@@ -1,0 +1,61 @@
+{
+  "_comment": "Enemy definitions. 'drops' lists possible item drops with probability weights. 'ai' defines attack patterns.",
+  "enemies": [
+    {
+      "id": "goblin",
+      "name": "Goblin",
+      "color": "#5a8a44",
+      "hp": 48, "mp": 0, "str": 14, "def": 10, "mag": 0, "mdef": 8, "spd": 22,
+      "expReward": 12, "gpReward": 8,
+      "drops": [{ "itemId": "potion", "weight": 30 }],
+      "abilities": ["attack"],
+      "ai": "basic_attack",
+      "resistances": [], "weaknesses": ["fire"]
+    },
+    {
+      "id": "wolf",
+      "name": "Wild Wolf",
+      "color": "#888888",
+      "hp": 65, "mp": 0, "str": 18, "def": 12, "mag": 0, "mdef": 10, "spd": 30,
+      "expReward": 18, "gpReward": 12,
+      "drops": [{ "itemId": "potion", "weight": 20 }, { "itemId": "wolf_pelt", "weight": 10 }],
+      "abilities": ["attack", "howl"],
+      "ai": "aggressive",
+      "resistances": [], "weaknesses": ["fire"]
+    },
+    {
+      "id": "armored_soldier",
+      "name": "Armored Soldier",
+      "color": "#8899aa",
+      "hp": 120, "mp": 15, "str": 22, "def": 22, "mag": 8, "mdef": 15, "spd": 18,
+      "expReward": 32, "gpReward": 25,
+      "drops": [{ "itemId": "iron_helm", "weight": 5 }, { "itemId": "potion", "weight": 40 }],
+      "abilities": ["attack", "defend", "fire"],
+      "ai": "defensive",
+      "resistances": ["blizzard"], "weaknesses": ["thunder"]
+    },
+    {
+      "id": "magitek_armor",
+      "name": "Magitek Armor",
+      "color": "#cc4444",
+      "hp": 350, "mp": 80, "str": 30, "def": 30, "mag": 25, "mdef": 20, "spd": 15,
+      "expReward": 120, "gpReward": 80,
+      "drops": [{ "itemId": "ether", "weight": 30 }, { "itemId": "hi_potion", "weight": 20 }],
+      "abilities": ["attack", "magitek_laser", "magitek_missile"],
+      "ai": "pattern",
+      "resistances": ["fire", "blizzard"], "weaknesses": ["thunder"],
+      "isBoss": true
+    },
+    {
+      "id": "imp",
+      "name": "Imp",
+      "color": "#aa66ff",
+      "hp": 38, "mp": 25, "str": 10, "def": 8, "mag": 16, "mdef": 12, "spd": 28,
+      "expReward": 15, "gpReward": 10,
+      "drops": [{ "itemId": "ether", "weight": 15 }],
+      "abilities": ["attack", "blizzard"],
+      "ai": "magic_focus",
+      "resistances": [], "weaknesses": ["fire"]
+    }
+  ]
+}
