@@ -106,6 +106,16 @@ Read [`references/systems.md`](references/systems.md) for design specs on:
 
 ---
 
+## Visual Reference
+
+Read [`references/visual-reference.md`](references/visual-reference.md) for annotated
+FF6 screenshots organized by game system (overworld, towns, dialogue, combat,
+cutscenes). Use these as the aesthetic north star when building any visual system.
+
+Screenshots are in [`references/ff6_screenshots/`](references/ff6_screenshots/).
+
+---
+
 ## How to Start a New Session
 
 1. Read this SKILL.md
