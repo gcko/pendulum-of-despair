@@ -23,6 +23,7 @@ const TOKEN_TTL = '7d';
 const USERNAME_MIN = 3;
 const USERNAME_MAX = 32;
 const PASSPHRASE_MIN = 6;
+const PASSPHRASE_MAX = 128;
 
 /**
  * Validates that a username contains only safe characters.
@@ -60,12 +61,13 @@ router.post('/register', async (req, res) => {
     username.length < USERNAME_MIN ||
     username.length > USERNAME_MAX ||
     !isValidUsername(username) ||
-    passphrase.length < PASSPHRASE_MIN
+    passphrase.length < PASSPHRASE_MIN ||
+    passphrase.length > PASSPHRASE_MAX
   ) {
     return res.status(400).json({
       error:
         `Username must be ${USERNAME_MIN}–${USERNAME_MAX} alphanumeric characters ` +
-        `(underscores/hyphens allowed). Passphrase must be at least ${PASSPHRASE_MIN} characters.`,
+        `(underscores/hyphens allowed). Passphrase must be ${PASSPHRASE_MIN}–${PASSPHRASE_MAX} characters.`,
     });
   }
 
@@ -82,7 +84,7 @@ router.post('/register', async (req, res) => {
     .prepare('INSERT INTO users (username, passphrase_hash) VALUES (?, ?)')
     .run(username, hash);
 
-  const token = signToken({ id: result.lastInsertRowid, username });
+  const token = signToken({ id: Number(result.lastInsertRowid), username });
   return res.status(201).json({ token, username });
 });
 

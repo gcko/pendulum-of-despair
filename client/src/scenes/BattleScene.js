@@ -157,7 +157,7 @@ export default class BattleScene extends Phaser.Scene {
       if (enemy.hp <= 0 || enemy.atbGauge < GAUGE_MAX) continue;
       const action = getEnemyAction(enemy, this._party, this._abilityMap);
       if (action) {
-        this._resolveAndAnimate(enemy, action.ability, action.targets);
+        this._executeEnemyAction(enemy, action.ability, action.targets);
       } else {
         enemy.atbGauge = 0;
       }
@@ -172,6 +172,15 @@ export default class BattleScene extends Phaser.Scene {
         return;
       }
     }
+  }
+
+  /** Resolves an enemy action through the same pipeline as player actions. */
+  _executeEnemyAction(enemy, ability, targets) {
+    this._phase = 'resolving';
+    const results = resolveAction(enemy, ability, targets, this._abilityMap);
+    this._processResults(results, () => {
+      this._finishAction();
+    });
   }
 
   _requestPlayerInput(member) {

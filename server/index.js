@@ -30,7 +30,7 @@ const corsOrigin = process.env.CORS_ORIGIN || '*';
 app.use(cors({ origin: corsOrigin }));
 
 // ── Body parsing ──────────────────────────────────────────────────────────────
-app.use(express.json({ limit: '600kb' }));
+app.use(express.json({ limit: '520kb' })); // Slightly above 512KB save slot limit
 
 // ── Rate limiting ─────────────────────────────────────────────────────────────
 /** Tight limit on auth routes to prevent brute-force attacks */

@@ -8,6 +8,12 @@
 
 const jwt = require('jsonwebtoken');
 
+if (!process.env.JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('FATAL: JWT_SECRET environment variable is required in production');
+  }
+  console.warn('[WARN] JWT_SECRET not set — using insecure default. Do NOT use in production.');
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me-in-production';
 
 /**

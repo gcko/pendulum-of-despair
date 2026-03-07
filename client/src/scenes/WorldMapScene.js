@@ -63,10 +63,16 @@ export default class WorldMapScene extends Phaser.Scene {
     // Show intro text on first visit
     if (!this._gameState.worldFlags.map_visited) {
       this._gameState.worldFlags.map_visited = true;
+      this._dialogueVisible = true;
       this.time.delayedCall(500, () => {
+        const allDialogues = this.cache.json.get('dialogue').dialogues;
         this.scene.launch('DialogueScene', {
-          dialogue: this.cache.json.get('dialogue').dialogues.find((d) => d.id === 'intro_001'),
-          onClose: () => this.scene.stop('DialogueScene'),
+          dialogue: allDialogues.find((d) => d.id === 'intro_001'),
+          allDialogues,
+          onClose: () => {
+            this._dialogueVisible = false;
+            this.scene.stop('DialogueScene');
+          },
         });
       });
     }
@@ -158,11 +164,11 @@ export default class WorldMapScene extends Phaser.Scene {
         fontFamily: '"Press Start 2P", monospace', fontSize: '7px', color: '#aaccff',
       }).setScrollFactor(0).setDepth(11);
 
-      const hpText = this.add.text(x, y + 14, `HP ${member.hp}/${member.hp}`, {
+      const hpText = this.add.text(x, y + 14, `HP ${member.hp}/${member.maxHp || member.hp}`, {
         fontFamily: '"Press Start 2P", monospace', fontSize: '6px', color: '#44ff44',
       }).setScrollFactor(0).setDepth(11);
 
-      const mpText = this.add.text(x, y + 26, `MP ${member.mp}/${member.mp}`, {
+      const mpText = this.add.text(x, y + 26, `MP ${member.mp}/${member.maxMp || member.mp}`, {
         fontFamily: '"Press Start 2P", monospace', fontSize: '6px', color: '#4488ff',
       }).setScrollFactor(0).setDepth(11);
 
