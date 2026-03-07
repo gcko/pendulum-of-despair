@@ -1,0 +1,21 @@
+{
+  "name": "pendulum-of-despair",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.6.5",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev:server": "pnpm --filter @pendulum/server dev",
+    "dev:client": "pnpm --filter @pendulum/client dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc -b --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
