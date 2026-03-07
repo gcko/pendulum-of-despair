@@ -88,7 +88,7 @@ packages/server/src/
   middleware/
     auth.ts         # JWT verification middleware
   db/
-    schema.ts       # SQLite schema (users + saves tables)
+    init.ts         # SQLite schema (users + saves tables)
 ```
 
 ### Authentication Design
