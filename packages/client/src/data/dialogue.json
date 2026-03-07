@@ -1,0 +1,77 @@
+{
+  "_comment": "Dialogue scripts. Each entry has an id, optional speaker name, and an array of text pages. Choices branch to other dialogue ids.",
+  "dialogues": [
+    {
+      "id": "intro_001",
+      "speaker": "??",
+      "pages": [
+        "The weight of the world presses down on these forgotten lands...",
+        "The Empire marches on. Town after town falls silent.",
+        "But somewhere, in the frozen north, something ancient stirs."
+      ],
+      "next": "intro_002"
+    },
+    {
+      "id": "intro_002",
+      "speaker": "Terra",
+      "pages": [
+        "Where... am I? My head feels like it's full of smoke.",
+        "I remember flashes — the Empire, a man in a cape... magic.",
+        "Was that me? Did I do all that?"
+      ],
+      "next": null
+    },
+    {
+      "id": "npc_old_man",
+      "speaker": "Old Man",
+      "pages": [
+        "Hmm? A stranger in Narshe?",
+        "Be careful out there. The mines are dangerous since the Magitek soldiers arrived.",
+        "Rumour has it something froze them solid. Something from inside the mine."
+      ],
+      "choices": [
+        { "text": "Tell me more about the mines.", "next": "npc_old_man_mines" },
+        { "text": "I'll be careful. Thanks.", "next": null }
+      ]
+    },
+    {
+      "id": "npc_old_man_mines",
+      "speaker": "Old Man",
+      "pages": [
+        "The mines run deep under the mountains.",
+        "They say the Esper in there has been sleeping for a thousand years.",
+        "The Empire wants it. But it doesn't want them."
+      ],
+      "next": null
+    },
+    {
+      "id": "save_point",
+      "speaker": "★ Save Point",
+      "pages": ["A calming warmth envelops you..."],
+      "choices": [
+        { "text": "Save the game.",       "next": null, "action": "save" },
+        { "text": "Rest here (restore HP/MP).", "next": null, "action": "rest" },
+        { "text": "Leave.",               "next": null }
+      ]
+    },
+    {
+      "id": "battle_victory",
+      "speaker": null,
+      "pages": ["Victory! The party gained {exp} EXP and {gp} GP."],
+      "next": null
+    },
+    {
+      "id": "level_up",
+      "speaker": null,
+      "pages": ["{name} reached Level {level}!", "{name}'s stats increased!"],
+      "next": null
+    },
+    {
+      "id": "game_over",
+      "speaker": null,
+      "pages": ["The party was defeated...", "The world falls into shadow."],
+      "next": null,
+      "action": "game_over"
+    }
+  ]
+}
