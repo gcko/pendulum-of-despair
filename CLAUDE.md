@@ -9,7 +9,7 @@
 For detailed documentation beyond AGENTS.md essentials:
 
 - `docs/plans/` - Architecture decisions and implementation plans
-- `.claude/skills/pendulum-of-despair/` - Project skill with design references, tech stack, and game systems
+- `.claude/skills/pod-dev/` - Project skill with design references, tech stack, and game systems
 
 ## Development Environment
 
