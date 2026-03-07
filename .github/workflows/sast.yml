@@ -1,0 +1,27 @@
+name: Semgrep SAST
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday at 6am UTC
+  workflow_dispatch: {}   # Allow manual trigger
+
+jobs:
+  semgrep:
+    name: Semgrep Scan
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run Semgrep
+        run: |
+          semgrep scan \
+            --config auto \
+            --error \
+            --severity WARNING \
+            --exclude 'node_modules' \
+            --exclude 'dist' \
+            --exclude 'coverage'

@@ -16,9 +16,11 @@
     "pretest": "pnpm run build:shared",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "pnpm -r run typecheck"
+    "lint": "pnpm -r run typecheck",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "typescript": "^5.9.3",
     "vitest": "^4.0.0"
   }

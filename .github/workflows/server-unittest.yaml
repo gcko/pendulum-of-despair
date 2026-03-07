@@ -1,0 +1,191 @@
+name: Server Unit Test
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/server/src/**'
+      - 'packages/shared/src/**'
+      - 'packages/server/package.json'
+      - 'packages/server/tsconfig.json'
+      - 'packages/server/vitest.config.*'
+      - 'pnpm-lock.yaml'
+  pull_request:
+    branches:
+      - main
+    # No paths filter — always trigger to satisfy required status checks.
+    # The check-server-changes job detects relevant changes and skips
+    # server-unittest when none are found (skipped = passes required check).
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-server-changes:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      has-changes: ${{ steps.filter.outputs.server }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            server:
+              - 'packages/server/src/**'
+              - 'packages/shared/src/**'
+              - 'packages/server/package.json'
+              - 'packages/server/tsconfig.json'
+              - 'packages/server/vitest.config.*'
+              - 'pnpm-lock.yaml'
+
+  quality-checks:
+    needs: check-server-changes
+    if: >
+      !cancelled() &&
+      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v5
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared package
+        run: pnpm run build:shared
+
+      - name: Type Check
+        run: pnpm --filter @pendulum/server run typecheck
+
+  server-unittest:
+    needs: check-server-changes
+    if: >
+      !cancelled() &&
+      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v5
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared package
+        run: pnpm run build:shared
+
+      - name: Get changed source files
+        if: github.event_name == 'pull_request'
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'packages/server/src/**' 'packages/shared/src/**' | grep -E '\.(ts|tsx|js|jsx)$' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "has_source_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_source_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Unit Tests
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ steps.changed.outputs.has_source_changes }}" = "true" ]; then
+            echo "Running vitest related for changed files..."
+            echo "${{ steps.changed.outputs.files }}" | xargs pnpm exec vitest related --run
+          else
+            echo "Running full server test suite..."
+            pnpm --filter @pendulum/server test -- --coverage
+          fi
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v7
+        if: always() && github.event_name == 'push'
+        with:
+          name: server-coverage-${{ github.run_id }}
+          path: packages/server/coverage/coverage-final.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload main branch coverage
+        uses: actions/upload-artifact@v7
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: server-coverage-main
+          path: packages/server/coverage/coverage-final.json
+          retention-days: 30
+          overwrite: true
+          if-no-files-found: ignore
+
+  server-unittest-merge:
+    needs: [server-unittest, quality-checks, check-server-changes]
+    if: >
+      always() &&
+      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify upstream job results
+        run: |
+          echo "server-unittest result: ${{ needs.server-unittest.result }}"
+          echo "quality-checks result: ${{ needs.quality-checks.result }}"
+
+          if [ "${{ needs.server-unittest.result }}" != "success" ]; then
+            echo "::error::server-unittest did not succeed"
+            exit 1
+          fi
+
+          if [ "${{ needs.quality-checks.result }}" != "success" ]; then
+            echo "::error::quality-checks did not succeed"
+            exit 1
+          fi

@@ -1,0 +1,193 @@
+name: Coverage Report
+
+on:
+  workflow_run:
+    workflows: ["Server Unit Test", "Client Unit Test"]
+    types: [completed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    # Only run for PRs when the triggering workflow succeeded (skip dependabot)
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login != 'dependabot[bot]'
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: read
+
+    steps:
+      # ========== WAIT FOR SIBLING WORKFLOW ==========
+      - name: Check if other test workflow is still running
+        id: sibling
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COMMIT_SHA="${{ github.event.workflow_run.head_sha }}"
+          TRIGGERING_WORKFLOW="${{ github.event.workflow_run.name }}"
+
+          if [[ "$TRIGGERING_WORKFLOW" == "Server Unit Test" ]]; then
+            OTHER_WORKFLOW="Client Unit Test"
+          else
+            OTHER_WORKFLOW="Server Unit Test"
+          fi
+
+          echo "Triggered by: $TRIGGERING_WORKFLOW"
+          echo "Checking sibling: $OTHER_WORKFLOW"
+
+          OTHER_STATUS=$(gh run list \
+            --workflow="$OTHER_WORKFLOW" \
+            --commit="$COMMIT_SHA" \
+            --json status \
+            --jq '.[0].status // "not_found"' 2>/dev/null || echo "not_found")
+
+          echo "Sibling status: $OTHER_STATUS"
+
+          if [[ "$OTHER_STATUS" == "in_progress" || "$OTHER_STATUS" == "queued" || "$OTHER_STATUS" == "waiting" || "$OTHER_STATUS" == "pending" ]]; then
+            echo "Sibling workflow still running — skipping this run"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Sibling workflow completed or not running — proceeding"
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ========== SETUP ==========
+      - name: Checkout PR
+        if: steps.sibling.outputs.skip != 'true'
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Get PR number
+        if: steps.sibling.outputs.skip != 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_NUMBER=$(gh pr view --repo "${{ github.repository }}" \
+            "${{ github.event.workflow_run.head_repository.owner.login }}:${{ github.event.workflow_run.head_branch }}" \
+            --json 'number' --jq '.number' 2>/dev/null || echo "")
+
+          if [ -z "$PR_NUMBER" ]; then
+            PR_NUMBER="${{ github.event.workflow_run.pull_requests[0].number }}"
+          fi
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "::error::Could not determine PR number"
+            exit 1
+          fi
+
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "Found PR #$PR_NUMBER"
+
+      # ========== DOWNLOAD COVERAGE ARTIFACTS ==========
+      - name: Download base server coverage
+        if: steps.sibling.outputs.skip != 'true'
+        uses: dawidd6/action-download-artifact@v16
+        with:
+          workflow: server-unittest.yaml
+          branch: main
+          name: server-coverage-main
+          path: ./base-coverage/server/
+          if_no_artifact_found: warn
+
+      - name: Download base client coverage
+        if: steps.sibling.outputs.skip != 'true'
+        uses: dawidd6/action-download-artifact@v16
+        with:
+          workflow: client-unittest.yaml
+          branch: main
+          name: client-coverage-main
+          path: ./base-coverage/client/
+          if_no_artifact_found: warn
+
+      - name: Download PR server coverage
+        if: steps.sibling.outputs.skip != 'true'
+        uses: dawidd6/action-download-artifact@v16
+        with:
+          workflow: server-unittest.yaml
+          commit: ${{ github.event.workflow_run.head_sha }}
+          name_is_regexp: true
+          name: ^server-coverage-
+          path: ./pr-coverage/server/
+          if_no_artifact_found: warn
+
+      - name: Download PR client coverage
+        if: steps.sibling.outputs.skip != 'true'
+        uses: dawidd6/action-download-artifact@v16
+        with:
+          workflow: client-unittest.yaml
+          commit: ${{ github.event.workflow_run.head_sha }}
+          name_is_regexp: true
+          name: ^client-coverage-
+          path: ./pr-coverage/client/
+          if_no_artifact_found: warn
+
+      # ========== GENERATE REPORT ==========
+      - name: Flatten and ensure coverage files exist
+        if: steps.sibling.outputs.skip != 'true'
+        run: |
+          mkdir -p base-coverage/server base-coverage/client pr-coverage/server pr-coverage/client
+
+          # Flatten PR coverage from subdirectories (if created by regexp download)
+          for dir in pr-coverage/server pr-coverage/client; do
+            if [ ! -f "$dir/coverage-final.json" ]; then
+              found=$(find "$dir" -mindepth 2 -name 'coverage-final.json' -print -quit 2>/dev/null)
+              [ -n "$found" ] && cp "$found" "$dir/coverage-final.json"
+            fi
+          done
+
+          # Create fallback empty coverage files if missing
+          for f in base-coverage/server/coverage-final.json base-coverage/client/coverage-final.json pr-coverage/server/coverage-final.json pr-coverage/client/coverage-final.json; do
+            [ -f "$f" ] || echo '{}' > "$f"
+          done
+
+      - name: Generate coverage summary
+        if: steps.sibling.outputs.skip != 'true'
+        id: report
+        run: |
+          cat > coverage-report.md << 'REPORT_EOF'
+          <!-- coverage-report-marker -->
+          ## Coverage Report
+
+          | Package | Status |
+          |---------|--------|
+          REPORT_EOF
+
+          for pkg in server client; do
+            BASE_FILE="base-coverage/$pkg/coverage-final.json"
+            PR_FILE="pr-coverage/$pkg/coverage-final.json"
+
+            if [ -s "$PR_FILE" ] && [ "$(cat "$PR_FILE")" != "{}" ]; then
+              echo "| @pendulum/$pkg | Coverage data available |" >> coverage-report.md
+            else
+              echo "| @pendulum/$pkg | No coverage data |" >> coverage-report.md
+            fi
+          done
+
+          echo "" >> coverage-report.md
+          echo "_Generated by Coverage Report workflow_" >> coverage-report.md
+
+      - name: Find existing comment
+        if: steps.sibling.outputs.skip != 'true'
+        id: find-comment
+        uses: peter-evans/find-comment@v4
+        with:
+          issue-number: ${{ steps.pr.outputs.number }}
+          body-includes: "<!-- coverage-report-marker -->"
+
+      - name: Post PR comment
+        if: steps.sibling.outputs.skip != 'true'
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ steps.pr.outputs.number }}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body-path: coverage-report.md
+          edit-mode: replace
