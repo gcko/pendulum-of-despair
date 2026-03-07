@@ -1,4 +1,4 @@
-# Game Systems Reference — Pendulum of Despair
+# Game Systems Reference -- Pendulum of Despair
 
 ## Inspiration Games Quick Reference
 
@@ -26,12 +26,12 @@ Inspired by FF6's Active Time Battle system.
 
 **Battle UI layout (inspired by FF6):**
 ```
-[ Battle scene — sprites on canvas ]
-─────────────────────────────────────
+[ Battle scene -- sprites on canvas ]
+-------------------------------------
 [ Action Menu ]    [ Party Status   ]
-  ▶ Fight            TERRA    210 ══
-    Magic            EDGAR    185 ══
-    Item             LOCKE    194 ══
+  > Fight            TERRA    210 ==
+    Magic            EDGAR    185 ==
+    Item             LOCKE    194 ==
 ```
 
 **Character action menus (unique per character):**
@@ -39,11 +39,11 @@ Inspired by FF6's Active Time Battle system.
 - Always confirm with the user what each character's unique ability is before implementing
 
 **Enemies:**
-- Can have hidden steal-able items (FF6-style) — flag to implement later
+- Can have hidden steal-able items (FF6-style) -- flag to implement later
 - Boss encounters get a pre-battle cutscene and unique music sting
 - Some enemies are immune to certain elements (fire/ice/lightning/earth)
 
-### Damage Formula (starting point — adjust with user)
+### Damage Formula (starting point -- adjust with user)
 ```
 physical_damage = max(1, (attacker.atk * 4) - (defender.def * 2)) + random(-5, 5)
 magic_damage    = max(1, (caster.mag * spell.power) - (target.mdef)) + random(-3, 3)
@@ -101,7 +101,7 @@ Each character tracks:
 ### Save State JSON Schema
 ```json
 {
-  "_comment": "Full game save state — serialized and stored as a single JSON blob",
+  "_comment": "Full game save state -- serialized and stored as a single JSON blob",
   "version": 1,
   "playtime_seconds": 3600,
   "location": {
@@ -136,7 +136,7 @@ Auto-save should fire on:
 
 ### Manual Save Points
 - Inns (staying at an inn saves + restores HP/MP)
-- Save point objects on map (glowing crystals, campfires — to be decided)
+- Save point objects on map (glowing crystals, campfires -- to be decided)
 
 ### New Game vs. Continue
 On login:
@@ -153,7 +153,7 @@ On login:
 - Speaker name displayed in yellow/gold at top left
 - Text appears character-by-character (typewriter effect, ~40ms per char)
 - Player presses confirm to advance or skip to end of current line
-- Dialogue stored in JSON files under `src/data/dialogue/`
+- Dialogue stored in JSON files under `packages/client/src/data/dialogue/`
 
 ### Dialogue JSON Format
 ```json
@@ -168,7 +168,7 @@ On login:
 ```
 
 ### Writing Style Guidelines
-Dialogue should be punchy and memorable — inspired by the best lines from the source games:
+Dialogue should be punchy and memorable -- inspired by the best lines from the source games:
 - **Kefka:** Manic, theatrical, menacing. Short bursts. ("Son of a submariner!")
 - **Terra:** Quiet, searching, self-doubting. ("But I'm hardly... normal...")
 - **Edgar:** Charming, slightly roguish. ("What man could refuse a lady?")
@@ -181,31 +181,31 @@ Avoid exposition dumps. Break up long lore into multiple exchanges.
 ## Map System
 
 ### Tile Grid
-- **Tile size:** 16×16 pixels (matches SNES sprite scale)
-- **Map format:** Tiled JSON (`.tmj`) — create maps in [Tiled Map Editor](https://www.mapeditor.org/)
+- **Tile size:** 16x16 pixels (matches SNES sprite scale)
+- **Map format:** Tiled JSON (`.tmj`) -- create maps in [Tiled Map Editor](https://www.mapeditor.org/)
 - **Layers (minimum):**
-  - `ground` — walkable terrain
-  - `decoration` — trees, rocks, objects above ground
-  - `collision` — invisible layer marking impassable tiles
-  - `events` — trigger zones (NPC positions, doors, transitions)
+  - `ground` -- walkable terrain
+  - `decoration` -- trees, rocks, objects above ground
+  - `collision` -- invisible layer marking impassable tiles
+  - `events` -- trigger zones (NPC positions, doors, transitions)
 
 ### Encounter Design
-Two options — **confirm with user before implementing:**
-- **Option A (Random):** Invisible step counter triggers battles — classic FF feel
-- **Option B (Visible):** Enemies visible on map, contact triggers battle — more modern, less frustrating
+Two options -- **confirm with user before implementing:**
+- **Option A (Random):** Invisible step counter triggers battles -- classic FF feel
+- **Option B (Visible):** Enemies visible on map, contact triggers battle -- more modern, less frustrating
 
 ### Overworld Map
 - Uses a zoomed-out tileset for the world map (like FF6's overworld)
 - Player character shrinks to "world scale" sprite when on overworld
-- Towns and dungeons are entry points — walking onto them triggers transition
+- Towns and dungeons are entry points -- walking onto them triggers transition
 
 ---
 
 ## Aesthetic & Tone
 
 ### Visual Target
-- 16×16 or 32×32 tile grid
-- SNES color palette feel — rich but constrained
+- 16x16 or 32x32 tile grid
+- SNES color palette feel -- rich but constrained
 - Parallax scrolling for battle backgrounds (Mode 7 homage)
 - Screen-wipe transitions between scenes (classic RPG style)
 
