@@ -110,6 +110,27 @@ Read [`references/systems.md`](references/systems.md) for design specs on:
 
 ---
 
+## Story & Narrative
+
+Read [`docs/story/`](../../../docs/story/) for the full narrative design:
+- [`outline.md`](../../../docs/story/outline.md) -- Rough story outline (4 acts + interlude + epilogue)
+- [`world.md`](../../../docs/story/world.md) -- Factions (Valdris, Carradan Compact, Thornmere Wilds), Arcanite Forging, the Pallor, geography
+- [`characters.md`](../../../docs/story/characters.md) -- Core cast (Edren, Cael, Lira, Torren, Sable, Maren), arcs, and relationships
+
+**Key narrative facts for development:**
+- The Pendulum of Despair is a MacGuffin -- it drives the plot but has no real power
+- The true antagonist is **the Pallor** -- Despair itself, an abstract cosmic force
+- Two protagonists (Edren and Cael) start as allies; Cael is manipulated into betrayal
+- Tragic romance between Cael and Lira (betrayal, separation, corruption)
+- Cael's redemption is sacrificial -- he closes the door from the inside
+- Thematic core: acceptance starves Despair; denial feeds it
+- Ending is triumphant but changed -- old magic and Arcanite Forging find balance
+
+Reference these documents when building dialogue, cutscenes, character data, or any
+narrative-adjacent system. Story details should be consistent across all game data files.
+
+---
+
 ## Visual Reference
 
 Read [`references/visual-reference.md`](references/visual-reference.md) for annotated
@@ -125,7 +146,7 @@ Screenshots are in [`references/ff6_screenshots/`](references/ff6_screenshots/).
 1. Read this SKILL.md
 2. Run `bd ready` and `bd list --status=in_progress` to see current work
 3. Confirm what the user wants to work on today before touching any code
-4. Reference the relevant section of `systems.md` or `tech-stack.md` as needed
+4. Reference the relevant section of `systems.md`, `tech-stack.md`, or `docs/story/` as needed
 
 Example opener the user might give:
 > "Last session we finished the tilemap renderer. Today I want the dialogue system."
