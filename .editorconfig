@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 charset = utf-8
 
 # 2 space indentation for web stack
-[*.{ts,tsx,js,jsx,json,y{a,}ml,html}]
+[*.{ts,tsx,js,jsx,json,yml,yaml,html}]
 indent_style = space
 indent_size = 2
 
