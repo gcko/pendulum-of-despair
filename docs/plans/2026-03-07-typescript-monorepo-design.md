@@ -24,7 +24,7 @@ pendulum-of-despair/
 ├── package.json              (root workspace)
 ├── pnpm-workspace.yaml
 ├── tsconfig.base.json
-├── vitest.workspace.ts
+├── vitest.config.ts
 └── packages/
     ├── shared/               @pendulum/shared — types & constants
     ├── server/               @pendulum/server — Express API

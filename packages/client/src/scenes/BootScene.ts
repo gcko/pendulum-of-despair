@@ -39,12 +39,12 @@ export default class BootScene extends Phaser.Scene {
       barFill.fillRect(width / 2 - 158, height / 2 - 14, 316 * value, 28);
     });
 
-    this.load.json("characters", "src/data/characters.json");
-    this.load.json("enemies", "src/data/enemies.json");
-    this.load.json("items", "src/data/items.json");
-    this.load.json("abilities", "src/data/abilities.json");
-    this.load.json("dialogue", "src/data/dialogue.json");
-    this.load.json("map_overworld", "src/data/maps/overworld.json");
+    this.load.json("characters", new URL("../data/characters.json", import.meta.url).toString());
+    this.load.json("enemies", new URL("../data/enemies.json", import.meta.url).toString());
+    this.load.json("items", new URL("../data/items.json", import.meta.url).toString());
+    this.load.json("abilities", new URL("../data/abilities.json", import.meta.url).toString());
+    this.load.json("dialogue", new URL("../data/dialogue.json", import.meta.url).toString());
+    this.load.json("map_overworld", new URL("../data/maps/overworld.json", import.meta.url).toString());
   }
 
   create(): void {

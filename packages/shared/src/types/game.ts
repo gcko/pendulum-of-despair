@@ -15,15 +15,14 @@ export interface CharacterStats {
 
 /** Party member as stored in save data */
 export interface PartyMember {
+  id: string;
   name: string;
-  characterId: string;
   level: number;
   hp: number;
   mp: number;
-  stats: CharacterStats;
-  abilities: string[];
-  equipment: Equipment;
-  statusEffects: string[];
+  maxHp?: number;
+  maxMp?: number;
+  [key: string]: unknown;
 }
 
 /** Equipment slots */
@@ -35,7 +34,7 @@ export interface Equipment {
 
 /** Inventory item with quantity */
 export interface InventoryItem {
-  id: string;
+  itemId: string;
   qty: number;
 }
 
@@ -82,10 +81,17 @@ export type EnemyAiPattern =
   | "magic_focus"
   | "pattern";
 
+/** Drop entry from enemies.json */
+export interface EnemyDrop {
+  itemId: string;
+  weight: number;
+}
+
 /** Enemy definition from enemies.json */
 export interface EnemyDefinition {
   id: string;
   name: string;
+  color: string;
   hp: number;
   mp: number;
   str: number;
@@ -93,34 +99,40 @@ export interface EnemyDefinition {
   mag: number;
   mdef: number;
   spd: number;
-  exp: number;
-  gp: number;
-  aiPattern: EnemyAiPattern;
+  expReward: number;
+  gpReward: number;
+  drops: EnemyDrop[];
   abilities: string[];
+  ai: EnemyAiPattern;
   weaknesses: string[];
   resistances: string[];
-  steals: string[];
+  isBoss?: boolean;
 }
 
 /** Ability definition from abilities.json */
 export interface AbilityDefinition {
   id: string;
   name: string;
-  type: "physical" | "magical" | "special" | "item";
-  element?: string;
+  type: "physical" | "magic" | "special";
+  element?: string | null;
   power: number;
   mpCost: number;
-  target: "single" | "all" | "self" | "ally" | "allAllies";
+  target: "single_enemy" | "all_enemies" | "self" | "single_ally";
   description: string;
+  icon?: string;
+  effect?: string;
 }
 
 /** Item definition from items.json */
 export interface ItemDefinition {
   id: string;
   name: string;
-  type: "consumable" | "weapon" | "armor" | "accessory" | "key";
+  type: "consumable" | "weapon" | "armor" | "key_item";
   description: string;
-  effect?: Record<string, number>;
-  stats?: Partial<CharacterStats>;
-  price: number;
+  effect?: Record<string, number | string> | null;
+  target?: string;
+  price?: number;
+  icon?: string;
+  slot?: string;
+  overworld_only?: boolean;
 }

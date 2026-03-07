@@ -472,7 +472,8 @@ export function getEnemyAction(
     }
 
     case "pattern": {
-      enemy._patternIndex = ((enemy._patternIndex ?? 0) + 1) % enemy.abilities.length;
+      const idx = enemy._patternIndex ?? -1;
+      enemy._patternIndex = (idx + 1) % enemy.abilities.length;
       chosenAbilityId = enemy.abilities[enemy._patternIndex]!;
       break;
     }

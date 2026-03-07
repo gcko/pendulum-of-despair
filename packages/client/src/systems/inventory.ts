@@ -96,7 +96,7 @@ export function equipItem(character: EquippedCharacter, itemDef: ItemDef | null 
   const previous = equip[slot] ?? null;
 
   // Remove the new item from inventory (qty 1)
-  removeItem(inventory, itemDef.id);
+  if (!removeItem(inventory, itemDef.id)) return null;
 
   // Put the previously equipped item back in inventory
   if (previous) addItem(inventory, previous);

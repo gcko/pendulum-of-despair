@@ -48,6 +48,8 @@ export default class DialogueScene extends Phaser.Scene {
   private _selectedChoice: number = 0;
   private _advanceKey!: Phaser.Input.Keyboard.Key;
   private _enterKey!: Phaser.Input.Keyboard.Key;
+  private _upKey!: Phaser.Input.Keyboard.Key;
+  private _downKey!: Phaser.Input.Keyboard.Key;
 
   constructor() {
     super({ key: "DialogueScene" });
@@ -121,6 +123,8 @@ export default class DialogueScene extends Phaser.Scene {
 
     this._advanceKey = this.input.keyboard!.addKey("SPACE");
     this._enterKey = this.input.keyboard!.addKey("ENTER");
+    this._upKey = this.input.keyboard!.addKey("UP");
+    this._downKey = this.input.keyboard!.addKey("DOWN");
     this._advanceKey.on("down", () => this._advance());
     this._enterKey.on("down", () => this._advance());
 
@@ -229,13 +233,13 @@ export default class DialogueScene extends Phaser.Scene {
 
     this._selectedChoice = 0;
 
-    const upKey = this.input.keyboard!.addKey("UP");
-    const downKey = this.input.keyboard!.addKey("DOWN");
-    upKey.on("down", () => {
+    this._upKey.removeAllListeners("down");
+    this._downKey.removeAllListeners("down");
+    this._upKey.on("down", () => {
       this._selectedChoice = Math.max(0, this._selectedChoice - 1);
       this._updateChoiceCursors();
     });
-    downKey.on("down", () => {
+    this._downKey.on("down", () => {
       this._selectedChoice = Math.min(choices.length - 1, this._selectedChoice + 1);
       this._updateChoiceCursors();
     });

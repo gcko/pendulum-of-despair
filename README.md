@@ -33,7 +33,7 @@ pendulum-of-despair/
 │           └── data/          # JSON data (characters, enemies, items, etc.)
 │
 ├── tsconfig.base.json         # Shared TypeScript config (strict, no any)
-├── vitest.workspace.ts        # Vitest workspace config
+├── vitest.config.ts           # Vitest root config
 ├── pnpm-workspace.yaml
 └── package.json               # Root scripts & workspace orchestration
 ```

@@ -4,7 +4,7 @@
  * Also manages the local JWT token in sessionStorage.
  */
 
-import type { AuthResponse, SaveSlotSummary, SaveSlotFull, SaveSuccessResponse } from "@pendulum/shared";
+import type { AuthResponse, SaveSlotSummary, SaveSlotFull, SaveSuccessResponse, GameSaveState } from "@pendulum/shared";
 
 const API_BASE = (window as { GAME_API_BASE?: string }).GAME_API_BASE ?? "";
 
@@ -83,6 +83,7 @@ export async function login(username: string, passphrase: string): Promise<AuthR
  * Lists all save slot summaries for the current user.
  */
 export async function listSaves(): Promise<SaveSlotSummary[]> {
+  if (!_token) throw new Error("Not authenticated");
   const res = await fetch(`${API_BASE}/api/save`, {
     headers: { Authorization: `Bearer ${_token}` },
   });
@@ -98,6 +99,7 @@ export async function listSaves(): Promise<SaveSlotSummary[]> {
  * Loads a specific save slot.
  */
 export async function loadSave(slot: number): Promise<SaveSlotFull> {
+  if (!_token) throw new Error("Not authenticated");
   const res = await fetch(`${API_BASE}/api/save/${slot}`, {
     headers: { Authorization: `Bearer ${_token}` },
   });
@@ -112,7 +114,8 @@ export async function loadSave(slot: number): Promise<SaveSlotFull> {
 /**
  * Writes game state to a save slot.
  */
-export async function writeSave(slot: number, gameState: Record<string, unknown>): Promise<SaveSuccessResponse> {
+export async function writeSave(slot: number, gameState: GameSaveState): Promise<SaveSuccessResponse> {
+  if (!_token) throw new Error("Not authenticated");
   const res = await fetch(`${API_BASE}/api/save/${slot}`, {
     method: "PUT",
     headers: {
