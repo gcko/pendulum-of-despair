@@ -52,7 +52,7 @@ pnpm lint              # TypeScript type-check across all packages
 
 ## Pre-Commit Hook Behavior
 
-Hooks run TypeScript type-check + related tests (via `vitest related`) on every commit. Only test files whose import chain touches staged files are executed, not the full suite. No need to run `pnpm test` separately before committing — the hook catches failures. If hook fails, fix issue, `git add`, then new commit (never `--amend` after hook failure).
+The pre-commit hook runs TypeScript type-check + related tests (via `vitest related`) when there are staged TypeScript/JavaScript files. Only test files whose import chain touches staged files are executed, not the full suite. Treat this as a safety net — you should still run `pnpm lint && pnpm test` from the workspace root before committing. If the hook fails, fix the issue, `git add`, then create a new commit (never `--amend` after a hook failure).
 
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`). bd integration is embedded in these user hooks.
 

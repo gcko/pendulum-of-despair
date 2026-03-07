@@ -21,7 +21,7 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 
 ### Always:
 - Use `pnpm` for all package management
-- Run `pnpm lint && pnpm test` before committing
+- Rely on pre-commit hooks for staged TS/JS files; run `pnpm lint && pnpm test` manually for wide-ranging changes or when hooks are unavailable
 - Build shared package before testing: `pnpm run build:shared`
 - Use strict TypeScript — no `any` types
 

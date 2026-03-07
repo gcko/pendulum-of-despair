@@ -23,14 +23,20 @@ concurrency:
 
 jobs:
   check-server-changes:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
     outputs:
-      has-changes: ${{ steps.filter.outputs.server }}
+      has-changes: ${{ steps.filter.outputs.server || 'true' }}
     steps:
+      # On push, paths filter in the trigger already ensures relevance — always run.
+      # On PR, use dorny/paths-filter for fine-grained change detection.
+      - name: Always run on push
+        if: github.event_name == 'push'
+        run: echo "Push event — paths filter in trigger handles relevance"
+
       - uses: dorny/paths-filter@v3
+        if: github.event_name == 'pull_request'
         id: filter
         with:
           filters: |
@@ -46,7 +52,7 @@ jobs:
     needs: check-server-changes
     if: >
       !cancelled() &&
-      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+      needs.check-server-changes.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -88,7 +94,7 @@ jobs:
     needs: check-server-changes
     if: >
       !cancelled() &&
-      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+      needs.check-server-changes.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -143,7 +149,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ steps.changed.outputs.has_source_changes }}" = "true" ]; then
             echo "Running vitest related for changed files..."
-            echo "${{ steps.changed.outputs.files }}" | xargs pnpm exec vitest related --run
+            echo "${{ steps.changed.outputs.files }}" | xargs pnpm exec vitest related --run --coverage
           else
             echo "Running full server test suite..."
             pnpm --filter @pendulum/server test -- --coverage
@@ -151,7 +157,7 @@ jobs:
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v7
-        if: always() && github.event_name == 'push'
+        if: always()
         with:
           name: server-coverage-${{ github.run_id }}
           path: packages/server/coverage/coverage-final.json
@@ -172,7 +178,7 @@ jobs:
     needs: [server-unittest, quality-checks, check-server-changes]
     if: >
       always() &&
-      (github.event_name == 'push' || needs.check-server-changes.outputs.has-changes == 'true')
+      needs.check-server-changes.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Verify upstream job results

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 # --- Beads (bd) pre-commit hook ---
 # Run bd's pre-commit logic (flush pending issue changes, etc.)
@@ -24,11 +25,30 @@ fi
 # Run only tests related to staged source files (uses Vite module graph)
 # Filter to .ts/.tsx/.js/.jsx only — passing config files causes
 # vitest to treat them as module-graph roots, pulling in ALL tests.
-STAGED_SOURCE=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' | grep -v '__tests__' | grep -v '\.test\.' || true)
-if [ -n "$STAGED_SOURCE" ]; then
+# Uses null-delimited git output piped through a temp file to avoid
+# process substitution (which can fail in some hook runners).
+STAGED_SOURCE=()
+TMPFILE=$(mktemp)
+git diff --cached --name-only --diff-filter=ACM -z > "$TMPFILE" 2>/dev/null || true
+while IFS= read -r -d '' file; do
+  case "$file" in
+    *.ts|*.tsx|*.js|*.jsx)
+      case "$file" in
+        *__tests__*|*.test.*)
+          ;; # Skip test files
+        *)
+          STAGED_SOURCE+=("$file")
+          ;;
+      esac
+      ;;
+  esac
+done < "$TMPFILE"
+rm -f "$TMPFILE"
+
+if [ "${#STAGED_SOURCE[@]}" -gt 0 ]; then
   echo "Running tests related to staged files..."
   pnpm run build:shared
-  echo "$STAGED_SOURCE" | xargs pnpm exec vitest related --run
+  pnpm exec vitest related --run "${STAGED_SOURCE[@]}"
 else
   echo "No source files changed, skipping tests..."
 fi
