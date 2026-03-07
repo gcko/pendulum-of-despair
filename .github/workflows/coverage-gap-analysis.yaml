@@ -62,16 +62,17 @@ jobs:
       - name: Generate coverage gap analysis report
         id: report
         run: |
-          cat > coverage-gap-report.md << 'EOF'
+          GENERATED_AT=$(date -u +"%Y-%m-%d %H:%M UTC")
+          cat > coverage-gap-report.md << EOF
           # Coverage Gap Analysis Report
 
-          Generated: $(date -u +"%Y-%m-%d %H:%M UTC")
+          Generated: ${GENERATED_AT}
 
           ## Server Package (@pendulum/server)
           EOF
 
           if [ -f packages/server/coverage/coverage-final.json ]; then
-            echo "Coverage data collected. See artifacts for details." >> coverage-gap-report.md
+            echo "Coverage data collected successfully." >> coverage-gap-report.md
           else
             echo "No coverage data available." >> coverage-gap-report.md
           fi
@@ -82,7 +83,7 @@ jobs:
           EOF
 
           if [ -f packages/client/coverage/coverage-final.json ]; then
-            echo "Coverage data collected. See artifacts for details." >> coverage-gap-report.md
+            echo "Coverage data collected successfully." >> coverage-gap-report.md
           else
             echo "No coverage data available." >> coverage-gap-report.md
           fi
