@@ -6,71 +6,58 @@
 
 ## Architecture
 
+TypeScript monorepo managed with pnpm workspaces.
+
 ```
 pendulum-of-despair/
-├── client/          # Phaser 3 browser game (ES modules, no bundler required)
-│   ├── index.html   # Entry point — loads Phaser from CDN
-│   └── src/
-│       ├── main.js          # Phaser game config & scene list
-│       ├── scenes/
-│       │   ├── BootScene.js      # Asset loading & placeholder texture generation
-│       │   ├── TitleScene.js     # Title screen + login/register UI
-│       │   ├── WorldMapScene.js  # Tile-based overworld with encounter system
-│       │   ├── BattleScene.js    # ATB combat (FF6-style)
-│       │   └── DialogueScene.js  # FF6-style typewriter dialogue boxes
-│       ├── systems/
-│       │   ├── combat.js    # ATB gauge, damage formulas, enemy AI, levelling
-│       │   ├── inventory.js # Item add/remove, equipment, stat bonuses
-│       │   └── saveLoad.js  # REST API communication (auth + save/load)
-│       └── data/
-│           ├── characters.json   # Party member definitions & stat growth
-│           ├── enemies.json      # Enemy roster with AI types
-│           ├── items.json        # Consumables, weapons, armor
-│           ├── abilities.json    # Spells, physical & special abilities
-│           ├── dialogue.json     # Dialogue scripts with branching
-│           └── maps/
-│               └── overworld.json  # Tile map data & encounter tables
+├── packages/
+│   ├── shared/        # @pendulum/shared — shared types & constants
+│   │   └── src/
+│   │       ├── index.ts
+│   │       └── types/         # Domain types (combat, inventory, save, etc.)
+│   │
+│   ├── server/        # @pendulum/server — Express REST API
+│   │   └── src/
+│   │       ├── index.ts       # Server entry point
+│   │       ├── app.ts         # Express app setup, CORS, rate-limiting
+│   │       ├── db/            # SQLite schema (node:sqlite built-in)
+│   │       ├── routes/        # Auth & save endpoints
+│   │       ├── middleware/     # JWT verification
+│   │       └── __tests__/     # Vitest integration tests
+│   │
+│   └── client/        # @pendulum/client — Phaser 3 browser game (Vite)
+│       └── src/
+│           ├── main.ts        # Phaser game config & scene list
+│           ├── scenes/        # Boot, Title, WorldMap, Battle, Dialogue
+│           ├── systems/       # Combat, inventory, save/load
+│           └── data/          # JSON data (characters, enemies, items, etc.)
 │
-└── server/          # Node.js/Express REST API
-    ├── index.js         # Server entry point, rate-limiting, CORS
-    ├── db/init.js       # SQLite schema (node:sqlite built-in, Node ≥ 22.5)
-    ├── routes/
-    │   ├── auth.js      # POST /api/auth/register, POST /api/auth/login
-    │   └── save.js      # GET/PUT /api/save/:slot, GET /api/save
-    ├── middleware/
-    │   └── auth.js      # JWT Bearer token verification
-    └── __tests__/       # Jest + supertest integration tests
+├── tsconfig.base.json         # Shared TypeScript config (strict, no any)
+├── vitest.workspace.ts        # Vitest workspace config
+├── pnpm-workspace.yaml
+└── package.json               # Root scripts & workspace orchestration
 ```
 
 ---
 
 ## Getting Started
 
-### Server
+### Prerequisites
+
+- **Node.js >= 24.0.0** (uses the built-in `node:sqlite` module). A `.naverc` is included.
+- **pnpm** — enabled via corepack: `corepack enable`
+
+### Install & Run
 
 ```bash
-cd server
-npm install
-cp .env.example .env        # Edit JWT_SECRET before deploying!
-npm start                   # http://localhost:3000
+pnpm install          # Install all workspace dependencies
+
+pnpm dev:server       # Start the API server (http://localhost:3000)
+pnpm dev:client       # Start the Vite dev server for the client
+
+pnpm test             # Run the full test suite (Vitest)
+pnpm lint             # TypeScript type-check (strict mode, no any)
 ```
-
-> **Requires Node.js ≥ 22.5.0** (uses the built-in `node:sqlite` module).
-
-### Client
-
-Open `client/index.html` in a browser — no build step required.
-
-For local development with the server, serve the `client/` directory with any static file server:
-
-```bash
-npx serve client
-# or
-python3 -m http.server 8080 --directory client
-```
-
-Then open `http://localhost:8080`. The client defaults to `http://localhost:3000` for the API.
-To use a different API URL, set `window.GAME_API_BASE` before the module loads.
 
 ---
 
@@ -81,25 +68,16 @@ To use a different API URL, set `window.GAME_API_BASE` before the module loads.
 | POST   | `/api/auth/register`    | No    | Create account, receive JWT        |
 | POST   | `/api/auth/login`       | No    | Login, receive JWT                 |
 | GET    | `/api/save`             | Yes   | List all save slot summaries       |
-| GET    | `/api/save/:slot`       | Yes   | Load full save data (slot 1–3)     |
+| GET    | `/api/save/:slot`       | Yes   | Load full save data (slot 1-3)     |
 | PUT    | `/api/save/:slot`       | Yes   | Write/overwrite save data          |
 | GET    | `/api/health`           | No    | Health check                       |
-
----
-
-## Running Tests
-
-```bash
-cd server
-npm test
-```
 
 ---
 
 ## Game Systems
 
 ### ATB Battle (FF6-inspired)
-- Each combatant has a speed-based ATB gauge (0–1000)
+- Each combatant has a speed-based ATB gauge (0-1000)
 - Player input is requested when a party member's gauge fills
 - Enemies act automatically via configurable AI patterns (`basic_attack`, `aggressive`, `defensive`, `magic_focus`, `pattern`)
 - Damage formulas account for STR/DEF (physical) and MAG/MDEF (magical), elemental resistances/weaknesses, critical hits, and variance
@@ -131,6 +109,16 @@ npm test
 
 ---
 
+## Tech Stack
+
+- **Language:** TypeScript (strict mode, no `any`)
+- **Testing:** Vitest
+- **Server:** Express + SQLite (`node:sqlite`)
+- **Client:** Phaser 3 + Vite
+- **Monorepo:** pnpm workspaces with project references
+
+---
+
 ## Roadmap
 
 - [x] Project scaffold & renderer (Phaser 3)
@@ -141,6 +129,7 @@ npm test
 - [x] Enemy AI & encounter system
 - [x] Dialogue system with typewriter effect
 - [x] User auth & save/load (backend)
+- [x] TypeScript monorepo refactor (pnpm workspaces, Vitest, strict types)
 - [ ] Town interiors & NPC conversations
 - [ ] Dungeon maps with hazards
 - [ ] Full ability/magic menu in battle
@@ -148,4 +137,3 @@ npm test
 - [ ] Title/pause menu screens
 - [ ] Music & SFX (Web Audio API)
 - [ ] Pixel art sprites & tilesets
-

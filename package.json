@@ -12,10 +12,10 @@
     "dev:client": "pnpm --filter @pendulum/client dev",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "tsc -b --noEmit"
+    "lint": "pnpm -r run typecheck"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^3.0.0"
   }
 }

@@ -11,8 +11,10 @@ import * as path from "node:path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-/** Path to the SQLite file (can be overridden via DB_PATH env var). */
-const DB_PATH = process.env["DB_PATH"] ?? path.join(__dirname, "..", "..", "game.db");
+/** Path to the SQLite file (can be overridden via DB_PATH env var). Evaluated lazily so test setup can override. */
+function getDbPath(): string {
+  return process.env["DB_PATH"] ?? path.join(__dirname, "..", "..", "game.db");
+}
 
 let db: DatabaseSync | null = null;
 
@@ -22,10 +24,10 @@ let db: DatabaseSync | null = null;
  */
 export function getDb(dbPath?: string): DatabaseSync {
   if (db) return db;
-  db = new DatabaseSync(dbPath ?? DB_PATH);
+  db = new DatabaseSync(dbPath ?? getDbPath());
 
   // Enable WAL mode for better concurrent read performance (skip for in-memory DBs)
-  const targetPath = dbPath ?? DB_PATH;
+  const targetPath = dbPath ?? getDbPath();
   if (targetPath !== ":memory:") {
     db.exec("PRAGMA journal_mode = WAL;");
   }

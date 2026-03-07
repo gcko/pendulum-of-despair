@@ -5,5 +5,10 @@ export default defineConfig({
     environment: "node",
     setupFiles: ["src/__tests__/setup.ts"],
     include: ["src/__tests__/**/*.test.ts"],
+    fileParallelism: false,
+    env: {
+      DB_PATH: ":memory:",
+      JWT_SECRET: "test-secret-key",
+    },
   },
 });
