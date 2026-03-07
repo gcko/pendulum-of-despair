@@ -1,0 +1,25 @@
+{
+  "name": "pendulum-of-despair",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r run build",
+    "build:shared": "pnpm --filter @pendulum/shared run build",
+    "predev:server": "pnpm run build:shared",
+    "dev:server": "pnpm --filter @pendulum/server dev",
+    "predev:client": "pnpm run build:shared",
+    "dev:client": "pnpm --filter @pendulum/client dev",
+    "pretest": "pnpm run build:shared",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "pnpm -r run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  }
+}

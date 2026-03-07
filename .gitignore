@@ -1,0 +1,11 @@
+node_modules/
+.env
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+dist/
+.DS_Store
+coverage/
+*.tsbuildinfo
+.vite/

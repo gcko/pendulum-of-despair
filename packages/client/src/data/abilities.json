@@ -1,0 +1,213 @@
+{
+  "_comment": "Ability/spell definitions. 'mpCost' is 0 for physical abilities. 'element' can be fire, blizzard, thunder, or null.",
+  "abilities": [
+    {
+      "id": "attack",
+      "name": "Attack",
+      "type": "physical",
+      "description": "A standard physical attack.",
+      "mpCost": 0,
+      "element": null,
+      "power": 1.0,
+      "target": "single_enemy",
+      "icon": "⚔️"
+    },
+    {
+      "id": "defend",
+      "name": "Defend",
+      "type": "physical",
+      "description": "Brace for impact. DEF doubled until next turn.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "self",
+      "icon": "🛡️",
+      "effect": "defend"
+    },
+    {
+      "id": "fire",
+      "name": "Fire",
+      "type": "magic",
+      "description": "Hurls a fireball at one enemy.",
+      "mpCost": 5,
+      "element": "fire",
+      "power": 1.2,
+      "target": "single_enemy",
+      "icon": "🔥"
+    },
+    {
+      "id": "fira",
+      "name": "Fira",
+      "type": "magic",
+      "description": "A more powerful fire spell.",
+      "mpCost": 12,
+      "element": "fire",
+      "power": 2.0,
+      "target": "single_enemy",
+      "icon": "🔥"
+    },
+    {
+      "id": "firaga",
+      "name": "Firaga",
+      "type": "magic",
+      "description": "Rains fire on all enemies.",
+      "mpCost": 22,
+      "element": "fire",
+      "power": 2.5,
+      "target": "all_enemies",
+      "icon": "🔥"
+    },
+    {
+      "id": "blizzard",
+      "name": "Blizzard",
+      "type": "magic",
+      "description": "Hurls ice shards at one enemy.",
+      "mpCost": 5,
+      "element": "blizzard",
+      "power": 1.2,
+      "target": "single_enemy",
+      "icon": "❄️"
+    },
+    {
+      "id": "blizzara",
+      "name": "Blizzara",
+      "type": "magic",
+      "description": "A more powerful ice spell.",
+      "mpCost": 12,
+      "element": "blizzard",
+      "power": 2.0,
+      "target": "single_enemy",
+      "icon": "❄️"
+    },
+    {
+      "id": "thunder",
+      "name": "Thunder",
+      "type": "magic",
+      "description": "Strikes one enemy with lightning.",
+      "mpCost": 5,
+      "element": "thunder",
+      "power": 1.2,
+      "target": "single_enemy",
+      "icon": "⚡"
+    },
+    {
+      "id": "cure",
+      "name": "Cure",
+      "type": "magic",
+      "description": "Restores HP to one ally.",
+      "mpCost": 5,
+      "element": null,
+      "power": 1.0,
+      "target": "single_ally",
+      "effect": "heal_hp",
+      "icon": "💚"
+    },
+    {
+      "id": "cura",
+      "name": "Cura",
+      "type": "magic",
+      "description": "Restores more HP to one ally.",
+      "mpCost": 12,
+      "element": null,
+      "power": 2.0,
+      "target": "single_ally",
+      "effect": "heal_hp",
+      "icon": "💚"
+    },
+    {
+      "id": "runic",
+      "name": "Runic",
+      "type": "special",
+      "description": "Absorbs the next magic spell cast, restoring MP.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "self",
+      "effect": "runic",
+      "icon": "✨"
+    },
+    {
+      "id": "steal",
+      "name": "Steal",
+      "type": "special",
+      "description": "Attempt to steal an item from an enemy.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "single_enemy",
+      "effect": "steal",
+      "icon": "🎒"
+    },
+    {
+      "id": "throw",
+      "name": "Throw",
+      "type": "special",
+      "description": "Throw a weapon or item at an enemy for massive damage.",
+      "mpCost": 0,
+      "element": null,
+      "power": 1.5,
+      "target": "single_enemy",
+      "effect": "throw",
+      "icon": "🗡️"
+    },
+    {
+      "id": "smoke_bomb",
+      "name": "Smoke Bomb",
+      "type": "special",
+      "description": "Guarantees escape from battle.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "self",
+      "effect": "escape",
+      "icon": "💨"
+    },
+    {
+      "id": "sprint",
+      "name": "Sprint",
+      "type": "special",
+      "description": "Doubles movement speed on the overworld.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "self",
+      "effect": "sprint",
+      "icon": "💨",
+      "overworld_only": true
+    },
+    {
+      "id": "howl",
+      "name": "Howl",
+      "type": "special",
+      "description": "(Enemy) Raises STR of all allies.",
+      "mpCost": 0,
+      "element": null,
+      "power": 0,
+      "target": "all_enemies",
+      "effect": "buff_str",
+      "icon": "🐺"
+    },
+    {
+      "id": "magitek_laser",
+      "name": "Magitek Laser",
+      "type": "magic",
+      "description": "(Enemy) A focused beam of Magitek energy.",
+      "mpCost": 15,
+      "element": "thunder",
+      "power": 2.0,
+      "target": "single_enemy",
+      "icon": "🔴"
+    },
+    {
+      "id": "magitek_missile",
+      "name": "Magitek Missile",
+      "type": "magic",
+      "description": "(Enemy) Fires a missile that damages all party members.",
+      "mpCost": 20,
+      "element": null,
+      "power": 1.5,
+      "target": "all_enemies",
+      "icon": "💥"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "server",
+  "dolt_database": "pendulum_of_despair",
+  "project_id": "0617ccac-2d8f-4e44-a8f7-9c386b27facd"
+}
