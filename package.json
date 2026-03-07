@@ -8,8 +8,12 @@
   },
   "scripts": {
     "build": "pnpm -r run build",
+    "build:shared": "pnpm --filter @pendulum/shared run build",
+    "predev:server": "pnpm run build:shared",
     "dev:server": "pnpm --filter @pendulum/server dev",
+    "predev:client": "pnpm run build:shared",
     "dev:client": "pnpm --filter @pendulum/client dev",
+    "pretest": "pnpm run build:shared",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "pnpm -r run typecheck"

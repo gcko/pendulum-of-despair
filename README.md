@@ -51,6 +51,7 @@ pendulum-of-despair/
 
 ```bash
 pnpm install          # Install all workspace dependencies
+pnpm build            # Build all packages (required before first run)
 
 pnpm dev:server       # Start the API server (http://localhost:3000)
 pnpm dev:client       # Start the Vite dev server for the client
@@ -58,6 +59,8 @@ pnpm dev:client       # Start the Vite dev server for the client
 pnpm test             # Run the full test suite (Vitest)
 pnpm lint             # TypeScript type-check (strict mode, no any)
 ```
+
+> **Note:** `dev:server`, `dev:client`, and `test` automatically build `@pendulum/shared` first via `pre*` scripts. You can also run `pnpm build` once after install to build everything.
 
 ---
 

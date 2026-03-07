@@ -127,7 +127,7 @@ export interface AbilityDefinition {
 export interface ItemDefinition {
   id: string;
   name: string;
-  type: "consumable" | "weapon" | "armor" | "key_item";
+  type: "consumable" | "weapon" | "armor" | "accessory" | "key_item";
   description: string;
   effect?: Record<string, number | string> | null;
   target?: string;

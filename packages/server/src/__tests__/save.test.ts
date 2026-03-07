@@ -12,10 +12,11 @@ let token: string;
 
 const SAMPLE_SAVE = {
   party: [
-    { name: "Terra", level: 5, hp: 120, mp: 60 },
-    { name: "Locke", level: 5, hp: 110, mp: 20 },
+    { id: "terra", name: "Terra", level: 5, hp: 120, mp: 60 },
+    { id: "locke", name: "Locke", level: 5, hp: 110, mp: 20 },
   ],
-  inventory: [{ id: "potion", qty: 3 }],
+  inventory: [{ itemId: "potion", qty: 3 }],
+  gp: 500,
   worldFlags: { intro_complete: true },
   currentMap: "narshe",
   currentPosition: { x: 10, y: 8 },

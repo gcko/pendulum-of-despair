@@ -58,5 +58,8 @@ export function getDb(dbPath?: string): DatabaseSync {
  * Resets the singleton (used between tests to get a fresh in-memory DB).
  */
 export function resetDb(): void {
+  if (db) {
+    db.close();
+  }
   db = null;
 }
