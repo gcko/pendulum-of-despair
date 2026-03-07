@@ -56,7 +56,7 @@ pnpm --filter @pendulum/client build    # Production build
 - SNES-era 16-bit aesthetic (240p logical resolution, pixel-perfect scaling)
 - Press Start 2P font (or custom bitmap font)
 - HTML/CSS overlays for menus, HUD, dialogue boxes — styled retro
-- Reference: FF6 screenshots in `.claude/skills/pendulum-of-despair/references/ff6_screenshots/`
+- Reference: FF6 screenshots in `.claude/skills/pod-dev/references/ff6_screenshots/`
 
 ## Coding Standards
 

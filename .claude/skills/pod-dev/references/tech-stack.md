@@ -166,21 +166,21 @@ package.json `exports` field. No runtime dependencies.
 All game content is stored as **JSON files** under `packages/client/src/data/`.
 These are loaded by Phaser's asset loader at scene start.
 
-### Naming conventions
+### Current layout
 ```
 packages/client/src/data/
+  abilities.json
+  characters.json
+  dialogue.json
+  enemies.json
+  items.json
   maps/
-    overworld.tmj         # Tiled map JSON
-    town-figaro.tmj
-  enemies/
-    enemies.json
-  items/
-    items.json
-  characters/
-    party.json
-  dialogue/
-    act1.json
+    overworld.json
 ```
+
+As the project grows, data files may be organized into subdirectories and maps
+may migrate to Tiled JSON format (`.tmj`). For now, most data files are flat
+in the `data/` directory with maps in a `maps/` subdirectory.
 
 ### JSON conventions
 
