@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# --- Beads (bd) pre-commit hook ---
+# Run bd's pre-commit logic (flush pending issue changes, etc.)
+# before the quality checks. Failures here are non-fatal — quality
+# checks below are what gate the commit.
+if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
+    BD_GIT_HOOK=1 bd hooks run pre-commit "$@" || true
+    # Stage any changes bd made to the issue database
+    git diff --quiet .beads/ 2>/dev/null || git add .beads/ 2>/dev/null || true
+fi
+
+# Check if there are any staged TypeScript/JavaScript files
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+# Build shared package once if any TS/JS files are staged (needed by both lint and tests)
+SHARED_BUILT=false
+if [ -n "$STAGED_TS_FILES" ]; then
+  echo "TypeScript/JavaScript files detected, building shared and running type check..."
+  pnpm run build:shared
+  SHARED_BUILT=true
+  pnpm lint
+else
+  echo "No TypeScript/JavaScript files changed, skipping type check..."
+fi
+
+# Run only tests related to staged source files (uses Vite module graph)
+# Filter to .ts/.tsx/.js/.jsx only — passing config files causes
+# vitest to treat them as module-graph roots, pulling in ALL tests.
+# Uses null-delimited git output piped through a temp file to avoid
+# process substitution (which can fail in some hook runners).
+STAGED_SOURCE=()
+TMPFILE=$(mktemp)
+git diff --cached --name-only --diff-filter=ACM -z > "$TMPFILE" 2>/dev/null || true
+while IFS= read -r -d '' file; do
+  case "$file" in
+    *.ts|*.tsx|*.js|*.jsx)
+      case "$file" in
+        *__tests__*|*.test.*)
+          ;; # Skip test files
+        *)
+          STAGED_SOURCE+=("$file")
+          ;;
+      esac
+      ;;
+  esac
+done < "$TMPFILE"
+rm -f "$TMPFILE"
+
+if [ "${#STAGED_SOURCE[@]}" -gt 0 ]; then
+  echo "Running tests related to staged files..."
+  if [ "$SHARED_BUILT" = false ]; then
+    pnpm run build:shared
+  fi
+  pnpm exec vitest related --run "${STAGED_SOURCE[@]}"
+else
+  echo "No source files changed, skipping tests..."
+fi

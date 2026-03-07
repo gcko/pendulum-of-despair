@@ -1,0 +1,139 @@
+name: Claude Re-Review
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-re-review:
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/re-review') &&
+      (
+        github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR'
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Get PR details
+        id: pr-details
+        run: |
+          PR_DATA=$(gh api repos/${{ github.repository }}/pulls/${{ github.event.issue.number }})
+          echo "head_ref=$(echo "$PR_DATA" | jq -r '.head.ref')" >> $GITHUB_OUTPUT
+          echo "head_sha=$(echo "$PR_DATA" | jq -r '.head.sha')" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.pr-details.outputs.head_ref }}
+          fetch-depth: 0
+
+      - name: Fetch prior review
+        id: prior-review
+        run: |
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --jq '[.[] | select(.user.login == "claude[bot]")] | last | .body // empty' \
+            > /tmp/prior_review.md
+
+          if [ -s /tmp/prior_review.md ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "Prior review found ($(wc -c < /tmp/prior_review.md) bytes)"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "No prior review found"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch conversation context
+        run: |
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --jq '[.[] | select(.user.type != "Bot")] | .[-5:] | .[] | "### \(.user.login) (\(.created_at))\n\(.body)\n"' \
+            > /tmp/conversation.md
+
+          echo "Conversation context: $(wc -l < /tmp/conversation.md) lines"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Acknowledge re-review request
+        run: |
+          gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+            -X POST -f content="+1"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Claude re-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY_PR_REVIEW }}
+          use_sticky_comment: true
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR_NUMBER: ${{ github.event.issue.number }}
+            PRIOR_REVIEW_FOUND: ${{ steps.prior-review.outputs.found }}
+            TRIGGERING_USER: ${{ github.event.comment.user.login }}
+            TRIGGERING_COMMENT: ${{ github.event.comment.body }}
+
+            You are performing a RE-REVIEW of this PR. A previous Claude review was conducted,
+            and the author (or a team member) has requested a re-review via the /re-review command.
+
+            **Step 1: Read prior context**
+            - Read /tmp/prior_review.md to understand the prior review findings
+            - Read /tmp/conversation.md to understand the discussion since the review
+
+            **Step 2: Re-evaluate each prior finding**
+            For each issue raised in the prior review, determine:
+            - FIXED: The code change addresses this finding
+            - DISPUTED (VALID): The author's argument is technically correct; withdraw the finding
+            - STILL VALID: The finding still applies and has not been addressed
+
+            **Step 3: Check for new commits**
+            Run `git log --oneline` to see if new commits were pushed since the last review.
+            If so, review the new changes for any new issues.
+
+            **Step 4: Post your re-review**
+            Update the sticky comment with your re-review. Use this format:
+
+            ## Re-Review
+
+            **Triggered by:** @TRIGGERING_USER via `/re-review`
+
+            ### Prior Findings Status
+            [For each prior finding: FIXED / DISPUTED (VALID) / STILL VALID with brief explanation]
+
+            ### New Issues (if any)
+            [Any new issues found in commits since last review]
+
+            ### Summary
+            [Overall assessment: all resolved, partially resolved, or issues remain]
+
+            **Posting your re-review:**
+            - Find the existing claude[bot] comment and update it:
+              First get the comment ID:
+              `COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments --jq '[.[] | select(.user.login == "claude[bot]")] | last | .id // empty')`
+              Then update: `gh api repos/${{ github.repository }}/issues/comments/$COMMENT_ID -X PATCH -f body="YOUR_REVIEW"`
+            - If no existing comment, create one:
+              `gh pr comment ${{ github.event.issue.number }} --body "YOUR_REVIEW"`
+            - Use third-level headings (###) for each reviewed issue
+            - Do not use referencing issues and pull requests (#1, #2, etc.) with issue numbers directly
+
+            **After posting, submit a formal GitHub review:**
+            - If all issues resolved: `gh pr review ${{ github.event.issue.number }} --approve --body "Claude Re-Review: All prior findings resolved."`
+            - If issues remain: `gh pr review ${{ github.event.issue.number }} --request-changes --body "Claude Re-Review: Some findings remain unresolved. See review comment for details."`
+
+            Use AGENTS.md for universal agent guidance and CLAUDE.md for Claude-specific guidance.
+
+            **IMPORTANT - Do NOT:**
+            - Run tests (npm test, pnpm test, etc.)
+            - Execute the code or start servers
+            - Modify any files
+          claude_args: '--allowed-tools "Bash(gh:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(grep:*),Bash(find:*),Bash(ls:*),Bash(stat:*),Bash(wc:*),Bash(diff:*),Read,Glob,Grep"'

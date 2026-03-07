@@ -1,0 +1,119 @@
+name: Claude Code Review
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-review:
+    # Only run on PR comments containing /review (not /re-review)
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/review') &&
+      !contains(github.event.comment.body, '/re-review') &&
+      github.actor != 'dependabot[bot]' &&
+      (
+        github.event.comment.author_association == 'OWNER' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'COLLABORATOR'
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Get PR details
+        id: pr-details
+        run: |
+          PR_DATA=$(gh api repos/${{ github.repository }}/pulls/${{ github.event.issue.number }})
+          echo "head_ref=$(echo "$PR_DATA" | jq -r '.head.ref')" >> $GITHUB_OUTPUT
+          echo "draft=$(echo "$PR_DATA" | jq -r '.draft')" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip draft PRs
+        if: steps.pr-details.outputs.draft == 'true'
+        run: |
+          echo "Skipping review for draft PR"
+          exit 0
+
+      - name: Acknowledge review request
+        run: |
+          gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions \
+            -X POST -f content="+1"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.pr-details.outputs.head_ref }}
+          fetch-depth: 1
+
+      - name: Find existing Claude comment
+        id: find-comment
+        run: |
+          COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --jq '[.[] | select(.user.login == "claude[bot]")] | first | .id // empty')
+          echo "comment_id=$COMMENT_ID" >> $GITHUB_OUTPUT
+          if [ -n "$COMMENT_ID" ]; then
+            echo "Found existing comment: $COMMENT_ID"
+          else
+            echo "No existing comment found"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Claude Code Review
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY_PR_REVIEW }}
+          use_sticky_comment: true
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR_NUMBER: ${{ github.event.issue.number }}
+            EXISTING_COMMENT_ID: ${{ steps.find-comment.outputs.comment_id }}
+            TRIGGERING_USER: ${{ github.event.comment.user.login }}
+
+            Review this PR focusing on critical issues:
+            - Bugs, security vulnerabilities, correctness
+            - Performance considerations
+            - Test coverage gaps
+            - TypeScript strict mode compliance (no `any` types)
+
+            Use AGENTS.md for universal agent guidance and CLAUDE.md for Claude-specific guidance. Be concise - only highlight critical issues.
+            Sign off: approved or issues found.
+
+            **Context from prior review:**
+            - If EXISTING_COMMENT_ID is set, read the prior review comment to understand what was previously flagged.
+              Check if new commits address those findings. Acknowledge findings that have been fixed.
+              Prefix your updated review with "## Updated Review".
+            - If no EXISTING_COMMENT_ID: This is a fresh review.
+
+            **IMPORTANT - Do NOT:**
+            - Run tests (npm test, pnpm test, etc.)
+            - Execute the code or start servers
+            - Modify any files
+
+            **Project context:**
+            - This is a TypeScript pnpm workspace monorepo (packages/shared, packages/server, packages/client)
+            - Server uses Express 5 + node:sqlite (Node 24+)
+            - Client uses Phaser 3 + Vite 7
+            - Strict TypeScript with no `any` types
+
+            **Posting your review:**
+            - If EXISTING_COMMENT_ID is set, update the existing comment:
+              `gh api repos/${{ github.repository }}/issues/comments/${{ steps.find-comment.outputs.comment_id }} -X PATCH -f body="YOUR_REVIEW"`
+            - Otherwise, create a new comment:
+              `gh pr comment ${{ github.event.issue.number }} --body "YOUR_REVIEW"`
+            - Use third-level headings (###) for each reviewed issue
+            - Do not use referencing issues and pull requests (#1, #2, etc.) with issue numbers directly
+
+            **After posting your review comment, submit a formal GitHub review:**
+            - If no critical issues found: `gh pr review ${{ github.event.issue.number }} --approve --body "Claude Code Review: No critical issues found."`
+            - If critical issues found: `gh pr review ${{ github.event.issue.number }} --request-changes --body "Claude Code Review: Critical issues found. See review comment for details."`
+          claude_args: '--allowed-tools "Bash(gh:*),Bash(cat:*),Bash(head:*),Bash(tail:*),Bash(grep:*),Bash(find:*),Bash(ls:*),Bash(stat:*),Bash(wc:*),Bash(diff:*),Read,Glob,Grep"'

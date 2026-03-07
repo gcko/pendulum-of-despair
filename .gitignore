@@ -5,6 +5,7 @@ node_modules/
 *.db-shm
 *.db-wal
 dist/
+.husky/_/
 .DS_Store
 coverage/
 *.tsbuildinfo

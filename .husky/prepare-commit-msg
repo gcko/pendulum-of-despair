@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Delegate to bd for agent identity trailers and issue tracking
+if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
+    BD_GIT_HOOK=1 bd hooks run prepare-commit-msg "$@" || true
+fi

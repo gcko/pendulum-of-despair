@@ -1,0 +1,203 @@
+name: Client Unit Test
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/client/src/**'
+      - 'packages/shared/src/**'
+      - 'packages/client/package.json'
+      - 'packages/client/tsconfig.json'
+      - 'packages/client/vitest.config.*'
+      - 'packages/client/vite.config.*'
+      - 'pnpm-lock.yaml'
+  pull_request:
+    branches:
+      - main
+    # No paths filter — always trigger to satisfy required status checks.
+    # The check-client-changes job detects relevant changes and skips
+    # client-unittest when none are found (skipped = passes required check).
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-client-changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      has-changes: ${{ steps.filter.outputs.client || 'true' }}
+    steps:
+      # On push, paths filter in the trigger already ensures relevance — always run.
+      # On PR, use dorny/paths-filter for fine-grained change detection.
+      - name: Always run on push
+        if: github.event_name == 'push'
+        run: echo "Push event — paths filter in trigger handles relevance"
+
+      - uses: dorny/paths-filter@v3
+        if: github.event_name == 'pull_request'
+        id: filter
+        with:
+          filters: |
+            client:
+              - 'packages/client/src/**'
+              - 'packages/shared/src/**'
+              - 'packages/client/package.json'
+              - 'packages/client/tsconfig.json'
+              - 'packages/client/vitest.config.*'
+              - 'packages/client/vite.config.*'
+              - 'pnpm-lock.yaml'
+
+  quality-checks:
+    needs: check-client-changes
+    if: >
+      !cancelled() &&
+      needs.check-client-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v5
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared package
+        run: pnpm run build:shared
+
+      - name: Type Check
+        run: pnpm --filter @pendulum/client run typecheck
+
+  client-unittest:
+    needs: [check-client-changes]
+    if: >
+      !cancelled() &&
+      needs.check-client-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v5
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared package
+        run: pnpm run build:shared
+
+      - name: Get changed source files
+        if: github.event_name == 'pull_request'
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'packages/client/src/**' 'packages/shared/src/**' | grep -E '\.(ts|tsx|js|jsx)$' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "has_source_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_source_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Unit Tests
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ steps.changed.outputs.has_source_changes }}" = "true" ]; then
+            echo "Running vitest related for changed files..."
+            changed_files=()
+            while IFS= read -r file; do
+              [ -n "$file" ] && changed_files+=("$file")
+            done <<< "${{ steps.changed.outputs.files }}"
+            pnpm exec vitest related --run --coverage "${changed_files[@]}"
+          else
+            echo "Running full client test suite..."
+            pnpm --filter @pendulum/client test -- --coverage
+          fi
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: client-coverage-${{ github.run_id }}
+          path: packages/client/coverage/coverage-final.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload main branch coverage
+        uses: actions/upload-artifact@v7
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: client-coverage-main
+          path: packages/client/coverage/coverage-final.json
+          retention-days: 30
+          overwrite: true
+          if-no-files-found: ignore
+
+  client-unittest-merge:
+    needs: [client-unittest, quality-checks, check-client-changes]
+    if: >
+      always() &&
+      needs.check-client-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify upstream job results
+        run: |
+          echo "client-unittest result: ${{ needs.client-unittest.result }}"
+          echo "quality-checks result: ${{ needs.quality-checks.result }}"
+
+          if [ "${{ needs.client-unittest.result }}" != "success" ]; then
+            echo "::error::client-unittest did not succeed"
+            exit 1
+          fi
+
+          if [ "${{ needs.quality-checks.result }}" != "success" ]; then
+            echo "::error::quality-checks did not succeed"
+            exit 1
+          fi

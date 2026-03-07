@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Delegate to bd for issue tracking after pull/merge
+if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
+    BD_GIT_HOOK=1 bd hooks run post-merge "$@" || true
+fi
