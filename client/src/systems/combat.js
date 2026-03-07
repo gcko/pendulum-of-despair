@@ -47,14 +47,17 @@ export function buildCombatant(charDef, savedStats = {}, isParty = true) {
   const level = savedStats.level || 1;
   const gr = charDef.growthRates || {};
 
-  const maxHp  = (charDef.baseStats.hp  + (gr.hp  || 0) * (level - 1));
-  const maxMp  = (charDef.baseStats.mp  + (gr.mp  || 0) * (level - 1));
-  const str    = charDef.baseStats.str  + (gr.str  || 0) * (level - 1);
-  const def    = charDef.baseStats.def  + (gr.def  || 0) * (level - 1);
-  const mag    = charDef.baseStats.mag  + (gr.mag  || 0) * (level - 1);
-  const mdef   = charDef.baseStats.mdef + (gr.mdef || 0) * (level - 1);
-  const spd    = charDef.baseStats.spd  + (gr.spd  || 0) * (level - 1);
-  const lck    = charDef.baseStats.lck  + (gr.lck  || 0) * (level - 1);
+  // Support both nested baseStats (characters) and flat stat fields (enemies)
+  const base = charDef.baseStats || charDef;
+
+  const maxHp  = (base.hp  + (gr.hp  || 0) * (level - 1));
+  const maxMp  = (base.mp  + (gr.mp  || 0) * (level - 1));
+  const str    = base.str  + (gr.str  || 0) * (level - 1);
+  const def    = base.def  + (gr.def  || 0) * (level - 1);
+  const mag    = base.mag  + (gr.mag  || 0) * (level - 1);
+  const mdef   = base.mdef + (gr.mdef || 0) * (level - 1);
+  const spd    = base.spd  + (gr.spd  || 0) * (level - 1);
+  const lck    = (base.lck || 0)  + (gr.lck  || 0) * (level - 1);
 
   return {
     id:          charDef.id,
@@ -117,6 +120,11 @@ export function tickAtb(combatants, deltaMs) {
 export function resolveAction(actor, ability, targets, abilityDb = {}) {
   // After acting, reset ATB gauge
   actor.atbGauge = 0;
+
+  // Deduct MP cost
+  if (ability.mpCost && ability.mpCost > 0) {
+    actor.mp = Math.max(0, actor.mp - ability.mpCost);
+  }
 
   // Clear defend status after acting
   if (actor.statuses.defend && ability.id !== 'defend') {

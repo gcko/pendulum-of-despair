@@ -158,9 +158,16 @@ export default class DialogueScene extends Phaser.Scene {
       return;
     }
 
-    // All pages shown — show choices or close
+    // All pages shown — show choices, chain to next dialogue, or close
     if (this._dialogue.choices && this._dialogue.choices.length > 0) {
       this._showChoices();
+    } else if (this._dialogue.next && this._allDialogues) {
+      const nextDial = this._allDialogues.find((d) => d.id === this._dialogue.next);
+      if (nextDial) {
+        this.scene.restart({ dialogue: nextDial, onClose: this._onClose, allDialogues: this._allDialogues });
+      } else {
+        this._close();
+      }
     } else {
       this._close();
     }

@@ -8,7 +8,7 @@
  *   3. On success → WorldMapScene with fresh or loaded game state
  */
 
-import { login, register, listSaves, isLoggedIn } from '../systems/saveLoad.js';
+import { login, register, listSaves } from '../systems/saveLoad.js';
 
 /** Default starting party (character IDs). */
 const STARTING_PARTY = ['terra', 'locke'];
@@ -293,7 +293,6 @@ export default class TitleScene extends Phaser.Scene {
   _showSaveSelectUI(saves) {
     this._removeAuthDiv();
 
-    const { loadSave } = window.__gameModules || {};
     const div = document.createElement('div');
     div.id = 'auth-overlay';
     div.style.cssText = `
