@@ -2,7 +2,7 @@
 
 This document defines every learnable spell in the game: elements, categories, progression, balance, and per-character availability. All spell names are original to this world, drawn from ley line terminology (Valdris tradition), Forgewright vocabulary (Carradan tradition), and spirit-speaker language (Thornmere tradition).
 
-> **Cross-training:** In addition to the base spell lists defined here, characters can learn 2-3 spells from another tradition through Act III story events (see abilities.md, Cross-Training section). Cross-trained spells supplement these base lists and are cast at increased MP cost (+50%).
+> **Cross-training:** In addition to the base spell lists defined here, characters can learn 1-3 spells from another tradition through Act III story events (see abilities.md, Cross-Training section). Cross-trained spells supplement these base lists and are cast at increased MP cost (+50%).
 
 ---
 

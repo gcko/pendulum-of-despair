@@ -276,10 +276,10 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 
 | Spell | MP | Target | Effect | Learned By |
 |-------|-----|--------|--------|------------|
-| **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Edren (Lv 10) |
-| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8), Lira (schematic), Torren (Act III cross-train) |
+| **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Edren (Lv 10), Cael (Lv 6) |
+| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8), Cael (Lv 6), Lira (schematic), Torren (Act III cross-train) |
 | **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train), Torren (Act III cross-train) |
-| **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15) |
+| **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 14) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
 | **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
 | **Ley Storm** | 25 | All enemies | Heavy Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
