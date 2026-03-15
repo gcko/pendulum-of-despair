@@ -325,6 +325,50 @@ The citadel is accessed during the Interlude through the Axis Tower infiltration
 
 ---
 
+### Gael's Span
+
+**Faction:** Contested (Thornmere Wilds / Carradan Compact border)
+**Acts:** II, Interlude
+**Type:** Bridge-town
+
+Gael's Span is a massive stone bridge crossing the Corrund River at its upper reach, where the Broken Hills meet the southern edge of the Thornmere Wilds. The bridge predates both factions — built by a pre-Compact explorer named Gael, it is wide enough for merchant caravans and has become the primary crossing point between the Wilds and Compact territory. A small settlement has grown on the bluff above the bridge: taverns, a provisioner, and guard posts on both ends flying different flags. The forest side is patrolled by Wilds-allied rangers; the industrial side by Compact soldiers.
+
+The bridge itself is neutral ground by unspoken agreement — trade depends on it. But the visual split is literal: forest tiles on one side, industrial tiles on the other. The midpoint of the bridge is the only place in the game where a player stands in natural daylight between two competing visual worlds.
+
+**Key features:**
+- The bridge (wide, ancient, stone-arched, spanning a deep river gorge)
+- Guard posts on both ends (factional — different flags, different architecture)
+- The midpoint (neutral ground — natural light, brief clarity between two biome palettes)
+- Provisioner and tavern (limited trade, border-town pricing)
+
+**What the player does here:**
+- Act II: Crossed during the diplomatic mission when traveling between Wilds and Compact territory. NPC conversations reflect the faction tension. Optional shopping at the border provisioner.
+- Interlude: The crossing is contested. The Compact guard post is reinforced; the Wilds-side guards have thinned. The bridge itself shows signs of neglect — cracked stone, missing railings. Passage is still possible but tense.
+
+---
+
+### Kettleworks
+
+**Faction:** Carradan Compact
+**Acts:** II, Interlude
+**Type:** Research facility
+
+Kettleworks is the Compact's premier research and prototyping campus, built on a line of quarried hills southeast of the Wilds border. Where Ashmark and Caldera manufacture, Kettleworks invents. The facility consists of glass-roofed laboratories, precision workshops, and prototype testing halls — cleaner and more purposeful than the typical Compact factory city. The Forgeward Ley Line runs directly beneath the campus, providing a stable energy source that the researchers depend on for experimental Forgewright devices.
+
+The campus has a distinct visual identity: brass and glass where other Compact cities use iron and brick. The main laboratory dome — a glass-and-brass hemisphere — is visible from the surrounding hills. The worker housing is modest but better maintained than Ashmark's or Caldera's tenements, reflecting the Consortium's investment in retaining skilled engineers.
+
+**Key features:**
+- The laboratory dome (visual landmark — glass and brass, glinting in sunlight)
+- Prototype testing halls (atmospheric — experimental devices on display, some malfunctioning)
+- Glass-roofed workshops (the interiors are visible from outside — a transparency motif)
+- Rail connection to Corrund (the research pipeline to the capital)
+
+**What the player does here:**
+- Act II: Optional visit when exploring Compact territory. Lira recognizes prototypes from her training. NPC conversations reveal the Compact's research ambitions and the engineers' unease about ley line instability.
+- Interlude: The Forgeward Line's instability has caused prototype devices to malfunction. Several labs are sealed. The engineers are frightened — their stable energy source has become unpredictable. Optional side content involving Forgewright prototype recovery.
+
+---
+
 ## Thornmere Wilds Locations
 
 ### Roothollow

@@ -116,6 +116,14 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 - [`outline.md`](../../../docs/story/outline.md) -- Rough story outline (4 acts + interlude + epilogue)
 - [`world.md`](../../../docs/story/world.md) -- Factions (Valdris, Carradan Compact, Thornmere Wilds), Arcanite Forging, the Pallor, geography
 - [`characters.md`](../../../docs/story/characters.md) -- Core cast (Edren, Cael, Lira, Torren, Sable, Maren), arcs, and relationships
+- [`locations.md`](../../../docs/story/locations.md) -- 35 named locations (cities, dungeons, secret areas), overworld routes, act-by-act progression
+- [`npcs.md`](../../../docs/story/npcs.md) -- 54 named NPCs with backstories, dialogue hints, and act-by-act state changes
+- [`events.md`](../../../docs/story/events.md) -- 30 story flags, world state transitions, NPC threads, foreshadowing/payoff map, critical path
+- [`sidequests.md`](../../../docs/story/sidequests.md) -- 10 major + 15 minor side quests, optional party scenes, post-game content
+- [`biomes.md`](../../../docs/story/biomes.md) -- Biome system, visual palettes, tileset direction, environmental storytelling
+- [`geography.md`](../../../docs/story/geography.md) -- Detailed continental map, regional geography, terrain features, travel implications
+- [`dynamic-world.md`](../../../docs/story/dynamic-world.md) -- How locations transform across acts (destruction, corruption, rebuilding, spatial shifts)
+- [`continuity-audit.md`](../../../docs/story/continuity-audit.md) -- Cross-reference audit of all story documents
 
 **Key narrative facts for development:**
 - The Pendulum of Despair is a MacGuffin -- it drives the plot but has no real power
