@@ -3,44 +3,81 @@ name: story-review
 description: >
   Use when reviewing PRs that add, modify, or remove story documents, ASCII
   layouts, NPC definitions, quest lines, game logic narratives, or city/dungeon
-  designs. Invoke with a PR number or URL. Checks continuity, naming, layout
-  validity, quest completeness, and cross-document consistency.
+  designs. Invoke with a PR number/URL to post review to GitHub, or with no
+  argument to review local uncommitted/unpushed changes inline.
 ---
 
-# Story & Narrative PR Review
+# Story & Narrative Review
 
-Review PRs containing storyboard, game logic, ASCII layout, or narrative
-connection changes. Produces a continuity verdict with suggestions only when
-issues exist.
+Review story content for continuity, naming, layout validity, quest
+completeness, and cross-document consistency. Posts results to GitHub when
+given a PR, or outputs inline when reviewing local state.
 
 ## Invocation
 
 ```
-/story-review <PR number or URL>
+/story-review <PR number or URL>   # Review PR, post results to GitHub
+/story-review                      # Review local changes, output in Claude
 ```
 
-## Process
+## Mode Detection
 
 ```dot
-digraph story_review {
+digraph mode {
     rankdir=TB;
     node [shape=box, style=filled, fillcolor=lightblue];
 
-    fetch [label="1. FETCH\nGet changed files\nvia gh api", fillcolor="#e6f3ff"];
-    classify [label="2. CLASSIFY\nStory docs? Layouts?\nNPCs? Quests? Events?", fillcolor="#fff3e6"];
-    check [label="3. CHECK\nRun all applicable\nvalidation passes", fillcolor="#ccffcc"];
-    verdict [label="4. VERDICT\nGO or NO-GO\n+ suggestions if any", fillcolor="#e6ffe6"];
+    start [label="Argument\nprovided?", shape=diamond, fillcolor="#fff3e6"];
+    pr [label="PR MODE\nFetch files from GitHub\nPost review to PR", fillcolor="#ccffcc"];
+    local [label="LOCAL MODE\nDiff against main branch\nOutput inline", fillcolor="#ccccff"];
 
-    fetch -> classify;
-    classify -> check;
-    check -> verdict;
+    start -> pr [label="yes — PR # or URL"];
+    start -> local [label="no argument"];
 }
 ```
 
-### 1. Fetch Changed Files
+### PR Mode (argument provided)
+
+1. Parse the PR number from the argument (strip URL if needed)
+2. Fetch changed files via `gh api /repos/{owner}/{repo}/pulls/{pr_number}/files`
+3. Run all validation passes
+4. Post the review as a PR comment via `gh pr review` or `gh pr comment`
+
+**Posting the review:**
 
 ```bash
+# For GO verdicts — approve the PR
+gh pr review {pr_number} --approve --body-file /tmp/story-review.md
+
+# For NO-GO verdicts — request changes
+gh pr review {pr_number} --request-changes --body-file /tmp/story-review.md
+```
+
+Always write the review body to a temp file first to avoid shell quoting issues.
+
+### Local Mode (no argument)
+
+1. Detect changed files via `git diff main --name-only` (includes staged
+   and unstaged changes against the main branch)
+2. If on a feature branch with commits ahead of main, also include
+   `git diff main...HEAD --name-only`
+3. Run all validation passes
+4. Output the review directly in the conversation — do NOT post anywhere
+
+## Process
+
+### 1. Fetch Changed Files
+
+**PR Mode:**
+```bash
 gh api /repos/{owner}/{repo}/pulls/{pr_number}/files --jq '.[].filename'
+```
+
+**Local Mode:**
+```bash
+# Uncommitted changes + branch commits ahead of main
+git diff main --name-only
+git diff main...HEAD --name-only 2>/dev/null
 ```
 
 Filter to story-relevant files:
@@ -48,8 +85,8 @@ Filter to story-relevant files:
 - `packages/client/src/data/*.json` (game data)
 - `.claude/skills/pod-dev/**` (skill references)
 
-If no story-relevant files changed, report "No narrative content in this PR"
-and stop.
+If no story-relevant files changed, report "No narrative content to review"
+and stop. In PR mode, post a brief comment saying so.
 
 ### 2. Classify Changes
 
@@ -156,8 +193,8 @@ Flag: partial renames, orphaned references to removed content.
 
 Categorize every finding:
 
-| Severity | Meaning | Blocks PR? |
-|----------|---------|------------|
+| Severity | Meaning | Blocks? |
+|----------|---------|---------|
 | **BLOCKER** | Breaks continuity, creates plot holes, makes quests impossible | Yes |
 | **ISSUE** | Inconsistency that will confuse players or developers | Yes |
 | **SUGGESTION** | Improvement opportunity, not a defect | No |
@@ -194,8 +231,10 @@ If any BLOCKERs or ISSUEs exist:
 
 ## Output Format
 
+The review body (used for both PR comments and inline output):
+
 ```markdown
-# Story Review: PR #<number>
+# Story Review: PR #<number>  (or "Story Review: Local Changes")
 
 **Files reviewed:** <count>
 **Categories:** <list of applicable categories>
@@ -225,7 +264,8 @@ If any BLOCKERs or ISSUEs exist:
 - **Severity matters.** A typo in an NPC name is an ISSUE. A quest
   referencing a deleted location is a BLOCKER. Do not inflate severity.
 - **Check the diff, not the universe.** Only validate content that was
-  CHANGED or ADDED in this PR. Do not audit the entire story bible on
-  every review.
+  CHANGED or ADDED. Do not audit the entire story bible on every review.
 - **Cross-reference is mandatory.** Every proper noun in a changed file
   must be verified against the canonical source. No assumptions.
+- **Temp files for GitHub posts.** Always write review body to a temp file
+  before posting via `gh`. Never use heredocs with special characters.
