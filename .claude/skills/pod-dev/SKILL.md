@@ -116,6 +116,21 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 - [`outline.md`](../../../docs/story/outline.md) -- Rough story outline (4 acts + interlude + epilogue)
 - [`world.md`](../../../docs/story/world.md) -- Factions (Valdris, Carradan Compact, Thornmere Wilds), Arcanite Forging, the Pallor, geography
 - [`characters.md`](../../../docs/story/characters.md) -- Core cast (Edren, Cael, Lira, Torren, Sable, Maren), arcs, and relationships
+- [`locations.md`](../../../docs/story/locations.md) -- 35 named locations (cities, dungeons, secret areas), overworld routes, act-by-act progression
+- [`npcs.md`](../../../docs/story/npcs.md) -- 54 named NPCs with backstories, dialogue hints, and act-by-act state changes
+- [`events.md`](../../../docs/story/events.md) -- 30 story flags, world state transitions, NPC threads, foreshadowing/payoff map, critical path
+- [`sidequests.md`](../../../docs/story/sidequests.md) -- 10 major + 15 minor side quests, optional party scenes, post-game content
+- [`biomes.md`](../../../docs/story/biomes.md) -- Biome system, visual palettes, tileset direction, environmental storytelling
+- [`geography.md`](../../../docs/story/geography.md) -- Detailed continental map, regional geography, terrain features, travel implications
+- [`dynamic-world.md`](../../../docs/story/dynamic-world.md) -- How locations transform across acts (destruction, corruption, rebuilding, spatial shifts)
+- [`visual-style.md`](../../../docs/story/visual-style.md) -- Art direction, location visual profiles, signature scenes, color script
+- [`building-palette.md`](../../../docs/story/building-palette.md) -- Reusable interior templates (18 building types, furniture, faction variants)
+- [`city-valdris.md`](../../../docs/story/city-valdris.md) -- Valdris faction city layouts with ASCII maps, shops, NPCs
+- [`city-carradan.md`](../../../docs/story/city-carradan.md) -- Carradan Compact city layouts with ASCII maps, districts, shops
+- [`city-thornmere.md`](../../../docs/story/city-thornmere.md) -- Thornmere settlements and cross-faction locations
+- [`interiors.md`](../../../docs/story/interiors.md) -- Key interior layouts, faction palette application, act-variant rooms
+- [`dungeons-world.md`](../../../docs/story/dungeons-world.md) -- 14 world dungeons with floor maps, puzzles, encounters
+- [`dungeons-city.md`](../../../docs/story/dungeons-city.md) -- City dungeons, 20 secret passages, hidden rooms, escape routes
 
 **Key narrative facts for development:**
 - The Pendulum of Despair is a MacGuffin -- it drives the plot but has no real power
