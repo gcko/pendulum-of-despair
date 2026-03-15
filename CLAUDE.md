@@ -23,6 +23,7 @@ Always use `pnpm` as the package manager for this project. When running commands
 ## Git & PRs
 
 - The default branch is `main`, not `master`. Always create PRs targeting `main` unless explicitly told otherwise.
+- **Conventional Commits are mandatory.** All commit messages must follow the [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification. The `commit-msg` hook enforces this via commitlint. Format: `<type>(<scope>): <description>`. See AGENTS.md for allowed types and scopes.
 - When creating PRs or commits with shell commands, avoid heredoc syntax with special characters (apostrophes, quotes). Instead, write the body to a temp file and use `--body-file` with `gh pr create` or similar approaches.
 - When merging or rebasing branches, always check for and resolve merge conflicts before proceeding. Run `git status` after merge/rebase to confirm clean state.
 - **PR Template is mandatory.** Every PR must use `.github/pull_request_template.md`. With `gh pr create`, the template auto-populates — fill in all sections.
