@@ -29,9 +29,11 @@ Phaser 3 (`phaser@^3.90`) provides:
 - Camera system (scrolling viewport for overworld/dungeons)
 - Built-in asset loader (images, audio, tilemaps)
 
-### Bundler: Vite 7
+### Bundler: Vite 8 (Rolldown)
 
-Development server and production builds via `vite@^7.0`. Port 8080 for dev.
+Development server and production builds via `vite@^8.0`. Port 8080 for dev.
+Vite 8 uses Rolldown (Rust-based bundler) for 10-30x faster builds. If CJS
+interop issues arise, add `legacy.inconsistentCjsInterop: true` to vite config.
 
 ### UI Overlays: HTML + CSS
 
@@ -151,10 +153,10 @@ package.json `exports` field. No runtime dependencies.
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| pnpm | 10.30+ | Package manager (corepack-managed) |
+| pnpm | 10.32+ | Package manager (corepack-managed) |
 | TypeScript | ^5.9 | Type checking (strict, no `any`) |
-| Vitest | ^4.0 | Test runner |
-| Vite | ^7.0 | Client bundler + dev server |
+| Vitest | ^4.1 | Test runner |
+| Vite | ^8.0 | Client bundler + dev server (Rolldown) |
 | tsx | ^4.21 | Server dev runner with watch |
 | Husky | ^9.1 | Git hooks (pre-commit: typecheck + vitest related) |
 | supertest | ^7.2 | HTTP integration testing |

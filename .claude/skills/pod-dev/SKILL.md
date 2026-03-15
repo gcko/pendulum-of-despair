@@ -87,7 +87,7 @@ Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
 - **Monorepo:** pnpm workspace with 3 packages (`shared`, `server`, `client`)
 - **Language:** TypeScript (strict) throughout -- no `any` types
 - **Renderer:** Phaser 3 (HTML5 Canvas) via `@pendulum/client`
-- **Bundler:** Vite 7
+- **Bundler:** Vite 8 (Rolldown — Rust-based bundler)
 - **Backend:** Express 5 on Node.js 24+ (`@pendulum/server`)
 - **Database:** `node:sqlite` (built-in, no external dependency)
 - **Auth:** Username + passphrase (bcryptjs), JWT sessions

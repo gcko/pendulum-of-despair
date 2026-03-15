@@ -86,6 +86,8 @@ pnpm test              # Run all tests
 
 **Quality checks (pre-commit):** TypeScript type-check, `vitest related` (affected tests only).
 
+**Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
+
 **bd hooks:** `pre-commit` (flush issues), `prepare-commit-msg` (agent trailers), `post-merge`, `pre-push`, `post-checkout` — all delegate to `bd hooks run <name>` with failures non-fatal.
 
 If hooks fail: read error, fix issue, `git add <files>`, commit again.
@@ -94,13 +96,15 @@ If hooks fail: read error, fix issue, `git add <files>`, commit again.
 
 ## Commit Conventions
 
+All commits must follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). This is enforced by a `commit-msg` hook via commitlint.
+
 ```bash
 git commit -m "feat(client): add combat scene with ATB system"
 ```
 
 **Format:** `<type>(<scope>): <description>`
 
-**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `perf`, `revert`, `ci`
 
 **Scopes:** `client`, `server`, `shared`, `ci`, `deps`
 
