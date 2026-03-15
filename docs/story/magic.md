@@ -616,7 +616,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 2
 - **MP Cost:** 14
 - **Target:** Single ally
-- **Effect:** Removes all negative status effects from one ally (including Petrify and Slow) EXCEPT Stop and Despair, which must expire naturally.
+- **Effect:** Removes all negative status effects from one ally (including Petrify and Slow) EXCEPT Stop (must expire naturally) and Despair (can only be removed by Hollow Mend or Hope Shard item).
 - **Description:** The full cleansing power of ley-light. Every shadow, every chain, every whisper -- burned away.
 - **Who learns:** Maren (Lv 16), Torren (Lv 20)
 - **Visual:** Gold-white light spirals around the target rapidly; all status effect icons shatter and dissolve.
@@ -1278,10 +1278,20 @@ Lira's spells are Flame-focused offensive and technical support. Her "Forge" uni
 |---|-------|---------|----------|------|--------|
 | 56 | Ironhide | Earth | Buff | 1 | Ironhaven Foundry schematic |
 | 57 | Wardglass | Ley | Buff | 1 | Ashmark Archives schematic |
-| 72 | Spiritsight | Spirit | Utility | 1 | Lira's personal upgrade (Lv 10) |
-| 47 | Seal Tongue | Ley | Status | 1 | Act III scene with Maren (cross-train, +50% MP cost) |
 
-**Total: 9 spells** (8 base + 1 cross-trained; Wardglass already learned via Forge-Schematic above)
+**Personal Upgrade:**
+
+| # | Spell | Element | Category | Tier | Source |
+|---|-------|---------|----------|------|--------|
+| 72 | Spiritsight | Spirit | Utility | 1 | Lira's personal upgrade (Lv 10) |
+
+**Cross-Trained Spell** (Act III, +50% MP cost):
+
+| # | Spell | Element | Category | Tier | Source |
+|---|-------|---------|----------|------|--------|
+| 47 | Seal Tongue | Ley | Status | 1 | Act III scene with Maren |
+
+**Total: 9 spells** (5 level-up + 2 schematic + 1 personal upgrade + 1 cross-trained)
 
 ### Torren (Spirit-Speaker -- Spirit Tradition)
 

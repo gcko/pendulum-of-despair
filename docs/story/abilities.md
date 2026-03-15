@@ -347,7 +347,7 @@ Characters can learn a limited number of spells outside their native tradition. 
 | Character | Can Learn From | Available Spells | Story Trigger |
 |-----------|---------------|------------------|---------------|
 | Edren | Spirit Communion (Torren) | Kindle Breath, Breath of the Wilds | Act III campfire scene — Torren teaches Edren to ask the spirits for sustained healing |
-| Lira | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
+| Lira | Ley Line (Maren) | Seal Tongue | Act III — Maren shows Lira how to weave ley-line sealing into Arcanite designs |
 | Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
@@ -417,9 +417,9 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
 | 12 | Arc Trap | — | — |
-| 13 | — | Wardglass (cross-train) | Act III scene with Maren |
+| 13 | Wardglass (schematic) | — | Ashmark Archives schematic |
 | 13 | — | Seal Tongue (cross-train) | Act III scene with Maren |
-| 14 | — | Thornveil device variant | Act III scene with Torren |
+| 14 | Thornveil device variant | — | Act III scene with Torren |
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | 22 | **[S] Overcharge** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | — | **[S] Arcanite Colossus** | — | Act III: commits to fighting Cael |
