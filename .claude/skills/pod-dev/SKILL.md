@@ -123,7 +123,14 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 - [`biomes.md`](../../../docs/story/biomes.md) -- Biome system, visual palettes, tileset direction, environmental storytelling
 - [`geography.md`](../../../docs/story/geography.md) -- Detailed continental map, regional geography, terrain features, travel implications
 - [`dynamic-world.md`](../../../docs/story/dynamic-world.md) -- How locations transform across acts (destruction, corruption, rebuilding, spatial shifts)
-- [`continuity-audit.md`](../../../docs/story/continuity-audit.md) -- Cross-reference audit of all story documents
+- [`visual-style.md`](../../../docs/story/visual-style.md) -- Art direction, location visual profiles, signature scenes, color script
+- [`building-palette.md`](../../../docs/story/building-palette.md) -- Reusable interior templates (18 building types, furniture, faction variants)
+- [`city-valdris.md`](../../../docs/story/city-valdris.md) -- Valdris faction city layouts with ASCII maps, shops, NPCs
+- [`city-carradan.md`](../../../docs/story/city-carradan.md) -- Carradan Compact city layouts with ASCII maps, districts, shops
+- [`city-thornmere.md`](../../../docs/story/city-thornmere.md) -- Thornmere settlements and cross-faction locations
+- [`interiors.md`](../../../docs/story/interiors.md) -- Key interior layouts, faction palette application, act-variant rooms
+- [`dungeons-world.md`](../../../docs/story/dungeons-world.md) -- 14 world dungeons with floor maps, puzzles, encounters
+- [`dungeons-city.md`](../../../docs/story/dungeons-city.md) -- City dungeons, 20 secret passages, hidden rooms, escape routes
 
 **Key narrative facts for development:**
 - The Pendulum of Despair is a MacGuffin -- it drives the plot but has no real power

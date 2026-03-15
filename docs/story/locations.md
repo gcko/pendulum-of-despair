@@ -23,6 +23,9 @@ The continent runs northwest to southeast along a gentle arc. Valdris occupies t
               /           |           \
          CARRADAN COMPACT (southeast)
      Corrund --- Ashmark --- Bellhaven --- Millhaven
+        |  \                    \
+     Ironmark   Caldera        Ashport
+     Citadel
 ```
 
 Travel between Valdris and the Compact always passes through the Wilds. There is no safe shortcut.
