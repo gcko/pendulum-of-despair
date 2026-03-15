@@ -276,14 +276,14 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 
 | Spell | MP | Target | Effect | Learned By |
 |-------|-----|--------|--------|------------|
-| **Ley Bolt** | 4 | Single | Light non-elemental damage | Maren (Lv 1), Edren (Lv 12) |
-| **Ward** | 6 | Single | +25% Magic Defense, 3 turns | Maren (Lv 3) |
-| **Ley Lance** | 10 | Single | Medium non-elemental damage, ignores 25% MDef | Maren (Lv 10) |
-| **Dispel** | 8 | Single | Removes one buff from target | Maren (Lv 12) |
-| **Ley Storm** | 18 | All enemies | Heavy non-elemental damage | Maren (Lv 20) |
-| **Seal** | 14 | Single | Inflicts Silence for 3 turns | Maren (Lv 16) |
-| **Barrier** | 12 | Party | +15% Defense and Magic Defense, 3 turns | Maren (Lv 22) |
-| **Ley Flare** | 30 | Single | Massive non-elemental damage | Maren (Lv 28) |
+| **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Edren (Lv 10) |
+| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8) |
+| **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12) |
+| **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15) |
+| **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
+| **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
+| **Ley Storm** | 25 | All enemies | Heavy Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
+| **Convergence Flare** | 38 | Single | Massive Ley-element damage (spell power 65) | Maren (Lv 34) |
 
 #### Arcanite Channeling (Carradan Tradition)
 
@@ -315,20 +315,22 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 
 ### Elemental System
 
-The magic system uses six elements arranged in opposing pairs:
+The magic system uses eight elements. The first four form an elemental wheel of opposing pairs; the remaining three exist outside the wheel but have their own interactions (see magic.md for the full resistance chart):
 
-| Element | Opposing Element | Associated Tradition |
-|---------|-----------------|---------------------|
-| **Fire** | **Ice** | Spirit Communion (Ember Wing) / Arcanite (Shock Coil heat) |
-| **Ice** | **Fire** | Spirit Communion (future spirit) / Ley Line |
-| **Lightning** | **Earth** | Arcanite Channeling (primary element) |
-| **Earth** | **Lightning** | Spirit Communion (Stoneheart) |
-| **Light** | **Dark** | Ley Line Magic |
-| **Dark** | **Light** | The Pallor (enemy-only in most cases) |
+| Element | Strong vs. (150%) | Weak vs. (75%) | Associated Tradition |
+|---------|-------------------|-----------------|---------------------|
+| **Flame** | Frost | Storm | Spirit Communion (Ember Wing) / Arcanite (Shock Coil heat) |
+| **Frost** | Storm | Earth | Ley Line / Spirit Communion (future spirit) |
+| **Storm** | Earth | Flame | Arcanite Channeling (primary element) |
+| **Earth** | Flame | Frost | Spirit Communion (Stoneheart) |
+| **Ley** | Void | Spirit | Ley Line Magic |
+| **Spirit** | Ley | Void | Spirit Communion (Thornmere tradition) |
+| **Void** | Spirit | Ley | The Pallor (enemy-only in most cases) |
+| **Non-elemental** | -- | -- | No affinity, pure kinetic or arcane impact |
 
-**Non-elemental** damage (Ley Bolt, Ley Lance, Greyveil spirit) bypasses elemental resistance but doesn't exploit weaknesses.
+**Non-elemental** damage (Linebolt, Ley Cascade, Greyveil spirit) bypasses elemental resistance but doesn't exploit weaknesses.
 
-**Pallor-type** damage is a special category used by corrupted enemies and Cael in his boss fight. It cannot be elementally resisted through normal means — only Greyveil (Torren), Unweave (Maren), and certain story abilities interact with it.
+**Void-type** damage is the Pallor's element. It is strong against Spirit and weak against Ley. Void vs. Void is fully immune. Only Greyveil (Torren), Unweave (Maren), and certain story abilities interact with it directly.
 
 ### Cross-Training
 
@@ -344,10 +346,10 @@ Characters can learn a limited number of spells outside their native tradition. 
 
 | Character | Can Learn From | Available Spells | Story Trigger |
 |-----------|---------------|------------------|---------------|
-| Edren | Ley Line (Maren) | Ley Bolt, Ward | Act III campfire scene — Maren finally teaches her old student |
-| Lira | Ley Line (Maren) | Ley Bolt, Dispel | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
+| Edren | Ley Line (Maren) | Linebolt, Wardglass | Act III campfire scene — Maren finally teaches her old student |
+| Lira | Ley Line (Maren) | Linebolt, Dispersion | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
 | Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
-| Torren | Ley Line (Maren) | Ward, Seal | Act III — Maren shares protective incantations compatible with spirit magic |
+| Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
 | Maren | Spirit Communion (Torren) | Dewfall (weaker version) | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
 
@@ -388,8 +390,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Ironwall | — | — |
 | 6 | Riposte | — | — |
 | 10 | Rampart | — | — |
-| 12 | — | Ley Bolt (cross-train) | Act III campfire scene |
-| 12 | — | Ward (cross-train) | Act III campfire scene |
+| 12 | — | Linebolt (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Wardglass (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Ley Ward | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
@@ -413,8 +415,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
 | 12 | Arc Trap | — | — |
-| 13 | — | Ley Bolt (cross-train) | Act III scene with Maren |
-| 13 | — | Dispel (cross-train) | Act III scene with Maren |
+| 13 | — | Linebolt (cross-train) | Act III scene with Maren |
+| 13 | — | Dispersion (cross-train) | Act III scene with Maren |
 | 14 | — | Thornveil device variant | Act III scene with Torren |
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | 22 | **[S] Overcharge** | — | Interlude: reverse-engineers Pallor tech in the Compact |
@@ -428,8 +430,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 5 | Dewfall (Rain Spirit) | — | — |
 | 11 | Ember Wing (Fire Spirit) | — | — |
 | 16 | **[S] Stoneheart (Earth Spirit)** | — | Interlude: party finds Torren (ley line nexus stabilization) |
-| 18 | — | Ward (cross-train) | Act III scene with Maren |
-| 18 | — | Seal (cross-train) | Act III scene with Maren |
+| 18 | — | Wardglass (cross-train) | Act III scene with Maren |
+| 18 | — | Seal Tongue (cross-train) | Act III scene with Maren |
 | 20 | **[S] Greyveil (Twilight Spirit)** | — | Interlude: party finds Torren |
 | — | **[S] Convergence Chorus** | — | Interlude: ley line nexus stabilization |
 
@@ -450,19 +452,19 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 
 | Level | Arcanum Ability | Ley Line Spell | Cross-Train | Story Trigger |
 |-------|----------------|---------------|-------------|---------------|
-| 1 | Siphon | Ley Bolt | — | — |
-| 3 | — | Ward | — | — |
+| 1 | Siphon | Linebolt | — | — |
+| 4 | — | Wardglass | — | — |
+| 6 | — | Seal Tongue | — | — |
 | 8 | Resonance | — | — | — |
-| 10 | — | Ley Lance | — | — |
-| 12 | — | Dispel | — | — |
+| 15 | — | Ley Cascade | — | — |
 | 13 | **[S] Unweave** | — | — | Interlude: ancient ruin discovery |
-| 16 | — | Seal | — | — |
+| 18 | — | Dispersion | — | — |
+| 18 | — | Leyward | — | — |
 | 18 | **[S] Ley Surge** | — | — | Interlude: ancient ruin discovery |
-| 20 | — | Ley Storm | — | — |
-| 22 | — | Barrier | — | — |
+| 22 | — | Ley Storm | — | — |
 | 23 | **[S] Mirrorsong** | — | — | Interlude: ancient ruin discovery |
 | 24 | — | — | Dewfall (cross-train) | Act III scene with Torren |
-| 28 | — | Ley Flare | — | — |
+| 34 | — | Convergence Flare | — | — |
 | — | **[S] Annulment** | — | — | Interlude: learns truth of Pallor's cycle |
 
 ---

@@ -57,7 +57,7 @@ Eight elements govern all magic in this world. Each is tied to a region, a tradi
 
 ## Elemental Resistance Chart
 
-Each element has one element it is strong against (deals 150% damage) and one it is weak against (deals 75% damage). Void exists outside this cycle.
+Each element has one element it is strong against (deals 150% damage) and one it is weak against (deals 75% damage). The first four elements (Flame, Frost, Storm, Earth) form an elemental wheel. Ley, Spirit, and Void exist outside this wheel but have their own triangle of interactions: Ley beats Void, Void beats Spirit, Spirit beats Ley.
 
 | Attacking | Strong vs. (150%) | Weak vs. (75%) |
 |-----------|-------------------|-----------------|
@@ -611,7 +611,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 2
 - **MP Cost:** 14
 - **Target:** Single ally
-- **Effect:** Removes ALL negative status effects from one ally (including Petrify, Slow, Stop).
+- **Effect:** Removes all negative status effects from one ally (including Petrify and Slow) EXCEPT Stop and Despair, which must expire naturally.
 - **Description:** The full cleansing power of ley-light. Every shadow, every chain, every whisper -- burned away.
 - **Who learns:** Maren (Lv 16), Torren (Lv 20)
 - **Visual:** Gold-white light spirals around the target rapidly; all status effect icons shatter and dissolve.
@@ -1374,7 +1374,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Stop | Negative | ATB frozen | 3 turns (cannot be cured, must expire) | Wears off only |
 | KO | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
-| Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion (enemy), Dispel effect |
+| Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion (enemy), Dispersion spell |
 | Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion (enemy) |
 | Regen | Positive | Restore 5% max HP per turn | 4 turns | Dispersion (enemy) |
 | Ironhide (DEF Up) | Positive | Physical DEF +40% (single) or +25% (party) | 4-5 turns | Dispersion (enemy) |
@@ -1428,6 +1428,7 @@ For quick reference, here are all status effects that spells in this system can 
 - Buff/debuff percentages modify the relevant stat directly (stacking rules: same buff does not stack, different buffs do)
 - Status hit rates are modified by: `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))`
 - Reflect bounces the spell back using the original caster's MAG stat against the original caster's MDEF
+- Unique command effects can modify spell output with a percentage multiplier. For example, Maren's Resonance (see abilities.md) amplifies the next ally spell by +30% damage or healing, applied as a multiplier after the base calculation and elemental adjustments
 
 ### The Despair Status
 
