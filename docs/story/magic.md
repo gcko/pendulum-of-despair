@@ -1407,7 +1407,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Last Breath (Reraise) | Positive | Auto-revive at 30% HP on KO | Until triggered or battle ends | Dispersion / Mass Dispersion |
 | Glintmark | Positive (on enemy) | Takes 10% more damage from all sources | 3 turns | Wears off |
 
-*\*For positive statuses, "Cured By" indicates spells that can **remove** the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
+*For positive statuses, "Cured By" indicates spells that can remove the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
 
 ---
 

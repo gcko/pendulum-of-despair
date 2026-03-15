@@ -348,12 +348,17 @@ Characters can learn a limited number of spells outside their native tradition. 
 |-----------|---------------|------------------|---------------|
 | Edren | Spirit Communion (Torren) | Kindle Breath, Breath of the Wilds | Act III campfire scene — Torren teaches Edren to ask the spirits for sustained healing |
 | Lira | Ley Line (Maren) | Seal Tongue | Act III — Maren shows Lira how to weave ley-line sealing into Arcanite designs |
-| Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
 | Maren | Spirit Communion (Torren) | Rekindling | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
 
 *Note: Cross-trained spells supplement each character's base spell list defined in magic.md. They are additional spells learned through Act III story events, cast at +50% MP cost (see Cross-Training Rules above).*
+
+**Cross-Trained Device Variants** (unique command unlocks, not spells — tracked in abilities.md only, not magic.md):
+
+| Character | Source Tradition | Device | Story Trigger |
+|-----------|-----------------|--------|---------------|
+| Lira | Spirit Communion (Torren) | Thornveil device variant | Act III — Torren helps Lira build a spirit-infused protective device |
 
 ### The Pallor's Effect on Magic
 
