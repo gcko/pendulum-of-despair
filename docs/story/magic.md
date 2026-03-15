@@ -2,6 +2,8 @@
 
 This document defines every learnable spell in the game: elements, categories, progression, balance, and per-character availability. All spell names are original to this world, drawn from ley line terminology (Valdris tradition), Forgewright vocabulary (Carradan tradition), and spirit-speaker language (Thornmere tradition).
 
+> **Cross-training:** In addition to the base spell lists defined here, characters can learn 2-3 spells from another tradition through Act III story events (see abilities.md, Cross-Training section). Cross-trained spells supplement these base lists and are cast at increased MP cost (+50%).
+
 ---
 
 ## Table of Contents
@@ -98,7 +100,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
 - **AoE versions** cost 1.5-2x the single-target version of the same tier
 - **Status spells** have a base hit rate of 60-80% (modified by caster MAG vs. target MDEF)
-- **Buff/debuff durations** last 4-6 turns at Tier 1, 6-8 turns at Tier 2, until end of battle at Tier 3
+- **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
 - **Damage formula reference:** `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)`
 - **Healing formula:** `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)` (no defense reduction)
 
@@ -620,7 +622,8 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Ley
 - **Category:** Healing
 - **Tier:** 3
-- **MP Cost:** 1 (costs HP instead: 25% of caster's current HP)
+- **MP Cost:** 0
+- **HP Cost:** 15% of caster's max HP
 - **Target:** Single ally
 - **Effect:** Restores 20% of target's max MP.
 - **Description:** The caster trades their own life-force for magical energy. A desperate bargain that Valdris court mages once swore never to teach.

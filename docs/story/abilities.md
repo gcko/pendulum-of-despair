@@ -94,11 +94,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 | Ability | Learned | AC Cost | Effect |
 |---------|---------|---------|--------|
-| **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals lightning damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat. |
+| **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat. |
 | **Bulkhead** | Level 7 | 3 AC | Device. Persists 3 turns. Reduces physical damage to one chosen ally by 40%. Can stack with Edren's Ironwall. |
-| **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing fire damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
+| **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
 | **Mending Engine** | Level 17 | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
-| **Overcharge** | Level 22 | 3 AC | Instant. Lira supercharges one ally's next attack, adding lightning element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
+| **Overcharge** | Level 22 | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
 | **Arcanite Colossus** | Story: After Interlude (Lira's renewed purpose) | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
 
 **Synergies:**
@@ -118,7 +118,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 > *The spirits aren't servants. They're neighbors. Torren asks, and sometimes they answer. The Wilds have a long memory, and Torren speaks its oldest language.*
 
-**Mechanic:** Torren calls upon nature spirits for varied effects. Each spirit has a **Favor** rating (0-3) that increases when Torren uses that spirit in battles where it's particularly effective (e.g., using a water spirit against fire enemies). Higher Favor unlocks stronger versions of the spirit's ability. Favor is persistent across battles and acts as a secondary progression system.
+**Mechanic:** Torren calls upon nature spirits for varied effects. Each spirit has a **Favor** rating (0-3) that increases when Torren uses that spirit in battles where it's particularly effective (e.g., using a Frost spirit against Flame enemies). Higher Favor unlocks stronger versions of the spirit's ability. Favor is persistent across battles and acts as a secondary progression system.
 
 **Resource: Spirit Favor**
 - Each spirit starts at Favor 0.
@@ -132,7 +132,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|---------|--------|-----------------|
 | **Thornveil** (Briar Spirit) | Level 1 | 5 MP | Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. | **Deeproot Veil:** Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%. |
 | **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally. Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies and removes Poison and Sleep. |
-| **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Fire damage to all enemies. Chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy fire damage to all enemies. Burn is guaranteed. |
+| **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Flame damage to all enemies. Chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Level 16 | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
 | **Greyveil** (Twilight Spirit) | Level 20 | 14 MP | Deals non-elemental spirit damage that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a chance to dispel Pallor buffs. |
 | **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs a weakened version of its ability simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
@@ -194,14 +194,14 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 **Resource: Weave Gauge (WG)**
 - Max 100 WG. Starts each battle at 0.
-- Gains: +10 WG when any ally casts a spell. +15 WG when any enemy casts a spell. +5 WG when Maren casts a spell herself.
+- Gains: +10 WG when any ally other than Maren casts a spell. +5 WG when Maren herself casts a spell. +15 WG when any enemy casts a spell.
 - The gauge encourages Maren to be in magic-heavy fights and rewards her for letting enemies cast (rather than just silencing them).
 
 **Sub-Abilities:**
 
 | Ability | Learned | Cost | Effect |
 |---------|---------|------|--------|
-| **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
+| **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
 | **Resonance** | Level 8 | 8 MP | Amplifies the next spell cast by any ally by 30% (damage or healing). Must be cast before the ally acts. Generates +10 WG. |
 | **Unweave** | Level 13 | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
 | **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes half the Weave Gauge. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
@@ -234,7 +234,7 @@ Combo abilities require two specific party members to both have full ATB gauges.
 | 1 | **Shield Oath** | Edren + Cael | 14 MP (7/7) | Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3. | *The two knights lock blades in salute, then turn outward — one the shield, the other the sword. They've drilled this since they were squires.* |
 | 2 | **Shattered Vanguard** | Edren + Sable | 10 MP (6/4) | Sable uses Misdirect on all enemies (forcing them toward Edren), and Edren immediately uses Shatter Guard at +50% damage. Requires Edren to be in a stance with stored damage. | *Sable darts between the enemy ranks, taunting and weaving, funneling them toward the immovable wall. Edren obliges.* |
 | 3 | **Forged Rampart** | Edren + Lira | 12 MP (6/6) | Lira deploys a Bulkhead on Edren that lasts 5 turns instead of 3 and also reflects 20% of absorbed damage back at attackers. Does not count toward Lira's device limit. | *Lira fuses Arcanite plating directly onto Edren's shield. It hums with contained lightning. "Don't drop it," she says. He never does.* |
-| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals heavy fire + lightning damage to all enemies with guaranteed burn and a 30% chance of Stop (the lightning shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
+| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals heavy Flame + Storm damage to all enemies with guaranteed burn and a 30% chance of Stop (the Storm energy shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
 | 5 | **Spiritward** | Torren + Edren | 14 MP (8/6) | Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction. | *The earth spirit settles into Edren's shield like a heartbeat. For a moment, the whole party stands on bedrock.* |
 | 6 | **Weave Theft** | Maren + Sable | 10 MP (6/4) | Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff. | *Sable's hands are faster than spells. Maren's mind is faster than Sable's hands. Between the two of them, nothing the enemy has stays theirs for long.* |
 | 7 | **Ley Torrent** | Maren + Torren | 18 MP (10/8) | Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren. | *The ley lines sing. The spirits answer. For one terrible moment, the raw voice of the world speaks through two people at once.* |
@@ -242,7 +242,7 @@ Combo abilities require two specific party members to both have full ATB gauges.
 | 9 | **Promise of Dawn** | Lira + Cael | 16 MP (8/8) | Cael rallies Lira with a personal command. Lira's next two device deployments cost 0 AC and have double duration. Cael is unable to act for 1 turn afterward (the emotional cost of the bond). | *He looks at her and says the only words that matter: "I believe in what you're building." She builds faster.* |
 | 10 | **Arcane Convergence** | Maren + Lira | 14 MP (8/6) | Maren weaves raw ley-line magic into Lira's deployed devices. All active devices trigger their effects immediately (out of turn) and gain +1 turn of duration. Generates 20 WG for Maren. | *Old magic and new craft were never meant to mix. Maren and Lira prove that wrong in six seconds flat.* |
 | 11 | **Twilight Raid** | Sable + Torren | 12 MP (4/8) | Torren's Greyveil spirit cloaks Sable in shadow. Sable attacks all enemies for physical damage that counts as spirit-type (effective against Pallor enemies), and steals from each target with 100% success rate. | *She vanishes into the spirit's shadow and reappears behind every enemy in the space between heartbeats. When she's done, her pockets are full and theirs are empty.* |
-| 12 | **Cael's Echo** | Edren + Lira | 20 MP (10/10) | **Available only in Act IV, after Cael's departure.** Edren and Lira combine their memories of Cael — his swordsmanship, his leadership, his warmth — into a single devastating attack. Edren strikes with both swords (his and Cael's) while Lira overcharges the strikes with Arcanite energy. Deals massive physical + lightning damage to a single target. Afterward, both characters are healed for 25% max HP (grief transmuted into strength). | *They don't speak. They don't need to. The sword remembers. The lightning remembers. And for one moment, he's with them again — not as a ghost, but as the man they both loved.* |
+| 12 | **Cael's Echo** | Edren + Lira | 20 MP (10/10) | **Available only in Act IV, after Cael's departure.** Edren and Lira combine their memories of Cael — his swordsmanship, his leadership, his warmth — into a single devastating attack. Edren strikes with both swords (his and Cael's) while Lira overcharges the strikes with Arcanite energy. Deals massive physical + Storm damage to a single target. Afterward, both characters are healed for 25% max HP (grief transmuted into strength). | *They don't speak. They don't need to. The sword remembers. The lightning remembers. And for one moment, he's with them again — not as a ghost, but as the man they both loved.* |
 
 ### Combos Lost to the Story
 
@@ -319,7 +319,7 @@ The magic system uses eight elements. The first four form an elemental wheel of 
 
 | Element | Strong vs. (150%) | Weak vs. (75%) | Associated Tradition |
 |---------|-------------------|-----------------|---------------------|
-| **Flame** | Frost | Storm | Spirit Communion (Ember Wing) / Arcanite (Shock Coil heat) |
+| **Flame** | Frost | Storm | Spirit Communion (Ember Wing) / Arcanite (Arc Trap) |
 | **Frost** | Storm | Earth | Ley Line / Spirit Communion (future spirit) |
 | **Storm** | Earth | Flame | Arcanite Channeling (primary element) |
 | **Earth** | Flame | Frost | Spirit Communion (Stoneheart) |
@@ -328,7 +328,7 @@ The magic system uses eight elements. The first four form an elemental wheel of 
 | **Void** | Spirit | Ley | The Pallor (enemy-only in most cases) |
 | **Non-elemental** | -- | -- | No affinity, pure kinetic or arcane impact |
 
-**Non-elemental** damage (Linebolt, Ley Cascade, Greyveil spirit) bypasses elemental resistance but doesn't exploit weaknesses.
+**Non-elemental** damage (Fracture, Unraveling Bolt, Greyveil spirit) bypasses elemental resistance but doesn't exploit weaknesses.
 
 **Void-type** damage is the Pallor's element. It is strong against Spirit and weak against Ley. Void vs. Void is fully immune. Only Greyveil (Torren), Unweave (Maren), and certain story abilities interact with it directly.
 
@@ -337,7 +337,7 @@ The magic system uses eight elements. The first four form an elemental wheel of 
 Characters can learn a limited number of spells outside their native tradition. This represents the game's theme of the three factions learning to coexist.
 
 **Rules:**
-- Cross-trained spells cost 25% more MP than they would for a native caster.
+- Cross-trained spells cost 50% more MP than they would for a native caster.
 - Cross-trained spells cannot exceed Tier 2 (no access to the most powerful spells of another tradition).
 - Cross-training becomes available during Act III, after the party has reunited and the factions' rigid boundaries have begun to blur.
 - Learning requires a specific in-game interaction (e.g., a campfire scene where Maren teaches Edren, or Torren shows Lira how to ask spirits for help).
@@ -346,12 +346,14 @@ Characters can learn a limited number of spells outside their native tradition. 
 
 | Character | Can Learn From | Available Spells | Story Trigger |
 |-----------|---------------|------------------|---------------|
-| Edren | Ley Line (Maren) | Linebolt, Wardglass | Act III campfire scene — Maren finally teaches her old student |
-| Lira | Ley Line (Maren) | Linebolt, Dispersion | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
+| Edren | Spirit Communion (Torren) | Thornguard, Dewfall | Act III campfire scene — Torren teaches Edren to ask the spirits for protection |
+| Lira | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
 | Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
 | Maren | Spirit Communion (Torren) | Dewfall (weaker version) | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
+
+*Note: Cross-trained spells supplement each character's base spell list defined in magic.md. They are additional spells learned through Act III story events, cast at +50% MP cost (see Cross-Training Rules above).*
 
 ### The Pallor's Effect on Magic
 
@@ -390,8 +392,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Ironwall | — | — |
 | 6 | Riposte | — | — |
 | 10 | Rampart | — | — |
-| 12 | — | Linebolt (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
-| 12 | — | Wardglass (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Thornguard (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Dewfall (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Ley Ward | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
@@ -415,8 +417,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
 | 12 | Arc Trap | — | — |
-| 13 | — | Linebolt (cross-train) | Act III scene with Maren |
-| 13 | — | Dispersion (cross-train) | Act III scene with Maren |
+| 13 | — | Wardglass (cross-train) | Act III scene with Maren |
+| 13 | — | Seal Tongue (cross-train) | Act III scene with Maren |
 | 14 | — | Thornveil device variant | Act III scene with Torren |
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | 22 | **[S] Overcharge** | — | Interlude: reverse-engineers Pallor tech in the Compact |
@@ -456,8 +458,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 4 | — | Wardglass | — | — |
 | 6 | — | Seal Tongue | — | — |
 | 8 | Resonance | — | — | — |
-| 15 | — | Ley Cascade | — | — |
 | 13 | **[S] Unweave** | — | — | Interlude: ancient ruin discovery |
+| 15 | — | Ley Cascade | — | — |
 | 18 | — | Dispersion | — | — |
 | 18 | — | Leyward | — | — |
 | 18 | **[S] Ley Surge** | — | — | Interlude: ancient ruin discovery |
