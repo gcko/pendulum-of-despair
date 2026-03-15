@@ -17,7 +17,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Location | Change | Details |
 |----------|--------|---------|
 | Valdris Crown | Deteriorating | Markets thin out, ley-lamps flicker, Court Quarter consumed by political infighting. Cael's quarters become restricted (Pendulum study site). |
-| Aelhart | Inaccessible | The player cannot return; the border road south is now too dangerous for civilian travel. The village is referenced by NPCs as "cut off." |
+| Aelhart | Mostly inaccessible | The border road is dangerous; NPCs reference the village as "cut off." During the Interlude, an alternate mountain path opens to access the Dry Well mini-dungeon. The village itself is empty and quiet. |
 | Thornwatch | Militarized | Commander Halda reports Compact probes against the fort. Garrison on high alert. New defensive emplacements visible. |
 | Greyvale | No-man's-land | Population halved. Scorch marks and siege damage visible. NPCs recount the border conflict firsthand. |
 | Ironmouth | Compact-occupied | The mine is sealed. Carradan soldiers have fortified the outpost. Inaccessible to the player. |

@@ -738,7 +738,7 @@ The color script maps the game's emotional arc onto its visual palette, scene by
 
 **The reunion mechanic:** Each time two party members find each other, the local saturation increases by 15-20% for the duration of their shared scenes. When all four reunite, the scene reaches 75% -- still below Act I's 100%, but noticeably brighter than the surrounding world at 50%. The message: people together resist the grey. Isolation feeds it.
 
-**Torren's sacrifice is the Interlude's betrayal mirror:** maximum saturation, then collapse. But where the betrayal went to 0%, Torren's sacrifice settles at 40%. The world is darker for his loss, but it continues. His death bought time. The palette acknowledges the cost.
+**Torren's sacrifice is the Interlude's betrayal mirror:** maximum saturation, then collapse. But where the betrayal went to 0%, Torren's sacrifice settles at 40%. The world is darker for his loss, but it continues. His near-fatal sacrifice bought time. The palette acknowledges the cost.
 
 ---
 

@@ -61,7 +61,7 @@ By Act II, the city shows the strain. Markets are half-empty, ley-lamps flicker,
 ### Aelhart
 
 **Faction:** Valdris
-**Acts:** I
+**Acts:** I, Interlude (Dry Well access only)
 **Type:** Small town (starting area)
 
 Aelhart is a farming village in the foothills northwest of Valdris Crown, where the highlands begin their slow descent into the Thornmere Wilds. Stone cottages with thatch roofs line a single main road. A modest garrison — barely twenty soldiers — watches the border road south. The village is unremarkable by design: this is the quiet before everything goes wrong. An old well in the village square has run dry, a detail NPCs mention offhandedly. The ley line that once fed the well's enchantment stopped flowing three seasons ago.
@@ -531,6 +531,28 @@ From the ridge, the ley lines' direction is physically perceptible — the energ
 **What the player does here:**
 - Act II: Optional exploration. Speaking to Ashara provides foreshadowing about the Convergence. The ley lines' directional pull is visible here.
 - Interlude: The wards are failing. The sunstones' glow is dimming. Ashara's desperation is palpable.
+
+---
+
+### Deeproot Shrine
+
+**Faction:** Thornmere Wilds
+**Acts:** I, II
+**Type:** Sacred site
+
+A small sacred clearing deep in the Wilds where the roots of ancient trees form a natural cathedral. Spirit-speakers come here for solitary meditation and communion with the oldest forest spirits. The shrine is not a settlement — there are no permanent structures, only a ring of moss-covered standing stones and a spring fed by an underground ley line branch.
+
+Brenn, an exiled Valdris mage turned hermit, has made this place his home. His lean-to and scattered research notes are the only sign of habitation. The shrine is difficult to find without a guide — Torren or Kael Thornwalker can lead the party here.
+
+**Key features:**
+- Sacred standing stones (environmental storytelling — pre-civilization origin)
+- Ley-fed spring (one of the few still flowing in Act II)
+- Brenn's hermit camp (quest-relevant — "Ink and Ashes" side quest)
+- Spirit communion point (Torren can speak with ancient spirits here)
+
+**What the player does here:**
+- Act I: Optional visit with Torren. Lore about the Wilds' spiritual history. Brenn offers cryptic warnings about ley line instability.
+- Act II: "Ink and Ashes" side quest. Brenn's research on the Pallor's previous cycles provides early hints that parallel Maren's discoveries.
 
 ---
 
