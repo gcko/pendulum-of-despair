@@ -104,7 +104,7 @@ git commit -m "feat(client): add combat scene with ATB system"
 
 **Format:** `<type>(<scope>): <description>`
 
-**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `perf`, `revert`, `ci`
 
 **Scopes:** `client`, `server`, `shared`, `ci`, `deps`
 
