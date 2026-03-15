@@ -28,19 +28,19 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Ironwall** | Level 1 | 0 | Stance. Edren guards a single ally, absorbing 50% of physical damage dealt to them. AP generated per the standard hit-based rule above. |
 | **Rampart** | Level 10 | 0 | Stance. Edren guards the entire back row, absorbing 30% of all damage dealt to back-row allies. Lower absorption rate but wider coverage. |
 | **Riposte** | Level 6 | 2 AP | Reaction. When Edren absorbs an attack in any stance, he counters with a physical strike dealing 1.5x normal damage. Can trigger once per enemy turn. |
-| **Ley Ward** | Level 15 | 3 AP | Edren channels ley-line energy into a magical barrier on one ally, reducing magic damage by 40% for 3 turns. |
+| **Aegis Veil** | Level 15 | 3 AP | Edren channels ley-line energy into a magical barrier on one ally, reducing magic damage by 40% for 3 turns. |
 | **Shatter Guard** | Level 22 | 5 AP | Edren breaks his stance explosively, dealing physical damage to all enemies equal to total damage absorbed since entering the stance (capped at 2x his max HP). Ends the current stance. |
 | **Oathkeeper** | Story: Act IV (picks up Cael's sword) | 8 AP | Edren dual-wields his own sword and Cael's blade. For 3 turns, all Bulwark stances gain +50% absorption AND Riposte triggers automatically on every absorbed hit. While active, Edren's attack commands hit twice. |
 
 **Synergies:**
 - Edren + Torren: Torren's healing spirits can restore HP Edren loses while absorbing, creating a sustain loop.
-- Edren + Maren: Maren's Resonance (see below) can amplify Ley Ward to cover the whole party at reduced strength.
+- Edren + Maren: Maren's Resonance (see below) can amplify Aegis Veil to cover the whole party at reduced strength.
 - Edren + Lira: Lira's Bulkhead device stacks with Ironwall, allowing near-total damage negation on a single target for one turn.
 
 **Story Integration:**
 - **Acts I-II:** Edren has Ironwall, Riposte, and Rampart. His kit reflects a disciplined knight protecting others.
 - **Interlude:** After Cael's betrayal, Edren loses access to Bulwark temporarily during the monastery sequence (he's paralyzed by guilt — mechanically represented as the command being greyed out). Sable's arrival restores it.
-- **Act III:** Ley Ward and Shatter Guard become available, reflecting his renewed resolve and deeper connection to the ley lines.
+- **Act III:** Aegis Veil and Shatter Guard become available, reflecting his renewed resolve and deeper connection to the ley lines.
 - **Act IV:** Oathkeeper unlocks when Edren picks up Cael's fallen sword. This is the culmination of his arc — carrying the weight of loss and turning it into strength.
 
 ---
@@ -202,7 +202,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | Ability | Learned | Cost | Effect |
 |---------|---------|------|--------|
 | **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
-| **Resonance** | Level 8 | 8 MP | Amplifies the next spell cast by any ally by 30% (damage or healing). Must be cast before the ally acts. Generates +10 WG. |
+| **Resonance** | Level 8 | 8 MP | Amplifies the next magical action by any ally by 30%. Affects spells (damage/healing +30%), Spiritcall effects (+30% potency), and Forgewright devices (+1 turn duration). For Bulwark's Aegis Veil, converts single-target to party-wide at reduced strength. Must be cast before the ally acts. Generates +10 WG. |
 | **Unweave** | Level 13 | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
 | **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes half the Weave Gauge. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
 | **Mirrorsong** | Level 23 | 16 MP | Maren copies the last spell cast by any combatant (ally or enemy) and casts it immediately at her own Magic stat. Generates +15 WG. |
@@ -211,7 +211,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Synergies:**
 - Maren + Torren: Resonance + Spiritcall = 30% stronger spirit effects. At Favor 3, this can produce devastating results (e.g., Resonance + Duskbreaker against Pallor enemies).
 - Maren + Lira: Resonance extends Lira's device durations by 1 turn. Unweave can strip enemy barriers that block Lira's devices.
-- Maren + Edren: Resonance + Ley Ward creates party-wide magic resistance. Siphon protects the party from enemy spells that bypass Edren's physical absorption.
+- Maren + Edren: Resonance + Aegis Veil creates party-wide magic resistance. Siphon protects the party from enemy spells that bypass Edren's physical absorption.
 - Maren + Sable: Stolen Pallor fragments increase Unweave damage by 50% when consumed during the cast.
 
 **Story Integration:**
@@ -276,10 +276,10 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 
 | Spell | MP | Target | Effect | Learned By |
 |-------|-----|--------|--------|------------|
-| **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Edren (Lv 10), Cael (Lv 6) |
-| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8), Cael (Lv 6), Lira (schematic), Torren (Act III cross-train) |
+| **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Cael (Lv 1), Edren (Lv 10) |
+| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Cael (Lv 6), Edren (Lv 8), Lira (schematic), Torren (Act III cross-train) |
 | **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train), Torren (Act III cross-train) |
-| **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 14) |
+| **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 17) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
 | **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
 | **Ley Storm** | 25 | All enemies | Heavy Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
@@ -399,7 +399,7 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 10 | Rampart | — | — |
 | 12 | — | Kindle Breath (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 12 | — | Breath of the Wilds (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
-| 15 | Ley Ward | — | — |
+| 15 | Aegis Veil | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
 
