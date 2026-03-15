@@ -18,14 +18,14 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 **Resource: Aegis Points (AP)**
 - Max 10 AP. Starts each battle at 0.
-- Gained by absorbing damage (1 AP per 10% max HP absorbed), redirecting attacks, or successfully countering.
+- Gained per hit absorbed while in a stance: 1 AP per hit. Bonus +1 AP if the absorbed hit exceeds 10% of Edren's max HP (rewards tanking heavy hits). Also gained by successful counters (Riposte grants 1 AP on hit).
 - AP decay: lose 1 AP at the start of each of Edren's turns if he took no damage since his last turn (encourages active tanking).
 
 **Sub-Abilities:**
 
 | Ability | Learned | AP Cost | Effect |
 |---------|---------|---------|--------|
-| **Ironwall** | Level 1 | 0 | Stance. Edren guards a single ally, absorbing 50% of physical damage dealt to them. Generates 1 AP per hit absorbed. |
+| **Ironwall** | Level 1 | 0 | Stance. Edren guards a single ally, absorbing 50% of physical damage dealt to them. AP generated per the standard hit-based rule above. |
 | **Rampart** | Level 10 | 0 | Stance. Edren guards the entire back row, absorbing 30% of all damage dealt to back-row allies. Lower absorption rate but wider coverage. |
 | **Riposte** | Level 6 | 2 AP | Reaction. When Edren absorbs an attack in any stance, he counters with a physical strike dealing 1.5x normal damage. Can trigger once per enemy turn. |
 | **Ley Ward** | Level 15 | 3 AP | Edren channels ley-line energy into a magical barrier on one ally, reducing magic damage by 40% for 3 turns. |
@@ -311,7 +311,7 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 - Sound: Nature sounds (rushing water, crackling fire, wind through leaves), overlaid with faint voices
 - Effects tend toward versatility and scaling — spirits grow stronger with use (Favor system), and the same spirit can be called for offense, defense, or support depending on context
 
-**Note:** Torren's Spiritcall command IS his magic. Individual spirit calls function as his spell list. He can learn a limited number of elemental spells through cross-training (see below), but they are filtered through spirit intermediaries — he asks a fire spirit to create flame rather than creating it himself.
+**Note:** Torren has BOTH a Spiritcall unique command AND a separate Magic command. Spiritcall summons nature spirits for varied effects (his signature mechanic). His Magic command gives access to the 35 spells listed in magic.md (mostly Spirit-element healing and support). The two systems complement each other: Spiritcall is versatile and Favor-driven, Magic is reliable and MP-driven. He can also learn a limited number of Ley Line spells through cross-training (see below).
 
 ### Elemental System
 
@@ -346,12 +346,12 @@ Characters can learn a limited number of spells outside their native tradition. 
 
 | Character | Can Learn From | Available Spells | Story Trigger |
 |-----------|---------------|------------------|---------------|
-| Edren | Spirit Communion (Torren) | Thornguard, Dewfall | Act III campfire scene — Torren teaches Edren to ask the spirits for protection |
+| Edren | Spirit Communion (Torren) | Mend, Cleansing Draught | Act III campfire scene — Torren teaches Edren to ask the spirits for healing |
 | Lira | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
 | Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
-| Maren | Spirit Communion (Torren) | Dewfall (weaker version) | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
+| Maren | Spirit Communion (Torren) | Mend (weaker version) | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
 
 *Note: Cross-trained spells supplement each character's base spell list defined in magic.md. They are additional spells learned through Act III story events, cast at +50% MP cost (see Cross-Training Rules above).*
 
@@ -392,8 +392,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Ironwall | — | — |
 | 6 | Riposte | — | — |
 | 10 | Rampart | — | — |
-| 12 | — | Thornguard (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
-| 12 | — | Dewfall (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Mend (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Cleansing Draught (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Ley Ward | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
@@ -465,7 +465,7 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 18 | **[S] Ley Surge** | — | — | Interlude: ancient ruin discovery |
 | 22 | — | Ley Storm | — | — |
 | 23 | **[S] Mirrorsong** | — | — | Interlude: ancient ruin discovery |
-| 24 | — | — | Dewfall (cross-train) | Act III scene with Torren |
+| 24 | — | — | Mend (cross-train) | Act III scene with Torren |
 | 34 | — | Convergence Flare | — | — |
 | — | **[S] Annulment** | — | — | Interlude: learns truth of Pallor's cycle |
 
@@ -480,7 +480,7 @@ The six characters fill distinct combat roles with intentional overlap to preven
 | Role | Primary | Secondary |
 |------|---------|-----------|
 | Tank / Protector | Edren | Lira (Bulkhead) |
-| Healer | Torren | Maren (Dewfall cross-train), Lira (Mending Engine) |
+| Healer | Torren | Maren (Mend cross-train), Edren (Mend cross-train), Lira (Mending Engine) |
 | Physical DPS | Sable | Edren (Shatter Guard / Oathkeeper) |
 | Magic DPS | Maren | Torren (Ember Wing / Greyveil) |
 | Support / Buffs | Cael (Acts I-II) | Torren (Stoneheart), Maren (Resonance) |

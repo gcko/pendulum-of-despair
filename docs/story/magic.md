@@ -1377,15 +1377,15 @@ For quick reference, here are all status effects that spells in this system can 
 | Stop | Negative | ATB frozen | 3 turns (cannot be cured, must expire) | Wears off only |
 | KO | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
-| Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion (enemy), Dispersion spell |
-| Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion (enemy) |
-| Regen | Positive | Restore 5% max HP per turn | 4 turns | Dispersion (enemy) |
-| Ironhide (DEF Up) | Positive | Physical DEF +40% (single) or +25% (party) | 4-5 turns | Dispersion (enemy) |
-| Wardglass (MDEF Up) | Positive | Magic DEF +40% (single) or +25% (party) | 4-5 turns | Dispersion (enemy) |
-| Quickstep (Haste) | Positive | ATB speed +50% | 5 turns | Dispersion (enemy) |
-| Rallying Cry (ATK Up) | Positive | Physical ATK +30% | 5 turns | Dispersion (enemy) |
-| Attunement (MAG Up) | Positive | Magic ATK +30% | 5 turns | Dispersion (enemy) |
-| Last Breath (Reraise) | Positive | Auto-revive at 30% HP on KO | Until triggered or battle ends | Dispersion (enemy) |
+| Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
+| Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion / Mass Dispersion |
+| Regen | Positive | Restore 5% max HP per turn | 4 turns | Dispersion / Mass Dispersion |
+| Ironhide (DEF Up) | Positive | Physical DEF +40% (single) or +25% (party) | 4-5 turns | Dispersion / Mass Dispersion |
+| Wardglass (MDEF Up) | Positive | Magic DEF +40% (single) or +25% (party) | 4-5 turns | Dispersion / Mass Dispersion |
+| Quickstep (Haste) | Positive | ATB speed +50% | 5 turns | Dispersion / Mass Dispersion |
+| Rallying Cry (ATK Up) | Positive | Physical ATK +30% | 5 turns | Dispersion / Mass Dispersion |
+| Attunement (MAG Up) | Positive | Magic ATK +30% | 5 turns | Dispersion / Mass Dispersion |
+| Last Breath (Reraise) | Positive | Auto-revive at 30% HP on KO | Until triggered or battle ends | Dispersion / Mass Dispersion |
 | Glintmark | Positive (on enemy) | Takes 10% more damage from all sources | 3 turns | Wears off |
 
 ---
