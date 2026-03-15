@@ -153,9 +153,9 @@ package.json `exports` field. No runtime dependencies.
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| pnpm | 10.30+ | Package manager (corepack-managed) |
+| pnpm | 10.32+ | Package manager (corepack-managed) |
 | TypeScript | ^5.9 | Type checking (strict, no `any`) |
-| Vitest | ^4.0 | Test runner |
+| Vitest | ^4.1 | Test runner |
 | Vite | ^8.0 | Client bundler + dev server (Rolldown) |
 | tsx | ^4.21 | Server dev runner with watch |
 | Husky | ^9.1 | Git hooks (pre-commit: typecheck + vitest related) |
