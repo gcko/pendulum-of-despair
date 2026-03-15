@@ -277,8 +277,8 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 | Spell | MP | Target | Effect | Learned By |
 |-------|-----|--------|--------|------------|
 | **Linebolt** | 5 | Single | Light Ley-element damage (spell power 15) | Maren (Lv 1), Edren (Lv 10) |
-| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8) |
-| **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12) |
+| **Wardglass** | 6 | Single | +40% Magic Defense, 5 turns | Maren (Lv 4), Edren (Lv 8), Lira (schematic), Torren (Act III cross-train) |
+| **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train), Torren (Act III cross-train) |
 | **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
 | **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
@@ -346,12 +346,12 @@ Characters can learn a limited number of spells outside their native tradition. 
 
 | Character | Can Learn From | Available Spells | Story Trigger |
 |-----------|---------------|------------------|---------------|
-| Edren | Spirit Communion (Torren) | Mend, Cleansing Draught | Act III campfire scene — Torren teaches Edren to ask the spirits for healing |
+| Edren | Spirit Communion (Torren) | Kindle Breath, Breath of the Wilds | Act III campfire scene — Torren teaches Edren to ask the spirits for sustained healing |
 | Lira | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shows Lira how ley lines and Arcanite aren't so different |
 | Lira | Spirit Communion (Torren) | Thornveil (as a device variant) | Act III — Torren helps Lira build a spirit-infused device |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
 | Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
-| Maren | Spirit Communion (Torren) | Mend (weaker version) | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
+| Maren | Spirit Communion (Torren) | Rekindling | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
 
 *Note: Cross-trained spells supplement each character's base spell list defined in magic.md. They are additional spells learned through Act III story events, cast at +50% MP cost (see Cross-Training Rules above).*
 
@@ -392,8 +392,8 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 1 | Ironwall | — | — |
 | 6 | Riposte | — | — |
 | 10 | Rampart | — | — |
-| 12 | — | Mend (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
-| 12 | — | Cleansing Draught (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Kindle Breath (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| 12 | — | Breath of the Wilds (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Ley Ward | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
@@ -465,7 +465,7 @@ Story-triggered abilities are marked with **[S]** and noted in the Story Trigger
 | 18 | **[S] Ley Surge** | — | — | Interlude: ancient ruin discovery |
 | 22 | — | Ley Storm | — | — |
 | 23 | **[S] Mirrorsong** | — | — | Interlude: ancient ruin discovery |
-| 24 | — | — | Mend (cross-train) | Act III scene with Torren |
+| 24 | — | — | Rekindling (cross-train) | Act III scene with Torren |
 | 34 | — | Convergence Flare | — | — |
 | — | **[S] Annulment** | — | — | Interlude: learns truth of Pallor's cycle |
 
@@ -480,7 +480,7 @@ The six characters fill distinct combat roles with intentional overlap to preven
 | Role | Primary | Secondary |
 |------|---------|-----------|
 | Tank / Protector | Edren | Lira (Bulkhead) |
-| Healer | Torren | Maren (Mend cross-train), Edren (Mend cross-train), Lira (Mending Engine) |
+| Healer | Torren | Maren (Rekindling cross-train), Edren (Kindle Breath / Breath of the Wilds cross-train), Lira (Mending Engine) |
 | Physical DPS | Sable | Edren (Shatter Guard / Oathkeeper) |
 | Magic DPS | Maren | Torren (Ember Wing / Greyveil) |
 | Support / Buffs | Cael (Acts I-II) | Torren (Stoneheart), Maren (Resonance) |

@@ -19,6 +19,9 @@ This document defines every learnable spell in the game: elements, categories, p
 9. [Utility & Special Magic](#utility--special-magic)
 10. [Void Magic (Pallor)](#void-magic-pallor)
 11. [Spell Index by Character](#spell-index-by-character)
+12. [Status Effect Reference](#status-effect-reference)
+13. [Spell Count Summary](#spell-count-summary)
+14. [Design Notes](#design-notes)
 
 ---
 
@@ -112,7 +115,7 @@ Each character learns spells through a tradition that reflects their background 
 
 ### Ley Line Tradition (Maren, Edren)
 
-**Maren** is a master of the old ways. She begins with a broad spell list and learns new spells by leveling up and discovering ancient texts in ruins and libraries. She has access to nearly every non-Void, non-Spirit spell in the game. She is the party's primary offensive caster and lore-keeper.
+**Maren** is a master of the old ways. She begins with a broad spell list and learns new spells by leveling up and discovering ancient texts in ruins and libraries. She has access to nearly every non-Void spell, plus a curated set of Spirit-tradition healing spells learned through her research into all magical traditions. She is the party's primary offensive caster and lore-keeper.
 
 **Edren** is a knight-commander, not a mage. He learned a small set of defensive and support spells during his training under Maren. His spell list is narrow (10-12 spells total) but focused on protection and leadership. He learns through level-up only.
 
@@ -527,7 +530,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** All allies
 - **Effect:** Spell power 8. Restores minor HP to entire party.
 - **Description:** A soft wind carries the scent of moss and rain. Every wound eases. Every breath comes easier.
-- **Who learns:** Torren (Lv 6), Maren (Lv 10)
+- **Who learns:** Torren (Lv 6), Maren (Lv 10), Edren (Act III cross-train, +50% MP cost)
 - **Visual:** A gentle breeze of green-white particles sweeps across the entire party; each member glows briefly.
 
 #### 35. Sanctuary
@@ -560,7 +563,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single ally
 - **Effect:** Grants regeneration: restores 5% max HP per turn for 4 turns.
 - **Description:** A slow-burning warmth settles into the target's chest. The body heals itself, breath by breath.
-- **Who learns:** Torren (Lv 4), Maren (Lv 8)
+- **Who learns:** Torren (Lv 4), Maren (Lv 8), Edren (Act III cross-train, +50% MP cost)
 - **Visual:** A small, warm green-white ember orbits the target character; pulses faintly each turn.
 
 #### 38. Rekindling
@@ -571,7 +574,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** All allies
 - **Effect:** Grants regeneration: restores 5% max HP per turn for 4 turns to entire party.
 - **Description:** The ember spreads. Every heartbeat brings the party closer to whole. Torren learned this watching the Wilds regrow after wildfire.
-- **Who learns:** Torren (Lv 20)
+- **Who learns:** Torren (Lv 20), Maren (Act III cross-train, +50% MP cost)
 - **Visual:** Small green-white embers appear orbiting each party member; they pulse in sync.
 
 #### 39. Spirit Recall
@@ -677,7 +680,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single enemy
 - **Effect:** 70% chance to inflict Silence. Target cannot cast spells.
 - **Description:** A thread of ley energy wraps around the target's throat. Words form but no sound emerges. The silence is absolute.
-- **Who learns:** Maren (Lv 6), Edren (Lv 12)
+- **Who learns:** Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train, +50% MP cost), Torren (Act III cross-train, +50% MP cost)
 - **Visual:** A thin gold thread winds around the target's neck area; a speech-bubble icon appears crossed out.
 
 #### 48. Grey Gaze
@@ -795,7 +798,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single ally
 - **Effect:** Increases magic defense by 40% for 5 turns.
 - **Description:** A pane of shimmering ley energy interposes itself between the target and the world. Spells slide off like rain on glass.
-- **Who learns:** Maren (Lv 4), Edren (Lv 8), Cael (Lv 6)
+- **Who learns:** Maren (Lv 4), Edren (Lv 8), Cael (Lv 6), Lira (Ashmark Archives schematic), Torren (Act III cross-train, +50% MP cost)
 - **Visual:** A translucent gold-white barrier flickers into existence around the target; faint hexagonal grid pattern.
 
 #### 58. Quickstep
@@ -1230,8 +1233,9 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 28 | Ley Ruin | Ley | Offensive | 4 | Lv 45 + Ancient Ruins text |
 | 89 | Pendulum's Echo | Void | Offensive | 3 | Post-game (Pendulum chamber) |
 | 88 | Hollow Mend | Void | Healing | 3 | Post-game (Convergence meadow) |
+| 38 | Rekindling | Spirit | Healing | 2 | Act III scene with Torren (cross-train, +50% MP cost) |
 
-**Total: 58 spells** (the most of any character by far)
+**Total: 59 spells** (58 base + 1 cross-trained; the most of any character by far)
 
 ### Edren (Knight-Commander -- Limited Ley Line Tradition)
 
@@ -1251,8 +1255,10 @@ Edren's spell list is narrow and focused on protection and leadership.
 | 47 | Seal Tongue | Ley | Status | 1 | Lv 12 |
 | 63 | Bulwark Line | Earth | Buff | 2 | Lv 18 |
 | 64 | Leyward | Ley | Buff | 2 | Lv 22 |
+| 37 | Kindle Breath | Spirit | Healing | 1 | Act III campfire scene (cross-train from Torren, +50% MP cost) |
+| 34 | Breath of the Wilds | Spirit | Healing | 1 | Act III campfire scene (cross-train from Torren, +50% MP cost) |
 
-**Total: 12 spells**
+**Total: 14 spells** (12 base + 2 cross-trained)
 
 ### Lira (Forgewright -- Arcanite Tradition)
 
@@ -1273,8 +1279,9 @@ Lira's spells are Flame-focused offensive and technical support. Her "Forge" uni
 | 56 | Ironhide | Earth | Buff | 1 | Ironhaven Foundry schematic |
 | 57 | Wardglass | Ley | Buff | 1 | Ashmark Archives schematic |
 | 72 | Spiritsight | Spirit | Utility | 1 | Lira's personal upgrade (Lv 10) |
+| 47 | Seal Tongue | Ley | Status | 1 | Act III scene with Maren (cross-train, +50% MP cost) |
 
-**Total: 8 spells**
+**Total: 9 spells** (8 base + 1 cross-trained; Wardglass already learned via Forge-Schematic above)
 
 ### Torren (Spirit-Speaker -- Spirit Tradition)
 
@@ -1317,8 +1324,10 @@ Torren is the party's primary healer and nature-element caster. His Spirit and E
 | 36 | Lifetide | Spirit | Healing | 3 | Lv 32 |
 | 29 | Requiem of Thorns | Spirit | Offensive | 4 | Lv 40 + Pallor trial |
 | 88 | Hollow Mend | Void | Healing | 3 | Post-game (Convergence meadow) |
+| 57 | Wardglass | Ley | Buff | 1 | Act III scene with Maren (cross-train, +50% MP cost) |
+| 47 | Seal Tongue | Ley | Status | 1 | Act III scene with Maren (cross-train, +50% MP cost) |
 
-**Total: 35 spells**
+**Total: 37 spells** (35 base + 2 cross-trained)
 
 ### Sable (Streetwise -- Minimal Magic)
 
@@ -1365,7 +1374,7 @@ While in the party, Cael has a solid set of Ley Line spells. After his corruptio
 
 For quick reference, here are all status effects that spells in this system can inflict or cure.
 
-| Status | Type | Effect | Duration | Cured By |
+| Status | Type | Effect | Duration | Cured By* |
 |--------|------|--------|----------|----------|
 | Poison | Negative | Lose 8% max HP per turn | Until cured | Cleansing Draught, Purge, Antidote item |
 | Sleep | Negative | Cannot act; wake on damage | Until cured or damaged | Cleansing Draught, Purge, Alarm Clock item |
@@ -1387,6 +1396,8 @@ For quick reference, here are all status effects that spells in this system can 
 | Attunement (MAG Up) | Positive | Magic ATK +30% | 5 turns | Dispersion / Mass Dispersion |
 | Last Breath (Reraise) | Positive | Auto-revive at 30% HP on KO | Until triggered or battle ends | Dispersion / Mass Dispersion |
 | Glintmark | Positive (on enemy) | Takes 10% more damage from all sources | 3 turns | Wears off |
+
+*\*For positive statuses, "Cured By" indicates spells that can **remove** the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
 
 ---
 
