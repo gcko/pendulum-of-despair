@@ -305,11 +305,10 @@ The Compact cities do show a price gradient: Caldera > Corrund > Ashmark, which 
 
 ### Issues Found
 
-**IMPORTANT-04: Valdris cities lack itemized shop inventories**
-city-valdris.md describes shops narratively ("The Knight's Edge sells standard Valdris arms") but does not provide itemized price tables like city-carradan.md does for every Compact shop. This makes cross-faction price comparison impossible and leaves Valdris shop implementation underspecified.
+**~~IMPORTANT-04: Valdris cities lack itemized shop inventories~~ RESOLVED**
+city-valdris.md now includes itemized shop tables for all Valdris cities, matching the format used in city-carradan.md. Cross-faction price comparison is possible.
 
-Severity: **IMPORTANT**
-Every Carradan city has full shop tables with item names, types, prices, and act availability. Valdris cities have none. This is a documentation gap that will cause implementation problems.
+Severity: **RESOLVED**
 
 **MINOR-06: Currency exchange rates not fully documented**
 Corrund has an Exchange House that "converts Valdris coin to Compact scrip." Bellhaven has a Money Changer with "better rates than Corrund." But the actual exchange rate (gil-to-scrip ratio) is never specified in any document. Thornmere spirit tokens have a documented 2:1 penalty for Valdris gil at Roothollow. But the base gil:scrip:token ratio is undefined.
@@ -442,7 +441,7 @@ None found.
 | IMPORTANT-01 | Continental map omits Caldera, Ashport, Ironmark Citadel | 1.1 |
 | IMPORTANT-02 | Fenn Acari not placed in Corrund city map | 2.1 |
 | IMPORTANT-03 | Pallor Hollow dungeon for "A Knight's Vigil" has no layout | 3.1 |
-| IMPORTANT-04 | Valdris cities lack itemized shop inventories | 5.1 |
+| ~~IMPORTANT-04~~ | ~~Valdris cities lack itemized shop inventories~~ RESOLVED | 5.1 |
 | IMPORTANT-05 | Duskfen has no explicit save point | 6.1 |
 | IMPORTANT-06 | Ashgrove has no save point during Act II gathering | 6.1 |
 | IMPORTANT-07 | Canopy Reach save point unclear | 6.1 |

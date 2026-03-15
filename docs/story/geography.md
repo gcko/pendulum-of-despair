@@ -39,7 +39,7 @@ The continent of Ardenmere runs roughly northwest to southeast, shaped like a br
    ~~  ~~   # ROOTHOLLOW  GREYWOOD  CANOPY #  /^^^^                 ~~
    ~~  ~~   # [settlement] [camp]   REACH  # /^^^^                  ~~
    ~~  ~~   #   ###  ###  ###  ###  [tree] #/                       ~~
-   ~~  ~~   #  MAREN'S  STILLWATER  town]  #                        ~~
+   ~~  ~~   #  MAREN'S  STILLWATER  [town] #                        ~~
    ~~  ~~   #  REFUGE    HOLLOW     ###    #    WINDSHEAR            ~~
    ~~  ~~   #  [cottage] [spring]  ###     #    PEAK                 ~~
    ~~  ~~   #    ###  ASHGROVE  ###  ###   #    /^^                  ~~
@@ -53,7 +53,7 @@ The continent of Ardenmere runs roughly northwest to southeast, shaped like a br
    ~~  ~~    #####|################|########  . . . . . .            ~~
    ~~  ~~         | IRONMOUTH      |          .  ASHPORT .           ~~
    ~~  ~~         | [outpost]  KETTLEWORKS    . [port]   .           ~~
-   ~~  ~~         |    |       [factory]      . . . . . .            ~~
+   ~~  ~~         |    |       [research]      . . . . . .            ~~
    ~~  ~~     GAEL'S SPAN         |            ~~~~                  ~~
    ~~  ~~     [bridge-town]       |           ~~~~~                  ~~
    ~~  ~~         |        CORRUND RIVER      ~~~~~                  ~~

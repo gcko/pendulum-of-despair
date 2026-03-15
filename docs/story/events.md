@@ -269,31 +269,32 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
 | 15 | `interlude_begins` | Time skip. Player controls Sable. | Entire world map updates to Unraveling state. All NPC dialogue refreshes. Multiple locations transform (see World State Changes above). Party scattered — Edren, Lira, Torren, Maren each at separate locations. | All NPCs |
-| 16 | `edren_found` | Sable reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party. Highcairn cleared of Pallor. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
-| 17 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
-| 18 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, defeats the corrupted root-spirit | Torren rejoins the party. Roothollow stabilized but damaged. Yara's condition improves slightly. The nexus becomes a beacon — the first sign that the Pallor can be pushed back. | Torren (rejoins), Yara, Elder Savanh |
-| 19 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
-| 20 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
+| 16 | `ley_line_rupture` | Fires simultaneously with or immediately after `interlude_begins` | Ley lines rupture across the continent as a consequence of Cael opening the gate. Triggers Millhaven destruction, Rail Tunnel collapse, and overworld fissures. Spirit creatures go mad. Forgewright engines misfire. Magic becomes wild and unstable continent-wide. | All NPCs in affected locations |
+| 17 | `edren_found` | Sable reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party. Highcairn cleared of Pallor. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
+| 18 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
+| 19 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, defeats the corrupted root-spirit | Torren rejoins the party. Roothollow stabilized but damaged. Yara's condition improves slightly. The nexus becomes a beacon — the first sign that the Pallor can be pushed back. | Torren (rejoins), Yara, Elder Savanh |
+| 20 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
+| 21 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
 
 ### Act III Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 21 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
-| 22 | `edren_trial_complete` | Edren faces and accepts phantom Cael's accusations | Edren gains a resolve buff or ability. Trial clearing becomes a temporary safe zone. | Edren |
-| 23 | `lira_trial_complete` | Lira faces and releases the vision of the life she and Cael could have had | Lira gains a resolve buff or ability. The most emotionally devastating trial. | Lira |
-| 24 | `torren_trial_complete` | Torren faces the spirits' accusations and accepts imperfect protection | Torren gains a resolve buff or ability. | Torren |
-| 25 | `sable_trial_complete` | Sable faces her own insignificance and recognizes that showing up is enough | Sable gains a resolve buff or ability. | Sable |
-| 26 | `maren_trial_complete` | Maren faces her younger self and affirms the cost of knowledge | Maren gains a resolve buff or ability. | Maren |
-| 27 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
+| 22 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
+| 23 | `edren_trial_complete` | Edren faces and accepts phantom Cael's accusations | Edren gains a resolve buff or ability. Trial clearing becomes a temporary safe zone. | Edren |
+| 24 | `lira_trial_complete` | Lira faces and releases the vision of the life she and Cael could have had | Lira gains a resolve buff or ability. The most emotionally devastating trial. | Lira |
+| 25 | `torren_trial_complete` | Torren faces the spirits' accusations and accepts imperfect protection | Torren gains a resolve buff or ability. | Torren |
+| 26 | `sable_trial_complete` | Sable faces her own insignificance and recognizes that showing up is enough | Sable gains a resolve buff or ability. | Sable |
+| 27 | `maren_trial_complete` | Maren faces her younger self and affirms the cost of knowledge | Maren gains a resolve buff or ability. | Maren |
+| 28 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
 
 ### Act IV Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 28 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
-| 29 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
-| 30 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
+| 29 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
+| 30 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
+| 31 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
 
 ---
 

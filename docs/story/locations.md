@@ -537,7 +537,7 @@ From the ridge, the ley lines' direction is physically perceptible — the energ
 ### Maren's Refuge
 
 **Faction:** Unaligned
-**Acts:** I, (III referenced)
+**Acts:** I, Interlude, Epilogue
 **Type:** Hermit's dwelling
 
 Deep in the Wilds, where the trees grow so thick that the forest floor sees no sunlight, Maren built her exile. Her refuge is a stone cottage half-swallowed by the forest — moss on the walls, roots through the floorboards, shelves crammed with books and artifacts from a dozen civilizations. A ley line runs directly beneath the cottage, which Maren tapped for research purposes. The line is weak but stable — one of the few that hasn't been drained by the Compact or disrupted by the dimming.
@@ -552,6 +552,29 @@ The cottage is larger inside than it should be — old magic, nothing flashy, ju
 
 **What the player does here:**
 - Act I: The party brings the Pendulum to Maren. She delivers the "it's a door" warning. The player can explore her library for optional lore. Maren joins the party.
+
+---
+
+### Three Roads Inn
+
+**Faction:** Unaligned
+**Acts:** I, II, Interlude, Epilogue
+**Type:** Waystation
+
+A sturdy stone-and-timber inn at the crossroads where the three faction territories meet — the Valdris road running northwest, the Compact road running southeast, and the Wilds trail running due south. Run by Hadley, a perpetually calm innkeeper who serves everyone and judges no one. The inn is neutral ground by tradition and by Hadley's force of will. Border patrols from all three factions stop here, sometimes at the same time, and Hadley keeps the peace with good food and an absolute refusal to take sides.
+
+During the Interlude, the inn is damaged but standing. Hadley shelters Valdris refugees and Compact deserters under the same roof, mediating disputes with the same unflappable calm. In the Epilogue, Sable takes over the inn and renames it "The Pendulum" — a low, comfortable tavern with a swinging sign depicting a pendulum on a broken chain.
+
+**Key features:**
+- Neutral waystation (rest, save, faction-agnostic shop)
+- Hadley (NPC — innkeeper, mediator, the human constant in a changing world)
+- Crossroads location (travel hub between all three faction territories)
+
+**What the player does here:**
+- Act I: Optional rest stop during early travel. Hadley provides local gossip and regional context.
+- Act II: Rest stop during diplomatic missions. Faction NPCs can be overheard discussing border tensions.
+- Interlude: Hadley is sheltering refugees. The inn shows damage but remains open. "Somebody has to."
+- Epilogue: Becomes The Pendulum tavern (post-game hub). See "The Pendulum (Tavern)" under Optional & Secret Locations.
 
 ---
 

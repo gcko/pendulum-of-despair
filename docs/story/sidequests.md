@@ -1,6 +1,6 @@
 # Side Quests & Optional Content
 
-This document defines all side quests, optional party member scenes, recurring content systems, and post-game activities. Every quest references specific NPCs from npcs.md and locations from locations.md. Side content is designed to deepen the world's themes — acceptance vs. denial, old vs. new magic, the cost of knowledge, and the human toll of systemic failure — rather than serve as disconnected diversions.
+This document defines all side quests, optional party member scenes, recurring content systems, and post-game activities. Every quest references specific NPCs from npcs.md and locations from locations.md or the city layout documents (city-valdris.md, city-carradan.md, city-thornmere.md). Side content is designed to deepen the world's themes — acceptance vs. denial, old vs. new magic, the cost of knowledge, and the human toll of systemic failure — rather than serve as disconnected diversions.
 
 ---
 
@@ -33,7 +33,7 @@ Dael's response is complicated. He is grateful but unsatisfied — the damage is
 
 **Quest Giver:** Dame Cordwyn (Valdris Crown, Knight's Barracks)
 **Location(s):** Valdris Crown (barracks, Lower Ward), Greyvale, Ironmouth
-**Availability:** Act II, after Cael's betrayal at end of Act II (available during early Interlude)
+**Availability:** Interlude (after cael_betrayal_complete)
 **Estimated Length:** Medium (30 minutes)
 
 **Narrative Arc:**
@@ -77,7 +77,7 @@ Mirren presents the findings to Maren. The two women argue — their first real 
 
 ### 4. The Spirit That Stopped Singing
 
-**Quest Giver:** Elara Thane (Valdris, ruined tower outskirts — Interlude)
+**Quest Giver:** Elara Thane (Valdris Crown, Court Quarter — Interlude)
 **Location(s):** Valdris Crown outskirts, Windshear Peak, Roothollow
 **Availability:** Interlude, after finding Torren
 **Estimated Length:** Medium (30 minutes)

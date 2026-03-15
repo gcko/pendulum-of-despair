@@ -671,40 +671,42 @@ Notes: `G` represents the Forgewright engine shaft -- a massive rotating assembl
 - `S` (right): Save point before Kole.
 - `^` (right): Stairs up to Kole's Chamber.
 
-### Floor 5: Kole's Chamber (30x25)
+### Floor 5: Ironmark Tunnel Access (30x25)
+
+The Axis Tower's lowest sublevel connects to Ironmark Citadel via an underground tunnel. The party reaches Ironmark Citadel through this passage -- the Axis Tower is the infiltration route, but General Kole awaits in the Command Chamber at Ironmark (see dungeons-city.md, Ironmark Citadel Dungeons).
 
 ```
       ####^####
       #.......#
       #.......#
-      #.......#
+      #..@....#
       ###D#####
         #.....#
    ######.....######
+   #......!.........#
    #................#
-   #.......@........#
-   #................#
+   #......!.........#
    ####.........#####
       #.........#
-      #....B....#
+      #....S....#
       #.........#
       #.........#
-      ###..T..###
+      ###.....###
          #...#
-         #.X.#
+         #.X.#  --> IRONMARK CITADEL (tunnel)
          #####
 ```
 
 **Key Locations:**
 - `^` (top): Stairs from Command Floor.
-- `@` (center): Story trigger -- Kole confrontation. His dialogue: "You think I was corrupted? I was clarified."
-- `B` (center-bottom): Boss arena. The room is cold and grey. Pallor energy crackles from conduits in the walls.
-- `T` (bottom): Post-boss chest -- Map to the Convergence (key item), Kole's Epaulettes (accessory, +15 DEF, +10 MAG DEF).
-- `X` (bottom): Exit. After Kole's defeat, the tower's Pallor energy dissipates. An elevator activates, taking the party to ground level.
+- `@` (center-top): Story trigger -- Lira identifies the tunnel route to Ironmark Citadel from Compact blueprints found on Floor 3.
+- `S` (center): Save point before entering the Ironmark tunnel.
+- `!` (corridors): Pallor Soldier patrols in the connecting passage.
+- `X` (bottom): Tunnel exit leading to Ironmark Citadel. The Kole boss fight takes place in the Ironmark Command Chamber (see dungeons-city.md).
 
-### Boss: General Vassar Kole
+### Boss: General Vassar Kole (at Ironmark Citadel)
 
-A military commander in Pallor-enhanced Forgewright armor. He fights with disciplined precision -- not wild, not monstrous, but calculated. Phase 1 (100-50% HP): Standard attacks with Arcanite sword, plus a command ability that summons 2 Pallor Soldiers. Phase 2 (50-0%): He channels the tower's Pallor conduits, gaining area attacks (Grey Shockwave) and a despair aura that applies Despair debuff (all stats down) to the party each turn. Destroying the two conduit crystals on the arena's edges removes the aura. 12,000 HP.
+The Kole boss fight occurs in Ironmark Citadel's Command Chamber, reached via the Floor 5 tunnel. See dungeons-city.md for the full Ironmark Citadel dungeon layout including the Command Chamber arena. A military commander in Pallor-enhanced Forgewright armor. He fights with disciplined precision -- not wild, not monstrous, but calculated. Phase 1 (100-50% HP): Standard attacks with Arcanite sword, plus a command ability that summons 2 Pallor Soldiers. Phase 2 (50-0%): He channels Ironmark's Pallor conduits, gaining area attacks (Grey Shockwave) and a despair aura that applies Despair debuff (all stats down) to the party each turn. Destroying the two conduit crystals on the arena's edges removes the aura. 12,000 HP.
 
 When defeated, his soldiers collapse. Brant watches silently.
 
@@ -714,9 +716,9 @@ When defeated, his soldiers collapse. Brant watches silently.
 |-------|-------------|----------|
 | Compact Guard | Disciplined soldier. Attacks in pairs, covers each other. | All floors |
 | Forgewright Sentry | Automated turret. Scans in a cone. High damage, low HP. | Floors 2-3 |
-| Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4-5 |
+| Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4-5 (and Ironmark tunnel) |
 | Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1-2 |
-| **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 12,000 HP. | Floor 5 |
+| **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 12,000 HP. | Ironmark Citadel Command Chamber (via Floor 5 tunnel) |
 
 ### Treasure/Loot
 
@@ -729,8 +731,8 @@ When defeated, his soldiers collapse. Brant watches silently.
 | Project Pendulum Dossier | Floor 3 secret | Lore item |
 | Commander's Blade | Floor 4 | Weapon (Edren) |
 | Stealth Master Badge | Floor 4 (perfect stealth only) | Accessory (first strike) |
-| Map to the Convergence | Floor 5 | Key item (story) |
-| Kole's Epaulettes | Floor 5 | Accessory (+15 DEF, +10 MAG DEF) |
+| Map to the Convergence | Ironmark Command Chamber (post-boss) | Key item (story) |
+| Kole's Epaulettes | Ironmark Command Chamber (post-boss) | Accessory (+15 DEF, +10 MAG DEF) |
 
 ### Environmental Hazards
 
