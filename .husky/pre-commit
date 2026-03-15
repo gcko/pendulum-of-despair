@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- Block direct commits to main ---
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ]; then
+  echo "ERROR: Direct commits to main are not allowed."
+  echo "Create a feature branch and open a PR instead."
+  exit 1
+fi
+
 # --- Beads (bd) pre-commit hook ---
 # Run bd's pre-commit logic (flush pending issue changes, etc.)
 # before the quality checks. Failures here are non-fatal — quality
