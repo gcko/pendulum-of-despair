@@ -788,6 +788,78 @@ The Archive is not hostile by nature — its guardians are constructs that test 
 
 ---
 
+### Caldera Forge Depths
+
+**Faction:** Carradan Compact
+**Acts:** II (discoverable), Interlude (full access)
+**Type:** Dungeon (4 floors)
+
+Beneath Caldera's industrial refineries lies a pre-civilization forge complex — a find the Compact's founders never knew they were building over. The refineries above are loud, hot, and ceaseless; the Forge Depths are silent in a way that feels deliberate, the silence of a place that has been waiting. Four floors descend from the refinery basement into volcanic caves and finally to an ancient forge chamber, where the original builders shaped metal using processes the Compact's Forgewrights cannot replicate.
+
+The dungeon's central mechanic is lava flow redirection — diverting molten channels to open passages, cool barriers, or power ancient mechanisms. The forge itself is still functional in the lowest chamber; it will shape materials that no surface forge can touch. This is Lira's character dungeon. The descent mirrors her arc: layer by layer, the industrial veneer of Caldera gives way to something older and more fundamental, a place that pre-dates the systems she's always worked within and always doubted.
+
+**Key features:**
+- Lava flow redirection puzzles (core dungeon mechanic — divert channels to open paths)
+- Pre-civilization forge complex (visual contrast with Compact refineries above)
+- Volcanic cave section (natural formation between industrial and ancient layers)
+- Ancient forge chamber (lowest floor — capable of working unique materials)
+- Secret exit to Caldera's lower district (bypass route for infiltration)
+- Connects to "The Fading Shifts" sidequest
+
+**What the player does here:**
+- Act II (discoverable): The entrance is accessible from Caldera's refinery basement during the Act II visit, but the full descent is blocked by lava flows requiring equipment or knowledge not yet available.
+- Interlude (full access): Lira's character dungeon. The party descends all four floors, solves the lava redirection puzzles, reaches the ancient forge, and obtains the Volcanic Ingot — the material component for Lira's ultimate weapon.
+
+**Notable:** Contains the Volcanic Ingot, the primary material component for Lira's ultimate weapon.
+
+---
+
+### Frostcap Caverns
+
+**Faction:** Valdris (near Highcairn / Monastery of the Vigil)
+**Acts:** Interlude, Act III
+**Type:** Dungeon (3 floors)
+
+Inside the Frostcap Peaks above Highcairn, a natural ice cave system runs deep into the mountain. The upper floors are natural — ice and stone shaped by glacial movement over centuries, with the particular crystalline beauty of places that have never been touched by warmth. The lower floors are something else: ancient Valdris ruins, built into the ice by people who chose this cold, difficult place deliberately. In the deepest chamber, a forbidden shrine to old spirits sits untouched — old in a way that predates the Vigil's doctrine, old enough that the monks above don't acknowledge it exists.
+
+The dungeon's mechanics combine wind puzzles (navigating air currents to reach elevated passages or activate ice mechanisms) with ice-sliding sections (momentum-based navigation through glacial corridors). A secret passage in the shrine chamber connects to the Monastery of the Vigil's sealed library — the one section the monks have locked for generations. This is Torren's character dungeon. The ice and the old shrine speak to the parts of spirit practice that formal doctrine has tried to suppress; navigating here requires the same attunement Torren has been developing throughout the game.
+
+**Key features:**
+- Ice sliding sections (momentum-based navigation — core dungeon mechanic)
+- Wind puzzles (air current navigation to open passages and reach elevated areas)
+- Ancient Valdris ruins (lower floors — older than current Vigil doctrine)
+- Forbidden shrine to old spirits (lore — pre-Vigil Valdris spirituality)
+- Secret passage to the Monastery's sealed library (unlocks additional lore and the Monastery Key)
+
+**What the player does here:**
+- Interlude: Accessible during the Highcairn sequence. Torren's character dungeon. The party descends through natural ice caves and ancient ruins to the forbidden shrine, where the Frostpeak Crystal is found and the passage to the sealed library is opened.
+- Act III: Revisitable for any content not completed during the Interlude.
+
+**Notable:** Contains the Frostpeak Crystal (Torren's ultimate weapon material) and the Monastery Key, which unlocks the sealed library in the Monastery of the Vigil.
+
+---
+
+### Thornvein Passage
+
+**Faction:** Thornmere Wilds
+**Acts:** III
+**Type:** Dungeon/passage (2 floors)
+
+An underground root-choked tunnel beneath the Thornmere Wilds, connecting Roothollow to the approach routes toward the Convergence. The pre-civilization builders used it as a transit route — a quick path under the worst of the surface terrain. Over centuries, the Wilds grew into it. Root systems from the old-growth trees above have pushed through the stone, filling corridors with living wood that has developed its own slow intelligence, the same distributed awareness that spirit-speakers call root-mind.
+
+The Thornvein Passage is not hostile by nature. The roots test rather than threaten — moving to block paths, forming puzzles that require communing with the root systems to negotiate passage. Torren can speak to them directly. The dungeon is short by design: two floors, purpose-built as a strategic asset for Act III's march rather than a character dungeon. Using it bypasses the most grueling overland sections of the Pallor Wastes approach, arriving closer to the Convergence with more resources intact.
+
+**Key features:**
+- Spirit root manipulation puzzles (Torren communes with root systems to negotiate passage)
+- Living root corridors (the old-growth root-mind has reshaped the pre-civilization structure)
+- Pre-civilization stonework visible beneath root overgrowth (connects to the broader ruin network)
+- Strategic shortcut (bypasses the worst of the Pallor Wastes surface route)
+
+**What the player does here:**
+- Act III: Optional dungeon discovered in Roothollow before the final march. Completing it provides a strategic advantage — the party emerges closer to the Convergence, bypassing a significant portion of the Pallor Wastes gauntlet and preserving resources for the final confrontation.
+
+---
+
 ## Optional & Secret Locations
 
 ### The Pendulum (Tavern)
@@ -989,6 +1061,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 15 | Ashgrove | Grove | Alliance formalized |
 | 16 | Millhaven | Town | Compact exploitation witnessed |
 | 17 | Ley Line Depths | Dungeon | Optional, deep lore |
+| 17a | Caldera Forge Depths | Dungeon | Optional, Lira's dungeon (discoverable only; full access in Interlude) |
 | 18 | Valdris Crown | City | Carradan assault, betrayal, Act II climax |
 
 ### Interlude: The Unraveling
@@ -1003,6 +1076,8 @@ This table maps the intended player progression through locations, reflecting JR
 | 24 | Axis Tower | Dungeon | Infiltration, Kole boss, map recovered |
 | 25 | Greyvale | Town | Pallor's effect on civilians |
 | 26 | Roothollow | Town | Find Torren, corruption spreading |
+| 26a | Frostcap Caverns | Dungeon | Torren's character dungeon, Frostpeak Crystal, Monastery Key |
+| 26b | Caldera Forge Depths | Dungeon | Lira's character dungeon (full access), Volcanic Ingot |
 | 27 | Archive of Ages | Dungeon | Find Maren, the truth revealed |
 
 ### Act III: The Convergence / Act IV: The Closing Door
@@ -1010,6 +1085,7 @@ This table maps the intended player progression through locations, reflecting JR
 | Order | Location | Type | Purpose |
 |-------|----------|------|---------|
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
+| 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
 | 29 | Pallor Wastes | Gauntlet | Party trials, final approach |
 | 30 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 

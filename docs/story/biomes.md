@@ -493,7 +493,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ember Vein (ancient ruin variant -- ember-orange crystals, geometric carvings, shifts into Ancient Ruins sub-biome)
 - Carradan Rail Tunnels (industrial variant -- iron-braced, Arcanite-lit, rail infrastructure)
 - Ley Line Depths (nexus variant -- transitions into Ley Line Nexus biome at depth)
-- Dry Well of Aelhart (mini-dungeon variant -- small, intimate, connecting to ruin network)
+- Dry Well of Aelhart (progressive variant -- transitions from village well to natural caves to full Ancient Ruins over 7 floors)
 - Axis Tower lower levels (urban variant -- maintenance tunnels, Undercroft access)
 
 ---
@@ -550,7 +550,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ember Vein (introductory scale -- small, 4 rooms, ember-orange inlay)
 - Archive of Ages (full scale -- vast, knowledge-based puzzles, pictographic walls)
 - Ley Line Depths (partial -- ancient carvings visible at the deepest level, sealed door)
-- Dry Well of Aelhart (fragment -- 3 rooms, single tablet, connects to ruin network)
+- Dry Well of Aelhart (full scale -- 7 floors, progressive descent from village well to ley-line nexus, waterworks, residential quarters, deep archive, gravity-warped depths, and the Wellspring)
 - Dreamer's Fault (corrupted variant -- architecture from multiple ages twisted together, impossible geometry)
 
 ---
@@ -983,5 +983,5 @@ When Cael closes the door and the Pallor withdraws, the biomes do not revert to 
 | The Convergence | Ley Line Nexus (extreme) | The Pallor Wastes | III, IV, Epilogue |
 | The Pendulum (tavern) | Valdris Highlands / Ashlands (border) | -- | Post-game |
 | Dreamer's Fault | Ancient Ruins (corrupted) | The Pallor Wastes | Post-game |
-| Dry Well of Aelhart | Underground / Cavern | Ancient Ruins (fragment) | Interlude |
+| Dry Well of Aelhart | Underground / Cavern (F1-2), Ancient Ruins (F3-7) | Ley Line Nexus (F7 Wellspring) | Interlude, III |
 | Sunken Rig | Coastal / Harbor (industrial) | Underground (interior) | Interlude |
