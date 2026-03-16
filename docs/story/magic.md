@@ -98,6 +98,8 @@ Each element has one element it is strong against (deals 150% damage) and one it
 | 3 | High | 25-45 MP | Late game (Lv 26-40) | 50-70 |
 | 4 | Ultimate | 50-99 MP | Endgame (Lv 40+) | 85-120 |
 
+*Note: AoE spells use approximately 60-70% of these ranges (Tier 2 AoE: 18-28).*
+
 ### Balance Rules
 
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
@@ -121,7 +123,7 @@ Each character learns spells through a tradition that reflects their background 
 
 ### Forgewright Tradition (Lira)
 
-**Lira** does not cast spells in the traditional sense. Her unique command is "Forge" -- she channels Arcanite energy through her tools. However, she can learn 8-10 spells that represent Arcanite-enhanced casting: primarily Flame-element offensive magic and technical support spells (barriers, analysis). She learns through level-up and by studying Forgewright schematics found in Carradan locations.
+**Lira** does not cast spells in the traditional sense. Her unique command is "Forgewright" -- she channels Arcanite energy through her tools. However, she can learn 8-10 spells that represent Arcanite-enhanced casting: primarily Flame-element offensive magic and technical support spells (barriers, analysis). She learns through level-up and by studying Forgewright schematics found in Carradan locations.
 
 ### Spirit Tradition (Torren)
 
@@ -1235,7 +1237,7 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 88 | Hollow Mend | Void | Healing | 3 | Post-game (Convergence meadow) |
 | 38 | Rekindling | Spirit | Healing | 2 | Act III scene with Torren (cross-train, +50% MP cost) |
 
-**Total: 59 spells** (58 base + 1 cross-trained; the most of any character by far)
+**Total: 63 spells** (62 base + 1 cross-trained; the most of any character by far)
 
 ### Edren (Knight-Commander -- Limited Ley Line Tradition)
 

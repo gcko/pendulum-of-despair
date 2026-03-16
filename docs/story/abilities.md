@@ -97,8 +97,8 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat. |
 | **Bulkhead** | Level 7 | 3 AC | Device. Persists 3 turns. Reduces physical damage to one chosen ally by 40%. Can stack with Edren's Ironwall. |
 | **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
-| **Mending Engine** | Interlude [S] | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
-| **Overcharge** | Interlude [S] | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
+| **Mending Engine** | Interlude [S] (Lv 17+) | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
+| **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
 | **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
 
 **Synergies:**
@@ -133,8 +133,8 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Thornveil** (Briar Spirit) | Level 1 | 5 MP | Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. | **Deeproot Veil:** Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%. |
 | **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally. Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies and removes Poison and Sleep. |
 | **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Flame damage to all enemies. Chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
-| **Stoneheart** (Earth Spirit) | Level 16 | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
-| **Greyveil** (Twilight Spirit) | Level 20 | 14 MP | Deals non-elemental spirit damage that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a chance to dispel Pallor buffs. |
+| **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
+| **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental spirit damage that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a chance to dispel Pallor buffs. |
 | **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs a weakened version of its ability simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
 
 **Synergies:**
@@ -204,7 +204,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
 | **Resonance** | Level 8 | 8 MP | Amplifies the next magical action by any ally by 30%. Affects spells (damage/healing +30%), Spiritcall effects (+30% potency), and Forgewright devices (+1 turn duration). For Bulwark's Aegis Veil, converts single-target to party-wide at reduced strength. Must be cast before the ally acts. Generates +10 WG. |
 | **Unweave** | Level 13 | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
-| **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes half the Weave Gauge. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
+| **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes 50 WG. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
 | **Mirrorsong** | Level 23 | 16 MP | Maren copies the last spell cast by any combatant (ally or enemy) and casts it immediately at her own Magic stat. Generates +15 WG. |
 | **Annulment** | Story: After finding the ancient ruin (Interlude) | 100 WG (full gauge, no MP) | Maren unravels all active magic on the battlefield — all buffs, debuffs, status effects, devices, barriers, and ongoing spells are removed from ALL combatants (allies and enemies alike). Then deals heavy non-elemental magic damage to all enemies based on the total number of effects removed. Extremely powerful but indiscriminate — requires careful timing. |
 
@@ -282,7 +282,7 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 | **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 17) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
 | **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
-| **Ley Storm** | 25 | All enemies | Heavy Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
+| **Ley Storm** | 25 | All enemies | Moderate Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
 | **Convergence Flare** | 38 | Single | Massive Ley-element damage (spell power 65) | Maren (Lv 34) |
 
 #### Arcanite Channeling (Carradan Tradition)
