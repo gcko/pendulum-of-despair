@@ -117,7 +117,7 @@ Each character learns spells through a tradition that reflects their background 
 
 **Maren** is a master of the old ways. She begins with a broad spell list and learns new spells by leveling up and discovering ancient texts in ruins and libraries. She has access to nearly every non-Void spell, plus a curated set of Spirit-tradition healing spells learned through her research into all magical traditions. She is the party's primary offensive caster and lore-keeper.
 
-**Edren** is a knight-commander, not a mage. He learned a small set of defensive and support spells during his training under Maren. His spell list is narrow (10-12 spells total) but focused on protection and leadership. He learns through level-up only.
+**Edren** is a knight-commander, not a mage. He learned a small set of defensive and support spells during his training under Maren. His spell list is narrow (14 spells total: 12 base via level-up, plus 2 Spirit-tradition cross-trained spells from Torren in Act III) but focused on protection and leadership.
 
 ### Forgewright Tradition (Lira)
 
@@ -125,11 +125,11 @@ Each character learns spells through a tradition that reflects their background 
 
 ### Spirit Tradition (Torren)
 
-**Torren** learns through communion with the spirits of the Thornmere Wilds. His spells are Spirit-element and Earth-element, focused on healing, regeneration, and nature-based offense. He learns through level-up and story events (spirit communion scenes). His versions of common spells have unique spirit-flavored names and slightly different visual effects.
+**Torren** learns through communion with the spirits of the Thornmere Wilds. His spells are primarily Spirit-element and Earth-element, with some Storm and Ley spells reflecting his broad connection to the natural world. Focused on healing, regeneration, and nature-based offense. He learns through level-up, story events (spirit communion scenes), and Act III cross-training (2 Ley spells from Maren). His versions of common spells have unique spirit-flavored names and slightly different visual effects.
 
 ### Streetwise (Sable)
 
-**Sable** is not a mage. She can learn 4-5 utility spells at most, representing tricks picked up on the streets of the Carradan underbelly: smokescreens, distractions, a rudimentary analysis trick. These are learned through story events only.
+**Sable** is not a mage. She has 5 utility spells representing tricks picked up on the streets of the Carradan underbelly: smokescreens, distractions, a rudimentary analysis trick. Smokeveil is innate (she's always known it). The rest are learned through story events — Torren and Maren each teach her one practical trick during the Interlude. These are not cross-trained spells (no +50% MP penalty); they are one-off gifts tailored to her streetwise style.
 
 ### Corrupted Tradition (Cael)
 

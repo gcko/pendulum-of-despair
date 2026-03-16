@@ -349,7 +349,7 @@ Characters can learn a limited number of spells outside their native tradition. 
 | Edren | Spirit Communion (Torren) | Kindle Breath, Breath of the Wilds | Act III campfire scene — Torren teaches Edren to ask the spirits for sustained healing |
 | Lira | Ley Line (Maren) | Seal Tongue | Act III — Maren shows Lira how to weave ley-line sealing into Arcanite designs |
 | Torren | Ley Line (Maren) | Wardglass, Seal Tongue | Act III — Maren shares protective incantations compatible with spirit magic |
-| Sable | None (traditional) | N/A | Sable's magic comes from items and Tricks, not traditions |
+| Sable | None (formal cross-training) | N/A | Sable's spells are one-off gifts from Torren and Maren during the Interlude, not formal cross-training (no +50% MP cost). See magic.md Sable section. |
 | Maren | Spirit Communion (Torren) | Rekindling | Act III — Torren teaches Maren that magic doesn't always need to be controlled |
 
 *Note: Cross-trained spells supplement each character's base spell list defined in magic.md. They are additional spells learned through Act III story events, cast at +50% MP cost (see Cross-Training Rules above).*

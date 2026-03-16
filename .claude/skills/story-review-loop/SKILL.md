@@ -95,7 +95,7 @@ For each round (1 through N):
    ```bash
    git add <changed-files>
    cat > /tmp/commit-msg.txt << 'EOF'
-   fix(client): address story review issues (round N)
+   docs: address story review issues (round N)
 
    - Description of fix 1
    - Description of fix 2
