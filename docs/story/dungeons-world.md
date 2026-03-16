@@ -1841,7 +1841,7 @@ Vaelith uses ancient magic from a dead era. No longer dismissive -- focused.
 **Phase 2 (below 10000 HP): The Shepherd Falls**
 Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey light appear.
 - All Phase 1 attacks, plus:
-- **Despair Pulse** -- party-wide, 400 damage + Despair status (50% chance to skip turn). Every 3 turns.
+- **Despair Pulse** -- party-wide, 400 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Reality Warp** -- corrupts the ley lines the weapon draws from. Lira must re-forge the weapon (timed input -- success maintains damage; failure reduces party damage 50% for 2 turns). Every 5th turn.
 - **Unraveling** -- targets Lira, 600 damage. If Lira falls below 25% HP, weapon dims (party damage reduced 25% until healed above 50%).
 - **"This was not in the pattern. You were not in the pattern."** -- dialogue at 5000 HP.
@@ -3847,7 +3847,7 @@ A massive elk corrupted by the Pallor -- the dominant creature of the highland f
 - **Grey Charge** -- The Stag lowers its crystalline antlers and charges across the battlefield. 400 damage to a single target + knockback. Telegraphed by a 1-turn wind-up (hoofing the ground, grey energy building in its antlers).
 - **Corruption Aura** -- Passive effect. All adjacent party members (melee attackers) take 50 damage per turn from proximity to the Pallor energy radiating from its body. Ranged attacks avoid this penalty.
 - **Petrifying Gaze** -- The Stag locks eyes with one party member. 40% Petrify chance. Targets the party member who dealt the most damage on the previous turn.
-- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to Stun (1 turn). Shakes the arena, causing tree debris to fall.
+- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to inflict Stop (1 turn). Shakes the arena, causing tree debris to fall.
 - **Antler Sweep** -- Physical attack, hits all front-row party members, 300 damage. Used after Grey Charge if the Stag is not staggered.
 
 **At 30% HP:** The Stag's movements become erratic -- it charges walls, shakes its head as if trying to dislodge the corruption. Torren (if present) comments: "It's fighting itself. The creature underneath is still in there." The Stag cannot be calmed -- the corruption is too deep. But Torren's observation foreshadows the Howling Gale's peaceful resolution.
@@ -4470,7 +4470,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 - **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or fire/Flame magic).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
-- **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
+- **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
 - **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
 
@@ -4587,7 +4587,7 @@ The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- orga
 
 **Phase 3 (below 3000 HP): The Pallor Core**
 The Ram's core activates. Despair Pulse intensifies to party-wide.
-- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (50% chance to skip turn). Every 3 turns.
+- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
 - **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
 
@@ -4706,7 +4706,7 @@ Not a monster in the traditional sense. It looks like Edren -- a grey, transluce
 **Phase 2 (5500-2750 HP): The Voice**
 The Hollow speaks in Edren's voice. Lines from earlier in the game.
 - All Phase 1 attacks, plus:
-- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (50% chance to skip turn, 3 turns). Implementation note: The game maintains a list of 6-8 predefined guilt lines drawn from key story moments (Cael's betrayal, Aldren's death, orders given during the siege). The Hollow selects from this fixed pool, not dynamic dialogue tracking.
+- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (ATB speed -25%, damage dealt -20%, 4 turns). Implementation note: The game maintains a list of 6-8 predefined guilt lines drawn from key story moments (Cael's betrayal, Aldren's death, orders given during the siege). The Hollow selects from this fixed pool, not dynamic dialogue tracking.
 - **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
 - **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
 
