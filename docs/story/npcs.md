@@ -684,31 +684,12 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 **Dialogue hints:**
 - *"My predecessor heard a voice in the marsh and followed it. I hear voices too. I've learned not to follow."*
 - *"You want our spears? Earn them. The Hollow has been poisoning our water for months. Fix that, and we'll talk about alliances."*
-
-**Story relevance:** Ties to main quest
-
-**Act presence:** Act II (Duskfen, sets condition for alliance, performs the Fenmother binding), Interlude (Duskfen is half-submerged; Caden leads the remnant tribe on the highest platforms, grim but holding), Post-game (confident spirit-speaker leading Duskfen's reconstruction).
-
----
-
-### Caden
-
-**Location:** Duskfen Hollow, Roothollow nexus area
-
-**Role:** Young spirit-speaker of the Duskfen tribe. Torren's spiritual successor.
-
-**Backstory:** Caden is the youngest spirit-speaker in living memory among the Duskfen people. Where Torren learned the old ways through decades of practice and tradition, Caden's gift emerged raw and untrained -- she could hear spirits before anyone taught her the rituals. The elders see her as either a sign of hope or a warning; a gift that powerful without discipline can be dangerous. Torren recognizes in her what he fears about himself: that the connection to the land might outlive the traditions that give it meaning. Caden is untroubled by this philosophical weight. She simply listens, and the land speaks back.
-
-When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. She can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. She guides the party to Torren's location during the Interlude, serving as both scout and spiritual compass.
-
-**Dialogue hints:**
-- *"The ground is screaming. Can you not hear it? It has been screaming for days."*
+- *"The ground is screaming. Can you not hear it? It has been screaming for days."* (Interlude, guiding the party to the Ley Leech)
 - *"Torren says I should not listen so hard. But if I stop listening, who will?"*
-- *"The old spirits are not gone. They are just... very quiet. You have to be patient."*
 
 **Story relevance:** Ties to main quest
 
-**Act presence:** Interlude: Senses the Ley Leech from miles away and guides the party to Torren's location at the ley nexus. During the Ley Leech boss fight, assists from the perimeter. After the fight, performs a small recovery ritual for the exhausted Torren -- a passing-of-the-torch moment between the old spirit-speaker and the young one. Act III: If the party returns to the Wilds, Caden is maintaining the stabilized nexus in Torren's absence. Epilogue: Referenced as continuing the spirit-speaking tradition in the changed world.
+**Act presence:** Act II (Duskfen, sets condition for alliance, performs the Fenmother binding). Interlude: When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. He can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. He guides the party to Torren's location at the ley nexus, serving as both scout and spiritual compass. During the Ley Leech boss fight, Caden assists from the perimeter. After the fight, he performs a small recovery ritual for the exhausted Torren -- a passing-of-the-torch moment between the old spirit-speaker and the young one. Duskfen itself is half-submerged; Caden leads the remnant tribe on the highest platforms, grim but holding. Act III: If the party returns to the Wilds, Caden is maintaining the stabilized nexus in Torren's absence. Post-game: Confident spirit-speaker leading Duskfen's reconstruction.
 
 ---
 
@@ -1061,7 +1042,7 @@ Their influence in the current cycle extends far beyond direct confrontation. Th
 
 ---
 
-### Brenn
+### Kerra
 
 **Location:** Caldera, undercity (Sera Linn's resistance network)
 
