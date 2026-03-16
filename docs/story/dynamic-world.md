@@ -74,11 +74,11 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Offscreen state (for NPC dialogue):** Aelhart has been occupied by Compact forces. The inn is a garrison post. The dry well remains dry. The Carradan trader is now the only merchant. The farmers work for Compact supply requisitions.
 
 ##### Interlude State (Dry Well dungeon access)
-- **What changed:** The ley line instability has cracked the well's foundation open. The village itself is not a full map -- the player accesses only the well and its three-room mini-dungeon beneath. The village square visible around the well entrance shows: the inn's thatch roof partially collapsed, Compact supply crates stacked against buildings, no civilians visible, a Compact flag on a pole.
+- **What changed:** The ley line instability has cracked the well's foundation open. The village itself is not a full map -- the player accesses only the well and its 7-floor dungeon beneath (Floors 1-4 available in the Interlude). The village square visible around the well entrance shows: the inn's thatch roof partially collapsed, Compact supply crates stacked against buildings, no civilians visible, a Compact flag on a pole.
 - **Environmental details:** The wheat fields are fallow. The stone cottages have Compact graffiti (unit markers). The border road has wagon ruts. The silence is the loudest thing -- in Act I this was a place of birdsong and conversation.
 
 ##### Epilogue State
-- **Not directly visitable** (the village is referenced in NPC dialogue and visible from the overworld). The Compact forces have left. Aelhart is slowly repopulating. The dry well has been capped with new stone. The wheat fields show early spring green. Recovery, not restoration.
+- **Not directly visitable** (the village is referenced in NPC dialogue and visible from the overworld). The Compact forces have left. Aelhart is slowly repopulating. If the player completed the Water of Life puzzle (Floor 3), the dry well flows with clear water and villagers gather around it; otherwise, the well has been capped with new stone. The wheat fields show early spring green. Recovery, not restoration.
 
 ---
 
@@ -457,9 +457,9 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 #### The Ember Vein (Ruin)
 
 ##### Act I State (Only Visit)
-- **Map layout changes:** None. Four rooms and a central hub. Pre-civilization ruin lined with ember-orange crystallized ley energy.
+- **Map layout changes:** None. Four floors (Upper Mine, Lower Mine, Ancient Ruin, The Pendulum Chamber). Carradan mine infrastructure gives way to pre-civilization ruin lined with ember-orange crystallized ley energy.
 - **Visual state:** Underground/Cavern palette transitioning to Ancient Ruins palette. Ember-orange glow from crystals. Geometric wall carvings pulse faintly.
-- **Accessible areas:** All four rooms and central hub (tutorial dungeon -- linear progression).
+- **Accessible areas:** All four floors (tutorial dungeon -- linear progression from mine to ancient ruin).
 - **Environmental details:** Dead miners in the corridors. No wounds. Faces frozen in despair. The geometric carvings establish the visual language for all ancient ruins. The Pendulum on its pedestal in the central chamber. The atmosphere is heavy -- the dead miners, the too-perfect geometry, the artifact waiting in the dark. This is the game's first dungeon and its first mystery.
 
 ##### Post-Act I State (Not revisitable)
@@ -629,8 +629,8 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Environmental details:** NPCs mention the well offhandedly. The crack is a visual detail only.
 
 ##### Interlude State
-- **Accessible.** The ley line instability has widened the crack. Three-room mini-dungeon below.
-- **Map modifications:** The well's bottom has a new entrance tile (the crack widened). Below: three rooms of pre-civilization ruin, identical architecture to the Ember Vein. A single tablet depicts Aelhart's founding -- the village was built to cap this entrance.
+- **Accessible.** The ley line instability has widened the crack. Seven-floor dungeon below (Floors 1-4 accessible in the Interlude; Floors 5-7 unlock in Act III).
+- **Map modifications:** The well's bottom has a new entrance tile (the crack widened). Below: seven floors of pre-civilization ruin, identical architecture to the Ember Vein. A single tablet depicts Aelhart's founding -- the village was built to cap this entrance.
 - **Environmental details:** The village above (visible through the well mouth) shows Compact occupation. The dungeon below is timeless -- ancient ruins do not change. The reward is Edren's family crest, a unique accessory.
 
 ---
@@ -977,7 +977,7 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Dry Well of Aelhart** | -- | -- | Accessible (Floors 1-4) | Floors 5-7 unlocked | -- | **2** | 7-floor dungeon; Interlude partial, Act III full |
 | **Sunken Rig** | -- | -- | Beached rig (dungeon) | -- | -- | **1** | |
 | **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (4 floors) | -- | -- | **2** | Lira's character dungeon |
-| **Frostcap Caverns** | -- | -- | Cave system (3 chambers) | -- | -- | **1** | Torren's character dungeon |
+| **Frostcap Caverns** | -- | -- | Cave system (3 floors) | -- | -- | **1** | Torren's character dungeon |
 | **Thornvein Passage** | -- | -- | -- | Root tunnel (optional shortcut) | -- | **1** | Connects Roothollow to Pallor Wastes Section 2 (via ley-line root network) |
 | **Windshear Peak** | -- | Base vista | -- | Corrupted vista | -- | **2** | Visual change only (the view) |
 
@@ -985,8 +985,8 @@ How many distinct map states each location needs, helping scope the tilemap work
 
 | Metric | Count |
 |--------|-------|
-| **Total unique locations** | 38 |
-| **Total map variants needed** | ~77 |
+| **Total unique locations** | 37 |
+| **Total map variants needed** | ~72 |
 | **Locations needing 4+ variants** | 2 (Valdris Crown: 5, Roothollow: 4) |
 | **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, Ley Line Depths) |
 | **Locations needing 2 variants** | 18 |

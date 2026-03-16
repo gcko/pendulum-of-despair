@@ -985,3 +985,6 @@ When Cael closes the door and the Pallor withdraws, the biomes do not revert to 
 | Dreamer's Fault | Ancient Ruins (corrupted) | The Pallor Wastes | Post-game |
 | Dry Well of Aelhart | Underground / Cavern (F1-2), Ancient Ruins (F3-7) | Ley Line Nexus (F7 Wellspring) | Interlude, III |
 | Sunken Rig | Coastal / Harbor (industrial) | Underground (interior) | Interlude |
+| Caldera Forge Depths | Carradan Industrial (F1), Underground / Cavern (F2), Ancient Ruins (F3-4) | Ley Line Nexus (F4 forge) | II, Interlude |
+| Frostcap Caverns | Mountain / Alpine (deep cavern) | Ancient Ruins (F3 shrine) | Interlude, III |
+| Thornvein Passage | Thornmere Deep Forest (subterranean) | Underground / Cavern | III |

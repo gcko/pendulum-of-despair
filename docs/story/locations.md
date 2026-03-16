@@ -1097,5 +1097,5 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
 | 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
-| 35 | Sunken Rig | Dungeon | Sable-focused optional content |
+| 33 | Windshear Peak | Vista | Oracle hints, atmosphere |
+| 34 | Sunken Rig | Dungeon | Sable-focused optional content |
