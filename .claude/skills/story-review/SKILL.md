@@ -132,6 +132,29 @@ something "does X" without defining X is a finding. Examples:
 - "does not count toward the limit" (why? is this an exception to a
   stated rule? if so, document the exception in the rule itself)
 
+**CRITICAL: Noun-existence checking.** Every noun used as a game
+mechanic, action, status effect, or ability name MUST be defined
+somewhere in the docs. Scan for:
+- Actions characters can take ("Calibrate", "Purify", "Disrupt") —
+  each must have cost, target, and effect defined
+- Status effects mentioned in ability descriptions — must exist in
+  magic.md's Status Effect Reference (e.g., if "burn" is mentioned but
+  not defined, that's an ISSUE)
+- Device/ability names referenced in story sections — must have a full
+  spec in the ability tables
+- Abbreviations — must match the canonical full form exactly (e.g.,
+  "Non-elem" must be "Non-elemental")
+
+**CRITICAL: Bidirectional cross-referencing.** Check BOTH directions:
+- If abilities.md says character X learns spell Y, magic.md's spell Y
+  definition must list character X in "Who learns"
+- If magic.md's character index lists spell Y for character X, spell
+  Y's definition must also list character X
+- If abilities.md references a device/ability by name, the device must
+  have a full definition (AC cost, duration, target, effect)
+- Check the reverse: if magic.md's spell definitions list learners,
+  verify each learner appears in the character spell indices too
+
 ---
 
 #### Pass A: Name & Terminology Consistency
@@ -156,8 +179,20 @@ Cross-reference every proper noun AND game term in changed files:
 - "Cross-training" vs "schematic" vs "story event" vs "innate" —
   these are distinct unlock mechanisms and must not be conflated
 
+**Vocabulary scan procedure:**
+- Scan ALL text in changed files — not just headers and table cells.
+  Include parenthetical text, flavor descriptions, synergy notes, and
+  story integration paragraphs.
+- Check for element names in ALL forms: as adjectives ("fire damage"
+  should be "Flame damage"), in compound nouns ("Fire Spirit" should be
+  "Flame Spirit"), and as abbreviations ("Non-elem" should be
+  "Non-elemental").
+- Check that every status effect name used in ability descriptions
+  exists in `magic.md`'s Status Effect Reference.
+
 Flag: misspellings, variant names not in canon, new names without
-definition, non-canonical element terms, ability/spell name mismatches.
+definition, non-canonical element terms, ability/spell name mismatches,
+undefined status effects, abbreviation drift.
 
 ---
 
