@@ -691,6 +691,27 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 
 ---
 
+### Caden
+
+**Location:** Duskfen Hollow, Roothollow nexus area
+
+**Role:** Young spirit-speaker of the Duskfen tribe. Torren's spiritual successor.
+
+**Backstory:** Caden is the youngest spirit-speaker in living memory among the Duskfen people. Where Torren learned the old ways through decades of practice and tradition, Caden's gift emerged raw and untrained -- she could hear spirits before anyone taught her the rituals. The elders see her as either a sign of hope or a warning; a gift that powerful without discipline can be dangerous. Torren recognizes in her what he fears about himself: that the connection to the land might outlive the traditions that give it meaning. Caden is untroubled by this philosophical weight. She simply listens, and the land speaks back.
+
+When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. She can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. She guides the party to Torren's location during the Interlude, serving as both scout and spiritual compass.
+
+**Dialogue hints:**
+- *"The ground is screaming. Can you not hear it? It has been screaming for days."*
+- *"Torren says I should not listen so hard. But if I stop listening, who will?"*
+- *"The old spirits are not gone. They are just... very quiet. You have to be patient."*
+
+**Story relevance:** Ties to main quest
+
+**Act presence:** Interlude: Senses the Ley Leech from miles away and guides the party to Torren's location at the ley nexus. During the Ley Leech boss fight, assists from the perimeter. After the fight, performs a small recovery ritual for the exhausted Torren -- a passing-of-the-torch moment between the old spirit-speaker and the young one. Act III: If the party returns to the Wilds, Caden is maintaining the stabilized nexus in Torren's absence. Epilogue: Referenced as continuing the spirit-speaking tradition in the changed world.
+
+---
+
 ### Wynne
 
 **Location:** Thornmere Wilds, Canopy Reach (the treetop settlement)
@@ -1014,6 +1035,47 @@ In the Interlude, the tavern is damaged but standing. Hadley refuses to close. S
 **Story relevance:** Side quest giver
 
 **Act presence:** All acts. A recurring safe haven. In the Interlude, she can provide leads, shelter, and a side quest involving mediating between refugee groups. She is also the NPC whose tavern Sable names hers after in the epilogue — a detail that rewards players who remember.
+
+---
+
+### Vaelith, the Ashen Shepherd
+
+**Location:** Variable -- appears across multiple locations throughout the story. First encountered at Ember Vein. Later appears in the Thornmere Wilds, Corrund or Bellhaven, the walls of Valdris during the siege, and finally the Pallor Wastes.
+
+**Role:** Pallor General -- an ancient champion of Despair from the previous Pallor cycle, 800 years ago. Recurring antagonist who appears seven times across the story. See characters.md for full arc.
+
+**Backstory:** Vaelith was a scholar-diplomat in the previous civilization. When the Pallor rose in their era, they were the one everyone trusted to find a solution. Instead, they found the Pallor fascinating and chose it willingly -- the only person in recorded history to embrace Despair not out of brokenness but out of intellectual curiosity. The Pallor granted them what they wanted: eternity to observe. For 800 years, Vaelith has walked the continent between cycles, studying people, destabilizing ley nodes with precisely crafted tuning forks, and waiting for the next cycle to begin. They have watched every set of heroes try and fail. They know how hope dies because they have catalogued every variation.
+
+Their influence in the current cycle extends far beyond direct confrontation. They planted fatalism in Commissar Brant, consulted on the Ashen Ram's design at a Corrund construction site, destabilized ley nodes across the continent, and disturbed Grey Bounty creatures in the Wilds. Records in the Archive of Ages describe a diplomat from the previous cycle who "walked into the grey and did not return." A faded portrait in Valdris Crown's forgotten gallery matches their appearance.
+
+**Dialogue hints:**
+- *"Such a fragile little thing to build hope around."* (Ember Vein, examining the Pendulum)
+- *"Your friend with the heavy eyes. How is he sleeping?"* (Corrund/Bellhaven tavern, asking about Cael)
+- *"You are doing wonderfully. Truly. I have not been this entertained in centuries."* (Valdris siege, unwinnable fight)
+- *"...Interesting."* (Pallor Wastes, when Lira's weapon manifests)
+- *"Eight hundred years. Every cycle, the same. And you... you actually changed something."* (Pallor Wastes, upon defeat)
+
+**Story relevance:** Ties to main quest
+
+**Act presence:** Act I: Appears post-Vein Guardian at Ember Vein (Appearance 1 -- charming introduction, no combat). Observed watching from a ridge in the Thornmere/Duskfen region during the Act I-II transition (Appearance 2 -- leaves a campsite with two cups of tea and a journal page). Act II: Found in a Corrund or Bellhaven tavern posing as a traveling scholar (Appearance 3). A narrative cutscene (not witnessed by the party) reveals Vaelith feeding on Pallor-touched villagers while comforting them (Appearance 4 -- the "Doma moment"). Appears during the Valdris siege for an unwinnable fight (Appearance 5). Interlude: Not seen directly, but referenced by multiple NPCs including Brant's confession and Cordwyn's reports (Appearance 6). Act III: Penultimate boss in the Pallor Wastes before the Convergence (Appearance 7 -- 20,000 HP).
+
+---
+
+### Brenn
+
+**Location:** Caldera, undercity (Sera Linn's resistance network)
+
+**Role:** Former Valdris soldier turned Caldera resistance fighter. Guest NPC during "Unbowed" escort mission.
+
+**Backstory:** Brenn served in the Valdris garrison during the siege. When the walls fell, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she drifted into Caldera's undercity, where Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Brenn volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
+
+**Dialogue hints:**
+- *"Stay behind me. Stay quiet. Do exactly what I say and everyone gets through."*
+- *"I have already lost everyone once. It is not happening again."*
+
+**Story relevance:** Ties to world event
+
+**Act presence:** Interlude: Found in Caldera's undercity as part of Sera Linn's resistance network. Joins the party as a guest NPC during the "Unbowed" escort mission. Fights alongside the party against the Pallor Nest Mother (low stats, high courage). If she survives the mission, she becomes a recurring presence in Caldera -- organizing the workers, coordinating with Sera. Epilogue: Appears as a militia leader during Caldera's reconstruction.
 
 ---
 
