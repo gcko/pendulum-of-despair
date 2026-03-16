@@ -55,6 +55,9 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 15. [Caldera Forge Depths](#15-caldera-forge-depths)
 16. [Frostcap Caverns](#16-frostcap-caverns)
 17. [Thornvein Passage](#17-thornvein-passage)
+18. [Valdris Siege Battlefield](#18-valdris-siege-battlefield)
+19. [Ley Nexus Hollow](#19-ley-nexus-hollow)
+20. [Highcairn Monastery](#20-highcairn-monastery)
 
 ---
 
@@ -796,6 +799,32 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 - **Sable** (after finding the Maintenance Chief's Report): "Pre-civilization ruins under the tunnels. The Compact built over something ancient and pretended it wasn't there. Sound familiar?"
 - **Lira** (after opening the Corrund passage): "A direct connection to the city sewers. This was probably an emergency evacuation route. Smart."
 
+### Boss: The Ironbound (8000 HP)
+
+A massive Carradan boring engine fused with its operator during a Pallor corruption event. The machine and the worker are one -- a person trapped inside a machine that will not stop digging. A Drayce-series frame, built for two-person crews. The second operator fled.
+
+**Phase 1 (8000-4000 HP): The Machine**
+- **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
+- **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stun (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
+
+**Phase 2 (below 4000 HP): The Operator**
+The operator's voice breaks through. Attacks become erratic -- the machine hesitates mid-charge, drill strokes stutter.
+- All Phase 1 attacks, but with random hesitation windows (1-turn pauses where the machine stops).
+- **Hesitation Window** -- during a pause, Lira can use Forgewright to disrupt the engine (bonus 500 damage) or Torren can use Spiritcall to reach the spirit inside (bonus 400 damage + reduces next attack's damage by 50%).
+- **Desperate Bore** -- the machine charges twice in succession with no wind-up. Only used when the operator's voice is strongest.
+
+**On defeat:** The machine stops. The operator's spirit speaks a single line -- their partner's name -- and goes still.
+
+**Lira's Special Interaction:** Recognizes the boring engine model. Unique dialogue: "That is a Drayce-series frame. Those were built for two-person crews. Where is the second operator?" Forgewright command deals bonus damage during hesitation windows.
+
+**Torren's Special Interaction:** Spiritcall can reach the trapped spirit during hesitation windows. Provides bonus damage and damage reduction on the Ironbound's next attack.
+
+**Weakness:** Lightning (150% damage). Void (125% damage).
+**Resistance:** Earth (50% damage), Flame (75% damage).
+**Drop:** Operator's Badge (key item -- triggers dialogue with the second operator NPC in Bellhaven), Reinforced Drill Bit (crafting material).
+
 ### Encounter Table
 
 | Enemy | Description | Location |
@@ -807,6 +836,7 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 | Steam Elemental | Living steam from broken vents. Flame damage, can blind. | Hub, West |
 | Pipe Wraith | Ghostly maintenance worker. Emerges from pipe junctions. Ignores 25% DEF. Weak to Storm. 1,800 HP. | Maintenance Shaft |
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
+| **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 8,000 HP. | Deepest tunnel section |
 
 ### Treasure/Loot
 
@@ -4282,13 +4312,204 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Waystation Provisions | Floor 2, left chest | Consumable set (5x Potion, 3x Spirit Tonic, 1x Elixir) |
 ---
 
+## 18. Valdris Siege Battlefield
+
+### Dungeon Overview
+
+- **Floors:** 1 (The Walls of Valdris -- a scripted battle sequence, not a traditional dungeon)
+- **Size:** 60x40 tiles (wide battlefield with wall sections, towers, and courtyard)
+- **Theme:** The fall of Valdris. A defensive battle on the capital's walls as the Carradan Compact assaults with conventional forces and a Pallor-corrupted siege engine. The city's last stand before it falls.
+- **Narrative Purpose:** The Act II climax. King Aldren dies. The Ashen Ram reveals Vaelith's hidden hand in the Compact's war machine. Dame Cordwyn fights alongside the party. The victory against the Ram is rendered hollow by the Compact's overwhelming numbers. Vaelith appears for the unwinnable fight that closes Act II.
+- **Difficulty:** Hard. Multi-phase boss with add waves and positional mechanics. The allied NPC (Cordwyn) must be managed.
+- **Recommended Level:** 18-22
+- **Estimated Play Time:** 25-35 minutes (scripted battle sequence, not a full dungeon crawl)
+
+**Boss: The Ashen Ram (10000 HP)**
+
+A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction site in Corrund. The Compact thinks the Ram is their weapon. It is Vaelith's.
+
+**Phase 1 (10000-6000 HP): Ranged Engagement**
+The Ram advances toward the walls. The party fights from the battlements.
+- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing enough damage can delay this by 1 turn.
+- **Despair Pulse (Passive)** -- all party members lose 5% max MP per turn from proximity to the Ram's Pallor-resonant frame.
+- **Compact Escalade** -- waves of Compact soldiers scale the walls (3-4 soldiers per wave, 800 HP each). Must be managed while damaging the Ram.
+- **Lord Haren's Orders** -- if the party made favorable dialogue choices with Haren earlier, he calls archer volleys (200 damage to the Ram per turn) and deploys barricades (reduce soldier wave size by 1).
+
+**Allied NPC: Dame Cordwyn** (5000 HP, ATK 85, DEF 70)
+- Fights alongside the party. Has her own turn in the ATB order.
+- **Shield Wall** -- reduces damage to one party member by 50% for 1 turn.
+- **Rally Cry** -- removes Despair status from all party members. 3-turn cooldown.
+
+**Phase 2 (6000-3000 HP): The Breach**
+The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.
+- **Drill Arm** -- single target, 500-600 damage.
+- **Pallor Shrapnel** -- AoE cone, 300-350 damage + Pallor Touched status (ATK/DEF reduced 10% for 3 turns).
+- **Engine Surge** -- the Ram charges forward, pushing party members back. 200 damage + knockback.
+- Compact soldier waves continue (reduced to 2 per wave).
+
+**Phase 3 (below 3000 HP): The Pallor Core**
+The Ram's core activates. Despair Pulse intensifies to party-wide.
+- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (50% chance to skip turn). Every 3 turns.
+- **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
+- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
+
+**On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
+
+**Weakness:** Lightning (150% damage), Flame (125% damage to exposed core only in Phase 3).
+**Resistance:** Earth (absorbs), Frost (75% damage).
+**Drop:** Pallor-Laced Iron (crafting material -- unique), Compact Battle Standard (accessory -- boosts party DEF when allied NPCs are present).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| Compact Soldier | Carradan infantry. Scales walls in waves. Basic physical attacks. | Battlements (all phases) | 800 |
+| **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 10,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Pallor-Laced Iron | Boss drop | Crafting material (unique) |
+| Compact Battle Standard | Boss drop | Accessory (boosts party DEF when allied NPCs present) |
+
+---
+
+## 19. Ley Nexus Hollow
+
+### Dungeon Overview
+
+- **Floors:** 1 (The Nexus Chamber -- a single boss arena)
+- **Size:** 50x40 tiles (large circular chamber with radiating ley lines)
+- **Theme:** The living heart of the Thornmere Wilds' ley network. A vast underground chamber where ley lines converge in a web of glowing energy -- now corrupted by the Ley Leech. Torren is at the center, burning his life force to hold the nexus together.
+- **Narrative Purpose:** The Interlude's Torren recovery sequence. The party must defeat the Ley Leech to free Torren and stabilize the nexus. This is the first major sign that the Pallor can be pushed back. Caden guides the party here. Kael Thornwalker holds the perimeter.
+- **Difficulty:** Hard. Positional mechanics on shifting ley lines. Torren unavailable until Phase 2. DPS check in Phase 3.
+- **Recommended Level:** 20-24
+- **Estimated Play Time:** 20-30 minutes
+
+**Boss: The Ley Leech (9000 HP)**
+
+A parasitic Pallor entity latched onto the ley nexus. Unlike most Pallor manifestations (grey, static, hollow), the Leech is grotesquely alive -- swollen with stolen energy, pulsing with color that looks wrong. Vibrant where it should be grey. This is what the Pallor looks like when it is feeding well.
+
+**Arena Mechanic: Shifting Ley Lines**
+Glowing ley lines crisscross the chamber floor. Standing on an active (glowing) ley line heals 50 HP per turn. The Leech periodically corrupts ley lines (they turn grey), causing them to deal 75 damage per turn instead. Ley lines shift corruption patterns every 3 turns.
+
+**Phase 1 (9000-4500 HP): Rooted**
+The Leech is anchored to the nexus. Torren is visible in the background, struggling. Party fights at reduced strength (4 members, no Torren).
+- **Tentacle Lash** -- single target, 350-400 damage. Reaches anywhere in the arena.
+- **Corruption Pulse** -- corrupts 2 additional ley lines for 3 turns.
+- **Siphon** -- drains 200 HP from the nexus (visual: ley lines dim). If used 5 times without interruption, the Leech heals 1500 HP. Interrupt by dealing 1000+ damage in a single turn.
+- **Nexus Regeneration (Passive)** -- while rooted, heals 100 HP per turn from the nexus connection.
+
+**Phase 2 (below 4500 HP): Unmoored**
+Torren breaks free and rejoins the party. The Leech detaches and becomes mobile.
+- All Phase 1 attacks except Nexus Regeneration.
+- **Thrash** -- AoE hitting all adjacent characters, 250-300 damage.
+- **Leech Bite** -- single target, 300 damage + drains HP equal to damage dealt.
+- Moves 2 tiles per turn. Faster and more aggressive but no longer regenerating.
+
+**Phase 3 (below 1800 HP): Desperate Re-attachment**
+The Leech moves toward the nexus center.
+- If it reaches the center, it re-attaches and heals 30%. Phase resets to Phase 2.
+- **DPS check:** burn it down before it roots again.
+- **Torren's Spiritcall** deals 200% damage during Phase 3.
+- **Death Throes** -- on defeat, releases all stolen energy. All ley lines glow clean. Party fully healed.
+
+**On defeat:** Nexus stabilizes. Torren collapses. Caden enters and performs a recovery ritual -- passing-of-the-torch moment.
+
+**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. 200% in Phase 3. After the fight, Torren acknowledges Caden's ritual: "She did not call the spirits. She asked the land. That is... different. That might be better."
+
+**Weakness:** Flame (150%), Spirit (125%).
+**Resistance:** Frost (50%), Earth (75%).
+**Immunity:** Pallor Touched status.
+**Drop:** Nexus Shard (crafting material -- Torren's ultimate weapon component), Leech Ichor (consumable -- full HP/MP restore, single use).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 9,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Nexus Shard | Boss drop | Crafting material (Torren's ultimate weapon component) |
+| Leech Ichor | Boss drop | Consumable (full HP/MP restore, single use) |
+
+---
+
+## 20. Highcairn Monastery
+
+### Dungeon Overview
+
+- **Floors:** 2 (Monastery Grounds + Inner Sanctum)
+- **Size:** 40x30 tiles per floor
+- **Theme:** A mountain monastery saturated by the Pallor. Edren has been here alone, stewing in guilt after the fall of Valdris. The grey came out of him -- not into him. His guilt gave the Pallor permission to take shape.
+- **Narrative Purpose:** The Interlude's Edren recovery sequence. The party confronts the Pallor Hollow -- a mirror-image of Edren made from his guilt. Resolves IMPORTANT-03 from layout-audit.md.
+- **Difficulty:** Hard. The Hollow uses Edren's own moveset (including player-equipped abilities). Phase 3 requires protecting guest NPC Edren.
+- **Recommended Level:** 20-24
+- **Estimated Play Time:** 25-35 minutes
+
+**Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Pallor Hollow (11000 HP)**
+
+Not a monster in the traditional sense. It looks like Edren -- a grey, translucent mirror-image, but wrong. Moves like Edren. Fights like Edren. Face frozen in the expression Edren wore when Valdris fell.
+
+**Dynamic Moveset:** Uses Edren's moveset from when the player last controlled him, including equipped abilities. The game remembers what the player built and turns it against them.
+
+**Phase 1 (11000-5500 HP): The Mirror**
+- Uses Edren's equipped abilities against the party.
+- **Mirror Counter** -- if the party uses physical attacks, the Hollow counters with physical. If magic, counters with magic. Vary approach to avoid counters.
+- **Grey Reflection** -- copies the last ability used against it and fires it back. 2-turn cooldown.
+- **Hollow Guard** -- raises DEF by 50% for 1 turn when the party focuses one damage type.
+
+**Phase 2 (5500-2750 HP): The Voice**
+The Hollow speaks in Edren's voice. Lines from earlier in the game.
+- All Phase 1 attacks, plus:
+- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (50% chance to skip turn, 3 turns).
+- **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
+- **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
+
+**Phase 3 (below 2750 HP): The Reckoning**
+Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses entirely on Edren.
+- Party must protect Edren (if his HP reaches 0, fight resets to Phase 2 at 4000 HP).
+- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 1500 damage). Three Defends end the fight.
+
+**On defeat:** Dissolves into grey mist that flows back into Edren. Not destroyed -- reclaimed. Edren rejoins with **Scar of the Hollow** -- max HP permanently reduced by 10%, but immunity to Despair status effects.
+
+**The Monastery Prior's Dialogue:** "Your friend came to us broken. We tried to help. But the grey came out of him -- not into him, out. It was already inside. It just needed permission to take shape."
+
+**Cordwyn's Special Interaction:** If present: "That is not him. But it was him. That is what he has been carrying."
+
+**Weakness:** Spirit (150%), Flame (125%).
+**Resistance:** Physical (75%), Frost (75%).
+**Immunity:** Void.
+**Drop:** Hollow Shard (accessory -- reduces Pallor damage 25%), Edren's Guilt (key item -- triggers Act III bonus dialogue).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 11,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Hollow Shard | Boss drop | Accessory (reduces Pallor damage 25%) |
+| Edren's Guilt | Boss drop | Key item (triggers Act III bonus dialogue) |
+
+---
+
 ## Appendix: Dungeon Summary Table
 
 | # | Dungeon | Act | Floors | Rec. Level | Time | Boss | Gimmick |
 |---|---------|-----|--------|-----------|------|------|---------|
 | 1 | Ember Vein | I | 4 | 3-7 | 40-55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
 | 2 | Fenmother's Hollow | II | 3 | 12-15 | 55-75 min | Corrupted Fenmother | Water level control, Water of Life |
-| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine | Power routing, wall switch sequence |
+| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
 | 4 | Axis Tower | Interlude | 5 | 22-26 | 50-65 min | General Kole | Stealth/alarm system |
 | 5 | Ley Line Depths | II (optional), III | 5 | 16-28 | 90-120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
 | 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Trial Manifestations | Pallor trials (narrative combat) |
@@ -4305,3 +4526,6 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
 | 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
 | 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
+| 18 | Valdris Siege Battlefield | II | 1 | 18-22 | 25-35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
+| 19 | Ley Nexus Hollow | Interlude | 1 | 20-24 | 20-30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
+| 20 | Highcairn Monastery | Interlude | 2 | 20-24 | 25-35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
