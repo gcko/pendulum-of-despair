@@ -602,7 +602,7 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 - Inside Farmhouse 1 (after completing the spooked animal quest): 1x 100g reward pouch
 
 **Environmental storytelling:**
-- The Dry Well: center of the village square. NPCs mention it offhandedly -- "Went dry three seasons back." The ley line beneath it stopped flowing. In the Interlude, the well's foundation cracks open, revealing a mini-dungeon beneath (see Dry Well of Aelhart in locations.md).
+- The Dry Well: center of the village square. NPCs mention it offhandedly -- "Went dry three seasons back." The ley line beneath it stopped flowing. In the Interlude, the well's foundation cracks open, revealing a dungeon beneath (see Dry Well of Aelhart in locations.md).
 - Wheat fields: golden and swaying (3-frame animation). Three sides of the village. No other location has this crop density. This is what feeds Valdris.
 - The Carradan Trader: a small, deliberate detail. Compact goods on Valdris soil. The trader is polite, professional, and sells useful items. The tension is not hostile -- it is insidious.
 - Older farmers mention the soil "used to glow." Ley line magic enriched the farmland; now it is just dirt.

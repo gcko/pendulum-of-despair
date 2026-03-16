@@ -1079,6 +1079,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 26 | Roothollow | Town | Find Torren, corruption spreading |
 | 26a | Frostcap Caverns | Dungeon | Torren's character dungeon, Frostpeak Crystal, Monastery Key |
 | 26b | Caldera Forge Depths | Dungeon | Lira's character dungeon (full access), Volcanic Ingot |
+| 26c | Dry Well of Aelhart | Dungeon (7 floors) | Optional; Edren's personal content (Floors 1-4 Interlude, 5-7 Act III) |
 | 27 | Archive of Ages | Dungeon | Find Maren, the truth revealed |
 
 ### Act III: The Convergence / Act IV: The Closing Door
@@ -1096,6 +1097,5 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
 | 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 33 | Dry Well of Aelhart | Dungeon (7 floors) | Edren's personal content |
 | 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
 | 35 | Sunken Rig | Dungeon | Sable-focused optional content |

@@ -974,11 +974,11 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Archive of Ages** | -- | -- | Base (dungeon) | -- | -- | **1** | Ancient ruins do not change |
 | **The Pendulum (tavern)** | -- | -- | -- | -- | New construction | **1** | Epilogue only |
 | **Dreamer's Fault** | -- | -- | -- | -- | Post-game dungeon | **1** | |
-| **Dry Well of Aelhart** | -- | -- | Accessible (mini-dungeon) | -- | -- | **1** | |
+| **Dry Well of Aelhart** | -- | -- | Accessible (Floors 1-4) | Floors 5-7 unlocked | -- | **2** | 7-floor dungeon; Interlude partial, Act III full |
 | **Sunken Rig** | -- | -- | Beached rig (dungeon) | -- | -- | **1** | |
 | **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (4 floors) | -- | -- | **2** | Lira's character dungeon |
 | **Frostcap Caverns** | -- | -- | Cave system (3 chambers) | -- | -- | **1** | Torren's character dungeon |
-| **Thornvein Passage** | -- | -- | -- | Root tunnel (critical path) | -- | **1** | Connects Roothollow to Pallor Wastes Section 2 (via ley-line root network) |
+| **Thornvein Passage** | -- | -- | -- | Root tunnel (optional shortcut) | -- | **1** | Connects Roothollow to Pallor Wastes Section 2 (via ley-line root network) |
 | **Windshear Peak** | -- | Base vista | -- | Corrupted vista | -- | **2** | Visual change only (the view) |
 
 ### Summary
@@ -986,11 +986,11 @@ How many distinct map states each location needs, helping scope the tilemap work
 | Metric | Count |
 |--------|-------|
 | **Total unique locations** | 38 |
-| **Total map variants needed** | ~76 |
+| **Total map variants needed** | ~77 |
 | **Locations needing 4+ variants** | 2 (Valdris Crown: 5, Roothollow: 4) |
-| **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, The Convergence) |
-| **Locations needing 2 variants** | 17 |
-| **Locations needing 1 variant** | 14 |
+| **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, Ley Line Depths) |
+| **Locations needing 2 variants** | 18 |
+| **Locations needing 1 variant** | 12 |
 | **Pallor desaturation overlay tiles** | Every outdoor surface tile at 40-50% desaturation (can be batch-processed) |
 
 ---

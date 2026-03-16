@@ -977,7 +977,7 @@ When Cael closes the door and the Pallor withdraws, the biomes do not revert to 
 | Fenmother's Hollow | Thornmere Wetlands (submerged) | Underground / Cavern | II |
 | Carradan Rail Tunnels | Underground / Cavern (industrial) | -- | II, Interlude |
 | Axis Tower | Carradan Industrial (interior) | Underground (lower) | Interlude |
-| Ley Line Depths | Underground / Cavern | Ley Line Nexus, Ancient Ruins | II, Interlude |
+| Ley Line Depths | Underground / Cavern | Ley Line Nexus, Ancient Ruins | II, III |
 | Archive of Ages | Ancient Ruins | -- | Interlude |
 | Pallor Wastes | The Pallor Wastes | -- | III |
 | The Convergence | Ley Line Nexus (extreme) | The Pallor Wastes | III, IV, Epilogue |
