@@ -522,6 +522,42 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ---
 
+#### Caldera Forge Depths (Character Dungeon — Lira)
+
+##### Act II State (Discoverable)
+- **Map layout changes:** None. The entrance is a sealed maintenance hatch in Caldera's refinery basement, visible but locked.
+- **Visual state:** Carradan Industrial (subterranean variant). Forge-heat shimmer. Exposed Arcanite conduits. The air tastes of metal.
+- **Accessible areas:** Only the refinery basement antechamber. Lira's Forgewright knowledge identifies the hatch but she cannot open it without her full toolkit (lost when she fled). A single room of environmental lore -- schematics on the walls, an old Forgewright workbench.
+- **Environmental details:** The hatch bears Forgewright guild seals that predate the current regime. Lira recognizes the design language -- this was a prototype testing facility, sealed and forgotten. The refinery above rumbles constantly. Heat rises through the floor grating.
+
+##### Interlude State (Full Access)
+- **What changed:** Lira rejoins the party with her recovered toolkit and resistance contacts. Sera Linn's network provides the access codes. The hatch opens to reveal three floors of abandoned Forgewright experimental chambers.
+- **Map modifications:** The hatch is open (new accessible staircase). Below: prototype testing halls, a flooded coolant level, and a deep forge chamber where early Arcanite-ley integration experiments left scars on the walls.
+- **Palette/atmosphere shifts:** Stage 1 corruption at the deepest level -- the forge experiments destabilized the local ley line decades ago. The Arcanite conduits flicker between amber and grey-white.
+- **Environmental details:** Lira's character content -- journals from Forgewrights who questioned the Guild's methods, prototype devices that foreshadow the Axis Tower engine's design. The deep forge chamber contains evidence that the Compact knew ley extraction was unsustainable. Lira-specific loot and a confrontation with her past.
+
+---
+
+#### Frostcap Caverns (Character Dungeon — Torren)
+
+##### Interlude State (Only Visit)
+- **Map layout changes:** A hidden cave entrance near Highcairn, revealed by frost-shatter from ley line instability. The entrance is a narrow crack in the mountainside, widened by seismic stress.
+- **Visual state:** Mountain/Alpine (deep cavern variant). Ice formations. Ley energy frozen into crystalline veins in the cave walls. Cold blue-white light from the ice. No forge-glow, no warmth -- the opposite of Caldera.
+- **Accessible areas:** Three-chamber cave system -- an ice gallery with spirit-carved formations, a frozen ley spring, and a meditation chamber where an ancient spirit-speaker left wards that still pulse faintly.
+- **Environmental details:** Torren's character dungeon. The spirit-speaker wards resonate with his abilities -- puzzles require spirit-speaking to progress. The frozen ley spring is a ley line node that the Pallor has not reached (the cold and altitude protect it). Torren can commune with the ice spirits here, gaining insight into the old ways of stabilizing ley lines. The cave is pristine and silent -- a counterpoint to the corruption outside. Torren-specific loot and a pivotal character moment about sacrifice and preservation.
+
+---
+
+#### Thornvein Passage (Root Tunnel Network)
+
+##### Act III State (Only Visit)
+- **Map layout changes:** The Thornvein root network, stressed by Pallor corruption and ley line instability, has shifted and cracked open a passage from Roothollow's deep roots to the Natural Caverns (Floor 2) of the Ley Line Depths. The passage did not exist before -- the roots moved.
+- **Visual state:** Thornmere Deep Forest (subterranean variant) transitioning to Underground/Cavern. Living and petrified roots intertwined. Bioluminescence dim but present -- the roots here are deeper than the Pallor has reached. At the far end, the cavern palette of the Ley Line Depths begins.
+- **Accessible areas:** A winding root tunnel from Roothollow's lowest chamber to the Ley Line Depths Floor 2 entrance. Three nodes along the route -- a root junction (navigation puzzle), a petrified section (combat gauntlet where the Pallor has partially reached), and a ley line seep (rest point where the roots drink from the deep ley network).
+- **Environmental details:** The passage is the world responding to catastrophe -- the roots shifted because the ley lines beneath them shifted. The petrified section is a reminder that the corruption reaches even here. The living sections glow faintly, the roots still trying to sustain the forest above. This is the only route to the Ley Line Depths after Millhaven's destruction, making it a critical path dungeon. The transition from organic root tunnel to geometric pre-civilization stone at the far end is visually striking -- nature's chaos meeting ancient order.
+
+---
+
 #### The Pallor Wastes (Convergence Approach)
 
 ##### Act III State (Only Visit)
@@ -940,18 +976,21 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Dreamer's Fault** | -- | -- | -- | -- | Post-game dungeon | **1** | |
 | **Dry Well of Aelhart** | -- | -- | Accessible (mini-dungeon) | -- | -- | **1** | |
 | **Sunken Rig** | -- | -- | Beached rig (dungeon) | -- | -- | **1** | |
+| **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (3 floors) | -- | -- | **2** | Lira's character dungeon |
+| **Frostcap Caverns** | -- | -- | Cave system (3 chambers) | -- | -- | **1** | Torren's character dungeon |
+| **Thornvein Passage** | -- | -- | -- | Root tunnel (critical path) | -- | **1** | Connects Roothollow to Ley Line Depths |
 | **Windshear Peak** | -- | Base vista | -- | Corrupted vista | -- | **2** | Visual change only (the view) |
 
 ### Summary
 
 | Metric | Count |
 |--------|-------|
-| **Total unique locations** | 35 |
-| **Total map variants needed** | ~72 |
+| **Total unique locations** | 38 |
+| **Total map variants needed** | ~76 |
 | **Locations needing 4+ variants** | 2 (Valdris Crown: 5, Roothollow: 4) |
 | **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, The Convergence) |
-| **Locations needing 2 variants** | 16 |
-| **Locations needing 1 variant** | 12 |
+| **Locations needing 2 variants** | 17 |
+| **Locations needing 1 variant** | 14 |
 | **Pallor desaturation overlay tiles** | Every outdoor surface tile at 40-50% desaturation (can be batch-processed) |
 
 ---

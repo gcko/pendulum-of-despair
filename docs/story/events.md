@@ -26,6 +26,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Canopy Reach | New area opens | Accessible for the first time during the diplomatic mission. |
 | Ashgrove | New area opens | Accessible for the tribal alliance scene. |
 | Millhaven | New area opens | Accessible during the diplomatic mission arc; the extraction pit is operational. |
+| Caldera Forge Depths | Discoverable | Refinery basement entrance found beneath Caldera's industrial district. Gated by Lira's Forgewright knowledge — accessible only with her in the party. |
 | Ashmark | Referenced | Appears in Lira's flashbacks. Not yet visitable. |
 
 **NPC Changes:**
@@ -49,7 +50,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 - Wild magic incidents increase in the Thornmere Wilds — creature behavior erratic, spirit-totems cracking.
 - Carradan extraction operations at Millhaven running at full capacity, visibly wounding the earth.
 
-**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut).
+**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut), Caldera Forge Depths (discoverable, gated by Lira).
 
 **Areas Closing:** Aelhart (cut off), Ironmouth (occupied).
 
@@ -82,6 +83,8 @@ This is the game's World of Ruin moment. Everything changes.
 | The Archive of Ages | New area opens | Maren's location during the "Finding Maren" sequence. |
 | Carradan Rail Tunnels | Corrupted | Boring engines reactivated randomly. Pallor manifestations nesting in the dark. Required dungeon for Corrund infiltration. |
 | Axis Tower | New dungeon | Infiltration dungeon during the "Finding Lira" sequence. |
+| Caldera Forge Depths | Full access | Lira rejoins the party and unlocks the deeper chambers beneath Caldera's refineries. Her character dungeon. |
+| Frostcap Caverns | New area opens | Hidden caves near Highcairn in the Frostcap Mountains. Torren's character dungeon, accessible during the Highcairn sequence. |
 
 **NPC Changes:**
 
@@ -153,6 +156,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 | Highcairn | Safe haven | Monastery cleared of Pallor. Monks provide supplies and a blessing for the march. |
 | Corrund | Disarray | Consortium lost control of several districts. Brief passage through. |
 | Ashgrove | Grey | The ash field fully Pallor-corrupted. Somber pass-through scene. |
+| Thornvein Passage | New area opens | Root tunnel network connecting Roothollow to Ley Line Depths Floor 2. Opens when the Thornvein root network shifts, bypassing the destroyed Millhaven surface entrance. |
 | The Pallor Wastes | New area opens | Ten-mile radius around the Convergence fully consumed. Grey petrified forest, drained earth, muffled sound. The gauntlet dungeon. |
 | The Convergence | New area opens | Final dungeon. Floating plateau, Cael's machine, the door. |
 
@@ -172,7 +176,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 - No shops, no save points except faint ley line clearings.
 - Hope physically heavier — reflected in gameplay (debuff mechanics, resource pressure).
 
-**New Areas Opening:** The Pallor Wastes, The Convergence.
+**New Areas Opening:** The Pallor Wastes, The Convergence, Thornvein Passage (root tunnel to Ley Line Depths).
 
 ---
 

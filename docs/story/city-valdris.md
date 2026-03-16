@@ -787,7 +787,7 @@ AR    = Armory                  BT = Bell Tower Base
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
 | Alpine Remedy | 60 | Restore 250 HP | Local herb blend |
-| Frostbane Tea | 80 | Cure Freeze status, +10% Cold resist 1 battle | Alpine specialty |
+| Frostbane Tea | 80 | Cure Petrify status, +10% Cold resist 1 battle | Alpine specialty |
 | Antidote | 30 | Cure Poison | Standard |
 | Smelling Salts | 40 | Cure Sleep/Confuse | Standard |
 

@@ -546,10 +546,10 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | Marsh Serpent | Small water snake, fast, poison bite. 2-3 per encounter. | All floors |
 | Drowned Bones | Skeletal remains animated by wild ley energy. Slow, hits hard. | Floor 1-2 |
 | Ley Jellyfish | Floating translucent creature. Casts paralysis. Weak to physical. | Floor 2-3 |
-| Polluted Elemental | Water elemental with dark discoloration. Area water attack. | Floor 2-3 |
+| Polluted Elemental | Frost elemental with dark discoloration. Area Frost attack. | Floor 2-3 |
 | Corrupted Spawn | Dark-scaled serpent, fast, targets backline. Cleansing sequence only. | Floor 3 (Wave 4) |
-| **Drowned Sentinel** (Mini-boss) | Stone guardian covered in barnacles. Heavy physical, water area attack. 4,000 HP. | Floor 2 |
-| **Corrupted Fenmother** (Boss) | Water serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 8,000 HP. | Floor 3 |
+| **Drowned Sentinel** (Mini-boss) | Stone guardian covered in barnacles. Heavy physical, Frost area attack. 4,000 HP. | Floor 2 |
+| **Corrupted Fenmother** (Boss) | Frost serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 8,000 HP. | Floor 3 |
 
 ### Treasure/Loot
 
@@ -782,7 +782,7 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 
 - Pipe Wraiths appear in groups of 2-3.
 - They emerge from pipe junctions in the walls, sliding out of the metal as if the pipes were doorways.
-- **Attack pattern:** Wraith Strike (physical, ignores 25% DEF), Steam Curse (inflicts Burn status), Tool Throw (ranged, chance to inflict Slow).
+- **Attack pattern:** Wraith Strike (physical, ignores 25% DEF), Steam Curse (inflicts Burn status), Tool Throw (ranged, 20% chance to inflict Slow).
 - **Weakness:** Storm magic disrupts their spectral form. Lira's Flame spells deal 1.5x damage.
 - **Behavior:** They don't chase aggressively. They patrol set paths along the pipe runs, and engage only when the player enters their corridor. If the player retreats, they return to their patrol.
 - **Lore flavor:** Defeating a Pipe Wraith causes it to dissipate with a sound like escaping steam. Occasionally, one will mutter a work order before attacking: "Section 7, pressure check..." or "Valve 3 needs recalibrating..."
@@ -2623,8 +2623,8 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Well Shade | Dormant construct, sluggish. Stone limbs, faint amber glow. Awakened by footsteps after centuries of silence. | Floor 1 | 800 |
 | Cave Lurker | Ley-mutated cave crawler. Six-legged, crystalline carapace. Attacks in groups of 2-3. | Floor 2 | 1,200 |
 | Ley Vermin (deep) | Stronger variant of the Ember Vein's crystalline rats. Faster, hits harder, glows blue instead of amber. | Floors 2-3 | 1,000 |
-| Pipe Specter | Water-element construct. Manifests in waterwork channels. Sprays pressurized ley-water. | Floor 3 | 1,800 |
-| **Pipe Warden** (Mini-boss) | Waterworks guardian construct. Water attacks, valve-sealing ability. | Floor 3 | 6,500 |
+| Pipe Specter | Frost-element construct. Manifests in waterwork channels. Sprays pressurized ley-water. | Floor 3 | 1,800 |
+| **Pipe Warden** (Mini-boss) | Waterworks guardian construct. Frost attacks, valve-sealing ability. | Floor 3 | 6,500 |
 | Guardian Sentinel | Standard ruin guardian. Stone body, geometric attacks. Triggered by failed wall switch sequence. | Floor 4 | 3,000 |
 | Hearthstone Shade | Domestic guardian echo. Slower than combat constructs but durable. Appears in residential areas. | Floor 4 | 2,500 |
 | **Hearthstone Warden** (Mini-boss) | Residential quarter guardian. Stone blade and shield. Salutes before combat. Skippable with Family Crest. | Floor 4 | 8,000 |
@@ -3048,7 +3048,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 - Weak coastal enemies. Clusters of oversized crabs that have colonized the hull's surface.
 - They skitter across the tilted hull in groups of 3-5.
 - **Stats:** 400 HP, high DEF (hard shell), very low magic DEF. Weak to Flame and Storm.
-- **Attacks:** Claw Snap (physical, chance to inflict Bleed), Shell Guard (raises DEF for 2 turns), Swarm (all crabs attack one target when 3+ are alive).
+- **Attacks:** Claw Snap (physical, 15% chance to inflict Bleed), Shell Guard (raises DEF for 2 turns), Swarm (all crabs attack one target when 3+ are alive).
 - **Behavior:** Non-aggressive until the player steps on their territory (barnacle clusters). They scatter when hit with area attacks.
 - **Drop:** Crab Shell (crafting material), Salt Crystal (consumable, cures Poison).
 
@@ -3083,7 +3083,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 - `S` (top-left): Save point.
 - `P` (center): Valve wheel 1. Controls compartment flooding.
 - `@` (center-right): Crew log station. Five logs describing the crew's experience. The last log is just: "The grey is inside now."
-- `T` (left): Chest -- Diver's Mask (accessory, prevents water damage).
+- `T` (left): Chest -- Diver's Mask (accessory, prevents environmental flood damage).
 - `T` (right): Chest -- Rig Worker's Wrench (weapon, Sable, high critical rate).
 - `v` (right): Hatch down to Lower Engine Room.
 
@@ -3141,7 +3141,7 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 | Crew Manifest | Exposed Hull chest | Lore item |
 | 2x Antidote | Exposed Hull chest | Consumable |
 | 1x Ether | Exposed Hull, pitfall compartment | Consumable |
-| Diver's Mask | Upper Deck chest | Accessory (prevents water damage) |
+| Diver's Mask | Upper Deck chest | Accessory (prevents environmental flood damage) |
 | Rig Worker's Wrench | Upper Deck chest | Weapon (Sable, high crit) |
 | 3x Pallor Ward | Engine Room chest | Consumable |
 | Abyssal Dagger | Engine Room, post-boss | Weapon (Sable, best Interlude dagger) |
@@ -3151,7 +3151,7 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 
 - **Rusted deck plates (Exposed Hull):** Thin hull plates that collapse when stepped on. Visual tell: dark orange-brown pitting vs. grey-green patina. Pitfall leads to a compartment with a chest and ladder back up.
 - **Tilted hull (Exposed Hull):** The rig's list reduces movement speed to 75% for all party members except Sable. Affects combat positioning on this floor.
-- **Flooded compartments (Upper Deck, Engine Room):** Water-filled sections deal periodic water damage. Drained by correct pressure valve routing.
+- **Flooded compartments (Upper Deck, Engine Room):** Water-filled sections deal periodic Non-elemental flood damage. Drained by correct pressure valve routing.
 - **Pallor corruption zones (Engine Room):** Grey-tinted areas that apply Despair debuff (ATK and MAG down). Intensifies near the boss arena.
 - **Pressure venting (Engine Room):** Boss arena mechanic -- activating valves stuns the boss but floods sections of the arena, reducing safe standing space.
 
@@ -3598,7 +3598,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 ### Dungeon Overview
 
 - **Location:** Beneath the city of Caldera, in the heart of Carradan Compact industrial territory. The entrance is hidden in the basement of Refinery Six -- the oldest and most decrepit of Caldera's ley-refinement facilities.
-- **Acts:** Act II (discoverable -- the basement only), Interlude (full access after "The Fading Shifts" sidequest reveals deeper levels)
+- **Acts:** Act II (discoverable -- the basement only), Interlude (full access via the refinery basement after Lira rejoins the party)
 - **Floors:** 4 (Refinery Basement + Magma Channels + Ancient Forge + The Caldera Heart)
 - **Size:** 40x30 tiles each floor
 - **Theme:** A vertical descent through layers of history. Floor 1 is Carradan industrial architecture -- riveted iron walls, steam pipes, abandoned workstations. Floor 2 transitions into natural volcanic caves with magma channels carved by ancient lava flows. Floor 3 reveals an ancient pre-civilization forge built directly into the volcanic rock -- the pre-civ builders harnessed volcanic heat to power their ley-line forging operations. Floor 4 is the volcanic heart itself -- the original caldera chamber where the forge's power source still burns. The Compact built their refineries on top without knowing what was below. Lira's Forgewright knowledge is essential for understanding the industrial sections and recognizing the ancient forge's purpose.
@@ -3618,46 +3618,47 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 ### Floor 1: Refinery Basement (40x30)
 
 ```
-##########E#############################
-#........#..!...........#..............#
-#........#..............#.....T........#
-#..@.....D..............D.............##
-#........####.....####..#............##
-#........#  #.....#  #..#..........###
-####D#####  #..P..#  ####........###
-   #......  #.....#     #......###
-   #..!...  ##D####     #....###
-   #......    #....#    #..###
-   #..T...    #.%..#    ####
-   ########   #....#
-              #.P..#######
-              #.........#
-    ##########...........#
-    #.........+....!.....#
-    #...!.....#..........#
-    #.........#...S......#
-    ####D######..........#
-       #......####D#######
-       #......#  #......#
-       #..@...#  #..!...#
-       #......#  #......#
-       ####v###  #......#
-                 ########
+########################################
+#......#.........E.........#...........#
+#..@...#.........!.........#.....T.....#
+#......D...................D...........#
+#......#....###PPPP###.....#...........#
+########....#..pipe..#.....#####D#######
+     #......#..pipe..#..........#......#
+     #..!...D..pipe..D....!....#......#
+     #......#..pipe..#..........D..@...#
+     #..T...#..pipe..#..........#......#
+     ####D###..pipe..####D######..%....#
+        #....#..pipe..#........########
+        #....#..pipe..D....P...#
+        #.%..#........#........#
+   ######....##PPPP####........#
+   #.........+................S#
+   #....!....#.................#
+   #.........##################
+   ####D#####
+      #.....#
+      #.....#
+      ##.v.##
+       #...#
+       #####
 ```
 
 **Environment:** Riveted iron walls streaked with rust. Steam pipes run along the ceiling, some still hissing. Abandoned workstations with Compact-era tools -- wrenches, pressure gauges, ley-measurement devices. The air is hot and smells of sulfur and machine oil. Flickering gas lamps provide dim orange light. Deeper in, the iron walls give way to bare rock, and the temperature climbs noticeably.
 
 **Key Locations (Floor 1):**
-- `E` (top): Entry from Refinery Six's main floor. A heavy iron door with a faded sign: "SUBLEVEL ACCESS -- MAINTENANCE ONLY."
+- `E` (top-center): Entry from Refinery Six's main floor. A heavy iron door with a faded sign: "SUBLEVEL ACCESS -- MAINTENANCE ONLY."
 - `@` (top-left room): Compact engineer's logbook. Documents increasing heat readings from below and unexplained tremors. Final entry: "Something down there is waking up. Recommending immediate evacuation of Sublevel 3." The evacuation never happened.
-- `P` (center): Steam valve -- vents excess heat from below. Must be turned to reduce temperature in the southern corridor (otherwise, 5% max HP Flame damage every 3 steps).
-- `P` (lower-center): Pressure release lever -- opens a sealed maintenance hatch leading to the lower rooms.
-- `%` (center-right): Thin volcanic crust trap. Drops to lava tube sub-level.
+- `PPPP` (center, vertical): Central steam pipe corridor -- the refinery's main thermal conduit running north-south through the floor. Steam hisses from joints. Impassable barrier that divides the floor into east and west wings, with doors on either side for crossing.
+- `P` (lower-right): Steam valve -- vents excess heat from below. Must be turned to reduce temperature in the southern corridor (otherwise, 5% max HP Flame damage every 3 steps).
+- `%` (mid-right): Thin volcanic crust trap. Drops to lava tube sub-level.
+- `%` (lower-left): Second thin volcanic crust section near the descent.
 - `T` (upper-right): Chest -- Compact Wrench (weapon, Lira -- ATK +15, bonus damage to mechanical enemies).
-- `T` (left): Chest -- 3x Heat Salve (consumable, grants Flame resistance for 5 turns in battle).
-- `@` (lower-left): Lira's Forgewright check #1. She recognizes the refinery's power coupling design: "This is a Mk-III thermal coupler. Standard Compact issue, but the mounting brackets... these are much older. Someone built on top of existing infrastructure." Opens a shortcut panel revealing a hidden cache: Compact Thermal Suit (accessory, halves Flame environmental damage).
-- `S` (lower-center): Save point -- a still-functioning Compact emergency beacon, repurposed as a save crystal.
-- `v` (bottom-left): Stairs down to Floor 2.
+- `T` (mid-left): Chest -- 3x Heat Salve (consumable, grants Flame resistance for 5 turns in battle).
+- `@` (mid-right room): Lira's Forgewright check #1. She recognizes the refinery's power coupling design: "This is a Mk-III thermal coupler. Standard Compact issue, but the mounting brackets... these are much older. Someone built on top of existing infrastructure." Opens a shortcut panel revealing a hidden cache: Compact Thermal Suit (accessory, halves Flame environmental damage).
+- `+` (lower-left): Hidden passage behind a rusted maintenance panel, shortcut between the southern wing and the western rooms.
+- `S` (lower-right): Save point -- a still-functioning Compact emergency beacon, repurposed as a save crystal.
+- `v` (bottom): Stairs down to Floor 2.
 
 **Encounter Zones:**
 - Furnace Rat Pack (4x Furnace Rat, 120 HP each -- fast, minor Flame damage on bite)
@@ -3683,44 +3684,44 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 ### Floor 2: Magma Channels (40x30)
 
 ```
-   ####^####
-   #.......#
-   #..!....#
-   #.......#
-   ###D#####
-     #.............#########
-     #.............#.......#
-     #.....%.......D...T...#
-     #.............#.......#
-     ####D####.....#########
-        #....#.........#
-        #....%....P....#
-        #....#....!....#
-        #....####D######
-        ##D##   #......#
-   ######..P#   #......#
-   #........#   #..P...#
-   #...!....#   #......#
-   #........#   ##L#####
-   #..T.....#     #.....#
-   ###D######     #..*..#
-      #......#    #.....#
-      #..S...#    #.....#
-      #......#    ###v###
-      ####v###
+########################################
+#........#LLLLLLLLLL#.......#..........#
+#...^....#LLLLLLLLLL#..!....#....T.....#
+#........#LLLLLLLLLL#.......D..........#
+####D#####LLLLLLLLLL###D#####..........#
+   #.......LLLLLLLLL#.................#
+   #..!....LLLLLLLL.D.........%.....##
+   #........LLLLLLL.#..............##
+   #...%....#LLLLLL.####D##########
+   ####D#####.LLLL......#.........#
+       #......P.LL......#....P....#
+       #..P...#..L......D...!.....#
+       #......#..L......#.........#
+       #......#..LLLL...####D######
+       ###D####..LLLLL.....#.....#
+   #####.......#.LLLLLL....#.....#
+   #...........#..LLLLLLL..L..P..#
+   #....!......D...LLLLLLLL#.....#
+   #...........#....LLLLLLL##D####
+   #...T.......#.....LLLLLL#....#
+   ####D########......LLLLL#.*..#
+      #........#...........#....#
+      #...S....#...........#....#
+      #........#############v####
+      ####v#####
 ```
 
-**Environment:** The transition zone. Compact infrastructure gives way to raw volcanic cave. Magma channels -- rivers of glowing orange-red lava -- flow through carved trenches in the rock floor. The channels are 2-3 tiles wide, impassable without redirecting the flow via valve gates. The heat is intense. Ancient stone walls begin to appear among the natural rock -- smooth, precise, clearly artificial. Pre-civilization construction.
+**Environment:** The transition zone. Compact infrastructure gives way to raw volcanic cave. Magma channels -- rivers of glowing orange-red lava (`L`) -- flow through carved trenches in the rock floor, winding diagonally across the chamber in wide, irregular swaths. The channels are impassable without redirecting the flow via valve gates. The heat is intense. Ancient stone walls begin to appear among the natural rock -- smooth, precise, clearly artificial. Pre-civilization construction. The cave walls are irregular and organic, nothing like the rectangular corridors above.
 
 **Key Locations (Floor 2):**
-- `^` (top): Stairs up to Floor 1.
-- `P` (center): Valve Gate Alpha -- controls the eastern magma channel. Open position floods the eastern corridor (blocking passage to the treasure room). Closed position diverts lava to the heating mechanism on Floor 3.
-- `P` (lower-left): Valve Gate Beta -- controls the western magma channel. Open position floods the western path. Closed position cools the stone bridge to the mini-boss chamber.
-- `P` (lower-right): Valve Gate Gamma -- controls the deep channel feeding the Caldera Heart. This valve's setting determines which of two paths opens on Floor 3.
+- `^` (top-left): Stairs up to Floor 1.
+- `P` (mid-left): Valve Gate Alpha -- controls the central magma channel. Open position floods the central corridor. Closed position diverts lava to the heating mechanism on Floor 3.
+- `P` (mid-left, lower): Valve Gate Beta -- controls the western magma channel. Open position floods the western path. Closed position cools the stone bridge to the mini-boss chamber.
+- `P` (mid-right): Valve Gate Gamma -- controls the deep channel feeding the Caldera Heart. This valve's setting determines which of two paths opens on Floor 3.
 - `%` (two locations): Thin volcanic crust traps. Drop to small lava tube with ladder back.
 - `T` (upper-right): Chest -- Magma Shield (armor, +8 DEF, Flame resistance).
 - `T` (lower-left): Chest -- 5x Potion.
-- `L` (lower-right): Locked gate -- opens only when Valve Gate Beta is closed (lava cools, stone mechanism unlocks).
+- `L` (right, below Gamma valve): Locked gate -- opens only when Valve Gate Beta is closed (lava cools, stone mechanism unlocks).
 - `*` (lower-right): **Mini-boss: Slag Golem** (5000 HP).
 - `S` (bottom-left): Save point -- an ancient stone marker with a faintly glowing ley-line sigil.
 - `v` (bottom-left): Stairs down to Floor 3 (main path).
@@ -3729,7 +3730,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 **Mini-Boss: Slag Golem (5000 HP)**
 - A hulking mass of molten slag -- industrial waste animated by wild ley energy leaking from below. Half Compact metal, half volcanic rock, fused together and given terrible purpose.
 - **Attacks:** Slag Slam (heavy physical, single target), Molten Spray (Flame damage, all targets, 25% chance of Burn status), Harden (raises DEF for 3 turns, reduces SPD), Core Meltdown (when below 25% HP -- charges for 2 turns, then massive Flame AoE).
-- **Weakness:** Frost magic. Water-based attacks cool the slag, reducing its ATK for 2 turns.
+- **Weakness:** Frost magic. Frost-based attacks cool the slag, reducing its ATK by 20% for 2 turns.
 - **Strategy:** Burst Frost damage during Harden phases (high DEF but it stands still). When Core Meltdown charges, either finish it quickly or defend + Flame resistance.
 - **Drop:** Refined Slag (crafting material), 800 Gold.
 
@@ -3827,7 +3828,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 
 **Phase 1 (10000-5000 HP):**
 - **Forge Hammer** -- heavy physical, single target, 400-500 damage.
-- **Magma Breath** -- Flame damage, cone AoE, 250-350 damage + Burn status.
+- **Magma Breath** -- Flame damage, cone AoE, 250-350 damage + Burn status (30% chance).
 - **Volcanic Tremor** -- earth damage, all targets, 200-300 damage. Cracks appear in the floor (new `%` trap tiles for 3 turns).
 - **Temper** -- self-buff, raises ATK and DEF for 3 turns.
 
@@ -3839,7 +3840,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 
 **Lira's Special Interaction:** If Lira has the Boring Engine Schematic (from Rail Tunnels), a dialogue option appears at the start of Phase 2: "I know what you are. You're not a weapon -- you're a forge. The Compact broke your containment, but I can fix it." Lira uses the schematic's knowledge to interface with the Forge Heart. The boss's ATK and DEF drop by 30%, and Caldera Eruption becomes non-interruptible but deals only 300 damage. The Forge Heart's dialogue shifts from rage to exhaustion: "FINALLY... ONE WHO UNDERSTANDS... END THIS... GENTLY..."
 
-**Weakness:** Frost magic (150% damage). Water attacks cool the outer shell (reduce DEF for 2 turns).
+**Weakness:** Frost magic (150% damage). Frost attacks cool the outer shell (reduce DEF by 20% for 2 turns).
 **Resistance:** Flame (absorbs), Earth (50% damage).
 **Drop:** Heart of the Caldera (key item -- quest completion), Volcanic Ingot x2 (if not already obtained from Floor 3 chest), 3000 Gold.
 
@@ -4013,7 +4014,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 
 **Mini-Boss: Ice Wyvern (6000 HP)**
 - A massive ice-blue wyvern that nests in the wind tunnels. Wingspan fills the battle screen. Scales shimmer with frost. Not malicious -- territorial. It guards the path to the shrine.
-- **Attacks:** Frost Breath (Frost damage, cone AoE, 300-400 damage + Petrify), Wing Buffet (physical, all targets, 200-250 damage + knockback, may push characters into hazard tiles), Dive Strike (single target, 500 damage, wyvern becomes untargetable for 1 turn during dive), Ice Armor (self-buff, +50% DEF for 3 turns).
+- **Attacks:** Frost Breath (Frost damage, cone AoE, 300-400 damage + Petrify (25% chance)), Wing Buffet (physical, all targets, 200-250 damage + knockback, may push characters into hazard tiles), Dive Strike (single target, 500 damage, wyvern becomes untargetable for 1 turn during dive), Ice Armor (self-buff, +50% DEF for 3 turns).
 - **Weakness:** Flame magic (150% damage). Storm (125% damage).
 - **Strategy:** Flame magic to strip Ice Armor quickly. Heal through Frost Breath. Save burst damage for after Dive Strike lands (wyvern is grounded for 1 turn after).
 - **Drop:** Wyvern Scale (crafting material, rare), Wyvern Fang (accessory, +12 ATK, Frost-element physical attacks), 1200 Gold.
@@ -4200,7 +4201,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 A root system fully corrupted by the Pallor. Where healthy roots are brown and amber-veined, this mass is black, withered, and aggressive. It fills a chamber, tendrils whipping from walls and ceiling. At its core, a pulsating dark-purple heart of concentrated Pallor energy. It attacks on sight -- no communication possible.
 
 - **Root Lash** -- physical, single target, 350-450 damage + Bind status (1 turn, target cannot move or act).
-- **Thorn Burst** -- physical, all targets, 200-300 damage + Poison.
+- **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
 - **Pallor Pulse** -- dark magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
 - **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
