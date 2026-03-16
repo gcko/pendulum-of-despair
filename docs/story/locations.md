@@ -1088,6 +1088,7 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
 | 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
+| 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
 | 29 | Pallor Wastes | Gauntlet | Party trials, final approach |
 | 30 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 

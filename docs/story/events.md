@@ -158,6 +158,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 | Corrund | Disarray | Consortium lost control of several districts. Brief passage through. |
 | Ashgrove | Grey | The ash field fully Pallor-corrupted. Somber pass-through scene. |
 | Thornvein Passage | New area opens | Root tunnel network beneath the Thornmere Wilds, connecting Roothollow to a hidden exit at Pallor Wastes Section 2. Opens when the Thornvein root network shifts due to Pallor corruption and ley line instability. The tunnel follows ley-line channels linked to the deep root network, bypassing the Ashen Approach (Pallor Wastes Section 1) entirely. |
+| Ley Line Depths | Rediscovered | Floors 2-5 accessible via Thornvein root network (Floor 1 collapsed during the Interlude). Sealed door on Floor 4 opens with the Archivist's Codex, revealing Floor 5 (the Ley Confluence). |
 | The Pallor Wastes | New area opens | Ten-mile radius around the Convergence fully consumed. Grey petrified forest, drained earth, muffled sound. The gauntlet dungeon. |
 | The Convergence | New area opens | Final dungeon. Floating plateau, Cael's machine, the door. |
 
@@ -177,7 +178,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 - No shops, no save points except faint ley line clearings.
 - Hope physically heavier — reflected in gameplay (debuff mechanics, resource pressure).
 
-**New Areas Opening:** The Pallor Wastes, The Convergence, Thornvein Passage (root tunnel shortcut to Pallor Wastes Section 2).
+**New Areas Opening:** The Pallor Wastes, The Convergence, Thornvein Passage (root tunnel shortcut to Pallor Wastes Section 2), Ley Line Depths (rediscovered via Thornvein, Floors 2-5).
 
 ---
 

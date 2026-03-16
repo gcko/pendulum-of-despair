@@ -556,7 +556,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 **Locations Using This Biome:**
 - Ember Vein (introductory scale -- small, 4 floors, ember-orange inlay)
 - Archive of Ages (full scale -- vast, knowledge-based puzzles, pictographic walls)
-- Ley Line Depths (partial -- ancient carvings visible at the deepest level, sealed door)
+- Ley Line Depths (partial -- ancient carvings on deep floors; sealed door opens in Act III to reveal the Ley Confluence)
 - Dry Well of Aelhart (full scale -- 7 floors, progressive descent from village well to ley-line nexus, waterworks, residential quarters, deep archive, gravity-warped depths, and the Wellspring)
 - Dreamer's Fault (corrupted variant -- architecture from multiple ages twisted together, impossible geometry)
 - Caldera Forge Depths (Floors 3-4 -- pre-civilization forge complex, lava-flow mechanisms)
