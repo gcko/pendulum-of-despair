@@ -794,7 +794,7 @@ The Archive is not hostile by nature — its guardians are constructs that test 
 **Acts:** II (discoverable), Interlude (full access)
 **Type:** Dungeon (4 floors)
 
-Beneath Caldera's industrial refineries lies a pre-civilization forge complex — a find the Compact's founders never knew they were building over. The refineries above are loud, hot, and ceaseless; the Forge Depths are silent in a way that feels deliberate, the silence of a place that has been waiting. Four floors descend from the refinery basement into volcanic caves and finally to an ancient forge chamber, where the original builders shaped metal using processes the Compact's Forgewrights cannot replicate.
+Beneath Caldera's industrial refineries lies a pre-civilization forge complex — a find that the Compact's founders never knew they were building over. The refineries above are loud, hot, and ceaseless; the Forge Depths are silent in a way that feels deliberate, the silence of a place that has been waiting. Four floors descend from the refinery basement into volcanic caves and finally to an ancient forge chamber, where the original builders shaped metal using processes the Compact's Forgewrights cannot replicate.
 
 The dungeon's central mechanic is lava flow redirection — diverting molten channels to open passages, cool barriers, or power ancient mechanisms. The forge itself is still functional in the lowest chamber; it will shape materials that no surface forge can touch. This is Lira's character dungeon. The descent mirrors her arc: layer by layer, the industrial veneer of Caldera gives way to something older and more fundamental, a place that pre-dates the systems she's always worked within and always doubted.
 

@@ -1137,7 +1137,7 @@ Lira (if present, first entry): "I designed pipe junctions like these. Not this 
 ####D##########LLLLL####D###################
    #..........#LLLLL#     #................#
    #....P.....#LLLLL#     #......!.........#
-   #..........#LLLLL#     #................#
+   #..........#LLLLL#     #..P.............#
    #..........##DDD##     #................#
    ####D#######  #..#     ########D#########
       #........# #..#            #........#
@@ -1162,7 +1162,8 @@ Edren (if present): "It's warm. I can feel it from here." He holds out his hand 
 - `v` (top): Descent from Floor 1. The transition is immediate -- scaffolding to raw stone in a single step.
 - `L` (center): Ley energy river. Flows north to south through the cavern. Illuminates everything in blue-white. The river branches at the center of the floor, with eastern and western arms feeding into deeper channels. The main trunk continues south, growing brighter as it descends. Small fish-like shapes of pure energy swim in the current -- not alive, but not inanimate either. They scatter when the party approaches.
 - `P` (left): Ley valve 1. A pre-civilization mechanism -- geometric stone housing, smooth-worn handgrip, no rust. Redirects the eastern branch. The valve moves with surprising ease despite its age. When turned, the eastern channel brightens and the western dims. A dead crystal node on the eastern wall flickers to life: pale blue, geometric, humming.
-- `P` (right): Ley valve 2. Redirects the western branch. Same construction as valve 1. A mural beside it depicts the valve configuration in abstract pictographs -- three circles (nodes), three lines (channels), and a hand turning a symbol. Players who explored the Ember Vein will recognize the pictographic style immediately.
+- `P` (right, upper): Ley valve 2. Redirects the western branch. Same construction as valve 1. A mural beside it depicts the valve configuration in abstract pictographs -- four circles (nodes), four lines (channels), and a hand turning a symbol. Players who explored the Ember Vein will recognize the pictographic style immediately.
+- `P` (right, lower): Ley valve 3. Controls a tributary channel feeding node 3 on the southern wall. Same pre-civilization construction as valves 1 and 2. When turned, the tributary brightens and node 3 activates -- a deep amber crystal set into a carved alcove, older and larger than the others. Node 3 powers the passage to Floor 3. The correct configuration requires this valve open (node 3 powered) alongside node 1.
 - `H` (bottom-left): Hidden passage. Revealed by directing ley flow to node 1 (left valve). The dead crystal node on the eastern wall blazes to life, and the light it casts reveals a seam in the rock that was invisible before. The passage is narrow -- single file -- and the walls are covered in crystal inclusions that catch the ley-light and throw it back in cascading color. Leads to the secret room.
 - `T` (bottom-left main): Chest -- Ley-Touched Ring (accessory, +15 MAG). Resting on a natural stone shelf beside the hidden passage entrance. The ring is warm to the touch and hums faintly.
 - `T` (bottom-left secret): Chest -- Prismatic Shard (best magic accessory in Act II, +20 MAG, +10 MAG DEF). Found in the secret room -- a small natural grotto where ley energy pools in a basin of smooth stone. The shard floats in the pool, rotating slowly, casting rainbow refractions on the walls. Taking it does not disturb the pool.
@@ -3027,7 +3028,7 @@ Sable shines on the Exposed Hull. Her nimbleness is reflected mechanically -- sh
 - (Climbing the hull): "I grew up around rigs like this. Smaller ones, but the same bones. Iron and salt and grease."
 - (Examining barnacles): "These are deep-water barnacles. This rig was submerged for a while before it beached. The Pallor probably drove it ashore."
 - (Near the escape hatch): "Twenty-three people. And the company probably wrote them off as a line item. 'Rig 7: total loss. File insurance claim.'"
-- (Finding the Crew Manifest): "Names. Real names. Not 'crew of Rig 7.' Donnen Harsk. Mila Vey. Torren Cade." She pauses. "We'll find out what happened to them inside."
+- (Finding the Crew Manifest): "Names. Real names. Not 'crew of Rig 7.' Donnen Harsk. Mila Vey. Garrett Cade." She pauses. "We'll find out what happened to them inside."
 
 **Lore: Crew Manifest**
 
@@ -3333,27 +3334,27 @@ E.......................................
 #.....#........#  ################
 #.H...#........#  #..............#
 #.....##D###...#  #..............#
-#.............ice..ice...........#
-#..............ice.ice...........#
-#...S..........ice.......ice.....#
-#..............ice...............#
-#..............ice..ice..........#
-#...!..........ice.ice...........#
-#..............ice...............#
-#..............ice..ice..........#
-#..............ice.ice..ice......#
-#..............ice...............#
-#..........ice.ice...............#
-#..............ice...............D
-#.............ice.ice............#
-#..............ice...............#
-#............ice.................#
-#..........ice...................#
+#..............O..O..............#
+#...............O.O..............#
+#...S..........O.......O.........#
+#..............O.................#
+#..............O..O..............#
+#...!..........O.O...............#
+#..............O.................#
+#..............O..O..............#
+#..............O.O..O............#
+#..............O.................#
+#..........O..O.................#
+#..............O.................D
+#.............O.O................#
+#..............O.................#
+#............O...................#
+#..........O.....................#
 #................................#
 ##################################
 ```
 
-**Environment:** A vast underground frozen lake, its surface a flawless mirror of blue-white ice. The ceiling arches high above, covered in crystalline ice formations that catch and scatter torchlight into rainbow fragments. The lake is roughly 20 tiles across. Solid ground borders the edges. Three large ice boulders (marked `ice` clusters) sit on the frozen surface -- they can be pushed but not pulled.
+**Environment:** A vast underground frozen lake, its surface a flawless mirror of blue-white ice. The ceiling arches high above, covered in crystalline ice formations that catch and scatter torchlight into rainbow fragments. The lake is roughly 20 tiles across. Solid ground borders the edges. Three large ice boulders (marked `O`) sit on the frozen surface -- they can be pushed but not pulled.
 
 **Ice Sliding Puzzle Layout:**
 - The player enters from the west (through `D` from Room 1).
