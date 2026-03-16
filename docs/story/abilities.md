@@ -83,7 +83,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 > *Every Carradan child learns: magic is just energy, and energy is just a problem to be engineered. Lira left the Compact, but she brought its best ideas with her — and a bag full of tools.*
 
-**Mechanic:** Lira builds and deploys **devices** in combat. She carries a pool of **Arcanite Charges (AC)** that fuel device construction. Devices are temporary constructs that persist on the battlefield for a set number of turns or until destroyed. Lira can have up to 2 devices active simultaneously. Deploying a third destroys the oldest one.
+**Mechanic:** Lira builds and deploys **devices** in combat. She carries a pool of **Arcanite Charges (AC)** that fuel device construction. Devices are temporary constructs that persist on the battlefield for a set number of turns or until destroyed. Lira can have up to 2 devices active simultaneously. Deploying a third destroys the oldest one. **Exception:** devices deployed via dual tech combos do not count toward this limit (they are fused directly onto the target rather than placed on the field).
 
 **Resource: Arcanite Charges (AC)**
 - Max 12 AC. Starts each battle at max.
@@ -98,7 +98,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Bulkhead** | Level 7 | 3 AC | Device. Persists 3 turns. Reduces physical damage to one chosen ally by 40%. Can stack with Edren's Ironwall. |
 | **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
 | **Mending Engine** | Interlude [S] (Lv 17+) | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
-| **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
+| **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, the attack gains dual-element: it hits with BOTH elements, checking the target's weakness to each independently and using the more favorable result. Consumed on next attack. |
 | **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
 
 **Synergies:**
@@ -424,7 +424,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
 | 12 | Arc Trap | — | — |
-| 13 | Wardglass (schematic) | — | Ashmark Archives schematic |
+| 13 | — | Wardglass (schematic) | Ashmark Archives schematic |
 | 13 | — | Seal Tongue (cross-train) | Act III scene with Maren |
 | 14 | Thornveil device variant | — | Act III scene with Torren |
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |

@@ -98,7 +98,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 | 3 | High | 25-45 MP | Late game (Lv 26-40) | 50-70 |
 | 4 | Ultimate | 50-99 MP | Endgame (Lv 40+) | 85-120 |
 
-*Note: AoE spells use approximately 60-70% of these ranges (Tier 2 AoE: 18-28).*
+*Note: AoE **spell power** uses approximately 60-70% of the single-target ranges above (e.g., Tier 2 AoE spell power: 18-28 vs single-target 28-40). AoE **MP cost** is handled separately: 1.5-2x the single-target cost (see Balance Rules below).*
 
 ### Balance Rules
 
