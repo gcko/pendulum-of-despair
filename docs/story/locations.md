@@ -610,7 +610,7 @@ During the Interlude, the inn is damaged but standing. Hadley shelters Valdris r
 
 Beneath Ironmouth's mine, the Carradan tunnels broke into something far older — a network of passages lined with crystallized ley energy that glows a deep, ember-orange. The Ember Vein is a pre-civilization ruin whose builders left no writing, only geometric carvings in the walls and a central chamber where the Pendulum rested on a stone pedestal. The dead miners lie in the corridors leading to the central chamber, faces frozen in despair.
 
-The ruin is small — four rooms and a central hub — designed as the game's introductory dungeon. The geometric carvings pulse faintly in response to magic, establishing the visual language the player will see in every ancient ruin going forward. The encounter design is forgiving: weak monsters (ley-corrupted vermin, unstable crystal formations) that teach the combat system without punishing mistakes. The atmosphere does the heavy lifting — the dead miners, the too-perfect geometry, the Pendulum waiting in the dark.
+The ruin spans 4 floors (Upper Mine, Lower Mine, Ancient Ruin, and the Pendulum Chamber) — designed as the game's introductory dungeon. The geometric carvings pulse faintly in response to magic, establishing the visual language the player will see in every ancient ruin going forward. The encounter design is forgiving: weak monsters (ley-corrupted vermin, unstable crystal formations) that teach the combat system without punishing mistakes. The atmosphere does the heavy lifting — the dead miners, the too-perfect geometry, the Pendulum waiting in the dark.
 
 **Key features:**
 - Ember-orange crystallized ley energy (visual motif for ancient ruins)
@@ -695,7 +695,7 @@ The dungeon is structured as a vertical climb. Sable and Lira enter through the 
 ### The Ley Line Depths
 
 **Faction:** None (natural formation)
-**Acts:** II (optional), Interlude
+**Acts:** II (optional), III
 **Type:** Environmental dungeon
 
 Beneath Millhaven's extraction pit, the earth opens into a natural cavern system where raw ley energy flows like rivers of light. The Depths are what ley lines look like when they're exposed — veins of brilliant, shifting color running through dark stone, branching and converging in patterns that almost look intentional. The air hums with magical resonance. Unprotected exposure causes hallucinations, euphoria, and eventually magical burn — a condition where the body absorbs more energy than it can contain.
@@ -706,12 +706,13 @@ The Compact has built scaffolding and pumping rigs into the upper levels, but be
 - Raw ley energy rivers (visual spectacle; environmental hazard — magical burn timer)
 - Compact pumping infrastructure (upper levels; environmental puzzle)
 - Ancient carvings (lore — connects to Ember Vein and the Pendulum's origin)
-- The sealed door (mystery element — unanswerable in this playthrough, seeds for future content)
+- The sealed door (opens in Act III with the Archivist's Codex, revealing Floor 5 — the Ley Confluence)
 - Unique enemies (ley-born creatures, living energy constructs)
 
 **What the player does here:**
 - Act II (optional): Accessible from Millhaven. A challenging side dungeon with unique enemies and the best magical equipment in Act II.
-- Interlude: Referenced — the pit erupts, destroying Millhaven. The Depths collapse.
+- Interlude: Referenced — the pit erupts, destroying Millhaven. The surface infrastructure and Floor 1 collapse, but the pre-civilization chambers (Floors 2–5) survive intact.
+- Act III: Accessible via the Thornvein root network. The sealed door opens with the Archivist's Codex, revealing Floor 5 (the Ley Confluence).
 
 ---
 
@@ -899,16 +900,16 @@ At the bottom, the player finds a shade of Cael — not truly him, but an echo. 
 ### The Dry Well of Aelhart (Secret)
 
 **Faction:** Valdris
-**Acts:** I (discoverable), Interlude (accessible)
-**Type:** Mini-dungeon
+**Acts:** Interlude, III
+**Type:** Dungeon (7 floors)
 
-The dry well in Aelhart's village square has a crack at the bottom that only becomes accessible after the ley line instability of the Interlude widens it. A small, three-room dungeon beneath the village connects to a fragment of the same pre-civilization ruin network as the Ember Vein. Inside, a single tablet depicts Aelhart's founding — the village was built specifically to cap this ruin entrance. The reward is a unique accessory tied to Edren's personal story: a family crest that boosts his abilities and unlocks a dialogue option in Act III's Pallor trial.
+The dry well in Aelhart's village square has a crack at the bottom that only becomes accessible after the ley line instability of the Interlude widens it. What begins as a simple well shaft descends into a sprawling 7-floor uber-dungeon (Well Shaft, Natural Caves, Waterworks, Living Quarters, Deep Archive, Warped Depths, and the Wellspring) connecting to the same pre-civilization ruin network as the Ember Vein. The deeper floors reveal that Aelhart was built specifically to cap this ruin entrance, and the complex expands dramatically in Act III. The reward is a unique accessory tied to Edren's personal story: a family crest that boosts his abilities and unlocks a dialogue option in Act III's Pallor trial.
 
 **Key features:**
-- Only accessible during or after the Interlude
+- Only accessible during or after the Interlude (deeper floors open in Act III)
 - Connects to the pre-civilization ruin network
 - Edren-specific reward (personal story integration)
-- Short but rewarding (three rooms, one puzzle, one fight)
+- 7 floors of escalating challenge and lore discovery
 
 ---
 
@@ -1095,6 +1096,6 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
 | 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 33 | Dry Well of Aelhart | Mini-dungeon | Edren's personal content |
+| 33 | Dry Well of Aelhart | Dungeon (7 floors) | Edren's personal content |
 | 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
 | 35 | Sunken Rig | Dungeon | Sable-focused optional content |

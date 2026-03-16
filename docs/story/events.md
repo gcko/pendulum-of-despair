@@ -17,7 +17,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Location | Change | Details |
 |----------|--------|---------|
 | Valdris Crown | Deteriorating | Markets thin out, ley-lamps flicker, Court Quarter consumed by political infighting. Cael's quarters become restricted (Pendulum study site). |
-| Aelhart | Mostly inaccessible | The border road is dangerous; NPCs reference the village as "cut off." During the Interlude, an alternate mountain path opens to access the Dry Well mini-dungeon. The village itself is empty and quiet. |
+| Aelhart | Mostly inaccessible | The border road is dangerous; NPCs reference the village as "cut off." During the Interlude, an alternate mountain path opens to access the Dry Well dungeon. The village itself is empty and quiet. |
 | Thornwatch | Militarized | Commander Halda reports Compact probes against the fort. Garrison on high alert. New defensive emplacements visible. |
 | Greyvale | No-man's-land | Population halved. Scorch marks and siege damage visible. NPCs recount the border conflict firsthand. |
 | Ironmouth | Compact-occupied | The mine is sealed. Carradan soldiers have fortified the outpost. Inaccessible to the player. |
@@ -72,7 +72,7 @@ This is the game's World of Ruin moment. Everything changes.
 | Corrund | New area opens | Axis Tower malfunctioning. Districts losing power while others overload. Consortium blames Valdris sabotage. General Kole running a Pallor-fueled power grab. |
 | Ashmark | Visitable | Forges behaving erratically. Environmental hazards from ley line instability. Lira's old quarters accessible. |
 | Bellhaven | Changed | Submersible rigs surfacing unmanned, crews found with faces frozen in hopelessness. The Pallor spreading through ley lines. |
-| Millhaven | Destroyed | The extraction pit erupted. Town abandoned. Crater visible from miles away. Ley Line Depths collapsed. |
+| Millhaven | Destroyed | The extraction pit erupted. Town abandoned. Crater visible from miles away. Surface infrastructure and Floor 1 of the Ley Line Depths collapsed, but the pre-civilization chambers (Floors 2–5) survived intact. In Act III, rediscovered via the Thornvein root network. |
 | Roothollow | Dying | The great tree is petrifying — bark turning to stone, roots cracking. Tribe evacuating. Torren performing a suicidal ritual. |
 | Duskfen | Half-submerged | Marsh risen, swallowing lower platforms. Will-o'-wisp lanterns replaced by grey Pallor glow. |
 | Ashgrove | Corrupted | The ash field has turned grey. The Pallor has reached neutral ground. |

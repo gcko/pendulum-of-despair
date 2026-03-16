@@ -124,7 +124,7 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 - `S` (lower-left): Save point crystal -- glowing amber, embedded in the wall.
 - `v` (bottom-left): Stairs down to Floor 2.
 
-**Encounter Zones:** Four zones marked `!`. Encounters are:
+**Encounter Zones:** Five zones marked `!`. Encounters are:
 - Ley Vermin (crystalline rats, weak, 2-3 per encounter)
 - Unstable Crystal (stationary, shatters for area damage, teaches positioning)
 
@@ -176,7 +176,7 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 - `S` (lower-left): Save point crystal before mini-boss.
 - `v` (bottom-left): Stairs down to Floor 3. The timber frame around the stairwell gives way entirely to smooth geometric stone. The transition is complete.
 
-**Encounter Zones:** Two zones marked `!`. Encounters are:
+**Encounter Zones:** Three zones marked `!`. Encounters are:
 - Ley Vermin (crystalline rats, slightly stronger than Floor 1, groups of 3-4)
 - Unstable Crystal (as Floor 1)
 - Mine Shade (ghostly miner silhouette, casts weak despair debuff -- attack down for 2 turns, foreshadows the Pallor)
@@ -232,10 +232,10 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 - `T` (bottom passage): Chest -- Phoenix Down (revival item, valuable at this stage).
 - `v` (bottom): Stairs down to Floor 4. The stairwell narrows. The geometric carvings grow denser, more intricate. The amber pulse quickens.
 
-**Encounter Zones:** Two zones marked `!`. Encounters are:
+**Encounter Zones:** Four zones marked `!`. Encounters are:
 - Unstable Crystal (as previous floors)
 - Mine Shade (ghostly miner, despair debuff, more frequent here)
-- Ember Wisp (small floating flame-crystal, weak fire magic, appears in pairs)
+- Ember Wisp (small floating flame-crystal, weak Flame magic, appears in pairs)
 
 ### Floor 4: The Pendulum Chamber (35x30)
 
@@ -302,7 +302,7 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 | Ley Vermin | Crystalline rats with ember-orange eyes. Fast, weak, attack in groups of 2-4. | Floors 1-2 | 80 |
 | Unstable Crystal | Floating crystal formation. Shatters when defeated, dealing area damage. Teaches "kill it fast or move away." | Floors 1-3 | 150 |
 | Mine Shade | Ghostly silhouette of a dead miner. Casts a weak despair debuff (attack down, 2 turns). Foreshadows the Pallor. | Floors 2-3 | 200 |
-| Ember Wisp | Small floating flame-crystal. Weak fire magic, appears in pairs. | Floor 3 only | 120 |
+| Ember Wisp | Small floating flame-crystal. Weak Flame magic, appears in pairs. | Floor 3 only | 120 |
 | **Ember Drake** (Mini-boss) | Crystalline lizard-construct. Fast, aggressive, angular geometry. Teaches full-party coordination. | Floor 2, mini-boss room | 1,500 |
 | **Vein Guardian** (Boss) | Geometric crystal construct. Slow charge attacks, area slam. Telegraphs with floor glow. Reconstructs at 50% HP. | Floor 4, boss room | 3,000 |
 
@@ -643,7 +643,7 @@ The solution path: A=Ventilation, B=Blast Door 2, C=Lighting (reveals shortcut t
 - `P` (top-center): Junction A power routing console.
 - `P` (bottom-left): Junction B power routing console.
 - `L` (right): Locked blast door. Requires Junction B set to "Blast Door 2."
-- `%` (center-right): Steam vent corridor. Deals periodic fire damage until ventilation is powered.
+- `%` (center-right): Steam vent corridor. Deals periodic Flame damage until ventilation is powered.
 - `T` (top-right): Chest -- Forgewright Goggles (accessory, reveals hidden items in Compact dungeons).
 - `T` (right, behind blast door): Chest -- Arcanite Wrench (weapon, Lira).
 - `T` (far right): Chest -- 3x Smelling Salts.
@@ -758,7 +758,7 @@ Activating switches in the correct order (W1=Gear, W4=Piston, W5=Valve, W2=Wrenc
 2. **Step 3-4 (Valve, Wrench):** A sealed supply room door grinds open (the room containing the Forgewright Master Key chest). Steam hisses from the broken seal. The room beyond is pristine -- hermetically sealed since the tunnels were abandoned.
 3. **Step 5 (Hammer):** The final switch triggers a cascade of locks disengaging. A section of wall in the southeast corner slides aside, revealing a passage that descends into damp stone -- the connection to Corrund's sewer system. The air changes immediately: salt and rust give way to wet stone and flowing water.
 
-**Activating out of order:** A steam burst erupts from the nearest pipe junction, dealing 8% max HP fire damage to the party. Sable flinches: "Wrong order. The pressure's got to build in sequence or it vents." All switches reset to their original positions. The visual tell: steam begins to hiss from the pipe junctions when the first wrong switch is pulled, giving the player a moment to recognize the mistake before the burst.
+**Activating out of order:** A steam burst erupts from the nearest pipe junction, dealing 8% max HP Flame damage to the party. Sable flinches: "Wrong order. The pressure's got to build in sequence or it vents." All switches reset to their original positions. The visual tell: steam begins to hiss from the pipe junctions when the first wrong switch is pulled, giving the player a moment to recognize the mistake before the burst.
 
 **Floor Trap: Rusted Grating**
 
@@ -783,10 +783,10 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 - Pipe Wraiths appear in groups of 2-3.
 - They emerge from pipe junctions in the walls, sliding out of the metal as if the pipes were doorways.
 - **Attack pattern:** Wraith Strike (physical, ignores 25% DEF), Steam Curse (inflicts Burn status), Tool Throw (ranged, chance to inflict Slow).
-- **Weakness:** Lightning magic disrupts their spectral form. Lira's Thunder spells deal 1.5x damage.
+- **Weakness:** Storm magic disrupts their spectral form. Lira's Flame spells deal 1.5x damage.
 - **Behavior:** They don't chase aggressively. They patrol set paths along the pipe runs, and engage only when the player enters their corridor. If the player retreats, they return to their patrol.
 - **Lore flavor:** Defeating a Pipe Wraith causes it to dissipate with a sound like escaping steam. Occasionally, one will mutter a work order before attacking: "Section 7, pressure check..." or "Valve 3 needs recalibrating..."
-- **Stats:** 1,800 HP, moderate DEF, low magic DEF. Immune to Poison and Blind. Weak to Lightning.
+- **Stats:** 1,800 HP, moderate DEF, low magic DEF. Immune to Poison and Blind. Weak to Storm.
 
 **Party Dialogue (Maintenance Shaft):**
 
@@ -804,8 +804,8 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 | Rail Sentry | Malfunctioning automated turret on a rail cart. Fires bolts. Stays on tracks. | Hub, East |
 | Pallor Nest | Immobile grey mass on the wall. Spawns 1-2 Grey Mites per turn until destroyed. | All sections |
 | Grey Mite | Tiny grey creature. Weak individually, dangerous in numbers. Drains MP. | Spawned by Nests |
-| Steam Elemental | Living steam from broken vents. Fire damage, can blind. | Hub, West |
-| Pipe Wraith | Ghostly maintenance worker. Emerges from pipe junctions. Ignores 25% DEF. Weak to Lightning. 1,800 HP. | Maintenance Shaft |
+| Steam Elemental | Living steam from broken vents. Flame damage, can blind. | Hub, West |
+| Pipe Wraith | Ghostly maintenance worker. Emerges from pipe junctions. Ignores 25% DEF. Weak to Storm. 1,800 HP. | Maintenance Shaft |
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
 
 ### Treasure/Loot
@@ -827,11 +827,11 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 
 ### Environmental Hazards
 
-- **Steam vents:** Periodic bursts of steam from broken pipes. Deal fire damage (5% HP) and can inflict Blind. Avoidable by timing movement between bursts.
+- **Steam vents:** Periodic bursts of steam from broken pipes. Deal Flame damage (5% HP) and can inflict Blind. Avoidable by timing movement between bursts.
 - **Poison gas corridors:** Green-tinted air in sealed sections. Deal poison damage per step until ventilation is restored via power routing.
 - **Unstable floors:** In the West Tunnel boring engine section, floor tiles crack and collapse if the player stands still too long. Forces constant movement.
 - **Pallor corruption zones:** Grey-tinted areas where Pallor nests grow. Being in these zones applies a slow Despair debuff (attack and magic down) that clears when leaving the zone.
-- **Steam burst (Maintenance Shaft):** Triggered by activating wall switches out of order. Deals 8% max HP fire damage. Resets all switches. Avoidable by following the Compact Officer's Logbook hint.
+- **Steam burst (Maintenance Shaft):** Triggered by activating wall switches out of order. Deals 8% max HP Flame damage. Resets all switches. Avoidable by following the Compact Officer's Logbook hint.
 - **Rusted grating (Maintenance Shaft):** Weakened floor tiles over a chasm. Stepping on dark-rust tiles causes a pitfall to a lower room. Visually telegraphed. Non-punishing -- chest reward below.
 
 ---
@@ -1052,7 +1052,7 @@ When defeated, his soldiers collapse. Brant watches silently.
 ### Environmental Hazards
 
 - **Forgewright sensor traps:** Invisible tripwires that trigger alarms. Lira can detect and disable them.
-- **Steam conduit bursts:** On the Engine Level, periodic steam releases deal fire damage in narrow corridors.
+- **Steam conduit bursts:** On the Engine Level, periodic steam releases deal Flame damage in narrow corridors.
 - **Pallor conduit zones:** On Floors 4-5, grey-lit corridors apply Despair debuff while inside. Move through quickly.
 - **Elevator shaft:** On Floor 2, the elevator shaft is exposed. Falling deals significant damage. A railing prevents accidental falls; only a failed stealth sequence near the shaft causes it.
 
@@ -1201,7 +1201,7 @@ Edren (if present): "It's warm. I can feel it from here." He holds out his hand 
           #.............#
           ######D########
                #.....#
-               #..B..#
+               #..*..#
                #.....#
                ##v####
 ```
@@ -1214,7 +1214,7 @@ Maren (if present, first entry): "I have read about this. The Rivensong Archive 
 
 Lira (if present): "The crystal structure is hexagonal -- same lattice as arcanite, but grown naturally instead of forged. If the Compact knew this was down here..." She trails off, then: "Actually, they probably do know. That's why they dug the pit."
 
-Notes: `%` represents crystal walls/formations -- translucent, refracting light, impassable. Numbers `1`-`5` represent crystal prism stations (rotatable). `B` represents the mini-boss arena.
+Notes: `%` represents crystal walls/formations -- translucent, refracting light, impassable. Numbers `1`-`5` represent crystal prism stations (rotatable). `*` represents the mini-boss arena.
 
 **Puzzle: Crystal Light Refraction (Main Beam)**
 
@@ -1242,7 +1242,7 @@ Lira (if present, after the mandatory pitfall): "That was a thirty-foot drop thr
 - `T` (mid-right, small room): Chest -- Crystal Gauntlets (armor, +12 DEF, +8 MAG DEF). Forged from the labyrinth's own crystal, sized for human hands. Found in a dead-end alcove that requires navigating past two volatile crystal clusters.
 - `T` (bottom-center): Chest -- Labyrinth Map Fragment (key item). A crystal tablet showing the labyrinth layout from above, including safe paths and pitfall locations. Found on the far side of a pitfall section -- the player either avoids the pitfall (using the map from the hidden alcove, if they fell there first) or finds this after trial and error. The map also shows the location of the secret beam's prism slot, hinting at the Interlude return puzzle.
 - `S` (bottom-center): Save point. A small clearing in the crystal formations where the light settles to a steady warm amber. The crystal walls here are opaque rather than translucent -- a pocket of calm.
-- `B` (bottom): Mini-boss arena -- see Ley Colossus encounter below.
+- `*` (bottom): Mini-boss arena -- see Ley Colossus encounter below.
 - `v` (bottom): Descent to Floor 4. Beyond the mini-boss arena. The crystal formations thin out and the walls transition back to dark basalt -- but now carved. Geometric patterns cover every surface. The pre-civilization architecture begins.
 
 **Mini-Boss: Ley Colossus**
@@ -1413,7 +1413,7 @@ Edren (if present): "It recognized me. The offering gesture. The Colossus did th
 | Prism Moth | Winged crystal insect drawn to ley-light beams. Harmless unless the beam puzzle is misconfigured -- volatile crystal flashes attract swarms. In swarms, they cast Refraction (redirects the party's magic spells at random targets, including allies). Solo: trivial. Swarm: dangerous. | Floor 3 |
 | Ley Construct | Geometric guardian -- floating cube of crystal and energy. Pattern-based attacks. Rotates between physical and magic phases on a 3-turn cycle. | Floor 4-5 |
 | Vein Stalker | Eyeless humanoid made of solidified ley residue. Phases through walls (can appear from any adjacent wall tile). Drains MP on hit. Rare. | Floor 4-5 |
-| Confluence Elemental | Living ley energy in its purest form -- a swirling vortex of color. Casts spells of every element on a rotating cycle (fire, ice, lightning, earth, repeat). Absorbs the element it just cast. Weak to the element it will cast NEXT (displayed as a color shift 1 turn before). Rewards careful observation. | Floor 5 only |
+| Confluence Elemental | Living ley energy in its purest form -- a swirling vortex of color. Casts spells of every element on a rotating cycle (Flame, Frost, Storm, Earth, repeat). Absorbs the element it just cast. Weak to the element it will cast NEXT (displayed as a color shift 1 turn before). Rewards careful observation. | Floor 5 only |
 | **Ley Colossus** (Mini-boss) | Humanoid energy construct. Heavy magic attacks, area pulse. 7,000 HP. Phase 1: physical + area. Phase 2: shatters, reforms smaller, gains precision beam. | Floor 3 |
 | **Ley Titan** (Boss) | Evolved form of the Colossus. Three-phase fight: brute force, fracture into Aspects, reform into fast dense form. 18,000 HP. | Floor 5 |
 
@@ -2629,7 +2629,7 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Hearthstone Shade | Domestic guardian echo. Slower than combat constructs but durable. Appears in residential areas. | Floor 4 | 2,500 |
 | **Hearthstone Warden** (Mini-boss) | Residential quarter guardian. Stone blade and shield. Salutes before combat. Skippable with Family Crest. | Floor 4 | 8,000 |
 | Crystal Warden (deep) | Stronger variant. Fires concentrated ley bolts. Shatters on death (area damage). | Floors 5-6 | 3,500 |
-| Pictograph Wisp (deep) | Stronger variant. Magic attacks themed to the tablet's content -- history attacks (time-element), warning attacks (fire-element). | Floor 5 | 2,800 |
+| Pictograph Wisp (deep) | Stronger variant. Magic attacks themed to the tablet's content -- history attacks (Non-elemental), warning attacks (Flame-element). | Floor 5 | 2,800 |
 | **Archive Keeper** (Mini-boss) | Knowledge construct. Translation puzzle combat. Strength varies with player's answers. | Floor 5 | 3,000-12,000 |
 | Ley-Warped Construct | Gravity-exploiting guardian. Attacks from walls and ceilings. | Floor 6 | 4,000 |
 | Warp Sentinel | Gravity-manipulating construct. Can flip room gravity mid-combat. | Floor 6 | 4,500 |
@@ -2646,7 +2646,7 @@ The Dry Well's enemies follow a progression that mirrors the dungeon's narrative
 
 *Floor 4 (Domestic):* The residential quarter enemies are gentler than expected. Hearthstone Shades are slow-moving echoes that patrol the corridors the way a night watchman would. They do not ambush. They do not pursue aggressively. The Hearthstone Warden's salute before combat -- and its willingness to stand aside if Edren carries the Family Crest -- establish that these guardians are not hostile by nature. They are protective. They are doing their job across millennia.
 
-*Floor 5 (Intellectual):* The Deep Archive enemies are knowledge-themed. Crystal Wardens fire ley bolts encoded with pictographic symbols (cosmetic detail, no gameplay effect -- but observant players notice that the symbols match the translation puzzle). Pictograph Wisps are literally animated text -- they detach from the tablets and attack with the content they represent. A wisp from a history tablet attacks with time-element damage. A wisp from a warning tablet attacks with fire. The Archive Keeper's variable difficulty based on the player's translation skill is the floor's statement: in this dungeon, knowledge is power, literally.
+*Floor 5 (Intellectual):* The Deep Archive enemies are knowledge-themed. Crystal Wardens fire ley bolts encoded with pictographic symbols (cosmetic detail, no gameplay effect -- but observant players notice that the symbols match the translation puzzle). Pictograph Wisps are literally animated text -- they detach from the tablets and attack with the content they represent. A wisp from a history tablet attacks with Non-elemental damage. A wisp from a warning tablet attacks with Flame. The Archive Keeper's variable difficulty based on the player's translation skill is the floor's statement: in this dungeon, knowledge is power, literally.
 
 *Floor 6 (Spatial):* The gravity-warped enemies are the most mechanically complex in the dungeon. Ley-Warped Constructs attack from unconventional positions -- walls, ceilings -- requiring the player to target unusual directions. Warp Sentinels can flip the room's gravity during combat, which rearranges the party's front/back row formation. This forces the player to think about positioning in a way no other dungeon requires. Healers end up in the front row. Tanks end up in the back. Adaptation is the test.
 
@@ -3047,7 +3047,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 **Salt Crabs:**
 - Weak coastal enemies. Clusters of oversized crabs that have colonized the hull's surface.
 - They skitter across the tilted hull in groups of 3-5.
-- **Stats:** 400 HP, high DEF (hard shell), very low magic DEF. Weak to Fire and Lightning.
+- **Stats:** 400 HP, high DEF (hard shell), very low magic DEF. Weak to Flame and Storm.
 - **Attacks:** Claw Snap (physical, chance to inflict Bleed), Shell Guard (raises DEF for 2 turns), Swarm (all crabs attack one target when 3+ are alive).
 - **Behavior:** Non-aggressive until the player steps on their territory (barnacle clusters). They scatter when hit with area attacks.
 - **Drop:** Crab Shell (crafting material), Salt Crystal (consumable, cures Poison).
@@ -3055,7 +3055,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 **Rust Elementals:**
 - Hull metal animated by Pallor energy. They rise out of the deck plates -- humanoid shapes made of rusted iron and orange-brown flakes.
 - They appear in pairs near the Pallor-touched sections of the hull (where the rust is worst).
-- **Stats:** 1,200 HP, very high DEF, moderate magic DEF. Immune to Poison. Weak to Water and Ice (the rust weakens further when wet).
+- **Stats:** 1,200 HP, very high DEF, moderate magic DEF. Immune to Poison. Weak to Frost (the rust weakens further when wet).
 - **Attacks:** Iron Slam (physical, high damage), Rust Cloud (area, inflicts DEF Down on all party members -- their equipment corrodes), Pallor Pulse (magic, Despair debuff).
 - **Behavior:** Slow-moving but hit hard. They don't chase far -- if the player retreats past the rust zone, they sink back into the hull.
 - **Visual:** When defeated, they collapse into a pile of rust flakes that the wind scatters. The hull plate where they stood is now clean metal -- they WERE the rust.
@@ -3125,8 +3125,8 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 
 | Enemy | Description | Location |
 |-------|-------------|----------|
-| Salt Crab | Oversized crustacean. Hard shell, high DEF, weak to Fire/Lightning. Swarms in groups of 3-5. 400 HP. | Exposed Hull |
-| Rust Elemental | Hull metal animated by Pallor energy. Very high DEF, weak to Water/Ice. Rust Cloud inflicts DEF Down. 1,200 HP. | Exposed Hull |
+| Salt Crab | Oversized crustacean. Hard shell, high DEF, weak to Flame/Storm. Swarms in groups of 3-5. 400 HP. | Exposed Hull |
+| Rust Elemental | Hull metal animated by Pallor energy. Very high DEF, weak to Frost. Rust Cloud inflicts DEF Down. 1,200 HP. | Exposed Hull |
 | Bilge Rat | Oversized vermin. Fast, low HP. Attacks in packs. Can inflict Poison. | Upper Deck |
 | Pallor Barnacle | Immobile corruption growth on walls. Pulses Despair debuff in area. Destroy to clear. | Upper Deck, Engine Room |
 | Drowned Worker | Waterlogged Pallor construct. Slow but durable. Grapple attack pins one party member. | Engine Room |
@@ -3290,7 +3290,7 @@ E.......................................
 - `E` (top-left): Entry from Valdris Crown side.
 - `X` (bottom-right): Exit to Highcairn.
 - `S` (top-left): Save point -- a traveler's cairn.
-- `T` (left): Chest -- Highland Herbs (consumable, restores HP and cures Freeze).
+- `T` (left): Chest -- Highland Herbs (consumable, restores HP and cures Petrify).
 - `H` (center-left): Hidden cave entrance -- leads to Floor 2 (Ice Cave Shortcut).
 
 #### Puzzle Mechanics (Ice Cave)
@@ -3319,12 +3319,12 @@ E.......................................
 **Environment:** Rough ice walls carved by water over millennia. Icicles hang from the ceiling, glinting in the party's torchlight. The air is biting cold. Frost coats every surface. The stone floor transitions to solid ice as the party moves deeper.
 
 - `H` (top): Entry from the hidden cave entrance on Floor 1. A narrow squeeze through rock, then the cave opens up.
-- `T` (left): Chest -- Frost Crystal (accessory, +10 MAG DEF, ice resistance).
+- `T` (left): Chest -- Frost Crystal (accessory, +10 MAG DEF, Frost resistance).
 - `D` (bottom): Door to Room 2 (Frozen Lake Chamber).
 
 **Encounters (Room 1):**
 - Ice Wolf Pack (3x Ice Wolf, 180 HP each -- fast, cold-bite attacks)
-- Frost Elemental (1x, 400 HP -- weak to fire, casts Blizzard)
+- Frost Elemental (1x, 400 HP -- weak to Flame, casts Hoarfall)
 
 #### Floor 2, Room 2: Frozen Lake Chamber (35x25)
 
@@ -3366,12 +3366,12 @@ E.......................................
 **Key Locations (Room 2):**
 - `S` (west edge): Save point -- a frozen cairn with a faintly glowing amber crystal embedded in the ice.
 - `H` (northwest): Hidden alcove -- accessible only via the secret boulder configuration. Chest -- Glacial Shard (crafting material, rare, used for Torren's Frostpeak weapon upgrade later).
-- `T` (north): Chest -- Frozen Teardrop (accessory, +12 MAG DEF, immunity to Freeze status).
+- `T` (north): Chest -- Frozen Teardrop (accessory, +12 MAG DEF, immunity to Petrify status).
 - `D` (east): Exit to Room 3 (Deep Ice).
 
 **Encounters (Room 2):**
 - Ice Sculptor (1x, 500 HP -- reshapes ice terrain mid-fight, creating obstacles on the battle grid)
-- Frost Sprite Swarm (5x Frost Sprite, 80 HP each -- weak individually, dangerous in numbers, cast group Freeze)
+- Frost Sprite Swarm (5x Frost Sprite, 80 HP each -- weak individually, dangerous in numbers, cast group Petrify)
 
 #### Floor 2, Room 3: Deep Ice (30x25)
 
@@ -3407,7 +3407,7 @@ E.......................................
 **Key Locations (Room 3):**
 - `D` (top): Entry from Room 2 (Frozen Lake Chamber).
 - `%` (four locations): Thin ice trap tiles. Darker blue-grey coloring with rising frost particle effects.
-- `T` (lower-left): Chest -- 3x Highland Herbs (consumable, restores HP and cures Freeze).
+- `T` (lower-left): Chest -- 3x Highland Herbs (consumable, restores HP and cures Petrify).
 - `T` (Sub-Level): Chest -- Ice Beetle Carapace (crafting material, minor).
 - `^` (Sub-Level): Ladder back up to Room 3 main level. Emerges near the `%` tile that was broken.
 - `X` (bottom-right): Exit -- emerges near Highcairn, bypassing the upper switchbacks. Daylight streams in through a narrow crack that widens into a mountain ledge. Highcairn's walls are visible below.
@@ -3415,7 +3415,7 @@ E.......................................
 **Encounters (Room 3):**
 - Ice Wolf Alpha + 2x Ice Wolf (Alpha: 350 HP, Wolves: 180 HP each -- the Alpha buffs pack members)
 - Crystal Stalactite (1x, 450 HP -- drops from ceiling, ambush encounter, high first-strike damage)
-- Frozen Revenant (1x, 600 HP -- a traveler who froze to death in the cave, reanimated by Pallor energy. Weak to fire. Drops Traveler's Journal lore item)
+- Frozen Revenant (1x, 600 HP -- a traveler who froze to death in the cave, reanimated by Pallor energy. Weak to Flame. Drops Traveler's Journal lore item)
 
 **Encounters (Sub-Level):**
 - Ice Grub Cluster (4x Ice Grub, 60 HP each -- nuisance enemies, very weak)
@@ -3587,7 +3587,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 - Hidden beneath the ash field. Contains a chamber with carvings from the time the First Tree burned. The carvings depict the Pallor's cycle in pictographs similar to the Archive of Ages.
 - `@` (right): Pictograph wall. Maren (if present) can translate. Provides early foreshadowing of the Archive's revelations.
-- `T` (left): Chest -- Ash Blossom (accessory, +8 MAG, fire resistance).
+- `T` (left): Chest -- Ash Blossom (accessory, +8 MAG, Flame resistance).
 - `T` (right): Chest -- First Tree Seed (key item, used in post-game content at the Convergence meadow -- planting it triggers a unique epilogue scene).
 - Encounters: Ash elementals, ancient spirit remnants.
 
@@ -3603,7 +3603,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - **Size:** 40x30 tiles each floor
 - **Theme:** A vertical descent through layers of history. Floor 1 is Carradan industrial architecture -- riveted iron walls, steam pipes, abandoned workstations. Floor 2 transitions into natural volcanic caves with magma channels carved by ancient lava flows. Floor 3 reveals an ancient pre-civilization forge built directly into the volcanic rock -- the pre-civ builders harnessed volcanic heat to power their ley-line forging operations. Floor 4 is the volcanic heart itself -- the original caldera chamber where the forge's power source still burns. The Compact built their refineries on top without knowing what was below. Lira's Forgewright knowledge is essential for understanding the industrial sections and recognizing the ancient forge's purpose.
 - **Narrative Purpose:** Lira's character dungeon. Reveals that the Compact's industrial operations unknowingly sit atop pre-civilization infrastructure. The contaminated ley line traced in "The Fading Shifts" sidequest originates partially from the Compact's drilling disturbing the ancient forge's sealed magma channels. The Forge Heart boss can be "reasoned with" if Lira has the Boring Engine Schematic from the Rail Tunnels -- a moment that demonstrates her growth from Compact defector to someone who bridges old and new knowledge.
-- **Difficulty:** Moderate-to-hard. Floor traps deal fire damage. Magma channels require careful navigation. The lava flow puzzle has multiple configurations but only two correct solutions.
+- **Difficulty:** Moderate-to-hard. Floor traps deal Flame damage. Magma channels require careful navigation. The lava flow puzzle has multiple configurations but only two correct solutions.
 - **Recommended Level:** 16-20 (Act II partial), 22-26 (Interlude full clear)
 - **Estimated Play Time:** 50-65 minutes
 
@@ -3611,7 +3611,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Lava Flow Redirection (Floors 2-4):** Volcanic channels run through the cave system, carrying molten rock from the caldera heart to the surface. Three valve gates (`P`) control the flow direction. Each valve has two positions (open/closed), creating 8 possible configurations, but only 4 meaningfully change the environment. The player must redirect lava away from blocked passages (cooling the stone so it can be walked on -- takes 5 seconds after valve change, with a visual cooling animation from red to dark grey) and toward stuck mechanisms (heating them to free rusted gears and open doors). The puzzle spans multiple rooms -- changing a valve on Floor 2 affects conditions on Floor 3.
 
-**Floor Traps (All Floors):** Thin volcanic crust sections that crack and give way when stepped on, dropping the player to a lower lava tube. Visual tell: orange-veined crust that pulses faintly, distinct from solid dark stone. The drop deals 10% max HP fire damage and deposits the player in a warm tube with minor enemies, a chest, and a ladder back up.
+**Floor Traps (All Floors):** Thin volcanic crust sections that crack and give way when stepped on, dropping the player to a lower lava tube. Visual tell: orange-veined crust that pulses faintly, distinct from solid dark stone. The drop deals 10% max HP Flame damage and deposits the player in a warm tube with minor enemies, a chest, and a ladder back up.
 
 **Lira's Forgewright Checks:** Three optional interactions where Lira can read Compact-era engineering labels, identify structural weak points, and recognize forge components. Each check opens a shortcut or reveals a hidden cache. Without Lira, these areas remain inaccessible (but the dungeon is still completable via the main path).
 
@@ -3650,18 +3650,18 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 **Key Locations (Floor 1):**
 - `E` (top): Entry from Refinery Six's main floor. A heavy iron door with a faded sign: "SUBLEVEL ACCESS -- MAINTENANCE ONLY."
 - `@` (top-left room): Compact engineer's logbook. Documents increasing heat readings from below and unexplained tremors. Final entry: "Something down there is waking up. Recommending immediate evacuation of Sublevel 3." The evacuation never happened.
-- `P` (center): Steam valve -- vents excess heat from below. Must be turned to reduce temperature in the southern corridor (otherwise, heat damage every 3 steps).
+- `P` (center): Steam valve -- vents excess heat from below. Must be turned to reduce temperature in the southern corridor (otherwise, 5% max HP Flame damage every 3 steps).
 - `P` (lower-center): Pressure release lever -- opens a sealed maintenance hatch leading to the lower rooms.
 - `%` (center-right): Thin volcanic crust trap. Drops to lava tube sub-level.
 - `T` (upper-right): Chest -- Compact Wrench (weapon, Lira -- ATK +15, bonus damage to mechanical enemies).
-- `T` (left): Chest -- 3x Heat Salve (consumable, grants fire resistance for 5 turns in battle).
-- `@` (lower-left): Lira's Forgewright check #1. She recognizes the refinery's power coupling design: "This is a Mk-III thermal coupler. Standard Compact issue, but the mounting brackets... these are much older. Someone built on top of existing infrastructure." Opens a shortcut panel revealing a hidden cache: Compact Thermal Suit (accessory, halves fire environmental damage).
+- `T` (left): Chest -- 3x Heat Salve (consumable, grants Flame resistance for 5 turns in battle).
+- `@` (lower-left): Lira's Forgewright check #1. She recognizes the refinery's power coupling design: "This is a Mk-III thermal coupler. Standard Compact issue, but the mounting brackets... these are much older. Someone built on top of existing infrastructure." Opens a shortcut panel revealing a hidden cache: Compact Thermal Suit (accessory, halves Flame environmental damage).
 - `S` (lower-center): Save point -- a still-functioning Compact emergency beacon, repurposed as a save crystal.
 - `v` (bottom-left): Stairs down to Floor 2.
 
 **Encounter Zones:**
-- Furnace Rat Pack (4x Furnace Rat, 120 HP each -- fast, minor fire damage on bite)
-- Steam Phantom (1x, 350 HP -- formed from leaking steam, weak to ice, resistant to physical)
+- Furnace Rat Pack (4x Furnace Rat, 120 HP each -- fast, minor Flame damage on bite)
+- Steam Phantom (1x, 350 HP -- formed from leaking steam, weak to Frost, resistant to physical)
 - Compact Sentry (1x, 500 HP -- abandoned security automaton, still active, mechanical type)
 
 **Lava Tube Sub-Level (accessed via % trap):**
@@ -3718,7 +3718,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `P` (lower-left): Valve Gate Beta -- controls the western magma channel. Open position floods the western path. Closed position cools the stone bridge to the mini-boss chamber.
 - `P` (lower-right): Valve Gate Gamma -- controls the deep channel feeding the Caldera Heart. This valve's setting determines which of two paths opens on Floor 3.
 - `%` (two locations): Thin volcanic crust traps. Drop to small lava tube with ladder back.
-- `T` (upper-right): Chest -- Magma Shield (armor, +8 DEF, fire resistance).
+- `T` (upper-right): Chest -- Magma Shield (armor, +8 DEF, Flame resistance).
 - `T` (lower-left): Chest -- 5x Potion.
 - `L` (lower-right): Locked gate -- opens only when Valve Gate Beta is closed (lava cools, stone mechanism unlocks).
 - `*` (lower-right): **Mini-boss: Slag Golem** (5000 HP).
@@ -3728,14 +3728,14 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Mini-Boss: Slag Golem (5000 HP)**
 - A hulking mass of molten slag -- industrial waste animated by wild ley energy leaking from below. Half Compact metal, half volcanic rock, fused together and given terrible purpose.
-- **Attacks:** Slag Slam (heavy physical, single target), Molten Spray (fire damage, all targets, chance of Burn status), Harden (raises DEF for 3 turns, reduces SPD), Core Meltdown (when below 25% HP -- charges for 2 turns, then massive fire AoE).
-- **Weakness:** Ice magic. Water-based attacks cool the slag, reducing its ATK for 2 turns.
-- **Strategy:** Burst ice damage during Harden phases (high DEF but it stands still). When Core Meltdown charges, either finish it quickly or defend + fire resistance.
+- **Attacks:** Slag Slam (heavy physical, single target), Molten Spray (Flame damage, all targets, 25% chance of Burn status), Harden (raises DEF for 3 turns, reduces SPD), Core Meltdown (when below 25% HP -- charges for 2 turns, then massive Flame AoE).
+- **Weakness:** Frost magic. Water-based attacks cool the slag, reducing its ATK for 2 turns.
+- **Strategy:** Burst Frost damage during Harden phases (high DEF but it stands still). When Core Meltdown charges, either finish it quickly or defend + Flame resistance.
 - **Drop:** Refined Slag (crafting material), 800 Gold.
 
 **Encounter Zones:**
-- Magma Crawler (2x, 300 HP each -- slow, high DEF, fire attacks)
-- Ley Wisp Cluster (6x Ley Wisp, 50 HP each -- fragile, erratic movement, electric attacks)
+- Magma Crawler (2x, 300 HP each -- slow, high DEF, Flame attacks)
+- Ley Wisp Cluster (6x Ley Wisp, 50 HP each -- fragile, erratic movement, Storm attacks)
 - Forge Phantom (1x, 450 HP -- spectral Compact worker, haunts the transition areas)
 
 ### Floor 3: Ancient Forge (40x30)
@@ -3782,9 +3782,9 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `v` (bottom): Stairs down to Floor 4 (The Caldera Heart).
 
 **Encounter Zones:**
-- Ancient Forge Guardian (1x, 700 HP -- a dormant defense construct that activates when the party approaches the Master Forge. Stone body with ley-line veins. Uses hammer attacks and ley-pulse AoE.)
-- Ember Wraith (2x, 400 HP each -- spirits of pre-civ forge workers, not hostile until provoked by touching forge equipment without Lira present)
-- Magma Serpent (1x, 550 HP -- lives in the lava channels, ambushes from below)
+- Ancient Forge Guardian (1x, 700 HP -- a dormant defense construct that activates when the party approaches the Master Forge. Stone body with ley-line veins. Hammer attacks: 150-200 physical damage. Ley-pulse AoE: 100-150 Ley damage.)
+- Ember Wraith (2x, 400 HP each -- spirits of pre-civ forge workers, not hostile until provoked by touching forge equipment without Lira present. Ember Bolt: 80-120 Flame damage.)
+- Magma Serpent (1x, 550 HP -- lives in the lava channels, ambushes from below. Lava Lash: 100-140 Flame damage, 15% Burn chance.)
 
 ### Floor 4: The Caldera Heart (40x30)
 
@@ -3814,8 +3814,8 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Key Locations (Floor 4):**
 - `v` (top): Stairs up to Floor 3.
-- `%` (four locations): Thin volcanic crust -- the most dangerous traps in the dungeon. Drops into a magma tube that deals 20% max HP fire damage.
-- `T` (left-upper): Chest -- Caldera Core Fragment (accessory, +15 ATK, +10 MAG, fire damage added to all attacks).
+- `%` (four locations): Thin volcanic crust -- the most dangerous traps in the dungeon. Drops into a magma tube that deals 20% max HP Flame damage.
+- `T` (left-upper): Chest -- Caldera Core Fragment (accessory, +15 ATK, +10 MAG, Flame damage added to all attacks).
 - `T` (lower-left): Chest -- 3x Elixir.
 - `T` (lower-right): Chest -- Forgewright's Memoir (lore item -- a pre-civ forge master's journal, written in the old script. Maren can translate if present: describes the forge's purpose as "shaping the ley into armor against the silence" -- the pre-civ builders were already fighting the Pallor).
 - `S` (center): Save point -- the last intact containment node, still holding.
@@ -3827,29 +3827,69 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 
 **Phase 1 (10000-5000 HP):**
 - **Forge Hammer** -- heavy physical, single target, 400-500 damage.
-- **Magma Breath** -- fire damage, cone AoE, 250-350 damage + Burn status.
+- **Magma Breath** -- Flame damage, cone AoE, 250-350 damage + Burn status.
 - **Volcanic Tremor** -- earth damage, all targets, 200-300 damage. Cracks appear in the floor (new `%` trap tiles for 3 turns).
 - **Temper** -- self-buff, raises ATK and DEF for 3 turns.
 
 **Phase 2 (below 5000 HP):**
 - All Phase 1 attacks, plus:
-- **Caldera Eruption** -- massive fire AoE, 500-600 damage to all. 3-turn charge. Interruptible if a character uses an ice attack during the charge.
+- **Caldera Eruption** -- massive Flame AoE, 500-600 damage to all. 3-turn charge. Interruptible if a character uses a Frost attack during the charge.
 - **Ley Overload** -- drains 50 MP from all party members, heals self for the total drained.
 - **Desperate Hammering** -- 3 rapid physical strikes on random targets, 300 each.
 
 **Lira's Special Interaction:** If Lira has the Boring Engine Schematic (from Rail Tunnels), a dialogue option appears at the start of Phase 2: "I know what you are. You're not a weapon -- you're a forge. The Compact broke your containment, but I can fix it." Lira uses the schematic's knowledge to interface with the Forge Heart. The boss's ATK and DEF drop by 30%, and Caldera Eruption becomes non-interruptible but deals only 300 damage. The Forge Heart's dialogue shifts from rage to exhaustion: "FINALLY... ONE WHO UNDERSTANDS... END THIS... GENTLY..."
 
-**Weakness:** Ice magic (150% damage). Water attacks cool the outer shell (reduce DEF for 2 turns).
-**Resistance:** Fire (absorbs), Earth (50% damage).
+**Weakness:** Frost magic (150% damage). Water attacks cool the outer shell (reduce DEF for 2 turns).
+**Resistance:** Flame (absorbs), Earth (50% damage).
 **Drop:** Heart of the Caldera (key item -- quest completion), Volcanic Ingot x2 (if not already obtained from Floor 3 chest), 3000 Gold.
 
 **Post-Boss:** The Forge Heart collapses. The caldera stabilizes. Lira kneels beside the wreckage: "It was just doing what it was built to do. Forge. Create. The Compact's drilling drove it mad." If she has the Boring Engine Schematic: "I think I can rebuild the containment. Not now, but... someday. When this is over." (Sets up a post-game quest hook.)
 
 **Encounter Zones (Floor 4):**
-- Caldera Wyrm (1x, 800 HP -- serpentine fire creature, fast, aggressive)
+- Caldera Wyrm (1x, 800 HP -- serpentine Flame creature, fast, aggressive)
 - Molten Golem Pair (2x, 500 HP each -- smaller versions of the Slag Golem)
 - Ley Eruption (environmental encounter -- a geyser of ley energy erupts, dealing 150 damage to all and spawning 3x Ley Spark, 100 HP each)
 
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| Furnace Rat | Fast rats with minor Flame damage on bite. Groups of 4. | Floor 1 | 120 |
+| Steam Phantom | Formed from leaking steam. Weak to Frost, resistant to physical. | Floor 1 | 350 |
+| Compact Sentry | Abandoned security automaton, still active. Mechanical type. | Floor 1 | 500 |
+| Lava Grub | Weak nuisance creature in lava tube sub-level. Groups of 2. | Floor 1 (sub-level) | 90 |
+| Magma Crawler | Slow, high DEF, Flame attacks. Groups of 2. | Floor 2 | 300 |
+| Ley Wisp Cluster | Fragile, erratic movement, Storm attacks. Groups of 6. | Floor 2 | 50 |
+| Forge Phantom | Spectral Compact worker, haunts transition areas. | Floor 2 | 450 |
+| Ancient Forge Guardian | Dormant defense construct. Hammer attacks: 150-200 physical. Ley-pulse AoE: 100-150 Ley damage. | Floor 3 | 700 |
+| Ember Wraith | Spirits of pre-civ forge workers. Ember Bolt: 80-120 Flame damage. Not hostile unless provoked without Lira. Groups of 2. | Floor 3 | 400 |
+| Magma Serpent | Ambushes from lava channels. Lava Lash: 100-140 Flame damage, 15% Burn chance. | Floor 3 | 550 |
+| Caldera Wyrm | Serpentine Flame creature, fast, aggressive. | Floor 4 | 800 |
+| Molten Golem | Smaller versions of the Slag Golem. Groups of 2. | Floor 4 | 500 |
+| Ley Spark | Spawned by Ley Eruption environmental encounter. | Floor 4 | 100 |
+| **Slag Golem** (Mini-boss) | Molten slag animated by wild ley energy. 25% Burn chance on Molten Spray. Core Meltdown below 25% HP. | Floor 2 | 5,000 |
+| **The Forge Heart** (Boss) | Ancient forge mechanism. Two phases. Lira special interaction available. | Floor 4 | 10,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Compact Wrench | Floor 1, upper-right chest | Weapon (Lira, ATK +15) |
+| 3x Heat Salve | Floor 1, left chest | Consumable (Flame resistance, 5 turns) |
+| Compact Thermal Suit | Floor 1, Lira's Forgewright check #1 | Accessory (halves Flame environmental damage) |
+| Slag Fragment | Floor 1, lava tube sub-level chest | Crafting material |
+| Magma Shield | Floor 2, upper-right chest | Armor (+8 DEF, Flame resistance) |
+| 5x Potion | Floor 2, lower-left chest | Consumable |
+| Refined Slag | Floor 2, Slag Golem drop | Crafting material |
+| Ancient Alloy | Floor 3, left chest | Crafting material (rare, ultimate weapon forging) |
+| Volcanic Ingot | Floor 3, right chest | Crafting material (unique, Lira's ultimate weapon) |
+| Ancient Forge Hammer | Floor 3, Lira's Forgewright check #3 | Weapon (Lira, ATK +22, Forgewright's Legacy) |
+| Caldera Core Fragment | Floor 4, left-upper chest | Accessory (+15 ATK, +10 MAG, Flame damage on attacks) |
+| 3x Elixir | Floor 4, lower-left chest | Consumable |
+| Forgewright's Memoir | Floor 4, lower-right chest | Lore item |
+| Heart of the Caldera | Floor 4, boss drop | Key item (quest completion) |
+| Volcanic Ingot x2 | Floor 4, boss drop (conditional) | Crafting material |
 ---
 
 ## 16. Frostcap Caverns
@@ -3911,9 +3951,9 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - `S` (left): Save point -- a natural ice formation shaped like a cairn, with a faint amber glow from within.
 - `P` (center): Wind Vent Alpha -- controls airflow in the eastern gallery. When active, wind blows east-to-west across the ice sliding section, affecting slide trajectories. Also lights the crystal sconces in the lower corridors (revealing a hidden passage on Floor 2).
 - `%` (lower-center): Thin ice trap. Drops to a small grotto below (contains a chest with Ice Beetle Shell, crafting material, and a ladder back up).
-- `T` (upper-right): Chest -- Frostweave Cloak (accessory, +12 MAG DEF, ice resistance, reduces Freeze duration by 1 turn).
+- `T` (upper-right): Chest -- Frostweave Cloak (accessory, +12 MAG DEF, Frost resistance, reduces Petrify duration by 1 turn).
 - `T` (lower-right): Chest -- 3x Frost Elixir (consumable, restores HP and MP, bonus effect in cold environments).
-- `T` (left): Chest -- Highland Bow (weapon, Sable -- ATK +18, ice-element arrows).
+- `T` (left): Chest -- Highland Bow (weapon, Sable -- ATK +18, Frost-element arrows).
 - `@` (lower-left): Ancient Valdris carving on the wall. Depicts monks sealing a cave entrance while spirits watch from within. Torren: "These spirits weren't dangerous. They were being imprisoned." If Maren is present: "The Valdris script reads: 'Here we seal what we cannot control. May silence keep what wisdom could not.'"
 - `H` (lower-right): Hidden passage -- leads to a secret ice vault. Contains: Ancient Spirit Token (key item, used on Floor 3 to bypass the Frost Warden's outer defenses).
 - `v` (bottom-left): Stairs down to Floor 2.
@@ -3922,9 +3962,9 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - A 10x8 ice field with 4 boulders. The main path requires pushing Boulder 1 south and Boulder 3 east, then sliding north-east-south to reach the lower corridor. An alternate configuration (Boulder 2 west, Boulder 4 north) opens access to the hidden passage `H`.
 
 **Encounter Zones:**
-- Ice Gallery Sentinel (1x, 600 HP -- crystalline humanoid, patrols the galleries, ice magic + physical)
-- Frost Bat Swarm (6x Frost Bat, 70 HP each -- weak individually, Freeze chance on bite)
-- Crystal Spider (2x, 350 HP each -- ambush predators, drop from ceiling, poison + ice attacks)
+- Ice Gallery Sentinel (1x, 600 HP -- crystalline humanoid, patrols the galleries, Frost magic + physical)
+- Frost Bat Swarm (6x Frost Bat, 70 HP each -- weak individually, 20% Petrify chance on bite)
+- Crystal Spider (2x, 350 HP each -- ambush predators, drop from ceiling, poison + Frost attacks)
 
 ### Floor 2: Wind Tunnels (45x30)
 
@@ -3973,15 +4013,15 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 
 **Mini-Boss: Ice Wyvern (6000 HP)**
 - A massive ice-blue wyvern that nests in the wind tunnels. Wingspan fills the battle screen. Scales shimmer with frost. Not malicious -- territorial. It guards the path to the shrine.
-- **Attacks:** Frost Breath (ice damage, cone AoE, 300-400 damage + Freeze), Wing Buffet (physical, all targets, 200-250 damage + knockback, may push characters into hazard tiles), Dive Strike (single target, 500 damage, wyvern becomes untargetable for 1 turn during dive), Ice Armor (self-buff, +50% DEF for 3 turns).
-- **Weakness:** Fire magic (150% damage). Lightning (125% damage).
-- **Strategy:** Fire magic to strip Ice Armor quickly. Heal through Frost Breath. Save burst damage for after Dive Strike lands (wyvern is grounded for 1 turn after).
-- **Drop:** Wyvern Scale (crafting material, rare), Wyvern Fang (accessory, +12 ATK, ice-element physical attacks), 1200 Gold.
+- **Attacks:** Frost Breath (Frost damage, cone AoE, 300-400 damage + Petrify), Wing Buffet (physical, all targets, 200-250 damage + knockback, may push characters into hazard tiles), Dive Strike (single target, 500 damage, wyvern becomes untargetable for 1 turn during dive), Ice Armor (self-buff, +50% DEF for 3 turns).
+- **Weakness:** Flame magic (150% damage). Storm (125% damage).
+- **Strategy:** Flame magic to strip Ice Armor quickly. Heal through Frost Breath. Save burst damage for after Dive Strike lands (wyvern is grounded for 1 turn after).
+- **Drop:** Wyvern Scale (crafting material, rare), Wyvern Fang (accessory, +12 ATK, Frost-element physical attacks), 1200 Gold.
 
 **Encounter Zones:**
 - Wind Howler (1x, 500 HP -- air elemental, hard to hit, wind attacks push party into traps)
-- Frost Stalker (2x, 400 HP each -- ice-elemental predators, high EVA, ambush attacks)
-- Valdris Shade (1x, 550 HP -- spirit of an ancient monk, uses holy + ice magic, not hostile until attacked -- can be spoken to by Torren to avoid combat and receive a Spirit Blessing buff)
+- Frost Stalker (2x, 400 HP each -- Frost-elemental predators, high EVA, ambush attacks)
+- Valdris Shade (1x, 550 HP -- spirit of an ancient monk, uses holy + Frost magic, not hostile until attacked -- can be spoken to by Torren to avoid combat and receive a Spirit Blessing buff)
 
 ### Floor 3: The Frost Shrine (45x30)
 
@@ -4029,14 +4069,14 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 An ancient Valdris spirit guardian, bound to the shrine since before the Monastery was built. A towering figure of pale blue light, vaguely humanoid, wearing armor made of crystallized spirit energy. Its face is a mask of serene authority. Eyes of deep blue fire. It does not attack immediately -- it speaks first: "YOU ENTER THE SANCTUARY. STATE YOUR PURPOSE OR BE JUDGED." The party can respond (dialogue choice), but combat begins regardless (the Warden must test them physically as well as spiritually).
 
 **Phase 1 (11000-6000 HP) -- The Test of Endurance:**
-- **Frost Lance** -- ice magic, single target, 400-500 damage.
+- **Frost Lance** -- Frost magic, single target, 400-500 damage.
 - **Spirit Ward** -- creates a barrier on one party member that reflects the next spell cast on them (ally heals bounce back to the Warden, enemy debuffs hit the caster).
-- **Blizzard Veil** -- ice damage, all targets, 250-350 damage + Freeze chance.
+- **Frost Veil** -- Frost damage, all targets, 250-350 damage + 30% Petrify chance.
 - **Judgment Gaze** -- targets the party member with the lowest current HP, deals fixed 300 damage. A test of the party's healing discipline.
 
 **Phase 2 (below 6000 HP) -- The Test of Wisdom:**
 - All Phase 1 attacks, plus:
-- **Absolute Zero** -- massive ice AoE, 600-700 damage to all. 3-turn charge. Can be interrupted by Torren using Spirit Speak (unique command).
+- **Absolute Zero** -- massive Frost AoE, 600-700 damage to all. 3-turn charge. Can be interrupted by Torren using Spirit Speak (unique command).
 - **Spirit Drain** -- drains 80 MP from one target, heals self for double the amount.
 - **Sanctuary Seal** -- locks one party member in an ice prison for 3 turns. Physical attacks shatter the prison; magic attacks strengthen it.
 - **"YOU HAVE STRENGTH. BUT DO YOU HAVE UNDERSTANDING?"** -- dialogue trigger at 50% HP.
@@ -4045,16 +4085,52 @@ An ancient Valdris spirit guardian, bound to the shrine since before the Monaste
 
 Without Torren's sidequest completion, the fight continues to 0 HP. The Warden shatters into light, then reforms as a small spirit orb: "You fight well. Perhaps... the shrine is in good hands." Same drops, but no peaceful resolution -- the Warden's binding is broken permanently.
 
-**Weakness:** Fire magic (150% damage). Dark/Shadow (125% damage).
-**Resistance:** Ice (absorbs), Holy (50% damage).
-**Immunity:** Freeze, Silence.
+**Weakness:** Flame magic (150% damage). Dark/Shadow (125% damage).
+**Resistance:** Frost (absorbs), Holy (50% damage).
+**Immunity:** Petrify, Silence.
 **Drop:** Warden's Blessing (accessory, +15 MAG DEF, +10 MAG, auto-regen in cold environments), Spirit Warden's Shard (key item -- quest completion), 2500 Gold.
 
 **Encounter Zones (Floor 3):**
-- Shrine Guardian (2x, 500 HP each -- smaller spirit constructs, ice + holy attacks)
+- Shrine Guardian (2x, 500 HP each -- smaller spirit constructs, Frost + holy attacks)
 - Frozen Offering (1x, 400 HP -- a corrupted offering that attacks when disturbed, drops Spirit Incense consumable)
 - Valdris Ancestor Spirit (1x, 700 HP -- powerful spirit, uses ancient magic. Torren can speak with it to avoid combat -- it gives a blessing instead: +10% XP for 5 battles)
 
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| Ice Gallery Sentinel | Crystalline humanoid. Patrols galleries. Frost magic + physical. | Floor 1 | 600 |
+| Frost Bat Swarm | Weak individually. 20% Petrify chance on bite. Groups of 6. | Floor 1 | 70 |
+| Crystal Spider | Ambush predators. Drop from ceiling. Poison + Frost attacks. Groups of 2. | Floor 1 | 350 |
+| Wind Howler | Air elemental, hard to hit. Wind attacks push party into traps. | Floor 2 | 500 |
+| Frost Stalker | Frost-elemental predators. High EVA, ambush attacks. Groups of 2. | Floor 2 | 400 |
+| Valdris Shade | Spirit of an ancient monk. Holy + Frost magic. Can be spoken to by Torren to avoid combat. | Floor 2 | 550 |
+| Shrine Guardian | Smaller spirit constructs. Frost + holy attacks. Groups of 2. | Floor 3 | 500 |
+| Frozen Offering | Corrupted offering. Attacks when disturbed. Drops Spirit Incense. | Floor 3 | 400 |
+| Valdris Ancestor Spirit | Powerful spirit, ancient magic. Torren can speak to avoid combat (+10% XP for 5 battles). | Floor 3 | 700 |
+| **Ice Wyvern** (Mini-boss) | Massive ice-blue wyvern. Frost Breath, Wing Buffet, Dive Strike, Ice Armor. | Floor 2 | 6,000 |
+| **The Frost Warden** (Boss) | Ancient Valdris spirit guardian. Two-phase test. Torren special interaction available. | Floor 3 | 11,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Frostweave Cloak | Floor 1, upper-right chest | Accessory (+12 MAG DEF, Frost resistance) |
+| 3x Frost Elixir | Floor 1, lower-right chest | Consumable (HP + MP restore) |
+| Highland Bow | Floor 1, left chest | Weapon (Sable, ATK +18, Frost-element) |
+| Ancient Spirit Token | Floor 1, hidden passage | Key item (Floor 3 Warden bypass) |
+| Ice Beetle Shell | Floor 1, thin ice trap grotto | Crafting material |
+| Wind Dancer's Ring | Floor 2, upper-right chest | Accessory (+10 SPD, +5 EVA, wind resistance) |
+| 5x Potion, 3x Antidote | Floor 2, lower-left chest | Consumable |
+| Wyvern Scale | Floor 2, Ice Wyvern drop | Crafting material (rare) |
+| Wyvern Fang | Floor 2, Ice Wyvern drop | Accessory (+12 ATK, Frost-element physical) |
+| Frostpeak Crystal | Floor 3, left chest | Crafting material (unique, Torren's ultimate weapon) |
+| Ancient Spirit Tome | Floor 3, lower-left chest | Lore item |
+| Monastery Key | Floor 3, lower-right chest | Key item (opens Monastery sealed library) |
+| Warden's Blessing | Floor 3, boss drop | Accessory (+15 MAG DEF, +10 MAG, auto-regen in cold) |
+| Spirit Warden's Shard | Floor 3, boss drop | Key item (quest completion) |
+| Spirit Incense | Floor 3, Frozen Offering drop | Consumable |
 ---
 
 ## 17. Thornvein Passage
@@ -4126,12 +4202,12 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 - **Root Lash** -- physical, single target, 350-450 damage + Bind status (1 turn, target cannot move or act).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison.
 - **Pallor Pulse** -- dark magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
-- **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with fire or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
+- **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
 - **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
 
-**Weakness:** Fire (150% damage). Ley Water (special: 1000 damage + disables regeneration). Holy (125% damage).
+**Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Holy (125% damage).
 **Resistance:** Earth (50% damage), Nature (absorbs).
-**Strategy:** Prioritize disabling regeneration with fire or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
+**Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
 **Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, nature-element attacks gain dark sub-element), 1500 Gold.
 
 **Encounter Zones:**
@@ -4179,6 +4255,30 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 - Ley Moth Swarm (8x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
 - Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, dark-element, regenerates unless the crack is sealed with ley water)
 
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| Root Tendril | Burst from walls. Bind + physical attacks. Groups of 3. | Floor 1 | 250 |
+| Pallor Fungus | Toxic spore attacks. Poison + Confusion. Groups of 2. | Floor 1 | 350 |
+| Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
+| Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
+| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
+| Pallor Seep | Pallor corruption leaking through crack. Amorphous, dark-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
+| **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind. | Floor 1 | 7,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Root Bark Shield | Floor 1, upper-right chest | Armor (+10 DEF, +5 MAG DEF, nature resistance) |
+| 3x Spirit Tonic | Floor 1, left chest (near spring) | Consumable (restores 50 MP) |
+| Thornmere Amber | Floor 1, right chest | Accessory (+8 MAG, boosts nature spells) |
+| Vial of Ley Water | Floor 1, clean ley spring | Key item (purifies corrupted roots) |
+| Purified Root Heart | Floor 1, Root Horror drop | Crafting material (rare) |
+| Root Horror's Core | Floor 1, Root Horror drop | Accessory (+12 ATK, +8 MAG, nature+dark attacks) |
+| Waystation Provisions | Floor 2, left chest | Consumable set (5x Potion, 3x Spirit Tonic, 1x Elixir) |
 ---
 
 ## Appendix: Dungeon Summary Table
