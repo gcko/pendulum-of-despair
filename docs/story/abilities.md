@@ -8,6 +8,8 @@ This document defines unique character abilities, combo techniques, the magic sy
 
 Each party member has one unique command in their battle menu alongside Fight, Magic, and Item. These commands reflect the character's background, faction, and narrative arc.
 
+**Unlock conditions:** Abilities show a 'Learned' column. For pure level-up abilities, this is the level required. For story-triggered abilities marked [S], the level shown is the **minimum level** — the ability unlocks when BOTH the level requirement AND the story trigger are met. If only a story trigger is needed (no level gate), the Learned column shows the story reference instead of a level.
+
 ---
 
 ### Edren — Bulwark
@@ -99,7 +101,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
 | **Mending Engine** | Interlude [S] (Lv 17+) | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
 | **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, the attack gains dual-element: it hits with BOTH elements, checking the target's weakness to each independently and using the more favorable result. Consumed on next attack. |
-| **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
+| **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. The Colossus has HP equal to 50% of Lira's max HP, Attack equal to Lira's Attack x 1.5, and ATB speed equal to 75% of Lira's Speed. It cannot be healed but can be targeted by enemies. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
 
 **Synergies:**
 - Lira + Maren: Maren's Resonance can extend device durations by 1 turn.
@@ -122,7 +124,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 **Resource: Spirit Favor**
 - Each spirit starts at Favor 0.
-- Favor increases by 1 when the spirit's ability is used "in harmony" (matching a weakness, protecting an ally from death, healing someone below 25% HP, etc.). Max Favor 3.
+- Favor increases by 1 when the spirit's ability is used "in harmony" (matching a weakness, protecting an ally from death, healing someone below 25% HP). These are the only conditions that increase Favor. Max Favor 3.
 - At Favor 3, the spirit's ability transforms into an upgraded version permanently.
 - Favor can decrease by 1 if a spirit is summoned and the battle is fled from (spirits don't appreciate being abandoned).
 
@@ -132,10 +134,10 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|---------|--------|-----------------|
 | **Thornveil** (Briar Spirit) | Level 1 | 5 MP | Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. | **Deeproot Veil:** Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%. |
 | **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally. Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies and removes Poison and Sleep. |
-| **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Flame damage to all enemies. Chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
+| **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Flame damage to all enemies. 40% chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
-| **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental spirit damage that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a chance to dispel Pallor buffs. |
-| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs a weakened version of its ability simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
+| **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental spirit damage that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
+| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
 
 **Synergies:**
 - Torren + Edren: Thornveil on Edren while he's in Ironwall stance means enemies take counter-damage from both Riposte and the thorn barrier.
@@ -168,9 +170,9 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Filch** | Level 1 | 0 MP / 0 CD | Steal an item from one enemy. Success rate based on Sable's Speed vs. enemy Speed. Each enemy has a common and rare steal. |
 | **Smokescreen** | Level 4 | 4 MP / 2 turns | Reduces all enemies' accuracy by 30% for 2 turns. If Sable has a stolen Forgewright component, also reduces enemy Speed by 15%. |
 | **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it for bonus elemental damage (element depends on item type). The item is consumed. |
-| **Misdirect** | Level 14 | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. If used on a boss, instead reduces the boss's next attack damage by 25%. |
-| **Ransack** | Level 19 | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
-| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: deals physical damage equal to 2x her Attack. 1 item: adds the item's element as AoE damage. 2 items: AoE damage plus a random debuff on all enemies. 3 items: AoE heavy damage, random debuff, and restores 10% HP to all allies. All stolen items are consumed. |
+| **Misdirect** | Interlude [S] (Lv 14+) | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. Against AoE attacks, Misdirect has no effect. Against non-physical actions (spells), it redirects the targeting as normal. If used on a boss, instead reduces the boss's next attack damage by 25%. |
+| **Ransack** | Interlude [S] (Lv 19+) | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
+| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: deals physical damage equal to 2x her Attack. 1 item: adds the item's element as AoE damage. 2 items: AoE damage plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: AoE heavy damage, random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow), and restores 10% HP to all allies. All stolen items are consumed. |
 
 **Synergies:**
 - Sable + Lira: Stolen Forgewright components can be given to Lira between battles to restore 2 AC each.
@@ -201,11 +203,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 | Ability | Learned | Cost | Effect |
 |---------|---------|------|--------|
-| **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
+| **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Functions as a stance: once selected, Maren holds Siphon until the next enemy spell is cast, then absorbs it automatically. If no enemy spell comes before Maren's next turn, the stance ends with no effect. Generates +20 WG on success. |
 | **Resonance** | Level 8 | 8 MP | Amplifies the next magical action by any ally by 30%. Affects spells (damage/healing +30%), Spiritcall effects (+30% potency), and Forgewright devices (+1 turn duration). For Bulwark's Aegis Veil, converts single-target to party-wide at half strength (20% magic damage reduction for 2 turns instead of 40% for 3 turns). Must be cast before the ally acts. Generates +10 WG. |
-| **Unweave** | Level 13 | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
-| **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes 50 WG. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
-| **Mirrorsong** | Level 23 | 16 MP | Maren copies the last spell cast by any combatant (ally or enemy) and casts it immediately at her own Magic stat. Generates +15 WG. |
+| **Unweave** | Interlude [S] (Lv 13+) | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
+| **Ley Surge** | Interlude [S] (Lv 18+) | 50 WG (no MP) | Consumes 50 WG. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
+| **Mirrorsong** | Interlude [S] (Lv 23+) | 16 MP | Maren copies the last spell cast by any combatant (ally or enemy) and casts it immediately at her own Magic stat. Generates +15 WG. |
 | **Annulment** | Story: After finding the ancient ruin (Interlude) | 100 WG (full gauge, no MP) | Maren unravels all active magic on the battlefield — all buffs, debuffs, status effects, devices, barriers, and ongoing spells are removed from ALL combatants (allies and enemies alike). Then deals heavy non-elemental magic damage to all enemies based on the total number of effects removed. Extremely powerful but indiscriminate — requires careful timing. |
 
 **Synergies:**
@@ -372,12 +374,12 @@ The Pallor corrupts all three magical traditions:
 - Visual: Ley-line sigils flicker grey at the edges when cast in corrupted zones.
 
 **Arcanite Channeling:**
-- Forgewright devices in corrupted areas have a 15% chance to malfunction each turn (effect is randomized — might heal the wrong target, damage an ally, or simply fizzle).
+- Forgewright devices in corrupted areas have a 15% chance to malfunction each turn (effect is randomized (equal 1/3 chance each): heal the wrong target, damage an ally, or fizzle with no effect).
 - Lira can spend a turn to Calibrate a device, removing the malfunction chance for its remaining duration.
 - Visual: Arcanite crystals pulse with grey veins in corrupted zones.
 
 **Spirit Communion:**
-- Spirits called in corrupted areas may arrive corrupted themselves (10% chance). A corrupted spirit performs its effect on the wrong targets (heals enemies, damages allies).
+- Spirits called in corrupted areas may arrive corrupted themselves (10% chance). A corrupted spirit performs its effect on the wrong targets (heals enemies, damages allies). For non-damage, non-healing effects (e.g., Stoneheart status immunity), corruption grants the effect to enemies instead of allies.
 - Torren can spend a turn to Purify a corrupted spirit call, reversing it to the correct targets.
 - Spirits at Favor 3 are immune to corruption.
 - Visual: Spirit forms appear translucent and grey-tinged in corrupted zones.
@@ -424,9 +426,9 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
 | 12 | Arc Trap | — | — |
-| 13 | — | Wardglass (schematic) | Ashmark Archives schematic |
-| 13 | — | Seal Tongue (cross-train) | Act III scene with Maren |
-| 14 | Thornveil device variant | — | Act III scene with Torren |
+| — | — | Wardglass (schematic) | Ashmark Archives schematic |
+| — | — | Seal Tongue (cross-train) | Act III scene with Maren |
+| 14 | **[S]** Thornveil device variant | — | Act III scene with Torren |
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | 22 | **[S] Overcharge** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | — | **[S] Arcanite Colossus** | — | Act III: commits to fighting Cael |

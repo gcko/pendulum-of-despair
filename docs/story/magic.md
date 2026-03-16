@@ -100,6 +100,8 @@ Each element has one element it is strong against (deals 150% damage) and one it
 
 *Note: AoE **spell power** uses approximately 60-70% of the single-target ranges above (e.g., Tier 2 AoE spell power: 18-28 vs single-target 28-40). AoE **MP cost** is handled separately: 1.5-2x the single-target cost (see Balance Rules below).*
 
+*AoE MP costs also exceed single-target ranges: typically 1.5-2x the single-target cost for the same tier (e.g., Tier 2 AoE MP: 18-28).*
+
 ### Balance Rules
 
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
