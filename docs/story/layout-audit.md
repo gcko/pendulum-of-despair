@@ -412,7 +412,7 @@ Severity: **MINOR**
 | The Convergence | Outer Ring (before Phase 1) | None during phases | OK (intentional difficulty) |
 | Archive of Ages | Floor 1, Floor 2, Floor 3 (none explicitly before boss) | SEE MINOR-10 |
 | Dreamer's Fault | Every 5th floor | Sparse but intentional (super dungeon) | OK |
-| Dry Well of Aelhart | None | None (7-floor dungeon, 60-90 min Interlude / 2-3 hr full clear) | OK |
+| Dry Well of Aelhart | Floors 1, 3, 5 (before bosses) | Floors 2, 4, 6 (7-floor dungeon, 60-90 min Interlude / 2-3 hr full clear) | OK |
 | Sunken Rig | Floor 1, Floor 2 (before boss) | Both floors covered | OK |
 | Windshear Peak | Summit | N/A (no combat) | OK |
 | Valdris Catacombs | Floor 1 (Spirit Shrine), Floor 3 (before boss) | Floor 2 not explicitly | SEE MINOR-11 |
