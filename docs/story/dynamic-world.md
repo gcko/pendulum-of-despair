@@ -517,7 +517,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Map layout changes:** None. Natural caverns beneath Millhaven where raw ley energy flows like rivers of light.
 - **Visual state:** Underground/Cavern transitioning to Ley Line Nexus at depth. Brilliant, shifting colors. Ancient carvings. The sealed door with the Pendulum's symbol.
 - **Accessible areas:** Upper levels (Compact scaffolding and pumping rigs) and deeper natural caverns. The sealed door at the bottom cannot be opened.
-- **Environmental details:** The Depths are awe-inspiring -- veins of light through dark stone. The magical burn timer creates urgency. The Compact's scaffolding intrudes on something sacred. The sealed door is a mystery seed.
+- **Environmental details:** The Depths are awe-inspiring -- veins of light through dark stone. The magical burn timer creates urgency. The Compact's scaffolding intrudes on something sacred. The sealed door is a foreshadowing element that resolves in Act III when the Archivist's Codex unlocks the Ley Confluence.
 
 ##### Interlude State
 - **Surface destroyed.** The pit erupted, Millhaven collapsed. The Compact's Extraction Works (Floor 1) are gone -- buried under the crater. The Millhaven entrance is sealed. However, the pre-civilization chambers deep below (Floors 2-5) survive intact. The builders' architecture was designed to endure catastrophe; the geometric stone and ley-crystal formations are undamaged. The deeper Depths are inaccessible during the Interlude -- no known entrance exists. Referenced in dialogue as "gone," because from the surface, they are.

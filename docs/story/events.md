@@ -87,6 +87,8 @@ This is the game's World of Ruin moment. Everything changes.
 | Caldera Forge Depths | Full access | Lira rejoins the party and unlocks the deeper chambers beneath Caldera's refineries. Her character dungeon. |
 | Frostcap Caverns | New area opens | Hidden caves near Highcairn in the Frostcap Mountains. Torren's character dungeon, accessible during the Highcairn sequence. |
 
+**New Areas Opening:** Highcairn, Corrund, Axis Tower, Caldera Forge Depths (full access), Frostcap Caverns, Dry Well of Aelhart, Archive of Ages.
+
 **NPC Changes:**
 
 | NPC | Change | Details |
