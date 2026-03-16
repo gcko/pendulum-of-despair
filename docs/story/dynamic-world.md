@@ -515,7 +515,10 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Environmental details:** The Depths are awe-inspiring -- veins of light through dark stone. The magical burn timer creates urgency. The Compact's scaffolding intrudes on something sacred. The sealed door is a mystery seed.
 
 ##### Interlude State
-- **Destroyed.** The pit erupted, Millhaven collapsed, the Depths are gone. Referenced in dialogue only. The sealed door -- and whatever lay behind it -- is buried under a crater.
+- **Surface destroyed.** The pit erupted, Millhaven collapsed. The Compact's Extraction Works (Floor 1) are gone -- buried under the crater. The Millhaven entrance is sealed. However, the pre-civilization chambers deep below (Floors 2-5) survive intact. The builders' architecture was designed to endure catastrophe; the geometric stone and ley-crystal formations are undamaged. The deeper Depths are inaccessible during the Interlude -- no known entrance exists. Referenced in dialogue as "gone," because from the surface, they are.
+
+##### Act III State
+- **Rediscovered.** A secondary entrance through the Thornvein root network (accessible from the Thornvein Passage or Roothollow) opens into the Natural Caverns (Floor 2), bypassing the destroyed surface floors. The Crystal Labyrinth, Deep Vein, and the sealed door are intact. With the Archivist's Codex (from the Archive of Ages), the sealed door opens to reveal Floor 5: the Ley Confluence. The revelation that the ley lines are engineered -- and that the Compact was draining planetary life support -- is the narrative payoff for the dungeon's earlier mystery.
 
 ---
 
@@ -929,7 +932,7 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Fenmother's Hollow** | -- | Base (dungeon) | -- (offscreen: submerged) | -- | -- | **1** | |
 | **Carradan Rail Tunnels** | -- | Base (functional) | Corrupted maze | -- | -- | **2** | Major layout change |
 | **Axis Tower** | -- | -- | Dungeon (single visit) | -- | -- | **1** | |
-| **Ley Line Depths** | -- | Base (optional dungeon) | -- (destroyed) | -- | -- | **1** | |
+| **Ley Line Depths** | -- | Base (optional dungeon) | Surface destroyed (deep floors survive) | Rediscovered (Floors 2-5 via Thornvein) | -- | **3** | Surface collapse, deep survival, Act III re-entry |
 | **Pallor Wastes** | -- | -- | -- | Wastes (gauntlet) | -- | **1** | Unique biome, not a variant |
 | **The Convergence** | -- | -- | -- | Fractured plateau | Meadow | **2** | Plus Phase 1/2/3 combat states |
 | **Archive of Ages** | -- | -- | Base (dungeon) | -- | -- | **1** | Ancient ruins do not change |

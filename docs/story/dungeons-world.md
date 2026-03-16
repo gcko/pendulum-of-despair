@@ -1069,7 +1069,7 @@ When defeated, his soldiers collapse. Brant watches silently.
 - **Difficulty:** Hard. Magical burn timer adds pressure. Enemies are tough. Floors 4-5 are very hard.
 - **Recommended Level:** 16-20 (Act II, Floors 1-4). 24-28 (Act III, Floor 5).
 - **Estimated Play Time:** 90-120 minutes (full clear, all floors)
-- **Revisitable:** Yes. Floors 1-4 available in Act II. Floor 5 unlocks in Act III (requires Archivist's Codex). The Crystal Labyrinth's second beam puzzle can only be solved with an item from the Interlude, rewarding return visits.
+- **Revisitable:** Floors 1-4 available in Act II via the Millhaven extraction pit. During the Interlude, the Millhaven pit erupts and the surface infrastructure collapses -- Floor 1 (Extraction Works) is destroyed, and the Millhaven entrance is sealed under rubble. However, the pre-civilization chambers (Floors 2-5) survive intact; the builders' architecture endures what Compact scaffolding cannot. In Act III, a secondary entrance opens through the Thornvein root network (accessible from the Thornvein Passage dungeon or Roothollow), bypassing the destroyed upper floors and entering directly at Floor 2. Floor 5 unlocks in Act III (requires Archivist's Codex from the Archive of Ages). The Crystal Labyrinth's second beam puzzle can only be solved with an item from the Interlude, rewarding return visits.
 
 ### Puzzle Mechanic: Ley Energy Channeling (Floors 2, 4)
 
