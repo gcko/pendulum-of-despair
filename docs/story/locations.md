@@ -610,7 +610,7 @@ During the Interlude, the inn is damaged but standing. Hadley shelters Valdris r
 
 Beneath Ironmouth's mine, the Carradan tunnels broke into something far older — a network of passages lined with crystallized ley energy that glows a deep, ember-orange. The Ember Vein is a pre-civilization ruin whose builders left no writing, only geometric carvings in the walls and a central chamber where the Pendulum rested on a stone pedestal. The dead miners lie in the corridors leading to the central chamber, faces frozen in despair.
 
-The ruin is small — four rooms and a central hub — designed as the game's introductory dungeon. The geometric carvings pulse faintly in response to magic, establishing the visual language the player will see in every ancient ruin going forward. The encounter design is forgiving: weak monsters (ley-corrupted vermin, unstable crystal formations) that teach the combat system without punishing mistakes. The atmosphere does the heavy lifting — the dead miners, the too-perfect geometry, the Pendulum waiting in the dark.
+The ruin spans 4 floors (Upper Mine, Lower Mine, Ancient Ruin, and the Pendulum Chamber) — designed as the game's introductory dungeon. The geometric carvings pulse faintly in response to magic, establishing the visual language the player will see in every ancient ruin going forward. The encounter design is forgiving: weak monsters (ley-corrupted vermin, unstable crystal formations) that teach the combat system without punishing mistakes. The atmosphere does the heavy lifting — the dead miners, the too-perfect geometry, the Pendulum waiting in the dark.
 
 **Key features:**
 - Ember-orange crystallized ley energy (visual motif for ancient ruins)
@@ -695,23 +695,24 @@ The dungeon is structured as a vertical climb. Sable and Lira enter through the 
 ### The Ley Line Depths
 
 **Faction:** None (natural formation)
-**Acts:** II (optional), Interlude
+**Acts:** II (optional), III
 **Type:** Environmental dungeon
 
 Beneath Millhaven's extraction pit, the earth opens into a natural cavern system where raw ley energy flows like rivers of light. The Depths are what ley lines look like when they're exposed — veins of brilliant, shifting color running through dark stone, branching and converging in patterns that almost look intentional. The air hums with magical resonance. Unprotected exposure causes hallucinations, euphoria, and eventually magical burn — a condition where the body absorbs more energy than it can contain.
 
-The Compact has built scaffolding and pumping rigs into the upper levels, but below that, the Depths are untouched. The deeper you go, the older the stone, and the carvings begin — the same geometric patterns found in the Ember Vein, but vaster and more complex. At the deepest accessible point, a sealed door bears the symbol of the Pendulum. It cannot be opened. Maren theorizes it leads to wherever the Pendulum was originally held before it was moved to the Ember Vein.
+The Compact has built scaffolding and pumping rigs into the upper levels, but below that, the Depths are untouched. The deeper you go, the older the stone, and the carvings begin — the same geometric patterns found in the Ember Vein, but vaster and more complex. At the deepest accessible point, a sealed door bears the symbol of the Pendulum. It cannot be opened during the Act II visit. Maren theorizes it leads to wherever the Pendulum was originally held before it was moved to the Ember Vein.
 
 **Key features:**
 - Raw ley energy rivers (visual spectacle; environmental hazard — magical burn timer)
 - Compact pumping infrastructure (upper levels; environmental puzzle)
 - Ancient carvings (lore — connects to Ember Vein and the Pendulum's origin)
-- The sealed door (mystery element — unanswerable in this playthrough, seeds for future content)
+- The sealed door (opens in Act III with the Archivist's Codex, revealing Floor 5 — the Ley Confluence)
 - Unique enemies (ley-born creatures, living energy constructs)
 
 **What the player does here:**
 - Act II (optional): Accessible from Millhaven. A challenging side dungeon with unique enemies and the best magical equipment in Act II.
-- Interlude: Referenced — the pit erupts, destroying Millhaven. The Depths collapse.
+- Interlude: Referenced — the pit erupts, destroying Millhaven. The surface infrastructure and Floor 1 collapse, but the pre-civilization chambers (Floors 2–5) survive intact.
+- Act III: Accessible via the Thornvein root network. The sealed door opens with the Archivist's Codex, revealing Floor 5 (the Ley Confluence).
 
 ---
 
@@ -788,6 +789,78 @@ The Archive is not hostile by nature — its guardians are constructs that test 
 
 ---
 
+### Caldera Forge Depths
+
+**Faction:** Carradan Compact
+**Acts:** II (discoverable), Interlude (full access)
+**Type:** Dungeon (4 floors)
+
+Beneath Caldera's industrial refineries lies a pre-civilization forge complex — a find that the Compact's founders never knew they were building over. The refineries above are loud, hot, and ceaseless; the Forge Depths are silent in a way that feels deliberate, the silence of a place that has been waiting. Four floors descend from the refinery basement into volcanic caves and finally to an ancient forge chamber, where the original builders shaped metal using processes the Compact's Forgewrights cannot replicate.
+
+The dungeon's central mechanic is lava flow redirection — diverting molten channels to open passages, cool barriers, or power ancient mechanisms. The forge itself is still functional in the lowest chamber; it will shape materials that no surface forge can touch. This is Lira's character dungeon. The descent mirrors her arc: layer by layer, the industrial veneer of Caldera gives way to something older and more fundamental, a place that pre-dates the systems she's always worked within and always doubted.
+
+**Key features:**
+- Lava flow redirection puzzles (core dungeon mechanic — divert channels to open paths)
+- Pre-civilization forge complex (visual contrast with Compact refineries above)
+- Volcanic cave section (natural formation between industrial and ancient layers)
+- Ancient forge chamber (lowest floor — capable of working unique materials)
+- Secret exit to Caldera's lower district (bypass route for infiltration)
+- Connects to "The Fading Shifts" sidequest
+
+**What the player does here:**
+- Act II (discoverable): The entrance is accessible from Caldera's refinery basement during the Act II visit, but the full descent is blocked by lava flows requiring equipment or knowledge not yet available.
+- Interlude (full access): Lira's character dungeon. The party descends all four floors, solves the lava redirection puzzles, reaches the ancient forge, and obtains the Volcanic Ingot — the material component for Lira's ultimate weapon.
+
+**Notable:** Contains the Volcanic Ingot, the primary material component for Lira's ultimate weapon.
+
+---
+
+### Frostcap Caverns
+
+**Faction:** Valdris (near Highcairn / Monastery of the Vigil)
+**Acts:** Interlude, Act III
+**Type:** Dungeon (3 floors)
+
+Inside the Frostcap Peaks above Highcairn, a natural ice cave system runs deep into the mountain. The upper floors are natural — ice and stone shaped by glacial movement over centuries, with the particular crystalline beauty of places that have never been touched by warmth. The lower floors are something else: ancient Valdris ruins, built into the ice by people who chose this cold, difficult place deliberately. In the deepest chamber, a forbidden shrine to old spirits sits untouched — old in a way that predates the Vigil's doctrine, old enough that the monks above don't acknowledge it exists.
+
+The dungeon's mechanics combine wind puzzles (navigating air currents to reach elevated passages or activate ice mechanisms) with ice-sliding sections (momentum-based navigation through glacial corridors). A secret passage in the shrine chamber connects to the Monastery of the Vigil's sealed library — the one section the monks have locked for generations. This is Torren's character dungeon. The ice and the old shrine speak to the parts of spirit practice that formal doctrine has tried to suppress; navigating here requires the same attunement Torren has been developing throughout the game.
+
+**Key features:**
+- Ice sliding sections (momentum-based navigation — core dungeon mechanic)
+- Wind puzzles (air current navigation to open passages and reach elevated areas)
+- Ancient Valdris ruins (lower floors — older than current Vigil doctrine)
+- Forbidden shrine to old spirits (lore — pre-Vigil Valdris spirituality)
+- Secret passage to the Monastery's sealed library (unlocks additional lore and the Monastery Key)
+
+**What the player does here:**
+- Interlude: Accessible during the Highcairn sequence. Torren's character dungeon. The party descends through natural ice caves and ancient ruins to the forbidden shrine, where the Frostpeak Crystal is found and the passage to the sealed library is opened.
+- Act III: Revisitable for any content not completed during the Interlude.
+
+**Notable:** Contains the Frostpeak Crystal (Torren's ultimate weapon material) and the Monastery Key, which unlocks the sealed library in the Monastery of the Vigil.
+
+---
+
+### Thornvein Passage
+
+**Faction:** Thornmere Wilds
+**Acts:** III
+**Type:** Dungeon/passage (2 floors)
+
+An underground root-choked tunnel beneath the Thornmere Wilds, connecting Roothollow to the approach routes toward the Convergence. The pre-civilization builders used it as a transit route — a quick path under the worst of the surface terrain. Over centuries, the Wilds grew into it. Root systems from the old-growth trees above have pushed through the stone, filling corridors with living wood that has developed its own slow intelligence, the same distributed awareness that spirit-speakers call root-mind.
+
+The Thornvein Passage is not hostile by nature. The roots test rather than threaten — moving to block paths, forming puzzles that require communing with the root systems to negotiate passage. Torren can speak to them directly. The dungeon is short by design: two floors, purpose-built as a strategic asset for Act III's march rather than a character dungeon. Using it bypasses the most grueling overland sections of the Pallor Wastes approach, arriving closer to the Convergence with more resources intact.
+
+**Key features:**
+- Spirit root manipulation puzzles (Torren communes with root systems to negotiate passage)
+- Living root corridors (the old-growth root-mind has reshaped the pre-civilization structure)
+- Pre-civilization stonework visible beneath root overgrowth (connects to the broader ruin network)
+- Strategic shortcut (bypasses the worst of the Pallor Wastes surface route)
+
+**What the player does here:**
+- Act III: Optional dungeon discovered in Roothollow before the final march. Completing it provides a strategic advantage — the party emerges closer to the Convergence, bypassing a significant portion of the Pallor Wastes gauntlet and preserving resources for the final confrontation.
+
+---
+
 ## Optional & Secret Locations
 
 ### The Pendulum (Tavern)
@@ -827,16 +900,16 @@ At the bottom, the player finds a shade of Cael — not truly him, but an echo. 
 ### The Dry Well of Aelhart (Secret)
 
 **Faction:** Valdris
-**Acts:** I (discoverable), Interlude (accessible)
-**Type:** Mini-dungeon
+**Acts:** Interlude, III
+**Type:** Dungeon (7 floors)
 
-The dry well in Aelhart's village square has a crack at the bottom that only becomes accessible after the ley line instability of the Interlude widens it. A small, three-room dungeon beneath the village connects to a fragment of the same pre-civilization ruin network as the Ember Vein. Inside, a single tablet depicts Aelhart's founding — the village was built specifically to cap this ruin entrance. The reward is a unique accessory tied to Edren's personal story: a family crest that boosts his abilities and unlocks a dialogue option in Act III's Pallor trial.
+The dry well in Aelhart's village square has a crack at the bottom that only becomes accessible after the ley line instability of the Interlude widens it. What begins as a simple well shaft descends into a sprawling 7-floor uber-dungeon (Well Shaft, Natural Caves, Waterworks, Living Quarters, Deep Archive, Warped Depths, and the Wellspring) connecting to the same pre-civilization ruin network as the Ember Vein. The deeper floors reveal that Aelhart was built specifically to cap this ruin entrance, and the complex expands dramatically in Act III. The reward is a unique accessory tied to Edren's personal story: a family crest that boosts his abilities and unlocks a dialogue option in Act III's Pallor trial.
 
 **Key features:**
-- Only accessible during or after the Interlude
+- Only accessible during or after the Interlude (deeper floors open in Act III)
 - Connects to the pre-civilization ruin network
 - Edren-specific reward (personal story integration)
-- Short but rewarding (three rooms, one puzzle, one fight)
+- 7 floors of escalating challenge and lore discovery
 
 ---
 
@@ -989,6 +1062,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 15 | Ashgrove | Grove | Alliance formalized |
 | 16 | Millhaven | Town | Compact exploitation witnessed |
 | 17 | Ley Line Depths | Dungeon | Optional, deep lore |
+| 17a | Caldera Forge Depths | Dungeon | Optional, Lira's dungeon (discoverable only; full access in Interlude) |
 | 18 | Valdris Crown | City | Carradan assault, betrayal, Act II climax |
 
 ### Interlude: The Unraveling
@@ -1003,6 +1077,9 @@ This table maps the intended player progression through locations, reflecting JR
 | 24 | Axis Tower | Dungeon | Infiltration, Kole boss, map recovered |
 | 25 | Greyvale | Town | Pallor's effect on civilians |
 | 26 | Roothollow | Town | Find Torren, corruption spreading |
+| 26a | Frostcap Caverns | Dungeon | Torren's character dungeon, Frostpeak Crystal, Monastery Key |
+| 26b | Caldera Forge Depths | Dungeon | Lira's character dungeon (full access), Volcanic Ingot |
+| 26c | Dry Well of Aelhart | Dungeon (7 floors) | Optional; Edren's personal content (Floors 1-4 Interlude, 5-7 Act III) |
 | 27 | Archive of Ages | Dungeon | Find Maren, the truth revealed |
 
 ### Act III: The Convergence / Act IV: The Closing Door
@@ -1010,6 +1087,8 @@ This table maps the intended player progression through locations, reflecting JR
 | Order | Location | Type | Purpose |
 |-------|----------|------|---------|
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
+| 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
+| 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
 | 29 | Pallor Wastes | Gauntlet | Party trials, final approach |
 | 30 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 
@@ -1019,6 +1098,5 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
 | 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 33 | Dry Well of Aelhart | Mini-dungeon | Edren's personal content |
-| 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
-| 35 | Sunken Rig | Dungeon | Sable-focused optional content |
+| 33 | Windshear Peak | Vista | Oracle hints, atmosphere |
+| 34 | Sunken Rig | Dungeon | Sable-focused optional content |

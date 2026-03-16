@@ -17,7 +17,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Location | Change | Details |
 |----------|--------|---------|
 | Valdris Crown | Deteriorating | Markets thin out, ley-lamps flicker, Court Quarter consumed by political infighting. Cael's quarters become restricted (Pendulum study site). |
-| Aelhart | Mostly inaccessible | The border road is dangerous; NPCs reference the village as "cut off." During the Interlude, an alternate mountain path opens to access the Dry Well mini-dungeon. The village itself is empty and quiet. |
+| Aelhart | Mostly inaccessible | The border road is dangerous; NPCs reference the village as "cut off." During the Interlude, an alternate mountain path opens to access the Dry Well dungeon. The village itself is empty and quiet. |
 | Thornwatch | Militarized | Commander Halda reports Compact probes against the fort. Garrison on high alert. New defensive emplacements visible. |
 | Greyvale | No-man's-land | Population halved. Scorch marks and siege damage visible. NPCs recount the border conflict firsthand. |
 | Ironmouth | Compact-occupied | The mine is sealed. Carradan soldiers have fortified the outpost. Inaccessible to the player. |
@@ -26,6 +26,8 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Canopy Reach | New area opens | Accessible for the first time during the diplomatic mission. |
 | Ashgrove | New area opens | Accessible for the tribal alliance scene. |
 | Millhaven | New area opens | Accessible during the diplomatic mission arc; the extraction pit is operational. |
+| Caldera | Accessible (optional) | Industrial city in the volcanic basin. The lower factory district, upper terrace, Forgewrights' Academy, and undercity are visitable during the diplomatic mission arc. |
+| Caldera Forge Depths | Discoverable | Refinery basement entrance found beneath Caldera's industrial district. Gated by Lira's Forgewright knowledge — accessible only with her in the party. |
 | Ashmark | Referenced | Appears in Lira's flashbacks. Not yet visitable. |
 
 **NPC Changes:**
@@ -49,7 +51,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 - Wild magic incidents increase in the Thornmere Wilds — creature behavior erratic, spirit-totems cracking.
 - Carradan extraction operations at Millhaven running at full capacity, visibly wounding the earth.
 
-**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut).
+**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Caldera (optional), Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut), Caldera Forge Depths (discoverable, gated by Lira).
 
 **Areas Closing:** Aelhart (cut off), Ironmouth (occupied).
 
@@ -72,7 +74,7 @@ This is the game's World of Ruin moment. Everything changes.
 | Corrund | New area opens | Axis Tower malfunctioning. Districts losing power while others overload. Consortium blames Valdris sabotage. General Kole running a Pallor-fueled power grab. |
 | Ashmark | Visitable | Forges behaving erratically. Environmental hazards from ley line instability. Lira's old quarters accessible. |
 | Bellhaven | Changed | Submersible rigs surfacing unmanned, crews found with faces frozen in hopelessness. The Pallor spreading through ley lines. |
-| Millhaven | Destroyed | The extraction pit erupted. Town abandoned. Crater visible from miles away. Ley Line Depths collapsed. |
+| Millhaven | Destroyed | The extraction pit erupted. Town abandoned. Crater visible from miles away. Surface infrastructure and Floor 1 of the Ley Line Depths collapsed, but the pre-civilization chambers (Floors 2–5) survived intact. In Act III, rediscovered via the Thornvein root network. |
 | Roothollow | Dying | The great tree is petrifying — bark turning to stone, roots cracking. Tribe evacuating. Torren performing a suicidal ritual. |
 | Duskfen | Half-submerged | Marsh risen, swallowing lower platforms. Will-o'-wisp lanterns replaced by grey Pallor glow. |
 | Ashgrove | Corrupted | The ash field has turned grey. The Pallor has reached neutral ground. |
@@ -82,6 +84,10 @@ This is the game's World of Ruin moment. Everything changes.
 | The Archive of Ages | New area opens | Maren's location during the "Finding Maren" sequence. |
 | Carradan Rail Tunnels | Corrupted | Boring engines reactivated randomly. Pallor manifestations nesting in the dark. Required dungeon for Corrund infiltration. |
 | Axis Tower | New dungeon | Infiltration dungeon during the "Finding Lira" sequence. |
+| Caldera Forge Depths | Full access | Lira rejoins the party and unlocks the deeper chambers beneath Caldera's refineries. Her character dungeon. |
+| Frostcap Caverns | New area opens | Hidden caves near Highcairn in the Frostcap Mountains. Torren's character dungeon, accessible during the Highcairn sequence. |
+
+**New Areas Opening:** Highcairn, Corrund, Axis Tower, Caldera Forge Depths (full access), Frostcap Caverns, Dry Well of Aelhart, Archive of Ages.
 
 **NPC Changes:**
 
@@ -153,6 +159,8 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 | Highcairn | Safe haven | Monastery cleared of Pallor. Monks provide supplies and a blessing for the march. |
 | Corrund | Disarray | Consortium lost control of several districts. Brief passage through. |
 | Ashgrove | Grey | The ash field fully Pallor-corrupted. Somber pass-through scene. |
+| Thornvein Passage | New area opens | Root tunnel network beneath the Thornmere Wilds, connecting Roothollow to a hidden exit at Pallor Wastes Section 2. Opens when the Thornvein root network shifts due to Pallor corruption and ley line instability. The tunnel follows ley-line channels linked to the deep root network, bypassing the Ashen Approach (Pallor Wastes Section 1) entirely. |
+| Ley Line Depths | Rediscovered | Floors 2-5 accessible via Thornvein root network (Floor 1 collapsed during the Interlude). Sealed door on Floor 4 opens with the Archivist's Codex, revealing Floor 5 (the Ley Confluence). |
 | The Pallor Wastes | New area opens | Ten-mile radius around the Convergence fully consumed. Grey petrified forest, drained earth, muffled sound. The gauntlet dungeon. |
 | The Convergence | New area opens | Final dungeon. Floating plateau, Cael's machine, the door. |
 
@@ -172,7 +180,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 - No shops, no save points except faint ley line clearings.
 - Hope physically heavier — reflected in gameplay (debuff mechanics, resource pressure).
 
-**New Areas Opening:** The Pallor Wastes, The Convergence.
+**New Areas Opening:** The Pallor Wastes, The Convergence, Thornvein Passage (root tunnel shortcut to Pallor Wastes Section 2), Ley Line Depths (rediscovered via Thornvein, Floors 2-5).
 
 ---
 

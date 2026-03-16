@@ -240,8 +240,18 @@ For side quest or event changes:
 - Quest chains must have no dangling "next step" without resolution
 - Quest-locked areas in `dungeons-city.md` must reference real quests
 
+**Downstream gating check (CRITICAL — missed when dungeons expand):**
+When a dungeon's floor structure or act-gating changes, check ALL
+quests in `sidequests.md` that reference that dungeon. If a quest
+requires an item/tablet/event from a specific floor, verify that floor
+is accessible during the quest's availability window. Example: if a
+quest is available in the Interlude but its required item is on Floor 5
+which is Act III-gated, the quest is broken. Either move the item to an
+accessible floor or update the quest to span multiple acts.
+
 Flag: nonexistent NPCs/locations, impossible availability windows,
-undefined rewards, hanging quest threads.
+undefined rewards, hanging quest threads, quest items behind act gates
+that conflict with quest availability.
 
 ---
 
@@ -253,6 +263,15 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 **Existence checks:**
 - Referenced content actually exists in the target document
 - References are bidirectional where expected
+
+**Item/consumable cross-references (frequently missed):**
+When an item's status-effect cure is changed (e.g., "Cure Freeze" →
+"Cure Slow"), verify the TARGET status in `magic.md`:
+- Does the status effect's cure list include this item?
+- Is the cure thematically appropriate? (A tea shouldn't cure Petrify
+  if Petrify requires Purge/Soft Stone per magic.md)
+- Apply the same bidirectional check to items that grant status
+  resistance, immunity, or infliction
 
 **Value-level checks (CRITICAL — this is where most issues hide):**
 - Spell learn levels must be IDENTICAL between `abilities.md` and
@@ -280,8 +299,56 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 - `abilities.md` progression tables ↔ `magic.md` character indices
 - Description prose (spell counts, learn methods) ↔ actual data tables
 
+**Summary/reference table propagation (CRITICAL — frequently missed):**
+When any entity's data changes (floor count, act availability, dungeon
+type, variant count), the change must propagate to EVERY summary table
+that references that entity. These tables compile data from across the
+document and are the #1 source of stale values. For each changed entity,
+verify its row in ALL of the following:
+- `dynamic-world.md` Map Variant Count table (variant count, labels,
+  notes column). Also re-verify the Summary section totals (locations
+  needing N variants) — recount from the table, do not trust the old
+  totals.
+- `biomes.md` dungeon/location appendix table (biome, sub-biome, act
+  availability column). ALSO check "Locations Using This Biome" prose
+  lists — these describe entity scale/room counts in narrative form
+  and are frequently stale. ALSO check the Healing/restoration summary.
+- `locations.md` Location Progression tables (table section placement,
+  type column, purpose column). Check that the entity is in the CORRECT
+  section (Act I / Act II / Interlude / Act III / Post-Game) based on
+  its first-available act.
+- `events.md` location state tables (per-act state descriptions)
+
+**Classification label consistency (CRITICAL — frequently missed):**
+Table cells often contain categorical labels that assert properties
+about a location, dungeon, or mechanic. These labels must match the
+canonical description. Common mismatches:
+- "mini-dungeon" vs "dungeon" — if a dungeon was expanded, every table
+  cell and prose reference must update
+- "critical path" vs "optional" — must match the progression table and
+  locations.md description
+- "Post-Game" section placement for content available earlier — if a
+  dungeon is accessible in the Interlude, it should not be in the
+  Post-Game section of a progression table
+- Variant counts — if a dungeon now spans multiple acts with different
+  states, it likely needs more than 1 variant
+
+**Prerequisite location accessibility (frequently missed):**
+When a dungeon is added to an act's events.md table, verify that the
+PARENT LOCATION containing the dungeon is also listed as accessible in
+that act. If a dungeon is inside Caldera but Caldera the city isn't
+listed as opening in Act II, there is a logical gap — the player can't
+reach the dungeon entrance. Check:
+- For each dungeon entry in events.md, identify the containing city
+  or region (from locations.md or dungeons-world.md)
+- Verify the containing location has its own entry in the same act's
+  location state table (or is already established as accessible from a
+  prior act)
+
 Flag: value mismatches, conflicting unlock methods, incorrect counts,
-stale descriptions that don't match current data.
+stale descriptions that don't match current data, stale classification
+labels, summary table rows not updated, incorrect table section
+placement, missing prerequisite location entries.
 
 ---
 
@@ -308,6 +375,68 @@ most commonly missed category.
   guidelines say "Tier 2 buffs last 6-8 turns" but spells show 5 turns)
 - Status effect rules must not contradict each other (e.g., "Purge
   cures all statuses including Stop" vs "Stop cannot be cured")
+
+**Entity-wide stale reference sweep (CRITICAL — #1 missed category):**
+When an entity undergoes a major reclassification in the diff (e.g.,
+"mini-dungeon" → "7-floor dungeon", "3 floors" → "5 floors", location
+changes acts, sealed door now opens), search the ENTIRE changed file —
+not just the diff hunks — for stale references to that entity.
+
+**Search procedure (mandatory — do not skip steps):**
+1. Search for the entity NAME (e.g., "Dry Well", "Ley Line Depths",
+   "Ember Vein") across ALL changed files using grep. Read every match
+   location plus ±10 lines of context. Do not skip matches even if
+   there are many — read EVERY one.
+2. Search for the entity's KEY ATTRIBUTES — distinctive features that
+   other sections may describe without using the entity name. Examples:
+   - "sealed door" (key attribute of Ley Line Depths)
+   - "cannot be opened" (old behavior of the sealed door)
+   - "mini-dungeon" (old classification of Dry Well)
+   - Floor counts ("three rooms", "four rooms", "3 floors")
+   Run grep for each key attribute across ALL changed files.
+3. In each match, check whether the text reflects the NEW state or the
+   OLD state. If old, it is a stale reference — flag it.
+
+**Assessment rigor (CRITICAL — #1 reason stale refs slip through):**
+The search finds matches. The failure is in ASSESSMENT. When reading a
+match, do NOT give it the benefit of the doubt. Apply this test:
+- Would a fresh reader, seeing ONLY this paragraph, get the correct
+  current state of the entity? If the paragraph says "inaccessible" or
+  "unknown" or "no one has reached" for something that IS now accessible
+  and known, it is stale — even if the paragraph is in a section about
+  an earlier act. Sections about earlier acts should say "in Act II,
+  this cannot be opened" not just "this cannot be opened" unqualified.
+- Words that signal staleness: "unknown", "inaccessible", "mystery",
+  "no one has reached", "fate is unknown", "seeds future content",
+  "unanswered", "collapsed" (when deep floors survived). These are
+  red flags when applied to entities whose state changed in this PR.
+
+**Common hiding spots (these are missed most often):**
+- Description paragraphs ABOVE the key features bullets (the prose
+  paragraph often says the same thing as the bullets but in narrative
+  form — updates to bullets do not automatically update the paragraph)
+- "Locations Using This Biome" lists in biomes.md (prose descriptions
+  of scale, room counts, key features per location)
+- Healing/restoration section summaries in biomes.md
+- Act-by-act change sections in dynamic-world.md
+- NPC dialogue that references the entity's old description
+- Appendix/summary tables at the end of the file
+
+The rule "check changed files, not the universe" applies to WHICH FILES
+you review (only changed files). Within a changed file, you must search
+the WHOLE file for stale references to reclassified entities.
+
+**Verify content you ADD, not just pre-existing content (CRITICAL):**
+When the review process itself adds new content (table rows, new
+sections in dynamic-world.md, new entries in events.md), that added
+content must be cross-checked against the canonical source BEFORE
+committing. Common errors in added content:
+- Wrong floor counts (writing "3 floors" when the dungeon has 4)
+- Wrong act labels ("Only Visit" when the dungeon is revisitable)
+- Wrong classification labels ("critical path" for optional content)
+- Values copied from memory rather than verified against the source
+For every new section or row you add, re-read the canonical source
+(usually dungeons-world.md or locations.md) and verify every value.
 
 **Specific patterns to scan for:**
 - Section headers/labels that don't match their contents (e.g., a
@@ -462,8 +591,13 @@ The review body (used for both PR comments and inline output):
   stop. Do not invent "nice to have" items to appear thorough.
 - **Severity matters.** A typo in an NPC name is an ISSUE. A quest
   referencing a deleted location is a BLOCKER. Do not inflate severity.
-- **Check the diff, not the universe.** Only validate content that was
-  CHANGED or ADDED. Do not audit the entire story bible on every review.
+- **Check changed files, not the universe.** Only review files that were
+  CHANGED or ADDED — do not audit the entire story bible. But WITHIN a
+  changed file, search the WHOLE file for stale references to entities
+  whose classification changed in the diff (e.g., if a dungeon went
+  from "mini-dungeon" to "7 floors", grep the entire file for the old
+  label). The diff tells you WHICH files; the entity tells you WHAT to
+  search for within those files.
 - **Cross-reference is mandatory.** Every proper noun in a changed file
   must be verified against the canonical source. No assumptions.
 - **Values, not just existence.** When cross-referencing, check that

@@ -94,6 +94,20 @@ For each round (1 through N):
 3. **If issues are found (NO-GO verdict):**
    - Read each file referenced by the issues
    - Fix every BLOCKER and ISSUE (not suggestions)
+   - **Verify added content:** When adding NEW content to fix an issue
+     (new table rows, new dynamic-world sections, new entries), re-read
+     the canonical source (usually dungeons-world.md) and verify every
+     value in the new content (floor counts, act availability, labels)
+     BEFORE committing. Do not write values from memory.
+   - **Post-fix context check:** After editing a line, re-read the ±10
+     surrounding lines to verify the fix does not create a new
+     contradiction with adjacent text (e.g., updating a bullet but not
+     the description paragraph above it that says the same thing).
+   - **Post-fix zero-match verification:** After fixing stale references
+     for an entity, re-run grep for that entity's name and key attributes
+     across ALL changed files. Confirm ZERO stale matches remain. If any
+     remain, fix them before proceeding. This catches the "updated some
+     but not all" pattern that is the #1 recurring failure mode.
    - Run `pnpm lint && pnpm test` to verify fixes
    - If verification fails, fix the failure before proceeding
 
