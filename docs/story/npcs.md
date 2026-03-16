@@ -1017,7 +1017,7 @@ He carries the Operator's Badge -- his shift identification, stamped with the As
 - *"The specs were wrong. We knew it. Foreman said run it anyway. The conduits were hot -- too hot. I told them. I told them and they said run it."*
 - *"When it happened, the first operator -- he didn't scream. He just... stopped being a person and started being part of the machine. I heard the metal accept him. That's the sound I can't forget."*
 
-**Trigger:** The party must have the Operator's Badge key item (found in the Ashmark Factory Depths or obtained through the "Fading Shifts" quest). Showing the badge to Gavren unlocks his full dialogue. Without the badge, he is a silent drunk who will not speak to strangers.
+**Trigger:** The party must have the Operator's Badge key item (found after defeating the Ironbound in the Carradan Rail Tunnels). Showing the badge to Gavren unlocks his full dialogue. Without the badge, he is a silent drunk who will not speak to strangers.
 
 **Story relevance:** Lore (Ironbound creation, Compact engineering ethics)
 

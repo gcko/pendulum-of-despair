@@ -274,7 +274,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 15 | `vaelith_doma_moment` | Automatic mid-Act II cutscene | Player awareness of Vaelith's true nature shifts permanently. The party witnesses Vaelith at a corruption site, feeding on ambient despair with quiet satisfaction. | Vaelith (Appearance 4) |
 | 16 | `ashen_ram_defeated` | Party defeats the Ashen Ram during the Valdris siege | The wall is breached. The siege's most dangerous moment passes, but the damage is done — the eastern defenses are shattered. | Dame Cordwyn (fights alongside party), Lord Haren (coordinates defense) |
 | 17 | `king_aldren_dead` | King Aldren dies during the siege | Crown passes to no one. Haren attempts to hold the council and fails. Cordwyn assumes de facto military command. The political NPCs' dialogue shifts to grief and power vacuum. | King Aldren (removed), Lord Chancellor Haren, Dame Cordwyn |
-| 18 | `vaelith_siege_encounter` | Unwinnable fight with Vaelith at Valdris | Party wakes in the aftermath, city fallen. Vaelith's power revealed to be far beyond the party's current ability. | Vaelith (Appearance 5), King Aldren (dies during siege) |
+| 18 | `vaelith_siege_encounter` | Unwinnable fight with Vaelith at Valdris | Party wakes in the aftermath, city fallen. Vaelith's power revealed to be far beyond the party's current ability. | Vaelith (Appearance 5) |
 | 19 | `ironbound_defeated` | Party defeats the Ironbound in the Rail Tunnels | Deepest tunnel section cleared. The Ironbound was a Compact worker consumed by their own boring engine — a grotesque fusion of flesh and machine. | Lira (recognizes engine model), Torren (can reach trapped spirit) |
 | 20 | `cael_betrayal_complete` | Cael takes the Pendulum, confronts Lira, and vanishes | Act II ends. Cael removed from party. Lira's dialogue becomes grief-stricken. Maren reveals the Pendulum's true nature. All NPC dialogue across the game world updates for the Unraveling. Scholar Aldis locks herself in the library. Sergeant Marek begins carving Cael's name daily. | Cael (removed), Lira, Maren, Scholar Aldis, Sergeant Marek, Dame Cordwyn |
 
@@ -284,11 +284,9 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 |---|-----------|---------|---------------|---------------|
 | 21 | `interlude_begins` | Time skip. Player controls Sable. | Entire world map updates to Unraveling state. All NPC dialogue refreshes. Multiple locations transform (see World State Changes above). Party scattered — Edren, Lira, Torren, Maren each at separate locations. | All NPCs |
 | 22 | `ley_line_rupture` | Fires simultaneously with or immediately after `interlude_begins` | Ley lines rupture across the continent as a consequence of Cael opening the gate. Triggers Millhaven destruction, Rail Tunnel collapse, and overworld fissures. Spirit creatures go mad. Forgewright engines misfire. Magic becomes wild and unstable continent-wide. | All NPCs in affected locations |
-| 23 | `edren_found` | Sable reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party. Highcairn cleared of Pallor. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
+| 23 | `edren_found` | Party reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party (with Scar of the Hollow passive -- reduced max HP but Despair immunity). Highcairn cleared of Pallor. The monastery becomes a safe haven. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
 | 24 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
-| 25 | `ley_leech_defeated` | Party defeats the Ley Leech at Torren's nexus | Nexus stabilized, ley lines glow clean, first sign the Pallor can be pushed back. The surrounding forest begins to recover its color within hours. | Torren (rejoins), Caden (performs recovery ritual), Kael Thornwalker (provides perimeter warriors) |
-| 26 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, defeats the corrupted root-spirit | Torren rejoins the party. Roothollow stabilized but damaged. Yara's condition improves slightly. The nexus becomes a beacon — the first sign that the Pallor can be pushed back. | Torren (rejoins), Yara, Elder Savanh |
-| 27 | `pallor_hollow_defeated` | Edren confronts and reclaims the Hollow at Highcairn | Highcairn cleared of Pallor. The monastery becomes a safe haven. Edren's confrontation with his own guilt made manifest yields hard-won clarity. | Edren (rejoins with Scar of the Hollow passive -- reduced max HP but Despair immunity), the monastery prior |
+| 25 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, and defeats the Ley Leech | Torren rejoins the party. Nexus stabilized, ley lines glow clean, first sign the Pallor can be pushed back. The surrounding forest begins to recover its color within hours. Roothollow stabilized but damaged. Yara's condition improves slightly. | Torren (rejoins), Caden (performs recovery ritual), Kael Thornwalker (provides perimeter warriors), Yara, Elder Savanh |
 | 28 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
 | 29 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
 
@@ -302,7 +300,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 33 | `trial_torren_complete` | Torren completes the Silent Grove | Torren unlocks Rootsong ability. The spirits' accusations force him to accept imperfect protection over abandonment. | Torren |
 | 34 | `trial_sable_complete` | Sable completes the Crooked Mile | Sable unlocks Unbreakable Thread passive. She faces her own insignificance and recognizes that showing up is enough. | Sable |
 | 35 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
-| 36 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `ley_leech_defeated` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption he engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
+| 36 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption he engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
 | 37 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
 
 ### Act IV Flags
@@ -409,7 +407,7 @@ Full narrative threads for every NPC marked "ties to main quest" or "ties to wor
 
 **Interlude:** Vaelith is never encountered directly. Instead, whispered references accumulate: corruption sites bear his teacup markings, Brant confesses that someone planted fatalism in him before the siege (*"A man came to see me. Grey robes. He didn't threaten me. He just... explained how things would go. And I believed him."*), and Maren's research reveals that several key events — the ley node destabilizations, the Ashen Ram's creation, the creatures Riven hunts in the Grey Bounties — were engineered rather than natural. The picture assembles itself: Vaelith has been tuning the world like an instrument, plucking ley nodes and feeding on the despair each disruption produces. He is not the Pallor itself, but its shepherd — guiding the flock of suffering toward the door.
 
-**Act III:** Vaelith serves as the penultimate boss, encountered in the Pallor Wastes after the party completes the Pallor Trials. The fight requires two prerequisites: `trial_lira_complete` (Lira must have unlocked her latent weapon forge ability) and `ley_leech_defeated` (the nexus must be stabilized, proving the Pallor can be pushed back). During the fight, Lira manifests a weapon forged from her connection to Cael — the thing the ancient forgewright failed to build in a previous cycle. Vaelith's defeat does not destroy him; it releases him. In his final moments, his mask falls completely, and the party sees what he was before the Pallor claimed him: someone who once cared, hollowed out over centuries until feeding was all that remained. His defeat destabilizes the Pallor Wastes and opens the full path to the Convergence.
+**Act III:** Vaelith serves as the penultimate boss, encountered in the Pallor Wastes after the party completes the Pallor Trials. The fight requires two prerequisites: `trial_lira_complete` (Lira must have unlocked her latent weapon forge ability) and `torren_found` (the nexus must be stabilized, proving the Pallor can be pushed back). During the fight, Lira manifests a weapon forged from her connection to Cael — the thing the ancient forgewright failed to build in a previous cycle. Vaelith's defeat does not destroy him; it releases him. In his final moments, his mask falls completely, and the party sees what he was before the Pallor claimed him: someone who once cared, hollowed out over centuries until feeding was all that remained. His defeat destabilizes the Pallor Wastes and opens the full path to the Convergence.
 
 ---
 
@@ -744,7 +742,7 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 26 | Corrund (Axis Tower) | Commissar Brant | Opens the rear gate to the citadel out of desperation. | Citadel access |
 | 27 | Corrund (Axis Tower) | Lieutenant Ansa Veld | Found in the cells. Provides intelligence about Kole's defenses and the map location. | Tactical knowledge for boss fight |
 | 28 | Corrund (Axis Tower) | General Vassar Kole (boss) | Boss fight. Defeat Kole. Recover the map to Cael's location. | `lira_found` flag; Lira rejoins; map obtained |
-| 29 | Roothollow | Torren + Yara | Find Torren burning his life force to hold back corruption. Boss fight (corrupted root-spirit). Stabilize the nexus. | `torren_found` flag; Torren rejoins |
+| 29 | Roothollow | Torren + Yara | Find Torren burning his life force to hold back corruption. Boss fight (Ley Leech). Stabilize the nexus. | `torren_found` flag; Torren rejoins |
 | 30 | Deep Wilds | Brenn (optional but guided) | One of the stops on the trail to Maren. Delivers her sealed message. | Direction to the Archive of Ages |
 | 31 | Deep Wilds | Riven (optional guide) | Can guide the party to the Archive. His knowledge of the deep Wilds provides safe passage. | Archive of Ages navigation |
 | 32 | Archive of Ages | The Archivist | Answers questions about the Pallor's cycle. Clinical, detached, terrifying. | Pallor history confirmed |
@@ -756,11 +754,11 @@ Every NPC interaction required to progress the main story, in chronological orde
 | Step | Location | NPC / Event | What Happens | Unlocks |
 |------|----------|-------------|--------------|---------|
 | 35 | Pallor Wastes entrance | (Point of no return) | Warning that the party cannot turn back. Final preparation. | `grey_march_begins` flag |
-| 36 | Trial Clearing 1 | Edren's trial | Phantom Cael accuses him. Edren accepts. | `edren_trial_complete` |
-| 37 | Trial Clearing 2 | Lira's trial | Vision of the life with Cael. Lira lets go. | `lira_trial_complete` |
-| 38 | Trial Clearing 3 | Torren's trial | Spirits accuse him of failing the Wilds. Torren accepts imperfect protection. | `torren_trial_complete` |
-| 39 | Trial Clearing 4 | Sable's trial | Her own insignificance. Showing up is enough. | `sable_trial_complete` |
-| 40 | Trial Clearing 5 | Maren's trial | Younger self questions the cost. Knowledge was worth it. | `maren_trial_complete` |
+| 36 | Trial Clearing 1 | Edren's trial | Phantom Cael accuses him. Edren accepts. | `trial_edren_complete` |
+| 37 | Trial Clearing 2 | Lira's trial | Vision of the life with Cael. Lira lets go. | `trial_lira_complete` |
+| 38 | Trial Clearing 3 | Torren's trial | Spirits accuse him of failing the Wilds. Torren accepts imperfect protection. | `trial_torren_complete` |
+| 39 | Trial Clearing 4 | Sable's trial | Her own insignificance. Showing up is enough. | `trial_sable_complete` |
+| 40 | Trial Clearing 5 | Maren's trial | Younger self questions the cost. Knowledge was worth it. | `trial_maren_complete` |
 | 41 | The Convergence | Cael | Final confrontation begins. Three-phase boss battle. | `convergence_reached` |
 
 ### Act IV
@@ -802,3 +800,7 @@ Quick reference for where every story-relevant NPC can be found in each act.
 | Marrek | Crossroads | Crossroads | Crossroads | Final crossroads | The Pendulum (tavern) |
 | Vaelith | Ember Vein (Appearance 1), Thornmere ridge (Appearance 2) | Corrund/Bellhaven tavern (Appearance 3), Corruption site cutscene (Appearance 4), Valdris walls (Appearance 5) | Referenced only (Appearance 6) | Pallor Wastes (Appearance 7) | -- |
 | Hadley | Three Roads Inn | Three Roads Inn | Three Roads Inn | -- | Three Roads Inn |
+| Tollen | -- | -- | Ironmark Citadel (engineering wing) | -- | -- |
+| Old Harren | Valdris Crown (Lower Ward, Crown's Rest inn) | Valdris Crown (Lower Ward) | -- | -- | -- |
+| Gavren | -- | -- | Bellhaven (Stilts District tavern) | -- | -- |
+| Kerra | -- | -- | Caldera (undercity) | -- | Caldera (militia leader) |

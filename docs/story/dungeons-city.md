@@ -471,7 +471,7 @@ A massive Pallor creature that has burrowed into the tunnel junction, using the 
 **Guest NPC: Kerra** -- A former Valdris soldier who volunteered for the evacuation escort. She fights alongside the party during this encounter as a guest NPC. Low combat stats (ATK 18, DEF 14, HP 800) but she does not flee, does not falter, and positions herself between the Nest Mother's spawn and the evacuees without being asked. If Kerra falls to 0 HP, she is incapacitated but survives the quest (her epilogue role is reduced but not eliminated).
 
 **Attacks:**
-- **Brood Pulse** -- The Nest Mother sends a wave of Pallor energy through the tunnel. AoE, 200-250 damage to all party members + 20% chance to inflict Despair (ATK and MAG reduced by 25% for 3 turns). Also spawns 2 Grey Crawlers (150 HP each).
+- **Brood Pulse** -- The Nest Mother sends a wave of Pallor energy through the tunnel. AoE, 200-250 damage to all party members + 20% chance to inflict Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Also spawns 2 Grey Crawlers (150 HP each).
 - **Nest Defense** -- Passive ability. While any of the Nest Mother's spawn are alive, her carapace hardens: +50% DEF. The party must clear the adds before dealing meaningful damage to the Mother.
 - **Tendril Lash** -- Physical attack, targets two party members, 300 damage each. The tendrils extend from the walls, attacking from unexpected angles.
 - **Corruption Surge** -- Channels Pallor energy through the tunnel floor. Creates 3 contaminated zones (2x2 tiles) that deal 100 damage/turn to anyone standing in them. Zones last 3 turns.
@@ -635,7 +635,7 @@ The ley contamination overrides the Warden's programmed protocols. Its movements
 
 Lira stabilizes the rupture using a combination of Forgewright pipe-sealing and Maren's ley-tapping technique (the first time old and new magic work together constructively). The contamination stops flowing. The faded workers upstairs will not recover, but no new cases will develop.
 
-**Weakness:** Lightning (150% damage), Spirit (125% damage).
+**Weakness:** Storm (150% damage), Spirit (125% damage).
 **Resistance:** Flame (50% damage), Earth (75% damage).
 **Immunity:** Petrify, Poison.
 **Drop:** Drayce's Failsafe Core (accessory -- +12 DEF, +8 MAG DEF, auto-Shield Protocol once per battle at 25% HP), Corrupted Tuning Fork (key item -- Vaelith breadcrumb), Forgewright Stabilizer (accessory -- reduces magical damage taken, unique to Lira; quest reward), 2000 Gold.

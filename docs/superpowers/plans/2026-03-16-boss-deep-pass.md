@@ -292,9 +292,9 @@ Add flags for:
 
 - [ ] **Step 4: Add Interlude flags**
 
-Add flags for:
-- `ley_leech_defeated` -- triggered when the party defeats the Ley Leech at Torren's nexus. World changes: nexus stabilized, ley lines in the region glow clean. NPCs affected: Torren (rejoins), Caden, Kael Thornwalker.
-- `pallor_hollow_defeated` -- triggered when Edren confronts and reclaims the Hollow at Highcairn. World changes: Highcairn cleared of Pallor. NPCs affected: Edren (rejoins with Scar of the Hollow passive), the monastery prior.
+Update existing flags:
+- `torren_found` -- update to include Ley Leech boss defeat, nexus stabilization, and Caden/Kael Thornwalker NPCs.
+- `edren_found` -- update to include Pallor Hollow boss defeat, Scar of the Hollow passive, and monastery safe haven.
 
 - [ ] **Step 5: Add Act III flags**
 
@@ -304,7 +304,7 @@ Add flags for:
 - `trial_torren_complete` -- Torren completes the Silent Grove. Unlocks Rootsong.
 - `trial_sable_complete` -- Sable completes the Crooked Mile. Unlocks Unbreakable Thread.
 - `trial_maren_complete` -- Maren completes the Restricted Stacks. Unlocks Pallor Sight.
-- `vaelith_defeated` -- triggered when the party defeats Vaelith in the Pallor Wastes. Prerequisites: (1) `trial_lira_complete` (Lira's trial unlocks the latent forge ability) and (2) `ley_leech_defeated` (ley network must be partially restored). Note: all five trials are completed by this point in the Wastes progression, but only Lira's trial and the ley network are mechanically required for Lira's weapon to manifest.
+- `vaelith_defeated` -- triggered when the party defeats Vaelith in the Pallor Wastes. Prerequisites: (1) `trial_lira_complete` (Lira's trial unlocks the latent forge ability) and (2) `torren_found` (ley network must be partially restored). Note: all five trials are completed by this point in the Wastes progression, but only Lira's trial and the ley network are mechanically required for Lira's weapon to manifest.
 
 - [ ] **Step 6: Add Vaelith NPC Story Thread to section 3**
 

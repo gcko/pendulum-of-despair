@@ -808,7 +808,7 @@ A massive Carradan boring engine fused with its operator during a Pallor corrupt
 **Phase 1 (8000-4000 HP): The Machine**
 - **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
 - **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
-- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stun (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stop (1 turn). Rearranges the arena by blocking some positions and opening others.
 - **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
 
 **Phase 2 (below 4000 HP): The Operator**
@@ -823,7 +823,7 @@ The operator's voice breaks through. Attacks become erratic -- the machine hesit
 
 **Torren's Special Interaction:** Spiritcall can reach the trapped spirit during hesitation windows. Provides bonus damage and damage reduction on the Ironbound's next attack.
 
-**Weakness:** Lightning (150% damage). Void (125% damage).
+**Weakness:** Storm (150% damage). Void (125% damage).
 **Resistance:** Earth (50% damage), Flame (75% damage).
 **Drop:** Operator's Badge (key item -- triggers dialogue with the second operator NPC in Bellhaven), Reinforced Drill Bit (crafting material).
 
@@ -1777,7 +1777,7 @@ Speaks clearly: "Let me go." Standard attacks deal reduced damage.
 
 A literal door at the end of the alley, standing open. Warm light, no enemies, freedom. The Shadows urge her through.
 
-**Resolution Mechanic:** No combat. The player navigates Sable to **turn around and walk back** into the alley -- toward the party, toward danger. Walking through the door triggers a false ending and resets the trial. Walking back closes the door. Shadows vanish. Sable says nothing. She just walks back.
+**Resolution Mechanic:** No combat. The player navigates Sable to **turn around and walk back** into the alley -- toward the party, toward danger. Walking through the door triggers a false ending (screen fades to black, then the player reappears at the Crooked Mile entrance; all enemies respawn and progress is lost). Walking back closes the door. Shadows vanish. Sable says nothing. She just walks back.
 
 **Unlock:** **Unbreakable Thread** -- passive preventing forced removal from battle (counters Pallor Incarnate's Reality Tear).
 
@@ -1811,7 +1811,7 @@ Neither option is correct.
 An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times throughout the story -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed: the ley network is alive.
 
 **The 10-Attack Threshold (Pre-Fight Phase):**
-The fight begins like the previous unwinnable encounter at Valdris. Party attacks deal 0 or negligible damage. Vaelith attacks 10 times, each accompanied by taunting dialogue:
+The fight begins like the previous unwinnable encounter at Valdris. Party attacks deal 0 damage. Vaelith attacks 10 times, each accompanied by taunting dialogue:
 1. "Ah, you came. They always come."
 2. "The spirit-speaker, the forgewright, the thief... I have seen your archetypes before."
 3. "The last cycle's hero wept at this point. You are holding up rather well."
@@ -4568,7 +4568,7 @@ A Carradan siege construct corrupted by Pallor-resonant materials -- materials w
 
 **Phase 1 (10000-6000 HP): Ranged Engagement**
 The Ram advances toward the walls. The party fights from the battlements.
-- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing enough damage can delay this by 1 turn.
+- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 2000+ damage in a single turn delays the advance by 1 turn.
 - **Despair Pulse (Passive)** -- all party members lose 5% max MP per turn from proximity to the Ram's Pallor-resonant frame.
 - **Compact Escalade** -- waves of Compact soldiers scale the walls (3-4 soldiers per wave, 800 HP each). Must be managed while damaging the Ram.
 - **Lord Haren's Orders** -- if the party made favorable dialogue choices with Haren earlier, he calls archer volleys (200 damage to the Ram per turn) and deploys barricades (reduce soldier wave size by 1).
@@ -4581,7 +4581,7 @@ The Ram advances toward the walls. The party fights from the battlements.
 **Phase 2 (6000-3000 HP): The Breach**
 The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.
 - **Drill Arm** -- single target, 500-600 damage.
-- **Pallor Shrapnel** -- AoE cone, 300-350 damage + Pallor Touched status (ATK/DEF reduced 10% for 3 turns).
+- **Pallor Shrapnel** -- AoE cone, 300-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Engine Surge** -- the Ram charges forward, pushing party members back. 200 damage + knockback.
 - Compact soldier waves continue (reduced to 2 per wave).
 
@@ -4593,7 +4593,7 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 
 **On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
 
-**Weakness:** Lightning (150% damage), Flame (125% damage to exposed core only in Phase 3).
+**Weakness:** Storm (150% damage), Flame (125% damage to exposed core only in Phase 3).
 **Resistance:** Earth (absorbs), Frost (75% damage).
 **Drop:** Pallor-Laced Iron (crafting material -- unique), Compact Battle Standard (accessory -- boosts party DEF when allied NPCs are present).
 
@@ -4659,7 +4659,7 @@ The Leech moves toward the nexus center.
 
 **Weakness:** Flame (150%), Spirit (125%).
 **Resistance:** Frost (50%), Earth (75%).
-**Immunity:** Pallor Touched status.
+**Immunity:** Despair status.
 **Drop:** Nexus Shard (crafting material -- Torren's ultimate weapon component), Leech Ichor (consumable -- full HP/MP restore, single use).
 
 ### Encounter Table
@@ -4706,7 +4706,7 @@ Not a monster in the traditional sense. It looks like Edren -- a grey, transluce
 **Phase 2 (5500-2750 HP): The Voice**
 The Hollow speaks in Edren's voice. Lines from earlier in the game.
 - All Phase 1 attacks, plus:
-- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (50% chance to skip turn, 3 turns).
+- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (50% chance to skip turn, 3 turns). Implementation note: The game maintains a list of 6-8 predefined guilt lines drawn from key story moments (Cael's betrayal, Aldren's death, orders given during the siege). The Hollow selects from this fixed pool, not dynamic dialogue tracking.
 - **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
 - **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
 
