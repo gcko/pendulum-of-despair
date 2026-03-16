@@ -240,8 +240,18 @@ For side quest or event changes:
 - Quest chains must have no dangling "next step" without resolution
 - Quest-locked areas in `dungeons-city.md` must reference real quests
 
+**Downstream gating check (CRITICAL — missed when dungeons expand):**
+When a dungeon's floor structure or act-gating changes, check ALL
+quests in `sidequests.md` that reference that dungeon. If a quest
+requires an item/tablet/event from a specific floor, verify that floor
+is accessible during the quest's availability window. Example: if a
+quest is available in the Interlude but its required item is on Floor 5
+which is Act III-gated, the quest is broken. Either move the item to an
+accessible floor or update the quest to span multiple acts.
+
 Flag: nonexistent NPCs/locations, impossible availability windows,
-undefined rewards, hanging quest threads.
+undefined rewards, hanging quest threads, quest items behind act gates
+that conflict with quest availability.
 
 ---
 
@@ -253,6 +263,15 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 **Existence checks:**
 - Referenced content actually exists in the target document
 - References are bidirectional where expected
+
+**Item/consumable cross-references (frequently missed):**
+When an item's status-effect cure is changed (e.g., "Cure Freeze" →
+"Cure Slow"), verify the TARGET status in `magic.md`:
+- Does the status effect's cure list include this item?
+- Is the cure thematically appropriate? (A tea shouldn't cure Petrify
+  if Petrify requires Purge/Soft Stone per magic.md)
+- Apply the same bidirectional check to items that grant status
+  resistance, immunity, or infliction
 
 **Value-level checks (CRITICAL — this is where most issues hide):**
 - Spell learn levels must be IDENTICAL between `abilities.md` and
