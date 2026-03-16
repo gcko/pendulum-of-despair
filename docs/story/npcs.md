@@ -1114,7 +1114,7 @@ Their influence in the current cycle extends far beyond direct confrontation. Th
 
 **Role:** Former Valdris soldier turned Caldera resistance fighter. Guest NPC during "Unbowed" escort mission.
 
-**Backstory:** Brenn served in the Valdris garrison during the siege. When the walls fell, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she drifted into Caldera's undercity, where Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Brenn volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
+**Backstory:** Kerra served in the Valdris garrison during the siege. When the walls fell, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she drifted into Caldera's undercity, where Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Kerra volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
 
 **Dialogue hints:**
 - *"Stay behind me. Stay quiet. Do exactly what I say and everyone gets through."*
