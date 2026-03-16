@@ -106,6 +106,10 @@ Read [`references/systems.md`](references/systems.md) for design specs on:
 - Save system design
 - Dialogue system
 - Map and encounter design
+
+Also see the detailed combat design docs:
+- [`docs/story/abilities.md`](../../../docs/story/abilities.md) -- 6 unique character commands (Bulwark, Rally, Forgewright, Spiritcall, Tricks, Arcanum), 12 dual techs, magic framework
+- [`docs/story/magic.md`](../../../docs/story/magic.md) -- 89 original spells across 8 elements, full spell progression per character
 - Aesthetic and tone guidelines
 
 ---
