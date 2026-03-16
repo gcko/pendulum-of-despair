@@ -456,7 +456,7 @@ A secondary puzzle layered on top of the water-level system. On Floor 2, a trans
 - `L` (center): Spirit-plant barrier -- the dying water spirit bonded to a physical reed form. Translucent tendrils, grey and brittle, fill the passage to the east. The plant is visibly suffering -- its glow is almost gone, its roots are blackened where they touch the contaminated water. This is the Water of Life puzzle target. If the player has the filled Spirit Vessel, the interact prompt appears: "Pour pure water on the dying spirit-plant?" See "Water of Life" puzzle above for the full sequence and dialogue.
 - `*` (right): Mini-boss -- Drowned Sentinel. A waterlogged stone guardian covered in barnacles and dead marsh growth. Accessible only after the spirit-plant passage is opened. The Sentinel stands in a flooded antechamber, motionless until approached. When it activates, water cascades from the joints in its stone body. Its eyes are ley-crystal -- one still glows amber (the original binding), the other is dark and cracked (corrupted). Sable: "Is that thing supposed to be guarding something, or is it just angry?" Torren: "Both. It was bound to protect this place. The corruption has twisted its purpose -- it can't tell friend from threat anymore."
 - `P` (far right): Water Wheel 3. Final wheel. Setting all three to HIGH opens the secret room and the boss path.
-- `T` (left): Chest -- Fenmother's Scale (accessory, +10 MAG DEF, water element resist).
+- `T` (left): Chest -- Fenmother's Scale (accessory, +10 MAG DEF, Frost resistance).
 - `T` (center-right): Chest -- Spirit-Bound Spear (weapon, Torren). Found in an alcove behind the spirit-plant passage. The spear is fenwood with a ley-crystal tip, spirit-bound to a minor water spirit. It hums when Torren holds it. "She's still in there. The spirit. She chose this weapon. She wants to fight." The spear deals bonus damage to corrupted enemies -- mechanically useful for the Fenmother boss fight.
 - `S` (bottom-left): Save point before boss descent. The spirit-totem here glows stronger than the one on Floor 1 -- they are closer to the Fenmother's ley-line node, and even poisoned, the node radiates power.
 - `v` (bottom): Stairs down to Floor 3 (Fenmother's Sanctum). Only accessible when Wheels 1+2 are HIGH.
@@ -3685,33 +3685,33 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 ```
 ########################################
-#........#LLLLLLLLLL#.......#..........#
-#...^....#LLLLLLLLLL#..!....#....T.....#
-#........#LLLLLLLLLL#.......D..........#
-####D#####LLLLLLLLLL###D#####..........#
-   #.......LLLLLLLLL#.................#
-   #..!....LLLLLLLL.D.........%.....##
-   #........LLLLLLL.#..............##
-   #...%....#LLLLLL.####D##########
-   ####D#####.LLLL......#.........#
-       #......P.LL......#....P....#
-       #..P...#..L......D...!.....#
-       #......#..L......#.........#
-       #......#..LLLL...####D######
-       ###D####..LLLLL.....#.....#
-   #####.......#.LLLLLL....#.....#
-   #...........#..LLLLLLL..L..P..#
-   #....!......D...LLLLLLLL#.....#
-   #...........#....LLLLLLL##D####
-   #...T.......#.....LLLLLL#....#
-   ####D########......LLLLL#.*..#
+#........#~~~~~~~~~~#.......#..........#
+#...^....#~~~~~~~~~~#..!....#....T.....#
+#........#~~~~~~~~~~#.......D..........#
+####D#####~~~~~~~~~~###D#####..........#
+   #.......~~~~~~~~~#.................#
+   #..!....~~~~~~~~.D.........%.....##
+   #........~~~~~~~.#..............##
+   #...%....#~~~~~~.####D##########
+   ####D#####.~~~~......#.........#
+       #......P.~~......#....P....#
+       #..P...#..~......D...!.....#
+       #......#..~......#.........#
+       #......#..~~~~...####D######
+       ###D####..~~~~~.....#.....#
+   #####.......#.~~~~~~....#.....#
+   #...........#..~~~~~~~..L..P..#
+   #....!......D...~~~~~~~~#.....#
+   #...........#....~~~~~~~##D####
+   #...T.......#.....~~~~~~#....#
+   ####D########......~~~~~#.*..#
       #........#...........#....#
       #...S....#...........#....#
       #........#############v####
       ####v#####
 ```
 
-**Environment:** The transition zone. Compact infrastructure gives way to raw volcanic cave. Magma channels -- rivers of glowing orange-red lava (`L`) -- flow through carved trenches in the rock floor, winding diagonally across the chamber in wide, irregular swaths. The channels are impassable without redirecting the flow via valve gates. The heat is intense. Ancient stone walls begin to appear among the natural rock -- smooth, precise, clearly artificial. Pre-civilization construction. The cave walls are irregular and organic, nothing like the rectangular corridors above.
+**Environment:** The transition zone. Compact infrastructure gives way to raw volcanic cave. Magma channels -- rivers of glowing orange-red lava (`~`) -- flow through carved trenches in the rock floor, winding diagonally across the chamber in wide, irregular swaths. The channels are impassable without redirecting the flow via valve gates. The heat is intense. Ancient stone walls begin to appear among the natural rock -- smooth, precise, clearly artificial. Pre-civilization construction. The cave walls are irregular and organic, nothing like the rectangular corridors above.
 
 **Key Locations (Floor 2):**
 - `^` (top-left): Stairs up to Floor 1.
@@ -3965,7 +3965,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 **Encounter Zones:**
 - Ice Gallery Sentinel (1x, 600 HP -- crystalline humanoid, patrols the galleries, Frost magic + physical)
 - Frost Bat Swarm (6x Frost Bat, 70 HP each -- weak individually, 20% Petrify chance on bite)
-- Crystal Spider (2x, 350 HP each -- ambush predators, drop from ceiling, poison + Frost attacks)
+- Crystal Spider (2x, 350 HP each -- ambush predators, drop from ceiling, Frost attacks + Poison (15% chance))
 
 ### Floor 2: Wind Tunnels (45x30)
 
@@ -4004,7 +4004,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - `=` (upper-center): Ice bridges across a chasm. Only solid when Wind Vent Beta is active (blowing moisture across the gap to maintain the ice). When inactive, the bridges are too thin to cross -- attempting to cross triggers a fall (50% max HP damage, deposited in a lower cave with a long climb back).
 - `P` (center): Wind Vent Beta -- controls the ice bridge formation and the torch illumination in the eastern corridor. When active: bridges are solid, eastern torches are lit (revealing the path to the mini-boss is direct but guarded). When inactive: bridges are fragile, torches are dark (an illusory wall in the dark eastern corridor becomes passable, offering a stealth approach to the mini-boss).
 - `P` (lower-left): Wind Vent Gamma -- controls airflow on Floor 3. When active, the Frost Shrine's outer ice curtains are blown aside (direct approach). When inactive, the shrine is sealed but a side passage opens (longer but with better treasure).
-- `T` (upper-right): Chest -- Wind Dancer's Ring (accessory, +10 SPD, +5 EVA, wind resistance).
+- `T` (upper-right): Chest -- Wind Dancer's Ring (accessory, +10 SPD, +5 EVA, Storm resistance).
 - `T` (lower-left): Chest -- 5x Potion, 3x Antidote.
 - `L` (lower-right): Locked gate -- opens when Wind Vent Beta is deactivated (the wind pressure holding the lock mechanism releases).
 - `*` (lower-right): **Mini-boss: Ice Wyvern** (6000 HP).
@@ -4022,7 +4022,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 **Encounter Zones:**
 - Wind Howler (1x, 500 HP -- air elemental, hard to hit, wind attacks push party into traps)
 - Frost Stalker (2x, 400 HP each -- Frost-elemental predators, high EVA, ambush attacks)
-- Valdris Shade (1x, 550 HP -- spirit of an ancient monk, uses holy + Frost magic, not hostile until attacked -- can be spoken to by Torren to avoid combat and receive a Spirit Blessing buff)
+- Valdris Shade (1x, 550 HP -- spirit of an ancient monk, uses Spirit + Frost magic, not hostile until attacked -- can be spoken to by Torren to avoid combat and receive a Spirit Blessing buff)
 
 ### Floor 3: The Frost Shrine (45x30)
 
@@ -4086,13 +4086,13 @@ An ancient Valdris spirit guardian, bound to the shrine since before the Monaste
 
 Without Torren's sidequest completion, the fight continues to 0 HP. The Warden shatters into light, then reforms as a small spirit orb: "You fight well. Perhaps... the shrine is in good hands." Same drops, but no peaceful resolution -- the Warden's binding is broken permanently.
 
-**Weakness:** Flame magic (150% damage). Dark/Shadow (125% damage).
-**Resistance:** Frost (absorbs), Holy (50% damage).
+**Weakness:** Flame magic (150% damage). Void (125% damage).
+**Resistance:** Frost (absorbs), Spirit (50% damage).
 **Immunity:** Petrify, Silence.
 **Drop:** Warden's Blessing (accessory, +15 MAG DEF, +10 MAG, auto-regen in cold environments), Spirit Warden's Shard (key item -- quest completion), 2500 Gold.
 
 **Encounter Zones (Floor 3):**
-- Shrine Guardian (2x, 500 HP each -- smaller spirit constructs, Frost + holy attacks)
+- Shrine Guardian (2x, 500 HP each -- smaller spirit constructs, Frost + Spirit attacks)
 - Frozen Offering (1x, 400 HP -- a corrupted offering that attacks when disturbed, drops Spirit Incense consumable)
 - Valdris Ancestor Spirit (1x, 700 HP -- powerful spirit, uses ancient magic. Torren can speak with it to avoid combat -- it gives a blessing instead: +10% XP for 5 battles)
 
@@ -4103,11 +4103,11 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 |-------|-------------|----------|----|
 | Ice Gallery Sentinel | Crystalline humanoid. Patrols galleries. Frost magic + physical. | Floor 1 | 600 |
 | Frost Bat Swarm | Weak individually. 20% Petrify chance on bite. Groups of 6. | Floor 1 | 70 |
-| Crystal Spider | Ambush predators. Drop from ceiling. Poison + Frost attacks. Groups of 2. | Floor 1 | 350 |
+| Crystal Spider | Ambush predators. Drop from ceiling. Frost attacks + Poison (15% chance). Groups of 2. | Floor 1 | 350 |
 | Wind Howler | Air elemental, hard to hit. Wind attacks push party into traps. | Floor 2 | 500 |
 | Frost Stalker | Frost-elemental predators. High EVA, ambush attacks. Groups of 2. | Floor 2 | 400 |
-| Valdris Shade | Spirit of an ancient monk. Holy + Frost magic. Can be spoken to by Torren to avoid combat. | Floor 2 | 550 |
-| Shrine Guardian | Smaller spirit constructs. Frost + holy attacks. Groups of 2. | Floor 3 | 500 |
+| Valdris Shade | Spirit of an ancient monk. Spirit + Frost magic. Can be spoken to by Torren to avoid combat. | Floor 2 | 550 |
+| Shrine Guardian | Smaller spirit constructs. Frost + Spirit attacks. Groups of 2. | Floor 3 | 500 |
 | Frozen Offering | Corrupted offering. Attacks when disturbed. Drops Spirit Incense. | Floor 3 | 400 |
 | Valdris Ancestor Spirit | Powerful spirit, ancient magic. Torren can speak to avoid combat (+10% XP for 5 battles). | Floor 3 | 700 |
 | **Ice Wyvern** (Mini-boss) | Massive ice-blue wyvern. Frost Breath, Wing Buffet, Dive Strike, Ice Armor. | Floor 2 | 6,000 |
@@ -4122,7 +4122,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 | Highland Bow | Floor 1, left chest | Weapon (Sable, ATK +18, Frost-element) |
 | Ancient Spirit Token | Floor 1, hidden passage | Key item (Floor 3 Warden bypass) |
 | Ice Beetle Shell | Floor 1, thin ice trap grotto | Crafting material |
-| Wind Dancer's Ring | Floor 2, upper-right chest | Accessory (+10 SPD, +5 EVA, wind resistance) |
+| Wind Dancer's Ring | Floor 2, upper-right chest | Accessory (+10 SPD, +5 EVA, Storm resistance) |
 | 5x Potion, 3x Antidote | Floor 2, lower-left chest | Consumable |
 | Wyvern Scale | Floor 2, Ice Wyvern drop | Crafting material (rare) |
 | Wyvern Fang | Floor 2, Ice Wyvern drop | Accessory (+12 ATK, Frost-element physical) |
@@ -4188,9 +4188,9 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 - `P` (upper-center): Root Barrier Alpha -- thick roots block the main passage. Torren communes: the roots are healthy and curious. They retract willingly. Cost: 15 MP. "They're... happy to help. They say travelers used to come through here all the time."
 - `P` (center): Root Barrier Beta -- corrupted. Black-purple veins. Torren attempts contact: "Pain. It's in pain. The Pallor has touched it." Must be purified with ley water from the spring (`~` area) before it can be communed with. Once purified and retracted, opens the path to the southern section.
 - `~` (left): Clean ley spring -- water surfaces here through a crack in a ley channel. The water glows faint amber. Collect "Vial of Ley Water" (key item, used to purify corrupted roots). The spring refills -- the party can collect multiple vials.
-- `T` (upper-right): Chest -- Root Bark Shield (armor, +10 DEF, +5 MAG DEF, nature resistance).
+- `T` (upper-right): Chest -- Root Bark Shield (armor, +10 DEF, +5 MAG DEF, Earth resistance).
 - `T` (left, near spring): Chest -- 3x Spirit Tonic (consumable, restores 50 MP).
-- `T` (right): Chest -- Thornmere Amber (accessory, +8 MAG, boosts nature-element spells).
+- `T` (right): Chest -- Thornmere Amber (accessory, +8 MAG, boosts Earth-element spells).
 - `@` (lower-center): Pre-civ trail marker, mostly intact. Carved directions point south: "TO THE CONVERGENCE -- 3 DAYS WALK." Maren (if present): "Three days by their reckoning. The passages have shifted since then, but the direction is right."
 - `*` (lower-right): **Mini-boss: Root Horror** (7000 HP).
 - `S` (lower-center): Save point -- a ley-line node where roots and energy converge, creating a natural sanctuary.
@@ -4200,20 +4200,20 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 
 A root system fully corrupted by the Pallor. Where healthy roots are brown and amber-veined, this mass is black, withered, and aggressive. It fills a chamber, tendrils whipping from walls and ceiling. At its core, a pulsating dark-purple heart of concentrated Pallor energy. It attacks on sight -- no communication possible.
 
-- **Root Lash** -- physical, single target, 350-450 damage + Bind status (1 turn, target cannot move or act).
+- **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or fire/Flame magic).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
-- **Pallor Pulse** -- dark magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
+- **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
 - **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
 
-**Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Holy (125% damage).
-**Resistance:** Earth (50% damage), Nature (absorbs).
+**Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Spirit (125% damage).
+**Resistance:** Earth (50% damage), Earth (absorbs).
 **Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
-**Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, nature-element attacks gain dark sub-element), 1500 Gold.
+**Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, Earth-element attacks gain Void sub-element), 1500 Gold.
 
 **Encounter Zones:**
-- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind + physical attacks)
-- Pallor Fungus (2x, 350 HP each -- toxic spore attacks, Poison + Confusion)
+- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (immobilized for 2 turns, removed by physical attack or fire/Flame magic) + physical attacks)
+- Pallor Fungus (2x, 350 HP each -- toxic spore attacks, Poison (25% chance) + Confusion (20% chance))
 - Tunnel Beetle (4x, 150 HP each -- armored, physical-only, high DEF but low HP)
 
 ### Floor 2: Spirit Cavern (35x25)
@@ -4254,7 +4254,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 **Encounter Zones:**
 - Ancient Root Guardian (1x, 600 HP -- a petrified root construct that activates when the party enters. Not corrupted -- a defense mechanism. Can be spoken to by Torren to deactivate peacefully)
 - Ley Moth Swarm (8x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
-- Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, dark-element, regenerates unless the crack is sealed with ley water)
+- Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, Void-element, regenerates unless the crack is sealed with ley water)
 
 
 ### Encounter Table
@@ -4262,23 +4262,23 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
 | Root Tendril | Burst from walls. Bind + physical attacks. Groups of 3. | Floor 1 | 250 |
-| Pallor Fungus | Toxic spore attacks. Poison + Confusion. Groups of 2. | Floor 1 | 350 |
+| Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
 | Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
-| Pallor Seep | Pallor corruption leaking through crack. Amorphous, dark-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
+| Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
 | **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind. | Floor 1 | 7,000 |
 
 ### Treasure/Loot
 
 | Item | Location | Type |
 |------|----------|------|
-| Root Bark Shield | Floor 1, upper-right chest | Armor (+10 DEF, +5 MAG DEF, nature resistance) |
+| Root Bark Shield | Floor 1, upper-right chest | Armor (+10 DEF, +5 MAG DEF, Earth resistance) |
 | 3x Spirit Tonic | Floor 1, left chest (near spring) | Consumable (restores 50 MP) |
-| Thornmere Amber | Floor 1, right chest | Accessory (+8 MAG, boosts nature spells) |
+| Thornmere Amber | Floor 1, right chest | Accessory (+8 MAG, boosts Earth spells) |
 | Vial of Ley Water | Floor 1, clean ley spring | Key item (purifies corrupted roots) |
 | Purified Root Heart | Floor 1, Root Horror drop | Crafting material (rare) |
-| Root Horror's Core | Floor 1, Root Horror drop | Accessory (+12 ATK, +8 MAG, nature+dark attacks) |
+| Root Horror's Core | Floor 1, Root Horror drop | Accessory (+12 ATK, +8 MAG, Earth+Void attacks) |
 | Waystation Provisions | Floor 2, left chest | Consumable set (5x Potion, 3x Spirit Tonic, 1x Elixir) |
 ---
 

@@ -551,10 +551,10 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 #### Thornvein Passage (Root Tunnel Network)
 
 ##### Act III State (Only Visit)
-- **Map layout changes:** The Thornvein root network, stressed by Pallor corruption and ley line instability, has shifted and cracked open a passage from Roothollow's deep roots to the Natural Caverns (Floor 2) of the Ley Line Depths. The passage did not exist before -- the roots moved.
-- **Visual state:** Thornmere Deep Forest (subterranean variant) transitioning to Underground/Cavern. Living and petrified roots intertwined. Bioluminescence dim but present -- the roots here are deeper than the Pallor has reached. At the far end, the cavern palette of the Ley Line Depths begins.
-- **Accessible areas:** A winding root tunnel from Roothollow's lowest chamber to the Ley Line Depths Floor 2 entrance. Three nodes along the route -- a root junction (navigation puzzle), a petrified section (combat gauntlet where the Pallor has partially reached), and a ley line seep (rest point where the roots drink from the deep ley network).
-- **Environmental details:** The passage is the world responding to catastrophe -- the roots shifted because the ley lines beneath them shifted. The petrified section is a reminder that the corruption reaches even here. The living sections glow faintly, the roots still trying to sustain the forest above. This is the only route to the Ley Line Depths after Millhaven's destruction, making it a critical path dungeon. The transition from organic root tunnel to geometric pre-civilization stone at the far end is visually striking -- nature's chaos meeting ancient order.
+- **Map layout changes:** The Thornvein root network, stressed by Pallor corruption and ley line instability, has shifted and cracked open a passage from Roothollow's deep roots through the ancient root system beneath the Thornmere Wilds. The passage did not exist before -- the roots moved. The tunnel follows ley-line channels that once connected to the Natural Caverns of the Ley Line Depths, and its exit emerges onto a hidden ledge deep in Pallor territory, placing the party at the start of Pallor Wastes Section 2 and bypassing the Ashen Approach entirely.
+- **Visual state:** Thornmere Deep Forest (subterranean variant) transitioning to Underground/Cavern. Living and petrified roots intertwined. Bioluminescence dim but present -- the roots here are deeper than the Pallor has reached. At the far end, the cavern walls give way to a hidden exit overlooking the Wilds.
+- **Accessible areas:** A winding root tunnel from Roothollow's lowest chamber through two floors (Root Tunnels and Spirit Cavern) to a hidden exit near the Convergence approach. Three nodes along the route -- a root junction (navigation puzzle), a petrified section (combat gauntlet where the Pallor has partially reached), and a ley line seep (rest point where the roots drink from the deep ley network). The root network intersects ley-line channels connected to the Ley Line Depths, and Torren can sense the deep ley network through the roots.
+- **Environmental details:** The passage is the world responding to catastrophe -- the roots shifted because the ley lines beneath them shifted. The petrified section is a reminder that the corruption reaches even here. The living sections glow faintly, the roots still trying to sustain the forest above. The passage provides a critical strategic shortcut, bypassing the densest encounter zone of the Pallor Wastes (Section 1) and preserving resources for the harder sections ahead. The transition from organic root tunnel to geometric pre-civilization stone at the far end is visually striking -- nature's chaos meeting ancient order.
 
 ---
 
@@ -976,9 +976,9 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Dreamer's Fault** | -- | -- | -- | -- | Post-game dungeon | **1** | |
 | **Dry Well of Aelhart** | -- | -- | Accessible (mini-dungeon) | -- | -- | **1** | |
 | **Sunken Rig** | -- | -- | Beached rig (dungeon) | -- | -- | **1** | |
-| **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (3 floors) | -- | -- | **2** | Lira's character dungeon |
+| **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (4 floors) | -- | -- | **2** | Lira's character dungeon |
 | **Frostcap Caverns** | -- | -- | Cave system (3 chambers) | -- | -- | **1** | Torren's character dungeon |
-| **Thornvein Passage** | -- | -- | -- | Root tunnel (critical path) | -- | **1** | Connects Roothollow to Ley Line Depths |
+| **Thornvein Passage** | -- | -- | -- | Root tunnel (critical path) | -- | **1** | Connects Roothollow to Pallor Wastes Section 2 (via ley-line root network) |
 | **Windshear Peak** | -- | Base vista | -- | Corrupted vista | -- | **2** | Visual change only (the view) |
 
 ### Summary
