@@ -71,13 +71,15 @@ For each round (1 through N):
 
 1. **Run the story-review validation passes** against the current local
    state of the PR files. This is a LOCAL review — do NOT post anything
-   to GitHub yet. Run all 6 passes:
-   - Pass A: Name Consistency
+   to GitHub yet. Run all 8 passes:
+   - Pass A: Name & Terminology Consistency
    - Pass B: Timeline & Act Consistency
    - Pass C: Layout Validity
    - Pass D: Quest Completeness
-   - Pass E: Cross-Document References
-   - Pass F: Diff-Specific Checks
+   - Pass E: Cross-Document Value Matching
+   - Pass F: Internal Self-Consistency
+   - Pass G: Mechanic Completeness & Edge Cases
+   - Pass H: Diff-Specific Checks
 
    Scope the review to files changed in this PR (compare against main).
 
