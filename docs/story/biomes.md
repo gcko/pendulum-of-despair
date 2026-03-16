@@ -148,6 +148,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ironmouth (frontier industrial variant -- prefab metal buildings, small scale, encroaching on forest)
 - Millhaven (extraction variant -- open pit, pumping stations, the Millglow)
 - Carradan Rail Tunnels (tunnel variant -- iron-braced stone, Arcanite lamps, rail infrastructure)
+- Caldera Forge Depths (Floor 1 -- refinery basement, industrial heat, Forgewright infrastructure)
 
 ---
 
@@ -208,6 +209,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Maren's Refuge (hermit variant -- dense, dark, isolated, with spirit visitors)
 - Stillwater Hollow (sacred spring variant -- mirror-still water, training stones, meditative quiet)
 - Overworld routes: Ironmouth to Roothollow (Wildwood Trail), Roothollow to Maren's Refuge (The Deep Path)
+- Thornvein Passage (subterranean root tunnel variant -- bioluminescent roots, spirit energy, connects Roothollow to Pallor Wastes)
 
 ---
 
@@ -321,6 +323,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Highcairn (monastery variant -- austere architecture, prayer stones, the great hall)
 - Windshear Peak (bare summit variant -- no architecture, exposed rock, wind-spirit shrine)
 - Overworld route: Highcairn to Valdris Crown (Highland Descent, upper section)
+- Frostcap Caverns (deep cavern variant -- ice formations, frozen ley veins, spirit-carved chambers)
 
 ---
 
@@ -380,6 +383,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ember Vein (introductory variant -- small scale, ember-orange crystal, geometric walls)
 - The Convergence (extreme variant -- all ley colors converging, then draining)
 - Stillwater Hollow (subtle variant -- ley energy beneath a sacred spring, felt more than seen)
+- Caldera Forge Depths (Floor 4 -- the Caldera Heart, ancient forge powered by ley-magma convergence)
 
 ---
 
@@ -495,6 +499,9 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ley Line Depths (nexus variant -- transitions into Ley Line Nexus biome at depth)
 - Dry Well of Aelhart (progressive variant -- transitions from village well to natural caves to full Ancient Ruins over 7 floors)
 - Axis Tower lower levels (urban variant -- maintenance tunnels, Undercroft access)
+- Caldera Forge Depths (Floor 2 -- magma channels, volcanic transition)
+- Frostcap Caverns (ice cave variant)
+- Thornvein Passage (root-threaded cavern)
 
 ---
 
@@ -552,6 +559,8 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - Ley Line Depths (partial -- ancient carvings visible at the deepest level, sealed door)
 - Dry Well of Aelhart (full scale -- 7 floors, progressive descent from village well to ley-line nexus, waterworks, residential quarters, deep archive, gravity-warped depths, and the Wellspring)
 - Dreamer's Fault (corrupted variant -- architecture from multiple ages twisted together, impossible geometry)
+- Caldera Forge Depths (Floors 3-4 -- pre-civilization forge complex, lava-flow mechanisms)
+- Frostcap Caverns (Floor 3 -- forbidden spirit shrine, ancient Valdris ruins)
 
 ---
 
