@@ -202,7 +202,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | Ability | Learned | Cost | Effect |
 |---------|---------|------|--------|
 | **Siphon** | Level 1 | 0 MP | Maren absorbs the next spell cast by an enemy, negating it and recovering MP equal to the spell's cost. Against enemies that do not use MP, Siphon restores MP equal to the spell's tier value (Tier 1: 5 MP, Tier 2: 15 MP, Tier 3: 30 MP, Tier 4: 50 MP). Requires timing — must be selected before the enemy spell resolves. If no spell comes before Maren's next turn, the stance is wasted. Generates +20 WG on success. |
-| **Resonance** | Level 8 | 8 MP | Amplifies the next magical action by any ally by 30%. Affects spells (damage/healing +30%), Spiritcall effects (+30% potency), and Forgewright devices (+1 turn duration). For Bulwark's Aegis Veil, converts single-target to party-wide at reduced strength. Must be cast before the ally acts. Generates +10 WG. |
+| **Resonance** | Level 8 | 8 MP | Amplifies the next magical action by any ally by 30%. Affects spells (damage/healing +30%), Spiritcall effects (+30% potency), and Forgewright devices (+1 turn duration). For Bulwark's Aegis Veil, converts single-target to party-wide at half strength (20% magic damage reduction for 2 turns instead of 40% for 3 turns). Must be cast before the ally acts. Generates +10 WG. |
 | **Unweave** | Level 13 | 12 MP | Dispels all buffs from one enemy. If the enemy has Pallor-type buffs, also deals magic damage equal to Maren's Magic x 3. Generates +10 WG. |
 | **Ley Surge** | Level 18 | 50 WG (no MP) | Consumes 50 WG. All allies' next spells cost 0 MP. Lasts until each ally has cast one free spell. |
 | **Mirrorsong** | Level 23 | 16 MP | Maren copies the last spell cast by any combatant (ally or enemy) and casts it immediately at her own Magic stat. Generates +15 WG. |
@@ -272,7 +272,9 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 - Sound: Resonant tones, harmonic chords, a low hum beneath the casting
 - Spells tend toward precision and control — single-target damage, dispels, buffs, barriers
 
-**Spell List (Ley Line):**
+**Key Ley Line Spells (Summary):**
+
+*This is a representative subset. For the complete Ley Line spell catalog, see magic.md.*
 
 | Spell | MP | Target | Effect | Learned By |
 |-------|-----|--------|--------|------------|
@@ -397,8 +399,8 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 1 | Ironwall | — | — |
 | 6 | Riposte | — | — |
 | 10 | Rampart | — | — |
-| 12 | — | Kindle Breath (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
-| 12 | — | Breath of the Wilds (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| — | — | Kindle Breath (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
+| — | — | Breath of the Wilds (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Aegis Veil | — | — |
 | 22 | Shatter Guard | — | — |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
@@ -417,7 +419,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 
 ### Lira (Forgewright)
 
-| Level | Forgewright Ability | Magic (Cross-Train) | Story Trigger |
+| Level | Forgewright Ability | Magic (Other Sources) | Story Trigger |
 |-------|--------------------|--------------------|---------------|
 | 1 | Shock Coil | — | — |
 | 7 | Bulkhead | — | — |
@@ -437,8 +439,8 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 5 | Dewfall (Rain Spirit) | — | — |
 | 11 | Ember Wing (Fire Spirit) | — | — |
 | 16 | **[S] Stoneheart (Earth Spirit)** | — | Interlude: party finds Torren (ley line nexus stabilization) |
-| 18 | — | Wardglass (cross-train) | Act III scene with Maren |
-| 18 | — | Seal Tongue (cross-train) | Act III scene with Maren |
+| — | — | Wardglass (cross-train) | Act III scene with Maren |
+| — | — | Seal Tongue (cross-train) | Act III scene with Maren |
 | 20 | **[S] Greyveil (Twilight Spirit)** | — | Interlude: party finds Torren |
 | — | **[S] Convergence Chorus** | — | Interlude: ley line nexus stabilization |
 
@@ -470,7 +472,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 18 | **[S] Ley Surge** | — | — | Interlude: ancient ruin discovery |
 | 22 | — | Ley Storm | — | — |
 | 23 | **[S] Mirrorsong** | — | — | Interlude: ancient ruin discovery |
-| 24 | — | — | Rekindling (cross-train) | Act III scene with Torren |
+| — | — | — | Rekindling (cross-train) | Act III scene with Torren |
 | 34 | — | Convergence Flare | — | — |
 | — | **[S] Annulment** | — | — | Interlude: learns truth of Pallor's cycle |
 

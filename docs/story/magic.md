@@ -585,7 +585,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 2
 - **MP Cost:** 20
 - **Target:** Single ally (KO'd)
-- **Effect:** Revives a fallen ally with 25% max HP.
+- **Effect:** Revives a fallen ally at 25% of max HP.
 - **Description:** The caster calls the departing spirit back. It is not a command -- it is a request. Sometimes the spirit listens.
 - **Who learns:** Torren (Lv 14), Maren (Lv 18)
 - **Visual:** A translucent version of the fallen character rises from their body, then sinks back in; they stir and rise.
@@ -596,7 +596,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 3
 - **MP Cost:** 40
 - **Target:** Single ally (KO'd)
-- **Effect:** Revives a fallen ally with 75% max HP.
+- **Effect:** Revives a fallen ally at 75% of max HP.
 - **Description:** Ley energy floods the body like sunrise. The dead do not stay dead when the ley lines still burn.
 - **Who learns:** Maren (Lv 28)
 - **Visual:** A burst of gold-white light erupts from beneath the fallen character; they are lifted briefly and set back down, restored.
