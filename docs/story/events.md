@@ -257,52 +257,61 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 3 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
 | 4 | `maren_warning` | Maren examines the Pendulum at her refuge | Maren joins the party. Return Road to Valdris Crown opens. Maren's Refuge becomes a revisitable rest point. The party decides to bring the Pendulum to the capital. | Maren (joins) |
 | 5 | `pendulum_to_capital` | Party arrives at Valdris Crown with the Pendulum | Act I ends. Act II begins. King Aldren appears in the throne hall. Cael's quarters become restricted. Multiple NPC dialogues update (Aldis assigned to research, Cordwyn on alert). Court Quarter political NPCs activate. | King Aldren, Scholar Aldis, Dame Cordwyn, Lord Chancellor Haren |
+| 6 | `vaelith_ember_vein` | Vein Guardian defeated in the Ember Vein | Grey stranger NPCs appear in Valdris Crown with gossip dialogue about a charming traveler seen near the mine. | Vaelith (first appearance) |
 
 ### Act II Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 6 | `cael_nightmares_begin` | First nightmare cutscene triggers in Cael's quarters | Cael's dialogue becomes subtly different — more distant, more philosophical about suffering. Sable gains optional dialogue warning about him. Scholar Aldis begins noticing behavioral changes. | Cael, Sable, Scholar Aldis |
-| 7 | `diplomatic_mission_start` | King Aldren sends the party to the Thornmere tribes | Diplomatic Road opens. Duskfen, Canopy Reach, and Ashgrove become accessible. Millhaven accessible as optional stop. Thornwatch dialogue updates (Halda reports Compact probes). | Commander Halda, Elder Savanh, Spirit-speaker Caden, Wynne |
-| 8 | `duskfen_alliance` | Party clears Fenmother's Hollow and secures Duskfen's alliance | Caden's dialogue shifts to cautious trust. Spirit-binding shop fully unlocks. Duskfen tribe sends representatives to Ashgrove. | Spirit-speaker Caden |
-| 9 | `canopy_alliance` | Party reaches Canopy Reach and secures their alliance | Panoramic view cutscene triggers — first continent overview, grey haze over the Convergence visible. Wynne's observation about atmospheric disturbance logged. | Wynne |
-| 10 | `tribal_alliance_complete` | All three tribes agree at the Ashgrove council | Diplomatic mission resolved. Return to Valdris Crown enabled. Ashgrove council stones glow briefly — ley line resonance from unified intent. | Elder Savanh, Caden, Wynne, all tribal NPCs |
-| 11 | `sable_warning_ignored` | Sable's warnings about Cael are delivered but the party is away | Sets up dramatic irony. Sable's dialogue when the party returns reflects frustration. Renn's intelligence network confirms something is wrong at the court. | Sable, Renn |
-| 12 | `carradan_assault_begins` | Surprise Compact attack on Valdris Crown | Major set-piece battle triggers. Lower Ward combat zone. Eastern wall breach. Multiple NPC states update — Cordwyn commands the outer defense, Wynn mans the gate, Bren shelters in the market. | Dame Cordwyn, Wynn, Bren, all Valdris Crown NPCs |
-| 13 | `king_aldren_dead` | King Aldren dies during the siege | Crown passes to no one. Haren attempts to hold the council and fails. Cordwyn assumes de facto military command. The political NPCs' dialogue shifts to grief and power vacuum. | King Aldren (removed), Lord Chancellor Haren, Dame Cordwyn |
-| 14 | `cael_betrayal_complete` | Cael takes the Pendulum, confronts Lira, and vanishes | Act II ends. Cael removed from party. Lira's dialogue becomes grief-stricken. Maren reveals the Pendulum's true nature. All NPC dialogue across the game world updates for the Unraveling. Scholar Aldis locks herself in the library. Sergeant Marek begins carving Cael's name daily. | Cael (removed), Lira, Maren, Scholar Aldis, Sergeant Marek, Dame Cordwyn |
+| 7 | `cael_nightmares_begin` | First nightmare cutscene triggers in Cael's quarters | Cael's dialogue becomes subtly different — more distant, more philosophical about suffering. Sable gains optional dialogue warning about him. Scholar Aldis begins noticing behavioral changes. | Cael, Sable, Scholar Aldis |
+| 8 | `diplomatic_mission_start` | King Aldren sends the party to the Thornmere tribes | Diplomatic Road opens. Duskfen, Canopy Reach, and Ashgrove become accessible. Millhaven accessible as optional stop. Thornwatch dialogue updates (Halda reports Compact probes). | Commander Halda, Elder Savanh, Spirit-speaker Caden, Wynne |
+| 9 | `duskfen_alliance` | Party clears Fenmother's Hollow and secures Duskfen's alliance | Caden's dialogue shifts to cautious trust. Spirit-binding shop fully unlocks. Duskfen tribe sends representatives to Ashgrove. | Spirit-speaker Caden |
+| 10 | `canopy_alliance` | Party reaches Canopy Reach and secures their alliance | Panoramic view cutscene triggers — first continent overview, grey haze over the Convergence visible. Wynne's observation about atmospheric disturbance logged. | Wynne |
+| 11 | `tribal_alliance_complete` | All three tribes agree at the Ashgrove council | Diplomatic mission resolved. Return to Valdris Crown enabled. Ashgrove council stones glow briefly — ley line resonance from unified intent. | Elder Savanh, Caden, Wynne, all tribal NPCs |
+| 12 | `sable_warning_ignored` | Sable's warnings about Cael are delivered but the party is away | Sets up dramatic irony. Sable's dialogue when the party returns reflects frustration. Renn's intelligence network confirms something is wrong at the court. | Sable, Renn |
+| 13 | `carradan_assault_begins` | Surprise Compact attack on Valdris Crown | Major set-piece battle triggers. Lower Ward combat zone. Eastern wall breach. Multiple NPC states update — Cordwyn commands the outer defense, Wynn mans the gate, Bren shelters in the market. | Dame Cordwyn, Wynn, Bren, all Valdris Crown NPCs |
+| 14 | `vaelith_tavern_encounter` | Party meets Vaelith in Corrund/Bellhaven | No immediate world changes; enables retroactive horror after the Doma moment cutscene. Vaelith presents as a charming travelling scholar with interest in ley line folklore. | Vaelith (Appearance 3) |
+| 15 | `vaelith_doma_moment` | Automatic mid-Act II cutscene | Player awareness of Vaelith's true nature shifts permanently. The party witnesses Vaelith at a corruption site, feeding on ambient despair with quiet satisfaction. | Vaelith (Appearance 4) |
+| 16 | `ashen_ram_defeated` | Party defeats the Ashen Ram during the Valdris siege | The wall is breached. The siege's most dangerous moment passes, but the damage is done — the eastern defenses are shattered. | Dame Cordwyn (fights alongside party), Lord Haren (coordinates defense) |
+| 17 | `king_aldren_dead` | King Aldren dies during the siege | Crown passes to no one. Haren attempts to hold the council and fails. Cordwyn assumes de facto military command. The political NPCs' dialogue shifts to grief and power vacuum. | King Aldren (removed), Lord Chancellor Haren, Dame Cordwyn |
+| 18 | `vaelith_siege_encounter` | Unwinnable fight with Vaelith at Valdris | Party wakes in the aftermath, city fallen. Vaelith's power revealed to be far beyond the party's current ability. | Vaelith (Appearance 5), King Aldren (dies during siege) |
+| 19 | `ironbound_defeated` | Party defeats the Ironbound in the Rail Tunnels | Deepest tunnel section cleared. The Ironbound was a Compact worker consumed by their own boring engine — a grotesque fusion of flesh and machine. | Lira (recognizes engine model), Torren (can reach trapped spirit) |
+| 20 | `cael_betrayal_complete` | Cael takes the Pendulum, confronts Lira, and vanishes | Act II ends. Cael removed from party. Lira's dialogue becomes grief-stricken. Maren reveals the Pendulum's true nature. All NPC dialogue across the game world updates for the Unraveling. Scholar Aldis locks herself in the library. Sergeant Marek begins carving Cael's name daily. | Cael (removed), Lira, Maren, Scholar Aldis, Sergeant Marek, Dame Cordwyn |
 
 ### Interlude Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 15 | `interlude_begins` | Time skip. Player controls Sable. | Entire world map updates to Unraveling state. All NPC dialogue refreshes. Multiple locations transform (see World State Changes above). Party scattered — Edren, Lira, Torren, Maren each at separate locations. | All NPCs |
-| 16 | `ley_line_rupture` | Fires simultaneously with or immediately after `interlude_begins` | Ley lines rupture across the continent as a consequence of Cael opening the gate. Triggers Millhaven destruction, Rail Tunnel collapse, and overworld fissures. Spirit creatures go mad. Forgewright engines misfire. Magic becomes wild and unstable continent-wide. | All NPCs in affected locations |
-| 17 | `edren_found` | Sable reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party. Highcairn cleared of Pallor. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
-| 18 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
-| 19 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, defeats the corrupted root-spirit | Torren rejoins the party. Roothollow stabilized but damaged. Yara's condition improves slightly. The nexus becomes a beacon — the first sign that the Pallor can be pushed back. | Torren (rejoins), Yara, Elder Savanh |
-| 20 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
-| 21 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
+| 21 | `interlude_begins` | Time skip. Player controls Sable. | Entire world map updates to Unraveling state. All NPC dialogue refreshes. Multiple locations transform (see World State Changes above). Party scattered — Edren, Lira, Torren, Maren each at separate locations. | All NPCs |
+| 22 | `ley_line_rupture` | Fires simultaneously with or immediately after `interlude_begins` | Ley lines rupture across the continent as a consequence of Cael opening the gate. Triggers Millhaven destruction, Rail Tunnel collapse, and overworld fissures. Spirit creatures go mad. Forgewright engines misfire. Magic becomes wild and unstable continent-wide. | All NPCs in affected locations |
+| 23 | `edren_found` | Sable reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party. Highcairn cleared of Pallor. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
+| 24 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
+| 25 | `ley_leech_defeated` | Party defeats the Ley Leech at Torren's nexus | Nexus stabilized, ley lines glow clean, first sign the Pallor can be pushed back. The surrounding forest begins to recover its color within hours. | Torren (rejoins), Caden (performs recovery ritual), Kael Thornwalker (provides perimeter warriors) |
+| 26 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, defeats the corrupted root-spirit | Torren rejoins the party. Roothollow stabilized but damaged. Yara's condition improves slightly. The nexus becomes a beacon — the first sign that the Pallor can be pushed back. | Torren (rejoins), Yara, Elder Savanh |
+| 27 | `pallor_hollow_defeated` | Edren confronts and reclaims the Hollow at Highcairn | Highcairn cleared of Pallor. The monastery becomes a safe haven. Edren's confrontation with his own guilt made manifest yields hard-won clarity. | Edren (rejoins with Scar of the Hollow passive -- reduced max HP but Despair immunity), the monastery prior |
+| 28 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
+| 29 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
 
 ### Act III Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 22 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
-| 23 | `edren_trial_complete` | Edren faces and accepts phantom Cael's accusations | Edren gains a resolve buff or ability. Trial clearing becomes a temporary safe zone. | Edren |
-| 24 | `lira_trial_complete` | Lira faces and releases the vision of the life she and Cael could have had | Lira gains a resolve buff or ability. The most emotionally devastating trial. | Lira |
-| 25 | `torren_trial_complete` | Torren faces the spirits' accusations and accepts imperfect protection | Torren gains a resolve buff or ability. | Torren |
-| 26 | `sable_trial_complete` | Sable faces her own insignificance and recognizes that showing up is enough | Sable gains a resolve buff or ability. | Sable |
-| 27 | `maren_trial_complete` | Maren faces her younger self and affirms the cost of knowledge | Maren gains a resolve buff or ability. | Maren |
-| 28 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
+| 30 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
+| 31 | `trial_edren_complete` | Edren completes the Hall of Crowns in the Pallor Wastes | Edren unlocks Steadfast Resolve ability. Trial clearing becomes a temporary safe zone. Edren confronts phantom kings who demand he justify every life lost under his command. | Edren |
+| 32 | `trial_lira_complete` | Lira completes the Unfinished Forge | Lira unlocks latent weapon forge ability. The most emotionally devastating trial — she must build something that works without Cael's hands beside hers. | Lira |
+| 33 | `trial_torren_complete` | Torren completes the Silent Grove | Torren unlocks Rootsong ability. The spirits' accusations force him to accept imperfect protection over abandonment. | Torren |
+| 34 | `trial_sable_complete` | Sable completes the Crooked Mile | Sable unlocks Unbreakable Thread passive. She faces her own insignificance and recognizes that showing up is enough. | Sable |
+| 35 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
+| 36 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `ley_leech_defeated` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption he engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
+| 37 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
 
 ### Act IV Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 29 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
-| 30 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
-| 31 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
+| 38 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
+| 39 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
+| 40 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
 
 ---
 
@@ -389,6 +398,18 @@ Full narrative threads for every NPC marked "ties to main quest" or "ties to wor
 **Interlude only:** Found during the citadel infiltration. He opens the rear gate — not out of heroism, but out of desperate cowardice that happens to look like bravery. His self-awareness is total: *"I didn't open that gate for you. I opened it for me."*
 
 **After Kole's defeat:** He does not celebrate. He does not feel relief. He watched his commanding officer transform and said nothing for weeks. The party's arrival gave him an exit, not a redemption. If spoken to after the boss fight, he says: *"I stayed without embracing. That sounded brave in my head. In practice, it meant I watched and did nothing. There's a word for that."*
+
+---
+
+### Vaelith, the Ashen Shepherd (Ties to Main Quest)
+
+**Act I:** Vaelith appears twice, both times as a charming curiosity rather than a threat. At the Ember Vein, he is found near the mine entrance after the Vein Guardian falls — a well-spoken stranger with grey-flecked robes and a warm smile, asking the party what they found underground. He offers tea from an ornate set of porcelain cups and shares folklorist observations about the mine's history. At the Thornmere ridge, he is spotted from a distance — a lone figure watching the party's passage through the Wilds. If Torren is present, he notes the stranger's scent is wrong: *"He smells like old ash. Not campfire ash. The kind that's left after something burns from the inside."* Vaelith does not engage. He waves and moves on. Both encounters are easy to forget — and designed to be.
+
+**Act II:** Vaelith escalates from observer to participant. In Corrund or Bellhaven, he appears at a tavern as a travelling scholar, buying drinks and discussing ley line folklore with genuine-seeming enthusiasm. He is warm, knowledgeable, and slightly self-deprecating — the kind of person you are glad to meet on the road. If the player engages, he shares surprisingly accurate information about the Pallor's historical cycles, disguised as academic speculation. Then the Doma moment: a mid-Act II cutscene triggers automatically, showing Vaelith at a corruption site, alone, feeding on ambient despair with quiet, practiced satisfaction. The charming scholar's mask slips, and the player sees what has been standing next to them. Every previous encounter recontextualizes — the folklorist questions were reconnaissance, the tea was a ritual marker, the ridge observation was predator behavior. At the Valdris siege, Vaelith appears on the walls in the aftermath of the Ashen Ram's breach. The party fights him and cannot win. He is not cruel about it. He simply demonstrates that they are not ready, then walks away through the burning city as though the siege were weather.
+
+**Interlude:** Vaelith is never encountered directly. Instead, whispered references accumulate: corruption sites bear his teacup markings, Brant confesses that someone planted fatalism in him before the siege (*"A man came to see me. Grey robes. He didn't threaten me. He just... explained how things would go. And I believed him."*), and Maren's research reveals that several key events — the ley node destabilizations, the Ashen Ram's creation, the creatures Riven hunts in the Grey Bounties — were engineered rather than natural. The picture assembles itself: Vaelith has been tuning the world like an instrument, plucking ley nodes and feeding on the despair each disruption produces. He is not the Pallor itself, but its shepherd — guiding the flock of suffering toward the door.
+
+**Act III:** Vaelith serves as the penultimate boss, encountered in the Pallor Wastes after the party completes the Pallor Trials. The fight requires two prerequisites: `trial_lira_complete` (Lira must have unlocked her latent weapon forge ability) and `ley_leech_defeated` (the nexus must be stabilized, proving the Pallor can be pushed back). During the fight, Lira manifests a weapon forged from her connection to Cael — the thing the ancient forgewright failed to build in a previous cycle. Vaelith's defeat does not destroy him; it releases him. In his final moments, his mask falls completely, and the party sees what he was before the Pallor claimed him: someone who once cared, hollowed out over centuries until feeding was all that remained. His defeat destabilizes the Pallor Wastes and opens the full path to the Convergence.
 
 ---
 
@@ -591,6 +612,57 @@ Their dialogue is clinical, detached, and terrifying:
 
 ---
 
+### Boss Interconnection Map
+
+```
+VAELITH'S WEB (direct influence):
+  Vaelith ---- planted fatalism ---- Brant (enabled later cowardice at Ironmark)
+     |                              |
+     +-- designed -- Ashen Ram --- siege of Valdris
+     |                              |
+     +-- destabilized -- ley nodes -+-- Ley Leech (Torren's nexus)
+     |         (tuning forks)       +-- Forge Warden (Ashmark)
+     |                              +-- Howling Gale (indirect)
+     |                              +-- Frostcap destabilization
+     |
+     +-- woke -- Grey Bounty creatures (Riven's targets)
+     |
+     +-- journal fragments -- Archive of Ages -- Maren's research
+                                                      |
+                                                  previous cycle parallels
+                                                      |
+                                            "The forgewright built a weapon.
+                                             It failed."
+                                                      |
+                                            Lira's weapon SUCCEEDS
+                                            (this cycle IS different)
+
+PALLOR'S NATURAL SPREAD (no Vaelith involvement):
+  The Pallor ---- Grey Stag (Missing Patrol)
+     |
+     +-- Pallor Nest Mother (Unbowed escort)
+     |
+     +-- Pallor Hollow (Edren's guilt, Highcairn)
+     |
+     +-- Corrupted Fenmother (existing, Duskfen)
+
+CHARACTER ARC BOSSES (Pallor Trials):
+  Edren ----- The Crowned Hollow (leadership guilt)
+  Lira ------ The Perfect Machine (can't fix everything)
+  Torren ---- The Last Voice (old ways dying)
+  Sable ----- The Open Door (trust vs. survival)
+  Maren ----- The Index (knowledge vs. feeling)
+
+COMPACT CORRUPTION:
+  Drayce ---- Ironbound (Rail Tunnels) -- worker consumed
+     |                                      |
+     +-- Forge Warden (Ashmark) ------- same design philosophy
+                                            |
+                                     "progress at any cost"
+```
+
+---
+
 ## 4. Foreshadowing and Payoff Map
 
 Classic JRPG design: things said early should gain new meaning later. The following table maps early foreshadowing to later revelation.
@@ -617,6 +689,12 @@ Classic JRPG design: things said early should gain new meaning later. The follow
 | 18 | **Act I-Interlude / Marrek** / Always cheerful. Always at the crossroads. Always well-stocked. Untouched by the world's deterioration. | **Never resolved** / Marrek is never explained. Players will theorize. His unchanging presence amid universal decline suggests he is outside the Pallor's influence — or outside time itself. The absence of payoff IS the payoff. |
 | 19 | **Act II / King Aldren** / "There is nothing safe left in Valdris." | **Act II ending** / He was right. Not even the king was safe. His death in the chaos of siege — sudden, unglamorous — proves his own warning. |
 | 20 | **Act I / Ember Vein** / Dead miners with no wounds, faces frozen in hopelessness. | **Act III** / The Pallor Wastes produce the same effect on a continental scale. The miners were a preview — the first people to feel what the whole world would feel. |
+| 21 | **Act I / campsite** / Vaelith offers the party tea from ornate porcelain cups — a charming stranger's hospitality. | **Interlude** / The same teacups are found at corruption sites across the continent, connecting the charming stranger to Pallor feeding. The hospitality was a ritual marker. |
+| 22 | **Acts I-III / scattered** / Journal fragments referencing a previous cycle: "The forgewright built a weapon. It failed." | **Act III / Pallor Wastes** / Lira's weapon succeeds where the ancient forgewright's failed. The journal fragments told the player the ending before they knew the story — this cycle IS different. |
+| 23 | **Act II / before the siege** / Brant receives a visitor — a grey-robed man who "explained how things would go." | **Interlude** / Brant confesses that someone planted fatalism in him. The visitor was Vaelith, engineering cowardice as precisely as he engineered the Ashen Ram. |
+| 24 | **Act II / Corrund** / A charming tavern scholar buys drinks and discusses ley line folklore with genuine-seeming warmth. | **Act II** / The Doma moment cutscene retroactively recontextualizes the encounter. The scholar was feeding, and every warm word was reconnaissance. |
+| 25 | **Act II / Rail Tunnels** / Drayce's engineering legacy — the Ironbound is a worker consumed by a boring engine. | **Interlude** / The Forge Warden in Ashmark connects the same "progress at any cost" design philosophy. Two bosses, same institutional rot, same refusal to count the human cost. |
+| 26 | **Interlude / Grey Bounties** / Riven reports disturbed creatures in the deep Wilds — behaviour erratic, territorial patterns broken. | **Act III** / Vaelith's passage through the Wilds woke them. The bounty targets were not random — they were collateral damage from the Ashen Shepherd's transit. |
 
 ---
 
@@ -722,4 +800,5 @@ Quick reference for where every story-relevant NPC can be found in each act.
 | Brenn | Wilds (optional) | Wilds (optional) | Deeproot Shrine (trail) | -- | -- |
 | Riven | Wilds (random) | Wilds (random) | Wilds (guide to Archive) | -- | -- |
 | Marrek | Crossroads | Crossroads | Crossroads | Final crossroads | The Pendulum (tavern) |
+| Vaelith | Ember Vein (Appearance 1), Thornmere ridge (Appearance 2) | Corrund/Bellhaven tavern (Appearance 3), Corruption site cutscene (Appearance 4), Valdris walls (Appearance 5) | Referenced only (Appearance 6) | Pallor Wastes (Appearance 7) | -- |
 | Hadley | Three Roads Inn | Three Roads Inn | Three Roads Inn | -- | Three Roads Inn |
