@@ -1654,6 +1654,16 @@ Her younger self asks why she wasted her life on knowledge that only brought suf
 | Pallor Knight | Armored figure from a past age. Strong, disciplined, empty. Premium encounter. | Sections 3-4 |
 | Grief Shade | Translucent figure that mimics a party member's silhouette. Uses weakened versions of party abilities. | Sections 2, 4 |
 | Trial Manifestations | Unique to each trial. See trial descriptions. | Trial clearings |
+| The Crowned Hollow | Towering armored figure wearing every crown of failed leaders. Mirrors Edren's moveset. 8000 HP. | Trial 1 (B1) |
+| The Perfect Machine | Flawless automaton with Cael's face. Does not attack -- asks to be repaired. 7000 HP. | Trial 2 (B2) |
+| The Last Voice | Ancient Great Spirit cracked with grey stone. Barely alive, asks to rest. 6000 HP. | Trial 3 (B3) |
+| Shadows of Sable | Copies using Sable's Tricks moveset. Fast, evasive. Taunt: "You always leave." | Trial 4 (B4) |
+| The Index | Vast catalogue entity containing every recorded death from every Pallor cycle. 7000 HP. | Trial 5 (B5) |
+| Hollow Knights | Grey echoes of Valdris soldiers. Fight in formation. Summoned by Crowned Hollow. | Trial 1 (B1) |
+| Unfinished Constructs | Machines that beg to be repaired. Repairing wastes turns and spawns more. | Trial 2 (B2) |
+| Stone Spirits | Petrified nature spirits that animate on approach. Cannot speak. | Trial 3 (B3) |
+| Archived | Humanoid figures of compressed pages. Attack with factual recitations of how they died. | Trial 5 (B5) |
+| Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 20000 HP. Multi-phase. | Section 5 |
 
 ### Treasure/Loot
 
@@ -1671,6 +1681,181 @@ Treasure is deliberately sparse. The Wastes strip away resources; they do not gi
 - **Muffled sound:** The game's music fades to near-silence. Only footsteps and combat sounds remain. This is not a bug; it is the Pallor.
 - **Greyscale shift:** The color palette desaturates 10% per section. By Section 4, the screen is nearly monochrome. Only ley-line save points retain color.
 - **No retreat:** Once entered, the party cannot return to the overworld. Commitment is absolute.
+
+### Pallor Trials (Expanded)
+
+**Note: Full ASCII floor layouts for all five trials will be created in a follow-up session.**
+
+### Pallor Trial 1: The Hall of Crowns (Edren)
+
+- **Floors:** 3-4 (variable shifting throne rooms)
+- **Theme:** Leadership guilt and survivor's guilt. Each floor is Valdris Crown in a different state of ruin.
+- **Enemies:** Hollow Knights -- grey echoes of Valdris soldiers who followed Edren's orders and died. Fight in formation.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Crowned Hollow (8000 HP)**
+
+A towering armored figure wearing every crown of every leader who failed to stop the Pallor across history. Fights with Edren's own moveset, mirrored.
+
+**Phase 1 (8000-2000 HP):**
+- **Mirror Strike** -- uses Edren's equipped weapon attack, mirrored. Damage matches Edren's ATK stat.
+- **Crown's Burden** -- AoE, 300-350 damage + ATK reduction on all party members (2 turns).
+- **Formation Call** -- summons 2 Hollow Knights (1000 HP each) to fight in formation.
+- **Royal Guard** -- counterattacks any physical attack with 150% damage return.
+
+**Phase 2 (below 2000 HP): Invulnerability**
+The Crowned Hollow becomes invulnerable and uses devastating attacks:
+- **Weight of Command** -- party-wide, 500 damage per turn.
+- **Every Name They Carried** -- recites names of the fallen. Despair status on all party members.
+
+**Resolution Mechanic (Cecil-type):** The ONLY way to end Phase 2 is for Edren to use the **Defend** command for 3 consecutive turns. Not attacking -- just enduring. Each Defend causes the Hollow to stagger and the ghostly soldiers to lower their weapons. Third Defend ends the fight.
+
+**Unlock:** **Steadfast Resolve** -- party-wide defensive buff that also cleanses Pallor status effects.
+
+**Weakness:** Spirit (150%). **Resistance:** Physical (75%). **Drop:** Crown Shard (accessory -- leadership-themed buff).
+
+### Pallor Trial 2: The Unfinished Forge (Lira)
+
+- **Floors:** 3-4 (shifting forge-workshop environments)
+- **Theme:** The need to fix everything. Puzzles involve choosing which projects to abandon.
+- **Enemies:** Unfinished Constructs -- machines that beg to be repaired. Repairing wastes turns and spawns more.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Perfect Machine (7000 HP)**
+
+A flawless automaton with Cael's face. Does NOT attack. Stands in the center and asks Lira to repair it.
+
+**Mechanic:** Each "repair" action adds 1500 HP to the boss AND triggers counterattack:
+- **Hopeful Spark** -- 400 damage to Lira + "Almost... try again." dialogue.
+- **False Promise** -- heals Perfect Machine to current HP + 1500, party-wide 200 damage.
+- High DEF (halves physical damage).
+
+**Resolution Mechanic:** Lira must use Forgewright to select **Dismantle** (unique option in this fight). Dismantling deals 3500 damage per use. Dialogue: "I cannot fix you. I could not fix him. That was never my job." Two Dismantles end the fight.
+
+**Unlock:** Latent ability -- faint glow in Lira's hands. Forged something from grief instead of metal. Prerequisite for manifesting Cael's connection as weapon against Vaelith.
+
+**Weakness:** Void (150%). **Resistance:** Flame (75%). **Drop:** Unfinished Ring (accessory -- Lira-specific, boosts Forgewright abilities).
+
+### Pallor Trial 3: The Silent Grove (Torren)
+
+- **Floors:** 2-3 (petrified forest with diminishing ambient sound)
+- **Theme:** The old ways are dying. Puzzles involve following the last remaining sounds.
+- **Enemies:** Stone Spirits -- petrified nature spirits that animate on approach. Cannot speak.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Last Voice (6000 HP)**
+
+An ancient Great Spirit, massive and beautiful, cracked through with grey stone. Barely alive. Speaks in fragments. Asks Torren to let it rest.
+
+**Phase 1 (6000-1500 HP):**
+- **Stone Grasp** -- single target, 350 damage + Petrify status (1 turn).
+- **Silent Scream** -- AoE, 250 damage + Silence (2 turns). No sound accompanies it.
+- **Crumbling Form** -- loses 100 HP passively per turn. It is dying regardless.
+
+**Phase 2 (below 1500 HP): The Request**
+Speaks clearly: "Let me go." Standard attacks deal reduced damage.
+
+**Resolution Mechanic:** Torren uses Spiritcall and selects **Release** (replaces "Call"). One Release ends the fight. The Great Spirit dies peacefully. Forest remains stone, but a single green shoot appears.
+
+**Unlock:** **Rootsong** -- healing ability restoring HP and MP, drawing from the ley network.
+
+**Weakness:** Flame (150%). **Resistance:** Spirit (50%). **Drop:** Petrified Heartwood (crafting material).
+
+### Pallor Trial 4: The Crooked Mile (Sable)
+
+- **Floors:** 1-2 (twisting alleyways that loop back)
+- **Theme:** Trust and abandonment. Doors lead to rooms where party members are in danger -- all traps.
+- **Enemies:** Shadows of Sable -- copies using her Tricks moveset. Fast, evasive. Taunt: "You always leave."
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Open Door (no HP -- not a combat encounter)**
+
+A literal door at the end of the alley, standing open. Warm light, no enemies, freedom. The Shadows urge her through.
+
+**Resolution Mechanic:** No combat. The player navigates Sable to **turn around and walk back** into the alley -- toward the party, toward danger. Walking through the door triggers a false ending and resets the trial. Walking back closes the door. Shadows vanish. Sable says nothing. She just walks back.
+
+**Unlock:** **Unbreakable Thread** -- passive preventing forced removal from battle (counters Pallor Incarnate's Reality Tear).
+
+### Pallor Trial 5: The Restricted Stacks (Maren)
+
+- **Floors:** 2-3 (infinite library flooding with grey light)
+- **Theme:** Knowledge as emotional armor. Reading books grants tactical info but triggers debuffs.
+- **Enemies:** Archived -- humanoid figures of compressed pages. Attack with factual recitations of how they died.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Index (7000 HP)**
+
+A vast catalogue entity containing every recorded death from every Pallor cycle.
+
+**Mechanic:** Presents a binary choice:
+- **Absorb** -- massive INT buff but 90% max HP damage and permanent Despair.
+- **Destroy** -- instant kill but loses all INT buffs and a unique lore item.
+
+Neither option is correct.
+
+**Resolution Mechanic:** Select **Read One Entry** (third option, appears when examining the Index). Maren reads one person's entry and grieves for them individually. The Index shatters -- built on the premise that people are data, one person mourned breaks its logic.
+
+**Unlock:** **Pallor Sight** -- see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence.
+
+**Weakness:** Spirit (150%). **Resistance:** Void (50%). **Drop:** Archivist's Lens (accessory -- boosts Arcanum abilities).
+
+### Section 5: Plateau's Edge -- Vaelith
+
+**Boss: Vaelith, the Ashen Shepherd (20000 HP)**
+
+An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times throughout the story -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed: the ley network is alive.
+
+**The 10-Attack Threshold (Pre-Fight Phase):**
+The fight begins like the previous unwinnable encounter at Valdris. Party attacks deal 0 or negligible damage. Vaelith attacks 10 times, each accompanied by taunting dialogue:
+1. "Ah, you came. They always come."
+2. "The spirit-speaker, the forgewright, the thief... I have seen your archetypes before."
+3. "The last cycle's hero wept at this point. You are holding up rather well."
+4. "Your friend -- the one with the heavy eyes -- he is quite comfortable where he is."
+5. "I met a forgewright once. Eight hundred years ago. She built a weapon too."
+6. "The spirit-speakers always burn brightest before they go out."
+7. "The thief. Always the thief who surprises me. They never stay."
+8. "The scholar catalogues everything. As if knowing changes anything."
+9. "You fight as if it matters. It is... almost endearing."
+10. "Shall we stop pretending? You cannot hurt me. No one can."
+
+After the 10th attack, an in-battle cutscene triggers.
+
+**In-Battle Cutscene: Lira's Weapon**
+Cael's lingering connection to the party, channeled through the restored ley network, manifests as raw energy. Lira -- the Forgewright -- instinctively shapes it. She forges a weapon mid-battle from grief, love, and the living land. The weapon glows with ley-line blue threaded with grey (Cael's color). This has never happened in any previous Pallor cycle because the ley network was always dead by this point and no previous forgewright had a personal bond with the Pallor's vessel.
+
+After the cutscene, ALL party members can damage Vaelith. The real fight begins.
+
+**Phase 1 (20000-10000 HP): The Scholar Fights**
+Vaelith uses ancient magic from a dead era. No longer dismissive -- focused.
+- **Epoch's End** -- party-wide AoE, 500-600 damage. Ancient spell with no modern equivalent.
+- **Grey Archive** -- single target, 700-800 damage + Silence (3 turns). Vaelith recites a fact about how the target's archetype died in a previous cycle.
+- **Cycle's Weight** -- stacking debuff on one party member. Each stack reduces ATK/DEF by 10%. Represents accumulated weight of failed cycles.
+- **Temporal Cascade** -- Vaelith acts twice in one turn. Used every 4th turn.
+- **"You are the first to draw blood in eight centuries."** -- dialogue trigger at 15000 HP.
+
+**Phase 2 (below 10000 HP): The Shepherd Falls**
+Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey light appear.
+- All Phase 1 attacks, plus:
+- **Despair Pulse** -- party-wide, 400 damage + Despair status (50% chance to skip turn). Every 3 turns.
+- **Reality Warp** -- corrupts the ley lines the weapon draws from. Lira must re-forge the weapon (timed input -- success maintains damage; failure reduces party damage 50% for 2 turns). Every 5th turn.
+- **Unraveling** -- targets Lira, 600 damage. If Lira falls below 25% HP, weapon dims (party damage reduced 25% until healed above 50%).
+- **"This was not in the pattern. You were not in the pattern."** -- dialogue at 5000 HP.
+- **"...Interesting."** -- dialogue at 2000 HP.
+
+**On defeat:** Vaelith does not die dramatically. They sit down. Look at the party without contempt for the first time. "Eight hundred years. Every cycle, the same. And you... you actually changed something." Dissolves into grey mist. Not destroyed -- released.
+
+**Lira's Special Interaction:** Forgewright during Reality Warp re-forges weapon. If Lira has the Boring Engine Schematic, timing window extended.
+
+**Torren's Special Interaction:** Spiritcall reveals Vaelith's next attack during Phase 2.
+
+**Maren's Special Interaction:** If Maren has Pallor Sight (from her trial), critical hit rate doubled for all party members.
+
+**Sable's Special Interaction:** Unbreakable Thread prevents Reality Tear effects. Cannot be removed from fight.
+
+**Weakness:** Spirit (125%).
+**Resistance:** Void (50%), Frost (75%).
+**Immunity:** Despair status, Instant Death.
+**Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic damage), Grey Mist Essence (crafting material -- Lira's ultimate weapon component).
 
 ---
 
@@ -4512,7 +4697,7 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 | 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
 | 4 | Axis Tower | Interlude | 5 | 22-26 | 50-65 min | General Kole | Stealth/alarm system |
 | 5 | Ley Line Depths | II (optional), III | 5 | 16-28 | 90-120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
-| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Trial Manifestations | Pallor trials (narrative combat) |
+| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
 | 7 | The Convergence | III-IV | 4 phases | 32-36 | 75-100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
 | 8 | Archive of Ages | Interlude | 3 | 24-28 | 45-55 min | Archive Guardian | Translation puzzle |
 | 9 | Dreamer's Fault | Post-game | 20 | 40-50 | 3-5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
