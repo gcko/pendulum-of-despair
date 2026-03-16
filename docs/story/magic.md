@@ -1264,7 +1264,7 @@ Edren's spell list is narrow and focused on protection and leadership.
 
 ### Lira (Forgewright -- Arcanite Tradition)
 
-Lira's spells are Flame-focused offensive and technical support. Her "Forge" unique command handles most of her combat utility.
+Lira's spells are Flame-focused offensive and technical support. Her "Forgewright" unique command handles most of her combat utility.
 
 | # | Spell | Element | Category | Tier | Lv/Event |
 |---|-------|---------|----------|------|----------|
