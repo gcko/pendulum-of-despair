@@ -325,6 +325,7 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 **Dialogue hints:**
 - *"Maren took my document. Didn't ask. Didn't sign for it. Just took it and vanished. And now everyone treats her like some kind of prophet. She's a thief who reads fast."*
 - *"The original text mentions three previous 'Doors.' Maren's copy was damaged — she only knows about two. I wonder if she knows she's missing one."*
+- *"A scholar came through requesting records from the Founding. Impeccable manners. He returned the documents with annotations -- corrections, actually. He fixed errors in 800-year-old records. How would anyone know?"* (Available in Act II. Mirren is troubled by this visit -- the corrections were accurate, verified against sources she thought only she had access to. The scholar left no forwarding address.)
 
 **Story relevance:** Ties to main quest
 
@@ -346,6 +347,24 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 **Story relevance:** Ties to world event
 
 **Act presence:** Act I only. His disappearance after Millhaven's fall is a quiet, unresolved loss. The player never learns what happened to him. That's the point.
+
+---
+
+### Old Harren
+
+**Location:** Valdris Crown, Lower Ward (the Crown's Rest inn)
+
+**Role:** Innkeeper
+
+**Backstory:** Harren has run the Crown's Rest for forty years. He inherited the inn from his father, who inherited it from his. Three generations of serving travelers, soldiers, and diplomats. He knows every squeaking floorboard, every draft, every stain on the ceiling. The inn is his life's work and his memory palace.
+
+**Dialogue hints:**
+- *"Had a strange guest last month. Very polite. Tipped well. Asked about the old mines. Said he was writing a history. Funny thing -- he knew details about this inn that I have never told anyone. Said the original hearth was three feet to the left. He was right."* (Available in Act II. Harren is unsettled but cannot articulate why. The guest stayed one night, asked precise questions about Valdris Crown's oldest structures, and left before dawn. He paid in coins Harren did not recognize -- they were accepted at the market without comment.)
+- *"Forty years behind this bar. I remember every face. His, I can't quite recall. Polite. Grey coat. That's all I have. Isn't that strange?"*
+
+**Story relevance:** Flavor (Vaelith breadcrumb)
+
+**Act presence:** Act I-II. In Act I he's a cheerful, unremarkable innkeeper. In Act II his dialogue about the grey stranger is available. A small, easily missed detail that gains weight in retrospect.
 
 ---
 
@@ -488,6 +507,7 @@ When the party confronts Kole, Brant is the one who opens the citadel's rear gat
 **Dialogue hints:**
 - *"The general is... focused. More focused than before. The new energy has been... effective."* (He can't meet your eyes.)
 - *"I didn't open that gate for you. I opened it for me. There's a difference. Don't thank me."*
+- *"He did not threaten me. That is what I cannot stop thinking about. He came weeks before any of this. He just... explained how it would go. Every option, every outcome. He had seen it all before. He made cowardice sound like the only rational choice. And he was so kind about it."* (Available after opening the gate. Brant is describing a grey stranger who visited him before Kole's transformation -- a quiet, polite scholar who mapped every choice Brant would face and showed him, gently, that compliance was inevitable. The stranger left no name.)
 
 **Story relevance:** Ties to main quest
 
@@ -530,6 +550,27 @@ Her maps are beautiful — intricate, color-coded renderings of the invisible ri
 **Story relevance:** Flavor only
 
 **Act presence:** Acts I-II. Not present in the Interlude — the docks have shut down. His fate is unknown, like Voss's. A small, unanswered question.
+
+---
+
+### Tollen
+
+**Location:** Carradan Compact, Ironmark Citadel (engineering wing)
+
+**Role:** Carradan military engineer
+
+**Backstory:** Tollen was assigned to the Ashen Ram project -- the Compact's siege weapon designed to breach Valdris Crown's walls. A competent, methodical engineer who follows specifications to the letter. During the Ram's construction, he noticed discrepancies in the alloy composition. The original specs called for standard Carradan iron. Someone had altered the alloy formula -- introducing trace elements that Tollen could not identify. The alteration was subtle enough that quality control passed it, but Tollen's eye for detail caught the change. He raised the issue. He was told the specs had been "updated by a consultant." No one could name the consultant.
+
+The altered alloy made the Ram more effective than it should have been. The trace elements interacted with residual ley energy in a way standard iron would not -- the Ram hit harder, lasted longer, and showed none of the usual metal fatigue. Tollen found this unsettling rather than impressive.
+
+**Dialogue hints:**
+- *"The specs called for standard iron. Someone altered the alloy. I do not know who approved it."*
+- *"I checked the purchase orders. The trace elements came from a supplier I cannot find. The invoice was paid in full before the order was placed. That is not how procurement works."*
+- *"The Ram worked better than it should have. Nobody asked why. When something works too well, you should always ask why."*
+
+**Story relevance:** Lore (Vaelith's influence on Compact military engineering)
+
+**Act presence:** Interlude only. Found in the Ironmark engineering wing after Kole's defeat. His testimony connects the Ashen Ram's unusual effectiveness to an outside influence -- the "consultant" who altered the specs was Vaelith, seeding the Compact's military with optimized designs to ensure the siege succeeded.
 
 ---
 
@@ -858,6 +899,7 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 **Dialogue hints:**
 - *"I can track a shadowcat through a rainstorm. People are easier. People leave guilt behind them like footprints."*
 - *"The deep places are changing. Ruins that were empty for centuries — there's light in them now. Wrong kind of light. Cold."*
+- *"Some of these creatures were not just corrupted. They were disturbed. Something walked through their territory and woke them up. Whatever it was, it was not afraid of them. They were afraid of it."* (Available after the party has encountered Grey Bounty creatures in the Wilds. Riven has tracked something through the deep forest that leaves no footprints but makes the wildlife flee.)
 
 **Story relevance:** Side quest giver
 
@@ -876,6 +918,7 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 **Dialogue hints:**
 - *"My grandmother told me a story about a time the world forgot how to laugh. She said a door opened and something grey walked through. A young man closed it, and he didn't come back. That story is older than Valdris."*
 - *"You think this is new. It isn't. The world has fought this before. It just keeps forgetting."*
+- *"Someone has been through the old grove. Picked herbs I did not think still grew. Left the roots intact, very careful. But the grove felt... quieter after."* (Available in Act II. Seyth tends the old-growth Thornmere near the Greywood Camp. She noticed someone harvesting extinct herb species with expert care -- the same herbs found in the grey teacups at the Ember Vein and Fenmother's Hollow. The visitor left no footprints but the grove's ambient spirit energy is diminished, as if something old passed through and the spirits went still.)
 
 **Story relevance:** Ties to main quest
 
@@ -956,6 +999,29 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 ## Cross-Faction and Unaffiliated NPCs
 
 Characters who don't belong to any single faction, or who operate across faction lines.
+
+---
+
+### Gavren (the Second Operator)
+
+**Location:** Bellhaven, Stilts District (a dockside tavern, drinking alone)
+
+**Role:** Former boring engine operator, Ashmark Factory
+
+**Backstory:** Gavren was the second operator on the boring engine shift that created the Ironbound -- the Compact's experimental war construct. When the engine's ley conduits surged during the forging process, the first operator was consumed by the energy feedback. Gavren ran. He has been running ever since. He ended up in Bellhaven because it is as far from Ashmark's forges as you can get without crossing water. He drinks to forget the sound the first operator made. He does not drink enough.
+
+He carries the Operator's Badge -- his shift identification, stamped with the Ashmark Forge-Masters' Guild seal and the date of the incident. He cannot bring himself to throw it away.
+
+**Dialogue hints:**
+- *"I was the second man on the engine. There were two of us. Now there is one."*
+- *"The specs were wrong. We knew it. Foreman said run it anyway. The conduits were hot -- too hot. I told them. I told them and they said run it."*
+- *"When it happened, the first operator -- he didn't scream. He just... stopped being a person and started being part of the machine. I heard the metal accept him. That's the sound I can't forget."*
+
+**Trigger:** The party must have the Operator's Badge key item (found in the Ashmark Factory Depths or obtained through the "Fading Shifts" quest). Showing the badge to Gavren unlocks his full dialogue. Without the badge, he is a silent drunk who will not speak to strangers.
+
+**Story relevance:** Lore (Ironbound creation, Compact engineering ethics)
+
+**Act presence:** Interlude only. He provides critical context for the Ironbound's creation and the Forge-Masters' Guild's willingness to sacrifice workers. His guilt is genuine and unresolvable -- he survived because he was a coward, and the machine that killed his colleague is still operating.
 
 ---
 
