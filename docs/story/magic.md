@@ -38,7 +38,7 @@ Eight elements govern all magic in this world. Each is tied to a region, a tradi
 | **Ley** | Line-light | Valdris ley line tradition, pure channeled magic | Gold-white, shimmering motes |
 | **Spirit** | Breath-song | Thornmere spirit communion, life force, nature | Pale green, translucent wisps |
 | **Void** | Hollow-dark | The Pallor, entropy, anti-magic, forbidden | Grey static, absence of color |
-| **Non-elemental** | Raw-force | No affinity, pure kinetic or arcane impact | White flash, concussive ripple |
+| **Non-elementalental** | Raw-force | No affinity, pure kinetic or arcane impact | White flash, concussive ripple |
 
 ### Element Descriptions
 
@@ -56,7 +56,7 @@ Eight elements govern all magic in this world. Each is tied to a region, a tradi
 
 **Void** -- The anti-element. Void is not darkness -- it is absence. The Pallor's influence made manifest as magic. Void spells drain, suppress, and corrode. No sane mage seeks this power. It finds you. Associated with despair, entropy, and the surrender of hope.
 
-**Non-elemental** -- Raw magical force with no elemental signature. Cannot be resisted through elemental defense, but also benefits from no elemental weakness. The brute-force option.
+**Non-elementalental** -- Raw magical force with no elemental signature. Cannot be resisted through elemental defense, but also benefits from no elemental weakness. The brute-force option.
 
 ---
 
@@ -73,7 +73,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 | Ley | Void | Spirit |
 | Spirit | Ley | Void |
 | Void | Spirit | Ley |
-| Non-elemental | -- (100% to all) | -- (100% to all) |
+| Non-elementalental | -- (100% to all) | -- (100% to all) |
 
 **Special interactions:**
 - Flame vs. Flame: 50% damage (resistance)
@@ -131,7 +131,7 @@ Each character learns spells through a tradition that reflects their background 
 
 ### Streetwise (Sable)
 
-**Sable** is not a mage. She has 5 utility spells representing tricks picked up on the streets of the Carradan underbelly: smokescreens, distractions, a rudimentary analysis trick. Smokeveil is innate (she's always known it). The rest are learned through story events — Torren and Maren each teach her one practical trick during the Interlude. These are not cross-trained spells (no +50% MP penalty); they are one-off gifts tailored to her streetwise style.
+**Sable** is not a mage. She has 5 utility spells representing tricks picked up on the streets of the Carradan underbelly: smokescreens, distractions, a rudimentary analysis trick. Smokeveil is innate (she's always known it). The remaining four are learned through story events during the Interlude — practical tricks picked up from party members and her own street experience. These are not cross-trained spells (no +50% MP penalty); they are one-off gifts tailored to her streetwise style.
 
 ### Corrupted Tradition (Cael)
 
@@ -420,7 +420,7 @@ Each character learns spells through a tradition that reflects their background 
 ### Non-Elemental Spells
 
 #### 25. Fracture
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Offensive
 - **Tier:** 2
 - **MP Cost:** 18
@@ -431,7 +431,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A distortion-wave ripple travels from caster to target; on impact, a white flash and concussive ring.
 
 #### 26. Unraveling Bolt
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Offensive
 - **Tier:** 3
 - **MP Cost:** 40
@@ -789,7 +789,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single ally
 - **Effect:** Increases physical defense by 40% for 5 turns.
 - **Description:** The caster calls on the deep-root's patience. Skin hardens. Muscle tightens. The body becomes its own armor.
-- **Who learns:** Edren (Lv 5), Torren (Lv 8), Maren (Lv 10)
+- **Who learns:** Edren (Lv 5), Torren (Lv 8), Maren (Lv 10), Lira (Ironhaven Foundry schematic)
 - **Visual:** Brown-grey energy ripples across the target's sprite; a brief stone-texture overlay appears and fades.
 
 #### 57. Wardglass
@@ -826,7 +826,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A spinning disc of gold-white light appears in front of the target; it occasionally flickers with reflected images.
 
 #### 60. Rallying Cry
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Buff
 - **Tier:** 1
 - **MP Cost:** 8
@@ -883,7 +883,7 @@ Each character learns spells through a tradition that reflects their background 
 ### Debuffs (Enemy)
 
 #### 65. Sunder
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Debuff
 - **Tier:** 1
 - **MP Cost:** 7
@@ -894,7 +894,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A concussive ripple strikes the target; their armor/outline flickers red briefly; a downward arrow icon appears.
 
 #### 66. Fray
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Debuff
 - **Tier:** 1
 - **MP Cost:** 7
@@ -971,7 +971,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single enemy
 - **Effect:** Reveals target's HP, MP, elemental weaknesses, resistances, and steal-able items.
 - **Description:** The caster peers through the spirit world's lens. Every creature has a shape in that place -- and every shape has seams.
-- **Who learns:** Torren (Lv 1), Maren (Lv 4), Sable (Lv 8, story event)
+- **Who learns:** Torren (Lv 1), Maren (Lv 4), Sable (Lv 8, story event), Lira (personal upgrade, Lv 10)
 - **Visual:** A translucent pale-green overlay briefly appears over the target; data text populates a scan window.
 
 #### 73. Waymark
@@ -1019,7 +1019,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** Party members' sprites lift slightly off the ground; a gentle upward wind particle effect persists beneath them.
 
 #### 77. Smokeveil
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Utility
 - **Tier:** 1
 - **MP Cost:** 4
@@ -1030,7 +1030,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A cloud of dark grey smoke billows outward from the party's position; screen fades to black; battle ends.
 
 #### 78. Glintmark
-- **Element:** Non-elemental
+- **Element:** Non-elementalental
 - **Category:** Utility
 - **Tier:** 1
 - **MP Cost:** 3
@@ -1192,10 +1192,10 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 44 | Vilethorn | Earth | Status | 1 | Lv 8 |
 | 49 | Leaden Step | Earth | Status | 1 | Lv 10 |
 | 34 | Breath of the Wilds | Spirit | Healing | 1 | Lv 10 |
-| 66 | Fray | Non-elem | Debuff | 1 | Lv 10 |
+| 66 | Fray | Non-elemental | Debuff | 1 | Lv 10 |
 | 76 | Drift | Storm | Utility | 1 | Lv 12 |
 | 58 | Quickstep | Storm | Buff | 2 | Lv 12 |
-| 65 | Sunder | Non-elem | Debuff | 1 | Lv 12 |
+| 65 | Sunder | Non-elemental | Debuff | 1 | Lv 12 |
 | 2 | Kindlepyre | Flame | Offensive | 2 | Lv 14 |
 | 6 | Hoarfall | Frost | Offensive | 2 | Lv 14 |
 | 32 | Deepmend | Spirit | Healing | 2 | Lv 14 |
@@ -1211,7 +1211,7 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 39 | Spirit Recall | Spirit | Healing | 2 | Lv 18 |
 | 64 | Leyward | Ley | Buff | 2 | Lv 18 |
 | 68 | Dispersion | Ley | Debuff | 2 | Lv 18 |
-| 25 | Fracture | Non-elem | Offensive | 2 | Lv 20 |
+| 25 | Fracture | Non-elemental | Offensive | 2 | Lv 20 |
 | 12 | Squall Line | Storm | Offensive | 2 | Lv 20 |
 | 16 | Quake Stride | Earth | Offensive | 2 | Lv 20 |
 | 50 | Stillwatch | Frost | Status | 2 | Lv 20 |
@@ -1230,7 +1230,7 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 11 | Tempest Reign | Storm | Offensive | 3 | Lv 32 |
 | 15 | Landshatter | Earth | Offensive | 3 | Lv 34 |
 | 19 | Convergence Flare | Ley | Offensive | 3 | Lv 34 |
-| 26 | Unraveling Bolt | Non-elem | Offensive | 3 | Lv 36 |
+| 26 | Unraveling Bolt | Non-elemental | Offensive | 3 | Lv 36 |
 | 27 | Worldfire | Flame | Offensive | 4 | Lv 42 |
 | 28 | Ley Ruin | Ley | Offensive | 4 | Lv 45 + Ancient Ruins text |
 | 89 | Pendulum's Echo | Void | Offensive | 3 | Post-game (Pendulum chamber) |
@@ -1248,12 +1248,12 @@ Edren's spell list is narrow and focused on protection and leadership.
 | 31 | Leybalm | Ley | Healing | 1 | Lv 3 |
 | 30 | Mend | Spirit | Healing | 1 | Lv 5 |
 | 56 | Ironhide | Earth | Buff | 1 | Lv 5 |
-| 60 | Rallying Cry | Non-elem | Buff | 1 | Lv 6 |
+| 60 | Rallying Cry | Non-elemental | Buff | 1 | Lv 6 |
 | 5 | Rime Shard | Frost | Offensive | 1 | Lv 8 |
 | 41 | Cleansing Draught | Spirit | Healing | 1 | Lv 8 |
 | 57 | Wardglass | Ley | Buff | 1 | Lv 8 |
 | 17 | Linebolt | Ley | Offensive | 1 | Lv 10 |
-| 65 | Sunder | Non-elem | Debuff | 1 | Lv 10 |
+| 65 | Sunder | Non-elemental | Debuff | 1 | Lv 10 |
 | 47 | Seal Tongue | Ley | Status | 1 | Lv 12 |
 | 63 | Bulwark Line | Earth | Buff | 2 | Lv 18 |
 | 64 | Leyward | Ley | Buff | 2 | Lv 22 |
@@ -1347,8 +1347,8 @@ Sable is not a mage. Her 5 spells are practical tools, learned through story eve
 
 | # | Spell | Element | Category | Tier | Lv/Event |
 |---|-------|---------|----------|------|----------|
-| 77 | Smokeveil | Non-elem | Utility | 1 | Innate |
-| 78 | Glintmark | Non-elem | Utility | 1 | Lv 5, story event |
+| 77 | Smokeveil | Non-elemental | Utility | 1 | Innate |
+| 78 | Glintmark | Non-elemental | Utility | 1 | Lv 5, story event |
 | 72 | Spiritsight | Spirit | Utility | 1 | Lv 8, story event (Torren teaches her) |
 | 51 | Murk Veil | Spirit | Status | 1 | Lv 12, story event |
 | 46 | Befuddle | Ley | Status | 1 | Lv 18, story event (Maren teaches her) |

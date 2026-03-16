@@ -112,7 +112,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Lira has access to Shock Coil, Bulkhead, and Arc Trap — practical, defensive tools reflecting her cautious defection from the Compact.
 - **Interlude:** While searching for Cael in the Compact, Lira reverse-engineers Pallor-corrupted Forgewright tech. This unlocks Mending Engine and Overcharge — she's turning the enemy's tools against them.
 - **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters.
-- **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. This is a unique interaction only she can perform.
+- **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. (Disrupt is a scripted battle action available only during the Phase 2 boss fight. It costs 2 AC, targets one of Cael's ley line anchors, and disables it for 3 turns. Each anchor disabled reduces the machine's power by 25%.) This is a unique interaction only she can perform.
 
 ---
 
@@ -134,7 +134,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|---------|--------|-----------------|
 | **Thornveil** (Briar Spirit) | Level 1 | 5 MP | Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. | **Deeproot Veil:** Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%. |
 | **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally. Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies and removes Poison and Sleep. |
-| **Ember Wing** (Fire Spirit) | Level 11 | 10 MP | Flame damage to all enemies. 40% chance to inflict a burn (damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
+| **Ember Wing** (Flame Spirit) | Level 11 | 10 MP | Flame damage to all enemies. 40% chance to inflict Poison (flavored as burn — Flame damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Poison (burn) is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
 | **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
 | **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
@@ -236,7 +236,7 @@ Combo abilities require two specific party members to both have full ATB gauges.
 | 1 | **Shield Oath** | Edren + Cael | 14 MP (7/7) | Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3. | *The two knights lock blades in salute, then turn outward — one the shield, the other the sword. They've drilled this since they were squires.* |
 | 2 | **Shattered Vanguard** | Edren + Sable | 10 MP (6/4) | Sable uses Misdirect on all enemies (forcing them toward Edren), and Edren immediately uses Shatter Guard at +50% damage. Requires Edren to be in a stance with stored damage. | *Sable darts between the enemy ranks, taunting and weaving, funneling them toward the immovable wall. Edren obliges.* |
 | 3 | **Forged Rampart** | Edren + Lira | 12 MP (6/6) | Lira deploys a Bulkhead on Edren that lasts 5 turns instead of 3 and also reflects 20% of absorbed damage back at attackers. Does not count toward Lira's device limit. | *Lira fuses Arcanite plating directly onto Edren's shield. It hums with contained lightning. "Don't drop it," she says. He never does.* |
-| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, split between elements) with guaranteed burn and a 30% chance of Stop (the Storm energy shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
+| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, split between elements) with guaranteed Poison (burn) and a 30% chance of Stop (the Storm energy shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
 | 5 | **Spiritward** | Torren + Edren | 14 MP (8/6) | Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction. | *The earth spirit settles into Edren's shield like a heartbeat. For a moment, the whole party stands on bedrock.* |
 | 6 | **Weave Theft** | Maren + Sable | 10 MP (6/4) | Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff. | *Sable's hands are faster than spells. Maren's mind is faster than Sable's hands. Between the two of them, nothing the enemy has stays theirs for long.* |
 | 7 | **Ley Torrent** | Maren + Torren | 18 MP (10/8) | Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren. | *The ley lines sing. The spirits answer. For one terrible moment, the raw voice of the world speaks through two people at once.* |
@@ -364,6 +364,8 @@ Characters can learn a limited number of spells outside their native tradition. 
 |-----------|-----------------|--------|---------------|
 | Lira | Spirit Communion (Torren) | Thornveil device variant | Act III — Torren helps Lira build a spirit-infused protective device |
 
+**Thornveil Device Variant spec:** AC Cost: 3. Duration: 3 turns. Target: Single ally. Effect: Creates an Arcanite thorn barrier that deals counter-damage equal to 15% of the shielded ally's Defense to attackers. Functions identically to Torren's base Thornveil but uses Lira's AC instead of MP and counts toward her 2-device limit.
+
 ### The Pallor's Effect on Magic
 
 The Pallor corrupts all three magical traditions:
@@ -375,12 +377,12 @@ The Pallor corrupts all three magical traditions:
 
 **Arcanite Channeling:**
 - Forgewright devices in corrupted areas have a 15% chance to malfunction each turn (effect is randomized (equal 1/3 chance each): heal the wrong target, damage an ally, or fizzle with no effect).
-- Lira can spend a turn to Calibrate a device, removing the malfunction chance for its remaining duration.
+- Lira can spend a turn to Calibrate a device, removing the malfunction chance for its remaining duration. (Calibrate is a free Forgewright sub-command available only in Pallor-corrupted zones. It costs 0 AC, targets one active device, and removes the malfunction chance for that device's remaining duration. Appears in Lira's battle menu alongside her regular Forgewright abilities.)
 - Visual: Arcanite crystals pulse with grey veins in corrupted zones.
 
 **Spirit Communion:**
 - Spirits called in corrupted areas may arrive corrupted themselves (10% chance). A corrupted spirit performs its effect on the wrong targets (heals enemies, damages allies). For non-damage, non-healing effects (e.g., Stoneheart status immunity), corruption grants the effect to enemies instead of allies.
-- Torren can spend a turn to Purify a corrupted spirit call, reversing it to the correct targets.
+- Torren can spend a turn to Purify a corrupted spirit call, reversing it to the correct targets. (Purify is a free Spiritcall sub-command available only in Pallor-corrupted zones. It costs 0 MP, reverses the current corrupted spirit effect to its correct targets, and prevents further corruption for that spirit's remaining duration. Appears in Torren's battle menu alongside his regular Spiritcall abilities.)
 - Spirits at Favor 3 are immune to corruption.
 - Visual: Spirit forms appear translucent and grey-tinged in corrupted zones.
 
@@ -439,7 +441,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 |-------|-------------------|--------------------|---------------|
 | 1 | Thornveil (Briar Spirit) | — | — |
 | 5 | Dewfall (Rain Spirit) | — | — |
-| 11 | Ember Wing (Fire Spirit) | — | — |
+| 11 | Ember Wing (Flame Spirit) | — | — |
 | 16 | **[S] Stoneheart (Earth Spirit)** | — | Interlude: party finds Torren (ley line nexus stabilization) |
 | — | — | Wardglass (cross-train) | Act III scene with Maren |
 | — | — | Seal Tongue (cross-train) | Act III scene with Maren |
