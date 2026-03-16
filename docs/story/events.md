@@ -26,6 +26,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 | Canopy Reach | New area opens | Accessible for the first time during the diplomatic mission. |
 | Ashgrove | New area opens | Accessible for the tribal alliance scene. |
 | Millhaven | New area opens | Accessible during the diplomatic mission arc; the extraction pit is operational. |
+| Caldera | Accessible (optional) | Industrial city in the volcanic basin. The lower factory district, upper terrace, Forgewrights' Academy, and undercity are visitable during the diplomatic mission arc. |
 | Caldera Forge Depths | Discoverable | Refinery basement entrance found beneath Caldera's industrial district. Gated by Lira's Forgewright knowledge — accessible only with her in the party. |
 | Ashmark | Referenced | Appears in Lira's flashbacks. Not yet visitable. |
 
@@ -50,7 +51,7 @@ The party brings the Pendulum to Valdris Crown. The Compact's border pressure in
 - Wild magic incidents increase in the Thornmere Wilds — creature behavior erratic, spirit-totems cracking.
 - Carradan extraction operations at Millhaven running at full capacity, visibly wounding the earth.
 
-**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut), Caldera Forge Depths (discoverable, gated by Lira).
+**New Areas Opening:** Duskfen, Canopy Reach, Ashgrove, Millhaven, Caldera (optional), Fenmother's Hollow (dungeon), Ley Line Depths (optional dungeon), Carradan Rail Tunnels (optional shortcut), Caldera Forge Depths (discoverable, gated by Lira).
 
 **Areas Closing:** Aelhart (cut off), Ironmouth (occupied).
 
