@@ -85,6 +85,11 @@ Filter to story-relevant files:
 - `docs/story/*.md`
 - `packages/client/src/data/*.json` (game data)
 - `.claude/skills/pod-dev/**` (skill references)
+- `docs/superpowers/plans/*.md` and `docs/superpowers/specs/*.md` — if
+  these files reference story entities (NPC names, boss names, pronouns,
+  locations), verify those references match current story canon. Plan and
+  spec docs are not authoritative but must not contradict the story docs
+  they reference. Treat mismatches as ISSUEs (not BLOCKERs).
 
 If no story-relevant files changed, report "No narrative content to review"
 and stop. In PR mode, post a brief comment saying so.
@@ -168,10 +173,36 @@ Cross-reference every proper noun AND game term in changed files:
 - Faction names: "Valdris", "Carradan Compact" / "the Compact", "Thornmere Wilds" / "the Wilds"
 - Artifact names: "the Pendulum of Despair" / "the Pendulum", "the Pallor"
 
+**Character pronoun consistency (CRITICAL — frequently missed):**
+- Each character's pronouns are as canonical as their name. Check
+  `characters.md` or `npcs.md` for the canonical pronoun set (he/him,
+  she/her, they/them).
+- Verify ALL files in the diff use the same pronouns for the same
+  character. Pronoun drift across files (e.g., they/them in npcs.md but
+  he/him in outline.md) is an ISSUE.
+- Common hiding spots: narrative prose in outline.md and events.md NPC
+  threads, where authors may default to gendered pronouns even when the
+  canonical form is they/them.
+
+**Name collision detection (CRITICAL — missed when new entities added):**
+- When new named entities are introduced (bosses, weapons, abilities,
+  items, NPCs), grep `abilities.md`, `magic.md`, `npcs.md`, and
+  `sidequests.md` for name collisions with EXISTING entities. A new
+  entity cannot share a name with an existing one.
+- Check both exact matches and near-matches that could cause confusion
+  (e.g., a weapon named "Cael's Echo" colliding with a Dual Tech named
+  "Cael's Echo").
+
 **Game terminology (CRITICAL — frequently missed):**
 - Element names must use canonical terms from `magic.md` everywhere:
-  Flame (not fire), Frost (not ice), Storm (not lightning/thunder),
+  Flame (not fire), Frost (not ice), Storm (not lightning/thunder/wind),
   Earth, Ley, Spirit, Void, Non-elemental
+- **Allowlist scanning (CRITICAL):** Scan ALL element references in
+  weakness/resistance/immunity lines and damage type descriptions. Any
+  element term NOT in the canonical 8 is a finding — including common
+  variants: "Fire", "Ice", "Lightning", "Thunder", "Wind", "Light",
+  "Dark", "Holy", "Shadow", "Nature", "Water". The scan must check
+  every occurrence, not just the most obvious ones.
 - Spell names must match `magic.md` exactly — no draft names, no
   abbreviations, no near-matches (e.g., "Ley Bolt" vs "Linebolt")
 - Ability names must match `abilities.md` exactly
@@ -203,6 +234,11 @@ For any changes involving act-specific content:
 - NPCs must not appear after their documented death (King Aldren dies Act II)
 - Locations must be accessible in the act they're referenced
 - Events must trigger in correct act order per `events.md`
+- **Flag ordering within act tables (frequently missed):** Within each
+  act's flag table in `events.md`, verify rows are ordered by trigger
+  timing (earliest first). A flag that triggers at the start of an act
+  should not appear after a flag that triggers at the end. Misordered
+  flags confuse downstream references and implementation.
 - Pallor corruption must follow the staged progression (none in Act I, Stage 1
   in Act II borders, Stage 2 in Interlude, Stage 3 in Act III Wastes)
 - Party composition must be correct per act (party scatters in Interlude,
@@ -224,8 +260,22 @@ For ASCII map changes:
 - Save points must exist in every settlement and before every boss
 - Buildings referenced in NPC locations must appear on the map
 
+**ASCII diagrams (non-map):**
+- Relationship charts, interconnection maps, and other ASCII diagrams
+  should use consistent connector formatting. Verify all relationship
+  lines have matching start/end connectors (arrows, dashes).
+- If a diagram uses a convention (e.g., `----` for connections, `+--`
+  for branches), verify it is applied consistently throughout.
+
+**Encounter table vs boss completeness (CRITICAL — frequently missed):**
+- Every boss defined in a dungeon section (via a `**Boss:` stat block)
+  must have a corresponding row in that dungeon's encounter table.
+- Cross-check boss stat block headers against encounter table rows.
+  Missing encounter table entries for defined bosses are an ISSUE.
+
 Flag: undefined symbols, missing legend entries, orphaned buildings,
-missing save points, entry/exit gaps.
+missing save points, entry/exit gaps, inconsistent diagram formatting,
+boss stat blocks without encounter table rows.
 
 ---
 
@@ -263,6 +313,16 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 **Existence checks:**
 - Referenced content actually exists in the target document
 - References are bidirectional where expected
+
+**New detail propagation (CRITICAL — missed when multiple files updated):**
+When a location state description (`dynamic-world.md`) or event thread
+(`events.md`) introduces NEW backstory or lore for a named NPC, verify
+that detail is reflected in the NPC's canonical entry in `npcs.md`. New
+lore must propagate bidirectionally — if `dynamic-world.md` says an NPC
+was "haunted by a visit from a scholar," the NPC's `npcs.md` entry must
+also reference that visit. The same applies in reverse: if `npcs.md`
+adds a detail, files that describe the same NPC's location state should
+be consistent.
 
 **Item/consumable cross-references (frequently missed):**
 When an item's status-effect cure is changed (e.g., "Cure Freeze" →
@@ -476,6 +536,16 @@ For any game mechanic definitions (abilities, spells, combat rules):
   party member targeted by a buff)
 - Are there naming collisions between different systems? (e.g., an
   ability name too similar to a spell name)
+
+**Narrative logic contradictions (CRITICAL — frequently missed):**
+- For any NPC with a trigger condition involving a key item, verify
+  item ownership/location is logically consistent. If an NPC "carries"
+  an item, the party cannot also possess that same item as a trigger.
+  If an item drops from Boss X, the NPC entry must not say the item is
+  found elsewhere.
+- For any mechanic that involves showing, giving, or using an item,
+  verify the item's source is documented and reachable at the time the
+  mechanic is available.
 
 **Undefined forward reference checks (CRITICAL — most missed category):**
 Scan every effect description for phrases that reference undefined
