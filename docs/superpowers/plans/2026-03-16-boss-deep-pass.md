@@ -147,9 +147,9 @@ Place after related Thornmere NPCs (near Elder Savanh, Orun, or other Duskfen ch
 
 **Role:** Young spirit-speaker of the Duskfen tribe. Torren's spiritual successor.
 
-**Backstory:** Caden is the youngest spirit-speaker in living memory among the Duskfen people. Where Torren learned the old ways through decades of practice and tradition, Caden's gift emerged raw and untrained -- she could hear spirits before anyone taught her the rituals. The elders see her as either a sign of hope or a warning; a gift that powerful without discipline can be dangerous. Torren recognizes in her what he fears about himself: that the connection to the land might outlive the traditions that give it meaning. Caden is untroubled by this philosophical weight. She simply listens, and the land speaks back.
+**Backstory:** Caden is the youngest spirit-speaker in living memory among the Duskfen people. Where Torren learned the old ways through decades of practice and tradition, Caden's gift emerged raw and untrained -- he could hear spirits before anyone taught him the rituals. The elders see him as either a sign of hope or a warning; a gift that powerful without discipline can be dangerous. Torren recognizes in him what he fears about himself: that the connection to the land might outlive the traditions that give it meaning. Caden is untroubled by this philosophical weight. He simply listens, and the land speaks back.
 
-When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. She can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. She guides the party to Torren's location during the Interlude, serving as both scout and spiritual compass.
+When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. He can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. He guides the party to Torren's location during the Interlude, serving as both scout and spiritual compass.
 
 **Dialogue hints:**
 - *"The ground is screaming. Can you not hear it? It has been screaming for days."*
@@ -172,23 +172,23 @@ git commit -m "docs(story): add Caden NPC entry (resolves continuity-audit gap)"
 
 ---
 
-### Task 4: Add Brenn to npcs.md
+### Task 4: Add Kerra to npcs.md
 
 **Files:**
 - Modify: `docs/story/npcs.md` (add entry under `## Cross-Faction and Unaffiliated NPCs`)
 
-**Context:** Brenn is the former Valdris soldier introduced in the Pallor Nest Mother boss addition to the "Unbowed" sidequest. She ended up in Caldera after the siege and joined Sera Linn's resistance.
+**Context:** Kerra is the former Valdris soldier introduced in the Pallor Nest Mother boss addition to the "Unbowed" sidequest. She ended up in Caldera after the siege and joined Sera Linn's resistance.
 
-- [ ] **Step 1: Write Brenn's NPC entry**
+- [ ] **Step 1: Write Kerra's NPC entry**
 
 ```markdown
-### Brenn
+### Kerra
 
 **Location:** Caldera, undercity (Sera Linn's resistance network)
 
 **Role:** Former Valdris soldier turned Caldera resistance fighter. Guest NPC during "Unbowed" escort mission.
 
-**Backstory:** Brenn served in the Valdris garrison during the siege. When the walls fell, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she drifted into Caldera's undercity, where Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Brenn volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
+**Backstory:** Kerra served in the Valdris garrison during the siege. When the walls fell, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she drifted into Caldera's undercity, where Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Kerra volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
 
 **Dialogue hints:**
 - *"Stay behind me. Stay quiet. Do exactly what I say and everyone gets through."*
@@ -205,7 +205,7 @@ git commit -m "docs(story): add Caden NPC entry (resolves continuity-audit gap)"
 
 ```bash
 git add docs/story/npcs.md
-git commit -m "docs(story): add Brenn NPC entry for Unbowed sidequest"
+git commit -m "docs(story): add Kerra NPC entry for Unbowed sidequest"
 ```
 
 ---
@@ -902,7 +902,7 @@ Formalize the grey-elk as the Grey Stag boss (5,500 HP). Add boss-level descript
 
 - [ ] **Step 4: Update "Unbowed" (minor quest #10)**
 
-Add the Pallor Nest Mother boss (6,000 HP) as a capstone encounter. Add Brenn as a guest NPC. Preserve Sera Linn's role and the Caldera setting.
+Add the Pallor Nest Mother boss (6,000 HP) as a capstone encounter. Add Kerra as a guest NPC. Preserve Sera Linn's role and the Caldera setting.
 
 - [ ] **Step 5: Update "The Fading Shifts" (quest #1)**
 
@@ -942,7 +942,7 @@ Place in the Ashmark Factory Depths section, replacing or upgrading the existing
 
 - [ ] **Step 5: Add the Pallor Nest Mother stat block (6,000 HP)**
 
-Check dungeons-city.md for Caldera undercity tunnels. Add the Nest Mother with spawning mechanics and Brenn guest NPC.
+Check dungeons-city.md for Caldera undercity tunnels. Add the Nest Mother with spawning mechanics and Kerra guest NPC.
 
 - [ ] **Step 6: Update encounter tables and appendix entries**
 
@@ -1084,7 +1084,7 @@ Grep for "Vaelith" across all story docs. Confirm consistent naming, HP value (2
 
 - [ ] **Step 2: Verify new NPC names across all files**
 
-Grep for "Caden", "Brenn", "Ironbound", "Ashen Ram", "Ley Leech", "Pallor Hollow", "Howling Gale", "Grey Stag", "Forge Warden", "Pallor Nest Mother" -- confirm each appears in all expected files.
+Grep for "Caden", "Kerra", "Ironbound", "Ashen Ram", "Ley Leech", "Pallor Hollow", "Howling Gale", "Grey Stag", "Forge Warden", "Pallor Nest Mother" -- confirm each appears in all expected files.
 
 - [ ] **Step 3: Verify event flags reference correct triggers**
 
@@ -1114,7 +1114,7 @@ Chunk 1 (Character Setup):
   Task 1 (Vaelith characters.md) ─┐
   Task 2 (Vaelith npcs.md) ───────┤── All independent, can run in parallel
   Task 3 (Caden npcs.md) ─────────┤
-  Task 4 (Brenn npcs.md) ─────────┘
+  Task 4 (Kerra npcs.md) ─────────┘
 
 Chunk 2 (Story Integration):
   Task 5 (outline.md) ──── depends on Task 1 (Vaelith defined)

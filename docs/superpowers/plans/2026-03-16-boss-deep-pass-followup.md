@@ -285,7 +285,9 @@ git commit -m "docs: add all 12 Grey Bounty boss stat blocks"
 
 Read the Forgewright command section and any weapon-related content.
 
-- [ ] **Step 2: Define the weapon — "Cael's Echo" (working name)**
+- [ ] **Step 2: Define the weapon — "Ley-Forged Grief" (working name)**
+
+> **Note:** Working name chosen to avoid collision with the existing "Cael's Echo" Dual Tech in abilities.md.
 
 Design the weapon as a unique equipment piece that:
 - Appears during the Vaelith fight via cutscene (cannot be obtained earlier)
@@ -307,7 +309,7 @@ Specify the timing window, success/failure effects, and how the Boring Engine Sc
 
 ```bash
 git add docs/story/abilities.md docs/story/dungeons-world.md
-git commit -m "docs: define Lira's weapon (Cael's Echo) mechanics"
+git commit -m "docs: define Lira's weapon (Ley-Forged Grief) mechanics"
 ```
 
 ---

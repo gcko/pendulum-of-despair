@@ -1663,6 +1663,7 @@ Her younger self asks why she wasted her life on knowledge that only brought suf
 | The Perfect Machine | Flawless automaton with Cael's face. Does not attack -- asks to be repaired. 7000 HP. | Trial 2 (B2) |
 | The Last Voice | Ancient Great Spirit cracked with grey stone. Barely alive, asks to rest. 6000 HP. | Trial 3 (B3) |
 | Shadows of Sable | Copies using Sable's Tricks moveset. Fast, evasive. Taunt: "You always leave." | Trial 4 (B4) |
+| The Open Door | A literal open door at the end of the alley. Warm light, freedom. Not a combat encounter (non-combat resolution). | Trial 4 (B4) |
 | The Index | Vast catalogue entity containing every recorded death from every Pallor cycle. 7000 HP. | Trial 5 (B5) |
 | Hollow Knights | Grey echoes of Valdris soldiers. Fight in formation. Summoned by Crowned Hollow. | Trial 1 (B1) |
 | Unfinished Constructs | Machines that beg to be repaired. Repairing wastes turns and spawns more. | Trial 2 (B2) |
@@ -3454,7 +3455,7 @@ A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It man
 - If Spiritcall is not used, the fight continues to 0 HP. The Gale shatters into silence. The spirit is destroyed, not saved. Torren receives a weaker spirit-bond (the Frost Warden still senses it, but the peaceful resolution at 25% HP requires an additional dialogue check).
 
 **Weakness:** Earth (150% damage), Flame (125% damage).
-**Resistance:** Wind (absorbs), Frost (75% damage).
+**Resistance:** Storm (absorbs), Frost (75% damage).
 **Immunity:** Silence.
 **Drop:** Gale's Echo (accessory -- party evasion boost, wind resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, evidence of deliberate ley line sabotage), 1500 Gold.
 
