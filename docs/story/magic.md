@@ -1389,7 +1389,8 @@ For quick reference, here are all status effects that spells in this system can 
 
 | Status | Type | Effect | Duration | Cured By* |
 |--------|------|--------|----------|----------|
-| Poison | Negative | Lose 8% max HP per turn | Until cured (standard) or 3 turns (burn variant from Ember Wing/Inferno Gale) | Cleansing Draught, Purge, Antidote item |
+| Poison | Negative | Lose 8% max HP per turn | Until cured | Cleansing Draught, Purge, Antidote item |
+| Burn | Negative | Lose 5% max HP per turn (Flame-typed damage) | 3 turns | Cleansing Draught, Purge, Antidote item |
 | Sleep | Negative | Cannot act; wake on damage | Until cured or damaged | Cleansing Draught, Purge, Alarm Clock item |
 | Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Remedy item |
 | Silence | Negative | Cannot cast spells | 4 turns or until cured | Cleansing Draught, Purge, Echo Drop item |
