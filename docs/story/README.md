@@ -22,6 +22,12 @@ This directory contains the narrative design for Pendulum of Despair.
 | `biomes.md` | 11 biomes with color palettes, tilesets, Pallor corruption overlay system |
 | `dynamic-world.md` | How every location transforms across acts — 72 map variants |
 
+### Combat & Magic
+| File | Purpose |
+|------|---------|
+| `abilities.md` | 6 unique character commands, 12 dual techs, magic system framework, progression tables |
+| `magic.md` | 89 original spells across 8 elements — offensive, healing, status, buffs, utility, Void/Pallor |
+
 ### Visual Design
 | File | Purpose |
 |------|---------|
