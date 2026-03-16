@@ -63,7 +63,7 @@ The quest ends back at the barracks. Cordwyn locks the gloves away again. She te
 
 Mirren has been stewing for years over the document Maren took from the archives — the fragmentary text referencing the Pallor. But Mirren read the original, and Maren only read a damaged copy. The original mentions three previous "Doors." Maren's copy only references two. Mirren believes the missing third Door is critical — if the Pallor's cycle has been broken once more than Maren knows, there may be a variation in how it was closed, a detail that could change the cost.
 
-She asks the party to help her reconstruct the missing account. The first lead is the Dry Well of Aelhart — the mini-dungeon beneath the village contains a fragment of the same pre-civilization ruin network, and one of its tablets depicts a scene Mirren recognizes from the original text. The tablet confirms that the third Door was closed differently: the host was not alone. Two people walked through — one who carried the Pallor's mark, and one who carried a counter-resonance, a ley line harmonic that could sustain consciousness inside the door's threshold.
+She asks the party to help her reconstruct the missing account. The first lead is the Dry Well of Aelhart — the 7-floor dungeon beneath the village contains fragments of the same pre-civilization ruin network, and one of its tablets depicts a scene Mirren recognizes from the original text. The tablet confirms that the third Door was closed differently: the host was not alone. Two people walked through — one who carried the Pallor's mark, and one who carried a counter-resonance, a ley line harmonic that could sustain consciousness inside the door's threshold.
 
 The second lead takes the party back to the Archive of Ages, where the Archivist confirms the account but adds a devastating detail: the second person survived, but returned changed. They carried the Pallor's weight for the rest of their life — not corrupted, but permanently burdened with the grief of every age the Pallor had accumulated. They lived, but they never laughed again.
 
@@ -245,7 +245,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Availability:** Act I, from game start
 **Description:** The village elder asks the party to investigate why the well ran dry. An examination reveals the ley line beneath the village has been diverted — not by the Compact, but by a natural shift. The party can reroute a small trickle of energy back using Maren's techniques (if she's joined) or brute-force clear the blockage. The well flows again, weakly.
 **Reward:** Aelhart Charm (minor accessory — small HP boost), villager gratitude (unlocks a free rest at the inn for the remainder of the game)
-**Connection:** Foreshadows the Dry Well of Aelhart mini-dungeon accessible in the Interlude.
+**Connection:** Foreshadows the Dry Well of Aelhart dungeon (7 floors) accessible in the Interlude.
 
 ---
 
