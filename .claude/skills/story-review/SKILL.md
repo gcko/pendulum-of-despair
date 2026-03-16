@@ -280,8 +280,42 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 - `abilities.md` progression tables ↔ `magic.md` character indices
 - Description prose (spell counts, learn methods) ↔ actual data tables
 
+**Summary/reference table propagation (CRITICAL — frequently missed):**
+When any entity's data changes (floor count, act availability, dungeon
+type, variant count), the change must propagate to EVERY summary table
+that references that entity. These tables compile data from across the
+document and are the #1 source of stale values. For each changed entity,
+verify its row in ALL of the following:
+- `dynamic-world.md` Map Variant Count table (variant count, labels,
+  notes column). Also re-verify the Summary section totals (locations
+  needing N variants) — recount from the table, do not trust the old
+  totals.
+- `biomes.md` dungeon/location appendix table (biome, sub-biome, act
+  availability column)
+- `locations.md` Location Progression tables (table section placement,
+  type column, purpose column). Check that the entity is in the CORRECT
+  section (Act I / Act II / Interlude / Act III / Post-Game) based on
+  its first-available act.
+- `events.md` location state tables (per-act state descriptions)
+
+**Classification label consistency (CRITICAL — frequently missed):**
+Table cells often contain categorical labels that assert properties
+about a location, dungeon, or mechanic. These labels must match the
+canonical description. Common mismatches:
+- "mini-dungeon" vs "dungeon" — if a dungeon was expanded, every table
+  cell and prose reference must update
+- "critical path" vs "optional" — must match the progression table and
+  locations.md description
+- "Post-Game" section placement for content available earlier — if a
+  dungeon is accessible in the Interlude, it should not be in the
+  Post-Game section of a progression table
+- Variant counts — if a dungeon now spans multiple acts with different
+  states, it likely needs more than 1 variant
+
 Flag: value mismatches, conflicting unlock methods, incorrect counts,
-stale descriptions that don't match current data.
+stale descriptions that don't match current data, stale classification
+labels, summary table rows not updated, incorrect table section
+placement.
 
 ---
 
@@ -308,6 +342,22 @@ most commonly missed category.
   guidelines say "Tier 2 buffs last 6-8 turns" but spells show 5 turns)
 - Status effect rules must not contradict each other (e.g., "Purge
   cures all statuses including Stop" vs "Stop cannot be cured")
+
+**Entity-wide stale reference sweep (CRITICAL — #1 missed category):**
+When an entity undergoes a major reclassification in the diff (e.g.,
+"mini-dungeon" → "7-floor dungeon", "3 floors" → "5 floors", location
+changes acts), search the ENTIRE changed file — not just the diff
+hunks — for stale references to that entity. Use grep/search for the
+entity name across ALL changed files. Common hiding spots:
+- Environmental storytelling paragraphs that mention the entity casually
+- Act-by-act change sections that describe the entity's old state
+- NPC dialogue that references the entity's old description
+- Appendix/summary tables at the end of the file
+- Other documents' prose sections that mention the entity in passing
+
+The rule "check the diff, not the universe" applies to WHICH FILES you
+review (only changed files). Within a changed file, you must search the
+WHOLE file for stale references to reclassified entities.
 
 **Specific patterns to scan for:**
 - Section headers/labels that don't match their contents (e.g., a
@@ -462,8 +512,13 @@ The review body (used for both PR comments and inline output):
   stop. Do not invent "nice to have" items to appear thorough.
 - **Severity matters.** A typo in an NPC name is an ISSUE. A quest
   referencing a deleted location is a BLOCKER. Do not inflate severity.
-- **Check the diff, not the universe.** Only validate content that was
-  CHANGED or ADDED. Do not audit the entire story bible on every review.
+- **Check changed files, not the universe.** Only review files that were
+  CHANGED or ADDED — do not audit the entire story bible. But WITHIN a
+  changed file, search the WHOLE file for stale references to entities
+  whose classification changed in the diff (e.g., if a dungeon went
+  from "mini-dungeon" to "7 floors", grep the entire file for the old
+  label). The diff tells you WHICH files; the entity tells you WHAT to
+  search for within those files.
 - **Cross-reference is mandatory.** Every proper noun in a changed file
   must be verified against the canonical source. No assumptions.
 - **Values, not just existence.** When cross-referencing, check that
