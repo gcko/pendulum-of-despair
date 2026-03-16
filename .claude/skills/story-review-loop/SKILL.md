@@ -13,6 +13,12 @@ the story-review validation passes, fixes any issues found, and commits
 locally. After N rounds (or when a round comes back clean), push all
 commits at once and post a summary to the PR.
 
+> **Dependency:** This skill delegates ALL review logic to the
+> `story-review` skill. It does NOT define its own passes. If
+> `story-review` is updated (passes added/removed/renamed), this skill
+> inherits those changes automatically. Never duplicate the pass list
+> here — always reference story-review as the single source of truth.
+
 ## Invocation
 
 ```
@@ -33,7 +39,7 @@ digraph review_loop {
     node [shape=box, style=filled, fillcolor=lightblue];
 
     start [label="Parse PR # and N\nCheckout PR branch", fillcolor="#e6f3ff"];
-    review [label="Run story-review\n(all 6 validation passes)", fillcolor="#ccffcc"];
+    review [label="Run story-review\n(all 8 validation passes A-H)", fillcolor="#ccffcc"];
     clean [label="All passes\nclean?", shape=diamond, fillcolor="#fff3e6"];
     fix [label="Fix all issues\n(read files, edit, verify)", fillcolor="#ccffcc"];
     commit [label="Commit fixes locally\n(do NOT push yet)", fillcolor="#e6ffe6"];
@@ -69,17 +75,15 @@ digraph review_loop {
 
 For each round (1 through N):
 
-1. **Run the story-review validation passes** against the current local
-   state of the PR files. This is a LOCAL review — do NOT post anything
-   to GitHub yet. Run all 8 passes:
-   - Pass A: Name & Terminology Consistency
-   - Pass B: Timeline & Act Consistency
-   - Pass C: Layout Validity
-   - Pass D: Quest Completeness
-   - Pass E: Cross-Document Value Matching
-   - Pass F: Internal Self-Consistency
-   - Pass G: Mechanic Completeness & Edge Cases
-   - Pass H: Diff-Specific Checks
+1. **Run ALL validation passes from the story-review skill** against the
+   current local state of the PR files. This is a LOCAL review — do NOT
+   post anything to GitHub yet.
+
+   **IMPORTANT:** The pass list is defined in story-review/SKILL.md and
+   must NOT be duplicated here. Always read the current story-review
+   skill to get the authoritative pass list. As of the last sync, the
+   passes are A through H (8 total), but if story-review adds or
+   removes passes, this loop automatically inherits the change.
 
    Scope the review to files changed in this PR (compare against main).
 

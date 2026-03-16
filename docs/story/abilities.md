@@ -115,7 +115,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Story Integration:**
 - **Acts I-II:** Lira has access to Shock Coil, Bulkhead, and Arc Trap — practical, defensive tools reflecting her cautious defection from the Compact.
 - **Interlude:** While searching for Cael in the Compact, Lira reverse-engineers Pallor-corrupted Forgewright tech. This unlocks Mending Engine and Overcharge — she's turning the enemy's tools against them.
-- **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters. Disrupt is available as a scripted action during the Phase 2 boss fight (see story integration above).
+- **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters. Disrupt is available as a scripted action during the Phase 2 boss fight (defined in the next bullet).
 - **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. (Disrupt is a scripted battle action available only during the Phase 2 boss fight. It costs 2 AC, targets one of Cael's ley line anchors, and disables it for 3 turns. Each anchor disabled reduces the machine's power by 25%.) This is a unique interaction only she can perform.
 
 ---

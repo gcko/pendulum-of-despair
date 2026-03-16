@@ -607,7 +607,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 1
 - **MP Cost:** 5
 - **Target:** Single ally
-- **Effect:** Removes one negative status effect (Poison, Sleep, Confusion, Silence, Blind).
+- **Effect:** Removes one negative status effect (Poison, Burn, Sleep, Confusion, Silence, Blind).
 - **Description:** A pulse of clean spirit-light washes through the target, burning away corruption like morning fog.
 - **Who learns:** Torren (Lv 3), Maren (Lv 5), Edren (Lv 8)
 - **Visual:** A bright white flash pulses outward from the target's center; dark particles scatter away.
