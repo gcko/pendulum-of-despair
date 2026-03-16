@@ -38,7 +38,7 @@ Eight elements govern all magic in this world. Each is tied to a region, a tradi
 | **Ley** | Line-light | Valdris ley line tradition, pure channeled magic | Gold-white, shimmering motes |
 | **Spirit** | Breath-song | Thornmere spirit communion, life force, nature | Pale green, translucent wisps |
 | **Void** | Hollow-dark | The Pallor, entropy, anti-magic, forbidden | Grey static, absence of color |
-| **Non-elementalental** | Raw-force | No affinity, pure kinetic or arcane impact | White flash, concussive ripple |
+| **Non-elemental** | Raw-force | No affinity, pure kinetic or arcane impact | White flash, concussive ripple |
 
 ### Element Descriptions
 
@@ -56,7 +56,7 @@ Eight elements govern all magic in this world. Each is tied to a region, a tradi
 
 **Void** -- The anti-element. Void is not darkness -- it is absence. The Pallor's influence made manifest as magic. Void spells drain, suppress, and corrode. No sane mage seeks this power. It finds you. Associated with despair, entropy, and the surrender of hope.
 
-**Non-elementalental** -- Raw magical force with no elemental signature. Cannot be resisted through elemental defense, but also benefits from no elemental weakness. The brute-force option.
+**Non-elemental** -- Raw magical force with no elemental signature. Cannot be resisted through elemental defense, but also benefits from no elemental weakness. The brute-force option.
 
 ---
 
@@ -73,7 +73,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 | Ley | Void | Spirit |
 | Spirit | Ley | Void |
 | Void | Spirit | Ley |
-| Non-elementalental | -- (100% to all) | -- (100% to all) |
+| Non-elemental | -- (100% to all) | -- (100% to all) |
 
 **Special interactions:**
 - Flame vs. Flame: 50% damage (resistance)
@@ -420,7 +420,7 @@ Each character learns spells through a tradition that reflects their background 
 ### Non-Elemental Spells
 
 #### 25. Fracture
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Offensive
 - **Tier:** 2
 - **MP Cost:** 18
@@ -431,7 +431,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A distortion-wave ripple travels from caster to target; on impact, a white flash and concussive ring.
 
 #### 26. Unraveling Bolt
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Offensive
 - **Tier:** 3
 - **MP Cost:** 40
@@ -671,7 +671,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Target:** Single enemy
 - **Effect:** 65% chance to inflict Confusion. Target attacks random allies or enemies.
 - **Description:** A flash of contradictory ley-signals scrambles the target's thoughts. Friend becomes foe. Up becomes sideways.
-- **Who learns:** Maren (Lv 8)
+- **Who learns:** Maren (Lv 8), Sable (Lv 18, story event)
 - **Visual:** Spiraling gold-white motes orbit the target's head rapidly; their sprite sways; question marks and stars appear.
 
 #### 47. Seal Tongue
@@ -826,7 +826,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A spinning disc of gold-white light appears in front of the target; it occasionally flickers with reflected images.
 
 #### 60. Rallying Cry
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Buff
 - **Tier:** 1
 - **MP Cost:** 8
@@ -883,7 +883,7 @@ Each character learns spells through a tradition that reflects their background 
 ### Debuffs (Enemy)
 
 #### 65. Sunder
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Debuff
 - **Tier:** 1
 - **MP Cost:** 7
@@ -894,7 +894,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A concussive ripple strikes the target; their armor/outline flickers red briefly; a downward arrow icon appears.
 
 #### 66. Fray
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Debuff
 - **Tier:** 1
 - **MP Cost:** 7
@@ -1019,7 +1019,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** Party members' sprites lift slightly off the ground; a gentle upward wind particle effect persists beneath them.
 
 #### 77. Smokeveil
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Utility
 - **Tier:** 1
 - **MP Cost:** 4
@@ -1030,7 +1030,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Visual:** A cloud of dark grey smoke billows outward from the party's position; screen fades to black; battle ends.
 
 #### 78. Glintmark
-- **Element:** Non-elementalental
+- **Element:** Non-elemental
 - **Category:** Utility
 - **Tier:** 1
 - **MP Cost:** 3
@@ -1190,6 +1190,7 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 69 | Drag Tide | Storm | Debuff | 1 | Lv 8 |
 | 73 | Waymark | Ley | Utility | 1 | Lv 8 |
 | 44 | Vilethorn | Earth | Status | 1 | Lv 8 |
+| 56 | Ironhide | Earth | Buff | 1 | Lv 10 |
 | 49 | Leaden Step | Earth | Status | 1 | Lv 10 |
 | 34 | Breath of the Wilds | Spirit | Healing | 1 | Lv 10 |
 | 66 | Fray | Non-elemental | Debuff | 1 | Lv 10 |
@@ -1237,7 +1238,7 @@ Maren has the largest spell list in the game. She is the party's primary offensi
 | 88 | Hollow Mend | Void | Healing | 3 | Post-game (Convergence meadow) |
 | 38 | Rekindling | Spirit | Healing | 2 | Act III scene with Torren (cross-train, +50% MP cost) |
 
-**Total: 63 spells** (62 base + 1 cross-trained; the most of any character by far)
+**Total: 64 spells** (63 base + 1 cross-trained; the most of any character by far)
 
 ### Edren (Knight-Commander -- Limited Ley Line Tradition)
 
@@ -1388,7 +1389,7 @@ For quick reference, here are all status effects that spells in this system can 
 
 | Status | Type | Effect | Duration | Cured By* |
 |--------|------|--------|----------|----------|
-| Poison | Negative | Lose 8% max HP per turn | Until cured | Cleansing Draught, Purge, Antidote item |
+| Poison | Negative | Lose 8% max HP per turn | Until cured (standard) or 3 turns (burn variant from Ember Wing/Inferno Gale) | Cleansing Draught, Purge, Antidote item |
 | Sleep | Negative | Cannot act; wake on damage | Until cured or damaged | Cleansing Draught, Purge, Alarm Clock item |
 | Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Remedy item |
 | Silence | Negative | Cannot cast spells | 4 turns or until cured | Cleansing Draught, Purge, Echo Drop item |

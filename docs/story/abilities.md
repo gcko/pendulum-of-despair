@@ -42,7 +42,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Story Integration:**
 - **Acts I-II:** Edren has Ironwall, Riposte, and Rampart. His kit reflects a disciplined knight protecting others.
 - **Interlude:** After Cael's betrayal, Edren loses access to Bulwark temporarily during the monastery sequence (he's paralyzed by guilt — mechanically represented as the command being greyed out). Sable's arrival restores it.
-- **Act III:** Aegis Veil and Shatter Guard become available, reflecting his renewed resolve and deeper connection to the ley lines.
+- **Act III:** By this point, Edren has typically reached levels 15-22, unlocking Aegis Veil and Shatter Guard through standard leveling.
 - **Act IV:** Oathkeeper unlocks when Edren picks up Cael's fallen sword. This is the culmination of his arc — carrying the weight of loss and turning it into strength.
 
 ---
@@ -101,7 +101,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
 | **Mending Engine** | Interlude [S] (Lv 17+) | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
 | **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, the attack gains dual-element: it hits with BOTH elements, checking the target's weakness to each independently and using the more favorable result. Consumed on next attack. |
+| **Salvage** | Level 1 | 0 AC | Instant. Destroys one active device, recovering half its AC cost (rounded down). |
+| **Thornveil Barrier** (device variant) | Act III [S] | 3 AC | Device. Persists 3 turns. Target: Single ally. Creates an Arcanite thorn barrier dealing counter-damage equal to 15% of the shielded ally's Defense to attackers. Counts toward 2-device limit. |
 | **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. The Colossus has HP equal to 50% of Lira's max HP, Attack equal to Lira's Attack x 1.5, and ATB speed equal to 75% of Lira's Speed. It cannot be healed but can be targeted by enemies. It attacks for physical damage equal to its Attack stat (Lira's Attack x 1.5) or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
+
+**Pallor-zone action:** Calibrate (0 AC, targets one active device, removes malfunction chance for remaining duration). Available only in Pallor-corrupted zones.
 
 **Synergies:**
 - Lira + Maren: Maren's Resonance extends the next device Lira deploys by 1 turn.
@@ -111,7 +115,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Story Integration:**
 - **Acts I-II:** Lira has access to Shock Coil, Bulkhead, and Arc Trap — practical, defensive tools reflecting her cautious defection from the Compact.
 - **Interlude:** While searching for Cael in the Compact, Lira reverse-engineers Pallor-corrupted Forgewright tech. This unlocks Mending Engine and Overcharge — she's turning the enemy's tools against them.
-- **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters.
+- **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters. Disrupt is available as a scripted action during the Phase 2 boss fight (see story integration above).
 - **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. (Disrupt is a scripted battle action available only during the Phase 2 boss fight. It costs 2 AC, targets one of Cael's ley line anchors, and disables it for 3 turns. Each anchor disabled reduces the machine's power by 25%.) This is a unique interaction only she can perform.
 
 ---
@@ -149,6 +153,8 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Interlude:** Torren's self-sacrifice to hold back the corruption in the Wilds is reflected mechanically — when the party finds him, his max HP is permanently reduced by 15% (he burned his life force). However, he gains Stoneheart, Greyveil, and Convergence Chorus. The spirits he nearly died protecting now answer more readily.
 - **Act III (Pallor Trials):** During Torren's trial, the spirits turn hostile. The player fights corrupted versions of each spirit Torren has called. Defeating them without killing them (reducing to 1 HP rather than 0) preserves their Favor ratings. Killing them resets Favor to 0. This creates a meaningful combat puzzle during the trial.
 - **Greyveil:** This spirit is unique — it represents the boundary between the living world and the Pallor. It's the most effective tool the party has against Pallor-type enemies, but it's also the spirit most vulnerable to corruption.
+
+**Pallor-zone action:** Purify (0 MP, reverses corrupted spirit effect to correct targets, prevents further corruption for remaining duration). Available only in Pallor-corrupted zones.
 
 ---
 
@@ -236,7 +242,7 @@ Combo abilities require two specific party members to both have full ATB gauges.
 | 1 | **Shield Oath** | Edren + Cael | 14 MP (7/7) | Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3. | *The two knights lock blades in salute, then turn outward — one the shield, the other the sword. They've drilled this since they were squires.* |
 | 2 | **Shattered Vanguard** | Edren + Sable | 10 MP (6/4) | Sable uses Misdirect on all enemies (forcing them toward Edren), and Edren immediately uses Shatter Guard at +50% damage. Requires Edren to be in a stance with stored damage. | *Sable darts between the enemy ranks, taunting and weaving, funneling them toward the immovable wall. Edren obliges.* |
 | 3 | **Forged Rampart** | Edren + Lira | 12 MP (6/6) | Lira deploys a Bulkhead on Edren that lasts 5 turns instead of 3 and also reflects 20% of absorbed damage back at attackers. Does not count toward Lira's device limit. | *Lira fuses Arcanite plating directly onto Edren's shield. It hums with contained lightning. "Don't drop it," she says. He never does.* |
-| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, split between elements) with guaranteed Poison (burn) and a 30% chance of Stop (the Storm energy shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
+| 4 | **Thornfire** | Torren + Lira | 16 MP (8/8) | Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40 (20 Flame + 20 Storm, each checked independently against the target's elemental resistance)) with guaranteed Poison (burn) and a 30% chance of Stop (the Storm energy shorts out enemy movement). | *The fire spirit screams through Lira's Shock Coil, doubling in size and splitting into a dozen blazing arcs. Even Torren steps back.* |
 | 5 | **Spiritward** | Torren + Edren | 14 MP (8/6) | Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction. | *The earth spirit settles into Edren's shield like a heartbeat. For a moment, the whole party stands on bedrock.* |
 | 6 | **Weave Theft** | Maren + Sable | 10 MP (6/4) | Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff. | *Sable's hands are faster than spells. Maren's mind is faster than Sable's hands. Between the two of them, nothing the enemy has stays theirs for long.* |
 | 7 | **Ley Torrent** | Maren + Torren | 18 MP (10/8) | Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren. | *The ley lines sing. The spirits answer. For one terrible moment, the raw voice of the world speaks through two people at once.* |
