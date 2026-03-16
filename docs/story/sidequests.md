@@ -19,7 +19,13 @@ Dael Corran approaches the party in Caldera's lower district, recognizing Lira a
 
 The investigation leads the party through the Black Forges of Ashmark — industrial dungeon corridors thick with steam and malfunctioning machinery — where they discover that the extraction pipeline connects to Millhaven's open pit. The ley energy being pumped through the refineries carries trace corruption: not the Pallor itself, but the residue of over-extraction, a ley line pushed past its breaking point and beginning to hemorrhage. The energy still works in machines, but prolonged human exposure strips emotional capacity. The fading is not a Pallor symptom. It is what happens when people absorb dying magic.
 
-At the Ley Line Depths beneath Millhaven, the party finds the source: a collapsed section of the extraction infrastructure has ruptured a deep vein, and the raw energy pouring upward is unstable, cycling between normal ley light and something darker. Lira can stabilize the rupture using a combination of Forgewright engineering and the old ley-tapping techniques Maren taught her — the first time in the game that old magic and new craft are used together constructively. The stabilization doesn't heal the faded workers, but it stops the contamination from spreading.
+At the Ley Line Depths beneath Millhaven, the party finds the source: a collapsed section of the extraction infrastructure has ruptured a deep vein, and the raw energy pouring upward is unstable, cycling between normal ley light and something darker. Guarding the rupture is the Forge Warden (8,500 HP) — a massive Forgewright automaton built by Forgemaster Elyn Drayce as a failsafe to protect the ley tap. Its original purpose was defensive: if anything threatened the extraction pipeline, the Warden would seal the area and neutralize intruders. But the ley rupture has corrupted its logic circuits, and it now interprets the party's presence as the threat it was built to stop.
+
+Lira recognizes the design immediately: "This is Drayce's failsafe. Built to protect the tap if anything went wrong. But it thinks *we* are what went wrong." The Forge Warden fights in two phases — programmed defense protocols followed by corrupted, erratic logic as the ley contamination overrides its systems. Lira's Forgewright expertise allows her to deal bonus damage by targeting its exposed maintenance panels.
+
+After defeating the Forge Warden, the party discovers a tuning fork artifact lodged in the ley tap's resonance chamber. The tap's destabilization was not caused by over-extraction alone — someone introduced a resonance frequency that amplified the ley line's collapse. The tuning fork matches artifacts found at other destabilized ley sites (see "The Spirit That Stopped Singing" — Windshear Peak). Confronting Forgemaster Drayce with the Warden's wreckage and the evidence of deliberate sabotage cracks their facade of ignorance — Drayce knew the tap was failing and built the Warden to cover it up, not fix it.
+
+Lira can then stabilize the rupture using a combination of Forgewright engineering and the old ley-tapping techniques Maren taught her — the first time in the game that old magic and new craft are used together constructively. The stabilization doesn't heal the faded workers, but it stops the contamination from spreading.
 
 Dael's response is complicated. He is grateful but unsatisfied — the damage is done, the workers won't recover, and the guild will claim the problem fixed itself. He asks Lira to write a technical report he can distribute to other factory districts. She agrees. This is a seed that, in the epilogue, becomes the foundation of the Bridgewrights — Lira's guild that merges Forgewright craft with ley line stewardship.
 
@@ -88,7 +94,15 @@ Elara Thane's wind-spirit pact broke during the Unraveling. The spirit didn't di
 
 Torren listens to Elara describe the silence and recognizes something: the spirit didn't stop answering because the ley lines failed. It stopped because it is afraid. The spirits are sentient. They felt the Pallor's presence in the ley line network and withdrew — not dying, but hiding. Torren has felt this in the Wilds but never articulated it so clearly. Elara's experience as a pact-holder gives her a unique perspective: she describes the silence not as absence but as someone holding their breath.
 
-The party travels to Windshear Peak, where wind-spirits are known to gather. The peak is silent — no wind, which is wrong for the highest point in the Wilds. Torren performs a calling ritual, burning a portion of his own spiritual energy. The wind-spirit doesn't appear, but it responds: a single gust that carries a sound like a sigh. It is still there. It is terrified.
+The party travels to Windshear Peak, where wind-spirits are known to gather. Near the trail, an old shepherd tends a dwindling flock. He tells the party: "Used to hear it every evening. Kept us safe in the fog. Then one day it just... screamed. Has not stopped." The peak is silent — no wind, which is wrong for the highest point in the Wilds. Torren performs a calling ritual, burning a portion of his own spiritual energy. The wind-spirit doesn't appear, but it responds: a single gust that carries a sound like a sigh. It is still there. It is terrified.
+
+Then the silence breaks. A second, larger spirit has been twisted by Pallor corruption into a shrieking storm entity — the Howling Gale (7,000 HP). It blocks the terrified wind-spirit from answering Elara's call, a massive vortex of corrupted wind energy that screams with a voice that was once a song. The party must defeat or calm the Gale before the quest can proceed. Torren's Spiritcall ability, usable at 30% HP, offers a peaceful resolution: Torren reaches the spirit's original nature beneath the corruption and calms it. The Gale dissipates into clean wind, and the ley energy at the peak strengthens — the corruption's removal restores a minor nexus point that had been suppressed.
+
+Near the Howling Gale's resting place, the party finds a tuning fork artifact embedded in the rock — the same resonance frequency found at other destabilized ley sites. Someone placed it here to amplify the Pallor's corruption of the wind-spirits. The tuning fork is a Vaelith breadcrumb: evidence of deliberate ley line sabotage that connects to the larger conspiracy.
+
+The peaceful resolution grants Torren a spirit-bond — a connection to the wind-spirits that the Frost Warden in the Frostcap Caverns recognizes. Per the Warden's ancient protocols, a spirit-speaker who carries a genuine spirit-bond is worthy of respect rather than combat (completing this quest causes the Frost Warden to offer peaceful resolution at 25% HP). If the party defeated the Gale through combat alone, the spirit-bond is weaker but still present.
+
+The calming of the Gale also makes the subsequent Roothollow ritual more powerful — the restored ley energy at the peak feeds into the nexus network, strengthening the connection Elara needs.
 
 The quest's resolution happens at Roothollow, where the ley line nexus the party stabilized during the Interlude provides enough safe energy for Elara to attempt a modified pact. The new pact is different — weaker, more fragile, but mutual. The spirit isn't bound; it is invited. Elara can call a breeze, not a gale. She weeps, not from disappointment but from relief. "It's enough," she says. "It's talking to me again. That's enough."
 
@@ -285,11 +299,16 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 ### 5. The Missing Patrol
 
 **Quest Giver:** Kael Thornwalker (Greywood Camp perimeter)
-**Location:** Greywood Camp, deep Wilds patrol route
+**Location:** Greywood Camp, deep Wilds patrol route, highland forest
 **Availability:** Act II, during the diplomatic mission
-**Description:** Kael's latest patrol squad hasn't reported back. Three rangers went into the deep Wilds to investigate a disturbance near a ley line convergence point and haven't returned. The party tracks them through the forest, finding signs of a fight and grey residue on the trees — early Pallor corruption. The rangers are found alive but shaken, cornered by a creature they've never seen: a grey-elk twisted by Pallor energy into something predatory. The party defeats the creature and escorts the rangers home.
-**Reward:** Thornwalker's Bow (weapon — ranged weapon for Torren, built from deep-Wilds wood), Kael's grudging respect (unlocks additional dialogue and a minor ally during Act III)
-**Connection:** The corrupted grey-elk is the first wildlife mutation the party encounters. Kael's dialogue references it in the Interlude as evidence that the corruption was visible long before anyone took it seriously.
+**Description:** Kael's latest patrol squad hasn't reported back. Three rangers went into the deep Wilds to investigate a disturbance near a ley line convergence point and haven't returned. The party tracks them through the forest, finding signs of a fight and grey residue on the trees — early Pallor corruption. Two of the rangers are found dead. A third — a young ranger named Tomas — is found hiding in a shallow cave, injured and terrified. He tells the party what happened: the patrol encountered the dominant creature of the highland forest, a massive grey-elk that the Thornwalkers call the Grey Stag — and when it fell to Pallor corruption, the ecosystem followed. Every creature in its territory turned aggressive. The forest itself became hostile.
+
+The Grey Stag (5,500 HP) is a boss encounter in the highland forest clearing. It is enormous — twice the size of a natural elk, its antlers branching into grey crystalline formations that pulse with Pallor energy. Its hide is mottled grey-white, and a Corruption Aura radiates from its body, dealing passive damage to adjacent party members. Its signature attacks include Grey Charge (400 damage, charges across the battlefield), Petrifying Gaze (targets one party member, 40% Petrify chance), and territorial stomps that shake the arena. The Stag fights with the desperate fury of a creature that was once the forest's protector and is now its destroyer.
+
+Defeating the Grey Stag visibly weakens the corruption in the immediate area — the grey residue on the trees begins to fade, and natural sound returns to the forest. Tomas, the surviving ranger, is escorted home to Greywood Camp. He later joins the Valdris militia during the Interlude and appears during the siege of Valdris Crown as a named allied NPC, his experience in the Wilds making him a capable scout.
+
+**Reward:** Thornwalker's Bow (weapon — ranged weapon for Torren, built from deep-Wilds wood), Kael's grudging respect (unlocks additional dialogue and a minor ally during Act III), Stag's Antler (crafting material — crystallized Pallor-tainted bone, used in late-game weapon forging)
+**Connection:** The Grey Stag is the first wildlife mutation the party encounters as a full boss-level threat. Kael's dialogue references it in the Interlude as evidence that the corruption was visible long before anyone took it seriously. Tomas's survival and later militia service demonstrates that saving individuals during side content has tangible consequences in the main story.
 
 ---
 
@@ -340,11 +359,18 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 ### 10. Unbowed
 
 **Quest Giver:** Sera Linn (Caldera, undercity)
-**Location:** Caldera undercity, factory district
+**Location:** Caldera undercity, factory district, deep tunnel passages
 **Availability:** Interlude, after reaching Caldera
 **Description:** Sera's resistance network is running low on supplies. Three safe houses have been discovered by Compact security forces, and her people are scattered. She asks the party to help relocate twenty workers and their families through the undercity tunnels to a new safe house near the canal district. The quest is an escort mission — the party guides the group through tunnel sections, avoiding patrols and clearing Pallor nests that have infested the lower passages.
-**Reward:** Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints)
-**Connection:** Sera's network, if preserved, provides critical intelligence for the party's movements through Compact territory in Act III.
+
+Kerra, a former Valdris soldier who was separated from her unit during the Compact's advance, volunteers to help with the escort. She joins the party as a guest NPC — her combat stats are low (she's been surviving on scraps for weeks), but her courage is high. She positions herself between the evacuees and danger without being asked and refuses to retreat when the party encounters resistance. Her dialogue reveals she came to Caldera looking for her brother, a factory worker she hasn't heard from since the fading started.
+
+The tunnels' deepest point — the only safe route that avoids both Compact patrols and collapsed passages — runs through the den of the Pallor Nest Mother (6,000 HP). This is the source of the Pallor nests that have been infesting the lower passages. The Nest Mother is a massive Pallor creature that has burrowed into the junction where the old forge-channels meet the natural volcanic vents, using the warmth and ley residue to breed. It spawns lesser Pallor creatures (Grey Crawlers, Pallor Mites) throughout the fight, and its Brood Pulse attack sends waves of corruption through the tunnel that damage the entire party. Its Nest Defense ability hardens its carapace when its spawn are alive, requiring the party to clear adds before dealing meaningful damage to the Mother itself. The evacuees must be kept behind the party's defensive line — if the Nest Mother's spawn reach them, the quest becomes significantly harder.
+
+Kerra fights beside the party during the Nest Mother encounter. If she survives, she appears in the epilogue as a militia leader during Caldera's reconstruction, organizing the same kind of civilian evacuations she helped with here — but now with authority, training, and a network of people who trust her because she earned it in these tunnels.
+
+**Reward:** Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints), Nest Mother's Core (crafting material — concentrated Pallor essence, used in anti-Pallor weapon modifications)
+**Connection:** Sera's network, if preserved, provides critical intelligence for the party's movements through Compact territory in Act III. Kerra's survival branches into a meaningful epilogue presence, and the Nest Mother's destruction permanently clears the Pallor infestation from the undercity tunnel network, making subsequent traversals encounter-free.
 
 ---
 

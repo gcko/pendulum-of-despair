@@ -125,6 +125,7 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 - `T` (mid-left): Chest -- 3x Potion.
 - `T` (lower-mid): Chest -- Iron Bracelet (accessory).
 - `S` (lower-left): Save point crystal -- glowing amber, embedded in the wall.
+- *(near entrance)* Two grey teacups on a flat stone beside the entry corridor, still faintly warm. An unusual herbal blend. Torren identifies the herbs as extinct species from old-growth Thornmere -- plants that have not existed for centuries. The cups are clean, the stone swept. Someone sat here recently and left without hurry.
 - `v` (bottom-left): Stairs down to Floor 2.
 
 **Encounter Zones:** Five zones marked `!`. Encounters are:
@@ -417,6 +418,7 @@ A secondary puzzle layered on top of the water-level system. On Floor 2, a trans
 ```
 
 **Key Locations (Floor 1):**
+- *(Duskfen outskirts, near entrance)* Two grey teacups on a flat stone at the top of the entry stairs, still faintly warm. The same unusual herbal blend as the Ember Vein. Torren: "The same herbs. The same cups. Whoever this is, they have been here too." The stone is dry in a place where everything else is damp. Someone sat and watched the marsh before descending.
 - `E` (top): Entry -- stone staircase descending into murky water. The first thing the party sees: dead fish floating belly-up in dark, oil-sheened water. Torren stops on the stairs and touches the wall carvings. "These are old. Older than the Duskfen. They show the Fenmother when she was... healthy." The carvings depict a vast serpentine spirit, luminous and beautiful, coiling through clear water. The contrast with the murky filth below is immediate and visceral. Sable: "So what happened to her?" Torren: "The same thing that's happening to everything. Someone decided the land was worth more than what lived in it."
 - `S` (left): Save point -- spirit-totem embedded in the wall, pulsing faintly. The totem's glow is weak and intermittent -- a sign of the ley-line poisoning. In a healthy dungeon, this would burn steady. Here, it flickers like a dying candle.
 - `W` (top-center): Deep water barrier. Impassable until Wheel 1 is set to HIGH (water drains here, fills elsewhere). The water here is the worst in the dungeon -- thick with dark sediment, iridescent with contamination. Lira crouches at the edge and examines it. "This isn't natural runoff. See the chemical sheen? That's processed ley-extract residue. The Compact's purification plant at Ironbend dumps its waste into the tributary that feeds this system." She traces the flow with her finger. "It's been accumulating here for years. Maybe decades."
@@ -1330,6 +1332,8 @@ Edren (if present): "The Ember Vein had carvings like these. Smaller, rougher. L
 - `v` (top): Descent from Floor 3. The geometric carvings begin here. The transition from crystal labyrinth to carved stone is abrupt -- a clear boundary. The crystal growth stopped exactly where the architecture starts, as if the crystal knew not to encroach.
 - `L` (center): The deepest ley river. Brighter, more intense. Multiple channels converging. The tributary channels pulse at different rates, creating a shimmering interference pattern where they meet. The light here is so bright that the party casts sharp double shadows.
 - `P` (left): Ley valve 4. Pre-civilization mechanism, more elaborate than valves 1-3. This valve has three positions rather than two -- the third position opens a tributary channel that feeds the sealed door mechanism. A pictographic inscription beside it reads (if the Archivist's Codex is equipped): "The root sleeps. Turn the heart to wake it." Without the Codex, the third position is discoverable by experimentation -- the valve clicks into three distinct positions, and the third triggers a rumbling sound from the sealed door corridor.
+- *(near ley valve 4)* A loose page in archaic script, folded precisely and placed atop the valve mechanism. Torren and Maren together translate: "I found the nexus. Fragile. A tuning fork at the right frequency should destabilize it within a season." The handwriting matches every other fragment. Maren goes pale: "This is not observation. This is a plan."
+- *(near destabilized node, lower passage)* A precisely crafted tuning fork, resting on a carved stone shelf. It hums at a frequency that agitates spirits. Torren recoils -- "That sound. It is wrong. It makes the ley energy flinch." Lira picks it up carefully: "The craftsmanship is impossibly precise for the era it was made. This alloy should not exist in pre-Compact metallurgy." The fork's vibration matches the destabilization pattern visible in the ley river's flow.
 - `T` (bottom-left): Chest -- Deep Vein Crystal (weapon material, used to forge Maren's best staff). A raw crystal the size of a fist, pulled from the wall beside a pre-civilization tool rack. The tools are still there -- crystal-cutting implements of a design no modern smith would recognize. Lira (if present): "These tools are sharper than anything the Compact makes. The alloy is... I don't know what this is. Not arcanite. Something older."
 - `T` (right): Chest -- Ley-Born Armor (armor, best magic defense in Act II). A chest of pre-civilization make, sealed with a ley-lock that opens when the party approaches (keyed to living presence, not a specific key). The armor inside is light, flexible, woven from a material that catches ley-light and holds it. It fits whoever puts it on.
 - `@` (right): The sealed door. Massive stone door, ten feet tall, five feet wide, set into a wall of solid carved stone. The door bears the Pendulum symbol at its center -- the same symbol as the artifact Edren carries, the same symbol carved in the Ember Vein, the same symbol that appears in the Archive of Ages. The pictographic inscription around the door's frame reads (with the Codex): "The Deep Root. Sealed from within. The water flows beneath. Do not open until the Archive speaks." Without the Codex, the pictographs are inscrutable, but the Pendulum symbol is unmistakable. Examining the door grants the Sealed Door Rubbing (lore item -- a charcoal rubbing of the door's inscription, readable later if the Codex is obtained).
@@ -1642,6 +1646,7 @@ Her own insignificance whispers: she doesn't belong with heroes. Correct respons
 Her younger self asks why she wasted her life on knowledge that only brought suffering. Correct response: "Because someone had to remember. Even if it hurt."
 
 - `S` (bottom-right): Final save point before the Convergence.
+- *(near final save point)* A loose page in archaic script, placed deliberately on the save point's ley-line clearing -- the only spot with color in the grey waste. Torren and Maren together translate: "This cycle has a forgewright who loves the vessel. That is new. I wonder if it will matter." The handwriting has not changed across eight hundred years and six locations. The ink is fresh. The page was left here for the party to find. Maren's hands shake: "Every fragment. Every location. The same hand. Eight centuries of writing and the penmanship never aged." If the party has found all six fragments, Maren adds: "A scholar. A diplomat. Someone who walks everywhere and writes everything down. Someone who has been watching since before any of us were born."
 - `X` (bottom-right): Exit to the Convergence plateau edge.
 
 ### Encounter Table
@@ -2145,6 +2150,8 @@ Players who explored the Ember Vein and Ley Line Depths thoroughly will recogniz
 - `@` (left): Maren is here. Reunion scene. She has been studying the tablets and has decoded most of the pictographic language.
 - `P` (center-bottom): Translation puzzle 1. Stone interface with symbol slots. Solving opens the stairs.
 - `T` (right): Chest -- Archive Key Fragment (1 of 2, needed for Floor 3 locked door).
+- *(near entry hall)* A loose page in archaic script, tucked behind a stone tablet. Torren and Maren together translate: "The forgewright built a weapon. It failed." The handwriting matches the Thornvein Passage fragment exactly. The date, if the calendar can be trusted, is three hundred years earlier.
+- *(gallery alcove, Floor 2)* A flower pressed between two stone tablets. The species has been extinct since the previous Pallor cycle -- perfectly preserved, as if picked yesterday. Tucked inside a history of the last cycle's heroes. A bookmark. Maren holds it to the light: "This flower has not existed for eight hundred years. Someone kept it."
 - `v` (bottom): Stairs down to Floor 2.
 
 ### Floor 2: Pictograph Gallery (45x35)
@@ -2463,6 +2470,7 @@ The layout is deliberately claustrophobic. Three rooms connected by a narrow ver
 - `@` (center-left): A carved stone marker, half-buried in sediment. The geometric patterns match the Ember Vein exactly. Maren (if present): "This is the same language. The same builders. Under Edren's village." Edren: "They were here before us. Before Aelhart. Before everything." If the player has completed the Ember Vein, Edren adds: "The same carvings we saw in the mine. The same precision. But this is under my home."
 - `!` (two zones): Encounter zones. Enemies are weak -- the well shaft is shallow, and the guardians here have been dormant for centuries. They activate sluggishly, joints grinding, ley energy flickering. They are confused as much as hostile.
 - `%` (lower-right): Environmental hazard -- unstable flooring. The stone here is cracked and listing. Walking across it triggers a rumble and a shower of dust. No damage, but it foreshadows the pitfall mechanic on Floor 2. Sable (if present): "That floor is going to go. Not today, but soon. Step light."
+- *(near carved marker)* A loose page in archaic script, wedged into a crack in the ancient stonework. Torren and Maren together translate: "The hero stood at the door and wept. They all weep." The handwriting is identical to the fragments found in the Thornvein Passage and Archive of Ages. The date is different. The hand is not.
 - `T` (lower-right): Chest -- Well-Stone Ring (accessory, +5 DEF, minor ley resistance). A ring carved from the same stone as the well's foundation. Too precise to be Valdris craft. The interior surface has a pictographic inscription too small to read without magnification. With the Archive Keeper's Lens (Floor 5, future acquisition): the inscription reads "endure."
 - `v` (bottom): Narrow stairs descending. The fieldstone ends. Below this point, every surface is pre-civilization construction. The transition is not gradual -- it is a clean line. The builders' work begins where Aelhart's work ends, as if the village was built to fit on top of something that was already here. Because it was.
 
@@ -3427,6 +3435,29 @@ The map represents a switchback trail ascending to the summit. The path narrows 
 
 No encounters. No treasure. No hazards. Just the wind, the view, and one answer.
 
+### Sidequest Boss: The Howling Gale (7000 HP)
+
+**Availability:** During "The Spirit That Stopped Singing" sidequest (Interlude, after finding Torren). The Howling Gale appears at the summit when Torren performs his calling ritual. The peak's peaceful nature is temporarily overridden by the encounter.
+
+A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It manifests as a vortex of grey-white wind energy, roughly humanoid in shape but constantly shifting -- arms become cyclone funnels, its face is a hollow scream in the eye of the storm. What was once a guardian spirit that sang to the highland shepherds is now a thing of terror. The sound it produces is the original song, distorted into a weapon.
+
+**Phase 1 (7000-2100 HP) -- The Storm:**
+- **Gale Force** -- Wind-element AoE, 300-350 damage to all party members + 30% chance to inflict Silence (the wind tears words from the caster's mouth).
+- **Shriek** -- Single-target sonic attack, 450 damage + Confusion (2 turns). Targets the party member with the highest MAG stat.
+- **Tempest Spin** -- The Gale spins rapidly, becoming semi-transparent. For 2 turns, physical attacks have a 50% miss chance. During this state, it deals 150 damage per turn to all party members (wind debris).
+- **Updraft** -- Launches one party member into the air, removing them from battle for 1 turn. They return with 200 fall damage.
+
+**Phase 2 (below 2100 HP / 30%) -- The Song Beneath:**
+- All Phase 1 attacks, but Gale Force and Shriek have reduced damage (the corruption is weakening).
+- **Desperate Howl** -- Massive wind AoE, 500 damage to all. 2-turn charge. Can be interrupted by Torren's Spiritcall.
+- **Torren's Spiritcall (Peaceful Resolution):** At 30% HP, Torren can use Spiritcall as a special action. He reaches beneath the corruption to the spirit's original nature -- the song it used to sing. If successful, the Gale calms: the vortex slows, the grey drains from the wind, and the spirit's true form -- a shimmering wind-shape, gentle and luminous -- appears for a moment before dissipating into clean air. The ley energy at the peak strengthens visibly. Full XP and drops awarded. This resolution grants Torren a spirit-bond recognized by the Frost Warden in the Frostcap Caverns.
+- If Spiritcall is not used, the fight continues to 0 HP. The Gale shatters into silence. The spirit is destroyed, not saved. Torren receives a weaker spirit-bond (the Frost Warden still senses it, but the peaceful resolution at 25% HP requires an additional dialogue check).
+
+**Weakness:** Earth (150% damage), Flame (125% damage).
+**Resistance:** Wind (absorbs), Frost (75% damage).
+**Immunity:** Silence.
+**Drop:** Gale's Echo (accessory -- party evasion boost, wind resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, evidence of deliberate ley line sabotage), 1500 Gold.
+
 ---
 
 ## 13. Mountain Passes
@@ -3806,6 +3837,26 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (right): Chest -- First Tree Seed (key item, used in post-game content at the Convergence meadow -- planting it triggers a unique epilogue scene).
 - Encounters: Ash elementals, ancient spirit remnants.
 
+### Sidequest Boss: The Grey Stag (5500 HP)
+
+**Availability:** During "The Missing Patrol" sidequest (Act II, during the diplomatic mission). The Grey Stag encounter takes place in a highland forest clearing near Greywood Camp, along the deep Wilds patrol route.
+
+A massive elk corrupted by the Pallor -- the dominant creature of the highland forest. Twice the size of a natural elk, its antlers branch into grey crystalline formations that pulse with Pallor energy. Its hide is mottled grey-white, and its eyes burn with the dull fury of a creature that was once the forest's protector and is now its destroyer. When it fell to corruption, the ecosystem followed -- every creature in its territory turned aggressive.
+
+**Attacks:**
+- **Grey Charge** -- The Stag lowers its crystalline antlers and charges across the battlefield. 400 damage to a single target + knockback. Telegraphed by a 1-turn wind-up (hoofing the ground, grey energy building in its antlers).
+- **Corruption Aura** -- Passive effect. All adjacent party members (melee attackers) take 50 damage per turn from proximity to the Pallor energy radiating from its body. Ranged attacks avoid this penalty.
+- **Petrifying Gaze** -- The Stag locks eyes with one party member. 40% Petrify chance. Targets the party member who dealt the most damage on the previous turn.
+- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to Stun (1 turn). Shakes the arena, causing tree debris to fall.
+- **Antler Sweep** -- Physical attack, hits all front-row party members, 300 damage. Used after Grey Charge if the Stag is not staggered.
+
+**At 30% HP:** The Stag's movements become erratic -- it charges walls, shakes its head as if trying to dislodge the corruption. Torren (if present) comments: "It's fighting itself. The creature underneath is still in there." The Stag cannot be calmed -- the corruption is too deep. But Torren's observation foreshadows the Howling Gale's peaceful resolution.
+
+**Weakness:** Flame (150% damage).
+**Resistance:** Earth (absorbs), Spirit (75% damage).
+**Immunity:** Petrify.
+**Drop:** Stag's Antler (crafting material -- crystallized Pallor-tainted bone, used in late-game weapon forging), Grey Hide (accessory -- +10 DEF, reduces Corruption Aura-type passive damage from all sources by 50%), 1000 Gold.
+
 ---
 
 ## 15. Caldera Forge Depths
@@ -4171,6 +4222,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - `T` (lower-right): Chest -- 3x Frost Elixir (consumable, restores HP and MP, bonus effect in cold environments).
 - `T` (left): Chest -- Highland Bow (weapon, Sable -- ATK +18, Frost-element arrows).
 - `@` (lower-left): Ancient Valdris carving on the wall. Depicts monks sealing a cave entrance while spirits watch from within. Torren: "These spirits weren't dangerous. They were being imprisoned." If Maren is present: "The Valdris script reads: 'Here we seal what we cannot control. May silence keep what wisdom could not.'"
+- *(near carving)* A loose page in archaic script, pinned beneath a shard of ice that has not melted. Torren and Maren together translate: "The old worship sites are useful. Spirits remember fear." The handwriting matches the other journal fragments. The page is centuries old. The ice holding it in place is fresh.
 - `H` (lower-right): Hidden passage -- leads to a secret ice vault. Contains: Ancient Spirit Token (key item, used on Floor 3 to bypass the Frost Warden's outer defenses).
 - `v` (bottom-left): Stairs down to Floor 2.
 
@@ -4407,6 +4459,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 - `T` (left, near spring): Chest -- 3x Spirit Tonic (consumable, restores 50 MP).
 - `T` (right): Chest -- Thornmere Amber (accessory, +8 MAG, boosts Earth-element spells).
 - `@` (lower-center): Pre-civ trail marker, mostly intact. Carved directions point south: "TO THE CONVERGENCE -- 3 DAYS WALK." Maren (if present): "Three days by their reckoning. The passages have shifted since then, but the direction is right."
+- *(near trail marker)* A loose page in archaic script, pinned beneath a root. Torren and Maren together translate: "The spirit-speakers fell first. They always do." The handwriting is precise and unhurried. The page is old -- centuries old -- but the ink has not faded. Maren: "This script predates the Compact by at least five hundred years. The ink should have turned to dust."
 - `*` (lower-right): **Mini-boss: Root Horror** (7000 HP).
 - `S` (lower-center): Save point -- a ley-line node where roots and energy converge, creating a natural sanctuary.
 - `v` (bottom-center): Stairs down to Floor 2.
@@ -4703,11 +4756,11 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 | 9 | Dreamer's Fault | Post-game | 20 | 40-50 | 3-5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
 | 10 | Dry Well of Aelhart | Interlude/III | 7 | 22-36 | 2-3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
 | 11 | Sunken Rig | Interlude | 3 | 22-26 | 30-40 min | The Grey Engine | Pressure valve routing, deck plate traps |
-| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | None | Oracle, vista, rest |
+| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
 | 13a | Wilds Gate Pass | I-II | 1 | 5-10 | 10 min | None | Transition area |
 | 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20-24 | 20-30 min | None | Ice sliding puzzle, thin ice traps |
 | 13c | Broken Hills Crossing | II-Interlude | 1 | 14-18 | 10 min | None | Transition area |
-| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | None | Exploration rewards |
+| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland area) | Exploration rewards |
 | 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
 | 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
 | 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
