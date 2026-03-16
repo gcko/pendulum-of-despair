@@ -97,9 +97,9 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat. |
 | **Bulkhead** | Level 7 | 3 AC | Device. Persists 3 turns. Reduces physical damage to one chosen ally by 40%. Can stack with Edren's Ironwall. |
 | **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
-| **Mending Engine** | Level 17 | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
-| **Overcharge** | Level 22 | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
-| **Arcanite Colossus** | Story: After Interlude (Lira's renewed purpose) | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
+| **Mending Engine** | Interlude [S] | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
+| **Overcharge** | Interlude [S] | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, elements combine. Consumed on next attack. |
+| **Arcanite Colossus** | Act III [S] | 8 AC | Device. Persists 2 turns. A towering Forgewright construct that acts as an additional party member with its own ATB gauge. It attacks for heavy physical damage or can be commanded to shield an ally (absorb one hit, then it's destroyed). |
 
 **Synergies:**
 - Lira + Maren: Maren's Resonance can extend device durations by 1 turn.
@@ -388,7 +388,7 @@ The Pallor corrupts all three magical traditions:
 
 ## 4. Ability Progression Table
 
-Story-triggered abilities are marked with **[S]** and noted in the Story Trigger column.
+Story-triggered unique-command abilities are marked with **[S]** in the tables below. Other story-triggered unlocks (cross-trained spells, schematics) are labeled with their unlock method (e.g., "cross-train", "schematic") instead of [S], since they are spells tracked in magic.md rather than unique-command abilities.
 
 ### Edren (Bulwark + Ley Line Magic)
 
