@@ -4207,7 +4207,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 - **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
 
 **Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Spirit (125% damage).
-**Resistance:** Earth (50% damage), Earth (absorbs).
+**Resistance:** Earth (absorbs).
 **Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
 **Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, Earth-element attacks gain Void sub-element), 1500 Gold.
 
