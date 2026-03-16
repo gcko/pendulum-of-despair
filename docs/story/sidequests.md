@@ -245,7 +245,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Availability:** Act I, from game start
 **Description:** The village elder asks the party to investigate why the well ran dry. An examination reveals the ley line beneath the village has been diverted — not by the Compact, but by a natural shift. The party can reroute a small trickle of energy back using Maren's techniques (if she's joined) or brute-force clear the blockage. The well flows again, weakly.
 **Reward:** Aelhart Charm (minor accessory — small HP boost), villager gratitude (unlocks a free rest at the inn for the remainder of the game)
-**Connection:** Foreshadows the Dry Well of Aelhart dungeon (7 floors) accessible in the Interlude.
+**Connection:** Foreshadows the Dry Well of Aelhart dungeon (Floors 1-4 in Interlude, Floors 5-7 in Act III).
 
 ---
 
