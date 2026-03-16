@@ -110,6 +110,28 @@ Read each changed file and categorize:
 Run every applicable pass based on the classified changes. Read the full
 content of changed files AND the files they reference.
 
+**CRITICAL: Adversarial reading mandate.** Do NOT read charitably. Read
+every line as if you are a fresh implementer seeing it for the first
+time. If a sentence COULD be misread, it WILL be misread. If a value
+COULD be interpreted two ways, flag it. The goal is to find every place
+where a reasonable developer would ask "wait, which one is it?"
+
+**CRITICAL: Cell-level table auditing.** For every table in a changed
+file, verify EACH CELL independently:
+- Does the data in this cell belong under this column header?
+- If this cell contains a level number, is this a hard requirement or
+  just an expected level? Event-based unlocks should use "—" not a number.
+- If this cell references a mechanic, is that mechanic fully defined?
+- If this cell says "at reduced strength" or "elements combine" — are
+  the exact values specified somewhere?
+
+**CRITICAL: Undefined forward references.** Any phrase that says
+something "does X" without defining X is a finding. Examples:
+- "at reduced strength" (what strength exactly?)
+- "elements combine" (how exactly?)
+- "does not count toward the limit" (why? is this an exception to a
+  stated rule? if so, document the exception in the rule itself)
+
 ---
 
 #### Pass A: Name & Terminology Consistency
@@ -212,6 +234,10 @@ that the reference EXISTS but that the VALUES MATCH exactly.
   place, it must not be described as "cross-trained" elsewhere
 - Unlock method (level-up / story event / schematic / cross-training /
   innate) must be consistent across ALL references to the same spell
+- If a spell/ability is event-based (story trigger), it must NOT show
+  a concrete level number in a "Level" column — use "—" instead. A
+  level number implies level-gating, which contradicts event-based
+  unlocking. This is the #1 most common cross-doc value mismatch.
 
 **Specific high-risk cross-references:**
 - `abilities.md` Ley Line spell list "Learned By" ↔ `magic.md` character indices
@@ -249,11 +275,18 @@ most commonly missed category.
   cures all statuses including Stop" vs "Stop cannot be cured")
 
 **Specific patterns to scan for:**
-- Section headers/labels that don't match their contents
+- Section headers/labels that don't match their contents (e.g., a
+  section called "Spell List" that only shows 8 of 30+ spells)
 - "Including X" lists that include items excluded elsewhere
 - Defined categories that leak into each other
 - Descriptions using adjectives from the wrong tier (e.g., "Heavy"
   for a Tier 2 spell when "Heavy" means Tier 3)
+- Table column headers that don't match cell contents (e.g., a column
+  called "Cross-Train" containing schematic entries, or a "Forgewright
+  Ability" column containing spells)
+- Global rules contradicted by specific exceptions that aren't documented
+  at the rule level (e.g., "max 2 devices" but a combo says "doesn't
+  count toward the limit" — the rule must acknowledge the exception)
 
 Flag: self-contradictions, stale summaries, misplaced data, broken
 marker conventions, guideline-vs-data mismatches.
@@ -279,6 +312,19 @@ For any game mechanic definitions (abilities, spells, combat rules):
   party member targeted by a buff)
 - Are there naming collisions between different systems? (e.g., an
   ability name too similar to a spell name)
+
+**Undefined forward reference checks (CRITICAL — most missed category):**
+Scan every effect description for phrases that reference undefined
+behavior. Common patterns:
+- "at reduced strength" — what exact numbers?
+- "elements combine" — what combination rule?
+- "does not count toward the limit" — is this exception documented
+  in the rule itself?
+- "a weaker version" — what exactly is weaker? Numbers required.
+- "scales with" — what formula?
+- "chance to" — what percentage?
+If any effect description uses vague language where an implementer
+would need to make a judgment call, flag it as an ISSUE.
 
 **Completeness checks:**
 - Every ability that claims to interact with another system must have
