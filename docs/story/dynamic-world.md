@@ -531,7 +531,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Environmental details:** The hatch bears Forgewright guild seals that predate the current regime. Lira recognizes the design language -- this was a prototype testing facility, sealed and forgotten. The refinery above rumbles constantly. Heat rises through the floor grating.
 
 ##### Interlude State (Full Access)
-- **What changed:** Lira rejoins the party with her recovered toolkit and resistance contacts. Sera Linn's network provides the access codes. The hatch opens to reveal three floors of abandoned Forgewright experimental chambers.
+- **What changed:** Lira rejoins the party with her recovered toolkit and resistance contacts. Sera Linn's network provides the access codes. The hatch opens to reveal four floors of abandoned Forgewright experimental chambers.
 - **Map modifications:** The hatch is open (new accessible staircase). Below: prototype testing halls, a flooded coolant level, and a deep forge chamber where early Arcanite-ley integration experiments left scars on the walls.
 - **Palette/atmosphere shifts:** Stage 1 corruption at the deepest level -- the forge experiments destabilized the local ley line decades ago. The Arcanite conduits flicker between amber and grey-white.
 - **Environmental details:** Lira's character content -- journals from Forgewrights who questioned the Guild's methods, prototype devices that foreshadow the Axis Tower engine's design. The deep forge chamber contains evidence that the Compact knew ley extraction was unsustainable. Lira-specific loot and a confrontation with her past.
@@ -540,11 +540,15 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 #### Frostcap Caverns (Character Dungeon — Torren)
 
-##### Interlude State (Only Visit)
+##### Interlude State (First Visit)
 - **Map layout changes:** A hidden cave entrance near Highcairn, revealed by frost-shatter from ley line instability. The entrance is a narrow crack in the mountainside, widened by seismic stress.
 - **Visual state:** Mountain/Alpine (deep cavern variant). Ice formations. Ley energy frozen into crystalline veins in the cave walls. Cold blue-white light from the ice. No forge-glow, no warmth -- the opposite of Caldera.
 - **Accessible areas:** Three-chamber cave system -- an ice gallery with spirit-carved formations, a frozen ley spring, and a meditation chamber where an ancient spirit-speaker left wards that still pulse faintly.
 - **Environmental details:** Torren's character dungeon. The spirit-speaker wards resonate with his abilities -- puzzles require spirit-speaking to progress. The frozen ley spring is a ley line node that the Pallor has not reached (the cold and altitude protect it). Torren can commune with the ice spirits here, gaining insight into the old ways of stabilizing ley lines. The cave is pristine and silent -- a counterpoint to the corruption outside. Torren-specific loot and a pivotal character moment about sacrifice and preservation.
+
+##### Act III State (Revisit)
+- **Map layout changes:** None. The cavern layout is unchanged from the Interlude visit.
+- **Environmental details:** The dungeon is revisitable in Act III. The frozen ley spring still pulses with protected energy, and the spirit-speaker wards remain active. No new content or map modifications -- the cave remains a pristine refuge.
 
 ---
 

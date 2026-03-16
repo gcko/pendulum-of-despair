@@ -291,7 +291,9 @@ verify its row in ALL of the following:
   needing N variants) — recount from the table, do not trust the old
   totals.
 - `biomes.md` dungeon/location appendix table (biome, sub-biome, act
-  availability column)
+  availability column). ALSO check "Locations Using This Biome" prose
+  lists — these describe entity scale/room counts in narrative form
+  and are frequently stale. ALSO check the Healing/restoration summary.
 - `locations.md` Location Progression tables (table section placement,
   type column, purpose column). Check that the entity is in the CORRECT
   section (Act I / Act II / Interlude / Act III / Post-Game) based on
@@ -346,18 +348,49 @@ most commonly missed category.
 **Entity-wide stale reference sweep (CRITICAL — #1 missed category):**
 When an entity undergoes a major reclassification in the diff (e.g.,
 "mini-dungeon" → "7-floor dungeon", "3 floors" → "5 floors", location
-changes acts), search the ENTIRE changed file — not just the diff
-hunks — for stale references to that entity. Use grep/search for the
-entity name across ALL changed files. Common hiding spots:
-- Environmental storytelling paragraphs that mention the entity casually
-- Act-by-act change sections that describe the entity's old state
+changes acts, sealed door now opens), search the ENTIRE changed file —
+not just the diff hunks — for stale references to that entity.
+
+**Search procedure (mandatory — do not skip steps):**
+1. Search for the entity NAME (e.g., "Dry Well", "Ley Line Depths",
+   "Ember Vein") across ALL changed files using grep. Read every match
+   location plus ±10 lines of context.
+2. Search for the entity's KEY ATTRIBUTES — distinctive features that
+   other sections may describe without using the entity name. Examples:
+   - "sealed door" (key attribute of Ley Line Depths)
+   - "cannot be opened" (old behavior of the sealed door)
+   - "mini-dungeon" (old classification of Dry Well)
+   - Floor counts ("three rooms", "four rooms", "3 floors")
+   Run grep for each key attribute across ALL changed files.
+3. In each match, check whether the text reflects the NEW state or the
+   OLD state. If old, it is a stale reference — flag it.
+
+**Common hiding spots (these are missed most often):**
+- Description paragraphs ABOVE the key features bullets (the prose
+  paragraph often says the same thing as the bullets but in narrative
+  form — updates to bullets do not automatically update the paragraph)
+- "Locations Using This Biome" lists in biomes.md (prose descriptions
+  of scale, room counts, key features per location)
+- Healing/restoration section summaries in biomes.md
+- Act-by-act change sections in dynamic-world.md
 - NPC dialogue that references the entity's old description
 - Appendix/summary tables at the end of the file
-- Other documents' prose sections that mention the entity in passing
 
-The rule "check the diff, not the universe" applies to WHICH FILES you
-review (only changed files). Within a changed file, you must search the
-WHOLE file for stale references to reclassified entities.
+The rule "check changed files, not the universe" applies to WHICH FILES
+you review (only changed files). Within a changed file, you must search
+the WHOLE file for stale references to reclassified entities.
+
+**Verify content you ADD, not just pre-existing content (CRITICAL):**
+When the review process itself adds new content (table rows, new
+sections in dynamic-world.md, new entries in events.md), that added
+content must be cross-checked against the canonical source BEFORE
+committing. Common errors in added content:
+- Wrong floor counts (writing "3 floors" when the dungeon has 4)
+- Wrong act labels ("Only Visit" when the dungeon is revisitable)
+- Wrong classification labels ("critical path" for optional content)
+- Values copied from memory rather than verified against the source
+For every new section or row you add, re-read the canonical source
+(usually dungeons-world.md or locations.md) and verify every value.
 
 **Specific patterns to scan for:**
 - Section headers/labels that don't match their contents (e.g., a

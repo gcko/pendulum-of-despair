@@ -700,7 +700,7 @@ The dungeon is structured as a vertical climb. Sable and Lira enter through the 
 
 Beneath Millhaven's extraction pit, the earth opens into a natural cavern system where raw ley energy flows like rivers of light. The Depths are what ley lines look like when they're exposed — veins of brilliant, shifting color running through dark stone, branching and converging in patterns that almost look intentional. The air hums with magical resonance. Unprotected exposure causes hallucinations, euphoria, and eventually magical burn — a condition where the body absorbs more energy than it can contain.
 
-The Compact has built scaffolding and pumping rigs into the upper levels, but below that, the Depths are untouched. The deeper you go, the older the stone, and the carvings begin — the same geometric patterns found in the Ember Vein, but vaster and more complex. At the deepest accessible point, a sealed door bears the symbol of the Pendulum. It cannot be opened. Maren theorizes it leads to wherever the Pendulum was originally held before it was moved to the Ember Vein.
+The Compact has built scaffolding and pumping rigs into the upper levels, but below that, the Depths are untouched. The deeper you go, the older the stone, and the carvings begin — the same geometric patterns found in the Ember Vein, but vaster and more complex. At the deepest accessible point, a sealed door bears the symbol of the Pendulum. It cannot be opened during the Act II visit. Maren theorizes it leads to wherever the Pendulum was originally held before it was moved to the Ember Vein.
 
 **Key features:**
 - Raw ley energy rivers (visual spectacle; environmental hazard — magical burn timer)

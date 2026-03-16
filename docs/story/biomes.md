@@ -547,7 +547,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 - No random encounters in most ruin sections -- the danger is puzzle-based and boss-focused
 
 **Locations Using This Biome:**
-- Ember Vein (introductory scale -- small, 4 rooms, ember-orange inlay)
+- Ember Vein (introductory scale -- small, 4 floors, ember-orange inlay)
 - Archive of Ages (full scale -- vast, knowledge-based puzzles, pictographic walls)
 - Ley Line Depths (partial -- ancient carvings visible at the deepest level, sealed door)
 - Dry Well of Aelhart (full scale -- 7 floors, progressive descent from village well to ley-line nexus, waterworks, residential quarters, deep archive, gravity-warped depths, and the Wellspring)
@@ -942,7 +942,7 @@ When Cael closes the door and the Pallor withdraws, the biomes do not revert to 
 | **Coastal / Harbor** | The tide normalizes. The rigs are not rebuilt -- the offshore extraction is over. The harbor is quieter, smaller, focused on fishing and trade rather than industrial extraction. Bellhaven's stilts district has been partly reclaimed by the sea. |
 | **Ashlands** | Ashgrove's ash is still pale, but tiny green shoots appear at the edges of the clearing -- the first growth in a thousand years. The First Tree stump has a single bud. The footprints are still preserved. Nothing is erased. |
 | **Ley Line Nexus** | The ley energy stabilizes into something new. The colors are different -- less pure blue and amber, more complex, iridescent, shifting. The energy is alive in a way it was not before. Wild magic drifts like fireflies at the Convergence meadow. |
-| **Underground / Cavern** | The Compact tunnels are partly reclaimed by nature -- roots and water. The ancient ruins are unchanged. They were here before the Pallor and will be here after. The sealed door in the Ley Line Depths is still sealed. Some mysteries remain. |
+| **Underground / Cavern** | The Compact tunnels are partly reclaimed by nature -- roots and water. The ancient ruins are unchanged. They were here before the Pallor and will be here after. The sealed door in the Ley Line Depths, opened in Act III with the Archivist's Codex, now stands ajar -- the Ley Confluence beyond it hums with stabilized energy. Some mysteries remain. |
 | **The Pallor Wastes** | The Wastes do not exist in the Epilogue. The Convergence is a meadow. The ten-mile radius is recovering -- still scarred (petrified trees standing among new growth) but alive. The static is gone. Sound returns. The first birdsong the player hears in the Wastes' former territory is the most important sound in the game. |
 
 ---
