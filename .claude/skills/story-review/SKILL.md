@@ -314,10 +314,22 @@ canonical description. Common mismatches:
 - Variant counts — if a dungeon now spans multiple acts with different
   states, it likely needs more than 1 variant
 
+**Prerequisite location accessibility (frequently missed):**
+When a dungeon is added to an act's events.md table, verify that the
+PARENT LOCATION containing the dungeon is also listed as accessible in
+that act. If a dungeon is inside Caldera but Caldera the city isn't
+listed as opening in Act II, there is a logical gap — the player can't
+reach the dungeon entrance. Check:
+- For each dungeon entry in events.md, identify the containing city
+  or region (from locations.md or dungeons-world.md)
+- Verify the containing location has its own entry in the same act's
+  location state table (or is already established as accessible from a
+  prior act)
+
 Flag: value mismatches, conflicting unlock methods, incorrect counts,
 stale descriptions that don't match current data, stale classification
 labels, summary table rows not updated, incorrect table section
-placement.
+placement, missing prerequisite location entries.
 
 ---
 
@@ -354,7 +366,8 @@ not just the diff hunks — for stale references to that entity.
 **Search procedure (mandatory — do not skip steps):**
 1. Search for the entity NAME (e.g., "Dry Well", "Ley Line Depths",
    "Ember Vein") across ALL changed files using grep. Read every match
-   location plus ±10 lines of context.
+   location plus ±10 lines of context. Do not skip matches even if
+   there are many — read EVERY one.
 2. Search for the entity's KEY ATTRIBUTES — distinctive features that
    other sections may describe without using the entity name. Examples:
    - "sealed door" (key attribute of Ley Line Depths)
@@ -364,6 +377,20 @@ not just the diff hunks — for stale references to that entity.
    Run grep for each key attribute across ALL changed files.
 3. In each match, check whether the text reflects the NEW state or the
    OLD state. If old, it is a stale reference — flag it.
+
+**Assessment rigor (CRITICAL — #1 reason stale refs slip through):**
+The search finds matches. The failure is in ASSESSMENT. When reading a
+match, do NOT give it the benefit of the doubt. Apply this test:
+- Would a fresh reader, seeing ONLY this paragraph, get the correct
+  current state of the entity? If the paragraph says "inaccessible" or
+  "unknown" or "no one has reached" for something that IS now accessible
+  and known, it is stale — even if the paragraph is in a section about
+  an earlier act. Sections about earlier acts should say "in Act II,
+  this cannot be opened" not just "this cannot be opened" unqualified.
+- Words that signal staleness: "unknown", "inaccessible", "mystery",
+  "no one has reached", "fate is unknown", "seeds future content",
+  "unanswered", "collapsed" (when deep floors survived). These are
+  red flags when applied to entities whose state changed in this PR.
 
 **Common hiding spots (these are missed most often):**
 - Description paragraphs ABOVE the key features bullets (the prose
