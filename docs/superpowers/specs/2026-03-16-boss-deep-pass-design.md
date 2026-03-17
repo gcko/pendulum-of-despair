@@ -338,8 +338,8 @@ Massive elk corrupted by the Pallor. Dominant creature of the highland forest --
 The current Ley Rupture Guardian mini-boss elevated to full boss. A Compact security automaton guarding the factory's ley tap. Absorbed corrupted energy and went haywire -- doing exactly what it was programmed to do (protect the factory) but with broken logic.
 
 **NPC Connections:**
-- **Forgemaster Elyn Drayce** built this automaton and the ley tap. Evidence from this fight cracks his facade in the sidequest chain.
-- **Lira** has unique dialogue: "This is Drayce's failsafe. He built it to protect the tap if anything went wrong. But it thinks *we* are what went wrong."
+- **Forgemaster Elyn Drayce** built this automaton and the ley tap. Evidence from this fight cracks her facade in the sidequest chain.
+- **Lira** has unique dialogue: "This is Drayce's failsafe. She built it to protect the tap if anything went wrong. But it thinks *we* are what went wrong."
 
 **Vaelith Breadcrumb:** Ley tap destabilized by a resonance frequency matching the tuning fork artifacts. Connects Ashmark factory failure to the larger pattern.
 
@@ -437,7 +437,7 @@ COMPACT CORRUPTION:
 ### Key Narrative Through-Lines
 
 - Vaelith's tuning forks connect the Ley Leech, Forge Warden, Howling Gale, and the Ley Line Depths artifact
-- Drayce's engineering connects the Ironbound and Forge Warden -- his machines keep consuming people
+- Drayce's engineering connects the Ironbound and Forge Warden -- her machines keep consuming people
 - Journal fragments foreshadow and invert: the previous cycle's forgewright failed, but Lira succeeds
 - Brant's Interlude encounter reveals Vaelith planted the fatalism that made his cowardice at Ironmark feel inevitable -- connecting the siege, Brant's self-loathing, and Vaelith's manipulation into a single thread
 - The Pallor Hollow and Pallor Trials are personal, not orchestrated -- the Pallor does not need Vaelith to break people
