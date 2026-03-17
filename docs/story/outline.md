@@ -19,6 +19,10 @@ At the ruin, they find **the Pendulum of Despair** — inert, unremarkable, but 
 - They flee into the Thornmere Wilds. **Torren**, a ranger and spirit-speaker, finds them. He recognizes the Pendulum from old spirit-lore.
 - Torren insists they seek out **Maren**, an exiled Valdris court mage living deep in the Wilds.
 
+### The Stranger at the Mine
+
+As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on. They do not mention Vaelith again.
+
 ### The First Warning
 
 Maren examines the Pendulum and delivers the first warning: *"This thing has no power. It's a door. And something on the other side knows you opened it."*
@@ -27,13 +31,13 @@ Maren examines the Pendulum and delivers the first warning: *"This thing has no 
 
 The full party is assembled. They decide to bring the Pendulum to the Valdris capital for safekeeping. Cael begins having nightmares — brief, dismissable. The player might not even notice.
 
-As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on. They do not mention Vaelith again.
-
 ---
 
 ## Act II: The Fraying
 
-### The Road to Valdris
+### Act I–II Transition: The Road to Valdris
+
+<!-- This section covers the journey between acts. Act II proper begins at pendulum_to_capital (arriving at Valdris). -->
 
 The journey back to the capital takes several days through disputed country. On the second evening, Torren spots a figure on a ridge above the road — still, watching, gone by the time the party doubles back. The campsite they find is recently abandoned: two teacups still warm, a small fire tamped down with care. A single page of journal sits on a flat stone, covered in script so archaic that Torren can only piece together fragments. The words he manages to read describe a cycle — something about a door opening and closing across ages. He cannot tell if it is prophecy or history. The party does not know who left it or who the second teacup was for.
 

@@ -4565,7 +4565,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 **Boss: The Ashen Ram (10000 HP)**
 
-A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction site in Corrund. The Compact thinks the Ram is their weapon. It is Vaelith's.
+A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction yard at Ironmark. The Compact thinks the Ram is their weapon. It is Vaelith's.
 
 **Phase 1 (10000-6000 HP): Ranged Engagement**
 The Ram advances toward the walls. The party fights from the battlements.

@@ -1006,13 +1006,13 @@ Characters who don't belong to any single faction, or who operate across faction
 
 **Location:** Bellhaven, Stilts District (a dockside tavern, drinking alone)
 
-**Role:** Former boring engine operator, Ashmark Factory
+**Role:** Former boring engine operator, Carradan Rail Tunnels
 
-**Backstory:** Gavren was the second operator on the boring engine shift that created the Ironbound -- the Compact's experimental war construct. When the engine's ley conduits surged during the forging process, the first operator was consumed by the energy feedback. Gavren ran. He has been running ever since. He ended up in Bellhaven because it is as far from Ashmark's forges as you can get without crossing water. He drinks to forget the sound the first operator made. He does not drink enough.
+**Backstory:** Gavren was the second operator on the boring engine shift that created the Ironbound -- the boring engine that became the Ironbound. When the engine's ley conduits surged during a deep tunnel excavation, the first operator was consumed by the energy feedback. Gavren ran. He has been running ever since. He ended up in Bellhaven because it is as far from the tunnels as you can get without crossing water. He drinks to forget the sound the first operator made. He does not drink enough.
 
-When he fled the factory, he dropped his own Operator's Badge in the wreckage -- his shift identification, stamped with his name, the Ashmark Forge-Masters' Guild seal, and the date of the incident. The first operator had no badge to leave behind; he was consumed entirely by the machine. Gavren has thought about going back for his badge every day since. He never has.
+When he fled the tunnels, he dropped his own Operator's Badge in the wreckage -- his shift identification, stamped with his name, the Ashmark Forge-Masters' Guild seal, and the date of the incident. The first operator had no badge to leave behind; he was consumed entirely by the machine. Gavren has thought about going back for his badge every day since. He never has.
 
-Weeks before the incident, a grey stranger visited the factory and spoke privately with the foreman about the ley conduit calibration. Gavren overheard fragments of the conversation from behind a cooling stack but did not understand the significance until much later. The stranger left without introducing himself. The conduit settings the foreman used on the day of the incident matched what the stranger had described.
+Weeks before the incident, a grey stranger visited the tunnels and spoke privately with the foreman about the ley conduit calibration. Gavren overheard fragments of the conversation from behind a cooling stack but did not understand the significance until much later. The stranger left without introducing himself. The conduit settings the foreman used on the day of the incident matched what the stranger had described.
 
 **Dialogue hints:**
 - *"I was the second man on the engine. There were two of us. Now there is one."*

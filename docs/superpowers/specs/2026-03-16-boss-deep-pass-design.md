@@ -58,7 +58,7 @@ The unwinnable fight does NOT kill the party. It functions as a narrative transi
 - Screen fades to grey (not the standard game-over screen)
 - A cutscene plays showing the party injured but alive
 - The party is shown recovering, reinforcing that they survived but were outclassed
-- At Valdris: the party wakes in the aftermath of the siege, the city fallen
+- At Valdris: the party wakes in the aftermath of the siege, Valdris wounded and leaderless
 
 ### Penultimate Boss Fight Mechanics (Appearance 7)
 
@@ -254,7 +254,7 @@ The Compact's ethos taken to its nightmare conclusion -- progress at any cost, t
 
 ### Nature
 
-A siege construct -- part Carradan engineering, part Pallor corruption. The Compact built it as a battering ram to breach Valdris's walls. But Vaelith visited the construction site (a worker in Corrund mentions a "consultant" who made design suggestions). The Ram was built with Pallor-resonant materials woven into its frame. When activated, it radiated despair, breaking defenders' will before the physical assault reached them.
+A siege construct -- part Carradan engineering, part Pallor corruption. The Compact built it as a battering ram to breach Valdris's walls. But Vaelith visited the construction yard (Tollen, a military engineer at Ironmark, notices a "consultant" who made design suggestions). The Ram was built with Pallor-resonant materials woven into its frame. When activated, it radiated despair, breaking defenders' will before the physical assault reached them.
 
 ### Why It Matters
 

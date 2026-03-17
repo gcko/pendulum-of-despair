@@ -195,7 +195,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Accessible areas:** The Stilts (harbor district, NPC hub), merchant prince manor district, Sable's childhood neighborhood (character content).
 - **Blocked areas:** Offshore rigs (referenced, not accessible until the Sunken Rig optional dungeon in Interlude).
 - **Environmental details:** Ironclad barges and submersible rigs dominate the harbor. Foreign merchants crowd the market quarter. Laws enforced loosely. Sable knows this place -- her dialogue changes here, more confident, more bitter. The Breakwater fortification is intact.
-- **Vaelith's passage:** A charming traveler has been buying drinks at the Stilts taverns and asking about local history, maritime trade routes, and the old boring engine projects. A former engine operator (Gavren) is drinking himself into oblivion in one of the dockside taverns, haunted by a visit from a polite scholar who explained, weeks before the incident, exactly how the Ironbound forging would go wrong.
+- **Vaelith's passage:** A charming traveler has been buying drinks at the Stilts taverns and asking about local history, maritime trade routes, and the old boring engine projects. A former engine operator (Gavren) is drinking himself into oblivion in one of the dockside taverns, haunted by a visit from a polite scholar who explained, weeks before the incident, exactly how the boring run would go wrong.
 
 ##### Interlude State
 - **What changed:** Several submersible rigs have surfaced unmanned, crews lost to the Pallor. The harbor economy is disrupted. One rig has drifted to shore (the Sunken Rig dungeon).

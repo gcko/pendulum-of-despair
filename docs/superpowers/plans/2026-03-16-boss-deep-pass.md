@@ -100,7 +100,7 @@ Find the `## Cross-Faction and Unaffiliated NPCs` section and read the last few 
 
 **Backstory:** Vaelith was a scholar-diplomat in the previous civilization. When the Pallor rose in their era, they were the one everyone trusted to find a solution. Instead, they found the Pallor fascinating and chose it willingly -- the only person in recorded history to embrace Despair not out of brokenness but out of intellectual curiosity. The Pallor granted them what they wanted: eternity to observe. For 800 years, Vaelith has walked the continent between cycles, studying people, destabilizing ley nodes with precisely crafted tuning forks, and waiting for the next cycle to begin. They have watched every set of heroes try and fail. They know how hope dies because they have catalogued every variation.
 
-Their influence in the current cycle extends far beyond direct confrontation. They manipulated Commissar Brant's fatalism, consulted on the Ashen Ram's design at a Corrund construction site, destabilized ley nodes across the continent, and disturbed Grey Bounty creatures in the Wilds. Records in the Archive of Ages describe a diplomat from the previous cycle who "walked into the grey and did not return." A faded portrait in Valdris Crown's forgotten gallery matches their appearance.
+Their influence in the current cycle extends far beyond direct confrontation. They manipulated Commissar Brant's fatalism, consulted on the Ashen Ram's design at the Ironmark construction yard, destabilized ley nodes across the continent, and disturbed Grey Bounty creatures in the Wilds. Records in the Archive of Ages describe a diplomat from the previous cycle who "walked into the grey and did not return." A faded portrait in Valdris Crown's forgotten gallery matches their appearance.
 
 **Dialogue hints:**
 - *"Such a fragile little thing to build hope around."* (Ember Vein, examining the Pendulum)
@@ -439,7 +439,7 @@ Use Pattern B format with the three phases from the spec: ranged engagement, clo
 ```markdown
 **Boss: The Ashen Ram (10000 HP)**
 
-A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction site in Corrund. The Compact thinks the Ram is their weapon. It is Vaelith's.
+A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction yard at Ironmark. The Compact thinks the Ram is their weapon. It is Vaelith's.
 
 **Phase 1 (10000-6000 HP): Ranged Engagement**
 The Ram advances toward the walls. The party fights from the battlements.
