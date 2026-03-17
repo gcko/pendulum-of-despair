@@ -595,6 +595,85 @@ Flag: partial renames, orphaned references to removed content.
 
 ---
 
+#### Pass I: Item & Prop Continuity (Script Supervisor Pass)
+
+Inspired by Hollywood script supervision continuity reports. Track every
+item, key item, and quest reward through its full lifecycle: where it is
+created/dropped, who possesses it, what triggers it enables, and where
+it is consumed or referenced.
+
+**Item lifecycle tracking:**
+For every item introduced or referenced in the diff, trace its chain:
+1. **Source:** Where does the item originate? (boss drop, chest, quest
+   reward, NPC gift, crafting)
+2. **Acquisition path:** Is it a guaranteed reward or RNG drop? Is it
+   listed in BOTH a Drop line AND a Treasure list? (Duplicate listing
+   creates ambiguity — pick one canonical path.)
+3. **Trigger chain:** If the item is a key item that triggers NPC
+   dialogue, quest progression, or mechanic unlocks, verify the trigger
+   condition matches the source. If an NPC requires "Operator's Badge"
+   but the boss drops "Operator's Log," the chain is broken.
+4. **Possession logic:** If an NPC "carries" an item, the party cannot
+   also "find" that same item elsewhere. If both are true, clarify
+   (e.g., the NPC has a copy, or the party finds a different version).
+
+**Character knowledge tracking:**
+Track what each character KNOWS at each point in the story:
+- If an NPC describes an event they "witnessed," verify they were
+  present at that event per the timeline.
+- If an NPC describes "overhearing" something, they should not later
+  be described as having had a "direct conversation."
+- If a character "doesn't know" something in Act II, they should not
+  reference that knowledge until they learn it in a later act.
+
+**Duplicate acquisition paths:**
+Scan all boss Drop lines and Treasure lists in dungeon docs. Flag any
+item that appears in BOTH the Drop section (implies RNG/combat loot)
+and the Treasure section (implies guaranteed/environmental pickup) of
+the same dungeon. Choose one canonical path.
+
+Flag: broken item chains, duplicate acquisition paths, character
+knowledge contradictions, possession logic errors.
+
+---
+
+#### Pass J: Semantic Consistency & Character Voice
+
+Inspired by screenplay script coverage analysis. Check that descriptions
+of the same entity or event MEAN the same thing across files, not just
+use the same names.
+
+**Semantic comparison:**
+When the same event is described in multiple files, compare not just
+names/values but the MEANING:
+- "The Ram stalls and goes silent" vs "the party fights and destroys
+  the Ram" — these describe different outcomes even though both involve
+  the Ram. One is passive failure, the other is active combat victory.
+- "A visit from a polite scholar who explained" vs "overheard fragments
+  of a conversation from behind a cooling stack" — one is direct
+  communication, the other is indirect eavesdropping.
+- "Her unit was killed" vs "she was separated from her unit" vs "lost
+  her unit to the Pallor" — same character, three incompatible accounts
+  of the same event.
+
+**Character voice consistency:**
+For major characters with significant new dialogue or descriptions,
+verify their voice matches their established personality:
+- Does their dialogue match their documented personality traits?
+- Do their actions match their stated motivations?
+- Is their level of knowledge consistent with what they should know
+  at that point in the story?
+
+**Role/title consistency:**
+When a character's role is referenced (e.g., "knight-captain," "garrison
+commander," "intelligence agent"), verify it matches their canonical
+role in npcs.md or characters.md. Role misattribution is an ISSUE.
+
+Flag: semantic contradictions, voice inconsistencies, role/title
+mismatches, incompatible accounts of the same event.
+
+---
+
 ### 4. Verdict
 
 Categorize every finding:

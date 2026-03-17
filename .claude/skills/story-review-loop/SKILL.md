@@ -10,7 +10,7 @@ description: >
 # Story Review Loop
 
 Automate multiple rounds of story review + fix on a PR. Each round
-dispatches **four specialized review agents** in parallel, fixes any
+dispatches **five specialized review agents** in parallel, fixes any
 issues found, and commits locally. After N rounds (or when a round comes
 back clean), push all commits at once and post a summary to the PR.
 
@@ -71,7 +71,8 @@ digraph review_loop {
         agent1 [label="Agent 1: PROPAGATION\ngrep every entity across\nALL changed files\nCompare descriptions", fillcolor="#ccffcc"];
         agent2 [label="Agent 2: NARRATIVE\nFind every event described\nin multiple files\nCompare outcomes/details", fillcolor="#ccffcc"];
         agent3 [label="Agent 3: TECHNICAL\nPasses A, B, C, D, G\nElement names, pronouns\nMechanics, quests", fillcolor="#ccffcc"];
-        agent4 [label="Agent 4: DEVIL'S ADVOCATE\nPick 5-8 entities at random\nRead ALL mentions cold\nWhat did others miss?", fillcolor="#ffcccc"];
+        agent4 [label="Agent 4: SCRIPT SUPERVISOR\nTrack items through lifecycle\nDuplicate drops, possession\nCharacter knowledge", fillcolor="#ffffcc"];
+        agent5 [label="Agent 5: DEVIL'S ADVOCATE\nPick 5-8 entities at random\nRead ALL mentions cold\nWhat did others miss?", fillcolor="#ffcccc"];
     }
 
     merge [label="Merge + deduplicate\nall findings", fillcolor="#fff3e6"];
@@ -85,10 +86,12 @@ digraph review_loop {
     start -> agent2;
     start -> agent3;
     start -> agent4;
+    start -> agent5;
     agent1 -> merge;
     agent2 -> merge;
     agent3 -> merge;
     agent4 -> merge;
+    agent5 -> merge;
     merge -> clean;
     clean -> fix [label="issues found"];
     clean -> push [label="all clean — early exit"];
@@ -98,6 +101,7 @@ digraph review_loop {
     count -> agent2 [label="yes"];
     count -> agent3 [label="yes"];
     count -> agent4 [label="yes"];
+    count -> agent5 [label="yes"];
     count -> push [label="no — done"];
 }
 ```
@@ -201,7 +205,7 @@ or "No narrative coherence issues found."
 **Prompt template:**
 ```
 You are the TECHNICAL REVIEWER. Run the standard story-review
-validation passes (A through H) as defined in the story-review
+validation passes (A through J) as defined in the story-review
 skill.
 
 Changed files: [list]
@@ -211,10 +215,14 @@ Focus on:
 - Pass B: Timeline/act consistency, flag ordering
 - Pass C: Layout validity, encounter table completeness
 - Pass D: Quest completeness, NPC existence
-- Pass E: Cross-doc value matching (HP, flags)
+- Pass E: Cross-doc value matching (HP, flags, narrative outcomes)
 - Pass F: Internal self-consistency
 - Pass G: Mechanic completeness, undefined references
 - Pass H: Diff-specific (renames, orphaned references)
+- Pass I: Item/prop continuity (lifecycle, duplicate acquisition,
+  possession logic, character knowledge tracking)
+- Pass J: Semantic consistency (meaning comparison, character voice,
+  role/title accuracy)
 
 IMPORTANT: Only flag issues in content ADDED or MODIFIED by this
 PR. Pre-existing issues in unchanged lines are out of scope.
@@ -222,7 +230,46 @@ PR. Pre-existing issues in unchanged lines are out of scope.
 Report per-pass PASS/FAIL with specific findings.
 ```
 
-#### Agent 4: Devil's Advocate
+#### Agent 4: Script Supervisor (Item & Continuity)
+
+**Mission:** Track every item, prop, and key item through its full
+lifecycle. Inspired by Hollywood script supervision continuity reports.
+
+**Prompt template:**
+```
+You are the SCRIPT SUPERVISOR. Your job is tracking items, props,
+and character knowledge through their full lifecycle — like a
+Hollywood continuity supervisor catching errors between takes.
+
+Changed files: [list]
+
+Instructions:
+1. Identify every ITEM introduced in the diff (boss drops, chest
+   contents, quest rewards, key items, crafting materials).
+2. For EACH item, trace its lifecycle:
+   - SOURCE: Where does it originate? (boss drop, treasure, NPC)
+   - ACQUISITION: Is it guaranteed or RNG? Is it listed in BOTH
+     a Drop line AND a Treasure list? (flag duplicates)
+   - TRIGGER: If it's a key item, what does it unlock? Does the
+     unlock condition match the source location?
+   - CONSUMPTION: Where is it used or referenced later?
+3. For every NPC with a TRIGGER condition involving a key item:
+   - Verify the item exists in the stated source location
+   - Verify no possession logic contradiction (NPC "carries" item
+     that party must also "find" separately)
+4. For every CHARACTER appearing in new content:
+   - Track what they KNOW at each story point
+   - Flag if they describe "witnessing" something they weren't
+     present for
+   - Flag if they describe "overhearing" in one file but having
+     a "direct conversation" in another
+
+Report: list of broken item chains, duplicate acquisitions,
+possession contradictions, knowledge inconsistencies, or
+"No continuity issues found."
+```
+
+#### Agent 5: Devil's Advocate
 
 **Mission:** Fresh eyes. Pick entities at random and read them cold
 across all files. What did the other agents miss?
@@ -342,10 +389,10 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
    ## Per-Round Results
 
-   | Round | Propagation | Narrative | Technical | Advocate | Unique Issues | Fixed |
-   |-------|-------------|-----------|-----------|----------|---------------|-------|
-   | 1 | 3 | 2 | 4 | 1 | 8 (2 dupes) | 8 |
-   | 2 | 0 | 0 | 0 | 0 | 0 | 0 |
+   | Round | Propagation | Narrative | Technical | Script Sup. | Advocate | Unique | Fixed |
+   |-------|-------------|-----------|-----------|-------------|----------|--------|-------|
+   | 1 | 3 | 2 | 4 | 2 | 1 | 10 | 10 |
+   | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
    ## Agent Effectiveness
 
@@ -353,7 +400,8 @@ After the loop ends (either all N rounds complete or an early clean exit):
    |-------|-------------|------------------------------|
    | Propagation | 3 | 2 |
    | Narrative | 2 | 1 |
-   | Technical | 4 | 3 |
+   | Technical | 4 | 2 |
+   | Script Supervisor | 2 | 1 |
    | Advocate | 1 | 1 |
 
    ## Commits Pushed
@@ -379,7 +427,7 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 - **Local commits, single push.** Commit after each round but only push
   once at the end. This keeps the PR history clean.
-- **Four agents per round.** Always dispatch all four. Do NOT skip the
+- **Five agents per round.** Always dispatch all four. Do NOT skip the
   devil's advocate — it catches what the structured agents miss.
 - **Parallel dispatch.** Launch all four agents simultaneously using a
   single message with multiple Agent tool calls.
