@@ -362,7 +362,7 @@ A massive Carradan boring engine fused with its operator during a Pallor corrupt
 **Phase 1 (8000-4000 HP): The Machine**
 - **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
 - **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
-- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stun (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stop (1 turn). Rearranges the arena by blocking some positions and opening others.
 - **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
 
 **Phase 2 (below 4000 HP): The Operator**
@@ -705,7 +705,7 @@ Vaelith shifts to Pallor-fueled abilities. Their form begins to destabilize -- c
 
 **On defeat:** Vaelith does not die dramatically. They sit down. They look at the party -- really look, for the first time without the lens of centuries of contempt. "Eight hundred years. Every cycle, the same. And you... you actually changed something." They dissolve into grey mist. Not destroyed -- released. The eternity they chose finally ends.
 
-**Lira's Special Interaction:** Forgewright command during Reality Warp re-forges the weapon (timed input). If Lira has the Boring Engine Schematic from the Caldera Forge Depths, re-forge timing window is extended by 1 second.
+**Lira's Special Interaction:** Forgewright command during Reality Warp re-forges the weapon (timed input). If Lira has the Boring Engine Schematic from the Rail Tunnels, re-forge timing window is extended by 1 second.
 
 **Torren's Special Interaction:** Spiritcall can sense Vaelith's connection to the Pallor. During Phase 2, Spiritcall reveals Vaelith's next attack (telegraphs the move for 1 turn).
 

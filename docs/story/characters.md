@@ -106,7 +106,7 @@ Vaelith --[pattern recognition]> Lira
 Vaelith --[noted "promising"]--> Torren
 Maren <--[Archive records match]--> Vaelith
 Riven <--[creatures disturbed]--> Vaelith
-Vaelith --[consulted on design]> Forgemaster Elyn Drayce
+Vaelith --[anonymous consultant]--> Tollen (Ashen Ram alloy)
 ```
 
 ## The Tragic Romance: Cael and Lira

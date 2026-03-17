@@ -1856,7 +1856,7 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 
 **Maren's Special Interaction:** If Maren has Pallor Sight (from her trial), critical hit rate doubled for all party members.
 
-**Sable's Special Interaction:** Unbreakable Thread prevents Reality Tear effects. Cannot be removed from fight.
+**Sable's Special Interaction:** Unbreakable Thread prevents forced removal from battle. Sable cannot be targeted by Vaelith's Unraveling for removal effects.
 
 **Weakness:** Spirit (125%).
 **Resistance:** Void (50%), Frost (75%).

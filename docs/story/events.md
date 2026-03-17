@@ -401,7 +401,7 @@ Full narrative threads for every NPC marked "ties to main quest" or "ties to wor
 
 ### Vaelith, the Ashen Shepherd (Ties to Main Quest)
 
-**Act I:** Vaelith appears once, as a charming curiosity rather than a threat. At the Ember Vein, they are found near the mine entrance after the Vein Guardian falls — a well-spoken stranger with grey-flecked robes and a warm smile, asking the party what they found underground. Vaelith shares folklorist observations about the mine's history, then bows and walks into the dark.
+**Act I:** Vaelith appears once, as a charming curiosity rather than a threat. At the Ember Vein, they are found near the mine entrance after the Vein Guardian falls — a grey-cloaked stranger leaning against a broken stone column as though they had been waiting. They introduce themselves pleasantly and ask to see the Pendulum. Edren refuses. Vaelith studies the artifact from a polite distance and murmurs about what "a fragile little thing it is to build hope around." Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste.
 
 **Act I-II Transition:** On the road to the capital, the party spots a lone figure on a ridge above the road — watching, gone by the time they double back. The abandoned campsite they find has two grey teacups still warm and a journal page in archaic script. If Torren is present, he notes the stranger's scent is wrong: *"They smell like old ash. Not campfire ash. The kind that's left after something burns from the inside."* Vaelith does not engage. Both encounters are easy to forget — and designed to be.
 

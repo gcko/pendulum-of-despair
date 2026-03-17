@@ -1124,7 +1124,7 @@ Their influence in the current cycle extends far beyond direct confrontation. Th
 
 **Story relevance:** Ties to world event
 
-**Act presence:** Interlude: Found in Caldera's undercity as part of Sera Linn's resistance network. Joins the party as a guest NPC during the "Unbowed" escort mission. Fights alongside the party against the Pallor Nest Mother (low stats, high courage). If she survives the mission, she becomes a recurring presence in Caldera -- organizing the workers, coordinating with Sera. Epilogue: Appears as a militia leader during Caldera's reconstruction.
+**Act presence:** Interlude: Found in Caldera's undercity as part of Sera Linn's resistance network. Joins the party as a guest NPC during the "Unbowed" escort mission. Fights alongside the party against the Pallor Nest Mother (low stats, high courage). If she remains standing during the mission (at 0 HP she is incapacitated but survives), she becomes a recurring presence in Caldera -- organizing the workers, coordinating with Sera. Epilogue: Appears as a militia leader during Caldera's reconstruction.
 
 ---
 

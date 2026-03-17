@@ -350,7 +350,7 @@ The current Ley Rupture Guardian mini-boss elevated to full boss. A Compact secu
 
 The Pallor Nest Mother is the largest Pallor creature encountered outside main story boss contexts. A brood entity spawning the lesser creatures that infest the lower passages. The tunnel is its den -- and the safe route to the canal district runs right through it.
 
-**NPC Connection:** Among the workers is **Kerra**, a former Valdris soldier who ended up in Caldera after the siege and joined Sera's resistance. She lost her entire unit to the Pallor and is leading civilians to safety despite being barely functional herself. She fights alongside the party as a guest NPC (low stats, high courage). If she survives, she appears later as a militia leader during Caldera's reconstruction and in the epilogue.
+**NPC Connection:** Among the workers is **Kerra**, a former Valdris soldier who ended up in Caldera after the siege and joined Sera's resistance. She lost her entire unit during the Valdris siege and is leading civilians to safety despite being barely functional herself. She fights alongside the party as a guest NPC (low stats, high courage). If she survives, she appears later as a militia leader during Caldera's reconstruction and in the epilogue.
 
 **No Vaelith connection** -- ground-level Pallor horror. Not everything is orchestrated.
 
