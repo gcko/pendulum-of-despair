@@ -314,6 +314,14 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 - Referenced content actually exists in the target document
 - References are bidirectional where expected
 
+**Narrative outcome consistency (CRITICAL — frequently missed):**
+When a story beat (battle, siege, boss defeat, betrayal) is described in
+multiple files (outline.md, events.md, dynamic-world.md), the OUTCOME
+must be described consistently. "City fallen" in events.md but "wounded
+and leaderless" in outline.md is a value mismatch — these describe
+different degrees of destruction. Check that adjectives, severity, and
+consequences match across all files describing the same event.
+
 **New detail propagation (CRITICAL — missed when multiple files updated):**
 When a location state description (`dynamic-world.md`) or event thread
 (`events.md`) introduces NEW backstory or lore for a named NPC, verify
