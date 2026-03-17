@@ -46,6 +46,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Palette/atmosphere shifts:** Stage 0.5 corruption -- not from the Pallor overlay system, but from decline. Ley-lamps flicker (1 in 4 are dim). The gold accent color is muted. Clouds linger. The sky is overcast more often than clear.
 - **New/removed accessible areas:** Cael's quarters inaccessible (guarded). War council chamber in the Keep opens. The eastern wall battlements become accessible for the Carradan assault set piece. After the assault: the eastern wall collapses (major tile replacement -- intact wall tiles swapped for rubble, fire damage, breach).
 - **Environmental details:** Markets half-empty. Stall awnings torn and unmended. NPCs whisper about border losses. A refugee family from Greyvale sits against the Lower Ward wall. Guards are tense, short-tempered. At night, only three of the Seven Towers glow. After the assault: fires in the Lower Ward. Bodies under sheets. The eastern wall is a ruin of broken limestone and scattered siege debris. The throne room has blood on the flagstones. King Aldren's chair is empty.
+- **Vaelith's passage:** A faded portrait in the forgotten gallery of the Catacombs (Floor 2) has been noticed by more visitors than usual -- an 800-year-old painting labeled "Diplomat-Emissary to the Grey Accord" that predates any known historical record. Old Harren at the Crown's Rest inn describes a polite guest who knew architectural details about the building that no living person should know.
 
 ##### Interlude State
 - **Major transformation:** The capital has fractured into noble house territories. Makeshift barricades of furniture, carts, and rubble divide the Citizen's Walk into controlled zones. The Court Quarter is locked down by Lord Chancellor Haren's faction. The Lower Ward is the most accessible but most damaged.
@@ -74,11 +75,16 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Offscreen state (for NPC dialogue):** Aelhart has been occupied by Compact forces. The inn is a garrison post. The dry well remains dry. The Carradan trader is now the only merchant. The farmers work for Compact supply requisitions.
 
 ##### Interlude State (Dry Well dungeon access)
-- **What changed:** The ley line instability has cracked the well's foundation open. The village itself is not a full map -- the player accesses only the well and its three-room mini-dungeon beneath. The village square visible around the well entrance shows: the inn's thatch roof partially collapsed, Compact supply crates stacked against buildings, no civilians visible, a Compact flag on a pole.
+- **What changed:** The ley line instability has cracked the well's foundation open. The village itself is not a full map -- the player accesses only the well and its 7-floor dungeon beneath (Floors 1-4 available in the Interlude). The village square visible around the well entrance shows: the inn's thatch roof partially collapsed, Compact supply crates stacked against buildings, no civilians visible, a Compact flag on a pole.
 - **Environmental details:** The wheat fields are fallow. The stone cottages have Compact graffiti (unit markers). The border road has wagon ruts. The silence is the loudest thing -- in Act I this was a place of birdsong and conversation.
 
+##### Act III State (Deep Well access)
+- **What changed:** The well entrance remains accessible. With the Archivist's Codex (obtained from the Archive of Ages), the sealed door on Floor 4 can be translated and opened, unlocking Floors 5-7: the Deep Archive, Warped Depths (gravity anomaly maze), and The Wellspring (ley line nexus connecting to the continent-spanning pre-civilization network). Recommended level 30-36.
+- **Visual state:** The village square is unchanged from the Interlude -- still occupied, Compact flag still visible, no civilians. The well entrance is the only point of interaction.
+- **Environmental details:** The deeper floors reveal the full scope of what lies beneath Aelhart: the builders' living quarters, echo tile visions of the pre-civilization inhabitants, and a final translation puzzle at the Wellspring. Edren's Family Crest (Floor 4) reveals his ancestors were descendants of the last generation of builders. The Wellspring Guardian boss guards Floor 7. Completing the full descent transforms Aelhart from a quaint starting village into the cap on something immense.
+
 ##### Epilogue State
-- **Not directly visitable** (the village is referenced in NPC dialogue and visible from the overworld). The Compact forces have left. Aelhart is slowly repopulating. The dry well has been capped with new stone. The wheat fields show early spring green. Recovery, not restoration.
+- **Not directly visitable** (the village is referenced in NPC dialogue and visible from the overworld). The Compact forces have left. Aelhart is slowly repopulating. If the player completed the Water of Life puzzle (Floor 3), the dry well flows with clear water and villagers gather around it; otherwise, the well has been capped with new stone. The wheat fields show early spring green. Recovery, not restoration.
 
 ---
 
@@ -144,6 +150,8 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 #### Corrund (Capital)
 
+**Vaelith's passage (Act II, referenced in Interlude):** A charming visitor has been buying drinks and asking about local history in the Undercroft taverns. They corrected an archivist's 800-year-old records and left annotations of impossible accuracy. Carved sigils -- pre-Compact ward-marks meaning "I passed here and found it wanting" -- have appeared on doorframes throughout the sewer network. A grey thread tapestry appeared in the resistance waypoint, donated by someone no one can quite remember meeting.
+
 ##### Interlude State (First Visit)
 - **Map layout changes:** The city's canal district has flooded sections where pumping machinery has failed (new water tiles replacing walkway tiles in specific areas). The Undercroft is accessible. The Axis Tower exterior shows erratic energy -- lightning arcs between conduits, visible from street level.
 - **Visual state:** Carradan Industrial palette with Stage 1-2 corruption at the edges. The forge-glow in factory districts shifts between normal amber and sickly grey-white. The smog is thinner (some factories have stopped) but the air feels dead -- the palette is cleaner but colder.
@@ -187,6 +195,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Accessible areas:** The Stilts (harbor district, NPC hub), merchant prince manor district, Sable's childhood neighborhood (character content).
 - **Blocked areas:** Offshore rigs (referenced, not accessible until the Sunken Rig optional dungeon in Interlude).
 - **Environmental details:** Ironclad barges and submersible rigs dominate the harbor. Foreign merchants crowd the market quarter. Laws enforced loosely. Sable knows this place -- her dialogue changes here, more confident, more bitter. The Breakwater fortification is intact.
+- **Vaelith's passage:** A charming traveler has been buying drinks at the Stilts taverns and asking about local history, maritime trade routes, and the old boring engine projects. (Note: Gavren, the former engine operator haunted by the incident, arrives in Bellhaven during the Interlude — he fled the tunnels when the ley rupture happened and is not yet present in Act II.)
 
 ##### Interlude State
 - **What changed:** Several submersible rigs have surfaced unmanned, crews lost to the Pallor. The harbor economy is disrupted. One rig has drifted to shore (the Sunken Rig dungeon).
@@ -221,6 +230,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Act II State
 - **Compact-occupied and sealed.** The mine is sealed. Compact soldiers have fortified the outpost -- new iron plating on the buildings, a guard tower, supply wagons. Inaccessible to the player. Referenced by NPCs at Thornwatch.
+- **Vaelith's passage:** A grey stranger was reported near the mines. Locals at Thornwatch describe a polite scholar asking about mineral deposits and the mine's history. They left before anyone thought to question them further. Two grey teacups were found on a flat stone near the Ember Vein entrance.
 
 ##### Interlude State
 - **Abandoned.** The Compact soldiers have pulled back. The fortifications are empty. The iron plating is rusting (accelerated by Pallor influence in the Wilds). The mine entrance is open -- the seal has cracked. The Forgewright engine is silent, its core dark. If the player visits: an empty, eerie place. The forest is reclaiming it -- vines on the metal buildings, roots cracking the foundation. The mine exhales grey air.
@@ -457,9 +467,9 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 #### The Ember Vein (Ruin)
 
 ##### Act I State (Only Visit)
-- **Map layout changes:** None. Four rooms and a central hub. Pre-civilization ruin lined with ember-orange crystallized ley energy.
+- **Map layout changes:** None. Four floors (Upper Mine, Lower Mine, Ancient Ruin, The Pendulum Chamber). Carradan mine infrastructure gives way to pre-civilization ruin lined with ember-orange crystallized ley energy.
 - **Visual state:** Underground/Cavern palette transitioning to Ancient Ruins palette. Ember-orange glow from crystals. Geometric wall carvings pulse faintly.
-- **Accessible areas:** All four rooms and central hub (tutorial dungeon -- linear progression).
+- **Accessible areas:** All four floors (tutorial dungeon -- linear progression from mine to ancient ruin).
 - **Environmental details:** Dead miners in the corridors. No wounds. Faces frozen in despair. The geometric carvings establish the visual language for all ancient ruins. The Pendulum on its pedestal in the central chamber. The atmosphere is heavy -- the dead miners, the too-perfect geometry, the artifact waiting in the dark. This is the game's first dungeon and its first mystery.
 
 ##### Post-Act I State (Not revisitable)
@@ -512,10 +522,54 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Map layout changes:** None. Natural caverns beneath Millhaven where raw ley energy flows like rivers of light.
 - **Visual state:** Underground/Cavern transitioning to Ley Line Nexus at depth. Brilliant, shifting colors. Ancient carvings. The sealed door with the Pendulum's symbol.
 - **Accessible areas:** Upper levels (Compact scaffolding and pumping rigs) and deeper natural caverns. The sealed door at the bottom cannot be opened.
-- **Environmental details:** The Depths are awe-inspiring -- veins of light through dark stone. The magical burn timer creates urgency. The Compact's scaffolding intrudes on something sacred. The sealed door is a mystery seed.
+- **Environmental details:** The Depths are awe-inspiring -- veins of light through dark stone. The magical burn timer creates urgency. The Compact's scaffolding intrudes on something sacred. The sealed door is a foreshadowing element that resolves in Act III when the Archivist's Codex unlocks the Ley Confluence.
 
 ##### Interlude State
-- **Destroyed.** The pit erupted, Millhaven collapsed, the Depths are gone. Referenced in dialogue only. The sealed door -- and whatever lay behind it -- is buried under a crater.
+- **Surface destroyed.** The pit erupted, Millhaven collapsed. The Compact's Extraction Works (Floor 1) are gone -- buried under the crater. The Millhaven entrance is sealed. However, the pre-civilization chambers deep below (Floors 2-5) survive intact. The builders' architecture was designed to endure catastrophe; the geometric stone and ley-crystal formations are undamaged. The deeper Depths are inaccessible during the Interlude -- no known entrance exists. Referenced in dialogue as "gone," because from the surface, they are.
+- **Vaelith's passage (pre-eruption):** Destabilization patterns in the ley nexus match a deliberate resonance -- not natural Pallor spread. A precisely crafted tuning fork found near a destabilized node on Floor 4 hums at a frequency that agitates spirits and disrupts ley flow. The destabilization preceded the Millhaven eruption by months. Someone was here first, with tools designed to weaken the network from within.
+
+##### Act III State
+- **Rediscovered.** A secondary entrance through the Thornvein root network (accessible from the Thornvein Passage or Roothollow) opens into the Natural Caverns (Floor 2), bypassing the destroyed surface floors. The Crystal Labyrinth, Deep Vein, and the sealed door are intact. With the Archivist's Codex (from the Archive of Ages), the sealed door opens to reveal Floor 5: the Ley Confluence. The revelation that the ley lines are engineered -- and that the Compact was draining planetary life support -- is the narrative payoff for the dungeon's earlier mystery.
+
+---
+
+#### Caldera Forge Depths (Character Dungeon — Lira)
+
+##### Act II State (Discoverable)
+- **Map layout changes:** None. The entrance is a sealed maintenance hatch in the basement of Refinery Six -- the oldest of Caldera's ley-refinement facilities -- visible but locked.
+- **Visual state:** Carradan Industrial (subterranean variant). Riveted iron walls streaked with rust. Steam pipes along the ceiling. Forge-heat shimmer. The air smells of sulfur and machine oil.
+- **Accessible areas:** Only the refinery basement antechamber. Lira's Forgewright knowledge identifies the hatch but she cannot open it without her full toolkit (lost when she fled). A single room of environmental lore -- Compact engineer logbooks documenting unexplained heat readings and tremors from below, and mounting brackets that Lira recognizes as older than the Compact itself. The refinery above rumbles constantly. Heat rises through the floor grating.
+- **Environmental details:** The hatch bears seals that predate the current regime. Lira recognizes the infrastructure as built on top of something older -- the Compact's founders never knew what was beneath their refineries. The antechamber shows both Compact refinery infrastructure and pre-civilization elements underneath.
+
+##### Interlude State (Full Access)
+- **What changed:** Lira rejoins the party with her recovered toolkit and resistance contacts. Sera Linn's network provides the access codes. The hatch opens to reveal a four-floor descent through layers of history beneath Caldera.
+- **Map modifications:** The hatch is open (new accessible staircase). Four floors: Floor 1 -- Refinery Basement (Compact industrial architecture, riveted iron, steam pipes, abandoned workstations). Floor 2 -- Magma Channels (natural volcanic caves with molten rock channels, the transition zone where industrial infrastructure gives way to raw geology). Floor 3 -- Ancient Forge Approach (pre-civilization architecture emerges from the volcanic rock, geometric carvings, ley-channel inlays). Floor 4 -- The Caldera Heart (the original caldera chamber, an ancient forge built directly into the volcanic core, still functional).
+- **Palette/atmosphere shifts:** Each floor shifts deeper in time and temperature. Compact iron and gas lamps give way to volcanic orange glow, then to the smooth-cut stone and ley-light of the pre-civilization forge. The core mechanic is lava flow redirection -- diverting molten channels to cool barriers, open passages, and power ancient mechanisms across multiple floors.
+- **Environmental details:** Lira's character dungeon. The descent mirrors her arc: the industrial veneer of Caldera peels away to reveal a pre-civilization forge complex the Compact unknowingly built over. Journals and schematics reveal the Compact's drilling disturbed sealed magma channels, contributing to the contaminated ley line traced in "The Fading Shifts" sidequest. The ancient forge on Floor 4 can shape materials no surface forge can touch. The Forge Heart boss can be "reasoned with" if Lira has the Boring Engine Schematic. Lira-specific loot including the Volcanic Ingot (her ultimate weapon material).
+
+---
+
+#### Frostcap Caverns (Character Dungeon — Torren)
+
+##### Interlude State (First Visit)
+- **Map layout changes:** A hidden cave entrance behind a frozen waterfall on the Frostcap Peaks' northern face, near Highcairn and the Monastery of the Vigil. A local legend among Highcairn's elders, dismissed as superstition by the monks.
+- **Visual state:** Mountain/Alpine (deep cavern variant). A cathedral of ice -- translucent blue walls with trapped air bubbles, crystal stalactites that chime in the wind. Cold blue-white prismatic light. No forge-glow, no warmth -- the opposite of Caldera.
+- **Accessible areas:** Three-floor dungeon descending from natural ice caves to ancient Valdris ruins to a forbidden spirit shrine. Floor 1 -- Ice Galleries (natural ice formations, ice sliding sections with boulder puzzles, wind vent controls). Floor 2 -- Wind Tunnels (interconnected wind current puzzles, ice bridge chasms, illusory walls revealed by torch-light). Floor 3 -- The Frost Shrine (ancient Valdris ruins older than the Vigil's doctrine, a forbidden shrine to old spirits that the monks sealed and suppressed, the Frost Warden boss).
+- **Environmental details:** Torren's character dungeon. The Monastery of the Vigil was built to seal away the old spirit worship, not protect it. Spirit communication on Floor 3 is essential for puzzle hints and for peacefully resolving the Frost Warden encounter (a Valdris spirit guardian bound by duty, not evil). A secret passage in the shrine connects to the Monastery's sealed library -- truth buried beneath institutional authority. Contains the Frostpeak Crystal (Torren's ultimate weapon material) and the Monastery Key, which unlocks the sealed library and enables fast-travel between Highcairn and the Caverns. Torren-specific loot and a pivotal character moment about sacrifice and preservation.
+
+##### Act III State (Revisit)
+- **Map layout changes:** None. The cavern layout is unchanged from the Interlude visit.
+- **Environmental details:** The dungeon is revisitable in Act III. The frozen ley spring still pulses with protected energy, and the spirit-speaker wards remain active. No new content or map modifications -- the cave remains a pristine refuge.
+
+---
+
+#### Thornvein Passage (Root Tunnel Network)
+
+##### Act III State (Only Visit)
+- **Map layout changes:** The Thornvein root network, stressed by Pallor corruption and ley line instability, has shifted and cracked open a passage from Roothollow's deep roots through the ancient root system beneath the Thornmere Wilds. The passage did not exist before -- the roots moved. The tunnel follows ley-line channels that once connected to the Natural Caverns of the Ley Line Depths, and its exit emerges onto a hidden ledge deep in Pallor territory, placing the party at the start of Pallor Wastes Section 2 and bypassing the Ashen Approach entirely.
+- **Visual state:** Thornmere Deep Forest (subterranean variant) transitioning to Underground/Cavern. Living and petrified roots intertwined. Bioluminescence dim but present -- the roots here are deeper than the Pallor has reached. At the far end, the cavern walls give way to a hidden exit overlooking the Wilds.
+- **Accessible areas:** A winding root tunnel from Roothollow's lowest chamber through two floors (Root Tunnels and Spirit Cavern) to a hidden exit near the Convergence approach. Three nodes along the route -- a root junction (navigation puzzle), a petrified section (combat gauntlet where the Pallor has partially reached), and a ley line seep (rest point where the roots drink from the deep ley network). The root network intersects ley-line channels connected to the Ley Line Depths, and Torren can sense the deep ley network through the roots.
+- **Environmental details:** The passage is the world responding to catastrophe -- the roots shifted because the ley lines beneath them shifted. The petrified section is a reminder that the corruption reaches even here. The living sections glow faintly, the roots still trying to sustain the forest above. The passage provides a critical strategic shortcut, bypassing the densest encounter zone of the Pallor Wastes (Section 1) and preserving resources for the harder sections ahead. The transition from organic root tunnel to geometric pre-civilization stone at the far end is visually striking -- nature's chaos meeting ancient order.
 
 ---
 
@@ -590,8 +644,8 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Environmental details:** NPCs mention the well offhandedly. The crack is a visual detail only.
 
 ##### Interlude State
-- **Accessible.** The ley line instability has widened the crack. Three-room mini-dungeon below.
-- **Map modifications:** The well's bottom has a new entrance tile (the crack widened). Below: three rooms of pre-civilization ruin, identical architecture to the Ember Vein. A single tablet depicts Aelhart's founding -- the village was built to cap this entrance.
+- **Accessible.** The ley line instability has widened the crack. Seven-floor dungeon below (Floors 1-4 accessible in the Interlude; Floors 5-7 unlock in Act III).
+- **Map modifications:** The well's bottom has a new entrance tile (the crack widened). Below: seven floors of pre-civilization ruin, identical architecture to the Ember Vein. A single tablet depicts Aelhart's founding -- the village was built to cap this entrance.
 - **Environmental details:** The village above (visible through the well mouth) shows Compact occupation. The dungeon below is timeless -- ancient ruins do not change. The reward is Edren's family crest, a unique accessory.
 
 ---
@@ -929,25 +983,28 @@ How many distinct map states each location needs, helping scope the tilemap work
 | **Fenmother's Hollow** | -- | Base (dungeon) | -- (offscreen: submerged) | -- | -- | **1** | |
 | **Carradan Rail Tunnels** | -- | Base (functional) | Corrupted maze | -- | -- | **2** | Major layout change |
 | **Axis Tower** | -- | -- | Dungeon (single visit) | -- | -- | **1** | |
-| **Ley Line Depths** | -- | Base (optional dungeon) | -- (destroyed) | -- | -- | **1** | |
+| **Ley Line Depths** | -- | Base (optional dungeon) | Surface destroyed (deep floors survive) | Rediscovered (Floors 2-5 via Thornvein) | -- | **3** | Surface collapse, deep survival, Act III re-entry |
 | **Pallor Wastes** | -- | -- | -- | Wastes (gauntlet) | -- | **1** | Unique biome, not a variant |
 | **The Convergence** | -- | -- | -- | Fractured plateau | Meadow | **2** | Plus Phase 1/2/3 combat states |
 | **Archive of Ages** | -- | -- | Base (dungeon) | -- | -- | **1** | Ancient ruins do not change |
 | **The Pendulum (tavern)** | -- | -- | -- | -- | New construction | **1** | Epilogue only |
 | **Dreamer's Fault** | -- | -- | -- | -- | Post-game dungeon | **1** | |
-| **Dry Well of Aelhart** | -- | -- | Accessible (mini-dungeon) | -- | -- | **1** | |
+| **Dry Well of Aelhart** | -- | -- | Accessible (Floors 1-4) | Floors 5-7 unlocked | -- | **2** | 7-floor dungeon; Interlude partial, Act III full |
 | **Sunken Rig** | -- | -- | Beached rig (dungeon) | -- | -- | **1** | |
+| **Caldera Forge Depths** | -- | Discoverable (antechamber) | Full access (4 floors) | -- | -- | **2** | Lira's character dungeon |
+| **Frostcap Caverns** | -- | -- | Cave system (3 floors) | -- | -- | **1** | Torren's character dungeon |
+| **Thornvein Passage** | -- | -- | -- | Root tunnel (optional shortcut) | -- | **1** | Connects Roothollow to Pallor Wastes Section 2 (via ley-line root network) |
 | **Windshear Peak** | -- | Base vista | -- | Corrupted vista | -- | **2** | Visual change only (the view) |
 
 ### Summary
 
 | Metric | Count |
 |--------|-------|
-| **Total unique locations** | 35 |
+| **Total unique locations** | 37 |
 | **Total map variants needed** | ~72 |
 | **Locations needing 4+ variants** | 2 (Valdris Crown: 5, Roothollow: 4) |
-| **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, The Convergence) |
-| **Locations needing 2 variants** | 16 |
+| **Locations needing 3 variants** | 5 (Highcairn, Corrund, Caldera, Ashgrove, Ley Line Depths) |
+| **Locations needing 2 variants** | 18 |
 | **Locations needing 1 variant** | 12 |
 | **Pallor desaturation overlay tiles** | Every outdoor surface tile at 40-50% desaturation (can be batch-processed) |
 
@@ -985,6 +1042,8 @@ The only hints are narrative, not visual:
 | Ley-lamps in Valdris Crown | 1 in 4 dim or dark. | Attributed to ley line failure, not the Pallor. The player has an explanation that is not supernatural. |
 
 **What the player notices instead:** The world's problems in Act II feel political and military -- the Compact's expansion, Valdris's decline, the diplomatic mission. The Pallor is working through Cael in cutscenes, not through the environment. The subtle visual corruption is designed for replay value: the second time through, the player sees what they missed.
+
+**Vaelith-accelerated vs. natural corruption:** Not all corruption spreads at the same rate. Locations where Vaelith has been active show faster, more precise degradation. Natural Pallor spread is organic -- diffuse, gradual, radiating outward from the Convergence like a stain. Vaelith-accelerated corruption is surgical -- ley nodes destabilized by tuning forks show localized collapse patterns (the energy fractures along clean lines rather than bleeding outward), spirit populations flee specific areas as if driven out rather than dying off, and the corruption's Stage 1 markers appear weeks or months before the natural spread would reach that distance from the Convergence. On first playthrough, this distinction is invisible. On replay, after finding the tuning fork and journal fragments, the player can trace Vaelith's path across the continent by the shape of the corruption: everywhere the grey spreads too fast, Vaelith was there first.
 
 ---
 

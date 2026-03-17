@@ -72,9 +72,9 @@ Cross-reference of all story documents: outline.md, world.md, characters.md, loc
 
 | Issue | Severity | Details |
 |-------|----------|---------|
-| **"The Fading Shifts" references Caldera in Act II** | **IMPORTANT** | The quest is available in "Act II, after the diplomatic mission reaches Compact territory." The diplomatic mission goes to the Thornmere tribes, not Compact territory. The player visits Duskfen, Canopy Reach, and Ashgrove during Act II. Compact territory access (Caldera) isn't clearly established during Act II's diplomatic mission route. Millhaven is accessible as an optional stop, but Caldera is not on the Act II route per locations.md or events.md. This quest may need to be moved to the Interlude, or Caldera needs to be added to the Act II accessible area list. |
+| **"The Fading Shifts" references Caldera in Act II** | **RESOLVED** | Caldera is now listed as accessible (optional) in Act II per events.md and locations.md. The player can visit Caldera during the diplomatic mission arc as an optional detour into Compact territory. The quest's Act II availability is consistent with the updated area accessibility. |
 | **"The Gloves She Wore" timing** | **MINOR** | Listed as "Act II, after Cael's betrayal at end of Act II (available during early Interlude)." The betrayal ends Act II. This quest is actually an Interlude quest. The availability description is correct but could be clearer. |
-| **"The Third Door" references Dry Well of Aelhart** | **MINOR** | The quest sends the party to the Dry Well of Aelhart. locations.md says the Dry Well mini-dungeon is "Only accessible during or after the Interlude." The quest is available during the Interlude, so this is consistent. |
+| **"The Third Door" references Dry Well of Aelhart** | **MINOR** | The quest sends the party to the Dry Well of Aelhart, Floor 4 (Living Quarters), which is Interlude-accessible (Floors 1-4 open during Interlude; Floor 5+ gated to Act III). The quest-critical tablet is on Floor 4, so the quest is completable during the Interlude without requiring Act III access. Consistent. |
 | **"What the Stars Said" references Canopy Reach** | **MINOR** | Available "Act II, after securing the tribal alliance." The quest visits Canopy Reach. locations.md says Canopy Reach is "Inaccessible" during the Interlude. If the player doesn't complete this quest before the Interlude, they can't access Canopy Reach later. This should be documented as a missable quest, or Canopy Reach access should be modified. |
 
 ---
@@ -146,7 +146,7 @@ Cross-reference of all story documents: outline.md, world.md, characters.md, loc
 | **Commander Halda's fate** | **MINOR** | events.md says "Commander Halda's fate unknown" when Thornwatch falls. No resolution in any document. This could be intentional (echoing Voss's unresolved disappearance) or could be addressed in a side quest. |
 | **Thessa's disappearance** | **MINOR** | events.md says "Temple of the Old Pacts shuttered. Thessa not found." No resolution. Like Halda, this could be intentional ambiguity. |
 | **Marrek's identity** | OK | Intentionally unresolved per events.md and npcs.md. "There is no answer. That's the point." |
-| **The sealed door in the Ley Line Depths** | OK | Explicitly noted as "mystery element -- unanswerable in this playthrough, seeds for future content." |
+| **The sealed door in the Ley Line Depths** | **RESOLVED** | Opens in Act III with the Archivist's Codex (from the Archive of Ages), revealing Floor 5: the Ley Confluence. The revelation that the ley lines are engineered is the narrative payoff. |
 
 ### 4.4 NPCs Who Should React to Events but Lack Dialogue Changes
 

@@ -602,13 +602,13 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 - Inside Farmhouse 1 (after completing the spooked animal quest): 1x 100g reward pouch
 
 **Environmental storytelling:**
-- The Dry Well: center of the village square. NPCs mention it offhandedly -- "Went dry three seasons back." The ley line beneath it stopped flowing. In the Interlude, the well's foundation cracks open, revealing a mini-dungeon beneath (see Dry Well of Aelhart in locations.md).
+- The Dry Well: center of the village square. NPCs mention it offhandedly -- "Went dry three seasons back." The ley line beneath it stopped flowing. In the Interlude, the well's foundation cracks open, revealing a dungeon beneath (see Dry Well of Aelhart in locations.md).
 - Wheat fields: golden and swaying (3-frame animation). Three sides of the village. No other location has this crop density. This is what feeds Valdris.
 - The Carradan Trader: a small, deliberate detail. Compact goods on Valdris soil. The trader is polite, professional, and sells useful items. The tension is not hostile -- it is insidious.
 - Older farmers mention the soil "used to glow." Ley line magic enriched the farmland; now it is just dirt.
 
 **Secret areas:**
-- The Dry Well crack: visible in Act I but too narrow to enter. During the Interlude, ley line instability widens it. Three-room mini-dungeon below with pre-civilization ruins. Reward: Edren's Family Crest (unique accessory, ATK +3, DEF +3, unlocks a special dialogue with Edren).
+- The Dry Well crack: visible in Act I but too narrow to enter. During the Interlude, ley line instability widens it. Seven-floor dungeon below descends from natural caves into a pre-civilization waterworks, residential quarter, deep archive, gravity-warped depths, and a ley-line nexus (the Wellspring). Floors 1-4 accessible during the Interlude; Floors 5-7 require the Archivist's Codex from Act III. Key reward: Edren's Family Crest (Floor 4, accessory, ATK +10, DEF +10, unlocks bonus dialogue in Edren's Act III Pallor trial). Completing the Water of Life puzzle on Floor 3 causes the well to flow again in the epilogue.
 
 ### 2.6 Act-by-Act Changes
 
@@ -632,7 +632,7 @@ The border road is too dangerous. Aelhart is referenced by NPCs as "cut off." Th
 
 #### Interlude (Dry Well Access Only)
 
-The village itself is not a full map. The player accesses only the well and its mini-dungeon. The small slice of village visible around the well entrance shows:
+The village itself is not a full map. The player accesses only the well and the seven-floor dungeon beneath it (Floors 1-4 during Interlude). The small slice of village visible around the well entrance shows:
 - Inn's thatch roof partially collapsed
 - Compact supply crates stacked against buildings
 - Compact flag on a pole where the ley-lamp stood
@@ -642,7 +642,7 @@ The village itself is not a full map. The player accesses only the well and its 
 
 #### Epilogue (Overworld Reference Only)
 
-Not directly visitable. Visible from the overworld: Compact forces have left. Early spring green in the fields. The dry well has been capped with new stone. Recovery, not restoration.
+Not directly visitable. Visible from the overworld: Compact forces have left. Early spring green in the fields. If the player completed the Water of Life puzzle, the dry well flows with clear water and villagers gather around it. If not completed, the well has been capped with new stone. Recovery, not restoration.
 
 ---
 
@@ -787,7 +787,7 @@ AR    = Armory                  BT = Bell Tower Base
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
 | Alpine Remedy | 60 | Restore 250 HP | Local herb blend |
-| Frostbane Tea | 80 | Cure Freeze status, +10% Cold resist 1 battle | Alpine specialty |
+| Frostbane Tea | 80 | +10% Frost resist 1 battle | Alpine specialty |
 | Antidote | 30 | Cure Poison | Standard |
 | Smelling Salts | 40 | Cure Sleep/Confuse | Standard |
 

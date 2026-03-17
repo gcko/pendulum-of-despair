@@ -85,6 +85,11 @@ Filter to story-relevant files:
 - `docs/story/*.md`
 - `packages/client/src/data/*.json` (game data)
 - `.claude/skills/pod-dev/**` (skill references)
+- `docs/superpowers/plans/*.md` and `docs/superpowers/specs/*.md` — if
+  these files reference story entities (NPC names, boss names, pronouns,
+  locations), verify those references match current story canon. Plan and
+  spec docs are not authoritative but must not contradict the story docs
+  they reference. Treat mismatches as ISSUEs (not BLOCKERs).
 
 If no story-relevant files changed, report "No narrative content to review"
 and stop. In PR mode, post a brief comment saying so.
@@ -168,10 +173,36 @@ Cross-reference every proper noun AND game term in changed files:
 - Faction names: "Valdris", "Carradan Compact" / "the Compact", "Thornmere Wilds" / "the Wilds"
 - Artifact names: "the Pendulum of Despair" / "the Pendulum", "the Pallor"
 
+**Character pronoun consistency (CRITICAL — frequently missed):**
+- Each character's pronouns are as canonical as their name. Check
+  `characters.md` or `npcs.md` for the canonical pronoun set (he/him,
+  she/her, they/them).
+- Verify ALL files in the diff use the same pronouns for the same
+  character. Pronoun drift across files (e.g., they/them in npcs.md but
+  he/him in outline.md) is an ISSUE.
+- Common hiding spots: narrative prose in outline.md and events.md NPC
+  threads, where authors may default to gendered pronouns even when the
+  canonical form is they/them.
+
+**Name collision detection (CRITICAL — missed when new entities added):**
+- When new named entities are introduced (bosses, weapons, abilities,
+  items, NPCs), grep `abilities.md`, `magic.md`, `npcs.md`, and
+  `sidequests.md` for name collisions with EXISTING entities. A new
+  entity cannot share a name with an existing one.
+- Check both exact matches and near-matches that could cause confusion
+  (e.g., a weapon named "Cael's Echo" colliding with a Dual Tech named
+  "Cael's Echo").
+
 **Game terminology (CRITICAL — frequently missed):**
 - Element names must use canonical terms from `magic.md` everywhere:
-  Flame (not fire), Frost (not ice), Storm (not lightning/thunder),
+  Flame (not fire), Frost (not ice), Storm (not lightning/thunder/wind),
   Earth, Ley, Spirit, Void, Non-elemental
+- **Allowlist scanning (CRITICAL):** Scan ALL element references in
+  weakness/resistance/immunity lines and damage type descriptions. Any
+  element term NOT in the canonical 8 is a finding — including common
+  variants: "Fire", "Ice", "Lightning", "Thunder", "Wind", "Light",
+  "Dark", "Holy", "Shadow", "Nature", "Water". The scan must check
+  every occurrence, not just the most obvious ones.
 - Spell names must match `magic.md` exactly — no draft names, no
   abbreviations, no near-matches (e.g., "Ley Bolt" vs "Linebolt")
 - Ability names must match `abilities.md` exactly
@@ -203,6 +234,11 @@ For any changes involving act-specific content:
 - NPCs must not appear after their documented death (King Aldren dies Act II)
 - Locations must be accessible in the act they're referenced
 - Events must trigger in correct act order per `events.md`
+- **Flag ordering within act tables (frequently missed):** Within each
+  act's flag table in `events.md`, verify rows are ordered by trigger
+  timing (earliest first). A flag that triggers at the start of an act
+  should not appear after a flag that triggers at the end. Misordered
+  flags confuse downstream references and implementation.
 - Pallor corruption must follow the staged progression (none in Act I, Stage 1
   in Act II borders, Stage 2 in Interlude, Stage 3 in Act III Wastes)
 - Party composition must be correct per act (party scatters in Interlude,
@@ -224,8 +260,22 @@ For ASCII map changes:
 - Save points must exist in every settlement and before every boss
 - Buildings referenced in NPC locations must appear on the map
 
+**ASCII diagrams (non-map):**
+- Relationship charts, interconnection maps, and other ASCII diagrams
+  should use consistent connector formatting. Verify all relationship
+  lines have matching start/end connectors (arrows, dashes).
+- If a diagram uses a convention (e.g., `----` for connections, `+--`
+  for branches), verify it is applied consistently throughout.
+
+**Encounter table vs boss completeness (CRITICAL — frequently missed):**
+- Every boss defined in a dungeon section (via a `**Boss:` stat block)
+  must have a corresponding row in that dungeon's encounter table.
+- Cross-check boss stat block headers against encounter table rows.
+  Missing encounter table entries for defined bosses are an ISSUE.
+
 Flag: undefined symbols, missing legend entries, orphaned buildings,
-missing save points, entry/exit gaps.
+missing save points, entry/exit gaps, inconsistent diagram formatting,
+boss stat blocks without encounter table rows.
 
 ---
 
@@ -240,8 +290,18 @@ For side quest or event changes:
 - Quest chains must have no dangling "next step" without resolution
 - Quest-locked areas in `dungeons-city.md` must reference real quests
 
+**Downstream gating check (CRITICAL — missed when dungeons expand):**
+When a dungeon's floor structure or act-gating changes, check ALL
+quests in `sidequests.md` that reference that dungeon. If a quest
+requires an item/tablet/event from a specific floor, verify that floor
+is accessible during the quest's availability window. Example: if a
+quest is available in the Interlude but its required item is on Floor 5
+which is Act III-gated, the quest is broken. Either move the item to an
+accessible floor or update the quest to span multiple acts.
+
 Flag: nonexistent NPCs/locations, impossible availability windows,
-undefined rewards, hanging quest threads.
+undefined rewards, hanging quest threads, quest items behind act gates
+that conflict with quest availability.
 
 ---
 
@@ -253,6 +313,33 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 **Existence checks:**
 - Referenced content actually exists in the target document
 - References are bidirectional where expected
+
+**Narrative outcome consistency (CRITICAL — frequently missed):**
+When a story beat (battle, siege, boss defeat, betrayal) is described in
+multiple files (outline.md, events.md, dynamic-world.md), the OUTCOME
+must be described consistently. "City fallen" in events.md but "wounded
+and leaderless" in outline.md is a value mismatch — these describe
+different degrees of destruction. Check that adjectives, severity, and
+consequences match across all files describing the same event.
+
+**New detail propagation (CRITICAL — missed when multiple files updated):**
+When a location state description (`dynamic-world.md`) or event thread
+(`events.md`) introduces NEW backstory or lore for a named NPC, verify
+that detail is reflected in the NPC's canonical entry in `npcs.md`. New
+lore must propagate bidirectionally — if `dynamic-world.md` says an NPC
+was "haunted by a visit from a scholar," the NPC's `npcs.md` entry must
+also reference that visit. The same applies in reverse: if `npcs.md`
+adds a detail, files that describe the same NPC's location state should
+be consistent.
+
+**Item/consumable cross-references (frequently missed):**
+When an item's status-effect cure is changed (e.g., "Cure Freeze" →
+"Cure Slow"), verify the TARGET status in `magic.md`:
+- Does the status effect's cure list include this item?
+- Is the cure thematically appropriate? (A tea shouldn't cure Petrify
+  if Petrify requires Purge/Soft Stone per magic.md)
+- Apply the same bidirectional check to items that grant status
+  resistance, immunity, or infliction
 
 **Value-level checks (CRITICAL — this is where most issues hide):**
 - Spell learn levels must be IDENTICAL between `abilities.md` and
@@ -280,8 +367,56 @@ that the reference EXISTS but that the VALUES MATCH exactly.
 - `abilities.md` progression tables ↔ `magic.md` character indices
 - Description prose (spell counts, learn methods) ↔ actual data tables
 
+**Summary/reference table propagation (CRITICAL — frequently missed):**
+When any entity's data changes (floor count, act availability, dungeon
+type, variant count), the change must propagate to EVERY summary table
+that references that entity. These tables compile data from across the
+document and are the #1 source of stale values. For each changed entity,
+verify its row in ALL of the following:
+- `dynamic-world.md` Map Variant Count table (variant count, labels,
+  notes column). Also re-verify the Summary section totals (locations
+  needing N variants) — recount from the table, do not trust the old
+  totals.
+- `biomes.md` dungeon/location appendix table (biome, sub-biome, act
+  availability column). ALSO check "Locations Using This Biome" prose
+  lists — these describe entity scale/room counts in narrative form
+  and are frequently stale. ALSO check the Healing/restoration summary.
+- `locations.md` Location Progression tables (table section placement,
+  type column, purpose column). Check that the entity is in the CORRECT
+  section (Act I / Act II / Interlude / Act III / Post-Game) based on
+  its first-available act.
+- `events.md` location state tables (per-act state descriptions)
+
+**Classification label consistency (CRITICAL — frequently missed):**
+Table cells often contain categorical labels that assert properties
+about a location, dungeon, or mechanic. These labels must match the
+canonical description. Common mismatches:
+- "mini-dungeon" vs "dungeon" — if a dungeon was expanded, every table
+  cell and prose reference must update
+- "critical path" vs "optional" — must match the progression table and
+  locations.md description
+- "Post-Game" section placement for content available earlier — if a
+  dungeon is accessible in the Interlude, it should not be in the
+  Post-Game section of a progression table
+- Variant counts — if a dungeon now spans multiple acts with different
+  states, it likely needs more than 1 variant
+
+**Prerequisite location accessibility (frequently missed):**
+When a dungeon is added to an act's events.md table, verify that the
+PARENT LOCATION containing the dungeon is also listed as accessible in
+that act. If a dungeon is inside Caldera but Caldera the city isn't
+listed as opening in Act II, there is a logical gap — the player can't
+reach the dungeon entrance. Check:
+- For each dungeon entry in events.md, identify the containing city
+  or region (from locations.md or dungeons-world.md)
+- Verify the containing location has its own entry in the same act's
+  location state table (or is already established as accessible from a
+  prior act)
+
 Flag: value mismatches, conflicting unlock methods, incorrect counts,
-stale descriptions that don't match current data.
+stale descriptions that don't match current data, stale classification
+labels, summary table rows not updated, incorrect table section
+placement, missing prerequisite location entries.
 
 ---
 
@@ -308,6 +443,93 @@ most commonly missed category.
   guidelines say "Tier 2 buffs last 6-8 turns" but spells show 5 turns)
 - Status effect rules must not contradict each other (e.g., "Purge
   cures all statuses including Stop" vs "Stop cannot be cured")
+
+**Entity-wide stale reference sweep (CRITICAL — #1 missed category):**
+When an entity undergoes a major reclassification in the diff (e.g.,
+"mini-dungeon" → "7-floor dungeon", "3 floors" → "5 floors", location
+changes acts, sealed door now opens), search the ENTIRE changed file —
+not just the diff hunks — for stale references to that entity.
+
+**Search procedure (mandatory — do not skip steps):**
+1. Search for the entity NAME (e.g., "Dry Well", "Ley Line Depths",
+   "Ember Vein") across ALL changed files using grep. Read every match
+   location plus ±10 lines of context. Do not skip matches even if
+   there are many — read EVERY one.
+2. Search for the entity's KEY ATTRIBUTES — distinctive features that
+   other sections may describe without using the entity name. Examples:
+   - "sealed door" (key attribute of Ley Line Depths)
+   - "cannot be opened" (old behavior of the sealed door)
+   - "mini-dungeon" (old classification of Dry Well)
+   - Floor counts ("three rooms", "four rooms", "3 floors")
+   Run grep for each key attribute across ALL changed files.
+3. In each match, check whether the text reflects the NEW state or the
+   OLD state. If old, it is a stale reference — flag it.
+
+**Assessment rigor (CRITICAL — #1 reason stale refs slip through):**
+The search finds matches. The failure is in ASSESSMENT. When reading a
+match, do NOT give it the benefit of the doubt. Apply this test:
+- Would a fresh reader, seeing ONLY this paragraph, get the correct
+  current state of the entity? If the paragraph says "inaccessible" or
+  "unknown" or "no one has reached" for something that IS now accessible
+  and known, it is stale — even if the paragraph is in a section about
+  an earlier act. Sections about earlier acts should say "in Act II,
+  this cannot be opened" not just "this cannot be opened" unqualified.
+- Words that signal staleness: "unknown", "inaccessible", "mystery",
+  "no one has reached", "fate is unknown", "seeds future content",
+  "unanswered", "collapsed" (when deep floors survived). These are
+  red flags when applied to entities whose state changed in this PR.
+
+**Common hiding spots (these are missed most often):**
+- Description paragraphs ABOVE the key features bullets (the prose
+  paragraph often says the same thing as the bullets but in narrative
+  form — updates to bullets do not automatically update the paragraph)
+- "Locations Using This Biome" lists in biomes.md (prose descriptions
+  of scale, room counts, key features per location)
+- Healing/restoration section summaries in biomes.md
+- Act-by-act change sections in dynamic-world.md
+- NPC dialogue that references the entity's old description
+- Appendix/summary tables at the end of the file
+
+**Pre-existing prose invalidated by new content (CRITICAL — #2 most
+missed category, discovered via Copilot gap analysis on PR #12):**
+When new content is ADDED to a section (a boss, an encounter, a trial
+description), check whether PRE-EXISTING prose in that same section now
+contradicts the addition. The new content is correct; the old prose is
+stale. Common patterns:
+- A location says "No encounters. No treasure. No hazards." but a boss
+  encounter was just added below it. The prose must be updated to
+  acknowledge the new content.
+- A summary section describes a trial as "Edren gains Resolve" but the
+  detailed expanded trial below defines a specific boss and different
+  unlock. The summary must match the detail.
+- A dungeon overview says "2 floors" but a third floor was just added.
+- A section header says "Caves and Grottos" but the encounter placed
+  there is in a highland clearing, not a cave.
+
+**Procedure:** For every piece of new content added to an existing
+section, read the section's HEADER, OVERVIEW PARAGRAPH, and any
+SUMMARY that precedes the new content. Ask: "Does this pre-existing
+description still hold after my addition?" If not, update it.
+
+This is distinct from entity-wide stale reference sweeps (which search
+by entity name across files). This check is LOCAL — same section, same
+file, prose directly above or around the new content.
+
+The rule "check changed files, not the universe" applies to WHICH FILES
+you review (only changed files). Within a changed file, you must search
+the WHOLE file for stale references to reclassified entities.
+
+**Verify content you ADD, not just pre-existing content (CRITICAL):**
+When the review process itself adds new content (table rows, new
+sections in dynamic-world.md, new entries in events.md), that added
+content must be cross-checked against the canonical source BEFORE
+committing. Common errors in added content:
+- Wrong floor counts (writing "3 floors" when the dungeon has 4)
+- Wrong act labels ("Only Visit" when the dungeon is revisitable)
+- Wrong classification labels ("critical path" for optional content)
+- Values copied from memory rather than verified against the source
+For every new section or row you add, re-read the canonical source
+(usually dungeons-world.md or locations.md) and verify every value.
 
 **Specific patterns to scan for:**
 - Section headers/labels that don't match their contents (e.g., a
@@ -348,6 +570,16 @@ For any game mechanic definitions (abilities, spells, combat rules):
 - Are there naming collisions between different systems? (e.g., an
   ability name too similar to a spell name)
 
+**Narrative logic contradictions (CRITICAL — frequently missed):**
+- For any NPC with a trigger condition involving a key item, verify
+  item ownership/location is logically consistent. If an NPC "carries"
+  an item, the party cannot also possess that same item as a trigger.
+  If an item drops from Boss X, the NPC entry must not say the item is
+  found elsewhere.
+- For any mechanic that involves showing, giving, or using an item,
+  verify the item's source is documented and reachable at the time the
+  mechanic is available.
+
 **Undefined forward reference checks (CRITICAL — most missed category):**
 Scan every effect description for phrases that reference undefined
 behavior. Common patterns:
@@ -385,6 +617,85 @@ For modifications (not just additions):
   `abilities.md` and `magic.md` were updated
 
 Flag: partial renames, orphaned references to removed content.
+
+---
+
+#### Pass I: Item & Prop Continuity (Script Supervisor Pass)
+
+Inspired by Hollywood script supervision continuity reports. Track every
+item, key item, and quest reward through its full lifecycle: where it is
+created/dropped, who possesses it, what triggers it enables, and where
+it is consumed or referenced.
+
+**Item lifecycle tracking:**
+For every item introduced or referenced in the diff, trace its chain:
+1. **Source:** Where does the item originate? (boss drop, chest, quest
+   reward, NPC gift, crafting)
+2. **Acquisition path:** Is it a guaranteed reward or RNG drop? Is it
+   listed in BOTH a Drop line AND a Treasure list? (Duplicate listing
+   creates ambiguity — pick one canonical path.)
+3. **Trigger chain:** If the item is a key item that triggers NPC
+   dialogue, quest progression, or mechanic unlocks, verify the trigger
+   condition matches the source. If an NPC requires "Operator's Badge"
+   but the boss drops "Operator's Log," the chain is broken.
+4. **Possession logic:** If an NPC "carries" an item, the party cannot
+   also "find" that same item elsewhere. If both are true, clarify
+   (e.g., the NPC has a copy, or the party finds a different version).
+
+**Character knowledge tracking:**
+Track what each character KNOWS at each point in the story:
+- If an NPC describes an event they "witnessed," verify they were
+  present at that event per the timeline.
+- If an NPC describes "overhearing" something, they should not later
+  be described as having had a "direct conversation."
+- If a character "doesn't know" something in Act II, they should not
+  reference that knowledge until they learn it in a later act.
+
+**Duplicate acquisition paths:**
+Scan all boss Drop lines and Treasure lists in dungeon docs. Flag any
+item that appears in BOTH the Drop section (implies RNG/combat loot)
+and the Treasure section (implies guaranteed/environmental pickup) of
+the same dungeon. Choose one canonical path.
+
+Flag: broken item chains, duplicate acquisition paths, character
+knowledge contradictions, possession logic errors.
+
+---
+
+#### Pass J: Semantic Consistency & Character Voice
+
+Inspired by screenplay script coverage analysis. Check that descriptions
+of the same entity or event MEAN the same thing across files, not just
+use the same names.
+
+**Semantic comparison:**
+When the same event is described in multiple files, compare not just
+names/values but the MEANING:
+- "The Ram stalls and goes silent" vs "the party fights and destroys
+  the Ram" — these describe different outcomes even though both involve
+  the Ram. One is passive failure, the other is active combat victory.
+- "A visit from a polite scholar who explained" vs "overheard fragments
+  of a conversation from behind a cooling stack" — one is direct
+  communication, the other is indirect eavesdropping.
+- "Her unit was killed" vs "she was separated from her unit" vs "lost
+  her unit to the Pallor" — same character, three incompatible accounts
+  of the same event.
+
+**Character voice consistency:**
+For major characters with significant new dialogue or descriptions,
+verify their voice matches their established personality:
+- Does their dialogue match their documented personality traits?
+- Do their actions match their stated motivations?
+- Is their level of knowledge consistent with what they should know
+  at that point in the story?
+
+**Role/title consistency:**
+When a character's role is referenced (e.g., "knight-captain," "garrison
+commander," "intelligence agent"), verify it matches their canonical
+role in npcs.md or characters.md. Role misattribution is an ISSUE.
+
+Flag: semantic contradictions, voice inconsistencies, role/title
+mismatches, incompatible accounts of the same event.
 
 ---
 
@@ -462,8 +773,13 @@ The review body (used for both PR comments and inline output):
   stop. Do not invent "nice to have" items to appear thorough.
 - **Severity matters.** A typo in an NPC name is an ISSUE. A quest
   referencing a deleted location is a BLOCKER. Do not inflate severity.
-- **Check the diff, not the universe.** Only validate content that was
-  CHANGED or ADDED. Do not audit the entire story bible on every review.
+- **Check changed files, not the universe.** Only review files that were
+  CHANGED or ADDED — do not audit the entire story bible. But WITHIN a
+  changed file, search the WHOLE file for stale references to entities
+  whose classification changed in the diff (e.g., if a dungeon went
+  from "mini-dungeon" to "7 floors", grep the entire file for the old
+  label). The diff tells you WHICH files; the entity tells you WHAT to
+  search for within those files.
 - **Cross-reference is mandatory.** Every proper noun in a changed file
   must be verified against the canonical source. No assumptions.
 - **Values, not just existence.** When cross-referencing, check that
@@ -475,3 +791,24 @@ The review body (used for both PR comments and inline output):
   contradicted by usage in another section of the same file.
 - **Temp files for GitHub posts.** Always write review body to a temp file
   before posting via `gh`. Never use heredocs with special characters.
+
+## References
+
+Research sources that informed the design of these review passes.
+Consult for deeper methodology if expanding or refining passes.
+
+### Story Bible & Narrative QA
+- [Building a basic story bible for your game](https://www.gamedeveloper.com/design/building-a-basic-story-bible-for-your-game) — Anna Megill (Ubisoft Massive) on story bible structure and team communication
+- [Crafting a Compelling Story Bible](https://www.numberanalytics.com/blog/ultimate-guide-story-bible-game-narrative) — Centralized narrative consistency frameworks
+- [Lore Consistency in Game Design](https://www.meegle.com/en_us/topics/game-design/lore-consistency) — Narrative audit processes, cross-departmental review
+- [Crash meetings, keep a lore bible](https://www.gamedeveloper.com/design/crash-meetings-keep-a-lore-bible-and-other-narrative-design-tips-learned-at-king) — Practical narrative coordination at King
+
+### Hollywood Script Supervision (Passes I, J)
+- [Script Supervisor Report Explained](https://sethero.com/blog/script-supervisor-report-explained/) — Continuity report categories (directional, spatial, temporal, character state, prop tracking, dialogue matching)
+- [Ultimate Guide to Script Supervisors](https://www.studiobinder.com/blog/script-supervisor-forms-template/) — Production book structure, daily editor logs
+- [Film Continuity: Ultimate Guide](https://emahofilms.com/film-continuity-ultimate-guide-to-script-supervision/) — Matching notes, character tracking across scenes
+
+### Screenplay Coverage Analysis (Pass J)
+- [How to Write Amazing Screenplay Coverage](https://screencraft.org/blog/how-to-write-amazing-screenplay-coverage-and-feedback/) — Coverage dimensions: concept, characters, structure, plot, theme, pacing, dialogue
+- [Script Coverage: Complete Guide](https://www.studiobinder.com/blog/script-coverage-complete-guide/) — Coverage report templates, PASS/CONSIDER/RECOMMEND framework
+- [Script Coverage Templates](https://industrialscripts.com/script-coverage/) — Industry-standard evaluation criteria

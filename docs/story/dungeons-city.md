@@ -153,6 +153,8 @@ KEY:  ### = limestone wall   [===] = sarcophagus   === = passage
 
 **Lore:** The murals on Queen Verath's tomb walls depict the "Grey Seasons" -- a period predating the current understanding of the Pallor. Figures with hollow eyes stand in fields of ash. A woman with a crown holds a door closed with both hands. Maren recognizes the imagery: "This is older than my research. Much older. They knew. They always knew."
 
+**Faded Portrait (forgotten gallery corridor, between Dynasty Hall and Knight Commander Crypt):** A painting in a forgotten gallery corridor, 800 years old, half-hidden behind a collapsed display case. Labeled "Diplomat-Emissary to the Grey Accord." The face is obscured by age -- cracked pigment, darkened varnish -- but the pose and clothing look familiar. Maren: "This style predates the Compact by centuries. The Grey Accord is not in any history I have read." If the party has encountered Vaelith, Edren adds quietly: "The posture. The way they stand. Hands behind their back, weight on the left foot. I have seen someone stand like that." The painting cannot be taken. It is too fragile. But the image stays.
+
 #### Floor 3: Deep Catacombs
 
 ```
@@ -266,6 +268,8 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
     ####################################################
 ```
 
+**Carved Sigils (doorframes throughout):** Sigils scratched into the stone doorframes at knee height, easy to miss. They appear on three doorframes in the Sewer Junction and two more in the Maintenance Tunnels. Maren identifies them as ward-marks from a pre-Compact magical tradition meaning "I passed here and found it wanting." The marks are old -- decades at least -- but carved with a steady hand and deliberate precision. They do not match any Corrund graffiti or resistance markings. Sable: "Tash's people don't mark that low. These weren't made by anyone who works down here." If the party has found the journal fragments, Maren adds: "The same tradition. The same era. Someone has been walking through every city on this continent for a very long time."
+
 **Puzzle:** The Valve Room contains three pipe valves labeled A, B, and C. One tunnel exit (to the Maintenance Tunnels) is flooded. The player must route water away from the flooded passage by turning valves in the correct sequence: A (open), C (close), B (open). Incorrect sequences flood the Junction Platform temporarily (damage + forced retreat). Lira can bypass the puzzle entirely by examining the pipe schematic on the wall -- she identifies the correct sequence automatically.
 
 **Encounters:** Forge-Smoke Creatures (gaseous, fire-element, weak to water), Malfunctioning Service Automata (Compact maintenance drones gone haywire, physical attackers), Sewer Rats (weak, appear in swarms). The Tunnel Map key item from Tash's Black Market reveals enemy patrol routes, reducing encounter rate by 50%.
@@ -323,6 +327,7 @@ KEY:  ### = brick/iron wall   === = conduit pipe (glowing blue)
 - Supply Cache B: Compact Military Intelligence Documents (key item -- reveals patrol routes, used in "The Commissar's Confession" side quest), 1200 scrip
 - Old Foreman's Office hidden compartment: Ironmark Tunnel Map (key item -- required to navigate the Ironmark passage without getting lost; without it, the tunnel has random dead ends that loop back), 1x Arcanite Torch
 - Resistance Waypoint: Free rest (bedrolls restore HP/MP), resistance graffiti reads "WE REMEMBER WHAT WE WERE"
+- Resistance Waypoint (wall): A beautiful tapestry hanging on the brick wall, donated by "a kind traveler" according to the resistance fighters who cannot remember exactly when it appeared. Depicts a pastoral scene -- rolling hills, a village, figures at rest. Fine grey thread embroidery, exquisite craftsmanship. If examined after the Doma moment cutscene (flag: vaelith_doma_moment), the party notices the pastoral figures have grey eyes. Sable: "Those eyes. I have seen those eyes." Maren: "The thread is grey. Not dyed grey -- the material itself. I do not know what fiber this is." The tapestry cannot be removed without destroying it. The resistance fighters consider it good luck.
 - Abandoned Service Bay: Salvaged Automaton Core (crafting material -- used in Lira's Forgewright recipes)
 
 #### Axis Tower Sublevel (Screen 3)
@@ -457,6 +462,29 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 - Forge Channel (hidden chest in a dead-end branch): Molten Core (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
 - Escape Tunnel entrance: Survival Pack (3x Standard Ration, 2x Healing Draught, 1x Smoke Capsule)
 
+### Sidequest Boss: The Pallor Nest Mother (6000 HP)
+
+**Availability:** During the "Unbowed" sidequest (Interlude, after reaching Caldera). The Nest Mother encounter occurs in the deepest point of the undercity tunnels -- the junction where the old forge-channels meet the natural volcanic vents. The party must pass through this area to complete the worker evacuation route.
+
+A massive Pallor creature that has burrowed into the tunnel junction, using the volcanic warmth and residual ley energy to breed. It resembles a bloated, grey-white arthropod the size of a wagon, its carapace fused with the tunnel walls. Grey tendrils extend from its body into the surrounding rock, feeding corruption into the tunnel network. It is the source of the Pallor nests that have been infesting the lower passages. The air around it tastes of ash and despair.
+
+**Guest NPC: Kerra** -- A former Valdris soldier who volunteered for the evacuation escort. She fights alongside the party during this encounter as a guest NPC. Low combat stats (ATK 18, DEF 14, HP 800) but she does not flee, does not falter, and positions herself between the Nest Mother's spawn and the evacuees without being asked. If Kerra falls to 0 HP, she is incapacitated but survives the quest (her epilogue role is reduced but not eliminated).
+
+**Attacks:**
+- **Brood Pulse** -- The Nest Mother sends a wave of Pallor energy through the tunnel. AoE, 200-250 damage to all party members + 20% chance to inflict Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Also spawns 2 Grey Crawlers (150 HP each).
+- **Nest Defense** -- Passive ability. While any of the Nest Mother's spawn are alive, her carapace hardens: +50% DEF. The party must clear the adds before dealing meaningful damage to the Mother.
+- **Tendril Lash** -- Physical attack, targets two party members, 300 damage each. The tendrils extend from the walls, attacking from unexpected angles.
+- **Corruption Surge** -- Channels Pallor energy through the tunnel floor. Creates 3 contaminated zones (2x2 tiles) that deal 100 damage/turn to anyone standing in them. Zones last 3 turns.
+- **Spawn Brood** -- Every 4 turns, the Nest Mother spawns 3 Pallor Mites (100 HP each, melee attackers that target the party's backline).
+- **Desperate Contraction** -- Below 25% HP, the Nest Mother attempts to collapse the tunnel ceiling. 3-turn charge. 600 AoE damage if it completes. Can be interrupted by dealing 1000+ damage during the charge.
+
+**Strategy:** Manage the spawn cycle. Burst damage on the Nest Mother during windows when no adds are alive (Nest Defense is down). Keep Kerra alive by drawing aggro away from her. Flame and Spirit attacks are most effective. The volcanic environment means Flame-based attacks cause secondary explosions on the Nest Mother's Pallor tendrils (visual flourish, no mechanical bonus beyond the elemental weakness).
+
+**Weakness:** Flame (150% damage), Spirit (125% damage).
+**Resistance:** Frost (50% damage).
+**Immunity:** Despair.
+**Drop:** Nest Mother's Core (crafting material -- concentrated Pallor essence, used in anti-Pallor weapon modifications), Broodchamber Map (key item -- reveals the full extent of the Pallor nest network beneath Caldera, referenced in Act III intelligence), 1500 Gold.
+
 ---
 
 ### Ashmark Factory Depths
@@ -480,6 +508,11 @@ KEY:  ### = iron wall   === = pipe (ley energy, blue glow)
       [...] = room   S = save point
 
     ^ MAINTENANCE HATCH (Black Forge B, lower level)
+    |
+    [Near entrance: Two grey teacups on a pipe junction ledge,
+     still faintly warm. The same herbal blend found at the
+     Ember Vein and Fenmother's Hollow. Someone sat here and
+     watched the factory machinery before descending.]
     |
     ####################################################
     #   |                                              #
@@ -564,26 +597,53 @@ KEY:  ### = reinforced iron   ===|P|=== = contaminated pipeline
     #   !!!!!!!!!!!!!!!!!!  [ is what happens]       #
     #   ! [CONTAMINATION ]  [ when you drain ]       #
     #   ! [HEART         ]  [ a ley line     ]       #
-    #   ! [(mini-boss:   ]  [ past its       ]       #
-    #   ! [ Ley Rupture  ]  [ breaking       ]       #
-    #   ! [ Guardian --  ]  [ point.")       ]       #
-    #   ! [ a construct  ]  [                ]       #
-    #   ! [ formed from  ]                           #
-    #   ! [ unstable     ]                           #
-    #   ! [ ley energy,  ]                           #
+    #   ! [(boss: The    ]  [ past its       ]       #
+    #   ! [ Forge Warden ]  [ breaking       ]       #
+    #   ! [ -- Drayce's  ]  [ point.")       ]       #
+    #   ! [ failsafe     ]  [                ]       #
+    #   ! [ automaton,   ]                           #
+    #   ! [ corrupted by ]                           #
+    #   ! [ ley rupture, ]                           #
     #   ! [ defending    ]                           #
-    #   ! [ the rupture) ]                           #
+    #   ! [ the tap)     ]                           #
     #   !!!!!!!!!!!!!!!!!!                            #
     ####################################################
 ```
 
-**Mini-boss:** The Ley Rupture Guardian is a construct of crystallized ley energy that has formed around the pipe rupture. It is not malicious -- it is a natural defensive response from the ley line, trying to seal the wound. The party must defeat it to access the rupture for stabilization. Phase 1: energy projectiles and AoE shockwaves. Phase 2: it absorbs ley energy from the pipe, healing itself. Lira must use a special action (available only during this fight) to reroute the pipe flow, cutting off its energy source. After defeat, the construct dissolves and the rupture is exposed.
+**Boss: The Forge Warden (8500 HP)**
 
-**Post-boss:** Lira stabilizes the rupture using a combination of Forgewright pipe-sealing and Maren's ley-tapping technique (the first time old and new magic work together constructively). The contamination stops flowing. The faded workers upstairs will not recover, but no new cases will develop.
+The Ley Rupture Guardian referenced in early reports is, in truth, the Forge Warden -- a massive Forgewright automaton built by Forgemaster Elyn Drayce as a failsafe to protect the ley tap. Its original purpose was to seal the extraction pipeline and neutralize threats if the tap destabilized. But the ley rupture has corrupted its logic circuits, and it now interprets the party's presence as the threat it was designed to stop. It is a towering construct of brass, Arcanite conduit, and crystallized ley energy -- Drayce's engineering at its most impressive and most dangerous.
+
+Lira recognizes the design: "This is Drayce's failsafe. Built to protect the tap if anything went wrong. But it thinks *we* are what went wrong."
+
+**Phase 1 (8500-4250 HP) -- Programmed Defense:**
+- **Ley Bolt** -- Fires concentrated ley energy, single target, 350-400 damage. Fast cast, used frequently.
+- **Shield Protocol** -- Erects an Arcanite barrier that absorbs the next 1000 damage. 4-turn cooldown.
+- **Containment Pulse** -- AoE shockwave, 250-300 damage to all party members + pushes them back (positional displacement). Marks a zone as "contaminated" for 3 turns (standing in it deals 100 damage/turn).
+- **Pipeline Drain** -- The Warden absorbs ley energy from the ruptured pipe, healing 500 HP. Lira can use a special Forgewright action to reroute the pipe flow, cutting off its energy source (disables Pipeline Drain for the rest of the fight).
+
+**Phase 2 (below 4250 HP) -- Corrupted Logic:**
+The ley contamination overrides the Warden's programmed protocols. Its movements become erratic -- it targets allies and enemies indiscriminately, attacks the walls, and its voice synthesizer produces fragments of Drayce's recorded maintenance instructions mixed with static.
+- All Phase 1 attacks, but targeting becomes semi-random (may attack empty spaces or strike its own shield).
+- **Overload Beam** -- Massive ley energy beam, line AoE, 500-600 damage. 2-turn charge. Telegraphed by the Warden's chest core glowing bright blue. Can be interrupted by physical attacks totaling 800+ damage during the charge.
+- **System Failure** -- At random intervals, the Warden freezes for 1 turn (sparking, voice glitching). Free damage window.
+- **Emergency Protocol** -- Below 20% HP, the Warden attempts to self-destruct and seal the entire pipeline. A 3-turn countdown begins. The party must deal enough damage to destroy it before the countdown ends, or Lira must use Forgewright Override (special action) to abort the sequence.
+
+**Lira's Special Interaction:** Lira's Forgewright ability deals 150% damage to the Warden (she knows exactly where the maintenance panels are). Her Forgewright Override action can disable Pipeline Drain and abort Emergency Protocol. Unique dialogue after Phase 1: "The logic boards are fried. It's not following Drayce's orders anymore -- it's following the corruption's."
+
+**Post-boss:** After the Warden falls, the party discovers a tuning fork artifact lodged in the ley tap's resonance chamber. The tap's destabilization was not caused by over-extraction alone -- someone introduced a resonance frequency that amplified the ley line's collapse. The tuning fork matches artifacts found at other destabilized sites (Vaelith breadcrumb). Confronting Forgemaster Drayce with the Warden's wreckage cracks their facade -- Drayce knew the tap was failing and built the Warden to cover it up, not fix it.
+
+Lira stabilizes the rupture using a combination of Forgewright pipe-sealing and Maren's ley-tapping technique (the first time old and new magic work together constructively). The contamination stops flowing. The faded workers upstairs will not recover, but no new cases will develop.
+
+**Weakness:** Storm (150% damage), Spirit (125% damage).
+**Resistance:** Flame (50% damage), Earth (75% damage).
+**Immunity:** Petrify, Poison.
+**Drop:** Drayce's Failsafe Core (accessory -- +12 DEF, +8 MAG DEF, auto-Shield Protocol once per battle at 25% HP), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; they stack as evidence), 2000 Gold.
 
 **Treasure:**
 - Monitoring Station: Extraction Rate Documentation (key item -- used in "The Fading Shifts" reward chain and referenced in the Bridgewrights' founding)
 - Post-boss: Forgewright Stabilizer (accessory -- reduces magical damage taken, unique to Lira; quest reward)
+- Post-boss: Dael's Ledger (key item -- Dael Corran's personal records documenting the extraction timeline and worker casualties; unlocks Lira's ultimate weapon forge in Act III)
 - Pipeline Junction: Ley Residue Sample (key item -- can be shown to Jace Renn at Kettleworks for bonus dialogue in "Stars and Gears")
 
 ---
