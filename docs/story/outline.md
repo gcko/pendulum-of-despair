@@ -19,6 +19,10 @@ At the ruin, they find **the Pendulum of Despair** — inert, unremarkable, but 
 - They flee into the Thornmere Wilds. **Torren**, a ranger and spirit-speaker, finds them. He recognizes the Pendulum from old spirit-lore.
 - Torren insists they seek out **Maren**, an exiled Valdris court mage living deep in the Wilds.
 
+### The Stranger at the Mine
+
+As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on. They do not mention Vaelith again.
+
 ### The First Warning
 
 Maren examines the Pendulum and delivers the first warning: *"This thing has no power. It's a door. And something on the other side knows you opened it."*
@@ -31,6 +35,12 @@ The full party is assembled. They decide to bring the Pendulum to the Valdris ca
 
 ## Act II: The Fraying
 
+### Act I–II Transition: The Road to Valdris
+
+<!-- This section covers the journey between acts. Act II proper begins at pendulum_to_capital (arriving at Valdris). -->
+
+The journey back to the capital takes several days through disputed country. On the second evening, Torren spots a figure on a ridge above the road — still, watching, gone by the time the party doubles back. The campsite they find is recently abandoned: two teacups still warm, a small fire tamped down with care. A single page of journal sits on a flat stone, covered in script so archaic that Torren can only piece together fragments. The words he manages to read describe a cycle — something about a door opening and closing across ages. He cannot tell if it is prophecy or history. The party does not know who left it or who the second teacup was for.
+
 ### Valdris in Decline
 
 The party returns to find Valdris deteriorating. Ley lines are failing faster. Carradan forces have taken two border towns. The king is desperate and sees the Pendulum as a potential weapon, despite Maren's warnings.
@@ -42,6 +52,12 @@ Cael is tasked with studying the Pendulum alongside court scholars. The Pallor b
 ### The Diplomatic Mission
 
 Edren, Lira, and Torren are sent to the Thornmere tribes to broker an alliance against the Compact. The world opens up — the player explores the Wilds, meets the tribes, discovers that the ley lines aren't just dimming but being drained *toward something*.
+
+In a frontier tavern near the edge of Compact-held territory, they find Vaelith already there — buying rounds, charming the locals, asking a barkeep about mining routes that were abandoned two generations ago. Vaelith greets the party as old acquaintances and pulls up a chair. The conversation is light, curious, almost pleasant. They ask Edren about the Valdris court. They ask Torren about the old spirit-lore of the ley lines. Then, almost as an afterthought, they turn to Lira and ask how Cael is sleeping lately. She tells them Cael did not make the journey. Vaelith nods, as if this confirms something, finishes their drink, and takes their leave. The question about Cael's sleep will seem like idle small talk until it doesn't.
+
+### The Stranger's Work (Cutscene)
+
+The player sees a scene the party will never witness. Somewhere in the Wilds, a village has been touched by the Pallor — its people listless, grey-eyed, sitting in doorways and staring at nothing. Vaelith moves among them. They speak gently, crouching to meet people's eyes, resting a hand on a shoulder here, offering a quiet word there. The comfort they give is real in the moment; the villagers' faces ease, their breathing slows, something like peace settles over them. Vaelith stays for hours. When they finally rise and walk away into the treeline, the village is quieter than before. The grey in the villagers' eyes has deepened. The relief Vaelith offered was genuine — but in receiving it, something in the villagers gave way further. The player understands, even if they cannot articulate it yet, that Vaelith does not cause the Pallor's spread through cruelty. Vaelith spreads it through care.
 
 ### Sable's Warning
 
@@ -56,6 +72,12 @@ Lira and Cael's romance unfolds in flashback scenes interspersed throughout Act 
 The Carradan Compact launches a surprise assault on Valdris while Edren's team is away. In the chaos, Cael makes his move. The Pallor has convinced him the Pendulum can end all suffering — not as a weapon, but by reshaping the world. He takes the Pendulum, opens a gate using the weakened ley lines, and vanishes.
 
 But not before confronting Lira, who has just returned. She begs him to stay. He tells her he's doing this *for* her — for everyone. He believes it. She can see he's not entirely himself, but he's not entirely gone either. He leaves.
+
+### The Siege of Valdris
+
+The Compact's assault does not end with Cael's departure. Their vanguard has shattered the outer gates, and through the breach the party hears the ground-shaking advance of the Ashen Ram — a Forgewright siege engine powered, impossibly, by Pallor energy rather than stable ley lines. Its approach turns the cobblestones grey. The soldiers behind it move like men in a dream. The party meets the Ram on the battlements, fighting it as it advances. Mid-fight the Ram breaches the wall, and in the wreckage the party destroys its Pallor core. The battle turns there, but barely.
+
+During the fighting, Edren spots a figure standing on the broken outer wall above the gate. Not in Compact armor. Not directing anyone. Vaelith watches the city burn with the calm attentiveness of someone observing an interesting experiment. The party cuts their way toward them. They do not flee. They speak throughout the fight — complimenting the party's footwork, noting that Torren favors his left side when tired, asking Lira with genuine curiosity how it feels to defend a city for a king who never deserved it. The party cannot land a decisive blow. Vaelith overwhelms them — not with malice, but with the casual ease of eight centuries of accumulated power. "You are doing wonderfully," they say, as the party's strength gives out. "Truly. I have not been this entertained in centuries." The party falls. They wake in the aftermath of the siege, Valdris wounded and leaderless. The night does not feel like a victory.
 
 ### Act II Ends
 
@@ -79,6 +101,8 @@ Time passes — weeks, maybe months. The ley lines have ruptured. Magic is wild 
 - **Sable** moves between all three factions — carrying messages, gathering information, stealing what she needs. She's the thread that holds everything together.
 - **Maren** disappears. She leaves a single message: *"I've gone to find what came before the Pendulum."*
 
+In the weeks that follow, reports of the grey stranger reach each of them separately. Dame Cordwyn, the Valdris garrison commander, has compiled a file of sightings spanning decades — possibly centuries, if the older accounts are genuine. A travelling scholar fitting the same description appears in records from three different kingdoms during three different eras of Pallor activity. Sable finds the file and keeps it to herself for a while, not sure what to do with it. More immediate is what Brant tells her when she finally tracks him down — Brant, whose cowardice at the rear gate at Ironmark Citadel still has people talking. He cannot look at her when he confesses it: a figure matching Vaelith's description visited him weeks before the assault. They talked for hours. Brant cannot recall everything they discussed, only that afterward, the conviction slowly settled in him that resistance was pointless, that Valdris was already lost, that the door had been open too long to close. He did not recognize it as planted. It felt like clarity. The party, comparing notes through Sable, begins to understand that the siege did not begin at the gates. It began much earlier, in conversations they were not present for.
+
 ### Sable's Journey (Playable)
 
 The player controls Sable as she tracks down each party member. Each reunion is its own short arc:
@@ -87,7 +111,7 @@ The player controls Sable as she tracks down each party member. Each reunion is 
 
 **Finding Lira** — Sable infiltrates the Compact and discovers Lira is close to finding Cael's trail. They uncover a Carradan general who has willingly embraced the Pallor's influence to seize power. They take him down and recover a map to Cael's location.
 
-**Finding Torren** — The Wilds are dying. Torren has been performing a ritual to hold back the corruption, burning his own life force. The reunited party arrives just in time. They stabilize the largest ley line nexus, buying time — not a fix, but a stay of execution.
+**Finding Torren** — The Wilds are dying. Torren has been performing a ritual to hold back the corruption, burning his own life force. When Sable and Edren reach him, he is barely conscious at the center of a grove gone entirely grey. The nexus he has been tending is no longer merely corrupted — a Ley Leech has anchored itself to it, a creature born from the Pallor's spread that sustains itself by drinking the flow between ley lines and exhaling the drained energy as pure hopelessness. The spirits of the Wilds fled from it. The trees nearest the nexus are glass-still, not dead, but emptied. The reunited party defeats it, and the nexus stabilizes, ley lines glowing clean — the first sign the Pallor can be pushed back.
 
 **Finding Maren** — She's in a ruin older than any civilization on the map. She's discovered the truth: the Pallor has tried this before. Every age has had a conduit and a host. Every time, someone closed the door — and it cost them everything.
 
@@ -111,13 +135,19 @@ The party travels to the Convergence — a shattered plateau at the center of th
 
 The Pallor throws manifestations of each party member's fears:
 
-- **Edren** faces a phantom Cael who tells him he was always the lesser of the two.
+- **Edren** faces phantom kings and the weight of every command that cost lives — the Crowned Hollow, a towering figure wearing every crown of every leader who failed to stop the Pallor.
 - **Lira** faces a vision of the life she and Cael could have had — a cottage, peace, children. Letting go is the hardest thing she does.
 - **Torren** faces the spirits of the Wilds accusing him of failing them.
 - **Sable** faces her own insignificance — the whisper that she doesn't belong.
 - **Maren** faces her younger self, asking why she wasted her life on knowledge that only brought suffering.
 
 Each overcomes their trial not by defeating it, but by **accepting** it. The Pallor feeds on denial. Acceptance starves it. This is the thematic key to the entire game.
+
+### The Pallor Wastes
+
+The plateau outside the Convergence is wrong in a way the party has no language for — not hostile, exactly, but voided, as though the land itself has given up the habit of caring. Vaelith is waiting for them here, between the wastes and the Convergence gate. This is the first time the party has seen them without their ease. They are not smiling. They look at the ley lines visible in the sky above the party — threads of light, faint but present — and for a moment they seem genuinely disoriented. They remark, more to themselves than to the party, that the network should not still be alive this late in a cycle. It has never been alive this late. Vaelith turns to look at the party with something that might be recalibration.
+
+They do not stand aside. But the fight this time is different. Lira, drawing on Cael's lingering resonance through the Pendulum's fracture lines and the restored ley network threading through the plateau, shapes the grief she has been carrying since the siege into something she could not have made any earlier in the journey — not a weapon exactly, but an act of love that has learned to push back. It strikes Vaelith in a way that their centuries of experience have not prepared them for. They take a step backward. They take another. The smile does not return. The party presses the advantage until Vaelith is on one knee in the grey dust, and then — for the first time — they simply sit down. They look at the four of them without contempt, without performance, without the careful distance they have maintained across every encounter. They are quiet for a long moment. Then they say that something changed in this cycle, and that they do not fully understand what. They say it without bitterness. They dissolve slowly into grey mist, edges going first — not destroyed, not fleeing, but concluded. Released. The mist drifts upward and is gone. The Convergence gate opens without any further obstacle.
 
 ### The Final Battle
 

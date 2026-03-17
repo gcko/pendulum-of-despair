@@ -76,6 +76,20 @@
 
 **Incarnation:** In Act III, it attempts to incarnate through Cael — a towering presence of grey static and hollow sound. This is the only time it has a "body" the party can fight.
 
+## The Pallor's Champion
+
+### Vaelith, the Ashen Shepherd
+
+**Role:** Recurring antagonist -- the Pallor's ancient instrument, a figure from the previous cycle 800 years ago. Appears seven times across the story, escalating from charming curiosity to revealed sociopath to vulnerable final opponent.
+
+**Personality:** Vaelith speaks like a dinner party host -- warm, witty, genuinely interested in people. They ask questions. They remember names. They compliment Lira's craftsmanship and Torren's spiritual sensitivity with apparent sincerity. They treat the party like fascinating subjects in a study they have been conducting for centuries. The horror creeps in when you realize the warmth is real -- Vaelith genuinely likes people the way an entomologist likes butterflies. Pinned ones.
+
+In life, Vaelith was a celebrated scholar-diplomat -- charming, brilliant, beloved. When the Pallor rose in their era, they were the one everyone trusted to find a solution. Instead, they found the Pallor fascinating. They did not fall to Despair -- they chose it, the way a scholar chooses a field of study. The Pallor did not break them; it gave them exactly what they wanted: eternity to observe the human condition at its most raw.
+
+**Arc:** Vaelith's arc across seven appearances follows the Kefka template (FF6): the player first encounters a charming oddity at Ember Vein who seems almost helpful. Vaelith reappears as an observer in the Wilds, then as a tavern scholar in Corrund/Bellhaven who asks unsettling questions about Cael. A cutscene the party does not witness reveals the "Doma moment" -- Vaelith comforting Pallor-touched villagers while feeding on their despair. At the Valdris siege, Vaelith appears for an unwinnable fight, treating the party's desperate stand as entertainment. During the Interlude, NPCs reveal Vaelith has been engineering events (Brant's fatalism, ley node destabilization, the Ashen Ram's design). Finally, in the Pallor Wastes, Vaelith faces a party that has done what no previous cycle's heroes managed: the ley network is alive, and Lira forges a weapon from Cael's lingering bond. For the first time in eight centuries, Vaelith stops smiling.
+
+**Fate:** Vaelith does not die dramatically. After defeat, they sit down and look at the party -- really look, without the lens of centuries of contempt. "Eight hundred years. Every cycle, the same. And you... you actually changed something." They dissolve into grey mist. Not destroyed -- released. The eternity they chose finally ends.
+
 ## Relationships
 
 ```
@@ -86,6 +100,13 @@ Torren <--[mentor/guide]-------> Party
 Sable <--[found family]--------> Party
 Maren <--[mentor]--------------> Edren
 The Pallor --[manipulation]----> Cael
+Vaelith --[planted fatalism]---> Brant
+Vaelith --[observing/probing]--> Cael
+Vaelith --[pattern recognition]--> Lira
+Vaelith --[noted "promising"]--> Torren
+Maren <--[Archive records match]--> Vaelith
+Riven <--[creatures disturbed]--> Vaelith
+Vaelith --[anonymous consultant]--> Tollen (Ashen Ram alloy)
 ```
 
 ## The Tragic Romance: Cael and Lira

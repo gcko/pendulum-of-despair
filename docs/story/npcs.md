@@ -325,6 +325,7 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 **Dialogue hints:**
 - *"Maren took my document. Didn't ask. Didn't sign for it. Just took it and vanished. And now everyone treats her like some kind of prophet. She's a thief who reads fast."*
 - *"The original text mentions three previous 'Doors.' Maren's copy was damaged — she only knows about two. I wonder if she knows she's missing one."*
+- *"A scholar came through requesting records from the Founding. Impeccable manners. He returned the documents with annotations -- corrections, actually. He fixed errors in 800-year-old records. How would anyone know?"* (Available in Act II. Mirren is troubled by this visit -- the corrections were accurate, verified against sources she thought only she had access to. The scholar left no forwarding address.)
 
 **Story relevance:** Ties to main quest
 
@@ -346,6 +347,24 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 **Story relevance:** Ties to world event
 
 **Act presence:** Act I only. His disappearance after Millhaven's fall is a quiet, unresolved loss. The player never learns what happened to him. That's the point.
+
+---
+
+### Old Harren
+
+**Location:** Valdris Crown, Lower Ward (the Crown's Rest inn)
+
+**Role:** Innkeeper
+
+**Backstory:** Harren has run the Crown's Rest for forty years. He inherited the inn from his father, who inherited it from his. Three generations of serving travelers, soldiers, and diplomats. He knows every squeaking floorboard, every draft, every stain on the ceiling. The inn is his life's work and his memory palace.
+
+**Dialogue hints:**
+- *"Had a strange guest last month. Very polite. Tipped well. Asked about the old mines. Said he was writing a history. Funny thing -- he knew details about this inn that I have never told anyone. Said the original hearth was three feet to the left. He was right."* (Available in Act II. Harren is unsettled but cannot articulate why. The guest stayed one night, asked precise questions about Valdris Crown's oldest structures, and left before dawn. They paid in coins Harren did not recognize -- they were accepted at the market without comment.)
+- *"Forty years behind this bar. I remember every face. His, I can't quite recall. Polite. Grey coat. That's all I have. Isn't that strange?"*
+
+**Story relevance:** Flavor (Vaelith breadcrumb)
+
+**Act presence:** Act I-II. In Act I he's a cheerful, unremarkable innkeeper. In Act II his dialogue about the grey stranger is available. A small, easily missed detail that gains weight in retrospect.
 
 ---
 
@@ -488,6 +507,7 @@ When the party confronts Kole, Brant is the one who opens the citadel's rear gat
 **Dialogue hints:**
 - *"The general is... focused. More focused than before. The new energy has been... effective."* (He can't meet your eyes.)
 - *"I didn't open that gate for you. I opened it for me. There's a difference. Don't thank me."*
+- *"He did not threaten me. That is what I cannot stop thinking about. He came weeks before any of this. He just... explained how it would go. Every option, every outcome. He had seen it all before. He made cowardice sound like the only rational choice. And he was so kind about it."* (Available after opening the gate. Brant is describing a grey stranger who visited him before Kole's transformation -- a quiet, polite scholar who mapped every choice Brant would face and showed him, gently, that compliance was inevitable. The stranger left no name.)
 
 **Story relevance:** Ties to main quest
 
@@ -530,6 +550,27 @@ Her maps are beautiful — intricate, color-coded renderings of the invisible ri
 **Story relevance:** Flavor only
 
 **Act presence:** Acts I-II. Not present in the Interlude — the docks have shut down. His fate is unknown, like Voss's. A small, unanswered question.
+
+---
+
+### Tollen
+
+**Location:** Carradan Compact, Ironmark Citadel (engineering wing)
+
+**Role:** Carradan military engineer
+
+**Backstory:** Tollen was assigned to the Ashen Ram project -- the Compact's siege weapon designed to breach Valdris Crown's walls. A competent, methodical engineer who follows specifications to the letter. During the Ram's construction, he noticed discrepancies in the alloy composition. The original specs called for standard Carradan iron. Someone had altered the alloy formula -- introducing trace elements that Tollen could not identify. The alteration was subtle enough that quality control passed it, but Tollen's eye for detail caught the change. He raised the issue. He was told the specs had been "updated by a consultant." No one could name the consultant.
+
+The altered alloy made the Ram more effective than it should have been. The trace elements interacted with residual ley energy in a way standard iron would not -- the Ram hit harder, lasted longer, and showed none of the usual metal fatigue. Tollen found this unsettling rather than impressive.
+
+**Dialogue hints:**
+- *"The specs called for standard iron. Someone altered the alloy. I do not know who approved it."*
+- *"I checked the purchase orders. The trace elements came from a supplier I cannot find. The invoice was paid in full before the order was placed. That is not how procurement works."*
+- *"The Ram worked better than it should have. Nobody asked why. When something works too well, you should always ask why."*
+
+**Story relevance:** Lore (Vaelith's influence on Compact military engineering)
+
+**Act presence:** Interlude only. Found in the Ironmark engineering wing after Kole's defeat. His testimony connects the Ashen Ram's unusual effectiveness to an outside influence -- the "consultant" who altered the specs was Vaelith, seeding the Compact's military with optimized designs to ensure the siege succeeded.
 
 ---
 
@@ -684,10 +725,12 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 **Dialogue hints:**
 - *"My predecessor heard a voice in the marsh and followed it. I hear voices too. I've learned not to follow."*
 - *"You want our spears? Earn them. The Hollow has been poisoning our water for months. Fix that, and we'll talk about alliances."*
+- *"The ground is screaming. Can you not hear it? It has been screaming for days."* (Interlude, guiding the party to the Ley Leech)
+- *"Torren says I should not listen so hard. But if I stop listening, who will?"*
 
 **Story relevance:** Ties to main quest
 
-**Act presence:** Act II (Duskfen, sets condition for alliance, performs the Fenmother binding), Interlude (Duskfen is half-submerged; Caden leads the remnant tribe on the highest platforms, grim but holding), Post-game (confident spirit-speaker leading Duskfen's reconstruction).
+**Act presence:** Act II (Duskfen, sets condition for alliance, performs the Fenmother binding). Interlude: When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. He can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. He guides the party to Torren's location at the ley nexus, serving as both scout and spiritual compass. During the Ley Leech boss fight, Caden assists from the perimeter. After the fight, he performs a small recovery ritual for the exhausted Torren -- a passing-of-the-torch moment between the old spirit-speaker and the young one. Duskfen itself is half-submerged; Caden leads the remnant tribe on the highest platforms, grim but holding. Act III: If the party returns to the Wilds, Caden is maintaining the stabilized nexus in Torren's absence. Post-game: Confident spirit-speaker leading Duskfen's reconstruction.
 
 ---
 
@@ -856,6 +899,7 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 **Dialogue hints:**
 - *"I can track a shadowcat through a rainstorm. People are easier. People leave guilt behind them like footprints."*
 - *"The deep places are changing. Ruins that were empty for centuries — there's light in them now. Wrong kind of light. Cold."*
+- *"Some of these creatures were not just corrupted. They were disturbed. Something walked through their territory and woke them up. Whatever it was, it was not afraid of them. They were afraid of it."* (Available after the party has encountered Grey Bounty creatures in the Wilds. Riven has tracked something through the deep forest that leaves no footprints but makes the wildlife flee.)
 
 **Story relevance:** Side quest giver
 
@@ -874,6 +918,7 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 **Dialogue hints:**
 - *"My grandmother told me a story about a time the world forgot how to laugh. She said a door opened and something grey walked through. A young man closed it, and he didn't come back. That story is older than Valdris."*
 - *"You think this is new. It isn't. The world has fought this before. It just keeps forgetting."*
+- *"Someone has been through the old grove. Picked herbs I did not think still grew. Left the roots intact, very careful. But the grove felt... quieter after."* (Available in Act II. Seyth tends the old-growth Thornmere near the Greywood Camp. She noticed someone harvesting extinct herb species with expert care -- the same herbs found in the grey teacups at the Ember Vein and Fenmother's Hollow. The visitor left no footprints but the grove's ambient spirit energy is diminished, as if something old passed through and the spirits went still.)
 
 **Story relevance:** Ties to main quest
 
@@ -957,6 +1002,31 @@ Characters who don't belong to any single faction, or who operate across faction
 
 ---
 
+### Gavren (the Second Operator)
+
+**Location:** Bellhaven, Stilts District (a dockside tavern, drinking alone)
+
+**Role:** Former boring engine operator, Carradan Rail Tunnels
+
+**Backstory:** Gavren was the second operator on the boring engine shift that created the Ironbound -- the boring engine that became the Ironbound. When the engine's ley conduits surged during a deep tunnel excavation, the first operator was consumed by the energy feedback. Gavren ran. He has been running ever since. He ended up in Bellhaven because it is as far from the tunnels as you can get without crossing water. He drinks to forget the sound the first operator made. He does not drink enough.
+
+When he fled the tunnels, he dropped his own Operator's Badge in the wreckage -- his shift identification, stamped with his name, the Ashmark Forge-Masters' Guild seal, and the date of the incident. The first operator had no badge to leave behind; he was consumed entirely by the machine. Gavren has thought about going back for his badge every day since. He never has.
+
+Weeks before the incident, a grey stranger visited the tunnels and spoke privately with the foreman about the ley conduit calibration. Gavren overheard fragments of the conversation from behind a cooling stack but did not understand the significance until much later. The stranger left without introducing himself. The conduit settings the foreman used on the day of the incident matched what the stranger had described.
+
+**Dialogue hints:**
+- *"I was the second man on the engine. There were two of us. Now there is one."*
+- *"The specs were wrong. We knew it. Foreman said run it anyway. The conduits were hot -- too hot. I told them. I told them and they said run it."*
+- *"When it happened, the first operator -- he didn't scream. He just... stopped being a person and started being part of the machine. I heard the metal accept him. That's the sound I can't forget."*
+
+**Trigger:** The party must have the Operator's Badge key item (found in the Ironbound wreckage in the Carradan Rail Tunnels -- Gavren's own badge, stamped with his name). Showing it to Gavren unlocks his full dialogue; he recognizes it as proof the party has been to the site where he abandoned his partner. He breaks down. Without the badge, he is a silent drunk who will not speak to strangers.
+
+**Story relevance:** Lore (Ironbound creation, Compact engineering ethics)
+
+**Act presence:** Interlude only. He provides critical context for the Ironbound's creation and the Forge-Masters' Guild's willingness to sacrifice workers. His guilt is genuine and unresolvable -- he survived because he was a coward, and the machine that killed his colleague is still operating.
+
+---
+
 ### The Archivist (no other name given)
 
 **Location:** Pre-Valdris ruin, deep beneath the Thornmere Wilds (accessible only in the Interlude)
@@ -1014,6 +1084,47 @@ In the Interlude, the tavern is damaged but standing. Hadley refuses to close. S
 **Story relevance:** Side quest giver
 
 **Act presence:** All acts. A recurring safe haven. In the Interlude, she can provide leads, shelter, and a side quest involving mediating between refugee groups. She is also the NPC whose tavern Sable names hers after in the epilogue — a detail that rewards players who remember.
+
+---
+
+### Vaelith, the Ashen Shepherd
+
+**Location:** Variable -- appears across multiple locations throughout the story. First encountered at Ember Vein. Later appears in the Thornmere Wilds, Corrund or Bellhaven, the walls of Valdris during the siege, and finally the Pallor Wastes.
+
+**Role:** Pallor General -- an ancient champion of Despair from the previous Pallor cycle, 800 years ago. Recurring antagonist who appears seven times across the story. See characters.md for full arc.
+
+**Backstory:** Vaelith was a scholar-diplomat in the previous civilization. When the Pallor rose in their era, they were the one everyone trusted to find a solution. Instead, they found the Pallor fascinating and chose it willingly -- the only person in recorded history to embrace Despair not out of brokenness but out of intellectual curiosity. The Pallor granted them what they wanted: eternity to observe. For 800 years, Vaelith has walked the continent between cycles, studying people, destabilizing ley nodes with precisely crafted tuning forks, and waiting for the next cycle to begin. They have watched every set of heroes try and fail. They know how hope dies because they have catalogued every variation.
+
+Their influence in the current cycle extends far beyond direct confrontation. They planted fatalism in Commissar Brant, consulted on the Ashen Ram's design at an Ironmark construction site, destabilized ley nodes across the continent, and disturbed Grey Bounty creatures in the Wilds. Records in the Archive of Ages describe a diplomat from the previous cycle who "walked into the grey and did not return." A faded portrait in Valdris Crown's forgotten gallery matches their appearance.
+
+**Dialogue hints:**
+- *"Such a fragile little thing to build hope around."* (Ember Vein, examining the Pendulum)
+- *"Your friend with the heavy eyes. How is he sleeping?"* (Corrund/Bellhaven tavern, asking about Cael)
+- *"You are doing wonderfully. Truly. I have not been this entertained in centuries."* (Valdris siege, unwinnable fight)
+- *"...Interesting."* (Pallor Wastes, when Lira's weapon manifests)
+- *"Eight hundred years. Every cycle, the same. And you... you actually changed something."* (Pallor Wastes, upon defeat)
+
+**Story relevance:** Ties to main quest
+
+**Act presence:** Act I: Appears post-Vein Guardian at Ember Vein (Appearance 1 -- charming introduction, no combat). Observed watching from a ridge in the Thornmere/Duskfen region during the Act I-II transition (Appearance 2 -- leaves a campsite with two cups of tea and a journal page). Act II: Found in a Corrund or Bellhaven tavern posing as a traveling scholar (Appearance 3). A narrative cutscene (not witnessed by the party) reveals Vaelith feeding on Pallor-touched villagers while comforting them (Appearance 4 -- the "Doma moment"). Appears during the Valdris siege for an unwinnable fight (Appearance 5). Interlude: Not seen directly, but referenced by multiple NPCs including Brant's confession and Cordwyn's reports (Appearance 6). Act III: Penultimate boss in the Pallor Wastes before the Convergence (Appearance 7 -- 20,000 HP).
+
+---
+
+### Kerra
+
+**Location:** Caldera, undercity (Sera Linn's resistance network)
+
+**Role:** Former Valdris soldier turned Caldera resistance fighter. Guest NPC during "Unbowed" escort mission.
+
+**Backstory:** Kerra served in the Valdris garrison during the siege. When the walls were breached, her entire unit was killed. She survived by falling into the river and was carried downstream. She washed up in Compact territory with nothing -- no rank, no unit, no purpose. Rather than return to what remained of Valdris, she came to Caldera looking for her brother, a factory worker who had stopped writing months earlier. She never found him. But Sera Linn's resistance network gave her something to protect again. She does not talk about the siege. She does not sleep well. But when Sera needs someone to lead civilians through dangerous tunnels, Kerra volunteers without hesitation. Her combat skills are diminished by trauma and malnutrition, but her courage is absolute.
+
+**Dialogue hints:**
+- *"Stay behind me. Stay quiet. Do exactly what I say and everyone gets through."*
+- *"I have already lost everyone once. It is not happening again."*
+
+**Story relevance:** Ties to world event
+
+**Act presence:** Interlude: Found in Caldera's undercity as part of Sera Linn's resistance network. Joins the party as a guest NPC during the "Unbowed" escort mission. Fights alongside the party against the Pallor Nest Mother (low stats, high courage). If she remains standing during the mission (at 0 HP she is incapacitated but survives), she becomes a recurring presence in Caldera -- organizing the workers, coordinating with Sera. Epilogue: Appears as a militia leader during Caldera's reconstruction.
 
 ---
 

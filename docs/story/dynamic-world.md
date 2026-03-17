@@ -46,6 +46,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Palette/atmosphere shifts:** Stage 0.5 corruption -- not from the Pallor overlay system, but from decline. Ley-lamps flicker (1 in 4 are dim). The gold accent color is muted. Clouds linger. The sky is overcast more often than clear.
 - **New/removed accessible areas:** Cael's quarters inaccessible (guarded). War council chamber in the Keep opens. The eastern wall battlements become accessible for the Carradan assault set piece. After the assault: the eastern wall collapses (major tile replacement -- intact wall tiles swapped for rubble, fire damage, breach).
 - **Environmental details:** Markets half-empty. Stall awnings torn and unmended. NPCs whisper about border losses. A refugee family from Greyvale sits against the Lower Ward wall. Guards are tense, short-tempered. At night, only three of the Seven Towers glow. After the assault: fires in the Lower Ward. Bodies under sheets. The eastern wall is a ruin of broken limestone and scattered siege debris. The throne room has blood on the flagstones. King Aldren's chair is empty.
+- **Vaelith's passage:** A faded portrait in the forgotten gallery of the Catacombs (Floor 2) has been noticed by more visitors than usual -- an 800-year-old painting labeled "Diplomat-Emissary to the Grey Accord" that predates any known historical record. Old Harren at the Crown's Rest inn describes a polite guest who knew architectural details about the building that no living person should know.
 
 ##### Interlude State
 - **Major transformation:** The capital has fractured into noble house territories. Makeshift barricades of furniture, carts, and rubble divide the Citizen's Walk into controlled zones. The Court Quarter is locked down by Lord Chancellor Haren's faction. The Lower Ward is the most accessible but most damaged.
@@ -149,6 +150,8 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 #### Corrund (Capital)
 
+**Vaelith's passage (Act II, referenced in Interlude):** A charming visitor has been buying drinks and asking about local history in the Undercroft taverns. They corrected an archivist's 800-year-old records and left annotations of impossible accuracy. Carved sigils -- pre-Compact ward-marks meaning "I passed here and found it wanting" -- have appeared on doorframes throughout the sewer network. A grey thread tapestry appeared in the resistance waypoint, donated by someone no one can quite remember meeting.
+
 ##### Interlude State (First Visit)
 - **Map layout changes:** The city's canal district has flooded sections where pumping machinery has failed (new water tiles replacing walkway tiles in specific areas). The Undercroft is accessible. The Axis Tower exterior shows erratic energy -- lightning arcs between conduits, visible from street level.
 - **Visual state:** Carradan Industrial palette with Stage 1-2 corruption at the edges. The forge-glow in factory districts shifts between normal amber and sickly grey-white. The smog is thinner (some factories have stopped) but the air feels dead -- the palette is cleaner but colder.
@@ -192,6 +195,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Accessible areas:** The Stilts (harbor district, NPC hub), merchant prince manor district, Sable's childhood neighborhood (character content).
 - **Blocked areas:** Offshore rigs (referenced, not accessible until the Sunken Rig optional dungeon in Interlude).
 - **Environmental details:** Ironclad barges and submersible rigs dominate the harbor. Foreign merchants crowd the market quarter. Laws enforced loosely. Sable knows this place -- her dialogue changes here, more confident, more bitter. The Breakwater fortification is intact.
+- **Vaelith's passage:** A charming traveler has been buying drinks at the Stilts taverns and asking about local history, maritime trade routes, and the old boring engine projects. (Note: Gavren, the former engine operator haunted by the incident, arrives in Bellhaven during the Interlude — he fled the tunnels when the ley rupture happened and is not yet present in Act II.)
 
 ##### Interlude State
 - **What changed:** Several submersible rigs have surfaced unmanned, crews lost to the Pallor. The harbor economy is disrupted. One rig has drifted to shore (the Sunken Rig dungeon).
@@ -226,6 +230,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Act II State
 - **Compact-occupied and sealed.** The mine is sealed. Compact soldiers have fortified the outpost -- new iron plating on the buildings, a guard tower, supply wagons. Inaccessible to the player. Referenced by NPCs at Thornwatch.
+- **Vaelith's passage:** A grey stranger was reported near the mines. Locals at Thornwatch describe a polite scholar asking about mineral deposits and the mine's history. They left before anyone thought to question them further. Two grey teacups were found on a flat stone near the Ember Vein entrance.
 
 ##### Interlude State
 - **Abandoned.** The Compact soldiers have pulled back. The fortifications are empty. The iron plating is rusting (accelerated by Pallor influence in the Wilds). The mine entrance is open -- the seal has cracked. The Forgewright engine is silent, its core dark. If the player visits: an empty, eerie place. The forest is reclaiming it -- vines on the metal buildings, roots cracking the foundation. The mine exhales grey air.
@@ -521,6 +526,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Interlude State
 - **Surface destroyed.** The pit erupted, Millhaven collapsed. The Compact's Extraction Works (Floor 1) are gone -- buried under the crater. The Millhaven entrance is sealed. However, the pre-civilization chambers deep below (Floors 2-5) survive intact. The builders' architecture was designed to endure catastrophe; the geometric stone and ley-crystal formations are undamaged. The deeper Depths are inaccessible during the Interlude -- no known entrance exists. Referenced in dialogue as "gone," because from the surface, they are.
+- **Vaelith's passage (pre-eruption):** Destabilization patterns in the ley nexus match a deliberate resonance -- not natural Pallor spread. A precisely crafted tuning fork found near a destabilized node on Floor 4 hums at a frequency that agitates spirits and disrupts ley flow. The destabilization preceded the Millhaven eruption by months. Someone was here first, with tools designed to weaken the network from within.
 
 ##### Act III State
 - **Rediscovered.** A secondary entrance through the Thornvein root network (accessible from the Thornvein Passage or Roothollow) opens into the Natural Caverns (Floor 2), bypassing the destroyed surface floors. The Crystal Labyrinth, Deep Vein, and the sealed door are intact. With the Archivist's Codex (from the Archive of Ages), the sealed door opens to reveal Floor 5: the Ley Confluence. The revelation that the ley lines are engineered -- and that the Compact was draining planetary life support -- is the narrative payoff for the dungeon's earlier mystery.
@@ -1036,6 +1042,8 @@ The only hints are narrative, not visual:
 | Ley-lamps in Valdris Crown | 1 in 4 dim or dark. | Attributed to ley line failure, not the Pallor. The player has an explanation that is not supernatural. |
 
 **What the player notices instead:** The world's problems in Act II feel political and military -- the Compact's expansion, Valdris's decline, the diplomatic mission. The Pallor is working through Cael in cutscenes, not through the environment. The subtle visual corruption is designed for replay value: the second time through, the player sees what they missed.
+
+**Vaelith-accelerated vs. natural corruption:** Not all corruption spreads at the same rate. Locations where Vaelith has been active show faster, more precise degradation. Natural Pallor spread is organic -- diffuse, gradual, radiating outward from the Convergence like a stain. Vaelith-accelerated corruption is surgical -- ley nodes destabilized by tuning forks show localized collapse patterns (the energy fractures along clean lines rather than bleeding outward), spirit populations flee specific areas as if driven out rather than dying off, and the corruption's Stage 1 markers appear weeks or months before the natural spread would reach that distance from the Convergence. On first playthrough, this distinction is invisible. On replay, after finding the tuning fork and journal fragments, the player can trace Vaelith's path across the continent by the shape of the corruption: everywhere the grey spreads too fast, Vaelith was there first.
 
 ---
 

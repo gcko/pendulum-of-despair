@@ -55,6 +55,9 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 15. [Caldera Forge Depths](#15-caldera-forge-depths)
 16. [Frostcap Caverns](#16-frostcap-caverns)
 17. [Thornvein Passage](#17-thornvein-passage)
+18. [Valdris Siege Battlefield](#18-valdris-siege-battlefield)
+19. [Ley Nexus Hollow](#19-ley-nexus-hollow)
+20. [Highcairn Monastery](#20-highcairn-monastery)
 
 ---
 
@@ -122,6 +125,7 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 - `T` (mid-left): Chest -- 3x Potion.
 - `T` (lower-mid): Chest -- Iron Bracelet (accessory).
 - `S` (lower-left): Save point crystal -- glowing amber, embedded in the wall.
+- *(near entrance)* Two grey teacups on a flat stone beside the entry corridor, still faintly warm. An unusual herbal blend. Torren identifies the herbs as extinct species from old-growth Thornmere -- plants that have not existed for centuries. The cups are clean, the stone swept. Someone sat here recently and left without hurry.
 - `v` (bottom-left): Stairs down to Floor 2.
 
 **Encounter Zones:** Five zones marked `!`. Encounters are:
@@ -414,6 +418,7 @@ A secondary puzzle layered on top of the water-level system. On Floor 2, a trans
 ```
 
 **Key Locations (Floor 1):**
+- *(Duskfen outskirts, near entrance)* Two grey teacups on a flat stone at the top of the entry stairs, still faintly warm. The same unusual herbal blend as the Ember Vein. Torren: "The same herbs. The same cups. Whoever this is, they have been here too." The stone is dry in a place where everything else is damp. Someone sat and watched the marsh before descending.
 - `E` (top): Entry -- stone staircase descending into murky water. The first thing the party sees: dead fish floating belly-up in dark, oil-sheened water. Torren stops on the stairs and touches the wall carvings. "These are old. Older than the Duskfen. They show the Fenmother when she was... healthy." The carvings depict a vast serpentine spirit, luminous and beautiful, coiling through clear water. The contrast with the murky filth below is immediate and visceral. Sable: "So what happened to her?" Torren: "The same thing that's happening to everything. Someone decided the land was worth more than what lived in it."
 - `S` (left): Save point -- spirit-totem embedded in the wall, pulsing faintly. The totem's glow is weak and intermittent -- a sign of the ley-line poisoning. In a healthy dungeon, this would burn steady. Here, it flickers like a dying candle.
 - `W` (top-center): Deep water barrier. Impassable until Wheel 1 is set to HIGH (water drains here, fills elsewhere). The water here is the worst in the dungeon -- thick with dark sediment, iridescent with contamination. Lira crouches at the edge and examines it. "This isn't natural runoff. See the chemical sheen? That's processed ley-extract residue. The Compact's purification plant at Ironbend dumps its waste into the tributary that feeds this system." She traces the flow with her finger. "It's been accumulating here for years. Maybe decades."
@@ -796,6 +801,32 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 - **Sable** (after finding the Maintenance Chief's Report): "Pre-civilization ruins under the tunnels. The Compact built over something ancient and pretended it wasn't there. Sound familiar?"
 - **Lira** (after opening the Corrund passage): "A direct connection to the city sewers. This was probably an emergency evacuation route. Smart."
 
+### Boss: The Ironbound (8000 HP)
+
+A massive Carradan boring engine fused with its operator during a Pallor corruption event. The machine and the worker are one -- a person trapped inside a machine that will not stop digging. A Drayce-series frame, built for two-person crews. The second operator fled.
+
+**Phase 1 (8000-4000 HP): The Machine**
+- **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
+- **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Slow (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
+
+**Phase 2 (below 4000 HP): The Operator**
+The operator's voice breaks through. Attacks become erratic -- the machine hesitates mid-charge, drill strokes stutter.
+- All Phase 1 attacks, but with random hesitation windows (1-turn pauses where the machine stops).
+- **Hesitation Window** -- during a pause, Lira can use Forgewright to disrupt the engine (bonus 500 damage) or Torren can use Spiritcall to reach the spirit inside (bonus 400 damage + reduces next attack's damage by 50%).
+- **Desperate Bore** -- the machine charges twice in succession with no wind-up. Only used when the operator's voice is strongest.
+
+**On defeat:** The machine stops. The operator's spirit speaks a single line -- their partner's name -- and goes still.
+
+**Lira's Special Interaction:** Recognizes the boring engine model. Unique dialogue: "That is a Drayce-series frame. Those were built for two-person crews. Where is the second operator?" Forgewright command deals bonus damage during hesitation windows.
+
+**Torren's Special Interaction:** Spiritcall can reach the trapped spirit during hesitation windows. Provides bonus damage and damage reduction on the Ironbound's next attack.
+
+**Weakness:** Storm (150% damage). Void (125% damage).
+**Resistance:** Earth (50% damage), Flame (75% damage).
+**Drop:** Operator's Badge (key item -- triggers dialogue with the second operator NPC in Bellhaven), Reinforced Drill Bit (crafting material).
+
 ### Encounter Table
 
 | Enemy | Description | Location |
@@ -807,6 +838,7 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 | Steam Elemental | Living steam from broken vents. Flame damage, can blind. | Hub, West |
 | Pipe Wraith | Ghostly maintenance worker. Emerges from pipe junctions. Ignores 25% DEF. Weak to Storm. 1,800 HP. | Maintenance Shaft |
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
+| **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 8,000 HP. | Deepest tunnel section |
 
 ### Treasure/Loot
 
@@ -1300,6 +1332,8 @@ Edren (if present): "The Ember Vein had carvings like these. Smaller, rougher. L
 - `v` (top): Descent from Floor 3. The geometric carvings begin here. The transition from crystal labyrinth to carved stone is abrupt -- a clear boundary. The crystal growth stopped exactly where the architecture starts, as if the crystal knew not to encroach.
 - `L` (center): The deepest ley river. Brighter, more intense. Multiple channels converging. The tributary channels pulse at different rates, creating a shimmering interference pattern where they meet. The light here is so bright that the party casts sharp double shadows.
 - `P` (left): Ley valve 4. Pre-civilization mechanism, more elaborate than valves 1-3. This valve has three positions rather than two -- the third position opens a tributary channel that feeds the sealed door mechanism. A pictographic inscription beside it reads (if the Archivist's Codex is equipped): "The root sleeps. Turn the heart to wake it." Without the Codex, the third position is discoverable by experimentation -- the valve clicks into three distinct positions, and the third triggers a rumbling sound from the sealed door corridor.
+- *(near ley valve 4)* A loose page in archaic script, folded precisely and placed atop the valve mechanism. Torren and Maren together translate: "I found the nexus. Fragile. A tuning fork at the right frequency should destabilize it within a season." The handwriting matches every other fragment. Maren goes pale: "This is not observation. This is a plan."
+- *(near destabilized node, lower passage)* A precisely crafted tuning fork, resting on a carved stone shelf. It hums at a frequency that agitates spirits. Torren recoils -- "That sound. It is wrong. It makes the ley energy flinch." Lira picks it up carefully: "The craftsmanship is impossibly precise for the era it was made. This alloy should not exist in pre-Compact metallurgy." The fork's vibration matches the destabilization pattern visible in the ley river's flow.
 - `T` (bottom-left): Chest -- Deep Vein Crystal (weapon material, used to forge Maren's best staff). A raw crystal the size of a fist, pulled from the wall beside a pre-civilization tool rack. The tools are still there -- crystal-cutting implements of a design no modern smith would recognize. Lira (if present): "These tools are sharper than anything the Compact makes. The alloy is... I don't know what this is. Not arcanite. Something older."
 - `T` (right): Chest -- Ley-Born Armor (armor, best magic defense in Act II). A chest of pre-civilization make, sealed with a ley-lock that opens when the party approaches (keyed to living presence, not a specific key). The armor inside is light, flexible, woven from a material that catches ley-light and holds it. It fits whoever puts it on.
 - `@` (right): The sealed door. Massive stone door, ten feet tall, five feet wide, set into a wall of solid carved stone. The door bears the Pendulum symbol at its center -- the same symbol as the artifact Edren carries, the same symbol carved in the Ember Vein, the same symbol that appears in the Archive of Ages. The pictographic inscription around the door's frame reads (with the Codex): "The Deep Root. Sealed from within. The water flows beneath. Do not open until the Archive speaks." Without the Codex, the pictographs are inscrutable, but the Pendulum symbol is unmistakable. Examining the door grants the Sealed Door Rubbing (lore item -- a charcoal rubbing of the door's inscription, readable later if the Codex is obtained).
@@ -1547,10 +1581,10 @@ E.............#####...............................
 ```
 
 **Trial 1 (B1): Edren's Trial**
-A phantom Cael appears. He tells Edren he was always the lesser knight. The correct response: "You're right. I wasn't enough. But I'm here now." Edren gains Resolve (permanent +10% all stats for the rest of the game).
+Edren faces the Crowned Hollow -- a towering armored figure wearing every crown of every leader who failed to stop the Pallor. It fights with his own moveset. The correct response: defend, not attack. Three consecutive Defends end the fight. Edren gains Steadfast Resolve (party-wide defensive buff that cleanses Pallor status effects).
 
 **Trial 2 (B2): Lira's Trial**
-A vision of the life she and Cael could have had -- cottage, peace, children. The correct response: "It was beautiful. And it's gone. I'm letting it go." Lira gains Resolve.
+Lira faces the Perfect Machine -- a flawless automaton with Cael's face that asks to be repaired. Each "repair" adds HP and triggers counterattacks. The correct response: use Forgewright's Dismantle command. Dialogue: "I cannot fix you. I could not fix him. That was never my job." Lira gains a latent ability (prerequisite for manifesting Cael's connection as weapon against Vaelith).
 
 ### Section 3: The Grey March (50x20)
 
@@ -1603,15 +1637,16 @@ E.........#####..........#####..........#####.....
 ```
 
 **Trial 3 (B3): Torren's Trial**
-The spirits of the Wilds accuse him of failing them. Correct response: "I couldn't save you all. I saved what I could. It has to be enough."
+Torren faces the Last Voice -- an ancient Great Spirit cracked with grey stone, barely alive, asking to rest. The spirits of the Wilds accuse him of failing them. The correct response: use Spiritcall's Release command to let the Great Spirit die peacefully. A single green shoot appears. Torren gains Rootsong (healing ability restoring HP and MP, drawing from the ley network).
 
 **Trial 4 (B4): Sable's Trial**
-Her own insignificance whispers: she doesn't belong with heroes. Correct response: "I'm not a hero. I'm the one who showed up. That's enough."
+Sable faces the Open Door -- a literal open door at the end of the alley leading to safety, warmth, and freedom. Shadows of Sable (copies using her Tricks moveset) urge her through. Not a combat encounter. The correct response: turn around and walk back into the alley, toward the party, toward danger. The door closes. The shadows vanish. Sable gains Unbreakable Thread (passive preventing forced removal from battle, counters Pallor Incarnate's Reality Tear).
 
 **Trial 5 (B5): Maren's Trial**
-Her younger self asks why she wasted her life on knowledge that only brought suffering. Correct response: "Because someone had to remember. Even if it hurt."
+Maren faces the Index -- a vast catalogue entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence).
 
 - `S` (bottom-right): Final save point before the Convergence.
+- *(near final save point)* A loose page in archaic script, placed deliberately on the save point's ley-line clearing -- the only spot with color in the grey waste. Torren and Maren together translate: "This cycle has a forgewright who loves the vessel. That is new. I wonder if it will matter." The handwriting has not changed across eight hundred years and six locations. The ink is fresh. The page was left here for the party to find. Maren's hands shake: "Every fragment. Every location. The same hand. Eight centuries of writing and the penmanship never aged." If the party has found all six fragments, Maren adds: "A scholar. A diplomat. Someone who walks everywhere and writes everything down. Someone who has been watching since before any of us were born."
 - `X` (bottom-right): Exit to the Convergence plateau edge.
 
 ### Encounter Table
@@ -1624,6 +1659,17 @@ Her younger self asks why she wasted her life on knowledge that only brought suf
 | Pallor Knight | Armored figure from a past age. Strong, disciplined, empty. Premium encounter. | Sections 3-4 |
 | Grief Shade | Translucent figure that mimics a party member's silhouette. Uses weakened versions of party abilities. | Sections 2, 4 |
 | Trial Manifestations | Unique to each trial. See trial descriptions. | Trial clearings |
+| The Crowned Hollow | Towering armored figure wearing every crown of failed leaders. Mirrors Edren's moveset. 8000 HP. | Trial 1 (B1) |
+| The Perfect Machine | Flawless automaton with Cael's face. Does not attack -- asks to be repaired. 7000 HP. | Trial 2 (B2) |
+| The Last Voice | Ancient Great Spirit cracked with grey stone. Barely alive, asks to rest. 6000 HP. | Trial 3 (B3) |
+| Shadows of Sable | Copies using Sable's Tricks moveset. Fast, evasive. Taunt: "You always leave." | Trial 4 (B4) |
+| The Open Door | A literal open door at the end of the alley. Warm light, freedom. Not a combat encounter (non-combat resolution). | Trial 4 (B4) |
+| The Index | Vast catalogue entity containing every recorded death from every Pallor cycle. 7000 HP. | Trial 5 (B5) |
+| Hollow Knights | Grey echoes of Valdris soldiers. Fight in formation. Summoned by Crowned Hollow. | Trial 1 (B1) |
+| Unfinished Constructs | Machines that beg to be repaired. Repairing wastes turns and spawns more. | Trial 2 (B2) |
+| Stone Spirits | Petrified nature spirits that animate on approach. Cannot speak. | Trial 3 (B3) |
+| Archived | Humanoid figures of compressed pages. Attack with factual recitations of how they died. | Trial 5 (B5) |
+| Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 20000 HP. Multi-phase. | Section 5 |
 
 ### Treasure/Loot
 
@@ -1641,6 +1687,181 @@ Treasure is deliberately sparse. The Wastes strip away resources; they do not gi
 - **Muffled sound:** The game's music fades to near-silence. Only footsteps and combat sounds remain. This is not a bug; it is the Pallor.
 - **Greyscale shift:** The color palette desaturates 10% per section. By Section 4, the screen is nearly monochrome. Only ley-line save points retain color.
 - **No retreat:** Once entered, the party cannot return to the overworld. Commitment is absolute.
+
+### Pallor Trials (Expanded)
+
+**Note: Full ASCII floor layouts for all five trials will be created in a follow-up session.**
+
+### Pallor Trial 1: The Hall of Crowns (Edren)
+
+- **Floors:** 3-4 (variable shifting throne rooms)
+- **Theme:** Leadership guilt and survivor's guilt. Each floor is Valdris Crown in a different state of ruin.
+- **Enemies:** Hollow Knights -- grey echoes of Valdris soldiers who followed Edren's orders and died. Fight in formation.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Crowned Hollow (8000 HP)**
+
+A towering armored figure wearing every crown of every leader who failed to stop the Pallor across history. Fights with Edren's own moveset, mirrored.
+
+**Phase 1 (8000-2000 HP):**
+- **Mirror Strike** -- uses Edren's equipped weapon attack, mirrored. Damage matches Edren's ATK stat.
+- **Crown's Burden** -- AoE, 300-350 damage + ATK reduction on all party members (2 turns).
+- **Formation Call** -- summons 2 Hollow Knights (1000 HP each) to fight in formation.
+- **Royal Guard** -- counterattacks any physical attack with 150% damage return.
+
+**Phase 2 (below 2000 HP): Invulnerability**
+The Crowned Hollow becomes invulnerable and uses devastating attacks:
+- **Weight of Command** -- party-wide, 500 damage per turn.
+- **Every Name They Carried** -- recites names of the fallen. Despair status on all party members.
+
+**Resolution Mechanic (Cecil-type):** The ONLY way to end Phase 2 is for Edren to use the **Defend** command for 3 consecutive turns. Not attacking -- just enduring. Each Defend causes the Hollow to stagger and the ghostly soldiers to lower their weapons. Third Defend ends the fight.
+
+**Unlock:** **Steadfast Resolve** -- party-wide defensive buff that also cleanses Pallor status effects.
+
+**Weakness:** Spirit (150%). **Resistance:** Physical (75%). **Drop:** Crown Shard (accessory -- leadership-themed buff).
+
+### Pallor Trial 2: The Unfinished Forge (Lira)
+
+- **Floors:** 3-4 (shifting forge-workshop environments)
+- **Theme:** The need to fix everything. Puzzles involve choosing which projects to abandon.
+- **Enemies:** Unfinished Constructs -- machines that beg to be repaired. Repairing wastes turns and spawns more.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Perfect Machine (7000 HP)**
+
+A flawless automaton with Cael's face. Does NOT attack. Stands in the center and asks Lira to repair it.
+
+**Mechanic:** Each "repair" action adds 1500 HP to the boss AND triggers counterattack:
+- **Hopeful Spark** -- 400 damage to Lira + "Almost... try again." dialogue.
+- **False Promise** -- heals Perfect Machine to current HP + 1500, party-wide 200 damage.
+- High DEF (halves physical damage).
+
+**Resolution Mechanic:** Lira must use Forgewright to select **Dismantle** (unique option in this fight). Dismantling deals 3500 damage per use. Dialogue: "I cannot fix you. I could not fix him. That was never my job." Two Dismantles end the fight.
+
+**Unlock:** Latent ability -- faint glow in Lira's hands. Forged something from grief instead of metal. Prerequisite for manifesting Cael's connection as weapon against Vaelith.
+
+**Weakness:** Void (150%). **Resistance:** Flame (75%). **Drop:** Unfinished Ring (accessory -- Lira-specific, boosts Forgewright abilities).
+
+### Pallor Trial 3: The Silent Grove (Torren)
+
+- **Floors:** 2-3 (petrified forest with diminishing ambient sound)
+- **Theme:** The old ways are dying. Puzzles involve following the last remaining sounds.
+- **Enemies:** Stone Spirits -- petrified nature spirits that animate on approach. Cannot speak.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Last Voice (6000 HP)**
+
+An ancient Great Spirit, massive and beautiful, cracked through with grey stone. Barely alive. Speaks in fragments. Asks Torren to let it rest.
+
+**Phase 1 (6000-1500 HP):**
+- **Stone Grasp** -- single target, 350 damage + Slow status (2 turns).
+- **Silent Scream** -- AoE, 250 damage + Silence (2 turns). No sound accompanies it.
+- **Crumbling Form** -- loses 100 HP passively per turn. It is dying regardless.
+
+**Phase 2 (below 1500 HP): The Request**
+Speaks clearly: "Let me go." Standard attacks deal reduced damage.
+
+**Resolution Mechanic:** Torren uses Spiritcall and selects **Release** (replaces "Call"). One Release ends the fight. The Great Spirit dies peacefully. Forest remains stone, but a single green shoot appears.
+
+**Unlock:** **Rootsong** -- healing ability restoring HP and MP, drawing from the ley network.
+
+**Weakness:** Flame (150%). **Resistance:** Spirit (50%). **Drop:** Petrified Heartwood (crafting material).
+
+### Pallor Trial 4: The Crooked Mile (Sable)
+
+- **Floors:** 1-2 (twisting alleyways that loop back)
+- **Theme:** Trust and abandonment. Doors lead to rooms where party members are in danger -- all traps.
+- **Enemies:** Shadows of Sable -- copies using her Tricks moveset. Fast, evasive. Taunt: "You always leave."
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Open Door (no HP -- not a combat encounter)**
+
+A literal door at the end of the alley, standing open. Warm light, no enemies, freedom. The Shadows urge her through.
+
+**Resolution Mechanic:** No combat. The player navigates Sable to **turn around and walk back** into the alley -- toward the party, toward danger. Walking through the door triggers a false ending (screen fades to black, then the player reappears at the Crooked Mile entrance; all enemies respawn and progress is lost). Walking back closes the door. Shadows vanish. Sable says nothing. She just walks back.
+
+**Unlock:** **Unbreakable Thread** -- passive preventing forced removal from battle (counters Pallor Incarnate's Reality Tear).
+
+### Pallor Trial 5: The Restricted Stacks (Maren)
+
+- **Floors:** 2-3 (infinite library flooding with grey light)
+- **Theme:** Knowledge as emotional armor. Reading books grants tactical info but triggers debuffs.
+- **Enemies:** Archived -- humanoid figures of compressed pages. Attack with factual recitations of how they died.
+- **Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Index (7000 HP)**
+
+A vast catalogue entity containing every recorded death from every Pallor cycle.
+
+**Mechanic:** Presents a binary choice:
+- **Absorb** -- massive INT buff but 90% max HP damage and permanent Despair.
+- **Destroy** -- instant kill but loses all INT buffs and a unique lore item.
+
+Neither option is correct.
+
+**Resolution Mechanic:** Select **Read One Entry** (third option, appears when examining the Index). Maren reads one person's entry and grieves for them individually. The Index shatters -- built on the premise that people are data, one person mourned breaks its logic.
+
+**Unlock:** **Pallor Sight** -- see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence.
+
+**Weakness:** Spirit (150%). **Resistance:** Void (50%). **Drop:** Archivist's Lens (accessory -- boosts Arcanum abilities).
+
+### Section 5: Plateau's Edge -- Vaelith
+
+**Boss: Vaelith, the Ashen Shepherd (20000 HP)**
+
+An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times before this encounter -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed.
+
+**The 10-Attack Threshold (Pre-Fight Phase):**
+The fight begins like the previous unwinnable encounter at Valdris. Party attacks deal 0 damage. Vaelith attacks 10 times, each accompanied by taunting dialogue:
+1. "Ah, you came. They always come."
+2. "The spirit-speaker, the forgewright, the thief... I have seen your archetypes before."
+3. "The last cycle's hero wept at this point. You are holding up rather well."
+4. "Your friend -- the one with the heavy eyes -- he is quite comfortable where he is."
+5. "I met a forgewright once. Eight hundred years ago. She built a weapon too."
+6. "The spirit-speakers always burn brightest before they go out."
+7. "The thief. Always the thief who surprises me. They never stay."
+8. "The scholar catalogues everything. As if knowing changes anything."
+9. "You fight as if it matters. It is... almost endearing."
+10. "Shall we stop pretending? You cannot hurt me. No one can."
+
+After the 10th attack, an in-battle cutscene triggers.
+
+**In-Battle Cutscene: Lira's Weapon**
+Cael's lingering connection to the party, channeled through the restored ley network, manifests as raw energy. Lira -- the Forgewright -- instinctively shapes it. She forges a weapon mid-battle from grief, love, and the living land. The weapon glows with ley-line blue threaded with grey (Cael's color). This has never happened in any previous Pallor cycle because the ley network was always dead by this point and no previous forgewright had a personal bond with the Pallor's vessel.
+
+After the cutscene, ALL party members can damage Vaelith. The real fight begins.
+
+**Phase 1 (20000-10000 HP): The Scholar Fights**
+Vaelith uses ancient magic from a dead era. No longer dismissive -- focused.
+- **Epoch's End** -- party-wide AoE, 500-600 damage. Ancient spell with no modern equivalent.
+- **Grey Archive** -- single target, 700-800 damage + Silence (3 turns). Vaelith recites a fact about how the target's archetype died in a previous cycle.
+- **Cycle's Weight** -- stacking debuff on one party member. Each stack reduces ATK/DEF by 10%. Represents accumulated weight of failed cycles.
+- **Temporal Cascade** -- Vaelith acts twice in one turn. Used every 4th turn.
+- **"You are the first to draw blood in eight centuries."** -- dialogue trigger at 15000 HP.
+
+**Phase 2 (below 10000 HP): The Shepherd Falls**
+Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey light appear.
+- All Phase 1 attacks, plus:
+- **Despair Pulse** -- party-wide, 400 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
+- **Reality Warp** -- corrupts the ley lines the weapon draws from. Lira must re-forge the weapon (timed input -- success maintains damage; failure reduces party damage 50% for 2 turns). Every 5th turn.
+- **Unraveling** -- targets Lira, 600 damage. If Lira falls below 25% HP, weapon dims (party damage reduced 25% until healed above 50%).
+- **"This was not in the pattern. You were not in the pattern."** -- dialogue at 5000 HP.
+- **"...Interesting."** -- dialogue at 2000 HP.
+
+**On defeat:** Vaelith does not die dramatically. They sit down. Look at the party without contempt for the first time. "Eight hundred years. Every cycle, the same. And you... you actually changed something." Dissolves into grey mist. Not destroyed -- released.
+
+**Lira's Special Interaction:** Forgewright during Reality Warp re-forges weapon. If Lira has the Boring Engine Schematic, timing window extended.
+
+**Torren's Special Interaction:** Spiritcall reveals Vaelith's next attack during Phase 2.
+
+**Maren's Special Interaction:** If Maren has Pallor Sight (from her trial), critical hit rate doubled for all party members.
+
+**Sable's Special Interaction:** Unbreakable Thread prevents forced removal from battle. Sable cannot be targeted by Vaelith's Unraveling for removal effects.
+
+**Weakness:** Spirit (125%).
+**Resistance:** Void (50%), Frost (75%).
+**Immunity:** Despair status, Instant Death.
+**Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic damage), Grey Mist Essence (crafting material -- Lira's ultimate weapon component).
 
 ---
 
@@ -1930,6 +2151,8 @@ Players who explored the Ember Vein and Ley Line Depths thoroughly will recogniz
 - `@` (left): Maren is here. Reunion scene. She has been studying the tablets and has decoded most of the pictographic language.
 - `P` (center-bottom): Translation puzzle 1. Stone interface with symbol slots. Solving opens the stairs.
 - `T` (right): Chest -- Archive Key Fragment (1 of 2, needed for Floor 3 locked door).
+- *(near entry hall)* A loose page in archaic script, tucked behind a stone tablet. Torren and Maren together translate: "The forgewright built a weapon. It failed." The handwriting matches the Thornvein Passage fragment exactly. The date, if the calendar can be trusted, is three hundred years earlier.
+- *(gallery alcove, Floor 2)* A flower pressed between two stone tablets. The species has been extinct since the previous Pallor cycle -- perfectly preserved, as if picked yesterday. Tucked inside a history of the last cycle's heroes. A bookmark. Maren holds it to the light: "This flower has not existed for eight hundred years. Someone kept it."
 - `v` (bottom): Stairs down to Floor 2.
 
 ### Floor 2: Pictograph Gallery (45x35)
@@ -2248,6 +2471,7 @@ The layout is deliberately claustrophobic. Three rooms connected by a narrow ver
 - `@` (center-left): A carved stone marker, half-buried in sediment. The geometric patterns match the Ember Vein exactly. Maren (if present): "This is the same language. The same builders. Under Edren's village." Edren: "They were here before us. Before Aelhart. Before everything." If the player has completed the Ember Vein, Edren adds: "The same carvings we saw in the mine. The same precision. But this is under my home."
 - `!` (two zones): Encounter zones. Enemies are weak -- the well shaft is shallow, and the guardians here have been dormant for centuries. They activate sluggishly, joints grinding, ley energy flickering. They are confused as much as hostile.
 - `%` (lower-right): Environmental hazard -- unstable flooring. The stone here is cracked and listing. Walking across it triggers a rumble and a shower of dust. No damage, but it foreshadows the pitfall mechanic on Floor 2. Sable (if present): "That floor is going to go. Not today, but soon. Step light."
+- *(near carved marker)* A loose page in archaic script, wedged into a crack in the ancient stonework. Torren and Maren together translate: "The hero stood at the door and wept. They all weep." The handwriting is identical to the fragments found in the Thornvein Passage and Archive of Ages. The date is different. The hand is not.
 - `T` (lower-right): Chest -- Well-Stone Ring (accessory, +5 DEF, minor ley resistance). A ring carved from the same stone as the well's foundation. Too precise to be Valdris craft. The interior surface has a pictographic inscription too small to read without magnification. With the Archive Keeper's Lens (Floor 5, future acquisition): the inscription reads "endure."
 - `v` (bottom): Narrow stairs descending. The fieldstone ends. Below this point, every surface is pre-civilization construction. The transition is not gradual -- it is a clean line. The builders' work begins where Aelhart's work ends, as if the village was built to fit on top of something that was already here. Because it was.
 
@@ -3210,7 +3434,30 @@ The map represents a switchback trail ascending to the summit. The path narrows 
 - `@` (bottom, right): The vista point. The camera pulls out to show the entire continent. In Act II, the grey haze over the Convergence is visible. In the Interlude, the Pallor's spread is horrifying -- grey patches across the map. In Act III, the approach is visible.
 - `S` (bottom): Save point. Rest and recovery in the thin mountain air.
 
-No encounters. No treasure. No hazards. Just the wind, the view, and one answer.
+No encounters, treasure, or hazards during normal exploration. During "The Spirit That Stopped Singing" sidequest, the Howling Gale boss encounter activates at the summit.
+
+### Sidequest Boss: The Howling Gale (7000 HP)
+
+**Availability:** During "The Spirit That Stopped Singing" sidequest (Interlude, after finding Torren). The Howling Gale appears at the summit when Torren performs his calling ritual. The peak's peaceful nature is temporarily overridden by the encounter.
+
+A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It manifests as a vortex of grey-white wind energy, roughly humanoid in shape but constantly shifting -- arms become cyclone funnels, its face is a hollow scream in the eye of the storm. What was once a guardian spirit that sang to the highland shepherds is now a thing of terror. The sound it produces is the original song, distorted into a weapon.
+
+**Phase 1 (7000-2100 HP) -- The Storm:**
+- **Gale Force** -- Storm-element AoE, 300-350 damage to all party members + 30% chance to inflict Silence (the wind tears words from the caster's mouth).
+- **Shriek** -- Single-target sonic attack, 450 damage + Confusion (2 turns). Targets the party member with the highest MAG stat.
+- **Tempest Spin** -- The Gale spins rapidly, becoming semi-transparent. For 2 turns, physical attacks have a 50% miss chance. During this state, it deals 150 damage per turn to all party members (wind debris).
+- **Updraft** -- Launches one party member into the air, removing them from battle for 1 turn. They return with 200 fall damage.
+
+**Phase 2 (below 2100 HP / 30%) -- The Song Beneath:**
+- All Phase 1 attacks, but Gale Force and Shriek have reduced damage (the corruption is weakening).
+- **Desperate Howl** -- Massive Storm-element AoE, 500 damage to all. 2-turn charge. Can be interrupted by Torren's Spiritcall.
+- **Torren's Spiritcall (Peaceful Resolution):** At 30% HP, Torren can use Spiritcall as a special action. He reaches beneath the corruption to the spirit's original nature -- the song it used to sing. If successful, the Gale calms: the vortex slows, the grey drains from the wind, and the spirit's true form -- a shimmering wind-shape, gentle and luminous -- appears for a moment before dissipating into clean air. The ley energy at the peak strengthens visibly. Full XP and drops awarded. This resolution grants Torren a spirit-bond recognized by the Frost Warden in the Frostcap Caverns.
+- If Spiritcall is not used, the fight continues to 0 HP. The Gale shatters into silence. The spirit is destroyed, not saved. Torren receives a weaker spirit-bond (the Frost Warden still senses it, but the peaceful resolution at 25% HP requires an additional dialogue check).
+
+**Weakness:** Earth (150% damage), Flame (125% damage).
+**Resistance:** Storm (absorbs), Frost (75% damage).
+**Immunity:** Silence.
+**Drop:** Windcaller's Pendant (accessory -- party evasion boost, Storm resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; evidence of deliberate ley line sabotage), 1500 Gold.
 
 ---
 
@@ -3591,6 +3838,28 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (right): Chest -- First Tree Seed (key item, used in post-game content at the Convergence meadow -- planting it triggers a unique epilogue scene).
 - Encounters: Ash elementals, ancient spirit remnants.
 
+### Sidequest Boss: The Grey Stag (5500 HP)
+
+**Note:** This encounter takes place in a highland forest clearing near the Greywood Camp patrol routes, not inside a cave. It is placed under the Caves and Grottos section for organizational proximity to the surrounding overworld content.
+
+**Availability:** During "The Missing Patrol" sidequest (Act II, during the diplomatic mission). The Grey Stag encounter takes place in a highland forest clearing near Greywood Camp, along the deep Wilds patrol route.
+
+A massive elk corrupted by the Pallor -- the dominant creature of the highland forest. Twice the size of a natural elk, its antlers branch into grey crystalline formations that pulse with Pallor energy. Its hide is mottled grey-white, and its eyes burn with the dull fury of a creature that was once the forest's protector and is now its destroyer. When it fell to corruption, the ecosystem followed -- every creature in its territory turned aggressive.
+
+**Attacks:**
+- **Grey Charge** -- The Stag lowers its crystalline antlers and charges across the battlefield. 400 damage to a single target + knockback. Telegraphed by a 1-turn wind-up (hoofing the ground, grey energy building in its antlers).
+- **Corruption Aura** -- Passive effect. All adjacent party members (melee attackers) take 50 damage per turn from proximity to the Pallor energy radiating from its body. Ranged attacks avoid this penalty.
+- **Petrifying Gaze** -- The Stag locks eyes with one party member. 40% Petrify chance. Targets the party member who dealt the most damage on the previous turn.
+- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to inflict Slow (1 turn). Shakes the arena, causing tree debris to fall.
+- **Antler Sweep** -- Physical attack, hits all front-row party members, 300 damage. Used after Grey Charge if the Stag is not staggered.
+
+**At 30% HP:** The Stag's movements become erratic -- it charges walls, shakes its head as if trying to dislodge the corruption. Torren (if present) comments: "It's fighting itself. The creature underneath is still in there." The Stag cannot be calmed -- the corruption is too deep. But Torren's observation foreshadows the Howling Gale's peaceful resolution.
+
+**Weakness:** Flame (150% damage).
+**Resistance:** Earth (absorbs), Spirit (75% damage).
+**Immunity:** Petrify.
+**Drop:** Stag's Antler (crafting material -- crystallized Pallor-tainted bone, used in late-game weapon forging), Grey Hide (accessory -- +10 DEF, reduces Corruption Aura-type passive damage from all sources by 50%), 1000 Gold.
+
 ---
 
 ## 15. Caldera Forge Depths
@@ -3956,6 +4225,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - `T` (lower-right): Chest -- 3x Frost Elixir (consumable, restores HP and MP, bonus effect in cold environments).
 - `T` (left): Chest -- Highland Bow (weapon, Sable -- ATK +18, Frost-element arrows).
 - `@` (lower-left): Ancient Valdris carving on the wall. Depicts monks sealing a cave entrance while spirits watch from within. Torren: "These spirits weren't dangerous. They were being imprisoned." If Maren is present: "The Valdris script reads: 'Here we seal what we cannot control. May silence keep what wisdom could not.'"
+- *(near carving)* A loose page in archaic script, pinned beneath a shard of ice that has not melted. Torren and Maren together translate: "The old worship sites are useful. Spirits remember fear." The handwriting matches the other journal fragments. The page is centuries old. The ice holding it in place is fresh.
 - `H` (lower-right): Hidden passage -- leads to a secret ice vault. Contains: Ancient Spirit Token (key item, used on Floor 3 to bypass the Frost Warden's outer defenses).
 - `v` (bottom-left): Stairs down to Floor 2.
 
@@ -4192,6 +4462,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 - `T` (left, near spring): Chest -- 3x Spirit Tonic (consumable, restores 50 MP).
 - `T` (right): Chest -- Thornmere Amber (accessory, +8 MAG, boosts Earth-element spells).
 - `@` (lower-center): Pre-civ trail marker, mostly intact. Carved directions point south: "TO THE CONVERGENCE -- 3 DAYS WALK." Maren (if present): "Three days by their reckoning. The passages have shifted since then, but the direction is right."
+- *(near trail marker)* A loose page in archaic script, pinned beneath a root. Torren and Maren together translate: "The spirit-speakers fell first. They always do." The handwriting is precise and unhurried. The page is old -- centuries old -- but the ink has not faded. Maren: "This script predates the Compact by at least five hundred years. The ink should have turned to dust."
 - `*` (lower-right): **Mini-boss: Root Horror** (7000 HP).
 - `S` (lower-center): Save point -- a ley-line node where roots and energy converge, creating a natural sanctuary.
 - `v` (bottom-center): Stairs down to Floor 2.
@@ -4200,19 +4471,19 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 
 A root system fully corrupted by the Pallor. Where healthy roots are brown and amber-veined, this mass is black, withered, and aggressive. It fills a chamber, tendrils whipping from walls and ceiling. At its core, a pulsating dark-purple heart of concentrated Pallor energy. It attacks on sight -- no communication possible.
 
-- **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or fire/Flame magic).
+- **Root Lash** -- physical, single target, 350-450 damage + Bind status (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
-- **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (reduces all stats by 10% for 3 turns).
+- **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
-- **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
+- **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic)).
 
 **Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Spirit (125% damage).
 **Resistance:** Earth (absorbs).
-**Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
+**Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind (custom status) from Root Lash is the main threat -- a bound healer can cause a wipe.
 **Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, Earth-element attacks gain Void sub-element), 1500 Gold.
 
 **Encounter Zones:**
-- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (immobilized for 2 turns, removed by physical attack or fire/Flame magic) + physical attacks)
+- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic) + physical attacks)
 - Pallor Fungus (2x, 350 HP each -- toxic spore attacks, Poison (25% chance) + Confusion (20% chance))
 - Tunnel Beetle (4x, 150 HP each -- armored, physical-only, high DEF but low HP)
 
@@ -4261,13 +4532,13 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
-| Root Tendril | Burst from walls. Bind + physical attacks. Groups of 3. | Floor 1 | 250 |
+| Root Tendril | Burst from walls. Bind (custom status) + physical attacks. Groups of 3. | Floor 1 | 250 |
 | Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
 | Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
-| **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind. | Floor 1 | 7,000 |
+| **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
 
 ### Treasure/Loot
 
@@ -4282,26 +4553,220 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Waystation Provisions | Floor 2, left chest | Consumable set (5x Potion, 3x Spirit Tonic, 1x Elixir) |
 ---
 
+## 18. Valdris Siege Battlefield
+
+### Dungeon Overview
+
+- **Floors:** 1 (The Walls of Valdris -- a scripted battle sequence, not a traditional dungeon)
+- **Size:** 60x40 tiles (wide battlefield with wall sections, towers, and courtyard)
+- **Theme:** The fall of Valdris. A defensive battle on the capital's walls as the Carradan Compact assaults with conventional forces and a Pallor-corrupted siege engine. The city's last stand before it falls.
+- **Narrative Purpose:** The Act II climax. King Aldren dies. The Ashen Ram reveals Vaelith's hidden hand in the Compact's war machine. Dame Cordwyn fights alongside the party. The victory against the Ram is rendered hollow by the Compact's overwhelming numbers. Vaelith appears for the unwinnable fight that closes Act II.
+- **Difficulty:** Hard. Multi-phase boss with add waves and positional mechanics. The allied NPC (Cordwyn) must be managed.
+- **Recommended Level:** 18-22
+- **Estimated Play Time:** 25-35 minutes (scripted battle sequence, not a full dungeon crawl)
+
+**Boss: The Ashen Ram (10000 HP)**
+
+A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction yard at Ironmark. The Compact thinks the Ram is their weapon. It is Vaelith's.
+
+**Phase 1 (10000-6000 HP): Ranged Engagement**
+The Ram advances toward the walls. The party fights from the battlements.
+- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 2000+ damage in a single turn delays the advance by 1 turn.
+- **Despair Pulse (Passive)** -- all party members lose 5% max MP per turn from proximity to the Ram's Pallor-resonant frame.
+- **Compact Escalade** -- waves of Compact soldiers scale the walls (3-4 soldiers per wave, 800 HP each). Must be managed while damaging the Ram.
+- **Lord Haren's Orders** -- if the party made favorable dialogue choices with Haren earlier, he calls archer volleys (200 damage to the Ram per turn) and deploys barricades (reduce soldier wave size by 1).
+
+**Allied NPC: Dame Cordwyn** (5000 HP, ATK 85, DEF 70)
+- Fights alongside the party. Has her own turn in the ATB order.
+- **Shield Wall** -- reduces damage to one party member by 50% for 1 turn.
+- **Rally Cry** -- removes Despair status from all party members. 3-turn cooldown.
+
+**Phase 2 (6000-3000 HP): The Breach**
+The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.
+- **Drill Arm** -- single target, 500-600 damage.
+- **Pallor Shrapnel** -- AoE cone, 300-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
+- **Engine Surge** -- the Ram charges forward, pushing party members back. 200 damage + knockback.
+- Compact soldier waves continue (reduced to 2 per wave).
+
+**Phase 3 (below 3000 HP): The Pallor Core**
+The Ram's core activates. Despair Pulse intensifies to party-wide.
+- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
+- **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
+- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
+
+**On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
+
+**Weakness:** Storm (150% damage), Flame (125% damage to exposed core only in Phase 3).
+**Resistance:** Earth (absorbs), Frost (75% damage).
+**Drop:** Pallor-Laced Iron (crafting material -- unique), Compact Battle Standard (accessory -- boosts party DEF when allied NPCs are present).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| Compact Soldier | Carradan infantry. Scales walls in waves. Basic physical attacks. | Battlements (all phases) | 800 |
+| **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 10,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Pallor-Laced Iron | Boss drop | Crafting material (unique) |
+| Compact Battle Standard | Boss drop | Accessory (boosts party DEF when allied NPCs present) |
+
+---
+
+## 19. Ley Nexus Hollow
+
+### Dungeon Overview
+
+- **Floors:** 1 (The Nexus Chamber -- a single boss arena)
+- **Size:** 50x40 tiles (large circular chamber with radiating ley lines)
+- **Theme:** The living heart of the Thornmere Wilds' ley network. A vast underground chamber where ley lines converge in a web of glowing energy -- now corrupted by the Ley Leech. Torren is at the center, burning his life force to hold the nexus together.
+- **Narrative Purpose:** The Interlude's Torren recovery sequence. The party must defeat the Ley Leech to free Torren and stabilize the nexus. This is the first major sign that the Pallor can be pushed back. Caden guides the party here. Kael Thornwalker holds the perimeter.
+- **Difficulty:** Hard. Positional mechanics on shifting ley lines. Torren unavailable until Phase 2. DPS check in Phase 3.
+- **Recommended Level:** 20-24
+- **Estimated Play Time:** 20-30 minutes
+
+**Boss: The Ley Leech (9000 HP)**
+
+A parasitic Pallor entity latched onto the ley nexus. Unlike most Pallor manifestations (grey, static, hollow), the Leech is grotesquely alive -- swollen with stolen energy, pulsing with color that looks wrong. Vibrant where it should be grey. This is what the Pallor looks like when it is feeding well.
+
+**Arena Mechanic: Shifting Ley Lines**
+Glowing ley lines crisscross the chamber floor. Standing on an active (glowing) ley line heals 50 HP per turn. The Leech periodically corrupts ley lines (they turn grey), causing them to deal 75 damage per turn instead. Ley lines shift corruption patterns every 3 turns.
+
+**Phase 1 (9000-4500 HP): Rooted**
+The Leech is anchored to the nexus. Torren is visible in the background, struggling. Party fights at reduced strength (4 members, no Torren).
+- **Tentacle Lash** -- single target, 350-400 damage. Reaches anywhere in the arena.
+- **Corruption Pulse** -- corrupts 2 additional ley lines for 3 turns.
+- **Siphon** -- drains 200 HP from the nexus (visual: ley lines dim). If used 5 times without interruption, the Leech heals 1500 HP. Interrupt by dealing 1000+ damage in a single turn.
+- **Nexus Regeneration (Passive)** -- while rooted, heals 100 HP per turn from the nexus connection.
+
+**Phase 2 (below 4500 HP): Unmoored**
+Torren breaks free and rejoins the party. The Leech detaches and becomes mobile.
+- All Phase 1 attacks except Nexus Regeneration.
+- **Thrash** -- AoE hitting all adjacent characters, 250-300 damage.
+- **Leech Bite** -- single target, 300 damage + drains HP equal to damage dealt.
+- Moves 2 tiles per turn. Faster and more aggressive but no longer regenerating.
+
+**Phase 3 (below 1800 HP): Desperate Re-attachment**
+The Leech moves toward the nexus center.
+- If it reaches the center, it re-attaches and heals 30%. Phase resets to Phase 2.
+- **DPS check:** burn it down before it roots again.
+- **Torren's Spiritcall** deals 200% damage during Phase 3.
+- **Death Throes** -- on defeat, releases all stolen energy. All ley lines glow clean. Party fully healed.
+
+**On defeat:** Nexus stabilizes. Torren collapses. Caden enters and performs a recovery ritual -- passing-of-the-torch moment.
+
+**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. 200% in Phase 3. After the fight, Torren acknowledges Caden's ritual: "He did not call the spirits. He asked the land. That is... different. That might be better."
+
+**Weakness:** Flame (150%), Spirit (125%).
+**Resistance:** Frost (50%), Earth (75%).
+**Immunity:** Despair status.
+**Drop:** Nexus Shard (crafting material -- Torren's ultimate weapon component), Leech Ichor (consumable -- full HP/MP restore, single use).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 9,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Nexus Shard | Boss drop | Crafting material (Torren's ultimate weapon component) |
+| Leech Ichor | Boss drop | Consumable (full HP/MP restore, single use) |
+
+---
+
+## 20. Highcairn Monastery
+
+### Dungeon Overview
+
+- **Floors:** 2 (Monastery Grounds + Inner Sanctum)
+- **Size:** 40x30 tiles per floor
+- **Theme:** A mountain monastery saturated by the Pallor. Edren has been here alone, stewing in guilt after the fall of Valdris. The grey came out of him -- not into him. His guilt gave the Pallor permission to take shape.
+- **Narrative Purpose:** The Interlude's Edren recovery sequence. The party confronts the Pallor Hollow -- a mirror-image of Edren made from his guilt. Resolves IMPORTANT-03 from layout-audit.md.
+- **Difficulty:** Hard. The Hollow uses Edren's own moveset (including player-equipped abilities). Phase 3 requires protecting guest NPC Edren.
+- **Recommended Level:** 20-24
+- **Estimated Play Time:** 25-35 minutes
+
+**Note:** Full ASCII floor layouts will be created in a follow-up session.
+
+**Boss: The Pallor Hollow (11000 HP)**
+
+Not a monster in the traditional sense. It looks like Edren -- a grey, translucent mirror-image, but wrong. Moves like Edren. Fights like Edren. Face frozen in the expression Edren wore when Valdris fell.
+
+**Dynamic Moveset:** Uses Edren's moveset from when the player last controlled him, including equipped abilities. The game remembers what the player built and turns it against them.
+
+**Phase 1 (11000-5500 HP): The Mirror**
+- Uses Edren's equipped abilities against the party.
+- **Mirror Counter** -- if the party uses physical attacks, the Hollow counters with physical. If magic, counters with magic. Vary approach to avoid counters.
+- **Grey Reflection** -- copies the last ability used against it and fires it back. 2-turn cooldown.
+- **Hollow Guard** -- raises DEF by 50% for 1 turn when the party focuses one damage type.
+
+**Phase 2 (5500-2750 HP): The Voice**
+The Hollow speaks in Edren's voice. Lines from earlier in the game.
+- All Phase 1 attacks, plus:
+- **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (ATB speed -25%, damage dealt -20%, 4 turns). Implementation note: The game maintains a list of 6-8 predefined guilt lines drawn from key story moments (Cael's betrayal, Aldren's death, orders given during the siege). The Hollow selects from this fixed pool, not dynamic dialogue tracking.
+- **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
+- **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
+
+**Phase 3 (below 2750 HP): The Reckoning**
+Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses entirely on Edren.
+- Party must protect Edren (if his HP reaches 0, fight resets to Phase 2 at 4000 HP).
+- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 1500 damage). Three Defends end the fight.
+
+**On defeat:** Dissolves into grey mist that flows back into Edren. Not destroyed -- reclaimed. Edren rejoins with **Scar of the Hollow** -- max HP permanently reduced by 10%, but immunity to Despair status effects.
+
+**The Monastery Prior's Dialogue:** "Your friend came to us broken. We tried to help. But the grey came out of him -- not into him, out. It was already inside. It just needed permission to take shape."
+
+**Cordwyn's Special Interaction:** If present: "That is not him. But it was him. That is what he has been carrying."
+
+**Weakness:** Spirit (150%), Flame (125%).
+**Resistance:** Physical (75%), Frost (75%).
+**Immunity:** Void.
+**Drop:** Hollow Shard (accessory -- reduces Pallor damage 25%), Edren's Guilt (key item -- triggers Act III bonus dialogue).
+
+### Encounter Table
+
+| Enemy | Description | Location | HP |
+|-------|-------------|----------|----|
+| **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 11,000 |
+
+### Treasure/Loot
+
+| Item | Location | Type |
+|------|----------|------|
+| Hollow Shard | Boss drop | Accessory (reduces Pallor damage 25%) |
+| Edren's Guilt | Boss drop | Key item (triggers Act III bonus dialogue) |
+
+---
+
 ## Appendix: Dungeon Summary Table
 
 | # | Dungeon | Act | Floors | Rec. Level | Time | Boss | Gimmick |
 |---|---------|-----|--------|-----------|------|------|---------|
 | 1 | Ember Vein | I | 4 | 3-7 | 40-55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
 | 2 | Fenmother's Hollow | II | 3 | 12-15 | 55-75 min | Corrupted Fenmother | Water level control, Water of Life |
-| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine | Power routing, wall switch sequence |
+| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
 | 4 | Axis Tower | Interlude | 5 | 22-26 | 50-65 min | General Kole | Stealth/alarm system |
 | 5 | Ley Line Depths | II (optional), III | 5 | 16-28 | 90-120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
-| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Trial Manifestations | Pallor trials (narrative combat) |
+| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
 | 7 | The Convergence | III-IV | 4 phases | 32-36 | 75-100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
 | 8 | Archive of Ages | Interlude | 3 | 24-28 | 45-55 min | Archive Guardian | Translation puzzle |
 | 9 | Dreamer's Fault | Post-game | 20 | 40-50 | 3-5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
 | 10 | Dry Well of Aelhart | Interlude/III | 7 | 22-36 | 2-3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
 | 11 | Sunken Rig | Interlude | 3 | 22-26 | 30-40 min | The Grey Engine | Pressure valve routing, deck plate traps |
-| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | None | Oracle, vista, rest |
+| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
 | 13a | Wilds Gate Pass | I-II | 1 | 5-10 | 10 min | None | Transition area |
 | 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20-24 | 20-30 min | None | Ice sliding puzzle, thin ice traps |
 | 13c | Broken Hills Crossing | II-Interlude | 1 | 14-18 | 10 min | None | Transition area |
-| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | None | Exploration rewards |
+| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
 | 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
 | 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
 | 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
+| 18 | Valdris Siege Battlefield | II | 1 | 18-22 | 25-35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
+| 19 | Ley Nexus Hollow | Interlude | 1 | 20-24 | 20-30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
+| 20 | Highcairn Monastery | Interlude | 2 | 20-24 | 25-35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
