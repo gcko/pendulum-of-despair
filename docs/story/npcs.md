@@ -359,7 +359,7 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 **Backstory:** Harren has run the Crown's Rest for forty years. He inherited the inn from his father, who inherited it from his. Three generations of serving travelers, soldiers, and diplomats. He knows every squeaking floorboard, every draft, every stain on the ceiling. The inn is his life's work and his memory palace.
 
 **Dialogue hints:**
-- *"Had a strange guest last month. Very polite. Tipped well. Asked about the old mines. Said he was writing a history. Funny thing -- he knew details about this inn that I have never told anyone. Said the original hearth was three feet to the left. He was right."* (Available in Act II. Harren is unsettled but cannot articulate why. The guest stayed one night, asked precise questions about Valdris Crown's oldest structures, and left before dawn. He paid in coins Harren did not recognize -- they were accepted at the market without comment.)
+- *"Had a strange guest last month. Very polite. Tipped well. Asked about the old mines. Said he was writing a history. Funny thing -- he knew details about this inn that I have never told anyone. Said the original hearth was three feet to the left. He was right."* (Available in Act II. Harren is unsettled but cannot articulate why. The guest stayed one night, asked precise questions about Valdris Crown's oldest structures, and left before dawn. They paid in coins Harren did not recognize -- they were accepted at the market without comment.)
 - *"Forty years behind this bar. I remember every face. His, I can't quite recall. Polite. Grey coat. That's all I have. Isn't that strange?"*
 
 **Story relevance:** Flavor (Vaelith breadcrumb)

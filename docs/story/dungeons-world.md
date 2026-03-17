@@ -3443,7 +3443,7 @@ No encounters. No treasure. No hazards. Just the wind, the view, and one answer.
 A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It manifests as a vortex of grey-white wind energy, roughly humanoid in shape but constantly shifting -- arms become cyclone funnels, its face is a hollow scream in the eye of the storm. What was once a guardian spirit that sang to the highland shepherds is now a thing of terror. The sound it produces is the original song, distorted into a weapon.
 
 **Phase 1 (7000-2100 HP) -- The Storm:**
-- **Gale Force** -- Wind-element AoE, 300-350 damage to all party members + 30% chance to inflict Silence (the wind tears words from the caster's mouth).
+- **Gale Force** -- Storm-element AoE, 300-350 damage to all party members + 30% chance to inflict Silence (the wind tears words from the caster's mouth).
 - **Shriek** -- Single-target sonic attack, 450 damage + Confusion (2 turns). Targets the party member with the highest MAG stat.
 - **Tempest Spin** -- The Gale spins rapidly, becoming semi-transparent. For 2 turns, physical attacks have a 50% miss chance. During this state, it deals 150 damage per turn to all party members (wind debris).
 - **Updraft** -- Launches one party member into the air, removing them from battle for 1 turn. They return with 200 fall damage.

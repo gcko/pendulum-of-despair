@@ -377,7 +377,7 @@ The operator's voice breaks through. Attacks become erratic -- the machine hesit
 
 **Torren's Special Interaction:** Spiritcall can reach the trapped spirit during hesitation windows. Provides bonus damage and damage reduction on the Ironbound's next attack.
 
-**Weakness:** Lightning (150% damage). Void (125% damage).
+**Weakness:** Storm (150% damage). Void (125% damage).
 **Resistance:** Earth (50% damage), Flame (75% damage).
 **Drop:** Operator's Badge (key item -- triggers dialogue with the second operator NPC in Bellhaven), Reinforced Drill Bit (crafting material).
 ```
@@ -468,7 +468,7 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 
 **On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
 
-**Weakness:** Lightning (150% damage), Flame (125% damage to exposed core only in Phase 3).
+**Weakness:** Storm (150% damage), Flame (125% damage to exposed core only in Phase 3).
 **Resistance:** Earth (absorbs), Frost (75% damage).
 **Drop:** Pallor-Laced Iron (crafting material -- unique), Compact Battle Standard (accessory -- boosts party DEF when Cordwyn or other allied NPCs are present).
 ```

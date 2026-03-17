@@ -150,7 +150,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 #### Corrund (Capital)
 
-**Vaelith's passage (Act II, referenced in Interlude):** A charming visitor has been buying drinks and asking about local history in the Undercroft taverns. He corrected an archivist's 800-year-old records and left annotations of impossible accuracy. Carved sigils -- pre-Compact ward-marks meaning "I passed here and found it wanting" -- have appeared on doorframes throughout the sewer network. A grey thread tapestry appeared in the resistance waypoint, donated by someone no one can quite remember meeting.
+**Vaelith's passage (Act II, referenced in Interlude):** A charming visitor has been buying drinks and asking about local history in the Undercroft taverns. They corrected an archivist's 800-year-old records and left annotations of impossible accuracy. Carved sigils -- pre-Compact ward-marks meaning "I passed here and found it wanting" -- have appeared on doorframes throughout the sewer network. A grey thread tapestry appeared in the resistance waypoint, donated by someone no one can quite remember meeting.
 
 ##### Interlude State (First Visit)
 - **Map layout changes:** The city's canal district has flooded sections where pumping machinery has failed (new water tiles replacing walkway tiles in specific areas). The Undercroft is accessible. The Axis Tower exterior shows erratic energy -- lightning arcs between conduits, visible from street level.
@@ -230,7 +230,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Act II State
 - **Compact-occupied and sealed.** The mine is sealed. Compact soldiers have fortified the outpost -- new iron plating on the buildings, a guard tower, supply wagons. Inaccessible to the player. Referenced by NPCs at Thornwatch.
-- **Vaelith's passage:** A grey stranger was reported near the mines. Locals at Thornwatch describe a polite scholar asking about mineral deposits and the mine's history. He left before anyone thought to question him further. Two grey teacups were found on a flat stone near the Ember Vein entrance.
+- **Vaelith's passage:** A grey stranger was reported near the mines. Locals at Thornwatch describe a polite scholar asking about mineral deposits and the mine's history. They left before anyone thought to question them further. Two grey teacups were found on a flat stone near the Ember Vein entrance.
 
 ##### Interlude State
 - **Abandoned.** The Compact soldiers have pulled back. The fortifications are empty. The iron plating is rusting (accelerated by Pallor influence in the Wilds). The mine entrance is open -- the seal has cracked. The Forgewright engine is silent, its core dark. If the player visits: an empty, eerie place. The forest is reclaiming it -- vines on the metal buildings, roots cracking the foundation. The mine exhales grey air.
