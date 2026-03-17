@@ -810,7 +810,7 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 11 | Roothollow | Tribal representative | Negotiate alliance. Roothollow agrees (Vessa's earlier encounter with the party built trust). | Roothollow alliance secured |
 | 12 | Duskfen | Spirit-speaker Caden | Sets condition: clear Fenmother's Hollow to earn trust. | Fenmother's Hollow dungeon opens |
 | 13 | Fenmother's Hollow | (Dungeon clear) | Defeat the corrupted Fenmother. Caden arrives to perform a binding. | `duskfen_alliance` flag |
-| 14 | Canopy Reach | Wynne | Canopy Tribe agrees quickly — Wynne has already seen the signs. Panoramic view cutscene. | `canopy_alliance` flag |
+| 14 | Canopy Reach | Wynne | Wynne has seen the signs and is receptive, but demands concrete plans before committing. Panoramic view cutscene. | `canopy_alliance` flag |
 | 15 | Ashgrove | Elder Savanh (+ all tribal leaders) | Formal council at the council stones. Political negotiations, tension, vote (outcome varies per `council_result`). | `tribal_alliance_complete` flag; return to Valdris enabled |
 | 16 | Valdris Crown | Sable (automatic) | Sable delivers her warnings about Cael the evening the team returns. Too late to act -- the assault comes the next morning. | `sable_warning_ignored` flag |
 | 17 | Valdris Crown | (Siege event) | Carradan assault. Set-piece battle. Eastern wall collapse. | `carradan_assault_begins` flag |
