@@ -597,15 +597,15 @@ KEY:  ### = reinforced iron   ===|P|=== = contaminated pipeline
     #   !!!!!!!!!!!!!!!!!!  [ is what happens]       #
     #   ! [CONTAMINATION ]  [ when you drain ]       #
     #   ! [HEART         ]  [ a ley line     ]       #
-    #   ! [(mini-boss:   ]  [ past its       ]       #
-    #   ! [ Ley Rupture  ]  [ breaking       ]       #
-    #   ! [ Guardian --  ]  [ point.")       ]       #
-    #   ! [ a construct  ]  [                ]       #
-    #   ! [ formed from  ]                           #
-    #   ! [ unstable     ]                           #
-    #   ! [ ley energy,  ]                           #
+    #   ! [(boss: The    ]  [ past its       ]       #
+    #   ! [ Forge Warden ]  [ breaking       ]       #
+    #   ! [ -- Drayce's  ]  [ point.")       ]       #
+    #   ! [ failsafe     ]  [                ]       #
+    #   ! [ automaton,   ]                           #
+    #   ! [ corrupted by ]                           #
+    #   ! [ ley rupture, ]                           #
     #   ! [ defending    ]                           #
-    #   ! [ the rupture) ]                           #
+    #   ! [ the tap)     ]                           #
     #   !!!!!!!!!!!!!!!!!!                            #
     ####################################################
 ```
