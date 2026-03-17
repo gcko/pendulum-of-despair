@@ -4618,7 +4618,7 @@ DEF. They stack but serve different tactical roles.
 | 3 (full) | Archers, barricades, healing herbs | Archer volleys thin pre-battle enemy waves. Barricades grant DEF +20% in certain tile positions. Infirmary save point also restores MP. |
 | 2 (partial) | Archers only | Standard siege as designed above. |
 | 1 (token) | Small ranger squad | One-time wave clear assist (removes one full wave of adds). Otherwise harder than standard. |
-| 0 (none) | No allies | More enemy waves (+1 wave per phase). Cordwyn's HP drops to 25% at the start of Phase 2 instead of Phase 3, giving the player less time before the dialogue choice. |
+| 0 (none) | No allies | More enemy waves (+1 wave per phase). Cordwyn's HP-drop event (see Phase 3) triggers at the start of Phase 2 instead -- the Phase 3 drop does NOT also fire. This gives the player less time before the dialogue choice. |
 
 **Default assumption:** The siege encounter tables above are balanced for
 `council_result` = 2 (partial support). Full support makes it easier; no

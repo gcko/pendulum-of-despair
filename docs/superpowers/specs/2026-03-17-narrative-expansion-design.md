@@ -304,7 +304,7 @@ Each leader votes independently based on cumulative approval score.
 | All three support | 3 | Full Thornwatch: archers on walls, barricades at gates, healing herbs for infirmary. Siege significantly easier. |
 | Two of three | 2 | Partial: archers only, no barricades. Siege is standard difficulty. |
 | One of three | 1 | Token: a small ranger squad. Siege is harder -- fewer allied NPCs, no environmental advantages. |
-| None support | 0 | Party goes alone. Siege at maximum difficulty. Cordwyn's HP drops to 25% earlier in the fight (start of Phase 2 instead of Phase 3), giving the player less time before the dialogue choice. |
+| None support | 0 | Party goes alone. Siege at maximum difficulty. Cordwyn's HP-drop event moves to start of Phase 2 (replaces the Phase 3 drop), giving the player less time before the dialogue choice. |
 
 The player does not see exact scores. They read the room and make their case.
 No single "correct" path -- different leaders respond to different approaches.
@@ -539,7 +539,7 @@ What changes:
 | 3 (full) | Archers, barricades, healing herbs | Archer volleys thin pre-battle waves. Barricades grant DEF +20% in certain positions. Infirmary save point also restores MP. |
 | 2 (partial) | Archers only | Standard siege as currently designed. |
 | 1 (token) | Small ranger squad | One-time wave clear assist. Otherwise harder than standard. |
-| 0 (none) | No allies | More enemy waves. Cordwyn's HP drops to 25% earlier in the fight (start of Phase 2 instead of Phase 3), giving the player less time before the dialogue choice. |
+| 0 (none) | No allies | More enemy waves. Cordwyn's HP-drop event moves to start of Phase 2 (replaces the Phase 3 drop), giving the player less time before the dialogue choice. |
 
 ### Pallor Trial Interaction
 
