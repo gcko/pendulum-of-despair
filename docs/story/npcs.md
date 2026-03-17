@@ -741,7 +741,7 @@ balance and ley line health above political concerns.
   spirit-speech, dismissing the spirits' warnings.
 - **Hidden approval score:** 0-3 (flag `council_caden_approval`).
 - **Party interaction:** Torren's spirit-speaker status creates natural rapport.
-  If Torren is present, Caden's baseline starts at +1.
+  If Torren is present, Caden's baseline starts at +1 (still capped at 3).
 
 ---
 

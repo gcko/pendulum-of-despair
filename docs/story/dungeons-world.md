@@ -4636,7 +4636,7 @@ The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- orga
 The Ram's core activates. Despair Pulse intensifies to party-wide.
 - **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
-- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
+- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers (unless `council_result` = 0, in which case this already fired at Phase 2 start and does NOT repeat here). Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
 
 **On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
 

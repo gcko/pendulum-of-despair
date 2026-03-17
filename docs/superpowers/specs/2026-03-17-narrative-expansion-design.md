@@ -178,7 +178,7 @@ distinct rules for player control, camera behavior, and presentation.
 
 | Moment | Tier | Trigger |
 |--------|------|---------|
-| The Ley Line Rupture | Full | `interlude_begins` |
+| The Ley Line Rupture | Full | `ley_line_rupture` |
 | Sable alone in the aftermath | Walk-and-Talk | Immediately after rupture |
 | Each party reunion approach | Walk-and-Talk | Per reunion flag |
 | Each party reunion resolution | Playable Scene (dialogue choices) | Per reunion flag |
@@ -190,14 +190,14 @@ distinct rules for player control, camera behavior, and presentation.
 | The march to the Convergence | Walk-and-Talk | Act III opening |
 | The Night Before the Convergence (campfire) | Playable Scene | Pre-Convergence |
 | Each Pallor Trial | Playable Scene | Per trial entry |
-| Vaelith's release (10-attack threshold) | Full (in-battle) | Battle mechanic |
-| Lira reaches Cael | Full | Post-final-battle |
-| Cael: *"I'm sorry."* Edren: *"I know."* | Full | Post-Lira scene |
+| Vaelith's release | Full (in-battle) | `vaelith_defeated` |
 
 #### Act IV
 
 | Moment | Tier | Trigger |
 |--------|------|---------|
+| Lira reaches Cael | Full | `pallor_defeated` |
+| Cael: *"I'm sorry."* Edren: *"I know."* | Full | Post-Lira scene |
 | Cael explains the door must close from inside | Full | Act IV opening |
 | The party's farewell | Walk-and-Talk | Pre-final sequence |
 | Cael walks into the door | Full | Narrative climax |

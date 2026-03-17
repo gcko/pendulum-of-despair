@@ -20,7 +20,7 @@ cross-referencing against the spec.
 
 ## File Map
 
-All modifications are to existing files. No new files are created.
+All story doc changes are modifications to existing files. This plan and its companion spec (`docs/superpowers/specs/2026-03-17-narrative-expansion-design.md`) are the only new files.
 
 | File | What Changes |
 |------|-------------|
@@ -225,7 +225,7 @@ of its act's table section.
 | 40 | `council_savanh_approval` | Private audience with Elder Savanh at Ashgrove | Hidden score (0-3). Tracks Savanh's support based on dialogue choices. | Elder Savanh, Edren |
 | 41 | `council_caden_approval` | Private audience with Spirit-speaker Caden at Ashgrove | Hidden score (0-3). Tracks Caden's support based on dialogue choices. | Spirit-speaker Caden, Edren, Torren |
 | 42 | `council_wynne_approval` | Private audience with Wynne at Ashgrove | Hidden score (0-3). Tracks Wynne's support based on dialogue choices. | Wynne, Edren, Lira |
-| 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornmere tribal support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Fires with/after `tribal_alliance_complete` (flag 11). | Elder Savanh, Caden, Wynne |
+| 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornmere tribal support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Computed from individual approval scores (flags 40-42) before `tribal_alliance_complete` (flag 11) fires — the council tallies votes first, then the alliance flag resolves. | Elder Savanh, Caden, Wynne |
 | 44 | `cael_last_night_lira` | Cael visits Lira's workshop the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: camera lingers on Lira's face. | Cael, Lira |
 | 45 | `cael_last_night_edren` | Cael visits the training grounds the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: Edren's reaction shot is longer. | Cael, Edren |
 | 46 | `cael_last_night_maren` | Cael visits Maren's study the night before the betrayal | Binary. Recontextualizes betrayal: Cael was researching what the Pallor wanted, not seeking a cure. | Cael, Maren |
@@ -289,14 +289,14 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 | Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
 | Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
 | Siege of Valdris | II | Full -> Playable | `carradan_assault_begins` |
-| Ley Line Rupture | Interlude | Full (T1) | `interlude_begins` |
+| Ley Line Rupture | Interlude | Full (T1) | `ley_line_rupture` |
 | Sable alone in aftermath | Interlude | Walk-and-Talk (T2) | Post-rupture |
 | Party reunions | Interlude | Walk-and-Talk -> Playable | Per reunion flag |
 | March to Convergence | III | Walk-and-Talk (T2) | Act III opening |
 | Campfire scene | III | Playable (T3) | Pre-Convergence |
 | Pallor Trials | III | Playable (T3) | Per trial entry |
-| Vaelith's release | III | Full (T1, in-battle) | 10-attack threshold |
-| Lira reaches Cael | III | Full (T1) | Post-final-battle |
+| Vaelith's release | III | Full (T1, in-battle) | `vaelith_defeated` |
+| Lira reaches Cael | IV | Full (T1) | `pallor_defeated` |
 | Cael walks into the door | IV | Full (T1) | Narrative climax |
 | Edren places sword | Epilogue | Full (T1) | Final scene |
 ```
