@@ -12,9 +12,9 @@ The player controls Edren. Cael follows.
 
 **The taste of power (dual preview):**
 
-- Edren carries **Arcanite-enhanced gear** from the Valdris armory -- standard
-  issue for royal knights. The sword and shield hit harder than normal Act I
-  levels. This gear breaks during the escape from Carradan soldiers after the
+- Edren carries **Arcanite-enhanced gear** from the Valdris armory -- confiscated
+  Compact prototypes, issued only for high-risk missions. The sword and shield
+  hit harder than normal Act I levels. This gear breaks during the escape from Carradan soldiers after the
   Vein Guardian, giving the player a preview of Arcanite Forging that Lira
   unlocks later.
 - Cael has **unexplained extra power**. His attacks shimmer faintly. His damage
@@ -122,7 +122,7 @@ openly to the player's responses.
 
 **Phase 3 (Vote):** Each leader votes independently. Result stored in
 `council_result` flag (0-3). Outcome determines allied support at the Valdris
-Siege -- from full Thornwatch commitment (archers, barricades, healing herbs)
+Siege -- from full Thornmere tribal commitment (archers, barricades, healing herbs)
 to no support at all.
 
 See `docs/superpowers/specs/2026-03-17-narrative-expansion-design.md` Section 3,

@@ -301,7 +301,7 @@ Each leader votes independently based on cumulative approval score.
 
 | Council Result | `council_result` | Siege Impact |
 |----------------|-------------------|-------------|
-| All three support | 3 | Full Thornwatch: archers on walls, barricades at gates, healing herbs for infirmary. Siege significantly easier. |
+| All three support | 3 | Full Thornmere tribal support: archers on walls, barricades at gates, healing herbs for infirmary. Siege significantly easier. |
 | Two of three | 2 | Partial: archers only, no barricades. Siege is standard difficulty. |
 | One of three | 1 | Token: a small ranger squad. Siege is harder -- fewer allied NPCs, no environmental advantages. |
 | None support | 0 | Party goes alone. Siege at maximum difficulty. Cordwyn's HP-drop event moves to start of Phase 2 (replaces the Phase 3 drop), giving the player less time before the dialogue choice. |

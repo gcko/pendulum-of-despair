@@ -89,7 +89,8 @@ The Ember Vein serves as the game's tutorial and opening sequence (see
 `outline.md` "The Opening (Tutorial)" section).
 
 **Arcanite-enhanced gear (Edren):** Edren's starting equipment is Arcanite-
-enhanced from the Valdris armory -- standard issue for investigation missions.
+enhanced from the Valdris armory -- confiscated Compact prototypes, issued only
+for high-risk missions.
 ATK and DEF are ~30% above normal Act I baselines. The gear breaks during the
 Carradan escape after the Vein Guardian (Floor 4 exit), forcing Edren to
 standard equipment. This previews the Arcanite Forging system Lira unlocks

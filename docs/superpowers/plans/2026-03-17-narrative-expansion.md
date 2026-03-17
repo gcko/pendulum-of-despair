@@ -138,7 +138,8 @@ The Ember Vein serves as the game's tutorial and opening sequence (see
 `outline.md` "The Opening (Tutorial)" section).
 
 **Arcanite-enhanced gear (Edren):** Edren's starting equipment is Arcanite-
-enhanced from the Valdris armory -- standard issue for investigation missions.
+enhanced from the Valdris armory -- confiscated Compact prototypes, issued only
+for high-risk missions.
 ATK and DEF are ~30% above normal Act I baselines. The gear breaks during the
 Carradan escape after the Vein Guardian (Floor 4 exit), forcing Edren to
 standard equipment. This previews the Arcanite Forging system Lira unlocks
@@ -224,7 +225,7 @@ of its act's table section.
 | 40 | `council_savanh_approval` | Private audience with Elder Savanh at Ashgrove | Hidden score (0-3). Tracks Savanh's support based on dialogue choices. | Elder Savanh, Edren |
 | 41 | `council_caden_approval` | Private audience with Spirit-speaker Caden at Ashgrove | Hidden score (0-3). Tracks Caden's support based on dialogue choices. | Spirit-speaker Caden, Edren, Torren |
 | 42 | `council_wynne_approval` | Private audience with Wynne at Ashgrove | Hidden score (0-3). Tracks Wynne's support based on dialogue choices. | Wynne, Edren, Lira |
-| 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornwatch support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Fires with/after `tribal_alliance_complete` (flag 11). | Elder Savanh, Caden, Wynne |
+| 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornmere tribal support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Fires with/after `tribal_alliance_complete` (flag 11). | Elder Savanh, Caden, Wynne |
 | 44 | `cael_last_night_lira` | Cael visits Lira's workshop the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: camera lingers on Lira's face. | Cael, Lira |
 | 45 | `cael_last_night_edren` | Cael visits the training grounds the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: Edren's reaction shot is longer. | Cael, Edren |
 | 46 | `cael_last_night_maren` | Cael visits Maren's study the night before the betrayal | Binary. Recontextualizes betrayal: Cael was researching what the Pallor wanted, not seeking a cure. | Cael, Maren |
@@ -588,7 +589,7 @@ openly to the player's responses.
 
 **Phase 3 (Vote):** Each leader votes independently. Result stored in
 `council_result` flag (0-3). Outcome determines allied support at the Valdris
-Siege -- from full Thornwatch commitment (archers, barricades, healing herbs)
+Siege -- from full Thornmere tribal commitment (archers, barricades, healing herbs)
 to no support at all.
 
 See `docs/superpowers/specs/2026-03-17-narrative-expansion-design.md` Section 3,
@@ -817,7 +818,7 @@ in the Location Transformation Atlas (Valdris Locations section, starting
 ```markdown
 **Thornmere Alliance (Council Outcome):** The Ashgrove council result
 (`council_result` flag) visibly affects the siege battlefield. At full support
-(3), Thornwatch archers line the walls and barricades block key chokepoints.
+(3), Thornmere tribal archers line the walls and barricades block key chokepoints.
 At partial (2), archer positions are manned but barricades are absent. At
 token (1), a small ranger squad camps near the gate. At no support (0), the
 walls are defended only by Valdris regulars -- visually thinner, more
