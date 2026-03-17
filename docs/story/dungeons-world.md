@@ -83,6 +83,28 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 
 **Dying Ember Crystal (Floor 3):** A crystallized ley-plant blocks a passage, withering and flickering. A vial of mine water (found on Floor 2) can be poured on it to briefly revive the crystal, which unfurls and clears the path. An old miner's journal near the crystal reads: "The growths drink deep -- even stale water wakes them for a spell." This is the first hint of the Water of Life mechanic. On first play, it is just a neat puzzle. On replay after the Dry Well, its significance becomes clear.
 
+### Opening Sequence Overlay
+
+The Ember Vein serves as the game's tutorial and opening sequence (see
+`outline.md` "The Opening (Tutorial)" section).
+
+**Arcanite-enhanced gear (Edren):** Edren's starting equipment is Arcanite-
+enhanced from the Valdris armory -- standard issue for investigation missions.
+ATK and DEF are ~30% above normal Act I baselines. The gear breaks during the
+Carradan escape after the Vein Guardian (Floor 4 exit), forcing Edren to
+standard equipment. This previews the Arcanite Forging system Lira unlocks
+later.
+
+**Pallor shimmer (Cael):** Cael's attacks have a faint visual shimmer
+throughout the Ember Vein. His damage output is ~10% above his stat line. No
+in-game explanation is given. This is the Pallor's first touch -- retroactive
+foreshadowing visible only on replay or careful observation.
+
+**Dawn march (opening credits):** After the Vaelith encounter outside the mine
+(`vaelith_ember_vein` flag) and the party's escape with Lira and Sable, the
+game transitions to a playable Walk-and-Talk credits sequence. See
+`outline.md` "The Dawn March" section for dialogue and pacing.
+
 ### Floor 1: Upper Mine (40x30)
 
 ```
@@ -4580,6 +4602,23 @@ The Ram advances toward the walls. The party fights from the battlements.
 - Fights alongside the party. Has her own turn in the ATB order.
 - **Shield Wall** -- reduces damage to one party member by 50% for 1 turn.
 - **Rally Cry** -- removes Despair status from all party members. 3-turn cooldown.
+
+**Thornmere Alliance Support (Council Result)**
+
+The `council_result` flag (set during the Thornmere Council at Ashgrove)
+determines allied support during the siege. The siege's core design remains
+the same -- what changes is the support infrastructure around it.
+
+| `council_result` | Allied Support | Mechanical Effect |
+|-------------------|---------------|-------------------|
+| 3 (full) | Archers, barricades, healing herbs | Archer volleys thin pre-battle enemy waves. Barricades grant DEF +20% in certain tile positions. Infirmary save point also restores MP. |
+| 2 (partial) | Archers only | Standard siege as designed above. |
+| 1 (token) | Small ranger squad | One-time wave clear assist (removes one full wave of adds). Otherwise harder than standard. |
+| 0 (none) | No allies | More enemy waves (+1 wave per phase). Cordwyn's HP drops to 25% at the start of Phase 2 instead of Phase 3, giving the player less time before the dialogue choice. |
+
+**Default assumption:** The siege encounter tables above are balanced for
+`council_result` = 2 (partial support). Full support makes it easier; no
+support makes it harder.
 
 **Phase 2 (6000-3000 HP): The Breach**
 The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.

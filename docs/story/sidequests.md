@@ -523,7 +523,10 @@ These scenes are triggered by visiting specific locations or speaking to specifi
 **Introduction NPC:** Elder Savanh (Ashgrove variant); Sera Linn (Corrund variant)
 
 **Ashgrove Proving Grounds (Act II):**
-During the tribal alliance gathering at Ashgrove, Elder Savanh permits the party to participate in the traditional warrior's trials — a series of escalating combat challenges fought on the ash field before the council stones. The trials are ceremonial: the tribes test their warriors this way, and allowing outsiders to participate is a gesture of provisional trust. Five rounds of increasing difficulty, drawing from Thornmere-native enemies (spirit creatures, corrupted wildlife, elite tribal warriors). Completing all five earns the Ashgrove Champion title and a unique spirit-bound weapon.
+During the tribal alliance gathering at Ashgrove (available during the
+exploration phase before the formal council fire -- see Thornmere Council
+playable scene in `outline.md`), Elder Savanh permits the party to participate
+in the traditional warrior's trials — a series of escalating combat challenges fought on the ash field before the council stones. The trials are ceremonial: the tribes test their warriors this way, and allowing outsiders to participate is a gesture of provisional trust. Five rounds of increasing difficulty, drawing from Thornmere-native enemies (spirit creatures, corrupted wildlife, elite tribal warriors). Completing all five earns the Ashgrove Champion title and a unique spirit-bound weapon.
 
 **Corrund Arena (Interlude onward):**
 In the Corrund Canal District, an underground fighting ring has operated for decades — technically illegal, practically tolerated. Sera Linn gained access to it as part of her resistance network and offers the party entry. The arena features ten tiers of combat challenges: early tiers pit the party against Compact soldiers and Forgewright automata; later tiers introduce Pallor manifestations and hybrid enemies unique to the arena. Each tier rewards increasingly rare equipment. The tenth tier's opponent is a retired Compact general who fights using a prototype Forgewright battle-suit — the most mechanically complex fight outside the main story's bosses.

@@ -258,6 +258,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 4 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
 | 5 | `maren_warning` | Maren examines the Pendulum at her refuge | Maren joins the party. Return Road to Valdris Crown opens. Maren's Refuge becomes a revisitable rest point. The party decides to bring the Pendulum to the capital. | Maren (joins) |
 | 6 | `pendulum_to_capital` | Party arrives at Valdris Crown with the Pendulum | Act I ends. Act II begins. King Aldren appears in the throne hall. Cael's quarters become restricted. Multiple NPC dialogues update (Aldis assigned to research, Cordwyn on alert). Court Quarter political NPCs activate. | King Aldren, Scholar Aldis, Dame Cordwyn, Lord Chancellor Haren |
+| 39 | `opening_credits_seen` | Dawn march credits sequence ends at Wilds border | Tutorial complete. True game start. Prevents credits replay. Dawn march uses existing `vaelith_ember_vein` (flag 2) as prerequisite. | Edren, Cael, Lira, Sable |
 
 ### Act II Flags
 
@@ -276,6 +277,14 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 17 | `king_aldren_dead` | King Aldren dies during the siege | Crown passes to no one. Haren attempts to hold the council and fails. Cordwyn assumes de facto military command. The political NPCs' dialogue shifts to grief and power vacuum. | King Aldren (removed), Lord Chancellor Haren, Dame Cordwyn |
 | 18 | `vaelith_siege_encounter` | Unwinnable fight with Vaelith at Valdris | Party wakes in the aftermath of the siege, Valdris wounded and leaderless. Vaelith's power revealed to be far beyond the party's current ability. | Vaelith (Appearance 5) |
 | 19 | `cael_betrayal_complete` | Cael takes the Pendulum, confronts Lira, and vanishes | Act II ends. Cael removed from party. Lira's dialogue becomes grief-stricken. Maren reveals the Pendulum's true nature. All NPC dialogue across the game world updates for the Unraveling. Scholar Aldis locks herself in the library. Sergeant Marek begins carving Cael's name daily. | Cael (removed), Lira, Maren, Scholar Aldis, Sergeant Marek, Dame Cordwyn |
+| 40 | `council_savanh_approval` | Private audience with Elder Savanh at Ashgrove | Hidden score (0-3). Tracks Savanh's support based on dialogue choices. | Elder Savanh, Edren |
+| 41 | `council_caden_approval` | Private audience with Spirit-speaker Caden at Ashgrove | Hidden score (0-3). Tracks Caden's support based on dialogue choices. | Spirit-speaker Caden, Edren, Torren |
+| 42 | `council_wynne_approval` | Private audience with Wynne at Ashgrove | Hidden score (0-3). Tracks Wynne's support based on dialogue choices. | Wynne, Edren, Lira |
+| 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornwatch support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Fires with/after `tribal_alliance_complete` (flag 11). | Elder Savanh, Caden, Wynne |
+| 44 | `cael_last_night_lira` | Cael visits Lira's workshop the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: camera lingers on Lira's face. | Cael, Lira |
+| 45 | `cael_last_night_edren` | Cael visits the training grounds the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: Edren's reaction shot is longer. | Cael, Edren |
+| 46 | `cael_last_night_maren` | Cael visits Maren's study the night before the betrayal | Binary. Recontextualizes betrayal: Cael was researching what the Pallor wanted, not seeking a cure. | Cael, Maren |
+| 47 | `cael_last_night_vault` | Cael visits the Pendulum vault the night before the betrayal | Binary. Reveals Pallor contact was pre-existing: Cael's reflection is wrong for one frame. | Cael |
 
 ### Interlude Flags
 
@@ -289,6 +298,10 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 25 | `ironbound_defeated` | Party defeats the Ironbound in the Rail Tunnels | Deepest tunnel section cleared. The Ironbound was a Compact worker consumed by their own boring engine — a grotesque fusion of flesh and machine. | Lira (recognizes engine model), Torren (can reach trapped spirit) |
 | 26 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
 | 27 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
+| 48 | `reunion_order_1` | Sable finds the first party member | Stores character ID. Previously reunited members are present for later reunions, changing dialogue. | Sable + first found member |
+| 49 | `reunion_order_2` | Sable finds the second party member | Stores character ID. Dialogue varies based on who is already present. | Sable + found members |
+| 50 | `reunion_order_3` | Sable finds the third party member | Stores character ID. | Sable + found members |
+| 51 | `reunion_order_4` | Sable finds the fourth (final) party member | Stores character ID. Final reunion is most emotionally charged. | Sable + all members |
 
 ### Act III Flags
 
@@ -302,6 +315,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 33 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
 | 34 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
 | 35 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
+| 52 | `campfire_complete` | Player speaks to all party members at the campfire | Binary. Triggers group moment: Edren says something that binds the party. If the player walks to the exit without speaking to everyone, the march begins without it. | Edren, Lira, Torren, Sable, Maren |
 
 ### Act IV Flags
 
@@ -310,6 +324,78 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 36 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
 | 37 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
 | 38 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
+
+---
+
+## 2b. Cutscene Tier System
+
+All scripted narrative content uses one of four presentation tiers:
+
+| Tier | Name | Player Control | Presentation | Use For |
+|------|------|---------------|--------------|---------|
+| 1 | Full Cutscene | None (input locked) | Letterboxed (black bars) | Major emotional beats |
+| 2 | Walk-and-Talk | Movement only | Normal camera, proximity dialogue | Exposition, arrival, character building |
+| 3 | Playable Scene | Full control + choices | Normal camera, dialogue menus | Social encounters, moral choices, perspective shifts |
+| 4 | Micro-Cutscene | Briefly interrupted (<10s) | Brief camera shift, then back | Foreshadowing, character moments, environmental storytelling |
+
+**Micro-cutscene rule:** Each fires once per playthrough, tied to a one-time
+flag. If the player misses one (wrong party lead, did not visit the area), it
+is gone.
+
+### Cutscene Catalog
+
+See `docs/superpowers/specs/2026-03-17-narrative-expansion-design.md` Section 2
+for the full act-by-act cutscene catalog with tier assignments and trigger flags.
+
+### Key Cutscene Assignments
+
+| Moment | Act | Tier | Trigger |
+|--------|-----|------|---------|
+| Ember Vein tutorial | I | Playable | Game start |
+| Vaelith outside the mine | I | Full (T1) | `vaelith_ember_vein` |
+| Dawn march (opening credits) | I | Walk-and-Talk (T2) | Post-`vaelith_ember_vein` |
+| Maren examines the Pendulum | I | Full (T1) | `maren_warning` |
+| Cael's first nightmare | II | Micro (T4) | `cael_nightmares_begin` |
+| Vaelith comforts a village | II | Full (T1) | `vaelith_doma_moment` |
+| Panoramic view from Observatory | II | Full (T1) | `canopy_alliance` |
+| Thornmere Council at Ashgrove | II | Playable (T3) | `tribal_alliance_complete` progression |
+| Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
+| Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
+| Siege of Valdris | II | Full -> Playable | `valdris_siege` |
+| Ley Line Rupture | Interlude | Full (T1) | `interlude_begins` |
+| Sable alone in aftermath | Interlude | Walk-and-Talk (T2) | Post-rupture |
+| Party reunions | Interlude | Walk-and-Talk -> Playable | Per reunion flag |
+| March to Convergence | III | Walk-and-Talk (T2) | Act III opening |
+| Campfire scene | III | Playable (T3) | Pre-Convergence |
+| Pallor Trials | III | Playable (T3) | Per trial entry |
+| Vaelith's release | III | Full (T1, in-battle) | 10-attack threshold |
+| Lira reaches Cael | III | Full (T1) | Post-final-battle |
+| Cael walks into the door | IV | Full (T1) | Narrative climax |
+| Edren places sword | Epilogue | Full (T1) | Final scene |
+
+---
+
+## 2c. Death and Fast Reload
+
+When all party members are KO'd in battle:
+
+1. **The Fall (2s):** Last KO animation plays. Battle UI fades. Music hard-cuts
+   to silence.
+2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
+3. **Instant Reload:** Fade in at last save point. Full HP/MP as of last save.
+   Save point marker glows briefly. Ambient music resumes. ~4 seconds total.
+
+**Rules:**
+- No menu, no prompt. Save point is where you go.
+- Boss pre-battle cutscenes (Tier 1) set a `boss_cutscene_seen_<boss_id>` flag
+  on first viewing. On reload, the cutscene skips. (Note: this is a
+  parameterized flag pattern, not a numbered flag -- each boss gets its own
+  instance at runtime. Document the pattern in events.md but do not assign a
+  fixed flag number.)
+- Narrative defeats are exempt (e.g., the unwinnable Vaelith fight at the
+  siege transitions to an aftermath cutscene, not this sequence).
+- If the player dies before the first save point in the Ember Vein (unlikely
+  given Arcanite gear), reload at the dungeon entrance.
 
 ---
 
