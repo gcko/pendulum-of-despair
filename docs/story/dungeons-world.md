@@ -1581,7 +1581,7 @@ E.............#####...............................
 ```
 
 **Trial 1 (B1): Edren's Trial**
-A phantom Cael appears. He tells Edren he was always the lesser knight. The correct response: "You're right. I wasn't enough. But I'm here now." Edren gains Resolve (permanent +10% all stats for the rest of the game).
+Edren faces the Crowned Hollow -- a towering armored figure wearing every crown of every leader who failed to stop the Pallor. It fights with his own moveset. The correct response: defend, not attack. Three consecutive Defends end the fight. Edren gains Steadfast Resolve (party-wide defensive buff that cleanses Pallor status effects).
 
 **Trial 2 (B2): Lira's Trial**
 A vision of the life she and Cael could have had -- cottage, peace, children. The correct response: "It was beautiful. And it's gone. I'm letting it go." Lira gains Resolve.

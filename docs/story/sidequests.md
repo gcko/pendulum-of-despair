@@ -106,7 +106,7 @@ The calming of the Gale also makes the subsequent Roothollow ritual more powerfu
 
 The quest's resolution happens at Roothollow, where the ley line nexus the party stabilized during the Interlude provides enough safe energy for Elara to attempt a modified pact. The new pact is different — weaker, more fragile, but mutual. The spirit isn't bound; it is invited. Elara can call a breeze, not a gale. She weeps, not from disappointment but from relief. "It's enough," she says. "It's talking to me again. That's enough."
 
-**Rewards:** Windcaller's Pendant (accessory — grants the party evasion boost in battle, unique to the party member who equips it), Spirit's Whisper (Torren ability — a new healing skill that restores HP and cures Pallor-type status effects)
+**Rewards:** Windcaller's Pendant (accessory — party evasion boost, Storm resistance +25%), Spirit's Whisper (Torren ability — a new healing skill that restores HP and cures Pallor-type status effects)
 
 **Thematic Resonance:** The old pacts were based on power — spirits bound to serve. The new pact is based on mutual trust. This quest models in miniature the world's larger transformation: the rigid structures are gone, and what replaces them is smaller, more fragile, and more honest. Elara accepting a weaker connection instead of demanding the old power back is the personal-scale version of the game's acceptance theme.
 
