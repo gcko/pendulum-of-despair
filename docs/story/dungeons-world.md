@@ -4469,7 +4469,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 
 A root system fully corrupted by the Pallor. Where healthy roots are brown and amber-veined, this mass is black, withered, and aggressive. It fills a chamber, tendrils whipping from walls and ceiling. At its core, a pulsating dark-purple heart of concentrated Pallor energy. It attacks on sight -- no communication possible.
 
-- **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or fire/Flame magic).
+- **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or Flame magic).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
 - **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
@@ -4481,7 +4481,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 **Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, Earth-element attacks gain Void sub-element), 1500 Gold.
 
 **Encounter Zones:**
-- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (immobilized for 2 turns, removed by physical attack or fire/Flame magic) + physical attacks)
+- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (immobilized for 2 turns, removed by physical attack or Flame magic) + physical attacks)
 - Pallor Fungus (2x, 350 HP each -- toxic spore attacks, Poison (25% chance) + Confusion (20% chance))
 - Tunnel Beetle (4x, 150 HP each -- armored, physical-only, high DEF but low HP)
 
