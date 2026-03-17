@@ -451,7 +451,7 @@ COMPACT CORRUPTION:
 - **Vaelith stat blocks** for each appearance (unwinnable fight scripting, penultimate fight full stats)
 - **Pallor Trial enemy stat blocks** (Hollow Knights, Unfinished Constructs, Stone Spirits, Shadows of Sable, Archived)
 - **Grey Bounty boss stat blocks** (12 bounty bosses have names and descriptions but no detailed movesets)
-- **Caden npcs.md entry** (already flagged in continuity-audit.md as IMPORTANT; this spec increases Caden's role via the Ley Leech fight)
+- ~~Caden npcs.md entry~~ (completed in this PR — expanded existing entry with Ley Leech role)
 - **Lira's weapon** -- full mechanical definition of how it functions in-battle and post-battle
 - **New abilities for abilities.md** -- Spirit's Whisper (Torren, from "The Spirit That Stopped Singing" sidequest reward), Scar of the Hollow (Edren passive, from Pallor Hollow defeat), and all five Pallor Trial abilities (Steadfast Resolve, latent forge ability, Rootsong, Unbreakable Thread, Pallor Sight) need formal entries in abilities.md
-- **Integration passes** on existing story docs (outline.md, events.md, npcs.md, characters.md) to weave Vaelith and new bosses into the established text
+- ~~Integration passes on existing story docs (outline.md, events.md, npcs.md, characters.md) to weave Vaelith and new bosses into the established text~~ (completed in this PR)

@@ -462,7 +462,7 @@ The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- orga
 
 **Phase 3 (below 3000 HP): The Pallor Core**
 The Ram's core activates. Despair Pulse intensifies to party-wide.
-- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (50% chance to skip turn). Every 3 turns.
+- **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
 - **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
 
@@ -616,7 +616,7 @@ Not a monster in the traditional sense. It looks like Edren -- a grey, transluce
 **Phase 2 (5500-2750 HP): The Voice**
 The Hollow speaks in Edren's voice. Lines from earlier in the game.
 - All Phase 1 attacks, plus:
-- **Words of Guilt** -- speaks a line Edren said earlier (to Cael, to the party, orders he gave). Each line triggers Despair status on one party member (50% chance to skip turn, 3 turns). Different lines target different characters.
+- **Words of Guilt** -- speaks a line Edren said earlier (to Cael, to the party, orders he gave). Each line triggers Despair status on one party member (ATB speed -25%, damage dealt -20%, 4 turns). Different lines target different characters.
 - **Promise Broken** -- the Hollow repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction for 2 turns.
 - **"I failed them."** -- the Hollow speaks directly. Party-wide Despair Pulse, 200 damage to all.
 
@@ -697,7 +697,7 @@ Vaelith uses ancient magic from a dead era. No longer dismissive -- focused.
 **Phase 2 (below 10000 HP): The Shepherd Falls**
 Vaelith shifts to Pallor-fueled abilities. Their form begins to destabilize -- cracks of grey light appear.
 - All Phase 1 attacks, plus:
-- **Despair Pulse** -- party-wide, 400 damage + Despair status (50% chance to skip turn). Every 3 turns.
+- **Despair Pulse** -- party-wide, 400 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Reality Warp** -- corrupts the ley lines the weapon draws from. Lira must re-forge the weapon (a timed input prompt -- success maintains full party damage; failure reduces party damage by 50% for 2 turns). Occurs every 5th turn.
 - **Unraveling** -- Vaelith attempts to sever Cael's connection. Single target on Lira, 600 damage. If Lira falls below 25% HP, the weapon dims (party damage reduced 25% until Lira is healed above 50%).
 - **"This was not in the pattern. You were not in the pattern."** -- dialogue trigger at 5000 HP.
