@@ -643,6 +643,7 @@ Lira stabilizes the rupture using a combination of Forgewright pipe-sealing and 
 **Treasure:**
 - Monitoring Station: Extraction Rate Documentation (key item -- used in "The Fading Shifts" reward chain and referenced in the Bridgewrights' founding)
 - Post-boss: Forgewright Stabilizer (accessory -- reduces magical damage taken, unique to Lira; quest reward)
+- Post-boss: Dael's Ledger (key item -- Dael Corran's personal records documenting the extraction timeline and worker casualties; unlocks Lira's ultimate weapon forge in Act III)
 - Pipeline Junction: Ley Residue Sample (key item -- can be shown to Jace Renn at Kettleworks for bonus dialogue in "Stars and Gears")
 
 ---

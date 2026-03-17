@@ -32,7 +32,7 @@ Vaelith speaks like a dinner party host -- warm, witty, genuinely interested in 
 Appears after the party retrieves the Pendulum. Charming, odd, almost helpful -- warns them the Pendulum is "such a fragile little thing to build hope around." Does not fight. Walks into the dark. NPCs in Valdris Crown later mention a "grey stranger" who was asking about the mines.
 
 **Appearance 2: The Observer (Thornmere / Duskfen region, Act I-II transition)**
-The party spots Vaelith watching from a ridge as they travel. If they approach, Vaelith is gone -- but they have left a campsite with two cups of tea still warm. A journal page in an ancient script. Torren can partially translate: "The spirit-speaker is young. Promising."
+The party spots Vaelith watching from a ridge as they travel. If they approach, Vaelith is gone -- but they have left a campsite with two cups of tea still warm. A journal page in an ancient script. Torren can partially translate fragments describing a cycle — something about a door opening and closing across ages. He cannot tell if it is prophecy or history.
 
 **Appearance 3: The Charmer (Corrund or Bellhaven, Act II)**
 Vaelith is *in town*, posing as a traveling scholar. NPCs reference a "delightful visitor" who has been buying drinks and asking about local history. The party can actually have a conversation with Vaelith in a tavern. Vaelith asks about Cael -- "Your friend with the heavy eyes. How is he sleeping?" -- and the player does not yet realize why that question is horrifying.
@@ -41,7 +41,7 @@ Vaelith is *in town*, posing as a traveling scholar. NPCs reference a "delightfu
 The player sees a cutscene of Vaelith visiting a Pallor corruption site -- a village, a ley node, a place where people are suffering. Vaelith walks among the grey-touched, speaking gently to them, comforting them. Then the camera reveals they are *feeding* -- the comfort accelerates the corruption. They are a shepherd leading lambs. This is the "Doma moment."
 
 **Appearance 5: The Siege (Valdris Assault, Act II climax)**
-Vaelith appears on the walls of Valdris during the siege. Not leading the Carradan army -- just *present*, watching. The party confronts them. Unwinnable fight. Vaelith does not even use their full power -- they fight with one hand, making conversation. "You are doing wonderfully. Truly. I have not been this entertained in centuries." After the party falls, Vaelith walks away as Valdris burns. King Aldren dies.
+Vaelith appears on the walls of Valdris during the siege. Not leading the Carradan army -- just *present*, watching. The party confronts them. Unwinnable fight. Vaelith does not even use their full power -- they fight with one hand, making conversation. "You are doing wonderfully. Truly. I have not been this entertained in centuries." After the party falls, Vaelith walks away as Valdris burns.
 
 **Appearance 6: The Whisper (Interlude -- referenced but not seen)**
 During the Interlude, when the party is scattered, NPCs across multiple locations mention the grey stranger. Cordwyn says a figure matching Vaelith's description was seen near the ley nexus before it destabilized. When the party encounters Brant at Ironmark Citadel (where he opens the rear gate out of cowardice, per existing docs), additional dialogue reveals that someone visited Brant weeks earlier and "explained how it would all go." Brant did not betray Valdris during the siege directly -- but Vaelith planted the seed of fatalism that made Brant's later cowardice at Ironmark feel inevitable to him. The party realizes Vaelith has been *engineering* events, not just observing.
@@ -91,7 +91,7 @@ Vaelith shifts to Pallor-fueled abilities. Despair Pulses, reality distortion, a
 - **Torren**: Senses something ancient and wrong when Vaelith is nearby
 - **Maren**: Finds references to Vaelith in the Archive of Ages -- records from the previous cycle describing a diplomat who "walked into the grey and did not return"
 - **Riven** (bounty hunter): Some Grey Bounty creatures were "woken" by something passing through their territory
-- **Forgemaster Elyn Drayce**: Vaelith consulted on the Ashen Ram's design (indirect connection through Corrund worker NPC)
+- **Tollen** (Carradan military engineer): Noticed the altered alloy specs at the Ironmark construction yard — the anonymous consultant who modified the design was Vaelith
 
 ---
 

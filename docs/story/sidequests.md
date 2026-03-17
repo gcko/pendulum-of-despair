@@ -369,7 +369,7 @@ The tunnels' deepest point — the only safe route that avoids both Compact patr
 
 Kerra fights beside the party during the Nest Mother encounter. If she remains standing (at 0 HP she is incapacitated but survives -- see dungeons-city.md), she appears in the epilogue as a militia leader during Caldera's reconstruction, organizing the same kind of civilian evacuations she helped with here — but now with authority, training, and a network of people who trust her because she earned it in these tunnels.
 
-**Reward:** Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints), Nest Mother's Core (crafting material — concentrated Pallor essence, used in anti-Pallor weapon modifications)
+**Reward:** Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints)
 **Connection:** Sera's network, if preserved, provides critical intelligence for the party's movements through Compact territory in Act III. If she remains standing (at 0 HP she is incapacitated but survives -- see dungeons-city.md), Kerra branches into a meaningful epilogue presence, and the Nest Mother's destruction permanently clears the Pallor infestation from the undercity tunnel network, making subsequent traversals encounter-free.
 
 ---

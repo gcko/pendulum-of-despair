@@ -1809,7 +1809,7 @@ Neither option is correct.
 
 **Boss: Vaelith, the Ashen Shepherd (20000 HP)**
 
-An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times throughout the story -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed: the ley network is alive.
+An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times before this encounter -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed.
 
 **The 10-Attack Threshold (Pre-Fight Phase):**
 The fight begins like the previous unwinnable encounter at Valdris. Party attacks deal 0 damage. Vaelith attacks 10 times, each accompanied by taunting dialogue:
@@ -3457,7 +3457,7 @@ A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It man
 **Weakness:** Earth (150% damage), Flame (125% damage).
 **Resistance:** Storm (absorbs), Frost (75% damage).
 **Immunity:** Silence.
-**Drop:** Gale's Echo (accessory -- party evasion boost, Storm resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; evidence of deliberate ley line sabotage), 1500 Gold.
+**Drop:** Windcaller's Pendant (accessory -- party evasion boost, Storm resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; evidence of deliberate ley line sabotage), 1500 Gold.
 
 ---
 
