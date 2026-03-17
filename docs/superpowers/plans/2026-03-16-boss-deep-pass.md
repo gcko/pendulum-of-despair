@@ -550,7 +550,7 @@ The Leech tries to re-attach to the nexus. It moves toward the center of the cha
 
 **On defeat:** The nexus stabilizes. Ley lines glow clean across the chamber and extend outward into the earth. Torren collapses from exhaustion. Caden enters the chamber and performs a small recovery ritual -- kneeling beside Torren, humming a spirit-song. A passing-of-the-torch moment.
 
-**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. In Phase 3, Spiritcall deals 200% damage. After the fight, Torren's dialogue acknowledges that the nexus responded to Caden's ritual: "She did not call the spirits. She asked the land. That is... different. That might be better."
+**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. In Phase 3, Spiritcall deals 200% damage. After the fight, Torren's dialogue acknowledges that the nexus responded to Caden's ritual: "He did not call the spirits. He asked the land. That is... different. That might be better."
 
 **Weakness:** Flame (150% damage), Spirit (125% damage).
 **Resistance:** Frost (50% damage), Earth (75% damage).

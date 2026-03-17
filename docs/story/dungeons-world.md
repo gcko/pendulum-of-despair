@@ -3450,14 +3450,14 @@ A wind-spirit twisted by Pallor corruption into a shrieking storm entity. It man
 
 **Phase 2 (below 2100 HP / 30%) -- The Song Beneath:**
 - All Phase 1 attacks, but Gale Force and Shriek have reduced damage (the corruption is weakening).
-- **Desperate Howl** -- Massive wind AoE, 500 damage to all. 2-turn charge. Can be interrupted by Torren's Spiritcall.
+- **Desperate Howl** -- Massive Storm-element AoE, 500 damage to all. 2-turn charge. Can be interrupted by Torren's Spiritcall.
 - **Torren's Spiritcall (Peaceful Resolution):** At 30% HP, Torren can use Spiritcall as a special action. He reaches beneath the corruption to the spirit's original nature -- the song it used to sing. If successful, the Gale calms: the vortex slows, the grey drains from the wind, and the spirit's true form -- a shimmering wind-shape, gentle and luminous -- appears for a moment before dissipating into clean air. The ley energy at the peak strengthens visibly. Full XP and drops awarded. This resolution grants Torren a spirit-bond recognized by the Frost Warden in the Frostcap Caverns.
 - If Spiritcall is not used, the fight continues to 0 HP. The Gale shatters into silence. The spirit is destroyed, not saved. Torren receives a weaker spirit-bond (the Frost Warden still senses it, but the peaceful resolution at 25% HP requires an additional dialogue check).
 
 **Weakness:** Earth (150% damage), Flame (125% damage).
 **Resistance:** Storm (absorbs), Frost (75% damage).
 **Immunity:** Silence.
-**Drop:** Gale's Echo (accessory -- party evasion boost, wind resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, evidence of deliberate ley line sabotage), 1500 Gold.
+**Drop:** Gale's Echo (accessory -- party evasion boost, Storm resistance +25%), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; evidence of deliberate ley line sabotage), 1500 Gold.
 
 ---
 
@@ -4656,7 +4656,7 @@ The Leech moves toward the nexus center.
 
 **On defeat:** Nexus stabilizes. Torren collapses. Caden enters and performs a recovery ritual -- passing-of-the-torch moment.
 
-**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. 200% in Phase 3. After the fight, Torren acknowledges Caden's ritual: "She did not call the spirits. She asked the land. That is... different. That might be better."
+**Torren's Special Interaction:** Spiritcall deals bonus damage in all phases. 200% in Phase 3. After the fight, Torren acknowledges Caden's ritual: "He did not call the spirits. He asked the land. That is... different. That might be better."
 
 **Weakness:** Flame (150%), Spirit (125%).
 **Resistance:** Frost (50%), Earth (75%).

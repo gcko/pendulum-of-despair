@@ -638,7 +638,7 @@ Lira stabilizes the rupture using a combination of Forgewright pipe-sealing and 
 **Weakness:** Storm (150% damage), Spirit (125% damage).
 **Resistance:** Flame (50% damage), Earth (75% damage).
 **Immunity:** Petrify, Poison.
-**Drop:** Drayce's Failsafe Core (accessory -- +12 DEF, +8 MAG DEF, auto-Shield Protocol once per battle at 25% HP), Corrupted Tuning Fork (key item -- Vaelith breadcrumb), Forgewright Stabilizer (accessory -- reduces magical damage taken, unique to Lira; quest reward), 2000 Gold.
+**Drop:** Drayce's Failsafe Core (accessory -- +12 DEF, +8 MAG DEF, auto-Shield Protocol once per battle at 25% HP), Corrupted Tuning Fork (key item -- Vaelith breadcrumb, same type found at multiple corruption sites; they stack as evidence), Forgewright Stabilizer (accessory -- reduces magical damage taken, unique to Lira; quest reward), 2000 Gold.
 
 **Treasure:**
 - Monitoring Station: Extraction Rate Documentation (key item -- used in "The Fading Shifts" reward chain and referenced in the Bridgewrights' founding)

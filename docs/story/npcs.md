@@ -1010,7 +1010,7 @@ Characters who don't belong to any single faction, or who operate across faction
 
 **Backstory:** Gavren was the second operator on the boring engine shift that created the Ironbound -- the Compact's experimental war construct. When the engine's ley conduits surged during the forging process, the first operator was consumed by the energy feedback. Gavren ran. He has been running ever since. He ended up in Bellhaven because it is as far from Ashmark's forges as you can get without crossing water. He drinks to forget the sound the first operator made. He does not drink enough.
 
-When he fled the factory, he dropped his Operator's Badge in the wreckage -- his shift identification, stamped with the Ashmark Forge-Masters' Guild seal and the date of the incident. He has thought about going back for it every day since. He never has.
+When he fled the factory, he dropped his own Operator's Badge in the wreckage -- his shift identification, stamped with his name, the Ashmark Forge-Masters' Guild seal, and the date of the incident. The first operator had no badge to leave behind; he was consumed entirely by the machine. Gavren has thought about going back for his badge every day since. He never has.
 
 Weeks before the incident, a grey stranger visited the factory and spoke privately with the foreman about the ley conduit calibration. Gavren overheard fragments of the conversation from behind a cooling stack but did not understand the significance until much later. The stranger left without introducing himself. The conduit settings the foreman used on the day of the incident matched what the stranger had described.
 
@@ -1019,7 +1019,7 @@ Weeks before the incident, a grey stranger visited the factory and spoke private
 - *"The specs were wrong. We knew it. Foreman said run it anyway. The conduits were hot -- too hot. I told them. I told them and they said run it."*
 - *"When it happened, the first operator -- he didn't scream. He just... stopped being a person and started being part of the machine. I heard the metal accept him. That's the sound I can't forget."*
 
-**Trigger:** The party must have the Operator's Badge key item (found in the Ironbound wreckage in the Carradan Rail Tunnels -- the first operator's badge, not Gavren's). Showing it to Gavren unlocks his full dialogue; he recognizes it as his partner's badge and breaks down. Without the badge, he is a silent drunk who will not speak to strangers.
+**Trigger:** The party must have the Operator's Badge key item (found in the Ironbound wreckage in the Carradan Rail Tunnels -- Gavren's own badge, stamped with his name). Showing it to Gavren unlocks his full dialogue; he recognizes it as proof the party has been to the site where he abandoned his partner. He breaks down. Without the badge, he is a silent drunk who will not speak to strangers.
 
 **Story relevance:** Lore (Ironbound creation, Compact engineering ethics)
 
