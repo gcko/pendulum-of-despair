@@ -766,3 +766,24 @@ The review body (used for both PR comments and inline output):
   contradicted by usage in another section of the same file.
 - **Temp files for GitHub posts.** Always write review body to a temp file
   before posting via `gh`. Never use heredocs with special characters.
+
+## References
+
+Research sources that informed the design of these review passes.
+Consult for deeper methodology if expanding or refining passes.
+
+### Story Bible & Narrative QA
+- [Building a basic story bible for your game](https://www.gamedeveloper.com/design/building-a-basic-story-bible-for-your-game) — Anna Megill (Ubisoft Massive) on story bible structure and team communication
+- [Crafting a Compelling Story Bible](https://www.numberanalytics.com/blog/ultimate-guide-story-bible-game-narrative) — Centralized narrative consistency frameworks
+- [Lore Consistency in Game Design](https://www.meegle.com/en_us/topics/game-design/lore-consistency) — Narrative audit processes, cross-departmental review
+- [Crash meetings, keep a lore bible](https://www.gamedeveloper.com/design/crash-meetings-keep-a-lore-bible-and-other-narrative-design-tips-learned-at-king) — Practical narrative coordination at King
+
+### Hollywood Script Supervision (Passes I, J)
+- [Script Supervisor Report Explained](https://sethero.com/blog/script-supervisor-report-explained/) — Continuity report categories (directional, spatial, temporal, character state, prop tracking, dialogue matching)
+- [Ultimate Guide to Script Supervisors](https://www.studiobinder.com/blog/script-supervisor-forms-template/) — Production book structure, daily editor logs
+- [Film Continuity: Ultimate Guide](https://emahofilms.com/film-continuity-ultimate-guide-to-script-supervision/) — Matching notes, character tracking across scenes
+
+### Screenplay Coverage Analysis (Pass J)
+- [How to Write Amazing Screenplay Coverage](https://screencraft.org/blog/how-to-write-amazing-screenplay-coverage-and-feedback/) — Coverage dimensions: concept, characters, structure, plot, theme, pacing, dialogue
+- [Script Coverage: Complete Guide](https://www.studiobinder.com/blog/script-coverage-complete-guide/) — Coverage report templates, PASS/CONSIDER/RECOMMEND framework
+- [Script Coverage Templates](https://industrialscripts.com/script-coverage/) — Industry-standard evaluation criteria

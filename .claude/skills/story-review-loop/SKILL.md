@@ -445,3 +445,20 @@ After the loop ends (either all N rounds complete or an early clean exit):
   with special characters.
 - **Track agent effectiveness.** In the summary, note which agent found
   which issues. This data improves agent prompts over time.
+
+## References
+
+Research sources that informed the multi-agent architecture and agent
+role design. Consult for deeper methodology if expanding agents.
+
+### Multi-Agent Architecture Design
+- Analysis of 51 Copilot review comments across 7 reviews on PR #12
+  revealed single-agent review missed 73% of issues due to propagation
+  blindness (46%), narrative coherence gaps (32%), and context drift (22%)
+
+### Agent Role Inspirations
+- **Agent 1 (Propagation):** [Lore Consistency in Game Design](https://www.meegle.com/en_us/topics/game-design/lore-consistency) — Cross-departmental narrative audit methodology
+- **Agent 2 (Narrative):** [How to Write Amazing Screenplay Coverage](https://screencraft.org/blog/how-to-write-amazing-screenplay-coverage-and-feedback/) — Coverage dimensions for evaluating narrative coherence
+- **Agent 3 (Technical):** See story-review/SKILL.md for pass definitions
+- **Agent 4 (Script Supervisor):** [Script Supervisor Report Explained](https://sethero.com/blog/script-supervisor-report-explained/) — Continuity categories (directional, spatial, temporal, character state, prop tracking); [Ultimate Guide to Script Supervisors](https://www.studiobinder.com/blog/script-supervisor-forms-template/) — Production book and daily editor log structure
+- **Agent 5 (Devil's Advocate):** [Crash meetings, keep a lore bible](https://www.gamedeveloper.com/design/crash-meetings-keep-a-lore-bible-and-other-narrative-design-tips-learned-at-king) — Cross-team review with fresh eyes as a deliberate practice
