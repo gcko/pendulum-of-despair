@@ -102,7 +102,7 @@ Maren <--[mentor]--------------> Edren
 The Pallor --[manipulation]----> Cael
 Vaelith --[planted fatalism]---> Brant
 Vaelith --[observing/probing]--> Cael
-Vaelith --[pattern recognition]> Lira
+Vaelith --[pattern recognition]--> Lira
 Vaelith --[noted "promising"]--> Torren
 Maren <--[Archive records match]--> Vaelith
 Riven <--[creatures disturbed]--> Vaelith

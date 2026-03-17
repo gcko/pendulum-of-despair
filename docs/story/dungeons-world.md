@@ -1584,7 +1584,7 @@ E.............#####...............................
 Edren faces the Crowned Hollow -- a towering armored figure wearing every crown of every leader who failed to stop the Pallor. It fights with his own moveset. The correct response: defend, not attack. Three consecutive Defends end the fight. Edren gains Steadfast Resolve (party-wide defensive buff that cleanses Pallor status effects).
 
 **Trial 2 (B2): Lira's Trial**
-A vision of the life she and Cael could have had -- cottage, peace, children. The correct response: "It was beautiful. And it's gone. I'm letting it go." Lira gains Resolve.
+Lira faces the Perfect Machine -- a flawless automaton with Cael's face that asks to be repaired. Each "repair" adds HP and triggers counterattacks. The correct response: use Forgewright's Dismantle command. Dialogue: "I cannot fix you. I could not fix him. That was never my job." Lira gains a latent ability (prerequisite for manifesting Cael's connection as weapon against Vaelith).
 
 ### Section 3: The Grey March (50x20)
 
@@ -1637,13 +1637,13 @@ E.........#####..........#####..........#####.....
 ```
 
 **Trial 3 (B3): Torren's Trial**
-The spirits of the Wilds accuse him of failing them. Correct response: "I couldn't save you all. I saved what I could. It has to be enough."
+Torren faces the Last Voice -- an ancient Great Spirit cracked with grey stone, barely alive, asking to rest. The spirits of the Wilds accuse him of failing them. The correct response: use Spiritcall's Release command to let the Great Spirit die peacefully. A single green shoot appears. Torren gains Rootsong (healing ability restoring HP and MP, drawing from the ley network).
 
 **Trial 4 (B4): Sable's Trial**
-Her own insignificance whispers: she doesn't belong with heroes. Correct response: "I'm not a hero. I'm the one who showed up. That's enough."
+Sable faces the Open Door -- a literal open door at the end of the alley leading to safety, warmth, and freedom. Shadows of Sable (copies using her Tricks moveset) urge her through. Not a combat encounter. The correct response: turn around and walk back into the alley, toward the party, toward danger. The door closes. The shadows vanish. Sable gains Unbreakable Thread (passive preventing forced removal from battle, counters Pallor Incarnate's Reality Tear).
 
 **Trial 5 (B5): Maren's Trial**
-Her younger self asks why she wasted her life on knowledge that only brought suffering. Correct response: "Because someone had to remember. Even if it hurt."
+Maren faces the Index -- a vast catalogue entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence).
 
 - `S` (bottom-right): Final save point before the Convergence.
 - *(near final save point)* A loose page in archaic script, placed deliberately on the save point's ley-line clearing -- the only spot with color in the grey waste. Torren and Maren together translate: "This cycle has a forgewright who loves the vessel. That is new. I wonder if it will matter." The handwriting has not changed across eight hundred years and six locations. The ink is fresh. The page was left here for the party to find. Maren's hands shake: "Every fragment. Every location. The same hand. Eight centuries of writing and the penmanship never aged." If the party has found all six fragments, Maren adds: "A scholar. A diplomat. Someone who walks everywhere and writes everything down. Someone who has been watching since before any of us were born."
@@ -3434,7 +3434,7 @@ The map represents a switchback trail ascending to the summit. The path narrows 
 - `@` (bottom, right): The vista point. The camera pulls out to show the entire continent. In Act II, the grey haze over the Convergence is visible. In the Interlude, the Pallor's spread is horrifying -- grey patches across the map. In Act III, the approach is visible.
 - `S` (bottom): Save point. Rest and recovery in the thin mountain air.
 
-No encounters. No treasure. No hazards. Just the wind, the view, and one answer.
+No encounters, treasure, or hazards during normal exploration. During "The Spirit That Stopped Singing" sidequest, the Howling Gale boss encounter activates at the summit.
 
 ### Sidequest Boss: The Howling Gale (7000 HP)
 
@@ -3839,6 +3839,8 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - Encounters: Ash elementals, ancient spirit remnants.
 
 ### Sidequest Boss: The Grey Stag (5500 HP)
+
+**Note:** This encounter takes place in a highland forest clearing near the Greywood Camp patrol routes, not inside a cave. It is placed under the Caves and Grottos section for organizational proximity to the surrounding overworld content.
 
 **Availability:** During "The Missing Patrol" sidequest (Act II, during the diplomatic mission). The Grey Stag encounter takes place in a highland forest clearing near Greywood Camp, along the deep Wilds patrol route.
 
@@ -4761,7 +4763,7 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 | 13a | Wilds Gate Pass | I-II | 1 | 5-10 | 10 min | None | Transition area |
 | 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20-24 | 20-30 min | None | Ice sliding puzzle, thin ice traps |
 | 13c | Broken Hills Crossing | II-Interlude | 1 | 14-18 | 10 min | None | Transition area |
-| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland area) | Exploration rewards |
+| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
 | 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
 | 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
 | 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |

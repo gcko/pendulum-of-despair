@@ -2,7 +2,7 @@
 name: story-review-loop
 description: >
   Use when a story PR needs multiple rounds of automated review and fix cycles.
-  Runs story-review with a multi-agent architecture (4 specialized reviewers),
+  Runs story-review with a multi-agent architecture (5 specialized reviewers),
   fixes issues, commits, and repeats N times. Pushes once at the end and posts
   a summary. Invoke with PR number/URL and iteration count.
 ---
@@ -64,7 +64,7 @@ digraph review_loop {
     start [label="Parse PR # and N\nCheckout PR branch\nGet changed files list", fillcolor="#e6f3ff"];
 
     subgraph cluster_review {
-        label="Review Phase (4 agents in parallel)";
+        label="Review Phase (5 agents in parallel)";
         style=dashed;
         color=grey;
 
@@ -126,7 +126,7 @@ digraph review_loop {
 
 ### Step 2: Review Round (Multi-Agent)
 
-For each round (1 through N), dispatch **four review agents in
+For each round (1 through N), dispatch **five review agents in
 parallel**. Each agent gets the same file list but a different mission.
 
 #### Agent 1: Entity Propagation Checker
@@ -308,7 +308,7 @@ Report: list of issues found, or "No additional issues found."
 
 ### Step 2b: Merge Findings
 
-After all four agents return:
+After all five agents return:
 
 1. Collect all findings into a single list.
 2. **Deduplicate:** If multiple agents found the same issue, keep the
@@ -416,7 +416,7 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 ### Early Exit Conditions
 
-- **Clean round:** If all four agents find zero issues, stop. No point
+- **Clean round:** If all five agents find zero issues, stop. No point
   continuing.
 - **Same issues recurring:** If round N finds the exact same issues as
   round N-1 (fix didn't work), stop and report.
@@ -427,9 +427,9 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 - **Local commits, single push.** Commit after each round but only push
   once at the end. This keeps the PR history clean.
-- **Five agents per round.** Always dispatch all four. Do NOT skip the
+- **Five agents per round.** Always dispatch all five. Do NOT skip the
   devil's advocate — it catches what the structured agents miss.
-- **Parallel dispatch.** Launch all four agents simultaneously using a
+- **Parallel dispatch.** Launch all five agents simultaneously using a
   single message with multiple Agent tool calls.
 - **No manufactured fixes.** Only fix BLOCKERs and ISSUEs. Ignore
   SUGGESTIONs unless they are trivial (one-line typo).
