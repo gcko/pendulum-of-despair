@@ -194,6 +194,16 @@ Pay special attention to events described in BOTH story docs and
 NPC backstory — NPC entries often paraphrase events with different
 details than the canonical dungeon/event description.
 
+5. **CRITICAL: Pre-existing prose invalidated by new content.**
+   For every NEW boss, encounter, trial, or feature added to an
+   existing section, read the section's HEADER and OVERVIEW
+   paragraph. Does the old prose still hold? Examples:
+   - Location says "No encounters" but a boss was just added
+   - Summary says "gains Resolve" but expanded trial defines a
+     different boss and different unlock
+   - Section is called "Caves" but encounter is in a clearing
+   Flag any pre-existing prose that contradicts new additions.
+
 Report: list of {event, file1 version, file2 version, contradiction}
 or "No narrative coherence issues found."
 ```
@@ -300,6 +310,15 @@ Instructions:
    - Act boundaries that don't align between outline and events
    - Items that appear in drop tables under different names than
      in trigger conditions
+5. **CRITICAL: Pre-existing prose invalidated by new content.**
+   For each entity, read the section HEADER and OVERVIEW paragraph
+   ABOVE or AROUND the new content. Does the old prose still hold
+   after the addition? Examples that were missed in practice:
+   - "No encounters" in a section that now has a boss below it
+   - "gains Resolve" summary when the expanded trial says otherwise
+   - Section called "Caves" hosting a highland clearing encounter
+   This is the #1 thing other agents miss because they focus on
+   the new content and don't re-read the surrounding old prose.
 
 Be ADVERSARIAL. Assume every detail is wrong until verified.
 

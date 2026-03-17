@@ -490,6 +490,31 @@ match, do NOT give it the benefit of the doubt. Apply this test:
 - NPC dialogue that references the entity's old description
 - Appendix/summary tables at the end of the file
 
+**Pre-existing prose invalidated by new content (CRITICAL — #2 most
+missed category, discovered via Copilot gap analysis on PR #12):**
+When new content is ADDED to a section (a boss, an encounter, a trial
+description), check whether PRE-EXISTING prose in that same section now
+contradicts the addition. The new content is correct; the old prose is
+stale. Common patterns:
+- A location says "No encounters. No treasure. No hazards." but a boss
+  encounter was just added below it. The prose must be updated to
+  acknowledge the new content.
+- A summary section describes a trial as "Edren gains Resolve" but the
+  detailed expanded trial below defines a specific boss and different
+  unlock. The summary must match the detail.
+- A dungeon overview says "2 floors" but a third floor was just added.
+- A section header says "Caves and Grottos" but the encounter placed
+  there is in a highland clearing, not a cave.
+
+**Procedure:** For every piece of new content added to an existing
+section, read the section's HEADER, OVERVIEW PARAGRAPH, and any
+SUMMARY that precedes the new content. Ask: "Does this pre-existing
+description still hold after my addition?" If not, update it.
+
+This is distinct from entity-wide stale reference sweeps (which search
+by entity name across files). This check is LOCAL — same section, same
+file, prose directly above or around the new content.
+
 The rule "check changed files, not the universe" applies to WHICH FILES
 you review (only changed files). Within a changed file, you must search
 the WHOLE file for stale references to reclassified entities.
