@@ -4606,8 +4606,12 @@ The Ram advances toward the walls. The party fights from the battlements.
 **Thornmere Alliance Support (Council Result)**
 
 The `council_result` flag (set during the Thornmere Council at Ashgrove)
-determines allied support during the siege. The siege's core design remains
-the same -- what changes is the support infrastructure around it.
+determines **Thornmere** allied support during the siege. This is separate
+from Lord Haren's Orders (Valdris-internal support above), which depends on
+Haren dialogue choices. Both can be active simultaneously -- Haren's archers
+target the Ram directly, while Thornmere archers thin the soldier waves.
+Haren's barricades reduce wave size; Thornmere barricades grant positional
+DEF. They stack but serve different tactical roles.
 
 | `council_result` | Allied Support | Mechanical Effect |
 |-------------------|---------------|-------------------|

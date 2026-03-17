@@ -171,7 +171,7 @@ distinct rules for player control, camera behavior, and presentation.
 | The Thornmere Council at Ashgrove | Playable Scene | `tribal_alliance_complete` progression |
 | Cael's Last Night | Playable Scene | Night before `cael_betrayal_complete` |
 | Cael's betrayal | Full | `cael_betrayal_complete` |
-| Siege of Valdris (opening) | Full (transitions to playable battle) | `valdris_siege` |
+| Siege of Valdris (opening) | Full (transitions to playable battle) | `carradan_assault_begins` |
 | Vaelith at the siege (unwinnable fight) | Full | Post-Ashen Ram defeat |
 
 #### Interlude

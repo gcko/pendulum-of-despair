@@ -268,7 +268,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 8 | `diplomatic_mission_start` | King Aldren sends the party to the Thornmere tribes | Diplomatic Road opens. Duskfen, Canopy Reach, and Ashgrove become accessible. Millhaven accessible as optional stop. Thornwatch dialogue updates (Halda reports Compact probes). | Commander Halda, Elder Savanh, Spirit-speaker Caden, Wynne |
 | 9 | `duskfen_alliance` | Party clears Fenmother's Hollow and secures Duskfen's alliance | Caden's dialogue shifts to cautious trust. Spirit-binding shop fully unlocks. Duskfen tribe sends representatives to Ashgrove. | Spirit-speaker Caden |
 | 10 | `canopy_alliance` | Party reaches Canopy Reach and secures their alliance | Panoramic view cutscene triggers — first continent overview, grey haze over the Convergence visible. Wynne's observation about atmospheric disturbance logged. | Wynne |
-| 11 | `tribal_alliance_complete` | All three tribes agree at the Ashgrove council | Diplomatic mission resolved. Return to Valdris Crown enabled. Ashgrove council stones glow briefly — ley line resonance from unified intent. | Elder Savanh, Caden, Wynne, all tribal NPCs |
+| 11 | `tribal_alliance_complete` | Council vote at Ashgrove concludes (regardless of outcome) | Diplomatic mission resolved. Return to Valdris Crown enabled. If `council_result` = 3, Ashgrove council stones glow briefly — ley line resonance from unified intent. | Elder Savanh, Caden, Wynne, all tribal NPCs |
 | 12 | `sable_warning_ignored` | Sable's warnings about Cael are delivered but the party is away | Sets up dramatic irony. Sable's dialogue when the party returns reflects frustration. Renn's intelligence network confirms something is wrong at the court. | Sable, Renn |
 | 13 | `vaelith_tavern_encounter` | Party meets Vaelith in Corrund/Bellhaven | No immediate world changes; enables retroactive horror after the Doma moment cutscene. Vaelith presents as a charming travelling scholar with interest in ley line folklore. | Vaelith (Appearance 3) |
 | 14 | `vaelith_doma_moment` | Automatic mid-Act II cutscene | Player awareness of Vaelith's true nature shifts permanently. The player sees Vaelith at a corruption site, feeding on ambient despair with quiet satisfaction -- the party is not present; this is a dramatic irony cutscene. | Vaelith (Appearance 4) |
@@ -315,7 +315,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 33 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
 | 34 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
 | 35 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
-| 52 | `campfire_complete` | Player speaks to all party members at the campfire | Binary. Triggers group moment: Edren says something that binds the party. If the player walks to the exit without speaking to everyone, the march begins without it. | Edren, Lira, Torren, Sable, Maren |
+| 52 | `campfire_complete` | Player (as Edren) speaks to all four companions at the campfire | Binary. Triggers group moment: Edren says something that binds the party. If the player walks to the exit without speaking to everyone, the march begins without it. | Lira, Torren, Sable, Maren |
 
 ### Act IV Flags
 
@@ -361,17 +361,17 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 | Thornmere Council at Ashgrove | II | Playable (T3) | `tribal_alliance_complete` progression |
 | Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
 | Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
-| Siege of Valdris | II | Full -> Playable | `valdris_siege` |
+| Siege of Valdris | II | Full -> Playable | `carradan_assault_begins` |
 | Ley Line Rupture | Interlude | Full (T1) | `interlude_begins` |
-| Sable alone in aftermath | Interlude | Walk-and-Talk (T2) | Post-rupture |
-| Party reunions | Interlude | Walk-and-Talk -> Playable | Per reunion flag |
-| March to Convergence | III | Walk-and-Talk (T2) | Act III opening |
+| Sable alone in aftermath | Interlude | Walk-and-Talk (T2) | `interlude_begins` |
+| Party reunions | Interlude | Walk-and-Talk -> Playable | `edren_found` / `lira_found` / `torren_found` / `maren_found` |
+| March to Convergence | III | Walk-and-Talk (T2) | `grey_march_begins` |
 | Campfire scene | III | Playable (T3) | Pre-Convergence |
 | Pallor Trials | III | Playable (T3) | Per trial entry |
-| Vaelith's release | III | Full (T1, in-battle) | 10-attack threshold |
-| Lira reaches Cael | III | Full (T1) | Post-final-battle |
-| Cael walks into the door | IV | Full (T1) | Narrative climax |
-| Edren places sword | Epilogue | Full (T1) | Final scene |
+| Vaelith's release | III | Full (T1, in-battle) | `vaelith_defeated` (in-battle trigger) |
+| Lira reaches Cael | III | Full (T1) | `pallor_defeated` |
+| Cael walks into the door | IV | Full (T1) | `cael_sacrifice` |
+| Edren places sword | Epilogue | Full (T1) | `epilogue_complete` |
 
 ---
 
@@ -811,7 +811,7 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 12 | Duskfen | Spirit-speaker Caden | Sets condition: clear Fenmother's Hollow to earn trust. | Fenmother's Hollow dungeon opens |
 | 13 | Fenmother's Hollow | (Dungeon clear) | Defeat the corrupted Fenmother. Caden arrives to perform a binding. | `duskfen_alliance` flag |
 | 14 | Canopy Reach | Wynne | Canopy Tribe agrees quickly — Wynne has already seen the signs. Panoramic view cutscene. | `canopy_alliance` flag |
-| 15 | Ashgrove | Elder Savanh (+ all tribal leaders) | Formal alliance at the council stones. Political negotiations, tension, agreement. | `tribal_alliance_complete` flag; return to Valdris enabled |
+| 15 | Ashgrove | Elder Savanh (+ all tribal leaders) | Formal council at the council stones. Political negotiations, tension, vote (outcome varies per `council_result`). | `tribal_alliance_complete` flag; return to Valdris enabled |
 | 16 | Valdris Crown | Sable (automatic) | Sable delivers her warnings about Cael. The party has been away. It's too late. | `sable_warning_ignored` flag |
 | 17 | Valdris Crown | (Siege event) | Carradan assault. Set-piece battle. Eastern wall collapse. | `carradan_assault_begins` flag |
 | 18 | Valdris Crown, Inner Ward | King Aldren (death scene) | Aldren dies defending the inner ward. Unglamorous, sudden, devastating. | `king_aldren_dead` flag |

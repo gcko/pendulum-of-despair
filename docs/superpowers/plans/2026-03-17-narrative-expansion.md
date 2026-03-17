@@ -287,7 +287,7 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 | Thornmere Council at Ashgrove | II | Playable (T3) | `tribal_alliance_complete` progression |
 | Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
 | Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
-| Siege of Valdris | II | Full -> Playable | `valdris_siege` |
+| Siege of Valdris | II | Full -> Playable | `carradan_assault_begins` |
 | Ley Line Rupture | Interlude | Full (T1) | `interlude_begins` |
 | Sable alone in aftermath | Interlude | Walk-and-Talk (T2) | Post-rupture |
 | Party reunions | Interlude | Walk-and-Talk -> Playable | Per reunion flag |

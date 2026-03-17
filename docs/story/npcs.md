@@ -753,7 +753,7 @@ balance and ley line health above political concerns.
 
 **Backstory:** Wynne is an older woman — sharp-eyed, quiet, and given to long silences broken by observations that nobody else was thinking. She communes with wind-spirits and monitors the upper atmosphere for signs of magical instability. From Canopy Reach's highest platform, two hundred feet above the forest floor, she has watched the world change: Valdris's towers dimming, Corrund's smoke plumes thickening, and — most troubling — a grey haze settling over the center of the Wilds where the Convergence lies.
 
-Wynne is the easiest tribal leader to convince during the diplomatic mission. She doesn't need persuading — she has already seen the signs. She agrees to the alliance not out of trust but out of pragmatic necessity. Her panoramic view cutscene gives the player their first continent-wide perspective and foreshadows the Convergence.
+Wynne is the most receptive tribal leader during the diplomatic mission — she has already seen the signs and does not need to be convinced the threat is real. But she demands concrete plans, not emotional appeals. She agrees to the alliance out of pragmatic necessity, and her approval at the Ashgrove council depends on the player demonstrating strategic clarity (see Council Profile below). Her panoramic view cutscene gives the player their first continent-wide perspective and foreshadows the Convergence.
 
 **Dialogue hints:**
 - *"I've watched that haze grow for six months. It sits where the ley lines meet. I don't need your scholars to tell me what that means."*

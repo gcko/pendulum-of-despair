@@ -169,9 +169,9 @@ Scene 2 for full design.
 
 *(Tier 1: Full Cutscene)*
 
-The Carradan Compact launches a surprise assault on Valdris while Edren's team is away. In the chaos, Cael makes his move. The Pallor has convinced him the Pendulum can end all suffering — not as a weapon, but by reshaping the world. He takes the Pendulum, opens a gate using the weakened ley lines, and vanishes.
+The Carradan Compact launches a surprise assault on Valdris the morning after the diplomatic team returns. In the chaos, Cael makes his move. The Pallor has convinced him the Pendulum can end all suffering — not as a weapon, but by reshaping the world. He takes the Pendulum, opens a gate using the weakened ley lines, and vanishes.
 
-But not before confronting Lira, who has just returned. She begs him to stay. He tells her he's doing this *for* her — for everyone. He believes it. She can see he's not entirely himself, but he's not entirely gone either. He leaves.
+But not before confronting Lira. She begs him to stay. He tells her he's doing this *for* her — for everyone. He believes it. She can see he's not entirely himself, but he's not entirely gone either. He leaves.
 
 ### The Siege of Valdris
 
