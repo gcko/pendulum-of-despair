@@ -362,7 +362,7 @@ A massive Carradan boring engine fused with its operator during a Pallor corrupt
 **Phase 1 (8000-4000 HP): The Machine**
 - **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
 - **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
-- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stop (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Slow (1 turn). Rearranges the arena by blocking some positions and opening others.
 - **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
 
 **Phase 2 (below 4000 HP): The Operator**
@@ -810,7 +810,7 @@ A flawless automaton with Cael's face. Does NOT attack. Stands in the center and
 An ancient Great Spirit, massive and beautiful, cracked through with grey stone. Barely alive. Speaks in fragments. Asks Torren to let it rest.
 
 **Phase 1 (6000-1500 HP):**
-- **Stone Grasp** -- single target, 350 damage + Petrify status (1 turn).
+- **Stone Grasp** -- single target, 350 damage + Slow status (2 turns).
 - **Silent Scream** -- AoE, 250 damage + Silence (2 turns). No sound accompanies the attack.
 - **Crumbling Form** -- the Spirit loses HP passively (100 per turn). It is dying regardless of the party's actions.
 

@@ -253,10 +253,10 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
 | 1 | `pendulum_discovered` | Party finds the Pendulum in the Ember Vein central chamber | Ember Vein dungeon marked complete. Ironmouth Carradan soldiers become hostile. Lira and Sable join the party during the escape. | Lira (joins), Sable (joins) |
-| 2 | `carradan_ambush_survived` | Party defeats Carradan soldiers at Ironmouth exit | Ironmouth becomes inaccessible (Compact locks it down). Thornmere Wilds overworld opens. | Torren (findable at Roothollow) |
-| 3 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
-| 4 | `maren_warning` | Maren examines the Pendulum at her refuge | Maren joins the party. Return Road to Valdris Crown opens. Maren's Refuge becomes a revisitable rest point. The party decides to bring the Pendulum to the capital. | Maren (joins) |
-| 5 | `vaelith_ember_vein` | Vein Guardian defeated in the Ember Vein | Grey stranger NPCs appear in Valdris Crown with gossip dialogue about a charming traveler seen near the mine. | Vaelith (first appearance) |
+| 2 | `vaelith_ember_vein` | Vein Guardian defeated in the Ember Vein | Grey stranger NPCs appear in Valdris Crown with gossip dialogue about a charming traveler seen near the mine. | Vaelith (first appearance) |
+| 3 | `carradan_ambush_survived` | Party defeats Carradan soldiers at Ironmouth exit | Ironmouth becomes inaccessible (Compact locks it down). Thornmere Wilds overworld opens. | Torren (findable at Roothollow) |
+| 4 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
+| 5 | `maren_warning` | Maren examines the Pendulum at her refuge | Maren joins the party. Return Road to Valdris Crown opens. Maren's Refuge becomes a revisitable rest point. The party decides to bring the Pendulum to the capital. | Maren (joins) |
 | 6 | `pendulum_to_capital` | Party arrives at Valdris Crown with the Pendulum | Act I ends. Act II begins. King Aldren appears in the throne hall. Cael's quarters become restricted. Multiple NPC dialogues update (Aldis assigned to research, Cordwyn on alert). Court Quarter political NPCs activate. | King Aldren, Scholar Aldis, Dame Cordwyn, Lord Chancellor Haren |
 
 ### Act II Flags
@@ -756,7 +756,7 @@ Every NPC interaction required to progress the main story, in chronological orde
 | Step | Location | NPC / Event | What Happens | Unlocks |
 |------|----------|-------------|--------------|---------|
 | 35 | Pallor Wastes entrance | (Point of no return) | Warning that the party cannot turn back. Final preparation. | `grey_march_begins` flag |
-| 36 | Trial Clearing 1 | Edren's trial | Phantom Cael accuses him. Edren accepts. | `trial_edren_complete` |
+| 36 | Trial Clearing 1 | Edren's trial | The Crowned Hollow mirrors his moveset; Edren faces his leadership guilt. | `trial_edren_complete` |
 | 37 | Trial Clearing 2 | Lira's trial | Vision of the life with Cael. Lira lets go. | `trial_lira_complete` |
 | 38 | Trial Clearing 3 | Torren's trial | Spirits accuse him of failing the Wilds. Torren accepts imperfect protection. | `trial_torren_complete` |
 | 39 | Trial Clearing 4 | Sable's trial | Her own insignificance. Showing up is enough. | `trial_sable_complete` |

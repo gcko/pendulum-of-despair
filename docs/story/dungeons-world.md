@@ -808,7 +808,7 @@ A massive Carradan boring engine fused with its operator during a Pallor corrupt
 **Phase 1 (8000-4000 HP): The Machine**
 - **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
 - **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
-- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Stop (1 turn). Rearranges the arena by blocking some positions and opening others.
+- **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Slow (1 turn). Rearranges the arena by blocking some positions and opening others.
 - **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
 
 **Phase 2 (below 4000 HP): The Operator**
@@ -1754,7 +1754,7 @@ A flawless automaton with Cael's face. Does NOT attack. Stands in the center and
 An ancient Great Spirit, massive and beautiful, cracked through with grey stone. Barely alive. Speaks in fragments. Asks Torren to let it rest.
 
 **Phase 1 (6000-1500 HP):**
-- **Stone Grasp** -- single target, 350 damage + Petrify status (1 turn).
+- **Stone Grasp** -- single target, 350 damage + Slow status (2 turns).
 - **Silent Scream** -- AoE, 250 damage + Silence (2 turns). No sound accompanies it.
 - **Crumbling Form** -- loses 100 HP passively per turn. It is dying regardless.
 
@@ -3848,7 +3848,7 @@ A massive elk corrupted by the Pallor -- the dominant creature of the highland f
 - **Grey Charge** -- The Stag lowers its crystalline antlers and charges across the battlefield. 400 damage to a single target + knockback. Telegraphed by a 1-turn wind-up (hoofing the ground, grey energy building in its antlers).
 - **Corruption Aura** -- Passive effect. All adjacent party members (melee attackers) take 50 damage per turn from proximity to the Pallor energy radiating from its body. Ranged attacks avoid this penalty.
 - **Petrifying Gaze** -- The Stag locks eyes with one party member. 40% Petrify chance. Targets the party member who dealt the most damage on the previous turn.
-- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to inflict Stop (1 turn). Shakes the arena, causing tree debris to fall.
+- **Territorial Stomp** -- AoE ground slam, 250 damage to all party members + 25% chance to inflict Slow (1 turn). Shakes the arena, causing tree debris to fall.
 - **Antler Sweep** -- Physical attack, hits all front-row party members, 300 damage. Used after Grey Charge if the Stag is not staggered.
 
 **At 30% HP:** The Stag's movements become erratic -- it charges walls, shakes its head as if trying to dislodge the corruption. Torren (if present) comments: "It's fighting itself. The creature underneath is still in there." The Stag cannot be calmed -- the corruption is too deep. But Torren's observation foreshadows the Howling Gale's peaceful resolution.
