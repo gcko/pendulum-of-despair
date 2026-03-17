@@ -478,7 +478,7 @@ A massive Pallor creature that has burrowed into the tunnel junction, using the 
 - **Spawn Brood** -- Every 4 turns, the Nest Mother spawns 3 Pallor Mites (100 HP each, melee attackers that target the party's backline).
 - **Desperate Contraction** -- Below 25% HP, the Nest Mother attempts to collapse the tunnel ceiling. 3-turn charge. 600 AoE damage if it completes. Can be interrupted by dealing 1000+ damage during the charge.
 
-**Strategy:** Manage the spawn cycle. Burst damage on the Nest Mother during windows when no adds are alive (Nest Defense is down). Keep Kerra alive by drawing aggro away from her. Flame and Spirit attacks are most effective. The volcanic environment means fire-based attacks cause secondary explosions on the Nest Mother's Pallor tendrils (visual flourish, no mechanical bonus beyond the elemental weakness).
+**Strategy:** Manage the spawn cycle. Burst damage on the Nest Mother during windows when no adds are alive (Nest Defense is down). Keep Kerra alive by drawing aggro away from her. Flame and Spirit attacks are most effective. The volcanic environment means Flame-based attacks cause secondary explosions on the Nest Mother's Pallor tendrils (visual flourish, no mechanical bonus beyond the elemental weakness).
 
 **Weakness:** Flame (150% damage), Spirit (125% damage).
 **Resistance:** Frost (50% damage).

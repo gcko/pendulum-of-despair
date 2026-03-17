@@ -4469,19 +4469,19 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 
 A root system fully corrupted by the Pallor. Where healthy roots are brown and amber-veined, this mass is black, withered, and aggressive. It fills a chamber, tendrils whipping from walls and ceiling. At its core, a pulsating dark-purple heart of concentrated Pallor energy. It attacks on sight -- no communication possible.
 
-- **Root Lash** -- physical, single target, 350-450 damage + Bind status (immobilized for 2 turns, removed by physical attack or Flame magic).
+- **Root Lash** -- physical, single target, 350-450 damage + Bind status (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic).
 - **Thorn Burst** -- physical, all targets, 200-300 damage + Poison (20% chance).
 - **Pallor Pulse** -- Void magic, all targets, 250-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Root Regeneration** -- heals 500 HP per turn. Disabled for 3 turns if the core is hit with Flame or purified ley water (Torren can use a Vial of Ley Water as a battle item -- deals 1000 damage to the core and disables regeneration).
-- **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind).
+- **Burrow** -- the Horror retreats underground for 1 turn, then erupts beneath a random party member (400 damage + Bind (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic)).
 
 **Weakness:** Flame (150% damage). Ley Water (special: 1000 damage + disables regeneration). Spirit (125% damage).
 **Resistance:** Earth (absorbs).
-**Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind from Root Lash is the main threat -- a bound healer can cause a wipe.
+**Strategy:** Prioritize disabling regeneration with Flame or ley water. Burst damage during the 3-turn window. Keep Antidotes and status heals ready. The Bind (custom status) from Root Lash is the main threat -- a bound healer can cause a wipe.
 **Drop:** Purified Root Heart (crafting material, rare), Root Horror's Core (accessory, +12 ATK, +8 MAG, Earth-element attacks gain Void sub-element), 1500 Gold.
 
 **Encounter Zones:**
-- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (immobilized for 2 turns, removed by physical attack or Flame magic) + physical attacks)
+- Root Tendril Ambush (3x Root Tendril, 250 HP each -- burst from walls, Bind (custom status: immobilized -- cannot reposition for 2 turns, can still attack; removed by physical attack or Flame magic) + physical attacks)
 - Pallor Fungus (2x, 350 HP each -- toxic spore attacks, Poison (25% chance) + Confusion (20% chance))
 - Tunnel Beetle (4x, 150 HP each -- armored, physical-only, high DEF but low HP)
 
@@ -4530,13 +4530,13 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
-| Root Tendril | Burst from walls. Bind + physical attacks. Groups of 3. | Floor 1 | 250 |
+| Root Tendril | Burst from walls. Bind (custom status) + physical attacks. Groups of 3. | Floor 1 | 250 |
 | Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
 | Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
-| **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind. | Floor 1 | 7,000 |
+| **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
 
 ### Treasure/Loot
 

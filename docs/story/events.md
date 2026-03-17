@@ -270,7 +270,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 11 | `tribal_alliance_complete` | All three tribes agree at the Ashgrove council | Diplomatic mission resolved. Return to Valdris Crown enabled. Ashgrove council stones glow briefly — ley line resonance from unified intent. | Elder Savanh, Caden, Wynne, all tribal NPCs |
 | 12 | `sable_warning_ignored` | Sable's warnings about Cael are delivered but the party is away | Sets up dramatic irony. Sable's dialogue when the party returns reflects frustration. Renn's intelligence network confirms something is wrong at the court. | Sable, Renn |
 | 13 | `vaelith_tavern_encounter` | Party meets Vaelith in Corrund/Bellhaven | No immediate world changes; enables retroactive horror after the Doma moment cutscene. Vaelith presents as a charming travelling scholar with interest in ley line folklore. | Vaelith (Appearance 3) |
-| 14 | `vaelith_doma_moment` | Automatic mid-Act II cutscene | Player awareness of Vaelith's true nature shifts permanently. The party witnesses Vaelith at a corruption site, feeding on ambient despair with quiet satisfaction. | Vaelith (Appearance 4) |
+| 14 | `vaelith_doma_moment` | Automatic mid-Act II cutscene | Player awareness of Vaelith's true nature shifts permanently. The player sees Vaelith at a corruption site, feeding on ambient despair with quiet satisfaction -- the party is not present; this is a dramatic irony cutscene. | Vaelith (Appearance 4) |
 | 15 | `carradan_assault_begins` | Surprise Compact attack on Valdris Crown | Major set-piece battle triggers. Lower Ward combat zone. Eastern wall breach. Multiple NPC states update — Cordwyn commands the outer defense, Wynn mans the gate, Bren shelters in the market. | Dame Cordwyn, Wynn, Bren, all Valdris Crown NPCs |
 | 16 | `ashen_ram_defeated` | Party defeats the Ashen Ram during the Valdris siege | The wall is breached. The siege's most dangerous moment passes, but the damage is done — the eastern defenses are shattered. | Dame Cordwyn (fights alongside party), Lord Haren (coordinates defense) |
 | 17 | `king_aldren_dead` | King Aldren dies during the siege | Crown passes to no one. Haren attempts to hold the council and fails. Cordwyn assumes de facto military command. The political NPCs' dialogue shifts to grief and power vacuum. | King Aldren (removed), Lord Chancellor Haren, Dame Cordwyn |
@@ -294,22 +294,22 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 29 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
-| 30 | `trial_edren_complete` | Edren completes the Hall of Crowns in the Pallor Wastes | Edren unlocks Steadfast Resolve ability. Trial clearing becomes a temporary safe zone. Edren confronts phantom kings who demand he justify every life lost under his command. | Edren |
-| 31 | `trial_lira_complete` | Lira completes the Unfinished Forge | Lira unlocks latent weapon forge ability. The most emotionally devastating trial — she must build something that works without Cael's hands beside hers. | Lira |
-| 32 | `trial_torren_complete` | Torren completes the Silent Grove | Torren unlocks Rootsong ability. The spirits' accusations force him to accept imperfect protection over abandonment. | Torren |
-| 33 | `trial_sable_complete` | Sable completes the Crooked Mile | Sable unlocks Unbreakable Thread passive. She faces her own insignificance and recognizes that showing up is enough. | Sable |
-| 34 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
-| 35 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
-| 36 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
+| 28 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
+| 29 | `trial_edren_complete` | Edren completes the Hall of Crowns in the Pallor Wastes | Edren unlocks Steadfast Resolve ability. Trial clearing becomes a temporary safe zone. Edren confronts phantom kings who demand he justify every life lost under his command. | Edren |
+| 30 | `trial_lira_complete` | Lira completes the Unfinished Forge | Lira unlocks latent weapon forge ability. The most emotionally devastating trial — she must build something that works without Cael's hands beside hers. | Lira |
+| 31 | `trial_torren_complete` | Torren completes the Silent Grove | Torren unlocks Rootsong ability. The spirits' accusations force him to accept imperfect protection over abandonment. | Torren |
+| 32 | `trial_sable_complete` | Sable completes the Crooked Mile | Sable unlocks Unbreakable Thread passive. She faces her own insignificance and recognizes that showing up is enough. | Sable |
+| 33 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
+| 34 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
+| 35 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
 
 ### Act IV Flags
 
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
-| 37 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
-| 38 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
-| 39 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
+| 36 | `pallor_defeated` | Phase 3 of final battle complete; Pallor half-incarnated but weakened | Cael partially freed. The door visible as a tear in reality. Act IV proper begins — the farewell sequence. | Cael, all party members |
+| 37 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
+| 38 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. | All surviving NPCs |
 
 ---
 
