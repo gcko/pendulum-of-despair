@@ -285,7 +285,7 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 | Cael's first nightmare | II | Micro (T4) | `cael_nightmares_begin` |
 | Vaelith comforts a village | II | Full (T1) | `vaelith_doma_moment` |
 | Panoramic view from Observatory | II | Full (T1) | `canopy_alliance` |
-| Thornmere Council at Ashgrove | II | Playable (T3) | `tribal_alliance_complete` progression |
+| Thornmere Council at Ashgrove | II | Playable (T3) | Post individual alliances (flags 9-10), arrive at Ashgrove |
 | Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
 | Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
 | Siege of Valdris | II | Full -> Playable | `carradan_assault_begins` |
@@ -474,12 +474,13 @@ After Caden's existing content (~line 733), add:
 Caden represents Duskfen at the alliance council. Values the land's spiritual
 balance and ley line health above political concerns.
 - **Responds to:** Ley line knowledge, genuine concern for the Wilds' survival,
-  references to Maren's Pendulum research (if the player has visited Maren).
+  references to Maren's Pendulum research (Maren is always visited in Act I).
 - **Penalizes:** Treating the Wilds as a resource to exploit, instrumentalizing
   spirit-speech, dismissing the spirits' warnings.
 - **Hidden approval score:** 0-3 (flag `council_caden_approval`).
 - **Party interaction:** Torren's spirit-speaker status creates natural rapport.
-  If Torren is present, Caden's baseline starts at +1.
+  Torren is always present (diplomatic mission includes Edren, Lira, Torren), so
+  Caden's baseline starts at +1 (still capped at 3).
 ```
 
 - [ ] **Step 4: Add Council profile to Wynne**

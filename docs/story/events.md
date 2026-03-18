@@ -292,15 +292,15 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 |---|-----------|---------|---------------|---------------|
 | 20 | `interlude_begins` | Time skip. Player controls Sable. | Entire world map updates to Unraveling state. All NPC dialogue refreshes. Multiple locations transform (see World State Changes above). Party scattered — Edren, Lira, Torren, Maren each at separate locations. | All NPCs |
 | 21 | `ley_line_rupture` | Fires simultaneously with or immediately after `interlude_begins` | Ley lines rupture across the continent as a consequence of Cael opening the gate. Triggers Millhaven destruction, Rail Tunnel collapse, and overworld fissures. Spirit creatures go mad. Forgewright engines misfire. Magic becomes wild and unstable continent-wide. | All NPCs in affected locations |
+| 48 | `reunion_order_1` | Sable finds the first party member (fires concurrently with whichever of flags 22-24/26 is first) | Stores character ID. Previously reunited members are present for later reunions, changing dialogue. | Sable + first found member |
+| 49 | `reunion_order_2` | Sable finds the second party member (fires concurrently with the second of flags 22-24/26) | Stores character ID. Dialogue varies based on who is already present. | Sable + found members |
+| 50 | `reunion_order_3` | Sable finds the third party member (fires concurrently with the third of flags 22-24/26) | Stores character ID. | Sable + found members |
+| 51 | `reunion_order_4` | Sable finds the fourth (final) party member (fires concurrently with the last of flags 22-24/26) | Stores character ID. Final reunion is most emotionally charged. | Sable + all members |
 | 22 | `edren_found` | Party reaches Highcairn and defeats the Pallor Hollow | Edren rejoins the party (with Scar of the Hollow passive -- reduced max HP but Despair immunity). Highcairn cleared of Pallor. The monastery becomes a safe haven. Father Aldous's dialogue shifts to relief. Highland overlook scene shows the Pallor's continental spread. | Edren (rejoins), Father Aldous |
 | 23 | `lira_found` | Sable and Lira infiltrate Corrund, defeat General Kole | Lira rejoins the party. Map to Cael's location obtained. Kole's Pallor-touched soldiers collapse when he falls. Commissar Brant's dialogue reflects self-loathing. Lieutenant Ansa Veld freed. Compact intelligence archives accessible (Project Pendulum documents). | Lira (rejoins), General Vassar Kole (defeated), Commissar Brant, Lieutenant Ansa Veld, Forgemaster Elyn Drayce |
 | 24 | `torren_found` | Party reaches Roothollow, stabilizes the ley line nexus, and defeats the Ley Leech | Torren rejoins the party. Nexus stabilized, ley lines glow clean, first sign the Pallor can be pushed back. The surrounding forest begins to recover its color within hours. Roothollow stabilized but damaged. Yara's condition improves slightly. | Torren (rejoins), Caden (performs recovery ritual), Kael Thornwalker (provides perimeter warriors), Yara, Elder Savanh |
 | 25 | `ironbound_defeated` | Party defeats the Ironbound in the Rail Tunnels | Deepest tunnel section cleared. The Ironbound was a Compact worker consumed by their own boring engine — a grotesque fusion of flesh and machine. | Lira (recognizes engine model), Torren (can reach trapped spirit) |
 | 26 | `maren_found` | Party reaches the Archive of Ages and finds Maren | Maren rejoins. The truth about the Pallor's cycle revealed. The Archivist delivers the mechanical fact: the door closes from the inside, the one who closes it does not return. This flag enables the Act III march. | Maren (rejoins), The Archivist |
-| 48 | `reunion_order_1` | Sable finds the first party member | Stores character ID. Previously reunited members are present for later reunions, changing dialogue. | Sable + first found member |
-| 49 | `reunion_order_2` | Sable finds the second party member | Stores character ID. Dialogue varies based on who is already present. | Sable + found members |
-| 50 | `reunion_order_3` | Sable finds the third party member | Stores character ID. | Sable + found members |
-| 51 | `reunion_order_4` | Sable finds the fourth (final) party member | Stores character ID. Final reunion is most emotionally charged. | Sable + all members |
 | 27 | `party_reassembled` | All four reunions complete | The full party is together. The Convergence location marked on the world map. Maren's final briefing cutscene triggers. Everyone understands the cost. No one says Cael's name. | All party members |
 
 ### Act III Flags
@@ -358,7 +358,7 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 | Cael's first nightmare | II | Micro (T4) | `cael_nightmares_begin` |
 | Vaelith comforts a village | II | Full (T1) | `vaelith_doma_moment` |
 | Panoramic view from Observatory | II | Full (T1) | `canopy_alliance` |
-| Thornmere Council at Ashgrove | II | Playable (T3) | `tribal_alliance_complete` progression |
+| Thornmere Council at Ashgrove | II | Playable (T3) | Post individual alliances (flags 9-10), arrive at Ashgrove |
 | Cael's Last Night | II | Playable (T3) | Night before `cael_betrayal_complete` |
 | Cael's betrayal | II | Full (T1) | `cael_betrayal_complete` |
 | Siege of Valdris | II | Full -> Playable | `carradan_assault_begins` |
@@ -813,6 +813,7 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 14 | Canopy Reach | Wynne | Wynne has seen the signs and is receptive, but demands concrete plans before committing. Panoramic view cutscene. | `canopy_alliance` flag |
 | 15 | Ashgrove | Elder Savanh (+ all tribal leaders) | Formal council at the council stones. Political negotiations, tension, vote (outcome varies per `council_result`). | `tribal_alliance_complete` flag; return to Valdris enabled |
 | 16 | Valdris Crown | Sable (automatic) | Sable delivers her warnings about Cael the evening the team returns. Too late to act -- the assault comes the next morning. | `sable_warning_ignored` flag |
+| 16b | Valdris Crown | Cael (playable) | The night before the betrayal. Player controls Cael, visits up to 3 of 4 locations (Lira's workshop, training grounds, Maren's study, Pendulum vault). Each visit sets a binary flag affecting the betrayal cutscene. | `cael_last_night_lira` / `cael_last_night_edren` / `cael_last_night_maren` / `cael_last_night_vault` flags (44-47) |
 | 17 | Valdris Crown | (Siege event) | Carradan assault. Set-piece battle. Eastern wall collapse. | `carradan_assault_begins` flag |
 | 18 | Valdris Crown, Inner Ward | King Aldren (death scene) | Aldren dies defending the inner ward. Unglamorous, sudden, devastating. | `king_aldren_dead` flag |
 | 19 | Valdris Crown | Cael and Lira (confrontation) | Cael takes the Pendulum, confronts Lira, vanishes. The Pallor's manipulation complete. | `cael_betrayal_complete` flag; Act II ends |

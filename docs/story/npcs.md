@@ -736,12 +736,13 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 Caden represents Duskfen at the alliance council. Values the land's spiritual
 balance and ley line health above political concerns.
 - **Responds to:** Ley line knowledge, genuine concern for the Wilds' survival,
-  references to Maren's Pendulum research (if the player has visited Maren).
+  references to Maren's Pendulum research (Maren is always visited in Act I).
 - **Penalizes:** Treating the Wilds as a resource to exploit, instrumentalizing
   spirit-speech, dismissing the spirits' warnings.
 - **Hidden approval score:** 0-3 (flag `council_caden_approval`).
 - **Party interaction:** Torren's spirit-speaker status creates natural rapport.
-  If Torren is present, Caden's baseline starts at +1 (still capped at 3).
+  Torren is always present (diplomatic mission includes Edren, Lira, Torren), so
+  Caden's baseline starts at +1 (still capped at 3).
 
 ---
 
@@ -807,7 +808,7 @@ awareness above all else.
 - **Hidden approval score:** 0-3 (flag `council_savanh_approval`).
 - **Grandmother Seyth connection:** If the player speaks with Seyth before the
   council (see Seyth's entry), dialogue options that reference Seyth's
-  historical perspective are available and earn +1 with Savanh.
+  historical perspective are available and earn +1 with Savanh (still capped at 3).
 
 ---
 

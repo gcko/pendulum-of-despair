@@ -46,8 +46,8 @@ dungeon structure teaches the player through its progression:
 
 **The "taste of power" -- dual preview:**
 
-- **Edren carries Arcanite-enhanced gear** from the Valdris armory (standard
-  issue for royal knights on investigation missions). The sword and shield hit
+- **Edren carries Arcanite-enhanced gear** from the Valdris armory (confiscated
+  Compact prototypes, issued only for high-risk missions). The sword and shield hit
   harder and block more than normal Act I levels. This gear breaks during the
   escape from Carradan soldiers after the Vein Guardian fight, giving the
   player a mechanical preview of Arcanite Forging that Lira will unlock later.
@@ -147,7 +147,7 @@ distinct rules for player control, camera behavior, and presentation.
 | Ember Vein dungeon (Floors 1-4) | Playable (tutorial) | Game start |
 | Vaelith appears outside the mine | Full | `vaelith_ember_vein` (post-Vein Guardian, during escape) |
 | Lira and Sable join during escape | Full (brief) | Ember Vein escape sequence |
-| Dawn march (opening credits) | Walk-and-Talk | `opening_credits_seen` trigger |
+| Dawn march (opening credits) | Walk-and-Talk | Post-`vaelith_ember_vein` |
 | Torren finds the party in the Wilds | Walk-and-Talk | Story progression |
 | Maren examines the Pendulum | Full | `maren_warning` (arrive at Maren's Refuge) |
 
@@ -168,7 +168,7 @@ distinct rules for player control, camera behavior, and presentation.
 | Vaelith at the tavern (Corrund/Bellhaven) | Walk-and-Talk | `vaelith_tavern_encounter` |
 | The Stranger's Work (Vaelith comforts a village) | Full | `vaelith_doma_moment` (automatic, party not present) |
 | Panoramic view from Wynne's Observatory | Full | `canopy_alliance` |
-| The Thornmere Council at Ashgrove | Playable Scene | `tribal_alliance_complete` progression |
+| The Thornmere Council at Ashgrove | Playable Scene | Post individual alliances (flags 9-10), arrive at Ashgrove |
 | Cael's Last Night | Playable Scene | Night before `cael_betrayal_complete` |
 | Cael's betrayal | Full | `cael_betrayal_complete` |
 | Siege of Valdris (opening) | Full (transitions to playable battle) | `carradan_assault_begins` |
@@ -266,7 +266,7 @@ in this council scene at Ashgrove.
 - Responds to: Ley line knowledge, genuine concern for the Wilds' survival.
 - Penalizes: Treating the Wilds as a resource, instrumentalizing spirit-speech.
 - Party interaction: Torren's spirit-speaker status creates natural rapport.
-  Referencing Maren's Pendulum research (if the player has it) impresses Caden.
+  Referencing Maren's Pendulum research impresses Caden (Maren is always visited in Act I).
 
 **Wynne (Canopy Reach)**
 - Values: Strength, pragmatism, and strategic clarity.
