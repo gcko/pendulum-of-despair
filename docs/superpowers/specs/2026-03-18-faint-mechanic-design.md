@@ -65,26 +65,42 @@ already do -- this is correct and does not change.
 
 ## 4. Party Wipe Consequences
 
-When all active party members are Fainted in battle, the fast-reload sequence
-triggers (see events.md section 2c). The following rules govern what happens
-to player progress:
+### 4.0 Wipe Trigger
+
+A party wipe occurs when all **player-controlled** party members are Fainted in
+battle. Guest NPCs (Cordwyn, Kerra, etc.) do not count -- if every player
+character is Fainted but a guest NPC is still standing, the wipe still triggers.
+Guest NPCs cannot carry a fight alone.
+
+When a wipe triggers, the fast-reload sequence fires (see events.md section 2c).
 
 ### 4.1 Kept on Full Party Faint
 
 | Category | Rule | Rationale |
 |----------|------|-----------|
-| XP and level-ups | Kept | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
+| XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
 | Gold/currency | Kept | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
-| Consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
+| Battle consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
 
 ### 4.2 Reset to Last Save
+
+Everything not listed in 4.1 resets to last save state. This includes:
 
 | Category | Rule | Rationale |
 |----------|------|-----------|
 | Chest openings | Reset | Must be re-collected; rewards dungeon re-traversal |
-| Field item pickups | Reset | Same as chests |
+| Field item pickups | Reset | Same as chests -- items collected between save and wipe are gone |
+| Equipment changes | Reset | Reverts to last-saved loadout; prevents item duplication from reset chests |
+| Shop transactions | Reset | Buy/sell actions between save and wipe revert (gold reverts via 4.1, inventory reverts here) |
+| Party composition | Reset | If a story event added/removed a member between save and wipe, that reverts |
 | Storyline flag updates | Reset | Events, cutscenes, NPC state changes revert to last-saved state |
 | Dungeon progress | Reset | Doors opened, switches flipped, puzzles solved revert |
+
+**Simplifying principle:** The game reloads the last save file. XP, levels, and
+gold are the only values written to a persistent layer outside the save file.
+Everything else comes from the save. This eliminates edge cases around unsaved
+field pickups, equipment swaps, and shop transactions -- they simply were not
+saved, so they do not exist after reload.
 
 ### 4.3 Interaction with Existing Rules
 
@@ -95,9 +111,10 @@ to player progress:
   fast-reload sequence. These transition to aftermath cutscenes, not the
   Faint/reload flow. Already documented in events.md.
 
-## 5. Fast Reload Flow (Unchanged)
+## 5. Fast Reload Flow (Unchanged -- Updated Terminology)
 
-The existing fast-reload sequence in events.md section 2c remains as designed:
+The existing fast-reload sequence in events.md section 2c remains as designed.
+Text shown below reflects post-edit terminology:
 
 1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music
    hard-cuts to silence.
@@ -113,10 +130,10 @@ No retry option. No Game Over screen. Matches FF4/FF6 philosophy.
 
 | File | What Changes |
 |------|-------------|
-| `docs/story/magic.md` | Status effect table: KO -> Faint. Spell targets: "(KO'd)" -> "(Fainted)". Instant KO references -> instant Faint. |
+| `docs/story/magic.md` | **Status Effect Reference table** (near end of file): KO row -> Faint. **Last Breath (Reraise) row**: "on KO" -> "on Faint". **Spell targets** throughout: "(KO'd)" -> "(Fainted)". **Unmaking spell** (Void): "instantly KO'd" -> "instantly Fainted". Applies to both player and enemy spell descriptions. |
 | `docs/story/abilities.md` | Cael's Rally: "KO'd" -> "Fainted". Any other KO references in ability descriptions. |
-| `docs/story/events.md` | Section 2c title: "Death and Fast Reload" -> "Faint and Fast Reload". KO references in the reload rules. Status effect references elsewhere. |
-| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat". "Instant Death" immunity -> "Instant Faint". Enemy defeat descriptions. |
+| `docs/story/events.md` | Section 2c title: "Death and Fast Reload" -> "Faint and Fast Reload". "all party members are KO'd" -> "all party members are Fainted". "Last KO animation" -> "Last Faint animation". "If the player dies before the first save point" -> "If the party Faints before the first save point". Add party-wipe consequence tables (Section 4). |
+| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (e.g., Crystal Sentry, Crystal Warden). "Instant Death" immunity -> "Instant Faint". "instant kill" -> "instant Faint". |
 | `docs/story/dungeons-city.md` | Same pattern as dungeons-world.md for enemy entries. |
 | `docs/story/sidequests.md` | Any KO references in sidequest encounters or NPC mechanics. |
 | `docs/story/outline.md` | Any combat-context death/KO references (verify; may not need changes). |
