@@ -806,7 +806,9 @@ awareness above all else.
   negligence.
 - **Penalizes:** Flattery, dismissiveness, treating the alliance as Valdris's
   right rather than a request.
-- **Hidden approval score:** 0-3 (flag `council_savanh_approval`).
+- **Hidden approval score:** 0-3 (flag `council_savanh_approval`). Dialogue
+  choices alone can earn up to 2 points. The Seyth bonus is the only way to
+  reach 3.
 - **Grandmother Seyth connection:** If the player speaks with Seyth before the
   council (see Seyth's entry), dialogue options that reference Seyth's
   historical perspective are available and grant +1 bonus to Savanh's score

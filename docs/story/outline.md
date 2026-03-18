@@ -136,7 +136,7 @@ The player sees a scene the party will never witness. Somewhere in the Wilds, a 
 
 ### Sable's Warning
 
-Sable stays behind in Valdris and notices Cael's behavior shifting — talking to himself, isolating, growing cold. She tries to warn the others but can't reach them in the Wilds.
+Sable stays behind in Valdris and notices Cael's behavior shifting — talking to himself, isolating, growing cold. She tries to warn the others but can't reach them in the Wilds. When the diplomatic team finally returns, Sable delivers her warnings that evening — but it is too late to act. The assault comes the next morning.
 
 ### The Romance in Bloom
 
