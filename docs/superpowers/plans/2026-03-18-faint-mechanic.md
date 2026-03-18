@@ -93,9 +93,8 @@ separator):
 
 **What's Kept on Full Party Faint:**
 
-The game reloads the last save file. XP, levels, and gold are the only values
-written to a persistent layer outside the save file. Everything else comes from
-the save.
+The game reloads the last save file. A small number of values persist outside
+the save file (see table below). Everything else comes from the save.
 
 | Category | Rule | Rationale |
 |----------|------|-----------|

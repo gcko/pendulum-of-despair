@@ -98,9 +98,10 @@ Everything not listed in 4.1 resets to last save state. This includes:
 | Storyline flag updates | Reset | Events, quest progress flags, NPC state changes revert (boss cutscene skip flags exempt per 4.1) |
 | Dungeon progress | Reset | Doors opened, switches flipped, puzzles solved revert |
 
-**Simplifying principle:** The game reloads the last save file. XP, levels, and
-gold are the only values written to a persistent layer outside the save file.
-Everything else comes from the save. This eliminates edge cases around unsaved
+**Simplifying principle:** The game reloads the last save file. A small number
+of values persist outside the save file (XP, levels, gold, and boss cutscene
+skip flags -- see 4.1). Everything else comes from the save. This eliminates
+edge cases around unsaved
 field pickups, equipment swaps, and shop transactions -- they simply were not
 saved, so they do not exist after reload.
 
