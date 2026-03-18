@@ -264,6 +264,10 @@ If the PR includes spec or plan docs (docs/superpowers/), check:
 - Spec metadata accuracy: does the scope/status/date match the
   actual changes? (e.g., scope says "all files" but only 4 changed)
 - Spec file lists: do "files requiring changes" match reality?
+  Files audited but unchanged should be labeled as such.
+- Spec change descriptions: do per-file descriptions accurately
+  describe the scope? (e.g., don't say "applies to both player
+  and enemy spells" if only one spell was changed)
 - Plan shell commands: do grep/rg patterns use correct flags?
   (e.g., \b needs PCRE in GNU grep -- prefer rg; patterns should
   not false-positive on known environmental text)
