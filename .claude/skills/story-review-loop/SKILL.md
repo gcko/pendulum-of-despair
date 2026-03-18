@@ -22,22 +22,31 @@ back clean), push all commits at once and post a summary to the PR.
 
 ## Why Multi-Agent?
 
-A single monolithic review agent suffers from three systemic failure
-modes that account for 73% of missed issues (measured against Copilot
-review findings on PR #12):
+A single monolithic review agent suffers from systemic failure modes
+(measured against Copilot review findings on PRs #12 and #14):
 
 1. **Propagation blindness (46%):** When a value is fixed in one file,
    the same value in other files isn't checked. The agent reads the
    "grep for stale references" instruction but checks 2-3 files
-   instead of ALL files.
-2. **Narrative coherence gaps (32%):** The agent checks names and HP
+   instead of ALL files. Spec/plan docs that mirror story content go
+   stale silently (PR #14: events.md reload step fixed, spec copy not).
+2. **Post-fix self-contradiction (NEW, from PR #14):** Fixing one line
+   can contradict a claim 20+ lines away in the same section. Example:
+   updating HP/MP reload text to "100% of current max" contradicted the
+   simplifying principle "everything else comes from the save" later in
+   the same section. The ±10-line context check is insufficient.
+3. **Narrative coherence gaps (32%):** The agent checks names and HP
    values but doesn't compare HOW the same event is described across
    files. "Forging process" in one file vs "boring engine excavation"
    in another describes the same event differently.
-3. **Context drift (22%):** By the time the agent reads file 8, it has
+4. **Context drift (22%):** By the time the agent reads file 8, it has
    forgotten the exact phrasing in file 1. Multi-author content (from
    parallel subagents during implementation) introduces inconsistencies
    that a fatigued single reviewer misses.
+5. **Spec/plan hygiene gaps (NEW, from PR #14):** No agent checks spec
+   metadata accuracy, plan shell command correctness, or whether spec
+   file lists match reality. Grep patterns with wrong flags or
+   false-positive matches go unnoticed.
 
 Splitting into focused agents means each one does LESS but does it
 more THOROUGHLY. The devil's advocate agent provides fresh eyes.
@@ -158,6 +167,19 @@ Instructions:
 Also check: spec docs and plan docs for stale values that
 contradict the story docs.
 
+6. **CRITICAL: Spec/plan mirror check.** Specs and plans often
+   duplicate story doc content (tables, reload flows, terminology
+   mappings, file lists). When a story doc value changes, the
+   spec/plan copy goes stale silently. For EACH changed story doc
+   section, check whether the spec or plan contains a mirrored
+   version of that section. Common mirrors:
+   - events.md section 2c → spec Sections 4-5, plan party-wipe tables
+   - Terminology tables → spec Section 3.1, plan file map
+   - Flag definitions → spec Section 6, plan task descriptions
+   Read the spec/plan version and compare it to the current story
+   doc. Flag ANY discrepancy, even if the spec is "just a planning
+   artifact" — implementers read specs too.
+
 Report: list of {entity, file1 description, file2 description,
 discrepancy} or "No propagation issues found."
 ```
@@ -236,6 +258,19 @@ Focus on:
 
 IMPORTANT: Only flag issues in content ADDED or MODIFIED by this
 PR. Pre-existing issues in unchanged lines are out of scope.
+
+**Pass K: Spec/plan hygiene (NEW)**
+If the PR includes spec or plan docs (docs/superpowers/), check:
+- Spec metadata accuracy: does the scope/status/date match the
+  actual changes? (e.g., scope says "all files" but only 4 changed)
+- Spec file lists: do "files requiring changes" match reality?
+- Plan shell commands: do grep/rg patterns use correct flags?
+  (e.g., \b needs PCRE in GNU grep -- prefer rg; patterns should
+  not false-positive on known environmental text)
+- Spec terminology tables: do old->new mappings match what was
+  actually implemented in the story docs?
+- Plan expected outputs: do "Expected: zero matches" claims hold
+  when you actually run the command?
 
 Report per-pass PASS/FAIL with specific findings.
 ```
@@ -348,9 +383,20 @@ If issues are found:
    spec and plan docs) for that entity's name. Read every match.
    Verify the fix is consistent everywhere. This is the #1 failure
    mode — fixing in one file but not others.
-4. **Post-fix context check:** After editing a line, re-read ±10
-   surrounding lines to verify the fix doesn't create a new
-   contradiction with adjacent text.
+   **Spec/plan mirror check:** When fixing a story doc section that
+   has a corresponding section in the spec or plan (e.g., events.md
+   section 2c is mirrored in spec Sections 4-5 and plan tables),
+   read the mirrored section and verify it matches after the fix.
+   Spec/plan docs that duplicate story doc content go stale silently.
+4. **Post-fix section re-read (MANDATORY):** After editing ANY line,
+   re-read the ENTIRE section (from the nearest `##` heading above
+   to the next `##` heading or `---` separator below). Verify the
+   fix is consistent with every claim, number, and rule in the
+   section — not just the lines immediately adjacent. This catches
+   contradictions between a fix and a simplifying principle, summary
+   paragraph, or table that appears 20+ lines away in the same
+   section. The ±10-line check is NOT sufficient; full-section
+   re-read is required.
 5. Run `pnpm lint && pnpm test` to verify fixes.
 6. If verification fails, fix the failure before proceeding.
 
@@ -474,6 +520,11 @@ role design. Consult for deeper methodology if expanding agents.
 - Analysis of 51 Copilot review comments across 7 reviews on PR #12
   revealed single-agent review missed 73% of issues due to propagation
   blindness (46%), narrative coherence gaps (32%), and context drift (22%)
+- PR #14 gap analysis (13 Copilot comments across 3 review rounds):
+  multi-agent loop caught 8/13 issues; 5 missed due to post-fix
+  self-contradiction (2), spec-story propagation gaps (1), and
+  spec/plan hygiene (2). Led to adding: full-section re-read rule,
+  spec/plan mirror check in propagation agent, Pass K hygiene checks
 
 ### Agent Role Inspirations
 - **Agent 1 (Propagation):** [Lore Consistency in Game Design](https://www.meegle.com/en_us/topics/game-design/lore-consistency) — Cross-departmental narrative audit methodology
