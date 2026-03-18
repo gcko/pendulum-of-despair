@@ -584,7 +584,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Category:** Healing
 - **Tier:** 2
 - **MP Cost:** 20
-- **Target:** Single ally (KO'd)
+- **Target:** Single ally (Fainted)
 - **Effect:** Revives a fallen ally at 25% of max HP.
 - **Description:** The caster calls the departing spirit back. It is not a command -- it is a request. Sometimes the spirit listens.
 - **Who learns:** Torren (Lv 14), Maren (Lv 18)
@@ -595,7 +595,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Category:** Healing
 - **Tier:** 3
 - **MP Cost:** 40
-- **Target:** Single ally (KO'd)
+- **Target:** Single ally (Fainted)
 - **Effect:** Revives a fallen ally at 75% of max HP.
 - **Description:** Ley energy floods the body like sunrise. The dead do not stay dead when the ley lines still burn.
 - **Who learns:** Maren (Lv 28)
@@ -853,7 +853,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 3
 - **MP Cost:** 35
 - **Target:** Single ally
-- **Effect:** Grants auto-revive. If the target is KO'd, they automatically revive with 30% HP once. Lasts until triggered or battle ends.
+- **Effect:** Grants auto-revive. If the target is Fainted, they automatically revive with 30% HP once. Lasts until triggered or battle ends.
 - **Description:** A spirit lingers at the target's shoulder -- a guardian from the other side, ready to pull them back from the edge.
 - **Who learns:** Torren (Lv 28), Maren (Lv 32)
 - **Visual:** A translucent pale-green figure appears briefly behind the target, then fades to a faint green glow at their feet.
@@ -1115,7 +1115,7 @@ Void magic is the domain of the Pallor and those it has claimed. Most Void spell
 - **Tier:** 4
 - **MP Cost:** --
 - **Target:** Single party member
-- **Effect:** Spell power 85. Massive Void damage. If target HP falls below 10% from this spell, they are instantly KO'd.
+- **Effect:** Spell power 85. Massive Void damage. If target HP falls below 10% from this spell, they are instantly Fainted.
 - **Description:** The Pallor looks at you and decides you were never meant to exist. For a moment, you agree.
 - **Visual:** The target's sprite is broken into pixel fragments that scatter outward; grey light fills the gaps; they reform (if alive) or collapse.
 
@@ -1398,7 +1398,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Petrify | Negative | Removed from combat | Until cured | Purge, Soft Stone item |
 | Slow | Negative | ATB speed -50% | 5 turns | Purge, Chronos Dust item |
 | Stop | Negative | ATB frozen | 3 turns (cannot be cured, must expire) | Wears off only |
-| KO | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
+| Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
 | Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion / Mass Dispersion |
@@ -1408,7 +1408,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Quickstep (Haste) | Positive | ATB speed +50% | 5 turns | Dispersion / Mass Dispersion |
 | Rallying Cry (ATK Up) | Positive | Physical ATK +30% | 5 turns | Dispersion / Mass Dispersion |
 | Attunement (MAG Up) | Positive | Magic ATK +30% | 5 turns | Dispersion / Mass Dispersion |
-| Last Breath (Reraise) | Positive | Auto-revive at 30% HP on KO | Until triggered or battle ends | Dispersion / Mass Dispersion |
+| Last Breath (Reraise) | Positive | Auto-revive at 30% HP on Faint | Until triggered or battle ends | Dispersion / Mass Dispersion |
 | Glintmark | Positive (on enemy) | Takes 10% more damage from all sources | 3 turns | Wears off |
 
 *For positive statuses, "Cured By" indicates spells that can remove the buff. Dispersion and Mass Dispersion target enemies, so in practice these buffs are stripped when an enemy casts Dispersion/Mass Dispersion against the buffed party. Player-side Dispersion removes enemy buffs, not friendly ones.*
