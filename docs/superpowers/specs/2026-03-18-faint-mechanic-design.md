@@ -138,9 +138,9 @@ No retry option. No Game Over screen. Matches FF4/FF6 philosophy.
 | File | What Changes |
 |------|-------------|
 | `docs/story/magic.md` | **Status Effect Reference table** (near end of file): KO row -> Faint. **Last Breath (Reraise) row**: "on KO" -> "on Faint". **Spell targets** throughout: "(KO'd)" -> "(Fainted)". **Unmaking spell** (Void, enemy-only spell targeting party members): "instantly KO'd" -> "instantly Fainted". |
-| `docs/story/abilities.md` | Cael's Rally: "KO'd" -> "Fainted". Any other KO references in ability descriptions. |
+| `docs/story/abilities.md` | Cael's Rally: "KO'd" -> "Fainted". False Hope (corrupted ability): "would die" -> "would be defeated". |
 | `docs/story/events.md` | Section 2c title: "Death and Fast Reload" -> "Faint and Fast Reload". "all party members are KO'd" -> "all party members are Fainted". "Last KO animation" -> "Last Faint animation". "If the player dies before the first save point" -> "If the party Faints before the first save point". Add party-wipe consequence tables (Section 4). |
-| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (e.g., Crystal Sentry, Crystal Warden). "Instant Death" immunity -> "Instant Defeat". "instant kill" -> "instant defeat". |
+| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (Crystal Sentry, Crystal Warden, Crystal Warden deep). "Instant Death" immunity -> "Instant Defeat" (Vaelith). "instant kill" -> "instant defeat" (The Index). Wellspring Guardian Builder's Weight: "KO'd" -> "Fainted". |
 | `docs/story/dungeons-city.md` | Audited -- no KO or combat-death references found. No changes needed. |
 | `docs/story/sidequests.md` | Audited -- no KO references found. No changes needed. |
 | `docs/story/outline.md` | Audited -- no combat-context KO/death references found. No changes needed. |
