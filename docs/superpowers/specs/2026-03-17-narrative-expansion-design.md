@@ -297,7 +297,9 @@ with the Wilds after the Pallor is dealt with.)
 
 #### Phase 3: The Vote
 
-Each leader votes independently based on cumulative approval score.
+Each leader votes independently based on cumulative approval score. A leader
+"supports" if their individual score is ≥ 2 (out of 3). The `council_result`
+equals the number of leaders who support (0-3).
 
 | Council Result | `council_result` | Siege Impact |
 |----------------|-------------------|-------------|

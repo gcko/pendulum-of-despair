@@ -742,7 +742,8 @@ balance and ley line health above political concerns.
 - **Hidden approval score:** 0-3 (flag `council_caden_approval`).
 - **Party interaction:** Torren's spirit-speaker status creates natural rapport.
   Torren is always present (diplomatic mission includes Edren, Lira, Torren), so
-  Caden's baseline starts at +1 (still capped at 3).
+  Caden's baseline starts at +1 instead of 0. The player can earn up to 2 more
+  points through dialogue choices, for a maximum of 3.
 
 ---
 
@@ -808,7 +809,8 @@ awareness above all else.
 - **Hidden approval score:** 0-3 (flag `council_savanh_approval`).
 - **Grandmother Seyth connection:** If the player speaks with Seyth before the
   council (see Seyth's entry), dialogue options that reference Seyth's
-  historical perspective are available and earn +1 with Savanh (still capped at 3).
+  historical perspective are available and grant +1 bonus to Savanh's score
+  (additive with dialogue choices, still capped at 3).
 
 ---
 
