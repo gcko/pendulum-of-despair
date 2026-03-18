@@ -100,19 +100,20 @@ the save.
 | Category | Rule | Rationale |
 |----------|------|-----------|
 | XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
-| Gold/currency | Kept | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
-| Battle consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
+| Gold/currency | Kept (all gold, including battle rewards and sale proceeds) | Prevents soft-lock. Note: sell-then-wipe gold exploit accepted (shops sparse, resale values low). Matches FF4/FF6. |
+| Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching cutscenes on retry |
 
 **What Resets to Last Save:**
 
-| Category | Examples |
-|----------|---------|
+| Category | Rule |
+|----------|------|
+| Inventory and consumables | Entire inventory reverts to last save |
+| Equipment | Reverts to last-saved loadout; prevents item duplication from reset chests |
 | Chest openings | Must be re-collected |
 | Field item pickups | Items collected between save and wipe are gone |
-| Equipment changes | Reverts to last-saved loadout; prevents item duplication from reset chests |
-| Shop transactions | Buy/sell actions between save and wipe revert |
+| Shop transactions | Buy/sell actions revert (gold persists per above, purchased items revert) |
 | Party composition | Story-driven member additions/removals revert |
-| Storyline flag updates | Events, cutscenes, NPC state changes revert |
+| Storyline flag updates | Events, quest progress flags, NPC state changes revert (boss cutscene skip flags exempt) |
 | Dungeon progress | Doors opened, switches flipped, puzzles solved revert |
 ```
 

@@ -409,7 +409,7 @@ the save.
 | Category | Rule | Rationale |
 |----------|------|-----------|
 | XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
-| Gold/currency | Kept (includes gold earned from battles between save and wipe) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
+| Gold/currency | Kept (all gold, including battle rewards and sale proceeds earned since last save) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover. Note: since inventory resets but gold persists, a player could theoretically sell items, wipe, and keep the gold while the items return. This is accepted -- gold alone has limited exploitability (shops are sparse, items have low resale value), and the alternative (resetting gold) risks soft-locks. Matches FF4/FF6 behavior. |
 | Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching the same cutscene on retry; see Rules above |
 
 **What Resets to Last Save:**

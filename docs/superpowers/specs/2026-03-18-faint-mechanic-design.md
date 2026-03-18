@@ -36,8 +36,9 @@ fast-reload animation is documented, but what progress is kept vs. lost is not.
 | Ability interruption | "if he's KO'd" | "if he's Fainted" |
 | Auto-revive trigger | "Auto-revive at 30% HP on KO" | "Auto-revive at 30% HP on Faint" |
 | Enemy defeat description | "on death" / "Shatters on death" | "on defeat" / "Shatters on defeat" |
-| Instant KO mechanic | "instantly KO'd" / "instant kill" | "instantly Fainted" / "instant Faint" |
-| Instant Death immunity | "Instant Death" | "Instant Faint" |
+| Instant KO mechanic (player) | "instantly KO'd" | "instantly Fainted" |
+| Instant KO mechanic (enemy) | "instant kill" | "instant defeat" |
+| Instant Death immunity (enemy) | "Instant Death" | "Instant Defeat" |
 
 ### 3.2 Exceptions -- Keep "death"/"dead"/"die"
 
@@ -79,8 +80,8 @@ When a wipe triggers, the fast-reload sequence fires (see events.md section 2c).
 | Category | Rule | Rationale |
 |----------|------|-----------|
 | XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
-| Gold/currency | Kept | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
-| Battle consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
+| Gold/currency | Kept (all gold, including battle rewards and sale proceeds) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover. Note: since inventory resets but gold persists, selling items then wiping lets the player keep gold while items return. Accepted -- gold has limited exploitability (shops sparse, resale values low). Matches FF4/FF6. |
+| Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching cutscenes on retry |
 
 ### 4.2 Reset to Last Save
 
@@ -88,12 +89,13 @@ Everything not listed in 4.1 resets to last save state. This includes:
 
 | Category | Rule | Rationale |
 |----------|------|-----------|
+| Inventory and consumables | Reset | Entire inventory reverts to last save -- items used, collected, bought, or sold between save and wipe are all undone |
+| Equipment changes | Reset | Reverts to last-saved loadout; prevents item duplication from reset chests |
 | Chest openings | Reset | Must be re-collected; rewards dungeon re-traversal |
 | Field item pickups | Reset | Same as chests -- items collected between save and wipe are gone |
-| Equipment changes | Reset | Reverts to last-saved loadout; prevents item duplication from reset chests |
-| Shop transactions | Reset | Buy/sell actions between save and wipe revert (gold reverts via 4.1, inventory reverts here) |
+| Shop transactions | Reset | Buy/sell actions between save and wipe revert (gold persists per 4.1, purchased items revert) |
 | Party composition | Reset | If a story event added/removed a member between save and wipe, that reverts |
-| Storyline flag updates | Reset | Events, cutscenes, NPC state changes revert to last-saved state |
+| Storyline flag updates | Reset | Events, quest progress flags, NPC state changes revert (boss cutscene skip flags exempt per 4.1) |
 | Dungeon progress | Reset | Doors opened, switches flipped, puzzles solved revert |
 
 **Simplifying principle:** The game reloads the last save file. XP, levels, and
