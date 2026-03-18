@@ -968,7 +968,7 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 
 **Pre-Council Consultation:**
 If the player visits Grandmother Seyth at Greywood Camp before the Ashgrove
-council, she shares insights about each tribal leader's priorities. She is not
+council, she shares insights about Savanh's priorities in particular. She is not
 a leader herself, but her counsel carries weight with Elder Savanh. Speaking
 with Seyth unlocks additional dialogue options during the Savanh private
 audience that reference the Wilds' oral history of previous "grey times."

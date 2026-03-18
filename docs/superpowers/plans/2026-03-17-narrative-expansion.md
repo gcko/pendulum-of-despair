@@ -222,8 +222,8 @@ of its act's table section.
 **Act II flags** (add after flag 19, end of Act II section ~line 278):
 
 ```markdown
-| 40 | `council_savanh_approval` | Private audience with Elder Savanh at Ashgrove | Hidden score (0-3). Tracks Savanh's support based on dialogue choices. | Elder Savanh, Edren |
-| 41 | `council_caden_approval` | Private audience with Spirit-speaker Caden at Ashgrove | Hidden score (0-3). Tracks Caden's support based on dialogue choices. | Spirit-speaker Caden, Edren, Torren |
+| 40 | `council_savanh_approval` | Private audience with Elder Savanh at Ashgrove | Hidden score (0-3). Dialogue choices alone earn 0-2; consulting Grandmother Seyth before the council unlocks a bonus option that reaches 3. | Elder Savanh, Edren |
+| 41 | `council_caden_approval` | Private audience with Spirit-speaker Caden at Ashgrove | Hidden score (0-3). Caden's score starts at 1 because Torren (always in the diplomatic party) has natural rapport as a spirit-speaker; dialogue choices add 0-2 more. | Spirit-speaker Caden, Edren, Torren |
 | 42 | `council_wynne_approval` | Private audience with Wynne at Ashgrove | Hidden score (0-3). Tracks Wynne's support based on dialogue choices. | Wynne, Edren, Lira |
 | 43 | `council_result` | All three tribal leaders vote at the Ashgrove council fire | Stores outcome tier (0-3). 3 = full Thornmere tribal support at siege; 2 = archers only; 1 = token squad; 0 = party alone. Read by Valdris Siege encounter. Computed from individual approval scores (flags 40-42) before `tribal_alliance_complete` (flag 11) fires — the council tallies votes first, then the alliance flag resolves. | Elder Savanh, Caden, Wynne |
 | 44 | `cael_last_night_lira` | Cael visits Lira's workshop the night before the betrayal | Binary. Affects `cael_betrayal_complete` cutscene: camera lingers on Lira's face. | Cael, Lira |
@@ -508,7 +508,7 @@ After Seyth's existing content (~line 926), add:
 ```markdown
 **Pre-Council Consultation:**
 If the player visits Grandmother Seyth at Greywood Camp before the Ashgrove
-council, she shares insights about each tribal leader's priorities. She is not
+council, she shares insights about Savanh's priorities in particular. She is not
 a leader herself, but her counsel carries weight with Elder Savanh. Speaking
 with Seyth unlocks additional dialogue options during the Savanh private
 audience that reference the Wilds' oral history of previous "grey times."
@@ -658,7 +658,7 @@ The player moves freely around the campfire. Each member can be spoken to:
 - **Torren** talks about the spirits going quiet.
 - **Lira** adjusts her tools, mentions something she never finished building.
 - **Sable** makes a joke that does not land. Then a real one that does.
-- **Maren** stares at the fire. Says she has seen this story before.
+- **Maren** stares at the fire. Says she has seen this story before in the old texts. This time might be different.
 
 If the player speaks to everyone, a group moment triggers -- Edren says
 something simple that binds them. Not a battle speech, just acknowledgment.

@@ -251,7 +251,7 @@ The player moves freely around the campfire. Each member can be spoken to:
 - **Torren** talks about the spirits going quiet.
 - **Lira** adjusts her tools, mentions something she never finished building.
 - **Sable** makes a joke that does not land. Then a real one that does.
-- **Maren** stares at the fire. Says she has seen this story before.
+- **Maren** stares at the fire. Says she has seen this story before in the old texts. This time might be different.
 
 If the player speaks to everyone, a group moment triggers -- Edren says
 something simple that binds them. Not a battle speech, just acknowledgment.
