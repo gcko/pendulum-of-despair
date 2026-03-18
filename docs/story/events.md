@@ -375,11 +375,13 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 
 ---
 
-## 2c. Death and Fast Reload
+## 2c. Faint and Fast Reload
 
-When all party members are KO'd in battle:
+When all player-controlled party members are Fainted in battle (guest NPCs do
+not count -- if every player character is Fainted but a guest NPC is still
+standing, the wipe still triggers):
 
-1. **The Fall (2s):** Last KO animation plays. Battle UI fades. Music hard-cuts
+1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music hard-cuts
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
 3. **Instant Reload:** Fade in at last save point. Full HP/MP as of last save.
@@ -394,8 +396,32 @@ When all party members are KO'd in battle:
   fixed flag number.)
 - Narrative defeats are exempt (e.g., the unwinnable Vaelith fight at the
   siege transitions to an aftermath cutscene, not this sequence).
-- If the player dies before the first save point in the Ember Vein (unlikely
+- If the party Faints before the first save point in the Ember Vein (unlikely
   given Arcanite gear), reload at the dungeon entrance.
+
+**What's Kept on Full Party Faint:**
+
+The game reloads the last save file. XP, levels, and gold are the only values
+written to a persistent layer outside the save file. Everything else comes from
+the save.
+
+| Category | Rule | Rationale |
+|----------|------|-----------|
+| XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
+| Gold/currency | Kept | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
+| Battle consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
+
+**What Resets to Last Save:**
+
+| Category | Examples |
+|----------|---------|
+| Chest openings | Must be re-collected |
+| Field item pickups | Items collected between save and wipe are gone |
+| Equipment changes | Reverts to last-saved loadout; prevents item duplication from reset chests |
+| Shop transactions | Buy/sell actions between save and wipe revert |
+| Party composition | Story-driven member additions/removals revert |
+| Storyline flag updates | Events, cutscenes, NPC state changes revert |
+| Dungeon progress | Doors opened, switches flipped, puzzles solved revert |
 
 ---
 
