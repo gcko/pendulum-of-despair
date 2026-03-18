@@ -617,7 +617,7 @@ Four locations in Valdris Crown are available; time allows three visits:
 - **Pendulum Vault:** No dialogue. Cael's reflection in the glass is wrong for
   one frame.
 
-Each visit sets a flag (`cael_last_night_lira/edren/maren/vault`) that alters
+Each visit sets a flag (`cael_last_night_lira`, `cael_last_night_edren`, `cael_last_night_maren`, `cael_last_night_vault`) that alters
 the betrayal cutscene's camera work and emotional framing. No visit is wrong --
 each reveals a different truth about Cael's state. The control switch to Cael
 is unmarked; it hits only in retrospect.

@@ -71,7 +71,7 @@ At the ruin, they find **the Pendulum of Despair** — inert, unremarkable, but 
 
 *(Tier 1: Full Cutscene)*
 
-As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on. They do not mention Vaelith again.
+As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on.
 
 ### The First Warning
 
@@ -157,7 +157,7 @@ Four locations in Valdris Crown are available; time allows three visits:
 - **Pendulum Vault:** No dialogue. Cael's reflection in the glass is wrong for
   one frame.
 
-Each visit sets a flag (`cael_last_night_lira/edren/maren/vault`) that alters
+Each visit sets a flag (`cael_last_night_lira`, `cael_last_night_edren`, `cael_last_night_maren`, `cael_last_night_vault`) that alters
 the betrayal cutscene's camera work and emotional framing. No visit is wrong --
 each reveals a different truth about Cael's state. The control switch to Cael
 is unmarked; it hits only in retrospect.
