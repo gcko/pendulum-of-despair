@@ -1466,7 +1466,7 @@ Edren (if present): "It recognized me. The offering gesture. The Colossus did th
 | Cave Crawler | Giant crystalline insect. Hard shell, weak underbelly. | Floor 1-2 |
 | Ley Wisp | Ball of living ley energy. Casts elemental magic, absorbs magic attacks. Weak to physical. | Floor 2-3 |
 | Deep Serpent | Long, eyeless cave snake infused with ley energy. Constrict attack. | Floor 2-3 |
-| Crystal Sentry | Humanoid crystal formation that animates when disturbed. Slow but heavy physical damage. Shatters into shrapnel on death (minor area damage). | Floor 3 |
+| Crystal Sentry | Humanoid crystal formation that animates when disturbed. Slow but heavy physical damage. Shatters into shrapnel on defeat (minor area damage). | Floor 3 |
 | Prism Moth | Winged crystal insect drawn to ley-light beams. Harmless unless the beam puzzle is misconfigured -- volatile crystal flashes attract swarms. In swarms, they cast Refraction (redirects the party's magic spells at random targets, including allies). Solo: trivial. Swarm: dangerous. | Floor 3 |
 | Ley Construct | Geometric guardian -- floating cube of crystal and energy. Pattern-based attacks. Rotates between physical and magic phases on a 3-turn cycle. | Floor 4-5 |
 | Vein Stalker | Eyeless humanoid made of solidified ley residue. Phases through walls (can appear from any adjacent wall tile). Drains MP on hit. Rare. | Floor 4-5 |
@@ -1818,7 +1818,7 @@ A vast catalogue entity containing every recorded death from every Pallor cycle.
 
 **Mechanic:** Presents a binary choice:
 - **Absorb** -- massive INT buff but 90% max HP damage and permanent Despair.
-- **Destroy** -- instant kill but loses all INT buffs and a unique lore item.
+- **Destroy** -- instant defeat but loses all INT buffs and a unique lore item.
 
 Neither option is correct.
 
@@ -1883,7 +1883,7 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 
 **Weakness:** Spirit (125%).
 **Resistance:** Void (50%), Frost (75%).
-**Immunity:** Despair status, Instant Death.
+**Immunity:** Despair status, Instant Defeat.
 **Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic damage), Grey Mist Essence (crafting material -- Lira's ultimate weapon component).
 
 ---
@@ -2259,7 +2259,7 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 | Archive Sentinel | Stone guardian. Questions before fighting. Can be bypassed with correct answer. | Floor 2 |
 | Pictograph Wisp | Living inscription that detaches from the wall. Magic attacks themed to whatever story its tablet told. | All floors |
 | Dust Golem | Accumulated centuries of dust animated by ambient ley energy. Slow, tanky. | Floor 1-2 |
-| Crystal Warden | Small floating crystal. Fires ley bolts. Shatters on death (area damage). | Floor 2-3 |
+| Crystal Warden | Small floating crystal. Fires ley bolts. Shatters on defeat (area damage). | Floor 2-3 |
 | **Archive Guardian** (Boss) | Geometric construct. Three-phase test. 10,000 HP. | Floor 3 |
 
 ### Treasure/Loot
@@ -2859,7 +2859,7 @@ The Guardian fights conventionally -- powerful physical attacks (Stone Fist, Geo
 The Guardian pauses combat and projects three pictographic questions onto the arena floor. These are translation challenges, but simpler than the door puzzle. Each correct answer reduces the Guardian's HP by 1,500. Each wrong answer triggers a Nexus Pulse (heavy all-party ley damage) and the question is repeated. The Guardian does not attack during this phase -- it waits. The test is fair.
 
 **Phase 3: The Test of Resolve (30% to 0% HP)**
-The Guardian combines physical and magical attacks, splits into a geometric form that can reassemble (each piece must be damaged), and uses a unique ability: Builder's Weight. This is a Pallor-type attack -- the Guardian channels the accumulated grief of the builders who died here, dealing heavy Despair-element damage and applying a stacking debuff that reduces all stats. The debuff represents the weight of history, the cost of knowledge, the burden of carrying what the builders left behind. If any party member's debuff stacks reach 5, they are KO'd. The party must either end the fight quickly or use Pallor resistance gear (the Harmonic Shard from "The Third Door" sidequest is extremely useful here).
+The Guardian combines physical and magical attacks, splits into a geometric form that can reassemble (each piece must be damaged), and uses a unique ability: Builder's Weight. This is a Pallor-type attack -- the Guardian channels the accumulated grief of the builders who died here, dealing heavy Despair-element damage and applying a stacking debuff that reduces all stats. The debuff represents the weight of history, the cost of knowledge, the burden of carrying what the builders left behind. If any party member's debuff stacks reach 5, they are Fainted. The party must either end the fight quickly or use Pallor resistance gear (the Harmonic Shard from "The Third Door" sidequest is extremely useful here).
 
 When defeated, the Guardian does not shatter. It kneels. It places one hand on the nexus crystal. "The water flows. The builders rest. You are worthy." Then it goes dormant -- not destroyed, merely sleeping. If the player returns to the Wellspring after the boss fight, the Guardian is still there, kneeling, hand on the crystal. It does not reactivate. It is at peace.
 
@@ -2875,7 +2875,7 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Guardian Sentinel | Standard ruin guardian. Stone body, geometric attacks. Triggered by failed wall switch sequence. | Floor 4 | 3,000 |
 | Hearthstone Shade | Domestic guardian echo. Slower than combat constructs but durable. Appears in residential areas. | Floor 4 | 2,500 |
 | **Hearthstone Warden** (Mini-boss) | Residential quarter guardian. Stone blade and shield. Salutes before combat. Skippable with Family Crest. | Floor 4 | 8,000 |
-| Crystal Warden (deep) | Stronger variant. Fires concentrated ley bolts. Shatters on death (area damage). | Floors 5-6 | 3,500 |
+| Crystal Warden (deep) | Stronger variant. Fires concentrated ley bolts. Shatters on defeat (area damage). | Floors 5-6 | 3,500 |
 | Pictograph Wisp (deep) | Stronger variant. Magic attacks themed to the tablet's content -- history attacks (Non-elemental), warning attacks (Flame-element). | Floor 5 | 2,800 |
 | **Archive Keeper** (Mini-boss) | Knowledge construct. Translation puzzle combat. Strength varies with player's answers. | Floor 5 | 3,000-12,000 |
 | Ley-Warped Construct | Gravity-exploiting guardian. Attacks from walls and ceilings. | Floor 6 | 4,000 |

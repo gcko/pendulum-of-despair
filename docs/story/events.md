@@ -375,15 +375,19 @@ for the full act-by-act cutscene catalog with tier assignments and trigger flags
 
 ---
 
-## 2c. Death and Fast Reload
+## 2c. Faint and Fast Reload
 
-When all party members are KO'd in battle:
+When all player-controlled party members are Fainted in battle (guest NPCs do
+not count -- if every player character is Fainted but a guest NPC is still
+standing, the wipe still triggers):
 
-1. **The Fall (2s):** Last KO animation plays. Battle UI fades. Music hard-cuts
+1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music hard-cuts
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
-3. **Instant Reload:** Fade in at last save point. Full HP/MP as of last save.
-   Save point marker glows briefly. Ambient music resumes. ~4 seconds total.
+3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
+   persistent values (XP, levels, gold, boss cutscene skip flags) are applied on top.
+   HP and MP are set to 100% of the resulting max. Save point marker glows
+   briefly. Ambient music resumes. ~4 seconds total.
 
 **Rules:**
 - No menu, no prompt. Save point is where you go.
@@ -394,8 +398,32 @@ When all party members are KO'd in battle:
   fixed flag number.)
 - Narrative defeats are exempt (e.g., the unwinnable Vaelith fight at the
   siege transitions to an aftermath cutscene, not this sequence).
-- If the player dies before the first save point in the Ember Vein (unlikely
+- If the party Faints before the first save point in the Ember Vein (unlikely
   given Arcanite gear), reload at the dungeon entrance.
+
+**What's Kept on Full Party Faint:**
+
+The game reloads the last save file. A small number of values persist outside
+the save file (see table below). Everything else comes from the save.
+
+| Category | Rule | Rationale |
+|----------|------|-----------|
+| XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
+| Gold/currency | Kept (all gold, including battle rewards and sale proceeds earned since last save) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover. Note: since inventory resets but gold persists, a player could theoretically sell items, wipe, and keep the gold while the items return. This is accepted -- gold alone has limited exploitability (shops are sparse, items have low resale value), and the alternative (resetting gold) risks soft-locks. Matches FF4/FF6 behavior. |
+| Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching the same cutscene on retry; see Rules above |
+
+**What Resets to Last Save:**
+
+| Category | Rule |
+|----------|------|
+| Inventory and consumables | Entire inventory reverts to last save (items used, collected, bought, or sold between save and wipe are all undone) |
+| Equipment | Reverts to last-saved loadout; prevents item duplication from reset chests |
+| Chest openings | Must be re-collected |
+| Field item pickups | Items collected between save and wipe are gone |
+| Shop transactions | Buy/sell actions between save and wipe revert (gold persists per above, but purchased items revert) |
+| Party composition | Story-driven member additions/removals revert |
+| Storyline flag updates | Events, quest progress flags, NPC state changes revert (boss cutscene skip flags are exempt -- see What's Kept above) |
+| Dungeon progress | Doors opened, switches flipped, puzzles solved revert |
 
 ---
 

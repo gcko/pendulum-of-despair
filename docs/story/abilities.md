@@ -51,7 +51,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 > *Cael doesn't fight alone. He fights through his brothers and sisters — lifting their spirits, calling their movements, turning six swords into one. When Cael speaks, people believe.*
 
-**Mechanic:** Cael issues battlefield commands that buff allies and coordinate attacks. Rally commands cost MP and last a set number of turns. Only one Rally can be active at a time (issuing a new one replaces the old one). Cael must be conscious for the Rally to persist — if he's KO'd or afflicted with Silence/Sleep, the active Rally ends.
+**Mechanic:** Cael issues battlefield commands that buff allies and coordinate attacks. Rally commands cost MP and last a set number of turns. Only one Rally can be active at a time (issuing a new one replaces the old one). Cael must be conscious for the Rally to persist — if he's Fainted or afflicted with Silence/Sleep, the active Rally ends.
 
 **Sub-Abilities:**
 
@@ -76,7 +76,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
   - *Press Forward* becomes **Hollow Advance** — boosts all enemies' Attack by 25%.
   - *Second Wind* becomes **Draining Whisper** — enemies regenerate HP each turn.
   - *Vanguard Strike* becomes **Marked for Sorrow** — one party member takes 1.5x damage from all sources for 2 turns.
-  - *Unbreakable* becomes **False Hope** — an enemy that would die instead survives at 1 HP (once per phase).
+  - *Unbreakable* becomes **False Hope** — an enemy that would be defeated instead survives at 1 HP (once per phase).
 - The player recognizes these as twisted mirrors of abilities they once relied on. This is the mechanical expression of betrayal.
 
 ---
