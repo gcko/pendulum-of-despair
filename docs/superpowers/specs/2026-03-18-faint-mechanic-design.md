@@ -125,7 +125,7 @@ Text shown below reflects post-edit terminology:
    hard-cuts to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
 3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
-   persistent values (XP, levels, gold, cutscene flags) are applied on top.
+   persistent values (XP, levels, gold, boss cutscene skip flags) are applied on top.
    HP and MP are set to 100% of the resulting max. Save point marker glows
    briefly. Ambient music resumes. ~4 seconds total.
 
@@ -137,15 +137,15 @@ No retry option. No Game Over screen. Matches FF4/FF6 philosophy.
 
 | File | What Changes |
 |------|-------------|
-| `docs/story/magic.md` | **Status Effect Reference table** (near end of file): KO row -> Faint. **Last Breath (Reraise) row**: "on KO" -> "on Faint". **Spell targets** throughout: "(KO'd)" -> "(Fainted)". **Unmaking spell** (Void): "instantly KO'd" -> "instantly Fainted". Applies to both player and enemy spell descriptions. |
+| `docs/story/magic.md` | **Status Effect Reference table** (near end of file): KO row -> Faint. **Last Breath (Reraise) row**: "on KO" -> "on Faint". **Spell targets** throughout: "(KO'd)" -> "(Fainted)". **Unmaking spell** (Void, enemy-only spell targeting party members): "instantly KO'd" -> "instantly Fainted". |
 | `docs/story/abilities.md` | Cael's Rally: "KO'd" -> "Fainted". Any other KO references in ability descriptions. |
 | `docs/story/events.md` | Section 2c title: "Death and Fast Reload" -> "Faint and Fast Reload". "all party members are KO'd" -> "all party members are Fainted". "Last KO animation" -> "Last Faint animation". "If the player dies before the first save point" -> "If the party Faints before the first save point". Add party-wipe consequence tables (Section 4). |
 | `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (e.g., Crystal Sentry, Crystal Warden). "Instant Death" immunity -> "Instant Defeat". "instant kill" -> "instant defeat". |
-| `docs/story/dungeons-city.md` | Same pattern as dungeons-world.md for enemy entries. |
-| `docs/story/sidequests.md` | Any KO references in sidequest encounters or NPC mechanics. |
-| `docs/story/outline.md` | Any combat-context death/KO references (verify; may not need changes). |
-| `docs/story/characters.md` | Any combat-context death/KO references (verify; may not need changes). |
-| `docs/story/npcs.md` | Any combat-context death/KO references (verify; may not need changes). |
+| `docs/story/dungeons-city.md` | Audited -- no KO or combat-death references found. No changes needed. |
+| `docs/story/sidequests.md` | Audited -- no KO references found. No changes needed. |
+| `docs/story/outline.md` | Audited -- no combat-context KO/death references found. No changes needed. |
+| `docs/story/characters.md` | Audited -- no combat-context KO/death references found. No changes needed. |
+| `docs/story/npcs.md` | Audited -- no combat-context KO/death references found. No changes needed. |
 
 ### 6.2 New Content (Party Wipe Rules)
 

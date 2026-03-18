@@ -385,7 +385,7 @@ standing, the wipe still triggers):
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
 3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
-   persistent values (XP, levels, gold, cutscene flags) are applied on top.
+   persistent values (XP, levels, gold, boss cutscene skip flags) are applied on top.
    HP and MP are set to 100% of the resulting max. Save point marker glows
    briefly. Ambient music resumes. ~4 seconds total.
 

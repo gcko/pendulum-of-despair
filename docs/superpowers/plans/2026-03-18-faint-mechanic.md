@@ -376,13 +376,14 @@ also catches "KO'd" since `\b` matches at the apostrophe boundary.
 Search for combat-context death language in story docs:
 
 ```bash
-rg -n 'on defeat|instant kill|Instant Death|Instant Faint' docs/story/
+rg -n 'instant kill|Instant Death|Instant Faint' docs/story/
 ```
 
-Expected: only "on defeat" matches (those are correct). Zero matches for
-"instant kill", "Instant Death", or "Instant Faint". Note: searching for
-"on death" would false-positive on environmental text like "Vegetation death"
-in biomes.md — use "Instant Death" (the specific mechanic name) instead.
+Expected: zero matches for all three terms. "Instant Death" and "Instant Faint"
+were replaced with "Instant Defeat" (enemy immunity) and "instantly Fainted"
+(player-side Unmaking spell). "instant kill" was replaced with "instant defeat".
+Note: do NOT search for "on death" — it false-positives on environmental text
+like "Vegetation death" in biomes.md.
 
 - [ ] **Step 4: Push to remote**
 
