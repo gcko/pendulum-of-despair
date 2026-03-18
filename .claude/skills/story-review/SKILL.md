@@ -221,9 +221,19 @@ Cross-reference every proper noun AND game term in changed files:
 - Check that every status effect name used in ability descriptions
   exists in `magic.md`'s Status Effect Reference.
 
+**Identifier notation clarity (frequently missed):**
+- Flag names, ability names, and other identifiers that use slash
+  notation to compress multiple values (e.g., `cael_last_night_lira/
+  edren/maren/vault`) read as a single identifier. Since these are
+  used for grep-based propagation checks, they must be spelled out
+  individually (e.g., `cael_last_night_lira`, `cael_last_night_edren`,
+  `cael_last_night_maren`, `cael_last_night_vault`). Flag ANY slash-
+  separated identifier shorthand as an ISSUE.
+
 Flag: misspellings, variant names not in canon, new names without
 definition, non-canonical element terms, ability/spell name mismatches,
-undefined status effects, abbreviation drift.
+undefined status effects, abbreviation drift, slash-notation shorthand
+for identifiers.
 
 ---
 
@@ -234,11 +244,28 @@ For any changes involving act-specific content:
 - NPCs must not appear after their documented death (King Aldren dies Act II)
 - Locations must be accessible in the act they're referenced
 - Events must trigger in correct act order per `events.md`
-- **Flag ordering within act tables (frequently missed):** Within each
-  act's flag table in `events.md`, verify rows are ordered by trigger
-  timing (earliest first). A flag that triggers at the start of an act
-  should not appear after a flag that triggers at the end. Misordered
-  flags confuse downstream references and implementation.
+- **Flag table chronological ordering (CRITICAL — #1 missed category
+  in external reviews, accounting for 5 of 5 findings in one review
+  round):** When new flag rows are added to `events.md`, they are often
+  APPENDED to the end of their act section because they have higher
+  flag numbers. But flag number does NOT determine chronological order —
+  trigger timing does. This check catches that.
+
+  **Mandatory procedure (do NOT skip steps):**
+  1. For EACH act section in `events.md` that has new or moved rows,
+     read every row's "Trigger" column from top to bottom.
+  2. Ask: does each trigger happen AFTER the trigger in the row above
+     it? If a row's trigger fires BEFORE the previous row's trigger,
+     the table is misordered.
+  3. Pay special attention to:
+     - Flags added in the 39-52 range (new flags) placed after
+       established 1-38 flags — the number is higher but the event
+       may be earlier chronologically.
+     - Sub-event flags (council audiences before council vote,
+       reunion tracking before party_reassembled, campfire before
+       march begins) that must precede their parent/resolution flag.
+     - "Night before X" flags that must appear before X.
+  4. Flag ANY row that breaks chronological order as an ISSUE.
 - Pallor corruption must follow the staged progression (none in Act I, Stage 1
   in Act II borders, Stage 2 in Interlude, Stage 3 in Act III Wastes)
 - Party composition must be correct per act (party scatters in Interlude,
@@ -413,10 +440,38 @@ reach the dungeon entrance. Check:
   location state table (or is already established as accessible from a
   prior act)
 
+**Characterization consistency with unchanged canonical files
+(CRITICAL — missed when entity tone/difficulty/role changes):**
+The "check changed files, not the universe" rule scopes WHICH FILES
+to review. But when a changed file MODIFIES an entity's characterization
+(personality, difficulty, role, accessibility), also read that entity's
+entry in its canonical reference file — even if that file was NOT changed.
+
+**Mandatory procedure:**
+1. Identify every entity whose characterization CHANGED in the diff
+   (not just mentioned — actually changed). Examples: NPC described as
+   "easiest to convince" changed to "demands concrete plans"; location
+   changed from "optional" to "critical path"; boss difficulty adjusted.
+2. For each such entity, read its entry in the canonical source:
+   - NPCs → `npcs.md` AND `locations.md` (location descriptions often
+     characterize NPCs)
+   - Locations → `locations.md`
+   - Characters → `characters.md`
+   - Dungeons → `dungeons-world.md` or `dungeons-city.md`
+3. Check: does the unchanged canonical description still match the new
+   characterization? If the diff says "Wynne demands concrete plans"
+   but locations.md (unchanged) says "Wynne is the easiest to convince",
+   that is an ISSUE — even though locations.md was not in the diff.
+
+This extends the diff scope ONLY for entities whose characterization
+changed. Do NOT audit the entire canonical file — just the entries for
+entities that were re-characterized.
+
 Flag: value mismatches, conflicting unlock methods, incorrect counts,
 stale descriptions that don't match current data, stale classification
 labels, summary table rows not updated, incorrect table section
-placement, missing prerequisite location entries.
+placement, missing prerequisite location entries, characterization
+drift between changed and unchanged canonical files.
 
 ---
 
