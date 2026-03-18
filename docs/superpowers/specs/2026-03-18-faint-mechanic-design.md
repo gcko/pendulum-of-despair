@@ -135,7 +135,7 @@ No retry option. No Game Over screen. Matches FF4/FF6 philosophy.
 | `docs/story/magic.md` | **Status Effect Reference table** (near end of file): KO row -> Faint. **Last Breath (Reraise) row**: "on KO" -> "on Faint". **Spell targets** throughout: "(KO'd)" -> "(Fainted)". **Unmaking spell** (Void): "instantly KO'd" -> "instantly Fainted". Applies to both player and enemy spell descriptions. |
 | `docs/story/abilities.md` | Cael's Rally: "KO'd" -> "Fainted". Any other KO references in ability descriptions. |
 | `docs/story/events.md` | Section 2c title: "Death and Fast Reload" -> "Faint and Fast Reload". "all party members are KO'd" -> "all party members are Fainted". "Last KO animation" -> "Last Faint animation". "If the player dies before the first save point" -> "If the party Faints before the first save point". Add party-wipe consequence tables (Section 4). |
-| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (e.g., Crystal Sentry, Crystal Warden). "Instant Death" immunity -> "Instant Faint". "instant kill" -> "instant Faint". |
+| `docs/story/dungeons-world.md` | Enemy "on death" -> "on defeat" (e.g., Crystal Sentry, Crystal Warden). "Instant Death" immunity -> "Instant Defeat". "instant kill" -> "instant defeat". |
 | `docs/story/dungeons-city.md` | Same pattern as dungeons-world.md for enemy entries. |
 | `docs/story/sidequests.md` | Any KO references in sidequest encounters or NPC mechanics. |
 | `docs/story/outline.md` | Any combat-context death/KO references (verify; may not need changes). |

@@ -28,7 +28,7 @@ companion spec are the only new files.
 | `docs/story/events.md` | Rename section 2c, update KO->Faint terminology, add party-wipe consequence tables |
 | `docs/story/magic.md` | Status effect table + spell targets + Unmaking + Last Breath: KO->Faint |
 | `docs/story/abilities.md` | Cael's Rally KO->Fainted, corrupted False Hope "die"->"be defeated" |
-| `docs/story/dungeons-world.md` | Enemy "on death"->"on defeat", Instant Death->Instant Faint, instant kill->instant defeat, KO'd->Fainted |
+| `docs/story/dungeons-world.md` | Enemy "on death"->"on defeat", Instant Death->Instant Defeat, instant kill->instant defeat, KO'd->Fainted |
 
 ---
 
@@ -267,7 +267,7 @@ git commit -m "docs(shared): update abilities.md KO->Faint and combat death->def
 - Modify: `docs/story/dungeons-world.md:1469,1821,1886,2262,2862,2878`
 
 Six changes: three "on death"->"on defeat", one "instant kill"->"instant defeat",
-one "Instant Death"->"Instant Faint", one "KO'd"->"Fainted".
+one "Instant Death"->"Instant Defeat", one "KO'd"->"Fainted".
 
 - [ ] **Step 1: Update Crystal Sentry enemy description (line 1469)**
 
@@ -299,7 +299,7 @@ Change:
 ```
 to:
 ```
-**Immunity:** Despair status, Instant Faint.
+**Immunity:** Despair status, Instant Defeat.
 ```
 
 - [ ] **Step 4: Update Crystal Warden enemy description (line 2262)**
