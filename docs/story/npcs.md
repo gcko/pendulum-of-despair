@@ -732,6 +732,19 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 
 **Act presence:** Act II (Duskfen, sets condition for alliance, performs the Fenmother binding). Interlude: When the Pallor's corruption spreads into the Wilds, Caden is one of the first to sense it. He can feel the Ley Leech feeding on the nexus from miles away -- a wrongness in the spiritual frequency of the land, like a note held too long. He guides the party to Torren's location at the ley nexus, serving as both scout and spiritual compass. During the Ley Leech boss fight, Caden assists from the perimeter. After the fight, he performs a small recovery ritual for the exhausted Torren -- a passing-of-the-torch moment between the old spirit-speaker and the young one. Duskfen itself is half-submerged; Caden leads the remnant tribe on the highest platforms, grim but holding. Act III: If the party returns to the Wilds, Caden is maintaining the stabilized nexus in Torren's absence. Post-game: Confident spirit-speaker leading Duskfen's reconstruction.
 
+**Council Profile (Ashgrove):**
+Caden represents Duskfen at the alliance council. Values the land's spiritual
+balance and ley line health above political concerns.
+- **Responds to:** Ley line knowledge, genuine concern for the Wilds' survival,
+  references to Maren's Pendulum research (Maren is always visited in Act I).
+- **Penalizes:** Treating the Wilds as a resource to exploit, instrumentalizing
+  spirit-speech, dismissing the spirits' warnings.
+- **Hidden approval score:** 0-3 (flag `council_caden_approval`).
+- **Party interaction:** Torren's spirit-speaker status creates natural rapport.
+  Torren is always present (diplomatic mission includes Edren, Lira, Torren), so
+  Caden's baseline starts at +1 instead of 0. The player can earn up to 2 more
+  points through dialogue choices, for a maximum of 3.
+
 ---
 
 ### Wynne
@@ -742,7 +755,7 @@ When the party arrives during the diplomatic mission in Act II, Caden is the bar
 
 **Backstory:** Wynne is an older woman — sharp-eyed, quiet, and given to long silences broken by observations that nobody else was thinking. She communes with wind-spirits and monitors the upper atmosphere for signs of magical instability. From Canopy Reach's highest platform, two hundred feet above the forest floor, she has watched the world change: Valdris's towers dimming, Corrund's smoke plumes thickening, and — most troubling — a grey haze settling over the center of the Wilds where the Convergence lies.
 
-Wynne is the easiest tribal leader to convince during the diplomatic mission. She doesn't need persuading — she has already seen the signs. She agrees to the alliance not out of trust but out of pragmatic necessity. Her panoramic view cutscene gives the player their first continent-wide perspective and foreshadows the Convergence.
+Wynne is the most receptive tribal leader during the diplomatic mission — she has already seen the signs and does not need to be convinced the threat is real, which makes her the easiest of the three to bring into the alliance. But she still demands concrete plans, not emotional appeals: as long as the party can outline even a basic, coherent strategy, she backs them. Her approval at the Ashgrove council is therefore the easiest to secure, yet it still depends on the player demonstrating strategic clarity (see Council Profile below). Her panoramic view cutscene gives the player their first continent-wide perspective and foreshadows the Convergence.
 
 **Dialogue hints:**
 - *"I've watched that haze grow for six months. It sits where the ley lines meet. I don't need your scholars to tell me what that means."*
@@ -751,6 +764,18 @@ Wynne is the easiest tribal leader to convince during the diplomatic mission. Sh
 **Story relevance:** Ties to main quest
 
 **Act presence:** Act II (Canopy Reach, agrees to alliance, panoramic view cutscene). Canopy Reach is inaccessible in the Interlude — Wynne's fate is referenced but not shown; the tribe evacuated to lower ground.
+
+**Council Profile (Ashgrove):**
+Wynne represents Canopy Reach at the alliance council. The most pragmatic of
+the three leaders -- values strength and strategic clarity.
+- **Responds to:** Concrete battle plans, honest assessment of the Pallor
+  threat's military dimension, evidence of tactical preparation.
+- **Penalizes:** Vague promises, appeals to emotion over strategy, lack of
+  concrete plans.
+- **Hidden approval score:** 0-3 (flag `council_wynne_approval`).
+- **Party interaction:** Lira's Forgewright background can help (she understands
+  military engineering) or hurt (Forgewrights damaged ley lines) depending on
+  how the player frames her expertise during the audience.
 
 ---
 
@@ -771,6 +796,23 @@ When Edren's diplomatic mission arrives in Act II to broker a tribal alliance ag
 **Story relevance:** Ties to main quest
 
 **Act presence:** Act II (diplomatic mission), Interlude (Greywood Camp, under siege by Pallor corruption). In Act II she's sharp and political. In the Interlude, she's weakened — the spirit world's collapse has physically aged her. She passes leadership to the younger generation and focuses on preserving what knowledge she can.
+
+**Council Profile (Ashgrove):**
+Savanh hosts the formal alliance council at the Ashgrove council stones. She
+is the senior tribal leader and sets the tone. Values honesty and historical
+awareness above all else.
+- **Responds to:** Admissions of Valdris's past failures toward the Wilds.
+  Acknowledgment that the Compact's ley line damage is partly Valdris's
+  negligence.
+- **Penalizes:** Flattery, dismissiveness, treating the alliance as Valdris's
+  right rather than a request.
+- **Hidden approval score:** 0-3 (flag `council_savanh_approval`). Dialogue
+  choices alone can earn up to 2 points. The Seyth bonus is the only way to
+  reach 3.
+- **Grandmother Seyth connection:** If the player speaks with Seyth before the
+  council (see Seyth's entry), dialogue options that reference Seyth's
+  historical perspective are available and grant +1 bonus to Savanh's score
+  (additive with dialogue choices, still capped at 3).
 
 ---
 
@@ -923,6 +965,15 @@ She is the first NPC to notice that the ley lines aren't just dimming — they'r
 **Story relevance:** Ties to main quest
 
 **Act presence:** Act II (Greywood Camp), Interlude. Her oral history independently confirms what Maren discovers in the ancient ruin — that the Pallor's cycle has happened before. A player who hears Seyth's story in Act II and later hears Maren's scholarly version in the Interlude will realize the two women arrived at the same truth from opposite directions.
+
+**Pre-Council Consultation:**
+If the player visits Grandmother Seyth at Greywood Camp before the Ashgrove
+council, she shares insights about Savanh's priorities in particular. She is not
+a leader herself, but her counsel carries weight with Elder Savanh. Speaking
+with Seyth unlocks additional dialogue options during the Savanh private
+audience that reference the Wilds' oral history of previous "grey times."
+Seyth: *"Savanh does not want to hear that Valdris needs help. She wants to
+hear that Valdris finally understands what it costs to ignore the Wilds."*
 
 ---
 

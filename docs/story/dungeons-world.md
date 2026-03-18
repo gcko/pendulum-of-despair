@@ -83,6 +83,29 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 
 **Dying Ember Crystal (Floor 3):** A crystallized ley-plant blocks a passage, withering and flickering. A vial of mine water (found on Floor 2) can be poured on it to briefly revive the crystal, which unfurls and clears the path. An old miner's journal near the crystal reads: "The growths drink deep -- even stale water wakes them for a spell." This is the first hint of the Water of Life mechanic. On first play, it is just a neat puzzle. On replay after the Dry Well, its significance becomes clear.
 
+### Opening Sequence Overlay
+
+The Ember Vein serves as the game's tutorial and opening sequence (see
+`outline.md` "The Opening (Tutorial)" section).
+
+**Arcanite-enhanced gear (Edren):** Edren's starting equipment is Arcanite-
+enhanced from the Valdris armory -- confiscated Compact prototypes, issued only
+for high-risk missions.
+ATK and DEF are ~30% above normal Act I baselines. The gear breaks during the
+Carradan escape after the Vein Guardian (Floor 4 exit), forcing Edren to
+standard equipment. This previews the Arcanite Forging system Lira unlocks
+later.
+
+**Pallor shimmer (Cael):** Cael's attacks have a faint visual shimmer
+throughout the Ember Vein. His damage output is ~10% above his stat line. No
+in-game explanation is given. This is the Pallor's first touch -- retroactive
+foreshadowing visible only on replay or careful observation.
+
+**Dawn march (opening credits):** After the Vaelith encounter outside the mine
+(`vaelith_ember_vein` flag) and the party's escape with Lira and Sable, the
+game transitions to a playable Walk-and-Talk credits sequence. See
+`outline.md` "The Dawn March" section for dialogue and pacing.
+
 ### Floor 1: Upper Mine (40x30)
 
 ```
@@ -4581,6 +4604,27 @@ The Ram advances toward the walls. The party fights from the battlements.
 - **Shield Wall** -- reduces damage to one party member by 50% for 1 turn.
 - **Rally Cry** -- removes Despair status from all party members. 3-turn cooldown.
 
+**Thornmere Alliance Support (Council Result)**
+
+The `council_result` flag (set during the Thornmere Council at Ashgrove)
+determines **Thornmere** allied support during the siege. This is separate
+from Lord Haren's Orders (Valdris-internal support above), which depends on
+Haren dialogue choices. Both can be active simultaneously -- Haren's archers
+target the Ram directly, while Thornmere archers thin the soldier waves.
+Haren's barricades reduce wave size; Thornmere barricades grant positional
+DEF. They stack but serve different tactical roles.
+
+| `council_result` | Allied Support | Mechanical Effect |
+|-------------------|---------------|-------------------|
+| 3 (full) | Archers, barricades, healing herbs | Archer volleys thin pre-battle enemy waves. Barricades grant DEF +20% in certain tile positions. Infirmary save point also restores MP. |
+| 2 (partial) | Archers only | Standard siege as designed above. |
+| 1 (token) | Small ranger squad | One-time wave clear assist (removes one full wave of adds). Otherwise harder than standard. |
+| 0 (none) | No allies | More enemy waves (+1 wave per phase). Cordwyn's HP-drop event (see Phase 3) triggers at the start of Phase 2 instead -- the Phase 3 drop does NOT also fire. This gives the player less time before the dialogue choice. |
+
+**Default assumption:** The siege encounter tables above are balanced for
+`council_result` = 2 (partial support). Full support makes it easier; no
+support makes it harder.
+
 **Phase 2 (6000-3000 HP): The Breach**
 The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.
 - **Drill Arm** -- single target, 500-600 damage.
@@ -4592,7 +4636,7 @@ The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- orga
 The Ram's core activates. Despair Pulse intensifies to party-wide.
 - **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
-- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers. Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
+- **Cordwyn nearly breaks** -- at the start of Phase 3, Cordwyn's HP drops to 25% and she staggers (unless `council_result` = 0, in which case this already fired at Phase 2 start and does NOT repeat here). Edren dialogue choice: "Stay with me, Cordwyn" (Cordwyn recovers to 50% HP and gains ATK +20 for the rest of the fight) or no action (Cordwyn fights at reduced stats).
 
 **On defeat:** The Ram collapses. The wall is breached but the party holds the line -- momentarily. Then the Compact's overwhelming numbers press through other points. Vaelith appears in the chaos, walking calmly through the battlefield. The unwinnable fight triggers (see Vaelith Appearance 5).
 

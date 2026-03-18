@@ -10,6 +10,10 @@
 
 **Arc:** Edren's journey is about learning that loyalty isn't enough — that protecting people sometimes means letting go of the ones you love. His guilt over failing to see Cael's descent paralyzes him during the Interlude. Sable shakes him out of it. By Act IV, he's learned that grief doesn't disqualify you from fighting — it qualifies you.
 
+**Opening:** Carries Arcanite-enhanced gear from the Valdris armory during the
+Ember Vein tutorial. The gear breaks during the Carradan escape, previewing
+the Arcanite Forging system Lira unlocks later.
+
 **Fate:** Survives. Declines the throne of Valdris. Trains the next generation of knights as protectors, not warriors. Carries Cael's sword alongside his own.
 
 ### Cael
@@ -19,6 +23,19 @@
 **Personality:** Charismatic, brilliant, warmer than Edren. People are drawn to him. But he carries a deep wound — the death of his family during a Carradan border raid — that he's never fully processed.
 
 **Arc:** Cael's unresolved grief is the crack the Pallor exploits. The whispers reframe his pain: Valdris let his family die. Edren could have helped. No one cared. None of it is true, but grief doesn't need truth. He takes the Pendulum believing he can end all suffering. By the time he realizes what's happened, the Pallor is using him as an anchor. His redemption comes through sacrifice — closing the door from the inside.
+
+**Opening:** Cael's attacks shimmer faintly throughout the Ember Vein -- the
+Pallor's first touch, visible only in hindsight after the betrayal. His damage
+output is ~10% above his stat line with no in-game explanation.
+
+**Last Night (Playable):** The night before the betrayal, the player controls
+Cael -- the only time in the game someone other than Edren is controlled
+(outside Sable's Interlude). The player does not know this is the last night.
+Four locations are available (Lira's workshop, training grounds, Maren's
+study, the Pendulum vault); time allows three visits. Each visit sets a flag
+that alters the betrayal cutscene's camera and emotional framing. The control
+switch is unmarked -- the player may not realize until control returns to Edren
+after the betrayal.
 
 **Fate:** Dies closing the door. His sacrificial redemption is the emotional climax of the story.
 

@@ -464,7 +464,7 @@ From the highest platform, the player gets the first panoramic view of the conti
 - Wind-spirit shrine (optional: spirit-communion scene that hints at the Pallor's spread)
 
 **What the player does here:**
-- Act II: Diplomatic mission. The Canopy Tribe is the easiest to convince — Wynne has already seen the signs and knows the tribes need allies. The panoramic view scene establishes the world's geography for the player and foreshadows the Convergence.
+- Act II: Diplomatic mission. The Canopy Tribe is the most receptive — Wynne has already seen the signs and knows the tribes need allies, but she still demands concrete plans before committing her support at the Ashgrove council. The panoramic view scene establishes the world's geography for the player and foreshadows the Convergence.
 
 ---
 

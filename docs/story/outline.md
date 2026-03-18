@@ -4,9 +4,57 @@ Pendulum of Despair follows a four-act structure with a pivotal interlude after 
 
 ## Act I: The Gathering Storm
 
+### The Opening (Tutorial)
+
+The game opens in the Ember Vein -- a Carradan mine where something ancient
+has been unearthed. **Edren** and **Cael** descend on King Aldren's orders.
+The player controls Edren. Cael follows.
+
+**The taste of power (dual preview):**
+
+- Edren carries **Arcanite-enhanced gear** from the Valdris armory -- confiscated
+  Compact prototypes, issued only for high-risk missions. The sword and shield
+  hit harder than normal Act I levels. This gear breaks during the escape from Carradan soldiers after the
+  Vein Guardian, giving the player a preview of Arcanite Forging that Lira
+  unlocks later.
+- Cael has **unexplained extra power**. His attacks shimmer faintly. His damage
+  output exceeds his stats. The game offers no explanation. In hindsight --
+  after the betrayal -- the player realizes this was the Pallor's first touch.
+  Cael was already marked before the story began.
+
+The dungeon teaches combat across four floors (see Ember Vein in
+`dungeons-world.md`). After the Vein Guardian falls and Carradan soldiers
+force the party to flee, Lira and Sable join during the escape.
+
+### The Dawn March (Opening Credits)
+
+As the party emerges from the mine, **Vaelith** is waiting (see `vaelith_ember_vein`
+flag in `events.md`). After Vaelith's departure, the screen cuts to black.
+
+Music shifts. The player controls Edren walking a trail from Ironmouth toward
+the Thornmere Wilds at dawn -- forward only, no encounters. Cael walks
+alongside. Lira and Sable trail behind, visible but not in dialogue.
+
+Dialogue triggers as they walk:
+
+1. Cael: *"Those miners... they just stopped. No fight, no wounds. They gave up."*
+2. Edren: *"We'll let the court decide what it is."*
+3. Cael: *"And the stranger? You're not concerned?"*
+4. Edren: *"I'm concerned about all of it."*
+5. *(Beat of silence as the trail widens to show the valley below)*
+6. Cael: *"...I keep thinking about their faces."*
+
+Character names, game title, and credits overlay the walk. The sequence ends
+at the Wilds border.
+
+**Game title card: PENDULUM OF DESPAIR.**
+
+The `opening_credits_seen` flag is set.
+
 ### Setup
 
-The story opens in **Valdris**, an ancient kingdom in decline. The ley lines that power traditional sorcery are dimming. Carradan Forgewright outposts are creeping into the Thornmere Wilds. King Aldren sends **Edren** and **Cael** — two knights and close friends — to investigate a disturbance at an ancient ruin on the border of the Wilds. Carradan miners have unearthed something.
+The narrative context begins in **Valdris**, an ancient kingdom in decline.
+(The player experiences this through the Ember Vein tutorial above.) The ley lines that power traditional sorcery are dimming. Carradan Forgewright outposts are creeping into the Thornmere Wilds. King Aldren sends **Edren** and **Cael** — two knights and close friends — to investigate a disturbance at an ancient ruin on the border of the Wilds. Carradan miners have unearthed something.
 
 ### The Discovery
 
@@ -21,7 +69,9 @@ At the ruin, they find **the Pendulum of Despair** — inert, unremarkable, but 
 
 ### The Stranger at the Mine
 
-As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on. They do not mention Vaelith again.
+*(Tier 1: Full Cutscene)*
+
+As the party emerges from the ruin's outer passage into the cold night air, a grey-cloaked stranger is already there — leaning against a broken stone column as though they had been waiting for some time. They do not reach for a weapon. They introduce themselves as Vaelith, in the manner of someone sharing a pleasantry, and ask to see the Pendulum. Edren refuses. The stranger tilts their head with what might be academic disappointment, studies the artifact from a polite distance, and murmurs something about what a fragile little thing it is to build hope around. Then they bow, wish the party a safe journey to the capital, and walk back into the dark without haste. No threat is made. No threat is needed. The party exchanges glances and moves on.
 
 ### The First Warning
 
@@ -55,25 +105,77 @@ Edren, Lira, and Torren are sent to the Thornmere tribes to broker an alliance a
 
 In a frontier tavern near the edge of Compact-held territory, they find Vaelith already there — buying rounds, charming the locals, asking a barkeep about mining routes that were abandoned two generations ago. Vaelith greets the party as old acquaintances and pulls up a chair. The conversation is light, curious, almost pleasant. They ask Edren about the Valdris court. They ask Torren about the old spirit-lore of the ley lines. Then, almost as an afterthought, they turn to Lira and ask how Cael is sleeping lately. She tells them Cael did not make the journey. Vaelith nods, as if this confirms something, finishes their drink, and takes their leave. The question about Cael's sleep will seem like idle small talk until it doesn't.
 
+#### The Thornmere Council (Playable Scene)
+
+The diplomatic mission culminates at the Ashgrove council stones -- a Tier 3
+playable scene where the player's choices determine siege support levels.
+
+**Phase 1 (Private Audiences):** The player moves freely around Ashgrove,
+speaking with Elder Savanh, Spirit-speaker Caden, and Wynne privately. Each
+conversation offers 2-3 dialogue choices. Hidden approval scores track each
+leader's support (see `council_savanh_approval`, `council_caden_approval`,
+`council_wynne_approval` flags in `events.md`).
+
+**Phase 2 (Council Fire):** Three topics are debated: why the Wilds should
+help Valdris, who controls the Pendulum, and what happens after. Leaders react
+openly to the player's responses.
+
+**Phase 3 (Vote):** Each leader votes independently. Result stored in
+`council_result` flag (0-3). Outcome determines allied support at the Valdris
+Siege -- from full Thornmere tribal commitment (archers, barricades, healing herbs)
+to no support at all.
+
+See `docs/superpowers/specs/2026-03-17-narrative-expansion-design.md` Section 3,
+Scene 1 for full Council design.
+
 ### The Stranger's Work (Cutscene)
+
+*(Tier 1: Full Cutscene -- party not present)*
 
 The player sees a scene the party will never witness. Somewhere in the Wilds, a village has been touched by the Pallor — its people listless, grey-eyed, sitting in doorways and staring at nothing. Vaelith moves among them. They speak gently, crouching to meet people's eyes, resting a hand on a shoulder here, offering a quiet word there. The comfort they give is real in the moment; the villagers' faces ease, their breathing slows, something like peace settles over them. Vaelith stays for hours. When they finally rise and walk away into the treeline, the village is quieter than before. The grey in the villagers' eyes has deepened. The relief Vaelith offered was genuine — but in receiving it, something in the villagers gave way further. The player understands, even if they cannot articulate it yet, that Vaelith does not cause the Pallor's spread through cruelty. Vaelith spreads it through care.
 
 ### Sable's Warning
 
-Sable stays behind in Valdris and notices Cael's behavior shifting — talking to himself, isolating, growing cold. She tries to warn the others but can't reach them in the Wilds.
+Sable stays behind in Valdris and notices Cael's behavior shifting — talking to himself, isolating, growing cold. She tries to warn the others but can't reach them in the Wilds. When the diplomatic team finally returns, Sable delivers her warnings that evening — but it is too late to act. The assault comes the next morning.
 
 ### The Romance in Bloom
 
 Lira and Cael's romance unfolds in flashback scenes interspersed throughout Act II — campfire conversations, a quiet moment on the castle walls, her teaching him Forgewright engineering, him showing her the stars from the Valdris towers. The player falls in love with their relationship just as it's about to shatter.
 
+### Cael's Last Night (Playable Scene)
+
+The night before the betrayal. The player controls **Cael** -- the only time
+in the game outside of Sable's Interlude. The player does not know this is the
+last night.
+
+Four locations in Valdris Crown are available; time allows three visits:
+- **Lira's Workshop:** Tender, guarded conversation. Neither says what they need to.
+- **Training Grounds (Edren):** They spar like old times. Edren: *"Same time
+  tomorrow?"* Cael: *"...Same time tomorrow."*
+- **Maren's Study:** Cael asks questions too specific about the Pallor's
+  previous offers. Maren notices but does not press.
+- **Pendulum Vault:** No dialogue. Cael's reflection in the glass is wrong for
+  one frame.
+
+Each visit sets a flag (`cael_last_night_lira`, `cael_last_night_edren`, `cael_last_night_maren`, `cael_last_night_vault`) that alters
+the betrayal cutscene's camera work and emotional framing. No visit is wrong --
+each reveals a different truth about Cael's state. The control switch to Cael
+is unmarked; it hits only in retrospect.
+
+See `docs/superpowers/specs/2026-03-17-narrative-expansion-design.md` Section 3,
+Scene 2 for full design.
+
 ### The Betrayal
 
-The Carradan Compact launches a surprise assault on Valdris while Edren's team is away. In the chaos, Cael makes his move. The Pallor has convinced him the Pendulum can end all suffering — not as a weapon, but by reshaping the world. He takes the Pendulum, opens a gate using the weakened ley lines, and vanishes.
+*(Tier 1: Full Cutscene)*
 
-But not before confronting Lira, who has just returned. She begs him to stay. He tells her he's doing this *for* her — for everyone. He believes it. She can see he's not entirely himself, but he's not entirely gone either. He leaves.
+The Carradan Compact launches a surprise assault on Valdris the morning after the diplomatic team returns. In the chaos, Cael makes his move. The Pallor has convinced him the Pendulum can end all suffering — not as a weapon, but by reshaping the world. He takes the Pendulum, opens a gate using the weakened ley lines, and vanishes.
+
+But not before confronting Lira. She begs him to stay. He tells her he's doing this *for* her — for everyone. He believes it. She can see he's not entirely himself, but he's not entirely gone either. He leaves.
 
 ### The Siege of Valdris
+
+*(Tier 1: Full Cutscene, transitions to playable)*
 
 The Compact's assault does not end with Cael's departure. Their vanguard has shattered the outer gates, and through the breach the party hears the ground-shaking advance of the Ashen Ram — a Forgewright siege engine powered, impossibly, by Pallor energy rather than stable ley lines. Its approach turns the cobblestones grey. The soldiers behind it move like men in a dream. The party meets the Ram on the battlements, fighting it as it advances. Mid-fight the Ram breaches the wall, and in the wreckage the party destroys its Pallor core. The battle turns there, but barely.
 
@@ -91,9 +193,13 @@ The party reunites in a broken capital. Maren reveals what she's kept secret: th
 
 ### The World Changes
 
+*(Tier 1: Full Cutscene -- Ley Rupture)*
+
 Time passes — weeks, maybe months. The ley lines have ruptured. Magic is wild and unstable. The Thornmere Wilds are twisting — forests petrifying, spirit creatures going mad. Valdris has fractured into squabbling noble houses. The Carradan Compact is also suffering — their Forgewright engines relied on stable ley lines, and now machines are misfiring or running on Pallor energy without anyone understanding why.
 
 ### The Party Scatters
+
+*(Tier 2: Walk-and-Talk (Sable solo))*
 
 - **Edren** retreats to a remote monastery in the Valdris highlands, paralyzed by guilt.
 - **Lira** returns to the Carradan Compact under a false identity, searching for Cael.
@@ -104,6 +210,15 @@ Time passes — weeks, maybe months. The ley lines have ruptured. Magic is wild 
 In the weeks that follow, reports of the grey stranger reach each of them separately. Dame Cordwyn, the Valdris garrison commander, has compiled a file of sightings spanning decades — possibly centuries, if the older accounts are genuine. A travelling scholar fitting the same description appears in records from three different kingdoms during three different eras of Pallor activity. Sable finds the file and keeps it to herself for a while, not sure what to do with it. More immediate is what Brant tells her when she finally tracks him down — Brant, whose cowardice at the rear gate at Ironmark Citadel still has people talking. He cannot look at her when he confesses it: a figure matching Vaelith's description visited him weeks before the assault. They talked for hours. Brant cannot recall everything they discussed, only that afterward, the conviction slowly settled in him that resistance was pointless, that Valdris was already lost, that the door had been open too long to close. He did not recognize it as planted. It felt like clarity. The party, comparing notes through Sable, begins to understand that the siege did not begin at the gates. It began much earlier, in conversations they were not present for.
 
 ### Sable's Journey (Playable)
+
+The player chooses the order of reunions. Previously reunited members are
+present for later reunions, changing dialogue and emotional dynamics. Finding
+Lira first means she helps stabilize Torren's ley nexus. Finding Edren first
+means his steadiness grounds Lira's infiltration. Finding Torren first
+provides spirit-sense hints for subsequent searches. Finding Maren first
+recontextualizes all other reunions. The final reunion is always the most
+emotionally charged. Flags `reunion_order_1` through `reunion_order_4` track
+the sequence. The story converges at the same point regardless of order.
 
 The player controls Sable as she tracks down each party member. Each reunion is its own short arc:
 
@@ -127,7 +242,26 @@ Everyone understands. No one says Cael's name.
 
 ## Act III: The Convergence
 
+### The Night Before the Convergence (Playable Scene)
+
+A campfire scene. The remaining party (Edren, Lira, Torren, Sable, Maren) is
+together for the last time. Cael is absent -- he is at the Convergence.
+
+The player moves freely around the campfire. Each member can be spoken to:
+- **Torren** talks about the spirits going quiet.
+- **Lira** adjusts her tools, mentions something she never finished building.
+- **Sable** makes a joke that does not land. Then a real one that does.
+- **Maren** stares at the fire. Says she has seen this story before in the old texts. This time might be different.
+
+If the player speaks to everyone, a group moment triggers -- Edren says
+something simple that binds them. Not a battle speech, just acknowledgment.
+If the player walks to the exit, the march begins without it.
+
+`campfire_complete` flag set only if the group moment triggers.
+
 ### The March
+
+*(Tier 2: Walk-and-Talk)*
 
 The party travels to the Convergence — a shattered plateau at the center of the continent. The sky is grey and static. Hope feels physically heavier here. The Pallor knows they're coming.
 
@@ -145,6 +279,8 @@ Each overcomes their trial not by defeating it, but by **accepting** it. The Pal
 
 ### The Pallor Wastes
 
+*(Tier 1: Full Cutscene, in-battle)*
+
 The plateau outside the Convergence is wrong in a way the party has no language for — not hostile, exactly, but voided, as though the land itself has given up the habit of caring. Vaelith is waiting for them here, between the wastes and the Convergence gate. This is the first time the party has seen them without their ease. They are not smiling. They look at the ley lines visible in the sky above the party — threads of light, faint but present — and for a moment they seem genuinely disoriented. They remark, more to themselves than to the party, that the network should not still be alive this late in a cycle. It has never been alive this late. Vaelith turns to look at the party with something that might be recalibration.
 
 They do not stand aside. But the fight this time is different. Lira, drawing on Cael's lingering resonance through the Pendulum's fracture lines and the restored ley network threading through the plateau, shapes the grief she has been carrying since the siege into something she could not have made any earlier in the journey — not a weapon exactly, but an act of love that has learned to push back. It strikes Vaelith in a way that their centuries of experience have not prepared them for. They take a step backward. They take another. The smile does not return. The party presses the advantage until Vaelith is on one knee in the grey dust, and then — for the first time — they simply sit down. They look at the four of them without contempt, without performance, without the careful distance they have maintained across every encounter. They are quiet for a long moment. Then they say that something changed in this cycle, and that they do not fully understand what. They say it without bitterness. They dissolve slowly into grey mist, edges going first — not destroyed, not fleeing, but concluded. Released. The mist drifts upward and is gone. The Convergence gate opens without any further obstacle.
@@ -160,6 +296,8 @@ Cael is at the Convergence, barely recognizable — wreathed in grey light, the 
 **Phase 3** — The machine is broken. The Pallor, half-incarnated, is a towering presence of grey static and hollow sound. Cael is at its center, barely conscious.
 
 ### Lira Reaches Cael
+
+*(Tier 1: Full Cutscene)*
 
 She pushes through the Pallor's aura and speaks to him. She doesn't beg this time. She tells him about the door. She tells him she can still see him in there. And she tells him she's letting him go.
 
@@ -185,6 +323,8 @@ Edren refuses to accept it. He argues for another way. Maren shakes her head. To
 Lira tells Edren to let him go. It costs her everything. But she understood it in Phase 3. This is what acceptance looks like.
 
 ### The Sacrifice
+
+*(Tier 1: Full Cutscene)*
 
 Cael walks into the door. The party holds off a final surge of Pallor manifestations — a last stand sequence controlling the full party while Cael's silhouette grows smaller in the grey light.
 
@@ -215,6 +355,8 @@ The ley lines stabilize into something new — not restored, but settled. Raw ma
 **Maren** returns to the ancient ruin. She writes a complete history, so the next time Despair finds a crack, the world won't need to learn the lesson again.
 
 ### Final Scene
+
+*(Tier 1: Full Cutscene)*
 
 Edren stands at the Convergence — now a quiet meadow where wild magic drifts like fireflies. He places Cael's sword in the ground. Lira is beside him. They don't speak.
 
