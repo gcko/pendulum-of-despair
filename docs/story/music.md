@@ -223,7 +223,7 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Bellhaven | II | Stage 0 | Pastoral / Industrial | Accordion-forward, lighter. Sea breeze influence — open fifths, rolling wave rhythm. Port town ease. |
 | Millhaven | II | Stage 0 | Pastoral | Gentle hammered dulcimer, pastoral. Lightest Carradan theme. |
 | Millhaven | Interlude+ | Destroyed | Silence | Physically destroyed by Ley Line Rupture — not Pallor-consumed. No music. Wind ambience only. |
-| Ironmouth | I-III | Stage 0-1 | Industrial / Tense | Heavy port. Deep mechanical rhythm, foghorn-like bass tones. Commercial urgency. Accessible from Act I (Ember Vein mine entrance, Dawn March origin). |
+| Ironmouth | I-II | Stage 0-1 | Industrial / Tense | Heavy port. Deep mechanical rhythm, foghorn-like bass tones. Commercial urgency. Accessible from Act I (Ember Vein mine entrance, Dawn March origin). |
 | Caldera | III | Stage 1 | Industrial / Urgent | Deep bass drums, forge palette at maximum intensity. Volcanic heat and pressure. |
 | Ashport | II | Stage 0 | Industrial / Hopeful | Mid-weight Carradan. Trade hub energy, dulcimer and accordion trading phrases. |
 | Gael's Span | II-III | Stage 0-1 | Neutral + Carradan | Cross-faction bridge town. Neutral palette base with Carradan undercurrent. Trade and tension — factions meet here. |
@@ -266,9 +266,9 @@ mood with reduced instrumentation.
 |---------|-----|--------------|------|-------------|
 | Ember Vein | I | Carradan → Ancient | Mysterious → Solemn | Starts with mining sounds (pick strikes, cart wheels). Transitions floor by floor to ancient geometry — mining percussion fades, replaced by crystalline resonance and sustained tones. Floor 4: pure Ancient palette, no faction identity. Ley energy hum and silence. |
 | Fenmother's Hollow | II | Thornmere (submerged) | Mysterious | Underwater distortion of Wilds palette. Flute replaced by murky sustained tones. Bubbles and current as percussion. Cleansing sequence: music drains with corruption, floods back as clean Thornmere theme. |
-| Valdris Catacombs | II | Valdris (solemn) | Solemn | Slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound — Valdris predates the monarchy. |
-| Frostcap Caverns | II | Neutral (alpine) | Mysterious / Sacred | Crystal-clear acoustics. Sparse — solo instruments with natural reverb. Ice and altitude. No faction identity. |
-| Windshear Peak | II | Neutral (alpine) | Tense / Sacred | High-altitude wind as rhythmic base. Sparse brass and strings fighting the wind. Exposed, elemental. |
+| Valdris Crown Catacombs | Interlude | Valdris (solemn) | Solemn | Slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound — Valdris predates the monarchy. |
+| Frostcap Caverns | Interlude-III | Neutral (alpine) | Mysterious / Sacred | Crystal-clear acoustics. Sparse — solo instruments with natural reverb. Ice and altitude. No faction identity. |
+| Windshear Peak | II-III | Neutral (alpine) | Tense / Sacred | High-altitude wind as rhythmic base. Sparse brass and strings fighting the wind. Exposed, elemental. |
 | Ashgrove Proving Grounds | II | Thornmere + Ancient | Tense / Sacred | Trial ground. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
 | Carradan Rail Tunnels | II-Interlude | Carradan (dark) | Tense / Industrial | Echoing mechanical palette. Train-rhythm percussion (clack-clack tempo). Darkness and distance. Collapse sections: rhythm breaks apart. |
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
@@ -283,7 +283,7 @@ mood with reduced instrumentation.
 | Caldera Forge Depths | III | Carradan (volcanic) | Urgent / Industrial | Deepest forge. Bass drums and anvil strikes at maximum. Heat shimmer as ambient. Carradan industrial pushed past safe limits. |
 | Thornvein Passage | III | Thornmere (corrupted) | Tense / Mysterious | Corrupted root network. Thornmere palette at Stage 2-3 corruption. Flute pitchless, hand drums irregular. The forest is sick. |
 | Pallor Wastes | III | Pallor dominant | Consumed | The Pallor motif as a sustained, cycling drone. Ghost fragments of all three faction palettes drift in and out — memories of the world before. No melody, no rhythm, no structure. Anti-music given geography. Vaelith encounter sections intensify the motif to dissonant layering. |
-| Grey March Path | III | Overworld variant | Urgent / Solemn | Uses Act III overworld variant with encounter-rate tension layered in. Drumbeat underneath like a war march. Dead forest ambience. |
+| The Grey March | III | Overworld variant | Urgent / Solemn | Uses Act III overworld variant with encounter-rate tension layered in. Drumbeat underneath like a war march. Dead forest ambience. |
 | The Convergence | III-IV | All palettes merging | Urgent → Sacred → Resolved | Every faction palette present, cycling and compressing. Trial rooms isolate one character's motif in distorted form. Final chamber: all motifs attempt to play simultaneously (cacophony) until party unity resolves them into harmony. |
 | Valdris Siege (encounter) | II | Valdris (war) | Urgent | Valdris brass at war tempo. Most intense military percussion in the game. Wall breach = instruments drop out, replaced by chaos. Vaelith arrival = hard cut to Pallor motif. |
 | Dreamer's Fault | Post-game | Ancient + Pallor residue | Mysterious / Solemn | Post-game optional. Ancient palette with lingering Pallor echoes — corruption receding but not gone. Contemplative, archaeological. |
@@ -351,9 +351,11 @@ Vaelith has dissolved before this point and is absent.
 Every location theme has act variants. Rather than composing entirely new
 tracks, each variant modifies the original through corruption stages.
 
-**Terminology note:** These corruption stages align with the Stage 0-4
-system documented in [dynamic-world.md](dynamic-world.md). "Stage" is the canonical term
-across all story docs; this section uses it consistently.
+**Terminology note:** Stages 0-3 align with the corruption system in
+[dynamic-world.md](dynamic-world.md) and [biomes.md](biomes.md). Stage 4
+("Consumed") is a music-specific extension for locations where corruption
+has completely replaced the original soundscape (Pallor Wastes, destroyed
+Millhaven). "Stage" is the canonical term across all story docs.
 
 ### Corruption Stages
 
@@ -419,7 +421,7 @@ Event-driven tracks that override location music during story beats.
 | Silence is sacred | True silence (zero audio) appears exactly twice: after the Ley Line Rupture (5s) and before the bird call at Cael's sacrifice (3s). No other moment goes fully silent. The Pallor Wastes hard-cut transition fades to drone within 1 second — not true silence. |
 | The Bird | Not a musical instrument. A real bird call sample — single note, natural, unprocessed. The first non-musical sound in the entire game's score. Nature reasserting itself after Despair. |
 | Pallor drone spec | Sustained low tone (sub-bass + low-mid). No harmonic content — as flat and lifeless as possible. Anti-music. |
-| Music-as-mechanic | Torren's Spiritcall sidequest restores a corrupted melody in real-time gameplay. The player hears the music heal as they play. |
+| Music-as-mechanic | Torren's Spiritcall ability restores a corrupted melody during the Ley Leech boss fight (Interlude main story). The player hears the music heal in real-time as gameplay. |
 | Biome crossfade | Standard 3-second crossfade between biome themes (documented in biomes.md). Pallor Wastes exception: hard cut, then immediate 1-second drone fade-in (not true silence). |
 | Ley Nexus layering | Ley nexus locations blend additively with surrounding biome (hum layers underneath, not replacement). Documented in biomes.md. |
 
@@ -436,7 +438,7 @@ Standard JRPG music cues for non-narrative game systems.
 | Save Point | 3-5s | Gentle harp arpeggio with ley-hum fade. Thornmere palette — save points are ley-crystal formations. | Warmth and safety. Brief comfort before continuing. |
 | Inn / Rest | 8-10s | Soft acoustic passage. Neutral palette. Resolves on a warm major chord as HP/MP restore. | Plays over the rest animation. |
 | Shop | Loop (short) | Light arrangement of the current town's theme. Same palette, reduced to lead + rhythm only. More casual, transactional. | Not a unique track — a processing rule applied to the town theme. |
-| Game Over / Reload | 4s | The fast-reload sequence from events.md section 2c. Last Faint animation → fade to black → instant reload. Music: hard cut to silence on Faint, then save point jingle on reload. | No "Game Over" screen or unique game-over theme. The silence IS the statement. |
+| Game Over / Reload | 4s | The fast-reload sequence from [events.md](events.md) section 2c. Last Faint animation, fade to black, instant reload. Music stops on Faint (not true silence — ambient sound continues during the 2s fade to black), then save point jingle on reload. | No "Game Over" screen or unique game-over theme. |
 | Menu Screen | None | No unique menu music. The current location/overworld theme continues playing underneath the menu UI. | Maintains immersion. No jarring music switch when pausing. |
 
 ## Composable Framework for New Content
