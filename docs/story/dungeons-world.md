@@ -1883,7 +1883,7 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 
 **Weakness:** Spirit (125%).
 **Resistance:** Void (50%), Frost (75%).
-**Immunity:** Despair status, Instant Faint.
+**Immunity:** Despair status, Instant Defeat.
 **Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic damage), Grey Mist Essence (crafting material -- Lira's ultimate weapon component).
 
 ---

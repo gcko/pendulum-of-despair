@@ -384,8 +384,9 @@ standing, the wipe still triggers):
 1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music hard-cuts
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
-3. **Instant Reload:** Fade in at last save point. Full HP/MP as of last save.
-   Save point marker glows briefly. Ambient music resumes. ~4 seconds total.
+3. **Instant Reload:** Fade in at last save point. HP and MP restored to 100%
+   of current max (reflecting any levels gained since saving). Save point marker
+   glows briefly. Ambient music resumes. ~4 seconds total.
 
 **Rules:**
 - No menu, no prompt. Save point is where you go.
@@ -408,19 +409,20 @@ the save.
 | Category | Rule | Rationale |
 |----------|------|-----------|
 | XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
-| Gold/currency | Kept | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
-| Battle consumables | Restored to pre-battle state | The losing battle "didn't happen" -- items used during it are returned |
+| Gold/currency | Kept (includes gold earned from battles between save and wipe) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover |
+| Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching the same cutscene on retry; see Rules above |
 
 **What Resets to Last Save:**
 
-| Category | Examples |
-|----------|---------|
+| Category | Rule |
+|----------|------|
+| Inventory and consumables | Entire inventory reverts to last save (items used, collected, bought, or sold between save and wipe are all undone) |
+| Equipment | Reverts to last-saved loadout; prevents item duplication from reset chests |
 | Chest openings | Must be re-collected |
 | Field item pickups | Items collected between save and wipe are gone |
-| Equipment changes | Reverts to last-saved loadout; prevents item duplication from reset chests |
-| Shop transactions | Buy/sell actions between save and wipe revert |
+| Shop transactions | Buy/sell actions between save and wipe revert (gold persists per above, but purchased items revert) |
 | Party composition | Story-driven member additions/removals revert |
-| Storyline flag updates | Events, cutscenes, NPC state changes revert |
+| Storyline flag updates | Events, quest progress flags, NPC state changes revert (boss cutscene skip flags are exempt -- see What's Kept above) |
 | Dungeon progress | Doors opened, switches flipped, puzzles solved revert |
 
 ---
