@@ -2,7 +2,9 @@
 
 **Date:** 2026-03-18
 **Status:** Draft
-**Scope:** Documentation-only pass across all `docs/story/` files
+**Scope:** Documentation-only pass. All `docs/story/` files were audited; only
+files containing combat-mechanic KO/death terminology required changes (4 of 16).
+See Section 6 for the specific file list.
 
 ---
 
@@ -122,8 +124,10 @@ Text shown below reflects post-edit terminology:
 1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music
    hard-cuts to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
-3. **Instant Reload:** Fade in at last save point. Full HP/MP as of last save.
-   Save point marker glows briefly. Ambient music resumes. ~4 seconds total.
+3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
+   persistent values (XP, levels, gold, cutscene flags) are applied on top.
+   HP and MP are set to 100% of the resulting max. Save point marker glows
+   briefly. Ambient music resumes. ~4 seconds total.
 
 No retry option. No Game Over screen. Matches FF4/FF6 philosophy.
 

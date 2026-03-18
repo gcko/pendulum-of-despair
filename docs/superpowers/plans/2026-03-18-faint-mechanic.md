@@ -364,21 +364,25 @@ Expected: all pass (documentation-only changes should not break anything).
 Search all story docs for stray "KO" that should have been changed:
 
 ```bash
-grep -rn '\bKO\b' docs/story/
+rg -n '\bKO\b' docs/story/
 ```
 
-Expected: zero matches (all instances should now be "Faint").
+Expected: zero matches (all instances should now be "Faint"). Uses `rg` for
+reliable word-boundary matching (`\b` requires PCRE in GNU grep). The pattern
+also catches "KO'd" since `\b` matches at the apostrophe boundary.
 
 - [ ] **Step 3: Audit for combat-context "death" that should be "defeat"**
 
-Search for "on death" and "instant kill" in story docs:
+Search for combat-context death language in story docs:
 
 ```bash
-grep -rn 'on death\|instant kill\|Instant Death' docs/story/
+rg -n 'on defeat|instant kill|Instant Death|Instant Faint' docs/story/
 ```
 
-Expected: zero matches. If any remain, evaluate whether they are narrative
-(keep) or mechanical (change).
+Expected: only "on defeat" matches (those are correct). Zero matches for
+"instant kill", "Instant Death", or "Instant Faint". Note: searching for
+"on death" would false-positive on environmental text like "Vegetation death"
+in biomes.md — use "Instant Death" (the specific mechanic name) instead.
 
 - [ ] **Step 4: Push to remote**
 

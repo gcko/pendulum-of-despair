@@ -384,9 +384,10 @@ standing, the wipe still triggers):
 1. **The Fall (2s):** Last Faint animation plays. Battle UI fades. Music hard-cuts
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
-3. **Instant Reload:** Fade in at last save point. HP and MP restored to 100%
-   of current max (reflecting any levels gained since saving). Save point marker
-   glows briefly. Ambient music resumes. ~4 seconds total.
+3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
+   persistent values (XP, levels, gold, cutscene flags) are applied on top.
+   HP and MP are set to 100% of the resulting max. Save point marker glows
+   briefly. Ambient music resumes. ~4 seconds total.
 
 **Rules:**
 - No menu, no prompt. Save point is where you go.
