@@ -26,11 +26,15 @@
    gets a full theme of its own.
 4. **Music evolves with the world.** Each location's theme has act variants
    — the same melody progressively damaged by the Unraveling, then rebuilt.
-5. **Silence is sacred.** True silence (zero audio) appears exactly twice
-   in the entire game: after the Ley Line Rupture (5s) and before the bird
-   call at Cael's sacrifice (3s). Every other moment has at least ambient
-   sound or drone. The Pallor Wastes hard-cut transition uses drone (not
-   true silence) — it fades in within 1 second.
+5. **Silence is sacred.** Narrative true silence (zero audio, sustained
+   for dramatic effect) appears exactly twice: after the Ley Line Rupture
+   (5s) and before the bird call at Cael's sacrifice (3s). Other
+   moments where music stops (Game Over, the Betrayal, Pallor Wastes
+   biome transition) retain ambient sound or transition to drone within
+   seconds — these are music-stops, not true silence. The Pallor Wastes
+   transition has a brief gap before the drone fades in over 5 seconds
+   (per [biomes.md](biomes.md)), but this is a transition effect, not a
+   narrative beat.
 6. **All music is instrumental.** No singing, no vocals, no chanting.
    Choir-like textures use sustained string instruments, not voices.
 7. **The framework is composable.** New locations derive their music from
@@ -351,10 +355,14 @@ Vaelith has dissolved before this point and is absent.
 Every location theme has act variants. Rather than composing entirely new
 tracks, each variant modifies the original through corruption stages.
 
-**Terminology note:** Stages 0-3 align with the corruption system in
-[dynamic-world.md](dynamic-world.md) and [biomes.md](biomes.md). Stage 4
-("Consumed") is a music-specific extension for locations where corruption
-has completely replaced the original soundscape (Pallor Wastes, destroyed
+**Terminology note:** [biomes.md](biomes.md) defines a 3-stage Pallor
+overlay system (Stages 1-3) for visual corruption;
+[dynamic-world.md](dynamic-world.md) uses Stages 0-3 for location state
+tracking. This music system maps to those stages for audio effects (Stage
+0 = clean/no corruption, Stages 1-3 = audio equivalents of the visual
+corruption levels). Stage 4 ("Consumed") is a music-specific extension
+for locations where corruption has completely replaced the original
+soundscape (Pallor Wastes, destroyed
 Millhaven). "Stage" is the canonical term across all story docs.
 
 ### Corruption Stages
@@ -406,7 +414,7 @@ Event-driven tracks that override location music during story beats.
 | Siege of Valdris | Valdris brass at war tempo. Most intense military percussion. Wall breach: instruments drop out, chaos. Vaelith arrival: hard cut to Pallor motif. |
 | Ley Line Rupture | Every faction palette shuddering simultaneously (3-5 seconds) — hard cut to absolute silence. Silence holds for 5 full seconds. Single low drone fades in. The Unraveling has begun. (First of two true silences.) |
 | Sable's Reunions | Sable's pizzicato motif alone. Each reunion layers the found character's motif. By the fourth, four motifs play together. Player-chosen reunion order determines layering sequence. |
-| The March (walk-and-talk to Convergence) | Act III overworld at full rebuild. The party is together. Edren's motif leads, other motifs layer in as characters speak. Walking tempo — not urgent, resolute. Transitions to Grey March Path dungeon theme as encounters begin. |
+| The March (walk-and-talk to Convergence) | Act III overworld at full rebuild. The party is together. Edren's motif leads, other motifs layer in as characters speak. Walking tempo — not urgent, resolute. Transitions to The Grey March route theme as encounters begin. |
 | Campfire Scene (pre-Convergence) | Most intimate track. Acoustic-only, no orchestration. Each character's motif on a single instrument, overlapping like conversation. Fire-crackle ambient. Longest non-looping track — plays through the whole scene. |
 | Lira Reaches Cael | Lira's motif and Cael's original clean motif reaching toward each other. Harmonize for exactly one phrase. Then Cael's motif begins to fade. |
 | The Farewell | Transition from battle victory to sacrifice. Full orchestral resolution fades to solo instruments one by one. Party members' motifs drop out as focus narrows to Cael. Edren's motif plays a quiet phrase — the last thing between friends. |
@@ -422,7 +430,7 @@ Event-driven tracks that override location music during story beats.
 | The Bird | Not a musical instrument. A real bird call sample — single note, natural, unprocessed. The first non-musical sound in the entire game's score. Nature reasserting itself after Despair. |
 | Pallor drone spec | Sustained low tone (sub-bass + low-mid). No harmonic content — as flat and lifeless as possible. Anti-music. |
 | Music-as-mechanic | Torren's Spiritcall ability restores a corrupted melody during the Ley Leech boss fight (Interlude main story). The player hears the music heal in real-time as gameplay. |
-| Biome crossfade | Standard 3-second crossfade between biome themes (documented in biomes.md). Pallor Wastes exception: hard cut, then immediate 1-second drone fade-in (not true silence). |
+| Biome crossfade | Standard 3-second crossfade between biome themes (documented in [biomes.md](biomes.md)). Pallor Wastes exception: hard cut to silence, then Pallor drone fades in over 5 seconds. The brief silence between is deliberate but is not one of the two "sacred" true silences — it is a transition effect, not a narrative beat. Per biomes.md Section 1.11. |
 | Ley Nexus layering | Ley nexus locations blend additively with surrounding biome (hum layers underneath, not replacement). Documented in biomes.md. |
 
 ## System & UI Music

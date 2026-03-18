@@ -46,9 +46,9 @@ with these adjustments:
 - Create: `docs/story/music.md`
 - Reference: `docs/superpowers/specs/2026-03-18-music-score-design.md`
 
-- [ ] **Step 1: Create the file with header and design principles**
+- [ ] **Step 1: Create the file with header and musical rules**
 
-Create `docs/story/music.md` with the document header and condensed design
+Create `docs/story/music.md` with the document header and condensed musical
 rules. Open with a note about the document's purpose:
 
 ```markdown
