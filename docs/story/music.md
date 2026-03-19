@@ -210,7 +210,7 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
 | Valdris Crown | I-II | Stage 0-1 | Hopeful / Solemn | Proud, bustling. Brass fanfare on entry, settles into warm strings. Royal court undertone. Edren's motif as harmonic foundation. |
-| Valdris Crown | Interlude+ | Stage 2 | Corrupted | Muted horn over empty streets. Military snare replaces court strings — Cordwyn's de facto command. Ghost of the original fanfare in reverb. |
+| Valdris Crown | Interlude | Stage 2 | Corrupted | Muted horn over empty streets. Military snare replaces court strings — Cordwyn's de facto command. Ghost of the original fanfare in reverb. |
 | Aelhart | I/Interlude | Stage 0 | Pastoral | Lighter brass, pastoral strings. Small-town warmth. Market day feel. Relaxed tempo. Town proper inaccessible after Act I; Dry Well dungeon beneath accessible during Interlude+. |
 | Highcairn | Interlude-III | Stage 1-2 | Solemn / Sacred | Monastery setting. Low sustained strings, sparse brass. Deeper areas introduce Stage 2 corruption where Pallor manifestations appear. |
 | Thornwatch | I-II | Stage 0-1 | Tense | Martial Valdris variant. Drums prominent, brass restrained. Border watchtower vigil. |
@@ -221,12 +221,12 @@ variants needed. Multi-visit towns show separate rows per act state.
 
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
-| Corrund | Interlude-III | Stage 0 | Industrial / Hopeful | Full Carradan palette. Layered rhythms, merchant energy, hammered dulcimer lead. Busiest track in the game. |
+| Corrund | Interlude-III | Stage 0-1 | Industrial / Hopeful | Full Carradan palette. Layered rhythms, merchant energy, hammered dulcimer lead. Busiest track in the game. |
 | Corrund | Interlude+ | Stage 1-2 | Corrupted | Rhythms stutter. Factory sounds become arrhythmic. Resistance hideout sections drop to acoustic-only (rebel theme). |
 | Ashmark | II | Stage 0 | Industrial (heavy) | Darker Carradan variant. Deeper percussion, more anvil/forge sounds. Smoke and labor. |
 | Bellhaven | II | Stage 0 | Pastoral / Industrial | Accordion-forward, lighter. Sea breeze influence — open fifths, rolling wave rhythm. Port town ease. |
 | Millhaven | II | Stage 0 | Pastoral | Gentle hammered dulcimer, pastoral. Lightest Carradan theme. |
-| Millhaven | Interlude+ | N/A (Destroyed) | Silence | Physically destroyed by Ley Line Rupture — not Pallor-consumed. No music. Wind ambience only. |
+| Millhaven (crater) | Interlude | N/A (Destroyed) | Silence | Physically destroyed by Ley Line Rupture — not Pallor-consumed. Town map is gone; overworld crater only. No music. Wind ambience only. |
 | Ironmouth | I-II | Stage 0-1 | Industrial / Tense | Heavy port. Deep mechanical rhythm, foghorn-like bass tones. Commercial urgency. Accessible from Act I (Ember Vein mine entrance, Dawn March origin). |
 | Caldera | II/Interlude | Stage 1 | Industrial / Urgent | Deep bass drums, forge palette at maximum intensity. Volcanic heat and pressure. |
 | Ashport | II | Stage 0 | Industrial / Hopeful | Mid-weight Carradan. Trade hub energy, dulcimer and accordion trading phrases. |
@@ -276,11 +276,11 @@ mood with reduced instrumentation.
 | Carradan Rail Tunnels | II-Interlude | Carradan (dark) | Tense / Industrial | Echoing mechanical palette. Train-rhythm percussion (clack-clack tempo). Darkness and distance. Collapse sections: rhythm breaks apart. |
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
 | Archive of Ages | Interlude | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
-| Monastery of the Vigil (Highcairn) | Interlude | Valdris (sacred) | Sacred → Corrupted | Low sustained strings mimicking monastic chant (instrumental, not vocal). As Pallor influence deepens, the "chant" decomposes into the Pallor motif. |
+| Highcairn Monastery | Interlude | Valdris (sacred) | Sacred → Corrupted | Low sustained strings mimicking monastic chant (instrumental, not vocal). As Pallor influence deepens, the "chant" decomposes into the Pallor motif. |
 | Ley Nexus Hollow | Interlude | Thornmere + Ancient | Sacred / Urgent | Torren's reunion location. His flute motif corrupted by Ley Leech — the music IS the boss fight. Thornmere palette at maximum spiritual intensity. |
 | Sunken Rig | Interlude | Carradan (submerged) | Mysterious / Tense | Underwater-distorted industrial palette. Drowned machinery sounds. Accordion replaced by murky sustained tones. Eerie. |
 | Dry Well of Aelhart | Interlude+ | Valdris + Ancient | Solemn / Mysterious | Beneath Aelhart. Starts Valdris but transitions to Ancient as depth increases. Drought and abandonment — dry acoustics, no reverb. |
-| Axis Tower | Interlude | Carradan (power) | Urgent / Industrial | Ascending — music literally rises in register and intensity floor by floor. Peak Carradan: precision, power, control. |
+| Axis Tower Interior | Interlude | Carradan (power) | Urgent / Industrial | Ascending — music literally rises in register and intensity floor by floor. Peak Carradan: precision, power, control. |
 | Caldera Forge Depths | II/Interlude | Carradan (volcanic) | Urgent / Industrial | Deepest forge. Bass drums and anvil strikes at maximum. Heat shimmer as ambient. Carradan industrial pushed past safe limits. |
 | Thornvein Passage | III | Thornmere (corrupted) | Tense / Mysterious | Corrupted root network. Thornmere palette at Stage 2-3 corruption. Flute pitchless, hand drums irregular. The forest is sick. |
 | Pallor Wastes | III | Pallor dominant | Consumed | The Pallor motif as a sustained, cycling drone. Ghost fragments of all three faction palettes drift in and out — memories of the world before. No melody, no rhythm, no structure. Anti-music given geography. Vaelith encounter sections intensify the motif to dissonant layering. |
@@ -299,7 +299,7 @@ reduced instrumentation.
 |---------|-------------|-----------|-------------|
 | Valdris Crown Catacombs | Valdris Crown | Solemn | Unique track: slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound — Valdris predates the monarchy. Interlude (mandatory escape route), optional return post-Interlude. |
 | Ironmark Citadel Dungeons | Ironmark Citadel | Urgent / Tense | Unique track: march tempo. Oppressive brass borrowed from Valdris palette but mechanized. Stage 2 corruption deliberately embraced by Kole — the Pallor motif is woven in intentionally, not as decay but as power. Interlude (reached via Axis Tower tunnel). |
-| Corrund Sewers | Corrund | Industrial → Tense | Industrial palette stripped to bare percussion and dripping. Resistance sections introduce quiet acoustic rebel theme. |
+| Corrund Undercity / Sewers | Corrund | Industrial → Tense | Industrial palette stripped to bare percussion and dripping. Resistance sections introduce quiet acoustic rebel theme. |
 | Caldera Undercity | Caldera | Urgent → Tense | Caldera's forge intensity muted by stone. Deep percussion remains, dulcimer echoes off tunnel walls. |
 | Ashmark Factory Depths | Ashmark | Industrial → Mysterious | Factory rhythms continue below but distorted by depth. Machinery sounds become alien at lower levels. |
 | Bellhaven Smuggler Tunnels | Bellhaven | Pastoral → Tense | Bellhaven's accordion and wave rhythm replaced by dripping water and hushed urgency. Compact palette stripped to bare bones. |

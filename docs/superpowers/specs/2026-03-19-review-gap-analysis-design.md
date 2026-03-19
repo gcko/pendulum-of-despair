@@ -319,7 +319,7 @@ must be updated to "six":
 
 ### 9.5 Target Size
 
-SKILL.md: ~200 lines (down from ~500)
+SKILL.md: ~350 lines (down from ~500)
 Each agent file: ~60-100 lines
 verification-checklists.md: ~40 lines initially, growing
 gap-analysis-log.md: ~20 lines per entry, append-only

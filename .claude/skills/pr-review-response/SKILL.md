@@ -25,7 +25,7 @@ digraph pr_review {
     fix [label="3. FIX\nImplement changes\nfor valid concerns", fillcolor="#ccffcc"];
     verify [label="4. VERIFY\npnpm lint\npnpm test", fillcolor="#ccccff"];
     green [label="All green?", shape=diamond, fillcolor="#fff3e6"];
-    commit [label="5. COMMIT & PUSH\nDescriptive message\nvia temp file", fillcolor="#e6ffe6"];
+    commit [label="5. COMMIT\n(push deferred if\nCopilot commented)\nDescriptive message\nvia temp file", fillcolor="#e6ffe6"];
     copilot [label="Copilot\ncommented?", shape=diamond, fillcolor="#fff3e6"];
     gap [label="5b. GAP ANALYSIS\nCategorize Copilot findings\nPropose skill improvements", fillcolor="#f3e6ff"];
     reply [label="6. REPLY\nRespond to each comment\non GitHub", fillcolor="#ffe6f3"];
@@ -106,7 +106,8 @@ EOF
 
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
-# Do NOT push yet if Copilot commented — step 5b may add another commit
+# Push now if no Copilot comments; otherwise push after step 5b
+git push  # Skip if Copilot commented — step 5b will push
 ```
 
 ### 5b. Copilot Gap Analysis (if Copilot commented)
