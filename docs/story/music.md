@@ -212,7 +212,7 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Valdris Crown | I-II | Stage 0-1 | Hopeful / Solemn | Proud, bustling. Brass fanfare on entry, settles into warm strings. Royal court undertone. Edren's motif as harmonic foundation. |
 | Valdris Crown | Interlude+ | Stage 2 | Corrupted | Muted horn over empty streets. Military snare replaces court strings — Cordwyn's de facto command. Ghost of the original fanfare in reverb. |
 | Aelhart | I | Stage 0 | Pastoral | Lighter brass, pastoral strings. Small-town warmth. Market day feel. Relaxed tempo. Inaccessible after Act I (border road too dangerous). |
-| Highcairn | Interlude | Stage 1-2 | Solemn / Sacred | Monastery setting. Low sustained strings, sparse brass. Deeper areas introduce Stage 2 corruption where Pallor manifestations appear. |
+| Highcairn | Interlude-III | Stage 1-2 | Solemn / Sacred | Monastery setting. Low sustained strings, sparse brass. Deeper areas introduce Stage 2 corruption where Pallor manifestations appear. |
 | Thornwatch | II | Stage 0-1 | Tense | Martial Valdris variant. Drums prominent, brass restrained. Border watchtower vigil. |
 | Greyvale | I-II | Stage 0 | Pastoral / Solemn | Rural Valdris. Gentle strings, distant horn. |
 | Greyvale | Interlude+ | Stage 2 | Corrupted | Pastoral melody struggles against Pallor drone. Strings thin. |
@@ -221,7 +221,7 @@ variants needed. Multi-visit towns show separate rows per act state.
 
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
-| Corrund | I-II | Stage 0 | Industrial / Hopeful | Full Carradan palette. Layered rhythms, merchant energy, hammered dulcimer lead. Busiest track in the game. |
+| Corrund | Interlude-III | Stage 0 | Industrial / Hopeful | Full Carradan palette. Layered rhythms, merchant energy, hammered dulcimer lead. Busiest track in the game. |
 | Corrund | Interlude+ | Stage 1-2 | Corrupted | Rhythms stutter. Factory sounds become arrhythmic. Resistance hideout sections drop to acoustic-only (rebel theme). |
 | Ashmark | II | Stage 0 | Industrial (heavy) | Darker Carradan variant. Deeper percussion, more anvil/forge sounds. Smoke and labor. |
 | Bellhaven | II | Stage 0 | Pastoral / Industrial | Accordion-forward, lighter. Sea breeze influence — open fifths, rolling wave rhythm. Port town ease. |
@@ -237,11 +237,11 @@ variants needed. Multi-visit towns show separate rows per act state.
 
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
-| Roothollow | I-II | Stage 0 | Pastoral | Gentle flute and harp. Welcoming. Deepest forest feel — nature ambience woven into score. |
+| Roothollow | I-II/Interlude | Stage 0 | Pastoral | Gentle flute and harp. Welcoming. Deepest forest feel — nature ambience woven into score. |
 | Duskfen | II | Stage 0 | Mysterious | Muted hand drums, breathy flute. Fog and wetland. Spirit-hum more prominent than melody. |
 | Ashgrove | II | Stage 0 | Sacred | Harp-dominant. Reverent. Council stones give the ley-hum harmonic resonance — the earth is singing. |
 | Canopy Reach | II | Stage 0 | Hopeful / Sacred | Flute at its brightest. Wind sounds. The panoramic view moment swells to incorporate all three faction palettes in the distance — first continental overview. |
-| Greywood Camp | II | Stage 0 | Tense / Mysterious | Sparse hand drums, low flute. Ranger outpost on the edge of safe territory. |
+| Greywood Camp | II/Interlude | Stage 0 | Tense / Mysterious | Sparse hand drums, low flute. Ranger outpost on the edge of safe territory. |
 | Stillwater Hollow | II | Stage 0 | Solemn | Near-silence. Harp notes with long decay. The water reflects sound. |
 | Sunstone Ridge | II-Interlude | Stage 0-1 | Sacred / Tense | Ley nexus guardian camp. Thornmere drums with prominent ley-hum harmonic layer. Spiritual vigilance — the guardians are watching the energy. |
 | Deeproot Shrine | II | Stage 0 | Sacred | Deep Thornmere. Harp and ley-hum dominant. Ancient growth. |
@@ -272,7 +272,7 @@ mood with reduced instrumentation.
 | Fenmother's Hollow | II | Thornmere (submerged) | Mysterious | Underwater distortion of Wilds palette. Flute replaced by murky sustained tones. Bubbles and current as percussion. Cleansing sequence: music drains with corruption, floods back as clean Thornmere theme. |
 | Frostcap Caverns | Interlude-III | Neutral (alpine) | Mysterious / Sacred | Crystal-clear acoustics. Sparse — solo instruments with natural reverb. Ice and altitude. No faction identity. |
 | Windshear Peak | II-III | Neutral (alpine) | Tense / Sacred | High-altitude wind as rhythmic base. Sparse brass and strings fighting the wind. Exposed, elemental. |
-| Ashgrove Proving Grounds | II | Thornmere + Ancient | Tense / Sacred | Trial ground. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
+| Ashgrove Undercroft | II/Interlude | Thornmere + Ancient | Tense / Sacred | Beneath the Ashgrove clearing. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
 | Carradan Rail Tunnels | II-Interlude | Carradan (dark) | Tense / Industrial | Echoing mechanical palette. Train-rhythm percussion (clack-clack tempo). Darkness and distance. Collapse sections: rhythm breaks apart. |
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
 | Archive of Ages | II-III | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
@@ -501,8 +501,8 @@ per the rules in Motif Layering Rules.
 |----------|-------|-------|
 | Overworld variants | 4 | One composition, four arrangements |
 | Town themes | ~25 | Each settlement unique, with act variants per corruption system |
-| Dungeon themes (world) | ~22 | Unique per dungeon, palette-blended |
-| Dungeon themes (city) | ~4 unique + rule | Unique city dungeons + "parent theme darkened" rule for secret passages |
+| Dungeon themes (world) | ~20 | Unique per dungeon, palette-blended |
+| Dungeon themes (city) | ~6 unique + rule | Unique city dungeons + "parent theme darkened" rule for secret passages |
 | Battle themes | 4 tiers | Standard (3 faction variants + corrupted), Boss, Vaelith, Final (3 phases) |
 | Narrative moment themes | ~17 | Event-driven overrides |
 | System/UI cues | ~8 | Title, victory, level up, item, save, inn, game over, shop (rule-based) |
