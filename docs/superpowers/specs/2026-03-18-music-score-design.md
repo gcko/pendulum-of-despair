@@ -239,9 +239,9 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Ashgrove | II | Stage 0 | Sacred | Harp-dominant. Reverent. Council stones give the ley-hum harmonic resonance — the earth is singing. |
 | Canopy Reach | II | Stage 0 | Hopeful / Sacred | Flute at its brightest. Wind sounds. The panoramic view moment swells to incorporate all three faction palettes in the distance — first continental overview. |
 | Greywood Camp | II/Interlude | Stage 0 | Tense / Mysterious | Sparse hand drums, low flute. Ranger outpost on the edge of safe territory. |
-| Stillwater Hollow | II | Stage 0 | Solemn | Near-silence. Harp notes with long decay. The water reflects sound. |
+| Stillwater Hollow | II/Interlude | Stage 0 | Solemn | Near-silence. Harp notes with long decay. The water reflects sound. |
 | Sunstone Ridge | II-Interlude | Stage 0-1 | Sacred / Tense | Ley nexus guardian camp. Thornmere drums with prominent ley-hum harmonic layer. Spiritual vigilance — the guardians are watching the energy. |
-| Deeproot Shrine | II | Stage 0 | Sacred | Deep Thornmere. Harp and ley-hum dominant. Ancient growth. |
+| Deeproot Shrine | I-II | Stage 0 | Sacred | Deep Thornmere. Harp and ley-hum dominant. Ancient growth. |
 
 ### 6.4 Cross-Faction / Special Locations
 
