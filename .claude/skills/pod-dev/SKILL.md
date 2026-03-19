@@ -130,6 +130,9 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 - [`visual-style.md`](../../../docs/story/visual-style.md) -- Art direction, location visual profiles, signature scenes, color script
 - [`music.md`](../../../docs/story/music.md) -- Music score overview: faction palettes, character leitmotifs, ~70-80 tracks, corruption evolution, composable framework for new content
 - [`building-palette.md`](../../../docs/story/building-palette.md) -- Reusable interior templates (18 building types, furniture, faction variants)
+
+**Gap Analysis & Design Tracker:**
+- [`docs/analysis/game-design-gaps.md`](../../../docs/analysis/game-design-gaps.md) -- Living gap analysis tracking what's designed vs. what's missing. Use `/story-designer` skill to iterate on gaps.
 - [`city-valdris.md`](../../../docs/story/city-valdris.md) -- Valdris faction city layouts with ASCII maps, shops, NPCs
 - [`city-carradan.md`](../../../docs/story/city-carradan.md) -- Carradan Compact city layouts with ASCII maps, districts, shops
 - [`city-thornmere.md`](../../../docs/story/city-thornmere.md) -- Thornmere settlements and cross-faction locations
