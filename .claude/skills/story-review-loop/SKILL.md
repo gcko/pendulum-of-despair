@@ -2,7 +2,7 @@
 name: story-review-loop
 description: >
   Use when a story PR needs multiple rounds of automated review and fix cycles.
-  Runs story-review with a multi-agent architecture (5 specialized reviewers),
+  Runs story-review with a multi-agent architecture (6 specialized reviewers),
   fixes issues, commits, and repeats N times. Pushes once at the end and posts
   a summary. Invoke with PR number/URL and iteration count.
 ---
@@ -10,7 +10,7 @@ description: >
 # Story Review Loop
 
 Automate multiple rounds of story review + fix on a PR. Each round
-dispatches **five specialized review agents** in parallel, fixes any
+dispatches **six specialized review agents** in parallel, fixes any
 issues found, and commits locally. After N rounds (or when a round comes
 back clean), push all commits at once and post a summary to the PR.
 
@@ -22,31 +22,24 @@ back clean), push all commits at once and post a summary to the PR.
 
 ## Why Multi-Agent?
 
-A single monolithic review agent suffers from systemic failure modes
-(measured against Copilot review findings on PRs #12 and #14):
+A single monolithic review agent suffers from systemic failure modes:
 
 1. **Propagation blindness (46%):** When a value is fixed in one file,
-   the same value in other files isn't checked. The agent reads the
-   "grep for stale references" instruction but checks 2-3 files
-   instead of ALL files. Spec/plan docs that mirror story content go
-   stale silently (PR #14: events.md reload step fixed, spec copy not).
-2. **Post-fix self-contradiction (NEW, from PR #14):** Fixing one line
-   can contradict a claim 20+ lines away in the same section. Example:
-   updating HP/MP reload text to "100% of current max" contradicted the
-   simplifying principle "everything else comes from the save" later in
-   the same section. The ±10-line context check is insufficient.
+   the same value in other files isn't checked. Spec/plan docs that
+   mirror story content go stale silently.
+2. **Post-fix self-contradiction:** Fixing one line can contradict a
+   claim 20+ lines away in the same section. The ±10-line context check
+   is insufficient.
 3. **Narrative coherence gaps (32%):** The agent checks names and HP
    values but doesn't compare HOW the same event is described across
-   files. "Forging process" in one file vs "boring engine excavation"
-   in another describes the same event differently.
+   files.
 4. **Context drift (22%):** By the time the agent reads file 8, it has
-   forgotten the exact phrasing in file 1. Multi-author content (from
-   parallel subagents during implementation) introduces inconsistencies
-   that a fatigued single reviewer misses.
-5. **Spec/plan hygiene gaps (NEW, from PR #14):** No agent checks spec
-   metadata accuracy, plan shell command correctness, or whether spec
-   file lists match reality. Grep patterns with wrong flags or
-   false-positive matches go unnoticed.
+   forgotten the exact phrasing in file 1.
+5. **Spec/plan hygiene gaps:** No agent checks spec metadata accuracy,
+   plan shell command correctness, or whether spec file lists match
+   reality.
+
+See `references/gap-analysis-log.md` for detailed per-PR findings.
 
 Splitting into focused agents means each one does LESS but does it
 more THOROUGHLY. The devil's advocate agent provides fresh eyes.
@@ -73,7 +66,7 @@ digraph review_loop {
     start [label="Parse PR # and N\nCheckout PR branch\nGet changed files list", fillcolor="#e6f3ff"];
 
     subgraph cluster_review {
-        label="Review Phase (5 agents in parallel)";
+        label="Review Phase (6 agents in parallel)";
         style=dashed;
         color=grey;
 
@@ -82,6 +75,7 @@ digraph review_loop {
         agent3 [label="Agent 3: TECHNICAL\nPasses A, B, C, D, G\nElement names, pronouns\nMechanics, quests", fillcolor="#ccffcc"];
         agent4 [label="Agent 4: SCRIPT SUPERVISOR\nTrack items through lifecycle\nDuplicate drops, possession\nCharacter knowledge", fillcolor="#ffffcc"];
         agent5 [label="Agent 5: DEVIL'S ADVOCATE\nPick 5-8 entities at random\nRead ALL mentions cold\nWhat did others miss?", fillcolor="#ffcccc"];
+        agent6 [label="Agent 6: CANONICAL\nVerify every entity against\ncanonical source docs", fillcolor="#ccffcc"];
     }
 
     merge [label="Merge + deduplicate\nall findings", fillcolor="#fff3e6"];
@@ -96,11 +90,13 @@ digraph review_loop {
     start -> agent3;
     start -> agent4;
     start -> agent5;
+    start -> agent6;
     agent1 -> merge;
     agent2 -> merge;
     agent3 -> merge;
     agent4 -> merge;
     agent5 -> merge;
+    agent6 -> merge;
     merge -> clean;
     clean -> fix [label="issues found"];
     clean -> push [label="all clean — early exit"];
@@ -111,6 +107,7 @@ digraph review_loop {
     count -> agent3 [label="yes"];
     count -> agent4 [label="yes"];
     count -> agent5 [label="yes"];
+    count -> agent6 [label="yes"];
     count -> push [label="no — done"];
 }
 ```
@@ -135,238 +132,60 @@ digraph review_loop {
 
 ### Step 2: Review Round (Multi-Agent)
 
-For each round (1 through N), dispatch **five review agents in
+For each round (1 through N), dispatch **six review agents in
 parallel**. Each agent gets the same file list but a different mission.
 
 #### Agent 1: Entity Propagation Checker
 
-**Mission:** For every entity name introduced or modified in the PR,
-verify its description is consistent across ALL files.
+**Mission:** Verify entity descriptions are consistent across ALL files.
+Check spec/plan docs for stale mirrored content.
 
-**Prompt template:**
-```
-You are the PROPAGATION CHECKER. Your ONLY job is finding values
-that were updated in one file but not others.
-
-Changed files: [list]
-
-Instructions:
-1. Identify every entity (boss, NPC, location, item, event) that
-   was ADDED or MODIFIED in this PR.
-2. For EACH entity, grep ALL changed files for that entity's name.
-3. Read every match + ±10 lines of context.
-4. Compare HOW the entity is described across files:
-   - Same HP? Same location? Same act?
-   - Same narrative description of what happened?
-   - Same pronouns for characters?
-   - Same item names in drops/triggers?
-5. Flag ANY discrepancy — even slight wording differences that
-   describe different outcomes (e.g., "city fallen" vs "wounded
-   and leaderless").
-
-Also check: spec docs and plan docs for stale values that
-contradict the story docs.
-
-6. **CRITICAL: Spec/plan mirror check.** Specs and plans often
-   duplicate story doc content (tables, reload flows, terminology
-   mappings, file lists). When a story doc value changes, the
-   spec/plan copy goes stale silently. For EACH changed story doc
-   section, check whether the spec or plan contains a mirrored
-   version of that section. Common mirrors:
-   - events.md section 2c → spec Sections 4-5, plan party-wipe tables
-   - Terminology tables → spec Section 3.1, plan file map
-   - Flag definitions → spec Section 6, plan task descriptions
-   Read the spec/plan version and compare it to the current story
-   doc. Flag ANY discrepancy, even if the spec is "just a planning
-   artifact" — implementers read specs too.
-
-Report: list of {entity, file1 description, file2 description,
-discrepancy} or "No propagation issues found."
-```
+**Prompt:** Read `agents/propagation.md` and include its full contents
+as the agent's prompt in the Agent tool call.
 
 #### Agent 2: Narrative Coherence Checker
 
-**Mission:** Find every EVENT described in multiple files and verify
-the descriptions match.
+**Mission:** Find events described differently in multiple files.
+Check pre-existing prose invalidated by new content.
 
-**Prompt template:**
-```
-You are the NARRATIVE COHERENCE CHECKER. Your ONLY job is finding
-events described differently in different files.
+**Prompt:** Read `agents/narrative.md` and include its full contents
+as the agent's prompt in the Agent tool call.
 
-Changed files: [list]
+#### Agent 3: Technical Review (Passes A-K)
 
-Instructions:
-1. Identify every STORY EVENT in the diff:
-   - Boss fights (who fought, where, outcome)
-   - Character appearances (who, where, when, what they did)
-   - Deaths, betrayals, reunions
-   - Sieges, battles, set pieces
-   - NPC backstory events (what happened to them)
-2. For EACH event, find ALL files that describe it.
-3. Compare the descriptions:
-   - Same location? (e.g., "Ashmark Factory" vs "Rail Tunnels")
-   - Same mechanism? (e.g., "forging process" vs "excavation")
-   - Same outcome? (e.g., "city fallen" vs "wounded")
-   - Same timing/act? (e.g., Act I vs Act I-II transition)
-   - Same participants?
-4. Flag ANY contradiction in how the same event is described.
+**Mission:** Run standard story-review validation passes A through K.
+Includes spec/plan hygiene checks (Pass K).
 
-Pay special attention to events described in BOTH story docs and
-NPC backstory — NPC entries often paraphrase events with different
-details than the canonical dungeon/event description.
-
-5. **CRITICAL: Pre-existing prose invalidated by new content.**
-   For every NEW boss, encounter, trial, or feature added to an
-   existing section, read the section's HEADER and OVERVIEW
-   paragraph. Does the old prose still hold? Examples:
-   - Location says "No encounters" but a boss was just added
-   - Summary says "gains Resolve" but expanded trial defines a
-     different boss and different unlock
-   - Section is called "Caves" but encounter is in a clearing
-   Flag any pre-existing prose that contradicts new additions.
-
-Report: list of {event, file1 version, file2 version, contradiction}
-or "No narrative coherence issues found."
-```
-
-#### Agent 3: Technical Review (Passes A-H)
-
-**Mission:** Run the standard story-review passes from the skill.
-
-**Prompt template:**
-```
-You are the TECHNICAL REVIEWER. Run the standard story-review
-validation passes (A through J) as defined in the story-review
-skill.
-
-Changed files: [list]
-
-Focus on:
-- Pass A: Element names, pronouns, status effects, name collisions
-- Pass B: Timeline/act consistency, flag ordering
-- Pass C: Layout validity, encounter table completeness
-- Pass D: Quest completeness, NPC existence
-- Pass E: Cross-doc value matching (HP, flags, narrative outcomes)
-- Pass F: Internal self-consistency
-- Pass G: Mechanic completeness, undefined references
-- Pass H: Diff-specific (renames, orphaned references)
-- Pass I: Item/prop continuity (lifecycle, duplicate acquisition,
-  possession logic, character knowledge tracking)
-- Pass J: Semantic consistency (meaning comparison, character voice,
-  role/title accuracy)
-
-IMPORTANT: Only flag issues in content ADDED or MODIFIED by this
-PR. Pre-existing issues in unchanged lines are out of scope.
-
-**Pass K: Spec/plan hygiene (NEW)**
-If the PR includes spec or plan docs (docs/superpowers/), check:
-- Spec metadata accuracy: does the scope/status/date match the
-  actual changes? (e.g., scope says "all files" but only 4 changed)
-- Spec file lists: do "files requiring changes" match reality?
-  Files audited but unchanged should be labeled as such.
-- Spec change descriptions: do per-file descriptions accurately
-  describe the scope? (e.g., don't say "applies to both player
-  and enemy spells" if only one spell was changed)
-- Plan shell commands: do grep/rg patterns use correct flags?
-  (e.g., \b needs PCRE in GNU grep -- prefer rg; patterns should
-  not false-positive on known environmental text)
-- Spec terminology tables: do old->new mappings match what was
-  actually implemented in the story docs?
-- Plan expected outputs: do "Expected: zero matches" claims hold
-  when you actually run the command?
-
-Report per-pass PASS/FAIL with specific findings.
-```
+**Prompt:** Read `agents/technical.md` and include its full contents
+as the agent's prompt in the Agent tool call.
 
 #### Agent 4: Script Supervisor (Item & Continuity)
 
-**Mission:** Track every item, prop, and key item through its full
-lifecycle. Inspired by Hollywood script supervision continuity reports.
+**Mission:** Track items, props, and character knowledge through their
+full lifecycle. Catch broken item chains and knowledge contradictions.
 
-**Prompt template:**
-```
-You are the SCRIPT SUPERVISOR. Your job is tracking items, props,
-and character knowledge through their full lifecycle — like a
-Hollywood continuity supervisor catching errors between takes.
-
-Changed files: [list]
-
-Instructions:
-1. Identify every ITEM introduced in the diff (boss drops, chest
-   contents, quest rewards, key items, crafting materials).
-2. For EACH item, trace its lifecycle:
-   - SOURCE: Where does it originate? (boss drop, treasure, NPC)
-   - ACQUISITION: Is it guaranteed or RNG? Is it listed in BOTH
-     a Drop line AND a Treasure list? (flag duplicates)
-   - TRIGGER: If it's a key item, what does it unlock? Does the
-     unlock condition match the source location?
-   - CONSUMPTION: Where is it used or referenced later?
-3. For every NPC with a TRIGGER condition involving a key item:
-   - Verify the item exists in the stated source location
-   - Verify no possession logic contradiction (NPC "carries" item
-     that party must also "find" separately)
-4. For every CHARACTER appearing in new content:
-   - Track what they KNOW at each story point
-   - Flag if they describe "witnessing" something they weren't
-     present for
-   - Flag if they describe "overhearing" in one file but having
-     a "direct conversation" in another
-
-Report: list of broken item chains, duplicate acquisitions,
-possession contradictions, knowledge inconsistencies, or
-"No continuity issues found."
-```
+**Prompt:** Read `agents/script-supervisor.md` and include its full
+contents as the agent's prompt in the Agent tool call.
 
 #### Agent 5: Devil's Advocate
 
-**Mission:** Fresh eyes. Pick entities at random and read them cold
-across all files. What did the other agents miss?
+**Mission:** Fresh eyes. Pick entities at random, read them cold across
+all files. Find what the structured agents missed.
 
-**Prompt template:**
-```
-You are the DEVIL'S ADVOCATE. You have NO knowledge of what the
-other reviewers found. Your job is to find what they missed.
+**Prompt:** Read `agents/devils-advocate.md` and include its full
+contents as the agent's prompt in the Agent tool call.
 
-Changed files: [list]
+#### Agent 6: Canonical Verifier
 
-Instructions:
-1. Pick 5-8 entities at RANDOM from the PR diff (bosses, NPCs,
-   locations, items, events).
-2. For EACH entity, read EVERY mention across ALL changed files.
-   Read them as if you are a fresh implementer seeing the docs
-   for the first time.
-3. For each entity, ask:
-   - Would I know exactly what this is from reading any ONE file?
-   - Do all files agree on the details?
-   - Are there logical contradictions? (e.g., an NPC "carries"
-     an item that the party must also "find" elsewhere)
-   - Do pronouns, locations, timings, and outcomes match?
-   - Is anything described vaguely where precision is needed?
-4. Also scan for:
-   - In-character NPC dialogue that contradicts narrator text
-   - Survival/death conditions that are inconsistent
-   - Act boundaries that don't align between outline and events
-   - Items that appear in drop tables under different names than
-     in trigger conditions
-5. **CRITICAL: Pre-existing prose invalidated by new content.**
-   For each entity, read the section HEADER and OVERVIEW paragraph
-   ABOVE or AROUND the new content. Does the old prose still hold
-   after the addition? Examples that were missed in practice:
-   - "No encounters" in a section that now has a boss below it
-   - "gains Resolve" summary when the expanded trial says otherwise
-   - Section called "Caves" hosting a highland clearing encounter
-   This is the #1 thing other agents miss because they focus on
-   the new content and don't re-read the surrounding old prose.
+**Mission:** Verify every entity in the PR matches its canonical source
+document. Pure property verification — no narrative judgment.
 
-Be ADVERSARIAL. Assume every detail is wrong until verified.
-
-Report: list of issues found, or "No additional issues found."
-```
+**Prompt:** Read `agents/canonical-verifier.md` and include its full
+contents as the agent's prompt in the Agent tool call.
 
 ### Step 2b: Merge Findings
 
-After all five agents return:
+After all six agents return:
 
 1. Collect all findings into a single list.
 2. **Deduplicate:** If multiple agents found the same issue, keep the
@@ -392,6 +211,8 @@ If issues are found:
    section 2c is mirrored in spec Sections 4-5 and plan tables),
    read the mirrored section and verify it matches after the fix.
    Spec/plan docs that duplicate story doc content go stale silently.
+   Agents 1 and 6 also reference `references/verification-checklists.md`
+   for current items to verify.
 4. **Post-fix section re-read (MANDATORY):** After editing ANY line,
    re-read the ENTIRE section (from the nearest `##` heading above
    to the next `##` heading or `---` separator below). Verify the
@@ -423,10 +244,12 @@ git commit -F /tmp/commit-msg.txt
 
 ```
 Round {n}: Fixed {count} issues
-- Agent 1 found: [list]
-- Agent 2 found: [list]
-- Agent 3 found: [list]
-- Agent 4 found: [list]
+- Agent 1 (Propagation) found: [list]
+- Agent 2 (Narrative) found: [list]
+- Agent 3 (Technical) found: [list]
+- Agent 4 (Script Supervisor) found: [list]
+- Agent 5 (Devil's Advocate) found: [list]
+- Agent 6 (Canonical Verifier) found: [list]
 - After dedup: {total} unique issues
 - [list of what was fixed]
 ```
@@ -458,10 +281,10 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
    ## Per-Round Results
 
-   | Round | Propagation | Narrative | Technical | Script Sup. | Advocate | Unique | Fixed |
-   |-------|-------------|-----------|-----------|-------------|----------|--------|-------|
-   | 1 | 3 | 2 | 4 | 2 | 1 | 10 | 10 |
-   | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+   | Round | Propagation | Narrative | Technical | Script Sup. | Advocate | Canonical | Unique | Fixed |
+   |-------|-------------|-----------|-----------|-------------|----------|-----------|--------|-------|
+   | 1 | 3 | 2 | 4 | 2 | 1 | 2 | 12 | 12 |
+   | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
    ## Agent Effectiveness
 
@@ -472,6 +295,7 @@ After the loop ends (either all N rounds complete or an early clean exit):
    | Technical | 4 | 2 |
    | Script Supervisor | 2 | 1 |
    | Advocate | 1 | 1 |
+   | Canonical Verifier | 2 | 1 |
 
    ## Commits Pushed
 
@@ -485,7 +309,7 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 ### Early Exit Conditions
 
-- **Clean round:** If all five agents find zero issues, stop. No point
+- **Clean round:** If all six agents find zero issues, stop. No point
   continuing.
 - **Same issues recurring:** If round N finds the exact same issues as
   round N-1 (fix didn't work), stop and report.
@@ -496,9 +320,9 @@ After the loop ends (either all N rounds complete or an early clean exit):
 
 - **Local commits, single push.** Commit after each round but only push
   once at the end. This keeps the PR history clean.
-- **Five agents per round.** Always dispatch all five. Do NOT skip the
+- **Six agents per round.** Always dispatch all six. Do NOT skip the
   devil's advocate — it catches what the structured agents miss.
-- **Parallel dispatch.** Launch all five agents simultaneously using a
+- **Parallel dispatch.** Launch all six agents simultaneously using a
   single message with multiple Agent tool calls.
 - **No manufactured fixes.** Only fix BLOCKERs and ISSUEs. Ignore
   SUGGESTIONs unless they are trivial (one-line typo).
@@ -521,14 +345,8 @@ Research sources that informed the multi-agent architecture and agent
 role design. Consult for deeper methodology if expanding agents.
 
 ### Multi-Agent Architecture Design
-- Analysis of 51 Copilot review comments across 7 reviews on PR #12
-  revealed single-agent review missed 73% of issues due to propagation
-  blindness (46%), narrative coherence gaps (32%), and context drift (22%)
-- PR #14 gap analysis (13 Copilot comments across 3 review rounds):
-  multi-agent loop caught 8/13 issues; 5 missed due to post-fix
-  self-contradiction (2), spec-story propagation gaps (1), and
-  spec/plan hygiene (2). Led to adding: full-section re-read rule,
-  spec/plan mirror check in propagation agent, Pass K hygiene checks
+
+See `references/gap-analysis-log.md` for per-PR gap analysis data.
 
 ### Agent Role Inspirations
 - **Agent 1 (Propagation):** [Lore Consistency in Game Design](https://www.meegle.com/en_us/topics/game-design/lore-consistency) — Cross-departmental narrative audit methodology
@@ -536,3 +354,4 @@ role design. Consult for deeper methodology if expanding agents.
 - **Agent 3 (Technical):** See story-review/SKILL.md for pass definitions
 - **Agent 4 (Script Supervisor):** [Script Supervisor Report Explained](https://sethero.com/blog/script-supervisor-report-explained/) — Continuity categories (directional, spatial, temporal, character state, prop tracking); [Ultimate Guide to Script Supervisors](https://www.studiobinder.com/blog/script-supervisor-forms-template/) — Production book and daily editor log structure
 - **Agent 5 (Devil's Advocate):** [Crash meetings, keep a lore bible](https://www.gamedeveloper.com/design/crash-meetings-keep-a-lore-bible-and-other-narrative-design-tips-learned-at-king) — Cross-team review with fresh eyes as a deliberate practice
+- **Agent 6 (Canonical Verifier):** Source-of-truth verification inspired by database foreign-key checks — every entity reference must resolve to a canonical definition
