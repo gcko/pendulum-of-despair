@@ -211,15 +211,15 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Aelhart | I/Interlude | Stage 0 | Pastoral | Lighter brass, pastoral strings. Small-town warmth. Market day feel. Relaxed tempo. Town proper inaccessible after Act I; Dry Well dungeon beneath accessible during Interlude+. |
 | Highcairn | Interlude-III | Stage 1-2 | Solemn / Sacred | Monastery setting. Low sustained strings, sparse brass. Deeper areas introduce Stage 2 corruption where Pallor manifestations appear. |
 | Thornwatch | I-II | Stage 0-1 | Tense | Martial Valdris variant. Drums prominent, brass restrained. Border watchtower vigil. |
-| Greyvale | II | Stage 0 | Pastoral / Solemn | Rural Valdris. Gentle strings, distant horn. |
+| Greyvale | II | Stage 1 | Pastoral / Solemn | Rural Valdris but desaturated — siege damage, exhausted quarries. Gentle strings, distant horn. Subtle wrongness in the palette. |
 | Greyvale | Interlude+ | Stage 2 | Corrupted | Pastoral melody struggles against Pallor drone. Strings thin. |
 
 ### 6.2 Carradan Compact Towns
 
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
-| Corrund | Interlude-III | Stage 0-1 | Industrial / Hopeful | Full Carradan palette. Layered rhythms, merchant energy, hammered dulcimer lead. Busiest track in the game. |
-| Corrund | Interlude+ | Stage 1-2 | Corrupted | Rhythms stutter. Factory sounds become arrhythmic. Resistance hideout sections drop to acoustic-only (rebel theme). |
+| Corrund | Interlude | Stage 1-2 | Industrial / Tense | Full Carradan palette but forge-glow shifts grey-white. Some factories stopped; air feels dead. Undercroft resistance theme in accessible areas. Stage 1-2 at edges per dynamic-world.md. |
+| Corrund | III | Stage 2 | Corrupted | Post-Kole power vacuum. Rhythms stutter, factory sounds arrhythmic. Faction fighting — barricades in streets. Resistance hideout sections drop to acoustic-only (rebel theme). |
 | Ashmark | II | Stage 0 | Industrial (heavy) | Darker Carradan variant. Deeper percussion, more anvil/forge sounds. Smoke and labor. |
 | Bellhaven | II | Stage 0 | Pastoral / Industrial | Accordion-forward, lighter. Sea breeze influence — open fifths, rolling wave rhythm. Port town ease. |
 | Millhaven | II | Stage 0 | Pastoral | Gentle hammered dulcimer, pastoral. Lightest Carradan theme. |
@@ -279,7 +279,7 @@ mood with reduced instrumentation.
 | Caldera Forge Depths | II/Interlude | Carradan (volcanic) | Urgent / Industrial | Deepest forge. Bass drums and anvil strikes at maximum. Heat shimmer as ambient. Carradan industrial pushed past safe limits. |
 | Thornvein Passage | III | Thornmere (corrupted) | Tense / Mysterious | Corrupted root network. Thornmere palette at Stage 2-3 corruption. Flute pitchless, hand drums irregular. The forest is sick. |
 | Pallor Wastes | III | Pallor dominant | Consumed | The Pallor motif as a sustained, cycling drone. Ghost fragments of all three faction palettes drift in and out — memories of the world before. No melody, no rhythm, no structure. Anti-music given geography. Vaelith encounter sections intensify the motif to dissonant layering. |
-| The Grey March | III | Overworld variant | Urgent / Solemn | Uses Act III overworld variant with encounter-rate tension layered in. Drumbeat underneath like a war march. Dead forest ambience. |
+| The Grey March (route) | III | Overworld variant | Urgent / Solemn | Not a dungeon — an overworld route (Roothollow to the Convergence). Uses Act III overworld variant with encounter-rate tension layered in. Drumbeat underneath like a war march. Dead forest ambience. |
 | The Convergence | III-IV | All palettes merging | Urgent → Sacred → Resolved | Every faction palette present, cycling and compressing. Trial rooms isolate one character's motif in distorted form. Final chamber: all motifs attempt to play simultaneously (cacophony) until party unity resolves them into harmony. |
 | Valdris Siege Battlefield | II | Valdris (war) | Urgent | Valdris brass at war tempo. Most intense military percussion in the game. Wall breach = instruments drop out, replaced by chaos. Vaelith arrival = hard cut to Pallor motif. |
 | Dreamer's Fault | Post-game | Ancient + Pallor residue | Mysterious / Solemn | Post-game optional. Ancient palette with lingering Pallor echoes — corruption receding but not gone. Contemplative, archaeological. |
