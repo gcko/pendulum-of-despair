@@ -108,13 +108,26 @@ narrative judgment.
 
 ### 5.3 Why Separate From Existing Agents
 
-- **Agent 3 (Technical)** already runs 11 passes. Adding source
+- **Agent 3 (Technical)** already runs 11 passes (A-K). Adding source
   verification to every pass would overload it.
 - A dedicated verifier is **focused and exhaustive** — it doesn't need
   narrative judgment, just grep + read + compare.
 - It runs **in parallel** with the other 5 agents, adding no latency.
 - It's the easiest agent to make comprehensive — bounded, mechanical
   work that doesn't require creative assessment.
+
+### 5.5 Deconfliction With Agent 1 (Propagation)
+
+Agent 1 checks cross-file consistency: "is entity X described the
+same way in file A and file B?" Agent 6 checks canonical accuracy:
+"does entity X in file A match the source-of-truth definition?"
+
+Overlap example: both might flag "Frostcap Caverns says Act II but
+should be Interlude." During Step 2b (Merge Findings), deduplicate by
+keeping the more specific finding. Agent 6's findings are preferred
+for pure value mismatches because they cite the canonical source.
+Agent 1's findings are preferred for cross-file consistency issues
+where no single source is authoritative.
 
 ### 5.4 Process
 
@@ -206,12 +219,15 @@ improvements. One entry per Copilot review round.
 
 ### 8.1 New Process Step
 
-After Step 6 (Reply to Each Comment) and before Step 7 (Summarize),
-add:
+After Step 5 (Commit & Push) and before Step 6 (Reply), add:
 
 ```
-6b. COPILOT GAP ANALYSIS (if any comments came from Copilot)
+5b. COPILOT GAP ANALYSIS (if any comments came from Copilot)
 ```
+
+This runs BEFORE replying so the analysis can inform reply content
+(e.g., "Fixed in <sha>. This gap has been added to our verification
+checklists to prevent recurrence.").
 
 ### 8.2 Analysis Process
 
@@ -250,16 +266,21 @@ categories for classifying gaps:
 | Self-contradiction | Same doc contradicts itself | Rule says X, example shows Y |
 | Post-fix regression | A fix introduced a new problem | Fixed timing but broke silence rule |
 
+The first 6 categories map to the 6 gap patterns from Section 3. The
+last 2 (self-contradiction, post-fix regression) are general categories
+discovered in PR #14 that don't map to a specific gap pattern but
+recur across reviews.
+
 ## 9. story-review-loop SKILL.md Changes
 
 The SKILL.md becomes a lean process orchestrator:
 
 ### 9.1 What Stays
 
-- Process flow diagram (dispatch, merge, fix, commit, push)
+- Process flow diagram (updated for 6 agents — see 9.3)
 - Step definitions (setup, review round, merge findings, fix, commit, push)
-- Early exit conditions
-- Rules section
+- Early exit conditions (updated: "five" → "six")
+- Rules section (updated: "Five agents per round" → "Six agents per round")
 - "Why Multi-Agent?" section (rationale, not bloat)
 
 ### 9.2 What Moves
@@ -270,12 +291,31 @@ The SKILL.md becomes a lean process orchestrator:
 
 ### 9.3 What's Added
 
-- Agent 6 (Canonical Verifier) in the dispatch list
-- Reference to `agents/canonical-verifier.md` for its prompt
-- Instruction for all agents: "Read
-  `references/verification-checklists.md` for current verification
-  items"
-- Agent count in process diagram: 5 → 6
+- Agent 6 (Canonical Verifier) added to the dispatch list and process
+  diagram. Node label: "Agent 6: CANONICAL\nVerify every entity against\ncanonical source docs" with fillcolor="#ccffcc". Edges mirror the
+  other agents: start → agent6, agent6 → merge.
+- Agent prompt dispatch mechanism: SKILL.md tells the orchestrator to
+  "Read `agents/<name>.md` and include its full contents as the agent's
+  prompt in the Agent tool call." The orchestrator reads the file and
+  pastes its contents into the prompt parameter. No `@include` syntax —
+  explicit file read + paste.
+- Verification checklists: Agent 6 and Agent 1 (Propagation) read
+  `references/verification-checklists.md` for current items. Other
+  agents do NOT read it (keeps their prompts focused on their mission).
+- All references to "five agents" updated to "six agents" throughout
+  SKILL.md (Rules section, Early Exit, Log Template, Summary Template).
+
+### 9.4 Stale References to Update
+
+These specific lines in the current SKILL.md reference "five" and
+must be updated to "six":
+
+- Process diagram subgraph label: "Review Phase (5 agents in parallel)"
+- Log template: "Agent 1 found... Agent 4 found" → add Agent 5 + 6
+- Summary table: add "Canonical" column
+- Agent Effectiveness table: add row for Canonical Verifier
+- Rules: "Five agents per round. Always dispatch all five."
+- Early exit: "If all five agents find zero issues"
 
 ### 9.4 Target Size
 
@@ -291,7 +331,7 @@ gap-analysis-log.md: ~20 lines per entry, append-only
 | `.claude/skills/story-review-loop/SKILL.md` | Modify | Slim to process orchestrator, add Agent 6 to dispatch |
 | `.claude/skills/story-review-loop/agents/propagation.md` | Create | Agent 1 prompt (extracted from SKILL.md) |
 | `.claude/skills/story-review-loop/agents/narrative.md` | Create | Agent 2 prompt (extracted) |
-| `.claude/skills/story-review-loop/agents/technical.md` | Create | Agent 3 prompt (extracted) |
+| `.claude/skills/story-review-loop/agents/technical.md` | Create | Agent 3 prompt (extracted, passes A-K) |
 | `.claude/skills/story-review-loop/agents/script-supervisor.md` | Create | Agent 4 prompt (extracted) |
 | `.claude/skills/story-review-loop/agents/devils-advocate.md` | Create | Agent 5 prompt (extracted) |
 | `.claude/skills/story-review-loop/agents/canonical-verifier.md` | Create | Agent 6 prompt (NEW) |
