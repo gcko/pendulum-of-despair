@@ -50,8 +50,12 @@ digraph pr_review {
 
 ```bash
 # Get owner/repo from current repo
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments
+# CRITICAL: Always use --paginate to fetch ALL comments.
+# GitHub API defaults to 30 per page. PRs with many review rounds
+# can have 60+ comments — without --paginate, later comments are
+# silently dropped and entire Copilot review rounds go unaddressed.
+gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews --paginate
+gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate
 ```
 
 Parse each comment for: `id`, `user.login`, `path`, `line`, `body`, `in_reply_to_id` (skip replies — only address top-level comments).
