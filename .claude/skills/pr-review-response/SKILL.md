@@ -25,7 +25,9 @@ digraph pr_review {
     fix [label="3. FIX\nImplement changes\nfor valid concerns", fillcolor="#ccffcc"];
     verify [label="4. VERIFY\npnpm lint\npnpm test", fillcolor="#ccccff"];
     green [label="All green?", shape=diamond, fillcolor="#fff3e6"];
-    commit [label="5. COMMIT & PUSH\nDescriptive message\nvia temp file", fillcolor="#e6ffe6"];
+    commit [label="5. COMMIT\n(push deferred if\nCopilot commented)\nDescriptive message\nvia temp file", fillcolor="#e6ffe6"];
+    copilot [label="Copilot\ncommented?", shape=diamond, fillcolor="#fff3e6"];
+    gap [label="5b. GAP ANALYSIS\nCategorize Copilot findings\nPropose skill improvements", fillcolor="#f3e6ff"];
     reply [label="6. REPLY\nRespond to each comment\non GitHub", fillcolor="#ffe6f3"];
     summarize [label="7. SUMMARIZE\nList all changes made", fillcolor="#f3e6ff"];
 
@@ -36,7 +38,10 @@ digraph pr_review {
     verify -> green;
     green -> commit [label="yes"];
     green -> fix [label="no — fix issues"];
-    commit -> reply;
+    commit -> copilot;
+    copilot -> gap [label="yes"];
+    copilot -> reply [label="no"];
+    gap -> reply;
     reply -> summarize;
 }
 ```
@@ -45,8 +50,12 @@ digraph pr_review {
 
 ```bash
 # Get owner/repo from current repo
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments
+# CRITICAL: Always use --paginate to fetch ALL comments.
+# GitHub API defaults to 30 per page. PRs with many review rounds
+# can have 60+ comments — without --paginate, later comments are
+# silently dropped and entire Copilot review rounds go unaddressed.
+gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews --paginate
+gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate
 ```
 
 Parse each comment for: `id`, `user.login`, `path`, `line`, `body`, `in_reply_to_id` (skip replies — only address top-level comments).
@@ -97,8 +106,38 @@ EOF
 
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
-git push
+# Push now if no Copilot comments; otherwise push after step 5b
+git push  # Skip if Copilot commented — step 5b will push
 ```
+
+### 5b. Copilot Gap Analysis (if Copilot commented)
+
+If any comments came from `copilot-pull-request-reviewer[bot]`, run a
+gap analysis before replying. This ensures every Copilot review round
+improves our review skills.
+
+1. **Filter** Copilot comments from the set.
+2. **Categorize** each using `references/copilot-gap-taxonomy.md`.
+3. **Map** to the story-review-loop agent that should have caught it.
+4. **Check** if the gap is already covered by an item in
+   `.claude/skills/story-review-loop/references/verification-checklists.md`.
+5. **For new gaps**, draft:
+   - A one-line checklist item for verification-checklists.md
+   - A gap-analysis-log.md entry
+6. **Present** to the user:
+   > "Copilot found N issues our review missed. M are covered by
+   > existing checklists. K are new gaps:
+   > [list of proposed checklist additions]
+   > Want me to apply these improvements?"
+7. If approved, update the checklist and log files, commit.
+8. **Push all commits** (fix commit from step 5 + skill improvement
+   commit from step 5b) together: `git push`.
+
+The reply step (6) can then mention "added to verification checklists"
+for each addressed gap, closing the feedback loop.
+
+**If no Copilot comments:** Skip step 5b entirely and push in step 5
+as normal.
 
 ### 6. Reply to Each Comment
 
