@@ -89,7 +89,12 @@ Then transcribe spec Sections 2-14 with these section mappings:
 | 14. Out of Scope | (omit — not relevant for story doc audience) |
 
 Content transcription rules:
-- Copy all tables, descriptions, and music notes verbatim from the spec
+- Copy tables, descriptions, and music notes from the spec as a starting
+  point. Intentional divergences are expected when story-review or Copilot
+  review identifies values that need correcting against canonical sources
+  (e.g., act assignments, dungeon classifications). The story doc
+  (music.md) is authoritative after implementation; the spec is a
+  historical planning artifact
 - Remove spec metadata (date, status, scope header)
 - Remove section numbering from headings (use `##` and `###` naturally)
 - Keep the "Terminology note" about corruption stages aligning with

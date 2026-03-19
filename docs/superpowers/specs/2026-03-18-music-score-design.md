@@ -265,7 +265,6 @@ mood with reduced instrumentation.
 |---------|-----|--------------|------|-------------|
 | Ember Vein | I | Carradan → Ancient | Mysterious → Solemn | Starts with mining sounds (pick strikes, cart wheels). Transitions floor by floor to ancient geometry — mining percussion fades, replaced by crystalline resonance and sustained tones. Floor 4: pure Ancient palette, no faction identity. Ley energy hum and silence. |
 | Fenmother's Hollow | II | Thornmere (submerged) | Mysterious | Underwater distortion of Wilds palette. Flute replaced by murky sustained tones. Bubbles and current as percussion. Cleansing sequence: music drains with corruption, floods back as clean Thornmere theme. |
-| Valdris Crown Catacombs | Interlude | Valdris (solemn) | Solemn | Slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound — Valdris predates the monarchy. |
 | Frostcap Caverns | Interlude-III | Neutral (alpine) | Mysterious / Sacred | Crystal-clear acoustics. Sparse — solo instruments with natural reverb. Ice and altitude. No faction identity. |
 | Windshear Peak | II-III | Neutral (alpine) | Tense / Sacred | High-altitude wind as rhythmic base. Sparse brass and strings fighting the wind. Exposed, elemental. |
 | Ashgrove Proving Grounds | II | Thornmere + Ancient | Tense / Sacred | Trial ground. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
@@ -277,14 +276,13 @@ mood with reduced instrumentation.
 | Ley Nexus Hollow | Interlude | Thornmere + Ancient | Sacred / Urgent | Torren's reunion location. His flute motif corrupted by Ley Leech — the music IS the boss fight. Thornmere palette at maximum spiritual intensity. |
 | Sunken Rig | Interlude | Carradan (submerged) | Mysterious / Tense | Underwater-distorted industrial palette. Drowned machinery sounds. Accordion replaced by murky sustained tones. Eerie. |
 | Dry Well of Aelhart | Interlude+ | Valdris + Ancient | Solemn / Mysterious | Beneath Aelhart. Starts Valdris but transitions to Ancient as depth increases. Drought and abandonment — dry acoustics, no reverb. |
-| Axis Tower | III | Carradan (power) | Urgent / Industrial | Ascending — music literally rises in register and intensity floor by floor. Peak Carradan: precision, power, control. |
-| Ironmark Citadel | III | Carradan (military) | Urgent / Tense | March tempo. Oppressive brass borrowed from Valdris palette but mechanized. Stage 2 corruption deliberately embraced by Kole — the Pallor motif is woven in intentionally, not as decay but as power. |
-| Caldera Forge Depths | III | Carradan (volcanic) | Urgent / Industrial | Deepest forge. Bass drums and anvil strikes at maximum. Heat shimmer as ambient. Carradan industrial pushed past safe limits. |
+| Axis Tower | Interlude | Carradan (power) | Urgent / Industrial | Ascending — music literally rises in register and intensity floor by floor. Peak Carradan: precision, power, control. |
+| Caldera Forge Depths | II/Interlude | Carradan (volcanic) | Urgent / Industrial | Deepest forge. Bass drums and anvil strikes at maximum. Heat shimmer as ambient. Carradan industrial pushed past safe limits. |
 | Thornvein Passage | III | Thornmere (corrupted) | Tense / Mysterious | Corrupted root network. Thornmere palette at Stage 2-3 corruption. Flute pitchless, hand drums irregular. The forest is sick. |
 | Pallor Wastes | III | Pallor dominant | Consumed | The Pallor motif as a sustained, cycling drone. Ghost fragments of all three faction palettes drift in and out — memories of the world before. No melody, no rhythm, no structure. Anti-music given geography. Vaelith encounter sections intensify the motif to dissonant layering. |
 | The Grey March | III | Overworld variant | Urgent / Solemn | Uses Act III overworld variant with encounter-rate tension layered in. Drumbeat underneath like a war march. Dead forest ambience. |
 | The Convergence | III-IV | All palettes merging | Urgent → Sacred → Resolved | Every faction palette present, cycling and compressing. Trial rooms isolate one character's motif in distorted form. Final chamber: all motifs attempt to play simultaneously (cacophony) until party unity resolves them into harmony. |
-| Valdris Siege (encounter) | II | Valdris (war) | Urgent | Valdris brass at war tempo. Most intense military percussion in the game. Wall breach = instruments drop out, replaced by chaos. Vaelith arrival = hard cut to Pallor motif. |
+| Valdris Siege Battlefield | II | Valdris (war) | Urgent | Valdris brass at war tempo. Most intense military percussion in the game. Wall breach = instruments drop out, replaced by chaos. Vaelith arrival = hard cut to Pallor motif. |
 | Dreamer's Fault | Post-game | Ancient + Pallor residue | Mysterious / Solemn | Post-game optional. Ancient palette with lingering Pallor echoes — corruption receding but not gone. Contemplative, archaeological. |
 
 ### 7.2 City Dungeons
@@ -295,6 +293,8 @@ reduced instrumentation.
 
 | Dungeon | Parent City | Mood Shift | Music Notes |
 |---------|-------------|-----------|-------------|
+| Valdris Crown Catacombs | Valdris Crown | Solemn | Unique track: slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound. Interlude (mandatory escape route), optional return post-Interlude. |
+| Ironmark Citadel Dungeons | Ironmark Citadel | Urgent / Tense | Unique track: march tempo. Oppressive brass + mechanized Valdris palette. Stage 2 corruption deliberately embraced by Kole. Interlude (reached via Axis Tower tunnel). |
 | Corrund Sewers | Corrund | Industrial → Tense | See world dungeons above (unique track due to Resistance narrative). |
 | Caldera Undercity | Caldera | Urgent → Tense | Caldera's forge intensity muted by stone. Deep percussion remains, dulcimer echoes off tunnel walls. |
 | Ashmark Factory Depths | Ashmark | Industrial → Mysterious | Factory rhythms continue below but distorted by depth. Machinery sounds become alien at lower levels. |
@@ -355,8 +355,10 @@ tracks, each variant modifies the original through corruption stages.
 for location state tracking. This music system maps to those stages for
 audio effects (Stage 0 = clean, Stages 1-3 = audio equivalents of the
 visual corruption levels). Stage 4 ("Consumed") is a music-specific
-extension for locations where corruption has completely replaced the
-original soundscape (Pallor Wastes, destroyed Millhaven).
+extension for locations where Pallor corruption has completely replaced
+the original soundscape (e.g., Pallor Wastes). Note: Millhaven is
+physically destroyed by ley line eruption (not Pallor corruption) and
+uses silence + wind ambience instead of Stage 4 — see Special Cases.
 
 ### 9.1 Corruption Stages
 
@@ -421,7 +423,7 @@ Event-driven tracks that override location music during story beats.
 | The Bird | Not a musical instrument. A real bird call sample — single note, natural, unprocessed. The first non-musical sound in the entire game's score. Nature reasserting itself after Despair. |
 | Pallor drone spec | Sustained low tone (sub-bass + low-mid). No harmonic content — as flat and lifeless as possible. Anti-music. |
 | Music-as-mechanic | Torren's Spiritcall ability restores a corrupted melody during the Ley Leech boss fight (Interlude main story). The player hears the music heal in real-time as gameplay. |
-| Biome crossfade | Standard 3-second crossfade between biome themes (documented in biomes.md). Pallor Wastes exception: hard cut to silence, then Pallor drone fades in over 5 seconds. The brief silence is a transition effect, not a narrative beat. Per biomes.md Section 1.11. |
+| Biome crossfade | Standard 3-second crossfade between biome themes (documented in biomes.md). Pallor Wastes exception: hard cut to silence, then Pallor drone fades in over 5 seconds. The brief silence is a transition effect, not a narrative beat. Per biomes.md "The Pallor Wastes" section. |
 | Ley Nexus layering | Ley nexus locations blend additively with surrounding biome (hum layers underneath, not replacement). Documented in biomes.md. |
 
 ## 11. System & UI Music
