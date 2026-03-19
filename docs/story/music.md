@@ -238,8 +238,8 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Town | Acts | Corruption Stage | Mood | Music Notes |
 |------|------|-----------------|------|-------------|
 | Roothollow | I-II/Interlude | Stage 0 | Pastoral | Gentle flute and harp. Welcoming. Deepest forest feel — nature ambience woven into score. |
-| Duskfen | II | Stage 0 | Mysterious | Muted hand drums, breathy flute. Fog and wetland. Spirit-hum more prominent than melody. |
-| Ashgrove | II | Stage 0 | Sacred | Harp-dominant. Reverent. Council stones give the ley-hum harmonic resonance — the earth is singing. |
+| Duskfen | II/Interlude | Stage 0 | Mysterious | Muted hand drums, breathy flute. Fog and wetland. Spirit-hum more prominent than melody. |
+| Ashgrove | II-III | Stage 0 | Sacred | Harp-dominant. Reverent. Council stones give the ley-hum harmonic resonance — the earth is singing. |
 | Canopy Reach | II | Stage 0 | Hopeful / Sacred | Flute at its brightest. Wind sounds. The panoramic view moment swells to incorporate all three faction palettes in the distance — first continental overview. |
 | Greywood Camp | II/Interlude | Stage 0 | Tense / Mysterious | Sparse hand drums, low flute. Ranger outpost on the edge of safe territory. |
 | Stillwater Hollow | II/Interlude | Stage 0 | Solemn | Near-silence. Harp notes with long decay. The water reflects sound. |
