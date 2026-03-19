@@ -36,3 +36,25 @@ One entry per Copilot review round that produced new gaps.
 - Created Agent 6 (Canonical Verifier)
 - Created verification-checklists.md
 - Restructured SKILL.md into modular agents/ + references/
+
+---
+
+### PR #15 — Music Score, Copilot Review Round 3 (2026-03-19)
+
+**Comments:** 12 total
+**Gap patterns found:**
+- Source verification (act assignments): 3 — would be caught by Agent 6
+- Classification (world vs city dungeon): 3 — would be caught by Agent 6
+- Numeric propagation (Pallor timing): 1 — would be caught by Agent 6
+- Exception tracking (Millhaven Stage 4): 2 — would be caught by Agent 4
+- Reference format (section citation): 1 — would be caught by Agent 3
+- Mirror staleness (plan "verbatim"): 1 — would be caught by Agent 1
+- Post-fix regression (Pallor timing in table): 1 — would be caught by fix step re-read
+
+**All 12 covered by existing verification checklist items.** No new
+checklist items needed. This confirms the Agent 6 + checklists refactor
+addresses the gap patterns identified in the prior round.
+
+**Effectiveness prediction:** If Agent 6 had been running, it would have
+caught 8 of 12 issues. Combined with existing agents, 12 of 12 would
+have been caught.
