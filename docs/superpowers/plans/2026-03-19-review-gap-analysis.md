@@ -552,7 +552,7 @@ Expected:
 wc -l .claude/skills/story-review-loop/SKILL.md
 ```
 
-Expected: ~200 lines (down from 538).
+Expected: ~350 lines (down from ~538). The reduction comes from extracting inline agent prompts to agents/ files.
 
 - [ ] **Step 3: Verify no inline prompts remain**
 

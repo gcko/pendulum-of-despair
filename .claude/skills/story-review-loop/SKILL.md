@@ -72,7 +72,7 @@ digraph review_loop {
 
         agent1 [label="Agent 1: PROPAGATION\ngrep every entity across\nALL changed files\nCompare descriptions", fillcolor="#ccffcc"];
         agent2 [label="Agent 2: NARRATIVE\nFind every event described\nin multiple files\nCompare outcomes/details", fillcolor="#ccffcc"];
-        agent3 [label="Agent 3: TECHNICAL\nPasses A, B, C, D, G\nElement names, pronouns\nMechanics, quests", fillcolor="#ccffcc"];
+        agent3 [label="Agent 3: TECHNICAL\nTechnical passes (A-K)\nElement names, mechanics\nSpec/plan hygiene", fillcolor="#ccffcc"];
         agent4 [label="Agent 4: SCRIPT SUPERVISOR\nTrack items through lifecycle\nDuplicate drops, possession\nCharacter knowledge", fillcolor="#ffffcc"];
         agent5 [label="Agent 5: DEVIL'S ADVOCATE\nPick 5-8 entities at random\nRead ALL mentions cold\nWhat did others miss?", fillcolor="#ffcccc"];
         agent6 [label="Agent 6: CANONICAL\nVerify every entity against\ncanonical source docs", fillcolor="#ccffcc"];

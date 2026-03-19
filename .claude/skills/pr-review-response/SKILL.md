@@ -128,7 +128,7 @@ improves our review skills.
    > existing checklists. K are new gaps:
    > [list of proposed checklist additions]
    > Want me to apply these improvements?"
-7. If approved, update the checklist and log files, commit and push.
+7. If approved, update the checklist and log files, commit. The push in step 5 has already happened; the skill improvements commit will be pushed with any remaining work or as a standalone push after replies.
 
 The reply step (6) can then mention "added to verification checklists"
 for each addressed gap, closing the feedback loop.

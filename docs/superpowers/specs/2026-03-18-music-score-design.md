@@ -223,12 +223,12 @@ variants needed. Multi-visit towns show separate rows per act state.
 | Ashmark | II | Stage 0 | Industrial (heavy) | Darker Carradan variant. Deeper percussion, more anvil/forge sounds. Smoke and labor. |
 | Bellhaven | II | Stage 0 | Pastoral / Industrial | Accordion-forward, lighter. Sea breeze influence — open fifths, rolling wave rhythm. Port town ease. |
 | Millhaven | II | Stage 0 | Pastoral | Gentle hammered dulcimer, pastoral. Lightest Carradan theme. |
-| Millhaven | Interlude+ | Destroyed | Silence | Physically destroyed by Ley Line Rupture — not Pallor-consumed. No music. Wind ambience only. |
+| Millhaven | Interlude+ | N/A (Destroyed) | Silence | Physically destroyed by Ley Line Rupture — not Pallor-consumed. No music. Wind ambience only. |
 | Ironmouth | I-II | Stage 0-1 | Industrial / Tense | Heavy port. Deep mechanical rhythm, foghorn-like bass tones. Commercial urgency. Accessible from Act I (Ember Vein mine entrance, Dawn March origin). |
-| Caldera | III | Stage 1 | Industrial / Urgent | Deep bass drums, forge palette at maximum intensity. Volcanic heat and pressure. |
+| Caldera | II/Interlude | Stage 1 | Industrial / Urgent | Deep bass drums, forge palette at maximum intensity. Volcanic heat and pressure. |
 | Ashport | II | Stage 0 | Industrial / Hopeful | Mid-weight Carradan. Trade hub energy, dulcimer and accordion trading phrases. |
-| Gael's Span | II-III | Stage 0-1 | Neutral + Carradan | Cross-faction bridge town. Neutral palette base with Carradan undercurrent. Trade and tension — factions meet here. |
-| Kettleworks | II-III | Stage 0-1 | Industrial / Mysterious | Research campus. Lighter Carradan with Ancient palette influence — experimental tech meets ley energy. Curious, inventive. |
+| Gael's Span | II/Interlude | Stage 0-1 | Neutral + Carradan | Cross-faction bridge town. Neutral palette base with Carradan undercurrent. Trade and tension — factions meet here. |
+| Kettleworks | II/Interlude | Stage 0-1 | Industrial / Mysterious | Research campus. Lighter Carradan with Ancient palette influence — experimental tech meets ley energy. Curious, inventive. |
 
 ### 6.3 Thornmere Wilds Settlements
 
@@ -272,7 +272,6 @@ mood with reduced instrumentation.
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
 | Archive of Ages | II-III | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
 | Monastery of the Vigil (Highcairn) | Interlude | Valdris (sacred) | Sacred → Corrupted | Low sustained strings mimicking monastic chant (instrumental, not vocal). As Pallor influence deepens, the "chant" decomposes into the Pallor motif. |
-| Corrund Sewers | Interlude | Carradan (dark) | Tense | Industrial palette stripped to bare percussion and dripping. Resistance sections introduce quiet acoustic rebel theme. |
 | Ley Nexus Hollow | Interlude | Thornmere + Ancient | Sacred / Urgent | Torren's reunion location. His flute motif corrupted by Ley Leech — the music IS the boss fight. Thornmere palette at maximum spiritual intensity. |
 | Sunken Rig | Interlude | Carradan (submerged) | Mysterious / Tense | Underwater-distorted industrial palette. Drowned machinery sounds. Accordion replaced by murky sustained tones. Eerie. |
 | Dry Well of Aelhart | Interlude+ | Valdris + Ancient | Solemn / Mysterious | Beneath Aelhart. Starts Valdris but transitions to Ancient as depth increases. Drought and abandonment — dry acoustics, no reverb. |
@@ -295,7 +294,7 @@ reduced instrumentation.
 |---------|-------------|-----------|-------------|
 | Valdris Crown Catacombs | Valdris Crown | Solemn | Unique track: slow brass in reverb-heavy space. Echoes of royal marches. Deeper floors = more ancient sound. Interlude (mandatory escape route), optional return post-Interlude. |
 | Ironmark Citadel Dungeons | Ironmark Citadel | Urgent / Tense | Unique track: march tempo. Oppressive brass + mechanized Valdris palette. Stage 2 corruption deliberately embraced by Kole. Interlude (reached via Axis Tower tunnel). |
-| Corrund Sewers | Corrund | Industrial → Tense | See world dungeons above (unique track due to Resistance narrative). |
+| Corrund Sewers | Corrund | Industrial → Tense | Industrial palette stripped to bare percussion and dripping. Resistance sections introduce quiet acoustic rebel theme. |
 | Caldera Undercity | Caldera | Urgent → Tense | Caldera's forge intensity muted by stone. Deep percussion remains, dulcimer echoes off tunnel walls. |
 | Ashmark Factory Depths | Ashmark | Industrial → Mysterious | Factory rhythms continue below but distorted by depth. Machinery sounds become alien at lower levels. |
 | Bellhaven Smuggler Tunnels | Bellhaven | Pastoral → Tense | Bellhaven's accordion and wave rhythm replaced by dripping water and hushed urgency. Compact palette stripped to bare bones. |
@@ -420,7 +419,7 @@ Event-driven tracks that override location music during story beats.
 | Rule | Description |
 |------|-------------|
 | Silence is sacred | Narrative true silence (zero audio, sustained for dramatic effect) appears exactly twice: after the Ley Line Rupture (5s) and before the bird call at Cael's sacrifice (3s). Other music-stops (Game Over, Betrayal, Pallor Wastes transition) retain ambient sound or transition to drone — these are not true silence. |
-| The Bird | Not a musical instrument. A real bird call sample — single note, natural, unprocessed. The first non-musical sound in the entire game's score. Nature reasserting itself after Despair. |
+| The Bird | Not a musical instrument. A real bird call sample — single note, natural, unprocessed. The first isolated natural sound presented as a narrative beat — not woven into a biome palette, but standing alone after absolute silence. Nature reasserting itself after Despair. |
 | Pallor drone spec | Sustained low tone (sub-bass + low-mid). No harmonic content — as flat and lifeless as possible. Anti-music. |
 | Music-as-mechanic | Torren's Spiritcall ability restores a corrupted melody during the Ley Leech boss fight (Interlude main story). The player hears the music heal in real-time as gameplay. |
 | Biome crossfade | Standard 3-second crossfade between biome themes (documented in biomes.md). Pallor Wastes exception: hard cut to silence, then Pallor drone fades in over 5 seconds. The brief silence is a transition effect, not a narrative beat. Per biomes.md "The Pallor Wastes" section. |

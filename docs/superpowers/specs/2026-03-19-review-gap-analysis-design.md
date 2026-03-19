@@ -116,7 +116,7 @@ narrative judgment.
 - It's the easiest agent to make comprehensive — bounded, mechanical
   work that doesn't require creative assessment.
 
-### 5.5 Deconfliction With Agent 1 (Propagation)
+### 5.4 Deconfliction With Agent 1 (Propagation)
 
 Agent 1 checks cross-file consistency: "is entity X described the
 same way in file A and file B?" Agent 6 checks canonical accuracy:
@@ -129,7 +129,7 @@ for pure value mismatches because they cite the canonical source.
 Agent 1's findings are preferred for cross-file consistency issues
 where no single source is authoritative.
 
-### 5.4 Process
+### 5.5 Process
 
 1. Extract every entity name from the PR diff (locations, dungeons,
    characters, NPCs, mechanics).
@@ -317,7 +317,7 @@ must be updated to "six":
 - Rules: "Five agents per round. Always dispatch all five."
 - Early exit: "If all five agents find zero issues"
 
-### 9.4 Target Size
+### 9.5 Target Size
 
 SKILL.md: ~200 lines (down from ~500)
 Each agent file: ~60-100 lines
@@ -337,7 +337,7 @@ gap-analysis-log.md: ~20 lines per entry, append-only
 | `.claude/skills/story-review-loop/agents/canonical-verifier.md` | Create | Agent 6 prompt (NEW) |
 | `.claude/skills/story-review-loop/references/verification-checklists.md` | Create | Living checklist |
 | `.claude/skills/story-review-loop/references/gap-analysis-log.md` | Create | Copilot gap history |
-| `.claude/skills/pr-review-response/SKILL.md` | Modify | Add gap analysis step 6b |
+| `.claude/skills/pr-review-response/SKILL.md` | Modify | Add gap analysis step 5b |
 | `.claude/skills/pr-review-response/references/copilot-gap-taxonomy.md` | Create | Gap classification categories |
 
 ## 11. Out of Scope
