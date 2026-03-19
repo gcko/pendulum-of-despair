@@ -58,3 +58,31 @@ addresses the gap patterns identified in the prior round.
 **Effectiveness prediction:** If Agent 6 had been running, it would have
 caught 8 of 12 issues. Combined with existing agents, 12 of 12 would
 have been caught.
+
+---
+
+### PR #15 — Music Score + Skill Refactor, Copilot Review Round 4 (2026-03-19)
+
+**Comments:** 15 total (initially missed due to API pagination bug)
+**Infrastructure fix:** Added `--paginate` to all `gh api` calls in
+pr-review-response and story-review skills. GitHub API defaults to 30
+results per page; PR #15 had 61 total comments across 4 review rounds.
+
+**Gap patterns found:**
+- Source verification (town act assignments): 4 — Agent 6
+- Classification (Corrund Sewers world vs city): 2 — Agent 6
+- Self-contradiction (section numbering, bird call, diagram drift): 4 — Agent 3 (Pass F)
+- Spec hygiene (plan line count, step reference): 2 — Agent 3 (Pass K)
+- Workflow ambiguity (double-push): 1 — Agent 3 (Pass F)
+- PR scope (not a code gap): 1 — N/A
+- Exception tracking (Millhaven terminology): 1 — Agent 4
+
+**New checklist items added (4):**
+- Section numbering is monotonic
+- Diagram labels match the text they summarize
+- Terms in adjacent paragraphs don't contradict each other
+- Multi-step workflow descriptions have unambiguous ordering
+
+**Effectiveness note:** 10 of 15 covered by existing checklists.
+4 new "Internal Coherence" items added for newly written content.
+1 was a PR scope concern (not actionable as a checklist item).

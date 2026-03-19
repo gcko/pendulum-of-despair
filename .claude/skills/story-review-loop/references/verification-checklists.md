@@ -27,6 +27,16 @@ Each item is a single check. Grows from Copilot gap analysis.
   acknowledges it
 - "Destroyed" locations should not be assigned corruption stages
 
+## Internal Coherence (New Content)
+
+- Section numbering is monotonic (no 5.5 before 5.4, no duplicate numbers)
+- Diagram labels match the text they summarize (no hard-coded values that drift)
+- Terms introduced in one paragraph are not contradicted by an adjacent
+  paragraph in the same section (e.g., "first non-musical sound" vs palette
+  that includes the same sound type)
+- Multi-step workflow descriptions have unambiguous ordering (no "commit
+  and push" in step 5 AND step 5b without clarifying which push is canonical)
+
 ## Spec/Plan Mirror Checks
 
 - When music.md changes, check spec sections 3-13 for mirrored content
