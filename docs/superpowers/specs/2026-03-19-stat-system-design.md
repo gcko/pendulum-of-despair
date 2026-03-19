@@ -56,9 +56,16 @@ on top of the derived value.
 
 | Derived Stat | Formula | Cap | Notes |
 |-------------|---------|-----|-------|
-| Evasion% | `SPD / 4` | 50% | Chance to dodge physical attacks. Equipment adds flat EVA% on top. |
+| Hit Rate% | `90 + (SPD - target.SPD) / 4` | 99% (min 20%) | Base 90% accuracy. Fast attackers are more accurate against slow targets. Cannot reach 100% — there is always a 1% miss chance. Floor of 20% prevents complete whiffs. |
+| Evasion% | `SPD / 4` | 50% | Chance to dodge physical attacks after hit check passes. Equipment adds flat EVA% on top. |
 | Critical% | `LCK / 4` | 50% | Chance for physical attacks to deal 2x damage. Equipment adds flat CRIT% on top. |
 | Magic Evasion% | `(MDEF + SPD) / 8` | 40% | Chance to resist status spells. Does not apply to damage spells. |
+
+**Attack resolution order:** Hit Rate% roll first. If hit misses, no
+further checks. If hit lands, target rolls Evasion% to dodge. If not
+dodged, attacker rolls Critical% for bonus damage. This three-stage
+check creates moments of drama: a hit that lands, isn't dodged, AND
+crits feels earned.
 
 ### 3.3 Stat Caps
 
@@ -124,14 +131,21 @@ average 2.5) to avoid monotony.
 |-----------|-----|----------|-----------|-----------|-----------|-----------|
 | First level-up | 2 | 180 | 20 | — | — | — |
 | End of Act I | ~18 | 1,540 | 49 | — | 45 | 42 |
-| End of Act II | ~35 | 2,985 | 81 | — | 72 | 67 |
-| Interlude end | ~50 | 4,345 | 108 | 112 | 94 | 82 |
-| End of Act III | ~70 | 6,045 | 144 | 148 | 122 | 107 |
-| Level cap | 150 | 12,845 | 255 | 255 | 248 | 229 |
+| End of Act II | ~35 | 2,985 | 79 | — | 72 | 67 |
+| Interlude end | ~50 | 4,260 | 106 | 110 | 96 | 90 |
+| End of Act III | ~70 | 5,960 | 142 | 146 | 128 | 120 |
+| Level cap | 150 | 12,760 | 255 | 255 | 255 | 240 |
 
-Primary stats reach the 255 cap around level 120-140 naturally. The
-last 10-30 levels are for secondary stats to catch up and for HP/MP
-to keep growing toward their higher ceilings.
+Formula: `stat_at_level = base + growth * (level - 1)`, capped at 255
+(or 14999 for HP, 1499 for MP). These projections **exclude** equipment,
+Ley Crystal bonuses, and narrative milestone spikes (Section 6).
+
+Primary stats reach the 255 cap around level 120-140 naturally. Sable's
+SPD (growth 1.6) hits 255 at level ~149. LCK (growth 1.5) reaches 240
+at level 150 — the only primary stat that doesn't cap naturally,
+rewarding LCK-boosting Ley Crystals. The last 10-30 levels are for
+secondary stats to catch up and for HP/MP to keep growing toward their
+higher ceilings.
 
 ### 4.4 Party Join Level Rule
 
@@ -148,12 +162,28 @@ set to `party_average_level - 1` (minimum: story-appropriate floor).
 | Maren | Act III recruitment | 45 |
 | Interlude reunions | Sable finds each party member | — (uses party average - 1) |
 
+### 4.5 Guest NPC Stats
+
+Guest NPCs (Cordwyn, Kerra, etc.) join temporarily for specific
+story segments. They use fixed stats — they do not level up or benefit
+from Ley Crystals.
+
+| Guest NPC | When | Stats Rule | Notes |
+|-----------|------|-----------|-------|
+| Dame Cordwyn | Valdris Siege (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
+| Kerra | Caldera Unbowed (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per events.md). |
+
+Guest NPCs cannot be equipped, cannot use items, and do not earn XP.
+Their actions are AI-controlled (Attack + 1-2 signature abilities).
+They do not count toward party wipe — if all player characters Faint
+but a guest is standing, the wipe still triggers (per events.md).
+
 The "-1" means the new character is always close to catching up —
 usually one or two battles from matching the party. This creates a
 satisfying early-level-up feel on every recruitment, matching FF6's
 approach.
 
-### 4.5 Equipment and Buff Rules
+### 4.6 Equipment and Buff Rules
 
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds
   12 to the character's ATK. Simple and transparent.
@@ -224,7 +254,7 @@ unlock, or special effects trigger.
 | Flame Heart | ATK +1, MAG +1 | ATK +1, MAG +1 | ATK +2, MAG +1 | ATK +2, MAG +2 | ATK +2, MAG +2 | Wearer randomly hit by Tier 1 Flame spell once per battle (friendly fire, cannot kill — leaves at 1 HP) | Caldera Forge Depths |
 | Frost Veil | DEF +1, MDEF +1 | DEF +1, MDEF +1 | DEF +1, MDEF +2 | DEF +2, MDEF +2 | DEF +2, MDEF +2 | Wearer SPD -15% in battle (chilling effect on ATB gauge) | Frostcap Caverns |
 | Storm Eye | SPD +1, LCK +1 | SPD +1, LCK +1 | SPD +2, LCK +1 | SPD +2, LCK +2 | SPD +2, LCK +2 | 10% chance wearer's attacks hit a random target (ally or enemy) | Windshear Peak |
-| Grey Remnant | MAG +2 | MAG +3 | MAG +3 | MAG +3 | MAG +4 | HP -80 per character level-up (permanent). Wearer takes +25% Pallor damage in combat. | Pallor Wastes |
+| Grey Remnant | MAG +2 | MAG +3 | MAG +3 | MAG +3 | MAG +4 | HP -40 per character level-up (permanent). Wearer takes +25% Pallor damage in combat. | Pallor Wastes |
 
 #### Special Crystals
 
@@ -257,15 +287,26 @@ the player that ley energy is finite — foreshadows the Pallor's
 consumption of the ley lines.
 
 **Grey Remnant (risk/reward):** Strongest raw MAG crystal (+4 at Lv5).
-But -80 HP per character level-up is brutal. Equipping on Maren from
-level 50 to 100 = +200 bonus MAG but -4,000 max HP on the character
-with the lowest HP. Creates a genuine glass cannon tradeoff.
+But -40 HP per character level-up is painful. Equipping on Maren from
+level 50 to 100 = +200 bonus MAG but -2,000 max HP on the character
+with the lowest HP (Maren at level 100 has ~4,010 natural HP, so she'd
+drop to ~2,010 — fragile but survivable with Edren's protection).
+Creates a genuine glass cannon tradeoff without being lethal.
 
 **Convergence Shard (secret):** Looks mediocre at +1 all stats. Most
 players swap it out. But ~100 battles of commitment reveals +3 all
 stats — the best single crystal upgrade in the game. UI deliberately
-shows "???" for the Lv5 text. Rewards patience and loyalty in a game
-about commitment and sacrifice.
+shows "???" for the Lv5 text. Rewards patience and loyalty.
+
+Impact modeling: if a player equips Convergence Shard at level 60 and
+reaches crystal Lv5 around level 75 (after ~100 battles), the +3 all
+stats applies to levels 76-150 = 75 level-ups = +225 per stat. Combined
+with the +1 per stat from levels 60-75 (15 level-ups = +15 per stat),
+total bonus is +240 per stat. This is powerful but balanced: it applies
+to ALL stats equally (no min-maxing), requires late-game commitment,
+and only becomes exceptional if the player continues past level 100.
+Most players finishing the main story around level 70-80 will see
+modest benefit.
 
 **Cael's Echo (emotional payoff):** Post-game only. The character-
 specific bonuses (Lira +10% damage, Edren +10% DEF) tie to their
@@ -311,18 +352,29 @@ The existing formulas in magic.md use MAG and MDEF:
 - `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)`
 - `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)`
 
-With this stat system, at level 50:
-- Maren (MAG 112) casting Tier 2 spell (power 35): `112 * 35 = 3,920` raw
-- Against enemy with 60 MDEF: `3,920 - 60 = 3,860 damage`
-- This seems high. The damage formula in 1.1 (Damage Formulas gap) will
-  need to scale spell power or add a divisor. Flag for Gap 1.1.
+With this stat system, the current formula produces extremely high
+numbers:
+
+| Level | Maren MAG | Spell Tier | Power | Raw Damage | After 60 MDEF |
+|-------|-----------|-----------|-------|------------|---------------|
+| 50 | 110 | Tier 2 | 35 | 3,850 | 3,790 |
+| 70 | 146 | Tier 3 | 65 | 9,490 | 9,430 |
+| 150 | 255 | Tier 4 | 100 | 25,500 | 25,440 |
+
+The endgame numbers exceed the HP cap (14,999) by nearly 2x. The
+formula `(MAG * power) - MDEF` has no divisor and was likely designed
+for a smaller stat scale. **Gap 1.1 MUST add a divisor** (e.g.,
+`(MAG * power) / 4 - MDEF`) or significantly reduce spell power tiers
+to keep damage in the 100-9,999 range. This is the highest-priority
+integration point between the stat system and damage formulas.
 
 ### 7.2 Abilities (abilities.md)
 
 Existing percentage-based abilities work with this system:
 - Edren's Ironwall (50% physical reduction on ally): reduces incoming
   damage by 50% after DEF calculation
-- Thornveil counter (20% of DEF): at DEF 120 = 24 counter damage
+- Thornveil counter (20% of DEF base, 40% evolved Deeproot Veil, 15%
+  for Lira's device variant): at DEF 120 = 24/48/18 counter damage
 - Mending Engine (15% max HP heal): at HP 4,000 = 600 HP per tick
 - Sable's Shiv (ignores 50% DEF): halves target DEF before damage calc
 
