@@ -211,11 +211,11 @@ variants needed. Multi-visit towns show separate rows per act state.
 |------|------|-----------------|------|-------------|
 | Valdris Crown | I-II | Stage 0-1 | Hopeful / Solemn | Proud, bustling. Brass fanfare on entry, settles into warm strings. Royal court undertone. Edren's motif as harmonic foundation. |
 | Valdris Crown | Interlude+ | Stage 2 | Corrupted | Muted horn over empty streets. Military snare replaces court strings — Cordwyn's de facto command. Ghost of the original fanfare in reverb. |
-| Aelhart | I | Stage 0 | Pastoral | Lighter brass, pastoral strings. Small-town warmth. Market day feel. Relaxed tempo. Inaccessible after Act I (border road too dangerous). |
+| Aelhart | I/Interlude | Stage 0 | Pastoral | Lighter brass, pastoral strings. Small-town warmth. Market day feel. Relaxed tempo. Town proper inaccessible after Act I; Dry Well dungeon beneath accessible during Interlude+. |
 | Highcairn | Interlude-III | Stage 1-2 | Solemn / Sacred | Monastery setting. Low sustained strings, sparse brass. Deeper areas introduce Stage 2 corruption where Pallor manifestations appear. |
-| Thornwatch | II | Stage 0-1 | Tense | Martial Valdris variant. Drums prominent, brass restrained. Border watchtower vigil. |
-| Greyvale | I-II | Stage 0 | Pastoral / Solemn | Rural Valdris. Gentle strings, distant horn. |
-| Greyvale | Interlude+ | Stage 2 | Corrupted | Pastoral melody struggles against Pallor drone. Strings thin. |
+| Thornwatch | I-II | Stage 0-1 | Tense | Martial Valdris variant. Drums prominent, brass restrained. Border watchtower vigil. |
+| Greyvale | II | Stage 0 | Pastoral / Solemn | Rural Valdris. Gentle strings, distant horn. |
+| Greyvale | Interlude | Stage 2 | Corrupted | Pastoral melody struggles against Pallor drone. Strings thin. Pallor manifestation — residents in catatonic despair. |
 
 ### Carradan Compact Towns
 
@@ -275,7 +275,7 @@ mood with reduced instrumentation.
 | Ashgrove Undercroft | II/Interlude | Thornmere + Ancient | Tense / Sacred | Beneath the Ashgrove clearing. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
 | Carradan Rail Tunnels | II-Interlude | Carradan (dark) | Tense / Industrial | Echoing mechanical palette. Train-rhythm percussion (clack-clack tempo). Darkness and distance. Collapse sections: rhythm breaks apart. |
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
-| Archive of Ages | II-III | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
+| Archive of Ages | Interlude | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
 | Monastery of the Vigil (Highcairn) | Interlude | Valdris (sacred) | Sacred → Corrupted | Low sustained strings mimicking monastic chant (instrumental, not vocal). As Pallor influence deepens, the "chant" decomposes into the Pallor motif. |
 | Ley Nexus Hollow | Interlude | Thornmere + Ancient | Sacred / Urgent | Torren's reunion location. His flute motif corrupted by Ley Leech — the music IS the boss fight. Thornmere palette at maximum spiritual intensity. |
 | Sunken Rig | Interlude | Carradan (submerged) | Mysterious / Tense | Underwater-distorted industrial palette. Drowned machinery sounds. Accordion replaced by murky sustained tones. Eerie. |

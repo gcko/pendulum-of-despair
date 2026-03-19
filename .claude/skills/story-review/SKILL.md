@@ -72,7 +72,7 @@ Always write the review body to a temp file first to avoid shell quoting issues.
 **PR Mode:**
 ```bash
 # CRITICAL: Always use --paginate. GitHub defaults to 30 per page.
-# PRs with many files (e.g., story expansions touching 10+ docs) can
+# PRs with many changed files or review comments (30+) can
 # exceed this limit and silently drop files from review.
 gh api /repos/{owner}/{repo}/pulls/{pr_number}/files --paginate --jq '.[].filename'
 ```

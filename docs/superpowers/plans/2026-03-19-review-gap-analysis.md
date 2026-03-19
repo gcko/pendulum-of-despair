@@ -415,11 +415,14 @@ Read the full SKILL.md. Confirm:
 
 ```bash
 git add .claude/skills/story-review-loop/SKILL.md
-git commit -m "refactor(shared): slim story-review-loop SKILL.md to orchestrator
+cat > /tmp/commit-msg.txt << 'EOF'
+refactor(shared): slim story-review-loop SKILL.md to orchestrator
 
 Extract 5 agent prompts to agents/ files, add Agent 6 (Canonical
 Verifier), update dispatch to 6 agents, reference verification
-checklists. ~200 lines down from ~538."
+checklists. ~350 lines down from ~538.
+EOF
+git commit -F /tmp/commit-msg.txt
 ```
 
 ---
@@ -514,10 +517,13 @@ Add step 5b to the dot graph between commit and reply nodes.
 
 ```bash
 git add .claude/skills/pr-review-response/
-git commit -m "feat(shared): add Copilot gap analysis to pr-review-response
+cat > /tmp/commit-msg.txt << 'EOF'
+feat(shared): add Copilot gap analysis to pr-review-response
 
 New step 5b analyzes Copilot comments, categorizes gaps, proposes
-skill improvements. Includes gap taxonomy reference file."
+skill improvements. Includes gap taxonomy reference file.
+EOF
+git commit -F /tmp/commit-msg.txt
 ```
 
 ---

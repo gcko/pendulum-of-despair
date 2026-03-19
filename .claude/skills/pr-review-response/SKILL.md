@@ -106,7 +106,7 @@ EOF
 
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
-git push
+# Do NOT push yet if Copilot commented — step 5b may add another commit
 ```
 
 ### 5b. Copilot Gap Analysis (if Copilot commented)
@@ -128,10 +128,15 @@ improves our review skills.
    > existing checklists. K are new gaps:
    > [list of proposed checklist additions]
    > Want me to apply these improvements?"
-7. If approved, update the checklist and log files, commit. The push in step 5 has already happened; the skill improvements commit will be pushed with any remaining work or as a standalone push after replies.
+7. If approved, update the checklist and log files, commit.
+8. **Push all commits** (fix commit from step 5 + skill improvement
+   commit from step 5b) together: `git push`.
 
 The reply step (6) can then mention "added to verification checklists"
 for each addressed gap, closing the feedback loop.
+
+**If no Copilot comments:** Skip step 5b entirely and push in step 5
+as normal.
 
 ### 6. Reply to Each Comment
 

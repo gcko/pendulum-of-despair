@@ -127,12 +127,15 @@ Expected: all pass (documentation-only change).
 
 ```bash
 git add docs/story/music.md
-git commit -m "docs(shared): add comprehensive music score overview
+cat > /tmp/commit-msg.txt << 'EOF'
+docs(shared): add comprehensive music score overview
 
 Defines faction palettes, character leitmotifs, overworld/town/dungeon
 themes, battle music, narrative moment themes, corruption evolution
 system, system/UI cues, and composable framework for new content.
-~70-80 unique tracks cataloged. All instrumental, no vocals."
+~70-80 unique tracks cataloged. All instrumental, no vocals.
+EOF
+git commit -F /tmp/commit-msg.txt
 ```
 
 ---
