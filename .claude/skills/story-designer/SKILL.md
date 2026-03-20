@@ -132,7 +132,7 @@ design document.
 - `docs/story/equipment.md` — weapons, armor, accessories
 - `docs/story/economy.md` — pricing, shop inventories, gold pacing
 - `docs/story/ui-design.md` — menu layouts, battle screen, text boxes
-- `docs/story/progression.md` — XP curves, level milestones, stat growth
+- `docs/story/progression.md` — stat growth, progression crystals, level milestones
 
 ### 5. Verify (Adversarial Audit)
 

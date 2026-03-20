@@ -7,8 +7,8 @@
 >
 > **Related docs:** [characters.md](characters.md) |
 > [abilities.md](abilities.md) | [magic.md](magic.md) |
-> [events.md](events.md) | [equipment.md](equipment.md) (Gap 1.5) |
-> [enemies.md](enemies.md) (Gap 1.3)
+> [events.md](events.md) | equipment.md (Gap 1.5) |
+> enemies.md (Gap 1.3)
 
 **Design principles at a glance:**
 
@@ -115,9 +115,9 @@ See [characters.md](characters.md) for full character profiles.
 
 ### Milestones
 
-Formula: `stat_at_level = base + growth * (level - 1)`, capped at 255 (or 14999 for HP, 1499 for MP).
+Formula (per level): compute `raw = base + growth * (level - 1)`, then `stat_at_level = min(cap, round(raw))`, where the cap is 255 for primary stats, 14999 for HP, and 1499 for MP. Rounding uses standard half-up: `floor(raw + 0.5)`. This produces deterministic alternating gain patterns (e.g., +2, +2, +2, +2, +1 for a growth of 1.8) while keeping long-term growth equal to the specified average.
 
-Projected stats exclude equipment, Ley Crystal bonuses, and narrative milestone spikes.
+Projected stats exclude equipment, Ley Crystal bonuses, and narrative milestone spikes. Milestone values in the table below are computed from this rule; when in doubt, the formula above takes precedence.
 
 | Milestone | Lvl | Edren HP | Edren ATK | Maren MAG | Sable SPD | Sable LCK |
 |-----------|-----|----------|-----------|-----------|-----------|-----------|

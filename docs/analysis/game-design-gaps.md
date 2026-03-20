@@ -32,7 +32,7 @@ interconnected system and should be designed together.
 
 **What's Needed:**
 - [ ] Physical damage formula (ATK vs DEF, with variance)
-- [ ] Magical damage formula (MAG vs MAGDEF, element multiplier)
+- [ ] Magical damage formula (MAG vs MDEF, element multiplier)
 - [ ] Healing formula (spell power, caster stats)
 - [ ] Critical hit rate formula and damage multiplier
 - [ ] Hit/miss calculation (accuracy vs evasion)
@@ -89,7 +89,7 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 **Depends On:** 1.1 (Damage Formulas), 1.2 (Stat System)
 
 **What's Needed:**
-- [ ] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MAGDEF, SPD, LCK, XP, Gold
+- [ ] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK, XP, Gold
 - [ ] Per-enemy data for all ~40+ named enemies across every dungeon:
   - [ ] Ember Vein enemies (Restless Dead, Tomb Mite, Bone Warden, etc.)
   - [ ] Fenmother's Hollow enemies (Drowned Sentinel, Marsh Leech, etc.)

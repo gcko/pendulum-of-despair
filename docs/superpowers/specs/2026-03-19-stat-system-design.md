@@ -82,9 +82,14 @@ crits feels earned.
 
 ### 4.1 Growth Rates Per Level
 
-Each character has a growth archetype. Rates are per-level averages —
-actual gains alternate (e.g., +3 ATK on odd levels, +2 on even =
-average 2.5) to avoid monotony.
+Each character has a growth archetype. Rates are real-valued per-level
+averages. For integer-valued stats, let `ideal(level) = base + growth *
+(level - 1)`. The actual in-game stat is `stat_at_level = floor(ideal +
+0.5)` (half-up rounding), capped at the stat's hard cap. The per-level
+gain shown in game is the delta between consecutive levels. This produces
+deterministic alternating patterns (e.g., +2, +2, +2, +2, +1 for a
+growth of 1.8) while keeping long-term growth equal to the specified
+average.
 
 | Stat | Edren (Knight) | Cael (Commander) | Lira (Engineer) | Torren (Sage) | Sable (Thief) | Maren (Archmage) |
 |------|-------|------|------|--------|-------|-------|

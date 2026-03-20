@@ -134,6 +134,8 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 
 **Gap Analysis & Design Tracker:**
 - [`docs/analysis/game-design-gaps.md`](../../../docs/analysis/game-design-gaps.md) -- Living gap analysis tracking what's designed vs. what's missing. Use `/story-designer` skill to iterate on gaps.
+
+**Cities, interiors, and dungeons:**
 - [`city-valdris.md`](../../../docs/story/city-valdris.md) -- Valdris faction city layouts with ASCII maps, shops, NPCs
 - [`city-carradan.md`](../../../docs/story/city-carradan.md) -- Carradan Compact city layouts with ASCII maps, districts, shops
 - [`city-thornmere.md`](../../../docs/story/city-thornmere.md) -- Thornmere settlements and cross-faction locations
