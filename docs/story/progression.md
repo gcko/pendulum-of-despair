@@ -128,7 +128,7 @@ See [characters.md](characters.md) for full character profiles.
 
 ### Milestones
 
-Formula (per level): compute `raw = base + growth * (level - 1)`, then `stat_at_level = min(cap, round(raw))`, where the cap is 255 for primary stats, 14999 for HP, and 1499 for MP. Rounding uses standard half-up: `floor(raw + 0.5)`. This produces deterministic alternating gain patterns (e.g., +2, +2, +2, +2, +1 for a growth of 1.8) while keeping long-term growth equal to the specified average.
+Formula (per level): compute `raw = base + growth * (level - 1)`, then `stat_at_level = min(cap, floor(raw + 0.5))`, where the cap is 255 for primary stats, 14999 for HP, and 1499 for MP. Rounding uses standard half-up: `floor(raw + 0.5)`. This produces deterministic alternating gain patterns (e.g., +2, +2, +2, +2, +1 for a growth of 1.8) while keeping long-term growth equal to the specified average.
 
 Projected stats exclude equipment, Ley Crystal bonuses, and narrative milestone spikes. Milestone values in the table below are computed from this rule; when in doubt, the formula above takes precedence.
 
@@ -213,7 +213,7 @@ Crystals gain XP equal to **30% of the wearer's XP** after each battle. Crystals
 
 | Crystal | Lv1 | Lv2 | Lv3 | Lv4 | Lv5 | Found |
 |---------|-----|-----|-----|-----|-----|-------|
-| Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein Floor 4 |
+| Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein — Floor 4: The Pendulum Chamber |
 | Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Crown Catacombs |
 | Ley Prism | MAG +1 | MAG +2 | MAG +2 | MAG +2, MP +5/lvl | MAG +3, MP +8/lvl | Archive of Ages |
 | Ward Stone | MDEF +1 | MDEF +2 | MDEF +2 | MDEF +2 | MDEF +2, MAG +1 | Highcairn Monastery |
@@ -339,4 +339,4 @@ Equipment bonuses are additive. A weapon might grant ATK +15 to +45 depending on
 
 ### Ley Crystals and Level Cap Math
 
-A player who equips a Lv5 crystal with +3 to a stat for 100 levels gains +300 bonus. Since the stat cap is 255, this means crystal investment matters most for secondary stats (pushing a knight's MAG toward usable levels) rather than primary stats (which reach 255 naturally by level ~130).
+A player who equips a Lv5 crystal with +3 to a stat for 100 levels has a theoretical +300 pre-cap bonus; in practice, each level-up's crystal bonus is clamped by the 255 stat cap. Since primary stats reach 255 naturally by around level 130, crystal investment matters most for secondary stats (e.g., pushing a knight's MAG toward usable levels) rather than overcapping primaries.

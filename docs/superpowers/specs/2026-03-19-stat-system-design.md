@@ -158,9 +158,10 @@ average.
 | End of Act III | ~70 | 5,960 | 142 | 146 | 128 | 120 |
 | Level cap | 150 | 12,760 | 255 | 255 | 255 | 240 |
 
-Formula: `stat_at_level = base + growth * (level - 1)`, capped at 255
-(or 14999 for HP, 1499 for MP). These projections **exclude** equipment,
-Ley Crystal bonuses, and narrative milestone spikes (Section 6).
+Formula: let `ideal = base + growth * (level - 1)`, then
+`stat_at_level = min(cap, floor(ideal + 0.5))`, where `cap` is 255 (or
+14999 for HP, 1499 for MP). These projections **exclude** equipment, Ley
+Crystal bonuses, and narrative milestone spikes (Section 6).
 
 Primary stats reach the 255 cap around level 120-140 naturally. Sable's
 SPD (growth 1.6) hits 255 at level ~149. LCK (growth 1.5) reaches 240
@@ -268,7 +269,7 @@ unlock, or special effects trigger.
 
 | Crystal | Lv1 | Lv2 | Lv3 | Lv4 | Lv5 | Found |
 |---------|-----|-----|-----|-----|-----|-------|
-| Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein Floor 4 |
+| Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein — Floor 4: The Pendulum Chamber |
 | Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Crown Catacombs |
 | Ley Prism | MAG +1 | MAG +2 | MAG +2 | MAG +2, MP +5/lvl | MAG +3, MP +8/lvl | Archive of Ages |
 | Ward Stone | MDEF +1 | MDEF +2 | MDEF +2 | MDEF +2 | MDEF +2, MAG +1 | Highcairn Monastery |
@@ -421,11 +422,12 @@ mid-game stat) without being mandatory.
 
 ### 7.4 Ley Crystals + Level Cap Math
 
-A player who equips a Lv5 crystal with +3 to a stat for 100 levels
-gains +300 bonus. Since the stat cap is 255, this means crystal
-investment matters most for secondary stats (pushing a knight's MAG
-toward usable levels) rather than primary stats (which reach 255
-naturally by level ~130).
+A player who equips a Lv5 crystal with +3 to a stat for 100 levels has
+a theoretical pre-cap gain of +300. In practice, each level-up's crystal
+bonus is clamped by the 255 hard cap, so the realized gain can be lower
+once the affected stat approaches 255. This means crystal investment
+matters most for secondary stats (pushing a knight's MAG toward usable
+levels) rather than primary stats (which reach 255 naturally by ~level 130).
 
 ## 8. Files Changed
 

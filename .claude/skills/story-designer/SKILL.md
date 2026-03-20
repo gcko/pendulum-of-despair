@@ -40,7 +40,7 @@ When designing a new system:
   make sense with the damage formula?)
 - Verify new content doesn't contradict existing docs
 - Run the Canonical Verifier checklist (from
-  `story-review-loop/references/verification-checklists.md`) on your
+  `../story-review-loop/references/verification-checklists.md`) on your
   own output before committing
 
 When auditing existing gaps:

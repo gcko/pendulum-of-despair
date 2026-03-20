@@ -226,7 +226,7 @@ In `.claude/skills/pod-dev/SKILL.md`, find the story docs list and add:
   stat system: 8 stats, growth curves, 18 Ley Crystals, milestone spikes
 ```
 
-Add after the `music.md` entry.
+Add before the `music.md` entry.
 
 - [x] **Step 3: Note unblocked gaps**
 
