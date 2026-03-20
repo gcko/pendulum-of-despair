@@ -59,7 +59,24 @@ on top of the derived value.
 | Hit Rate% | `90 + (SPD - target.SPD) / 4` | 99% (min 20%) | Base 90% accuracy. Fast attackers are more accurate against slow targets. Cannot reach 100% — there is always a 1% miss chance. Floor of 20% prevents complete whiffs. |
 | Evasion% | `SPD / 4` | 50% | Chance to dodge physical attacks after hit check passes. Equipment adds flat EVA% on top. |
 | Critical% | `LCK / 4` | 50% | Chance for physical attacks to deal 2x damage. Equipment adds flat CRIT% on top. |
-| Magic Evasion% | `(MDEF + SPD) / 8` | 40% | Chance to resist status spells. Does not apply to damage spells. |
+| Magic Evasion% | `(MDEF + SPD) / 8` | 40% | Chance to resist status spells (additional check — see below). Does not apply to damage spells. |
+
+**Rounding & clamping (derived percentages):**
+
+1. Compute the raw value using real-number division (no integer truncation).
+2. Round the result down (floor) to the nearest whole percent.
+3. Add any flat bonuses from equipment to this rounded base value.
+4. Clamp the final value to the allowed range:
+   - Hit Rate%: clamp to `[20, 99]`.
+   - Evasion%, Critical%, Magic Evasion%: clamp to `[0, Cap]` where Cap is from the table above.
+
+**Magic Evasion% and status spells — resolution order:**
+
+Status spells use a two-stage check. First, the caster's accuracy is
+calculated via `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))`
+(see magic.md). If this check succeeds, the target then rolls their
+Magic Evasion% to resist the effect entirely. Damage spells skip the
+MEVA% check.
 
 **Attack resolution order:** Hit Rate% roll first. If hit misses, no
 further checks. If hit lands, target rolls Evasion% to dodge. If not
@@ -175,13 +192,14 @@ approach.
 ### 4.5 Guest NPC Stats
 
 Guest NPCs (Cordwyn, Kerra, etc.) join temporarily for specific
-story segments. They use fixed stats — they do not level up or benefit
-from Ley Crystals.
+story segments. Their stats are computed from the formulas below at the
+start of each battle, then remain fixed for that battle — they do not
+level up, gain XP, or benefit from Ley Crystals.
 
 | Guest NPC | When | Stats Rule | Notes |
 |-----------|------|-----------|-------|
-| Dame Cordwyn | Siege of Valdris (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
-| Kerra | Unbowed sidequest (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per events.md). |
+| Dame Cordwyn | Siege of Valdris (Act II) | Stats = party average for ATK/DEF/SPD. HP = 80% of Edren's max HP, evaluated at the start of each battle (ignores temporary damage, healing, and buffs). Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
+| Kerra | Unbowed sidequest (Interlude) | Stats = 60% of party average across all stats. HP = party average max HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per events.md). |
 
 Guest NPCs cannot be equipped, cannot use items, and do not earn XP.
 Their actions are AI-controlled (Attack + 1-2 signature abilities).

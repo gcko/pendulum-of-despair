@@ -36,7 +36,7 @@ completed gap.
 When designing a new system:
 - Cross-reference EVERY value against canonical story docs
 - Check that numeric values are internally consistent (if ATK growth
-  is 3/level and level cap is 99, max ATK = base + 294 — does that
+  is 3/level and level cap is 150, max ATK = base + 447 — does that
   make sense with the damage formula?)
 - Verify new content doesn't contradict existing docs
 - Run the Canonical Verifier checklist (from
