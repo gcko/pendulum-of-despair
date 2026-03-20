@@ -38,7 +38,7 @@ systems (abilities.md, magic.md, events.md).
 - Create: `docs/story/progression.md`
 - Reference: `docs/superpowers/specs/2026-03-19-stat-system-design.md`
 
-- [ ] **Step 1: Create the file with all sections**
+- [x] **Step 1: Create the file with all sections**
 
 Create `docs/story/progression.md` by transcribing spec sections 2-7
 into story-doc format. The document structure:
@@ -114,7 +114,7 @@ Transcription rules (same as music.md):
 - Include the spec's computed milestone projection table with the
   formula used (`stat = base + growth * (level - 1)`)
 
-- [ ] **Step 2: Verify cross-references**
+- [x] **Step 2: Verify cross-references**
 
 After creating the file:
 1. Verify all relative links point to existing files (or note "(Gap X)"
@@ -126,7 +126,7 @@ After creating the file:
 4. Verify milestone spike events match events.md and outline.md
 5. Verify ability percentage references match abilities.md
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add docs/story/progression.md
@@ -152,13 +152,13 @@ Each of the 6 party member sections in characters.md needs a base stat
 table added. Find each character's section and add the table after their
 narrative description, before any act-by-act notes.
 
-- [ ] **Step 1: Read characters.md to find insertion points**
+- [x] **Step 1: Read characters.md to find insertion points**
 
 Read the file. Identify where each character's section starts. The
 base stat table should be inserted after the character's personality/
 role description paragraph and before any act-specific content.
 
-- [ ] **Step 2: Add stat tables for all 6 characters**
+- [x] **Step 2: Add stat tables for all 6 characters**
 
 For each character, add a section like:
 
@@ -185,7 +185,7 @@ Base stats per character (from spec section 4.2):
 | Sable | 58 | 20 | 13 | 8 | 8 | 10 | 18 | 16 | Thief |
 | Maren | 50 | 55 | 6 | 6 | 22 | 18 | 8 | 5 | Archmage |
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add docs/story/characters.md
@@ -206,7 +206,7 @@ git commit -F /tmp/commit-msg.txt
 - Modify: `docs/analysis/game-design-gaps.md`
 - Modify: `.claude/skills/pod-dev/SKILL.md`
 
-- [ ] **Step 1: Update gap 1.2 status**
+- [x] **Step 1: Update gap 1.2 status**
 
 In `docs/analysis/game-design-gaps.md`, find gap 1.2 and:
 - Change status from PARTIAL to COMPLETE
@@ -217,7 +217,7 @@ In `docs/analysis/game-design-gaps.md`, find gap 1.2 and:
 | 2026-03-20 | 1.2 Stat System | PARTIAL -> COMPLETE | <commit-sha> |
 ```
 
-- [ ] **Step 2: Add progression.md to pod-dev skill**
+- [x] **Step 2: Add progression.md to pod-dev skill**
 
 In `.claude/skills/pod-dev/SKILL.md`, find the story docs list and add:
 
@@ -228,7 +228,7 @@ In `.claude/skills/pod-dev/SKILL.md`, find the story docs list and add:
 
 Add after the `music.md` entry.
 
-- [ ] **Step 3: Note unblocked gaps**
+- [x] **Step 3: Note unblocked gaps**
 
 After updating gap 1.2 to COMPLETE, check which downstream gaps are
 now unblocked. Update their "Depends On" status if 1.2 was their only
@@ -239,7 +239,7 @@ blocker. The following gaps depend on 1.2:
 - 2.1 (XP Curve) — depends on 1.2 and 1.3. Still blocked by 1.3.
 - 2.2 (ATB Mechanics) — depends on 1.2 ONLY. Now unblocked.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add docs/analysis/game-design-gaps.md .claude/skills/pod-dev/SKILL.md
@@ -256,7 +256,7 @@ git commit -F /tmp/commit-msg.txt
 
 ### Task 4: Final Verification and Push
 
-- [ ] **Step 1: Adversarial verification**
+- [x] **Step 1: Adversarial verification**
 
 Run the story-designer verification checks:
 
@@ -278,7 +278,7 @@ Run the story-designer verification checks:
    in progression.md match abilities.md (20% base, 40% evolved, 15%
    Lira device).
 
-- [ ] **Step 2: Run lint and tests**
+- [x] **Step 2: Run lint and tests**
 
 ```bash
 pnpm lint && pnpm test
@@ -286,7 +286,7 @@ pnpm lint && pnpm test
 
 Expected: all pass (documentation-only changes).
 
-- [ ] **Step 3: Push**
+- [x] **Step 3: Push**
 
 ```bash
 git push

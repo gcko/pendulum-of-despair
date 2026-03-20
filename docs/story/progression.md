@@ -36,7 +36,7 @@
 | Magic | MAG | 1-255 | Spell damage, healing potency, status infliction rate. Used in [magic.md](magic.md) formula: `(caster.mag * spell.power) - target.mdef`. |
 | Magic Defense | MDEF | 1-255 | Spell damage reduced. Status effect resistance. |
 | Speed | SPD | 1-255 | ATB gauge fill rate. Also: flee success rate, preemptive strike chance. |
-| Luck | LCK | 1-255 | Critical hit chance, steal success (Sable), rare drop rate. Sable's signature stat. |
+| Luck | LCK | 1-255 | Critical hit chance, rare drop rate. Sable's signature stat. Note: steal success (Filch) is SPD-based — see [abilities.md](abilities.md). |
 
 ### Derived Stats
 
@@ -96,7 +96,7 @@ Each character has a growth archetype. Rates are per-level averages — actual g
 - **Lira (Engineer):** Hybrid ATK/MAG. Decent at both, exceptional at neither. Flexibility is her strength.
 - **Torren (Sage):** High MAG, MDEF, and MP. Fragile physically. Classic white mage — essential but vulnerable.
 - **Sable (Thief):** Fastest and luckiest. Paper-thin HP and DEF. Glass cannon who exploits Shiv's 50% DEF ignore.
-- **Maren (Archmage):** Highest MAG and MP in the game. Lowest HP, ATK, DEF, SPD. Joins Act I and transforms the party's magical output, but needs Edren's protection.
+- **Maren (Archmage):** Highest MAG and MP in the game. Lowest HP, ATK, DEF, SPD, LCK. Joins Act I and transforms the party's magical output, but needs Edren's protection.
 
 ### Base Stats at Level 1
 
@@ -153,7 +153,7 @@ Guest NPCs (Cordwyn, Kerra, etc.) join temporarily for specific story segments. 
 | Guest NPC | When | Stats Rule | Notes |
 |-----------|------|-----------|-------|
 | Dame Cordwyn | Siege of Valdris (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
-| Kerra | Caldera Unbowed (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per [events.md](events.md)). |
+| Kerra | Unbowed sidequest (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per [events.md](events.md)). |
 
 Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actions are AI-controlled (Attack + 1-2 signature abilities). They do not count toward party wipe — if all player characters Faint but a guest is standing, the wipe still triggers (per [events.md](events.md)).
 
@@ -163,7 +163,7 @@ Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actio
 
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds 12 to the character's ATK. Simple and transparent.
 - **Equipment cannot push stats past the 255 cap** for ATK/DEF/MAG/MDEF/SPD/LCK. HP and MP can exceed their natural growth via equipment up to their hard caps (14999 / 1499).
-- **Buffs and debuffs are percentage-based.** Haste = +25% SPD. Protect = +25% DEF. Shell = +25% MDEF. These are applied to the final stat (base + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse.
+- **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass = +40% MDEF (single) / +25% MDEF (party). These are applied to the final stat (base + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See [magic.md](magic.md) for full buff/debuff spell list.
 - **Buff stacking:** Buffs of the same type do not stack. Recasting Protect refreshes the duration but does not double the bonus. Different buff types stack (Protect + Shell = both active).
 
 ---
@@ -235,8 +235,8 @@ Crystals gain XP equal to **30% of the wearer's XP** after each battle. Crystals
 |-----|-------------------|-------|
 | Act I | Ember Shard, Dawn Fragment (hidden) | 2 |
 | Act II | Iron Core, Lifestone, Frost Veil | 3 |
-| Interlude | Ward Stone, Quicksilver, Spirit Tear, Wellspring | 4 |
-| Act III | Ley Prism, Flame Heart, Storm Eye, Grey Remnant, Convergence Shard | 5 |
+| Interlude | Ward Stone, Quicksilver, Spirit Tear, Wellspring, Ley Prism | 5 |
+| Act III | Flame Heart, Storm Eye, Grey Remnant, Convergence Shard | 4 |
 | Sidequests | Fortune Stone (Sable), Forgewright Core (Lira) | 2 |
 | Post-game | Null Crystal, Cael's Echo | 2 |
 | **Total** | | **18** |
@@ -270,7 +270,7 @@ One-time permanent stat boosts tied to story moments. These reward narrative eng
 | Torren | Stabilizes ley nexus (reunion) | Interlude | MAG +8, SPD +4 | The ley network flows through him now. |
 | Sable | Reunites full party (all 4 found) | Interlude | SPD +5, LCK +5, ATK +3 | She held everyone together. Observer became leader. |
 | Sable | Opens The Pendulum tavern | Epilogue | LCK +10 | Luckiest woman alive. Post-game completionist bonus. |
-| Maren | Reveals cycle history (Archive) | III | MAG +10, MP +100 | Full understanding of ancient magic. Knowledge is power. |
+| Maren | Reveals cycle history (Archive) | Interlude | MAG +10, MP +100 | Full understanding of ancient magic. Knowledge is power. |
 | Maren | First Annulment cast (100 WG) | III | MDEF +8, MAG +5 | Channeling the full Weave changed her permanently. |
 | All party | Campfire scene (pre-Convergence) | III | All stats +2 | Unity. Resolve. The smallest boost mechanically, the biggest emotionally. |
 

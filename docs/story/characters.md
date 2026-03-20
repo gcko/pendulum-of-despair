@@ -134,7 +134,7 @@ Crystal system.
 |----|----|----|-----|-----|------|-----|-----|
 | 50 | 55 | 6 | 6 | 22 | 18 | 8 | 5 |
 
-**Growth archetype:** Archmage — highest MAG and MP in the game, lowest HP, ATK, DEF, SPD. See
+**Growth archetype:** Archmage — highest MAG and MP in the game, lowest HP, ATK, DEF, SPD, LCK. See
 [progression.md](progression.md) for full growth curves and Ley
 Crystal system.
 
