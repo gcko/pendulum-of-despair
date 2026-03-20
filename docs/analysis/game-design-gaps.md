@@ -50,28 +50,34 @@ interconnected system and should be designed together.
 
 ### 1.2 Character Stat System
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P0 — blocks combat formulas, equipment, leveling
-**Files:** `docs/story/characters.md` (narrative only, no stats)
+**Files:** `docs/story/progression.md`, `docs/story/characters.md`
 **Depends On:** None (foundational)
+**Completed:** 2026-03-20
 
 **What's Needed:**
-- [ ] Complete stat list with definitions (HP, MP, ATK, DEF, MAG, MAGDEF, SPD, EVA, LCK)
-- [ ] Base stats per character at level 1 (6 party members)
-- [ ] Stat growth curves per character per level (1-99 or chosen cap)
-- [ ] Level cap decision (50? 75? 99?)
-- [ ] Derived stat formulas:
-  - [ ] Physical hit rate
-  - [ ] Physical evasion rate
-  - [ ] Magical evasion rate
-  - [ ] Critical hit rate
-  - [ ] ATB gauge fill rate (speed-dependent)
-- [ ] Stat caps (max ATK, max HP, etc.)
-- [ ] Equipment stat bonus rules (additive? multiplicative? percentage?)
-- [ ] Buff/debuff effect on stats (flat +/- or percentage?)
-- [ ] Guest NPC stats (Cordwyn, Kerra) and scaling rules
+- [x] Complete stat list with definitions (HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK — 8 stats, EVA derived from SPD)
+- [x] Base stats per character at level 1 (6 party members)
+- [x] Stat growth curves per character per level (level cap 150)
+- [x] Level cap decision (150)
+- [x] Derived stat formulas:
+  - [x] Physical hit rate (90 + (SPD - target.SPD) / 4, cap 99%, floor 20%)
+  - [x] Physical evasion rate (SPD / 4, cap 50%)
+  - [x] Magical evasion rate ((MDEF + SPD) / 8, cap 40%)
+  - [x] Critical hit rate (LCK / 4, cap 50%)
+  - [ ] ATB gauge fill rate (deferred to Gap 2.2)
+- [x] Stat caps (255 for core stats, 14999 HP, 1499 MP)
+- [x] Equipment stat bonus rules (additive, cannot exceed caps)
+- [x] Buff/debuff effect on stats (percentage-based, can temporarily exceed 255)
+- [x] Guest NPC stats (Cordwyn, Kerra) with scaling rules
+- [x] Ley Crystal system (18 crystals, 5 XP-based levels, negative effects)
+- [x] Narrative milestone stat spikes (12 story-driven permanent boosts)
+- [x] Party join level rule (party average - 1)
+- [x] Attack resolution order (hit rate -> evasion -> critical)
 
-**Blocking:** Damage formulas, equipment design, enemy balancing, XP curve
+**Blocking:** ~~Damage formulas, equipment design, enemy balancing, XP curve~~
+Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 
 ---
 
@@ -467,3 +473,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Date | Gap | Change | Commit |
 |------|-----|--------|--------|
 | 2026-03-19 | Initial audit | All gaps cataloged | — |
+| 2026-03-20 | 1.2 Stat System | PARTIAL -> COMPLETE. 8 stats, level cap 150, Ley Crystals, milestones. Unblocks 1.1 + 2.2. | acba850, 1cb8f6c |
