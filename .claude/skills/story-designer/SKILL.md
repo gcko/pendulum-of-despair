@@ -139,7 +139,7 @@ design document.
 After implementation, run a verification pass. This is NOT optional.
 
 **Numeric consistency checks:**
-- Do damage formulas produce reasonable values at level 1, 25, 50, 99?
+- Do damage formulas produce reasonable values at level 1, 25, 50, 150?
 - Can the player kill Act I enemies in 2-4 hits? (Too fast = trivial,
   too slow = tedious)
 - Do boss HP values create 3-5 minute fights? (Shorter = anticlimactic,
@@ -213,7 +213,8 @@ Claude: [Writes spec, creates plan, implements in docs/story/]
 Claude: [Runs adversarial verification]
 Claude: [Updates gap-analysis-gaps.md: 1.2 -> COMPLETE]
 Claude: "Stat system complete. This unblocks: 1.1 (Damage Formulas),
-         2.1 (XP Curve), 2.2 (ATB Mechanics). Recommend 1.1 next."
+         2.2 (ATB Mechanics). (2.1 XP Curve still blocked by 1.3.)
+         Recommend 1.1 next."
 ```
 
 ## Rules

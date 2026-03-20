@@ -245,7 +245,7 @@ Crystals gain XP equal to **30% of the wearer's XP** after each battle. Crystals
 
 **Dawn Fragment (diminishing):** Found hidden during the Dawn March tutorial. All stats +2 at crystal level 1 is the strongest early-game crystal by far. But it peaks immediately and fades to nothing by crystal level 4. Lore: ancient ley energy, almost exhausted. Teaches the player that ley energy is finite — foreshadows the Pallor's consumption of the ley lines.
 
-**Grey Remnant (risk/reward):** Strongest raw MAG crystal (+4 at Lv5). But -40 HP per character level-up is painful. Equipping on Maren from level 50 to 100 = +200 bonus MAG but -2,000 max HP on the character with the lowest HP (Maren at level 100 has ~4,010 natural HP, so she'd drop to ~2,010 — fragile but survivable with Edren's protection). Creates a genuine glass cannon tradeoff without being lethal.
+**Grey Remnant (risk/reward):** Strongest raw MAG crystal (+4 at Lv5). But -40 HP per character level-up is painful. Equipping on Maren from level 50 to 100: the crystal starts at Lv1 (+2 MAG) and must be leveled through battles to reach Lv5 (+4 MAG). Assuming the crystal reaches Lv5 early in the range, the total bonus is approximately +160-200 MAG over 50 levels, with -2,000 max HP. Maren at level 100 has ~4,010 natural HP, so she'd drop to ~2,010-2,050 — fragile but survivable with Edren's protection. Creates a genuine glass cannon tradeoff without being lethal.
 
 **Convergence Shard (secret):** Looks mediocre at +1 all stats. Most players swap it out. But ~100 battles of commitment reveals +3 all stats — the best single crystal upgrade in the game. UI deliberately shows "???" for the Lv5 text. Rewards patience and loyalty.
 
@@ -320,7 +320,7 @@ Existing percentage-based abilities work with this system:
 - Mending Engine (15% max HP heal): at HP 4,000 = 600 HP per tick
 - Sable's Shiv (ignores 50% DEF): halves target DEF before damage calc
 
-### Equipment ([equipment.md](equipment.md), Gap 1.5)
+### Equipment (equipment.md, Gap 1.5)
 
 Equipment bonuses are additive. A weapon might grant ATK +15 to +45 depending on tier. This means equipment is meaningful (~10-25% of a mid-game stat) without being mandatory.
 

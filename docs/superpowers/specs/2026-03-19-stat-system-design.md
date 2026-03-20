@@ -302,9 +302,12 @@ consumption of the ley lines.
 
 **Grey Remnant (risk/reward):** Strongest raw MAG crystal (+4 at Lv5).
 But -40 HP per character level-up is painful. Equipping on Maren from
-level 50 to 100 = +200 bonus MAG but -2,000 max HP on the character
-with the lowest HP (Maren at level 100 has ~4,010 natural HP, so she'd
-drop to ~2,010 — fragile but survivable with Edren's protection).
+level 50 to 100: the crystal starts at Lv1 (+2 MAG) and must be leveled
+through battles to reach Lv5 (+4 MAG). Assuming the crystal reaches Lv5
+early in the range, the total bonus is approximately +160-200 MAG over
+50 levels, with -2,000 max HP. Maren at level 100 has ~4,010 natural
+HP, so she'd drop to ~2,010-2,050 — fragile but survivable with Edren's
+protection.
 Creates a genuine glass cannon tradeoff without being lethal.
 
 **Convergence Shard (secret):** Looks mediocre at +1 all stats. Most
