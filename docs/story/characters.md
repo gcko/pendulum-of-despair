@@ -8,6 +8,16 @@
 
 **Personality:** Disciplined, loyal, steady. Carries the weight of duty willingly. He believes in protecting the old ways but isn't blind to Valdris's decline. He leads by example rather than charisma.
 
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 95 | 15 | 18 | 16 | 6 | 8 | 10 | 8 |
+
+**Growth archetype:** Knight — highest HP and DEF growth, the immovable wall. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
+
 **Arc:** Edren's journey is about learning that loyalty isn't enough — that protecting people sometimes means letting go of the ones you love. His guilt over failing to see Cael's descent paralyzes him during the Interlude. Sable shakes him out of it. By Act IV, he's learned that grief doesn't disqualify you from fighting — it qualifies you.
 
 **Opening:** Carries Arcanite-enhanced gear from the Valdris armory during the
@@ -21,6 +31,16 @@ the Arcanite Forging system Lira unlocks later.
 **Role:** Deuteragonist turned betrayer. Knight of Valdris, Edren's closest friend.
 
 **Personality:** Charismatic, brilliant, warmer than Edren. People are drawn to him. But he carries a deep wound — the death of his family during a Carradan border raid — that he's never fully processed.
+
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 78 | 25 | 15 | 13 | 10 | 10 | 12 | 9 |
+
+**Growth archetype:** Commander — balanced generalist, his loss creates a real combat hole. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
 
 **Arc:** Cael's unresolved grief is the crack the Pallor exploits. The whispers reframe his pain: Valdris let his family die. Edren could have helped. No one cared. None of it is true, but grief doesn't need truth. He takes the Pendulum believing he can end all suffering. By the time he realizes what's happened, the Pallor is using him as an anchor. His redemption comes through sacrifice — closing the door from the inside.
 
@@ -47,6 +67,16 @@ after the betrayal.
 
 **Personality:** Sharp, pragmatic, driven by guilt over what Carradan Forgewright craft has done to the ley lines. She's not soft — she's a scientist who understands consequences.
 
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 68 | 30 | 14 | 12 | 14 | 12 | 11 | 10 |
+
+**Growth archetype:** Engineer — hybrid ATK/MAG, flexibility is her strength. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
+
 **Arc:** Lira's romance with Cael is the tragic heart of the story. They fall in love during Acts I-II. His betrayal is a triple wound: personal, romantic, and ideological (he twisted the Forgewright craft she defected over). During the Interlude she's reckless and grief-driven. By Act III, she's the one who tells Edren to let Cael go — because acceptance is the only weapon against Despair.
 
 **Fate:** Survives. Founds the Bridgewrights — a guild dedicated to Forgewright craft that works with ley lines rather than draining them. Cael's dream made real, without the Despair.
@@ -56,6 +86,16 @@ after the betrayal.
 **Role:** Thornmere ranger and spirit-speaker. Moral compass.
 
 **Personality:** Older, world-weary, patient. Speaks plainly. He's seen enough to know that the world doesn't owe anyone answers. Connected to the wild magic and the spirit world.
+
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 62 | 40 | 10 | 9 | 16 | 14 | 9 | 7 |
+
+**Growth archetype:** Sage — highest MAG and MP growth after Maren, fragile physically. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
 
 **Arc:** Torren's arc is about endurance. During the Interlude, he nearly kills himself holding back the Pallor's corruption in the Wilds. The party's arrival reminds him he doesn't have to carry it alone. His Pallor trial in Act III — the spirits of the Wilds accusing him of failure — is overcome by accepting that protection doesn't mean preventing all harm.
 
@@ -67,6 +107,16 @@ after the betrayal.
 
 **Personality:** Young, quick-witted, covers pain with bravado and humor. Lost everything to the Compact's expansion. Uses sarcasm as armor.
 
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 58 | 20 | 13 | 8 | 8 | 10 | 18 | 16 |
+
+**Growth archetype:** Thief — fastest and luckiest, paper-thin HP and DEF. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
+
 **Arc:** Sable is the connective thread during the Interlude — the one who refuses to quit and tracks down every party member. Her Pallor trial is the most personal: the whisper that she's insignificant, that she doesn't belong with these people. She overcomes it by recognizing that showing up is enough. She's the most human character in the cast.
 
 **Fate:** Survives. Opens a tavern at the crossroads of the three factions called "The Pendulum" — so nobody forgets what it cost.
@@ -76,6 +126,16 @@ after the betrayal.
 **Role:** Valdris court mage (exiled). Edren's mentor. Lore-keeper.
 
 **Personality:** Intellectual, guarded, carries secrets. She knows more about the Pendulum's history than she lets on — not out of malice, but because she wasn't sure the knowledge would help until it was almost too late.
+
+**Base Stats (Level 1):**
+
+| HP | MP | ATK | DEF | MAG | MDEF | SPD | LCK |
+|----|----|----|-----|-----|------|-----|-----|
+| 50 | 55 | 6 | 6 | 22 | 18 | 8 | 5 |
+
+**Growth archetype:** Archmage — highest MAG and MP in the game, lowest everything else. See
+[progression.md](progression.md) for full growth curves and Ley
+Crystal system.
 
 **Arc:** Maren's arc is about the cost of knowledge. She discovered the Pallor's cyclical nature — that it has tried this in every age — and spent years in exile chasing that truth. Her Pallor trial forces her to confront whether all that knowledge was worth the isolation. She concludes it was, because this time the world might remember.
 
