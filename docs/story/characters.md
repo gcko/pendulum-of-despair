@@ -45,8 +45,9 @@ Crystal system.
 **Arc:** Cael's unresolved grief is the crack the Pallor exploits. The whispers reframe his pain: Valdris let his family die. Edren could have helped. No one cared. None of it is true, but grief doesn't need truth. He takes the Pendulum believing he can end all suffering. By the time he realizes what's happened, the Pallor is using him as an anchor. His redemption comes through sacrifice — closing the door from the inside.
 
 **Opening:** Cael's attacks shimmer faintly throughout the Ember Vein -- the
-Pallor's first touch, visible only in hindsight after the betrayal. His damage
-output is ~10% above his stat line with no in-game explanation.
+Pallor's first touch, visible only in hindsight after the betrayal. He receives
+a hidden stat spike (ATK +2, MAG +2, SPD +1) with no in-game explanation — see
+[progression.md](progression.md) milestone spikes.
 
 **Last Night (Playable):** The night before the betrayal, the player controls
 Cael -- the only time in the game someone other than Edren is controlled
@@ -133,7 +134,7 @@ Crystal system.
 |----|----|----|-----|-----|------|-----|-----|
 | 50 | 55 | 6 | 6 | 22 | 18 | 8 | 5 |
 
-**Growth archetype:** Archmage — highest MAG and MP in the game, lowest everything else. See
+**Growth archetype:** Archmage — highest MAG and MP in the game, lowest HP, ATK, DEF, SPD. See
 [progression.md](progression.md) for full growth curves and Ley
 Crystal system.
 

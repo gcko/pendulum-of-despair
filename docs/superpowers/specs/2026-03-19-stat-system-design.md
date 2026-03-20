@@ -1,7 +1,7 @@
 # Character Stat System Design Spec
 
 **Date:** 2026-03-19
-**Status:** Draft
+**Status:** Implemented
 **Scope:** New file `docs/story/progression.md` — character stats, growth
 curves, Ley Crystal system, and narrative milestone spikes. Also updates
 to `docs/story/characters.md` for base stat tables.
@@ -109,7 +109,7 @@ average 2.5) to avoid monotony.
 - **Sable (Thief):** Fastest and luckiest. Paper-thin HP and DEF.
   Glass cannon who exploits Shiv's 50% DEF ignore.
 - **Maren (Archmage):** Highest MAG and MP in the game. Lowest HP,
-  ATK, DEF, SPD. Joins Act III and transforms the party's magical
+  ATK, DEF, SPD. Joins Act I and transforms the party's magical
   output, but needs Edren's protection.
 
 ### 4.2 Base Stats at Level 1
@@ -129,9 +129,9 @@ average 2.5) to avoid monotony.
 
 | Milestone | Lvl | Edren HP | Edren ATK | Maren MAG | Sable SPD | Sable LCK |
 |-----------|-----|----------|-----------|-----------|-----------|-----------|
-| First level-up | 2 | 180 | 20 | — | — | — |
-| End of Act I | ~18 | 1,540 | 49 | — | 45 | 42 |
-| End of Act II | ~35 | 2,985 | 79 | — | 72 | 67 |
+| First level-up | 2 | 180 | 20 | 24 | — | — |
+| End of Act I | ~18 | 1,540 | 49 | 53 | 45 | 42 |
+| End of Act II | ~35 | 2,985 | 79 | 83 | 72 | 67 |
 | Interlude end | ~50 | 4,260 | 106 | 110 | 96 | 90 |
 | End of Act III | ~70 | 5,960 | 142 | 146 | 128 | 120 |
 | Level cap | 150 | 12,760 | 255 | 255 | 255 | 240 |
@@ -159,7 +159,7 @@ set to `party_average_level - 1` (minimum: story-appropriate floor).
 | Lira | Act I recruitment | 1 |
 | Torren | Act I recruitment | 1 |
 | Sable | Act I recruitment | 1 |
-| Maren | Act III recruitment | 45 |
+| Maren | Act I recruitment (reunites Interlude) | 1 |
 | Interlude reunions | Sable finds each party member | — (uses party average - 1) |
 
 ### 4.5 Guest NPC Stats
@@ -170,7 +170,7 @@ from Ley Crystals.
 
 | Guest NPC | When | Stats Rule | Notes |
 |-----------|------|-----------|-------|
-| Dame Cordwyn | Valdris Siege (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
+| Dame Cordwyn | Siege of Valdris (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
 | Kerra | Caldera Unbowed (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per events.md). |
 
 Guest NPCs cannot be equipped, cannot use items, and do not earn XP.
@@ -237,10 +237,10 @@ unlock, or special effects trigger.
 | Crystal | Lv1 | Lv2 | Lv3 | Lv4 | Lv5 | Found |
 |---------|-----|-----|-----|-----|-----|-------|
 | Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein Floor 4 |
-| Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Catacombs |
+| Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Crown Catacombs |
 | Ley Prism | MAG +1 | MAG +2 | MAG +2 | MAG +2, MP +5/lvl | MAG +3, MP +8/lvl | Archive of Ages |
 | Ward Stone | MDEF +1 | MDEF +2 | MDEF +2 | MDEF +2 | MDEF +2, MAG +1 | Highcairn Monastery |
-| Quicksilver | SPD +1 | SPD +2 | SPD +2 | SPD +2, LCK +1 | SPD +2, LCK +2 | Corrund Undercity |
+| Quicksilver | SPD +1 | SPD +2 | SPD +2 | SPD +2, LCK +1 | SPD +2, LCK +2 | Corrund Undercity / Sewers |
 | Fortune Stone | LCK +2 | LCK +2 | LCK +2, SPD +1 | LCK +3, SPD +1 | LCK +3, SPD +2 | Sable sidequest |
 | Lifestone | HP +120/lvl | HP +120/lvl | HP +150/lvl | HP +150/lvl | HP +200/lvl, DEF +1 | Fenmother's Hollow |
 | Wellspring | MP +10/lvl | MP +10/lvl | MP +12/lvl, MAG +1 | MP +12/lvl, MAG +1 | MP +15/lvl, MAG +2 | Ley Line Depths |
@@ -411,8 +411,8 @@ naturally by level ~130).
 ## 10. Open Question: Damage Formula Scaling
 
 Section 7.1 flags that magic.md's existing formula produces very high
-numbers with medium-scale stats. At MAG 112 with Tier 2 spell power 35,
-raw damage is 3,920 — which would kill most mid-game enemies in one hit.
+numbers with medium-scale stats. At MAG 110 with Tier 2 spell power 35,
+raw damage is 3,850 — which would kill most mid-game enemies in one hit.
 
 Options to resolve (for Gap 1.1):
 - Add a divisor to the formula (e.g., `(mag * power) / 4 - mdef`)

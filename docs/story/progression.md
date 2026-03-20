@@ -96,7 +96,7 @@ Each character has a growth archetype. Rates are per-level averages — actual g
 - **Lira (Engineer):** Hybrid ATK/MAG. Decent at both, exceptional at neither. Flexibility is her strength.
 - **Torren (Sage):** High MAG, MDEF, and MP. Fragile physically. Classic white mage — essential but vulnerable.
 - **Sable (Thief):** Fastest and luckiest. Paper-thin HP and DEF. Glass cannon who exploits Shiv's 50% DEF ignore.
-- **Maren (Archmage):** Highest MAG and MP in the game. Lowest HP, ATK, DEF, SPD. Joins Act III and transforms the party's magical output, but needs Edren's protection.
+- **Maren (Archmage):** Highest MAG and MP in the game. Lowest HP, ATK, DEF, SPD. Joins Act I and transforms the party's magical output, but needs Edren's protection.
 
 ### Base Stats at Level 1
 
@@ -121,9 +121,9 @@ Projected stats exclude equipment, Ley Crystal bonuses, and narrative milestone 
 
 | Milestone | Lvl | Edren HP | Edren ATK | Maren MAG | Sable SPD | Sable LCK |
 |-----------|-----|----------|-----------|-----------|-----------|-----------|
-| First level-up | 2 | 180 | 20 | — | — | — |
-| End of Act I | ~18 | 1,540 | 49 | — | 45 | 42 |
-| End of Act II | ~35 | 2,985 | 79 | — | 72 | 67 |
+| First level-up | 2 | 180 | 20 | 24 | — | — |
+| End of Act I | ~18 | 1,540 | 49 | 53 | 45 | 42 |
+| End of Act II | ~35 | 2,985 | 79 | 83 | 72 | 67 |
 | Interlude end | ~50 | 4,260 | 106 | 110 | 96 | 90 |
 | End of Act III | ~70 | 5,960 | 142 | 146 | 128 | 120 |
 | Level cap | 150 | 12,760 | 255 | 255 | 255 | 240 |
@@ -141,7 +141,7 @@ When a character joins (first recruitment or reunion), their level is set to `pa
 | Lira | Act I recruitment | 1 |
 | Torren | Act I recruitment | 1 |
 | Sable | Act I recruitment | 1 |
-| Maren | Act III recruitment | 45 |
+| Maren | Act I recruitment (reunites Interlude) | 1 |
 | Interlude reunions | Sable finds each party member | — (uses party average - 1) |
 
 The "-1" means the new character is always close to catching up — usually one or two battles from matching the party. This creates a satisfying early-level-up feel on every recruitment, matching FF6's approach.
@@ -152,10 +152,12 @@ Guest NPCs (Cordwyn, Kerra, etc.) join temporarily for specific story segments. 
 
 | Guest NPC | When | Stats Rule | Notes |
 |-----------|------|-----------|-------|
-| Dame Cordwyn | Valdris Siege (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
+| Dame Cordwyn | Siege of Valdris (Act II) | Stats = party average for ATK/DEF/SPD. HP = Edren's current HP * 0.8. Fixed abilities: Shield Wall, Rally Cry. | Competent but not overpowering. Feels like a real knight fighting alongside the party. |
 | Kerra | Caldera Unbowed (Interlude) | Stats = 60% of party average across all stats. HP = party average HP * 0.5. | Intentionally fragile. Narrative weight: protecting her is the challenge. If she falls to 0 HP, she is incapacitated but survives (per [events.md](events.md)). |
 
 Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actions are AI-controlled (Attack + 1-2 signature abilities). They do not count toward party wipe — if all player characters Faint but a guest is standing, the wipe still triggers (per [events.md](events.md)).
+
+> **Note:** The dynamic stat formulas above supersede the hard-coded guest NPC stats in [dungeons-world.md](dungeons-world.md) (Cordwyn: 5000 HP, ATK 85, DEF 70) and [dungeons-city.md](dungeons-city.md) (Kerra: ATK 18, DEF 14, HP 800). Those values were placeholders written before the stat system existed. The dungeon docs will be updated to reference these formulas in a future pass.
 
 ### Equipment and Buffs
 
@@ -199,10 +201,10 @@ Crystals gain XP equal to **30% of the wearer's XP** after each battle. Crystals
 | Crystal | Lv1 | Lv2 | Lv3 | Lv4 | Lv5 | Found |
 |---------|-----|-----|-----|-----|-----|-------|
 | Ember Shard | ATK +1 | ATK +1 | ATK +2 | ATK +2 | ATK +2, DEF +1 | Ember Vein Floor 4 |
-| Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Catacombs |
+| Iron Core | DEF +2 | DEF +2 | DEF +2, HP +50/lvl | DEF +2, HP +50/lvl | DEF +3, HP +80/lvl | Valdris Crown Catacombs |
 | Ley Prism | MAG +1 | MAG +2 | MAG +2 | MAG +2, MP +5/lvl | MAG +3, MP +8/lvl | Archive of Ages |
 | Ward Stone | MDEF +1 | MDEF +2 | MDEF +2 | MDEF +2 | MDEF +2, MAG +1 | Highcairn Monastery |
-| Quicksilver | SPD +1 | SPD +2 | SPD +2 | SPD +2, LCK +1 | SPD +2, LCK +2 | Corrund Undercity |
+| Quicksilver | SPD +1 | SPD +2 | SPD +2 | SPD +2, LCK +1 | SPD +2, LCK +2 | Corrund Undercity / Sewers |
 | Fortune Stone | LCK +2 | LCK +2 | LCK +2, SPD +1 | LCK +3, SPD +1 | LCK +3, SPD +2 | Sable sidequest |
 | Lifestone | HP +120/lvl | HP +120/lvl | HP +150/lvl | HP +150/lvl | HP +200/lvl, DEF +1 | Fenmother's Hollow |
 | Wellspring | MP +10/lvl | MP +10/lvl | MP +12/lvl, MAG +1 | MP +12/lvl, MAG +1 | MP +15/lvl, MAG +2 | Ley Line Depths |
