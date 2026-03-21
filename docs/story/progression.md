@@ -44,8 +44,8 @@ Calculated from core stats. Equipment can add flat bonuses on top of the derived
 
 | Derived Stat | Formula | Cap | Notes |
 |-------------|---------|-----|-------|
-| Hit Rate% | `90 + (SPD - target.SPD) / 4` | 99% (min 20%) | Base 90% accuracy. Fast attackers are more accurate against slow targets. Cannot reach 100% — there is always a 1% miss chance. Floor of 20% prevents complete whiffs. |
-| Evasion% | `SPD / 4` | 50% | Chance to dodge physical attacks after hit check passes. Equipment adds flat EVA% on top. |
+| Hit Rate% | `90 + (attacker.SPD - target.SPD) / 4` | 99% (min 20%) | Base 90% accuracy. Fast attackers are more accurate against slow targets. Cannot reach 100% — there is always a 1% miss chance. Floor of 20% prevents complete whiffs. |
+| Evasion% | `target.SPD / 4` | 50% | Chance to dodge physical attacks after hit check passes. Equipment adds flat EVA% on top. |
 | Critical% | `LCK / 4` | 50% | Chance for physical attacks to deal 2x damage. Equipment adds flat CRIT% on top. |
 | Magic Evasion% | `(MDEF + SPD) / 8` | 40% | Chance to fully resist status spells (additional check — see below). Does not apply to damage spells. |
 
@@ -60,7 +60,7 @@ Calculated from core stats. Equipment can add flat bonuses on top of the derived
 
 **Magic Evasion% and status spells — resolution order:**
 
-Status spells use a two-stage check. First, the caster's accuracy is calculated via `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))` (see [magic.md](magic.md)). If this check succeeds, the target then rolls their Magic Evasion% to resist the effect entirely. This means high-MDEF targets are doubly protected: the first check reduces the effective hit rate, and the MEVA% check provides a second chance to shrug it off. Damage spells skip the MEVA% check entirely — they use the standard hit/evasion resolution below.
+Status spells use a two-stage check. First, the caster's accuracy is calculated via `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))` (see [magic.md](magic.md)). This document extends that rule by adding a second-stage Magic Evasion% roll; where there is any discrepancy in combat resolution details, this document supersedes `magic.md`. If the accuracy check succeeds, the target then rolls their Magic Evasion% to resist the effect entirely. This means high-MDEF targets are doubly protected: the first check reduces the effective hit rate, and the MEVA% check provides a second chance to shrug it off. Damage spells skip the MEVA% check entirely — once cast, they follow the standard three-stage Hit Rate% / Evasion% / Critical% resolution described below.
 
 ### Attack Resolution Order
 
