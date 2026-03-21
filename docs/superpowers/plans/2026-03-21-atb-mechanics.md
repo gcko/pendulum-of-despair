@@ -243,7 +243,7 @@ Berserk does not exist in the table, add it near the other negative
 statuses:
 
 ```markdown
-| Berserk | Negative | ATB speed +25%, auto-attack random enemy with 1.5× basic attack damage | Until cured | Purge only |
+| Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
 ```
 
 Search the file first for "Berserk" to see if it already has an entry.
