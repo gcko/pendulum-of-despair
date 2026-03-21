@@ -162,12 +162,12 @@ Both settings are in the Config menu:
 | Haste | × 1.5 | Normal turn | 5 turns | Expires, Purge | |
 | Slow | × 0.5 | Normal turn | 5 turns | Purge, Chronos Dust | |
 | Stop | Frozen (0) | Cannot act | 3 real-time seconds | Timer only | Real-time, not turn-based |
-| Sleep | Frozen at current value | Cannot act | Until damaged | Any damage wakes | Gauge resumes from frozen point |
+| Sleep | Frozen at current value | Cannot act | Until cured or damaged | Any damage wakes; Cleansing Draught, Purge | Gauge resumes from frozen point |
 | Confusion | × 1.0 | Auto-targets random ally/enemy, basic attack | 3 turns or until damaged | Damage, Purge | |
 | Berserk | × 1.25 | Auto-targets random enemy, basic attack (1.5× damage) | Until cured | Purge only | Tradeoff: faster+stronger but uncontrollable |
 | Despair | × 0.75 | Normal turn (damage -20%) | 4 turns | Hollow Mend, Hope Shard | Pallor signature. Standard Purge cannot remove. |
 | Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Expires | Flying enemies only |
-| Petrify | Frozen (0), removed from battle | Cannot act | Until cured | Cleansing Draught | Gauge resets to 0 on cure |
+| Petrify | Frozen (0), removed from battle | Cannot act | Until cured | Purge, Soft Stone item | Gauge resets to 0 on cure |
 
 ### 5.2 Key Rules
 

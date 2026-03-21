@@ -480,7 +480,7 @@ Player-configurable (1-6, default 3). Default matches FF6.
 ### Active/Wait Mode
 
 - **Active (default):** All gauges fill continuously. Enemy gauges fill while browsing spell/item menus. Time pressure on every decision.
-- **Wait:** Gauges pause for ALL combatants while any command sub-menu is open (Magic, Item, Ability lists, target selection). Top-level command selection (Attack/Magic/Ability/Item/Defend/Flee) still runs in real-time.
+- **Wait:** Gauges pause for ALL combatants while any command sub-menu is open (Magic, Item, Ability lists, target selection). Top-level command selection (Attack/Magic/Ability/Item/Defend/Flee) still runs in real-time. Real-time status timers (Stop's 3-second countdown) also pause during Wait sub-menus — Wait mode pauses ALL time progression, not just gauges.
 
 Both settings in Config menu. Defaults: Active mode, Battle Speed 3 — matching FF6.
 
@@ -517,7 +517,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 | Haste | × 1.5 | Normal turn | 5 turns | |
 | Slow | × 0.5 | Normal turn | 5 turns | |
 | Stop | Frozen (0) | Cannot act | 3 real-time seconds | Not turn-based — clock time |
-| Sleep | Frozen at current value | Cannot act | Until damaged | Resumes from frozen point |
+| Sleep | Frozen at current value | Cannot act | Until cured or damaged | Resumes from frozen point. See [magic.md](magic.md). |
 | Confusion | × 1.0 | Auto-attack random target | 3 turns or damaged | |
 | Berserk | × 1.25 | Auto-attack random enemy (1.5× damage) | Until cured | Tradeoff |
 | Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |
@@ -536,7 +536,7 @@ When multiple combatants fill on the same tick:
 
 1. Higher effective SPD acts first
 2. Party before enemies (if SPD tied)
-3. Left-to-right slot order (if still tied)
+3. Left-to-right slot order within each side (party slot index for allies, formation index for enemies)
 
 Fully deterministic — no RNG.
 

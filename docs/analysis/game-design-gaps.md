@@ -250,7 +250,7 @@ These gaps block specific subsystems but not the core game loop.
 **Completed:** 2026-03-21
 
 **What's Needed:**
-- [x] ATB gauge fill rate formula: `fill_rate = base_speed + (SPD * modifier)`
+- [x] ATB gauge fill rate formula: `floor((SPD + 25) * battle_speed_factor * status_modifiers)` — see [combat-formulas.md](../story/combat-formulas.md)
 - [x] Active vs. Wait mode: does gauge fill during menu navigation?
 - [x] Haste/Slow effect on gauge (percentage multiplier?)
 - [x] Battle speed config options (1-6 scale like FF6?)
