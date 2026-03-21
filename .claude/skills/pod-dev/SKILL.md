@@ -180,3 +180,24 @@ Example opener the user might give:
 
 Your response: confirm you've oriented yourself, ask 1-2 clarifying questions
 about the dialogue system design, then propose an approach before writing code.
+
+## Development Workflow Chain
+
+The skills in this project form a pipeline. Each skill names the next
+step in its exit message.
+
+| Step | Skill | What It Does | Next Step |
+|------|-------|-------------|-----------|
+| 1 | `/story-designer` | Design a game system (brainstorm, spec, plan, implement) | `/create-pr` |
+| 2 | `/create-pr` | Open a PR targeting main (tests, lint, push, create) | `/pr-review-response <PR#>` |
+| 3 | `/pr-review-response <PR#>` | Orchestrate review + address feedback | Merge (or re-run) |
+
+**How `/pr-review-response` works as orchestrator:**
+- Detects PR type from changed files (Story / Code / Mixed / Tooling / Docs)
+- Auto-runs upstream review if not already done:
+  - Story PRs → `/story-review-loop <PR#> 3`
+  - Code PRs → `pnpm lint && pnpm test`
+  - Mixed → both pipelines
+- Fetches and addresses all human and bot review comments
+- Proposes review skill improvements when Copilot finds gaps
+- Reports "ready to merge" or "re-run needed" at exit
