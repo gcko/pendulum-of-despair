@@ -306,24 +306,19 @@ The existing formulas in magic.md use MAG and MDEF:
 - `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)`
 - `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)`
 
-With this stat system, the current formula produces extremely high numbers:
+> **Resolved (Gap 1.1):** The divisor approach was adopted. The canonical
+> magic damage formula is now: `max(1, (MAG * spell_power) / 4 - MDEF)
+> * element_mod * variance`. See [combat-formulas.md](combat-formulas.md)
+> for the complete formula reference, including the physical damage
+> formula, critical hits, ability multipliers, and combat interactions.
+
+With the `/4` divisor, endgame damage stays well within the 14,999 damage cap:
 
 | Level | Maren MAG | Spell Tier | Power | Raw Damage | After 60 MDEF |
 |-------|-----------|-----------|-------|------------|---------------|
-| 50 | 110 | Tier 2 | 35 | 3,850 | 3,790 |
-| 70 | 146 | Tier 3 | 65 | 9,490 | 9,430 |
-| 150 | 255 | Tier 4 | 100 | 25,500 | 25,440 |
-
-The endgame numbers exceed the HP cap (14,999) by nearly 2x. The formula `(MAG * power) - MDEF` has no divisor and was likely designed for a smaller stat scale.
-
-> **WARNING (Gap 1.1):** Gap 1.1 MUST add a divisor (e.g., `(MAG * power) / 4 - MDEF`) or significantly reduce spell power tiers to keep damage in the 100-9,999 range. This is the highest-priority integration point between the stat system and damage formulas.
->
-> Options to resolve (for Gap 1.1):
-> - Add a divisor to the formula (e.g., `(mag * power) / 4 - mdef`)
-> - Reduce spell power tiers to match the stat scale
-> - Increase enemy MDEF significantly
->
-> This is explicitly deferred to Gap 1.1 (Damage Formulas) but documented here so the stat system and formula system are designed in concert.
+| 50 | 110 | Tier 2 | 35 | 963 | 903 |
+| 70 | 146 | Tier 3 | 65 | 2,373 | 2,313 |
+| 150 | 255 | Tier 4 | 100 | 6,375 | 6,315 |
 
 ### Abilities ([abilities.md](abilities.md))
 
