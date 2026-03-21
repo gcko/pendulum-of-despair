@@ -436,6 +436,121 @@ AoE spells have ~60–70% of single-target spell power (defined in [magic.md](ma
 
 ---
 
+## ATB Gauge System
+
+The Active Time Battle gauge determines when each combatant acts. The gauge fills continuously based on SPD; when it reaches maximum, the combatant takes a turn. See [progression.md](progression.md) for SPD stat values and growth rates.
+
+### Fill Rate Formula
+
+```
+fill_rate = floor((effective_SPD + 25) * battle_speed_factor * status_modifier_product)
+```
+
+**Full pipeline (order of operations):**
+
+1. `effective_SPD = floor(base_SPD * crystal_modifier)` (e.g., Frost Veil from [progression.md](progression.md): crystal_modifier = 0.85)
+2. `base_fill = (effective_SPD + 25) * battle_speed_factor`
+3. `fill_rate = floor(base_fill * status_modifier_product)` (e.g., Haste × Despair = 1.5 × 0.75 = 1.125)
+
+All intermediate values use real-number arithmetic. The final fill_rate is floored to an integer. Each tick (60/second), the gauge increases by exactly fill_rate.
+
+**Constants:**
+
+| Constant | Value | Purpose |
+|----------|-------|---------|
+| Base speed | 25 | Floor ensures even SPD 1 is playable |
+| Gauge max | 16,000 | Total gauge capacity |
+| Tick rate | 60/second | Fixed frame rate for gauge updates |
+
+**Time to fill:** `seconds = 16000 / fill_rate / 60`
+
+### Battle Speed Config
+
+Player-configurable (1-6, default 3). Default matches FF6.
+
+| Setting | Factor | Maren Lv1 (SPD 8) | Sable Lv1 (SPD 18) |
+|---------|--------|-------------------|-------------------|
+| 1 (Fastest) | 6 | 1.3s | 1.0s |
+| 2 | 5 | 1.6s | 1.2s |
+| **3 (Default)** | **3** | **2.7s** | **2.1s** |
+| 4 | 2 | 4.0s | 3.1s |
+| 5 | 1.5 | 5.4s | 4.1s |
+| 6 (Slowest) | 1 | 8.1s | 6.2s |
+
+### Active/Wait Mode
+
+- **Active (default):** All gauges fill continuously. Enemy gauges fill while browsing spell/item menus. Time pressure on every decision.
+- **Wait:** Gauges pause for ALL combatants while any command sub-menu is open (Magic, Item, Ability lists, target selection). Top-level command selection (Attack/Magic/Ability/Item/Defend/Flee) still runs in real-time.
+
+Both settings in Config menu. Defaults: Active mode, Battle Speed 3 — matching FF6.
+
+### ATB Pacing at Key Milestones (Battle Speed 3)
+
+| Scenario | SPD | Fill Rate | Seconds/Turn |
+|----------|-----|-----------|-------------|
+| Maren Lv1 | 8 | 99 | 2.7s |
+| Sable Lv1 | 18 | 129 | 2.1s |
+| Maren Lv70 | 49 | 222 | 1.20s |
+| Edren Lv70 | 65 | 270 | 0.99s |
+| Sable Lv70 | 128 | 459 | 0.58s |
+| Sable Lv70 + Haste | 128 | 688 | 0.39s |
+| Typical Lv70 enemy (SPD 60) | 60 | 255 | 1.0s |
+
+### Fill Rate Modifiers (Status Effects)
+
+Multiple modifiers stack multiplicatively:
+
+| Status | Modifier | Notes |
+|--------|----------|-------|
+| Haste (Quickstep) | × 1.5 | 5 turns. See [magic.md](magic.md). |
+| Slow (Leaden Step) | × 0.5 | 5 turns. |
+| Despair | × 0.75 | 4 turns. Also -20% damage dealt. |
+| Grounded | × 0.75 | 3 turns. Flying enemies only. |
+| Berserk | × 1.25 | Until cured. Also +50% basic attack damage. |
+
+Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
+
+### Status Effect ATB Interactions
+
+| Status | Gauge Behavior | When Fills | Duration | Notes |
+|--------|---------------|-----------|----------|-------|
+| Haste | × 1.5 | Normal turn | 5 turns | |
+| Slow | × 0.5 | Normal turn | 5 turns | |
+| Stop | Frozen (0) | Cannot act | 3 real-time seconds | Not turn-based — clock time |
+| Sleep | Frozen at current value | Cannot act | Until damaged | Resumes from frozen point |
+| Confusion | × 1.0 | Auto-attack random target | 3 turns or damaged | |
+| Berserk | × 1.25 | Auto-attack random enemy (1.5× damage) | Until cured | Tradeoff |
+| Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |
+| Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Flying only |
+| Petrify | Frozen (0) | Removed from battle | Until cured | Gauge resets to 0 on cure |
+
+**Key rules:**
+- **Frozen gauge retains value.** Sleep and Stop freeze at current position. Gauge resumes from that point when status ends.
+- **Petrify resets to 0.** Most severe status — recovery starts fresh.
+- **Stop uses real-time.** 3 seconds of clock time regardless of battle speed. Proportionally more punishing at slow speeds.
+- **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
+
+### Turn Order Resolution
+
+When multiple combatants fill on the same tick:
+
+1. Higher effective SPD acts first
+2. Party before enemies (if SPD tied)
+3. Left-to-right slot order (if still tied)
+
+Fully deterministic — no RNG.
+
+**Gauge overflow:** Excess discarded. Gauge resets to 0 after acting. No banking extra speed. Refilling starts immediately on the next tick.
+
+### Party & Enemy Size
+
+- **4 active party members** (FF6 standard). Swap at save points or between battles.
+- **Guest NPCs** (Cordwyn, Kerra) take a temporary 5th slot — they do not displace a party member.
+- **Up to 6 enemies** per encounter.
+- **Interlude:** Party scales from 1 (Sable alone) to 4 as she finds each party member.
+
+---
+
 ## Integration Notes
 
 This document replaces the placeholder formulas that existed in [magic.md](magic.md) and resolves the scaling warning in [progression.md](progression.md):
