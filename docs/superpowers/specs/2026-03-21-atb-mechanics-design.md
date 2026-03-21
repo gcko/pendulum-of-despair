@@ -32,8 +32,9 @@ defined (Gap 1.1), but how turns work is not. Every combat subsystem
    advantage, not a win condition.
 4. **Early game ~2-2.5 seconds per turn.** Gives new players time to
    read ability descriptions and learn the combat interaction system.
-5. **Endgame ~0.6-0.7 seconds per turn.** Fast enough to feel
-   powerful, slow enough to make decisions.
+5. **Endgame ~0.6-1.2 seconds per turn.** Fastest characters (Sable)
+   at ~0.6s, slowest (Maren) at ~1.2s. Fast enough to feel powerful,
+   slow enough to make decisions.
 6. **Player control over pacing.** Battle Speed 1-6 config and
    Active/Wait mode let players tune the experience.
 
@@ -79,6 +80,11 @@ multiplicatively:
 | Grounded | × 0.75 | SPD 100: 375 → 281 |
 | Berserk | × 1.25 | SPD 100: 375 → 469 |
 
+**New design decision (Berserk):** The × 1.25 ATB modifier for Berserk
+is new to this spec — it is not defined in magic.md or abilities.md.
+magic.md will be updated to include this value when this spec is
+implemented.
+
 **Stacking example:** Haste + Despair = `1.5 × 0.75 = 1.125` (net
 +12.5%). This prevents any single buff from being mandatory — you can
 partially counteract debuffs without fully negating them.
@@ -93,11 +99,26 @@ partially counteract debuffs without fully negating them.
 | Lira Lv1 | 11 | 108 | 2.5s |
 | Cael Lv1 | 12 | 111 | 2.4s |
 | Sable Lv1 | 18 | 129 | 2.1s |
-| Maren Lv70 | 100 | 375 | 0.71s |
-| Edren Lv70 | 142 | 501 | 0.53s |
+| Maren Lv70 | 49 | 222 | 1.20s |
+| Edren Lv70 | 65 | 270 | 0.99s |
 | Sable Lv70 | 128 | 459 | 0.58s |
 | Sable Lv70 + Haste | 128 | 689 | 0.39s |
 | Typical Lv70 enemy (SPD 60) | 60 | 255 | 1.0s |
+
+**Full pipeline (order of operations):**
+
+```
+1. effective_SPD = floor(base_SPD * crystal_modifier)
+   (e.g., Frost Veil: crystal_modifier = 0.85)
+2. base_fill = (effective_SPD + base_speed) * battle_speed_factor
+3. fill_rate = floor(base_fill * status_modifier_product)
+   (e.g., Haste * Despair = 1.5 * 0.75 = 1.125)
+```
+
+All intermediate values use real-number arithmetic. The final
+fill_rate is floored to an integer (matching the rounding convention
+from combat-formulas.md). Each tick, the gauge increases by exactly
+fill_rate (integer addition).
 
 **Time-to-fill formula:** `seconds = gauge_max / fill_rate / tick_rate`
 = `16000 / fill_rate / 60`
@@ -164,6 +185,12 @@ battle speed setting. At battle speed 1 (fastest), Stop still lasts 3
 seconds of clock time. This means Stop is proportionally more
 punishing at slow battle speeds (more enemy actions happen in that
 window relative to the pace).
+
+**Note:** magic.md currently defines Stop as "3 turns." This spec
+overrides that to "3 real-time seconds" because Stop freezes the
+gauge — the target takes no turns while Stopped, making turn-based
+duration meaningless. magic.md will be updated to match when this
+spec is implemented.
 
 **Berserk is a tradeoff.** +25% fill rate AND +50% damage on basic
 attacks, but you can only basic attack random enemies. For physical
@@ -256,7 +283,8 @@ combat-formulas.md determines WHAT HAPPENS when you act.
 | File | Action | Purpose |
 |------|--------|---------|
 | `docs/story/combat-formulas.md` | Modify | Add ATB section with formula, config, status interactions |
-| `docs/analysis/game-design-gaps.md` | Modify | Gap 2.2 status PARTIAL -> COMPLETE |
+| `docs/analysis/game-design-gaps.md` | Modify | Gap 2.2 status PARTIAL -> MOSTLY COMPLETE (visual representation deferred to Gap 2.3) |
+| `docs/story/magic.md` | Modify | Update Stop duration (3 turns -> 3 real-time seconds), add Berserk ATB modifier |
 | `.claude/skills/pod-dev/SKILL.md` | Modify | Add ATB reference if needed |
 
 ## 10. Out of Scope
