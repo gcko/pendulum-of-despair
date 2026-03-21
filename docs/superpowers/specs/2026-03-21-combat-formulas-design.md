@@ -37,8 +37,9 @@ these formulas, and enemy design is balanced against them.
 4. **Subtractive defense with floor of 1.** DEF/MDEF directly reduce
    damage. Damage can never go below 1 — weak enemies tickle you for
    1 damage, showing you've outgrown them. Classic SNES feel.
-5. **FF6-style variance (±6.25%).** Tight enough to plan around, loose
-   enough to create drama. A low roll on a killing blow means the enemy
+5. **FF6-style variance (up to -6.25%).** Tight enough to plan around,
+   loose enough to create drama. Damage ranges from 93.75% to 100% of
+   nominal — variance only reduces, never exceeds raw calculation. A low roll on a killing blow means the enemy
    survives with a sliver — these moments make combat memorable.
 6. **FF6-scale boss gauntlet.** The final battle (Cael phases + Pallor
    Incarnate) totals ~150,000 HP, creating a 20–30 minute climactic
@@ -283,8 +284,8 @@ if the attack has an elemental property):
 |------------|-----------|---------|
 | Elemental weakness | 1.5× | Flame vs Frost enemy |
 | Neutral | 1.0× | Flame vs Earth enemy |
-| Elemental resistance | 0.5× | Flame vs Storm enemy |
-| Same-element | 0.5× | Flame vs Flame enemy |
+| Elemental disadvantage | 0.75× | Flame vs Storm enemy (per elemental wheel) |
+| Same-element resistance | 0.5× | Flame vs Flame enemy |
 | Immunity | 0.0× | Void vs Void enemy |
 | Absorb | -1.0× | Heals target for damage amount |
 
