@@ -51,7 +51,7 @@ Calculated from core stats. Equipment can add flat bonuses on top of the derived
 
 **Rounding and clamping (all derived % stats):**
 
-1. Compute the base value from the formula using core stats.
+1. Compute the base value from the formula using real-number division (no integer truncation).
 2. Round the result down (floor) to the nearest whole percent.
 3. Add any flat bonuses from equipment to this rounded base value.
 4. Clamp the final value to the allowed range:
@@ -279,8 +279,8 @@ One-time permanent stat boosts tied to story moments. These reward narrative eng
 | Cael | Pallor's hidden influence | I | ATK +2, MAG +2, SPD +1 | Hidden. The Pallor's gift — player won't notice. |
 | Lira | Forges first independent creation | II | MAG +5, ATK +3 | Free from Compact doctrine. Builds without limits. |
 | Lira | Forges ley-weapon in final battle | III | ATK +15, MAG +10 | Greatest forging act in the game's history. |
-| Torren | Spirit-bond deepens (Fenmother) | II | MAG +5, MDEF +3, HP -15% | Power gained, vitality sacrificed. Real cost. |
-| Torren | Stabilizes ley nexus (reunion) | Interlude | MAG +8, SPD +4 | The ley network flows through him now. |
+| Torren | Spirit-bond deepens (Fenmother) | II | MAG +5, MDEF +3 | Deeper connection to the spirit world. |
+| Torren | Self-sacrifice at ley nexus (reunion) | Interlude | MAG +8, SPD +4, HP -15% | Burned his life force holding back the corruption. Power gained, vitality sacrificed. Real cost. |
 | Sable | Reunites full party (all 4 found) | Interlude | SPD +5, LCK +5, ATK +3 | She held everyone together. Observer became leader. |
 | Sable | Opens The Pendulum tavern | Epilogue | LCK +10 | Luckiest woman alive. Post-game completionist bonus. |
 | Maren | Reveals cycle history (Archive) | Interlude | MAG +10, MP +100 | Full understanding of ancient magic. Knowledge is power. |
