@@ -128,6 +128,7 @@ Read [`docs/story/`](../../../docs/story/) for the full narrative design:
 - [`geography.md`](../../../docs/story/geography.md) -- Detailed continental map, regional geography, terrain features, travel implications
 - [`dynamic-world.md`](../../../docs/story/dynamic-world.md) -- How locations transform across acts (destruction, corruption, rebuilding, spatial shifts)
 - [`visual-style.md`](../../../docs/story/visual-style.md) -- Art direction, location visual profiles, signature scenes, color script
+- [`combat-formulas.md`](../../../docs/story/combat-formulas.md) -- Combat formulas: physical/magic damage, healing, crits, elemental system, status accuracy, combat interactions, boss HP scaling
 - [`progression.md`](../../../docs/story/progression.md) -- Character stat system: 8 stats, growth curves, 18 Ley Crystals with 5 levels, narrative milestone spikes, party join rules
 - [`music.md`](../../../docs/story/music.md) -- Music score overview: faction palettes, character leitmotifs, ~70-80 tracks, corruption evolution, composable framework for new content
 - [`building-palette.md`](../../../docs/story/building-palette.md) -- Reusable interior templates (18 building types, furniture, faction variants)
