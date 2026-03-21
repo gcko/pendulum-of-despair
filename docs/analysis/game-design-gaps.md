@@ -243,26 +243,28 @@ These gaps block specific subsystems but not the core game loop.
 
 ### 2.2 ATB Gauge Mechanics
 
-**Status:** PARTIAL
+**Status:** MOSTLY COMPLETE
 **Priority:** P1
-**Files:** `docs/story/abilities.md` (references ATB but doesn't define it)
+**Files:** `docs/story/combat-formulas.md` (ATB Gauge System section)
 **Depends On:** 1.2 (Stat System for speed stat)
+**Completed:** 2026-03-21
 
 **What's Needed:**
-- [ ] ATB gauge fill rate formula: `fill_rate = base_speed + (SPD * modifier)`
-- [ ] Active vs. Wait mode: does gauge fill during menu navigation?
-- [ ] Haste/Slow effect on gauge (percentage multiplier?)
-- [ ] Battle speed config options (1-6 scale like FF6?)
-- [ ] Turn order resolution when multiple gauges fill simultaneously
-- [ ] ATB interaction with status effects:
-  - [ ] Stop: gauge frozen
-  - [ ] Sleep: gauge frozen until hit
-  - [ ] Confusion: auto-action on fill
-  - [ ] Berserk: auto-attack on fill
-- [ ] ATB visual representation (horizontal bar? vertical? segmented?)
-- [ ] Party size in battle (4? 3? variable?)
+- [x] ATB gauge fill rate formula: `fill_rate = base_speed + (SPD * modifier)`
+- [x] Active vs. Wait mode: does gauge fill during menu navigation?
+- [x] Haste/Slow effect on gauge (percentage multiplier?)
+- [x] Battle speed config options (1-6 scale like FF6?)
+- [x] Turn order resolution when multiple gauges fill simultaneously
+- [x] ATB interaction with status effects:
+  - [x] Stop: gauge frozen
+  - [x] Sleep: gauge frozen until hit
+  - [x] Confusion: auto-action on fill
+  - [x] Berserk: auto-attack on fill
+- [ ] ATB visual representation (horizontal bar? vertical? segmented?) — deferred to Gap 2.3
+- [x] Party size in battle (4? 3? variable?)
 
-**Blocking:** Battle system implementation, status effect behavior
+**Blocking:** ~~Battle system implementation, status effect behavior~~
+Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 
 ---
 
@@ -477,3 +479,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-19 | Initial audit | All gaps cataloged | — |
 | 2026-03-20 | 1.2 Stat System | PARTIAL -> COMPLETE. 8 stats, level cap 150, Ley Crystals, milestones. Unblocks 1.1 + 2.2. | acba850, 1cb8f6c |
 | 2026-03-21 | 1.1 Damage & Combat Formulas | MISSING -> COMPLETE. Physical (ATK²/6), magic (MAG*power/4), 14999 cap, 3-tier combat interactions. Unblocks 1.3, 1.4, 2.5. | b50da1b |
+| 2026-03-21 | 2.2 ATB Gauge Mechanics | PARTIAL -> MOSTLY COMPLETE. Fill rate (SPD+25)*factor, Active/Wait, battle speed 1-6, status interactions, 4-party. Visual deferred to 2.3. | 879bf2e |
