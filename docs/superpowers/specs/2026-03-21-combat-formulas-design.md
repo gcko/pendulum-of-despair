@@ -209,8 +209,8 @@ Damage column assumes Edren at Lv70 with endgame gear (ATK ~175 =
 |------|------|---------|-------------------------------|
 | 1.0 | Basic attack | Attack command, Shiv (see 5.3) | ~5,044 |
 | 1.5 | Strong skill | Riposte counter | ~7,596 |
-| 2.0 | Ultimate skill | Oathkeeper hits | ~10,118 |
-| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,639 |
+| 2.0 | Ultimate skill | Oathkeeper hits | ~10,148 |
+| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,700 |
 | 3.0 | Maximum | Convergence Chorus (once per battle) | 14,999 (capped) |
 
 **Buff-granted multipliers (stacking):** Some abilities are buffs that
@@ -482,7 +482,7 @@ endgame, and a 14,999 damage cap, bosses need FF6-scale HP pools.
 | The Ley Leech | Interlude | 9,000 | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 9,000 | 22,000 | Stunnable (effective HP lower). |
 | The Forge Heart | II/Interlude | 10,000 | 35,000 | Caldera Forge Depths boss. |
-| The Frost Warden | III | 11,000 | 38,000 | Elemental puzzle (Flame weakness). |
+| The Frost Warden | Interlude/III | 11,000 | 38,000 | Elemental puzzle (Flame weakness). |
 | The Pallor Hollow | III | 11,000 | 40,000 | Act III gauntlet entry. |
 | Vaelith, the Ashen Shepherd | III | 20,000 | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 15,000 | 45,000 | Uses party's tactics against them. |

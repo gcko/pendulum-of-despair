@@ -399,7 +399,7 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 | The Ley Leech | Interlude | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 22,000 | Stunnable (effective HP lower). |
 | The Forge Heart | II/Interlude | 35,000 | Caldera Forge Depths boss. |
-| The Frost Warden | III | 38,000 | Elemental puzzle (Flame weakness). |
+| The Frost Warden | Interlude/III | 38,000 | Elemental puzzle (Flame weakness). |
 | The Pallor Hollow | III | 40,000 | Act III gauntlet entry. |
 | Vaelith, the Ashen Shepherd | III | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 45,000 | Uses party's tactics against them. |
