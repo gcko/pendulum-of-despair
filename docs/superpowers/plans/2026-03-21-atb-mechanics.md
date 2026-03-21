@@ -150,7 +150,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 | Slow | × 0.5 | Normal turn | 5 turns | |
 | Stop | Frozen (0) | Cannot act | 3 real-time seconds | Not turn-based — clock time |
 | Sleep | Frozen at current value | Cannot act | Until cured or damaged | Resumes from frozen point |
-| Confusion | × 1.0 | Auto-attack random target | 3 turns or damaged | |
+| Confusion | × 1.0 | Auto-attack random target | 3 turns or until damaged | |
 | Berserk | × 1.25 | Auto-attack random enemy (+50% basic attack damage) | Until cured | Tradeoff |
 | Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |
 | Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Flying only |

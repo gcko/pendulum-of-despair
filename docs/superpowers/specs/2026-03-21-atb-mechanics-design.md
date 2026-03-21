@@ -83,10 +83,9 @@ multiplicatively:
 | Grounded | × 0.75 | SPD 100: 375 → 281 |
 | Berserk | × 1.25 | SPD 100: 375 → 469 |
 
-**New design decision (Berserk):** The × 1.25 ATB modifier for Berserk
-is new to this spec — it is not defined in magic.md or abilities.md.
-magic.md will be updated to include this value when this spec is
-implemented.
+**Design note (Berserk):** The × 1.25 ATB modifier for Berserk was
+introduced in this spec and is now canonical in magic.md and
+combat-formulas.md.
 
 **Stacking example:** Haste + Despair = `1.5 × 0.75 = 1.125` (net
 +12.5%). This prevents any single buff from being mandatory — you can
@@ -189,11 +188,10 @@ seconds of clock time. This means Stop is proportionally more
 punishing at slow battle speeds (more enemy actions happen in that
 window relative to the pace).
 
-**Note:** magic.md currently defines Stop as "3 turns." This spec
-overrides that to "3 real-time seconds" because Stop freezes the
-gauge — the target takes no turns while Stopped, making turn-based
-duration meaningless. magic.md will be updated to match when this
-spec is implemented.
+**Note:** Stop uses real-time (3 seconds) instead of turns because
+Stop freezes the gauge — the target takes no turns while Stopped,
+making turn-based duration meaningless. magic.md has been updated
+to match.
 
 **Berserk is a tradeoff.** +25% fill rate AND +50% damage on basic
 attacks, but you can only basic attack random enemies. For physical

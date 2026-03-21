@@ -257,7 +257,7 @@ These gaps block specific subsystems but not the core game loop.
 - [x] Turn order resolution when multiple gauges fill simultaneously
 - [x] ATB interaction with status effects:
   - [x] Stop: gauge frozen
-  - [x] Sleep: gauge frozen until hit
+  - [x] Sleep: gauge frozen until cured or damaged
   - [x] Confusion: auto-action on fill
   - [x] Berserk: auto-attack on fill
 - [ ] ATB visual representation (horizontal bar? vertical? segmented?) — deferred to Gap 2.3
