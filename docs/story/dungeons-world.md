@@ -4768,10 +4768,11 @@ The Hollow speaks in Edren's voice. Lines from earlier in the game.
 - **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
 - **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
 
-**Phase 3 (below 10000 HP): The Reckoning**
+**Phase 3 (below 12000 HP): The Reckoning**
 Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses entirely on Edren.
 - Party must protect Edren (if his HP reaches 0, fight resets to Phase 2 at 14500 HP).
-- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 5,000 damage). Three Defends end the fight.
+- The Hollow cannot be killed by normal attacks in Phase 3 — its HP cannot drop below 1 from non-Defend damage.
+- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 4,000 damage). Three Defends = 12,000 damage, ending the fight.
 
 **On defeat:** Dissolves into grey mist that flows back into Edren. Not destroyed -- reclaimed. Edren rejoins with **Scar of the Hollow** -- max HP permanently reduced by 10%, but immunity to Despair status effects.
 

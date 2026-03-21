@@ -286,7 +286,7 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 5. **Critical% roll** — `attacker.LCK / 4`, cap 50%. If crit: × 2.
 6. **Apply combat interaction modifiers** (Frozen Shatter, Glintmark, etc.)
 7. **Apply variance** — `× random_int(240, 255) / 256`
-8. **Clamp** — `min(14999, result)`
+8. **Floor and clamp** — `max(1, min(14999, floor(result)))`
 
 ### Magic Damage Resolution
 
@@ -296,7 +296,7 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 4. **Apply combat interaction modifiers** (Conductive Water, etc.)
 5. **Apply buff modifiers** (Resonance, Glintmark)
 6. **Apply variance** — `× random_int(240, 255) / 256`
-7. **Clamp** — `min(14999, result)`
+7. **Floor and clamp** — `max(1, min(14999, floor(result)))` (floor of 1 bypassed if elemental modifier was 0.0× or -1.0×)
 
 Magic damage spells use the same Hit Rate% and Evasion% checks as physical attacks (see [progression.md](progression.md)). Critical% rolls never apply to magic damage — spells cannot crit.
 
