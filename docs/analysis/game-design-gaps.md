@@ -32,7 +32,7 @@ interconnected system and should be designed together.
 **Completed:** 2026-03-21
 
 **What's Needed:**
-- [x] Physical damage formula (ATK² / 6 - DEF, with ±6.25% variance)
+- [x] Physical damage formula (ATK² / 6 - DEF, with up to -6.25% variance)
 - [x] Magical damage formula (MAG × power / 4 - MDEF, with element multiplier)
 - [x] Healing formula (MAG × power × 0.8, no defense)
 - [x] Critical hit rate formula and damage multiplier (LCK/4 cap 50%, 2× damage)

@@ -169,7 +169,7 @@ proof of growth.
 variance = random_int(240, 255) / 256
 ```
 
-- Range: 0.9375 to 0.99609375 (93.75%–100% of raw damage, i.e.,
+- Range: 0.9375 to 0.99609375 (93.75%–99.61% of raw damage, i.e.,
   up to -6.25% below nominal). Variance always reduces from maximum —
   it is not symmetric. This matches FF6's exact implementation.
 - Applied as a final multiplier before capping

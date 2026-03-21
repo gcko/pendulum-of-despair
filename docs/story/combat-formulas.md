@@ -16,7 +16,7 @@
 - **Physical = reliable, Magic = burst.** Physical attackers deal steady 5,000–7,000 at endgame; skills approach cap. Mages need elemental advantage + buffs to reach cap.
 - **Quadratic physical scaling.** Physical damage uses ATK² so each point of ATK is increasingly valuable. Late-game gear upgrades feel impactful.
 - **Subtractive defense with floor of 1.** DEF/MDEF directly reduce damage. Minimum damage is always 1 — weak enemies tickle you, proving you've outgrown them.
-- **FF6-style variance (up to -6.25%).** Damage ranges from 93.75% to 100% of nominal. Tight enough to plan around, loose enough to create drama.
+- **FF6-style variance (up to -6.25%).** Damage ranges from 93.75% to ~99.6% of nominal. Tight enough to plan around, loose enough to create drama.
 - **Three tiers of combat interactions.** Designed emergent gameplay that rewards experimentation: telegraphed, experimental, and hidden.
 
 ---
@@ -33,6 +33,8 @@ final = min(14999, raw × variance)
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied last, before the cap (see [Damage Variance](#damage-variance)).
 
+**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after variance is applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated. This produces deterministic results matching the milestone tables below.
+
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
 
 **Why divisor 6?** Tuned to produce these milestone values. Physical ATK values include equipment (base + gear); see [progression.md](progression.md) for natural stat growth:
@@ -44,7 +46,7 @@ final = min(14999, raw × variance)
 | Edren Lv35 vs Act II mob | 85 | 1.0 | 30 | ~1,174 | 2–3 hits on 2,500 HP mob |
 | Edren Lv70 vs Act III (good gear) | 175 | 1.0 | 60 | ~5,044 | In the 5–7K target range |
 | Edren Lv70 Riposte (1.5×) | 175 | 1.5 | 60 | ~7,596 | Strong skill hit |
-| Edren Lv70 Oathkeeper (1.5×, 2 hits) | 175 | 1.5 | 60 | 7,596 × 2 | Capped turn total |
+| Edren Lv70 Oathkeeper (1.5×, 2 hits) | 175 | 1.5 | 60 | 7,596 × 2 | Two hits; each hit capped at 14,999 |
 | Sable Lv70 Shiv (DEF halved) | 150 | 1.0 | 30 | ~3,720 | DEF-shredding thief |
 | Edren Lv150 basic | 255 | 1.0 | 80 | ~10,757 | Post-game power fantasy |
 | Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
@@ -101,7 +103,7 @@ final = min(14999, raw × variance)
 
 **Damage cap: 14,999** — applies to all damage types (physical, magical, healing). Each individual hit is capped independently. Multi-hit abilities can exceed 14,999 total per turn (e.g., Oathkeeper's 2 hits can deal up to 29,998 in one turn).
 
-**Damage floor: 1** — physical and magical damage can never deal less than 1. This applies after all calculations including variance. A level 150 Edren taking a hit from a level 1 Restless Dead still sees "1" — satisfying proof of growth.
+**Damage floor: 1** — physical and magical damage can never deal less than 1 when the elemental modifier is positive. This applies after all calculations including variance. Elemental immunity (0.0×) and absorb (-1.0×) are explicit overrides that bypass the floor — immunity always deals 0 damage, and absorb always heals. A level 150 Edren taking a hit from a level 1 Restless Dead still sees "1" — satisfying proof of growth.
 
 ---
 
@@ -111,7 +113,7 @@ final = min(14999, raw × variance)
 variance = random_int(240, 255) / 256
 ```
 
-- Range: 0.9375 to 0.99609375 (93.75%–100% of raw damage, i.e., up to -6.25% below nominal). Variance always reduces from maximum — it is not symmetric. This matches FF6's exact implementation.
+- Range: 0.9375 to 0.99609375 (93.75%–99.61% of raw damage, i.e., up to -6.25% below nominal). Variance always reduces from maximum — it is not symmetric. This matches FF6's exact implementation.
 - Applied as a final multiplier before capping.
 - Each hit rolls independently (multi-hit abilities get separate rolls).
 - Healing also uses variance (potions and spells fluctuate slightly).
@@ -296,7 +298,7 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 6. **Apply variance** — `× random_int(240, 255) / 256`
 7. **Clamp** — `min(14999, result)`
 
-Magic damage spells also use the standard physical hit/evasion resolution (per [progression.md](progression.md): "damage spells follow the standard three-stage Hit Rate% / Evasion% / Critical% resolution"). Critical hits do NOT apply to magic damage — only the hit/evasion check.
+Magic damage spells use the same Hit Rate% and Evasion% checks as physical attacks (see [progression.md](progression.md)). Critical% rolls never apply to magic damage — spells cannot crit.
 
 ### Status Spell Resolution
 

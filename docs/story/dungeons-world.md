@@ -550,7 +550,7 @@ After the Fenmother is cleansed, the spirit-path at the dungeon's exit (`X` on F
 
 **Narrative significance:** The spirit-path establishes that cleansed dungeons give back. The Fenmother was corrupted, hostile, dying. Now she is restored, and she offers a gift -- safe passage through her domain. This pattern repeats (on a smaller scale) with the Ember Vein's restored crystal lighting the escape route, and (on a grander scale) with the Dry Well's restored waterworks providing a permanent fast-travel hub in the late game.
 
-### Boss: The Corrupted Fenmother
+### Boss: The Corrupted Fenmother (18,000 HP)
 
 A vast water serpent with a translucent body showing the dark ley-corruption within. She surfaces to strike with tail sweeps and water jets, then dives (untargetable). When submerged, poisoned water pools appear on the arena floor (stepping on them deals poison damage). The party must attack during surface phases and avoid pools during dive phases. At 50% HP, she summons two Spawn -- smaller serpents that must be killed to force her to surface again.
 
@@ -568,8 +568,6 @@ Torren steps forward and begins the spirit-speaking ritual. The party must defen
 **Completion:** When the final Spawn falls, Torren completes the ritual. The Fenmother rises -- fully luminous, fully beautiful, exactly as the carvings depicted her. She is vast and gentle. She lowers her head to Torren and breathes on him -- a warm, clean mist. His clothes dry. His hands stop shaking. She makes a sound -- not a roar, not a hiss, but something closer to a whale's song filtered through crystal. It is the most beautiful sound in the dungeon. Then she descends into the ley-line node, coiling around it, and the node's light shifts from poisoned dark to clean amber-blue. The water in the sanctum clears. The air smells like rain.
 
 Caden arrives (he felt the cleansing through the water -- he was waiting at the marsh edge). He performs a binding -- not a cage, but a ward. A protection against future contamination. "She will sleep now. And the water will remember what clean feels like." He gives the party the Fenmother's Blessing.
-
-18,000 HP.
 
 ### Encounter Table
 
@@ -4607,7 +4605,7 @@ A Carradan siege construct corrupted by Pallor-resonant materials -- materials w
 
 **Phase 1 (25000-15000 HP): Ranged Engagement**
 The Ram advances toward the walls. The party fights from the battlements.
-- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 5000+ damage in a single turn delays the advance by 1 turn.
+- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 1500+ cumulative party damage in a single turn delays the advance by 1 turn.
 - **Despair Pulse (Passive)** -- all party members lose 5% max MP per turn from proximity to the Ram's Pallor-resonant frame.
 - **Compact Escalade** -- waves of Compact soldiers scale the walls (3-4 soldiers per wave, 800 HP each). Must be managed while damaging the Ram.
 - **Lord Haren's Orders** -- if the party made favorable dialogue choices with Haren earlier, he calls archer volleys (200 damage to the Ram per turn) and deploys barricades (reduce soldier wave size by 1).
