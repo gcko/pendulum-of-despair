@@ -106,8 +106,8 @@ Each element has one element it is strong against (deals 150% damage) and one it
 - **AoE versions** cost 1.5-2x the single-target version of the same tier
 - **Status spells** have a base hit rate of 60-80% (modified by caster MAG vs. target MDEF)
 - **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
-- **Damage formula reference:** `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)`
-- **Healing formula:** `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)` (no defense reduction)
+- **Damage formula reference:** `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
+- **Healing formula:** `heal_amount = min(14999, (caster.mag * spell.power * 0.8) * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md).
 
 ---
 
@@ -1451,8 +1451,7 @@ For quick reference, here are all status effects that spells in this system can 
 
 ### Interaction with Combat System
 
-- All spell damage uses the magic damage formula from the systems reference: `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)`
-- Elemental multipliers are applied after the base calculation
+- All spell damage uses the magic damage formula from the systems reference: `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
 - Buff/debuff percentages modify the relevant stat directly (stacking rules: same buff does not stack, different buffs do)
 - Status hit rates are modified by: `effective_rate = base_rate * (caster.mag / (caster.mag + target.mdef))`
 - Reflect bounces the spell back using the original caster's MAG stat against the original caster's MDEF
