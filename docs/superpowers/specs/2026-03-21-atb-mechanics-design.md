@@ -41,8 +41,11 @@ defined (Gap 1.1), but how turns work is not. Every combat subsystem
 ## 3. ATB Fill Rate Formula
 
 ```
-fill_rate = (SPD + base_speed) * battle_speed_factor
+fill_rate = floor((effective_SPD + base_speed) * battle_speed_factor * status_modifier_product)
 ```
+
+Where `effective_SPD = floor(base_SPD * crystal_modifier)`. See the
+full pipeline in Section 3.4 below.
 
 ### 3.1 Constants
 

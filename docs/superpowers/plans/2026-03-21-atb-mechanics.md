@@ -110,8 +110,9 @@ Player-configurable (1-6, default 3). Default matches FF6.
   decision.
 - **Wait:** Gauges pause for ALL combatants while any command
   sub-menu is open (Magic, Item, Ability lists, target selection).
-  Top-level command selection (Attack/Magic/Ability/Item/Defend/Flee)
-  still runs in real-time.
+  Real-time status timers (e.g., Stop countdown) also pause during
+  Wait sub-menus. Top-level command selection
+  (Attack/Magic/Ability/Item/Defend/Flee) still runs in real-time.
 
 Both settings in Config menu. Defaults: Active mode, Battle Speed 3.
 
@@ -148,7 +149,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 | Haste | × 1.5 | Normal turn | 5 turns | |
 | Slow | × 0.5 | Normal turn | 5 turns | |
 | Stop | Frozen (0) | Cannot act | 3 real-time seconds | Not turn-based — clock time |
-| Sleep | Frozen at current value | Cannot act | Until damaged | Resumes from frozen point |
+| Sleep | Frozen at current value | Cannot act | Until cured or damaged | Resumes from frozen point |
 | Confusion | × 1.0 | Auto-attack random target | 3 turns or damaged | |
 | Berserk | × 1.25 | Auto-attack random enemy (1.5× damage) | Until cured | Tradeoff |
 | Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |

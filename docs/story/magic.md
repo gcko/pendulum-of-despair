@@ -1398,7 +1398,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Petrify | Negative | Removed from combat | Until cured | Purge, Soft Stone item |
 | Slow | Negative | ATB speed -50% | 5 turns | Purge, Chronos Dust item |
 | Stop | Negative | ATB frozen | 3 real-time seconds (not turn-based) | Wears off only |
-| Berserk | Negative | ATB speed +25%, auto-attack random enemy with 1.5x basic attack damage | Until cured | Purge only |
+| Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
 | Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
