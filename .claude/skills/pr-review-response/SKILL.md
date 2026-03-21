@@ -189,8 +189,14 @@ or other bots. Treat all with equal rigor regardless of source.
 
 ### Verify
 
+Verification adapts to the detected PR type:
+
 ```bash
+# Story / Code / Mixed PRs — full suite
 pnpm lint && pnpm test
+
+# Tooling / Docs PRs — lint only
+pnpm lint
 ```
 
 All checks must pass before committing.
@@ -203,7 +209,7 @@ Write commit message to a temp file:
 
 ```bash
 cat > /tmp/commit-msg.txt << 'EOF'
-docs(scope): address PR review feedback
+type(scope): address PR review feedback
 
 - Description of change 1
 - Description of change 2
@@ -214,6 +220,11 @@ EOF
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
 ```
+
+**Commit type selection:** Use the conventional commit type that matches
+the PR content — `docs` for Story/Docs PRs, `fix` or `feat` for Code
+PRs, `chore` for Tooling PRs. The `(scope)` should match the package
+(`client`, `server`, `shared`) or use `shared` for cross-cutting docs.
 
 **Push is deferred** until after Step 6 if Copilot commented. Otherwise
 push immediately after commit.
