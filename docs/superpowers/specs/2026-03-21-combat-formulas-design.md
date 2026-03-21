@@ -72,7 +72,11 @@ of ~175 damage at endgame — far too low. Squaring ATK gives a natural
 producing the 5,000–7,000 basic attack range at endgame that matches
 the FF6 physical damage feel.
 
-**Why divisor 6?** Tuned to produce these milestone values:
+**Why divisor 6?** Tuned to produce these milestone values. Physical ATK
+values include equipment (base + gear); magical MAG values are natural
+only (per progression.md milestones). This reflects that physical
+fighters depend heavily on weapon upgrades while mages scale more from
+levels:
 
 | Scenario | ATK | Mult | DEF | Damage | Notes |
 |----------|-----|------|-----|--------|-------|
@@ -110,14 +114,20 @@ final = min(14999, raw × element_mod × variance)
 | Maren Lv70 Crucible Wrath (T3) | 146 | 58 | 60 | ~2,057 | ~3,086 | Heavy hitter |
 | Maren Lv150 Ley Ruin (T4) | 255 | 100 | 80 | ~6,295 | ~9,443 | Approaching cap |
 | Maren Lv150 Ley Ruin + Attunement | 332* | 100 | 80 | ~8,220 | ~12,330 | Near cap |
-| Maren Lv150 + Attune + Resonance | — | — | — | — | ~14,769 | Grazes cap |
+| Maren Lv150 + Attune + Resonance | 332* | 100 | 80 | 8,220 | 12,330 × 1.3 = ~14,999 | Hits cap with full setup! |
 
 *Attunement pushes MAG past 255 temporarily in combat (buffs can exceed
 cap per progression.md rules).
 
 **Reaching the 14,999 cap requires:** Best spell + elemental weakness +
-ATK/MAG buff + ally combo (Resonance). This is the "perfect setup"
-moment — rare, earned, and spectacular.
+Attunement buff + Resonance combo. The math: 8,220 base × 1.5 element
+× 1.3 Resonance = 16,029 → capped at 14,999. This is the "perfect
+setup" moment — rare, earned, and spectacular.
+
+*Note: Ley Ruin (power 100) is AoE per magic.md. It's used here as the
+highest-power endgame spell. No single-target Tier 4 spell currently
+exists; if one is added during the ability pass, it would reach cap
+more easily.*
 
 ### 3.3 Healing
 
@@ -127,10 +137,16 @@ final = min(14999, raw × variance)
 ```
 
 - No defense subtraction — healing is not resisted.
+- No divisor — intentional. Healing uses the raw `MAG × power` product
+  because it has no defense to subtract. The 0.8 multiplier serves as
+  the scaling control, keeping healing at ~80% of equivalent-tier
+  damage output before defense. This prevents heal-tanking while
+  ensuring heals feel meaningful.
 - No floor of 1 needed — inputs are always positive.
-- The 0.8 multiplier ensures healing is ~80% of equivalent-tier
-  damage output, preventing heal-tanking (out-healing all incoming
-  damage at equivalent spell tiers).
+- At Maren Lv70 (MAG 146) with Deepmend (power 30):
+  146 × 30 × 0.8 = 3,504 HP healed. Against damage of ~2,000–4,000
+  per enemy hit at this level, a single heal keeps pace but doesn't
+  trivialize incoming damage.
 
 ### 3.4 Damage Cap
 
@@ -152,7 +168,9 @@ proof of growth.
 variance = random_int(240, 255) / 256
 ```
 
-- Range: 0.9375 to 0.99609375 (approximately ±6.25%)
+- Range: 0.9375 to 0.99609375 (93.75%–100% of raw damage, i.e.,
+  up to -6.25% below nominal). Variance always reduces from maximum —
+  it is not symmetric. This matches FF6's exact implementation.
 - Applied as a final multiplier before capping
 - Each hit rolls independently (multi-hit abilities get separate rolls)
 - Healing also uses variance (potions and spells fluctuate slightly)
@@ -182,19 +200,38 @@ hits that spike through armor.
 
 ### 5.2 Physical Ability Multipliers
 
-The `ability_mult` value in the physical formula. Basic attack = 1.0:
+The `ability_mult` value in the physical formula. Basic attack = 1.0.
+Damage column assumes Edren at Lv70 with endgame gear (ATK ~175 =
+142 natural + ~33 equipment) vs DEF 60 enemy:
 
 | Mult | Tier | Examples | Lv70 Damage (ATK 175, DEF 60) |
 |------|------|---------|-------------------------------|
-| 1.0 | Basic attack | Attack command | ~5,044 |
-| 1.25 | Standard skill | Shiv, Press Forward target | ~6,336 |
-| 1.5 | Strong skill | Riposte, Overcharge | ~7,596 |
-| 2.0 | Ultimate skill | Oathkeeper hits, Shatter Guard | ~10,118 |
-| 2.5 | Combo/ultimate | Ley Torrent, Edren+Sable combo | ~12,639 |
-| 3.0 | Maximum | Annulment (100 WG), once-per-battle | 14,999 (capped) |
+| 1.0 | Basic attack | Attack command, Shiv (see 5.3) | ~5,044 |
+| 1.5 | Strong skill | Riposte counter | ~7,596 |
+| 2.0 | Ultimate skill | Oathkeeper hits | ~10,118 |
+| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,639 |
+| 3.0 | Maximum | Convergence Chorus (once per battle) | 14,999 (capped) |
+
+**Buff-granted multipliers (stacking):** Some abilities are buffs that
+multiply the next attack's output rather than having their own mult:
+- **Overcharge (+50% damage):** Multiplies the next attack's final
+  damage by 1.5×. Stacks multiplicatively with ability_mult. Example:
+  Overcharge on Edren's Riposte (1.5×) = damage × 1.5 × 1.5 = 2.25×
+  effective.
+- **Press Forward (+20% ATK buff):** Modifies ATK stat for 3 turns.
+  Since damage uses ATK², a 20% ATK buff yields ~44% more damage.
+- **Resonance (+30% spell output):** Multiplies magic damage by 1.3×
+  after base calculation and elemental modifiers.
+
+**Custom-formula abilities** (not covered by the standard physical
+formula):
+- **Shatter Guard:** Damage = total absorbed damage since stance began,
+  capped at 2× Edren's max HP. Uses its own formula, not ATK².
+- **Annulment:** Damage = (MAG × 2) + (effects_removed × 15), as
+  magic damage. Uses its own formula with 100 WG cost.
+- **Greyveil:** Non-elemental magic damage that ignores MDEF.
 
 The 3.0 tier is reserved for abilities with extreme costs:
-- Maren's Annulment (100 Weave Gauge — full meter)
 - Torren's Convergence Chorus (once per battle)
 - Combo ultimates requiring specific party + setup
 
@@ -205,12 +242,18 @@ These are "Bum Rush" moments — the payoff for mastering the system.
 Sable's Shiv halves target DEF before the formula:
 `DEF_effective = target.DEF / 2`
 
-Combined with a 1.25 ability multiplier, Shiv lets Sable shred armored
-targets that physical fighters chip away at. Against a DEF 100 boss:
-- Edren basic: ~5,700
-- Sable Shiv: ~4,500
+Shiv uses ability_mult 1.0 (no damage multiplier beyond the DEF
+penetration). The 50% DEF ignore IS the damage bonus — it's most
+valuable against heavily armored targets. Per abilities.md: "Quick
+physical attack that ignores 50% of target's Defense."
 
-Comparable damage through different means (raw power vs penetration).
+Example — DEF 100 boss, both characters at Lv70 with gear:
+- Edren (ATK 175) basic: (175² / 6) - 100 = ~5,004
+- Sable (ATK 150) Shiv: (150² / 6) - 50 = ~3,700
+
+Edren wins on raw output; Sable's advantage is speed (highest SPD)
+and crit rate (highest LCK). Against a DEF 40 enemy, the gap narrows
+because Shiv's DEF halving matters less when DEF is already low.
 
 ### 5.4 Buff Interaction Points
 
@@ -238,9 +281,9 @@ if the attack has an elemental property):
 
 | Interaction | Multiplier | Example |
 |------------|-----------|---------|
-| Elemental weakness | 1.5× | Flame vs Earth enemy |
-| Neutral | 1.0× | Flame vs Storm enemy |
-| Elemental resistance | 0.5× | Flame vs Frost enemy |
+| Elemental weakness | 1.5× | Flame vs Frost enemy |
+| Neutral | 1.0× | Flame vs Earth enemy |
+| Elemental resistance | 0.5× | Flame vs Storm enemy |
 | Same-element | 0.5× | Flame vs Flame enemy |
 | Immunity | 0.0× | Void vs Void enemy |
 | Absorb | -1.0× | Heals target for damage amount |
@@ -249,10 +292,10 @@ Element matchup table (from magic.md):
 
 | Element | Strong vs (1.5×) | Weak vs (0.75×) |
 |---------|-------------------|------------------|
-| Flame | Earth | Frost |
-| Frost | Storm | Flame |
-| Storm | Flame | Earth |
-| Earth | Frost | Storm |
+| Flame | Frost | Storm |
+| Frost | Storm | Earth |
+| Storm | Earth | Flame |
+| Earth | Flame | Frost |
 | Ley | Void | Spirit |
 | Spirit | Ley | Void |
 | Void | Spirit | Ley |
