@@ -33,7 +33,7 @@
 | Magic Points | MP | 10-1499 | Fuel for spells and some abilities. |
 | Attack | ATK | 1-255 | Physical damage dealt. Used by weapons and physical abilities. |
 | Defense | DEF | 1-255 | Physical damage reduced. Also used by Thornveil counter (20% of DEF). |
-| Magic | MAG | 1-255 | Spell damage, healing potency, status infliction rate. Used in [magic.md](magic.md) formula: `(caster.mag * spell.power) - target.mdef`. |
+| Magic | MAG | 1-255 | Spell damage, healing potency, status infliction rate. Used in [combat-formulas.md](combat-formulas.md) formula: `(caster.mag * spell.power) / 4 - target.mdef`. |
 | Magic Defense | MDEF | 1-255 | Spell damage reduced. Status effect resistance. |
 | Speed | SPD | 1-255 | ATB gauge fill rate. Also: flee success rate, preemptive strike chance. |
 | Luck | LCK | 1-255 | Critical hit chance, rare drop rate. Sable's signature stat. Note: steal success (Filch) is SPD-based — see [abilities.md](abilities.md). |

@@ -30,7 +30,7 @@ final = min(14999, raw × variance)
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
-- **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Defray (-30% DEF) reduce DEF before subtraction.
+- **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied last, before the cap (see [Damage Variance](#damage-variance)).
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
@@ -145,8 +145,8 @@ The `ability_mult` value in the physical formula. Basic attack = 1.0. Damage col
 |------|------|---------|-------------------------------|
 | 1.0 | Basic attack | Attack command, Shiv (see below) | ~5,044 |
 | 1.5 | Strong skill | Riposte counter | ~7,596 |
-| 2.0 | Ultimate skill | Oathkeeper hits | ~10,118 |
-| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,639 |
+| 2.0 | Ultimate skill | Oathkeeper hits | ~10,148 |
+| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,700 |
 | 3.0 | Maximum | Convergence Chorus (once per battle) | 14,999 (capped) |
 
 The 3.0 tier is reserved for abilities with extreme costs — Torren's Convergence Chorus (once per battle), combo ultimates requiring specific party + setup. These are "Bum Rush" moments — the payoff for mastering the system.
@@ -190,7 +190,7 @@ Buffs modify stats before they enter formulas, not damage output:
 | Rallying Cry (+30% ATK) | ATK stat | ATK² uses buffed value |
 | Attunement (+30% MAG) | MAG stat | MAG × power uses buffed value |
 | Ironhide (+40% DEF) | DEF stat | Target DEF in subtraction |
-| Defray (-30% DEF) | DEF stat | Target DEF in subtraction |
+| Sunder (-30% DEF) | DEF stat | Target DEF in subtraction |
 | Glintmark (+10% dmg taken) | Final damage | Multiplied after variance |
 | Resonance (+30% spell) | Spell output | Multiplied after base calc |
 
@@ -391,17 +391,17 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 | Boss | Act | HP | Rationale |
 |------|-----|----|-----------|
 | Vein Guardian | I | 6,000 | Tutorial boss. ~20 party actions. |
-| Corrupted Fenmother | II | 18,000 | 8 forms, ~2,250 each. Puzzle boss. |
+| Corrupted Fenmother | II | 18,000 | Boss phase + 4 cleansing waves. Puzzle boss. |
 | The Ironbound | II | 22,000 | Mid-game skill check. |
 | General Kole | II | 30,000 | Act II climax. Pallor-enhanced. |
 | Archive Guardian | Interlude | 28,000 | Three phases, ~9,300 each. |
 | The Ashen Ram | Interlude | 25,000 | Party rebuilding strength. |
 | The Ley Leech | Interlude | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 22,000 | Stunnable (effective HP lower). |
-| The Forge Heart | III | 35,000 | Act III standard. |
+| The Forge Heart | II/Interlude | 35,000 | Caldera Forge Depths boss. |
 | The Frost Warden | III | 38,000 | Elemental puzzle (Flame weakness). |
 | The Pallor Hollow | III | 40,000 | Act III gauntlet entry. |
-| Vaelith (unwinnable) | III | 50,000 | Narrative defeat. Timer-based. |
+| Vaelith, the Ashen Shepherd | III | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 45,000 | Uses party's tactics against them. |
 | Cael Phase 2 | III | 35,000 | Desperate. Pallor fully manifesting. |
 | Pallor Incarnate | III | 70,000 | Final boss. FF6-scale. |

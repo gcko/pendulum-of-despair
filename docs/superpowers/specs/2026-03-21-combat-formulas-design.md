@@ -1,7 +1,7 @@
 # Damage & Combat Formulas Design Spec
 
 **Date:** 2026-03-21
-**Status:** Draft
+**Status:** Implemented
 **Scope:** New file `docs/story/combat-formulas.md` — physical damage,
 magical damage, healing, critical hits, ability multipliers, elemental
 interactions, status accuracy, combat synergies, boss HP scaling, and
@@ -64,7 +64,7 @@ final = min(14999, raw × variance)
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values
   (see Section 5).
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs
-  like Defray (-30% DEF) reduce DEF before subtraction.
+  like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied last, before the cap (see Section 4).
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum
@@ -265,7 +265,7 @@ Buffs modify stats before they enter formulas, not damage output:
 | Rallying Cry (+30% ATK) | ATK stat | ATK² uses buffed value |
 | Attunement (+30% MAG) | MAG stat | MAG × power uses buffed value |
 | Ironhide (+40% DEF) | DEF stat | Target DEF in subtraction |
-| Defray (-30% DEF) | DEF stat | Target DEF in subtraction |
+| Sunder (-30% DEF) | DEF stat | Target DEF in subtraction |
 | Glintmark (+10% dmg taken) | Final damage | Multiplied after variance |
 | Resonance (+30% spell) | Spell output | Multiplied after base calc |
 
@@ -368,7 +368,7 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 
 1. **Calculate base damage** — `(MAG × spell_power) / 4 - target.MDEF`
 2. **Floor check** — `max(1, base_damage)`
-3. **Apply elemental modifier** (1.5×, 1.0×, 0.5×, 0.0×, or -1.0×)
+3. **Apply elemental modifier** (1.5×, 1.0×, 0.75×, 0.5×, 0.0×, or -1.0×)
 4. **Apply combat interaction modifiers** (Conductive Water, etc.)
 5. **Apply buff modifiers** (Resonance, Glintmark)
 6. **Apply variance** — `× random_int(240, 255) / 256`
@@ -474,17 +474,17 @@ endgame, and a 14,999 damage cap, bosses need FF6-scale HP pools.
 | Boss | Act | Old HP | New HP | Rationale |
 |------|-----|--------|--------|-----------|
 | Vein Guardian | I | 3,000 | 6,000 | Tutorial boss. ~20 party actions. |
-| Corrupted Fenmother | II | 8,000 | 18,000 | 8 forms, ~2,250 each. Puzzle boss. |
+| Corrupted Fenmother | II | 8,000 | 18,000 | Boss phase + 4 cleansing waves. Puzzle boss. |
 | The Ironbound | II | 8,000 | 22,000 | Mid-game skill check. |
 | General Kole | II | 12,000 | 30,000 | Act II climax. Pallor-enhanced. |
 | Archive Guardian | Interlude | 10,000 | 28,000 | Three phases, ~9,300 each. |
 | The Ashen Ram | Interlude | 10,000 | 25,000 | Party rebuilding strength. |
 | The Ley Leech | Interlude | 9,000 | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 9,000 | 22,000 | Stunnable (effective HP lower). |
-| The Forge Heart | III | 10,000 | 35,000 | Act III standard. |
+| The Forge Heart | II/Interlude | 10,000 | 35,000 | Caldera Forge Depths boss. |
 | The Frost Warden | III | 11,000 | 38,000 | Elemental puzzle (Flame weakness). |
 | The Pallor Hollow | III | 11,000 | 40,000 | Act III gauntlet entry. |
-| Vaelith (unwinnable) | III | 20,000 | 50,000 | Narrative defeat. Timer-based. |
+| Vaelith, the Ashen Shepherd | III | 20,000 | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 15,000 | 45,000 | Uses party's tactics against them. |
 | Cael Phase 2 | III | — | 35,000 | Desperate. Pallor manifesting. |
 | Pallor Incarnate | III | 25,000 | 70,000 | Final boss. FF6-scale. |
