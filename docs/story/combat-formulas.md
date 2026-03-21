@@ -392,15 +392,15 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 |------|-----|----|-----------|
 | Vein Guardian | I | 6,000 | Tutorial boss. ~20 party actions. |
 | Corrupted Fenmother | II | 18,000 | Boss phase + 4 cleansing waves. Puzzle boss. |
-| The Ironbound | II | 22,000 | Mid-game skill check. |
-| General Kole | II | 30,000 | Act II climax. Pallor-enhanced. |
+| The Ironbound | Interlude | 22,000 | Mid-game skill check. |
+| General Kole | Interlude | 30,000 | Pallor-enhanced commander. |
 | Archive Guardian | Interlude | 28,000 | Three phases, ~9,300 each. |
-| The Ashen Ram | Interlude | 25,000 | Party rebuilding strength. |
+| The Ashen Ram | II | 25,000 | Act II climax. Siege boss. |
 | The Ley Leech | Interlude | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 22,000 | Stunnable (effective HP lower). |
 | The Forge Heart | II/Interlude | 35,000 | Caldera Forge Depths boss. |
 | The Frost Warden | Interlude/III | 38,000 | Elemental puzzle (Flame weakness). |
-| The Pallor Hollow | III | 40,000 | Act III gauntlet entry. |
+| The Pallor Hollow | Interlude | 40,000 | Edren recovery sequence. |
 | Vaelith, the Ashen Shepherd | III | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 45,000 | Uses party's tactics against them. |
 | Cael Phase 2 | III | 35,000 | Desperate. Pallor fully manifesting. |

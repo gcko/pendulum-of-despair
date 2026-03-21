@@ -475,15 +475,15 @@ endgame, and a 14,999 damage cap, bosses need FF6-scale HP pools.
 |------|-----|--------|--------|-----------|
 | Vein Guardian | I | 3,000 | 6,000 | Tutorial boss. ~20 party actions. |
 | Corrupted Fenmother | II | 8,000 | 18,000 | Boss phase + 4 cleansing waves. Puzzle boss. |
-| The Ironbound | II | 8,000 | 22,000 | Mid-game skill check. |
-| General Kole | II | 12,000 | 30,000 | Act II climax. Pallor-enhanced. |
+| The Ironbound | Interlude | 8,000 | 22,000 | Mid-game skill check. |
+| General Kole | Interlude | 12,000 | 30,000 | Pallor-enhanced commander. |
 | Archive Guardian | Interlude | 10,000 | 28,000 | Three phases, ~9,300 each. |
-| The Ashen Ram | Interlude | 10,000 | 25,000 | Party rebuilding strength. |
+| The Ashen Ram | II | 10,000 | 25,000 | Act II climax. Siege boss. |
 | The Ley Leech | Interlude | 9,000 | 24,000 | Ley nexus boss. |
 | The Grey Engine | Interlude | 9,000 | 22,000 | Stunnable (effective HP lower). |
 | The Forge Heart | II/Interlude | 10,000 | 35,000 | Caldera Forge Depths boss. |
 | The Frost Warden | Interlude/III | 11,000 | 38,000 | Elemental puzzle (Flame weakness). |
-| The Pallor Hollow | III | 11,000 | 40,000 | Act III gauntlet entry. |
+| The Pallor Hollow | Interlude | 11,000 | 40,000 | Edren recovery sequence. |
 | Vaelith, the Ashen Shepherd | III | 20,000 | 50,000 | Winnable penultimate boss. Two phases. |
 | Cael Phase 1 | III | 15,000 | 45,000 | Uses party's tactics against them. |
 | Cael Phase 2 | III | — | 35,000 | Desperate. Pallor manifesting. |
