@@ -43,22 +43,36 @@ Based on `git diff main --name-only` for the PR's changed files:
 | Pattern | PR Type |
 |---------|---------|
 | `docs/story/**` or `docs/superpowers/**` | Story |
-| `packages/*/src/**` or `*.ts` or `*.js` (in packages/) | Code |
-| Both Story and Code patterns | Mixed |
-| `.claude/**`, `.github/**`, config files only | Tooling |
+| `packages/*/src/**` or `*.ts`/`*.js` (in packages/) | Code |
+| Both Story and Code patterns present | Mixed |
+| `.claude/**`, `.github/**`, root config (`*.json`, `*.yaml`, `*.toml`) only | Tooling |
+| Any other `docs/**` or `*.md` (e.g., `CLAUDE.md`, `docs/analysis/`) | Docs |
 
-**Priority:** If both Story and Code files are present, type is Mixed.
-Tooling files (`.claude/`, `.github/`, `*.json` config) are ignored
-for type detection — they're incidental to the real content.
+**Fallback:** If no files match any pattern (empty diff or unrecognized
+paths), default to **Docs** type (lint only, no deep review).
+
+**Priority rules:**
+- If both Story and Code files are present → **Mixed** (both pipelines)
+- Tooling and Docs files are ignored when mixed with Story or Code —
+  they're incidental to the real content
+- A PR with only `.claude/` + `docs/analysis/` files = **Docs**
+  (not Tooling, because it has non-config markdown)
+
+**Docs PRs** run `pnpm lint` only. They don't need story-review-loop
+(they're not story content) or full test suites (they're not code).
 
 ### 3.2 "Already Reviewed" Detection
 
 Before running upstream review, check if it's already been done:
 
-- **Story review:** Search PR comments for the string
-  `"Story Review Loop Summary"`. If found, skip story-review-loop.
-- **Code review:** Search PR comments for a passing CI status check
-  or a `"lint/test passed"` comment. If found, skip code verification.
+- **Story review:** Search PR comments for the substring
+  `"Story Review Loop Summary"` (the actual header is
+  `# Story Review Loop Summary (Multi-Agent)` — use a contains
+  match, not exact). If found, skip story-review-loop.
+- **Code review:** Search PR comments for a comment containing
+  `"pnpm lint && pnpm test"` and `"passed"` posted by the repo
+  owner or current actor. If found, skip code verification.
+  (CI status checks are not yet configured for this repo.)
 
 This makes the skill safe to re-run. If someone already ran
 `/story-review-loop 17 5`, pr-review-response won't re-run it.
@@ -78,7 +92,7 @@ technical, script supervisor, devil's advocate, canonical verifier).
 Fixes are committed and pushed. A summary comment is posted to the PR.
 
 After story-review-loop completes, pr-review-response continues to
-Step 3 (fetch and address any human/bot comments that arrived).
+Section 5 (fetch and address any human/bot comments that arrived).
 
 ### 4.2 Code PRs
 
@@ -97,8 +111,10 @@ Future: When a code-review agent is added, it would run here.
 ### 4.3 Mixed PRs
 
 Run both pipelines sequentially:
-1. Story review (story-review-loop)
-2. Code review (lint + test)
+1. Story review (story-review-loop) — runs first because it may commit
+   fixes to story docs, which must pass lint/test verification afterward
+2. Code review (lint + test) — runs second to verify everything
+   (including any story-review-loop fixes) passes
 
 ### 4.4 Tooling PRs
 
@@ -198,15 +214,21 @@ If any comments came from `copilot-pull-request-reviewer[bot]`:
    - Formatting (style/structure)
    - Cross-reference (broken links, stale references)
    - Ambiguity (unclear language, multiple interpretations)
-3. **Map** to the story-review-loop agent that should have caught it:
-   - Propagation → Agent 1 (Propagation Checker)
-   - Numeric → Agent 3 (Technical) or Agent 6 (Canonical Verifier)
-   - Cross-reference → Agent 6 (Canonical Verifier)
-   - Ambiguity → Agent 5 (Devil's Advocate)
-   - Formatting → Agent 3 (Technical, Pass K)
+3. **Map** to the appropriate review system based on PR type:
+   - **Story PRs:** Map to story-review-loop agents:
+     - Propagation → Agent 1 (Propagation Checker)
+     - Numeric → Agent 3 (Technical) or Agent 6 (Canonical Verifier)
+     - Cross-reference → Agent 6 (Canonical Verifier)
+     - Ambiguity → Agent 5 (Devil's Advocate)
+     - Formatting → Agent 3 (Technical, Pass K)
+   - **Code PRs:** Log as "code review gap" — no agent mapping yet.
+     These findings inform future code-review agent design.
+   - **Mixed PRs:** Map story-file comments to agents, log code-file
+     comments separately.
 4. **Check** if the gap is already in
    `.claude/skills/story-review-loop/references/verification-checklists.md`
-5. **For new gaps**, draft a one-line checklist item.
+   (story gaps only; code gaps are logged but not added to story checklists)
+5. **For new story gaps**, draft a one-line checklist item.
 6. **Present** to user:
    > "Copilot found N issues our review missed. M are already in
    > checklists. K are new gaps: [list]. Apply improvements?"
@@ -265,10 +287,14 @@ Add to pod-dev SKILL.md:
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `.claude/skills/pr-review-response/SKILL.md` | Create | The orchestrator skill |
+| `.claude/skills/pr-review-response/SKILL.md` | Rewrite | Replace current skill with orchestrator version |
 | `.claude/skills/pod-dev/SKILL.md` | Modify | Add workflow chain section + handoff language |
 | `.claude/skills/story-designer/SKILL.md` | Modify | Add exit message naming next skill |
 | `.claude/skills/story-review-loop/SKILL.md` | Modify | Note that pr-review-response may call it |
+
+**Note:** The `/create-pr` skill already exists in this repo at
+`.claude/skills/create-pr/SKILL.md`. Its exit message will be updated
+to name `/pr-review-response` as the next step.
 
 ## 9. Iron Rules (retained from current skill)
 
