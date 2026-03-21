@@ -20,6 +20,13 @@ back clean), push all commits at once and post a summary to the PR.
 > inherits those changes automatically. Never duplicate the pass list
 > here — always reference story-review as the single source of truth.
 
+> **Orchestrator integration:** This skill may be called automatically
+> by `/pr-review-response` when it detects a Story or Mixed PR type.
+> When called this way, the skill operates normally — it does not need
+> to know it was dispatched by an orchestrator. Its summary comment
+> (`# Story Review Loop Summary (Multi-Agent)`) is used by
+> pr-review-response to detect that the review has already been run.
+
 ## Why Multi-Agent?
 
 A single monolithic review agent suffers from systemic failure modes:

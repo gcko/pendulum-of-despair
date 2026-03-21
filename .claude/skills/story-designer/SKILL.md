@@ -214,7 +214,10 @@ Claude: [Runs adversarial verification]
 Claude: [Updates gap-analysis-gaps.md: 1.2 -> COMPLETE]
 Claude: "Stat system complete. This unblocks: 1.1 (Damage Formulas),
          2.2 (ATB Mechanics). (2.1 XP Curve still blocked by 1.3.)
-         Recommend 1.1 next."
+         Recommend 1.1 next.
+
+         Next step: run `/create-pr` to open a PR targeting main,
+         then `/pr-review-response <PR#>` to run automated review."
 ```
 
 ## Rules
@@ -229,3 +232,6 @@ Claude: "Stat system complete. This unblocks: 1.1 (Damage Formulas),
   systems elegant. Reference FF4/FF6/Chrono Trigger by name.
 - **Don't over-design.** YAGNI applies. Design what's needed for
   implementation, not a theoretical framework.
+- **Exit with handoff.** Every session ends by naming the next skill:
+  `/create-pr` to open a PR, then `/pr-review-response <PR#>` to
+  orchestrate review.

@@ -1,11 +1,16 @@
 ---
 name: pr-review-response
-description: Use when a PR has review comments to address — fetches comments, fixes valid concerns, runs tests, pushes, and replies to each reviewer on GitHub. Invoke with PR number or URL.
+description: >
+  Single post-PR entry point. Detects PR type (Story/Code/Mixed/Tooling/Docs),
+  auto-runs upstream review if not already done (story-review-loop for story PRs,
+  lint+test for code PRs), then addresses all human and bot review comments.
+  Invoke with PR number or URL.
 ---
 
-# PR Review Response
+# PR Review Response (Orchestrator)
 
-Address PR review comments end-to-end: read, assess, fix, verify, push, reply.
+Single entry point after PR creation. Detects the PR type, runs the
+appropriate upstream review pipeline, then addresses all feedback.
 
 ## Invocation
 
@@ -20,83 +25,191 @@ digraph pr_review {
     rankdir=TB;
     node [shape=box, style=filled, fillcolor=lightblue];
 
-    fetch [label="1. FETCH\nRead all review comments\nvia gh api", fillcolor="#e6f3ff"];
-    assess [label="2. ASSESS\nValid concern or\nfalse positive?", shape=diamond, fillcolor="#fff3e6"];
-    fix [label="3. FIX\nImplement changes\nfor valid concerns", fillcolor="#ccffcc"];
-    verify [label="4. VERIFY\npnpm lint\npnpm test", fillcolor="#ccccff"];
-    green [label="All green?", shape=diamond, fillcolor="#fff3e6"];
-    commit [label="5. COMMIT\n(push deferred if\nCopilot commented)\nDescriptive message\nvia temp file", fillcolor="#e6ffe6"];
+    detect [label="1. DETECT TYPE\nRead changed files\nClassify PR", fillcolor="#e6f3ff"];
+    reviewed [label="Already\nreviewed?", shape=diamond, fillcolor="#fff3e6"];
+    upstream [label="2. UPSTREAM REVIEW\nStory: story-review-loop\nCode: lint + test\nMixed: both", fillcolor="#ccffcc"];
+    fetch [label="3. FETCH COMMENTS\ngh api --paginate\nFilter unaddressed", fillcolor="#e6f3ff"];
+    comments [label="Comments\nexist?", shape=diamond, fillcolor="#fff3e6"];
+    assess [label="4. ASSESS & FIX\nValid concern → fix\nFalse positive → explain", fillcolor="#ccffcc"];
+    verify [label="VERIFY\npnpm lint && pnpm test", fillcolor="#ccccff"];
+    commit [label="5. COMMIT", fillcolor="#e6ffe6"];
     copilot [label="Copilot\ncommented?", shape=diamond, fillcolor="#fff3e6"];
-    gap [label="5b. GAP ANALYSIS\nCategorize Copilot findings\nPropose skill improvements", fillcolor="#f3e6ff"];
-    reply [label="6. REPLY\nRespond to each comment\non GitHub", fillcolor="#ffe6f3"];
-    summarize [label="7. SUMMARIZE\nList all changes made", fillcolor="#f3e6ff"];
+    gap [label="6. GAP ANALYSIS\nCategorize findings\nPropose improvements", fillcolor="#f3e6ff"];
+    push [label="PUSH", fillcolor="#e6ffe6"];
+    reply [label="7. REPLY\nRespond to each\ncomment on GitHub", fillcolor="#ffe6f3"];
+    exit [label="8. EXIT\nHandoff message", fillcolor=lightgreen];
 
-    fetch -> assess;
-    assess -> fix [label="valid"];
-    assess -> reply [label="false positive\n(explain why)"];
-    fix -> verify;
-    verify -> green;
-    green -> commit [label="yes"];
-    green -> fix [label="no — fix issues"];
+    detect -> reviewed;
+    reviewed -> fetch [label="yes"];
+    reviewed -> upstream [label="no"];
+    upstream -> fetch;
+    fetch -> comments;
+    comments -> exit [label="none — clean"];
+    comments -> assess [label="yes"];
+    assess -> verify;
+    verify -> commit;
     commit -> copilot;
     copilot -> gap [label="yes"];
-    copilot -> reply [label="no"];
-    gap -> reply;
-    reply -> summarize;
+    copilot -> push [label="no"];
+    gap -> push;
+    push -> reply;
+    reply -> exit;
 }
 ```
 
-### 1. Fetch Comments
+---
+
+## Step 1: Detect PR Type
+
+Get the list of changed files:
 
 ```bash
-# Get owner/repo from current repo
-# CRITICAL: Always use --paginate to fetch ALL comments.
-# GitHub API defaults to 30 per page. PRs with many review rounds
-# can have 60+ comments — without --paginate, later comments are
-# silently dropped and entire Copilot review rounds go unaddressed.
+gh pr view <pr_number> --json files --jq '.files[].path'
+```
+
+Classify based on file paths:
+
+| Pattern | PR Type |
+|---------|---------|
+| `docs/story/**` or `docs/superpowers/**` | **Story** |
+| `packages/*/src/**` or `*.ts`/`*.js` (in packages/) | **Code** |
+| Both Story and Code patterns present | **Mixed** |
+| `.claude/**`, `.github/**`, root config (`*.json`, `*.yaml`, `*.toml`) only | **Tooling** |
+| Any other `docs/**` or `*.md` (e.g., `CLAUDE.md`, `docs/analysis/`) | **Docs** |
+
+**Priority rules:**
+- If both Story and Code files are present → **Mixed**
+- Tooling and Docs files are ignored when mixed with Story or Code
+- A PR with only `.claude/` + `docs/analysis/` = **Docs**
+
+**Fallback:** If no files match any pattern (empty diff or unrecognized
+paths), default to **Docs** type.
+
+---
+
+## Step 2: Run Upstream Review (if not already run)
+
+Before running any upstream review, check if it has already been done:
+
+- **Story review:** Search PR comments (via `gh api --paginate`) for
+  the substring `"Story Review Loop Summary"`. The actual header is
+  `# Story Review Loop Summary (Multi-Agent)` — use a contains match.
+  If found, skip story-review-loop.
+- **Code review:** Search PR comments for a comment containing
+  `"pnpm lint && pnpm test"` and `"passed"` posted by the repo owner
+  or current actor. If found, skip code verification.
+
+### Story PRs
+
+Dispatch story-review-loop with 3 rounds:
+
+```
+/story-review-loop <PR#> 3
+```
+
+This runs the 6-agent multi-round review. Fixes are committed and
+pushed. A summary comment is posted to the PR. After it completes,
+continue to Step 3.
+
+### Code PRs
+
+Run the project's quality gates:
+
+```bash
+pnpm lint    # TypeScript type-check across all packages
+pnpm test    # Run all tests (server + client)
+```
+
+If either fails, fix issues before proceeding. Post a brief comment
+summarizing what was found and fixed.
+
+### Mixed PRs
+
+Run both pipelines sequentially:
+1. **Story review first** — story-review-loop may commit fixes to
+   story docs, which must pass verification afterward
+2. **Code review second** — `pnpm lint && pnpm test` to verify
+   everything (including story-review-loop fixes) passes
+
+### Tooling PRs
+
+Run `pnpm lint` only.
+
+### Docs PRs
+
+Run `pnpm lint` only.
+
+---
+
+## Step 3: Fetch Comments
+
+**CRITICAL: Always use `--paginate`.** GitHub API defaults to 30 per
+page. Without it, comments beyond page 1 are silently dropped.
+
+```bash
 gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews --paginate
 gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate
 ```
 
-Parse each comment for: `id`, `user.login`, `path`, `line`, `body`, `in_reply_to_id` (skip replies — only address top-level comments).
+Parse each comment for: `id`, `user.login`, `path`, `line`, `body`,
+`in_reply_to_id`.
 
-### 2. Assess Each Comment
+**Filter to unaddressed only:** A top-level comment is "addressed" if
+it already has a reply from the repo owner or current actor. Only
+process comments with NO replies yet. Skip replies (non-null
+`in_reply_to_id`).
 
-For each top-level comment, determine:
+**If zero unaddressed comments exist**, skip to Step 8 (exit clean).
+
+---
+
+## Step 4: Assess & Fix
+
+For each unaddressed top-level comment:
 
 | Assessment | Action |
 |-----------|--------|
-| **Valid concern** | Fix it in Phase 3 |
-| **False positive** | Prepare explanation for Phase 6 |
-| **Question/clarification** | Prepare answer for Phase 6 |
+| **Valid concern** | Fix it |
+| **False positive** | Prepare explanation for Step 7 |
+| **Question/clarification** | Prepare answer for Step 7 |
 | **Nitpick/style** | Fix if trivial, explain if subjective |
 
-Read the referenced file and lines before deciding. Do not dismiss concerns without understanding the code.
+**Read the referenced file and lines before deciding.** Do not dismiss
+concerns without understanding the code.
 
-**Comment sources:** Review comments may come from human reviewers, Claude (`claude[bot]` / `claude`), Copilot (`copilot-pull-request-reviewer[bot]`), or other automated reviewers. Treat all comments with equal rigor regardless of source.
+**Comment sources:** Comments may come from human reviewers, Claude
+(`claude[bot]` / `claude`), Copilot (`copilot-pull-request-reviewer[bot]`),
+or other bots. Treat all with equal rigor regardless of source.
 
-### 3. Fix Valid Concerns
+### Fixing
 
 - Read each file referenced by valid comments
 - Implement the fix
 - Group related fixes (multiple comments on same file/feature)
 
-### 4. Verify
+### Verify
+
+Verification adapts to the detected PR type:
 
 ```bash
+# Story / Code / Mixed PRs — full suite
+pnpm lint && pnpm test
+
+# Tooling / Docs PRs — lint only
 pnpm lint
-pnpm test
 ```
 
-All checks must pass before proceeding. If tests fail, investigate and fix before pushing.
+All checks must pass before committing.
 
-### 5. Commit and Push
+---
 
-Write commit message to a temp file to avoid shell quoting issues:
+## Step 5: Commit
+
+Write commit message to a temp file:
 
 ```bash
 cat > /tmp/commit-msg.txt << 'EOF'
-fix(scope): address PR review feedback
+type(scope): address PR review feedback
 
 - Description of change 1
 - Description of change 2
@@ -106,67 +219,107 @@ EOF
 
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
-# Push now if no Copilot comments; otherwise push after step 5b
-git push  # Skip if Copilot commented — step 5b will push
 ```
 
-### 5b. Copilot Gap Analysis (if Copilot commented)
+**Commit type selection:** Use the conventional commit type that matches
+the PR content — `docs` for Story/Docs PRs, `fix` or `feat` for Code
+PRs, `chore` for Tooling PRs. The `(scope)` should match the package
+(`client`, `server`, `shared`) or use `shared` for cross-cutting docs.
 
-If any comments came from `copilot-pull-request-reviewer[bot]`, run a
-gap analysis before replying. This ensures every Copilot review round
-improves our review skills.
+**Push is deferred** until after Step 6 if Copilot commented. Otherwise
+push immediately after commit.
 
-1. **Filter** Copilot comments from the set.
-2. **Categorize** each using `references/copilot-gap-taxonomy.md`.
-3. **Map** to the story-review-loop agent that should have caught it.
-4. **Check** if the gap is already covered by an item in
-   `.claude/skills/story-review-loop/references/verification-checklists.md`.
-5. **For new gaps**, draft:
-   - A one-line checklist item for verification-checklists.md
-   - A gap-analysis-log.md entry
+---
+
+## Step 6: Copilot Gap Analysis (if Copilot commented)
+
+If any comments came from `copilot-pull-request-reviewer[bot]`:
+
+1. **Filter** Copilot comments from the full set.
+2. **Categorize** each finding:
+   - Propagation (value inconsistency across files)
+   - Numeric (formula/arithmetic error)
+   - Formatting (style/structure)
+   - Cross-reference (broken links, stale references)
+   - Ambiguity (unclear language, multiple interpretations)
+3. **Map** to the appropriate review system based on PR type:
+   - **Story PRs:** Map to story-review-loop agents:
+     - Propagation → Agent 1 (Propagation Checker)
+     - Numeric → Agent 3 (Technical) or Agent 6 (Canonical Verifier)
+     - Cross-reference → Agent 6 (Canonical Verifier)
+     - Ambiguity → Agent 5 (Devil's Advocate)
+     - Formatting → Agent 3 (Technical, Pass K)
+   - **Code PRs:** Log as "code review gap" — no agent mapping yet.
+     These findings inform future code-review agent design.
+   - **Mixed PRs:** Map story-file comments to agents, log code-file
+     comments separately.
+4. **Check** if the gap is already in
+   `.claude/skills/story-review-loop/references/verification-checklists.md`
+   (story gaps only).
+5. **For new story gaps**, draft a one-line checklist item.
 6. **Present** to the user:
-   > "Copilot found N issues our review missed. M are covered by
-   > existing checklists. K are new gaps:
-   > [list of proposed checklist additions]
-   > Want me to apply these improvements?"
-7. If approved, update the checklist and log files, commit.
-8. **Push all commits** (fix commit from step 5 + skill improvement
-   commit from step 5b) together: `git push`.
+   > "Copilot found N issues our review missed. M are already in
+   > checklists. K are new gaps: [list]. Apply improvements?"
+7. If approved, update the checklist file and commit.
+8. **Push all commits** together: `git push`.
 
-The reply step (6) can then mention "added to verification checklists"
-for each addressed gap, closing the feedback loop.
+**If no Copilot comments:** Skip Step 6 and push in Step 5.
 
-**If no Copilot comments:** Skip step 5b entirely and push in step 5
-as normal.
+---
 
-### 6. Reply to Each Comment
+## Step 7: Reply to Each Comment
 
-Reply to **every** comment individually using the correct API. **Mention the commenter** with `@username` so they get notified:
+Reply to **every** comment individually:
 
 ```bash
 gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies \
-  -f body="@username Fixed in <commit-sha>. <brief explanation of what changed>"
+  -f body="@username Fixed in <commit-sha>. <brief explanation>"
 ```
 
-**Bot usernames:** If `user.login` ends with `[bot]`, strip the suffix. For example, `claude[bot]` becomes `@claude`.
+**Bot usernames:** If `user.login` ends with `[bot]`, strip the suffix.
+`claude[bot]` → `@claude`.
 
-**Copilot exception:** Do NOT `@` mention Copilot (`copilot-pull-request-reviewer[bot]`) in replies. Mentioning Copilot triggers it to respond and create follow-up PRs. Reply to Copilot comments without any `@` mention — just provide the fix explanation directly.
+**Copilot exception:** Do NOT `@` mention Copilot
+(`copilot-pull-request-reviewer[bot]`). Mentioning it triggers follow-up
+PRs. Reply without any `@` mention.
 
-For false positives, mention the commenter and explain why the current code is correct.
+For false positives, explain why the current code is correct.
 
-### 7. Summarize
+---
 
-Output a table of all comments and what was done:
+## Step 8: Exit with Handoff
+
+Always end with one of these messages:
+
+**Exit A (clean):**
+> "All {N} comments addressed and pushed. PR #{number} is ready to
+> merge."
+
+**Exit B (new comments arrived):**
+> "Addressed {N} comments, but {M} new comments arrived during fixes.
+> Re-run `/pr-review-response {number}` to address the new round."
+
+**Exit C (needs human decision):**
+> "Addressed {N} of {total} comments. {M} require human decision:
+> [list of issues needing human input]
+> Resolve these, then re-run `/pr-review-response {number}`."
+
+**Summarize** all comments and actions in a table:
 
 | Comment | File | Action | Status |
 |---------|------|--------|--------|
 | "Missing null check" | api.ts:42 | Added optional chaining | Fixed |
-| "This looks wrong" | utils.ts:10 | Explained why it is correct | Replied |
+| "This looks wrong" | utils.ts:10 | Explained why correct | Replied |
+
+---
 
 ## Iron Rules
 
-- **Reply to every comment.** Reviewers deserve acknowledgment, even for false positives.
-- **Never dismiss without reading.** Open the file, read the context, then decide.
+- **Reply to every comment.** Reviewers deserve acknowledgment.
+- **Never dismiss without reading.** Open the file, read context, decide.
 - **Tests must pass.** Do not push broken code to silence a reviewer.
-- **One commit per review round.** Group all fixes into a single commit, not one per comment.
-- **Temp file for commit messages.** Heredocs with special characters break in shell. Always write to a temp file and use `git commit -F`.
+- **One commit per review round.** Group all fixes into a single commit.
+- **Temp file for commit messages.** Heredocs with special characters
+  break in shell. Always write to a temp file and use `git commit -F`.
+- **Explicit handoff at every exit.** Name the next action or confirm
+  the PR is ready to merge.

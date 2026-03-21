@@ -2,6 +2,10 @@
 
 This document provides detailed dungeon layouts for every explorable dungeon, mountain pass, and cave system in Pendulum of Despair. Each entry includes floor maps, puzzle design, encounter tables, treasure, and environmental hazards. All maps use 16x16 tile grids at SNES-era resolution.
 
+> **Boss HP values** were calibrated against the combat formulas in
+> [combat-formulas.md](combat-formulas.md). These are initial targets;
+> final tuning happens during the bestiary pass (Gap 1.3).
+
 **Design Philosophy:** Every dungeon teaches the player something. Ember Vein teaches how dungeons work. Fenmother's Hollow teaches resource management. The Convergence tests everything at once. The best JRPG dungeons are remembered for their gimmick -- what makes THIS place different from every other corridor. Every dungeon here has one.
 
 **Map Legend (All ASCII Maps):**
@@ -313,7 +317,7 @@ game transitions to a playable Walk-and-Talk credits sequence. See
 - `>` (bottom): **Secret passage exit.** A one-way door that opens after the boss is defeated. The passage is a narrow geometric corridor that slopes upward. It emerges through a hidden entrance in the cliff face near Ironmouth's lower docks. Post-boss cutscene: Carradan soldiers are heard entering the mine from Floor 1 above. Edren: "They must have heard the collapse. We can't go back up." Cael spots the hidden passage. The party flees through it, emerging at the docks at night. This is where they encounter Lira (waiting on the dock, watching the mine entrance) and Sable (lurking in the shadows, curious about the commotion). The four-person party forms during the escape from Ironmouth.
 
 **Boss: Vein Guardian**
-A crystalline construct that assembles when the Pendulum is disturbed. Geometric, angular, towering -- twice the height of a person. Glowing ember-orange with a core of deep amber. Slow but hits hard. 3000 HP.
+A crystalline construct that assembles when the Pendulum is disturbed. Geometric, angular, towering -- twice the height of a person. Glowing ember-orange with a core of deep amber. Slow but hits hard. 6,000 HP.
 
 **Moveset:**
 - **Crystal Slam:** Single-target heavy physical. Telegraphed by raising both arms (one turn warning).
@@ -331,7 +335,7 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 | Mine Shade | Ghostly silhouette of a dead miner. Casts a weak despair debuff (attack down, 2 turns). Foreshadows the Pallor. | Floors 2-3 | 200 |
 | Ember Wisp | Small floating flame-crystal. Weak Flame magic, appears in pairs. | Floor 3 only | 120 |
 | **Ember Drake** (Mini-boss) | Crystalline lizard-construct. Fast, aggressive, angular geometry. Teaches full-party coordination. | Floor 2, mini-boss room | 1,500 |
-| **Vein Guardian** (Boss) | Geometric crystal construct. Slow charge attacks, area slam. Telegraphs with floor glow. Reconstructs at 50% HP. | Floor 4, boss room | 3,000 |
+| **Vein Guardian** (Boss) | Geometric crystal construct. Slow charge attacks, area slam. Telegraphs with floor glow. Reconstructs at 50% HP. | Floor 4, boss room | 6,000 |
 
 ### Treasure/Loot
 
@@ -546,7 +550,7 @@ After the Fenmother is cleansed, the spirit-path at the dungeon's exit (`X` on F
 
 **Narrative significance:** The spirit-path establishes that cleansed dungeons give back. The Fenmother was corrupted, hostile, dying. Now she is restored, and she offers a gift -- safe passage through her domain. This pattern repeats (on a smaller scale) with the Ember Vein's restored crystal lighting the escape route, and (on a grander scale) with the Dry Well's restored waterworks providing a permanent fast-travel hub in the late game.
 
-### Boss: The Corrupted Fenmother
+### Boss: The Corrupted Fenmother (18,000 HP)
 
 A vast water serpent with a translucent body showing the dark ley-corruption within. She surfaces to strike with tail sweeps and water jets, then dives (untargetable). When submerged, poisoned water pools appear on the arena floor (stepping on them deals poison damage). The party must attack during surface phases and avoid pools during dive phases. At 50% HP, she summons two Spawn -- smaller serpents that must be killed to force her to surface again.
 
@@ -565,8 +569,6 @@ Torren steps forward and begins the spirit-speaking ritual. The party must defen
 
 Caden arrives (he felt the cleansing through the water -- he was waiting at the marsh edge). He performs a binding -- not a cage, but a ward. A protection against future contamination. "She will sleep now. And the water will remember what clean feels like." He gives the party the Fenmother's Blessing.
 
-8,000 HP.
-
 ### Encounter Table
 
 | Enemy | Description | Location |
@@ -577,7 +579,7 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | Polluted Elemental | Frost elemental with dark discoloration. Area Frost attack. | Floor 2-3 |
 | Corrupted Spawn | Dark-scaled serpent, fast, targets backline. Cleansing sequence only. | Floor 3 (Wave 4) |
 | **Drowned Sentinel** (Mini-boss) | Stone guardian covered in barnacles. Heavy physical, Frost area attack. 4,000 HP. | Floor 2 |
-| **Corrupted Fenmother** (Boss) | Frost serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 8,000 HP. | Floor 3 |
+| **Corrupted Fenmother** (Boss) | Frost serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 18,000 HP. | Floor 3 |
 
 ### Treasure/Loot
 
@@ -824,17 +826,17 @@ The Maintenance Shaft has a unique enemy type: **Pipe Wraiths**. These are the g
 - **Sable** (after finding the Maintenance Chief's Report): "Pre-civilization ruins under the tunnels. The Compact built over something ancient and pretended it wasn't there. Sound familiar?"
 - **Lira** (after opening the Corrund passage): "A direct connection to the city sewers. This was probably an emergency evacuation route. Smart."
 
-### Boss: The Ironbound (8000 HP)
+### Boss: The Ironbound (22,000 HP)
 
 A massive Carradan boring engine fused with its operator during a Pallor corruption event. The machine and the worker are one -- a person trapped inside a machine that will not stop digging. A Drayce-series frame, built for two-person crews. The second operator fled.
 
-**Phase 1 (8000-4000 HP): The Machine**
+**Phase 1 (22000-11000 HP): The Machine**
 - **Drill Charge** -- charges the length of the tunnel, 400-500 damage to anyone in its path. Telegraphed by 1-turn wind-up. Positional awareness required.
 - **Steam Vent** -- cone AoE from the engine's exhaust, 200-250 damage + Burn status (3 turns).
 - **Tunnel Collapse** -- triggers falling debris in a marked zone. 300 damage + Slow (1 turn). Rearranges the arena by blocking some positions and opening others.
 - **Bore Forward** -- the Ironbound advances, pushing the party back. If a party member is pushed against the wall, 150 bonus damage.
 
-**Phase 2 (below 4000 HP): The Operator**
+**Phase 2 (below 11000 HP): The Operator**
 The operator's voice breaks through. Attacks become erratic -- the machine hesitates mid-charge, drill strokes stutter.
 - All Phase 1 attacks, but with random hesitation windows (1-turn pauses where the machine stops).
 - **Hesitation Window** -- during a pause, Lira can use Forgewright to disrupt the engine (bonus 500 damage) or Torren can use Spiritcall to reach the spirit inside (bonus 400 damage + reduces next attack's damage by 50%).
@@ -861,7 +863,7 @@ The operator's voice breaks through. Attacks become erratic -- the machine hesit
 | Steam Elemental | Living steam from broken vents. Flame damage, can blind. | Hub, West |
 | Pipe Wraith | Ghostly maintenance worker. Emerges from pipe junctions. Ignores 25% DEF. Weak to Storm. 1,800 HP. | Maintenance Shaft |
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
-| **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 8,000 HP. | Deepest tunnel section |
+| **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 22,000 HP. | Deepest tunnel section |
 
 ### Treasure/Loot
 
@@ -1088,7 +1090,7 @@ When defeated, his soldiers collapse. Brant watches silently.
 | Forgewright Sentry | Automated turret. Scans in a cone. High damage, low HP. | Floors 2-3 |
 | Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4-5 (and Ironmark tunnel) |
 | Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1-2 |
-| **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 12,000 HP. | Ironmark Citadel Command Chamber (via Floor 5 tunnel) |
+| **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 30,000 HP. | Ironmark Citadel Command Chamber (via Floor 5 tunnel) |
 
 ### Treasure/Loot
 
@@ -1692,7 +1694,7 @@ Maren faces the Index -- a vast catalogue entity containing every recorded death
 | Unfinished Constructs | Machines that beg to be repaired. Repairing wastes turns and spawns more. | Trial 2 (B2) |
 | Stone Spirits | Petrified nature spirits that animate on approach. Cannot speak. | Trial 3 (B3) |
 | Archived | Humanoid figures of compressed pages. Attack with factual recitations of how they died. | Trial 5 (B5) |
-| Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 20000 HP. Multi-phase. | Section 5 |
+| Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 50,000 HP. Multi-phase. | Section 5 |
 
 ### Treasure/Loot
 
@@ -1830,7 +1832,7 @@ Neither option is correct.
 
 ### Section 5: Plateau's Edge -- Vaelith
 
-**Boss: Vaelith, the Ashen Shepherd (20000 HP)**
+**Boss: Vaelith, the Ashen Shepherd (50,000 HP)**
 
 An 800-year-old champion of Despair from the previous Pallor cycle. A scholar-diplomat who chose the Pallor willingly. Has appeared six times before this encounter -- charming, observing, feeding, fighting with one hand. Now, for the first time, the party has done something no previous cycle's heroes managed.
 
@@ -1854,22 +1856,22 @@ Cael's lingering connection to the party, channeled through the restored ley net
 
 After the cutscene, ALL party members can damage Vaelith. The real fight begins.
 
-**Phase 1 (20000-10000 HP): The Scholar Fights**
+**Phase 1 (50000-25000 HP): The Scholar Fights**
 Vaelith uses ancient magic from a dead era. No longer dismissive -- focused.
 - **Epoch's End** -- party-wide AoE, 500-600 damage. Ancient spell with no modern equivalent.
 - **Grey Archive** -- single target, 700-800 damage + Silence (3 turns). Vaelith recites a fact about how the target's archetype died in a previous cycle.
 - **Cycle's Weight** -- stacking debuff on one party member. Each stack reduces ATK/DEF by 10%. Represents accumulated weight of failed cycles.
 - **Temporal Cascade** -- Vaelith acts twice in one turn. Used every 4th turn.
-- **"You are the first to draw blood in eight centuries."** -- dialogue trigger at 15000 HP.
+- **"You are the first to draw blood in eight centuries."** -- dialogue trigger at 37,500 HP.
 
-**Phase 2 (below 10000 HP): The Shepherd Falls**
+**Phase 2 (below 25000 HP): The Shepherd Falls**
 Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey light appear.
 - All Phase 1 attacks, plus:
 - **Despair Pulse** -- party-wide, 400 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Reality Warp** -- corrupts the ley lines the weapon draws from. Lira must re-forge the weapon (timed input -- success maintains damage; failure reduces party damage 50% for 2 turns). Every 5th turn.
 - **Unraveling** -- targets Lira, 600 damage. If Lira falls below 25% HP, weapon dims (party damage reduced 25% until healed above 50%).
-- **"This was not in the pattern. You were not in the pattern."** -- dialogue at 5000 HP.
-- **"...Interesting."** -- dialogue at 2000 HP.
+- **"This was not in the pattern. You were not in the pattern."** -- dialogue at 12,500 HP.
+- **"...Interesting."** -- dialogue at 5,000 HP.
 
 **On defeat:** Vaelith does not die dramatically. They sit down. Look at the party without contempt for the first time. "Eight hundred years. Every cycle, the same. And you... you actually changed something." Dissolves into grey mist. Not destroyed -- released.
 
@@ -1947,12 +1949,20 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 Cael descends from the machine to confront the party. He fights with his old knightly skills enhanced by Pallor energy -- he knows the party's tactics because he trained alongside them.
 
 **Boss: Cael, Knight of Despair (Phase 1)**
-- 15,000 HP.
+- 45,000 HP.
 - Uses enhanced versions of party member abilities. Counters with moves that specifically target whoever attacked last.
 - At 75%: Despair Pulse (party-wide Despair debuff).
 - At 50%: Shadow Step -- disappears and reappears behind a random party member for a critical strike.
 - At 25%: "I'm doing this for you" -- brief invulnerability while delivering dialogue. The party cannot skip this. It hurts.
-- At 0%: The machine activates. Phase 2 begins.
+- At 0%: Cael staggers but the Pallor surges through him. Phase 2 begins.
+
+**Boss: Cael, Knight of Despair (Phase 2)**
+- 35,000 HP.
+- The Pallor takes over. Cael's moveset shifts from calculated counters to raw Pallor-fueled aggression. Faster, less precise, more dangerous.
+- **Pallor Rend** -- heavy single-target physical, 600-700 damage. Ignores 25% DEF.
+- **Grey Tide** -- party-wide AoE, 400-500 damage + Despair status (ATB speed -25%, damage dealt -20%, 3 turns).
+- At 50%: "I can still hear you. That makes it worse." -- brief dialogue, then resumes.
+- At 0%: Cael falls. The machine activates fully. The anchor destruction phase begins.
 
 ### Anchor Station A: Crownline (25x25)
 
@@ -2052,7 +2062,7 @@ Notes: `C` marks Pallor conduit crystals (4 total). `BB` marks the Pallor incarn
 
 **Boss: The Pallor Incarnate (Phase 3)**
 A towering presence of grey static and hollow sound filling the sky above the platform. Cael is suspended at its center, barely conscious.
-- 25,000 HP.
+- 70,000 HP.
 - The four conduit crystals (`C`) each have 3,000 HP. While active, they channel energy to the Incarnate, granting it regeneration (500 HP/turn per crystal). Destroying all four removes regen and reduces its defense by 50%.
 - Attacks: Grey Cascade (party-wide, heavy magic damage), Hollow Voice (targets one member with a personalized despair -- unique dialogue per character, inflicts Despair), Reality Tear (removes one party member from battle for 2 turns -- they are "pulled toward the door").
 - At 50%: Despair Tide -- the arena shrinks as the edges crumble. Less room to maneuver.
@@ -2104,8 +2114,9 @@ After Wave 4, Cael closes the door. The Pendulum shatters. Grey light collapses 
 | Despair Cloud | Formless mass. Party-wide debuff. | Phase 4 |
 | Pallor Knight | Armored ancient figure. Premium enemy. | Phase 4 |
 | Grief Shade | Mimics party members. | Phase 4 |
-| **Cael, Knight of Despair** (Boss, Phase 1) | Former ally. Uses party tactics against them. 15,000 HP. | Outer Ring |
-| **The Pallor Incarnate** (Boss, Phase 3) | Towering grey entity. Conduit crystals, area attacks. 25,000 HP. | Central Platform |
+| **Cael, Knight of Despair** (Boss, Phase 1) | Former ally. Uses party tactics against them. 45,000 HP. | Outer Ring |
+| **Cael, Knight of Despair** (Boss, Phase 2) | Pallor-fueled aggression. Raw power, less precision. 35,000 HP. | Outer Ring |
+| **The Pallor Incarnate** (Boss, Phase 3) | Towering grey entity. Conduit crystals, area attacks. 70,000 HP. | Central Platform |
 | **Pallor Echo** (Mini-boss, Phase 4) | Shadow of Cael. Reduced Phase 1 moveset. 5,000 HP. | The Door |
 
 ### Treasure/Loot
@@ -2250,7 +2261,7 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 - Phase 1: Physical attacks only. Tests the party's defense and healing.
 - Phase 2: Magic attacks only. Tests the party's magic resistance and offense.
 - Phase 3: Combination. The Guardian splits into two halves -- one physical, one magical -- that must be defeated simultaneously (within 3 turns of each other, or the first revives). Tests coordination.
-10,000 HP total (5,000 per half in Phase 3).
+28,000 HP total (14,000 per half in Phase 3).
 
 ### Encounter Table
 
@@ -2260,7 +2271,7 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 | Pictograph Wisp | Living inscription that detaches from the wall. Magic attacks themed to whatever story its tablet told. | All floors |
 | Dust Golem | Accumulated centuries of dust animated by ambient ley energy. Slow, tanky. | Floor 1-2 |
 | Crystal Warden | Small floating crystal. Fires ley bolts. Shatters on defeat (area damage). | Floor 2-3 |
-| **Archive Guardian** (Boss) | Geometric construct. Three-phase test. 10,000 HP. | Floor 3 |
+| **Archive Guardian** (Boss) | Geometric construct. Three-phase test. 28,000 HP. | Floor 3 |
 
 ### Treasure/Loot
 
@@ -2853,10 +2864,10 @@ The final construct. Larger than the Archive Guardian, built from the same geome
 "You have reached the heart. The builders rested here. I was made to ensure that whoever followed would be worthy of what they left behind."
 
 **Phase 1: The Test of Arms (100% to 60% HP)**
-The Guardian fights conventionally -- powerful physical attacks (Stone Fist, Geometric Cleave) and ley-energy blasts (Nexus Bolt, targeting single or all party members). It is faster than the Archive Guardian and hits harder. The arena has no environmental gimmicks -- this is a straight test of combat readiness. 15,000 HP total.
+The Guardian fights conventionally -- powerful physical attacks (Stone Fist, Geometric Cleave) and ley-energy blasts (Nexus Bolt, targeting single or all party members). It is faster than the Archive Guardian and hits harder. The arena has no environmental gimmicks -- this is a straight test of combat readiness. 28,000 HP total.
 
 **Phase 2: The Test of Knowledge (60% to 30% HP)**
-The Guardian pauses combat and projects three pictographic questions onto the arena floor. These are translation challenges, but simpler than the door puzzle. Each correct answer reduces the Guardian's HP by 1,500. Each wrong answer triggers a Nexus Pulse (heavy all-party ley damage) and the question is repeated. The Guardian does not attack during this phase -- it waits. The test is fair.
+The Guardian pauses combat and projects three pictographic questions onto the arena floor. These are translation challenges, but simpler than the door puzzle. Each correct answer reduces the Guardian's HP by 2,800. Each wrong answer triggers a Nexus Pulse (heavy all-party ley damage) and the question is repeated. The Guardian does not attack during this phase -- it waits. The test is fair.
 
 **Phase 3: The Test of Resolve (30% to 0% HP)**
 The Guardian combines physical and magical attacks, splits into a geometric form that can reassemble (each piece must be damaged), and uses a unique ability: Builder's Weight. This is a Pallor-type attack -- the Guardian channels the accumulated grief of the builders who died here, dealing heavy Despair-element damage and applying a stacking debuff that reduces all stats. The debuff represents the weight of history, the cost of knowledge, the burden of carrying what the builders left behind. If any party member's debuff stacks reach 5, they are Fainted. The party must either end the fight quickly or use Pallor resistance gear (the Harmonic Shard from "The Third Door" sidequest is extremely useful here).
@@ -2881,7 +2892,7 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Ley-Warped Construct | Gravity-exploiting guardian. Attacks from walls and ceilings. | Floor 6 | 4,000 |
 | Warp Sentinel | Gravity-manipulating construct. Can flip room gravity mid-combat. | Floor 6 | 4,500 |
 | Ley-Born Echo | Impression of a builder given temporary form. Tests rather than attacks. | Floor 7 | 3,000 |
-| **Wellspring Guardian** (Boss) | Three-phase construct. Physical, knowledge, and resolve tests. Builder's Weight despair attack. | Floor 7 | 15,000 |
+| **Wellspring Guardian** (Boss) | Three-phase construct. Physical, knowledge, and resolve tests. Builder's Weight despair attack. | Floor 7 | 28,000 |
 
 **Encounter Design Philosophy:**
 
@@ -3366,7 +3377,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 
 ### Boss: The Grey Engine
 
-The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical horror -- gears grinding, pipes hissing, Pallor energy crackling. It cannot move but has long-range attacks: steam jets, pipe strikes, and a Despair Pulse that hits the entire party. The arena has two pressure release valves -- activating them vents steam, stunning the boss for 2 turns but flooding part of the arena (reducing safe space). 9,000 HP.
+The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical horror -- gears grinding, pipes hissing, Pallor energy crackling. It cannot move but has long-range attacks: steam jets, pipe strikes, and a Despair Pulse that hits the entire party. The arena has two pressure release valves -- activating them vents steam, stunning the boss for 2 turns but flooding part of the arena (reducing safe space). 22,000 HP.
 
 ### Encounter Table
 
@@ -3378,7 +3389,7 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 | Pallor Barnacle | Immobile corruption growth on walls. Pulses Despair debuff in area. Destroy to clear. | Upper Deck, Engine Room |
 | Drowned Worker | Waterlogged Pallor construct. Slow but durable. Grapple attack pins one party member. | Engine Room |
 | **Pallor Amalgam** (Mini-boss) | Grey corruption fused with rig machinery. Part organic, part mechanical. Area attacks, regenerates if not burst-damaged. 5,500 HP. | Engine Room |
-| **The Grey Engine** (Boss) | Arcanite engine consumed by Pallor. Steam jets, pipe strikes, Despair Pulse. Stunnable via pressure valves. 9,000 HP. | Engine Room |
+| **The Grey Engine** (Boss) | Arcanite engine consumed by Pallor. Steam jets, pipe strikes, Despair Pulse. Stunnable via pressure valves. 22,000 HP. | Engine Room |
 
 ### Treasure/Loot
 
@@ -4112,19 +4123,19 @@ A massive elk corrupted by the Pallor -- the dominant creature of the highland f
 - `T` (lower-left): Chest -- 3x Elixir.
 - `T` (lower-right): Chest -- Forgewright's Memoir (lore item -- a pre-civ forge master's journal, written in the old script. Maren can translate if present: describes the forge's purpose as "shaping the ley into armor against the silence" -- the pre-civ builders were already fighting the Pallor).
 - `S` (center): Save point -- the last intact containment node, still holding.
-- `B` (center): **Boss: The Forge Heart** (10000 HP).
+- `B` (center): **Boss: The Forge Heart** (35,000 HP).
 
-**Boss: The Forge Heart (10000 HP)**
+**Boss: The Forge Heart (35,000 HP)**
 
 The ancient pre-civilization forge mechanism, fully awakened by the Compact's drilling and the party's disruption of the valve system. It rises from the caldera floor -- a massive humanoid torso of volcanic rock and ancient metal, its chest split open to reveal a core of molten ley energy. Arms ending in hammer-like fists. Eyes of pure amber fire.
 
-**Phase 1 (10000-5000 HP):**
+**Phase 1 (35000-17500 HP):**
 - **Forge Hammer** -- heavy physical, single target, 400-500 damage.
 - **Magma Breath** -- Flame damage, cone AoE, 250-350 damage + Burn status (30% chance).
 - **Volcanic Tremor** -- earth damage, all targets, 200-300 damage. Cracks appear in the floor (new `%` trap tiles for 3 turns).
 - **Temper** -- self-buff, raises ATK and DEF for 3 turns.
 
-**Phase 2 (below 5000 HP):**
+**Phase 2 (below 17500 HP):**
 - All Phase 1 attacks, plus:
 - **Caldera Eruption** -- massive Flame AoE, 500-600 damage to all. 3-turn charge. Interruptible if a character uses a Frost attack during the charge.
 - **Ley Overload** -- drains 50 MP from all party members, heals self for the total drained.
@@ -4162,7 +4173,7 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 | Molten Golem | Smaller versions of the Slag Golem. Groups of 2. | Floor 4 | 500 |
 | Ley Spark | Spawned by Ley Eruption environmental encounter. | Floor 4 | 100 |
 | **Slag Golem** (Mini-boss) | Molten slag animated by wild ley energy. 25% Burn chance on Molten Spray. Core Meltdown below 25% HP. | Floor 2 | 5,000 |
-| **The Forge Heart** (Boss) | Ancient forge mechanism. Two phases. Lira special interaction available. | Floor 4 | 10,000 |
+| **The Forge Heart** (Boss) | Ancient forge mechanism. Two phases. Lira special interaction available. | Floor 4 | 35,000 |
 
 ### Treasure/Loot
 
@@ -4355,20 +4366,20 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 - `T` (lower-left): Chest -- Ancient Spirit Tome (lore item -- details the old spirit worship practices. If Maren is present, she translates key passages that provide context for the Archive of Ages).
 - `T` (lower-right): Chest -- Monastery Key (key item -- opens the sealed library in Highcairn's Monastery of the Vigil. The monks sealed the library to hide records of the old worship. Inside: lore documents, a unique spell scroll for Maren, and evidence that the Monastery's founders knew about the Pallor cycle).
 - `S` (center): Save point -- the communion circle's power, repurposed.
-- `B` (center): **Boss: The Frost Warden** (11000 HP).
+- `B` (center): **Boss: The Frost Warden** (38,000 HP).
 - `H` (bottom): Hidden passage -- leads through a narrow, winding tunnel that emerges inside the Monastery of the Vigil's sealed library. The passage is one-way from this direction (can be opened from the library side using the Monastery Key). This connection means the party can fast-travel between Highcairn and the Frostcap Caverns after clearing the dungeon.
 
-**Boss: The Frost Warden (11000 HP)**
+**Boss: The Frost Warden (38,000 HP)**
 
 An ancient Valdris spirit guardian, bound to the shrine since before the Monastery was built. A towering figure of pale blue light, vaguely humanoid, wearing armor made of crystallized spirit energy. Its face is a mask of serene authority. Eyes of deep blue fire. It does not attack immediately -- it speaks first: "YOU ENTER THE SANCTUARY. STATE YOUR PURPOSE OR BE JUDGED." The party can respond (dialogue choice), but combat begins regardless (the Warden must test them physically as well as spiritually).
 
-**Phase 1 (11000-6000 HP) -- The Test of Endurance:**
+**Phase 1 (38000-19000 HP) -- The Test of Endurance:**
 - **Frost Lance** -- Frost magic, single target, 400-500 damage.
 - **Spirit Ward** -- creates a barrier on one party member that reflects the next spell cast on them (ally heals bounce back to the Warden, enemy debuffs hit the caster).
 - **Frost Veil** -- Frost damage, all targets, 250-350 damage + 30% Petrify chance.
 - **Judgment Gaze** -- targets the party member with the lowest current HP, deals fixed 300 damage. A test of the party's healing discipline.
 
-**Phase 2 (below 6000 HP) -- The Test of Wisdom:**
+**Phase 2 (below 19000 HP) -- The Test of Wisdom:**
 - All Phase 1 attacks, plus:
 - **Absolute Zero** -- massive Frost AoE, 600-700 damage to all. 3-turn charge. Can be interrupted by Torren using Spirit Speak (unique command).
 - **Spirit Drain** -- drains 80 MP from one target, heals self for double the amount.
@@ -4404,7 +4415,7 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 | Frozen Offering | Corrupted offering. Attacks when disturbed. Drops Spirit Incense. | Floor 3 | 400 |
 | Valdris Ancestor Spirit | Powerful spirit, ancient magic. Torren can speak to avoid combat (+10% XP for 5 battles). | Floor 3 | 700 |
 | **Ice Wyvern** (Mini-boss) | Massive ice-blue wyvern. Frost Breath, Wing Buffet, Dive Strike, Ice Armor. | Floor 2 | 6,000 |
-| **The Frost Warden** (Boss) | Ancient Valdris spirit guardian. Two-phase test. Torren special interaction available. | Floor 3 | 11,000 |
+| **The Frost Warden** (Boss) | Ancient Valdris spirit guardian. Two-phase test. Torren special interaction available. | Floor 3 | 38,000 |
 
 ### Treasure/Loot
 
@@ -4588,13 +4599,13 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 - **Recommended Level:** 18-22
 - **Estimated Play Time:** 25-35 minutes (scripted battle sequence, not a full dungeon crawl)
 
-**Boss: The Ashen Ram (10000 HP)**
+**Boss: The Ashen Ram (25,000 HP)**
 
 A Carradan siege construct corrupted by Pallor-resonant materials -- materials woven into the design after Vaelith visited the construction yard at Ironmark. The Compact thinks the Ram is their weapon. It is Vaelith's.
 
-**Phase 1 (10000-6000 HP): Ranged Engagement**
+**Phase 1 (25000-15000 HP): Ranged Engagement**
 The Ram advances toward the walls. The party fights from the battlements.
-- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 2000+ damage in a single turn delays the advance by 1 turn.
+- **Battering Advance** -- the Ram moves closer each turn. After 5 turns, it breaches the wall and Phase 2 begins. Dealing 1500+ cumulative party damage in a single turn delays the advance by 1 turn.
 - **Despair Pulse (Passive)** -- all party members lose 5% max MP per turn from proximity to the Ram's Pallor-resonant frame.
 - **Compact Escalade** -- waves of Compact soldiers scale the walls (3-4 soldiers per wave, 800 HP each). Must be managed while damaging the Ram.
 - **Lord Haren's Orders** -- if the party made favorable dialogue choices with Haren earlier, he calls archer volleys (200 damage to the Ram per turn) and deploys barricades (reduce soldier wave size by 1).
@@ -4625,14 +4636,14 @@ DEF. They stack but serve different tactical roles.
 `council_result` = 2 (partial support). Full support makes it easier; no
 support makes it harder.
 
-**Phase 2 (6000-3000 HP): The Breach**
+**Phase 2 (15000-7500 HP): The Breach**
 The Ram breaches the wall. Close combat. Interior mechanisms are exposed -- organic-looking, Pallor-grey.
 - **Drill Arm** -- single target, 500-600 damage.
 - **Pallor Shrapnel** -- AoE cone, 300-350 damage + Despair status (ATB speed -25%, damage dealt -20%, 4 turns).
 - **Engine Surge** -- the Ram charges forward, pushing party members back. 200 damage + knockback.
 - Compact soldier waves continue (reduced to 2 per wave).
 
-**Phase 3 (below 3000 HP): The Pallor Core**
+**Phase 3 (below 7500 HP): The Pallor Core**
 The Ram's core activates. Despair Pulse intensifies to party-wide.
 - **Despair Pulse (Active)** -- 250 damage to all party members + Despair status (ATB speed -25%, damage dealt -20%, 4 turns). Every 3 turns.
 - **Core Overload** -- massive single-target attack, 800-900 damage. 2-turn charge, can be interrupted by attacking the exposed core (marked target).
@@ -4649,7 +4660,7 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
 | Compact Soldier | Carradan infantry. Scales walls in waves. Basic physical attacks. | Battlements (all phases) | 800 |
-| **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 10,000 |
+| **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 25,000 |
 
 ### Treasure/Loot
 
@@ -4672,28 +4683,28 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 - **Recommended Level:** 20-24
 - **Estimated Play Time:** 20-30 minutes
 
-**Boss: The Ley Leech (9000 HP)**
+**Boss: The Ley Leech (24,000 HP)**
 
 A parasitic Pallor entity latched onto the ley nexus. Unlike most Pallor manifestations (grey, static, hollow), the Leech is grotesquely alive -- swollen with stolen energy, pulsing with color that looks wrong. Vibrant where it should be grey. This is what the Pallor looks like when it is feeding well.
 
 **Arena Mechanic: Shifting Ley Lines**
 Glowing ley lines crisscross the chamber floor. Standing on an active (glowing) ley line heals 50 HP per turn. The Leech periodically corrupts ley lines (they turn grey), causing them to deal 75 damage per turn instead. Ley lines shift corruption patterns every 3 turns.
 
-**Phase 1 (9000-4500 HP): Rooted**
+**Phase 1 (24000-12000 HP): Rooted**
 The Leech is anchored to the nexus. Torren is visible in the background, struggling. Party fights at reduced strength (4 members, no Torren).
 - **Tentacle Lash** -- single target, 350-400 damage. Reaches anywhere in the arena.
 - **Corruption Pulse** -- corrupts 2 additional ley lines for 3 turns.
-- **Siphon** -- drains 200 HP from the nexus (visual: ley lines dim). If used 5 times without interruption, the Leech heals 1500 HP. Interrupt by dealing 1000+ damage in a single turn.
+- **Siphon** -- drains 200 HP from the nexus (visual: ley lines dim). If used 5 times without interruption, the Leech heals 4,000 HP. Interrupt by dealing 1000+ damage in a single turn.
 - **Nexus Regeneration (Passive)** -- while rooted, heals 100 HP per turn from the nexus connection.
 
-**Phase 2 (below 4500 HP): Unmoored**
+**Phase 2 (below 12000 HP): Unmoored**
 Torren breaks free and rejoins the party. The Leech detaches and becomes mobile.
 - All Phase 1 attacks except Nexus Regeneration.
 - **Thrash** -- AoE hitting all adjacent characters, 250-300 damage.
 - **Leech Bite** -- single target, 300 damage + drains HP equal to damage dealt.
 - Moves 2 tiles per turn. Faster and more aggressive but no longer regenerating.
 
-**Phase 3 (below 1800 HP): Desperate Re-attachment**
+**Phase 3 (below 4800 HP): Desperate Re-attachment**
 The Leech moves toward the nexus center.
 - If it reaches the center, it re-attaches and heals 30%. Phase resets to Phase 2.
 - **DPS check:** burn it down before it roots again.
@@ -4713,7 +4724,7 @@ The Leech moves toward the nexus center.
 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
-| **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 9,000 |
+| **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 24,000 |
 
 ### Treasure/Loot
 
@@ -4738,29 +4749,30 @@ The Leech moves toward the nexus center.
 
 **Note:** Full ASCII floor layouts will be created in a follow-up session.
 
-**Boss: The Pallor Hollow (11000 HP)**
+**Boss: The Pallor Hollow (40,000 HP)**
 
 Not a monster in the traditional sense. It looks like Edren -- a grey, translucent mirror-image, but wrong. Moves like Edren. Fights like Edren. Face frozen in the expression Edren wore when Valdris fell.
 
 **Dynamic Moveset:** Uses Edren's moveset from when the player last controlled him, including equipped abilities. The game remembers what the player built and turns it against them.
 
-**Phase 1 (11000-5500 HP): The Mirror**
+**Phase 1 (40000-20000 HP): The Mirror**
 - Uses Edren's equipped abilities against the party.
 - **Mirror Counter** -- if the party uses physical attacks, the Hollow counters with physical. If magic, counters with magic. Vary approach to avoid counters.
 - **Grey Reflection** -- copies the last ability used against it and fires it back. 2-turn cooldown.
 - **Hollow Guard** -- raises DEF by 50% for 1 turn when the party focuses one damage type.
 
-**Phase 2 (5500-2750 HP): The Voice**
+**Phase 2 (20000-10000 HP): The Voice**
 The Hollow speaks in Edren's voice. Lines from earlier in the game.
 - All Phase 1 attacks, plus:
 - **Words of Guilt** -- speaks a line Edren said earlier. Triggers Despair status on one party member (ATB speed -25%, damage dealt -20%, 4 turns). Implementation note: The game maintains a list of 6-8 predefined guilt lines drawn from key story moments (Cael's betrayal, Aldren's death, orders given during the siege). The Hollow selects from this fixed pool, not dynamic dialogue tracking.
 - **Promise Broken** -- repeats a promise Edren made. AoE, 400 damage + ATK/DEF reduction (2 turns).
 - **"I failed them."** -- party-wide Despair Pulse, 200 damage to all.
 
-**Phase 3 (below 2750 HP): The Reckoning**
+**Phase 3 (below 12000 HP): The Reckoning**
 Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses entirely on Edren.
-- Party must protect Edren (if his HP reaches 0, fight resets to Phase 2 at 4000 HP).
-- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 1500 damage). Three Defends end the fight.
+- Party must protect Edren (if his HP reaches 0, fight resets to Phase 2 at 14500 HP).
+- The Hollow cannot be killed by normal attacks in Phase 3 — its HP cannot drop below 1 from non-Defend damage.
+- **Resolution Mechanic:** When Edren uses **Defend** while the Hollow targets him, the Hollow destabilizes (flickers, takes 4,000 damage). Three Defends = 12,000 damage, ending the fight.
 
 **On defeat:** Dissolves into grey mist that flows back into Edren. Not destroyed -- reclaimed. Edren rejoins with **Scar of the Hollow** -- max HP permanently reduced by 10%, but immunity to Despair status effects.
 
@@ -4777,7 +4789,7 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
-| **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 11,000 |
+| **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 40,000 |
 
 ### Treasure/Loot
 

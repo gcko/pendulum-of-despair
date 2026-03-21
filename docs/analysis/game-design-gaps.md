@@ -25,26 +25,28 @@ interconnected system and should be designed together.
 
 ### 1.1 Damage & Combat Formulas
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P0 — blocks all combat code
-**Files:** None yet (create `docs/story/combat-formulas.md`)
+**Files:** `docs/story/combat-formulas.md`
 **Depends On:** 1.2 (Stat System)
+**Completed:** 2026-03-21
 
 **What's Needed:**
-- [ ] Physical damage formula (ATK vs DEF, with variance)
-- [ ] Magical damage formula (MAG vs MDEF, element multiplier)
-- [ ] Healing formula (spell power, caster stats)
-- [ ] Critical hit rate formula and damage multiplier
-- [ ] Hit/miss calculation (accuracy vs evasion)
-- [ ] Damage variance range (e.g., +/- 12.5%)
-- [ ] Damage cap (9999? 99999?)
-- [ ] How ability-specific multipliers interact (Riposte 1.5x, Overcharge +50%)
-- [ ] Multi-hit damage splitting rules
-- [ ] Armor/defense scaling approach (subtractive vs percentage)
-- [ ] Status effect application rate formula (caster MAG vs target resistance)
-- [ ] Elemental weakness/resistance multipliers (2x weak, 0.5x resist, 0x immune, absorb)
+- [x] Physical damage formula (ATK² / 6 - DEF, with up to -6.25% variance)
+- [x] Magical damage formula (MAG × power / 4 - MDEF, with element multiplier)
+- [x] Healing formula (MAG × power × 0.8, no defense)
+- [x] Critical hit rate formula and damage multiplier (LCK/4 cap 50%, 2× damage)
+- [x] Hit/miss calculation (accuracy vs evasion, 3-stage resolution)
+- [x] Damage variance range (FF6-style: random_int(240,255)/256, up to -6.25%)
+- [x] Damage cap (14,999 — mirrors HP cap)
+- [x] How ability-specific multipliers interact (1.0–3.0× tiers, buff stacking rules)
+- [x] Multi-hit damage splitting rules (per-hit independent, per-hit cap)
+- [x] Armor/defense scaling approach (subtractive with floor of 1)
+- [x] Status effect application rate formula (two-stage: MAG vs MDEF, then MEVA% resist)
+- [x] Elemental weakness/resistance multipliers (1.5× weak, 0.75× disadvantage, 0.5× same, 0× immune, -1× absorb)
 
-**Blocking:** All combat implementation, ability balancing, enemy design
+**Blocking:** ~~All combat implementation, ability balancing, enemy design~~
+Now unblocks: 1.3 (Bestiary), 1.4 (Items), 2.5 (Row/Position)
 
 ---
 
@@ -474,3 +476,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 |------|-----|--------|--------|
 | 2026-03-19 | Initial audit | All gaps cataloged | — |
 | 2026-03-20 | 1.2 Stat System | PARTIAL -> COMPLETE. 8 stats, level cap 150, Ley Crystals, milestones. Unblocks 1.1 + 2.2. | acba850, 1cb8f6c |
+| 2026-03-21 | 1.1 Damage & Combat Formulas | MISSING -> COMPLETE. Physical (ATK²/6), magic (MAG*power/4), 14999 cap, 3-tier combat interactions. Unblocks 1.3, 1.4, 2.5. | b50da1b |
