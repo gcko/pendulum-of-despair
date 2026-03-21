@@ -102,7 +102,7 @@ partially counteract debuffs without fully negating them.
 | Maren Lv70 | 49 | 222 | 1.20s |
 | Edren Lv70 | 65 | 270 | 0.99s |
 | Sable Lv70 | 128 | 459 | 0.58s |
-| Sable Lv70 + Haste | 128 | 689 | 0.39s |
+| Sable Lv70 + Haste | 128 | 688 | 0.39s |
 | Typical Lv70 enemy (SPD 60) | 60 | 255 | 1.0s |
 
 **Full pipeline (order of operations):**
