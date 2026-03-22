@@ -111,14 +111,14 @@ Non-preventable story moments:
 **2. Axis Tower — "The Garrison Falls" (Floor 4, scripted)**
 - Encounter: 4 Compact Officers
 - Turn 1: Kole's voice: "Let them in."
-- All 4 Guards → Pallor Soldiers simultaneously
+- All 4 Officers → Pallor Soldiers simultaneously
 - No source needed — Kole channels the Pallor directly
 - **Narrative:** Kole willingly corrupts his own soldiers
 
 **3. Ironmark Citadel — "The Last Holdout" (Cell Block B)**
 - Encounter: 2 enemy Compact Officers + allied NPC soldiers
 - Mid-combat: Pallor surges through conduits
-- Enemy Guards transform — AND one allied NPC transforms
+- Enemy Officers transform — AND one allied NPC transforms
 - Player fights converted enemies + former ally
 - **Emotional:** The Pallor doesn't discriminate
 
