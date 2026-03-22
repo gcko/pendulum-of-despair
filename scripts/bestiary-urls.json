@@ -1,0 +1,18 @@
+[
+    {
+        "url": "https://gamefaqs.gamespot.com/pc/323473-final-fantasy-vi-pixel-remaster/faqs/79866/bestiary-checklist",
+        "output": "docs/references/bestiary/ff6-bestiary.md"
+    },
+    {
+        "url": "https://gamefaqs.gamespot.com/pc/323467-final-fantasy-iv-pixel-remaster/faqs/79579/bestiary-1-157-normal-monsters",
+        "output": "docs/references/bestiary/ff4-bestiary.md"
+    },
+    {
+        "url": "https://gamefaqs.gamespot.com/ds/950181-chrono-trigger/faqs/55029",
+        "output": "docs/references/bestiary/chrono-trigger-bestiary.md"
+    },
+    {
+        "url": "https://mana.fandom.com/wiki/Secret_of_Mana_Bestiary",
+        "output": "docs/references/bestiary/secret-of-mana-bestiary.md"
+    }
+]

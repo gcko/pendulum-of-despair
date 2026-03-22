@@ -26,6 +26,8 @@ Instructions:
    - Corruption stages: docs/story/dynamic-world.md and
      docs/story/biomes.md
    - Events/flags: docs/story/events.md
+   - Enemies/bestiary: docs/story/bestiary/README.md (rules),
+     docs/story/bestiary/act-i.md (Act I stat tables)
 
 3. Open the canonical source. Find the entity entry. Compare
    EVERY property:

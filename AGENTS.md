@@ -51,6 +51,7 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 | `packages/server/` | `@pendulum/server` — Express REST API |
 | `packages/client/` | `@pendulum/client` — Phaser 3 game client |
 | `docs/plans/` | Architecture decisions and plans |
+| `docs/story/bestiary/` | Enemy bestiary — stat tables, type rules, families |
 
 ## Where to Add Code
 
@@ -63,6 +64,7 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 | Game scenes | `packages/client/src/scenes/` |
 | Game systems | `packages/client/src/systems/` |
 | Game data (JSON) | `packages/client/src/data/` |
+| Enemy data | `docs/story/bestiary/` |
 
 ---
 

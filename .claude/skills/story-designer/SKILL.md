@@ -127,7 +127,9 @@ design document.
 
 **File naming convention for new docs:**
 - `docs/story/combat-formulas.md` — damage, hit/miss, critical, ATB
-- `docs/story/enemies.md` — complete bestiary
+- `docs/story/bestiary/README.md` — bestiary index, type rules, scaling formulas
+- `docs/story/bestiary/act-i.md` — Act I enemy stat tables
+- `docs/story/bestiary/palette-families.md` — base → variant mappings
 - `docs/story/items.md` — consumable and key item catalog
 - `docs/story/equipment.md` — weapons, armor, accessories
 - `docs/story/economy.md` — pricing, shop inventories, gold pacing
