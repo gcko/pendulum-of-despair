@@ -163,7 +163,7 @@ Both settings are in the Config menu:
 |--------|-----------|-----------------|----------|---------|-------|
 | Haste | × 1.5 | Normal turn | 5 turns | Expires, Purge | |
 | Slow | × 0.5 | Normal turn | 5 turns | Purge, Chronos Dust | |
-| Stop | Frozen (0) | Cannot act | 3 real-time seconds | Timer only | Real-time, not turn-based |
+| Stop | Frozen at current value | Cannot act | 3 real-time seconds | Timer only | Real-time, not turn-based |
 | Sleep | Frozen at current value | Cannot act | Until cured or damaged | Any damage wakes; Cleansing Draught, Purge | Gauge resumes from frozen point |
 | Confusion | × 1.0 | Auto-targets random ally/enemy, basic attack | 3 turns or until damaged | Damage, Purge | |
 | Berserk | × 1.25 | Auto-targets random enemy, basic attack (+50% damage) | Until cured | Purge only | Tradeoff: faster+stronger but uncontrollable |
