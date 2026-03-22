@@ -351,6 +351,30 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 
 ---
 
+### 2.6 Pallor Wastes Oases
+
+**Status:** MISSING
+**Priority:** P1
+**Files:** None yet (add to `docs/story/locations.md` and/or new `docs/story/oases.md`)
+**Depends On:** 1.4 (Items), 1.5 (Equipment), 1.6 (Economy)
+
+**What's Needed:**
+- [ ] Number and placement of Oases in Act III overworld (closer to Convergence = rarer/smaller)
+- [ ] Each Oasis as a micro-settlement: displaced villagers from fallen towns
+- [ ] Services per Oasis:
+  - [ ] Rest point (full HP/MP restore, save point)
+  - [ ] Item shop (limited supplies — scarcity theme)
+  - [ ] Weapon/armor vendor (scrounged/repaired gear, not top-tier)
+  - [ ] Optional NPC quest givers (minor sidequests for crafting mats, lore, gear)
+- [ ] Oasis protection mechanic: what keeps the Pallor out? (Ley ward stones? A Spirit anchor? Sheer collective will?)
+- [ ] Narrative flavor: each Oasis has refugees from a specific fallen town, giving news/rumors about the spreading Grey
+- [ ] Oasis discovery: visible on overworld map, or hidden and require exploration?
+- [ ] Act progression: do Oases change/fall as the story advances? (e.g., one overrun between dungeon visits)
+
+**Blocking:** Act III overworld pacing, player resource management in endgame, narrative worldbuilding
+
+---
+
 ## Tier 3: Important But Not Blocking
 
 ### 3.1 Transport & Vehicle System
