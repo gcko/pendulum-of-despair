@@ -4,7 +4,7 @@
 > is compacted or a new session starts, read this file FIRST to understand
 > what has been done, what remains, and how to continue.
 >
-> **Last updated:** 2026-03-22 (after Sub-project 1 merge, PR #19)
+> **Last updated:** 2026-03-22 (after Sub-project 2a Act II implementation)
 
 ---
 
@@ -13,7 +13,8 @@
 | Sub-project | Status | PR | Enemies | Files |
 |-------------|--------|-----|---------|-------|
 | **1: Foundation + Act I** | COMPLETE | #19 (merged) | 25 | README.md, act-i.md, palette-families.md |
-| **2: Act II + Interlude** | NOT STARTED | — | ~80–100 target | act-ii.md, interlude.md |
+| **2a: Act II** | COMPLETE | — (pending PR) | 33 | act-ii.md, palette-families.md |
+| **2b: Interlude** | NOT STARTED | — | ~50–60 target | interlude.md |
 | **3: Act III + Optional** | NOT STARTED | — | ~60–80 target | act-iii.md, optional.md |
 | **4: Boss Compendium** | NOT STARTED | — | ~20–25 target | bosses.md |
 
