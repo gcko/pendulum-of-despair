@@ -65,7 +65,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Unstable Crystal | 3 | Elemental | — | Shard Burst (AoE on death) | Low |
-| 2 | Crystal Sentry | 20 | Elemental | Resist->Storm | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
+| 2 | Crystal Sentry | 20 | Elemental | Weak->Storm, Absorbs->Earth | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
 | 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Flame | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
 
 > Crystals are environmental Elementals tied to ley energy. They never
@@ -117,7 +117,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Ember Wisp | 5 | Elemental | — | Flicker (Flame ranged) | Low |
-| 2 | Ley Wisp | 18 | Elemental | Weak->Ley, Absorbs->Storm | +Chain Spark (2-target Storm), +Erratic Flight (SPD up) | Standard |
+| 2 | Ley Wisp | 18 | Elemental | — | +Chain Spark (2-target Storm), +Erratic Flight (SPD up) | Standard |
 | 3 | Void Wisp | 36 | Elemental | Weak->Spirit, Absorbs->Void | +Null Flare (Void AoE), +Blink (evade next attack) | Dangerous |
 
 > Wisps shift element affinity across tiers rather than gaining Pallor
@@ -175,7 +175,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Bog Leech | 7 | Beast | — | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
-| 2 | Sewer Leech | 15 | Beast | Resist->Frost | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
+| 2 | Sewer Leech | 15 | Beast | — | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
 | 3 | Blight Leech | 30 | Beast | Weak->Flame | +Plague Drain (HP drain + Poison), +Swarm Call (summon 2 Leeches) | Dangerous |
 
 > Leeches are drain specialists. Three tiers is sufficient -- they
@@ -261,7 +261,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Thornback Beetle | 3 | Beast | — | Pinch, Thorn Counter (damage on physical hit) | Low |
-| 2 | Iron Beetle | 16 | Beast | Resist->Storm | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
+| 2 | Iron Beetle | 16 | Beast | — | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
 | 3 | Blight Beetle | 32 | Beast | Weak->Flame | +Plague Shell (Poison counter), +Acid Spray (DEF down AoE) | Dangerous |
 
 > Beetles are defensive beasts. Their counter-attack gimmick scales
@@ -302,7 +302,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Forest Sprite | 4 | Spirit | — | Spark (Ley ranged), Phase (50% physical reduction inherent) | Low |
-| 2 | Meadow Sprite | 16 | Spirit | Resist->Ley | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
+| 2 | Meadow Sprite | 16 | Spirit | — | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
 | 3 | Elder Sprite | 35 | Spirit | Resist->Ley, Resist->Spirit | +Ley Torrent (heavy AoE), +Spirit Ward (party MDEF up), +Vanish (full evasion 1 turn) | Dangerous |
 
 > Sprites are magical Spirit enemies that support other enemies in
@@ -337,7 +337,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Wayward Wolf | 6 | Beast | — | Bite, Pack Howl (ATK up for all wolves in encounter) | Standard |
-| 2 | Dire Wolf | 16 | Beast | Resist->Frost | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
+| 2 | Dire Wolf | 16 | Beast | — | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
 | 3 | Shadow Wolf | 33 | Beast | Weak->Ley, Resist->Void | +Shadow Fang (Void damage + Blind), +Pack Tactics (coordinated 2-wolf combo attack) | Dangerous |
 | 4 | Pallor Wolf | 45 | Pallor | Weak->Spirit, Resist->Void | +Pallor Howl (AoE Despair + ATK up pack), +Hunt (guaranteed back-row target), +Devour (HP drain on KO'd target) | Rare |
 

@@ -5,7 +5,7 @@ Ashmark Factory Depths, Bellhaven Smuggler Tunnels, Valdris Siege,
 and the Overworld between cities. See [README.md](README.md) for
 type rules, stat formulas, and reward calculations.
 
-**Total:** 33 enemies (26 regular + 2 unique + 1 spawn + 2 mini-bosses + 2 bosses)
+**Total:** 33 enemies (28 regular + 1 unique + 1 spawn + 1 mini-boss + 2 bosses)
 
 ---
 
@@ -84,7 +84,7 @@ and the first signs of the Pallor's reach.
   - Emergency Protocol -- below 20%, 3-turn self-destruct (Lira Override
     aborts -- unique interaction)
 - **Weakness:** Storm (150%), Spirit (125%)
-- **Resistance:** Flame (50%), Earth (75%)
+- **Resistance:** Flame (75%), Earth (75%)
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Poison
 - **Drops:** Drayce's Failsafe Core (accessory), Corrupted Tuning Fork
   (Vaelith breadcrumb), 2,000 Gold
@@ -112,7 +112,7 @@ style) culminating in the Ashen Ram boss.
 
 **Guest NPC:** Dame Cordwyn (5,000 HP, ATK 85, DEF 70) fights alongside
 the party during all waves and the boss. Cannot be controlled. Uses
-Shield Wall (party DEF up) and Rally Cry (party ATK up).
+Shield Wall (party DEF up) and Rally Cry (removes Despair from all party members, 3-turn cooldown).
 
 ### Pre-Boss Encounters
 
@@ -163,7 +163,7 @@ When a Compact Gyrocopter reaches 0 HP:
   - Battering Advance -- cumulative party damage, 1-turn charge. After 5
     turns, breaches the wall and Phase 2 begins. Dealing 1,500+ cumulative
     party damage in a single turn delays the advance by 1 turn.
-  - Despair Pulse (passive) -- 10% Despair chance each turn, all party
+  - Despair Pulse (passive) -- all party members lose 5% max MP per turn from Pallor proximity
   - Compact Escalade -- summons 2 Compact Soldiers (once per phase)
   - Lord Haren's Orders -- if Cordwyn HP > 50%, Ram targets her
     preferentially (player must keep Cordwyn alive)
@@ -206,11 +206,11 @@ same level. Biome-specific encounter tables.
 
 ## Act II Summary
 
-- **Total:** 33 enemies (26 regular + 2 unique + 1 spawn + 2 mini-bosses + 2 bosses)
-- **Type coverage:** Beast (14), Construct (3), Humanoid (7), Spirit (3),
-  Elemental (4), Boss (2)
-- **Threat spread:** Low (10), Standard (14), Dangerous (2), Boss (2),
-  unique (2), spawn (1), mini-boss (2)
+- **Total:** 33 enemies (28 regular + 1 unique + 1 spawn + 1 mini-boss + 2 bosses)
+- **Type coverage:** Beast (13), Construct (3), Humanoid (7), Spirit (3),
+  Elemental (5), Boss (2)
+- **Threat spread:** Low (11), Standard (16), Dangerous (1), Boss (2),
+  unique (1), spawn (1), mini-boss (1)
 - **Level range:** 14–24
 - **New families:** Automata, Crawler, Soldier, Airborne, Roach, Wraith,
   Moth, Hawk, Treant (9)
