@@ -17,7 +17,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Ley Vermin | 1 | Beast | — | Bite | Trivial |
-| 2 | Cave Vermin | 10 | Beast | — | +Rabid Frenzy (2-hit) | Low |
+| 2 | Cave Vermin | 16 | Beast | — | +Rabid Frenzy (2-hit) | Low |
 | 3 | Blight Vermin | 24 | Beast | Weak->Spirit | +Plague Bite (Poison) | Standard |
 | 4 | Pallor Vermin | 38 | Pallor | Weak->Spirit, Resist->Void | +Despair Screech (AoE Despair) | Dangerous |
 
@@ -65,7 +65,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Unstable Crystal | 3 | Elemental | — | Shard Burst (AoE on death) | Low |
-| 2 | Resonant Crystal | 18 | Elemental | Resist->Storm | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
+| 2 | Crystal Sentry | 20 | Elemental | Resist->Storm | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
 | 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Flame | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
 
 > Crystals are environmental Elementals tied to ley energy. They never
@@ -117,7 +117,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Ember Wisp | 5 | Elemental | — | Flicker (Flame ranged) | Low |
-| 2 | Storm Wisp | 20 | Elemental | Weak->Ley, Absorbs->Storm | +Chain Spark (2-target Storm), +Erratic Flight (SPD up) | Standard |
+| 2 | Ley Wisp | 18 | Elemental | Weak->Ley, Absorbs->Storm | +Chain Spark (2-target Storm), +Erratic Flight (SPD up) | Standard |
 | 3 | Void Wisp | 36 | Elemental | Weak->Spirit, Absorbs->Void | +Null Flare (Void AoE), +Blink (evade next attack) | Dangerous |
 
 > Wisps shift element affinity across tiers rather than gaining Pallor
@@ -153,12 +153,17 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Marsh Serpent | 6 | Beast | — | Fang Strike, Venom Spit (Poison) | Low |
 | 2 | Corrupted Spawn | 10 | Beast | — | +Lunge (back-row target), +Coil (SPD up) | Standard |
+| 2 | Deep Serpent | 19 | Beast | Weak->Frost | +Constrict (Stun + DoT), +Ley Infusion (MAG up) | Standard |
 | 3 | Greater Serpent | 28 | Beast | Weak->Frost | +Constrict (Stun + damage over time), +Toxic Spray (AoE Poison) | Standard |
 | 4 | Ashen Serpent | 42 | Pallor | Weak->Spirit, Resist->Void | +Despair Fang (Poison + Despair), +Shed Skin (remove debuffs) | Dangerous |
 
 > Serpents are fast and status-oriented. Tier 2 already appears in
 > Act I (Corrupted Spawn in Fenmother's Hollow). The Ashen Serpent
 > combines Poison and Despair for dangerous status stacking.
+
+> Serpent family has two Tier 2 variants: Corrupted Spawn (Lv 10,
+> Fenmother's Hollow) and Deep Serpent (Lv 19, Ley Line Depths).
+> Same family tier, different biomes and levels.
 
 ---
 
@@ -170,7 +175,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Bog Leech | 7 | Beast | — | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
-| 2 | Sewer Leech | 18 | Beast | Resist->Frost | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
+| 2 | Sewer Leech | 15 | Beast | Resist->Frost | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
 | 3 | Blight Leech | 30 | Beast | Weak->Flame | +Plague Drain (HP drain + Poison), +Swarm Call (summon 2 Leeches) | Dangerous |
 
 > Leeches are drain specialists. Three tiers is sufficient -- they
@@ -256,7 +261,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Thornback Beetle | 3 | Beast | — | Pinch, Thorn Counter (damage on physical hit) | Low |
-| 2 | Iron Beetle | 18 | Beast | Resist->Storm | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
+| 2 | Iron Beetle | 16 | Beast | Resist->Storm | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
 | 3 | Blight Beetle | 32 | Beast | Weak->Flame | +Plague Shell (Poison counter), +Acid Spray (DEF down AoE) | Dangerous |
 
 > Beetles are defensive beasts. Their counter-attack gimmick scales
@@ -273,7 +278,8 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Road Bandit | 4 | Humanoid | — | Slash, Steal Gold (lose Gold on hit) | Low |
-| 2 | Highwayman | 16 | Humanoid | — | +Ambush Strike (first-strike bonus), +Smoke Bomb (party Blind) | Standard |
+| 2 | Highwayman | 15 | Humanoid | — | +Ambush Strike (first-strike bonus), +Smoke Bomb (party Blind) | Standard |
+| 2 | Smuggler Thug | 17 | Humanoid | — | +Ambush Strike (first-strike bonus), +Smoke Bomb (party Blind) | Low |
 | 3 | Marauder Captain | 30 | Humanoid | — | +Rally (summon 2 Road Bandits), +Power Strike (high single-target), +Parry (counter) | Dangerous |
 | 4 | Pallor Brigand | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike (Despair on hit), +Frenzied Assault (3-hit random), +Deathwish (ATK up when low HP) | Rare |
 
@@ -281,6 +287,10 @@ stat derivation, and naming conventions.
 > The Pallor Brigand represents a bandit consumed by despair --
 > reckless and dangerous. Humanoids transition well to Pallor because
 > they are narratively susceptible to corruption.
+
+> Bandit family has two Tier 2 variants: Highwayman (overworld roads)
+> and Smuggler Thug (Bellhaven coast). Same power tier, different
+> biomes — follows FF6's multi-location family pattern.
 
 ---
 
@@ -292,7 +302,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Forest Sprite | 4 | Spirit | — | Spark (Ley ranged), Phase (50% physical reduction inherent) | Low |
-| 2 | Meadow Sprite | 19 | Spirit | Resist->Ley | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
+| 2 | Meadow Sprite | 16 | Spirit | Resist->Ley | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
 | 3 | Elder Sprite | 35 | Spirit | Resist->Ley, Resist->Spirit | +Ley Torrent (heavy AoE), +Spirit Ward (party MDEF up), +Vanish (full evasion 1 turn) | Dangerous |
 
 > Sprites are magical Spirit enemies that support other enemies in
@@ -309,7 +319,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Wild Boar | 5 | Beast | — | Gore (high ATK), Charge (damage + knockback) | Standard |
-| 2 | Razorback | 20 | Beast | — | +Enrage (ATK up when hit), +Trample (AoE physical) | Dangerous |
+| 2 | Razorback | 17 | Beast | — | +Enrage (ATK up when hit), +Trample (AoE physical) | Dangerous |
 | 3 | Pallor Boar | 36 | Pallor | Weak->Spirit, Resist->Void | +Despair Charge (AoE Despair + damage), +Berserk Frenzy (multi-hit, loses accuracy) | Rare |
 
 > Boars are glass cannon beasts -- high ATK, low DEF. Three tiers
@@ -327,7 +337,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Wayward Wolf | 6 | Beast | — | Bite, Pack Howl (ATK up for all wolves in encounter) | Standard |
-| 2 | Dire Wolf | 19 | Beast | Resist->Frost | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
+| 2 | Dire Wolf | 16 | Beast | Resist->Frost | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
 | 3 | Shadow Wolf | 33 | Beast | Weak->Ley, Resist->Void | +Shadow Fang (Void damage + Blind), +Pack Tactics (coordinated 2-wolf combo attack) | Dangerous |
 | 4 | Pallor Wolf | 45 | Pallor | Weak->Spirit, Resist->Void | +Pallor Howl (AoE Despair + ATK up pack), +Hunt (guaranteed back-row target), +Devour (HP drain on KO'd target) | Rare |
 
@@ -336,3 +346,177 @@ stat derivation, and naming conventions.
 > it drags on. The Pallor Wolf pack is one of the most dangerous
 > regular encounters, as Pallor Howl applies Despair while buffing
 > every wolf simultaneously.
+
+---
+
+## Crawler Family
+
+**Base:** Cave Crawler (Lv 17, Beast, Standard)
+**Planned Tiers:** 4
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Cave Crawler | 17 | Beast | — | Pinch, Hard Shell (high DEF) | Standard |
+| 2 | Sea Crawler | 18 | Beast | Weak->Storm | +Brine Spray (Blind), +Shell Clamp (Stun) | Standard |
+| 3 | Blight Crawler | 32 | Beast | Weak->Flame | +Acid Spit (DEF down), +Burrow Strike | Dangerous |
+| 4 | Pallor Crawler | 46 | Pallor | Weak->Spirit, Resist->Void | +Despair Pinch (Despair), +Grey Shell (reflect 1 physical) | Rare |
+
+> Crawlers are hard-shelled beasts with high DEF. Tank role throughout
+> all tiers. Sea Crawler is a coastal variant, while the Pallor Crawler
+> gains the ability to reflect physical hits — punishing the very
+> strategy that works against its shell.
+
+---
+
+## Automata Family
+
+**Base:** Extraction Drone (Lv 16, Construct, Low)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Extraction Drone | 16 | Construct | — | Drill Strike, Scan (reveals weakness) | Low |
+| 2 | Overclocked Automata | 20 | Construct | — | +Overdrive (2-hit), +Spark Burst (Storm AoE) | Standard |
+| 3 | Haywire Colossus | 36 | Construct | Weak->Storm | +Self-Destruct (AoE on death), +Berserk Protocol (ATK up, random target) | Dangerous |
+
+> Automata are Carradan Compact machines. Construct-type throughout —
+> no Pallor transition (machines cannot despair). Three tiers is
+> sufficient. The Haywire Colossus self-destructs, making it a
+> dangerous time-pressure encounter.
+
+---
+
+## Soldier Family
+
+**Base:** Compact Soldier (Lv 18, Humanoid, Low)
+**Planned Tiers:** 4
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Compact Soldier | 18 | Humanoid | — | Sword Strike, Cover (protects adjacent ally) | Low |
+| 2 | Compact Officer | 24 | Humanoid | — | +Rally (ATK up party), +Shield Bash (Stun) | Standard |
+| 3 | Elite Guard | 34 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
+| 4 | Pallor Legionnaire | 48 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Rare |
+
+> Soldiers are the Carradan military Humanoid family. They fight in
+> formation and support each other. The Pallor Legionnaire is a
+> corrupted soldier who refuses to stay down — auto-revive once
+> makes it a must-kill-twice threat.
+
+---
+
+## Airborne Family (Spawn-on-Death Trait)
+
+**Base:** Compact Gyrocopter (Lv 20, Construct, Standard)
+**Planned Tiers:** 3
+**Family trait:** Spawns a linked Humanoid ground unit on death.
+
+| Tier | Name | Lv | Type | Death Spawn | New Abilities | Threat |
+|------|------|----|------|-------------|---------------|--------|
+| 1 | Compact Gyrocopter | 20 | Construct | Downed Pilot (Lv 18, Humanoid) | Bomb Run (AoE), Strafe (back-row), high melee evasion | Standard |
+| 2 | Assault Rotorcraft | 28 | Construct | Parachute Trooper (Lv 25, Humanoid) | +Napalm Drop (AoE + Burn), +Evasive Maneuver | Dangerous |
+| 3 | Pallor Drone | 40 | Pallor | Pallor Pilot (Lv 38, Pallor) | +Despair Bomb (AoE Despair), +Grey Static (Silence) | Rare |
+
+**Spawned units:**
+
+| Name | Lv | Type | Abilities | Threat |
+|------|----|------|-----------|--------|
+| Downed Pilot | 18 | Humanoid | Sword Slash, Pistol Shot (ranged) | Low |
+| Parachute Trooper | 25 | Humanoid | +Grenade (AoE), +Emergency Stim (self-heal) | Standard |
+| Pallor Pilot | 38 | Pallor | +Despair Touch, +Frenzied Slash (2-hit) | Standard |
+
+> The Airborne family is unique — each Construct spawns a Humanoid
+> ground unit on death. This creates a two-stage encounter where
+> destroying the vehicle is only half the fight. Gold/Exp is the
+> sum of both enemies. The Pallor Drone transitions both the vehicle
+> and pilot to Pallor type.
+
+---
+
+## Roach Family
+
+**Base:** Forge Roach (Lv 18, Beast, Low)
+**Planned Tiers:** 2
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Forge Roach | 18 | Beast | — | Skitter, Swarm (groups of 4–6) | Low |
+| 2 | Blight Roach | 30 | Beast | Weak->Flame | +Infest (Poison), +Scatter (flee and reappear next turn) | Standard |
+
+> Roaches are industrial swarm pests. Two tiers is enough — they
+> exist to populate factories and sewers in large numbers. Individually
+> weak, but Scatter makes them annoyingly persistent.
+
+---
+
+## Wraith Family
+
+**Base:** Pipe Wraith (Lv 19, Spirit, Standard)
+**Planned Tiers:** 4
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Pipe Wraith | 19 | Spirit | — | Ley Bolt (magic), Phase (50% phys reduction inherent), ignores 25% DEF | Standard |
+| 2 | Tide Wraith | 19 | Spirit | Weak->Storm | +Frost Wave (AoE Frost), +Undertow (SPD down) | Standard |
+| 3 | Storm Wraith | 32 | Spirit | Weak->Earth | +Chain Lightning (multi-target), +Tempest (AoE + Confusion chance) | Dangerous |
+| 4 | Pallor Wraith | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Wail (AoE Despair), +Soul Drain (HP drain, bypasses DEF) | Rare |
+
+> Wraiths are ley-infused Spirit enemies with inherent physical
+> damage reduction. Each tier shifts elemental affinity. The Pallor
+> Wraith's Soul Drain bypasses DEF entirely, making it one of the
+> most threatening Pallor variants.
+
+---
+
+## Moth Family
+
+**Base:** Prism Moth (Lv 18, Elemental, Low)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Prism Moth | 18 | Elemental | — | Flutter, Refraction (group MAG buff) | Low |
+| 2 | Crystal Moth | 26 | Elemental | Resist->Ley | +Prismatic Dust (random element AoE), +Dazzle (Blind) | Standard |
+| 3 | Void Moth | 38 | Elemental | Weak->Ley, Absorb->Void | +Void Dust (Silence AoE), +Absorb Light (heals from Ley) | Dangerous |
+
+> Moths are swarm casters that buff each other. Individually fragile,
+> but their group MAG buff makes them dangerous in numbers. Three
+> tiers — they shift element affinity rather than gaining Pallor
+> corruption.
+
+---
+
+## Hawk Family
+
+**Base:** Mountain Hawk (Lv 17, Beast, Standard)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Mountain Hawk | 17 | Beast | — | Dive (back-row target), Talon Rake | Standard |
+| 2 | Storm Hawk | 25 | Beast | Weak->Earth | +Gale Wing (AoE + SPD down), +Sky Strike (ignores row) | Dangerous |
+| 3 | Roc | 38 | Beast | Weak->Storm | +Carry Off (removes target 1 turn), +Tempest Dive (heavy AoE) | Rare |
+
+> Hawks are glass cannon flyers that target the back row. Their Dive
+> ability bypasses front-row protection, forcing parties to consider
+> positioning. The Roc's Carry Off is a unique removal mechanic —
+> temporarily reducing party size mid-combat.
+
+---
+
+## Treant Family
+
+**Base:** Thornwood Treant (Lv 19, Elemental, Dangerous)
+**Planned Tiers:** 3 (Pallor at Tier 3 — early transition)
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Thornwood Treant | 19 | Elemental | — | Root Slam (heavy physical), Thorn Counter (damage on hit), Earth Absorb | Dangerous |
+| 2 | Ancient Treant | 30 | Elemental | Resist->Earth, Resist->Frost | +Entangle (Stun + DoT), +Regrowth (self-heal 10% HP) | Dangerous |
+| 3 | Pallor Treant | 36 | Pallor | Weak->Spirit, Resist->Void | +Despair Roots (AoE Despair + Stun), +Grey Canopy (party Blind) | Rare |
+
+> Treants are rare, high-HP Elemental tanks. Pallor transition at
+> Tier 3 (not Tier 4) because nature corrupts early — the Pallor
+> attacks the land before it attacks people. The Pallor Treant's
+> Despair Roots combine crowd control with Despair, making it a
+> priority target despite its massive HP pool.
