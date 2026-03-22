@@ -35,6 +35,8 @@ digraph pr_review {
     commit [label="5. COMMIT", fillcolor="#e6ffe6"];
     copilot [label="Copilot\ncommented?", shape=diamond, fillcolor="#fff3e6"];
     gap [label="6. GAP ANALYSIS\nCategorize findings\nPropose improvements", fillcolor="#f3e6ff"];
+    fixesmade [label="Fixes\nmade?", shape=diamond, fillcolor="#fff3e6"];
+    reviewsweep [label="6b. REVIEW SWEEP\nstory-review-loop 1\n(catch related issues)", fillcolor="#ffffcc"];
     push [label="PUSH", fillcolor="#e6ffe6"];
     reply [label="7. REPLY\nRespond to each\ncomment on GitHub", fillcolor="#ffe6f3"];
     exit [label="8. EXIT\nHandoff message", fillcolor=lightgreen];
@@ -51,7 +53,10 @@ digraph pr_review {
     commit -> copilot;
     copilot -> gap [label="yes"];
     copilot -> push [label="no"];
-    gap -> push;
+    gap -> fixesmade;
+    fixesmade -> reviewsweep [label="yes — files changed"];
+    fixesmade -> push [label="no — replies only"];
+    reviewsweep -> push;
     push -> reply;
     reply -> exit;
 }
@@ -278,9 +283,53 @@ If any comments came from `copilot-pull-request-reviewer[bot]`:
    > "Copilot found N issues our review missed. M are already in
    > checklists. K are new gaps: [list]. Apply improvements?"
 7. If approved, update the checklist file and commit.
-8. **Push all commits** together: `git push`.
+8. **Do NOT push yet** — proceed to Step 6b.
 
 **If no Copilot comments:** Skip Step 6 and push in Step 5.
+
+---
+
+## Step 6b: Post-Fix Story Review (MANDATORY when fixes were made)
+
+<HARD-GATE>
+This step is MANDATORY whenever Step 4 (Assess & Fix) made changes to
+fix valid Copilot review comments. If Copilot found issues that our
+review agents missed, there are likely MORE issues of the same kind
+that Copilot also missed. A single story-review-loop pass catches
+these before they become another round of Copilot comments.
+
+Do NOT push without completing this step when fixes were made.
+Do NOT skip this step ("the fixes were trivial", "Copilot only found
+formatting issues"). If you fixed anything, run the review.
+</HARD-GATE>
+
+**When to run:** Copilot comments existed AND at least one was a valid
+concern that resulted in a file edit (not just a reply/explanation).
+
+**When to skip:** No Copilot comments existed, OR all Copilot comments
+were false positives that required only replies (no file changes).
+
+**Process:**
+
+1. **Commit** all fixes from Steps 4–6 locally (do NOT push yet).
+2. **Run story-review-loop once:**
+   ```
+   /story-review-loop <PR#> 1
+   ```
+   This dispatches all 6 review agents against the current state of
+   the branch — including the fixes just committed. Any issues found
+   are fixed and committed locally.
+3. **After story-review-loop completes**, push all commits together:
+   ```bash
+   git push
+   ```
+
+**Rationale:** On PR #19, Copilot generated 30 review comments across
+4 rounds. Many were formatting and consistency issues that the
+story-review-loop agents could have caught if they had been run after
+the initial fixes. This step closes the gap: fix what Copilot found,
+then let our own agents sweep for anything similar that both Copilot
+and the initial review missed.
 
 ---
 
