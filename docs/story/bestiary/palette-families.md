@@ -1,11 +1,22 @@
 # Palette-Swap Families
 
-Each family is a base creature design with 2–4 variants at increasing
+Each family is a base creature design with 2–4 tiers (with multiple biome/battlefield variants possible per tier) at increasing
 power levels. See [README.md](README.md) Section 7 for tier rules,
 stat derivation, and naming conventions.
 
-> **Status:** Act I families defined (Tier 1 only). Higher tiers will
-> be populated in Sub-projects 2–4 as those act files are created.
+> **Status:** Act I + Act II + Interlude families populated. Tier 1–4
+> entries present. 4 new families added (Sentry, Guardian, Royal Wraith,
+> Hound). ~15 existing families updated with Tier 3/4 entries and
+> dual-variant biome patterns.
+
+> **Early tier deployment:** Act files may deploy tier variants at
+> lower levels than projected here during narrative events. The
+> Interlude deploys Tier 4 Pallor variants at Lv 26 (instead of the
+> projected Lv 38–48) because the Pallor is overwhelming the world
+> NOW. palette-families.md shows the "full power" level for each
+> variant; act files show the actual encounter level. Stats in the
+> act file are computed from the act-file level using README formulas,
+> not from the palette-families projected level.
 
 ---
 
@@ -18,8 +29,13 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Ley Vermin | 1 | Beast | — | Bite | Trivial |
 | 2 | Cave Vermin | 16 | Beast | — | +Rabid Frenzy (2-hit) | Low |
+| 3 | Tunnel Vermin | 22 | Beast | — | +Plague Bite (Poison) | Standard |
 | 3 | Blight Vermin | 24 | Beast | Weak->Spirit | +Plague Bite (Poison) | Standard |
 | 4 | Pallor Vermin | 38 | Pallor | Weak->Spirit, Resist->Void | +Despair Screech (AoE Despair) | Dangerous |
+
+> Vermin family has two Tier 3 biome variants: Tunnel Vermin (Lv 22,
+> Rail Tunnels — plague-carrying tunnel rats) and Blight Vermin (Lv 24,
+> blight zones). Same family tier, different biomes.
 
 ---
 
@@ -48,7 +64,7 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Restless Dead | 3 | Undead | — | Claw, Shamble | Trivial |
 | 2 | Drowned Bones | 7 | Undead | — | +Bone Toss (ranged) | Low |
-| 3 | Wailing Dead | 26 | Undead | Resist->Frost | +Death Wail (AoE MAG, Despair chance) | Standard |
+| 3 | Wailing Dead | 24 | Undead | Resist->Frost | +Death Wail (AoE MAG, Despair chance) | Standard |
 | 4 | Pallor Revenant | 40 | Pallor | Weak->Spirit, Resist->Void | +Soul Rend (HP drain), +Undying (auto-revive once) | Dangerous |
 
 > The Dead family represents basic humanoid undead. Tier 2 already
@@ -82,12 +98,18 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Mine Shade | 4 | Spirit | — | Shadow Touch (MAG), Phase (50% physical reduction inherent) | Low |
 | 2 | Crypt Shade | 16 | Spirit | — | +Darkness (Blind, single target) | Standard |
+| 2 | Forge Phantom | 20 | Spirit | — | +Despair Touch (Despair chance), +Shadow Flicker (evasion) | Standard |
 | 3 | Wraith Shade | 30 | Spirit | Weak->Ley, Resist->Void | +Life Drain (HP steal), +Fear (Despair chance) | Dangerous |
 | 4 | Pallor Shade | 42 | Pallor | Weak->Spirit, Resist->Void | +Dread Shroud (party Despair AoE), +Possess (Confuse single) | Rare |
 
 > Shades are restless spirits bound to locations. The Pallor transition
 > at Tier 4 is thematically perfect -- despair made manifest. One of the
 > more dangerous Pallor variants due to AoE Despair pressure.
+>
+> Shade family has two Tier 2 biome variants: Crypt Shade (Lv 16,
+> tombs/catacombs) and Forge Phantom (Lv 20, Rail Tunnels — worker
+> silhouette haunting industrial ruins). Same family tier, different
+> biomes and visual themes.
 
 ---
 
@@ -99,9 +121,9 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Bone Warden | 4 | Undead | — | Guard Stance (DEF up), Heavy Swing | Low |
-| 2 | Tomb Warden | 17 | Undead | — | +Shield Bash (Stun), +Rally Dead (summon Restless Dead) | Standard |
+| 2 | Tomb Warden | 22 | Undead | — | +Shield Bash (Stun), +Rally Dead (summon Restless Dead) | Standard |
 | 3 | Dread Warden | 32 | Undead | Resist->Frost, Resist->Storm | +Cursed Guard (counter-attack on hit), +Death Strike (Death chance) | Dangerous |
-| 4 | Pallor Warden | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Aura (passive Despair buildup), +Unbreakable (auto DEF up at 50% HP) | Rare |
+| 4 | Pallor Warden | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Aura (passive Despair buildup), +Unbreakable (auto DEF up at 50% HP) | Dangerous |
 
 > Wardens are armored undead -- skeletal knights and guardians. Tank
 > role throughout all tiers. The Pallor variant is a wall that punishes
@@ -175,7 +197,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Bog Leech | 7 | Beast | — | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
-| 2 | Sewer Leech | 15 | Beast | — | +Blood Siphon (MP drain), +Attach (persistent drain) | Low |
+| 2 | Sewer Leech | 20 | Beast | — | +Blood Siphon (MP drain), +Attach (persistent drain) | Low |
 | 3 | Blight Leech | 30 | Beast | Weak->Flame | +Plague Drain (HP drain + Poison), +Swarm Call (summon 2 Leeches) | Dangerous |
 
 > Leeches are drain specialists. Three tiers is sufficient -- they
@@ -228,12 +250,18 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Polluted Elemental | 9 | Elemental | — | Frost Burst (AoE Frost), Elemental Shield (MDEF up) | Standard |
 | 2 | Raging Elemental | 24 | Elemental | Weak->Frost, Absorbs->Flame | +Eruption (high AoE Flame), +Melt (DEF down on target) | Dangerous |
+| 2 | Steam Elemental | 20 | Elemental | Weak->Frost, Absorbs->Flame | +Flame AoE, +Blind (steam cloud) | Standard |
 | 3 | Primordial Elemental | 40 | Elemental | Weak->Spirit, Absorbs->Ley | +Ley Storm (heavy AoE), +Elemental Shift (change weakness mid-fight), +Mana Burn (MP drain) | Rare |
 
 > The generic Elemental family represents corrupted ley energy
-> coalescing into hostile forms. Caster role with high MAG. Three
-> tiers -- the Primordial variant is a genuine threat with its
-> mid-fight weakness shifting.
+> coalescing into hostile forms. Caster role with high MAG. The
+> Primordial variant is a genuine threat with its mid-fight weakness
+> shifting.
+>
+> Elemental family has two Tier 2 variants: Raging Elemental (Lv 24,
+> volcanic/forge areas — eruption specialist) and Steam Elemental
+> (Lv 20, Rail Tunnels — superheated steam, Flame/Blind). Same family
+> tier, different biomes and power levels.
 
 ---
 
@@ -246,10 +274,15 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Plains Hare | 1 | Beast | — | Flee (50% chance to escape), Scratch | Trivial |
 | 2 | Mountain Hare | 15 | Beast | — | +Quick Dodge (evasion up), +Kick (counter-attack) | Low |
+| 2 | Sewer Rat | 18 | Beast | — | +Skitter (evasion), +Disease Bite (Poison chance) | Trivial |
 
-> Hares are pure fodder. Two tiers is enough -- they exist to populate
-> grasslands and give new players easy wins. The Mountain Hare is a
-> minor nuisance at best.
+> Hares are pure fodder. They exist to populate grasslands and sewers
+> and give new players easy wins. The Mountain Hare is a minor nuisance
+> at best.
+>
+> Hare family has two Tier 2 biome variants: Mountain Hare (Lv 15,
+> mountain trails) and Sewer Rat (Lv 18, Corrund Undercity — swarm
+> fodder). Same family tier, different biomes.
 
 ---
 
@@ -304,11 +337,17 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Forest Sprite | 4 | Spirit | — | Spark (Ley ranged), Phase (50% physical reduction inherent) | Low |
 | 2 | Meadow Sprite | 16 | Spirit | — | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
+| 3 | Heat Sprite | 22 | Elemental | Weak->Frost | +Flame Burst (fire AoE), +Heat Haze (evasion up) | Standard |
 | 3 | Elder Sprite | 35 | Spirit | Resist->Ley, Resist->Spirit | +Ley Torrent (heavy AoE), +Spirit Ward (party MDEF up), +Vanish (full evasion 1 turn) | Dangerous |
 
 > Sprites are magical Spirit enemies that support other enemies in
-> encounters. Three tiers -- they remain Spirit-type throughout, growing
-> from nuisances into genuine support threats that must be prioritized.
+> encounters. They grow from nuisances into genuine support threats
+> that must be prioritized.
+>
+> Sprite family has two Tier 3 variants: Heat Sprite (Lv 22, Caldera
+> Undercity — fire sprite, Elemental-type, Weak->Frost) and Elder
+> Sprite (Lv 35, late-game ley groves). Same family tier, different
+> biomes and elemental profiles.
 
 ---
 
@@ -359,6 +398,7 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Cave Crawler | 17 | Beast | — | Pinch, Hard Shell (high DEF) | Standard |
 | 2 | Sea Crawler | 18 | Beast | Weak->Storm | +Brine Spray (Blind), +Shell Clamp (Stun) | Standard |
+| 3 | Grey Crawler | 24 | Beast | — | +Acid Spit (DEF down), +Burrow Strike | Standard |
 | 3 | Blight Crawler | 32 | Beast | Weak->Flame | +Acid Spit (DEF down), +Burrow Strike | Dangerous |
 | 4 | Pallor Crawler | 46 | Pallor | Weak->Spirit, Resist->Void | +Despair Pinch (Despair), +Grey Shell (reflect 1 physical) | Rare |
 
@@ -366,6 +406,11 @@ stat derivation, and naming conventions.
 > all tiers. Sea Crawler is a coastal variant, while the Pallor Crawler
 > gains the ability to reflect physical hits — punishing the very
 > strategy that works against its shell.
+>
+> Crawler family has two Tier 3 variants: Grey Crawler (Lv 24, Caldera
+> Undercity — acid-spitting tunneler) and Blight Crawler (Lv 32,
+> late-game blight zones). Same family tier, different biomes and
+> power levels.
 
 ---
 
@@ -378,12 +423,23 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Extraction Drone | 16 | Construct | — | Drill Strike, Scan (reveals weakness) | Low |
 | 2 | Overclocked Automata | 20 | Construct | — | +Overdrive (2-hit), +Spark Burst (Storm AoE) | Standard |
+| 2 | Service Automata | 20 | Construct | — | +Haywire Drone (erratic multi-target), +Spark Burst (Storm AoE) | Standard |
+| 2 | Corrupted Forge Construct | 23 | Construct | — | +Flame Burst (fire AoE), +Meltdown (self-damage + AoE on death) | Standard |
 | 3 | Haywire Colossus | 36 | Construct | Weak->Storm | +Self-Destruct (AoE on death), +Berserk Protocol (ATK up, random target) | Dangerous |
 
 > Automata are Carradan Compact machines. Construct-type throughout —
-> no Pallor transition (machines cannot despair). Three tiers is
-> sufficient. The Haywire Colossus self-destructs, making it a
-> dangerous time-pressure encounter.
+> no Pallor transition (machines cannot despair). The Haywire Colossus
+> self-destructs, making it a dangerous time-pressure encounter.
+>
+> Automata family has three Tier 2 biome variants: Overclocked Automata
+> (Lv 20, Ashmark Factory), Service Automata (Lv 20, Corrund Undercity
+> — haywire maintenance drones), and Corrupted Forge Construct (Lv 23,
+> Caldera Undercity — half-melted foundry machines with fire attacks).
+> Same family tier, different biomes and combat profiles.
+>
+> Service Automata and Corrupted Forge Construct are Tier 2 biome variants
+> (similar power tier (Lv 20–23 range) as Overclocked Automata), not Tier 3
+> as originally specified.
 
 ---
 
@@ -397,12 +453,12 @@ stat derivation, and naming conventions.
 | 1 | Compact Soldier | 18 | Humanoid | — | Sword Strike, Cover (protects adjacent ally) | Low |
 | 2 | Compact Officer | 24 | Humanoid | — | +Rally (ATK up party), +Shield Bash (Stun) | Standard |
 | 3 | Elite Guard | 34 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
-| 4 | Pallor Legionnaire | 48 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Rare |
+| 4 | Pallor Soldier | 48 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Dangerous |
 
 > Soldiers are the Carradan military Humanoid family. They fight in
-> formation and support each other. The Pallor Legionnaire is a
-> corrupted soldier who refuses to stay down — auto-revive once
-> makes it a must-kill-twice threat.
+> formation and support each other. The Pallor Soldier is a corrupted
+> soldier who refuses to stay down — auto-revive once makes it a
+> must-kill-twice threat.
 >
 > Soldier family has three Tier 1 battlefield variants: Compact Soldier
 > (Lv 18, Low — infantry), Compact Engineer (Lv 19, Standard — support,
@@ -531,3 +587,74 @@ stat derivation, and naming conventions.
 > attacks the land before it attacks people. The Pallor Treant's
 > Despair Roots combine crowd control with Despair, making it a
 > priority target despite its massive HP pool.
+
+---
+
+## Sentry Family
+
+**Base:** Rail Sentry (Lv 18, Construct, Low)
+**Planned Tiers:** 2
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Rail Sentry | 18 | Construct | — | Turret Fire (ranged), Scan Lock (increases accuracy) | Low |
+| 2 | Forgewright Sentry | 24 | Construct | — | +Cone Scan (reveals row), +High-Caliber Shot (heavy single-target) | Standard |
+
+> Sentries are stationary Construct turrets. Construct-type throughout —
+> immune to Pallor infection. Two tiers is sufficient; they exist to
+> provide ranged mechanical threats in industrial and military areas.
+
+---
+
+## Guardian Family
+
+**Base:** Tomb Guardian (Lv 23, Construct, Standard)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Tomb Guardian | 23 | Construct | — | Stone Slam (heavy physical), Sentinel Stance (counter-attack) | Standard |
+| 2 | Temple Guardian | 32 | Construct | Resist->Earth | +Quake Stomp (AoE + Stun), +Stone Skin (DEF way up 2 turns) | Dangerous |
+| 3 | Grey Guardian | 42 | Construct | Weak->Storm | +Pallor Pulse (Despair AoE, Construct-channeled), +Immovable (immune to knockback/Stun) | Rare |
+
+> Guardians are animated stone constructs. Construct-type throughout —
+> immune to infection. The Grey Guardian (Tier 3) is NOT infected — it
+> was BUILT by Pallor-corrupted engineers to channel Despair through
+> stone circuits. A weapon of despair, not a victim. Foreshadows the
+> Act III/IV "designed Pallor Construct" concept.
+
+---
+
+## Royal Wraith Family
+
+**Base:** Royal Wraith (Lv 24, Spirit, Dangerous)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Royal Wraith | 24 | Spirit | — | Spectral Blade (magic damage), Royal Command (buffs allied spirits), Phase (50% phys reduction) | Dangerous |
+| 2 | Fallen Champion | 34 | Spirit | Weak->Ley, Resist->Void | +Champion's Challenge (forces single-target on self), +Cursed Blade (Silence on hit) | Dangerous |
+| 3 | Pallor Regent | 46 | Pallor | Weak->Spirit, Resist->Void | +Despair Decree (party-wide Despair + Silence), +Undying Loyalty (summons 2 Pallor Shades) | Rare |
+
+> Royal Wraiths are spectral knights — the ghosts of Valdris royalty.
+> They command other spirits in combat. The Pallor Regent is a king
+> consumed by despair who commands shade armies.
+
+---
+
+## Hound Family
+
+**Base:** Arcanite Hound (Lv 23, Construct, Standard)
+**Planned Tiers:** 3
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|---------------|---------------|--------|
+| 1 | Arcanite Hound | 23 | Construct | — | Lunge (back-attack), Tracking (always targets lowest HP), Fast Strike (high SPD) | Standard |
+| 2 | War Hound | 32 | Construct | Resist->Storm | +Pack Circuit (buffs adjacent Constructs), +Overclock Bite (2-hit + Burn) | Dangerous |
+| 3 | Grey Hound | 42 | Construct | — | +Despair Fang (deals Despair damage — Construct channeling Pallor energy), +Hunt Protocol (guaranteed back-row, ignores evasion) | Rare |
+
+> Arcanite Hounds are Carradan military Constructs — mechanical attack
+> dogs. The Grey Hound (Tier 3) is the first "designed Pallor Construct"
+> — not infected (immune to infection) but BUILT by corrupted engineers
+> to channel Despair through Arcanite circuits. The machine doesn't
+> despair; its creator did. Foreshadows Act III/IV Pallor weapon design.

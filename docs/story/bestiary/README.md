@@ -9,8 +9,8 @@
 | File | Contents |
 |------|----------|
 | [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I (25 enemies) |
-| [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Overworld Act II (TBD) |
-| [interlude.md](interlude.md) | Rail Tunnels, Axis Tower, City Dungeons (TBD) |
+| [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
+| [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
 | [act-iii.md](act-iii.md) | Pallor Wastes, Convergence (TBD) |
 | [optional.md](optional.md) | Sidequests, Superbosses, Rare Encounters (TBD) |
 | [bosses.md](bosses.md) | All Bosses & Mini-Bosses with AI Scripts (TBD) |
@@ -305,6 +305,12 @@ own level, with role adjustments and ability/element additions.
 | Tier 2 | Environment prefix | +1 ability |
 | Tier 3 | Threat prefix | +2 abilities, element shift |
 | Tier 4 | Pallor/Elite prefix | +3 abilities, type may change |
+
+> **Early deployment rule:** Tier 3/4 variants may appear at lower
+> levels than projected during narrative escalation events (e.g., the
+> Interlude). The act file's enemy level is authoritative for stat
+> computation. palette-families.md levels are projections for the
+> "full power" appearance, not hard floors.
 
 ### Tier 4 Type Change
 
