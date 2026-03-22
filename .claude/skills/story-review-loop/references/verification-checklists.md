@@ -95,3 +95,22 @@ Each item is a single check. Grows from Copilot gap analysis.
   column must match the corresponding act file's stat table. act file
   is authoritative; palette-families shows the SHIFT from prior tier,
   not the absolute profile (use em dash if profile matches Tier 1).
+
+## Family & Tier Integrity (from Copilot gap analysis, PR #22)
+
+- Every enemy name must be unique across ALL bestiary files and
+  palette-families.md. No two enemies may share a name even if in
+  different families. Check before assigning names to new enemies.
+- When a summary section lists "Tier N debuts," verify each enemy's
+  tier matches palette-families.md. Do not trust the summary — count
+  and verify against the family tables.
+- When an enemy's threat level in the act file differs from
+  palette-families.md, verify the Gold/Exp values match the act
+  file's threat multiplier, not the family's projected threat.
+- When act-file level is 5+ levels below palette-families projected
+  level, palette-families MUST have an early deployment note in the
+  family blockquote. Check ALL families with deployed enemies, not
+  just Tier 4 Pallor variants.
+- Before assigning a Tier N entry to a family, verify the family
+  actually HAS that many tiers in palette-families.md. A 3-tier
+  family cannot have a Tier 4 entry.

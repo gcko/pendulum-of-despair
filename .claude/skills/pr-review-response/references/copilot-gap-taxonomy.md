@@ -21,13 +21,13 @@ pr-review-response (Step 6).
 
 ## Agent Mapping
 
-| Agent | Categories Caught | PR #17 Hits | PR #18 Hits |
-|-------|-------------------|------------|------------|
-| Agent 1 (Propagation) | Mirror staleness, Numeric propagation | 5 | 6 |
-| Agent 3 (Technical) | Self-contradiction, Formula precision, Reference format | 10 | 1 |
-| Agent 4 (Script Supervisor) | Exception tracking | 0 | 0 |
-| Agent 5 (Devil's Advocate) | Ambiguity | 2 | 4 |
-| Agent 6 (Canonical Verifier) | Source verification, Classification | 1 | 5 |
+| Agent | Categories Caught | PR #17 Hits | PR #18 Hits | PR #22 Hits |
+|-------|-------------------|------------|------------|------------|
+| Agent 1 (Propagation) | Mirror staleness, Numeric propagation | 5 | 6 | 6 |
+| Agent 3 (Technical) | Self-contradiction, Formula precision, Reference format | 10 | 1 | 1 |
+| Agent 4 (Script Supervisor) | Exception tracking | 0 | 0 | 0 |
+| Agent 5 (Devil's Advocate) | Ambiguity | 2 | 4 | 2 |
+| Agent 6 (Canonical Verifier) | Source verification, Classification | 1 | 5 | 4 |
 
 ## How to Use
 
@@ -90,3 +90,32 @@ PR #19). 5 new checklist items added to "Mirror Propagation" section.
 Root cause: propagation sweep after updating README.md role limits
 did not grep ALL files for the old values. Boss mechanic notes need
 word-by-word comparison with dungeon source, not just HP verification.
+
+### PR #22 (2026-03-23) — 16 Copilot comments across 2 rounds, ~12 gaps
+
+**Top patterns:**
+- Classification (name collision, tier mislabel, tier cap): 4 comments
+  - Pallor Regent name collision (Royal Wraith Tier 3 vs Hawk Tier 4)
+  - Storm Wraith listed as Tier 3 (is Tier 2 in palette-families)
+  - Hawk family only has 3 tiers — no Tier 4 exists
+- Mirror staleness (type in spec/plan, elemental profiles): 6 comments
+  - Void Moth type=Beast in spec/plan (should be Elemental)
+  - Roc missing Weak=Storm per palette-families
+  - Pictograph Wisp missing Absorbs=Ley per palette-families
+  - Void Crystal weakness already fixed but Copilot reviewed old commit
+- Numeric propagation (threat multiplier, level mismatch): 2 comments
+  - Thunder Drake/Void Moth deployed at lower level+threat than projected
+- Ambiguity (missing early deployment notes): 2 comments
+  - Thunder Drake, Void Moth, Void Wisp all lacked notes
+- Reference format (naming inconsistency): 1 comment
+  - "Crystal Warden Deep" vs "Crystal Warden (Deep)"
+
+**Outcome:** Story-review-loop (Round 1, pre-Copilot) caught 15 issues.
+Copilot then found 16 more across 2 rounds. 5 new checklist items
+proposed. Root cause: agents don't verify tier labels in summaries,
+don't check name uniqueness across families, and don't enforce early
+deployment notes for all level gaps >5. PROCESS FAILURE: Step 6 (gap
+analysis) and Step 6b (story-review-loop) were BOTH skipped on
+Copilot Round 2. Root cause identified as system-reminder loading
+incomplete skill version. Structural fix applied to AGENTS.md and
+skill frontmatter.

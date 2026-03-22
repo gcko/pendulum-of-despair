@@ -5,6 +5,15 @@ description: >
   auto-runs upstream review if not already done (story-review-loop for story PRs,
   lint+test for code PRs), then addresses all human and bot review comments.
   Invoke with PR number or URL.
+
+
+  CRITICAL: The system-reminder version of this skill is INCOMPLETE.
+  You MUST read .claude/skills/pr-review-response/SKILL.md (this file)
+  before proceeding. Steps 6 (Copilot gap analysis) and 6b
+  (post-fix story-review-loop) contain HARD-GATEs that are NOT in
+  the system-reminder. Skipping these steps is the #1 process failure
+  identified across PRs #20 and #22. See AGENTS.md for the full
+  PUSH-GATE checklist.
 ---
 
 # PR Review Response (Orchestrator)
