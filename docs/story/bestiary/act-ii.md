@@ -43,7 +43,8 @@ ley-infused creatures.
 - **Not hostile** -- a guardian testing visitors. Lore-friendly.
 - **Absorbs:** Flame, Frost, Storm, Earth, Ley, Spirit, Void (all 7 elements)
 - **Immunities:** Petrify (Elemental default only)
-- **Drops:** Ley Crystal Fragment (crafting), Colossus Shard (accessory)
+- **Steal:** Ley Crystal Fragment (crafting)
+- **Drop:** Colossus Shard (accessory)
 
 ---
 
@@ -86,8 +87,8 @@ and the first signs of the Pallor's reach.
 - **Weakness:** Storm (150%), Spirit (125%)
 - **Resistance:** Flame (50% — stronger than standard Resists 0.75x; per-boss exception per dungeons-city.md), Earth (75%)
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Poison
-- **Drops:** Drayce's Failsafe Core (accessory), Corrupted Tuning Fork
-  (Vaelith breadcrumb), 2,000 Gold
+- **Steal:** Corrupted Tuning Fork (Vaelith breadcrumb)
+- **Drop:** Drayce's Failsafe Core (accessory), 2,000 Gold
 
 ---
 
@@ -175,7 +176,8 @@ When a Compact Gyrocopter reaches 0 HP:
 - **Weakness:** Storm (150%), Flame (125% to core only in Phase 3)
 - **Resistance:** Earth (absorbs), Frost (75%)
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Drops:** Pallor-Laced Iron (crafting), Compact Battle Standard (key item)
+- **Steal:** Pallor-Laced Iron (crafting)
+- **Drop:** Compact Battle Standard (key item)
 
 ---
 

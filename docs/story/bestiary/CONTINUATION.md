@@ -63,7 +63,7 @@ Dangerous ×1.0, Rare ×1.5, Boss = hand-tuned.
 
 ### Palette-Swap Family System
 28 families defined in `palette-families.md` (19 Act I + 9 Act II) with Tier 1–4 projections.
-Tier 1 entries match act-i.md. Higher tiers use stat formulas at the
+Tier 1 entries match the corresponding act file where the base enemy appears (Act I: act-i.md; Act II: act-ii.md). Higher tiers use stat formulas at the
 variant's own level with role adjustments — no raw stat multipliers.
 
 ### Enemy LCK

@@ -459,19 +459,23 @@ stat derivation, and naming conventions.
 ## Wraith Family
 
 **Base:** Pipe Wraith (Lv 19, Spirit, Standard)
-**Planned Tiers:** 4
+**Planned Tiers:** 3 (with two Tier 1 variants)
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Pipe Wraith | 19 | Spirit | — | Ley Bolt (magic), Phase (50% phys reduction inherent), ignores 25% DEF | Standard |
-| 2 | Tide Wraith | 19 | Spirit | Weak->Storm | +Frost Wave (AoE Frost), +Undertow (SPD down) | Standard |
-| 3 | Storm Wraith | 32 | Spirit | Weak->Earth | +Chain Lightning (multi-target), +Tempest (AoE + Confusion chance) | Dangerous |
-| 4 | Pallor Wraith | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Wail (AoE Despair), +Soul Drain (HP drain, bypasses DEF) | Rare |
+| 1 | Tide Wraith | 19 | Spirit | Weak->Storm | +Frost Wave (AoE Frost), +Undertow (SPD down) | Standard |
+| 2 | Storm Wraith | 32 | Spirit | Weak->Earth | +Chain Lightning (multi-target), +Tempest (AoE + Confusion chance) | Dangerous |
+| 3 | Pallor Wraith | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Wail (AoE Despair), +Soul Drain (HP drain, bypasses DEF) | Rare |
 
 > Wraiths are ley-infused Spirit enemies with inherent physical
 > damage reduction. Each tier shifts elemental affinity. The Pallor
 > Wraith's Soul Drain bypasses DEF entirely, making it one of the
 > most threatening Pallor variants.
+>
+> Wraith family has two Tier 1 variants: Pipe Wraith (Ashmark Factory,
+> Ley energy) and Tide Wraith (Bellhaven coast, water-bound). Same
+> power tier, different biomes and elemental profiles.
 
 ---
 
