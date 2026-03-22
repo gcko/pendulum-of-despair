@@ -61,3 +61,32 @@ pr-review-response (Step 6).
 
 **Outcome:** Checklist items from PR #17 would have caught 3 of 6.
 Remaining 3 covered by new items.
+
+### PR #19 (2026-03-22) — 30 Copilot comments across 4 rounds, ~20 gaps
+
+**Top patterns:**
+- Formatting (em dash vs double-hyphen, en dash for ranges): 8 comments
+- Elemental profile mismatch (act file vs palette-families): 6 comments
+- Self-contradiction (Vein Guardian type/phase, spec count): 5 comments
+- Copyright/tooling (reference bestiaries, scraper): 4 comments
+- Boss mechanic accuracy (Vein Guardian phases): 2 comments
+
+**Outcome:** Story-review-loop caught 29% initially. Step 6b process
+added. Verification checklists updated with role-based exception
+documentation rule.
+
+### PR #20 (2026-03-22) — 26 Copilot comments across 2 rounds, ~18 gaps
+
+**Top patterns:**
+- Mirror staleness (role bounds in spec/plan/CONTINUATION): 6 comments
+- Boss mechanic divergence (Cordwyn abilities, Ashen Ram phases,
+  Forge Warden resistance — details differ from dungeons-world.md): 5 comments
+- Elemental profile mismatch (act-ii vs palette-families): 6 comments
+- Count inconsistency (12 vs 11 families): 2 comments
+- Conditional weakness not in stat table: 1 comment
+
+**Outcome:** Story-review-loop caught 73% initially (up from 29% on
+PR #19). 5 new checklist items added to "Mirror Propagation" section.
+Root cause: propagation sweep after updating README.md role limits
+did not grep ALL files for the old values. Boss mechanic notes need
+word-by-word comparison with dungeon source, not just HP verification.
