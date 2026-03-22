@@ -62,7 +62,7 @@ Dangerous ×1.0, Rare ×1.5, Boss = hand-tuned.
 - Tank: DEF/HP +15%, SPD up to -22%
 
 ### Palette-Swap Family System
-19 families defined in `palette-families.md` with Tier 1–4 projections.
+28 families defined in `palette-families.md` (19 Act I + 9 Act II) with Tier 1–4 projections.
 Tier 1 entries match act-i.md. Higher tiers use stat formulas at the
 variant's own level with role adjustments — no raw stat multipliers.
 
@@ -179,7 +179,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 |------|---------|
 | `docs/story/bestiary/README.md` | Canonical rules, formulas, types |
 | `docs/story/bestiary/act-i.md` | Completed Act I (25 enemies) |
-| `docs/story/bestiary/palette-families.md` | 19 families with tier projections |
+| `docs/story/bestiary/palette-families.md` | 28 families with tier projections |
 | `docs/story/dungeons-world.md` | World dungeon layouts, boss descriptions, enemy names |
 | `docs/story/dungeons-city.md` | City dungeon layouts, enemy names |
 | `docs/story/combat-formulas.md` | Damage formulas, ATB, boss HP scaling table |

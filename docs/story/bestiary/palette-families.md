@@ -403,6 +403,12 @@ stat derivation, and naming conventions.
 > formation and support each other. The Pallor Legionnaire is a
 > corrupted soldier who refuses to stay down — auto-revive once
 > makes it a must-kill-twice threat.
+>
+> Soldier family has three Tier 1 battlefield variants: Compact Soldier
+> (Lv 18, Low — infantry), Compact Engineer (Lv 19, Standard — support,
+> heals Constructs), and Siege Ballista Crew (Lv 20, Standard — ranged,
+> back-row targeting). All share the same family but fill different
+> battlefield roles during the Valdris Siege gauntlet.
 
 ---
 
