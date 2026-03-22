@@ -266,8 +266,8 @@ formation and count are defined per encounter in the bestiary
 ### 8.1 Frost Veil Ley Crystal
 
 Progression.md defines the Frost Veil crystal as: "Wearer SPD -15%
-in battle (chilling effect on ATB gauge)." This is a permanent in-
-battle SPD reduction — it modifies the SPD value before it enters the
+in battle (chilling effect on ATB gauge)." This is a permanent
+in-battle SPD reduction — it modifies the SPD value before it enters the
 fill rate formula: `effective_SPD = SPD * 0.85`. This is applied
 before Haste/Slow modifiers.
 
