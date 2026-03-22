@@ -55,9 +55,9 @@ The solution always involves a form of hope:
 
 - The Crowned Hollow yields to endurance (Defend, don't attack)
 - The Perfect Machine yields to acceptance (Dismantle, don't repair)
-- The Last Voice yields to memory (remember, don't fight)
-- The Open Door yields to courage (walk through, don't resist)
-- The Index yields to defiance (reject the catalogue of death)
+- The Last Voice yields to release (free it, don't fight it)
+- The Open Door yields to courage (walk back, don't walk through)
+- The Index yields to grief (read one entry, don't absorb or destroy)
 
 The Grey Cleaver Unbound rewards fighting *through* despair — Despaired
 party members deal bonus damage during its shield stance.
@@ -88,6 +88,12 @@ Per README.md:
 | The Convergence regular | 32–36 |
 | The Convergence bosses | 34–40 |
 | Vaelith (Siege, unwinnable) | 99 (scripted) |
+
+> **Note:** README.md lists Act III enemy range as 30–45. Some
+> transitional areas (Ley Depths F5 at 26–28, Pallor Wastes outer
+> at 28–30, Overworld safe at 28–32) start below 30. These bridge
+> the Interlude→Act III gap. README.md range should be updated to
+> 26–45 during implementation.
 
 ---
 
@@ -182,7 +188,7 @@ by despair.
 
 | Name | Family | Tier | Lv | Type | Threat | Role |
 |------|--------|------|----|------|--------|------|
-| Pallor Boar | Boar | 3 | 28 | Pallor | Standard | Tank |
+| Pallor Boar | Boar | 3 | 28 | Pallor | Rare | Tank |
 | Shadow Wolf | Wolf | 3 | 28 | Beast | Standard | Glass cannon |
 | Pallor Vermin | Vermin | 4 | 30 | Pallor | Standard | Swarm |
 | Wraith Shade | Shade | 3 | 30 | Spirit | Standard | Caster |
@@ -197,7 +203,8 @@ by despair.
 - Despair Cloud is low threat individually but inflicts party-wide
   Despair. Priority target in mixed encounters.
 - Shadow Wolf is Beast type (not yet Pallor) — still fighting the
-  Grey. Fur matted into spines, moves in jerky bursts.
+  Grey. Fur matted into spines, moves in jerky bursts. Early
+  deployment at Lv 28 (projected Lv 33 in palette-families.md).
 - Pallor Boar: tusks fused into a single horn of grey bone. Charges
   blindly — it's forgotten how to stop.
 
@@ -210,7 +217,7 @@ Grey.
 |------|--------|------|----|------|--------|------|
 | Pallor Knight | — (unique) | — | 32 | Pallor | Dangerous | Balanced |
 | Grief Shade | — (unique) | — | 32 | Pallor | Dangerous | Caster |
-| Void Wisp | Wisp | 3 | 30 | Spirit | Standard | Caster |
+| Void Wisp | Wisp | 3 | 30 | Elemental | Standard | Caster |
 | Pallor Treant | Treant | 3 | 30 | Pallor | Standard | Tank |
 | Marauder Captain | Bandit | 3 | 30 | Humanoid | Standard | Balanced |
 
@@ -244,9 +251,9 @@ These appear ONLY within their trial clearing.
 |------|----|----|------|----------|------------|-----------------|
 | The Crowned Hollow | 30 | 8,000 | Boss | Spirit (150%) | Physical (75%) | Phase 2: invulnerable. Edren must Defend 3 consecutive turns to end the fight. Summons Hollow Knights. |
 | The Perfect Machine | 30 | 7,000 | Boss | Void (150%) | Flame (75%) | "Healing" it adds HP and triggers counterattacks. Lira's Dismantle command is the key. |
-| The Last Voice | 32 | 6,000 | Boss | Flame (150%) | Spirit (50%) | Petrified forest spirit. Silence-based attacks. Memory-based resolution mechanic. |
+| The Last Voice | 32 | 6,000 | Boss | Flame (150%) | Spirit (50%) | Petrified forest spirit. Silence-based attacks. Torren's Spiritcall Release command is the key — freeing the spirit, not fighting it. |
 | The Open Door | — | — | — | — | — | Non-combat. Sable faces shadows. Choosing to walk through ends the trial. |
-| The Index | 32 | 7,000 | Boss | Spirit (150%) | Void (50%) | Catalogues of death. Rejecting the catalogue (specific ability/dialogue choice) is the key. |
+| The Index | 32 | 7,000 | Boss | Spirit (150%) | Void (50%) | Catalogues of death. Maren must Read One Entry — grieve for one person instead of absorbing/destroying the whole catalogue. |
 
 **Vaelith, the Ashen Shepherd:**
 
@@ -254,7 +261,7 @@ These appear ONLY within their trial clearing.
 |-------|----|----|------|----------|------------|----------|
 | Pre-fight (10-attack threshold) | 34 | Invulnerable | Boss | — | — | All damage = 0 |
 | Phase 1 (ancient magic) | 34 | 50,000–25,000 | Boss | Spirit (125%) | Void (50%), Frost (75%) | Despair, Death |
-| Phase 2 (Pallor-fueled) | 34 | 25,000–0 | Boss | Spirit (150%) | Void (50%) | Despair, Death |
+| Phase 2 (Pallor-fueled) | 34 | 25,000–0 | Boss | Spirit (125%) | Void (50%) | Despair, Death |
 
 Per dungeons-world.md: 800-year-old champion of Despair from the
 previous Pallor cycle. Pre-fight phase mirrors the unwinnable Valdris
@@ -285,7 +292,7 @@ Tier 4 Pallor variants.
 | Pallor Soldier | Soldier | 4 | 34 | Pallor | Standard | Balanced |
 | Pallor Drake | Drake | 4 | 36 | Pallor | Rare | Dangerous |
 | Ley Construct | — (existing) | — | 34 | Construct | Standard | Balanced |
-| Forgewright Automaton | Automata | 3 | 34 | Construct | Standard | Tank |
+| Forgewright Automaton | Automata | 3 (biome variant) | 34 | Construct | Standard | Tank |
 | Corrupted Spirit | — (unique) | — | 34 | Spirit | Standard | Caster |
 | Ashen Serpent | Serpent | 4 | 34 | Pallor | Standard | Glass cannon |
 | Pallor Lurker | Lurker | 4 | 36 | Pallor | Standard | Balanced |
@@ -307,6 +314,9 @@ Tier 4 Pallor variants.
   weapon is pure grey mist. Rare encounter.
 - Corrupted Spirit: what spirits become when ley energy itself turns
   grey. Not infected — transformed at the source.
+- Pallor Drake, Ashen Serpent, and Pallor Lurker are bestiary
+  expansions beyond dungeons-world.md's Convergence encounter table,
+  which only names the first 4 enemies + Pallor Wastes enemies.
 
 ### 4.6 The Convergence — Bosses (Lv 34–40)
 
@@ -375,8 +385,8 @@ running corrupted programs, ley energy warping reality.
 
 | Name | Family | Tier | Lv | Type | Threat | Role |
 |------|--------|------|----|------|--------|------|
-| Crystal Warden (Deep) | Warden | 3 | 30 | Construct | Standard | Tank |
-| Pictograph Wisp | Wisp | 3 | 30 | Spirit | Standard | Caster |
+| Crystal Warden (Deep) | Guardian | 3 (biome variant) | 30 | Construct | Standard | Tank |
+| Pictograph Wisp | Wisp | 3 | 30 | Elemental | Standard | Caster |
 | Ley-Warped Construct | Automata | 3 | 32 | Construct | Standard | Balanced |
 | Warp Sentinel | Sentry | 3 | 32 | Construct | Standard | Balanced |
 | Ley-Born Echo | — (unique) | — | 34 | Spirit | Standard | Caster |
@@ -438,8 +448,8 @@ displaced by the Grey — desperate, aggressive, not yet corrupted.
 | Name | Family | Tier | Lv | Type | Threat | Role |
 |------|--------|------|----|------|--------|------|
 | Thunder Drake | Drake | 3 | 30 | Beast | Dangerous | Dangerous |
-| Fallen Champion | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
-| Blight Leech | Leech | 3 | 30 | Beast | Standard | Caster |
+| Deserter Captain | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
+| Blight Leech | Leech | 3 | 30 | Beast | Dangerous | Caster |
 | Void Moth | Moth | 3 | 30 | Beast | Standard | Caster |
 | Storm Wraith | Wraith | 3 | 30 | Spirit | Standard | Caster |
 | Roc | Hawk | 3 | 32 | Beast | Rare | Dangerous |
@@ -447,7 +457,7 @@ displaced by the Grey — desperate, aggressive, not yet corrupted.
 **Design notes:**
 - Thunder Drake: storm-charged, driven from mountain roosts by the
   Grey. Attacks anything near its new territory.
-- Fallen Champion: deserters from Valdris and Carradan armies. No
+- Deserter Captain: deserters from Valdris and Carradan armies. No
   allegiance left — just survival.
 - Roc: massive raptor. Rare overworld encounter. Swoops from above —
   preemptive strike chance for the enemy.
@@ -493,7 +503,7 @@ These families gain their projected Tier 3 variants in Act III:
 | Hawk | Roc | 32 | Beast | Overworld safe (rare) |
 | Shade | Wraith Shade | 30 | Spirit | Pallor Wastes outer |
 | Warden | Dread Warden | 30 | Undead | Pallor Wastes outer |
-| Wisp | Void Wisp | 30 | Spirit | Pallor Wastes inner |
+| Wisp | Void Wisp | 30 | Elemental | Pallor Wastes inner |
 | Treant | Pallor Treant | 30 | Pallor | Pallor Wastes inner |
 | Bandit | Marauder Captain | 30 | Humanoid | Pallor Wastes inner |
 | Crystal | Void Crystal | 32 | Elemental | Overworld grey |
@@ -502,11 +512,12 @@ These families gain their projected Tier 3 variants in Act III:
 | Sentry | Warp Sentinel | 32 | Construct | Dry Well F6 |
 | Guardian | Tempered Construct | 34 | Construct | Forgotten Forge |
 | Elemental | Slag Elemental | 34 | Elemental | Forgotten Forge |
-| Wisp | Pictograph Wisp | 30 | Spirit | Dry Well F5 |
-| Warden | Crystal Warden (Deep) | 30 | Construct | Dry Well F5 |
+| Wisp | Pictograph Wisp | 30 | Elemental | Dry Well F5 |
+| Guardian | Crystal Warden (Deep) | 30 | Construct | Dry Well F5 |
 | Automata | Ley-Warped Construct | 32 | Construct | Dry Well F6 |
 | Automata | Forgewright Automaton | 34 | Construct | Convergence |
-| Soldier | Fallen Champion | 30 | Humanoid | Overworld safe |
+| Soldier | Deserter Captain | 30 | Humanoid | Overworld safe |
+| Boar | Pallor Boar | 28 | Pallor | Pallor Wastes outer (early deployment; projected Lv 36) |
 
 ### 5.2 Existing Families Gaining Tier 4 Entries
 
@@ -515,7 +526,6 @@ all except Construct families.
 
 | Family | Tier 4 Name | Lv | Type | Location |
 |--------|-------------|----|------|----------|
-| Boar | Pallor Boar | 28 | Pallor | Pallor Wastes outer |
 | Vermin | Pallor Vermin | 30 | Pallor | Pallor Wastes outer |
 | Wolf | Pallor Wolf | 34 | Pallor | Overworld grey |
 | Dead | Pallor Revenant | 34 | Pallor | Overworld grey |
@@ -528,7 +538,7 @@ all except Construct families.
 
 ### 5.3 Family Notes
 
-- **Soldier family** gains Tier 3 (Fallen Champion, Humanoid) but
+- **Soldier family** gains Tier 3 (Deserter Captain, Humanoid) but
   Tier 4 (Pallor Soldier) was already deployed in the Interlude.
   The Convergence Pallor Soldier appears at the projected full-power
   level (Lv 34) rather than the early deployment level (Lv 26).
@@ -540,8 +550,14 @@ all except Construct families.
   Well) alongside existing Void Wisp projection.
 - **Automata family** gains two Tier 3 variants: Ley-Warped Construct
   (Dry Well) and Forgewright Automaton (Convergence).
-- **Warden family** gains Tier 3 biome variant: Crystal Warden Deep
-  (Dry Well Construct) alongside existing Dread Warden (Undead).
+- **Guardian family** gains Tier 3 biome variants: Crystal Warden
+  Deep (Dry Well) and Tempered Construct (Forgotten Forge), both
+  Construct type. Crystal Warden (Deep) moved from Warden to
+  Guardian family because the Warden family is Undead throughout
+  and Constructs cannot be Undead.
+- **Automata family** Forgewright Automaton is a Tier 3 biome variant
+  alongside the projected Haywire Colossus (both Tier 3, different
+  locations).
 
 ---
 
