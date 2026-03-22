@@ -43,7 +43,7 @@ spec uses them without modification:
 - **Formatting:** Em dash (—) for "none" in tables, en dash (–) for
   numeric ranges
 
-## 3. Act II Enemy Roster (39 entries)
+## 3. Act II Enemy Roster (33 entries)
 
 ### 3.1 Ley Line Depths — Floors 1–3 (Level 16–22)
 
