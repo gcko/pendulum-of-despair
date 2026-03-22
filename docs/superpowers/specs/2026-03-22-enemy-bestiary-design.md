@@ -409,7 +409,7 @@ appropriate.
 | Ember Wisp | Wisp | 1 | 5 | Elemental | Low | Weak to Frost — teaches elements |
 | The Flickering | — (unique) | — | 6 | Spirit | Dangerous | Phases solid/intangible — teaches timing |
 | *Ember Drake* | Drake | 1 | 8 | Beast | Dangerous | **Mini-boss** — full-party coordination |
-| *Vein Guardian* | — | — | 12 | Boss | Boss | **Boss** — two-phase construct |
+| *Vein Guardian* | — | — | 12 | Boss | Boss | **Boss** — crystal construct, one-time Reconstruct at 50% |
 
 ### 9.2 Fenmother's Hollow (Floors 1–3 + Cleansing)
 
