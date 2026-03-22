@@ -87,7 +87,7 @@ Per README.md:
 | Forgotten Forge | 32–36 |
 | The Convergence regular | 32–36 |
 | The Convergence bosses | 34–40 |
-| Vaelith (Siege, unwinnable) | 99 (scripted) |
+| Vaelith (Siege, unwinnable) | 150 (scripted) |
 
 > **Note:** README.md lists Act III enemy range as 30–45. Some
 > transitional areas (Ley Depths F5 at 26–28, Pallor Wastes outer
@@ -276,7 +276,7 @@ Pallor abilities (Grey Shockwave, Despair Aura, Ashen Command).
 
 | Lv | HP | Type | Notes |
 |----|----|------|-------|
-| 99 | 999,999 | Boss | Scripted loss. Party attacks deal 0–1 damage. Vaelith attacks with full power (kills in 2–3 hits). After ~5 party turns, cutscene triggers — party wakes in siege aftermath. |
+| 150 | 999,999 | Boss | Scripted loss. Party attacks deal 0–1 damage. Vaelith attacks with full power (kills in 2–3 hits). After ~5 party turns, cutscene triggers — party wakes in siege aftermath. |
 
 Stat block exists for completeness. All immunities. The encounter
 demonstrates Vaelith's overwhelming power before the party earns
@@ -596,7 +596,7 @@ lineage. They exist because the Grey creates novel forms of despair.
 | 4 | The Open Door | — | — | — | Pallor Wastes Trial 4 (non-combat) |
 | 5 | The Index | 7,000 | 32 | Boss | Pallor Wastes Trial 5 |
 | 6 | Vaelith, the Ashen Shepherd | 50,000 | 34 | Boss | Pallor Wastes Section 5 |
-| 7 | Vaelith (Siege, unwinnable) | 999,999 | 99 | Boss | Valdris Siege (Act II) |
+| 7 | Vaelith (Siege, unwinnable) | 999,999 | 150 | Boss | Valdris Siege (Act II) |
 | 8 | Ley Titan | 18,000 | 28 | Boss | Ley Line Depths F5 |
 | 9 | Archive Keeper | 3,000–12,000 | 32 | Boss | Dry Well F5 |
 | 10 | Wellspring Guardian | 28,000 | 36 | Boss | Dry Well F7 |
@@ -668,7 +668,7 @@ pattern established in the Interlude.
 
 ### 9.3 Vaelith Siege Encounter Placement
 
-The unwinnable Vaelith siege encounter (Lv 99) goes in act-iii.md
+The unwinnable Vaelith siege encounter (Lv 150) goes in act-iii.md
 as a special section, NOT in act-ii.md. Rationale: it belongs with
 Vaelith's complete combat arc, and act-ii.md is already merged. A
 cross-reference note in act-ii.md is not needed since

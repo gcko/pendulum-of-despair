@@ -279,10 +279,10 @@ complete combat arc.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Vaelith (Siege)* | Boss | 99 | 999,999 | 346 | 249 | 159 | 259 | 154 | 104 | 0 | 0 | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair, Poison, Silence, Slow, Berserk | Valdris Siege (scripted loss) |
+| *Vaelith (Siege)* | Boss | 150 | 999,999 | 525 | 372 | 240 | 388 | 231 | 153 | 0 | 0 | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair, Poison, Silence, Slow, Berserk | Valdris Siege (scripted loss) |
 
 - **HP:** 999,999 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 99
+- **Type:** Boss | **Level:** 150 (level cap)
 - Scripted loss. Party attacks deal 0--1 damage. Vaelith attacks with
   full power (kills in 2--3 hits). After ~5 party turns, cutscene
   triggers -- party wakes in siege aftermath.

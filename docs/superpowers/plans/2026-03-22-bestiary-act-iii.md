@@ -176,7 +176,7 @@ Vaelith stat table and boss notes per spec Section 4.4:
 - Lira weapon-forging cutscene breaks invulnerability
 
 Also add `### Vaelith — Unwinnable Siege Encounter (Act II)` section:
-- Lv 99, 999,999 HP, all immunities
+- Lv 150, 999,999 HP, all immunities
 - Scripted loss — for completeness
 
 **Cross-reference:** Read dungeons-world.md Section 5 "Plateau's
