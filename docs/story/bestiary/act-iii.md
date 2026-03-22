@@ -6,11 +6,11 @@ Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 65 enemies across 8 areas (47 regular + 5 trial-specific + 15 bosses/mini-bosses, with 2 bosses being multi-stage)
+**Total:** 64 enemies across 8 areas (45 regular + 4 trial-specific + 15 bosses/mini-bosses)
 
 ---
 
-## Pallor Wastes -- Outer Sections (Lv 28--30)
+## Pallor Wastes — Outer Sections (Lv 28–30)
 
 Ashen Approach and early clearings. The corrupted familiar -- things
 players fought before, now deformed by despair. Corruption is
@@ -44,7 +44,7 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
 
 ---
 
-## Pallor Wastes -- Inner Sections + Trial Clearings (Lv 30--32)
+## Pallor Wastes — Inner Sections + Trial Clearings (Lv 30–32)
 
 The shift toward Pallor-born. Things that never existed before the
 Grey. The deeper you go, the less recognizable things become.
@@ -113,7 +113,7 @@ with special resolution mechanics. One is non-combat.
 > encounter. No stat block. Sable faces shadows of herself and must
 > choose to walk back into the alley, toward the party, toward danger.
 
-### The Crowned Hollow (Boss -- Edren's Trial)
+### The Crowned Hollow (Boss —Edren's Trial)
 
 > **Note:** docs/story/dungeons-world.md is authoritative for exact
 > phase mechanics. The following summarizes.
@@ -139,7 +139,7 @@ with special resolution mechanics. One is non-combat.
 - **Steal:** Crown Fragment (crafting)
 - **Drop:** Crown Shard (accessory -- leadership-themed buff)
 
-### The Perfect Machine (Boss -- Lira's Trial)
+### The Perfect Machine (Boss —Lira's Trial)
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
@@ -163,7 +163,7 @@ with special resolution mechanics. One is non-combat.
 - **Drop:** Unfinished Ring (accessory -- Lira-specific, boosts
   Forgewright abilities)
 
-### The Last Voice (Boss -- Torren's Trial)
+### The Last Voice (Boss —Torren's Trial)
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
@@ -186,7 +186,7 @@ with special resolution mechanics. One is non-combat.
 - **Steal:** Petrified Seed (crafting)
 - **Drop:** Petrified Heartwood (crafting material)
 
-### The Index (Boss -- Maren's Trial)
+### The Index (Boss —Maren's Trial)
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
@@ -270,7 +270,7 @@ damage Vaelith. See dungeons-world.md.
   damage), Grey Mist Essence (crafting -- Lira's ultimate weapon
   component)
 
-### Vaelith -- Unwinnable Siege Encounter (Act II)
+### Vaelith — Unwinnable Siege Encounter (Act II)
 
 Stat block exists for completeness. The encounter demonstrates
 Vaelith's overwhelming power before the party earns the ability
@@ -290,7 +290,7 @@ complete combat arc.
 
 ---
 
-## Ley Line Depths -- Floor 5: The Ley Confluence (Lv 26--28)
+## Ley Line Depths — Floor 5: The Ley Confluence (Lv 26–28)
 
 The deepest ley chamber. Raw energy crystallized into living forms.
 Ley energy resists the Pallor -- less corrupted than the surface.
@@ -300,7 +300,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Ley Construct | Construct | 26 | 1,548 | 0 | 49 | 36 | 42 | 30 | 28 | 51 | 92 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Ley Line Depths F5 |
-| Vein Stalker | Humanoid | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 148 | 264 | Potion (75%) | Ley Residue (25%) | — | — | — | — | Ley Line Depths F4--F5 (rare) |
+| Vein Stalker | Humanoid | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 148 | 264 | Potion (75%) | Ley Residue (25%) | — | — | — | — | Ley Line Depths F4–F5 (rare) |
 | Confluence Elemental | Elemental | 28 | 1,767 | 98 | 40 | 38 | 51 | 32 | 30 | 59 | 105 | Element Shard (75%) | Elemental Core (25%) | — | — | — | Petrify | Ley Line Depths F5 |
 
 > **Confluence Elemental mechanic:** Casts spells on a rotating
@@ -345,7 +345,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 
 ---
 
-## Dry Well of Aelhart -- Floors 5--7 (Lv 30--36)
+## Dry Well of Aelhart — Floors 5--7 (Lv 30–36)
 
 Ancient builder chambers. Ley experiments gone wrong -- Constructs
 running corrupted programs, ley energy warping reality. Accessed
@@ -353,7 +353,7 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Crystal Warden (Deep) | Construct | 30 | 2,200 | 0 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F5--F6 |
+| Crystal Warden (Deep) | Construct | 30 | 2,200 | 0 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F5–F6 |
 | Pictograph Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | — | — | — | Petrify | Dry Well F5 |
 | Ley-Warped Construct | Construct | 32 | 2,247 | 0 | 59 | 43 | 50 | 36 | 33 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F6 |
 | Warp Sentinel | Construct | 32 | 2,247 | 0 | 59 | 43 | 50 | 36 | 33 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F6 |
@@ -375,14 +375,14 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Archive Keeper* | Boss | 32 | 3,000--12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Keeper's Index (100%) | Archive Keeper's Lens (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
+| *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Keeper's Index (100%) | Archive Keeper's Lens (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
 | *Wellspring Guardian* | Boss | 36 | 28,000 | 126 | 97 | 62 | 100 | 60 | 43 | 8,000 | 12,000 | Builder's Crest (100%) | Nexus Crest (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F7 (The Wellspring) |
 
 ### Archive Keeper (Mini-Boss)
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
-- **HP:** 3,000--12,000 (variable, per dungeons-world.md)
+- **HP:** 3,000–12,000 (variable, per dungeons-world.md)
 - **Type:** Boss | **Level:** 32
 - A knowledge construct -- floating geometric form that projects
   pictographic questions. Poses three translation puzzles and attacks
@@ -420,7 +420,7 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 
 ---
 
-## The Forgotten Forge -- Secret Dungeon (Lv 32--36)
+## The Forgotten Forge — Secret Dungeon (Lv 32–36)
 
 Five floors beneath the Dry Well of Aelhart. Ancient ley-forging
 facility where pre-Pallor builders experimented with weaponized
@@ -432,10 +432,10 @@ the Archivist's Codex to decipher.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Forge Sentinel | Construct | 32 | 2,471 | 0 | 59 | 49 | 50 | 36 | 25 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Forgotten Forge F1--F2 |
-| Tempered Construct | Construct | 34 | 2,508 | 0 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Forgotten Forge F1--F2 |
+| Forge Sentinel | Construct | 32 | 2,471 | 0 | 59 | 49 | 50 | 36 | 25 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Forgotten Forge F1–F2 |
+| Tempered Construct | Construct | 34 | 2,508 | 0 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Forgotten Forge F1–F2 |
 | Slag Elemental | Elemental | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Forgotten Forge F3 |
-| Grief Residue | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Forgotten Forge F3--F4 |
+| Grief Residue | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Forgotten Forge F3–F4 |
 | Hollow Smith | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Forge Hammer (25%) | Spirit | — | — | Despair, Death | Forgotten Forge F4 |
 
 **Design notes:**
@@ -501,7 +501,7 @@ The weapon awakens -- concentrated despair of centuries given form.
 - **Steal:** Despair Shard (crafting)
 - **Drop:** Grey Cleaver (Torren-exclusive greatsword)
 
-### Grey Cleaver -- Cursed Weapon Quest
+### Grey Cleaver — Cursed Weapon Quest
 
 **Reward:** Grey Cleaver (Torren-exclusive greatsword)
 
@@ -528,7 +528,7 @@ tracked per-weapon, not per-character.
 
 ---
 
-## The Convergence (Lv 32--36)
+## The Convergence (Lv 32–36)
 
 Ground zero. The Grey at full power. The final dungeon --
 4 phases: Outer Ring, Anchor Stations (x3, party split),
@@ -555,7 +555,7 @@ Central Platform, and The Door. ~90% Pallor encounters.
   turns grey. Not infected -- transformed at the source.
 - Ashen Serpent: glass cannon. Fast, venomous, brittle.
 
-### Phase 4: The Door -- Survival Gauntlet
+### Phase 4: The Door — Survival Gauntlet
 
 The party approaches the Door. Waves of enemies attack in
 sequence. No rest between waves. Cael's silhouette grows smaller
@@ -651,7 +651,7 @@ in the grey light.
 
 ---
 
-## Overworld Act III -- Safe Zones (Lv 28--32)
+## Overworld Act III — Safe Zones (Lv 28–32)
 
 Near surviving towns (Bellhaven, The Pendulum, Oases). Tier 3
 family enemies displaced by the Grey -- desperate, aggressive,
@@ -659,11 +659,11 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Thunder Drake | Beast | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Drake Scale (25%) | — | — | — | — | Overworld (mountain, highland) |
+| Thunder Drake | Beast | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Drake Scale (25%) | Ley | Storm | — | — | Overworld (mountain, highland) |
 | Deserter Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Overworld (roads, ruins) |
-| Blight Leech | Beast | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Leech Ichor (25%) | — | — | — | — | Overworld (swamp, coast) |
-| Void Moth | Beast | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Beast Hide (75%) | Moth Wing (25%) | — | — | — | — | Overworld (forest, grassland) |
-| Storm Wraith | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Overworld (highland, ruins) |
+| Blight Leech | Beast | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Leech Ichor (25%) | Flame | — | — | — | Overworld (swamp, coast) |
+| Void Moth | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | Ley | — | Void | Petrify | Overworld (forest, grassland) |
+| Storm Wraith | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Earth | — | — | Poison, Petrify | Overworld (highland, ruins) |
 | Roc | Beast | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 200 | 348 | Beast Hide (75%) | Roc Feather (25%) | — | — | — | — | Overworld (mountain, rare ~5%) |
 
 **Design notes:**
@@ -679,7 +679,7 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
 
 ---
 
-## Overworld Act III -- Grey Zones (Lv 32--35)
+## Overworld Act III — Grey Zones (Lv 32–35)
 
 Approaching the Convergence. Pallor Tier 4 variants and Pallor-born.
 The closer to the Convergence, the higher the encounter rate.
@@ -711,12 +711,12 @@ progresses here.
 
 ## Act III Summary
 
-- **Total:** 65 enemies across 8 areas (47 regular + 5 trial-specific +
-  13 bosses/mini-bosses)
+- **Total:** 64 enemies across 8 areas (45 regular + 4 trial-specific +
+  15 bosses/mini-bosses)
 - **Type distribution:** Pallor (~55%), Construct (15%),
   Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
   Humanoid (2%)
-- **Pallor gradient:** 20% (safe zones) -> 90% (Convergence)
+- **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
 - **Tier 3 debuts:** Thunder Drake, Deserter Captain, Blight Leech,
   Void Moth, Storm Wraith, Roc, Wraith Shade, Dread Warden,
   Void Wisp, Pallor Treant, Marauder Captain, Void Crystal,
