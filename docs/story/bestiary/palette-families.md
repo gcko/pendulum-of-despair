@@ -114,7 +114,7 @@ stat derivation, and naming conventions.
 | 1 | Bone Warden | 4 | Undead | — | Guard Stance (DEF up), Heavy Swing | Low |
 | 2 | Tomb Warden | 22 | Undead | — | +Shield Bash (Stun), +Rally Dead (summon Restless Dead) | Standard |
 | 3 | Dread Warden | 32 | Undead | Resist->Frost, Resist->Storm | +Cursed Guard (counter-attack on hit), +Death Strike (Death chance) | Dangerous |
-| 4 | Pallor Warden | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Aura (passive Despair buildup), +Unbreakable (auto DEF up at 50% HP) | Rare |
+| 4 | Pallor Warden | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Aura (passive Despair buildup), +Unbreakable (auto DEF up at 50% HP) | Dangerous |
 
 > Wardens are armored undead -- skeletal knights and guardians. Tank
 > role throughout all tiers. The Pallor variant is a wall that punishes

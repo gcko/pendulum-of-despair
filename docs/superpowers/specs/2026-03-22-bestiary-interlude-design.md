@@ -5,7 +5,7 @@
 **Scope:** Populate interlude.md with all Interlude enemies: Rail Tunnels,
 Corrund Undercity, Valdris Crown Catacombs, Caldera Undercity, Axis Tower,
 and Ironmark Citadel Dungeons. Introduce the Pallor Infection mechanic.
-Add 3 new palette-swap families. Update palette-families.md with Tier 3/4
+Add 4 new palette-swap families. Update palette-families.md with Tier 3/4
 entries for existing families.
 **Gap:** 1.3 (Enemy Bestiary)
 **Depends On:** Sub-project 2a (COMPLETE — PR #20 merged)
@@ -226,13 +226,13 @@ Non-preventable story moments:
 - **Type distribution:** Pallor (~40–45%), Beast (15%), Construct (15%),
   Spirit (12%), Undead (8%), Humanoid (8%), Elemental (5%)
 - **Pallor presence:** 30% → 75% escalating across dungeons
-- **New families:** Guardian, Royal Wraith, Hound (3)
+- **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **Tier 3 debuts:** Vermin, Shade, Elemental, Automata, Crawler,
   Sprite, Soldier, Dead
 - **Tier 4 debuts:** Soldier, Shade, Warden, Dead, Bandit, Wolf
 - **New mechanic:** Pallor Infection (4 source types, 3 set-pieces)
 
-## 5. New Palette-Swap Families (3)
+## 5. New Palette-Swap Families (4)
 
 ### 5.1 Guardian Family
 
@@ -376,7 +376,7 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 | File | Action | Purpose |
 |------|--------|---------|
 | `docs/story/bestiary/interlude.md` | Rewrite (from TBD) | Full Interlude enemy stat tables (52 entries) |
-| `docs/story/bestiary/palette-families.md` | Modify | Add 3 new families, Tier 3/4 for ~15 existing |
+| `docs/story/bestiary/palette-families.md` | Modify | Add 4 new families, Tier 3/4 for ~15 existing |
 | `docs/story/bestiary/CONTINUATION.md` | Modify | Update Sub-project 2b status |
 | `docs/analysis/game-design-gaps.md` | Modify | Check off Interlude items in Gap 1.3 |
 
@@ -400,4 +400,4 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 | Scripted set-pieces | 3 guaranteed transformations | Unforgettable narrative moments |
 | Grey Hound/Guardian | Construct deals Despair (designed, not infected) | Foreshadows Act III/IV Pallor weapon concept |
 | Boss mechanics | Summary only, reference dungeons source | Lesson from PR #20 — don't duplicate canonical source |
-| New families | 3 (Guardian, Royal Wraith, Hound) | Minimal — Interlude reuses/evolves existing families |
+| New families | 4 (Guardian, Royal Wraith, Hound, Sentry) | Minimal — Interlude reuses/evolves existing families |

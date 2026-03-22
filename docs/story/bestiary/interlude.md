@@ -71,6 +71,14 @@ during battle.
 
 ---
 
+> **Level range note:** Some early Interlude enemies (Rail Sentry Lv 18,
+> Grey Mite Lv 18, Sewer Rat Lv 18) fall below the Interlude recommended
+> party level of 20. These enemies appear in the earliest Interlude
+> dungeons when the party arrives from Act II at approximately Lv 18–20.
+> The transition is gradual, not a sharp cutoff.
+
+---
+
 ## Rail Tunnels
 
 Recommended party level: 18–22. Corrupted maintenance tunnels
@@ -240,13 +248,13 @@ fallen. Kole channels the Pallor directly.
 | Compact Officer | Humanoid | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Axis Tower (Floors 1–3) |
 | Forgewright Sentry | Construct | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (Floors 2–3) |
 | Arcanite Hound | Construct | 23 | 1,248 | 0 | 44 | 32 | 38 | 27 | 26 | 40 | 74 | Scrap Metal (75%) | Hound Gear (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (Floors 1–2) |
-| Pallor Soldier | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Pallor Insignia (25%) | Spirit | — | — | Despair, Death | Axis Tower (Floors 4–5, Ironmark tunnel) |
+| Pallor Soldier | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Axis Tower (Floors 4–5, Ironmark tunnel) |
 | Pallor Wisp | Pallor | 24 | 1,344 | 84 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Axis Tower (infection source, 60%) |
 | Compact Gyrocopter | Construct | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (tower defense, spawn-on-death) |
 | Downed Pilot | Humanoid | 22 | 1,155 | 0 | 43 | 31 | 36 | 26 | 25 | 22 | 40 | Potion (75%) | Pilot's Goggles (25%) | — | — | — | — | Axis Tower (spawned by Gyrocopter) |
 | Elite Guard | Humanoid | 26 | 1,548 | 0 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Elite Insignia (25%) | — | — | — | — | Axis Tower (Floors 4–5, Kole's personal guard) |
-| Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | — | — | Despair, Death | Axis Tower (Floors 4–5, rare) |
-| Pallor Brigand | Pallor | 26 | 1,114 | 91 | 56 | 25 | 42 | 30 | 28 | 127 | 229 | Potion (75%) | Pallor Blade (25%) | Spirit | — | — | Despair, Death | Axis Tower (rare, deserters consumed by despair) |
+| Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Axis Tower (Floors 4–5, rare) |
+| Pallor Brigand | Pallor | 26 | 1,114 | 91 | 56 | 25 | 42 | 30 | 28 | 127 | 229 | Potion (75%) | Pallor Blade (25%) | Spirit | Void | — | Despair, Death | Axis Tower (rare, deserters consumed by despair) |
 | *General Vassar Kole* | Boss | 28 | 30,000 | 98 | 78 | 49 | 81 | 48 | 36 | 8,000 | 12,000 | Kole's Epaulettes (100%) | Map to the Convergence (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Ironmark Citadel Command Chamber (via Axis Tower Floor 5 tunnel) |
 
 ### Scripted Set-Piece: "The Garrison Falls"
@@ -286,11 +294,11 @@ the halls with empty eyes.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Pallor-Touched Soldier | Humanoid | 25 | 1,445 | 0 | 48 | 35 | 41 | 29 | 28 | 47 | 85 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Ironmark Citadel (Cell Block, Guard Station) |
 | Pallor Wisp | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 51 | 91 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (infection source, 75%) |
-| Pallor Warden | Pallor | 26 | 1,702 | 91 | 49 | 41 | 42 | 30 | 21 | 85 | 153 | — | Pallor Ward (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (Inner Ring) |
-| Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (shared with Axis Tower) |
+| Pallor Warden | Pallor | 26 | 1,702 | 91 | 49 | 41 | 42 | 30 | 21 | 85 | 153 | — | Pallor Ward (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (Inner Ring) |
+| Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (shared with Axis Tower) |
 | Grey Mite | Pallor | 24 | 913 | 84 | 41 | 33 | 39 | 28 | 27 | 10 | 19 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (infesting cells) |
-| Pallor Revenant | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | — | Bone Dust (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (Inner Ring) |
-| Pallor Wolf | Pallor | 26 | 1,114 | 91 | 56 | 25 | 42 | 30 | 28 | 127 | 229 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (Outer Ring, patrol) |
+| Pallor Revenant | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | — | Bone Dust (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (Inner Ring) |
+| Pallor Wolf | Pallor | 26 | 1,114 | 91 | 56 | 25 | 42 | 30 | 28 | 127 | 229 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (Outer Ring, patrol) |
 
 ### Scripted Set-Piece: "The Last Holdout"
 

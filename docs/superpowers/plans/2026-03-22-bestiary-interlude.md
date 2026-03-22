@@ -5,7 +5,7 @@
 > Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Populate interlude.md with 52 Interlude enemies across 6 dungeons,
-introduce the Pallor Infection mechanic, add 3 new families, and update
+introduce the Pallor Infection mechanic, add 4 new families, and update
 ~15 existing families with Tier 3/4 entries.
 
 **Architecture:** Pure documentation pass — rewrite interlude.md from TBD
@@ -23,7 +23,7 @@ palette-families.md, update CONTINUATION.md and gap tracker.
 | File | Action | Purpose |
 |------|--------|---------|
 | `docs/story/bestiary/interlude.md` | Rewrite | Full Interlude enemy stat tables (52 entries) + Pallor Infection rules |
-| `docs/story/bestiary/palette-families.md` | Modify | Add 3 new families, Tier 3/4 for ~15 existing |
+| `docs/story/bestiary/palette-families.md` | Modify | Add 4 new families, Tier 3/4 for ~15 existing |
 | `docs/story/bestiary/CONTINUATION.md` | Modify | Update Sub-project 2b status |
 | `docs/analysis/game-design-gaps.md` | Modify | Check off Interlude items in Gap 1.3 |
 
@@ -189,7 +189,7 @@ Include **"The Last Holdout"** scripted set-piece (spec Section
   Construct (15%), Spirit (12%), Undead (8%), Humanoid (8%),
   Elemental (5%)
 - **Pallor presence:** 30% → 75% escalating
-- **New families:** Guardian, Royal Wraith, Hound (3)
+- **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **New mechanic:** Pallor Infection (4 source types,
   3 scripted set-pieces, Construct immunity)
 - **Tier 3 debuts:** Vermin, Shade, Elemental, Automata,
@@ -230,7 +230,7 @@ Commit message: `docs(shared): populate Interlude bestiary (52 enemies, Pallor I
 
 ## Chunk 2: Palette Family Updates
 
-### Task 2: Add 3 new families to palette-families.md
+### Task 2: Add 4 new families to palette-families.md
 
 **Files:**
 - Modify: `docs/story/bestiary/palette-families.md`
@@ -256,7 +256,7 @@ Tier 1 Element Shift = — (em dash) for all three.
 ```bash
 git add docs/story/bestiary/palette-families.md
 ```
-Commit message: `docs(shared): add 3 new Interlude families (Guardian, Royal Wraith, Hound)`
+Commit message: `docs(shared): add 4 new Interlude families (Guardian, Royal Wraith, Hound, Sentry)`
 
 ---
 
@@ -336,7 +336,7 @@ Change Sub-project 2b row to:
 | **2b: Interlude** | COMPLETE | — (pending PR) | 52 | interlude.md, palette-families.md |
 ```
 
-Update family count from 28 to 31 (28 + 3 new).
+Update family count from 28 to 32 (28 + 4 new).
 
 - [ ] **Step 2: Commit**
 
@@ -360,7 +360,7 @@ In Gap 1.3 "What's Needed" checklist, check off:
 - [ ] **Step 2: Add progress tracking row**
 
 ```markdown
-| 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic. 3 new families, ~15 Tier 3/4 updates. | <commit-sha> |
+| 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic. 4 new families, ~15 Tier 3/4 updates. | <commit-sha> |
 ```
 
 - [ ] **Step 3: Commit**
@@ -392,7 +392,7 @@ pnpm lint && pnpm test
 6. All Pallor enemies: Weak→Spirit, Immune→Despair
 7. All Boss enemies: Death+Petrify+Stop+Sleep+Confusion immunities
 8. Gold/Exp match logistic formulas × threat (spot-check 3)
-9. All 3 new families present in palette-families.md
+9. All 4 new families present in palette-families.md
 10. All ~15 existing family updates applied
 11. Pallor Infection rules complete and unambiguous
 12. 3 scripted set-pieces documented
