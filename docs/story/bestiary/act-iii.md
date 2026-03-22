@@ -354,7 +354,7 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Crystal Warden (Deep) | Construct | 30 | 2,200 | 0 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F5–F6 |
-| Pictograph Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | — | — | — | Petrify | Dry Well F5 |
+| Pictograph Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | — | — | Ley | Petrify | Dry Well F5 |
 | Ley-Warped Construct | Construct | 32 | 2,247 | 0 | 59 | 43 | 50 | 36 | 33 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F6 |
 | Warp Sentinel | Construct | 32 | 2,247 | 0 | 59 | 43 | 50 | 36 | 33 | 80 | 139 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dry Well F6 |
 | Ley-Born Echo | Spirit | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Dry Well F7 |
@@ -691,7 +691,7 @@ progresses here.
 | Pallor Wolf | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 93 | 160 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Crawler | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Crawler Shell (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Wraith | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
-| Pallor Regent | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 232 | 400 | Pallor Sample (75%) | Roc Feather (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones (rare ~5%) |
+| Pallor Roc | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 232 | 400 | Pallor Sample (75%) | Roc Feather (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones (rare ~5%) |
 | Void Crystal | Elemental | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 80 | 139 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Overworld grey zones (static, avoidable) |
 
 **Design notes:**
@@ -700,7 +700,7 @@ progresses here.
   pack identity.
 - Pallor Revenant: arms too long, joints bent wrong. Not undead --
   Pallor. The dead risen by grey energy.
-- Pallor Regent: a Roc consumed by the Grey. Wings fused into grey
+- Pallor Roc: a Roc consumed by the Grey. Wings fused into grey
   membranes. Rare, powerful (x1.5 rewards).
 - Void Crystal: ley crystals corrupted by proximity to Convergence.
   Elemental type -- absorbs Void element. Static encounter visible
@@ -722,10 +722,12 @@ progresses here.
   Confluence Elemental, Forge Sentinel, Warp Sentinel,
   Tempered Construct, Slag Elemental, Pictograph Wisp,
   Crystal Warden (Deep), Ley-Warped Construct,
-  Forgewright Automaton (21 total)
+  Forgewright Automaton, Pallor Wraith (22 total)
 - **Tier 4 debuts:** Pallor Vermin, Pallor Wolf, Pallor Revenant,
-  Pallor Crawler, Pallor Wraith, Pallor Regent, Pallor Drake,
-  Ashen Serpent, Pallor Lurker, Pallor Soldier (10 total)
+  Pallor Crawler, Pallor Drake, Ashen Serpent, Pallor Lurker,
+  Pallor Soldier (8 total — all already existed in palette-families,
+  deployed here at Act III levels)
+- **Unique Pallor-born:** Pallor Roc (corrupted Roc, no family tier)
 - **New mechanic:** Grey Cleaver cursed weapon quest
   (100 Pallor encounters to purify)
 - **Secret dungeon:** Forgotten Forge (5 floors, 2-stage boss)

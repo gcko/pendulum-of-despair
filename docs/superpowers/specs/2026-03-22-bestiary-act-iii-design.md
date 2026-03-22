@@ -473,7 +473,7 @@ The closer to the Convergence, the higher the encounter rate.
 | Pallor Wolf | Wolf | 4 | 34 | Pallor | Standard | Glass cannon |
 | Pallor Crawler | Crawler | 4 | 34 | Pallor | Standard | Balanced |
 | Pallor Wraith | Wraith | 4 | 34 | Pallor | Standard | Caster |
-| Pallor Regent | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
+| Pallor Roc | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
 | Void Crystal | Crystal | 3 | 32 | Elemental | Standard | Caster |
 
 **Design notes:**
@@ -481,7 +481,7 @@ The closer to the Convergence, the higher the encounter rate.
   Fast, vicious. Despair manifests as loss of pack identity.
 - Pallor Revenant: arms too long, joints bent wrong. Not undead —
   Pallor. The dead risen by grey energy.
-- Pallor Regent: a Roc consumed by the Grey. Wings fused into grey
+- Pallor Roc: a Roc consumed by the Grey. Wings fused into grey
   membranes. Rare, powerful.
 - Void Crystal: ley crystals corrupted by proximity to Convergence.
   Static encounter — visible on overworld, avoidable.
@@ -531,7 +531,7 @@ all except Construct families.
 | Dead | Pallor Revenant | 34 | Pallor | Overworld grey |
 | Crawler | Pallor Crawler | 34 | Pallor | Overworld grey |
 | Wraith | Pallor Wraith | 34 | Pallor | Overworld grey |
-| Hawk | Pallor Regent | 34 | Pallor | Overworld grey (rare) |
+| Hawk | Pallor Roc | 34 | Pallor | Overworld grey (rare) |
 | Drake | Pallor Drake | 36 | Pallor | Convergence (rare) |
 | Serpent | Ashen Serpent | 34 | Pallor | Convergence |
 | Lurker | Pallor Lurker | 36 | Pallor | Convergence |

@@ -522,7 +522,7 @@ Enemies (spec Section 4.10):
 | Thunder Drake | Drake | 3 | 30 | Beast | Dangerous | Dangerous |
 | Deserter Captain | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
 | Blight Leech | Leech | 3 | 30 | Beast | Dangerous | Caster |
-| Void Moth | Moth | 3 | 30 | Beast | Standard | Caster |
+| Void Moth | Moth | 3 | 30 | Elemental | Standard | Caster |
 | Storm Wraith | Wraith | 3 | 30 | Spirit | Standard | Caster |
 | Roc | Hawk | 3 | 32 | Beast | Rare | Dangerous |
 
@@ -548,7 +548,7 @@ Enemies (spec Section 4.11):
 | Pallor Wolf | Wolf | 4 | 34 | Pallor | Standard | Glass cannon |
 | Pallor Crawler | Crawler | 4 | 34 | Pallor | Standard | Balanced |
 | Pallor Wraith | Wraith | 4 | 34 | Pallor | Standard | Caster |
-| Pallor Regent | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
+| Pallor Roc | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
 | Void Crystal | Crystal | 3 | 32 | Elemental | Standard | Caster |
 
 **Notes:** All Pallor enemies Weak=Spirit, Immune=Despair+Death.
@@ -586,7 +586,7 @@ Verify:
 2. Storm Wraith (Spirit): Immune=Poison+Petrify
 3. Void Crystal (Elemental): correct elemental profile
 4. Thunder Drake and Blight Leech use Dangerous threat (×1.0)
-5. Roc and Pallor Regent use Rare threat (×1.5)
+5. Roc and Pallor Roc use Rare threat (×1.5)
 6. Count: 6 + 6 = 12 entries
 
 ```bash
@@ -620,7 +620,7 @@ Families to update (organized by location):
 **Overworld safe:**
 - Drake: Thunder Drake | 30 | Beast | Weak→Frost→Weak→Storm | +Thunder Breath, +Dive Bomb | Dangerous
 - Leech: Blight Leech | 30 | Beast | (per palette-families projection) | +Blight Drain, +Toxin Cloud | Dangerous
-- Moth: Void Moth | 30 | Beast | (per projection) | +Dark Spore, +Wing Scatter | Standard
+- Moth: Void Moth | 30 | Elemental | (per projection) | +Dark Spore, +Wing Scatter | Standard
 - Wraith: Storm Wraith | 30 | Spirit | (per projection) | +Storm Bolt, +Wail | Standard
 - Hawk: Roc | 32 | Beast | (per projection) | +Dive Strike, +Wing Gust | Rare
 - Soldier: Deserter Captain | 30 | Humanoid | — | +Rally Cry, +Desperate Slash | Standard
@@ -700,7 +700,7 @@ create new Tier 4 rows. The existing entries are:
 | Dead | Pallor Revenant | 40 | 34 |
 | Crawler | Pallor Crawler | 46 | 34 |
 | Wraith | Pallor Wraith | 44 | 34 |
-| Hawk | Pallor Regent | 46 | 34 |
+| Hawk | Pallor Roc | 46 | 34 |
 | Drake | Pallor Drake | 50 | 36 |
 | Serpent | Ashen Serpent | 42 | 34 |
 | Lurker | Pallor Lurker | 46 | 36 |
