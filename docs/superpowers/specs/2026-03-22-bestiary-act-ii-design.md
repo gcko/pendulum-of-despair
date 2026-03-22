@@ -55,7 +55,7 @@ spec uses them without modification:
 | Cave Vermin | Vermin | 2 | 16 | Beast | Low | Tier 2 Vermin, +Rabid Frenzy (2-hit) |
 | Cave Crawler | Crawler | 1 | 17 | Beast | Standard | Hard shell, high DEF, back attack bonus on underbelly |
 | Prism Moth | Moth | 1 | 18 | Elemental | Low | Swarm, Refraction (group magic buff), individually weak |
-| Ley Wisp | Wisp | 2 | 18 | Elemental | Standard | Tier 2 Wisp, absorbs magic, weak to physical |
+| Ley Wisp | Wisp | 2 | 18 | Elemental | Standard | Tier 2 Wisp, absorbs Flame, weak to Frost |
 | Deep Serpent | Serpent | 2 | 19 | Beast | Standard | Ley-infused, Constrict (Stun + DoT) |
 | Crystal Sentry | Crystal | 2 | 20 | Elemental | Standard | Slow, heavy physical, shrapnel AoE on death |
 | *Ley Colossus* | — (unique) | — | 22 | Elemental | Dangerous | **Mini-boss.** Absorbs magic, vulnerable to physical. Phase 1: crystal fists + Ley Pulse. Phase 2 (50%): shatters/reforms, faster, gains Prism Beam. |
@@ -125,7 +125,7 @@ during all waves and the boss. Cannot be controlled by the player.
 | Name | Family | Tier | Lv | Type | Threat | Biome |
 |------|--------|------|----|------|--------|-------|
 | Tunnel Mite | Mite | 2 | 14 | Beast | Low | Mountain caves |
-| Coastal Crab | Crawler | 1 | 14 | Beast | Low | Bellhaven coast |
+| Coastal Crab | — | — | 14 | Beast | Low | Bellhaven coast |
 | Road Viper | Serpent | 2 | 15 | Beast | Low | Roads, grassland |
 | Sewer Leech | Leech | 2 | 15 | Beast | Low | Coastal, swamp |
 | Highwayman | Bandit | 2 | 15 | Humanoid | Standard | Roads between cities |

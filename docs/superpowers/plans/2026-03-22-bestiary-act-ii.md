@@ -257,7 +257,7 @@ When a Compact Gyrocopter reaches 0 HP:
 | Name | Family | Tier | Lv | Type | Threat | Role | Biome |
 |------|--------|------|----|------|--------|------|-------|
 | Tunnel Mite | Mite | 2 | 14 | Beast | Low | Swarm | Mountain caves |
-| Coastal Crab | Crawler | 1 | 14 | Beast | Low | Tank | Bellhaven coast |
+| Coastal Crab | — | — | 14 | Beast | Low | Tank | Bellhaven coast |
 | Road Viper | Serpent | 2 | 15 | Beast | Low | Glass cannon | Roads, grassland |
 | Sewer Leech | Leech | 2 | 15 | Beast | Low | Balanced | Coastal, swamp |
 | Highwayman | Bandit | 2 | 15 | Humanoid | Standard | Balanced | Roads between cities |

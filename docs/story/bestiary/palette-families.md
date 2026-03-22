@@ -175,7 +175,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Bog Leech | 7 | Beast | — | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
-| 2 | Sewer Leech | 15 | Beast | — | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
+| 2 | Sewer Leech | 15 | Beast | — | +Blood Siphon (MP drain), +Attach (persistent drain) | Low |
 | 3 | Blight Leech | 30 | Beast | Weak->Flame | +Plague Drain (HP drain + Poison), +Swarm Call (summon 2 Leeches) | Dangerous |
 
 > Leeches are drain specialists. Three tiers is sufficient -- they
@@ -261,7 +261,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Thornback Beetle | 3 | Beast | — | Pinch, Thorn Counter (damage on physical hit) | Low |
-| 2 | Iron Beetle | 16 | Beast | — | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
+| 2 | Iron Beetle | 16 | Beast | — | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Low |
 | 3 | Blight Beetle | 32 | Beast | Weak->Flame | +Plague Shell (Poison counter), +Acid Spray (DEF down AoE) | Dangerous |
 
 > Beetles are defensive beasts. Their counter-attack gimmick scales
@@ -320,7 +320,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Wild Boar | 5 | Beast | — | Gore (high ATK), Charge (damage + knockback) | Standard |
-| 2 | Razorback | 17 | Beast | — | +Enrage (ATK up when hit), +Trample (AoE physical) | Dangerous |
+| 2 | Razorback | 17 | Beast | — | +Enrage (ATK up when hit), +Trample (AoE physical) | Standard |
 | 3 | Pallor Boar | 36 | Pallor | Weak->Spirit, Resist->Void | +Despair Charge (AoE Despair + damage), +Berserk Frenzy (multi-hit, loses accuracy) | Rare |
 
 > Boars are glass cannon beasts -- high ATK, low DEF. Three tiers
@@ -338,7 +338,7 @@ stat derivation, and naming conventions.
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Wayward Wolf | 6 | Beast | — | Bite, Pack Howl (ATK up for all wolves in encounter) | Standard |
-| 2 | Dire Wolf | 16 | Beast | — | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
+| 2 | Dire Wolf | 16 | Beast | — | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Standard |
 | 3 | Shadow Wolf | 33 | Beast | Weak->Ley, Resist->Void | +Shadow Fang (Void damage + Blind), +Pack Tactics (coordinated 2-wolf combo attack) | Dangerous |
 | 4 | Pallor Wolf | 45 | Pallor | Weak->Spirit, Resist->Void | +Pallor Howl (AoE Despair + ATK up pack), +Hunt (guaranteed back-row target), +Devour (HP drain on KO'd target) | Rare |
 

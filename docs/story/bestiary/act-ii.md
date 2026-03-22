@@ -59,7 +59,7 @@ and the first signs of the Pallor's reach.
 | Pipe Wraith | Spirit | 19 | 897 | 66 | 30 | 27 | 36 | 25 | 23 | 30 | 56 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Ashmark Factory Depths |
 | Overclocked Automata | Construct | 20 | 882 | 0 | 46 | 21 | 34 | 24 | 24 | 32 | 60 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Ashmark Factory Depths |
 | Pallor-Touched Worker | Humanoid | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 0 | 0 | Potion (75%) | — | — | — | — | — | Ashmark Factory Depths (non-lethal) |
-| *The Forge Warden* | Boss | 24 | 8,500 | 84 | 69 | 42 | 70 | 42 | 32 | 2,000 | 3,500 | Corrupted Tuning Fork (100%) | Drayce's Failsafe Core (100%) | Storm, Spirit | Flame, Earth | — | Death, Petrify, Stop, Sleep, Confusion, Poison | Ashmark Factory Depths (boss) |
+| *The Forge Warden* | Boss | 24 | 8,500 | 84 | 69 | 42 | 70 | 42 | 32 | 2,000 | 3,500 | Corrupted Tuning Fork (100%) | Drayce's Failsafe Core (100%) | Storm (150%), Spirit (125%) | Flame (50%), Earth (75%) | — | Death, Petrify, Stop, Sleep, Confusion, Poison | Ashmark Factory Depths (boss) |
 
 > **Pallor foreshadowing:** The Pallor-Touched Worker is the first
 > encounter where the party fights a human victim of the Pallor. At
@@ -163,21 +163,15 @@ When a Compact Gyrocopter reaches 0 HP:
 - **HP:** 25,000 (per dungeons-world.md)
 - **Type:** Boss
 - **Phase 1 -- Ranged Engagement (25,000–15,000 HP):**
-  - Battering Advance -- cumulative party damage, 1-turn charge. After 5
-    turns, breaches the wall and Phase 2 begins. Dealing 1,500+ cumulative
-    party damage in a single turn delays the advance by 1 turn.
-  - Despair Pulse (passive) -- all party members lose 5% max MP per turn from Pallor proximity
-  - Compact Escalade -- summons 2 Compact Soldiers (once per phase)
-  - Lord Haren's Orders -- if Cordwyn HP > 50%, Ram targets her
-    preferentially (player must keep Cordwyn alive)
+  Battering Advance, Despair Pulse (passive MP drain), Compact Escalade
+  (soldier reinforcements), Lord Haren's Orders (conditional). See
+  dungeons-world.md Valdris Siege for exact mechanics.
 - **Phase 2 -- The Breach (15,000–7,500 HP):**
-  - Drill Arm -- heavy single-target physical
-  - Pallor Shrapnel -- AoE + Despair (30% chance)
-  - Engine Surge -- self ATK buff, 2-turn duration
+  Drill Arm, Pallor Shrapnel, Engine Surge (knockback). See
+  dungeons-world.md.
 - **Phase 3 -- The Pallor Core (below 7,500 HP):**
-  - Despair Pulse (active) -- guaranteed Despair attempt each turn
-  - Core Overload -- 3-turn charge, massive AoE (must burst before it fires)
-  - Cordwyn's HP drops to critical -- cutscene, party must finish fast
+  Despair Pulse (active), Core Overload (interruptible charge). See
+  dungeons-world.md.
 - **Weakness:** Storm (150%), Flame (125% to core only in Phase 3)
 - **Resistance:** Earth (absorbs), Frost (75%)
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion
