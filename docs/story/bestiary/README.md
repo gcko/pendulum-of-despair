@@ -155,7 +155,7 @@ All core stats derived from enemy level. Individual enemies may be
 tuned +/-15% from these baselines for general adjustments. **Role-based
 exceptions** allow larger deviations:
 
-- **Swarm (Trivial):** HP up to -30% (compensated by appearing in groups)
+- **Swarm (Trivial):** HP up to -32% (compensated by appearing in groups)
 - **Glass cannon:** ATK up to +15%, DEF/HP up to -25%
 - **Caster:** MAG up to +15%, ATK up to -21% (physical attacks irrelevant)
 - **Tank:** DEF/HP up to +15%, SPD up to -18%
