@@ -87,7 +87,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 | Valdris Siege area | II | 18–22 | dungeons-world.md | Carradan Soldier, Compact Engineer, etc. |
 | Ley Line Depths (F1–3) | II | 16–22 | dungeons-world.md | Ley Construct, Ley Elemental, Ley Colossus |
 | Rail Tunnels | Interlude | 18–22 | dungeons-world.md | Forge Phantom, Rail Sentry, Pallor Nest, etc. |
-| Axis Tower | Interlude | 22–28 | dungeons-world.md | Compact Guard, Pallor Soldier, Arcanite Hound |
+| Axis Tower | Interlude | 22–28 | dungeons-world.md | Compact Officer, Pallor Soldier, Arcanite Hound |
 | Ley Line Depths (F4–5) | III | 25–35 | dungeons-world.md | Ley Construct (enhanced), Pallor Soldier |
 | Valdris Crown Catacombs | Interlude | 20–25 | dungeons-city.md | Crypt Shade, Bone Warden, Tomb Mite |
 | Corrund Undercity | Interlude | 18–22 | dungeons-city.md | Forge-Smoke Creature, Service Automata |
@@ -179,7 +179,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 |------|---------|
 | `docs/story/bestiary/README.md` | Canonical rules, formulas, types |
 | `docs/story/bestiary/act-i.md` | Completed Act I (25 enemies) |
-| `docs/story/bestiary/palette-families.md` | 28 families with tier projections |
+| `docs/story/bestiary/palette-families.md` | 32 families with tier projections |
 | `docs/story/dungeons-world.md` | World dungeon layouts, boss descriptions, enemy names |
 | `docs/story/dungeons-city.md` | City dungeon layouts, enemy names |
 | `docs/story/combat-formulas.md` | Damage formulas, ATB, boss HP scaling table |

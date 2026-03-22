@@ -31,7 +31,7 @@ during battle.
 2. **Grey mist visual** on target for 1 turn (warning to player)
 3. Next turn: target transforms:
    - **Family enemy with Pallor tier** — becomes that variant
-     (e.g., Compact Guard — Pallor Legionnaire with full Tier 4
+     (e.g., Compact Officer — Pallor Soldier with full Tier 4
      abilities from palette-families.md)
    - **No Pallor variant exists** — becomes "Pallor-Touched [Name]"
      with generic boost: +30% current HP as heal, +Despair Touch
@@ -312,7 +312,7 @@ story moment.
   Construct (15%), Spirit (12%), Undead (8%), Humanoid (8%),
   Elemental (5%)
 - **Pallor presence:** 30% — 75% escalating
-- **New families:** Guardian, Royal Wraith, Hound (3)
+- **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **New mechanic:** Pallor Infection (4 source types,
   3 scripted set-pieces, Construct immunity)
 - **Tier 3 debuts:** Vermin, Shade, Elemental, Automata,

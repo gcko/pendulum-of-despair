@@ -427,6 +427,10 @@ stat derivation, and naming conventions.
 > — haywire maintenance drones), and Corrupted Forge Construct (Lv 23,
 > Caldera Undercity — half-melted foundry machines with fire attacks).
 > Same family tier, different biomes and combat profiles.
+>
+> Service Automata and Corrupted Forge Construct are Tier 2 biome variants
+> (same power level as Overclocked Automata), not Tier 3 as originally
+> specified.
 
 ---
 
@@ -440,7 +444,7 @@ stat derivation, and naming conventions.
 | 1 | Compact Soldier | 18 | Humanoid | — | Sword Strike, Cover (protects adjacent ally) | Low |
 | 2 | Compact Officer | 24 | Humanoid | — | +Rally (ATK up party), +Shield Bash (Stun) | Standard |
 | 3 | Elite Guard | 26 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
-| 4 | Pallor Soldier | 26 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Rare |
+| 4 | Pallor Soldier | 26 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Dangerous |
 
 > Soldiers are the Carradan military Humanoid family. They fight in
 > formation and support each other. The Pallor Soldier is a corrupted
