@@ -390,10 +390,10 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
   reduce HP by 2,000 each. Wrong answers restore 1,000 HP. All three
   correct = 3,000 HP before combat. All three wrong = full 12,000 HP.
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Keeper's Index (key item -- completes pictographic
-  dictionary)
-- **Drop:** Archive Keeper's Lens (accessory -- +15 MAG, reveals
-  hidden pictographic inscriptions)
+- **Steal:** Ancient Tablet (lore item)
+- **Drop:** Keeper's Index (key item -- completes pictographic
+  dictionary). Note: Archive Keeper's Lens is a Floor 5 chest
+  reward, not a boss drop (see dungeons-world.md).
 
 ### Wellspring Guardian (Boss)
 
