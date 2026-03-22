@@ -523,7 +523,7 @@ Enemies (spec Section 4.10):
 | Deserter Captain | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
 | Blight Leech | Leech | 3 | 30 | Beast | Dangerous | Caster |
 | Void Moth | Moth | 3 | 30 | Elemental | Standard | Caster |
-| Storm Wraith | Wraith | 3 | 30 | Spirit | Standard | Caster |
+| Storm Wraith | Wraith | 2 | 30 | Spirit | Standard | Caster |
 | Roc | Hawk | 3 | 32 | Beast | Rare | Dangerous |
 
 **Notes:** Storm Wraith is Spirit — Immune Poison+Petrify. Thunder
@@ -548,7 +548,7 @@ Enemies (spec Section 4.11):
 | Pallor Wolf | Wolf | 4 | 34 | Pallor | Standard | Glass cannon |
 | Pallor Crawler | Crawler | 4 | 34 | Pallor | Standard | Balanced |
 | Pallor Wraith | Wraith | 4 | 34 | Pallor | Standard | Caster |
-| Pallor Roc | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
+| Pallor Roc | — (unique) | — | 34 | Pallor | Rare | Dangerous |
 | Void Crystal | Crystal | 3 | 32 | Elemental | Standard | Caster |
 
 **Notes:** All Pallor enemies Weak=Spirit, Immune=Despair+Death.
@@ -700,7 +700,6 @@ create new Tier 4 rows. The existing entries are:
 | Dead | Pallor Revenant | 40 | 34 |
 | Crawler | Pallor Crawler | 46 | 34 |
 | Wraith | Pallor Wraith | 44 | 34 |
-| Hawk | Pallor Roc | 46 | 34 |
 | Drake | Pallor Drake | 50 | 36 |
 | Serpent | Ashen Serpent | 42 | 34 |
 | Lurker | Pallor Lurker | 46 | 36 |

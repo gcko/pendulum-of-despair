@@ -538,7 +538,7 @@ Central Platform, and The Door. ~90% Pallor encounters.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Pallor Soldier | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring, Anchor A) |
 | Pallor Drake | Pallor | 36 | 2,784 | 126 | 65 | 48 | 56 | 40 | 36 | 269 | 459 | Pallor Sample (75%) | Drake Scale (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring, rare) |
-| Ley Construct | Construct | 34 | 2,508 | 0 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Convergence (Anchor A) |
+| Ley Construct (Anchored) | Construct | 34 | 2,508 | 0 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Convergence (Anchor A) |
 | Forgewright Automaton | Construct | 34 | 2,758 | 0 | 62 | 51 | 53 | 38 | 27 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Convergence (Anchor B) |
 | Corrupted Spirit | Spirit | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Convergence (Anchor C) |
 | Ashen Serpent | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Serpent Fang (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring) |
@@ -690,7 +690,7 @@ progresses here.
 | Pallor Revenant | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Bone Dust (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Wolf | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 93 | 160 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Crawler | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Crawler Shell (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
-| Pallor Wraith | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
+| Pallor Wraith | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 232 | 400 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Roc | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 232 | 400 | Pallor Sample (75%) | Roc Feather (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones (rare ~5%) |
 | Void Crystal | Elemental | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 80 | 139 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Overworld grey zones (static, avoidable) |
 

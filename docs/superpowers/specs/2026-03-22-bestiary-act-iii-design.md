@@ -451,7 +451,7 @@ displaced by the Grey — desperate, aggressive, not yet corrupted.
 | Deserter Captain | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
 | Blight Leech | Leech | 3 | 30 | Beast | Dangerous | Caster |
 | Void Moth | Moth | 3 | 30 | Elemental | Standard | Caster |
-| Storm Wraith | Wraith | 3 | 30 | Spirit | Standard | Caster |
+| Storm Wraith | Wraith | 2 | 30 | Spirit | Standard | Caster |
 | Roc | Hawk | 3 | 32 | Beast | Rare | Dangerous |
 
 **Design notes:**
@@ -473,7 +473,7 @@ The closer to the Convergence, the higher the encounter rate.
 | Pallor Wolf | Wolf | 4 | 34 | Pallor | Standard | Glass cannon |
 | Pallor Crawler | Crawler | 4 | 34 | Pallor | Standard | Balanced |
 | Pallor Wraith | Wraith | 4 | 34 | Pallor | Standard | Caster |
-| Pallor Roc | Hawk | 4 | 34 | Pallor | Rare | Dangerous |
+| Pallor Roc | — (unique) | — | 34 | Pallor | Rare | Dangerous |
 | Void Crystal | Crystal | 3 | 32 | Elemental | Standard | Caster |
 
 **Design notes:**
@@ -494,12 +494,14 @@ The closer to the Convergence, the higher the encounter rate.
 
 These families gain their projected Tier 3 variants in Act III:
 
+> **Tier 2 early deployment:** Storm Wraith (Wraith Tier 2, Lv 30 vs
+> projected Lv 32) also deploys in Act III overworld safe zones.
+
 | Family | Tier 3 Name | Lv | Type | Location |
 |--------|-------------|----|------|----------|
 | Drake | Thunder Drake | 30 | Beast | Overworld safe |
 | Leech | Blight Leech | 30 | Beast | Overworld safe |
 | Moth | Void Moth | 30 | Elemental | Overworld safe |
-| Wraith | Storm Wraith | 30 | Spirit | Overworld safe |
 | Hawk | Roc | 32 | Beast | Overworld safe (rare) |
 | Shade | Wraith Shade | 30 | Spirit | Pallor Wastes outer |
 | Warden | Dread Warden | 30 | Undead | Pallor Wastes outer |
@@ -531,7 +533,6 @@ all except Construct families.
 | Dead | Pallor Revenant | 34 | Pallor | Overworld grey |
 | Crawler | Pallor Crawler | 34 | Pallor | Overworld grey |
 | Wraith | Pallor Wraith | 34 | Pallor | Overworld grey |
-| Hawk | Pallor Roc | 34 | Pallor | Overworld grey (rare) |
 | Drake | Pallor Drake | 36 | Pallor | Convergence (rare) |
 | Serpent | Ashen Serpent | 34 | Pallor | Convergence |
 | Lurker | Pallor Lurker | 36 | Pallor | Convergence |
