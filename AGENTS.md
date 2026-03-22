@@ -18,12 +18,14 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 - Use interactive git commands (`git rebase -i`, `git add -i`)
 - Ignore test failures (tests must pass cleanly)
 - Use `npm`, `yarn`, or `npx` (use `pnpm` exclusively)
+- **Run `git push` in pr-review-response without completing Step 6b (story-review-loop).** This is a structural rule, not a suggestion. The only authorized push point in pr-review-response is the PUSH-GATE inside Step 6b. This rule exists because the agent repeatedly skipped the mandatory post-fix review on PR #20, directly causing 25+ additional Copilot review comments across 3 rounds. See `.claude/skills/pr-review-response/SKILL.md` Step 6b for the full gate.
 
 ### Always:
 - Use `pnpm` for all package management
 - Rely on pre-commit hooks for staged TS/JS files; run `pnpm lint && pnpm test` manually for wide-ranging changes or when hooks are unavailable
 - Build shared package before testing: `pnpm run build:shared`
 - Use strict TypeScript — no `any` types
+- **Run story-review-loop after fixing PR review comments.** When `/pr-review-response` fixes valid Copilot comments (any file edit, not just replies), `/story-review-loop <PR#> 1` MUST run before pushing. This is non-negotiable and enforced by the PUSH-GATE in the skill.
 
 ---
 
