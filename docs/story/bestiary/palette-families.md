@@ -161,6 +161,10 @@ stat derivation, and naming conventions.
 > casts by reading attack descriptions aloud) and Void Wisp (Lv 36,
 > late-game — void-aligned). Same family tier, different biomes and
 > elemental affinities.
+>
+> **Act III early deployment:** Void Wisp (Tier 3) is deployed at
+> Lv 30 in Pallor Wastes inner clearings (projected Lv 36). Stats
+> in act-iii.md are computed from the deployment level.
 
 ---
 
@@ -180,9 +184,10 @@ stat derivation, and naming conventions.
 > Each tier shifts elemental affinity. The Pallor Drake is one of the
 > most threatening non-boss enemies in the game.
 >
-> **Act III early deployment:** Pallor Drake (Tier 4) is deployed at
-> Lv 36 in the Convergence (projected Lv 50). Stats in act-iii.md are
-> computed from the deployment level.
+> **Act III early deployment:** Thunder Drake (Tier 3) is deployed at
+> Lv 30 in overworld safe zones (projected Lv 36). Pallor Drake
+> (Tier 4) is deployed at Lv 36 in the Convergence (projected Lv 50).
+> Stats in act-iii.md are computed from the deployment level.
 
 ---
 
@@ -623,6 +628,10 @@ stat derivation, and naming conventions.
 > but their group MAG buff makes them dangerous in numbers. Three
 > tiers — they shift element affinity rather than gaining Pallor
 > corruption.
+>
+> **Act III early deployment:** Void Moth (Tier 3) is deployed at
+> Lv 30 in overworld safe zones (projected Lv 38). Stats in
+> act-iii.md are computed from the deployment level.
 
 ---
 
@@ -705,7 +714,7 @@ stat derivation, and naming conventions.
 > by Pallor-corrupted engineers to channel Despair through stone
 > circuits. A weapon of despair, not a victim.
 >
-> Guardian family has three Tier 3 biome variants: Crystal Warden Deep
+> Guardian family has three Tier 3 biome variants: Crystal Warden (Deep)
 > (Lv 30, Dry Well F5 — crystalline armor that regenerates), Tempered
 > Construct (Lv 34, Forgotten Forge — superheated ley-infused builder
 > war machine), and Grey Guardian (Lv 42, late-game — designed Pallor

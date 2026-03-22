@@ -663,7 +663,7 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
 | Blight Leech | Beast | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Leech Ichor (25%) | Flame | — | — | — | Overworld (swamp, coast) |
 | Void Moth | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | Ley | — | Void | Petrify | Overworld (forest, grassland) |
 | Storm Wraith | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Earth | — | — | Poison, Petrify | Overworld (highland, ruins) |
-| Roc | Beast | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 200 | 348 | Beast Hide (75%) | Roc Feather (25%) | — | — | — | — | Overworld (mountain, rare ~5%) |
+| Roc | Beast | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 200 | 348 | Beast Hide (75%) | Roc Feather (25%) | Storm | — | — | — | Overworld (mountain, rare ~5%) |
 
 **Design notes:**
 - Thunder Drake: storm-charged, driven from mountain roosts by the
@@ -716,13 +716,15 @@ progresses here.
   Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
   Humanoid (2%)
 - **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
+- **Tier 2 early deployments:** Storm Wraith (Wraith Tier 2, Lv 30
+  vs projected Lv 32)
 - **Tier 3 debuts:** Thunder Drake, Deserter Captain, Blight Leech,
-  Void Moth, Storm Wraith, Roc, Wraith Shade, Dread Warden,
+  Void Moth, Roc, Wraith Shade, Dread Warden,
   Void Wisp, Pallor Treant, Marauder Captain, Void Crystal,
   Confluence Elemental, Forge Sentinel, Warp Sentinel,
   Tempered Construct, Slag Elemental, Pictograph Wisp,
   Crystal Warden (Deep), Ley-Warped Construct,
-  Forgewright Automaton, Pallor Wraith (22 total)
+  Forgewright Automaton, Pallor Wraith (21 total)
 - **Tier 4 debuts:** Pallor Vermin, Pallor Wolf, Pallor Revenant,
   Pallor Crawler, Pallor Drake, Ashen Serpent, Pallor Lurker,
   Pallor Soldier (8 total — all already existed in palette-families,
