@@ -83,7 +83,7 @@ Ashmark Factory Depths, Bellhaven Smuggler Tunnels, Valdris Siege,
 and the Overworld between cities. See [README.md](README.md) for
 type rules, stat formulas, and reward calculations.
 
-**Total:** 33 enemies (28 regular + 2 unique + 1 spawn + 2 bosses)
+**Total:** 33 enemies (28 regular + 1 unique + 1 spawn + 1 mini-boss + 2 bosses)
 
 ---
 
@@ -273,7 +273,7 @@ When a Compact Gyrocopter reaches 0 HP:
 ```markdown
 ## Act II Summary
 
-- **Total:** 33 enemies (28 regular + 2 unique + 1 spawn + 2 bosses)
+- **Total:** 33 enemies (28 regular + 1 unique + 1 spawn + 1 mini-boss + 2 bosses)
 - **Type coverage:** Beast (14), Construct (4), Humanoid (7),
   Spirit (3), Elemental (5), Boss (2)
 - **Threat spread:** Low (10), Standard (14), Dangerous (2), Boss (2),

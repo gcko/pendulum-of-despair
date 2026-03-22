@@ -288,9 +288,10 @@ stat derivation, and naming conventions.
 > reckless and dangerous. Humanoids transition well to Pallor because
 > they are narratively susceptible to corruption.
 
-> Bandit family has two Tier 2 variants: Highwayman (overworld roads)
-> and Smuggler Thug (Bellhaven coast). Same power tier, different
-> biomes — follows FF6's multi-location family pattern.
+> Bandit family has two Tier 2 variants: Highwayman (overworld roads,
+> Standard threat) and Smuggler Thug (Bellhaven coast, Low threat).
+> Different biomes and encounter difficulty — Highwayman is more
+> dangerous due to organized road ambushes vs opportunistic thugs.
 
 ---
 

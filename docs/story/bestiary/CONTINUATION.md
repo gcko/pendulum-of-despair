@@ -84,7 +84,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 
 | Dungeon | Act | Rec. Level | Source File | Enemies Named |
 |---------|-----|-----------|-------------|---------------|
-| Valdris Siege area | II | 13–18 | dungeons-world.md | Carradan Soldier, Compact Engineer, etc. |
+| Valdris Siege area | II | 18–22 | dungeons-world.md | Carradan Soldier, Compact Engineer, etc. |
 | Ley Line Depths (F1–3) | II | 18–25 | dungeons-world.md | Ley Construct, Ley Elemental, Ley Colossus |
 | Rail Tunnels | Interlude | 18–22 | dungeons-world.md | Forge Phantom, Rail Sentry, Pallor Nest, etc. |
 | Axis Tower | Interlude | 22–28 | dungeons-world.md | Compact Guard, Pallor Soldier, Arcanite Hound |
