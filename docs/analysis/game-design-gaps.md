@@ -85,13 +85,14 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 
 ### 1.3 Enemy Bestiary
 
-**Status:** MISSING
+**Status:** PARTIAL
 **Priority:** P0 — blocks encounter implementation, economy
-**Files:** None yet (create `docs/story/enemies.md`)
+**Files:** `docs/story/bestiary/README.md`, `docs/story/bestiary/act-i.md`, `docs/story/bestiary/palette-families.md`
 **Depends On:** 1.1 (Damage Formulas), 1.2 (Stat System)
+**Completed (partial):** 2026-03-22 — Foundation (template, types, formulas, rewards) + Act I (25 enemies, 19 families)
 
 **What's Needed:**
-- [ ] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK, XP, Gold
+- [x] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MDEF, SPD, Gold, Exp (19 columns)
 - [ ] Per-enemy data for all ~40+ named enemies across every dungeon:
   - [ ] Ember Vein enemies (Restless Dead, Tomb Mite, Bone Warden, etc.)
   - [ ] Fenmother's Hollow enemies (Drowned Sentinel, Marsh Leech, etc.)
@@ -480,3 +481,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-20 | 1.2 Stat System | PARTIAL -> COMPLETE. 8 stats, level cap 150, Ley Crystals, milestones. Unblocks 1.1 + 2.2. | acba850, 1cb8f6c |
 | 2026-03-21 | 1.1 Damage & Combat Formulas | MISSING -> COMPLETE. Physical (ATK²/6), magic (MAG*power/4), 14999 cap, 3-tier combat interactions. Unblocks 1.3, 1.4, 2.5. | b50da1b |
 | 2026-03-21 | 2.2 ATB Gauge Mechanics | PARTIAL -> MOSTLY COMPLETE. Fill rate (SPD+25)*factor, Active/Wait, battle speed 1-6, status interactions, 4-party. Visual deferred to 2.3. | 879bf2e |
+| 2026-03-22 | 1.3 Enemy Bestiary | MISSING -> PARTIAL. Template (19 cols), 8 types, stat scaling (Lv 1-150), bounded-growth rewards, 25 Act I enemies, 19 palette families. | ab92dba |
