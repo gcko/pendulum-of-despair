@@ -1,12 +1,12 @@
 # Act III Bestiary
 
 Enemies encountered during Act III: Pallor Wastes, The Convergence,
-Ley Line Depths Floor 5, Dry Well of Aelhart Floors 5--7, the
+Ley Line Depths Floor 5, Dry Well of Aelhart Floors 5–7, the
 Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 65 enemies across 8 areas (47 regular + 5 trial-specific + 13 bosses/mini-bosses)
+**Total:** 65 enemies across 8 areas (47 regular + 5 trial-specific + 15 bosses/mini-bosses, with 2 bosses being multi-stage)
 
 ---
 
@@ -516,7 +516,8 @@ centuries of despair in the Forgotten Forge.
 
 **Purification:** Win 100 encounters against Pallor-type enemies
 with Grey Cleaver equipped on Torren. Counter does NOT reset if
-unequipped. Torren must be alive when battle is won.
+unequipped. Torren must be alive when battle is won. Counter is
+tracked per-weapon, not per-character.
 
 **Purified -- Pallor's End:**
 - ATK +55 (best greatsword)
