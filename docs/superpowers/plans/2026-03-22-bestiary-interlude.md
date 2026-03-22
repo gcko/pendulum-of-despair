@@ -192,7 +192,7 @@ Include **"The Last Holdout"** scripted set-piece (spec Section
 - **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **New mechanic:** Pallor Infection (4 source types,
   3 scripted set-pieces, Construct immunity)
-- **Tier 3 debuts:** Vermin, Shade, Elemental, Automata,
+- **Tier 3 debuts:** Vermin, Shade, Automata,
   Crawler, Sprite, Soldier, Dead
 - **Tier 4 debuts:** Soldier, Shade, Warden, Dead, Bandit, Wolf
 ```
@@ -280,7 +280,7 @@ and/or Tier 4 entries in palette-families.md. Key updates:
   "Blight Vermin (Lv 24)" — rename and relevel
 - Shade: add Forge Phantom as second Tier 2 variant (Lv 20, biome:
   Rail Tunnels). Add note like Bandit/Serpent/Wraith dual-variant.
-- Elemental Tier 3: Steam Elemental (Lv 20)
+- Elemental Tier 2 (biome variant): Steam Elemental (Lv 20)
 - Automata Tier 2 (biome variants): Service Automata (Lv 20) and Corrupted Forge
   Construct (Lv 23) — two Tier 2 biome variants
 - Crawler Tier 3: Grey Crawler (Lv 24)
