@@ -96,7 +96,7 @@ during battle.
 
 Then add the full Pallor Infection rules from spec Section 3:
 - 4 source types table (Nest, Seep, Wisp, Soldier)
-- 3-step conversion process
+- 4-step conversion process (select → warning → transform → act)
 - Immunity rules table (Constructs immune)
 - Infection density by dungeon table (30%→75%)
 - 3 scripted set-piece descriptions
@@ -115,7 +115,7 @@ Enemies from spec Section 4.1:
 | Forge Phantom | Shade | 2 | 20 | Spirit | Standard | Caster |
 | Pallor Nest | — (source) | — | 20 | Pallor | Standard | Infection source |
 | Grey Mite | — (spawned) | — | 18 | Pallor | Trivial | Swarm (spawned) |
-| Steam Elemental | Elemental | 3 | 20 | Elemental | Standard | Caster |
+| Steam Elemental | Elemental | 2 | 20 | Elemental | Standard | Caster |
 | Tunnel Vermin | Vermin | 3 | 22 | Beast | Standard | Balanced |
 | Pipe Wraith | Wraith | 1 | 20 | Spirit | Standard | Caster |
 | Grey Mite Swarm | — (unique) | — | 20 | Pallor | Standard | Dense swarm |
@@ -389,7 +389,7 @@ pnpm lint && pnpm test
 3. Nest Mother HP = 6,000 (dungeons-city.md)
 4. All Construct enemies: MP=0, 5 status immunities
 5. All Spirit enemies: Poison+Petrify immunities
-6. All Pallor enemies: Weak→Spirit, Immune→Despair
+6. All Pallor enemies: Weak→Spirit, Immune→Despair+Death
 7. All Boss enemies: Death+Petrify+Stop+Sleep+Confusion immunities
 8. Gold/Exp match logistic formulas × threat (spot-check 3)
 9. All 4 new families present in palette-families.md

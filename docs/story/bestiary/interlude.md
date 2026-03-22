@@ -324,7 +324,7 @@ story moment.
 - **Type distribution:** Pallor (~40–45%), Beast (15%),
   Construct (15%), Spirit (12%), Undead (8%), Humanoid (8%),
   Elemental (5%)
-- **Pallor presence:** 30% — 75% escalating
+- **Pallor presence:** 30%–75% escalating
 - **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **New mechanic:** Pallor Infection (4 source types,
   3 scripted set-pieces, Construct immunity)

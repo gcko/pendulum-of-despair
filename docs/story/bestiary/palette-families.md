@@ -12,7 +12,7 @@ stat derivation, and naming conventions.
 > **Early tier deployment:** Act files may deploy tier variants at
 > lower levels than projected here during narrative events. The
 > Interlude deploys Tier 4 Pallor variants at Lv 26 (instead of the
-> projected Lv 38-48) because the Pallor is overwhelming the world
+> projected Lv 38–48) because the Pallor is overwhelming the world
 > NOW. palette-families.md shows the "full power" level for each
 > variant; act files show the actual encounter level. Stats in the
 > act file are computed from the act-file level using README formulas,
@@ -438,7 +438,7 @@ stat derivation, and naming conventions.
 > Same family tier, different biomes and combat profiles.
 >
 > Service Automata and Corrupted Forge Construct are Tier 2 biome variants
-> (similar power tier (Lv 20-23 range) as Overclocked Automata), not Tier 3
+> (similar power tier (Lv 20–23 range) as Overclocked Automata), not Tier 3
 > as originally specified.
 
 ---
