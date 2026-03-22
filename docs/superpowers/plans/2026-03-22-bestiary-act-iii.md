@@ -129,7 +129,7 @@ These appear ONLY within their trial clearing.
 | Hollow Knight | 1 (Crowned Hollow) | 30 | Pallor | Standard | 1,000 HP each. Formation fighters. |
 | Unfinished Construct | 2 (Perfect Machine) | 30 | Construct | Low | Beg to be repaired. Healing spawns more. |
 | Stone Spirit | 3 (Last Voice) | 30 | Spirit | Standard | Petrified. Silence-based attacks. |
-| Shadow of Sable | 4 (Open Door) | — | — | — | Non-combat trial. No stat block. |
+| Shadow of Sable | 4 (Open Door) | — | Pallor | — | Non-combat trial. No stat block needed. |
 | Archived | 5 (The Index) | 32 | Pallor | Standard | Compressed page figures. |
 
 **IMPORTANT:** Hollow Knights use a fixed 1,000 HP per
@@ -193,7 +193,8 @@ Expected: All pass (docs-only changes)
 
 Manually verify:
 1. Count stat table rows: should be 8 (outer) + 5 (inner) + 5
-   (trial) + 6 (bosses) = 24 entries
+   (trial) + 5 (trial bosses) + 1 (Vaelith) + 1 (Vaelith Siege)
+   = 25 entries
 2. All Pallor enemies: Weak=Spirit, Immune=Despair+Death
 3. All Construct enemies: MP=0, 5 immunities
 4. All Spirit enemies: Immune=Poison+Petrify
@@ -656,6 +657,12 @@ For families with multiple biome variants at the same tier (Sentry,
 Guardian, Wisp, Elemental, Automata), add a design note blockquote
 explaining the variants, following the Interlude pattern.
 
+**Early deployment notes for Tier 3:** Add blockquote notes for
+families deployed below their projected level:
+- Pallor Boar (Boar Tier 3): deployed at Lv 28, projected Lv 36.
+  The Boar family has only 3 tiers — Tier 3 IS the Pallor endpoint.
+- Shadow Wolf (Wolf Tier 3): deployed at Lv 28, projected Lv 33.
+
 - [ ] **Step 2: Verify Tier 3 entries**
 
 For each new entry, verify:
@@ -674,47 +681,58 @@ git commit -s -m "docs(shared): add ~21 Tier 3 entries to palette-families for A
 
 ---
 
-### Task 7: Update palette-families.md with Tier 4 entries
+### Task 7: Add early deployment notes + update palette-families header
 
 **Files:**
 - Modify: `docs/story/bestiary/palette-families.md`
 - Reference: `docs/superpowers/specs/2026-03-22-bestiary-act-iii-design.md` (Section 5.2)
 
-- [ ] **Step 1: Add ~10 Tier 4 Pallor entries**
+- [ ] **Step 1: Verify all Tier 4 entries already exist**
 
-For each family listed in spec Section 5.2, add the Tier 4 row.
-All Tier 4 entries (except Construct families) change type to Pallor:
+**CRITICAL:** ALL Tier 4 Pallor entries for Act III already exist
+in palette-families.md at their projected full-power levels. Do NOT
+create new Tier 4 rows. The existing entries are:
 
-| Family | Tier 4 Name | Lv | Type | Element Shift | Abilities | Threat |
-|--------|-------------|----|------|---------------|-----------|--------|
-| Vermin | Pallor Vermin | 30 | Pallor | Weak→Spirit | +Grey Skitter, +Despair Bite | Standard |
-| Wolf | Pallor Wolf | 34 | Pallor | Weak→Spirit | +Grey Fang, +Pack Despair | Standard |
-| Dead | Pallor Revenant | 34 | Pallor | Weak→Spirit | +Grey Rise, +Void Touch | Standard |
-| Crawler | Pallor Crawler | 34 | Pallor | Weak→Spirit | +Grey Acid, +Burrow Despair | Standard |
-| Wraith | Pallor Wraith | 34 | Pallor | Weak→Spirit | +Grey Wail, +Void Storm | Standard |
-| Hawk | Pallor Regent | 34 | Pallor | Weak→Spirit | +Grey Dive, +Despair Scream | Rare |
-| Drake | Pallor Drake | 36 | Pallor | Weak→Spirit | +Grey Breath, +Void Charge | Rare |
-| Serpent | Ashen Serpent | 34 | Pallor | Weak→Spirit | +Grey Venom, +Coil Despair | Standard |
-| Lurker | Pallor Lurker | 36 | Pallor | Weak→Spirit | +Grey Sense, +Despair Lunge | Standard |
+| Family | Existing Tier 4 | Projected Lv | Act III Deploy Lv |
+|--------|----------------|--------------|-------------------|
+| Vermin | Pallor Vermin | 38 | 30 |
+| Wolf | Pallor Wolf | 45 | 34 |
+| Dead | Pallor Revenant | 40 | 34 |
+| Crawler | Pallor Crawler | 46 | 34 |
+| Wraith | Pallor Wraith | 44 | 34 |
+| Hawk | Pallor Regent | 46 | 34 |
+| Drake | Pallor Drake | 50 | 36 |
+| Serpent | Ashen Serpent | 42 | 34 |
+| Lurker | Pallor Lurker | 46 | 36 |
 
-**Note:** Pallor Boar (Boar Tier 3, Lv 28, Pallor, Rare) was
-added in Task 6 — the Boar family has only 3 tiers, and Tier 3
-is the Pallor endpoint. It is deployed early (projected Lv 36)
-due to Act III narrative escalation. Add an early deployment note
-to the Boar family blockquote.
+Also already exist from Interlude: Pallor Soldier (48→26),
+Pallor Shade (42→26), Pallor Warden (44→26), Pallor Brigand
+(44→26).
 
-**Note:** Some families (Soldier, Shade, Warden, Dead, Bandit,
-Wolf) already have Tier 4 entries from the Interlude sub-project.
-Those were deployed at early levels (Lv 26). The Act III overworld
-grey zone deploys them at their projected full-power levels.
-Do NOT create duplicate entries — these families already have
-their Tier 4 rows. Only add Tier 4 entries for families that
-don't have them yet.
+Act III deploys these at LOWER levels than projected (early
+deployment rule). Stats in act-iii.md are computed from the
+act-file level, not the palette-families projected level.
 
-Check palette-families.md for each family before adding — if a
-Tier 4 row already exists, skip it.
+- [ ] **Step 2: Add early deployment notes to family blockquotes**
 
-- [ ] **Step 2: Update palette-families.md header**
+For each family whose Tier 4 is deployed in Act III at a lower
+level than projected, add or update the blockquote note. Follow
+the pattern established in the Interlude:
+
+Families needing Act III early deployment notes:
+- **Boar** (Tier 3 at Lv 28 vs projected Lv 36) — add note
+- **Wolf** (Tier 3 Shadow Wolf at Lv 28 vs projected Lv 33) — add note
+- **Vermin** (Tier 4 at Lv 30 vs projected Lv 38) — add note
+- **Drake** (Tier 4 at Lv 36 vs projected Lv 50) — add note
+- **Serpent** (Tier 4 at Lv 34 vs projected Lv 42) — add note
+- **Lurker** (Tier 4 at Lv 36 vs projected Lv 46) — add note
+
+Other families (Wolf Tier 4, Dead, Crawler, Wraith, Hawk) deploy
+at Lv 34 in the overworld grey zone which is closer to their
+projections. These are still early but the gap is smaller — add
+brief notes where the gap exceeds 5 levels.
+
+- [ ] **Step 3: Update palette-families.md header**
 
 Update the status note at the top of the file:
 
@@ -724,19 +742,16 @@ Update the status note at the top of the file:
 > existing families reach their Tier 3/4 endpoints.
 ```
 
-Update the intro text to reflect the new count of populated tiers.
-
-- [ ] **Step 3: Verify and commit**
+- [ ] **Step 4: Verify and commit**
 
 Verify:
-1. No duplicate Tier 4 entries for families already updated
-2. All new Pallor Tier 4 have Weak→Spirit element shift
-3. Boar family has early deployment note
-4. Families with biome variants have explanatory blockquotes
+1. ZERO new Tier 4 rows created (all already existed)
+2. Early deployment notes added for families with >5 level gaps
+3. Boar family note explains Tier 3 = Pallor endpoint (no Tier 4)
 
 ```bash
 git add docs/story/bestiary/palette-families.md
-git commit -s -m "docs(shared): add Tier 4 Pallor entries to palette-families for Act III"
+git commit -s -m "docs(shared): add Act III early deployment notes to palette-families"
 ```
 
 ---
