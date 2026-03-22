@@ -208,7 +208,21 @@ All checks must pass before committing.
 
 ---
 
-## Step 5: Commit
+## Step 5: Commit (LOCAL ONLY — NO PUSH HERE)
+
+<HARD-GATE>
+DO NOT run `git push` in this step. DO NOT run `git push` ANYWHERE
+in this skill except inside Step 6b (after story-review-loop) or
+at the explicit push point after Step 6b confirms clean.
+
+If you find yourself about to type `git push` and you have NOT
+completed Step 6b's story-review-loop, STOP. You are about to
+violate the process. Go to Step 6b first.
+
+This gate exists because the agent skipped Step 6b on PR #20
+rounds 2 and 3, directly causing 25+ additional Copilot comments
+across multiple rounds. The process works when followed.
+</HARD-GATE>
 
 Write commit message to a temp file:
 
@@ -224,6 +238,7 @@ EOF
 
 git add <specific-files>
 git commit -F /tmp/commit-msg.txt
+# DO NOT PUSH — proceed to Step 6, then 6b
 ```
 
 **Commit type selection:** Use the conventional commit type that matches
@@ -231,8 +246,8 @@ the PR content — `docs` for Story/Docs PRs, `fix` or `feat` for Code
 PRs, `chore` for Tooling PRs. The `(scope)` should match the package
 (`client`, `server`, `shared`) or use `shared` for cross-cutting docs.
 
-**Push is deferred** until after Step 6 if Copilot commented. Otherwise
-push immediately after commit.
+**Push is NEVER done here.** Always proceed to Step 6 (gap analysis)
+then Step 6b (story-review-loop) before pushing.
 
 ---
 
@@ -311,7 +326,7 @@ were false positives that required only replies (no file changes).
 
 **Process:**
 
-1. **Commit** all fixes from Steps 4–6 locally (do NOT push yet).
+1. **Verify all fixes are committed locally** (do NOT push yet).
 2. **Run story-review-loop once:**
    ```
    /story-review-loop <PR#> 1
@@ -319,17 +334,35 @@ were false positives that required only replies (no file changes).
    This dispatches all 6 review agents against the current state of
    the branch — including the fixes just committed. Any issues found
    are fixed and committed locally.
-3. **After story-review-loop completes**, push all commits together:
-   ```bash
-   git push
-   ```
+3. **After story-review-loop completes and reports CLEAN**, proceed to
+   the ONLY push point in this entire skill:
+
+<PUSH-GATE>
+## PRE-PUSH VERIFICATION (The ONLY place git push is allowed)
+
+STOP. Before typing `git push`, answer ALL of these:
+
+- [ ] Step 4 (Assess & Fix): Did I fix all valid Copilot concerns?
+- [ ] Step 5 (Commit): Are all fixes committed locally?
+- [ ] Step 6 (Gap Analysis): Did I categorize every Copilot comment?
+- [ ] Step 6b (Story Review Loop): Did I run `/story-review-loop <PR#> 1`?
+- [ ] Step 6b result: Did the review loop report CLEAN?
+- [ ] Step 6b fixes: If the loop found issues, did I fix and re-commit?
+
+If ANY checkbox is unchecked, DO NOT PUSH. Complete the missing step.
+
+Only after ALL checkboxes are checked:
+```bash
+git push
+```
+</PUSH-GATE>
 
 **Rationale:** On PR #19, Copilot generated 30 review comments across
-4 rounds. Many were formatting and consistency issues that the
-story-review-loop agents could have caught if they had been run after
-the initial fixes. This step closes the gap: fix what Copilot found,
-then let our own agents sweep for anything similar that both Copilot
-and the initial review missed.
+4 rounds. On PR #20, the agent skipped Step 6b on rounds 2 and 3,
+directly causing 25+ additional comments. The process works when
+followed — Step 6b caught 2 issues on the round it was actually run.
+This push gate exists because "I won't skip it" is not a reliable
+control. A structural gate is.
 
 ---
 
@@ -393,3 +426,10 @@ Always end with one of these messages:
   runs before push. No exceptions. No rationalizations. Every skipped
   analysis is a missed opportunity to improve the review agents. This
   was the #1 process failure identified on 2026-03-21.
+- **NEVER skip Step 6b story-review-loop.** If fixes were made to ANY
+  file, `/story-review-loop <PR#> 1` MUST run before `git push`.
+  The ONLY `git push` in this skill lives inside the PUSH-GATE in
+  Step 6b. There is no other authorized push point. This rule exists
+  because the agent skipped Step 6b repeatedly on PR #20, directly
+  causing 25+ additional Copilot comments across 3 rounds. "I won't
+  skip it" is not a reliable control — the structural gate is.

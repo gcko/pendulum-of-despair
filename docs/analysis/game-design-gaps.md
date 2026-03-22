@@ -96,7 +96,11 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 - [ ] Per-enemy data for all ~40+ named enemies across every dungeon:
   - [x] Ember Vein enemies (Ley Vermin, Tomb Mite, Bone Warden, etc.)
   - [x] Fenmother's Hollow enemies (Drowned Sentinel, Marsh Serpent, etc.)
-  - [ ] Valdris Siege enemies (Carradan Soldier, Compact Engineer, etc.)
+  - [x] Valdris Siege enemies (Compact Soldier, Engineer, Gyrocopter, Ashen Ram)
+  - [x] Ley Line Depths F1–3 (Extraction Drone, Cave Crawler, Ley Colossus, etc.)
+  - [x] Ashmark Factory (Forge Roach, Overclocked Automata, Forge Warden, etc.)
+  - [x] Bellhaven Tunnels (Smuggler Thug, Sea Crawler, Tide Wraith)
+  - [x] Overworld Act II (11 enemies across 5 terrain types)
   - [ ] Interlude enemies (Pallor Hollow, Fading Victim, Spirit Essence, etc.)
   - [ ] Act III enemies (enhanced variants, Pallor creatures)
   - [x] Overworld Act I enemies per terrain type
@@ -482,3 +486,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-21 | 1.1 Damage & Combat Formulas | MISSING -> COMPLETE. Physical (ATK²/6), magic (MAG*power/4), 14999 cap, 3-tier combat interactions. Unblocks 1.3, 1.4, 2.5. | b50da1b |
 | 2026-03-21 | 2.2 ATB Gauge Mechanics | PARTIAL -> MOSTLY COMPLETE. Fill rate (SPD+25)*factor, Active/Wait, battle speed 1-6, status interactions, 4-party. Visual deferred to 2.3. | 879bf2e |
 | 2026-03-22 | 1.3 Enemy Bestiary | MISSING -> PARTIAL. Template (19 cols), 8 types, stat scaling (Lv 1-150), bounded-growth rewards, 25 Act I enemies, 19 palette families. | ab92dba |
+| 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Act II enemies (33): Ley Line Depths F1–3, Ashmark, Bellhaven, Valdris Siege gauntlet, Overworld. 9 new families, 11 Tier 2 revisions. Airborne spawn-on-death mechanic. | b4358a2 |

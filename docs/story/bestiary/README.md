@@ -156,9 +156,9 @@ tuned +/-15% from these baselines for general adjustments. **Role-based
 exceptions** allow larger deviations:
 
 - **Swarm (Trivial):** HP up to -32% (compensated by appearing in groups)
-- **Glass cannon:** ATK up to +15%, DEF/HP up to -25%
-- **Caster:** MAG up to +15%, ATK up to -21% (physical attacks irrelevant)
-- **Tank:** DEF/HP up to +15%, SPD up to -18%
+- **Glass cannon:** ATK up to +15%, DEF/HP up to -28%
+- **Caster:** MAG up to +15%, ATK up to -23% (physical attacks irrelevant)
+- **Tank:** DEF/HP up to +15%, SPD up to -22%
 
 ```
 HP   = floor(level^2 x 1.8 + level x 12 + 20)

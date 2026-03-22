@@ -77,3 +77,21 @@ Each item is a single check. Grows from Copilot gap analysis.
   damage totals within the same encounter
 - Numeric thresholds in encounters must be achievable given the damage
   output at the recommended progression level
+
+## Mirror Propagation (from Copilot gap analysis, PR #19-20)
+
+- When a canonical value is updated in README.md (e.g., role deviation
+  limits), grep ALL project files for the old value and update every
+  occurrence. Key mirrors: spec, plan, CONTINUATION.md, lessons learned.
+- Boss notes in bestiary files must match dungeons-world.md /
+  dungeons-city.md for NPC ability descriptions (name AND effect),
+  phase mechanic details, and resistance values. Compare word-by-word,
+  not just HP values.
+- When a boss has a conditional weakness (e.g., "Flame only in Phase 3"),
+  the stat table Weak column must include the condition qualifier
+- Enemy counts in spec/plan/summary must match the actual table rows.
+  Verify by counting, not by trusting the stated total.
+- Elemental profiles in palette-families.md Tier 2+ Element Shift
+  column must match the corresponding act file's stat table. act file
+  is authoritative; palette-families shows the SHIFT from prior tier,
+  not the absolute profile (use em dash if profile matches Tier 1).
