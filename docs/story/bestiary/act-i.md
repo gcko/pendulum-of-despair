@@ -39,8 +39,12 @@ core mechanic.
   - Pounce -- back-row target
 - **Weakness:** Frost
 - **Strategy:** Defend during Flame Breath, focus physical damage.
-  Drake Fang consumable deals 500 bonus damage if saved for later bosses.
-- **Drops:** Drake Fang (crafting material, sells for decent gold)
+  Drake Fang can be used as a consumable battle item to deal 500 bonus
+  damage (rewards thorough exploration — saving it for the Vein Guardian
+  is optimal).
+- **Drops:** Drake Fang (dual-purpose: consumable battle item OR crafting
+  material. Per dungeons-world.md: "Crafting / consumable (500 dmg in
+  boss fight)")
 
 ### Vein Guardian (Boss)
 
@@ -53,7 +57,8 @@ core mechanic.
 - **Resists:** Flame
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion
 - **Strategy:** Edren tanks with Defend during Ember Pulse. Cael heals and
-  attacks during safe turns. Drake Fang from Floor 2 deals 500 bonus damage
+  attacks during safe turns. Drake Fang from Floor 2 can be used as a
+  consumable battle item to deal 500 bonus damage
   (rewards thorough exploration). Burst damage during Reconstruct recovery
   window to capitalize on the pause turn.
 - **Drops:** Vein Guardian's Core (crafting material, sells for good gold)

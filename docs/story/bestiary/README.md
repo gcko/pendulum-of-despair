@@ -36,12 +36,12 @@ Each enemy in the bestiary tables uses these columns:
 | SPD | int | Speed (1-255). ATB fill rate per combat-formulas.md |
 | Gold | int | Currency dropped. Bounded growth, cap 10,000 |
 | Exp | int | Experience awarded. Bounded growth, cap 30,000 |
-| Steal | string | Sable's Tricks. "Item (75%)", "Item (100%)", or "-" |
-| Drop | string | Defeat drop. "Item (25%)", "Item (100%)", or "-" |
-| Weak | string | Elements dealing 1.5x damage. Comma-separated or "-" |
-| Resists | string | Elements dealing 0.75x damage (elemental disadvantage per combat-formulas.md). Comma-separated or "-" |
-| Absorbs | string | Elements that heal. Comma-separated or "-" |
-| Status Immunities | string | Immune statuses. Comma-separated or "-" |
+| Steal | string | Sable's Tricks. "Item (75%)", "Item (100%)", or "—" |
+| Drop | string | Defeat drop. "Item (25%)", "Item (100%)", or "—" |
+| Weak | string | Elements dealing 1.5x damage. Comma-separated or "—" |
+| Resists | string | Elements dealing 0.75x damage (elemental disadvantage per combat-formulas.md). Comma-separated or "—" |
+| Absorbs | string | Elements that heal. Comma-separated or "—" |
+| Status Immunities | string | Immune statuses. Comma-separated or "—" |
 | Location(s) | string | Where enemy appears. Comma-separated areas |
 
 ---
@@ -152,7 +152,13 @@ and keeps the system simple (FF6's approach).
 ### Base Stat Curves (Regular Enemies)
 
 All core stats derived from enemy level. Individual enemies may be
-tuned +/-15% from these baselines.
+tuned +/-15% from these baselines for general adjustments. **Role-based
+exceptions** allow larger deviations:
+
+- **Swarm (Trivial):** HP up to -30% (compensated by appearing in groups)
+- **Glass cannon:** ATK up to +15%, DEF/HP up to -25%
+- **Caster:** MAG up to +15%, ATK up to -21% (physical attacks irrelevant)
+- **Tank:** DEF/HP up to +15%, SPD up to -18%
 
 ```
 HP   = floor(level^2 x 1.8 + level x 12 + 20)
