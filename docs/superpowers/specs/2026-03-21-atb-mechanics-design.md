@@ -77,11 +77,11 @@ multiplicatively:
 
 | Status | Modifier | Example |
 |--------|----------|---------|
-| Haste (Quickstep) | × 1.5 | SPD 100: 375 → 563 |
-| Slow (Leaden Step) | × 0.5 | SPD 100: 375 → 188 |
+| Haste (Quickstep) | × 1.5 | SPD 100: 375 → 562 |
+| Slow (Leaden Step) | × 0.5 | SPD 100: 375 → 187 |
 | Despair | × 0.75 | SPD 100: 375 → 281 |
 | Grounded | × 0.75 | SPD 100: 375 → 281 |
-| Berserk | × 1.25 | SPD 100: 375 → 469 |
+| Berserk | × 1.25 | SPD 100: 375 → 468 |
 
 **Design note (Berserk):** The × 1.25 ATB modifier for Berserk was
 introduced in this spec and is now canonical in magic.md and
@@ -139,7 +139,10 @@ This is the FF6 default.
 
 Gauges pause for ALL combatants (party and enemies) while any command
 sub-menu is open (Magic list, Item list, Ability list, target
-selection). Gauges resume when the sub-menu closes.
+selection). Real-time status timers (e.g., Stop's 3-second countdown)
+also pause during Wait sub-menus — Wait mode pauses ALL time
+progression, not just gauges. Gauges and timers resume when the
+sub-menu closes.
 
 **Only the top-level command menu runs in real-time.** The 6 options
 (Attack / Magic / Ability / Item / Defend / Flee) are selected while
@@ -165,7 +168,7 @@ Both settings are in the Config menu:
 | Slow | × 0.5 | Normal turn | 5 turns | Purge, Chronos Dust | |
 | Stop | Frozen at current value | Cannot act | 3 real-time seconds | Timer only | Real-time, not turn-based |
 | Sleep | Frozen at current value | Cannot act | Until cured or damaged | Any damage wakes; Cleansing Draught, Purge | Gauge resumes from frozen point |
-| Confusion | × 1.0 | Auto-targets random ally/enemy, basic attack | 3 turns or until damaged | Damage, Purge | |
+| Confusion | × 1.0 | Auto-targets random ally/enemy, basic attack | 3 turns or until damaged | Cleansing Draught, Purge, Remedy item, Damage | |
 | Berserk | × 1.25 | Auto-targets random enemy, basic attack (+50% damage) | Until cured | Purge only | Tradeoff: faster+stronger but uncontrollable |
 | Despair | × 0.75 | Normal turn (damage -20%) | 4 turns | Hollow Mend, Hope Shard | Pallor signature. Standard Purge cannot remove. |
 | Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Expires | Flying enemies only |
