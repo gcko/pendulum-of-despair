@@ -276,7 +276,7 @@ Occurs on Floor 4 of the Axis Tower. Non-preventable story moment.
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
-- **HP:** 30,000 (per dungeons-world.md)
+- **HP:** 30,000 (per dungeons-world.md encounter table; prose paragraph has a known typo of 12,000)
 - **Type:** Boss | **Level:** 28
 - **Phase 1 (100–50% HP):** Arcanite sword attacks, summons Pallor
   Soldiers. See dungeons-world.md.

@@ -208,7 +208,7 @@ Non-preventable story moments:
 | Elite Guard | Soldier | 3 | 26 | Humanoid | Dangerous | Tier 3 — Kole's personal guard. Counter Stance. |
 | Pallor Shade | Shade | 4 | 26 | Pallor | Rare | Tier 4 — Dread Shroud AoE Despair. |
 | Pallor Brigand | Bandit | 4 | 26 | Pallor | Rare | Tier 4 — deserters consumed by despair. |
-| *General Vassar Kole* | — | — | 28 | Boss | Boss | **Boss.** 30,000 HP. Per dungeons-world.md. |
+| *General Vassar Kole* | — | — | 28 | Boss | Boss | **Boss.** 30,000 HP. Per dungeons-world.md encounter table. |
 
 ### 4.6 Ironmark Citadel Dungeons (Lv 24–28) — 7 enemies
 
@@ -343,7 +343,7 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 
 > **Note:** docs/story/dungeons-world.md is authoritative.
 
-- **HP:** 30,000 (per dungeons-world.md)
+- **HP:** 30,000 (per dungeons-world.md encounter table; prose paragraph has a known typo of 12,000)
 - **Type:** Boss | **Level:** 28
 - **Phase 1 (100–50%):** Arcanite sword attacks, summons Pallor
   Soldiers. See dungeons-world.md.

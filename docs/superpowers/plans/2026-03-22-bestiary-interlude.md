@@ -210,8 +210,9 @@ Spot-check at least 5 enemies:
 3. **The Ironbound (Lv 24, Boss):** Verify HP=22,000 matches
    dungeons-world.md. Boss immunities present.
 
-4. **General Kole (Lv 28, Boss):** Verify HP=30,000 matches
-   dungeons-world.md. Boss immunities present.
+4. **General Kole (Lv 28, Boss):** Verify HP=30,000 matches the
+   dungeons-world.md encounter table (treat table as canonical over
+   conflicting prose HP). Boss immunities present.
 
 5. **Pallor Nest Mother (Lv 25, Boss):** Verify HP=6,000 matches
    dungeons-city.md. Immune to Despair (per-boss extension).
@@ -385,7 +386,7 @@ pnpm lint && pnpm test
 - [ ] **Step 2: Cross-reference verification**
 
 1. Ironbound HP = 22,000 (dungeons-world.md)
-2. Kole HP = 30,000 (dungeons-world.md)
+2. Kole HP = 30,000 (dungeons-world.md encounter table)
 3. Nest Mother HP = 6,000 (dungeons-city.md)
 4. All Construct enemies: MP=0, 5 status immunities
 5. All Spirit enemies: Poison+Petrify immunities
