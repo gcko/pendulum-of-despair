@@ -1,11 +1,11 @@
 # Palette-Swap Families
 
-Each family is a base creature design with 2--4 variants at increasing
+Each family is a base creature design with 2–4 variants at increasing
 power levels. See [README.md](README.md) Section 7 for tier rules,
 stat derivation, and naming conventions.
 
 > **Status:** Act I families defined (Tier 1 only). Higher tiers will
-> be populated in Sub-projects 2--4 as those act files are created.
+> be populated in Sub-projects 2–4 as those act files are created.
 
 ---
 
@@ -30,7 +30,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Tomb Mite | 2 | Beast | — | Nibble, Swarm (appears in groups of 3--4) | Trivial |
+| 1 | Tomb Mite | 2 | Beast | — | Nibble, Swarm (appears in groups of 3–4) | Trivial |
 | 2 | Tunnel Mite | 14 | Beast | — | +Burrow (evade next attack) | Low |
 | 3 | Plague Mite | 28 | Beast | Weak->Flame | +Infest (Poison + ATK down) | Standard |
 

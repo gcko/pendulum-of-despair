@@ -81,25 +81,29 @@ def scrape_url(session, url, output_path, converter):
         print(f"  FAIL {url} -> HTTP {resp.status_code}")
         return False
 
-    page_html = resp.text
-    if len(page_html) < 500:
-        print(f"  FAIL {url} -> response too small ({len(page_html)} bytes)")
+    try:
+        page_html = resp.text
+        if len(page_html) < 500:
+            print(f"  FAIL {url} -> response too small ({len(page_html)} bytes)")
+            return False
+
+        main_html = extract_main_content(page_html)
+        markdown = converter.handle(main_html)
+        markdown = clean_markdown(markdown)
+
+        header = f"# Source: {url}\n\n---\n\n"
+        content = header + markdown
+
+        out = Path(output_path)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(content, encoding="utf-8")
+
+        size_kb = len(content.encode("utf-8")) / 1024
+        print(f"  OK   -> {output_path} ({size_kb:.1f} KB)")
+        return True
+    except Exception as e:
+        print(f"  FAIL {url} -> parse error: {e}")
         return False
-
-    main_html = extract_main_content(page_html)
-    markdown = converter.handle(main_html)
-    markdown = clean_markdown(markdown)
-
-    header = f"# Source: {url}\n\n---\n\n"
-    content = header + markdown
-
-    out = Path(output_path)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(content, encoding="utf-8")
-
-    size_kb = len(content.encode("utf-8")) / 1024
-    print(f"  OK   -> {output_path} ({size_kb:.1f} KB)")
-    return True
 
 
 def main():

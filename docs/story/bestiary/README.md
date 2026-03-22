@@ -53,7 +53,7 @@ Each enemy in the bestiary tables uses these columns:
 ### Beast
 
 - **Inherent traits:** None
-- **Default immunities:** --
+- **Default immunities:** —
 - **Interactions:**
   - Sable's Tricks: steal rate +25%
   - Torren's Spiritcall: can calm non-hostile beasts (guaranteed flee)
@@ -86,7 +86,7 @@ Each enemy in the bestiary tables uses these columns:
 ### Humanoid
 
 - **Inherent traits:** Standard vulnerability to all statuses
-- **Default immunities:** --
+- **Default immunities:** —
 - **Interactions:**
   - Steal loot table +1 tier (better items than other types)
   - Can be Confused to attack allies (full friendly-fire)
