@@ -488,7 +488,7 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Prism Moth | 18 | Elemental | — | Flutter, Refraction (group MAG buff) | Low |
 | 2 | Crystal Moth | 26 | Elemental | Resist->Ley | +Prismatic Dust (random element AoE), +Dazzle (Blind) | Standard |
-| 3 | Void Moth | 38 | Elemental | Weak->Ley, Absorb->Void | +Void Dust (Silence AoE), +Absorb Light (heals from Ley) | Dangerous |
+| 3 | Void Moth | 38 | Elemental | Weak->Ley, Absorbs->Void | +Void Dust (Silence AoE), +Absorb Light (heals from Ley) | Dangerous |
 
 > Moths are swarm casters that buff each other. Individually fragile,
 > but their group MAG buff makes them dangerous in numbers. Three
