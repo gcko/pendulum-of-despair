@@ -133,7 +133,7 @@ Non-preventable story moments:
 | Axis Tower | 60% | Late — "the army has fallen" |
 | Ironmark Citadel | 75% | Late — "fully consumed" |
 
-## 4. Interlude Enemy Roster (~57 entries)
+## 4. Interlude Enemy Roster (52 entries)
 
 ### 4.1 Rail Tunnels (Lv 18–22) — 10 enemies
 
@@ -375,7 +375,7 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `docs/story/bestiary/interlude.md` | Rewrite (from TBD) | Full Interlude enemy stat tables (~57 entries) |
+| `docs/story/bestiary/interlude.md` | Rewrite (from TBD) | Full Interlude enemy stat tables (52 entries) |
 | `docs/story/bestiary/palette-families.md` | Modify | Add 3 new families, Tier 3/4 for ~15 existing |
 | `docs/story/bestiary/CONTINUATION.md` | Modify | Update Sub-project 2b status |
 | `docs/analysis/game-design-gaps.md` | Modify | Check off Interlude items in Gap 1.3 |
