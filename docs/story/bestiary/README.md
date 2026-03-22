@@ -36,8 +36,8 @@ Each enemy in the bestiary tables uses these columns:
 | SPD | int | Speed (1-255). ATB fill rate per combat-formulas.md |
 | Gold | int | Currency dropped. Bounded growth, cap 10,000 |
 | Exp | int | Experience awarded. Bounded growth, cap 30,000 |
-| Steal | string | Sable's Tricks. "Common (75%) / Rare (25%)" or "-" |
-| Drop | string | Defeat drop. "Common (75%) / Rare (25%)" or "-" |
+| Steal | string | Sable's Tricks. "Item (75%)", "Item (100%)", or "-" |
+| Drop | string | Defeat drop. "Item (25%)", "Item (100%)", or "-" |
 | Weak | string | Elements dealing 1.5x damage. Comma-separated or "-" |
 | Resists | string | Elements dealing 0.75x damage (elemental disadvantage per combat-formulas.md). Comma-separated or "-" |
 | Absorbs | string | Elements that heal. Comma-separated or "-" |
@@ -164,6 +164,12 @@ MDEF = floor(level x 1.0 + 4)
 SPD  = floor(level x 0.8 + 8)
 ```
 
+**Enemy LCK:** Enemies do not have a LCK stat. Enemy critical hits use
+a fixed 5% rate (not the player's `LCK / 4` formula). Enemy evasion
+uses `SPD / 4` per the standard derived stat rules in progression.md.
+This keeps the stat template at 19 columns and avoids inflating enemy
+data with a stat that rarely matters offensively for monsters.
+
 ### Verification Table
 
 | Lv | HP | ATK | DEF | MAG | MDEF | SPD | Context |
@@ -268,7 +274,7 @@ of the same level give different rewards based on how dangerous they are.
   Exp = floor(2,970 x 1.5) = 4,455
 - Level 150 Pallor Lord (Rare): base_gold(150) = 9,900.
   Gold = floor(9,900 x 1.5) = 14,850 -> capped at 10,000.
-  base_exp(150) = 29,000. Exp = floor(29,000 x 1.5) = 43,500
+  base_exp(150) = 28,992. Exp = floor(28,992 x 1.5) = 43,488
   -> capped at 30,000
 
 ---

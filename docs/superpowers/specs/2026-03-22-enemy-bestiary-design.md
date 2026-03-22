@@ -328,30 +328,15 @@ of the same level give different rewards based on how dangerous they are.
 
 ### 8.1 Family Tiers
 
-Each family has 2–4 tiers. Higher tiers are generated from the base
-using stat multipliers, with additional ability and element changes.
+Each family has 2–4 tiers. Higher tiers use the stat scaling formulas
+from Section 6.2 at the variant's own level, with ±15–25% role
+adjustments for variety (glass cannon, tank, caster, etc.).
 
-| Tier | Stat Multiplier | Name Pattern | Additions |
-|------|----------------|-------------|-----------|
-| Base (Tier 1) | ×1.0 | Original name | Base abilities |
-| Tier 2 | ×1.8 | Environment prefix | +1 ability |
-| Tier 3 | ×3.0 | Threat prefix | +2 abilities, element shift |
-| Tier 4 | ×5.0 | Pallor/Elite prefix | +3 abilities, type may change |
-
-**Stat multiplier application:**
-
-```
-variant_stat = floor(base_stat_at_variant_level × family_multiplier)
-```
-
-The variant's level determines baseline stats via the formulas in
-Section 6.2, then the family multiplier adjusts. This prevents
-double-dipping (the variant is not "level 1 × 5.0" but rather
-"level 35 baseline" adjusted by a smaller modifier for variety).
-
-**Correction:** The family multiplier is a *variance* modifier, not a
-raw stat multiplier. It adjusts the baseline ±15-30% for the variant's
-role (glass cannon, tank, etc.):
+**How variant stats are derived:** Each variant has its own level.
+Stats are computed from the Section 6.2 formulas at that level, then
+adjusted by ±15–25% based on the variant's combat role. There is no
+raw stat multiplier between tiers — the level difference and role
+adjustment account for all stat variation.
 
 | Tier | Level | How Stats Are Derived |
 |------|-------|----------------------|

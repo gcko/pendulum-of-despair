@@ -94,12 +94,12 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 **What's Needed:**
 - [x] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MDEF, SPD, Gold, Exp (19 columns)
 - [ ] Per-enemy data for all ~40+ named enemies across every dungeon:
-  - [ ] Ember Vein enemies (Restless Dead, Tomb Mite, Bone Warden, etc.)
-  - [ ] Fenmother's Hollow enemies (Drowned Sentinel, Marsh Leech, etc.)
+  - [x] Ember Vein enemies (Ley Vermin, Tomb Mite, Bone Warden, etc.)
+  - [x] Fenmother's Hollow enemies (Drowned Sentinel, Marsh Serpent, etc.)
   - [ ] Valdris Siege enemies (Carradan Soldier, Compact Engineer, etc.)
   - [ ] Interlude enemies (Pallor Hollow, Fading Victim, Spirit Essence, etc.)
   - [ ] Act III enemies (enhanced variants, Pallor creatures)
-  - [ ] Overworld enemies per terrain type
+  - [x] Overworld Act I enemies per terrain type
 - [ ] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
 - [ ] Status effect vulnerability per enemy
 - [ ] Drop tables: common item, rare item, steal item (common/rare)

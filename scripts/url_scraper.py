@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-URL scraper using curl_cffi (impersonates real browser TLS fingerprints)
-+ html2text for markdown conversion. Uses curl_cffi TLS impersonation
-for broad site compatibility.
+URL scraper using curl_cffi and html2text for markdown conversion.
+Uses curl_cffi TLS impersonation for broad site compatibility.
 
 Usage:
     scripts/.venv/bin/python scripts/url_scraper.py <url> <output_file>
