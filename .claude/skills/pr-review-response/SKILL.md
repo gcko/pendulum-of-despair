@@ -231,17 +231,34 @@ push immediately after commit.
 
 ---
 
-## Step 6: Copilot Gap Analysis (if Copilot commented)
+## Step 6: Copilot Gap Analysis (MANDATORY when Copilot commented)
+
+<HARD-GATE>
+This step is MANDATORY whenever ANY Copilot comment exists on the PR.
+Do NOT push, reply, or exit without completing the gap analysis.
+Do NOT rationalize skipping it ("it's just style comments", "the
+issues were trivial", "I already fixed them"). Every Copilot comment
+is a data point for improving our review agents. Skipping this step
+means the same issues will recur on the next PR.
+</HARD-GATE>
+
+**Checkpoint before push:** Before executing `git push`, verify:
+- [ ] Copilot comments counted: {N} total
+- [ ] Each categorized using `references/copilot-gap-taxonomy.md`
+- [ ] Each mapped to responsible agent
+- [ ] Verification checklists checked for existing coverage
+- [ ] New items proposed (or explicitly "0 new items — all covered")
+- [ ] User approved (or "0 new items" auto-approved)
 
 If any comments came from `copilot-pull-request-reviewer[bot]`:
 
 1. **Filter** Copilot comments from the full set.
-2. **Categorize** each finding:
-   - Propagation (value inconsistency across files)
-   - Numeric (formula/arithmetic error)
-   - Formatting (style/structure)
-   - Cross-reference (broken links, stale references)
-   - Ambiguity (unclear language, multiple interpretations)
+2. **Categorize** each finding using the categories defined in
+   `references/copilot-gap-taxonomy.md` (10 categories including
+   Source verification, Classification, Numeric propagation,
+   Exception tracking, Reference format, Mirror staleness,
+   Self-contradiction, Post-fix regression, Formula precision,
+   and Ambiguity).
 3. **Map** to the appropriate review system based on PR type:
    - **Story PRs:** Map to story-review-loop agents:
      - Propagation → Agent 1 (Propagation Checker)
@@ -323,3 +340,7 @@ Always end with one of these messages:
   break in shell. Always write to a temp file and use `git commit -F`.
 - **Explicit handoff at every exit.** Name the next action or confirm
   the PR is ready to merge.
+- **NEVER skip Copilot gap analysis.** If Copilot commented, Step 6
+  runs before push. No exceptions. No rationalizations. Every skipped
+  analysis is a missed opportunity to improve the review agents. This
+  was the #1 process failure identified on 2026-03-21.

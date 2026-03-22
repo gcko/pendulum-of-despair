@@ -12,6 +12,7 @@ Each item is a single check. Grows from Copilot gap analysis.
 - Character pronouns match characters.md
 - Corruption stages match dynamic-world.md / biomes.md
 - Numeric properties (duration, timing, HP) match across all files
+- Status duration text must match canonical source (magic.md) exactly
 
 ## Cross-Reference Format Verification
 
@@ -36,9 +37,43 @@ Each item is a single check. Grows from Copilot gap analysis.
   that includes the same sound type)
 - Multi-step workflow descriptions have unambiguous ordering (no "commit
   and push" in step 5 AND step 5b without clarifying which push is canonical)
+- Template/example values must be generic or conditional on context (not
+  hard-coded to one use case when multiple exist)
 
 ## Spec/Plan Mirror Checks
 
 - When music.md changes, check spec sections 3-13 for mirrored content
 - When events.md section 2c changes, check spec sections 4-5
 - Plan "verbatim" instructions must match actual implementation
+- Spec/plan notes saying a source doc "will be updated" must be resolved
+  or removed when that update ships in the same PR
+- Gap tracker checklist items must be updated when the canonical formula
+  they reference changes
+
+## Formula Precision (from Copilot gap analysis, PR #17-18)
+
+- Verify stated numeric ranges (min/max percentages) match actual formula
+  outputs (e.g., `255/256 = 0.996` not `1.0`)
+- Canonical formulas must specify rounding behavior (floor/round) and
+  application point (per-step vs end)
+- Inline formula excerpts must include all terms from canonical source
+  or be explicitly labeled as partial with a link to the full formula
+- Resolution/pipeline steps must include all bounds (floor, cap) stated
+  elsewhere in the same document
+
+## Ambiguity Prevention (from Copilot gap analysis, PR #17-18)
+
+- When a floor/cap/override rule is stated, verify all exception cases
+  (immunity, absorb, multi-hit) are explicitly ordered
+- Deterministic ordering rules must cover all entity types (party members
+  AND enemies, not just one side)
+- Multiplier notation must be consistent project-wide (use "+N%" not "Nx"
+  when describing the same modifier in different locations)
+- Real-time timers must specify behavior during pause states (Wait mode)
+
+## Numeric Consistency (from Copilot gap analysis, PR #17-18)
+
+- Boss phase HP thresholds must be arithmetically consistent with mechanic
+  damage totals within the same encounter
+- Numeric thresholds in encounters must be achievable given the damage
+  output at the recommended progression level

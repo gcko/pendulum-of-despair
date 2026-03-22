@@ -713,7 +713,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 2
 - **MP Cost:** 16
 - **Target:** Single enemy
-- **Effect:** 55% chance to inflict Stop. Target's ATB gauge is frozen for 3 turns.
+- **Effect:** 55% chance to inflict Stop. Target's ATB gauge is frozen for 3 seconds of active battle time (not turn-based — the target takes no turns while Stopped; in Wait mode, the countdown pauses while sub-menus are open). See [combat-formulas.md](combat-formulas.md).
 - **Description:** Time thickens around the target like ice forming on still water. They are held between one heartbeat and the next.
 - **Who learns:** Maren (Lv 20)
 - **Visual:** A ring of pale blue frost-energy encircles the target; they freeze mid-animation; frost particles hover motionless.
@@ -1397,7 +1397,8 @@ For quick reference, here are all status effects that spells in this system can 
 | Blind | Negative | Physical accuracy -50% | 4 turns or until cured | Cleansing Draught, Purge, Eye Drops item |
 | Petrify | Negative | Removed from combat | Until cured | Purge, Soft Stone item |
 | Slow | Negative | ATB speed -50% | 5 turns | Purge, Chronos Dust item |
-| Stop | Negative | ATB frozen | 3 turns (cannot be cured, must expire) | Wears off only |
+| Stop | Negative | ATB frozen | 3 real-time seconds (not turn-based) | Wears off only |
+| Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
 | Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
