@@ -24,7 +24,7 @@ core mechanic.
 | Bone Warden | Undead | 4 | 105 | 14 | 14 | 10 | 11 | 8 | 9 | 5 | 11 | Bone Fragment (75%) | Spirit Dust (25%) | Spirit | -- | -- | Poison, Death | Ember Vein F2--F3 |
 | Ember Wisp | Elemental | 5 | 125 | 17 | 13 | 11 | 14 | 9 | 12 | 5 | 12 | Element Shard (75%) | Elemental Core (25%) | Frost | -- | Flame | Petrify | Ember Vein F3 |
 | The Flickering | Spirit | 6 | 156 | 21 | 17 | 12 | 14 | 10 | 12 | 19 | 38 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | -- | -- | Poison, Petrify | Ember Vein F3 (unique) |
-| *Ember Drake* | Beast | 8 | 1,500 | 0 | 23 | 11 | 17 | 12 | 14 | 22 | 44 | Drake Fang (75%) | Drake Scale (25%) | Frost | -- | -- | -- | Ember Vein F2 (mini-boss) |
+| *Ember Drake* | Beast | 8 | 1,500 | 0 | 23 | 11 | 17 | 12 | 14 | 22 | 44 | Drake Scale (75%) | Drake Fang (100%) | Frost | -- | -- | -- | Ember Vein F2 (mini-boss) |
 | *Vein Guardian* | Boss | 12 | 6,000 | 42 | 40 | 24 | 39 | 24 | 20 | 500 | 800 | Vein Shard (100%) | Vein Guardian's Core (100%) | Storm | Flame | -- | Death, Petrify, Stop, Sleep | Ember Vein F4 (boss) |
 
 ### Ember Drake (Mini-Boss)
@@ -45,19 +45,17 @@ core mechanic.
 ### Vein Guardian (Boss)
 
 - **HP:** 6,000 (per dungeons-world.md)
-- **Phase 1 (6,000--3,000 HP):** Two arms, slow heavy attacks.
-  - Crystal Slam -- telegraphed single-target physical (one turn warning)
+- **Moveset:**
+  - Crystal Slam -- telegraphed single-target heavy physical (raises arms, one turn warning)
   - Ember Pulse -- AoE magic damage, floor glows orange (one turn warning)
-- **Phase 2 (below 3,000 HP):** Arms destroyed, core exposed.
-  - Reconstruct -- regenerates 300 HP per turn
-  - Ember Pulse rate increases
-- **Weakness:** Storm (Construct type -- Storm deals 1.25x type bonus)
+  - Reconstruct -- at 50% HP, pauses one turn and regenerates 300 HP (one-time event, not repeating)
+- **Weakness:** Storm
 - **Resists:** Flame
 - **Immunities:** Death, Petrify, Stop, Sleep
 - **Strategy:** Edren tanks with Defend during Ember Pulse. Cael heals and
   attacks during safe turns. Drake Fang from Floor 2 deals 500 bonus damage
-  (rewards thorough exploration). Destroy arms first, then burn core before
-  Reconstruct outheals party damage.
+  (rewards thorough exploration). Burst damage during Reconstruct recovery
+  window to capitalize on the pause turn.
 - **Drops:** Vein Guardian's Core (crafting material, sells for good gold)
 
 ---

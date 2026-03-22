@@ -19,7 +19,7 @@ concept. This spec covers:
 - Stat scaling formulas (level 1–150)
 - Bounded-growth reward formulas (Gold cap 10,000, Exp cap 30,000)
 - Palette-swap family system for generating 250–300 enemies from ~70 bases
-- Complete Act I roster (29 enemies: 25 regular + 2 mini-bosses + 2 bosses)
+- Complete Act I roster (25 enemies: 20 regular + 1 unique + 2 mini-bosses + 2 bosses)
 
 Sub-projects 2–4 (Act II/Interlude, Act III/Optional, Boss Compendium)
 will follow in separate specs, each using the template and formulas
@@ -85,7 +85,7 @@ Each enemy in the bestiary tables uses these columns:
 | Steal | string | Sable's Tricks. "Common (75%) / Rare (25%)" or "—" |
 | Drop | string | Defeat drop. "Common (75%) / Rare (25%)" or "—" |
 | Weak | string | Elements dealing 1.5× damage. Comma-separated or "—" |
-| Resists | string | Elements dealing 0.5× damage. Comma-separated or "—" |
+| Resists | string | Elements dealing 0.75× damage (elemental disadvantage). Comma-separated or "—" |
 | Absorbs | string | Elements that heal. Comma-separated or "—" |
 | Status Immunities | string | Immune statuses. Comma-separated or "—" |
 | Location(s) | string | Where enemy appears. Comma-separated areas |
@@ -321,7 +321,7 @@ of the same level give different rewards based on how dangerous they are.
   Exp = floor(2,970 × 1.5) = 4,455
 - Level 150 Pallor Lord (Rare): base_gold(150) = 9,900.
   Gold = floor(9,900 × 1.5) = 14,850 → capped at 10,000.
-  base_exp(150) = 29,000. Exp = floor(29,000 × 1.5) = 43,500
+  base_exp(150) = 28,992. Exp = floor(28,992 × 1.5) = 43,488
   → capped at 30,000
 
 ## 8. Palette-Swap Family System
@@ -492,4 +492,4 @@ appropriate.
 | Threat multiplier | 6 tiers (Trivial→Boss) | Same-level enemies give different rewards based on danger |
 | Palette-swap tiers | 4 tiers per family | Generates ~3–4 variants from each base; Tier 4 may change type to Pallor |
 | Stat tuning range | ±15% from formula baseline | Enough variance for role differentiation without breaking scaling |
-| Act I roster | 29 enemies (25 + 1 unique + 2 mini + 2 boss) | Covers 6 of 8 types, all threat tiers, teaches core mechanics |
+| Act I roster | 25 enemies (20 regular + 1 unique + 2 mini + 2 boss) | Covers 6 of 8 types, all threat tiers, teaches core mechanics |

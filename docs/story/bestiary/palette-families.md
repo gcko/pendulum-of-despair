@@ -64,7 +64,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Unstable Crystal | 3 | Elemental | -- | Shard Burst (AoE on death), Absorbs->Ley | Low |
+| 1 | Unstable Crystal | 3 | Elemental | Weak->Frost, Absorbs->Flame | Shard Burst (AoE on death) | Low |
 | 2 | Resonant Crystal | 18 | Elemental | Resist->Storm | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
 | 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Flame | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
 
@@ -204,7 +204,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Ley Jellyfish | 8 | Elemental | Weak->Storm, Absorbs->Ley | Ley Sting (Paralysis chance), Drift (random target) | Standard |
+| 1 | Ley Jellyfish | 8 | Elemental | Weak->Storm, Absorbs->Frost | Ley Sting (Paralysis chance), Drift (random target) | Standard |
 | 2 | Deep Jellyfish | 22 | Elemental | Weak->Flame, Absorbs->Frost | +Numbing Pulse (AoE Paralysis chance), +Regenerate (passive HP regen) | Standard |
 | 3 | Void Jellyfish | 38 | Elemental | Weak->Spirit, Absorbs->Void | +Null Sting (Silence + Paralysis), +Phase Drift (evasion up) | Dangerous |
 
@@ -221,7 +221,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Polluted Elemental | 9 | Elemental | Weak->Frost, Absorbs->Ley | Ley Burst (AoE Ley), Elemental Shield (MDEF up) | Standard |
+| 1 | Polluted Elemental | 9 | Elemental | Weak->Flame, Absorbs->Frost | Frost Burst (AoE Frost), Elemental Shield (MDEF up) | Standard |
 | 2 | Raging Elemental | 24 | Elemental | Weak->Frost, Absorbs->Flame | +Eruption (high AoE Flame), +Melt (DEF down on target) | Dangerous |
 | 3 | Primordial Elemental | 40 | Elemental | Weak->Spirit, Absorbs->Ley | +Ley Storm (heavy AoE), +Elemental Shift (change weakness mid-fight), +Mana Burn (MP drain) | Rare |
 

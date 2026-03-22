@@ -39,7 +39,7 @@ Each enemy in the bestiary tables uses these columns:
 | Steal | string | Sable's Tricks. "Common (75%) / Rare (25%)" or "-" |
 | Drop | string | Defeat drop. "Common (75%) / Rare (25%)" or "-" |
 | Weak | string | Elements dealing 1.5x damage. Comma-separated or "-" |
-| Resists | string | Elements dealing 0.5x damage. Comma-separated or "-" |
+| Resists | string | Elements dealing 0.75x damage (elemental disadvantage per combat-formulas.md). Comma-separated or "-" |
 | Absorbs | string | Elements that heal. Comma-separated or "-" |
 | Status Immunities | string | Immune statuses. Comma-separated or "-" |
 | Location(s) | string | Where enemy appears. Comma-separated areas |
