@@ -5,7 +5,7 @@
 > Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Populate act-ii.md with 33 Act II enemies across 5 areas, add 9
-new palette-swap families, and update 12 existing families with Tier 2 entries.
+new palette-swap families, and update 11 existing families with Tier 2 entries.
 
 **Architecture:** Pure documentation pass — rewrite act-ii.md from TBD placeholder
 to full stat tables, update palette-families.md with new and revised families,
@@ -22,7 +22,7 @@ update CONTINUATION.md and gap tracker.
 | File | Action | Purpose |
 |------|--------|---------|
 | `docs/story/bestiary/act-ii.md` | Rewrite | Full Act II enemy stat tables (33 entries) |
-| `docs/story/bestiary/palette-families.md` | Modify | Add 9 new families, revise Tier 2 for 12 existing |
+| `docs/story/bestiary/palette-families.md` | Modify | Add 9 new families, revise Tier 2 for 11 existing |
 | `docs/story/bestiary/CONTINUATION.md` | Modify | Update Sub-project 2a status |
 | `docs/analysis/game-design-gaps.md` | Modify | Check off Act II items in Gap 1.3 |
 
@@ -65,9 +65,9 @@ Dangerous ×1.0, Boss = hand-tuned.
 
 Role adjustments:
 - Swarm: HP up to -32%, ATK -10%
-- Glass cannon: ATK +15%, DEF/HP up to -25%
-- Caster: MAG +15%, ATK up to -21%, MDEF +10%
-- Tank: DEF +15%, HP +10%, SPD up to -18%
+- Glass cannon: ATK +15%, DEF/HP up to -28%
+- Caster: MAG +15%, ATK up to -23%, MDEF +10%
+- Tank: DEF +15%, HP +10%, SPD up to -22%
 - Balanced: no adjustment
 
 - [ ] **Step 2: Write the Ley Line Depths section**
@@ -195,7 +195,7 @@ style) culminating in the Ashen Ram boss.
 
 **Guest NPC:** Dame Cordwyn (5,000 HP, ATK 85, DEF 70) fights alongside
 the party during all waves and the boss. Cannot be controlled. Uses
-Shield Wall (party DEF up) and Rally Cry (party ATK up).
+Shield Wall (50% damage reduction to one ally for 1 turn) and Rally Cry (removes Despair, 3-turn cooldown).
 ```
 
 Pre-boss random encounter enemies (battlefield traversal):
@@ -377,7 +377,7 @@ Commit message: `docs(shared): add 9 new palette-swap families (Crawler, Automat
 
 ---
 
-### Task 3: Update 12 existing families with Tier 2 revisions
+### Task 3: Update 11 existing families with Tier 2 revisions
 
 **Files:**
 - Modify: `docs/story/bestiary/palette-families.md`

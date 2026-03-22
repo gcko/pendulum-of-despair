@@ -57,9 +57,9 @@ Dangerous ×1.0, Rare ×1.5, Boss = hand-tuned.
 
 ### Role Adjustments
 - Swarm (Trivial): HP up to -32%
-- Glass cannon: ATK +15%, DEF/HP up to -25%
-- Caster: MAG +15%, ATK up to -21%
-- Tank: DEF/HP +15%, SPD up to -18%
+- Glass cannon: ATK +15%, DEF/HP up to -28%
+- Caster: MAG +15%, ATK up to -23%
+- Tank: DEF/HP +15%, SPD up to -22%
 
 ### Palette-Swap Family System
 19 families defined in `palette-families.md` with Tier 1–4 projections.
@@ -85,7 +85,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 | Dungeon | Act | Rec. Level | Source File | Enemies Named |
 |---------|-----|-----------|-------------|---------------|
 | Valdris Siege area | II | 18–22 | dungeons-world.md | Carradan Soldier, Compact Engineer, etc. |
-| Ley Line Depths (F1–3) | II | 18–25 | dungeons-world.md | Ley Construct, Ley Elemental, Ley Colossus |
+| Ley Line Depths (F1–3) | II | 16–22 | dungeons-world.md | Ley Construct, Ley Elemental, Ley Colossus |
 | Rail Tunnels | Interlude | 18–22 | dungeons-world.md | Forge Phantom, Rail Sentry, Pallor Nest, etc. |
 | Axis Tower | Interlude | 22–28 | dungeons-world.md | Compact Guard, Pallor Soldier, Arcanite Hound |
 | Ley Line Depths (F4–5) | III | 25–35 | dungeons-world.md | Ley Construct (enhanced), Pallor Soldier |
@@ -209,7 +209,7 @@ These lessons should inform all future sub-projects:
    (the base has no shift — its profile lives in the act file).
 
 4. **The ±15% tuning rule needs explicit role-based exceptions.**
-   Swarm enemies exceed -30%, casters exceed -20% on ATK. Document
+   Swarm enemies exceed -30%, casters exceed -23% on ATK. Document
    these exceptions in README rather than silently violating the rule.
 
 5. **Step 6b (post-fix story-review-loop) catches issues that would

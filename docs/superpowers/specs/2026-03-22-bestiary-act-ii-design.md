@@ -6,7 +6,7 @@
 (floors 1–3), Ashmark Factory Depths, Bellhaven Smuggler Tunnels,
 Valdris Siege castle defense gauntlet, and Overworld Act II. Add 9 new
 palette-swap families. Update palette-families.md with Tier 2 entries
-for 12 existing families.
+for 11 existing families.
 **Gap:** 1.3 (Enemy Bestiary)
 **Depends On:** Sub-project 1 (COMPLETE — PR #19 merged)
 
@@ -34,8 +34,8 @@ spec uses them without modification:
 - **Stat scaling formulas** (per README.md Section: Stat Scaling)
 - **Reward formulas:** Logistic bounded growth (Gold cap 10,000,
   Exp cap 30,000) with threat multipliers
-- **Role adjustments:** Swarm up to -32% HP, Glass cannon up to -25%
-  DEF, Caster up to -21% ATK, Tank up to -18% SPD
+- **Role adjustments:** Swarm up to -32% HP, Glass cannon up to -28%
+  DEF, Caster up to -23% ATK, Tank up to -22% SPD
 - **Palette-swap system:** Variants use stat formulas at their own
   level with ±15–25% role adjustments
 - **Enemy LCK:** Fixed 5% crit rate for all enemies
@@ -115,7 +115,7 @@ spec uses them without modification:
 - **Boss:** The Ashen Ram breaches the wall. 3-phase fight.
 
 **Dame Cordwyn** (Guest NPC): 5,000 HP, ATK 85, DEF 70. Shield Wall
-(party DEF up), Rally Cry (party ATK up). Fights alongside party
+(50% damage reduction to one ally for 1 turn), Rally Cry (removes Despair, 3-turn cooldown). Fights alongside party
 during all waves and the boss. Cannot be controlled by the player.
 
 ### 3.5 Overworld Act II (Level 13–22)
@@ -139,6 +139,9 @@ during all waves and the boss. Cannot be controlled by the player.
 ## 4. Boss Details
 
 ### 4.1 The Ashen Ram (Valdris Siege Boss)
+
+> **Note:** docs/story/dungeons-world.md is authoritative for exact
+> Ashen Ram phase mechanics. The following summarizes for bestiary purposes.
 
 - **HP:** 25,000 (per dungeons-world.md, combat-formulas.md boss table)
 - **Type:** Boss
@@ -372,7 +375,7 @@ Added to palette-families.md alongside the existing 19 families.
 
 ## 7. Existing Family Tier 2 Updates
 
-12 existing families from Act I gain Tier 2 entries in Act II.
+11 existing families from Act I gain Tier 2 entries in Act II.
 
 **REVISION NOTE:** Sub-project 1's palette-families.md contained
 projected Tier 2 names and levels that were estimates. This spec
@@ -415,7 +418,7 @@ family tiers can appear in multiple areas with different names.
 | File | Action | Purpose |
 |------|--------|---------|
 | `docs/story/bestiary/act-ii.md` | Rewrite (from TBD placeholder) | Full Act II enemy stat tables (~33 entries) |
-| `docs/story/bestiary/palette-families.md` | Modify | Add 9 new families, confirm Tier 2 for 12 existing |
+| `docs/story/bestiary/palette-families.md` | Modify | Add 9 new families, confirm Tier 2 for 11 existing |
 | `docs/story/bestiary/CONTINUATION.md` | Modify | Update Sub-project 2a status |
 | `docs/analysis/game-design-gaps.md` | Modify | Check off Act II items in Gap 1.3 |
 

@@ -84,7 +84,7 @@ and the first signs of the Pallor's reach.
   - Emergency Protocol -- below 20%, 3-turn self-destruct (Lira Override
     aborts -- unique interaction)
 - **Weakness:** Storm (150%), Spirit (125%)
-- **Resistance:** Flame (75%), Earth (75%)
+- **Resistance:** Flame (50% — stronger than standard Resists 0.75x; per-boss exception per dungeons-city.md), Earth (75%)
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Poison
 - **Drops:** Drayce's Failsafe Core (accessory), Corrupted Tuning Fork
   (Vaelith breadcrumb), 2,000 Gold
@@ -112,7 +112,7 @@ style) culminating in the Ashen Ram boss.
 
 **Guest NPC:** Dame Cordwyn (5,000 HP, ATK 85, DEF 70) fights alongside
 the party during all waves and the boss. Cannot be controlled. Uses
-Shield Wall (party DEF up) and Rally Cry (removes Despair from all party members, 3-turn cooldown).
+Shield Wall (50% damage reduction to one ally for 1 turn) and Rally Cry (removes Despair from all party members, 3-turn cooldown).
 
 ### Pre-Boss Encounters
 
@@ -131,7 +131,7 @@ begins.
 | Siege Ballista Crew | Humanoid | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Potion (75%) | Ballista Bolt (25%) | — | — | — | — | Valdris Siege (gauntlet W2) |
 | Compact Gyrocopter | Construct | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Valdris Siege (gauntlet W3) |
 | Downed Pilot | Humanoid | 18 | 819 | 0 | 36 | 26 | 31 | 22 | 22 | 16 | 30 | Potion (75%) | Pilot's Goggles (25%) | — | — | — | — | Valdris Siege (spawned by Gyrocopter) |
-| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 5,000 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
+| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 5,000 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
 
 ### Castle Defense Gauntlet
 
@@ -156,6 +156,9 @@ When a Compact Gyrocopter reaches 0 HP:
 4. Gold/Exp = sum of both enemies
 
 ### The Ashen Ram (Boss)
+
+> For exact phase mechanics, see docs/story/dungeons-world.md Ashen Ram
+> encounter. The following is a summary.
 
 - **HP:** 25,000 (per dungeons-world.md)
 - **Type:** Boss
