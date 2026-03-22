@@ -112,8 +112,8 @@ Each enemy in the bestiary tables uses these columns:
 ### Boss
 
 - **Inherent traits:** Cannot be removed from battle
-- **Default immunities:** Death, Petrify, Stop, Sleep (can be
-  overridden per individual boss in the boss stat sheet)
+- **Default immunities:** Death, Petrify, Stop, Sleep, Confusion (can
+  be overridden per individual boss in the boss stat sheet)
 - **Interactions:**
   - Phase transition immunity: cannot be killed during phase-change
     animations. Overkill damage is discarded at phase boundaries.
@@ -283,8 +283,8 @@ of the same level give different rewards based on how dangerous they are.
 
 ### Family Tiers
 
-Each family has 2-4 tiers. Higher tiers are generated from the base
-using stat multipliers, with additional ability and element changes.
+Each family has 2-4 tiers. Higher tiers use the stat formulas at their
+own level, with role adjustments and ability/element additions.
 
 | Tier | Level | How Stats Are Derived |
 |------|-------|----------------------|

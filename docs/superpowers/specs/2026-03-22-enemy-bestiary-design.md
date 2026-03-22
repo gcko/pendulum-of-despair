@@ -156,7 +156,7 @@ Each enemy in the bestiary tables uses these columns:
 ### 5.8 Boss
 
 - **Inherent traits:** Cannot be removed from battle
-- **Default immunities:** Death, Petrify, Stop, Sleep (can be
+- **Default immunities:** Death, Petrify, Stop, Sleep, Confusion (can be
   overridden per individual boss in the boss stat sheet)
 - **Interactions:**
   - Phase transition immunity: cannot be killed during phase-change

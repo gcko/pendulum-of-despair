@@ -25,7 +25,7 @@ core mechanic.
 | Ember Wisp | Elemental | 5 | 125 | 17 | 13 | 11 | 14 | 9 | 12 | 5 | 12 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Ember Vein F3 |
 | The Flickering | Spirit | 6 | 156 | 21 | 17 | 12 | 14 | 10 | 12 | 19 | 38 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Ember Vein F3 (unique) |
 | *Ember Drake* | Beast | 8 | 1,500 | 0 | 23 | 11 | 17 | 12 | 14 | 22 | 44 | Drake Scale (75%) | Drake Fang (100%) | Frost | — | — | — | Ember Vein F2 (mini-boss) |
-| *Vein Guardian* | Boss | 12 | 6,000 | 42 | 40 | 24 | 39 | 24 | 20 | 500 | 800 | Vein Shard (100%) | Vein Guardian's Core (100%) | Storm | Flame | — | Death, Petrify, Stop, Sleep | Ember Vein F4 (boss) |
+| *Vein Guardian* | Boss | 12 | 6,000 | 42 | 40 | 24 | 39 | 24 | 20 | 500 | 800 | Vein Shard (100%) | Vein Guardian's Core (100%) | Storm | Flame | — | Death, Petrify, Stop, Sleep, Confusion | Ember Vein F4 (boss) |
 
 ### Ember Drake (Mini-Boss)
 
@@ -51,7 +51,7 @@ core mechanic.
   - Reconstruct -- at 50% HP, pauses one turn and regenerates 300 HP (one-time event, not repeating)
 - **Weakness:** Storm
 - **Resists:** Flame
-- **Immunities:** Death, Petrify, Stop, Sleep
+- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
 - **Strategy:** Edren tanks with Defend during Ember Pulse. Cael heals and
   attacks during safe turns. Drake Fang from Floor 2 deals 500 bonus damage
   (rewards thorough exploration). Burst damage during Reconstruct recovery
@@ -83,7 +83,7 @@ status effects, elemental resistance, and the cleansing mechanic.
 | Polluted Elemental | Elemental | 9 | 273 | 31 | 18 | 15 | 20 | 14 | 15 | 13 | 28 | Element Shard (75%) | Elemental Core (25%) | Flame | — | Frost | Petrify | Fenmother's Hollow F2--F3 |
 | Corrupted Spawn | Beast | 10 | 288 | 0 | 27 | 14 | 20 | 14 | 16 | 15 | 30 | Beast Hide (75%) | Dark Scale (25%) | — | — | — | — | Fenmother's Hollow F3 (Wave 4) |
 | *Drowned Sentinel* | Construct | 10 | 4,000 | 0 | 24 | 19 | 20 | 14 | 14 | 25 | 50 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Fenmother's Hollow F2 (mini-boss) |
-| *Corrupted Fenmother* | Boss | 12 | 18,000 | 42 | 40 | 24 | 39 | 24 | 20 | 1,500 | 2,500 | Fenmother's Tear (100%) | Fenmother's Blessing (100%) | Flame | Frost | — | Death, Petrify, Stop, Sleep | Fenmother's Hollow F3 (boss) |
+| *Corrupted Fenmother* | Boss | 12 | 18,000 | 42 | 40 | 24 | 39 | 24 | 20 | 1,500 | 2,500 | Fenmother's Tear (100%) | Fenmother's Blessing (100%) | Flame | Frost | — | Death, Petrify, Stop, Sleep, Confusion | Fenmother's Hollow F3 (boss) |
 
 ### Drowned Sentinel (Mini-Boss)
 
@@ -120,7 +120,7 @@ status effects, elemental resistance, and the cleansing mechanic.
   - Wave 4 ("Release"): 3 Corrupted Spawn (stronger variants, target Torren)
 - **Weakness:** Flame (corrupted Frost serpent)
 - **Resists:** Frost
-- **Immunities:** Death, Petrify, Stop, Sleep
+- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
 - **Strategy:** Attack during surface phases, defend during dives. Manage
   poison with Antidotes. At Phase 2, burn Spawn quickly to maximize damage
   windows. During cleansing waves, prioritize enemies targeting Torren.
