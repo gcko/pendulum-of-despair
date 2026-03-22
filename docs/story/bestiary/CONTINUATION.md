@@ -4,7 +4,7 @@
 > is compacted or a new session starts, read this file FIRST to understand
 > what has been done, what remains, and how to continue.
 >
-> **Last updated:** 2026-03-22 (after Sub-project 2b Interlude implementation)
+> **Last updated:** 2026-03-22 (after Sub-project 3a Act III implementation)
 
 ---
 
@@ -15,10 +15,11 @@
 | **1: Foundation + Act I** | COMPLETE | #19 (merged) | 25 | README.md, act-i.md, palette-families.md |
 | **2a: Act II** | COMPLETE | #20 (merged) | 33 | act-ii.md, palette-families.md |
 | **2b: Interlude** | COMPLETE | — (pending PR) | 52 | interlude.md, palette-families.md |
-| **3: Act III + Optional** | NOT STARTED | — | ~60–80 target | act-iii.md, optional.md |
+| **3a: Act III** | COMPLETE | — (pending PR) | ~65 | act-iii.md, palette-families.md |
+| **3b: Optional** | NOT STARTED | — | ~20–30 target | optional.md |
 | **4: Boss Compendium** | NOT STARTED | — | ~20–25 target | bosses.md |
 
-**Gap 1.3 status:** PARTIAL (in `docs/analysis/game-design-gaps.md`)
+**Gap 1.3 status:** PARTIAL — Act I + Act II + Interlude + Act III complete (in `docs/analysis/game-design-gaps.md`)
 
 ---
 
@@ -62,7 +63,7 @@ Dangerous ×1.0, Rare ×1.5, Boss = hand-tuned.
 - Tank: DEF/HP +15%, SPD up to -22%
 
 ### Palette-Swap Family System
-32 families defined in `palette-families.md` (19 Act I + 9 Act II + 4 Interlude) with Tier 1–4 projections.
+32 families defined in `palette-families.md` (19 Act I + 9 Act II + 4 Interlude) with Tier 1–4 projections. Act III adds ~10 biome variant Tier 3 entries to existing families (no new families).
 Tier 1 entries match the corresponding act file where the base enemy appears (Act I: act-i.md; Act II: act-ii.md). Higher tiers use stat formulas at the
 variant's own level with role adjustments — no raw stat multipliers.
 
