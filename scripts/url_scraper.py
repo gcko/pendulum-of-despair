@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 URL scraper using curl_cffi (impersonates real browser TLS fingerprints)
-+ html2text for markdown conversion. Bypasses Cloudflare by matching
-Chrome's exact TLS handshake.
++ html2text for markdown conversion. Uses curl_cffi TLS impersonation
+for broad site compatibility.
 
 Usage:
     scripts/.venv/bin/python scripts/url_scraper.py <url> <output_file>

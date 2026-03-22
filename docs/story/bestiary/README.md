@@ -318,7 +318,7 @@ When this happens:
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|--------------|---------------|--------|
-| 1 | Ley Vermin | 1 | Beast | -- | Bite | Trivial |
-| 2 | Cave Vermin | 10 | Beast | -- | Bite, Rabid Frenzy (2-hit) | Low |
+| 1 | Ley Vermin | 1 | Beast | — | Bite | Trivial |
+| 2 | Cave Vermin | 10 | Beast | — | Bite, Rabid Frenzy (2-hit) | Low |
 | 3 | Blight Vermin | 24 | Beast | Weak->Spirit | Bite, Rabid Frenzy, Plague Bite (Poison) | Standard |
 | 4 | Pallor Vermin | 38 | Pallor | Weak->Spirit, Resist->Void | All above + Despair Screech (AoE Despair) | Dangerous |

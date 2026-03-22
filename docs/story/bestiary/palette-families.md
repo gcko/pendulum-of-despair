@@ -16,8 +16,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Ley Vermin | 1 | Beast | -- | Bite | Trivial |
-| 2 | Cave Vermin | 10 | Beast | -- | +Rabid Frenzy (2-hit) | Low |
+| 1 | Ley Vermin | 1 | Beast | — | Bite | Trivial |
+| 2 | Cave Vermin | 10 | Beast | — | +Rabid Frenzy (2-hit) | Low |
 | 3 | Blight Vermin | 24 | Beast | Weak->Spirit | +Plague Bite (Poison) | Standard |
 | 4 | Pallor Vermin | 38 | Pallor | Weak->Spirit, Resist->Void | +Despair Screech (AoE Despair) | Dangerous |
 
@@ -30,8 +30,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Tomb Mite | 2 | Beast | -- | Nibble, Swarm (appears in groups of 3--4) | Trivial |
-| 2 | Tunnel Mite | 14 | Beast | -- | +Burrow (evade next attack) | Low |
+| 1 | Tomb Mite | 2 | Beast | — | Nibble, Swarm (appears in groups of 3--4) | Trivial |
+| 2 | Tunnel Mite | 14 | Beast | — | +Burrow (evade next attack) | Low |
 | 3 | Plague Mite | 28 | Beast | Weak->Flame | +Infest (Poison + ATK down) | Standard |
 
 > Mites are swarm fodder -- individually weak but dangerous in numbers.
@@ -46,8 +46,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Restless Dead | 3 | Undead | -- | Claw, Shamble | Trivial |
-| 2 | Drowned Bones | 7 | Undead | -- | +Bone Toss (ranged) | Low |
+| 1 | Restless Dead | 3 | Undead | — | Claw, Shamble | Trivial |
+| 2 | Drowned Bones | 7 | Undead | — | +Bone Toss (ranged) | Low |
 | 3 | Wailing Dead | 26 | Undead | Resist->Frost | +Death Wail (AoE MAG, Despair chance) | Standard |
 | 4 | Pallor Revenant | 40 | Pallor | Weak->Spirit, Resist->Void | +Soul Rend (HP drain), +Undying (auto-revive once) | Dangerous |
 
@@ -80,8 +80,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Mine Shade | 4 | Spirit | -- | Shadow Touch (MAG), Phase (50% physical reduction inherent) | Low |
-| 2 | Crypt Shade | 16 | Spirit | -- | +Darkness (Blind, single target) | Standard |
+| 1 | Mine Shade | 4 | Spirit | — | Shadow Touch (MAG), Phase (50% physical reduction inherent) | Low |
+| 2 | Crypt Shade | 16 | Spirit | — | +Darkness (Blind, single target) | Standard |
 | 3 | Wraith Shade | 30 | Spirit | Weak->Ley, Resist->Void | +Life Drain (HP steal), +Fear (Despair chance) | Dangerous |
 | 4 | Pallor Shade | 42 | Pallor | Weak->Spirit, Resist->Void | +Dread Shroud (party Despair AoE), +Possess (Confuse single) | Rare |
 
@@ -98,8 +98,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Bone Warden | 4 | Undead | -- | Guard Stance (DEF up), Heavy Swing | Low |
-| 2 | Tomb Warden | 17 | Undead | -- | +Shield Bash (Stun), +Rally Dead (summon Restless Dead) | Standard |
+| 1 | Bone Warden | 4 | Undead | — | Guard Stance (DEF up), Heavy Swing | Low |
+| 2 | Tomb Warden | 17 | Undead | — | +Shield Bash (Stun), +Rally Dead (summon Restless Dead) | Standard |
 | 3 | Dread Warden | 32 | Undead | Resist->Frost, Resist->Storm | +Cursed Guard (counter-attack on hit), +Death Strike (Death chance) | Dangerous |
 | 4 | Pallor Warden | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Aura (passive Despair buildup), +Unbreakable (auto DEF up at 50% HP) | Rare |
 
@@ -151,8 +151,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Marsh Serpent | 6 | Beast | -- | Fang Strike, Venom Spit (Poison) | Low |
-| 2 | Corrupted Spawn | 10 | Beast | -- | +Lunge (back-row target), +Coil (SPD up) | Standard |
+| 1 | Marsh Serpent | 6 | Beast | — | Fang Strike, Venom Spit (Poison) | Low |
+| 2 | Corrupted Spawn | 10 | Beast | — | +Lunge (back-row target), +Coil (SPD up) | Standard |
 | 3 | Greater Serpent | 28 | Beast | Weak->Frost | +Constrict (Stun + damage over time), +Toxic Spray (AoE Poison) | Standard |
 | 4 | Ashen Serpent | 42 | Pallor | Weak->Spirit, Resist->Void | +Despair Fang (Poison + Despair), +Shed Skin (remove debuffs) | Dangerous |
 
@@ -169,7 +169,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Bog Leech | 7 | Beast | -- | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
+| 1 | Bog Leech | 7 | Beast | — | Latch (HP drain), Bloat (self-destruct if full HP) | Low |
 | 2 | Sewer Leech | 18 | Beast | Resist->Frost | +Blood Siphon (MP drain), +Attach (persistent drain) | Standard |
 | 3 | Blight Leech | 30 | Beast | Weak->Flame | +Plague Drain (HP drain + Poison), +Swarm Call (summon 2 Leeches) | Dangerous |
 
@@ -186,7 +186,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Swamp Lurker | 8 | Beast | -- | Ambush (first-strike bonus), Heavy Claw, Thick Hide (high DEF) | Standard |
+| 1 | Swamp Lurker | 8 | Beast | — | Ambush (first-strike bonus), Heavy Claw, Thick Hide (high DEF) | Standard |
 | 2 | Cave Lurker | 20 | Beast | Resist->Ley | +Stone Throw (ranged), +Burrow (evade + reposition) | Standard |
 | 3 | Abyssal Lurker | 34 | Beast | Weak->Flame, Resist->Frost | +Crushing Grip (Stun + high damage), +Tremor (AoE) | Dangerous |
 | 4 | Pallor Lurker | 46 | Pallor | Weak->Spirit, Resist->Void | +Despair Ambush (back-attack Despair), +Consume (high HP drain) | Rare |
@@ -239,8 +239,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Plains Hare | 1 | Beast | -- | Flee (50% chance to escape), Scratch | Trivial |
-| 2 | Mountain Hare | 15 | Beast | -- | +Quick Dodge (evasion up), +Kick (counter-attack) | Low |
+| 1 | Plains Hare | 1 | Beast | — | Flee (50% chance to escape), Scratch | Trivial |
+| 2 | Mountain Hare | 15 | Beast | — | +Quick Dodge (evasion up), +Kick (counter-attack) | Low |
 
 > Hares are pure fodder. Two tiers is enough -- they exist to populate
 > grasslands and give new players easy wins. The Mountain Hare is a
@@ -255,7 +255,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Thornback Beetle | 3 | Beast | -- | Pinch, Thorn Counter (damage on physical hit) | Low |
+| 1 | Thornback Beetle | 3 | Beast | — | Pinch, Thorn Counter (damage on physical hit) | Low |
 | 2 | Iron Beetle | 18 | Beast | Resist->Storm | +Shell Slam (high DEF attack), +Hunker (DEF way up, skip turn) | Standard |
 | 3 | Blight Beetle | 32 | Beast | Weak->Flame | +Plague Shell (Poison counter), +Acid Spray (DEF down AoE) | Dangerous |
 
@@ -272,9 +272,9 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Road Bandit | 4 | Humanoid | -- | Slash, Steal Gil (lose Gold on hit) | Low |
-| 2 | Highwayman | 16 | Humanoid | -- | +Ambush Strike (first-strike bonus), +Smoke Bomb (party Blind) | Standard |
-| 3 | Marauder Captain | 30 | Humanoid | -- | +Rally (summon 2 Road Bandits), +Power Strike (high single-target), +Parry (counter) | Dangerous |
+| 1 | Road Bandit | 4 | Humanoid | — | Slash, Steal Gold (lose Gold on hit) | Low |
+| 2 | Highwayman | 16 | Humanoid | — | +Ambush Strike (first-strike bonus), +Smoke Bomb (party Blind) | Standard |
+| 3 | Marauder Captain | 30 | Humanoid | — | +Rally (summon 2 Road Bandits), +Power Strike (high single-target), +Parry (counter) | Dangerous |
 | 4 | Pallor Brigand | 44 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike (Despair on hit), +Frenzied Assault (3-hit random), +Deathwish (ATK up when low HP) | Rare |
 
 > Bandits are the core Humanoid family. Good steal targets throughout.
@@ -291,7 +291,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Forest Sprite | 4 | Spirit | -- | Spark (Ley ranged), Phase (50% physical reduction inherent) | Low |
+| 1 | Forest Sprite | 4 | Spirit | — | Spark (Ley ranged), Phase (50% physical reduction inherent) | Low |
 | 2 | Meadow Sprite | 19 | Spirit | Resist->Ley | +Heal Pulse (heals allies), +Confuse Dust (Confuse single) | Standard |
 | 3 | Elder Sprite | 35 | Spirit | Resist->Ley, Resist->Spirit | +Ley Torrent (heavy AoE), +Spirit Ward (party MDEF up), +Vanish (full evasion 1 turn) | Dangerous |
 
@@ -308,8 +308,8 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Wild Boar | 5 | Beast | -- | Gore (high ATK), Charge (damage + knockback) | Standard |
-| 2 | Razorback | 20 | Beast | -- | +Enrage (ATK up when hit), +Trample (AoE physical) | Dangerous |
+| 1 | Wild Boar | 5 | Beast | — | Gore (high ATK), Charge (damage + knockback) | Standard |
+| 2 | Razorback | 20 | Beast | — | +Enrage (ATK up when hit), +Trample (AoE physical) | Dangerous |
 | 3 | Pallor Boar | 36 | Pallor | Weak->Spirit, Resist->Void | +Despair Charge (AoE Despair + damage), +Berserk Frenzy (multi-hit, loses accuracy) | Rare |
 
 > Boars are glass cannon beasts -- high ATK, low DEF. Three tiers
@@ -326,7 +326,7 @@ stat derivation, and naming conventions.
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
-| 1 | Wayward Wolf | 6 | Beast | -- | Bite, Pack Howl (ATK up for all wolves in encounter) | Standard |
+| 1 | Wayward Wolf | 6 | Beast | — | Bite, Pack Howl (ATK up for all wolves in encounter) | Standard |
 | 2 | Dire Wolf | 19 | Beast | Resist->Frost | +Lunge (back-row target), +Dire Howl (ATK + SPD up for pack) | Dangerous |
 | 3 | Shadow Wolf | 33 | Beast | Weak->Ley, Resist->Void | +Shadow Fang (Void damage + Blind), +Pack Tactics (coordinated 2-wolf combo attack) | Dangerous |
 | 4 | Pallor Wolf | 45 | Pallor | Weak->Spirit, Resist->Void | +Pallor Howl (AoE Despair + ATK up pack), +Hunt (guaranteed back-row target), +Devour (HP drain on KO'd target) | Rare |
