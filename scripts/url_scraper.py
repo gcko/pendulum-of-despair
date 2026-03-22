@@ -130,7 +130,11 @@ def main():
 
     ok_count = 0
     fail_count = 0
-    for target in targets:
+    for i, target in enumerate(targets):
+        if not isinstance(target, dict) or "url" not in target or "output" not in target:
+            print(f"  SKIP entry {i}: malformed target (missing 'url' or 'output' key): {target!r}")
+            fail_count += 1
+            continue
         if scrape_url(session, target["url"], target["output"], converter):
             ok_count += 1
         else:
