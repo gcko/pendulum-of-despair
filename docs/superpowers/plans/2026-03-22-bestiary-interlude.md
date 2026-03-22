@@ -236,7 +236,7 @@ Commit message: `docs(shared): populate Interlude bestiary (52 enemies, Pallor I
 - Modify: `docs/story/bestiary/palette-families.md`
 - Reference: spec Sections 5.1–5.3
 
-- [ ] **Step 1: Add Guardian, Royal Wraith, and Hound families**
+- [ ] **Step 1: Add Guardian, Royal Wraith, Hound, and Sentry families**
 
 Append after the existing Treant family (last Act II family). Use
 the exact tier tables from spec Sections 5.1–5.3.
@@ -281,8 +281,8 @@ and/or Tier 4 entries in palette-families.md. Key updates:
 - Shade: add Forge Phantom as second Tier 2 variant (Lv 20, biome:
   Rail Tunnels). Add note like Bandit/Serpent/Wraith dual-variant.
 - Elemental Tier 3: Steam Elemental (Lv 20)
-- Automata Tier 3: Service Automata (Lv 20) and Corrupted Forge
-  Construct (Lv 23) — two Tier 3 variants
+- Automata Tier 2 (biome variants): Service Automata (Lv 20) and Corrupted Forge
+  Construct (Lv 23) — two Tier 2 biome variants
 - Crawler Tier 3: Grey Crawler (Lv 24)
 - Sprite Tier 3: Heat Sprite (Lv 22) — renamed from Elder Sprite
 - Soldier Tier 3: Elite Guard (Lv 26), Tier 4: Pallor Soldier (Lv 26)
@@ -299,7 +299,7 @@ and/or Tier 4 entries in palette-families.md. Key updates:
 **Dual-variant notes needed for:**
 - Shade family: Crypt Shade + Forge Phantom (two Tier 2 biome variants)
 - Automata family: Service Automata + Corrupted Forge Construct
-  (two Tier 3 variants)
+  (two Tier 2 biome variants)
 
 **Important:** palette-families.md Mite family note says "they never
 become Pallor-corrupted." Do NOT add Pallor Mite as a family tier.

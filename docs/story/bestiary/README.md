@@ -306,6 +306,12 @@ own level, with role adjustments and ability/element additions.
 | Tier 3 | Threat prefix | +2 abilities, element shift |
 | Tier 4 | Pallor/Elite prefix | +3 abilities, type may change |
 
+> **Early deployment rule:** Tier 3/4 variants may appear at lower
+> levels than projected during narrative escalation events (e.g., the
+> Interlude). The act file's enemy level is authoritative for stat
+> computation. palette-families.md levels are projections for the
+> "full power" appearance, not hard floors.
+
 ### Tier 4 Type Change
 
 Tier 4 variants may change type to Pallor, representing corruption.

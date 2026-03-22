@@ -70,7 +70,7 @@ the immediate threat while corruption spreads.
 2. **Grey mist visual** on target for 1 turn (warning to player)
 3. Next turn: target transforms:
    - **Family enemy with Pallor tier** → becomes that variant
-     (e.g., Compact Guard → Pallor Legionnaire with full Tier 4
+     (e.g., Compact Officer → Pallor Soldier with full Tier 4
      abilities from palette-families.md)
    - **No Pallor variant exists** → becomes "Pallor-Touched [Name]"
      with generic boost: +30% current HP as heal, +Despair Touch
@@ -109,14 +109,14 @@ Non-preventable story moments:
 - **Teaches:** Construct immunity + Pallor threat level
 
 **2. Axis Tower — "The Garrison Falls" (Floor 4, scripted)**
-- Encounter: 4 Compact Guards
+- Encounter: 4 Compact Officers
 - Turn 1: Kole's voice: "Let them in."
 - All 4 Guards → Pallor Soldiers simultaneously
 - No source needed — Kole channels the Pallor directly
 - **Narrative:** Kole willingly corrupts his own soldiers
 
 **3. Ironmark Citadel — "The Last Holdout" (Cell Block B)**
-- Encounter: 2 enemy Compact Guards + allied NPC soldiers
+- Encounter: 2 enemy Compact Officers + allied NPC soldiers
 - Mid-combat: Pallor surges through conduits
 - Enemy Guards transform — AND one allied NPC transforms
 - Player fights converted enemies + former ally
@@ -155,7 +155,7 @@ Non-preventable story moments:
 | Name | Family | Tier | Lv | Type | Threat | Notes |
 |------|--------|------|----|------|--------|-------|
 | Forge-Smoke Creature | — (unique) | — | 19 | Elemental | Standard | Gaseous, Flame, Weak→Frost |
-| Service Automata | Automata | 3 | 20 | Construct | Standard | Haywire drones |
+| Service Automata | Automata | 2 (biome variant) | 20 | Construct | Standard | Haywire drones |
 | Sewer Rat | Hare | 2 | 18 | Beast | Trivial | Swarm fodder |
 | Pallor Seep | — (source) | — | 20 | Pallor | Standard | **Infection source.** Slow converter (4 turns). High HP. |
 | Sewer Leech | Leech | 2 | 20 | Beast | Low | Drain specialist |
@@ -181,7 +181,7 @@ Non-preventable story moments:
 | Name | Family | Tier | Lv | Type | Threat | Notes |
 |------|--------|------|----|------|--------|-------|
 | Heat Sprite | Sprite | 3 | 22 | Elemental | Standard | Fire sprite — Weak→Frost. Elder Sprite variant. |
-| Corrupted Forge Construct | Automata | 3 | 23 | Construct | Standard | Half-melted, fire attacks |
+| Corrupted Forge Construct | Automata | 2 (biome variant) | 23 | Construct | Standard | Half-melted, fire attacks |
 | Pallor Seep | — (source) | — | 22 | Pallor | Standard | **Infection source.** 45% encounters. |
 | Grey Crawler | Crawler | 3 | 24 | Beast | Standard | Blight Crawler — Acid Spit, high DEF |
 | Pallor Mite | — (boss spawn) | — | 22 | Pallor | Low | Nest Mother boss spawn only. NOT a Mite family tier (Mites don't become Pallor per palette-families.md). |
@@ -283,6 +283,16 @@ Non-preventable story moments:
 > to channel Despair through Arcanite circuits. The machine doesn't
 > despair; its creator did. Foreshadows Act III/IV Pallor weapon design.
 
+### 5.4 Sentry Family
+
+**Base:** Rail Sentry (Lv 18, Construct, Low)
+**Planned Tiers:** 2
+
+| Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
+|------|------|----|------|--------------|---------------|--------|
+| 1 | Rail Sentry | 18 | Construct | — | Bolt Shot (ranged), Track-bound (cannot reposition) | Low |
+| 2 | Forgewright Sentry | 24 | Construct | — | +Cone Scan (area targeting), +Overcharge (high damage, cooldown) | Standard |
+
 ## 6. Existing Family Tier Updates
 
 Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
@@ -297,7 +307,7 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 | Mite | — | (Pallor Mite is a boss spawn, not a family tier) | Caldera |
 | Crawler | 3 | Grey Crawler (Lv 24) | Caldera |
 | Sprite | 3 | Heat Sprite (Lv 22) | Caldera |
-| Automata | 3 | Service Automata (Lv 20), Corrupted Forge Construct (Lv 23) | Corrund, Caldera |
+| Automata | 2 (biome variants) | Service Automata (Lv 20), Corrupted Forge Construct (Lv 23) | Corrund, Caldera |
 | Soldier | 2, 3, 4 | Compact Officer (Lv 24), Elite Guard (Lv 26), Pallor Soldier (Lv 26) | Axis Tower |
 | Sentry | 2 | Forgewright Sentry (Lv 24) | Axis Tower |
 | Bandit | 4 | Pallor Brigand (Lv 26) | Axis Tower |

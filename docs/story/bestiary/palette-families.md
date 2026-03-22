@@ -1,6 +1,6 @@
 # Palette-Swap Families
 
-Each family is a base creature design with 2–4 variants at increasing
+Each family is a base creature design with 2–4 tiers (with multiple biome/battlefield variants possible per tier) at increasing
 power levels. See [README.md](README.md) Section 7 for tier rules,
 stat derivation, and naming conventions.
 
@@ -8,6 +8,15 @@ stat derivation, and naming conventions.
 > entries present. 4 new families added (Sentry, Guardian, Royal Wraith,
 > Hound). ~15 existing families updated with Tier 3/4 entries and
 > dual-variant biome patterns.
+
+> **Early tier deployment:** Act files may deploy tier variants at
+> lower levels than projected here during narrative events. The
+> Interlude deploys Tier 4 Pallor variants at Lv 26 (instead of the
+> projected Lv 38-48) because the Pallor is overwhelming the world
+> NOW. palette-families.md shows the "full power" level for each
+> variant; act files show the actual encounter level. Stats in the
+> act file are computed from the act-file level using README formulas,
+> not from the palette-families projected level.
 
 ---
 
@@ -429,8 +438,8 @@ stat derivation, and naming conventions.
 > Same family tier, different biomes and combat profiles.
 >
 > Service Automata and Corrupted Forge Construct are Tier 2 biome variants
-> (same power level as Overclocked Automata), not Tier 3 as originally
-> specified.
+> (similar power tier (Lv 20-23 range) as Overclocked Automata), not Tier 3
+> as originally specified.
 
 ---
 
