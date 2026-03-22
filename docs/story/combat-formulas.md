@@ -516,7 +516,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 |--------|---------------|-----------|----------|-------|
 | Haste | × 1.5 | Normal turn | 5 turns | |
 | Slow | × 0.5 | Normal turn | 5 turns | |
-| Stop | Frozen at current value | Cannot act | 3 real-time seconds | Not turn-based — clock time |
+| Stop | Frozen at current value | Cannot act | 3 real-time seconds | Not turn-based; pauses in Wait mode |
 | Sleep | Frozen at current value | Cannot act | Until cured or damaged | Resumes from frozen point. See [magic.md](magic.md). |
 | Confusion | × 1.0 | Auto-attack random ally or enemy | 3 turns or until damaged | |
 | Berserk | × 1.25 | Auto-attack random enemy (+50% basic attack damage) | Until cured | Tradeoff |
@@ -527,7 +527,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 **Key rules:**
 - **Frozen gauge retains value.** Sleep and Stop freeze at current position. Gauge resumes from that point when status ends.
 - **Petrify resets to 0.** Most severe status — recovery starts fresh.
-- **Stop uses real-time.** 3 seconds of clock time regardless of battle speed. Proportionally more punishing at slow speeds. In Wait mode, the Stop countdown pauses along with all other time progression while sub-menus are open.
+- **Stop uses real-time.** 3 seconds of real-time (not turn-based), counted only while battle time is running. Proportionally more punishing at slow speeds. In Wait mode, the Stop countdown pauses along with all other time progression while sub-menus are open.
 - **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
 
 ### Turn Order Resolution

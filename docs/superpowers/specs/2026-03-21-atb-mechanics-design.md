@@ -30,7 +30,7 @@ defined (Gap 1.1), but how turns work is not. Every combat subsystem
 3. **Meaningful but not dominant.** The fastest character should get
    ~20-30% more turns than the slowest party member. Speed is an
    advantage, not a win condition.
-4. **Early game ~2-2.5 seconds per turn.** Gives new players time to
+4. **Early game ~2-3 seconds per turn.** Gives new players time to
    read ability descriptions and learn the combat interaction system.
 5. **Endgame ~0.6-1.2 seconds per turn.** Fastest characters (Sable)
    at ~0.6s, slowest (Maren) at ~1.2s. Fast enough to feel powerful,
@@ -185,13 +185,16 @@ immediately after Stop wears off.
 starts the gauge from scratch. Petrify is the most severe status —
 recovery should feel costly.
 
-**Stop uses real-time duration.** 3 real-time seconds regardless of
-battle speed setting. At battle speed 1 (fastest), Stop still lasts 3
-seconds of clock time. This means Stop is proportionally more
-punishing at slow battle speeds (more enemy actions happen in that
-window relative to the pace).
+**Stop uses real-time duration.** 3 seconds of active battle time
+(not turn-based), counted only while battle time is running. The
+duration is independent of battle speed setting. At battle speed 1
+(fastest), Stop still lasts 3 seconds. In Wait mode, the Stop
+countdown pauses while sub-menus are open (consistent with the Wait
+mode rule that ALL time progression pauses). This means Stop is
+proportionally more punishing at slow battle speeds (more enemy
+actions happen in that window relative to the pace).
 
-**Note:** Stop uses real-time (3 seconds) instead of turns because
+**Note:** Stop uses time-based (3 seconds) instead of turns because
 Stop freezes the gauge — the target takes no turns while Stopped,
 making turn-based duration meaningless. magic.md has been updated
 to match.
@@ -289,7 +292,7 @@ combat-formulas.md determines WHAT HAPPENS when you act.
 | `docs/story/combat-formulas.md` | Modify | Add ATB section with formula, config, status interactions |
 | `docs/analysis/game-design-gaps.md` | Modify | Gap 2.2 status PARTIAL -> MOSTLY COMPLETE (visual representation deferred to Gap 2.3) |
 | `docs/story/magic.md` | Modify | Update Stop duration (3 turns -> 3 real-time seconds), add Berserk ATB modifier |
-| `.claude/skills/pod-dev/SKILL.md` | Modify | Add ATB reference if needed |
+| `.claude/skills/pod-dev/SKILL.md` | Audited | No change needed — already references combat-formulas.md |
 
 ## 10. Out of Scope
 

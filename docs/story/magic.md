@@ -713,7 +713,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Tier:** 2
 - **MP Cost:** 16
 - **Target:** Single enemy
-- **Effect:** 55% chance to inflict Stop. Target's ATB gauge is frozen for 3 real-time seconds (not turn-based — the target takes no turns while Stopped). See [combat-formulas.md](combat-formulas.md).
+- **Effect:** 55% chance to inflict Stop. Target's ATB gauge is frozen for 3 seconds of active battle time (not turn-based — the target takes no turns while Stopped; in Wait mode, the countdown pauses while sub-menus are open). See [combat-formulas.md](combat-formulas.md).
 - **Description:** Time thickens around the target like ice forming on still water. They are held between one heartbeat and the next.
 - **Who learns:** Maren (Lv 20)
 - **Visual:** A ring of pale blue frost-energy encircles the target; they freeze mid-animation; frost particles hover motionless.
