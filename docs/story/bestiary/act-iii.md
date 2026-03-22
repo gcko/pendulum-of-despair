@@ -19,14 +19,14 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Pallor Boar | Pallor | 28 | 1,943 | 98 | 52 | 43 | 45 | 32 | 23 | 148 | 264 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Ashen Approach, outer clearings) |
+| Pallor Boar | Pallor | 28 | 1,943 | 98 | 52 | 43 | 45 | 32 | 24 | 148 | 264 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (Ashen Approach, outer clearings) |
 | Shadow Wolf | Beast | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 59 | 105 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Pallor Wastes (Ashen Approach) |
-| Pallor Vermin | Pallor | 30 | 1,360 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all outer sections) |
-| Wraith Shade | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Pallor Wastes (outer clearings) |
+| Pallor Vermin | Pallor | 30 | 1,360 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (all outer sections) |
+| Wraith Shade | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | Void | — | Poison, Petrify | Pallor Wastes (outer clearings) |
 | Hollow Walker | Pallor | 28 | 1,767 | 98 | 52 | 38 | 45 | 32 | 30 | 59 | 105 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all sections), Convergence |
 | Despair Cloud | Pallor | 28 | 1,767 | 98 | 40 | 38 | 51 | 32 | 30 | 34 | 61 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all sections), Convergence |
 | Petrified Beast | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Ashen Approach, Grey March) |
-| Dread Warden | Undead | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Bone Dust (75%) | Bone Fragment (25%) | Spirit | — | — | Poison, Death | Pallor Wastes (outer clearings) |
+| Dread Warden | Undead | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Bone Dust (75%) | Bone Fragment (25%) | Spirit | Frost, Storm | — | Poison, Death | Pallor Wastes (outer clearings) |
 
 **Design notes:**
 - Hollow Walker is the iconic Pallor Wastes enemy -- featureless grey
@@ -55,7 +55,7 @@ Grey. The deeper you go, the less recognizable things become.
 | Pallor Knight | Pallor | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Pallor Shard (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Grey March, trial clearings), Convergence |
 | Grief Shade | Pallor | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (trial clearings), Convergence |
 | Void Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Pallor Wastes (inner clearings) |
-| Pallor Treant | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Petrified Bark (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (inner sections) |
+| Pallor Treant | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Petrified Bark (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (inner sections) |
 | Marauder Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Potion (75%) | Bandit's Coin (25%) | — | — | — | — | Pallor Wastes (inner clearings) |
 
 **Design notes:**
@@ -220,7 +220,7 @@ of the main story. Multi-phase encounter at Plateau's Edge
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome (100%) | Spirit | Void, Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
+| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome + Grey Mist Essence (100%) | Spirit | Void, Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
 
 ### Vaelith (Boss)
 
@@ -263,7 +263,7 @@ damage Vaelith. See dungeons-world.md.
 - **Sable:** Unbreakable Thread prevents forced removal from battle
 
 - **Weakness:** Spirit (125%)
-- **Resistance:** Void (50%), Frost (75%)
+- **Resistance:** Phase 1: Void (50%), Frost (75%). Phase 2: Void (50%) only — Frost resistance lost as form destabilizes
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
 - **Steal:** Vaelith's Quill (lore item)
 - **Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic
@@ -345,7 +345,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 
 ---
 
-## Dry Well of Aelhart — Floors 5--7 (Lv 30–36)
+## Dry Well of Aelhart — Floors 5–7 (Lv 30–36)
 
 Ancient builder chambers. Ley experiments gone wrong -- Constructs
 running corrupted programs, ley energy warping reality. Accessed
@@ -375,7 +375,7 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Keeper's Index (100%) | Archive Keeper's Lens (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
+| *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
 | *Wellspring Guardian* | Boss | 36 | 28,000 | 126 | 97 | 62 | 100 | 60 | 43 | 8,000 | 12,000 | Builder's Crest (100%) | Nexus Crest (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F7 (The Wellspring) |
 
 ### Archive Keeper (Mini-Boss)
@@ -591,7 +591,7 @@ in the grey light.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Cael, Knight of Despair (Phase 1)* | Boss | 36 | 45,000 | 126 | 97 | 62 | 100 | 60 | 43 | 10,000 | 15,000 | Cael's Knight Crest (100%) | Anchor Shard (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
+| *Cael, Knight of Despair (Phase 1)* | Boss | 36 | 45,000 | 126 | 97 | 62 | 100 | 60 | 43 | 10,000 | 15,000 | Cael's Knight Crest (100%) | Cael's Pendant (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
 | *Cael, Knight of Despair (Phase 2)* | Boss | 38 | 35,000 | 133 | 102 | 65 | 106 | 63 | 45 | — | — | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
 
 **Phase 1 (45,000 HP):**
@@ -616,7 +616,7 @@ in the grey light.
 - **Immunities:** Death, Petrify, Stop, Sleep, Confusion
 - **Steal (Phase 1):** Cael's Knight Crest (accessory -- Edren only,
   +20 all stats)
-- **Drop (Phase 1):** Anchor Shard (crafting material)
+- **Drop (Phase 1):** Cael's Pendant (key item — personal memento)
 
 ### The Pallor Incarnate (Final Boss)
 
@@ -638,8 +638,7 @@ in the grey light.
     (unique dialogue per character, inflicts Despair)
   - Reality Tear -- removes one party member from battle for 2 turns
   - Despair Tide (at 50%) -- arena shrinks, less room to maneuver
-  - Void Collapse (at <25%) -- massive party-wide damage
-- At 25% HP: Cael briefly speaks: "Lira..."
+- At 25% HP: Cael briefly speaks from within: "Lira..." (dialogue moment, not an attack)
 - At 0% HP: The Pallor is weakened but not destroyed. Cael is
   partially freed. Act IV begins.
 - **"What the Stars Said" bonus:** If complete, ley line resonance

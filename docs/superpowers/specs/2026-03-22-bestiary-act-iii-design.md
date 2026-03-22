@@ -450,7 +450,7 @@ displaced by the Grey — desperate, aggressive, not yet corrupted.
 | Thunder Drake | Drake | 3 | 30 | Beast | Dangerous | Dangerous |
 | Deserter Captain | Soldier | 3 | 30 | Humanoid | Standard | Balanced |
 | Blight Leech | Leech | 3 | 30 | Beast | Dangerous | Caster |
-| Void Moth | Moth | 3 | 30 | Beast | Standard | Caster |
+| Void Moth | Moth | 3 | 30 | Elemental | Standard | Caster |
 | Storm Wraith | Wraith | 3 | 30 | Spirit | Standard | Caster |
 | Roc | Hawk | 3 | 32 | Beast | Rare | Dangerous |
 
@@ -498,7 +498,7 @@ These families gain their projected Tier 3 variants in Act III:
 |--------|-------------|----|------|----------|
 | Drake | Thunder Drake | 30 | Beast | Overworld safe |
 | Leech | Blight Leech | 30 | Beast | Overworld safe |
-| Moth | Void Moth | 30 | Beast | Overworld safe |
+| Moth | Void Moth | 30 | Elemental | Overworld safe |
 | Wraith | Storm Wraith | 30 | Spirit | Overworld safe |
 | Hawk | Roc | 32 | Beast | Overworld safe (rare) |
 | Shade | Wraith Shade | 30 | Spirit | Pallor Wastes outer |

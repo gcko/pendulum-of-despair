@@ -89,10 +89,12 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Unstable Crystal | 3 | Elemental | — | Shard Burst (AoE on death) | Low |
 | 2 | Crystal Sentry | 20 | Elemental | Weak->Storm, Absorbs->Earth | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
-| 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Flame | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
+| 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Spirit | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
 
 > Crystals are environmental Elementals tied to ley energy. They never
 > become Pallor-type -- corruption twists them into Void affinity instead.
+> Void Crystal deploys at Lv 32 in Act III overworld grey zones
+> (projected Lv 34).
 
 ---
 
