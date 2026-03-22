@@ -234,7 +234,7 @@ Commit message: `docs(shared): populate Interlude bestiary (52 enemies, Pallor I
 
 **Files:**
 - Modify: `docs/story/bestiary/palette-families.md`
-- Reference: spec Sections 5.1–5.3
+- Reference: spec Sections 5.1–5.4
 
 - [ ] **Step 1: Add Guardian, Royal Wraith, Hound, and Sentry families**
 

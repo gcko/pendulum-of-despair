@@ -26,7 +26,7 @@ during battle.
 
 ### Conversion Process
 
-1. Source selects target: nearest non-Pallor, non-Construct enemy
+1. Source selects target: nearest non-Pallor, non-Construct, non-Boss enemy
    (Constructs are immune — machines cannot feel despair)
 2. **Grey mist visual** on target for 1 turn (warning to player)
 3. Next turn: target transforms:
@@ -37,6 +37,11 @@ during battle.
      with generic boost: +30% current HP as heal, +Despair Touch
      ability, type — Pallor, Weak — Spirit, Immune — Despair
 4. Converted enemy acts on its next turn
+
+> **Note:** Pre-existing "Pallor-Touched" enemies (like the Pallor-Touched
+> Soldier in Ironmark) are NOT the result of mid-combat conversion. They
+> were corrupted before the encounter and retain their original type. Only
+> mid-combat conversions change type to Pallor.
 
 ### Immunity Rules
 
@@ -248,7 +253,7 @@ fallen. Kole channels the Pallor directly.
 | Compact Officer | Humanoid | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Axis Tower (Floors 1–3) |
 | Forgewright Sentry | Construct | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (Floors 2–3) |
 | Arcanite Hound | Construct | 23 | 1,248 | 0 | 44 | 32 | 38 | 27 | 26 | 40 | 74 | Scrap Metal (75%) | Hound Gear (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (Floors 1–2) |
-| Pallor Soldier | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Axis Tower (Floors 4–5, Ironmark tunnel) |
+| Pallor Soldier | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Axis Tower (Floors 4–5, Ironmark tunnel) (infection source — passive aura) |
 | Pallor Wisp | Pallor | 24 | 1,344 | 84 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Axis Tower (infection source, 60%) |
 | Compact Gyrocopter | Construct | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Axis Tower (tower defense, spawn-on-death) |
 | Downed Pilot | Humanoid | 22 | 1,155 | 0 | 43 | 31 | 36 | 26 | 25 | 22 | 40 | Potion (75%) | Pilot's Goggles (25%) | — | — | — | — | Axis Tower (spawned by Gyrocopter) |
@@ -292,7 +297,7 @@ the halls with empty eyes.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Pallor-Touched Soldier | Humanoid | 25 | 1,445 | 0 | 48 | 35 | 41 | 29 | 28 | 47 | 85 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Ironmark Citadel (Cell Block, Guard Station) |
+| Pallor-Touched Soldier | Humanoid | 25 | 1,445 | 0 | 48 | 35 | 41 | 29 | 28 | 47 | 85 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Ironmark Citadel (Cell Block, Guard Station) (Pre-existing — already Pallor-touched before encounter, NOT a mid-combat conversion. Retains Humanoid type.) |
 | Pallor Wisp | Pallor | 26 | 1,548 | 91 | 49 | 36 | 42 | 30 | 28 | 51 | 91 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Ironmark Citadel (infection source, 75%) |
 | Pallor Warden | Pallor | 26 | 1,702 | 91 | 49 | 41 | 42 | 30 | 21 | 85 | 153 | — | Pallor Ward (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (Inner Ring) |
 | Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Ironmark Citadel (shared with Axis Tower) |
@@ -323,6 +328,6 @@ story moment.
 - **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
 - **New mechanic:** Pallor Infection (4 source types,
   3 scripted set-pieces, Construct immunity)
-- **Tier 3 debuts:** Vermin, Shade, Elemental, Automata,
+- **Tier 3 debuts:** Vermin, Shade, Automata,
   Crawler, Sprite, Soldier, Dead
 - **Tier 4 debuts:** Soldier, Shade, Warden, Dead, Bandit, Wolf

@@ -65,7 +65,7 @@ the immediate threat while corruption spreads.
 
 ### 3.3 Conversion Process
 
-1. Source selects target: nearest non-Pallor, non-Construct enemy
+1. Source selects target: nearest non-Pallor, non-Construct, non-Boss enemy
    (Constructs are immune — machines cannot feel despair)
 2. **Grey mist visual** on target for 1 turn (warning to player)
 3. Next turn: target transforms:
@@ -76,6 +76,11 @@ the immediate threat while corruption spreads.
      with generic boost: +30% current HP as heal, +Despair Touch
      ability, type→Pallor, Weak→Spirit, Immune→Despair
 4. Converted enemy acts on its next turn
+
+> **Note:** Pre-existing "Pallor-Touched" enemies (like the Pallor-Touched
+> Soldier in Ironmark) are NOT the result of mid-combat conversion. They
+> were corrupted before the encounter and retain their original type. Only
+> mid-combat conversions change type to Pallor.
 
 ### 3.4 Immunity Rules
 
@@ -143,7 +148,7 @@ Non-preventable story moments:
 | Forge Phantom | Shade | 2 | 20 | Spirit | Standard | Second Tier 2 Shade variant (biome: Rail Tunnels). Worker silhouette, Despair debuff. |
 | Pallor Nest | — (source) | — | 20 | Pallor | Standard | **Infection source.** Immobile spawner. |
 | Grey Mite | — (spawned) | — | 18 | Pallor | Trivial | Spawned by Nest. MP drain. |
-| Steam Elemental | Elemental | 3 | 20 | Elemental | Standard | Flame AoE, Blind. Tier 3 Elemental. |
+| Steam Elemental | Elemental | 2 (biome variant) | 20 | Elemental | Standard | Flame AoE, Blind. Second Tier 2 Elemental biome variant. |
 | Tunnel Vermin | Vermin | 3 | 22 | Beast | Standard | Tier 3 — Plague Bite (Poison) |
 | Pipe Wraith | Wraith | 1 | 20 | Spirit | Standard | Ley entity, ignores 25% DEF |
 | Grey Mite Swarm | — (unique) | — | 20 | Pallor | Standard | Dense swarm variant, AoE MP drain |
@@ -171,7 +176,7 @@ Non-preventable story moments:
 | Tomb Mite | Mite | 2 | 20 | Beast | Low | Return visit swarm |
 | Drowned Sentinel | — | — | 22 | Construct | Standard | Flooded chamber reappearance |
 | Tomb Guardian | Guardian | 1 | 23 | Construct | Standard | **NEW family.** Animated stone statue. |
-| Royal Wraith | Wraith (royal) | 1 | 24 | Spirit | Dangerous | **NEW family.** Spectral knight. Magic. Weak→Spirit. |
+| Royal Wraith | Wraith (royal) | 1 | 24 | Spirit | Dangerous | **NEW family.** Spectral knight. Magic. Weak→Ley. |
 | Pallor Wisp | — (source) | — | 22 | Pallor | Standard | **Infection source.** 40% encounters. |
 | Wailing Dead | Dead | 3 | 24 | Undead | Standard | Tier 3 Dead — Death Wail AoE + Despair chance. Level revised from projected 26 to 24 for Catacombs placement. |
 | *The Undying Warden* | — | — | 25 | Boss | Boss | **Optional boss.** Spirit-construct. Per dungeons-city.md. |
@@ -209,7 +214,7 @@ Non-preventable story moments:
 
 | Name | Family | Tier | Lv | Type | Threat | Notes |
 |------|--------|------|----|------|--------|-------|
-| Pallor-Touched Soldier | — (unique) | — | 25 | Humanoid | Standard | Former soldiers. Slow, empty eyes. |
+| Pallor-Touched Soldier | — (unique) | — | 25 | Humanoid | Standard | Former soldiers. Slow, empty eyes. (Pre-existing — already Pallor-touched before encounter, NOT a mid-combat conversion. Retains Humanoid type.) |
 | Pallor Wisp | — (source) | — | 26 | Pallor | Standard | **Infection source.** 75% encounters. |
 | Pallor Warden | Warden | 4 | 26 | Pallor | Dangerous | Tier 4 — Despair Aura passive. |
 | Pallor Shade | Shade | 4 | 26 | Pallor | Rare | Tier 4 — Dread Shroud + Possess. |
@@ -227,7 +232,7 @@ Non-preventable story moments:
   Spirit (12%), Undead (8%), Humanoid (8%), Elemental (5%)
 - **Pallor presence:** 30% → 75% escalating across dungeons
 - **New families:** Guardian, Royal Wraith, Hound, Sentry (4)
-- **Tier 3 debuts:** Vermin, Shade, Elemental, Automata, Crawler,
+- **Tier 3 debuts:** Vermin, Shade, Automata, Crawler,
   Sprite, Soldier, Dead
 - **Tier 4 debuts:** Soldier, Shade, Warden, Dead, Bandit, Wolf
 - **New mechanic:** Pallor Infection (4 source types, 3 set-pieces)
@@ -290,8 +295,8 @@ Non-preventable story moments:
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|--------------|---------------|--------|
-| 1 | Rail Sentry | 18 | Construct | — | Bolt Shot (ranged), Track-bound (cannot reposition) | Low |
-| 2 | Forgewright Sentry | 24 | Construct | — | +Cone Scan (area targeting), +Overcharge (high damage, cooldown) | Standard |
+| 1 | Rail Sentry | 18 | Construct | — | Turret Fire (ranged), Scan Lock (increases accuracy) | Low |
+| 2 | Forgewright Sentry | 24 | Construct | — | +Cone Scan (reveals row), +High-Caliber Shot (heavy single-target) | Standard |
 
 ## 6. Existing Family Tier Updates
 
@@ -301,7 +306,7 @@ Families gaining Tier 3 and/or Tier 4 entries in the Interlude:
 |--------|------------|-------|----------|
 | Vermin | 3 | Tunnel Vermin (Lv 22) | Rail Tunnels |
 | Shade | 2 (variant), 4 | Forge Phantom (Lv 20, second Tier 2 biome variant), Pallor Shade (Lv 26) | Rail Tunnels, Axis/Ironmark |
-| Elemental | 3 | Steam Elemental (Lv 20) | Rail Tunnels |
+| Elemental | 2 (biome variant) | Steam Elemental (Lv 20) | Rail Tunnels |
 | Dead | 3, 4 | Wailing Dead (Lv 24), Pallor Revenant (Lv 26) | Catacombs, Ironmark |
 | Warden | 2 (revised), 4 | Tomb Warden (Lv 22, revised from 17), Pallor Warden (Lv 26) | Catacombs, Ironmark |
 | Mite | — | (Pallor Mite is a boss spawn, not a family tier) | Caldera |

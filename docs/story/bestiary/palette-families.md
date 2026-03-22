@@ -250,7 +250,7 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Polluted Elemental | 9 | Elemental | — | Frost Burst (AoE Frost), Elemental Shield (MDEF up) | Standard |
 | 2 | Raging Elemental | 24 | Elemental | Weak->Frost, Absorbs->Flame | +Eruption (high AoE Flame), +Melt (DEF down on target) | Dangerous |
-| 3 | Steam Elemental | 20 | Elemental | Weak->Frost, Absorbs->Flame | +Flame AoE, +Blind (steam cloud) | Standard |
+| 2 | Steam Elemental | 20 | Elemental | Weak->Frost, Absorbs->Flame | +Flame AoE, +Blind (steam cloud) | Standard |
 | 3 | Primordial Elemental | 40 | Elemental | Weak->Spirit, Absorbs->Ley | +Ley Storm (heavy AoE), +Elemental Shift (change weakness mid-fight), +Mana Burn (MP drain) | Rare |
 
 > The generic Elemental family represents corrupted ley energy
@@ -258,10 +258,10 @@ stat derivation, and naming conventions.
 > Primordial variant is a genuine threat with its mid-fight weakness
 > shifting.
 >
-> Elemental family has two Tier 3 variants: Steam Elemental (Lv 20,
-> Rail Tunnels — superheated steam, Flame/Blind) and Primordial
-> Elemental (Lv 40, late-game ley corruption). Same family tier,
-> different biomes and power levels.
+> Elemental family has two Tier 2 variants: Raging Elemental (Lv 24,
+> volcanic/forge areas — eruption specialist) and Steam Elemental
+> (Lv 20, Rail Tunnels — superheated steam, Flame/Blind). Same family
+> tier, different biomes and power levels.
 
 ---
 
@@ -452,8 +452,8 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Compact Soldier | 18 | Humanoid | — | Sword Strike, Cover (protects adjacent ally) | Low |
 | 2 | Compact Officer | 24 | Humanoid | — | +Rally (ATK up party), +Shield Bash (Stun) | Standard |
-| 3 | Elite Guard | 26 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
-| 4 | Pallor Soldier | 26 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Dangerous |
+| 3 | Elite Guard | 34 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
+| 4 | Pallor Soldier | 48 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Dangerous |
 
 > Soldiers are the Carradan military Humanoid family. They fight in
 > formation and support each other. The Pallor Soldier is a corrupted
