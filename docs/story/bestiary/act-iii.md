@@ -20,7 +20,7 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Pallor Boar | Pallor | 28 | 1,943 | 98 | 52 | 43 | 45 | 32 | 24 | 148 | 264 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (Ashen Approach, outer clearings) |
-| Shadow Wolf | Beast | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 59 | 105 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Pallor Wastes (Ashen Approach) |
+| Shadow Wolf | Beast | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 59 | 105 | Beast Hide (75%) | Wolf Pelt (25%) | Ley | Void | — | — | Pallor Wastes (Ashen Approach) |
 | Pallor Vermin | Pallor | 30 | 1,360 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (all outer sections) |
 | Wraith Shade | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | Void | — | Poison, Petrify | Pallor Wastes (outer clearings) |
 | Hollow Walker | Pallor | 28 | 1,767 | 98 | 52 | 38 | 45 | 32 | 30 | 59 | 105 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all sections), Convergence |
@@ -301,7 +301,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Ley Construct | Construct | 26 | 1,548 | 0 | 49 | 36 | 42 | 30 | 28 | 51 | 92 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Ley Line Depths F5 |
 | Vein Stalker | Humanoid | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 148 | 264 | Potion (75%) | Ley Residue (25%) | — | — | — | — | Ley Line Depths F4–F5 (rare) |
-| Confluence Elemental | Elemental | 28 | 1,767 | 98 | 40 | 38 | 51 | 32 | 30 | 59 | 105 | Element Shard (75%) | Elemental Core (25%) | — | — | — | Petrify | Ley Line Depths F5 |
+| Confluence Elemental | Elemental | 28 | 1,767 | 98 | 40 | 38 | 51 | 32 | 30 | 59 | 105 | Element Shard (75%) | Elemental Core (25%) | Varies (cycle) | — | Varies (cycle) | Petrify | Ley Line Depths F5 |
 
 > **Confluence Elemental mechanic:** Casts spells on a rotating
 > element cycle (Flame -> Frost -> Storm -> Earth). Absorbs the
@@ -363,8 +363,9 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 - Crystal Warden (Deep): stronger version of earlier Crystal
   Wardens. Crystalline armor that regenerates. Tank role.
 - Pictograph Wisp: ghostly text fragments -- builders' records
-  given form. Casts by "reading" attack descriptions aloud.
-  Absorbs element matching tablet content (varies per encounter).
+  given form. Baseline absorbs Ley (per palette-families). Casts
+  elements matching the inscribed tablet script (attack element
+  varies per encounter).
 - Ley-Warped Construct: automaton whose ley core overloaded.
   Glitching between functions -- attacks with tools, mining drills,
   structural beams. Unpredictable.
