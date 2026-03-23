@@ -336,15 +336,322 @@ that the Fenmother is a victim to be saved, not a monster to be killed.
 
 ### Ley Colossus (Mini-Boss)
 
-*AI script pending -- see Task 3*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Ley Colossus* | Elemental | 22 | 7,000 | 77 | 43 | 31 | 36 | 26 | 25 | 63 | 116 | Ley Crystal Fragment (75%) | Colossus Shard (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Petrify | Ley Line Depths F3 (mini-boss) |
+
+> **Note:** The Ley Colossus is NOT hostile -- it is a guardian testing
+> visitors' worthiness. It absorbs ALL elemental magic damage (Flame,
+> Frost, Storm, Earth, Ley, Spirit, Void). Players must rely on physical
+> attacks. The Colossus is Elemental type, not Boss type, meaning it
+> lacks standard boss status immunities beyond Petrify.
+
+**Modes:** 2 (Whole, Shattered)
+
+**AI Script:**
+
+```
+=== Phase 1 (7,000--3,500 HP) ===
+
+Mode: Whole
+  Priority:
+    1. turn_counter % 4 == 0 → Ley Pulse (party_wide AoE, ley magic damage;
+       1-turn charge -- chest crystal glows bright on charge turn, pulses next turn)
+    2. turn_counter % 3 == 0 → Crystal Fists (single_target highest threat,
+       heavy physical damage)
+    3. Default → Crystal Fists (single_target highest threat, heavy physical damage)
+
+  Counters:
+    Trigger: Any magic damage dealt to boss
+    Response: Absorb (boss heals for 100% of damage dealt; all elements absorbed)
+    Limit: No limit (fires every time)
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2 (below 3,500 HP) ===
+
+Mode: Shattered
+  Stat Modifiers: DEF -25%, SPD +30%
+  Note: Colossus shatters and reforms into a smaller, faster configuration.
+        Loses Ley Pulse. Gains Prism Beam. Physical vulnerability increases.
+  Priority:
+    1. turn_counter % 3 == 0 → Prism Beam (single_target lowest MDEF,
+       high magic damage; 1-turn charge -- warning beam traces target on
+       charge turn, fires next turn)
+    2. Default → Crystal Fists (single_target highest threat, heavy physical damage)
+
+  Counters:
+    Trigger: Any magic damage dealt to boss
+    Response: Absorb (boss heals for 100% of damage dealt; all elements absorbed)
+    Limit: No limit (fires every time)
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "Cracks spiderweb across the Colossus. It shatters --
+      then the fragments pull together into a leaner, sharper form."
+    - mode_switch: Whole → Shattered
+    - environmental: Ley crystal debris scatters across arena floor
+
+  At boss.hp <= 0 (once):
+    - dialogue: "The Colossus kneels, crystal dimming. It extends one
+      hand -- a shard of its core rests in its palm. An offering."
+    - Note: Non-hostile defeat. The Colossus yields, granting passage.
+```
+
+**Design Note:** The Ley Colossus teaches magic absorption -- a mechanic
+that recurs with the Ley Titan in Act III. Players who rely on magic damage
+will heal the boss, forcing a physical-only strategy. The Phase 2 shift
+to a faster, frailer form rewards sustained aggression. Prism Beam's
+warning trace teaches single-target telegraph avoidance (move or guard the
+targeted character). As a non-hostile guardian, the encounter reinforces
+the theme that not all obstacles are enemies.
 
 ### The Forge Warden
 
-*AI script pending -- see Task 3*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Forge Warden* | Boss | 24 | 8,500 | 84 | 69 | 42 | 70 | 42 | 32 | 2,000 | 3,500 | Corrupted Tuning Fork (100%) | Drayce's Failsafe Core (100%) | Storm (150%), Spirit (125%) | Flame (50%), Earth (75%) | — | Death, Petrify, Stop, Sleep, Confusion, Poison | Ashmark Factory Depths (boss) |
+
+> **Note:** Lira Forgewright has a special relationship with the Forge
+> Warden -- she deals 150% damage to it and can disable Pipeline Drain.
+> The Forge Warden was originally a factory defense construct built by
+> Drayce; it has been corrupted by Pallor energy.
+
+**Modes:** 2 (Programmed, Corrupted)
+
+**AI Script:**
+
+```
+=== Phase 1: Programmed Defense (8,500--4,250 HP) ===
+
+Mode: Programmed
+  Priority:
+    1. turn_counter % 6 == 0 AND shield_protocol_off_cooldown →
+       Shield Protocol (self, grants 1,000 HP absorb shield; 4-turn cooldown)
+    2. turn_counter % 4 == 0 → Containment Pulse (party_wide AoE, 250--300
+       magic damage + knockback to back row + spawns 1--2 contaminated zones;
+       contaminated zones deal tick damage to party members standing in them)
+    3. turn_counter % 3 == 0 → Pipeline Drain (self, heals 500 HP;
+       if Lira Forgewright is in party and alive, she automatically disrupts
+       the pipeline -- heal is negated and boss loses next turn)
+    4. Default → Ley Bolt (single_target highest threat, 350--400 magic damage)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2: Corrupted Logic (below 4,250 HP) ===
+
+Mode: Corrupted
+  Note: Targeting becomes semi-random (50% chance to target highest threat,
+        50% random). All Phase 1 abilities retained with additions.
+  Priority:
+    1. boss.hp_percent <= 20 AND NOT emergency_protocol_active →
+       Emergency Protocol (self, begins 3-turn self-destruct countdown;
+       if Lira Forgewright is in party and alive, Lira Override ability
+       unlocks -- using it aborts the self-destruct. If countdown reaches
+       0, deals 9,999 damage party_wide -- effectively a wipe)
+    2. turn_counter % 5 == 0 → Overload Beam (positional line AoE,
+       500--600 magic damage; 2-turn charge -- targeting reticle appears
+       on charge turn 1, beam locks on charge turn 2, fires turn 3;
+       interruptible by 800+ physical damage during charge)
+    3. system_failure_ready (random, ~25% chance per turn) →
+       System Failure (self, boss freezes for 1 turn; free damage window)
+    4. turn_counter % 6 == 0 AND shield_protocol_off_cooldown →
+       Shield Protocol (self, grants 1,000 HP absorb shield; 4-turn cooldown)
+    5. turn_counter % 4 == 0 → Containment Pulse (party_wide AoE, 250--300
+       magic damage + knockback + contaminated zones)
+    6. turn_counter % 3 == 0 → Pipeline Drain (self, heals 500 HP;
+       Lira disrupts if present)
+    7. Default → Ley Bolt (single_target semi-random, 350--400 magic damage)
+
+  Counters: None
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "Warning klaxons blare. The Warden's eyes flicker between
+      blue and crimson. 'DEFENSE PROTOCOL... COR-R-RUPTED.'"
+    - mode_switch: Programmed → Corrupted
+    - environmental: Factory lights shift to emergency red; additional
+      contaminated zones appear at arena edges
+
+  At boss.hp_percent <= 20 (once, if Lira in party):
+    - dialogue: Lira: "That's Drayce's failsafe -- it'll take the whole
+      factory down! I can override it, but I need an opening!"
+    - ability_unlock: Lira gains "Lira Override" command (single use,
+      aborts Emergency Protocol self-destruct)
+
+  At boss.hp <= 0 (once):
+    - dialogue: "The Warden shudders, collapses to one knee. Its chest
+      plate splits open, revealing a pulsing core -- Drayce's Failsafe Core."
+    - Note: If Lira is in party, additional dialogue: Lira: "...He built
+      this to protect the factory. To protect us. And we had to destroy it."
+```
+
+**Design Note:** The Forge Warden is a mechanics-dense encounter that
+rewards party composition. Lira Forgewright's 150% damage bonus and
+Pipeline Drain disruption make her nearly essential, reinforcing her
+narrative connection to the factory. The Overload Beam teaches interrupt
+mechanics (burst physical damage to cancel a charge), while System
+Failure's random free turns prevent the fight from feeling scripted.
+Emergency Protocol is the tension peak -- players must either have Lira
+for the Override or burn through 20% HP in 3 turns. Storm weakness
+(150%) rewards Torren's magic.
 
 ### The Ashen Ram
 
-*AI script pending -- see Task 3*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 5,000 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
+
+> **Note:** The Ashen Ram is a massive siege engine. This encounter
+> begins with a pre-fight gauntlet of enemy waves before the boss itself
+> engages. Dame Cordwyn (NPC ally, 5,000 HP, ATK 85, DEF 70) fights
+> alongside the party throughout the encounter, using Shield Wall and
+> Rally Cry. Phase 3 exposes the Pallor Core, which is separately
+> vulnerable to Flame (the boss's overall Flame weakness only applies
+> to the exposed core).
+
+**Modes:** 3 (Ranged, Breach, Core)
+
+**AI Script:**
+
+```
+=== Pre-Fight Gauntlet ===
+
+The party and Dame Cordwyn face waves of Imperial forces before the
+Ashen Ram reaches the wall. Short breather between Wave 3 and the boss.
+
+  Wave 1 -- "Vanguard":
+    - 4 Imperial Soldiers + 2 Siege Engineers
+    - Note: Engineers repair barricades if left alive; prioritize them.
+
+  Wave 2 -- "Suppression":
+    - 3 Imperial Soldiers + 2 Ballista Crews
+    - Note: Ballista Crews deal heavy single-target damage from back row.
+
+  Wave 3 -- "Air Support":
+    - 2 Gyrocopters + 2 Imperial Soldiers
+    - Note: Gyrocopters are airborne (immune to melee until grounded
+      by Storm or ranged attacks).
+
+  Breather:
+    - Party HP/MP restored to 75% of max. Dame Cordwyn delivers a
+      rallying speech. Status effects cleared.
+
+NPC: Dame Cordwyn (fights alongside party for entire encounter)
+  HP: 5,000 | ATK: 85 | DEF: 70
+  AI:
+    1. party_avg_hp < 40% → Rally Cry (party_wide, restores 15% max HP
+       to all party members; 5-turn cooldown)
+    2. single ally below 25% HP → Shield Wall (positional, interposes
+       to absorb next hit targeting that ally; 3-turn cooldown)
+    3. Default → Sword Strike (single_target, same target as party leader;
+       physical damage based on ATK 85)
+
+=== Phase 1: Ranged Assault (25,000--15,000 HP) ===
+
+Mode: Ranged
+  Note: The Ashen Ram is approaching the wall. It attacks at range while
+        deploying soldiers. Despair Pulse is a passive aura.
+  Passive: Despair Pulse (party_wide, drains 3% max MP per turn from all
+           party members; cannot be dispelled while Ram is in Ranged mode)
+  Priority:
+    1. turn_counter % 5 == 0 → Compact Escalade (add_spawn, deploys 2
+       Imperial Soldiers from the Ram's side hatches; max 4 active)
+    2. turn_counter % 4 == 0 → Lord Haren's Orders (party_wide, ATK/MAG
+       buff to all active adds for 3 turns)
+    3. turn_counter % 3 == 0 → Battering Advance (single_target highest DEF,
+       heavy physical damage; Ram moves closer -- after 3 uses, triggers
+       Phase 2 transition regardless of HP)
+    4. Default → Battering Advance (single_target highest DEF, heavy
+       physical damage)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 60 OR Battering Advance used 3 times
+            → enter Phase 2
+
+=== Phase 2: Breach (15,000--7,500 HP) ===
+
+Mode: Breach
+  Note: The Ram has reached the wall. Close-range combat. Despair Pulse
+        passive continues. No more soldier deployment.
+  Passive: Despair Pulse (party_wide, drains 3% max MP per turn)
+  Priority:
+    1. turn_counter % 5 == 0 → Engine Surge (party_wide AoE, moderate
+       physical damage + knockback to back row; 1-turn charge --
+       engine revs on charge turn, surges next turn)
+    2. turn_counter % 3 == 0 → Pallor Shrapnel (party_wide AoE, moderate
+       magic damage + 30% chance Despair status on each target)
+    3. Default → Drill Arm (single_target highest threat, heavy physical
+       damage; ignores 25% of target's DEF)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 30 → enter Phase 3
+
+=== Phase 3: Pallor Core (below 7,500 HP) ===
+
+Mode: Core
+  Note: The Ram's outer hull is breached, exposing the Pallor Core.
+        Despair Pulse becomes an active attack. Core is vulnerable to
+        Flame (applies the boss's Flame weakness). Storm weakness
+        applies to the Ram throughout all phases.
+  Priority:
+    1. turn_counter % 5 == 0 → Core Overload (party_wide AoE, massive
+       magic damage; 2-turn charge -- core pulses on charge turn 1,
+       energy builds on charge turn 2, detonates turn 3; interruptible
+       by Flame damage during charge -- Flame hits the exposed core
+       and disrupts the overload)
+    2. turn_counter % 3 == 0 → Despair Pulse (active) (party_wide AoE,
+       moderate magic damage + drains 5% max MP; replaces passive aura)
+    3. Default → Drill Arm (single_target highest threat, heavy physical
+       damage; ignores 25% of target's DEF)
+
+  Counters: None
+
+Scripted Events:
+  At gauntlet_complete (once):
+    - dialogue: Dame Cordwyn: "Here it comes -- the Ashen Ram. Hold the
+      line! For Valdris!"
+    - environmental: The siege engine emerges from smoke, towering over
+      the wall defenses
+
+  At Phase 2 transition (once):
+    - dialogue: "The Ram crashes into the wall. Stone cracks. The ground
+      shakes beneath your feet."
+    - environmental: Arena shifts to close-range; ranged positions no
+      longer available. Debris hazards appear.
+    - dialogue: Dame Cordwyn: "It's breached the outer wall! Get in close
+      -- don't let it push through!"
+
+  At Phase 3 transition (once):
+    - dialogue: "The hull splits open. Inside, a pulsing core of grey
+      light -- Pallor energy, raw and writhing."
+    - environmental: Pallor Core exposed at Ram's center; Flame attacks
+      now deal bonus damage to the core
+    - dialogue: Dame Cordwyn: "There -- that's its heart! Hit it with
+      everything you've got!"
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Pallor Core ruptures. The Ashen Ram groans, lists,
+      and collapses in a cascade of iron and grey light. Silence falls
+      over the wall. Then -- cheering."
+    - dialogue: Dame Cordwyn: "The Ram is down. Valdris stands... for now."
+```
+
+**Design Note:** The Ashen Ram is Act II's climactic set-piece, combining
+a pre-fight gauntlet with a three-phase siege boss. The gauntlet teaches
+wave management and establishes Dame Cordwyn as a reliable NPC ally. The
+Despair Pulse MP drain creates resource tension across all phases, forcing
+players to choose between conserving MP and going all-out. Phase
+transitions are driven by both HP thresholds and mechanical triggers
+(Battering Advance count), keeping the pacing dynamic. Phase 3's Core
+Overload interrupt mechanic (Flame disrupts the charge) rewards players
+who saved fire-element resources despite the MP drain. The encounter
+serves as both a mechanical climax and a narrative one -- defending Valdris
+alongside Cordwyn cements the stakes of the Pallor conflict.
 
 ---
 
