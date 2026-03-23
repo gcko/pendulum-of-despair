@@ -523,7 +523,72 @@ content. Not sold in any shop.
 
 ## Arcanite Forging
 
-*Content pending — see Task 8*
+Lira's unique crafting system. Arcanite Forging allows the party to
+create equipment from gathered materials at save points and camps.
+Forged equipment carries a visible **"Forged"** tag in the equipment
+menu, cannot be bought from shops, and can only be crafted by Lira.
+
+### Forgeable Equipment
+
+Eight pieces total — five weapons and three armor. Each is listed in
+its respective weapon/armor section above; this table collects them
+in one reference.
+
+| Name | Slot | Stats | Materials | Gold | Unlock |
+|------|------|-------|-----------|------|--------|
+| Arcanite Blade | Weapon (Edren) | ATK 35, +5 MAG | 1 Arcanite Ingot + 3 Crystal Shard | 500 | Interlude |
+| Forgewright Maul | Weapon (Lira) | ATK 40 | 1 Arcanite Ingot + 2 Scrap Metal + 1 Drill Fragment | 500 | Interlude |
+| Thornspear | Weapon (Torren) | ATK 30, +3 SPD | 3 Spirit Essence + 2 Petrified Bark | 400 | Act III |
+| Shadowsteel Knife | Weapon (Sable) | ATK 28, +4 SPD, +3 LCK | 2 Pallor Sample + 1 Arcanite Shard | 400 | Act III |
+| Resonance Rod | Weapon (Maren) | ATK 15, +15 MAG | 2 Elemental Core + 2 Ley Crystal Fragment | 500 | Act III |
+| Arcanite Helm | Head | DEF 30, MDEF 22 | 1 Arcanite Ingot + 2 Drill Fragment | 400 | Interlude |
+| Pallor Ward Vest | Body (Light) | DEF 38, MDEF 25, Despair resist 50% | 3 Pallor Sample + 2 Grey Residue + 1 Spirit Essence | 500 | Act III |
+| Ley-Woven Cloak | Body (Robe) | DEF 20, MDEF 40, MP Regen 3%/turn | 2 Ether Wisp + 2 Elemental Core + 1 Ley Crystal Fragment | 500 | Act III |
+
+### Elemental Infusions
+
+Any weapon can receive an elemental infusion. Infusions are permanent
+but replaceable — applying a new infusion overwrites the previous one.
+Infusions can be removed for free at save points. Infused weapons
+display an **(Infused: Element)** suffix in the equipment menu.
+
+| Infusion | Element | Materials | Gold |
+|----------|---------|-----------|------|
+| Flame Infusion | Flame | 2 Element Shard + 1 Molten Gear | 300 |
+| Frost Infusion | Frost | 2 Element Shard + 1 Crystal Shard | 300 |
+| Storm Infusion | Storm | 2 Element Shard + 1 Scrap Metal | 300 |
+| Earth Infusion | Earth | 2 Element Shard + 1 Stone Fragment | 300 |
+| Ley Infusion | Ley | 2 Elemental Core + 1 Ley Crystal Fragment | 500 |
+| Spirit Infusion | Spirit | 2 Spirit Essence + 1 Ether Wisp | 500 |
+| Void Infusion | Void | 2 Pallor Sample + 1 Grey Residue | 500 |
+
+### Secret Synergies
+
+Certain weapon + infusion combinations unlock a hidden synergy,
+transforming the weapon into a named variant with a bonus effect.
+There are no in-game hints until the synergy activates. When a synergy
+triggers, the notification reads: *"Lira senses a resonance between
+the [weapon] and the [element] infusion. The weapon transforms..."*
+
+| Base Weapon | Infusion | Synergy Name | Bonus Effect |
+|-------------|----------|--------------|--------------|
+| Grey Cleaver (tainted) | Spirit | Penitent's Edge | Purification counter: 50 encounters (was 100) |
+| Architect's Hammer | Storm | Stormforge Hammer | +25% damage vs Construct-type |
+| Any Torren Spear | Earth | Rootbound Lance | 20% chance to inflict Slow on physical hit |
+| Any Maren Staff | Ley | Resonance Staff | MP cost of all spells -15% |
+| Any Sable Dagger | Void | Shadowfang | Steal rate +25%, successful steals 15% Despair chance |
+| Any Lira Hammer | Flame | Crucible Maul | Forgewright device gold cost -50% |
+| Any Edren Sword | Spirit | Oathkeeper | +15% damage when any ally has Faint status |
+
+#### Synergy Narrative Justifications
+
+- **Penitent's Edge:** The Spirit infusion accelerates the Grey Cleaver's purification by resonating with the lingering spiritspeaker echoes bound into the tainted blade.
+- **Stormforge Hammer:** Storm energy overcharges the Architect's own design principles, turning its anti-Construct properties into a devastating feedback loop.
+- **Rootbound Lance:** Earth energy channels through the spear's shaft into the ground, entangling targets with momentary root growth on impact.
+- **Resonance Staff:** Ley energy harmonizes with the staff's natural arcane conductivity, reducing the friction of spellcasting.
+- **Shadowfang:** Void energy coats the dagger's edge, letting Sable slice through material and morale alike — stolen goods carry a whisper of despair.
+- **Crucible Maul:** Flame energy superheats the hammer's striking surface, allowing Lira to work metal more efficiently and halving device forging costs.
+- **Oathkeeper:** Spirit energy responds to Edren's protective instincts — when an ally falls, the oath burns brighter.
 
 ---
 
