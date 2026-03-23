@@ -57,8 +57,8 @@ Grey. The deeper you go, the less recognizable things become.
 | Pallor Knight | Pallor | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Pallor Shard (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Grey March, trial clearings), Convergence |
 | Grief Shade | Pallor | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (trial clearings), Convergence |
 | Void Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Pallor Wastes (inner clearings) |
-| Pallor Treant | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Petrified Bark (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (inner sections) |
-| Marauder Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Potion (75%) | Bandit's Coin (25%) | — | — | — | — | Pallor Wastes (inner clearings) |
+| Pallor Treant | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 172 | 303 | Pallor Sample (75%) | Petrified Bark (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (inner sections) |
+| Marauder Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 115 | 202 | Potion (75%) | Bandit's Coin (25%) | — | — | — | — | Pallor Wastes (inner clearings) |
 
 **Design notes:**
 - Pallor Knight is a premium encounter (Dangerous threat). Armored
