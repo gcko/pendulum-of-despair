@@ -26,7 +26,7 @@ ley-infused creatures.
 | Crystal Sentry | Elemental | 20 | 1,078 | 70 | 40 | 33 | 34 | 24 | 19 | 32 | 60 | Element Shard (75%) | Elemental Core (25%) | Storm | — | Earth | Petrify | Ley Line Depths F2–F3 |
 | *Ley Colossus* | Elemental | 22 | 7,000 | 77 | 43 | 31 | 36 | 26 | 25 | 63 | 116 | Ley Crystal Fragment (75%) | Colossus Shard (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Petrify | Ley Line Depths F3 (mini-boss) |
 
-### Boss Notes
+### Boss Notes — Ley Line Depths
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -55,7 +55,7 @@ and the first signs of the Pallor's reach.
 > Gold/Exp is awarded. This encounter signals that something is
 > deeply wrong before the Interlude reveals the full scope.
 
-### Boss Notes
+### Boss Notes — Ashmark Factory Depths
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -128,7 +128,7 @@ When a Compact Gyrocopter reaches 0 HP:
 3. The pilot acts on the next available turn
 4. Gold/Exp = sum of both enemies
 
-### Boss Notes
+### Boss Notes — Valdris Siege
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
