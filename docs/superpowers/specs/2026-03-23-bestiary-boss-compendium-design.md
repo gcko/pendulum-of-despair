@@ -9,10 +9,15 @@ in the game with stat tables, AI scripts (modes, priority lists,
 counters, scripted events), and phase mechanics. Trim act-file Boss
 Notes to stub references.
 
-**Scope:** 29 bosses across Acts I–III, Interlude, and Post-game.
-No new bosses are introduced — this consolidates and formalizes what
-exists in `dungeons-world.md`, `dungeons-city.md`, and the act-file
-Boss Notes sections.
+**Scope:** 29 combat bosses + 1 unwinnable siege encounter across
+Acts I–III, Interlude, and Post-game. No new bosses are introduced —
+this consolidates and formalizes what exists in `dungeons-world.md`,
+`dungeons-city.md`, and the act-file Boss Notes sections.
+
+> **README update required:** `bestiary/README.md` currently states
+> boss HP range as 6,000–70,000. This must be updated to 1,500–100,000
+> to reflect mini-boss floors (Ember Drake 1,500) and post-game
+> ceilings (Iron Warden 100,000). Fix during implementation.
 
 ---
 
@@ -100,12 +105,13 @@ limited: "once per turn" or "50% chance."
 - Cael Phase 1 — counters whoever attacked last
 - Pallor Incarnate — conduit regen response
 - The Crowned Hollow — Royal Guard counterattack on physical
-- Vein Guardian — Reconstruct at 50% (one-time HP restore)
 - Archive Keeper — wrong answer restores HP (puzzle counter)
 - Wellspring Guardian — wrong answer triggers Nexus Pulse
 
 **Bosses without counters** (identity is elsewhere):
 - Ember Drake, Drowned Sentinel (simple intro fights)
+- Vein Guardian (Reconstruct is a scripted HP-threshold event, not a
+  reactive counter — moved to Scripted Events)
 - Ashen Ram (gauntlet + phases, not reactive)
 - Corrupted Boring Engine (positional puzzle, not reactive)
 - The Ironbound (phase transitions, Lira/Torren interaction)
@@ -200,12 +206,34 @@ dungeon files are authoritative for HP — do not recompute.
 Exp ≤ 30,000. These caps apply even to the Pallor Incarnate and
 post-game Echo Bosses.
 
-### 2.4 Vaelith Special Case
+### 2.4 Vaelith — Two Encounters
 
-Vaelith is the unwinnable siege encounter at Lv 150 (game level cap).
-His stats are computed at Lv 150 with boss multipliers. HP is
-hand-tuned to 50,000. This was corrected in the Act III PR (was
-previously Lv 99).
+Vaelith appears in two separate encounters with different stats:
+
+1. **Vaelith (Siege)** — Unwinnable encounter at Valdris during Act II.
+   Lv 150 (game level cap), 999,999 HP, all immunities. Party attacks
+   deal 0–1 damage. Scripted loss after ~5 turns. 0 Gold, 0 Exp.
+   Listed as a special appendix entry, NOT counted in the 29 combat
+   bosses. Stats already exist in `act-iii.md`.
+
+2. **Vaelith, the Ashen Shepherd** — Real fight at Pallor Wastes
+   Section 5 during Act III. **Lv 34**, 50,000 HP. Stats computed at
+   Lv 34 with boss multipliers (ATK 93, DEF 58, MAG 95, MDEF 57,
+   SPD 42 per act-iii.md). Party is Lv 30–35. This is the canonical
+   combat encounter.
+
+The pre-fight 10-attack threshold in the real fight echoes the siege —
+party attacks deal 0 damage until Lira's weapon-forging cutscene.
+After that, Vaelith is beatable at his Lv 34 stats.
+
+### 2.5 Archive Keeper Variable HP
+
+Archive Keeper has variable starting HP (3,000–12,000) based on a
+knowledge puzzle. Represented as a single stat row with HP = 12,000
+(worst case). A note in the AI script explains the puzzle mechanic:
+each correct answer reduces HP by 2,000 before combat begins (3
+correct = 6,000 reduction → 6,000 starting HP; combat starts at
+minimum 3,000 with all correct + finishing reduction).
 
 ---
 
@@ -308,6 +336,13 @@ previously Lv 99).
 ### The Crystal Queen (Echo Boss) ...
 ### The Rootking (Echo Boss) ...
 ### The Iron Warden (Echo Boss) ...
+
+---
+
+## Appendix: Unwinnable Encounters
+### Vaelith (Siege) — Scripted Loss
+[Stat row: Lv 150, 999,999 HP, 0 Gold, 0 Exp]
+[Note: not a real combat encounter — scripted loss after ~5 turns]
 ```
 
 ### 3.2 Act File Stub Format
@@ -334,17 +369,18 @@ All detail lives in `bosses.md`.
 | # | Name | Type | Lv | HP | Phases | Modes | Counters | Multi-Row |
 |---|------|------|----|----|--------|-------|----------|-----------|
 | 1 | Ember Drake | Beast | 8 | 1,500 | 1 | 1 (Normal) | No | No |
-| 2 | Vein Guardian | Boss | 12 | 6,000 | 2 | 2 (Normal, Reconstruct) | Yes (one-time heal) | No |
+| 2 | Vein Guardian | Boss | 12 | 6,000 | 2 | 2 (Normal, Enraged) | No | No |
 | 3 | Drowned Sentinel | Construct | 10 | 4,000 | 1 | 2 (Normal, Shield) | No | No |
 | 4 | Corrupted Fenmother | Boss | 12 | 18,000 | 3 | 3 (Surface, Dive, Cleansing) | Yes (untargetable dive) | Yes |
 
 **Design notes:**
 - Ember Drake is the tutorial mini-boss. Simple priority list, no
   counters. Teaches "bosses hit harder, watch for telegraphs."
-- Vein Guardian introduces phase transitions (Reconstruct at 50%).
-  Teaches "bosses change behavior at HP thresholds."
-- Drowned Sentinel teaches Shield mode — "some attacks bounce off,
-  wait for opening."
+- Vein Guardian introduces phase transitions. Reconstruct at 50% HP
+  is a scripted event (one-time 300 HP regen + 1-turn pause), not a
+  counter. Teaches "bosses change behavior at HP thresholds."
+- Drowned Sentinel teaches Shield mode — damage is heavily reduced
+  during Barnacle Shield (DEF +100% for 2 turns), rewarding patience.
 - Corrupted Fenmother is the first complex boss. Dive/surface mode
   cycling, add spawning, and the cleansing wave gauntlet. Multi-row
   because the cleansing sequence is a fundamentally different encounter.
@@ -422,7 +458,7 @@ All detail lives in `bosses.md`.
 
 | # | Name | Type | Lv | HP | Phases | Modes | Counters | Multi-Row |
 |---|------|------|----|----|--------|-------|----------|-----------|
-| 17 | Vaelith | Boss | 150 | 50,000 | 2+pre | 3 (Invulnerable, Scholar, Shepherd) | No | No |
+| 17 | Vaelith, the Ashen Shepherd | Boss | 34 | 50,000 | 2+pre | 3 (Invulnerable, Scholar, Shepherd) | No | No |
 | 18 | Ley Titan | Boss | 28 | 18,000 | 3 | 3 (Whole, Fractured, Condensed) | Yes (Phase 3 Resonance) | No |
 | 19 | Archive Keeper | Boss | 32 | 3,000–12,000 | 1 | 1 (Puzzle) | Yes (wrong answer = heal) | No |
 | 20 | Wellspring Guardian | Boss | 36 | 28,000 | 3 | 3 (Arms, Knowledge, Resolve) | Yes (wrong answer = AoE) | No |
@@ -433,21 +469,27 @@ All detail lives in `bosses.md`.
 | 25 | The Pallor Incarnate | Boss | 40 | 70,000 | 1 | 2 (Conduit, Exposed) | Yes (conduit regen) | No |
 
 **Design notes:**
-- Vaelith at Lv 150 is an unwinnable siege. The pre-fight 10-attack
-  threshold is a scripted event (0 damage until Lira's weapon-forging
-  cutscene). Two combat phases afterward use Scholar/Shepherd modes.
-  Stats computed at Lv 150 × boss multipliers, but HP hand-tuned to
-  50,000 (party is Lv 30-35, so even with the weapon this is brutal).
+- Vaelith's real fight is at **Lv 34** (not Lv 150 — that's the
+  unwinnable siege). The pre-fight 10-attack threshold is a scripted
+  event (0 damage until Lira's weapon-forging cutscene). Two combat
+  phases afterward use Scholar/Shepherd modes. Stats per act-iii.md.
+  The Vaelith (Siege) encounter gets an appendix entry in bosses.md.
 - Ley Titan's three modes map to its physical transformation. Fractured
   mode splits into 3 Aspects sharing an HP pool — kill order matters.
-  Phase 3 Resonance counter punishes burst damage.
+  Phase 3 Resonance counter punishes burst damage. Note: Ley Line
+  Depths spans Acts II–III (F1–3 = Act II, F4–5 = Act III). Ley
+  Colossus (Act II, F3) and Ley Titan (Act III, F5) are in the same
+  dungeon but different acts.
 - Archive Keeper and Wellspring Guardian are knowledge-puzzle bosses.
   Wrong answers have mechanical consequences (HP restore / AoE).
 - The Architect + Grey Cleaver Unbound are a two-stage fight with no
-  break. Architect is Construct-themed (Shielded/Unshielded modes via
-  Ley Anvil destruction). Grey Cleaver is Pallor-themed with the iconic
-  3-stance weapon cycle. These get separate stat rows (different types,
-  levels, and weaknesses).
+  break. They are listed as **separate bosses** (#21 and #22) because
+  they have different types, levels, and weaknesses — each gets its
+  own section and stat row naturally. (This is distinct from
+  "Multi-Row" which means one boss with multiple stat rows, like Cael.)
+  Architect is Construct-themed (Shielded/Unshielded modes via Ley
+  Anvil destruction). Grey Cleaver is Pallor-themed with the iconic
+  3-stance weapon cycle.
 - Cael is the emotional climax. Phase 1 is calculated (counters last
   attacker), Phase 2 is raw Pallor aggression. Multi-row because level,
   HP, and resistances change between phases.
@@ -538,7 +580,7 @@ Boss rewards are hand-tuned (not formula-derived). Guidelines:
 | Act I | 200–1,500 | 500–3,000 | Early game, meaningful but not economy-breaking |
 | Act II | 1,500–4,000 | 3,000–8,000 | Mid-game, funds equipment upgrades |
 | Interlude | 2,000–5,000 | 4,000–10,000 | Varies by boss difficulty |
-| Act III | 3,000–8,000 | 6,000–20,000 | Late game, significant rewards |
+| Act III | 3,000–10,000 | 6,000–20,000 | Late game; Vaelith at 10,000 Gold (ceiling) reflects his unique Lv 150 siege origin |
 | Post-game | 5,000–10,000 | 10,000–30,000 | Near caps, respects hard ceiling |
 
 **Hard ceilings:** Gold ≤ 10,000, Exp ≤ 30,000. No exceptions.
