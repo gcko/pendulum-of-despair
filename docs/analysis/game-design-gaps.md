@@ -542,4 +542,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic (4 sources, 3 set-pieces). 4 new families, ~15 Tier 3/4 updates. | 781f4ce |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 5 ages, Lv 42–100). Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL → COMPLETE. Boss Compendium (29+1 bosses): full AI scripts, phase mechanics, scripted events, stat tables verified against act files. Gap 1.3 fully closed. | — |
-| 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, ~24 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |
+| 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, 23 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |
