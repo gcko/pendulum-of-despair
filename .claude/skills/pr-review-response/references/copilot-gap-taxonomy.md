@@ -146,3 +146,19 @@ structural fix. Process working as intended.
 **Outcome:** 1 new checklist item added to "Stat Table Clarity"
 (single item per Drop/Steal cell). Propagation sweep should have
 caught the stale Pallor Regent note during the rename.
+
+### PR #23 (2026-03-23) — 10 Copilot comments, 1 new gap
+
+**Top patterns:**
+- Numeric propagation (boss Gold exceeds 10K cap): 3 comments — new
+- Reference format (double-hyphens in headers/table cells): 2 comments
+- Mirror staleness (README stale text, CONTINUATION files column,
+  gap tracker wording): 3 comments — all covered by existing checklists
+- Self-contradiction (type distribution percentages): 1 comment —
+  already fixed before Copilot reviewed
+- Ambiguity (boss HP range vs README): 1 comment — already addressed
+  in level classification note
+
+**Outcome:** 1 new checklist item (boss Gold must respect 10K cap).
+Story-review-loop caught the README stale text before Copilot.
+6 of 10 issues were already covered by existing checklists.

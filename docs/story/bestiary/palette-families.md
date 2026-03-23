@@ -188,6 +188,10 @@ stat derivation, and naming conventions.
 > Lv 30 in overworld safe zones (projected Lv 36). Pallor Drake
 > (Tier 4) is deployed at Lv 36 in the Convergence (projected Lv 50).
 > Stats in act-iii.md are computed from the deployment level.
+>
+> **Dreamer's Fault deployment:** Pallor Drake also appears at
+> Lv 90 in the Void (Floors 17–20). The Pallor's domain amplifies
+> all entities — stats computed from the Void deployment level.
 
 ---
 
@@ -254,6 +258,10 @@ stat derivation, and naming conventions.
 > **Act III early deployment:** Pallor Lurker (Tier 4) is deployed at
 > Lv 36 in the Convergence (projected Lv 46). Stats in act-iii.md are
 > computed from the deployment level.
+>
+> **Dreamer's Fault deployment:** Pallor Lurker also appears at
+> Lv 96 in the Void (Floors 17–20). The Pallor's domain amplifies
+> all entities — stats computed from the Void deployment level.
 
 ---
 
@@ -441,6 +449,10 @@ stat derivation, and naming conventions.
 > (Tier 4) is deployed at Lv 34 in overworld grey zones (projected
 > Lv 45). Stats in act-iii.md are computed from the deployment level,
 > not the projected level.
+>
+> **Dreamer's Fault deployment:** Pallor Wolf also appears at
+> Lv 92 in the Void (Floors 17–20). The Pallor's domain amplifies
+> all entities — stats computed from the Void deployment level.
 
 ---
 
