@@ -16,10 +16,10 @@
 | **2a: Act II** | COMPLETE | #20 (merged) | 33 | act-ii.md, palette-families.md |
 | **2b: Interlude** | COMPLETE | — (pending PR) | 52 | interlude.md, palette-families.md |
 | **3a: Act III** | COMPLETE | — (pending PR) | ~65 | act-iii.md, palette-families.md |
-| **3b: Optional** | NOT STARTED | — | ~20–30 target | optional.md |
+| **3b: Optional** | COMPLETE | — (pending PR) | 24 | optional.md |
 | **4: Boss Compendium** | NOT STARTED | — | ~20–25 target | bosses.md |
 
-**Gap 1.3 status:** PARTIAL — Act I + Act II + Interlude + Act III complete (in `docs/analysis/game-design-gaps.md`)
+**Gap 1.3 status:** PARTIAL — Act I + Act II + Interlude + Act III + Optional complete. Only Boss Compendium remains (in `docs/analysis/game-design-gaps.md`)
 
 ---
 
