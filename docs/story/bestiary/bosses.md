@@ -659,23 +659,467 @@ alongside Cordwyn cements the stakes of the Pallor conflict.
 
 ### Corrupted Boring Engine (Mini-Boss)
 
-*AI script pending -- see Task 4*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 63 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
+
+> **Note:** The Corrupted Boring Engine is a Construct, not Boss type,
+> meaning it has more status vulnerabilities than a true boss. Back
+> attacks against the exposed Arcanite core deal bonus damage. The
+> engine cycles between two modes: Drilling (charges and slams) and
+> Exposed (core targetable, takes +50% physical damage but only from
+> melee-range attacks).
+
+**Modes:** 2 (Drilling, Exposed)
+
+**AI Script:**
+
+```
+Mode: Drilling
+  Note: Engine charges forward in straight lines. Core is shielded.
+        Physical attacks deal normal damage. Back attacks unavailable.
+  Priority:
+    1. turn_counter % 3 == 0 → Drill Charge (positional line, 250--300
+       physical damage to all targets in a line; 1-turn charge --
+       engine revs on charge turn, charges next turn; positional --
+       party members can move out of the line during charge turn)
+    2. turn_counter % 2 == 0 → Area Slam (party_wide AoE, 150--200
+       physical damage + knockback; engine slams the tunnel floor)
+    3. Default → Ram (single_target highest threat, 200 physical damage)
+  Exit: After 3 turns in Drilling → switch to Exposed
+
+Mode: Exposed
+  Stat Modifiers: Physical damage taken +50% (melee only)
+  Note: The Arcanite core on the engine's back becomes targetable.
+        Back attacks against the core deal +50% physical damage (melee
+        only). Ranged and magic attacks deal normal damage. Engine is
+        sluggish and defensive in this mode.
+  Priority:
+    1. turn_counter % 2 == 0 → Steam Vent (party_wide cone AoE,
+       100--150 fire magic damage; defensive spray while core is exposed)
+    2. Default → Grinding Halt (self, DEF +25% for 1 turn; engine
+       braces while overheated)
+  Exit: After 2 turns in Exposed → switch to Drilling
+
+  Counters: None
+
+Scripted Events: None
+```
+
+**Design Note:** The Corrupted Boring Engine teaches positional
+awareness in tight tunnel corridors. The Drilling/Exposed cycle rewards
+patience -- players who weather the Drilling phase get a high-damage
+window when the core is exposed. As a Construct (not Boss), it is
+vulnerable to more status effects, letting players experiment with
+debuffs. Storm weakness rewards Torren's magic, and the back-attack
+bonus on the exposed core rewards melee positioning. A straightforward
+mini-boss that gates access to the deeper Rail Tunnels and The Ironbound.
 
 ### The Ironbound
 
-*AI script pending -- see Task 4*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm, Void | Earth, Flame | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
+
+> **Note:** The Ironbound is a massive boring engine fused with its
+> operator -- a Drayce-series construct frame. Phase 1 ("The Machine")
+> is pure mechanical aggression. Phase 2 ("The Operator") retains all
+> Phase 1 abilities but introduces random hesitation windows where the
+> trapped operator's will resurfaces, creating free damage opportunities.
+> Lira recognizes the Drayce-series frame. Character interactions
+> during hesitation windows grant significant bonuses.
+
+**Modes:** 2 (The Machine, The Operator)
+
+**AI Script:**
+
+```
+=== Phase 1: The Machine (22,000--11,000 HP) ===
+
+Mode: The Machine
+  Priority:
+    1. turn_counter % 5 == 0 → Tunnel Collapse (party_wide AoE, 300
+       physical damage + Slow 2 turns; environmental -- rearranges
+       zone positions, pushing party members to random slots)
+    2. turn_counter % 4 == 0 → Steam Vent (positional cone AoE,
+       200--250 fire magic damage + Burn 3 turns; targets front row
+       and adjacent positions)
+    3. turn_counter % 3 == 0 → Drill Charge (single_target highest
+       threat, 400--500 physical damage; 1-turn wind-up -- engine
+       locks onto target on charge turn, strikes next turn; positional
+       -- bonus 150 damage if target is pushed against tunnel wall)
+    4. Default → Bore Forward (party_wide push, 150 physical damage;
+       pushes all party members back one position; bonus 150 damage
+       to any party member already against the wall)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2: The Operator (below 11,000 HP) ===
+
+Mode: The Operator
+  Note: All Phase 1 abilities retained. The operator's will surfaces
+        randomly, creating hesitation windows (1-turn pauses where
+        the boss takes no action). ~30% chance each turn to hesitate
+        instead of acting. Desperate Bore replaces Drill Charge.
+        Character interactions during hesitation grant bonuses.
+  Priority:
+    1. hesitation_roll (30% chance per turn) → Hesitation (self,
+       boss pauses for 1 turn; operator's will struggles for control;
+       free damage window)
+    2. turn_counter % 5 == 0 → Tunnel Collapse (party_wide AoE, 300
+       physical damage + Slow 2 turns; zone rearrange)
+    3. turn_counter % 4 == 0 → Steam Vent (positional cone AoE,
+       200--250 fire magic damage + Burn 3 turns)
+    4. turn_counter % 3 == 0 → Desperate Bore (single_target highest
+       threat, 500--600 physical damage; double charge speed -- no
+       wind-up, strikes immediately; replaces Drill Charge)
+    5. Default → Bore Forward (party_wide push, 150 physical damage;
+       wall bonus 150)
+
+  Counters: None
+
+  Character Interactions (during Hesitation only):
+    - Lira Forgewright ability used during Hesitation → bonus 500
+      damage (Lira recognizes the Drayce-series frame and targets
+      structural weak points)
+    - Torren Spiritcall used during Hesitation → bonus 400 damage
+      + boss next attack damage reduced by 50% (operator's spirit
+      responds to Torren's call, weakening the machine's aggression)
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "The engine shudders. Metal groans. From deep inside
+      the machine, a voice -- human, desperate: 'I can't... stop it...'"
+    - mode_switch: The Machine → The Operator
+    - environmental: Tunnel lights flicker; Pallor energy crackles
+      along the engine's seams
+
+  At first Hesitation (once):
+    - dialogue: "The Ironbound freezes mid-swing. The drill arm
+      trembles. The operator's voice, clearer now: 'Please...'"
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Ironbound slows. The drill grinds to a halt.
+      The operator's spirit surfaces one final time -- lips moving,
+      whispering a name. A partner's name. Then stillness."
+    - Note: The operator's death is framed as release, not defeat.
+```
+
+**Design Note:** The Ironbound is the Interlude's emotional anchor. Phase
+1 is pure mechanical pressure -- Drill Charge's positional wind-up and
+Bore Forward's wall-push create a spatial puzzle in the tunnel corridors.
+Phase 2 introduces hesitation windows that serve double duty: as a
+difficulty relief valve and as a narrative device revealing the trapped
+operator. Character interactions during hesitation reward attentive
+players -- Lira's Forgewright knowledge and Torren's Spiritcall both
+have unique mechanical payoffs. Desperate Bore (no wind-up) raises
+Phase 2 burst damage while hesitation windows lower average DPS,
+creating an unpredictable rhythm. The defeat scene -- the operator
+whispering a partner's name -- reinforces the Pallor's cost: not
+monsters, but people consumed by the machine.
 
 ### The Undying Warden (Optional)
 
-*AI script pending -- see Task 4*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Undying Warden* | Boss | 25 | 8,000 | 87 | 72 | 45 | 73 | 43 | 33 | 2,000 | 3,500 | Catacomb Map (100%) | Warden's Binding (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Valdris Catacombs (Catacomb Heart, optional) |
+
+> **Note:** The Undying Warden is a spirit-construct bound to guard
+> the Valdris Catacombs since the city's founding, driven half-mad by
+> ley line failure. This is an optional boss encounter. Torren has a
+> special calm command available that changes the defeat dialogue.
+> No elemental weaknesses or resistances.
+
+**Modes:** 2 (Spectral Guard, Ley Eruption)
+
+**AI Script:**
+
+```
+=== Phase 1: Spectral Guard (8,000--4,000 HP) ===
+
+Mode: Spectral Guard
+  Note: The Warden fights with spectral swords and ley-crystal shards.
+        Primarily physical attacks with occasional crystal projectiles.
+  Priority:
+    1. turn_counter % 5 == 0 → Crystal Barrage (party_wide AoE,
+       200--250 magic damage; hurls ley-crystal shards in a wide arc)
+    2. turn_counter % 3 == 0 → Spectral Cleave (positional front row,
+       300--350 physical damage; sweeps twin spectral blades across
+       front-row positions)
+    3. turn_counter % 4 == 0 → Binding Chains (single_target random,
+       150 physical damage + Slow 2 turns; ethereal chains wrap target)
+    4. Default → Spectral Slash (single_target highest threat,
+       250 physical damage)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2: Ley Eruption (below 4,000 HP) ===
+
+Mode: Ley Eruption
+  Note: Ley-crystal eruptions tear through the catacomb floor. The
+        Warden becomes more desperate, mixing physical and magic
+        attacks. All Phase 1 abilities retained with additions.
+  Priority:
+    1. turn_counter % 4 == 0 → Ley-Crystal Eruption (party_wide AoE,
+       300--350 magic damage; crystals burst from the floor beneath
+       all party members; 1-turn telegraph -- floor glows on charge
+       turn, erupts next turn)
+    2. turn_counter % 3 == 0 → Spectral Cleave (positional front row,
+       300--350 physical damage)
+    3. turn_counter % 5 == 0 → Warden's Fury (single_target lowest HP,
+       400 physical damage; the Warden focuses on weakened prey)
+    4. Default → Spectral Slash (single_target highest threat,
+       250 physical damage)
+
+  Counters: None
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "The Warden howls -- the sound of centuries of duty
+      twisted into rage. The catacomb floor cracks. Ley crystals
+      erupt from the stone."
+    - mode_switch: Spectral Guard → Ley Eruption
+    - environmental: Ley-crystal formations burst through catacomb
+      floor; ambient light shifts from dim blue to unstable violet
+
+  At boss.hp <= 0 (once, if Torren calm command was NOT used):
+    - cutscene: "The Warden staggers. Its spectral form flickers.
+      'You... are not... the enemy...' The binding unravels. The
+      spirit dissolves into pale light, finally unmoored."
+
+  At boss.hp <= 0 (once, if Torren calm command WAS used):
+    - cutscene: "The Warden kneels. The madness fades from its eyes.
+      'Finally. Rest.' The spectral form dims gently -- not shattering,
+      but settling. Like a candle allowed to go out."
+    - Note: Torren's calm command can be used at any point during
+      the fight. It does not change the combat mechanics, only the
+      defeat dialogue and narrative tone.
+```
+
+**Design Note:** The Undying Warden is an optional encounter that
+rewards exploration of the Valdris Catacombs. With no elemental
+weaknesses or resistances, the fight is a pure stat check -- players
+must rely on raw damage and healing efficiency. Phase 2's Ley-Crystal
+Eruption introduces telegraphed AoE from the floor, teaching spatial
+awareness in a different way from the tunnel bosses. Torren's calm
+command is a narrative choice with no mechanical impact -- it exists
+purely to give Torren a character moment and to reinforce the theme
+that the Warden is a victim of ley line decay, not an enemy. The
+branching defeat dialogue rewards players who experiment with party
+abilities during boss fights.
 
 ### Pallor Nest Mother (Optional)
 
-*AI script pending -- see Task 4*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Pallor Nest Mother* | Boss | 25 | 6,000 | 87 | 72 | 45 | 73 | 43 | 33 | 1,500 | 3,000 | Broodchamber Map (100%) | Nest Mother's Core (100%) | Flame, Spirit | Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Caldera Undercity (deepest junction, sidequest) |
+
+> **Note:** The Pallor Nest Mother is a bloated grey-white arthropod
+> fused with the tunnel walls. This is an optional sidequest boss.
+> Kerra (NPC guest, 800 HP) fights alongside the party. The Nest
+> Mother has a passive Nest Defense buff (+50% DEF) while any spawn
+> are alive, incentivizing add management. Desperate Contraction
+> (below 25% HP) is a wipe-threat charge that can be interrupted.
+
+**Modes:** 1 (Brood Mother)
+
+**AI Script:**
+
+```
+Mode: Brood Mother
+  Passive: Nest Defense (+50% DEF while any Grey Crawlers or Pallor
+           Mites are alive on the field; removed when all adds dead)
+  Priority:
+    1. boss.hp_percent <= 25 AND NOT desperate_contraction_active →
+       Desperate Contraction (self, begins 3-turn charge; deals 600
+       party_wide AoE on detonation; interruptible by dealing 1,000+
+       damage in a single hit during charge; boss contracts into
+       tunnel walls, visibly pulsing)
+    2. turn_counter % 4 == 0 → Spawn Brood (add_spawn, spawns 3
+       Pallor Mites at 100 HP each; Mites use basic melee attacks)
+    3. turn_counter % 3 == 0 → Brood Pulse (party_wide AoE, 200--250
+       magic damage + 20% chance Despair on each target + spawns 2
+       Grey Crawlers at 150 HP each)
+    4. turn_counter % 5 == 0 → Corruption Surge (environmental,
+       creates 3 contaminated zones on the arena floor; zones deal
+       100 damage per turn for 3 turns to party members standing
+       in them)
+    5. Default → Tendril Lash (2 random targets, 300 physical damage
+       each; tendrils lash out from the tunnel walls)
+
+  Counters: None
+
+NPC: Kerra (fights alongside party for entire encounter)
+  HP: 800 | ATK: 18 | DEF: 14
+  Note: If Kerra falls to 0 HP, she is incapacitated but survives
+        the encounter. She does not die permanently.
+  AI:
+    1. active_adds >= 3 → Sweeping Strike (party_wide, targets all
+       adds; moderate physical damage; prioritizes clearing spawns)
+    2. Default → Quick Slash (single_target, same target as party
+       leader; physical damage based on ATK 18)
+
+Scripted Events:
+  At encounter_start (once):
+    - dialogue: Kerra: "That thing -- it's fused with the walls.
+      We have to kill the spawns or it'll just keep shielding itself."
+    - Note: Tutorial hint about Nest Defense passive.
+
+  At boss.hp_percent <= 25 (once):
+    - dialogue: "The Nest Mother shrieks. Its body contracts, pulling
+      tight against the tunnel walls. Something is building..."
+    - Note: Signals Desperate Contraction charge. Players have 3
+      turns to deal 1,000+ damage in a single hit to interrupt.
+
+  At Desperate Contraction interrupted (once, if applicable):
+    - dialogue: "The Nest Mother convulses -- the charge dissipates.
+      It sags against the walls, momentarily stunned."
+    - Note: Boss is stunned for 1 turn after interruption.
+
+  At boss.hp <= 0 (once):
+    - dialogue: "The Nest Mother's grip on the walls loosens. Grey
+      chitin cracks and falls away. The tunnel junction falls silent."
+    - Note: If Kerra is still standing, additional dialogue:
+      Kerra: "It's done. The tunnels should be safer now. ...Thank you."
+```
+
+**Design Note:** The Pallor Nest Mother is an add-management encounter
+that tests the player's ability to prioritize targets. Nest Defense
+(+50% DEF while adds alive) creates a clear incentive to clear spawns
+before focusing the boss, but the constant Brood Pulse and Spawn Brood
+abilities keep add pressure high. Corruption Surge's contaminated zones
+add spatial complexity, forcing movement while managing adds.
+Desperate Contraction below 25% HP is the tension peak -- a 600-damage
+party-wide wipe threat that rewards players who saved burst abilities.
+Kerra as a guest NPC provides add-clearing support but is fragile (800
+HP), teaching resource allocation. Flame and Spirit weaknesses reward
+diverse elemental strategies. As an optional sidequest boss, the Nest
+Mother rewards exploration of the Caldera Undercity.
 
 ### General Vassar Kole
 
-*AI script pending -- see Task 4*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *General Vassar Kole* | Boss | 28 | 30,000 | 98 | 78 | 49 | 81 | 48 | 36 | 8,000 | 12,000 | Kole's Epaulettes (100%) | Map to the Convergence (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Ironmark Citadel Command Chamber (via Axis Tower Floor 5 tunnel) |
+
+> **Note:** General Vassar Kole is the Interlude's final boss -- a
+> military commander in Pallor-enhanced Forgewright armor. He is
+> calculated, not monstrous. HP 30,000 is canonical (encounter table
+> value; prose reference of 12,000 is a known typo). No elemental
+> weaknesses or resistances. Phase 2 introduces conduit crystals
+> that must be destroyed to remove the Despair Aura.
+
+**Modes:** 2 (Commander, Channeling)
+
+**AI Script:**
+
+```
+=== Phase 1: Commander (30,000--15,000 HP) ===
+
+Mode: Commander
+  Note: Kole fights with discipline and tactical precision. Arcanite
+        sword strikes deal high single-target physical damage. Summons
+        Pallor Soldiers as reinforcements every 3rd turn.
+  Priority:
+    1. turn_counter % 3 == 0 AND active_adds < 4 → Deploy Soldiers
+       (add_spawn, summons 2 Pallor Soldiers; max 4 active at a time;
+       soldiers use standard Pallor Soldier AI from bestiary)
+    2. turn_counter % 4 == 0 → Commander's Strike (single_target
+       highest threat, 500--600 physical damage; Kole's arcanite sword
+       flares with Pallor energy; 1-turn telegraph -- Kole raises
+       sword overhead on charge turn, strikes next turn)
+    3. turn_counter % 5 == 0 → Tactical Retreat (self, Kole
+       repositions to back of arena; DEF +25% for 2 turns; adds
+       gain ATK +15% for 2 turns while Kole directs from rear)
+    4. Default → Arcanite Slash (single_target highest threat,
+       350--400 physical damage)
+
+  Counters: None
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2: Channeling (below 15,000 HP) ===
+
+Mode: Channeling
+  Note: Kole channels Ironmark conduits. 2 conduit crystals spawn at
+        arena edges. While crystals are active, Despair Aura applies
+        Despair status to all party members each turn. Destroy both
+        crystals to remove the aura. Kole retains Phase 1 sword
+        attacks and gains Grey Shockwave.
+  Environmental: 2 Conduit Crystals spawn (1,500 HP each, no DEF,
+                 targetable). While at least 1 crystal active:
+                 Despair Aura (party_wide, applies Despair status
+                 to all party members at start of each turn).
+  Priority:
+    1. turn_counter % 4 == 0 → Grey Shockwave (party_wide AoE,
+       350--400 magic damage; Pallor energy pulses through the floor
+       from the conduit network)
+    2. turn_counter % 3 == 0 → Commander's Strike (single_target
+       highest threat, 500--600 physical damage; 1-turn telegraph)
+    3. conduit_crystals_destroyed == 2 AND turn_counter % 5 == 0 →
+       Rechannel (environmental, respawns 1 Conduit Crystal at 1,000
+       HP; Kole forces a new crystal from the floor; 8-turn cooldown)
+    4. Default → Arcanite Slash (single_target highest threat,
+       350--400 physical damage)
+
+  Counters: None
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: Kole: "Enough. You've proven yourselves worthy of the
+      real thing."
+    - cutscene: "Kole drives his sword into the floor. The chamber
+      trembles. Conduit lines carved into the walls flare with grey
+      light. Two crystals erupt from the arena edges, pulsing with
+      Pallor energy."
+    - environmental: 2 Conduit Crystals spawn at arena edges
+    - mode_switch: Commander → Channeling
+    - add_spawn: 4 Compact Officers appear at chamber entrance
+    - dialogue: Kole (to Officers): "Let them in."
+    - Note: The 4 Compact Officers willingly accept Pallor corruption
+      on Kole's command. They transform into Pallor Soldiers and join
+      the fight (max 4 active adds).
+
+  At first Conduit Crystal destroyed (once):
+    - dialogue: "One crystal shatters. The Despair Aura flickers --
+      but holds. Kole's jaw tightens."
+
+  At both Conduit Crystals destroyed (once):
+    - dialogue: "The second crystal explodes. The grey aura dissipates.
+      Kole staggers, severed from the conduit network."
+    - Note: Despair Aura removed. Kole can Rechannel after 8-turn
+      cooldown.
+
+  At boss.hp <= 0 (once):
+    - cutscene: "Kole falls to one knee. His armor -- Pallor-laced,
+      Forgewright-built -- sparks and goes dark. He looks up. Not
+      with hatred. With something like respect."
+    - dialogue: Kole: "The Convergence... you'll need the map.
+      Take it. Finish what I couldn't."
+    - Note: Commissar Brant watches silently from the chamber
+      balcony throughout the defeat scene. He does not speak or
+      intervene.
+```
+
+**Design Note:** General Vassar Kole is the Interlude's climactic
+encounter -- a 30,000 HP endurance fight against a disciplined military
+commander. Phase 1 is a war of attrition: Kole's high single-target
+damage and steady Pallor Soldier reinforcements test sustained healing
+and add management. The Phase 2 transition is one of the game's most
+striking moments -- Kole ordering his own officers to accept Pallor
+corruption ("Let them in") establishes him as ruthlessly pragmatic,
+not evil. The Conduit Crystal/Despair Aura mechanic forces a strategic
+choice: burn the crystals to remove the aura (splitting DPS away from
+Kole) or endure Despair while focusing the boss. Rechannel prevents
+permanent removal, maintaining pressure. With no elemental weaknesses,
+Kole is a pure execution check -- the hardest stat test in the
+Interlude, preparing players for Act III's difficulty curve. Commissar
+Brant's silent observation during the defeat foreshadows his role in
+Act III.
 
 ---
 
