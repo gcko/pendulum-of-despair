@@ -90,7 +90,9 @@ listed level with role adjustments. Apply type rules:
 - Humanoid: no inherent immunities
 - Elemental: absorbs own element, Immune Petrify
 
-Use age-specific steal/drop:
+Use age-specific steal/drop (all are **Gap 1.4 placeholders** —
+add a note in the section header that item names/effects are TBD
+pending Item Catalog design):
 - Steal: Ancient Glyph (75%)
 - Drop: Carved Stone (25%)
 
@@ -121,6 +123,7 @@ Steal: Crystal Fragment (75%), Drop: Prism Shard (25%)
 Crystal Queen Echo Boss: Lv 60, 60,000 HP, reflection mechanic,
 Phase 2 shatters into 4 Crystal Aspects (15,000 HP each).
 Weakness: Earth (150%), Resistance: Ley (75%).
+Steal: Queen's Prism (100%), Drop: Queen's Facet (100%).
 
 - [ ] **Step 3: Write Green Age section (4 regular + 1 boss)**
 
@@ -142,6 +145,7 @@ enemies use Dangerous.
 Rootking Echo Boss: Lv 72, 80,000 HP, regen + summons mechanic,
 Root Anchor targetable part.
 Weakness: Flame (150%), Resistance: Earth (50%).
+Steal: Living Root (100%), Drop: Root Crown (100%).
 
 - [ ] **Step 4: Write Iron Age section (4 regular + 1 boss)**
 
@@ -215,7 +219,12 @@ Void enemies (spec Section 3.5):
 | Void Walker | — (unique) | — | 100 | Pallor | Dangerous |
 
 **Type rules for Pallor:**
-- Weak=Spirit, Immune Despair+Death, Resist Void
+- Weak=Spirit, Immune Despair+Death (type defaults per README)
+- Resist Void is a per-enemy column value for Tier 4 Pallor
+  family variants (from palette-families Element Shift), NOT a
+  type-level default. Add Void to the Resists column for Drake,
+  Wolf, and Lurker. Void Walker (unique, non-family) does NOT
+  get Void resistance — it IS the Void.
 - 2% HP regen while party has Despair
 - At Lv 100, Pallor regen = ~384 HP/turn (extremely punishing)
 
@@ -299,6 +308,10 @@ already exist. Only add deployment notes to the family blockquotes.
 | Drake | Pallor Drake | 50 | 90 |
 | Wolf | Pallor Wolf | 45 | 92 |
 | Lurker | Pallor Lurker | 46 | 96 |
+
+**Verify projected levels against palette-families.md before writing
+notes.** Read the actual Drake, Wolf, and Lurker family entries to
+confirm the projected Lv values match.
 
 For each family, add a note like:
 
@@ -405,8 +418,8 @@ Pick one from each age + Void:
 - Void Walker (Lv 100, Pallor Balanced)
 
 For each: compute HP, ATK, DEF, MAG, MDEF, SPD from formulas.
-Apply role adjustment. Verify Gold/Exp match logistic formula ×
-threat multiplier.
+Apply role adjustment (Balanced = no adjustment, use baseline
+stats). Verify Gold/Exp match logistic formula × threat multiplier.
 
 - [ ] **Step 4: Age steal/drop consistency**
 
@@ -452,7 +465,9 @@ Before running `/create-pr`:
 - [ ] All 6 Construct enemies: MP=0, 5 immunities
 - [ ] All 4 Spirit enemies: Immune Poison+Petrify
 - [ ] All 3 Elemental enemies: Immune Petrify
-- [ ] All 4 Pallor enemies: Weak=Spirit, Immune Despair+Death, Resist Void
+- [ ] All 4 Pallor enemies: Weak=Spirit, Immune Despair+Death
+- [ ] Pallor Drake/Wolf/Lurker: Resist=Void (per-enemy, from palette-families)
+- [ ] Void Walker: Resist=— (unique, no Void resistance)
 - [ ] All 4 Boss immunities: Death+Petrify+Stop+Sleep+Confusion
 - [ ] Boss resistance percentages annotated in stat tables
 - [ ] Age-specific steal/drop materials used consistently
