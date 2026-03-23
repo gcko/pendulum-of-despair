@@ -743,11 +743,8 @@ stat derivation, and naming conventions.
 
 > Royal Wraiths are spectral knights — the ghosts of Valdris royalty.
 > They command other spirits in combat. The Pallor Regent is a king
-> consumed by despair who commands shade armies.
->
-> **Act III early deployment:** Pallor Regent (Tier 3) is deployed at
-> Lv 34 in overworld grey zones (projected Lv 46). Stats in act-iii.md
-> are computed from the deployment level.
+> consumed by despair who commands shade armies. Pallor Regent does
+> not appear in Act III; it is projected for post-game content.
 
 ---
 

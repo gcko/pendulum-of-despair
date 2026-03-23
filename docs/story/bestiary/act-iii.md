@@ -222,7 +222,7 @@ of the main story. Multi-phase encounter at Plateau's Edge
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome + Grey Mist Essence (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
+| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
 
 ### Vaelith (Boss)
 
