@@ -310,7 +310,10 @@ own level, with role adjustments and ability/element additions.
 > levels than projected during narrative escalation events (e.g., the
 > Interlude). The act file's enemy level is authoritative for stat
 > computation. palette-families.md levels are projections for the
-> "full power" appearance, not hard floors.
+> "full power" appearance, not hard floors. **Threat level is
+> preserved** — a Dangerous enemy remains Dangerous at any deployment
+> level. Only stats (computed from level) change; the reward
+> multiplier matches palette-families.md.
 
 ### Tier 4 Type Change
 

@@ -20,13 +20,13 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Pallor Boar | Pallor | 28 | 1,943 | 98 | 52 | 43 | 45 | 32 | 24 | 148 | 264 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (Ashen Approach, outer clearings) |
-| Shadow Wolf | Beast | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 59 | 105 | Beast Hide (75%) | Wolf Pelt (25%) | Ley | Void | — | — | Pallor Wastes (Ashen Approach) |
-| Pallor Vermin | Pallor | 30 | 1,360 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (all outer sections) |
-| Wraith Shade | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | Void | — | Poison, Petrify | Pallor Wastes (outer clearings) |
+| Shadow Wolf | Beast | 28 | 1,272 | 98 | 59 | 29 | 45 | 32 | 30 | 99 | 176 | Beast Hide (75%) | Wolf Pelt (25%) | Ley | Void | — | — | Pallor Wastes (Ashen Approach) |
+| Pallor Vermin | Pallor | 30 | 1,360 | 105 | 56 | 41 | 48 | 34 | 32 | 115 | 202 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (all outer sections) |
+| Wraith Shade | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | Void | — | Poison, Petrify | Pallor Wastes (outer clearings) |
 | Hollow Walker | Pallor | 28 | 1,767 | 98 | 52 | 38 | 45 | 32 | 30 | 59 | 105 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all sections), Convergence |
 | Despair Cloud | Pallor | 28 | 1,767 | 98 | 40 | 38 | 51 | 32 | 30 | 34 | 61 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (all sections), Convergence |
 | Petrified Beast | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Ashen Approach, Grey March) |
-| Dread Warden | Undead | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Bone Dust (75%) | Bone Fragment (25%) | Spirit | Frost, Storm | — | Poison, Death | Pallor Wastes (outer clearings) |
+| Dread Warden | Undead | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 115 | 202 | Bone Dust (75%) | Bone Fragment (25%) | Spirit | Frost, Storm | — | Poison, Death | Pallor Wastes (outer clearings) |
 
 **Design notes:**
 - Hollow Walker is the iconic Pallor Wastes enemy -- featureless grey
@@ -41,9 +41,8 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
   Swarm role -- reduced HP, appears in groups.
 - Petrified Beast: former forest creature, turned to grey stone and
   animated. Heavy physical attacks, slow.
-- Wraith Shade and Dread Warden use Standard threat (x0.60) at
-  early deployment levels despite palette-families projecting
-  Dangerous. Early deployment reduces both level and threat.
+- Wraith Shade and Dread Warden use Dangerous threat (x1.0) per
+  palette-families. Early deployment reduces level, not threat.
 
 ---
 
@@ -57,7 +56,7 @@ Grey. The deeper you go, the less recognizable things become.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Pallor Knight | Pallor | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Pallor Shard (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (Grey March, trial clearings), Convergence |
 | Grief Shade | Pallor | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 133 | 232 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Pallor Wastes (trial clearings), Convergence |
-| Void Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Pallor Wastes (inner clearings) |
+| Void Wisp | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Pallor Wastes (inner clearings) |
 | Pallor Treant | Pallor | 30 | 2,200 | 105 | 56 | 47 | 48 | 34 | 24 | 69 | 121 | Pallor Sample (75%) | Petrified Bark (25%) | Spirit | Void | — | Despair, Death | Pallor Wastes (inner sections) |
 | Marauder Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Potion (75%) | Bandit's Coin (25%) | — | — | — | — | Pallor Wastes (inner clearings) |
 
@@ -540,13 +539,13 @@ Central Platform, and The Door. ~90% Pallor encounters.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Pallor Soldier | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring, Anchor A) |
+| Pallor Soldier | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 155 | 266 | Potion (75%) | Pallor Insignia (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring, Anchor A) |
 | Pallor Drake | Pallor | 36 | 2,784 | 126 | 65 | 48 | 56 | 40 | 36 | 269 | 459 | Pallor Sample (75%) | Drake Scale (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring, rare) |
 | Ley Construct (Anchored) | Construct | 34 | 2,508 | 0 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Convergence (Anchor A) |
 | Forgewright Automaton | Construct | 34 | 2,758 | 0 | 62 | 51 | 53 | 38 | 27 | 93 | 160 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Convergence (Anchor B) |
 | Corrupted Spirit | Spirit | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 93 | 160 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Convergence (Anchor C) |
-| Ashen Serpent | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Serpent Fang (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring) |
-| Pallor Lurker | Pallor | 36 | 2,784 | 126 | 65 | 48 | 56 | 40 | 36 | 107 | 183 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring) |
+| Ashen Serpent | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 155 | 266 | Pallor Sample (75%) | Serpent Fang (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring) |
+| Pallor Lurker | Pallor | 36 | 2,784 | 126 | 65 | 48 | 56 | 40 | 36 | 268 | 459 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Convergence (Outer Ring) |
 
 **Design notes:**
 - Pallor Soldier appears here at projected full-power Lv 34 (vs
@@ -665,8 +664,8 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
 | Thunder Drake | Beast | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Drake Scale (25%) | Ley | Storm | — | — | Overworld (mountain, highland) |
 | Deserter Captain | Humanoid | 30 | 2,000 | 105 | 56 | 41 | 48 | 34 | 32 | 69 | 121 | Potion (75%) | Compact Insignia (25%) | — | — | — | — | Overworld (roads, ruins) |
 | Blight Leech | Beast | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Beast Hide (75%) | Leech Ichor (25%) | Flame | — | — | — | Overworld (swamp, coast) |
-| Void Moth | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Element Shard (75%) | Elemental Core (25%) | Ley | — | Void | Petrify | Overworld (forest, grassland) |
-| Storm Wraith | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 69 | 121 | Ether Wisp (75%) | Spirit Essence (25%) | Earth | — | — | Poison, Petrify | Overworld (highland, ruins) |
+| Void Moth | Elemental | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Element Shard (75%) | Elemental Core (25%) | Ley | — | Void | Petrify | Overworld (forest, grassland) |
+| Storm Wraith | Spirit | 30 | 2,000 | 105 | 43 | 41 | 55 | 34 | 32 | 115 | 202 | Ether Wisp (75%) | Spirit Essence (25%) | Earth | — | — | Poison, Petrify | Overworld (highland, ruins) |
 | Roc | Beast | 32 | 2,247 | 112 | 59 | 43 | 50 | 36 | 33 | 200 | 348 | Beast Hide (75%) | Roc Feather (25%) | Storm | — | — | — | Overworld (mountain, rare ~5%) |
 
 **Design notes:**
@@ -679,9 +678,8 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
   magic-based drain attacks.
 - Roc: massive raptor. Rare overworld encounter (x1.5 rewards).
   Swoops from above -- preemptive strike chance for the enemy.
-- Void Moth and Storm Wraith use Standard threat (x0.60) at early
-  deployment levels despite palette-families projecting Dangerous.
-  Early deployment reduces both level and threat.
+- Void Moth and Storm Wraith use Dangerous threat (x1.0) per
+  palette-families. Early deployment reduces level, not threat.
 
 ---
 
@@ -694,12 +692,12 @@ progresses here.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Pallor Revenant | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Bone Dust (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
-| Pallor Wolf | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 93 | 160 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
-| Pallor Crawler | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 93 | 160 | Pallor Sample (75%) | Crawler Shell (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
+| Pallor Revenant | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 155 | 266 | Pallor Sample (75%) | Bone Dust (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
+| Pallor Wolf | Pallor | 34 | 1,805 | 119 | 71 | 35 | 53 | 38 | 35 | 232 | 399 | Beast Hide (75%) | Wolf Pelt (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
+| Pallor Crawler | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 232 | 399 | Pallor Sample (75%) | Crawler Shell (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Wraith | Pallor | 34 | 2,508 | 119 | 47 | 45 | 60 | 38 | 35 | 232 | 400 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones |
 | Pallor Roc | Pallor | 34 | 2,508 | 119 | 62 | 45 | 53 | 38 | 35 | 232 | 400 | Pallor Sample (75%) | Roc Feather (25%) | Spirit | Void | — | Despair, Death | Overworld grey zones (rare ~5%) |
-| Void Crystal | Elemental | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 80 | 139 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Overworld grey zones (static, avoidable) |
+| Void Crystal | Elemental | 32 | 2,247 | 112 | 45 | 43 | 57 | 36 | 33 | 133 | 232 | Element Shard (75%) | Elemental Core (25%) | Spirit | — | Void | Petrify | Overworld grey zones (static, avoidable) |
 
 **Design notes:**
 - Pallor Wolf: pack hunters with fused legs, jaw split into three.
