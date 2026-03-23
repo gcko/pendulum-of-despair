@@ -115,9 +115,9 @@
 
 > **Despair** is the signature status of the Pallor — a creeping hopelessness
 > that slows ATB speed by 25% and reduces all outgoing damage by 20%. It cannot
-> be cured by Remedy; only Pallor Salve, Hope Shard, or the Purge spell remove
-> it. The limited supply of cures makes Despair a genuine resource-management
-> threat, especially in the Pallor Wastes and Axis Tower.
+> be cured by Remedy; only Pallor Salve, Hope Shard, or the Hollow Mend spell
+> (post-game) remove it. The limited supply of cures makes Despair a genuine
+> resource-management threat, especially in the Pallor Wastes and Axis Tower.
 
 Status effect definitions and spell-based cures: see [magic.md](magic.md#status-effect-reference).
 
