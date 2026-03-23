@@ -2336,15 +2336,390 @@ it.
 
 #### Pallor Echo (Mini-Boss)
 
-*AI script pending -- see Task 7*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Pallor Echo* | Boss | 34 | 5,000 | 119 | 93 | 58 | 95 | 57 | 42 | 2,000 | 4,000 | Grey Echo Shard (100%) | Cael's Memory (100%) | Spirit | Void | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Phase 4, Wave 4 |
+
+**Modes:** 1 (Shadow)
+
+**AI Script:**
+
+```
+=== Mini-Boss Encounter: Pallor Echo ===
+
+Mode: Shadow
+  Note: The Pallor Echo is Cael's shadow -- a grey imitation formed
+        from the Pallor's memory of who he was before the corruption
+        took hold. It appears as the fourth and final wave of the
+        Convergence's approach gauntlet. It uses a reduced version of
+        Cael's Phase 1 moveset (slower, weaker, no counters). The
+        Echo exists to foreshadow Cael's fighting style and give the
+        party a preview before the real fight. Its low HP (5,000)
+        makes it a quick encounter, but its stat line matches Cael's
+        Phase 1 values, so individual hits still hurt.
+
+  Priority:
+    1. turn_counter % 4 == 0 → Echo Rend (single_target highest
+       threat, 400-500 physical damage; a grey imitation of Cael's
+       sword technique; "The shadow swings. The motion is familiar.")
+    2. turn_counter % 3 == 0 → Grey Pulse (party_wide, 250-300
+       magic damage; grey energy radiates outward; "A pale echo of
+       real power.")
+    3. Default → Shadow Strike (single_target random, 250-350
+       physical damage; "The Echo mimics a stance you've never
+       seen -- but someone has.")
+
+  Counters: None
+
+Scripted Events:
+  Turn 1 (once):
+    - dialogue: "A figure coalesces from the grey mist ahead. It
+      wears armor you recognize. It holds a sword you've seen before.
+      But its face is blank -- a memory with the identity scraped
+      away."
+    - dialogue: Lira: "That's... that's Cael's stance."
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Echo dissolves. As it fades, the blank face
+      flickers -- and for one frame, one heartbeat, it is Cael.
+      Not corrupted. Not grey. Just Cael, looking at you with
+      something that might be recognition."
+    - dialogue: "Then it's gone. The path to the Outer Ring is clear."
+    - drop: Cael's Memory (accessory; +10% damage vs. Pallor-type
+      enemies; "A fragment of who he was.")
+```
+
+**Design Note:** The Pallor Echo is deliberately understated. As the
+final wave of a four-wave gauntlet, it could have been a grueling
+endurance test, but instead it is brief and emotionally charged. Its
+purpose is narrative, not mechanical: it shows the party (and the player)
+that Cael's fighting style is burned into the Pallor's memory, and it
+creates a moment of recognition that makes the upcoming Cael fight
+hit harder. The blank face detail -- flickering to real Cael for one
+frame at death -- is the emotional hook that carries into the boss
+fight proper.
 
 #### Cael, Knight of Despair
 
-*AI script pending -- see Task 7*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Cael, Knight of Despair (Phase 1)* | Boss | 36 | 45,000 | 126 | 97 | 62 | 100 | 60 | 43 | 10,000 | 15,000 | Cael's Knight Crest (100%) | Cael's Pendant (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
+| *Cael, Knight of Despair (Phase 2)* | Boss | 38 | 35,000 | 133 | 102 | 65 | 106 | 63 | 45 | — | — | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
+
+**Modes:** Phase 1: Calculated (45,000 HP) / Phase 2: Pallor (35,000 HP)
+
+**AI Script:**
+
+```
+=== Boss Encounter: Cael, Knight of Despair ===
+
+PHASE 1: Calculated (HP 45,000; Lv 36 stat row)
+  Note: Cael fights as the person the party knew -- tactical,
+        disciplined, using enhanced versions of the abilities he had
+        as a party member. He counters the last person who attacked
+        him, making target rotation essential. He does not use Pallor
+        abilities in this phase. He is fighting deliberately, testing
+        whether the party is strong enough for what comes next.
+
+  Mode: Calculated
+    Priority:
+      1. boss.hp_percent <= 25 → Invulnerability trigger (see
+         Scripted Events)
+      2. boss.hp_percent <= 50 AND turn_counter % 3 == 0 →
+         Shadow Step (single_target, teleport behind target, 500-600
+         physical damage, ignores 50% DEF; "You can't guard what you
+         can't see.")
+      3. boss.hp_percent <= 75 AND turn_counter % 4 == 0 →
+         Despair Pulse (party_wide, 300-400 magic damage + 30%
+         Despair chance; grey energy seeps from Cael's armor;
+         "I know how this feels. I'm sorry.")
+      4. turn_counter % 3 == 0 → Knight's Gambit (single_target
+         lowest HP, 450-550 physical damage; calculated strike
+         targeting the weakest; "Tactical. Efficient. Like he
+         taught you.")
+      5. Default → Disciplined Strike (single_target highest threat,
+         300-400 physical damage; clean swordwork, no wasted motion)
+
+    Counters:
+      On any attack → Retaliation (single_target last attacker,
+        200-250 physical damage; immediate counter; "Cael pivots.
+        He was waiting for that."; once per turn)
+
+  PHASE 2: Pallor (HP 35,000; Lv 38 stat row)
+    Note: After Phase 1 ends, a Pallor surge overwhelms Cael. His
+          stats increase (new stat row). His discipline dissolves into
+          raw Pallor aggression. Counters are gone -- he is no longer
+          calculating. He is channeling. This phase uses a separate
+          35,000 HP pool.
+
+  Mode: Pallor
+    Priority:
+      1. turn_counter % 3 == 0 → Grey Tide (party_wide, 400-500
+         magic damage + Despair status 50% chance; "The grey crashes
+         over everything. There is no technique here. Just force.")
+      2. turn_counter % 2 == 0 → Pallor Rend (single_target highest
+         threat, 600-700 physical damage, ignores 25% DEF; "The
+         sword bites deeper than it should. The Pallor sharpens
+         everything.")
+      3. Default → Corrupted Strike (single_target random, 350-450
+         physical damage; wild, uncontrolled swings; "This is not
+         how he fights. This is how the Pallor fights through him.")
+
+    Counters: None
+
+Scripted Events:
+  Turn 1, Phase 1 (once):
+    - cutscene: "Cael stands at the center of the Outer Ring. His
+      armor is grey -- not the steel-grey you remember, but Pallor
+      grey. His sword hangs at his side. He does not draw it until
+      you are close enough to see his face."
+    - dialogue: Cael: "You came. I knew you would. I was counting
+      on it."
+    - dialogue: Lira: "Cael, we can --"
+    - dialogue: Cael: "No. You can't. But you can do what I need
+      you to do. Fight me. Prove you're strong enough for what's
+      behind me."
+
+  At boss.hp_percent <= 75, Phase 1 (once):
+    - dialogue: Cael: "Good. Don't hold back. I can feel the Pallor
+      pulling. If you hesitate, it takes me faster."
+    - ability_unlock: Despair Pulse added to Cael's priority list
+
+  At boss.hp_percent <= 50, Phase 1 (once):
+    - dialogue: Cael: "I'm doing this for you. All of it. The
+      machine, the Convergence -- I found a way to end the cycle.
+      But I need to be inside it when it breaks."
+    - dialogue: "His voice cracks. For a moment, the discipline
+      slips."
+    - ability_unlock: Shadow Step added to Cael's priority list
+
+  At boss.hp_percent <= 25, Phase 1 (once):
+    - cutscene: "Cael drives his sword into the ground. A Pallor
+      barrier erupts around him -- invulnerable. He stands inside
+      it, breathing hard."
+    - dialogue: Cael: "I'm doing this for you. Remember that. When
+      it's over, when you see what I've become -- remember I chose
+      this."
+    - dialogue: "The barrier shimmers. Cael's eyes close. When they
+      open, they are grey."
+    - Note: Invulnerability lasts 2 turns. No actions from either
+      side. Narrative moment only.
+
+  At Phase 1 HP <= 0 (once):
+    - cutscene: "Cael falls to one knee. The Pallor surges. Grey
+      energy erupts from every crack in his armor. His sword screams
+      -- the metal warping, darkening. Cael screams too. Then he
+      stops. The man who stands up is not entirely Cael anymore."
+    - phase_transition: Phase 1 → Phase 2 (new stat row: Lv 38,
+      35,000 HP, increased ATK/MAG/SPD)
+    - dialogue: "His movements are wrong. Too fast. Too sharp. The
+      discipline is gone."
+
+  At boss.hp_percent <= 50, Phase 2 (once):
+    - dialogue: Cael (strained): "I can still hear you. I can still
+      -- the machine is close. Don't stop. Please don't stop."
+    - dialogue: "Something in his voice is still Cael. Buried under
+      the grey, but there."
+
+  At Phase 2 HP <= 0 (once):
+    - cutscene: "Cael collapses. The Pallor energy erupts from him
+      in a pillar of grey light that strikes the Convergence machine
+      at the arena's center. The machine activates. Gears turn.
+      Energy flows. Cael lies still."
+    - dialogue: Lira: "Cael? Cael!"
+    - dialogue: "He doesn't move. But the machine does."
+    - environmental: The Convergence machine activates; central
+      platform becomes accessible
+    - Note: Cael is not dead. He is drained. His fate is determined
+      by the Pallor Incarnate fight.
+```
+
+**Design Note:** Cael is the emotional climax of the game's combat
+design. Phase 1's counter mechanic (retaliating against the last
+attacker) forces the party to rotate attackers, creating a tactical
+rhythm that mirrors Cael's disciplined fighting style. The escalating
+ability unlocks at 75% and 50% HP make each threshold feel like Cael
+is losing control, not gaining power. The invulnerability moment at 25%
+is pure narrative -- a pause that lets the dialogue breathe before the
+Phase 2 transformation. Phase 2 strips away everything that made Phase 1
+tactical (no counters, wild attacks, raw force) to communicate through
+mechanics that Cael is gone. The "I can still hear you" dialogue at 50%
+Phase 2 is the game's emotional fulcrum -- proof that the person is
+still in there, fighting the corruption from inside. The machine
+activation at defeat connects combat resolution directly to narrative
+progression: beating Cael does not save him, it completes his plan.
 
 #### The Pallor Incarnate
 
-*AI script pending -- see Task 7*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Pallor Incarnate* | Boss | 40 | 70,000 | 140 | 108 | 68 | 111 | 66 | 48 | 0 | 0 | Pallor Core (100%) | Cael's Sword (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence (Central Platform) |
+
+**Modes:** 2 (Conduit, Exposed)
+
+**AI Script:**
+
+```
+=== Final Boss Encounter: The Pallor Incarnate ===
+
+Note: The Pallor Incarnate is the physical manifestation of the Pallor
+      itself, drawn out of the cycle by Cael's machine. It is not a
+      creature with motives -- it is entropy given form. It does not
+      speak except through Hollow Voice (see below). The arena is the
+      Central Platform of the Convergence, surrounded by the activated
+      machine. No gold or exp are awarded (this is the final battle).
+
+      "What the Stars Said" bonus: If the party completed the optional
+      stargazing quest, all members carry the Resolve buff. This
+      provides +25% DEF reduction against the Incarnate's attacks (the
+      Incarnate's effective DEF is reduced by an additional 25%) AND
+      Hollow Voice fails against Resolve-buffed members. This is the
+      game's reward for engaging with optional content -- it does not
+      trivialize the fight but meaningfully reduces its two most
+      punishing mechanics.
+
+Mode: Conduit (4 Pallor Crystals active)
+  Note: The Pallor Incarnate begins surrounded by four Pallor Crystals
+        (3,000 HP each). While any Crystal survives, each Crystal
+        regenerates 500 HP per turn to itself AND the boss regenerates
+        2,000 HP per turn. With all four Crystals active, the boss
+        effectively heals 2,000 HP/turn -- sustainable DPS must exceed
+        this. Crystals have no elemental properties and take normal
+        damage from all sources.
+
+  Pallor Crystal stats:
+    - HP: 3,000 each (x4) | DEF: 40 | MDEF: 40 | SPD: 0
+    - Self-regen: 500 HP/turn per crystal
+    - Boss regen: 2,000 HP/turn (flat, not per crystal; removed
+      only when ALL crystals destroyed)
+
+  Priority:
+    1. turn_counter % 5 == 0 → Reality Tear (single_target random,
+       removes 1 party member from battle for 2 turns; "The grey
+       opens. [Name] falls through. The world closes over them.";
+       member returns after 2 turns at 50% HP)
+    2. turn_counter % 4 == 0 → Hollow Voice (single_target, see
+       below; personalized Despair attack)
+    3. turn_counter % 3 == 0 → Grey Cascade (party_wide, 500-600
+       magic damage; a wave of pure Pallor energy crashes across
+       the platform; "Everything goes grey.")
+    4. Default → Pallor Strike (single_target highest threat,
+       400-500 physical damage; a tendril of grey matter lashes out)
+
+  Counters:
+    On Crystal destroyed → Pallor Surge (party_wide, 300 magic
+      damage; the Incarnate shudders as a crystal dies;
+      "The grey screams. It felt that.")
+
+  Hollow Voice (personalized Despair attack):
+    Note: Hollow Voice targets one party member and speaks in a voice
+          from their past -- someone they lost, failed, or fear. If
+          the target does not have the Resolve buff, they receive
+          Despair status + 200 magic damage. If they DO have Resolve,
+          Hollow Voice fails entirely ("The voice reaches for [Name].
+          It finds only resolve. It recoils.")
+
+    - Hollow Voice → Lira: speaks as her mother. "You left me in the
+      grey, Lira. You left and you never came back."
+    - Hollow Voice → Torren: speaks as his failed summoning. "You
+      called me and I came. Why couldn't you send me back?"
+    - Hollow Voice → Maren: speaks as the scholars she couldn't save.
+      "You knew. You always knew. And you did nothing."
+    - Hollow Voice → Sable: speaks as his sister. "You promised you'd
+      protect me. Where were you?"
+
+Mode: Exposed (all Crystals destroyed)
+  Note: With all four Crystals destroyed, the Incarnate's regeneration
+        stops and its DEF drops by 50%. It becomes significantly more
+        vulnerable but does not change its attack patterns -- it simply
+        takes more damage. The fight becomes a DPS race against the
+        Incarnate's still-dangerous offensive output.
+
+  Priority:
+    1. turn_counter % 5 == 0 → Reality Tear (single_target random,
+       removes 1 party member for 2 turns)
+    2. turn_counter % 4 == 0 → Hollow Voice (single_target,
+       personalized Despair)
+    3. turn_counter % 3 == 0 → Grey Cascade (party_wide, 550-650
+       magic damage; slightly stronger in desperation)
+    4. Default → Pallor Strike (single_target highest threat,
+       450-550 physical damage)
+
+  Counters: None
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The machine's light fades. In its place, something
+      rises from the platform. It has no face. It has no shape that
+      holds for more than a moment. It is grey -- not a color, but
+      an absence. The absence of everything that makes the world
+      worth seeing."
+    - dialogue: Lira: "That's it. That's the Pallor."
+    - dialogue: Maren: "It's not alive. It's not dead. It's what
+      happens when the difference stops mattering."
+
+  At boss.hp_percent <= 50 (once):
+    - environmental: The arena shrinks. The outer ring of the Central
+      Platform crumbles into grey void. The party is confined to a
+      smaller fighting area. Positional options are reduced.
+    - dialogue: "The platform is breaking apart. The grey eats at
+      the edges. There is less world to stand on."
+
+  At boss.hp_percent <= 25 (once):
+    - dialogue (strained, from below the platform): "Lira..."
+    - dialogue: Lira: "Cael?!"
+    - dialogue: Cael (barely audible): "The machine... it's working.
+      I can feel it pulling the Pallor out of the cycle. Keep going.
+      I can hold it open a little longer."
+    - dialogue: "Somewhere beneath the platform, in the machine's
+      core, Cael is still fighting."
+    - Note: This confirms Cael is alive and actively maintaining
+      the machine. His fate is determined by the battle's outcome.
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Pallor Incarnate shudders. Cracks of light --
+      real light, warm light -- split its formless body. It does not
+      scream. It does not rage. It simply... stops. The grey drains
+      from the arena like water from a broken vessel. The sky above
+      the Convergence, for the first time in a thousand cycles,
+      shows stars."
+    - dialogue: "The Pallor is not destroyed. It is diminished.
+      Weakened. Pulled far enough out of the cycle that the world
+      can breathe again. It will return, someday. But not today."
+    - dialogue: "Cael lies at the center of the machine. His armor
+      is cracked. His hair is white. He is breathing."
+    - dialogue: Cael (whispering): "Did it work?"
+    - dialogue: Lira: "Yeah. It worked."
+    - Note: The Pallor is weakened, not destroyed. Cael is partially
+      freed -- alive but permanently changed. The cycle is broken
+      for this generation. The game ends here for the main story.
+
+  "What the Stars Said" bonus (if quest completed):
+    - At fight start: "The stars' light lingers in your memory. The
+      Pallor's voice seems thinner here. Less certain."
+    - Mechanical effect: Incarnate's DEF reduced by additional 25%;
+      Hollow Voice fails against Resolve-buffed members
+    - At boss.hp <= 0 (additional dialogue): "The stars are brighter
+      now. You remember what they said. Not words -- a feeling. That
+      the dark between stars is not empty. It is where light has not
+      yet reached."
+```
+
+**Design Note:** The Pallor Incarnate is designed as a final boss that
+tests everything the party has learned. The Crystal/Conduit mechanic
+creates a strategic opening phase (kill Crystals to stop regen vs. focus
+boss), while Hollow Voice is the game's most personal attack --
+literally weaponizing each character's grief. The Resolve buff from "What
+the Stars Said" is the payoff for the game's most easily missed optional
+content, and its effect (nullifying Hollow Voice) is thematically
+perfect: the characters who have processed their grief cannot be hurt by
+it. The arena shrink at 50% creates escalating physical pressure. Cael's
+voice at 25% is the emotional anchor -- confirmation that the person
+inside the machine is still fighting, that the party's violence against
+the Incarnate is not meaningless but is buying Cael time. The ending is
+deliberately ambiguous in its hope: the Pallor is not destroyed, Cael is
+not fully restored, the cycle will eventually return. But right now,
+there are stars. That is enough.
 
 ---
 
@@ -2372,4 +2747,73 @@ it.
 
 ### Vaelith (Siege) -- Scripted Loss
 
-*Stat row pending -- see Task 7*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Vaelith (Siege)* | Boss | 150 | 999,999 | 525 | 372 | 240 | 388 | 231 | 153 | 0 | 0 | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair, Poison, Silence, Slow, Berserk | Valdris Siege (scripted loss) |
+
+**Modes:** 0 (scripted loss -- not a real combat encounter)
+
+**AI Script:**
+
+```
+=== Scripted Loss: Vaelith (Siege) ===
+
+Note: This is NOT a real combat encounter. Vaelith appears during the
+      Valdris Siege sequence as an overwhelming force. The encounter
+      is designed to last approximately 5 turns before automatically
+      ending in party defeat. It exists to establish Vaelith as a
+      threat beyond the party's current ability and to motivate the
+      Act III quest to find a way to counter him.
+
+      All party attacks deal 0-1 damage (Vaelith's DEF/MDEF are
+      astronomically high relative to party stats at this point).
+      Vaelith is immune to every status effect in the game. No gold,
+      exp, items, or drops are awarded. The Game Over screen after
+      this fight leads to a cutscene, not a reload prompt.
+
+  Priority:
+    1. turn_counter == 1 → Grey Lecture (party_wide, 400-500 magic
+       damage; "Vaelith does not even look at you. He is reading.")
+    2. turn_counter == 2 → Epoch's End (party_wide, 600-700 magic
+       damage; "A page turns. The world shudders.")
+    3. turn_counter == 3 → Cycle's Weight (party_wide, -30% ATK/DEF;
+       "Your arms feel heavy. Your purpose feels small.")
+    4. turn_counter == 4 → Grey Archive (single_target Lira, 800
+       magic damage + Silence; "He finally looks up. At Lira. Only
+       at Lira. 'You remind me of someone.'")
+    5. turn_counter >= 5 → Ashen Verdict (party_wide, 9,999 damage;
+       "Vaelith closes his book. 'Enough.' The world goes grey.";
+       guaranteed party wipe)
+
+  Counters: None
+
+Scripted Events:
+  Turn 1 (once):
+    - dialogue: Vaelith: "Ah. The new ones."
+    - dialogue: "He does not stand. He does not draw a weapon. He
+      turns a page."
+
+  Turn 3 (once):
+    - dialogue: Vaelith: "I have seen this seven hundred times. The
+      heroes arrive. They fight. They lose. The cycle continues.
+      You are not special. You are not even interesting."
+
+  Turn 5+ (party wipe):
+    - cutscene: "Vaelith closes the Ashen Archive. The grey washes
+      over everything. The party falls. The siege is lost."
+    - Note: This triggers a narrative cutscene (not a Game Over
+      reload). The party wakes in a safe location, establishing
+      the Act III goal: find a way to pierce Vaelith's defenses.
+```
+
+**Design Note:** Vaelith (Siege) is a scripted loss designed to feel
+genuinely hopeless without feeling unfair. The player can take actions
+during the ~5 turns, but nothing works -- attacks deal 0-1 damage,
+status effects bounce off, and Vaelith's dialogue makes it clear he has
+done this before. The encounter's purpose is threefold: establish
+Vaelith as a credible final-act antagonist, motivate Lira's weapon-
+forging questline (the party needs a Pallor-piercing weapon to hurt
+him), and create a satisfying callback when the party returns in Act III
+and the Invulnerable pre-fight phase ends with Lira shattering his
+barrier. The 0 gold / 0 exp / no drops reinforce that this was never
+a real fight.
