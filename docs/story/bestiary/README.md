@@ -27,7 +27,7 @@ Each enemy in the bestiary tables uses these columns:
 | Name | string | Unique name. Palette swaps get distinct names |
 | Type | enum | Beast, Undead, Construct, Spirit, Humanoid, Pallor, Elemental, Boss |
 | Lv | int | Enemy level (1-150). Affects status hit rate per combat-formulas.md |
-| HP | int | Hit points. Regular: 6-42,320. Bosses: 1,500-100,000 |
+| HP | int | Hit points. Regular: 6–42,320. Bosses: 1,500–100,000 |
 | MP | int | Magic points. 0 for physical-only enemies |
 | ATK | int | Physical attack (1-255) |
 | DEF | int | Physical defense (1-255) |

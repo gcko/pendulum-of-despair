@@ -40,7 +40,7 @@
 | 27 | The Crystal Queen | Post | Dreamer's Fault F8 | 60 | 60,000 | Boss | 2 |
 | 28 | The Rootking | Post | Dreamer's Fault F12 | 72 | 80,000 | Boss | 2 |
 | 29 | The Iron Warden | Post | Dreamer's Fault F16 | 86 | 100,000 | Boss | 3 |
-| * | Vaelith (Siege) | II | Valdris Siege | 150 | 999,999 | Boss | -- |
+| * | Vaelith (Siege) | II | Valdris Siege | 150 | 999,999 | Boss | — |
 
 > **Notes:** Cael (#24) has two stat rows (Phase 1: Lv 36 / 45,000 HP;
 > Phase 2: Lv 38 / 35,000 HP). Archive Keeper (#19) has variable HP
@@ -60,7 +60,7 @@ conditional priority lists.
 
 ### Modes / Stances
 
-Bosses have 1--4 named behavioral modes, each with its own priority
+Bosses have 1–4 named behavioral modes, each with its own priority
 list, optional stat modifiers, and exit conditions.
 
 **Mode transitions** are triggered by:
@@ -69,7 +69,7 @@ list, optional stat modifiers, and exit conditions.
 - **Conditional:** "If all adds dead -> exit Defense"
 
 Simple bosses (Ember Drake, Drowned Sentinel) use a single Normal mode.
-Complex bosses (Grey Cleaver Unbound, Vaelith) use 2--4 modes.
+Complex bosses (Grey Cleaver Unbound, Vaelith) use 2–4 modes.
 
 ### Conditional Priority Lists
 

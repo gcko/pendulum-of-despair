@@ -35,7 +35,7 @@ priority list, stat modifiers (if any), and exit conditions.
 ```
 Modes:
   Normal:        [default mode on battle start]
-  Charge:        [telegraph mode — 1-2 turns, boss glows/charges]
+  Charge:        [telegraph mode — 1–2 turns, boss glows/charges]
   Defense:       [reduced damage, counter-focused]
   Enraged:       [below HP threshold, faster/stronger]
 ```
