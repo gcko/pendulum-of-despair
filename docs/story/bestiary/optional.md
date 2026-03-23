@@ -51,7 +51,7 @@ glyph-based magic, stone guardians. Floor rotation mechanic.
   death. Absorbs Flame inherently (Elemental type + Flame element). Weak to
   Frost (counter-element).
 
-### Boss Notes
+### Boss Notes — The First Age
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -92,7 +92,7 @@ Light/shadow visibility mechanic.
   with dissonant frequencies. Inflicts Silence. Physical damage reduced
   50% (Spirit type).
 
-### Boss Notes
+### Boss Notes — The Crystal Age
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -133,7 +133,7 @@ symbiotic organisms. Shifting path mechanic.
   **Rare threat (x1.5 rewards)** — deliberately scarce. All other Green
   Age enemies use Dangerous (x1.0).
 
-### Boss Notes
+### Boss Notes — The Green Age
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -177,7 +177,7 @@ the machines outlived them. Gravity reversal mechanic.
   party every turn. Low individual HP (Swarm -32%) but reconstitutes from
   destroyed Iron Automaton parts. MP=0 per Construct type rules.
 
-### Boss Notes
+### Boss Notes — The Iron Age
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).

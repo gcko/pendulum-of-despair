@@ -115,7 +115,7 @@ with special resolution mechanics. One is non-combat.
 > encounter. No stat block. Sable faces shadows of herself and must
 > choose to walk back into the alley, toward the party, toward danger.
 
-### Boss Notes
+### Boss Notes — Trial Bosses
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -138,7 +138,7 @@ of the main story. Multi-phase encounter at Plateau's Edge
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
 
-### Boss Notes
+### Boss Notes — Pallor Wastes
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -176,7 +176,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 5,000 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
 
-### Boss Notes
+### Boss Notes — Ley Line Depths
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -219,12 +219,12 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 | *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
 | *Wellspring Guardian* | Boss | 36 | 28,000 | 126 | 97 | 62 | 100 | 60 | 43 | 8,000 | 12,000 | Builder's Crest (100%) | Nexus Crest (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F7 (The Wellspring) |
 
-### Boss Notes
+### Boss Notes — Dry Well of Aelhart
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
 
-- **Archive Keeper** (Mini-Boss) — Lv 32, 3,000-12,000 HP, Boss. 1 phase.
+- **Archive Keeper** (Mini-Boss) — Lv 32, 3,000–12,000 HP, Boss. 1 phase.
 - **Wellspring Guardian** — Lv 36, 28,000 HP, Boss. 3 phases.
 
 ---
@@ -271,7 +271,7 @@ trapped in a machine.
 | *The Architect (Stage 1)* | Boss | 34 | 20,000 | 0 | 93 | 58 | 95 | 57 | 42 | 5,000 | 8,000 | Forge Schematic (100%) | Architect's Hammer (100%) | Storm | — | — | Death, Petrify, Stop, Sleep, Confusion, Poison, Berserk, Despair | Forgotten Forge F5 (Anvil Vault) |
 | *Grey Cleaver Unbound (Stage 2)* | Boss | 36 | 25,000 | 126 | 97 | 62 | 100 | 60 | 43 | 5,000 | 8,000 | Despair Shard (100%) | Grey Cleaver (100%) | Spirit | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Forgotten Forge F5 (Anvil Vault) |
 
-### Boss Notes
+### Boss Notes — The Forgotten Forge
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -326,13 +326,13 @@ in the grey light.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Pallor Echo* | Boss | 34 | 5,000 | 119 | 93 | 58 | 95 | 57 | 42 | 2,000 | 4,000 | Grey Echo Shard (100%) | Cael's Memory (100%) | Spirit | Void | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Phase 4, Wave 4 |
 
-### Boss Notes
+### Boss Notes — The Convergence
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
 
 - **Pallor Echo** (Mini-Boss) — Lv 34, 5,000 HP, Boss. 1 phase.
-- **Cael, Knight of Despair** — Lv 36/38, 45,000 + 35,000 HP, Boss. 2 phases.
+- **Cael, Knight of Despair** — Lv 36/38, Boss. 2 phases (Phase 1: 45,000 HP; Phase 2: 35,000 HP).
 - **The Pallor Incarnate** — Lv 40, 70,000 HP, Boss. 1 phase + conduit crystals.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |

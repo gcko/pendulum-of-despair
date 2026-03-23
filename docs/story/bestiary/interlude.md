@@ -103,7 +103,7 @@ Pallor Infection mechanic is introduced. 30% Pallor source encounters.
 | *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 63 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
 | *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
 
-### Boss Notes
+### Boss Notes — Rail Tunnels
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -160,7 +160,7 @@ revisited with full encounters. 40% Pallor source encounters.
 | Wailing Dead | Undead | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | — | Bone Dust (25%) | Spirit | — | — | Poison, Death | Valdris Catacombs (return visit) |
 | *The Undying Warden* | Boss | 25 | 8,000 | 87 | 72 | 45 | 73 | 43 | 33 | 2,000 | 3,500 | Catacomb Map (100%) | Warden's Binding (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Valdris Catacombs (Catacomb Heart, optional) |
 
-### Boss Notes
+### Boss Notes — Valdris Crown Catacombs
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -186,7 +186,7 @@ has burrowed into the deepest junction. 45% Pallor source encounters.
 | Pallor Nest | Pallor | 23 | 1,248 | 80 | 44 | 32 | 38 | 27 | 26 | 40 | 74 | Pallor Sample (75%) | Nest Fragment (25%) | Spirit | — | — | Despair, Death | Caldera Undercity (deeper tunnels, infection source) |
 | *Pallor Nest Mother* | Boss | 25 | 6,000 | 87 | 72 | 45 | 73 | 43 | 33 | 1,500 | 3,000 | Broodchamber Map (100%) | Nest Mother's Core (100%) | Flame, Spirit | Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Caldera Undercity (deepest junction, sidequest) |
 
-### Boss Notes
+### Boss Notes — Caldera Undercity
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).
@@ -225,7 +225,7 @@ Occurs on Floor 4 of the Axis Tower. Non-preventable story moment.
 - No infection source needed — Kole channels the Pallor directly
 - **Narrative:** Kole willingly corrupts his own soldiers
 
-### Boss Notes
+### Boss Notes — Axis Tower / Ironmark
 
 For full AI scripts, phase mechanics, and scripted events, see
 [bosses.md](bosses.md).

@@ -29,7 +29,7 @@
 | 16 | The Index | III | Pallor Wastes Trial 5 | 32 | 7,000 | Boss | 1 |
 | 17 | Vaelith, the Ashen Shepherd | III | Pallor Wastes Section 5 | 34 | 50,000 | Boss | 2+pre |
 | 18 | Ley Titan | III | Ley Line Depths F5 | 28 | 18,000 | Boss | 3 |
-| 19 | Archive Keeper | III | Dry Well F5 | 32 | 3,000--12,000 | Boss | 1 |
+| 19 | Archive Keeper | III | Dry Well F5 | 32 | 3,000–12,000 | Boss | 1 |
 | 20 | Wellspring Guardian | III | Dry Well F7 | 36 | 28,000 | Boss | 3 |
 | 21 | The Architect (Stage 1) | III | Forgotten Forge F5 | 34 | 20,000 | Boss | 1 |
 | 22 | Grey Cleaver Unbound (Stage 2) | III | Forgotten Forge F5 | 36 | 25,000 | Boss | 1 |
@@ -44,7 +44,7 @@
 
 > **Notes:** Cael (#24) has two stat rows (Phase 1: Lv 36 / 45,000 HP;
 > Phase 2: Lv 38 / 35,000 HP). Archive Keeper (#19) has variable HP
-> based on a knowledge puzzle (3,000--12,000). The Architect (#21) and
+> based on a knowledge puzzle (3,000–12,000). The Architect (#21) and
 > Grey Cleaver Unbound (#22) are a two-stage fight with no break but are
 > separate bosses with different types, levels, and weaknesses.
 > Vaelith (Siege) is an unwinnable scripted-loss encounter, not counted
@@ -1886,7 +1886,7 @@ Forge questline, rewarding exploration.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Archive Keeper* | Boss | 32 | 3,000--12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
+| *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
 
 **Modes:** 1 (Puzzle)
 
@@ -1908,7 +1908,7 @@ Mode: Puzzle
         three correct: 12,000 - 6,000 = 6,000 HP remaining for
         combat. With all three wrong: 12,000 + 3,000 = 15,000 HP
         (capped at 12,000) and 3 ley blasts taken. Best case: 3
-        correct = 6,000 HP. The stat row lists 3,000--12,000 to
+        correct = 6,000 HP. The stat row lists 3,000–12,000 to
         reflect the variable range (3,000 is achievable only with
         correct answers + pre-puzzle damage from environmental traps).
 
@@ -1977,7 +1977,7 @@ rewards preparation and exploration. Players who have been reading the
 builder script fragments scattered throughout the Dry Well will
 recognize the pictographic answers; those who rushed through will face
 a harder combat with a higher HP pool plus ley blast damage. The
-variable HP range (3,000--12,000) is the widest of any boss in the game,
+variable HP range (3,000–12,000) is the widest of any boss in the game,
 making this encounter feel genuinely responsive to player engagement with
 the dungeon's lore. The Keeper's Index drop is essential for the
 Wellspring Guardian fight, creating a clear progression chain within the
