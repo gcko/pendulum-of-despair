@@ -70,31 +70,96 @@
 
 ### HP Healing
 
-*Content pending — see Task 2*
+> **Stack limit:** HP/MP healing items stack to 199. All other consumables stack to 99.
+
+| Item | Effect | Buy | Sell | Availability |
+|------|--------|-----|------|--------------|
+| Potion | Restore 100 HP | 50 | 25 | Act I shops |
+| Hi-Potion | Restore 500 HP | 300 | 150 | Act II shops |
+| X-Potion | Restore 100% HP | 1,500 | 750 | Act III shops (limited) |
+| Ley Tonic | Restore 300 HP to all party | 800 | 400 | Act II shops (limited stock) |
+| Elixir | Restore 100% HP and MP | — | — | Chests, boss drops only |
+| Megalixir | Restore 100% HP and MP to all party | — | — | 3 total (Convergence, Dreamer's Fault) |
+| Tent | Restore 50% HP/MP to all party (save point only) | 500 | 250 | Act I shops |
+| Cottage | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Interlude shops |
 
 ### MP Restoration
 
-*Content pending — see Task 2*
+| Item | Effect | Buy | Sell | Availability |
+|------|--------|-----|------|--------------|
+| Ether | Restore 30 MP | 200 | 100 | Act I shops |
+| Hi-Ether | Restore 100 MP | 800 | 400 | Act II shops |
+| X-Ether | Restore 100% MP | 2,000 | 1,000 | Act III shops (limited) |
 
 ### Revival
 
-*Content pending — see Task 2*
+| Item | Effect | Buy | Sell | Availability |
+|------|--------|-----|------|--------------|
+| Phoenix Feather | Revive at 25% HP | 500 | 250 | Act I shops |
+| Phoenix Pinion | Revive at 100% HP | 3,000 | 1,500 | Act III shops (limited) |
 
 ### Status Cures
 
-*Content pending — see Task 2*
+| Item | Cures | Buy | Sell | Availability |
+|------|-------|-----|------|--------------|
+| Antidote | Poison, Burn | 50 | 25 | Act I shops |
+| Alarm Clock | Sleep | 75 | 37 | Act I shops |
+| Echo Drop | Silence | 75 | 37 | Act I shops |
+| Eye Drops | Blind | 50 | 25 | Act I shops |
+| Smelling Salts | Confusion | 75 | 37 | Act I shops |
+| Soft Stone | Petrify | 200 | 100 | Act II shops |
+| Chronos Dust | Slow | 150 | 75 | Act II shops |
+| Remedy | All except Stop, Berserk, Despair, Faint | 800 | 400 | Act II shops |
+| Pallor Salve | Despair (instant cure) | 2,500 | 1,250 | Act III Oases (limited). Also craftable. |
+| Hope Shard | Despair (instant cure) | — | — | Rare chests/quest rewards only |
+
+> **Despair** is the signature status of the Pallor — a creeping hopelessness
+> that reduces all outgoing damage by 50% and blocks MP regeneration. It cannot
+> be cured by Remedy; only Pallor Salve, Hope Shard, or the Purge spell remove
+> it. The limited supply of cures makes Despair a genuine resource-management
+> threat, especially in the Pallor Wastes and Axis Tower.
+
+Status effect definitions and spell-based cures: see [magic.md](magic.md#status-effect-reference).
+
+**Items cannot cure the following statuses:**
+
+- **Stop** — wears off only (3 real-time seconds)
+- **Berserk** — Purge spell only (per magic.md)
 
 ### Battle Utility
 
-*Content pending — see Task 2*
+| Item | Effect | Buy | Sell | Availability |
+|------|--------|-----|------|--------------|
+| Smoke Bomb | Flee from non-boss battles (100%) | 100 | 50 | Act I shops |
+| Waystone | Teleport to dungeon entrance | 300 | 150 | Act II shops |
+| Sable's Coin | Guaranteed preemptive next battle | 500 | — | Quest reward, rare chests |
 
 ### Stat Capsules
 
-*Content pending — see Task 2*
+Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden passages, and quest rewards. Approximately 82 total exist across the game.
+
+| Item | Effect | Total in Game |
+|------|--------|---------------|
+| Strength Capsule | ATK +1 (permanent) | 15 |
+| Guardian Capsule | DEF +1 (permanent) | 15 |
+| Arcane Capsule | MAG +1 (permanent) | 15 |
+| Warding Capsule | MDEF +1 (permanent) | 15 |
+| Swiftness Capsule | SPD +1 (permanent) | 12 |
+| Fortune Capsule | LCK +1 (permanent) | 10 |
+
+> **Distribution:** 20% in Act II/Interlude, 30% in Act III, 50% in Dreamer's Fault.
 
 ### Consumable Summary
 
-*Content pending — see Task 2*
+| Category | Count |
+|----------|-------|
+| HP Healing | 8 |
+| MP Restoration | 3 |
+| Revival | 2 |
+| Status Cure | 10 |
+| Battle Utility | 3 |
+| Stat Capsules | 6 types |
+| **Total** | **32** |
 
 ---
 
