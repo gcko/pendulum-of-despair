@@ -401,9 +401,9 @@ Verify all 4 are present with correct HP.
 
 Check ALL enemies:
 1. All Construct (6 total): MP=0, 5 immunities
-2. All Spirit (4 total): Immune Poison+Petrify
+2. All Spirit (3 total): Immune Poison+Petrify
 3. All Elemental (3 total): Immune Petrify
-4. All Pallor (4 total): Weak=Spirit, Immune Despair+Death, Resist Void
+4. All Pallor (4 total): Weak=Spirit, Immune Despair+Death. Resist Void is per-enemy for Drake/Wolf/Lurker only — Void Walker does NOT resist Void.
 5. All Boss (4 total): Immune Death+Petrify+Stop+Sleep+Confusion
 6. All Beast (2 total): no inherent immunities
 7. All Humanoid (2 total): no inherent immunities
@@ -463,7 +463,7 @@ Before running `/create-pr`:
 - [ ] `pnpm lint` passes
 - [ ] 4 Echo Boss HP verified (40K, 60K, 80K, 100K)
 - [ ] All 6 Construct enemies: MP=0, 5 immunities
-- [ ] All 4 Spirit enemies: Immune Poison+Petrify
+- [ ] All 3 Spirit enemies: Immune Poison+Petrify
 - [ ] All 3 Elemental enemies: Immune Petrify
 - [ ] All 4 Pallor enemies: Weak=Spirit, Immune Despair+Death
 - [ ] Pallor Drake/Wolf/Lurker: Resist=Void (per-enemy, from palette-families)
