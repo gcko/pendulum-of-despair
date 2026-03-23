@@ -650,6 +650,10 @@ stat derivation, and naming conventions.
 > ability bypasses front-row protection, forcing parties to consider
 > positioning. The Roc's Carry Off is a unique removal mechanic —
 > temporarily reducing party size mid-combat.
+>
+> **Act III early deployment:** Roc (Tier 3) is deployed at Lv 32
+> in overworld safe zones (projected Lv 38). Stats in act-iii.md
+> are computed from the deployment level.
 
 ---
 
@@ -669,6 +673,10 @@ stat derivation, and naming conventions.
 > attacks the land before it attacks people. The Pallor Treant's
 > Despair Roots combine crowd control with Despair, making it a
 > priority target despite its massive HP pool.
+>
+> **Act III early deployment:** Pallor Treant (Tier 3) is deployed
+> at Lv 30 in Pallor Wastes inner sections (projected Lv 36).
+> Stats in act-iii.md are computed from the deployment level.
 
 ---
 

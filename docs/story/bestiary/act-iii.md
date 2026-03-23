@@ -41,6 +41,9 @@ visible: bodies twisted, joints bent wrong, forms losing coherence.
   Swarm role -- reduced HP, appears in groups.
 - Petrified Beast: former forest creature, turned to grey stone and
   animated. Heavy physical attacks, slow.
+- Wraith Shade and Dread Warden use Standard threat (x0.60) at
+  early deployment levels despite palette-families projecting
+  Dangerous. Early deployment reduces both level and threat.
 
 ---
 
@@ -676,6 +679,9 @@ not yet corrupted. Encounter rate: normal. ~20% Pallor encounters.
   magic-based drain attacks.
 - Roc: massive raptor. Rare overworld encounter (x1.5 rewards).
   Swoops from above -- preemptive strike chance for the enemy.
+- Void Moth and Storm Wraith use Standard threat (x0.60) at early
+  deployment levels despite palette-families projecting Dangerous.
+  Early deployment reduces both level and threat.
 
 ---
 
@@ -719,8 +725,8 @@ progresses here.
 - **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
 - **Tier 2 early deployments:** Storm Wraith (Wraith Tier 2, Lv 30
   vs projected Lv 32)
-- **Tier 3 debuts:** Thunder Drake, Deserter Captain, Blight Leech,
-  Void Moth, Roc, Wraith Shade, Dread Warden,
+- **Tier 3 debuts:** Pallor Boar, Thunder Drake, Deserter Captain,
+  Blight Leech, Void Moth, Roc, Wraith Shade, Dread Warden,
   Void Wisp, Pallor Treant, Marauder Captain, Void Crystal,
   Confluence Elemental, Forge Sentinel, Warp Sentinel,
   Tempered Construct, Slag Elemental, Pictograph Wisp,
