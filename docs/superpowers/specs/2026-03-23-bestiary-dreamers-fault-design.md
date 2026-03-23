@@ -278,16 +278,16 @@ the numbers are large:
 
 | Level | HP (base) | ATK (base) | DEF (base) | MAG (base) |
 |-------|-----------|------------|------------|------------|
-| 42 | 3,700 | 75 | 55 | 64 |
-| 58 | 6,828 | 100 | 74 | 87 |
-| 70 | 9,860 | 120 | 89 | 104 |
-| 84 | 13,960 | 142 | 105 | 123 |
+| 42 | 3,699 | 75 | 55 | 64 |
+| 58 | 6,768 | 100 | 74 | 87 |
+| 70 | 9,680 | 120 | 89 | 104 |
+| 84 | 13,728 | 142 | 105 | 123 |
 | 100 | 19,220 | 168 | 125 | 146 |
 
 Gold/Exp use logistic formulas × threat. At these levels the
 S-curve approaches its cap:
-- base_gold(100) ≈ 9,944 (cap 10,000)
-- base_exp(100) ≈ 29,242 (cap 30,000)
+- base_gold(100) ≈ 6,954 (cap 10,000)
+- base_exp(100) ≈ 14,100 (cap 30,000)
 
 Threat multipliers: Dangerous ×1.0, Rare ×1.5.
 
@@ -299,7 +299,7 @@ Type rules apply as normal:
 - Construct: MP=0, Immune Poison/Sleep/Confusion/Berserk/Despair
 - Spirit: Immune Poison/Petrify
 - Elemental: absorbs own element, Immune Petrify
-- Pallor: Weak Spirit, Immune Despair/Death, Resist Void
+- Pallor: Weak Spirit, Immune Despair/Death (Resist Void is per-enemy for Tier 4 family variants, not a type default)
 - Boss: Immune Death/Petrify/Stop/Sleep/Confusion
 
 ---

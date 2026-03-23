@@ -513,4 +513,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-22 | 1.3 Enemy Bestiary | MISSING -> PARTIAL. Template (19 cols), 8 types, stat scaling (Lv 1-150), bounded-growth rewards, 25 Act I enemies, 19 palette families. | ab92dba |
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Act II enemies (33): Ley Line Depths F1–3, Ashmark, Bellhaven, Valdris Siege gauntlet, Overworld. 9 new families, 11 Tier 2 revisions. Airborne spawn-on-death mechanic. | b4358a2 |
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic (4 sources, 3 set-pieces). 4 new families, ~15 Tier 3/4 updates. | 781f4ce |
-| 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 4 zones), sidequests, rare encounters. Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |
+| 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 5 ages, Lv 42–100). Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |

@@ -161,7 +161,7 @@ Iron Age enemies (spec Section 3.4):
 Steal: Iron Cog (75%), Drop: Tempered Plate (25%)
 
 **Note:** Iron Automaton is "Immune to magic. Physical only."
-Include this as a design note — it is a per-boss exception to
+Include this as a design note — it is a per-enemy exception to
 the normal Construct rules (Constructs normally have MAG stat
 for MDEF derivation, but Iron Automaton's magic immunity is
 layered on top).
