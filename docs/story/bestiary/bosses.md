@@ -2266,10 +2266,6 @@ Stance: Whip (turns 4-6, 10-12, 16-18, ...)
 
   Counters: None
 
-Stance: Shield (turns 7-9, 13-15, 19-21, ... offset by +6)
-  Wait -- corrected rotation: Greatsword (1-3) → Whip (4-6) →
-  Shield (7-9) → Greatsword (10-12) → ...
-
 Stance: Shield (turns 7-9, 13-15, 19-21, ...)
   Note: The Cleaver plants itself blade-down and projects a Pallor
         barrier. It reflects 100% of all incoming damage back to the
@@ -2338,6 +2334,31 @@ mechanic stays relevant throughout the fight. The Grey Cleaver drop
 (Lira-exclusive, with Despair's Edge passive) carries the lesson forward
 into gameplay: despair is most dangerous when you refuse to acknowledge
 it.
+
+#### Grey Cleaver — Cursed Weapon Quest
+
+**Reward:** Grey Cleaver (Torren-exclusive greatsword)
+
+An homage to FF6's Cursed Shield. The weapon that absorbed
+centuries of despair in the Forgotten Forge.
+
+**Tainted form:**
+- ATK +15, DEF -10, MDEF -10, SPD -10
+- Inflicts Despair on Torren at battle start
+- Weak to all elements while equipped
+- Cannot be sold or discarded
+
+**Purification:** Win 100 encounters against Pallor-type enemies
+with Grey Cleaver equipped on Torren. Counter does NOT reset if
+unequipped. Torren must be alive when battle is won. Counter is
+tracked per-weapon, not per-character.
+
+**Purified — Pallor's End:**
+- ATK +55 (best greatsword)
+- Spirit element on all attacks
+- +50% damage vs Pallor-type enemies
+- Despair immunity for Torren
+- Absorbs Spirit element
 
 ### The Convergence
 

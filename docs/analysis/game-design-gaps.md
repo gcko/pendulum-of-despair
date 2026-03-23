@@ -108,7 +108,7 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 - [x] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
 - [x] Status effect vulnerability per enemy
 - [x] Drop tables: common item, rare item, steal item (common/rare)
-- [x] AI behavior scripts per enemy (attack patterns, conditional actions, phase triggers)
+- [x] AI behavior scripts for bosses (attack patterns, conditional actions, phase triggers — regular enemies use weighted-random selection, no explicit scripts)
 - [x] Boss stat sheets (all bosses from dungeons-world.md and dungeons-city.md):
   - [x] HP thresholds for phase changes
   - [x] Phase-specific ability sets
