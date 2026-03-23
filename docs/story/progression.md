@@ -102,6 +102,14 @@ Each character has a growth archetype. Rates are per-level averages — actual g
 | SPD | +0.8 | +1.0 | +0.9 | +0.7 | +1.6 | +0.6 |
 | LCK | +0.6 | +0.7 | +0.8 | +0.5 | +1.5 | +0.4 |
 
+> **Equipment rebalance proposal (Gap 1.5):** ATK growth rates above
+> are proposed for reduction (~20%) to make weapon upgrades more
+> impactful throughout the game. See [equipment.md](equipment.md)
+> Section "ATK Growth Adjustment" for proposed values and damage
+> verification. The bestiary's enemy stat curves were designed against
+> these original values — a balance pass (Gap 3.4) must verify enemy
+> HP targets still hold with reduced ATK growth.
+
 **Character identity through stats:**
 
 - **Edren (Knight):** Highest HP by far. Highest DEF and ATK. Slowest caster. He IS the wall.

@@ -594,16 +594,60 @@ the [weapon] and the [element] infusion. The weapon transforms..."*
 
 ## Equipment Tiers by Act
 
-*Content pending — derived from weapon/armor tier tables above once Tasks 2-7 are complete.*
+Summary of available equipment power by act. Ranges are base stats
+before weapon-type modifiers.
+
+| Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
+|-----|-------------|-----------|-----------|-----------------|
+| Act I | Tier 0-1 (ATK 3-12) | Tier 0-1 (DEF 2-8) | Tier 0-1 (DEF 4-12) | Stat boosts (+5) |
+| Act II | Tier 2 (ATK 15-22) | Tier 2 (DEF 10-15) | Tier 2 (DEF 15-22) | Status immunity, Colossus Shard |
+| Interlude | Tier 3 (ATK 28-38) | Tier 3 (DEF 18-24) | Tier 3 (DEF 25-35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
+| Act III | Tier 4 (ATK 42-55) | Tier 4 (DEF 28-35) | Tier 4 (DEF 40-50) | Elemental resist, Despair Ward, Ley Amplifier |
+| Ultimate | Tier 5 (ATK 65-100) | Tier 5 (DEF 40-55) | Tier 5 (DEF 55-75) | Dreamer's Crest, Cael's Knight Crest |
 
 ---
 
 ## Price Reference
 
-*Content pending — derived from weapon/armor price data once Tasks 2-7 are complete.*
+Combined price table across all equipment categories. Forged items
+have no gold price — they cost materials + a forging fee (300–500g).
+
+| Tier | Weapons | Head Armor | Body Armor (Light) | Body Armor (Heavy) | Robes | Accessories |
+|------|---------|------------|--------------------|--------------------|-------|-------------|
+| 0 | Free | Free | Free | — | — | — |
+| 1 | 250–600 | 200–350 | 300–500 | 400 | 300 | 300–500 |
+| 2 | 800–2,500 | 800–1,200 | 1,200–1,800 | 1,000–2,000 | 1,200 | 500–800 |
+| 3 | 2,000–5,000 | 2,500–3,000 | 3,200–3,500 | 4,500 | — | 1,500–3,000 |
+| 4 | 4,000–10,000 | 5,000–6,500 | 7,000–8,000 | 8,000–9,000 | 7,500 | 3,000–5,000 |
+| 5 | Not sold | Not sold | Not sold | Not sold | Not sold | Not sold |
+| Forged | Material cost | Material cost | Material cost | — | Material cost | — |
 
 ---
 
 ## Cross-Reference Tables
 
-*Content pending — see Task 9*
+### Boss Equipment Drops
+
+All 18 boss-dropped equipment pieces cross-referenced with the
+bestiary. Boss names match `docs/story/bestiary/bosses.md` exactly.
+
+| Item | Slot | Boss | Act | Bestiary File |
+|------|------|------|-----|---------------|
+| Colossus Shard | Accessory | Ley Colossus | II | bosses.md |
+| Drayce's Failsafe Core | Accessory | Forge Warden | II | bosses.md |
+| Warden's Binding | Accessory | Undying Warden | Int | bosses.md |
+| Kole's Epaulettes | Armor (Heavy) | General Kole | Int | bosses.md |
+| Crown Shard | Accessory | Crowned Hollow | III | bosses.md |
+| Unfinished Ring | Accessory | Perfect Machine | III | bosses.md |
+| Ashen Scholar's Tome | Accessory | Vaelith | III | bosses.md / act-iii.md |
+| Titan's Core | Accessory | Ley Titan | III | bosses.md |
+| Nexus Crest | Accessory | Wellspring Guardian | III | bosses.md |
+| Architect's Hammer | Weapon (Lira) | The Architect | III | bosses.md |
+| Grey Cleaver | Weapon (Torren) | Grey Cleaver Unbound | III | bosses.md |
+| Cael's Knight Crest | Accessory | Cael Phase 1 | III | bosses.md |
+| Cael's Memory | Accessory | Pallor Echo | III | bosses.md |
+| Scholar's Codex | Accessory | First Scholar | Post | bosses.md |
+| Queen's Facet | Accessory | Crystal Queen | Post | bosses.md |
+| Root Crown | Armor (Head) | Rootking | Post | bosses.md |
+| Warden's Core | Accessory | Iron Warden | Post | bosses.md |
+| Dreamer's Crest | Accessory | Cael's Echo (non-combat) | Post | optional.md |
