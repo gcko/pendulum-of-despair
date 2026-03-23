@@ -148,13 +148,13 @@ All weapon tables in the sections below use these columns:
 
 | Tier | Act | ATK Range | Price Range | Acquisition |
 |------|-----|-----------|-------------|-------------|
-| 0 — Starting | Prologue | 3–5 | Free | Initial equipment |
-| 1 | Act I | 8–12 | 200–600 | Shops, chests |
-| 2 | Act II | 15–22 | 800–2,500 | Shops, dungeons |
-| 3 | Interlude | 28–38 | 2,000–5,000 | Limited shops, chests |
-| 4 | Act III | 42–55 | 4,000–10,000 | Shops, Pallor Wastes |
-| 5 — Ultimate | Endgame | 65–100 | Not sold | Sidequests, bosses, Dreamer's Fault |
-| Forged | Various | +5–10 above tier | Material cost | Lira's Arcanite Forging |
+| 0 — Starting | Prologue | 3—5 | Free | Initial equipment |
+| 1 | Act I | 8—12 | 200—600 | Shops, chests |
+| 2 | Act II | 15—22 | 800—2,500 | Shops, dungeons |
+| 3 | Interlude | 28—38 | 2,000—5,000 | Limited shops, chests |
+| 4 | Act III | 42—55 | 4,000—10,000 | Shops, Pallor Wastes |
+| 5 — Ultimate | Endgame | 65—100 | Not sold | Sidequests, bosses, Dreamer's Fault |
+| Forged | Various | +5—10 above tier | — (Forged) | Lira's Arcanite Forging |
 
 ---
 
@@ -167,13 +167,13 @@ endgame swords.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Training Sword | 4 | — | – | — | – | 0 | Starting equipment |
-| Valdris Blade | 10 | — | – | — | 300 | 1 | Valdris shop |
-| Knight's Edge | 12 | — | – | — | 500 | 1 | Ember Vein chest |
-| Mythril Sword | 18 | — | – | — | 1,200 | 2 | Act II shops |
-| Compact Saber | 22 | — | – | Stolen Compact design | 2,000 | 2 | Ashmark chest |
+| Training Sword | 4 | — | — | — | — | 0 | Starting equipment |
+| Valdris Blade | 10 | — | — | — | 300 | 1 | Valdris shop |
+| Knight's Edge | 12 | — | — | — | 500 | 1 | Ember Vein chest |
+| Mythril Sword | 18 | — | — | — | 1,200 | 2 | Act II shops |
+| Compact Saber | 22 | — | — | Stolen Compact design | 2,000 | 2 | Ashmark chest |
 | Arcanite Blade | 35 | +5 MAG | — | Forged | — (Forged) | 3 | Lira forges (Interlude) |
-| Crystal Sword | 33 | — | – | — | 4,000 | 3 | Interlude shop |
+| Crystal Sword | 33 | — | — | — | 4,000 | 3 | Interlude shop |
 | Ley-Forged Longsword | 48 | — | Ley | — | 8,000 | 4 | Act III shop |
 | Pallor Bane | 52 | — | Spirit | +25% vs Pallor | 10,000 | 4 | Pallor Wastes chest |
 | Edren's Oath | 80 | +10 DEF | Spirit | Auto-Protect 1 turn at battle start | — | 5 | Edren sidequest |
@@ -188,12 +188,12 @@ Cael's authority and eventual betrayal.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Recruit's Claymore | 5 | SPD –2 | — | – | — | 0 | Starting equipment |
-| Commander's Blade | 12 | SPD –2 | — | – | 400 | 1 | Valdris armory |
-| War Cleaver | 14 | SPD –3 | — | – | 600 | 1 | Fenmother chest |
-| Ironbound Greatsword | 22 | SPD –3 | — | – | 1,500 | 2 | Act II shop |
-| Twilight Edge | 26 | SPD –3 | — | +10% crit rate | 2,500 | 2 | Ley Line Depths chest |
-| Dusk Reaver | 40 | SPD –4 | — | – | 5,000 | 3 | Interlude shop (brief window) |
+| Recruit's Claymore | 5 | SPD —2 | — | — | — | 0 | Starting equipment |
+| Commander's Blade | 12 | SPD —2 | — | — | 400 | 1 | Valdris armory |
+| War Cleaver | 14 | SPD —3 | — | — | 600 | 1 | Fenmother chest |
+| Ironbound Greatsword | 22 | SPD —3 | — | — | 1,500 | 2 | Act II shop |
+| Twilight Edge | 26 | SPD —3 | — | +10% crit rate | 2,500 | 2 | Ley Line Depths chest |
+| Dusk Reaver | 40 | SPD —4 | — | — | 5,000 | 3 | Interlude shop (brief window) |
 
 > **Design note:** Cael's betrayal during the Interlude removes him from the
 > party permanently. Tiers 3--5 greatswords have extremely limited
@@ -213,16 +213,16 @@ research background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Scholar's Rod | 2 | +3 MAG | — | – | — | 0 | Starting equipment |
-| Ley Wand | 6 | +5 MAG | — | – | 250 | 1 | Valdris shop |
-| Glyph Staff | 8 | +7 MAG | — | – | 500 | 1 | Archive of Ages chest |
-| Mythril Staff | 12 | +10 MAG | — | – | 1,000 | 2 | Act II shop |
+| Scholar's Rod | 2 | +3 MAG | — | — | — | 0 | Starting equipment |
+| Ley Wand | 6 | +5 MAG | — | — | 250 | 1 | Valdris shop |
+| Glyph Staff | 8 | +7 MAG | — | — | 500 | 1 | Archive of Ages chest |
+| Mythril Staff | 12 | +10 MAG | — | — | 1,000 | 2 | Act II shop |
 | Runic Focus | 10 | +12 MAG | Ley | +5% spell crit | 1,800 | 2 | Ley Line Depths chest |
 | Resonance Rod | 15 | +15 MAG | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
-| Arcane Conduit | 18 | +16 MAG | — | – | 3,500 | 3 | Interlude shop |
+| Arcane Conduit | 18 | +16 MAG | — | — | 3,500 | 3 | Interlude shop |
 | Ley Conduit | 25 | +18 MAG | Ley | — | 7,000 | 4 | Act III shop |
 | Archive Staff | 22 | +20 MAG | — | +10% healing | 9,000 | 4 | Dry Well chest |
-| Maren's Requiem | 40 | +25 MAG | Ley | MP cost –10% | — | 5 | Crafted from Pallor Core |
+| Maren's Requiem | 40 | +25 MAG | Ley | MP cost —10% | — | 5 | Crafted from Pallor Core |
 
 ---
 
@@ -234,13 +234,13 @@ a street/shadow theme reflecting Sable's underworld background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Street Knife | 3 | +1 SPD | — | – | — | 0 | Starting equipment |
-| Stiletto | 8 | +2 SPD | — | – | 250 | 1 | Bellhaven shop |
+| Street Knife | 3 | +1 SPD | — | — | — | 0 | Starting equipment |
+| Stiletto | 8 | +2 SPD | — | — | 250 | 1 | Bellhaven shop |
 | Pickpocket's Blade | 7 | +2 LCK | — | Steal rate +10% | 400 | 1 | Sable sidequest |
-| Mythril Dagger | 15 | +3 SPD | — | – | 1,000 | 2 | Act II shop |
+| Mythril Dagger | 15 | +3 SPD | — | — | 1,000 | 2 | Act II shop |
 | Trick Blade | 14 | +3 LCK | — | +5% crit rate | 1,500 | 2 | Bellhaven Tunnels chest |
 | Shadowsteel Knife | 28 | +4 SPD, +3 LCK | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
-| Whisper Edge | 32 | +5 SPD | — | – | 4,500 | 3 | Interlude shop |
+| Whisper Edge | 32 | +5 SPD | — | — | 4,500 | 3 | Interlude shop |
 | Twilight Fang | 42 | +4 LCK | — | 10% Poison on hit | 8,000 | 4 | Act III shop |
 | Shade Razor | 48 | +6 SPD | Void | — | 10,000 | 4 | Convergence chest |
 | Sable's Thread | 70 | +8 SPD, +5 LCK | — | Steal rate +25%, auto-Haste 1 turn | — | 5 | Sable sidequest |
@@ -255,14 +255,14 @@ theme reflecting Lira's engineering background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Maintenance Wrench | 4 | — | – | — | – | 0 | Starting equipment |
-| Iron Mallet | 10 | — | – | — | 300 | 1 | Corrund shop |
-| Pipe Hammer | 12 | — | – | — | 500 | 1 | Rail Tunnels chest |
-| Compact Sledge | 20 | — | – | — | 1,200 | 2 | Act II shop |
+| Maintenance Wrench | 4 | — | — | — | — | 0 | Starting equipment |
+| Iron Mallet | 10 | — | — | — | 300 | 1 | Corrund shop |
+| Pipe Hammer | 12 | — | — | — | 500 | 1 | Rail Tunnels chest |
+| Compact Sledge | 20 | — | — | — | 1,200 | 2 | Act II shop |
 | Forge Hammer | 24 | — | Flame | — | 2,200 | 2 | Ashmark Factory chest |
-| Forgewright Maul | 40 | — | – | Forged | — (Forged) | 3 | Lira forges (Interlude) |
-| Arcanite Maul | 38 | — | – | — | 5,000 | 3 | Interlude shop |
-| Piston Driver | 52 | — | – | 15% Stun chance | 8,500 | 4 | Act III shop |
+| Forgewright Maul | 40 | — | — | Forged | — (Forged) | 3 | Lira forges (Interlude) |
+| Arcanite Maul | 38 | — | — | — | 5,000 | 3 | Interlude shop |
+| Piston Driver | 52 | — | — | 15% Stun chance | 8,500 | 4 | Act III shop |
 | Architect's Hammer | 52 | — | Storm | +25% vs Constructs | — | 4 | The Architect boss drop |
 | Lira's Masterwork | 90 | +5 DEF | — | Forgewright device uses +1 | — | 5 | Crafted from Grey Mist Essence + Arcanite Ingot |
 
@@ -276,13 +276,13 @@ theme reflecting Torren's role as spiritspeaker.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Hunting Spear | 3 | — | – | — | – | 0 | Starting equipment |
-| Iron Lance | 8 | — | – | — | 250 | 1 | Thornmere shop |
-| Spirit-Bound Spear | 12 | — | Spirit | — | – | 1 | Fenmother boss reward |
-| Mythril Spear | 17 | — | – | — | 1,000 | 2 | Act II shop |
+| Hunting Spear | 3 | — | — | — | — | 0 | Starting equipment |
+| Iron Lance | 8 | — | — | — | 250 | 1 | Thornmere shop |
+| Spirit-Bound Spear | 12 | — | Spirit | — | — | 1 | Fenmother boss reward |
+| Mythril Spear | 17 | — | — | — | 1,000 | 2 | Act II shop |
 | Thornwood Pike | 20 | — | Earth | — | 1,800 | 2 | Thornmere Wilds chest |
 | Thornspear | 30 | +3 SPD | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
-| Wyrmbone Lance | 35 | — | – | — | 4,500 | 3 | Interlude shop |
+| Wyrmbone Lance | 35 | — | — | — | 4,500 | 3 | Interlude shop |
 | Ley Lance | 45 | — | Ley | — | 7,500 | 4 | Act III shop |
 | Pallor Pike | 50 | — | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
 | Grey Cleaver | 55 | — | Spirit (purified) | +50% vs Pallor, Despair immunity | — | 5 | Grey Cleaver Unbound boss |
@@ -621,12 +621,12 @@ have no gold price — they cost materials + a forging fee (300–500g).
 | Tier | Weapons | Head Armor | Body Armor (Light) | Body Armor (Heavy) | Robes | Accessories |
 |------|---------|------------|--------------------|--------------------|-------|-------------|
 | 0 | Free | Free | Free | — | — | — |
-| 1 | 250–600 | 200–350 | 300–500 | 400 | 300 | 300–500 |
-| 2 | 800–2,500 | 800–1,200 | 1,200–1,800 | 1,000–2,000 | 1,200 | 500–800 |
-| 3 | 2,000–5,000 | 2,500–3,000 | 3,200–3,500 | 4,500 | — | 1,500–3,000 |
-| 4 | 4,000–10,000 | 5,000–6,500 | 7,000–8,000 | 8,000–9,000 | 7,500 | 3,000–5,000 |
+| 1 | 250—600 | 200—350 | 300—500 | 400 | 300 | 300—500 |
+| 2 | 800—2,500 | 800—1,200 | 1,200—1,800 | 1,000—2,000 | 1,200 | 500—800 |
+| 3 | 2,000—5,000 | 2,500—3,000 | 3,200—3,500 | 4,500 | — | 1,500—3,000 |
+| 4 | 4,000—10,000 | 5,000—6,500 | 7,000—8,000 | 8,000—9,000 | 7,500 | 3,000—5,000 |
 | 5 | Not sold | Not sold | Not sold | Not sold | Not sold | Not sold |
-| Forged | Material cost | Material cost | Material cost | — | Material cost | — |
+| Forged | — (Forged) | — (Forged) | — (Forged) | — | — (Forged) | — |
 
 ---
 
