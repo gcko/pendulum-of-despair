@@ -426,7 +426,98 @@ making them the best choice for magic-focused characters.
 
 ## Accessories
 
-*Content pending — see Task 7*
+All characters can equip any accessory. Each character has one accessory
+slot. Accessories provide stat boosts, status immunities, elemental
+resistances, or combat mechanic effects. Progression follows FF6 Relic
+design: stat-focused early, effect-focused late.
+
+### Stat Boost Accessories
+
+Basic stat accessories available from shops in Acts I--II.
+
+| Name | Effect | Price | Act | Acquired |
+|------|--------|-------|-----|----------|
+| Power Ring | +5 ATK | 300 | I | Act I shops |
+| Iron Bracelet | +5 DEF | 300 | I | Act I shops |
+| Magic Earring | +5 MAG | 400 | I | Act I shops |
+| Warding Charm | +5 MDEF | 400 | I | Act I shops |
+| Sprint Shoes | +5 SPD | 500 | II | Act II shops |
+| Lucky Coin | +5 LCK | 500 | II | Act II shops |
+| Life Pendant | +300 HP | 800 | II | Act II shops |
+| Mana Bead | +50 MP | 800 | II | Act II shops |
+
+### Status Immunity Accessories
+
+Prevent specific status ailments. Available mid- to late-game as
+status-inflicting enemies grow more common.
+
+| Name | Effect | Price | Act | Acquired |
+|------|--------|-------|-----|----------|
+| Antidote Charm | Poison immune | 600 | II | Act II shops |
+| Clarity Band | Confusion immune | 800 | II | Act II shops |
+| Silence Ward | Silence immune | 800 | II | Interlude shop |
+| Stone Guard | Petrify immune | 1,500 | Int | Interlude shop |
+| Berserk Collar | Berserk immune | 2,000 | III | Act III shop |
+| Despair Ward | Despair immune | 5,000 | III | Act III Oases (very limited, 1--2 available) |
+
+### Elemental Resistance Accessories
+
+Halve incoming damage of a specific element. Available in Act III
+when elemental-heavy encounters become routine.
+
+| Name | Effect | Price | Act | Acquired |
+|------|--------|-------|-----|----------|
+| Flame Ring | Halve Flame damage | 3,000 | III | Act III shop |
+| Frost Amulet | Halve Frost damage | 3,000 | III | Act III shop |
+| Storm Pendant | Halve Storm damage | 3,000 | III | Pallor Wastes chest |
+| Void Ward | Halve Void damage | 4,000 | III | Convergence chest |
+
+### Combat Mechanic Accessories
+
+Grant passive combat effects. Interlude through Act III availability,
+rewarding exploration and sidequests.
+
+| Name | Effect | Price | Act | Acquired |
+|------|--------|-------|-----|----------|
+| Haste Bangle | Auto-Haste 2 turns at battle start | 2,500 | Int | Interlude shop |
+| Counter Ring | +15% counter-attack rate | 3,000 | Int | Catacombs chest |
+| Preemptive Charm | +25% preemptive strike rate | 2,000 | Int | Bellhaven quest |
+| Ley Amplifier | +20% spell damage | 4,000 | III | Dry Well chest |
+| Pallor Bane Charm | +25% damage vs Pallor-type | 3,500 | III | Act III shop |
+| MP Regen Ring | Restore 3% max MP per turn | 4,500 | III | Ley Line Depths F5 chest |
+
+### Character-Specific / Boss Drop Accessories
+
+Unique accessories obtained from boss drops, sidequests, and post-game
+content. Not sold in any shop.
+
+| Name | Effect | Source | Act |
+|------|--------|--------|-----|
+| Colossus Shard | +10 ATK, +10 DEF, Ley affinity | Ley Colossus | II |
+| Drayce's Failsafe Core | +12 DEF, +8 MDEF, auto-Shield Protocol (once per battle at 25% HP) | Forge Warden | II |
+| Warden's Binding | Auto-Protect and Auto-Shell at battle start | Undying Warden | Int |
+| Crown Shard | +10 ATK, +10 MAG, leadership aura (+5% party damage) | Crowned Hollow | III |
+| Unfinished Ring | +15 MAG, Forgewright ability boost (Lira only) | Perfect Machine | III |
+| Ashen Scholar's Tome | +15% party magic damage | Vaelith | III |
+| Titan's Core | +25 MAG, +25 MDEF, Ley affinity, MP Regen 2%/turn | Ley Titan | III |
+| Nexus Crest | +25 ATK, +25 DEF, +25 MAG, +25 SPD | Wellspring Guardian | III |
+| Cael's Knight Crest | +20 all stats (Edren only) | Cael Phase 1 | III |
+| Cael's Memory | +10% damage vs Pallor, grief resonance | Pallor Echo | III |
+| Scholar's Codex | +20 MAG, +10 SPD, spell cost -10% | First Scholar | Post |
+| Queen's Facet | Reflects 25% magic damage passively | Crystal Queen | Post |
+| Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
+| Dreamer's Crest | +30 all stats (best accessory in game) | Cael's Echo (non-combat) | Post |
+
+### Accessory Summary
+
+| Category | Count |
+|----------|-------|
+| Stat Boost | 8 |
+| Status Immunity | 6 |
+| Elemental Resistance | 4 |
+| Combat Mechanic | 6 |
+| Character-Specific / Boss Drop | 14 |
+| **Total** | **38** |
 
 ---
 
