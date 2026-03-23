@@ -51,26 +51,12 @@ glyph-based magic, stone guardians. Floor rotation mechanic.
   death. Absorbs Flame inherently (Elemental type + Flame element). Weak to
   Frost (counter-element).
 
-### The First Scholar (Echo Boss — Floor 4)
+### Boss Notes
 
-> **Note:** docs/story/dungeons-world.md is authoritative for phase
-> mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 40,000 (hand-tuned) | **Type:** Boss | **Level:** 50
-- **Mechanic: Spell Pattern Rotation.** Casts in a fixed 4-spell
-  rotation (Glyph of Flame, Glyph of Frost, Glyph of Storm, Glyph
-  of Void). Each glyph telegraphs with a symbol 1 turn in advance.
-  Players who learn the pattern can pre-buff/defend.
-- **Phase 1 (40,000–20,000 HP):** 4-spell rotation, moderate damage.
-- **Phase 2 (below 20,000 HP):** Rotation doubles speed — 2 spells
-  per turn. Same pattern, twice as fast.
-- **The test:** Pattern recognition and preparation.
-- **Weakness:** Void (150%)
-- **Resistance:** Spirit (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Ancient Manuscript (100%)
-- **Drop:** Scholar's Codex (100%) — accessory, MAG +25, Arcanum
-  boost. **TODO: finalize stat block in Gap 1.5 (Equipment).**
+- **The First Scholar** (Echo Boss) — Lv 50, 40,000 HP, Boss. 2 phases.
 
 ---
 
@@ -106,27 +92,12 @@ Light/shadow visibility mechanic.
   with dissonant frequencies. Inflicts Silence. Physical damage reduced
   50% (Spirit type).
 
-### The Crystal Queen (Echo Boss — Floor 8)
+### Boss Notes
 
-> **Note:** docs/story/dungeons-world.md is authoritative for phase
-> mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 60,000 (hand-tuned) | **Type:** Boss | **Level:** 60
-- **Mechanic: Reflection.** All single-target damage reflected back
-  at attacker at 50%. Only AoE and multi-target abilities bypass.
-  Healing the Queen damages her (reversed).
-- **Phase 1 (60,000–30,000 HP):** Reflection at 50%. Crystal shards
-  (physical) and prismatic beams (magic).
-- **Phase 2 (below 30,000 HP):** Shatters into 4 Crystal Aspects
-  (15,000 HP each). Each Aspect reflects a different element. Kill
-  all 4 to end the fight.
-- **The test:** Party composition and AoE strategy.
-- **Weakness:** Earth (150%)
-- **Resistance:** Ley (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Queen's Prism (100%)
-- **Drop:** Queen's Facet (100%) — accessory, reflects 25% magic
-  damage passively. **TODO: finalize stat block in Gap 1.5 (Equipment).**
+- **The Crystal Queen** (Echo Boss) — Lv 60, 60,000 HP, Boss. 2 phases.
 
 ---
 
@@ -162,27 +133,12 @@ symbiotic organisms. Shifting path mechanic.
   **Rare threat (x1.5 rewards)** — deliberately scarce. All other Green
   Age enemies use Dangerous (x1.0).
 
-### The Rootking (Echo Boss — Floor 12)
+### Boss Notes
 
-> **Note:** docs/story/dungeons-world.md is authoritative for phase
-> mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 80,000 (hand-tuned) | **Type:** Boss | **Level:** 72
-- **Mechanic: Regeneration + Summons.** Regenerates 2,000 HP/turn.
-  Summons Root Weavers every 3 turns. Only way to stop regen: destroy
-  Root Anchor (hidden targetable part, 10,000 HP, appears every 5
-  turns for 2 turns).
-- **Phase 1 (80,000–40,000 HP):** Moderate regen (2,000/turn), light
-  summons.
-- **Phase 2 (below 40,000 HP):** Regen doubles to 4,000 HP/turn.
-  Summons every 2 turns. Root Anchor appears every 4 turns. Desperate.
-- **The test:** Sustained DPS and add management.
-- **Weakness:** Flame (150%)
-- **Resistance:** Earth (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Living Root (100%)
-- **Drop:** Root Crown (100%) — accessory, HP regen 3%/turn.
-  **TODO: finalize stat block in Gap 1.5 (Equipment).**
+- **The Rootking** (Echo Boss) — Lv 72, 80,000 HP, Boss. 2 phases.
 
 ---
 
@@ -221,30 +177,12 @@ the machines outlived them. Gravity reversal mechanic.
   party every turn. Low individual HP (Swarm -32%) but reconstitutes from
   destroyed Iron Automaton parts. MP=0 per Construct type rules.
 
-### The Iron Warden (Echo Boss — Floor 16)
+### Boss Notes
 
-> **Note:** docs/story/dungeons-world.md is authoritative for phase
-> mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 100,000 (hand-tuned) | **Type:** Boss | **Level:** 86
-- **Mechanic: Counter Defense.** Physical attacks are countered.
-  Magic triggers a shield that absorbs the next magic attack. Must
-  alternate: physical -> magic -> physical -> magic.
-- **Phase 1 (100,000–50,000 HP):** Strict counter pattern. Rewards
-  disciplined alternation.
-- **Phase 2 (50,000–25,000 HP):** Summons 2 Gear Wraiths. Counter
-  pattern applies to summons — hitting wrong target triggers
-  party-wide counterattack.
-- **Phase 3 (below 25,000 HP):** Overclocks. 2 actions per turn.
-  Counter window shrinks. The machine is failing.
-- **The test:** Tactical discipline under escalating pressure.
-- **The true final boss of the game.**
-- **Weakness:** Storm (150%)
-- **Resistance:** Flame (50%), Frost (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Warden's Blueprint (100%)
-- **Drop:** Warden's Core (100%) — accessory, counter-attack on
-  physical hit. **TODO: finalize stat block in Gap 1.5 (Equipment).**
+- **The Iron Warden** (Echo Boss) — Lv 86, 100,000 HP, Boss. 3 phases.
 
 ---
 

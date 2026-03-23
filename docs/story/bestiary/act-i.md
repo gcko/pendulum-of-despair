@@ -27,41 +27,13 @@ core mechanic.
 | *Ember Drake* | Beast | 8 | 1,500 | 0 | 23 | 11 | 17 | 12 | 14 | 22 | 44 | Drake Scale (75%) | Drake Fang (100%) | Frost | — | — | — | Ember Vein F2 (mini-boss) |
 | *Vein Guardian* | Boss | 12 | 6,000 | 42 | 40 | 24 | 39 | 24 | 20 | 500 | 800 | Vein Shard (100%) | Vein Guardian's Core (100%) | Storm | Flame | — | Death, Petrify, Stop, Sleep, Confusion | Ember Vein F4 (boss) |
 
-### Ember Drake (Mini-Boss)
+### Boss Notes
 
-- **HP:** 1,500 (per dungeons-world.md)
-- **Phase:** Single phase
-- **Behavior:** Crystalline drake-beast. Fast, aggressive, angular geometry.
-  Teaches full-party coordination (Edren tanks, Cael heals/attacks).
-- **Abilities:**
-  - Flame Breath -- cone AoE, 1-turn charge
-  - Tail Swipe -- single-target physical
-  - Pounce -- back-row target
-- **Weakness:** Frost
-- **Strategy:** Defend during Flame Breath, focus physical damage.
-  Drake Fang can be used as a consumable battle item to deal 500 bonus
-  damage (rewards thorough exploration — saving it for the Vein Guardian
-  is optimal).
-- **Drops:** Drake Fang (dual-purpose: consumable battle item OR crafting
-  material. Per dungeons-world.md: "Crafting / consumable (500 dmg in
-  boss fight)")
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-### Vein Guardian (Boss)
-
-- **HP:** 6,000 (per dungeons-world.md)
-- **Moveset:**
-  - Crystal Slam -- telegraphed single-target heavy physical (raises arms, one turn warning)
-  - Ember Pulse -- AoE magic damage, floor glows orange (one turn warning)
-  - Reconstruct -- at 50% HP, pauses one turn and regenerates 300 HP (one-time event, not repeating)
-- **Weakness:** Storm
-- **Resists:** Flame
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Strategy:** Edren tanks with Defend during Ember Pulse. Cael heals and
-  attacks during safe turns. Drake Fang from Floor 2 can be used as a
-  consumable battle item to deal 500 bonus damage
-  (rewards thorough exploration). Burst damage during Reconstruct recovery
-  window to capitalize on the pause turn.
-- **Drops:** Vein Guardian's Core (crafting material, sells for good gold)
+- **Ember Drake** (Mini-Boss) — Lv 8, 1,500 HP, Beast. 1 phase.
+- **Vein Guardian** — Lv 12, 6,000 HP, Boss. 2 phases.
 
 ---
 
@@ -90,49 +62,13 @@ status effects, elemental resistance, and the cleansing mechanic.
 | *Drowned Sentinel* | Construct | 10 | 4,000 | 0 | 24 | 19 | 20 | 14 | 14 | 25 | 50 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Fenmother's Hollow F2 (mini-boss) |
 | *Corrupted Fenmother* | Boss | 12 | 18,000 | 42 | 40 | 24 | 39 | 24 | 20 | 1,500 | 2,500 | Fenmother's Tear (100%) | Fenmother's Blessing (100%) | Flame | Frost | — | Death, Petrify, Stop, Sleep, Confusion | Fenmother's Hollow F3 (boss) |
 
-### Drowned Sentinel (Mini-Boss)
+### Boss Notes
 
-- **HP:** 4,000 (per dungeons-world.md)
-- **Phase:** Single phase
-- **Behavior:** Stone guardian covered in barnacles. Heavy physical attacks,
-  Frost area attack. Blocks the passage to the Fenmother's sanctum.
-- **Abilities:**
-  - Stone Slam -- heavy single-target physical
-  - Frost Wave -- AoE Frost magic damage
-  - Barnacle Shield -- raises DEF for 2 turns
-- **Weakness:** Storm (Construct type -- Storm deals 1.25x type bonus)
-- **Immunities:** Poison, Sleep, Confusion, Berserk, Despair
-- **Strategy:** Use Storm-element attacks for bonus damage. Physical attackers
-  should wait out Barnacle Shield phases. Casters are effective throughout.
-- **Drops:** Crystal Shard (crafting material)
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-### Corrupted Fenmother (Boss)
-
-- **HP:** 18,000 (per dungeons-world.md)
-- **Phase 1 -- Surface/Dive (18,000–9,000 HP):**
-  - Surface: Tail Sweep (AoE physical), Water Jet (single-target magic)
-  - Dive: untargetable, spawns poisoned water pools on arena floor
-  - Party attacks during surface phases, avoids pools during dives
-- **Phase 2 -- Spawn Summon (below 9,000 HP):**
-  - Summons two Corrupted Spawn that must be killed to force resurface
-  - Dive/surface pattern continues with increased aggression
-- **Phase 3 -- Cleansing Sequence (at 0 HP):**
-  The party does NOT kill the Fenmother. At 0 HP, a cleansing ritual
-  triggers. Torren channels while the party defends him from 4 waves:
-  - Wave 1 ("The Poison Breaks"): 4 Marsh Serpents + 2 Polluted Elementals
-  - Wave 2 ("She Remembers"): 3 Ley Jellyfish + 3 Drowned Bones + 1 Polluted Elemental
-  - Wave 3 ("The Last Resistance"): 2 Polluted Elementals + 4 Marsh Serpents + 2 Ley Jellyfish
-  - Wave 4 ("Release"): 3 Corrupted Spawn (stronger variants, target Torren)
-- **Weakness:** Flame (corrupted Frost serpent)
-- **Resists:** Frost
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Strategy:** Attack during surface phases, defend during dives. Manage
-  poison with Antidotes. At Phase 2, burn Spawn quickly to maximize damage
-  windows. During cleansing waves, prioritize enemies targeting Torren.
-  The ritual meter decreases if Spawn reach Torren -- protect him at all costs.
-- **Drops:** Fenmother's Blessing (key item, grants safe passage through
-  Fenmother's domain). Torren receives the Spirit-Bound Spear from the
-  restored dungeon.
+- **Drowned Sentinel** (Mini-Boss) — Lv 10, 4,000 HP, Construct. 1 phase.
+- **Corrupted Fenmother** — Lv 12, 18,000 HP, Boss. 3 phases.
 
 ---
 

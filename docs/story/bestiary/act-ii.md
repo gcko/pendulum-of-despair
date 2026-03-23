@@ -26,25 +26,12 @@ ley-infused creatures.
 | Crystal Sentry | Elemental | 20 | 1,078 | 70 | 40 | 33 | 34 | 24 | 19 | 32 | 60 | Element Shard (75%) | Elemental Core (25%) | Storm | — | Earth | Petrify | Ley Line Depths F2–F3 |
 | *Ley Colossus* | Elemental | 22 | 7,000 | 77 | 43 | 31 | 36 | 26 | 25 | 63 | 116 | Ley Crystal Fragment (75%) | Colossus Shard (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Petrify | Ley Line Depths F3 (mini-boss) |
 
-### Ley Colossus (Mini-Boss)
+### Boss Notes
 
-- **HP:** 7,000 (per dungeons-world.md)
-- **Type:** Elemental (not Boss -- can be affected by more statuses)
-- **Phase 1 (7,000–3,500 HP):**
-  - Crystal Fists -- heavy single-target physical
-  - Ley Pulse -- AoE magic damage, 1-turn charge (chest glows as tell)
-  - Absorbs all magic damage. Vulnerable to physical.
-- **Phase 2 (below 3,500 HP):**
-  - Shatters and reforms smaller/faster
-  - Gains Prism Beam -- single-target high magic damage, 1-turn warning
-    (targeting beam visible before firing)
-  - Loses Ley Pulse
-  - Physical vulnerability increases
-- **Not hostile** -- a guardian testing visitors. Lore-friendly.
-- **Absorbs:** Flame, Frost, Storm, Earth, Ley, Spirit, Void (all 7 elements)
-- **Immunities:** Petrify (Elemental default only)
-- **Steal:** Ley Crystal Fragment (crafting)
-- **Drop:** Colossus Shard (accessory)
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
+
+- **Ley Colossus** (Mini-Boss) — Lv 22, 7,000 HP, Elemental. 2 phases.
 
 ---
 
@@ -68,27 +55,12 @@ and the first signs of the Pallor's reach.
 > Gold/Exp is awarded. This encounter signals that something is
 > deeply wrong before the Interlude reveals the full scope.
 
-### The Forge Warden (Boss)
+### Boss Notes
 
-- **HP:** 8,500 (per dungeons-city.md)
-- **Type:** Boss
-- **Phase 1 -- Programmed Defense (8,500–4,250 HP):**
-  - Ley Bolt -- 350–400 single-target magic, fast cast
-  - Shield Protocol -- absorbs 1,000 damage, 4-turn cooldown
-  - Containment Pulse -- 250–300 AoE + pushback, marks contaminated zones
-  - Pipeline Drain -- heals 500 HP (Lira's Forgewright reroutes, disables)
-- **Phase 2 -- Corrupted Logic (below 4,250 HP):**
-  - All Phase 1 attacks with semi-random targeting
-  - Overload Beam -- 500–600 line AoE, 2-turn charge (interrupt with 800+
-    physical damage)
-  - System Failure -- random 1-turn freeze (free damage window)
-  - Emergency Protocol -- below 20%, 3-turn self-destruct (Lira Override
-    aborts -- unique interaction)
-- **Weakness:** Storm (150%), Spirit (125%)
-- **Resistance:** Flame (50% — stronger than standard Resists 0.75x; per-boss exception per dungeons-city.md), Earth (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Poison
-- **Steal:** Corrupted Tuning Fork (Vaelith breadcrumb)
-- **Drop:** Drayce's Failsafe Core (accessory), 2,000 Gold
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
+
+- **The Forge Warden** — Lv 24, 8,500 HP, Boss. 2 phases.
 
 ---
 
@@ -156,28 +128,12 @@ When a Compact Gyrocopter reaches 0 HP:
 3. The pilot acts on the next available turn
 4. Gold/Exp = sum of both enemies
 
-### The Ashen Ram (Boss)
+### Boss Notes
 
-> For exact phase mechanics, see docs/story/dungeons-world.md Ashen Ram
-> encounter. The following is a summary.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 25,000 (per dungeons-world.md)
-- **Type:** Boss
-- **Phase 1 -- Ranged Engagement (25,000–15,000 HP):**
-  Battering Advance, Despair Pulse (passive MP drain), Compact Escalade
-  (soldier reinforcements), Lord Haren's Orders (conditional). See
-  dungeons-world.md Valdris Siege for exact mechanics.
-- **Phase 2 -- The Breach (15,000–7,500 HP):**
-  Drill Arm, Pallor Shrapnel, Engine Surge (knockback). See
-  dungeons-world.md.
-- **Phase 3 -- The Pallor Core (below 7,500 HP):**
-  Despair Pulse (active), Core Overload (interruptible charge). See
-  dungeons-world.md.
-- **Weakness:** Storm (150%), Flame (125% to core only in Phase 3)
-- **Resistance:** Earth (absorbs), Frost (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Pallor-Laced Iron (crafting)
-- **Drop:** Compact Battle Standard (key item)
+- **The Ashen Ram** — Lv 22, 25,000 HP, Boss. 3 phases.
 
 ---
 
