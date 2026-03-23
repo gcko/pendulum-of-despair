@@ -2314,9 +2314,10 @@ Scripted Events:
       dark, but just metal."
     - dialogue: "Lira picks up the blade. It does not resist. In her
       hands, it is a tool -- nothing more."
-    - drop: Grey Cleaver (weapon; Lira-exclusive; high ATK, Spirit
-      element; carries 'Despair's Edge' passive: +25% damage to
-      Despair'd enemies)
+    - drop: Grey Cleaver (weapon; Torren-exclusive halberd-class
+      polearm; ATK +55 when purified, Spirit element, +50% damage
+      vs Pallor-type, Despair immunity. See equipment.md and
+      items.md Grey Cleaver Cursed Weapon Quest.)
 ```
 
 **Design Note:** The Grey Cleaver Unbound is one of the most
@@ -2331,13 +2332,13 @@ embracing despair rather than fighting it is key. The no-break
 transition from Stage 1 creates genuine resource pressure, and the
 Weight of Ages periodic Despair application ensures the Shield stance
 mechanic stays relevant throughout the fight. The Grey Cleaver drop
-(Lira-exclusive, with Despair's Edge passive) carries the lesson forward
+(Torren-exclusive, with cursed→purified progression) carries the lesson forward
 into gameplay: despair is most dangerous when you refuse to acknowledge
 it.
 
 #### Grey Cleaver — Cursed Weapon Quest
 
-**Reward:** Grey Cleaver (Torren-exclusive greatsword)
+**Reward:** Grey Cleaver (Torren-exclusive halberd-class polearm)
 
 An homage to FF6's Cursed Shield. The weapon that absorbed
 centuries of despair in the Forgotten Forge.

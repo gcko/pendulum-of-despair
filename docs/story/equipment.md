@@ -111,8 +111,10 @@ a secondary type with reduced proficiency.
 
 ### ATK Modifier by Weapon Type
 
-Base ATK values in the weapon tables below are before this modifier is
-applied. The modifier adjusts effective ATK and may grant bonus stats.
+ATK values in the weapon tables below **already include** the type
+modifier. Swords are the ×1.0 baseline; other types are adjusted
+relative to that. The modifier also determines bonus stats (e.g.,
+Staves always grant +MAG, Daggers grant +SPD/LCK).
 
 | Type       | ATK Modifier | Bonus / Penalty | Notes |
 |------------|-------------|-----------------|-------|
@@ -130,9 +132,9 @@ All weapon tables in the sections below use these columns:
 | Column | Type | Description |
 |--------|------|-------------|
 | Name | string | Unique weapon name |
-| ATK | int | Base ATK before type modifier |
+| ATK | int | ATK bonus (type modifier already applied) |
 | Bonus Stat | string | Additional stat bonuses (e.g., +3 MAG) |
-| Element | enum | None, Fire, Ice, Lightning, Earth, Wind, Water, Holy, Dark |
+| Element | enum | —, Flame, Frost, Storm, Earth, Ley, Spirit, Void (per magic.md) |
 | Special | string | Passive effect or proc (if any) |
 | Price | int | Shop price in gold (— if not sold) |
 | Tier | int | 0-5 or Forged |
@@ -393,7 +395,7 @@ but has substantially lower MDEF.
 | Steel Plate | 20 | 5 | — | 1,000 | 2 | Act II shops |
 | Compact Plate | 26 | 8 | — | 2,000 | 2 | Ashmark chest |
 | Arcanite Plate | 42 | 12 | — | 4,500 | 3 | Interlude shop |
-| Kole's Epaulettes | 48 | 18 | +15 DEF vs physical | — | 3 | General Kole boss drop |
+| Kole's Epaulettes | 45 | 15 | +10 MDEF | — | 4 | General Kole boss drop (early Tier 4) |
 | Forgeheart Plate | 55 | 15 | — | 8,000 | 4 | Act III shop |
 | Genji Plate | 60 | 20 | — | 9,000 | 4 | Convergence chest |
 | Adamant Mail | 75 | 25 | +10 DEF, +10 ATK | — | 5 | Post-game quest |
@@ -594,8 +596,8 @@ the [weapon] and the [element] infusion. The weapon transforms..."*
 
 ## Equipment Tiers by Act
 
-Summary of available equipment power by act. Ranges are base stats
-before weapon-type modifiers.
+Summary of available equipment power by act. Weapon ATK ranges
+include type modifiers (Swords are the ×1.0 baseline).
 
 | Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
 |-----|-------------|-----------|-----------|-----------------|
