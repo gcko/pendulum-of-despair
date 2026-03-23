@@ -318,8 +318,8 @@ game). **TODO: finalize stat block in Gap 1.5 (Equipment).**
 
 - **Total:** 24 stat-block enemies + 1 non-combat encounter
 - **Level range:** 42--100 (Post-game through Optional/Superboss)
-- **Type distribution:** Construct (30%), Spirit (17%), Elemental (17%),
-  Humanoid (8%), Beast (8%), Pallor (17%), Boss (4 Echo Bosses)
+- **Type distribution:** Construct (30%), Pallor (20%), Spirit (15%),
+  Elemental (15%), Humanoid (10%), Beast (10%), Boss (4 Echo Bosses)
 - **Echo Bosses:** 4 combat (escalating 40K--100K HP) + 1 non-combat
   (Cael's Echo)
 - **Unique age materials:** 5 steal + 5 drop items (TODO Gap 1.4)
