@@ -333,10 +333,10 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 | Property | Value |
 |----------|-------|
-| **Drop rate** | Boss drops only, or rare field chests |
-| **Steal chance** | Boss steals (10–25% base) |
+| **Drop rate** | 25% from rare enemies, boss steals, or rare field chests |
+| **Steal chance** | 75% from Pallor enemies; 10–25% from bosses |
 | **Sell range** | 150–500g |
-| **Role** | Boss-exclusive materials for advanced devices. Arcanite Shard and Arcanite Core power endgame recipes. |
+| **Role** | Rare materials for advanced devices and crafting. Pallor materials (Pallor Sample, Grey Residue) drop from regular Pallor enemies. Arcanite materials are boss/mini-boss exclusive. |
 
 **Tier 3 materials:** Arcanite Shard (200g), Arcanite Core (200g), Pallor Sample (150g), Pallor Shard (175g), Pallor Ward (200g), Royal Signet (200g), Roc Feather (180g), boss-specific drops, Dreamer's Fault (First/Crystal Age) materials (300–450g).
 
@@ -465,7 +465,7 @@ These items gate progression into specific dungeons or areas. They activate auto
 |------|--------------|-----------------|----------------------|
 | Mine Water Vial | Ember Vein F2 chest | Approach Dying Ember Crystal | Ember Vein F3 |
 | Archivist's Codex | Archive of Ages quest | Approach sealed ley door | Ley Depths F5, Forgotten Forge |
-| Ironmark Tunnel Map | Interlude quest | Enter Ironmark passage | Ironmark Citadel |
+| Ironmark Tunnel Map | Old Foreman's Office hidden compartment (dungeons-city.md) | Enter Ironmark passage | Ironmark Citadel |
 | Ironmark Key | Post-Kole, Axis Tower | Approach sealed Armory | Ironmark Armory |
 | Forgewright Master Key | Ashmark Factory quest | Approach Compact-era locked door | All Compact dungeons |
 | Map to the Convergence | General Kole drop | Open world map | Reveals Convergence location |
@@ -498,7 +498,7 @@ Schematics are key items that unlock new Forgewright recipes when given to Lira.
 
 | Item | Acquired From | Recipe Unlocked |
 |------|--------------|----------------|
-| Boring Engine Schematic | Caldera Undercity secret room | Advanced Forgewright weapon component |
+| Boring Engine Schematic | Rail Tunnels East Tunnel secret room (dungeons-world.md) | Advanced Forgewright weapon component |
 | Forge Schematic | The Architect (steal) | Arcanite Lance recipe prerequisite |
 
 > **Forge Schematic** is the only steal-only crafting schematic in the game. Missing it locks out the Arcanite Lance recipe until New Game+.
@@ -562,14 +562,14 @@ Cross-reference between status effects, item cures, and spell cures. For full st
 
 | Status | Item Cure | Spell Cure | Notes |
 |--------|-----------|-----------|-------|
-| Poison | Antidote | Cleansing Draught, Purge | Also cures Burn |
-| Burn | Antidote | Cleansing Draught, Purge | Shares cure with Poison |
-| Sleep | Alarm Clock | Cleansing Draught, Purge | Also cured by damage |
-| Confusion | Smelling Salts | Cleansing Draught, Purge | Also cured by damage |
-| Silence | Echo Drop | Cleansing Draught, Purge | |
-| Blind | Eye Drops | Cleansing Draught, Purge | |
-| Petrify | Soft Stone | Purge | Not cured by Cleansing Draught |
-| Slow | Chronos Dust | Purge | Not cured by Cleansing Draught |
+| Poison | Antidote, Remedy | Cleansing Draught, Purge | Also cures Burn |
+| Burn | Antidote, Remedy | Cleansing Draught, Purge | Shares cure with Poison |
+| Sleep | Alarm Clock, Remedy | Cleansing Draught, Purge | Also cured by damage |
+| Confusion | Smelling Salts, Remedy | Cleansing Draught, Purge | Also cured by damage |
+| Silence | Echo Drop, Remedy | Cleansing Draught, Purge | |
+| Blind | Eye Drops, Remedy | Cleansing Draught, Purge | |
+| Petrify | Soft Stone, Remedy | Purge | Not cured by Cleansing Draught |
+| Slow | Chronos Dust, Remedy | Purge | Not cured by Cleansing Draught |
 | Stop | — | — | Wears off only (3 real-time seconds) |
 | Berserk | — | Purge | No item cure |
 | Faint | Phoenix Feather, Phoenix Pinion | Spirit Recall, Second Dawn | Revival items |
