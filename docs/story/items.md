@@ -62,7 +62,7 @@
 - Materials: sell at listed sell price (see Crafting Materials section)
 - Devices: cannot be sold (crafted, not bought)
 - Key items: cannot be sold
-- Equipment: sell at 50% of buy price (see [equipment.md](equipment.md))
+- Equipment: sell at 50% of buy price (see equipment.md — Gap 1.5, not yet created)
 
 ---
 
@@ -131,8 +131,8 @@ Status effect definitions and spell-based cures: see [magic.md](magic.md#status-
 | Item | Effect | Buy | Sell | Availability |
 |------|--------|-----|------|--------------|
 | Smoke Bomb | Flee from non-boss battles (100%) | 100 | 50 | Act I shops |
-| Waystone | Teleport to dungeon entrance | 300 | 150 | Act II shops |
-| Sable's Coin | Guaranteed preemptive next battle | 500 | — | Quest reward, rare chests |
+| Waystone | Teleport to dungeon entrance (dungeon use only) | 300 | 150 | Act II shops |
+| Sable's Coin | Guaranteed preemptive next battle | — | — | Quest reward, rare chests |
 
 ### Stat Capsules
 
@@ -346,7 +346,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 |----------|-------|
 | **Drop rate** | Fixed placement only (3 Arcanite Ingots in the entire game) |
 | **Steal chance** | N/A (not stealable) |
-| **Sell range** | 500–1,000g (some unsellable) |
+| **Sell range** | 1,000g+ (some unsellable) |
 | **Role** | Endgame pinnacle materials. Arcanite Ingot fuels Lira's ultimate weapon/armor. Pallor Core and Grey Mist Essence are unsellable story-critical crafting components. |
 
 **Tier 4 materials:** Arcanite Ingot (1,000g), Pallor Core (unsellable), Grey Mist Essence (unsellable), Dreamer's Fault (Green/Iron Age) materials (500–800g).
@@ -374,7 +374,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Viper Fang | Beast | 2 | 55 | Poison-element crafting |
 | Mite Husk | Beast | 2 | 40 | Basic components |
 | Roach Wing | Beast | 2 | 40 | Basic components |
-| Rat Tail | Beast | 2 | 30 | Vendor trash |
+| Rat Tail | Beast | 1 | 30 | Vendor trash |
 | Vermin Fang | Beast | 2 | 45 | Basic weapon components |
 | Crawler Shell | Beast | 2 | 55 | Armor components |
 | Petrified Bark | Beast | 2 | 65 | Pallor-touched crafting |
@@ -585,6 +585,6 @@ Every item appearing in bestiary Steal/Drop columns (see [bestiary/](bestiary/))
 - **Consumables** (Section 2) — Potions, Ethers, status cures, etc.
 - **Materials** (Section 5) — Beast parts, construct salvage, elemental components, etc.
 - **Key Items** (Section 6) — Quest items, mementos, schematics, story items.
-- **Equipment** (Gap 1.5) — Boss equipment drops cross-referenced in Section 6.6 (Equipment Cross-Reference).
+- **Equipment** (Gap 1.5) — Boss equipment drops cross-referenced in the Equipment Cross-Reference sub-section under Key Items.
 
 No bestiary drop references an item that is undefined in this catalog or the forthcoming equipment catalog.

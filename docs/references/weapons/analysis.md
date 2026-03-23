@@ -199,11 +199,11 @@
 | Swords | 9 | +3 → +65 | Mana Sword |
 | Spears | 9 | +4 → +56 | Daedalus Lance |
 | Axes | 9 | +3 → +58 | Doom Axe |
-| Whips | 9 | +3 → +52 | Dragon Whip |
-| Boomerangs | 9 | +4 → +57 | Cobra Shuttle |
+| Whips | 9 | +2 → +51 | Dragon Whip |
+| Boomerangs | 9 | +4 → +53 | Ninja's Trump |
 | Gloves | 9 | +3 → +53 | Dragon Claws |
 | Bows | 9 | +4 → +55 | Garuda Buster |
-| Javelins | 9 | +3 → +57 | Dragoon Lance |
+| Javelins | 9 | +3 → +54 | Dragoon Lance |
 
 ### ATK Progression (Swords as reference)
 
