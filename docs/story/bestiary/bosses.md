@@ -1607,33 +1607,730 @@ narrative scar.
 
 #### Vaelith, the Ashen Shepherd
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
+
+**Modes:** 3 (Invulnerable, Scholar, Shepherd)
+
+**AI Script:**
+
+```
+=== Boss Encounter: Vaelith, the Ashen Shepherd ===
+
+Mode: Invulnerable (pre-fight, scripted)
+  Note: Vaelith begins the encounter in an untargetable state behind a
+        Pallor barrier. All party attacks deal 0 damage. Vaelith attacks
+        the party 10 times (using Scholar-mode abilities at reduced
+        power) while delivering monologue dialogue. After 10 attacks,
+        a cutscene triggers: Lira forges a Pallor-piercing weapon using
+        ley fragments collected during the Wastes. The barrier shatters
+        and real combat begins.
+  Priority:
+    1. Default → Grey Lecture (party_wide, 200-250 magic damage;
+       Vaelith recites from the Ashen Archive while attacking)
+
+  Counters: None (all incoming damage = 0)
+
+Mode: Scholar (HP 50,000-25,001)
+  Priority:
+    1. turn_counter % 4 == 0 → Temporal Cascade (self buff; Vaelith
+       acts twice this turn; applies to the NEXT two priority checks)
+    2. target.has_status(Despair) → Grey Archive (single_target with
+       Despair status, 700-800 magic damage + Silence 3 turns;
+       "Your grief makes you legible.")
+    3. turn_counter % 3 == 0 → Cycle's Weight (party_wide debuff;
+       -10% ATK and -10% DEF, stacking; persists until end of fight;
+       "Another age. Another failure.")
+    4. Default → Epoch's End (party_wide, 500-600 magic damage;
+       grey energy radiates outward from Vaelith's tome)
+
+  Counters: None
+
+Mode: Shepherd (HP 25,000-0)
+  Note: Vaelith closes his tome and speaks directly. All Scholar
+        abilities remain available. New abilities added.
+  Priority:
+    1. turn_counter % 3 == 0 → Despair Pulse (party_wide, 400 magic
+       damage + Despair status; grey wave emanates from Vaelith;
+       "You should have stopped. Everyone stops.")
+    2. target == Lira → Unraveling (single_target Lira, 600 magic
+       damage; attempts to undo Lira's weapon forge; "That weapon
+       is borrowed time, child.")
+    3. turn_counter % 4 == 0 → Temporal Cascade (self buff; acts
+       twice this turn)
+    4. target.has_status(Despair) → Grey Archive (single_target,
+       700-800 magic damage + Silence 3 turns)
+    5. Default → Epoch's End (party_wide, 500-600 magic damage)
+
+  Counters:
+    On Lira's weapon destroyed (Reality Warp, see below):
+      → Lira re-forge cutscene triggers (see Scripted Events)
+
+Scripted Events:
+  Pre-fight (10 attacks complete, once):
+    - cutscene: "Vaelith raises his hand. The tenth blow falls. The
+      party staggers. Lira steps forward, ley fragments burning in
+      her grip. She slams them together. Light erupts -- not grey,
+      not gold -- something between. A blade forms in her hand,
+      forged from pure defiance."
+    - ability_unlock: Lira gains Pallor-Piercing weapon (deals full
+      damage to Vaelith; other party members deal 75% damage)
+    - mode_switch: Invulnerable → Scholar
+
+  At boss.hp <= 37,500 (once):
+    - dialogue: Vaelith: "Interesting. You have read the cycle's
+      pattern and still choose to fight it. That is either courage
+      or illiteracy."
+    - dialogue: "Vaelith adjusts his spectacles. For the first time,
+      he looks directly at the party."
+
+  At boss.hp <= 25,000 (once):
+    - mode_switch: Scholar → Shepherd
+    - dialogue: Vaelith: "Enough scholarship. Let me show you what
+      the cycle looks like from the inside."
+    - dialogue: "Vaelith closes the Ashen Archive. His eyes change --
+      the scholar's detachment is gone. Something colder takes its
+      place."
+
+  At boss.hp <= 12,500 (once):
+    - dialogue: Vaelith: "I was the first to understand the Pallor.
+      I was the first to name it. And I was the first to realize
+      naming it changes nothing."
+    - environmental: Arena darkens; Pallor energy intensifies;
+      party members without Despair immunity glow faintly grey
+
+  At boss.hp <= 5,000 (once):
+    - dialogue: Vaelith: "You will reach the Convergence. You will
+      face what I faced. And you will make the same choice I did.
+      Everyone does."
+    - dialogue: "His voice is not threatening. It is tired."
+
+  Reality Warp (triggered once per Shepherd mode, at random):
+    - dialogue: Vaelith: "That weapon is not yours."
+    - Lira's weapon temporarily destroyed (1 turn)
+    - cutscene: "Lira grits her teeth. The ley fragments respond
+      to her will. The blade reforms -- different, but hers."
+    - ability_unlock: Lira re-forges weapon (weapon restored with
+      +10% damage bonus for remainder of fight)
+
+  Character Interactions:
+    - Torren (passive): "Torren studies Vaelith's casting patterns.
+      Each spell Vaelith uses is briefly visible in Torren's
+      spirit sight." → Torren reveals Vaelith's next attack
+      (preview displayed above Vaelith for 1 turn)
+    - Maren (passive, if Pallor Sight active): "Maren's Pallor
+      Sight cuts through Vaelith's defensive aura." → Maren's
+      critical hit rate doubled against Vaelith
+    - Sable (passive): "Sable's shadow wraps protectively around
+      the party's buffs." → Sable prevents Cycle's Weight from
+      being dispelled or removed by Vaelith's abilities
+```
+
+**Design Note:** Vaelith is the Act III story boss, the culmination of
+the Pallor Wastes arc. The Invulnerable pre-fight phase establishes him
+as overwhelmingly powerful and makes Lira's weapon-forging moment feel
+earned rather than arbitrary. The Scholar/Shepherd mode split reflects
+his character arc: he begins as a detached academic cataloguing despair,
+then transitions to someone who personally inflicts it. Cycle's Weight's
+stacking ATK/DEF debuff creates mounting pressure -- the longer the
+fight lasts, the harder it gets, mechanically reinforcing the theme that
+the Pallor grinds people down over time. The character interactions give
+every party member a meaningful role: Lira's re-forge is the central
+mechanic, Torren provides tactical intelligence, Maren's Pallor Sight
+(from The Index trial) pays off with doubled crits, and Sable protects
+the party's buffs from erosion. Vaelith's dialogue at low HP is
+deliberately non-villainous -- he is not evil, just exhausted and
+convinced resistance is futile. This makes him a thematic mirror for the
+party's own potential despair.
 
 ### Ley Line Depths
 
 #### Ley Titan
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 5,000 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
+
+**Modes:** 3 (Whole, Fractured, Condensed)
+
+**AI Script:**
+
+```
+=== Boss Encounter: Ley Titan ===
+
+Mode: Whole (HP 100%-60%)
+  Note: The Ley Titan is a massive crystalline construct formed from
+        raw ley energy. It absorbs ALL elemental damage (Flame, Frost,
+        Storm, Earth, Ley, Spirit, Void). Only physical attacks and
+        non-elemental magic deal damage in this phase. The Titan moves
+        slowly but hits extremely hard.
+  Priority:
+    1. turn_counter % 4 == 0 → Ley Pulse (party_wide, 400-500 magic
+       damage; 1-turn charge -- the Titan's core glows bright blue on
+       charge turn, pulses next turn; "The air hums with raw energy.")
+    2. turn_counter % 3 == 0 → Confluence Tide (positional, 350-450
+       magic damage to front row OR back row based on party position;
+       ley energy surges along the ground; "The floor erupts with
+       crystalline light.")
+    3. Default → Crystal Fist (single_target highest threat, 300-400
+       heavy physical damage; the Titan's arm reshapes into a massive
+       crystalline hammer)
+
+  Counters:
+    On any elemental attack → Absorb (self heal equal to damage dealt;
+      "The Titan drinks in the energy. Its cracks seal.")
+
+Mode: Fractured (HP 60%-30%)
+  Note: At 60% HP, the Titan fractures into three Aspects. Each Aspect
+        has its own stat line but they SHARE a single HP pool (the
+        remaining Titan HP). Killing any Aspect removes it from the
+        field; when all three are gone, the Titan reforms in Condensed
+        mode. Kill order matters: destroying Endurance last makes
+        Condensed mode easier (lower DEF); destroying Strength last
+        makes it harder (higher ATK on reform).
+
+  Aspect of Strength:
+    - HP: shared pool | ATK: 95 | DEF: 35 | SPD: 40
+    - Priority:
+      1. Default → Shatter Blow (single_target, 400-500 physical
+         damage; "Raw force, unrefined.")
+
+  Aspect of Precision:
+    - HP: shared pool | MAG: 100 | MDEF: 60 | SPD: 45
+    - Priority:
+      1. turn_counter % 3 == 0 → Ley Lance (single_target lowest
+         MDEF, 350-450 non-elemental magic damage; "A needle of
+         crystallized energy.")
+      2. Default → Fracture Ray (party_wide, 200-250 non-elemental
+         magic damage)
+
+  Aspect of Endurance:
+    - HP: shared pool | DEF: 70 | MDEF: 70 | SPD: 30
+    - Priority:
+      1. turn_counter % 3 == 0 → Crystallize (self buff; +20% DEF
+         and MDEF for 3 turns, stacking; "The crystal thickens.")
+      2. Default → Stone Wall (reduces party damage by 25% for 1
+         turn; protective barrier)
+
+  Counters: None (Aspects do not absorb elements)
+
+Mode: Condensed (HP 30%-0%)
+  Note: The Titan reforms into a smaller, denser version of itself.
+        All elemental absorption is gone. DEF is modified based on
+        which Aspect was destroyed last: Endurance last = -20% DEF;
+        Precision last = normal DEF; Strength last = +20% DEF.
+        The Titan gains a damage reflection counter.
+  Priority:
+    1. turn_counter % 3 == 0 → Nexus Flare (party_wide, 500-600
+       non-elemental magic damage; the condensed core overloads;
+       "The crystal screams.")
+    2. Default → Condensed Strike (single_target highest threat,
+       350-450 physical damage; faster than Crystal Fist)
+
+  Counters:
+    On any physical attack → Resonance (reflects 30% of damage dealt
+      back to attacker; "The crystal vibrates. Energy rebounds.";
+      once per turn)
+
+Scripted Events:
+  At boss.hp_percent <= 60 (once):
+    - cutscene: "The Titan shudders. Cracks spider across its
+      crystalline body. With a sound like breaking glass amplified a
+      thousandfold, it splits into three distinct forms -- one massive,
+      one precise, one immovable."
+    - mode_switch: Whole → Fractured
+    - add_spawn: Aspect of Strength, Aspect of Precision, Aspect of
+      Endurance (all share remaining HP pool)
+
+  At boss.hp_percent <= 30 (once, when last Aspect destroyed):
+    - cutscene: "The last Aspect shatters. For a moment, the arena is
+      still. Then the fragments rush inward, compressing into a form
+      half the Titan's original size but twice as dense. The crystal
+      is no longer translucent -- it is opaque, dark, and humming
+      with concentrated force."
+    - mode_switch: Fractured → Condensed
+    - Note: DEF modifier applied based on last Aspect destroyed
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Condensed Titan cracks from within. Light pours
+      through the fractures -- not grey, not ley-blue, but warm and
+      golden. The crystal dissolves into motes of light that drift
+      upward and fade."
+    - drop: Titan's Core (key item; used in Forgotten Forge questline)
+```
+
+**Design Note:** The Ley Titan teaches elemental strategy through
+denial. Its total elemental absorption in Phase 1 forces parties to rely
+on physical damage and non-elemental magic -- a significant adjustment
+for magic-heavy compositions. The Fractured phase introduces a tactical
+puzzle: the three Aspects share HP but have different strengths, and the
+kill order directly affects the final phase's difficulty. This rewards
+players who pay attention to the Aspects' behaviors and plan their focus
+fire accordingly. The Condensed phase's Resonance counter (reflecting
+physical damage) creates an interesting tension with Phase 1's
+physical-only requirement -- the player must adapt their strategy twice.
+The Titan's Core drop ties this optional dungeon boss into the Forgotten
+Forge questline, rewarding exploration.
 
 ### Dry Well of Aelhart
 
 #### Archive Keeper (Mini-Boss)
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Archive Keeper* | Boss | 32 | 3,000--12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
+
+**Modes:** 1 (Puzzle)
+
+**AI Script:**
+
+```
+=== Mini-Boss Encounter: Archive Keeper ===
+
+Mode: Puzzle
+  Note: The Archive Keeper is a stone automaton guarding the deeper
+        levels of the Dry Well. It does not attack conventionally.
+        Instead, it presents three pictographic questions etched in
+        builder script on the walls of the Sanctum. The party must
+        interpret and answer each question.
+
+        HP is variable: the Keeper begins at 12,000 HP (worst case).
+        Each correct answer reduces HP by 2,000. Each wrong answer
+        RESTORES 1,000 HP and triggers a ley blast counter. With all
+        three correct: 12,000 - 6,000 = 6,000 HP remaining for
+        combat. With all three wrong: 12,000 + 3,000 = 15,000 HP
+        (capped at 12,000) and 3 ley blasts taken. Best case: 3
+        correct = 6,000 HP. The stat row lists 3,000--12,000 to
+        reflect the variable range (3,000 is achievable only with
+        correct answers + pre-puzzle damage from environmental traps).
+
+  Pre-Combat Phase (3 questions):
+    Question 1: A pictograph showing water flowing uphill.
+      - Correct answer: "The builders reversed the flow" (select
+        the inverted glyph)
+      - Wrong answer: any other glyph → +1,000 HP restored,
+        Ley Blast (party_wide, 300 magic damage)
+
+    Question 2: A pictograph showing three interlocked circles.
+      - Correct answer: "Unity of purpose" (select the merged glyph)
+      - Wrong answer: any other glyph → +1,000 HP restored,
+        Ley Blast (party_wide, 300 magic damage)
+
+    Question 3: A pictograph showing a door with no handle.
+      - Correct answer: "The door opens from within" (select the
+        inward glyph)
+      - Wrong answer: any other glyph → +1,000 HP restored,
+        Ley Blast (party_wide, 300 magic damage)
+
+  Combat Phase (after all 3 questions):
+    Priority:
+      1. turn_counter % 4 == 0 → Archive Slam (single_target highest
+         threat, 350-400 physical damage; stone fist strike;
+         "The Keeper enforces silence.")
+      2. turn_counter % 3 == 0 → Glyph Barrage (party_wide, 250-300
+         non-elemental magic damage; glowing glyphs launch from the
+         walls)
+      3. Default → Stone Guard (single_target highest threat, 250-300
+         physical damage; measured, mechanical strikes)
+
+  Counters:
+    On wrong answer (pre-combat only) → Ley Blast (party_wide, 300
+      magic damage; the Keeper's eyes flash; "Incorrect. The record
+      stands.")
+
+Scripted Events:
+  Pre-combat start (once):
+    - dialogue: "The Archive Keeper's eyes illuminate. Stone grinds
+      against stone as it raises one massive arm, pointing to the
+      wall. Pictographs glow to life -- questions older than the
+      city above."
+    - dialogue: Archive Keeper: "Answer. Or be answered."
+
+  On all 3 correct (once):
+    - dialogue: "The Keeper pauses. Its stone face does not change,
+      but its stance shifts -- less aggressive. Almost... respectful."
+    - dialogue: Archive Keeper: "You have read the builders' words.
+      Now prove you can withstand their guardian."
+    - Note: Combat begins with Keeper at reduced HP
+
+  On any wrong answer (each time):
+    - dialogue: Archive Keeper: "The record does not forgive error."
+
+  At boss.hp <= 0 (once):
+    - dialogue: "The Keeper's light fades. It settles into its
+      alcove, stone arms crossing over its chest. The path deeper
+      is clear."
+    - drop: Keeper's Index (key item; unlocks builder script
+      translation for Wellspring Guardian puzzle)
+```
+
+**Design Note:** The Archive Keeper is a puzzle-combat hybrid that
+rewards preparation and exploration. Players who have been reading the
+builder script fragments scattered throughout the Dry Well will
+recognize the pictographic answers; those who rushed through will face
+a harder combat with a higher HP pool plus ley blast damage. The
+variable HP range (3,000--12,000) is the widest of any boss in the game,
+making this encounter feel genuinely responsive to player engagement with
+the dungeon's lore. The Keeper's Index drop is essential for the
+Wellspring Guardian fight, creating a clear progression chain within the
+Dry Well.
 
 #### Wellspring Guardian
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Wellspring Guardian* | Boss | 36 | 28,000 | 126 | 97 | 62 | 100 | 60 | 43 | 8,000 | 12,000 | Builder's Crest (100%) | Nexus Crest (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F7 (The Wellspring) |
+
+**Modes:** 3 (Arms, Knowledge, Resolve)
+
+**AI Script:**
+
+```
+=== Boss Encounter: Wellspring Guardian ===
+
+Mode: Arms (HP 100%-60%)
+  Note: The Wellspring Guardian is the Dry Well's true protector -- a
+        massive builder construct of interlocking stone and ley conduits.
+        Unlike the Archive Keeper, this is a full combat boss, but the
+        Knowledge phase introduces puzzle mechanics mid-fight. The
+        Guardian tests whether the party can match strength, wisdom, and
+        endurance -- the three builder virtues.
+  Priority:
+    1. turn_counter % 4 == 0 → Nexus Bolt (single_target lowest MDEF,
+       450-550 non-elemental magic damage; a focused beam of ley
+       energy from the Guardian's core; 1-turn charge -- core glows
+       on charge turn)
+    2. turn_counter % 3 == 0 → Geometric Cleave (positional front row,
+       400-500 physical damage; the Guardian's arms sweep in a precise
+       geometric arc)
+    3. Default → Stone Fist (single_target highest threat, 300-400
+       physical damage; methodical, powerful strikes)
+
+  Counters: None
+
+Mode: Knowledge (HP 60%-30%)
+  Note: The Guardian pauses combat and presents three builder-script
+        puzzles, similar to the Archive Keeper but harder. If the party
+        has the Keeper's Index (from Archive Keeper), puzzle hints are
+        displayed. Each correct answer reduces the Guardian's HP by
+        2,800 (10% of max). Each wrong answer triggers Nexus Pulse
+        (party_wide AoE). After all three puzzles, combat resumes.
+  Priority:
+    1. Default → Present Puzzle (no damage; the Guardian projects
+       builder glyphs into the air and waits)
+
+  Counters:
+    On wrong answer → Nexus Pulse (party_wide, 400-500 non-elemental
+      magic damage; "The Wellspring rejects the unworthy.")
+
+  Puzzle 1: A sequence of flowing water glyphs with one missing.
+    - Correct: Complete the sequence (the spiral glyph)
+    - Wrong: Nexus Pulse
+
+  Puzzle 2: Three builder names; identify the architect of the Well.
+    - Correct: Select "Aelhart" (with Keeper's Index: name is
+      highlighted)
+    - Wrong: Nexus Pulse
+
+  Puzzle 3: A glyph equation representing the flow of ley energy.
+    - Correct: Balance the equation (equal distribution glyph)
+    - Wrong: Nexus Pulse
+
+Mode: Resolve (HP 30%-0%)
+  Note: The Guardian enters its final test -- endurance. It combines
+        physical and magical attacks and introduces Builder's Weight,
+        a stacking Despair mechanic. If any party member accumulates 5
+        stacks of Builder's Weight, they Faint (knocked out, revivable).
+        The Guardian is testing whether the party can endure suffering
+        without breaking.
+  Priority:
+    1. turn_counter % 3 == 0 → Builder's Weight (party_wide, 200
+       magic damage + 1 stack of Builder's Weight per party member;
+       "The weight of ages presses down."; at 5 stacks → Faint)
+    2. turn_counter % 4 == 0 → Nexus Bolt (single_target lowest MDEF,
+       450-550 non-elemental magic damage; 1-turn charge)
+    3. turn_counter % 2 == 0 → Geometric Cleave (positional front row,
+       400-500 physical damage)
+    4. Default → Stone Fist (single_target highest threat, 300-400
+       physical damage)
+
+  Counters: None
+
+Scripted Events:
+  At boss.hp_percent <= 60 (once):
+    - cutscene: "The Guardian's arms lower. Its core pulses with a
+      different light -- not aggressive, but inquisitive. Glyphs
+      materialize in the air around the party."
+    - dialogue: Wellspring Guardian: "Strength is proven. Now prove
+      understanding."
+    - mode_switch: Arms → Knowledge
+    - Note: If party has Keeper's Index, additional dialogue:
+      "The Keeper's Index warms in your pack. Faint translations
+      shimmer beside each glyph."
+
+  At boss.hp_percent <= 30 (once, after puzzles complete):
+    - cutscene: "The glyphs dissolve. The Guardian straightens to
+      its full height. Its core burns white-hot. The Wellspring
+      behind it churns."
+    - dialogue: Wellspring Guardian: "Knowledge is proven. Now prove
+      resolve."
+    - mode_switch: Knowledge → Resolve
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Guardian sinks to one knee. Its core dims to a
+      gentle blue. The Wellspring behind it calms, its waters
+      clearing for the first time in centuries. The Guardian speaks
+      its final words in a voice like water over stone:"
+    - dialogue: Wellspring Guardian: "The water flows. The builders
+      rest."
+    - dialogue: "The Guardian dissolves into the Wellspring. The
+      water glows. The Dry Well is dry no longer."
+    - drop: Nexus Crest (key item; major ley network restoration
+      component)
+```
+
+**Design Note:** The Wellspring Guardian is a three-virtue boss that
+tests the party in sequence: combat prowess (Arms), intellectual
+engagement (Knowledge), and emotional endurance (Resolve). The Knowledge
+phase's puzzle mechanics mid-fight break conventional boss rhythm and
+reward players who completed the Archive Keeper and kept the Keeper's
+Index. Builder's Weight in the Resolve phase is a deliberate Despair
+analogue -- the builders' version of the Pallor's oppressive force --
+creating thematic resonance between the ancient civilization and the
+current crisis. The 5-stack Faint threshold creates genuine tension
+without being unfair: parties with healing and status management can
+sustain through it, but ignoring the stacks is fatal. The Guardian's
+final words ("The water flows. The builders rest.") provide emotional
+closure for the entire Dry Well dungeon arc.
 
 ### The Forgotten Forge
 
 #### The Architect (Stage 1)
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Architect (Stage 1)* | Boss | 34 | 20,000 | 0 | 93 | 58 | 95 | 57 | 42 | 5,000 | 8,000 | Forge Schematic (100%) | Architect's Hammer (100%) | Storm | — | — | Death, Petrify, Stop, Sleep, Confusion, Poison, Berserk, Despair | Forgotten Forge F5 (Anvil Vault) |
+
+**Modes:** 2 (Shielded, Unshielded)
+
+**AI Script:**
+
+```
+=== Boss Encounter: The Architect (Stage 1 of 2) ===
+
+Mode: Shielded (3 Ley Anvils active)
+  Note: The Architect begins the fight protected by three Ley Anvils
+        positioned around the arena. While any Anvil survives, the
+        Architect takes 50% reduced damage from all sources. Each
+        Anvil has 2,000 HP and absorbs one element: Anvil of Flame
+        (absorbs Flame), Anvil of Frost (absorbs Frost), Anvil of
+        Storm (absorbs Storm). The Architect can summon Forge Sprite
+        adds (2 max active). Destroying all three Anvils transitions
+        to Unshielded mode.
+
+  Ley Anvil stats:
+    - Anvil of Flame: 2,000 HP | Absorbs: Flame | Weak: Frost
+    - Anvil of Frost: 2,000 HP | Absorbs: Frost | Weak: Flame
+    - Anvil of Storm: 2,000 HP | Absorbs: Storm | Weak: Earth
+
+  Priority:
+    1. active_adds < 2 AND turn_counter % 4 == 0 → Forge Call
+       (add_spawn: 1 Forge Sprite; small construct, 1,200 HP,
+       moderate physical attacks; "The Architect gestures. Molten
+       metal flows into form.")
+    2. turn_counter % 3 == 0 → Molten Spray (party_wide, 350-450
+       fire magic damage; "Slag erupts from the forge floor.")
+    3. turn_counter % 5 == 0 → Precision Cut (single_target lowest
+       DEF, 500-600 physical damage; "A surgical strike from the
+       master craftsman.")
+    4. Default → Hammer Strike (single_target highest threat, 300-400
+       physical damage; "The Architect's hammer falls with practiced
+       precision.")
+
+  Counters: None
+
+Mode: Unshielded (all Anvils destroyed)
+  Note: With all Ley Anvils destroyed, the Architect takes full damage
+        and becomes enraged. Attack speed increases (SPD +10). The
+        Architect no longer summons Forge Sprites but attacks faster
+        and harder. The 50% damage reduction is removed.
+  Priority:
+    1. turn_counter % 3 == 0 → Molten Spray (party_wide, 400-500
+       fire magic damage; intensified; "The forge itself rebels.")
+    2. turn_counter % 2 == 0 → Precision Cut (single_target lowest
+       DEF, 550-650 physical damage; "Faster now. Desperate.")
+    3. Default → Hammer Strike (single_target highest threat, 350-450
+       physical damage; "Each swing carries the weight of a
+       civilization's final work.")
+
+  Counters: None
+
+Scripted Events:
+  On first Anvil destroyed (once):
+    - dialogue: The Architect: "You break my tools. Do you even
+      understand what they were for?"
+    - dialogue: "The Architect's movements become sharper. Less
+      measured."
+
+  On second Anvil destroyed (once):
+    - dialogue: The Architect: "Two left. One left. It doesn't
+      matter. The weapon is almost complete."
+    - Note: Foreshadows the Grey Cleaver being forged regardless
+
+  On third Anvil destroyed (once):
+    - cutscene: "The last Anvil shatters. The Architect staggers.
+      The protective resonance field collapses. For the first time,
+      the full weight of the party's attacks lands unimpeded."
+    - mode_switch: Shielded → Unshielded
+    - dialogue: The Architect: "Fine. We do this the old way."
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Architect falls to one knee. His hammer clatters
+      to the ground. Behind him, the forge blazes -- and within it,
+      something takes shape. A massive blade, grey and pulsing with
+      Pallor energy. The Architect smiles."
+    - dialogue: The Architect: "Too late. It's finished."
+    - phase_transition: The Architect is defeated → Grey Cleaver
+      Unbound (Stage 2) begins immediately (no break, no healing)
+```
+
+**Design Note:** The Architect is the first half of a two-stage boss
+fight. The Ley Anvil mechanic creates a strategic choice: focus the
+boss directly at 50% damage or destroy the Anvils first for full damage.
+The elemental absorption on each Anvil (and cross-weaknesses between
+them) rewards parties with diverse elemental coverage. The Forge Sprite
+summons during Shielded mode add pressure to split focus. The transition
+to Unshielded is a relief that quickly becomes threatening as the
+Architect's enraged state hits harder and faster. The fight's narrative
+throughline -- the Architect is stalling while forging the Grey Cleaver
+-- means the party "wins" the combat but loses the strategic objective,
+setting up the Stage 2 fight with genuine dramatic tension.
 
 #### Grey Cleaver Unbound (Stage 2)
 
-*AI script pending -- see Task 6*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Grey Cleaver Unbound (Stage 2)* | Boss | 36 | 25,000 | 126 | 97 | 62 | 100 | 60 | 43 | 5,000 | 8,000 | Despair Shard (100%) | Grey Cleaver (100%) | Spirit | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Forgotten Forge F5 (Anvil Vault) |
+
+**Modes:** 3 stance cycle (Greatsword, Whip, Shield) -- cycles every 3 turns
+
+**AI Script:**
+
+```
+=== Boss Encounter: Grey Cleaver Unbound (Stage 2 of 2) ===
+
+Note: The Grey Cleaver Unbound is the weapon itself, animated by
+      Pallor energy. It fights autonomously, cycling through three
+      stances every 3 turns in a fixed rotation: Greatsword → Whip →
+      Shield → Greatsword → ... The party enters this fight with
+      whatever HP/MP they had at the end of Stage 1 (no break).
+
+      Key mechanic: Weight of Ages applies party-wide Despair
+      periodically. During Shield stance, the Cleaver reflects ALL
+      damage -- EXCEPT damage from party members afflicted with
+      Despair, who deal +50% damage. This creates a counterintuitive
+      dynamic: curing Despair during Shield stance is actively
+      harmful. Smart parties will time their Despair cures around
+      the stance cycle.
+
+Stance: Greatsword (turns 1-3, 7-9, 13-15, ...)
+  Note: Heavy single-target physical damage. The Cleaver takes its
+        massive blade form.
+  Priority:
+    1. turn_counter % 3 == 0 → Executioner's Arc (single_target
+       highest threat, 700-800 physical damage; 1-turn charge --
+       the blade rises on charge turn, falls next turn; "The blade
+       hangs in the air like a guillotine.")
+    2. Default → Cleaving Strike (single_target highest threat,
+       400-500 physical damage; "A brutal, efficient swing.")
+
+  Counters: None
+
+Stance: Whip (turns 4-6, 10-12, 16-18, ...)
+  Note: Party-wide attacks with Despair chance. The Cleaver's blade
+        extends into a segmented whip of grey metal.
+  Priority:
+    1. turn_counter % 2 == 0 → Grey Lash (party_wide, 350-400
+       physical damage + 40% chance Despair per target; "The whip
+       cracks across the party. Grey energy clings to the wounds.")
+    2. Default → Flaying Arc (party_wide, 250-300 physical damage;
+       "The whip sweeps low across the arena.")
+
+  Counters: None
+
+Stance: Shield (turns 7-9, 13-15, 19-21, ... offset by +6)
+  Wait -- corrected rotation: Greatsword (1-3) → Whip (4-6) →
+  Shield (7-9) → Greatsword (10-12) → ...
+
+Stance: Shield (turns 7-9, 13-15, 19-21, ...)
+  Note: The Cleaver plants itself blade-down and projects a Pallor
+        barrier. It reflects 100% of all incoming damage back to the
+        attacker -- EXCEPT damage from party members who have Despair
+        status. Despair'd members not only bypass the reflection but
+        deal +50% damage during Shield stance. The Cleaver does not
+        attack during Shield stance.
+  Priority:
+    1. Default → Pallor Aegis (self; reflects all damage; no attack;
+       "The blade hums behind its barrier. Waiting.")
+
+  Counters:
+    On any attack from non-Despair'd party member → Reflect (100%
+      damage reflected back to attacker; "The barrier flashes. Your
+      own force strikes you.")
+    On any attack from Despair'd party member → No reflection;
+      damage dealt at 150% (the barrier recognizes kinship with
+      Despair and yields; "The grey energy parts. Your grief is
+      the key.")
+
+Periodic Effect (all stances):
+  Weight of Ages: Every 5th turn (turns 5, 10, 15, 20, ...),
+    party_wide Despair application (60% chance per party member;
+    "The weight of the Pallor's history presses down on everyone.")
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The forge blazes white. The blade rises from the
+      anvil -- not held by any hand. It floats, surrounded by grey
+      mist, and the mist has a voice."
+    - dialogue: Grey Cleaver: "I am every sword that ever cut hope
+      short. I am the edge of every cycle's end."
+    - dialogue: "The blade shifts form. A greatsword. Then a whip.
+      Then a shield. Testing itself."
+
+  At boss.hp_percent <= 50 (once):
+    - dialogue: Grey Cleaver: "You carry despair in your bones. I
+      can feel it. We are not so different."
+    - dialogue: "The grey mist thickens. The Cleaver's attacks
+      carry more weight."
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Grey Cleaver screams -- a metallic shriek that
+      rattles the forge walls. The Pallor energy drains from the
+      blade. It falls to the ground, inert. Just metal now. Heavy,
+      dark, but just metal."
+    - dialogue: "Lira picks up the blade. It does not resist. In her
+      hands, it is a tool -- nothing more."
+    - drop: Grey Cleaver (weapon; Lira-exclusive; high ATK, Spirit
+      element; carries 'Despair's Edge' passive: +25% damage to
+      Despair'd enemies)
+```
+
+**Design Note:** The Grey Cleaver Unbound is one of the most
+mechanically innovative bosses in the game. The three-stance rotation
+creates a predictable rhythm that rewards players who count turns and
+plan ahead. The Shield stance's Despair reflection mechanic is the
+centerpiece: it inverts the normal RPG instinct to cure debuffs
+immediately, teaching players that Despair -- the game's central
+negative status -- can be a tool when wielded intentionally. This
+directly foreshadows the Convergence's thematic resolution, where
+embracing despair rather than fighting it is key. The no-break
+transition from Stage 1 creates genuine resource pressure, and the
+Weight of Ages periodic Despair application ensures the Shield stance
+mechanic stays relevant throughout the fight. The Grey Cleaver drop
+(Lira-exclusive, with Despair's Edge passive) carries the lesson forward
+into gameplay: despair is most dangerous when you refuse to acknowledge
+it.
 
 ### The Convergence
 
