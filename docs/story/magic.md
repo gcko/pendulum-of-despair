@@ -1392,15 +1392,15 @@ For quick reference, here are all status effects that spells in this system can 
 | Poison | Negative | Lose 8% max HP per turn | Until cured | Cleansing Draught, Purge, Antidote item |
 | Burn | Negative | Lose 5% max HP per turn (Flame-typed damage) | 3 turns | Cleansing Draught, Purge, Antidote item |
 | Sleep | Negative | Cannot act; wake on damage | Until cured or damaged | Cleansing Draught, Purge, Alarm Clock item |
-| Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Remedy item |
+| Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Smelling Salts item, Remedy item |
 | Silence | Negative | Cannot cast spells | 4 turns or until cured | Cleansing Draught, Purge, Echo Drop item |
 | Blind | Negative | Physical accuracy -50% | 4 turns or until cured | Cleansing Draught, Purge, Eye Drops item |
 | Petrify | Negative | Removed from combat | Until cured | Purge, Soft Stone item |
 | Slow | Negative | ATB speed -50% | 5 turns | Purge, Chronos Dust item |
 | Stop | Negative | ATB frozen | 3 real-time seconds (not turn-based) | Wears off only |
 | Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
-| Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
-| Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
+| Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item, Phoenix Pinion item |
+| Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Pallor Salve item, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
 | Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion / Mass Dispersion |
 | Regen | Positive | Restore 5% max HP per turn | 4 turns | Dispersion / Mass Dispersion |
@@ -1460,4 +1460,4 @@ For quick reference, here are all status effects that spells in this system can 
 
 ### The Despair Status
 
-Despair is this game's signature status effect. It is thematically central -- the Pallor's weapon is not destruction but surrender. Mechanically, it makes the afflicted character slower and weaker, representing the creeping apathy that the Pallor inflicts. It cannot be cured by standard Cleansing Draught or Purge -- only by Hollow Mend (post-game spell) or the rare Hope Shard item. This forces the party to endure it during the main story, making Pallor encounters feel genuinely oppressive. The inability to simply cure it is intentional: despair is not something you fix with a spell. You outlast it.
+Despair is this game's signature status effect. It is thematically central -- the Pallor's weapon is not destruction but surrender. Mechanically, it makes the afflicted character slower and weaker, representing the creeping apathy that the Pallor inflicts. It cannot be cured by standard Cleansing Draught or Purge -- only by Pallor Salve (Act III, expensive/scarce), Hollow Mend (post-game spell), or the rare Hope Shard item. This forces the party to endure it during the main story, making Pallor encounters feel genuinely oppressive. The inability to simply cure it is intentional: despair is not something you fix with a spell. You outlast it.
