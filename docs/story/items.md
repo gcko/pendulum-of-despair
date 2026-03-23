@@ -114,7 +114,7 @@
 | Hope Shard | Despair (instant cure) | — | — | Rare chests/quest rewards only |
 
 > **Despair** is the signature status of the Pallor — a creeping hopelessness
-> that reduces all outgoing damage by 50% and blocks MP regeneration. It cannot
+> that slows ATB speed by 25% and reduces all outgoing damage by 20%. It cannot
 > be cured by Remedy; only Pallor Salve, Hope Shard, or the Purge spell remove
 > it. The limited supply of cures makes Despair a genuine resource-management
 > threat, especially in the Pallor Wastes and Axis Tower.
@@ -559,8 +559,32 @@ Drake Fangs stack in the **Materials** tab (not Consumables). When used in battl
 
 ### Status Cure Mapping
 
-*Content pending — see Task 7*
+Cross-reference between status effects, item cures, and spell cures. For full status effect definitions, see [magic.md](magic.md#status-effect-reference).
+
+| Status | Item Cure | Spell Cure | Notes |
+|--------|-----------|-----------|-------|
+| Poison | Antidote | Cleansing Draught, Purge | Also cures Burn |
+| Burn | Antidote | Cleansing Draught, Purge | Shares cure with Poison |
+| Sleep | Alarm Clock | Cleansing Draught, Purge | Also cured by damage |
+| Confusion | Smelling Salts | Cleansing Draught, Purge | Also cured by damage |
+| Silence | Echo Drop | Cleansing Draught, Purge | |
+| Blind | Eye Drops | Cleansing Draught, Purge | |
+| Petrify | Soft Stone | Purge | Not cured by Cleansing Draught |
+| Slow | Chronos Dust | Purge | Not cured by Cleansing Draught |
+| Stop | — | — | Wears off only (3 real-time seconds) |
+| Berserk | — | Purge | No item cure |
+| Faint | Phoenix Feather, Phoenix Pinion | Spirit Recall, Second Dawn | Revival items |
+| Despair | Pallor Salve, Hope Shard | Hollow Mend (post-game) | Cannot be cured by Remedy |
+
+> **Remedy** cures all negative statuses EXCEPT Stop, Berserk, Despair, and Faint.
 
 ### Bestiary Drop Consistency
 
-*Content pending — see Task 7*
+Every item appearing in bestiary Steal/Drop columns (see [bestiary/](bestiary/)) maps to one of the following catalog sections:
+
+- **Consumables** (Section 2) — Potions, Ethers, status cures, etc.
+- **Materials** (Section 5) — Beast parts, construct salvage, elemental components, etc.
+- **Key Items** (Section 6) — Quest items, mementos, schematics, story items.
+- **Equipment** (Gap 1.5) — Boss equipment drops cross-referenced in Section 6.6 (Equipment Cross-Reference).
+
+No bestiary drop references an item that is undefined in this catalog or the forthcoming equipment catalog.

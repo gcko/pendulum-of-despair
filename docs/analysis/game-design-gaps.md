@@ -16,6 +16,28 @@ Each design area has:
 When a gap is closed, the `story-designer` skill updates the status and
 adds a "Completed" date + commit reference.
 
+## Reference Materials
+
+SNES-era JRPG reference data scraped from Fandom wikis and GameFAQs
+guides. **Read the analysis files first** — they contain cross-game
+counts, progression curves, and design takeaways for Pendulum of Despair.
+
+| Directory | Analysis File | Raw References |
+|-----------|--------------|----------------|
+| `docs/references/items/` | `quick-stats.md` — item counts by type per game, design takeaways | FF4, FF6 (wiki + GameFAQs), CT (GameFAQs), SoM |
+| `docs/references/weapons/` | `analysis.md` — weapon counts, ATK curves, character specialization, acquisition models | FF4, FF6, CT, SoM |
+| `docs/references/armor/` | `analysis.md` — armor counts, DEF curves, slot philosophy, elemental/status design | FF4, FF6, CT (equipment), SoM |
+
+**Key findings for story-designer:**
+- **Item count target:** ~45 consumables (FF6 sweet spot) + key items + crafting materials
+- **Weapon count target:** ~50–80 weapons; per-character weapon types (FF6/CT model)
+- **Armor count target:** ~60–80 pieces; 4 slots (weapon, head, body, accessory)
+- **Accessory depth:** 25–35 accessories are the customization engine (CT model)
+- **Progression curve:** ATK ~5→100 (20x), DEF ~5→120; new tier every 2–3 dungeons
+- **Elemental equipment:** 1–2 per element per type (weapons), 2–3 per element (armor)
+- **Crafting:** SoM's Watts blacksmith model maps to Lira's Forgewright
+- **Cursed items:** Grey Cleaver already designed; FF6's Cursed Shield is the gold standard
+
 ---
 
 ## Tier 1: Critical Blockers
@@ -124,29 +146,32 @@ Now unblocks: 1.4 (Items), 1.6 (Economy), 2.1 (XP Curve), 2.4 (Encounter Rates)
 
 ### 1.4 Item & Consumable Catalog
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P0 — blocks shops, inventory, combat items
-**Files:** None yet (create `docs/story/items.md`)
+**Files:** `docs/story/items.md`
 **Depends On:** 1.1 (Damage Formulas for heal/damage items)
+**Reference:** `docs/references/items/quick-stats.md` — cross-game item counts and design patterns (FF4/FF6/CT/SoM). Target ~45 consumables per quick-stats analysis.
+**Completed:** 2026-03-23
 
 **What's Needed:**
-- [ ] Consumable items with effects and prices:
-  - [ ] Healing items (Potion tiers, Elixir, Megalixir)
-  - [ ] MP restoration (Ether tiers)
-  - [ ] Revival items (Phoenix Feather, Phoenix Pinion)
-  - [ ] Status cure items (Antidote, Eye Drops, Remedy, etc.)
-  - [ ] Status infliction items (battle-use attack items)
-  - [ ] Stat boost items (temporary buffs)
-  - [ ] Escape items (Smoke Bomb)
-  - [ ] Encounter rate items (Repel equivalent)
-- [ ] Key items list (quest-required items with descriptions and usage)
-- [ ] Crafting materials (Arcanite Ingots, Spirit Essence, Pallor Fragments, etc.)
-- [ ] Crafting recipes for Lira's Forgewright system
-- [ ] Item acquisition matrix: which items available from shops, chests, drops, steals, quests
-- [ ] Item stack limits and inventory constraints
-- [ ] Sell price formula (typically 50% of buy price)
+- [x] Consumable items with effects and prices:
+  - [x] Healing items (Potion tiers, Elixir, Megalixir)
+  - [x] MP restoration (Ether tiers)
+  - [x] Revival items (Phoenix Feather, Phoenix Pinion)
+  - [x] Status cure items (Antidote, Eye Drops, Remedy, etc.)
+  - [x] Status infliction items (battle-use attack items)
+  - [x] Stat boost items (temporary buffs)
+  - [x] Escape items (Smoke Bomb)
+  - [x] Encounter rate items (Repel equivalent)
+- [x] Key items list (quest-required items with descriptions and usage)
+- [x] Crafting materials (Arcanite Ingots, Spirit Essence, Pallor Fragments, etc.)
+- [x] Crafting recipes for Lira's Forgewright system
+- [x] Item acquisition matrix: which items available from shops, chests, drops, steals, quests
+- [x] Item stack limits and inventory constraints
+- [x] Sell price formula (typically 50% of buy price)
 
-**Blocking:** Shop system, treasure chests, enemy drops, quest rewards
+**Blocking:** ~~Shop system, treasure chests, enemy drops, quest rewards~~
+Now unblocks: 1.5 (Equipment partial — items defined), 1.6 (Economy — item prices defined), 3.5 (Crafting — materials and recipes defined)
 
 ---
 
@@ -156,6 +181,7 @@ Now unblocks: 1.4 (Items), 1.6 (Economy), 2.1 (XP Curve), 2.4 (Encounter Rates)
 **Priority:** P0 — blocks character progression feel
 **Files:** None yet (create `docs/story/equipment.md`)
 **Depends On:** 1.2 (Stat System), 1.6 (Economy)
+**Reference:** `docs/references/weapons/analysis.md` — weapon counts, ATK curves, character specialization across FF4/FF6/CT/SoM. `docs/references/armor/analysis.md` — armor counts, DEF curves, slot philosophy, elemental/status design. Target ~50–80 weapons, ~60–80 armor, 4 equipment slots.
 
 **What's Needed:**
 - [ ] Equipment slot definitions (weapon, shield/off-hand, head, body, accessory x2?)
@@ -516,3 +542,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic (4 sources, 3 set-pieces). 4 new families, ~15 Tier 3/4 updates. | 781f4ce |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 5 ages, Lv 42–100). Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL → COMPLETE. Boss Compendium (29+1 bosses): full AI scripts, phase mechanics, scripted events, stat tables verified against act files. Gap 1.3 fully closed. | — |
+| 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, ~24 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |

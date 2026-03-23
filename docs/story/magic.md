@@ -1392,7 +1392,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Poison | Negative | Lose 8% max HP per turn | Until cured | Cleansing Draught, Purge, Antidote item |
 | Burn | Negative | Lose 5% max HP per turn (Flame-typed damage) | 3 turns | Cleansing Draught, Purge, Antidote item |
 | Sleep | Negative | Cannot act; wake on damage | Until cured or damaged | Cleansing Draught, Purge, Alarm Clock item |
-| Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Remedy item |
+| Confusion | Negative | Attack random targets | 3 turns or until damaged | Cleansing Draught, Purge, Smelling Salts item, Remedy item |
 | Silence | Negative | Cannot cast spells | 4 turns or until cured | Cleansing Draught, Purge, Echo Drop item |
 | Blind | Negative | Physical accuracy -50% | 4 turns or until cured | Cleansing Draught, Purge, Eye Drops item |
 | Petrify | Negative | Removed from combat | Until cured | Purge, Soft Stone item |
@@ -1400,7 +1400,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Stop | Negative | ATB frozen | 3 real-time seconds (not turn-based) | Wears off only |
 | Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
 | Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
-| Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Hope Shard item (rare) |
+| Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Pallor Salve item, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
 | Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion / Mass Dispersion |
 | Regen | Positive | Restore 5% max HP per turn | 4 turns | Dispersion / Mass Dispersion |
