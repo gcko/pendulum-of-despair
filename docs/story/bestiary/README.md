@@ -12,7 +12,7 @@
 | [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
 | [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Overworld (64 enemies) |
-| [optional.md](optional.md) | Dreamer's Fault, Sidequests, Superbosses, Rare Encounters (24 enemies) |
+| [optional.md](optional.md) | Dreamer's Fault (24 enemies across 5 ages, Lv 42–100) |
 | [bosses.md](bosses.md) | All Bosses & Mini-Bosses with AI Scripts (TBD) |
 | [palette-families.md](palette-families.md) | Base -> Variant Mappings |
 

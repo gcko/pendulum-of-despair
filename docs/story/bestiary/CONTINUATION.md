@@ -4,7 +4,7 @@
 > is compacted or a new session starts, read this file FIRST to understand
 > what has been done, what remains, and how to continue.
 >
-> **Last updated:** 2026-03-22 (after Sub-project 3a Act III implementation)
+> **Last updated:** 2026-03-23 (after Sub-project 3b Dreamer's Fault implementation)
 
 ---
 
