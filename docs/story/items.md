@@ -296,19 +296,160 @@ Lv 1–4: AoE 100 dmg, 1 use. Lv 5: AoE 2,000 dmg, 1 use. The Shard is functiona
 
 ### Dual-Purpose Economy
 
-*Content pending — see Task 5*
+Every crafting material can be **sold for gold** at any shop OR **saved for Lira's Forgewright recipes**. The listed sell price represents the item's "floor value" — its worth if you simply vendor it. Crafting value is always higher than sell value, creating a constant tension between immediate gold and long-term power.
+
+- **Sell:** Instant gold. Useful when you need consumables, equipment upgrades, or are flush with duplicate materials.
+- **Craft:** Transform materials into Forgewright devices (see [Recipes](#recipes) above). Devices cannot be bought, so materials are the only path to crafting power.
+- **No buyback:** Sold materials are gone. The game does not offer a buyback interface.
+- **Steal priority:** Many Tier 2–3 materials are steal-only from bosses. Missing a steal means missing a unique crafting opportunity until New Game+.
 
 ### Material Tiers
 
-*Content pending — see Task 5*
+Materials are organized into four rarity tiers that govern drop rates, steal chances, and sell price ranges.
+
+#### Tier 1 — Common
+
+| Property | Value |
+|----------|-------|
+| **Drop rate** | ~75% from standard enemies |
+| **Steal chance** | 75% base (modified by LCK) |
+| **Sell range** | 25–40g |
+| **Role** | Bread-and-butter crafting fodder. Always available, always useful. |
+
+**Tier 1 materials:** Beast Hide (25g), Bone Fragment (30g), Scrap Metal (35g), Element Shard (40g), Ether Wisp (40g), Leather Pouch (30g).
+
+#### Tier 2 — Uncommon
+
+| Property | Value |
+|----------|-------|
+| **Drop rate** | ~25% from standard enemies |
+| **Steal chance** | 25–50% base |
+| **Sell range** | 40–100g |
+| **Role** | Specialized parts from specific enemy families. Required for mid-tier devices. |
+
+**Tier 2 materials:** Specific beast parts (Sharp Fang, Drake Scale, Wolf Pelt, etc.), Crystal Shard (75g), Elemental Core (100g), Spirit Essence (100g), Grey Residue (100g), humanoid drops.
+
+#### Tier 3 — Rare
+
+| Property | Value |
+|----------|-------|
+| **Drop rate** | Boss drops only, or rare field chests |
+| **Steal chance** | Boss steals (10–25% base) |
+| **Sell range** | 150–500g |
+| **Role** | Boss-exclusive materials for advanced devices. Arcanite Shard and Arcanite Core power endgame recipes. |
+
+**Tier 3 materials:** Arcanite Shard (200g), Arcanite Core (200g), Pallor Sample (150g), Pallor Shard (175g), Pallor Ward (200g), Royal Signet (200g), Roc Feather (180g), boss-specific drops, Dreamer's Fault (First/Crystal Age) materials (300–450g).
+
+#### Tier 4 — Epic
+
+| Property | Value |
+|----------|-------|
+| **Drop rate** | Fixed placement only (3 Arcanite Ingots in the entire game) |
+| **Steal chance** | N/A (not stealable) |
+| **Sell range** | 500–1,000g (some unsellable) |
+| **Role** | Endgame pinnacle materials. Arcanite Ingot fuels Lira's ultimate weapon/armor. Pallor Core and Grey Mist Essence are unsellable story-critical crafting components. |
+
+**Tier 4 materials:** Arcanite Ingot (1,000g), Pallor Core (unsellable), Grey Mist Essence (unsellable), Dreamer's Fault (Green/Iron Age) materials (500–800g).
 
 ### Complete Material List
 
-*Content pending — see Task 5*
+> **67 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+
+| Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
+|------|----------------|------|---------------|---------------------|
+| **Beast Parts (20)** | | | | |
+| Beast Hide | Beast | 1 | 25 | Basic leather goods, Mending Engine |
+| Sharp Fang | Beast | 2 | 60 | Weapon upgrades |
+| Drake Fang | Beast | 2 | 80 | Consumable (500 dmg) or weapon crafting (see [Drake Fang Special Case](#drake-fang-special-case)) |
+| Drake Scale | Beast | 2 | 70 | Armor reinforcement |
+| Serpent Fang | Beast | 2 | 55 | Weapon upgrades |
+| Leech Ichor | Beast | 2 | 50 | Poison-element crafting |
+| Lurker Shell | Beast | 2 | 55 | Shield components |
+| Wolf Pelt | Beast | 2 | 50 | Light armor crafting |
+| Boar Tusk | Beast | 2 | 55 | Weapon hardening |
+| Hawk Feather | Beast | 2 | 50 | Speed-boosting accessories |
+| Hare Pelt | Beast | 2 | 40 | Light crafting |
+| Beetle Carapace | Beast | 2 | 55 | Armor hardening |
+| Crab Claw | Beast | 2 | 50 | Weapon components |
+| Viper Fang | Beast | 2 | 55 | Poison-element crafting |
+| Mite Husk | Beast | 2 | 40 | Basic components |
+| Roach Wing | Beast | 2 | 40 | Basic components |
+| Rat Tail | Beast | 2 | 30 | Vendor trash |
+| Vermin Fang | Beast | 2 | 45 | Basic weapon components |
+| Crawler Shell | Beast | 2 | 55 | Armor components |
+| Petrified Bark | Beast | 2 | 65 | Pallor-touched crafting |
+| **Construct Salvage (6)** | | | | |
+| Scrap Metal | Construct | 1 | 35 | Device components, basic forging |
+| Crystal Shard | Construct | 2 | 75 | Precision components, devices |
+| Drill Fragment | Construct | 2 | 60 | Weapon components |
+| Molten Gear | Construct | 2 | 70 | Flame-element forging |
+| Hound Gear | Construct | 2 | 65 | Mechanical components |
+| Stone Fragment | Construct | 2 | 55 | Earth-element crafting |
+| **Spirit/Elemental (5)** | | | | |
+| Ether Wisp | Spirit | 1 | 40 | MP restoration, Ward Emitter |
+| Spirit Essence | Spirit | 2 | 100 | Spirit-element crafting, devices |
+| Spirit Dust | Undead/Spirit | 2 | 60 | Spirit-element basics |
+| Element Shard | Elemental | 1 | 40 | Elemental infusions, devices |
+| Elemental Core | Elemental | 2 | 100 | Advanced elemental devices |
+| **Pallor (5)** | | | | |
+| Pallor Sample | Pallor | 3 | 150 | Anti-Pallor consumables, Pallor Salve |
+| Grey Residue | Pallor | 2 | 100 | Void-element infusions |
+| Nest Fragment | Pallor | 2 | 80 | Pallor research components |
+| Pallor Shard | Pallor | 3 | 175 | Advanced Pallor crafting |
+| Pallor Ward | Pallor | 3 | 200 | Defensive Pallor-resistance items |
+| **Undead (2)** | | | | |
+| Bone Fragment | Undead | 1 | 30 | Weapon hardening, Flashbang |
+| Bone Dust | Undead | 2 | 50 | Spirit-element basics |
+| **Arcanite (3)** | | | | |
+| Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices |
+| Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
+| Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
+| **Humanoid/Flavor Drops (14)** | | | | |
+| Compact Insignia | Humanoid | 2 | 45 | Vendor trash (sell only) |
+| Elite Insignia | Humanoid | 2 | 65 | Vendor trash |
+| Pallor Insignia | Humanoid | 2 | 55 | Vendor trash |
+| Leather Pouch | Humanoid | 1 | 30 | Vendor trash |
+| Stolen Purse | Humanoid | 2 | 80 | Vendor trash (contains gold) |
+| Bandit's Coin | Humanoid | 2 | 60 | Vendor trash |
+| Repair Kit | Humanoid | 2 | 50 | Minor device restoration |
+| Ballista Bolt | Humanoid | 2 | 45 | Vendor trash |
+| Pilot's Goggles | Humanoid | 2 | 55 | Vendor trash (accessory in Gap 1.5?) |
+| Royal Signet | Humanoid | 3 | 200 | Sell or trade for lore |
+| Roc Feather | Beast (rare) | 3 | 180 | Speed-boosting crafting |
+| Forge Hammer | Pallor | 2 | 60 | Weapon components |
+| Ley Residue | Humanoid | 2 | 75 | Ley-element crafting |
+| Pallor Blade | Pallor | 3 | 150 | Void-element weapon crafting |
+| **Dreamer's Fault Materials (8)** | | | | |
+| Ancient Glyph | Dreamer's Fault (First Age) | 3 | 300 | Age-specific recipes (TBD) |
+| Carved Stone | Dreamer's Fault (First Age) | 3 | 350 | Age-specific recipes (TBD) |
+| Crystal Fragment | Dreamer's Fault (Crystal Age) | 3 | 400 | Age-specific recipes (TBD) |
+| Prism Shard | Dreamer's Fault (Crystal Age) | 3 | 450 | Age-specific recipes (TBD) |
+| Living Bark | Dreamer's Fault (Green Age) | 4 | 500 | Age-specific recipes (TBD) |
+| Heartwood Splint | Dreamer's Fault (Green Age) | 4 | 550 | Age-specific recipes (TBD) |
+| Iron Cog | Dreamer's Fault (Iron Age) | 4 | 700 | Age-specific recipes (TBD) |
+| Tempered Plate | Dreamer's Fault (Iron Age) | 4 | 800 | Age-specific recipes (TBD) |
+| **Boss-Specific Materials (4)** | | | | |
+| Dark Scale | Beast (Corrupted Spawn) | 2 | 65 | Pallor-element crafting |
+| Vein Shard | Boss steal (Vein Guardian) | 3 | 150 | Ley-element weapon components |
+| Ley Crystal Fragment | Boss steal (Ley Colossus, Ley Titan) | 3 | 200 | Ley-element forging |
+| Reinforced Drill Bit | Boss steal (The Ironbound) | 3 | 175 | Heavy weapon components |
 
 ### Sell Price Formula
 
-*Content pending — see Task 5*
+Material sell prices follow a tier-based formula:
+
+```
+sell_price = floor(base_value x tier_multiplier)
+```
+
+| Tier | Multiplier | Sell Range | Example |
+|------|-----------|------------|---------|
+| 1 (Common) | x1.0 | 25–40g | Beast Hide 25g, Ether Wisp 40g |
+| 2 (Uncommon) | x2.0 | 40–100g | Sharp Fang 60g, Spirit Essence 100g |
+| 3 (Rare) | x5.0 | 150–500g | Arcanite Shard 200g, Ancient Glyph 300g |
+| 4 (Epic) | x10.0 | 500–1,000g+ | Arcanite Ingot 1,000g, Iron Cog 700g |
+
+> **Note:** Some Tier 4 materials (Pallor Core, Grey Mist Essence) are flagged unsellable — they exist solely as crafting components for story-critical recipes. The sell price formula does not apply to unsellable items.
 
 ---
 
