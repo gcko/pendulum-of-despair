@@ -103,7 +103,7 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
   - [x] Overworld Act II (11 enemies across 5 terrain types)
   - [x] Interlude enemies (Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark — 52 enemies + Pallor Infection mechanic)
   - [x] Act III enemies (enhanced variants, Pallor creatures)
-  - [x] Optional enemies (Dreamer's Fault, sidequests, rare encounters — 24 enemies)
+  - [x] Optional enemies (Dreamer's Fault — 24 enemies)
   - [x] Overworld Act I enemies per terrain type
 - [ ] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
 - [ ] Status effect vulnerability per enemy
