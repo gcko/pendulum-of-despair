@@ -133,3 +133,16 @@ skill frontmatter.
 **Outcome:** 2 new checklist items added to "Stat Table Clarity" section.
 First round where Step 6 gap analysis was properly executed per the
 structural fix. Process working as intended.
+
+### PR #22 Round 6 (2026-03-23) — 2 Copilot comments, 1 new gap
+
+**Patterns:**
+- Reference format (Vaelith Drop column has two items combined with
+  "+", breaking single-item convention): 1 comment — new pattern
+- Post-fix regression (Pallor Regent early deployment note references
+  enemy not in act-iii after rename to Pallor Roc): 1 comment —
+  covered by existing propagation sweep rule
+
+**Outcome:** 1 new checklist item added to "Stat Table Clarity"
+(single item per Drop/Steal cell). Propagation sweep should have
+caught the stale Pallor Regent note during the rename.

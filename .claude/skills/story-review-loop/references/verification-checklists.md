@@ -126,3 +126,7 @@ Each item is a single check. Grows from Copilot gap analysis.
   the design note must not say "absorbs varies per encounter." Describe
   variable behavior as attack/cast element variation, not absorption
   variation.
+- Stat table Drop/Steal columns must contain a single item per cell.
+  Multiple guaranteed drops (e.g., bosses with 2 rewards) should list
+  the primary drop in the stat table and the secondary in the boss
+  notes section. Do not combine with "+" in the cell.
