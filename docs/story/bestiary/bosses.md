@@ -132,19 +132,203 @@ thresholds, turn counts, or special conditions.
 
 ### Ember Drake (Mini-Boss)
 
-*AI script pending -- see Task 2*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Ember Drake* | Beast | 8 | 1,500 | 0 | 23 | 11 | 17 | 12 | 14 | 22 | 44 | Drake Scale (75%) | Drake Fang (100%) | Frost | — | — | — | Ember Vein F2 (mini-boss) |
+
+**Modes:** 1 (Normal)
+
+**AI Script:**
+
+```
+Mode: Normal
+  Priority:
+    1. turn_counter % 3 == 0 → Flame Breath (party_wide cone AoE, fire magic damage;
+       1-turn charge -- boss rears back on charge turn, fires next turn)
+    2. target.position == back_row → Pounce (single_target back-row, moderate physical damage)
+    3. Default → Tail Swipe (single_target highest threat, physical damage)
+
+  Counters: None
+
+Scripted Events: None
+```
+
+**Design Note:** Ember Drake is the player's first boss encounter, teaching
+charge-telegraph recognition (Flame Breath glow) and positional awareness
+(Pounce punishes unprotected back row). Drake Fang drop is a consumable
+that deals 500 bonus damage, useful in the Vein Guardian fight.
 
 ### Vein Guardian
 
-*AI script pending -- see Task 2*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Vein Guardian* | Boss | 12 | 6,000 | 42 | 40 | 24 | 39 | 24 | 20 | 500 | 800 | Vein Shard (100%) | Vein Guardian's Core (100%) | Storm | Flame | — | Death, Petrify, Stop, Sleep, Confusion | Ember Vein F4 (boss) |
+
+**Modes:** 2 (Normal, Reconstructing)
+
+**AI Script:**
+
+```
+Mode: Normal
+  Priority:
+    1. turn_counter % 4 == 0 → Crystal Slam (single_target highest threat, heavy physical;
+       1-turn telegraph -- raises arms on charge turn, slams next turn)
+    2. turn_counter % 3 == 0 → Ember Pulse (party_wide AoE, fire magic damage;
+       1-turn telegraph -- floor glows orange on charge turn, pulses next turn)
+    3. last_action == Crystal Slam → Ember Pulse (party_wide AoE, fire magic damage)
+    4. Default → Crystal Slam (single_target highest threat, heavy physical;
+       1-turn telegraph -- raises arms on charge turn, slams next turn)
+
+  Counters: None
+
+Mode: Reconstructing (1 turn only)
+  Priority:
+    1. Default → Reconstruct (self, regenerates 300 HP; boss pauses all attacks)
+  Exit: After 1 turn → return to Normal
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "The Guardian's crystal core fractures... it draws inward."
+    - mode_switch: Normal → Reconstructing
+    - Note: Reconstruct is one-time only. After completing, boss returns to
+      Normal and does not reconstruct again.
+```
+
+**Design Note:** Vein Guardian is the first true boss, teaching telegraph
+reading across two different attack types (physical slam vs. magic pulse)
+and introducing the concept of phase transitions. The Reconstruct pause at
+50% HP rewards aggressive play -- players who burst through minimize the
+heal.
 
 ### Drowned Sentinel (Mini-Boss)
 
-*AI script pending -- see Task 2*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Drowned Sentinel* | Construct | 10 | 4,000 | 0 | 24 | 19 | 20 | 14 | 14 | 25 | 50 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Fenmother's Hollow F2 (mini-boss) |
+
+**Modes:** 1 (Normal)
+
+**AI Script:**
+
+```
+Mode: Normal
+  Priority:
+    1. turn_counter % 4 == 0 → Barnacle Shield (self, DEF +100% for 2 turns)
+    2. turn_counter % 3 == 0 → Frost Wave (party_wide AoE, frost magic damage)
+    3. Default → Stone Slam (single_target highest threat, heavy physical damage)
+
+  Counters: None
+
+Scripted Events: None
+```
+
+**Design Note:** Drowned Sentinel teaches elemental type advantage -- as a
+Construct, it takes 1.25x damage from Storm, rewarding players who use
+Torren's storm magic. Barnacle Shield introduces timed defensive buffs,
+teaching patience (wait it out) or magic-based strategies (bypass DEF with
+spells).
 
 ### Corrupted Fenmother
 
-*AI script pending -- see Task 2*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *Corrupted Fenmother* | Boss | 12 | 18,000 | 42 | 40 | 24 | 39 | 24 | 20 | 1,500 | 2,500 | Fenmother's Tear (100%) | Fenmother's Blessing (100%) | Flame | Frost | — | Death, Petrify, Stop, Sleep, Confusion | Fenmother's Hollow F3 (boss) |
+
+> **Note:** This encounter has three phases. Phase 3 (Cleansing Sequence)
+> is a separate wave-defense encounter that begins when the Fenmother
+> reaches 0 HP. The party cannot lose Phase 3 -- it is a non-lethal
+> narrative sequence. Torren receives the Spirit-Bound Spear after the
+> Fenmother is restored.
+
+**Modes:** 3 (Surface, Diving, Desperate)
+
+**AI Script:**
+
+```
+=== Phase 1 (18,000--9,000 HP) ===
+
+Mode: Surface
+  Priority:
+    1. turn_counter % 4 == 0 → Tail Sweep (party_wide AoE, physical damage)
+    2. turn_counter % 3 == 0 → Water Jet (single_target lowest HP, water magic damage)
+    3. Default → Tail Sweep (party_wide AoE, physical damage)
+  Exit: After 3 turns on surface → switch to Diving
+
+Mode: Diving
+  - Boss is untargetable while submerged.
+  Priority:
+    1. Default → Spawn Poisoned Pool (environmental, places 1--2 poison
+       hazard zones on the arena floor; party members in zones take poison
+       tick damage each turn)
+  Exit: After 2 turns submerged → switch to Surface
+
+Transition: At boss.hp_percent <= 50 → enter Phase 2
+
+=== Phase 2 (below 9,000 HP) ===
+
+Mode: Surface (Desperate)
+  Priority:
+    1. active_adds < 2 AND turn_counter % 3 == 0 → Summon Corrupted Spawn
+       (add_spawn, spawns 2 Corrupted Spawn; max 2 active at a time)
+    2. turn_counter % 3 == 0 → Water Jet (single_target lowest HP, water magic damage)
+    3. turn_counter % 2 == 0 → Tail Sweep (party_wide AoE, physical damage)
+    4. Default → Water Jet (single_target lowest HP, water magic damage)
+  Exit: After 2 turns on surface → switch to Diving
+
+Mode: Diving
+  - Boss is untargetable while submerged. More aggressive pool spawning.
+  Priority:
+    1. Default → Spawn Poisoned Pool (environmental, places 2--3 poison
+       hazard zones; increased coverage)
+  Exit: After 2 turns submerged → switch to Surface (Desperate)
+
+Transition: At boss.hp <= 0 → enter Phase 3 (Cleansing Sequence)
+
+=== Phase 3: Cleansing Sequence (at 0 HP) ===
+
+Non-lethal wave-defense encounter. Torren channels to cleanse the
+Fenmother. The party defends Torren across 4 waves. Party members
+who fall are revived between waves at 25% HP.
+
+  Wave 1 -- "The Poison Breaks":
+    - 4 Marsh Serpents + 2 Polluted Elementals
+
+  Wave 2 -- "She Remembers":
+    - 3 Ley Jellyfish + 3 Drowned Bones + 1 Polluted Elemental
+
+  Wave 3 -- "The Last Resistance":
+    - 2 Polluted Elementals + 4 Marsh Serpents + 2 Ley Jellyfish
+
+  Wave 4 -- "Release":
+    - 3 Corrupted Spawn (stronger variant, prioritize targeting Torren)
+
+  Counters: None (standard enemy AI per wave; enemies use their
+  normal bestiary AI scripts)
+
+Scripted Events:
+  At boss.hp_percent <= 50 (once):
+    - dialogue: "The Fenmother shrieks -- corruption pulses through
+      her veins. She dives with renewed fury."
+    - add_spawn: 2 Corrupted Spawn
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Fenmother collapses. Torren steps forward, staff
+      raised. 'I can feel her -- she's still in there.'"
+    - phase_transition: Battle transitions to Cleansing Sequence
+    - ability_unlock: Torren begins channeling (cannot act normally)
+
+  At Wave 4 cleared:
+    - cutscene: "Light floods the hollow. The corruption lifts. The
+      Fenmother opens her eyes -- clear, golden, grateful."
+    - party_change: Torren receives Spirit-Bound Spear
+```
+
+**Design Note:** The Corrupted Fenmother is Act I's climactic encounter,
+combining every mechanic taught so far -- telegraphed attacks, positional
+hazards, add management, and elemental strategy (Flame weakness). The
+dive/surface cycle creates windows of vulnerability that reward planning.
+Phase 3's wave defense is a narrative payoff for Torren's arc, reinforcing
+that the Fenmother is a victim to be saved, not a monster to be killed.
 
 ---
 
