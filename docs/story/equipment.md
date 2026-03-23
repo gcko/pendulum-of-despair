@@ -350,15 +350,77 @@ higher tiers.
 
 ### Light Armor
 
-*Content pending — see Task 6*
+All characters can equip light armor. Light armor provides balanced DEF
+and MDEF without class restrictions.
+
+**DEF progression by tier:** 0: 4–6, 1: 8–12, 2: 15–22, 3: 25–35, 4: 40–50, 5: 55–75
+
+| Name | DEF | MDEF | Special | Price | Tier | Acquired |
+|------|-----|------|---------|-------|------|----------|
+| Leather Vest | 5 | 2 | — | — | 0 | Starting (most characters) |
+| Padded Coat | 4 | 3 | — | — | 0 | Starting (Sable, Maren) |
+| Chain Mail | 10 | 5 | — | 300 | 1 | Act I shops |
+| Reinforced Vest | 12 | 4 | — | 500 | 1 | Fenmother chest |
+| Mythril Vest | 18 | 10 | — | 1,200 | 2 | Act II shops |
+| Compact Uniform | 20 | 8 | — | 1,800 | 2 | Valdris Siege reward |
+| Crystal Vest | 30 | 18 | — | 3,500 | 3 | Interlude shop |
+| Pallor Ward Vest | 38 | 25 | Despair resist 50% | Material | Forged | Lira forges (Act III) |
+| Genji Armor | 45 | 28 | — | 7,000 | 4 | Act III shop |
+| Ley-Thread Mail | 42 | 32 | +5 MAG | 8,000 | 4 | Dry Well chest |
+| Spirit Shroud | 60 | 50 | Halve Spirit + Void | — | 5 | Dreamer's Fault chest |
+| Adamant Vest | 65 | 35 | — | — | 5 | Post-game quest |
+
+#### Elemental Body Armor
+
+Light armor with elemental resistance. All characters can equip these.
+
+| Name | DEF | MDEF | Special | Price | Tier | Acquired |
+|------|-----|------|---------|-------|------|----------|
+| Flameguard Mail | 28 | 16 | Halve Flame damage | 3,200 | 3 | Caldera shop |
+| Frostweave Vest | 26 | 18 | Halve Frost damage | 3,200 | 3 | Highcairn chest |
+| Stormhide Coat | 27 | 17 | Halve Storm damage | 3,200 | 3 | Bellhaven shop |
+| Earthen Plate | 30 | 14 | Halve Earth damage | 3,200 | 3 | Thornmere chest |
 
 ### Heavy Armor
 
-*Content pending — see Task 6*
+Heavy armor is restricted to **Edren** and **Lira** only. Heavy armor
+applies a ×1.3 DEF modifier compared to light armor at the same tier,
+but has substantially lower MDEF.
+
+| Name | DEF | MDEF | Special | Price | Tier | Acquired |
+|------|-----|------|---------|-------|------|----------|
+| Iron Plate | 15 | 3 | — | 400 | 1 | Act I shops |
+| Steel Plate | 20 | 5 | — | 1,000 | 2 | Act II shops |
+| Compact Plate | 26 | 8 | — | 2,000 | 2 | Ashmark chest |
+| Arcanite Plate | 42 | 12 | — | 4,500 | 3 | Interlude shop |
+| Kole's Epaulettes | 48 | 18 | +15 DEF vs physical | — | 3 | General Kole boss drop |
+| Forgeheart Plate | 55 | 15 | — | 8,000 | 4 | Act III shop |
+| Genji Plate | 60 | 20 | — | 9,000 | 4 | Convergence chest |
+| Adamant Mail | 75 | 25 | +10 DEF, +10 ATK | — | 5 | Post-game quest |
 
 ### Robes
 
-*Content pending — see Task 6*
+Robes are restricted to **Maren** and **Torren** only. Robes apply a
+×0.7 DEF modifier and ×1.5 MDEF modifier compared to light armor,
+making them the best choice for magic-focused characters.
+
+| Name | DEF | MDEF | Special | Price | Tier | Acquired |
+|------|-----|------|---------|-------|------|----------|
+| Silk Robe | 6 | 10 | — | 300 | 1 | Act I shops |
+| Ley Vestment | 10 | 20 | — | 1,200 | 2 | Act II shops |
+| Ley-Woven Cloak | 20 | 40 | MP Regen 3%/turn | Material | Forged | Lira forges (Act III) |
+| Archmage's Robe | 28 | 48 | +10 MAG | 7,500 | 4 | Act III shop |
+| Thornmere Raiment | 35 | 65 | +15 MAG, Spirit resist | — | 5 | Torren sidequest |
+
+### Body Armor Summary
+
+| Category | Pieces | Equippable By |
+|----------|--------|---------------|
+| Light Armor | 12 | All characters |
+| Elemental Body Armor | 4 | All characters |
+| Heavy Armor | 8 | Edren, Lira |
+| Robes | 5 | Maren, Torren |
+| **Total** | **29** | — |
 
 ---
 
