@@ -180,7 +180,7 @@ Now unblocks: 1.5 (Equipment partial — items defined), 1.6 (Economy — item p
 **Status:** COMPLETE
 **Priority:** P0 — blocks character progression feel
 **Files:** `docs/story/equipment.md`
-**Depends On:** 1.2 (Stat System), 1.6 (Economy)
+**Depends On:** 1.2 (Stat System) — 1.6 (Economy) was originally listed but is a circular dependency (equipment defines prices that economy uses). Removed.
 **Reference:** `docs/references/weapons/analysis.md` — weapon counts, ATK curves, character specialization across FF4/FF6/CT/SoM. `docs/references/armor/analysis.md` — armor counts, DEF curves, slot philosophy, elemental/status design. Target ~50–80 weapons, ~60–80 armor, 4 equipment slots.
 **Completed:** 2026-03-23 — 56 weapons (6 types, Tiers 0–5 + Forged), 49 armor (head/body/heavy/robe), 38 accessories, 8 Forged recipes, 7 elemental infusions, 7 secret synergies. ATK growth rebalance proposed. Boss drop cross-reference verified against bestiary.
 

@@ -36,8 +36,11 @@
 
 ## Equipment Slots
 
-Each party member has five equipment slots. Ley Crystal is the only slot
-that is universal and not restricted by class or character.
+Each party member has five equipment slots. Weapons are character-exclusive
+(one type per character). Head armor and accessories are universal (all
+characters). Body armor has light/heavy/robe sub-types with character
+restrictions. Ley Crystal is a separate progression system (see
+[progression.md](progression.md)).
 
 | Slot | Purpose | Stats Provided |
 |------|---------|----------------|
@@ -97,17 +100,18 @@ ATK still produce the target 2-hit kill range for on-level regular enemies.
 
 ### Weapon Types Overview
 
-Each character has a primary weapon type. Some characters share access to
-a secondary type with reduced proficiency.
+Each character has exactly one equippable weapon type. No sharing,
+no secondary types. This creates clear identity — Edren IS swords,
+Lira IS hammers.
 
-| Character | Primary Type | Secondary Type |
-|-----------|-------------|----------------|
-| Edren     | Sword       | –              |
-| Cael      | Greatsword  | –              |
-| Maren     | Staff       | –              |
-| Sable     | Dagger      | –              |
-| Lira      | Hammer      | –              |
-| Torren    | Spear       | –              |
+| Character | Weapon Type | Fantasy |
+|-----------|-----------|---------|
+| Edren | Sword | Knight one-handers, longswords |
+| Cael | Greatsword | Two-hand heavy blades |
+| Maren | Staff | Casting staves, arcane rods |
+| Sable | Dagger | Knives, stilettos, shivs |
+| Lira | Hammer | Wrenches, mallets, forge tools |
+| Torren | Spear | Lances, pikes, javelins |
 
 ### ATK Modifier by Weapon Type
 
@@ -163,16 +167,16 @@ endgame swords.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Training Sword | 4 | – | – | – | – | 0 | Starting equipment |
-| Valdris Blade | 10 | – | – | – | 300 | 1 | Valdris shop |
-| Knight's Edge | 12 | – | – | – | 500 | 1 | Ember Vein chest |
-| Mythril Sword | 18 | – | – | – | 1,200 | 2 | Act II shops |
-| Compact Saber | 22 | – | – | Stolen Compact design | 2,000 | 2 | Ashmark chest |
-| Arcanite Blade | 35 | +5 MAG | – | Forged | Material | 3 | Lira forges (Interlude) |
-| Crystal Sword | 33 | – | – | – | 4,000 | 3 | Interlude shop |
-| Ley-Forged Longsword | 48 | – | Ley | – | 8,000 | 4 | Act III shop |
-| Pallor Bane | 52 | – | Spirit | +25% vs Pallor | 10,000 | 4 | Pallor Wastes chest |
-| Edren's Oath | 80 | +10 DEF | Spirit | Auto-Protect 1 turn at battle start | – | 5 | Edren sidequest |
+| Training Sword | 4 | — | – | — | – | 0 | Starting equipment |
+| Valdris Blade | 10 | — | – | — | 300 | 1 | Valdris shop |
+| Knight's Edge | 12 | — | – | — | 500 | 1 | Ember Vein chest |
+| Mythril Sword | 18 | — | – | — | 1,200 | 2 | Act II shops |
+| Compact Saber | 22 | — | – | Stolen Compact design | 2,000 | 2 | Ashmark chest |
+| Arcanite Blade | 35 | +5 MAG | — | Forged | — (Forged) | 3 | Lira forges (Interlude) |
+| Crystal Sword | 33 | — | – | — | 4,000 | 3 | Interlude shop |
+| Ley-Forged Longsword | 48 | — | Ley | — | 8,000 | 4 | Act III shop |
+| Pallor Bane | 52 | — | Spirit | +25% vs Pallor | 10,000 | 4 | Pallor Wastes chest |
+| Edren's Oath | 80 | +10 DEF | Spirit | Auto-Protect 1 turn at battle start | — | 5 | Edren sidequest |
 
 ---
 
@@ -184,12 +188,12 @@ Cael's authority and eventual betrayal.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Recruit's Claymore | 5 | SPD –2 | – | – | – | 0 | Starting equipment |
-| Commander's Blade | 12 | SPD –2 | – | – | 400 | 1 | Valdris armory |
-| War Cleaver | 14 | SPD –3 | – | – | 600 | 1 | Fenmother chest |
-| Ironbound Greatsword | 22 | SPD –3 | – | – | 1,500 | 2 | Act II shop |
-| Twilight Edge | 26 | SPD –3 | – | +10% crit rate | 2,500 | 2 | Ley Line Depths chest |
-| Dusk Reaver | 40 | SPD –4 | – | – | 5,000 | 3 | Interlude shop (brief window) |
+| Recruit's Claymore | 5 | SPD –2 | — | – | — | 0 | Starting equipment |
+| Commander's Blade | 12 | SPD –2 | — | – | 400 | 1 | Valdris armory |
+| War Cleaver | 14 | SPD –3 | — | – | 600 | 1 | Fenmother chest |
+| Ironbound Greatsword | 22 | SPD –3 | — | – | 1,500 | 2 | Act II shop |
+| Twilight Edge | 26 | SPD –3 | — | +10% crit rate | 2,500 | 2 | Ley Line Depths chest |
+| Dusk Reaver | 40 | SPD –4 | — | – | 5,000 | 3 | Interlude shop (brief window) |
 
 > **Design note:** Cael's betrayal during the Interlude removes him from the
 > party permanently. Tiers 3--5 greatswords have extremely limited
@@ -209,16 +213,16 @@ research background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Scholar's Rod | 2 | +3 MAG | – | – | – | 0 | Starting equipment |
-| Ley Wand | 6 | +5 MAG | – | – | 250 | 1 | Valdris shop |
-| Glyph Staff | 8 | +7 MAG | – | – | 500 | 1 | Archive of Ages chest |
-| Mythril Staff | 12 | +10 MAG | – | – | 1,000 | 2 | Act II shop |
+| Scholar's Rod | 2 | +3 MAG | — | – | — | 0 | Starting equipment |
+| Ley Wand | 6 | +5 MAG | — | – | 250 | 1 | Valdris shop |
+| Glyph Staff | 8 | +7 MAG | — | – | 500 | 1 | Archive of Ages chest |
+| Mythril Staff | 12 | +10 MAG | — | – | 1,000 | 2 | Act II shop |
 | Runic Focus | 10 | +12 MAG | Ley | +5% spell crit | 1,800 | 2 | Ley Line Depths chest |
-| Resonance Rod | 15 | +15 MAG | – | Forged | Material | 3 | Lira forges (Act III) |
-| Arcane Conduit | 18 | +16 MAG | – | – | 3,500 | 3 | Interlude shop |
-| Ley Conduit | 25 | +18 MAG | Ley | – | 7,000 | 4 | Act III shop |
-| Archive Staff | 22 | +20 MAG | – | +10% healing | 9,000 | 4 | Dry Well chest |
-| Maren's Requiem | 40 | +25 MAG | Ley | MP cost –10% | – | 5 | Crafted from Pallor Core |
+| Resonance Rod | 15 | +15 MAG | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
+| Arcane Conduit | 18 | +16 MAG | — | – | 3,500 | 3 | Interlude shop |
+| Ley Conduit | 25 | +18 MAG | Ley | — | 7,000 | 4 | Act III shop |
+| Archive Staff | 22 | +20 MAG | — | +10% healing | 9,000 | 4 | Dry Well chest |
+| Maren's Requiem | 40 | +25 MAG | Ley | MP cost –10% | — | 5 | Crafted from Pallor Core |
 
 ---
 
@@ -230,16 +234,16 @@ a street/shadow theme reflecting Sable's underworld background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Street Knife | 3 | +1 SPD | – | – | – | 0 | Starting equipment |
-| Stiletto | 8 | +2 SPD | – | – | 250 | 1 | Bellhaven shop |
-| Pickpocket's Blade | 7 | +2 LCK | – | Steal rate +10% | 400 | 1 | Sable sidequest |
-| Mythril Dagger | 15 | +3 SPD | – | – | 1,000 | 2 | Act II shop |
-| Trick Blade | 14 | +3 LCK | – | +5% crit rate | 1,500 | 2 | Bellhaven Tunnels chest |
-| Shadowsteel Knife | 28 | +4 SPD, +3 LCK | – | Forged | Material | 3 | Lira forges (Act III) |
-| Whisper Edge | 32 | +5 SPD | – | – | 4,500 | 3 | Interlude shop |
-| Twilight Fang | 42 | +4 LCK | – | 10% Poison on hit | 8,000 | 4 | Act III shop |
-| Shade Razor | 48 | +6 SPD | Void | – | 10,000 | 4 | Convergence chest |
-| Sable's Thread | 70 | +8 SPD, +5 LCK | – | Steal rate +25%, auto-Haste 1 turn | – | 5 | Sable sidequest |
+| Street Knife | 3 | +1 SPD | — | – | — | 0 | Starting equipment |
+| Stiletto | 8 | +2 SPD | — | – | 250 | 1 | Bellhaven shop |
+| Pickpocket's Blade | 7 | +2 LCK | — | Steal rate +10% | 400 | 1 | Sable sidequest |
+| Mythril Dagger | 15 | +3 SPD | — | – | 1,000 | 2 | Act II shop |
+| Trick Blade | 14 | +3 LCK | — | +5% crit rate | 1,500 | 2 | Bellhaven Tunnels chest |
+| Shadowsteel Knife | 28 | +4 SPD, +3 LCK | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
+| Whisper Edge | 32 | +5 SPD | — | – | 4,500 | 3 | Interlude shop |
+| Twilight Fang | 42 | +4 LCK | — | 10% Poison on hit | 8,000 | 4 | Act III shop |
+| Shade Razor | 48 | +6 SPD | Void | — | 10,000 | 4 | Convergence chest |
+| Sable's Thread | 70 | +8 SPD, +5 LCK | — | Steal rate +25%, auto-Haste 1 turn | — | 5 | Sable sidequest |
 
 ---
 
@@ -251,16 +255,16 @@ theme reflecting Lira's engineering background.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Maintenance Wrench | 4 | – | – | – | – | 0 | Starting equipment |
-| Iron Mallet | 10 | – | – | – | 300 | 1 | Corrund shop |
-| Pipe Hammer | 12 | – | – | – | 500 | 1 | Rail Tunnels chest |
-| Compact Sledge | 20 | – | – | – | 1,200 | 2 | Act II shop |
-| Forge Hammer | 24 | – | Flame | – | 2,200 | 2 | Ashmark Factory chest |
-| Forgewright Maul | 40 | – | – | Forged | Material | 3 | Lira forges (Interlude) |
-| Arcanite Maul | 38 | – | – | – | 5,000 | 3 | Interlude shop |
-| Piston Driver | 52 | – | – | 15% Stun chance | 8,500 | 4 | Act III shop |
-| Architect's Hammer | 52 | – | Storm | +25% vs Constructs | – | 4 | The Architect boss drop |
-| Lira's Masterwork | 90 | +5 DEF | – | Forgewright device uses +1 | – | 5 | Crafted from Grey Mist Essence + Arcanite Ingot |
+| Maintenance Wrench | 4 | — | – | — | – | 0 | Starting equipment |
+| Iron Mallet | 10 | — | – | — | 300 | 1 | Corrund shop |
+| Pipe Hammer | 12 | — | – | — | 500 | 1 | Rail Tunnels chest |
+| Compact Sledge | 20 | — | – | — | 1,200 | 2 | Act II shop |
+| Forge Hammer | 24 | — | Flame | — | 2,200 | 2 | Ashmark Factory chest |
+| Forgewright Maul | 40 | — | – | Forged | — (Forged) | 3 | Lira forges (Interlude) |
+| Arcanite Maul | 38 | — | – | — | 5,000 | 3 | Interlude shop |
+| Piston Driver | 52 | — | – | 15% Stun chance | 8,500 | 4 | Act III shop |
+| Architect's Hammer | 52 | — | Storm | +25% vs Constructs | — | 4 | The Architect boss drop |
+| Lira's Masterwork | 90 | +5 DEF | — | Forgewright device uses +1 | — | 5 | Crafted from Grey Mist Essence + Arcanite Ingot |
 
 ---
 
@@ -272,16 +276,16 @@ theme reflecting Torren's role as spiritspeaker.
 
 | Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
 |------|-----|-------|---------|---------|-------|------|----------|
-| Hunting Spear | 3 | – | – | – | – | 0 | Starting equipment |
-| Iron Lance | 8 | – | – | – | 250 | 1 | Thornmere shop |
-| Spirit-Bound Spear | 12 | – | Spirit | – | – | 1 | Fenmother boss reward |
-| Mythril Spear | 17 | – | – | – | 1,000 | 2 | Act II shop |
-| Thornwood Pike | 20 | – | Earth | – | 1,800 | 2 | Thornmere Wilds chest |
-| Thornspear | 30 | +3 SPD | – | Forged | Material | 3 | Lira forges (Act III) |
-| Wyrmbone Lance | 35 | – | – | – | 4,500 | 3 | Interlude shop |
-| Ley Lance | 45 | – | Ley | – | 7,500 | 4 | Act III shop |
-| Pallor Pike | 50 | – | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
-| Grey Cleaver | 55 | – | Spirit (purified) | +50% vs Pallor, Despair immunity | – | 5 | Grey Cleaver Unbound boss |
+| Hunting Spear | 3 | — | – | — | – | 0 | Starting equipment |
+| Iron Lance | 8 | — | – | — | 250 | 1 | Thornmere shop |
+| Spirit-Bound Spear | 12 | — | Spirit | — | – | 1 | Fenmother boss reward |
+| Mythril Spear | 17 | — | – | — | 1,000 | 2 | Act II shop |
+| Thornwood Pike | 20 | — | Earth | — | 1,800 | 2 | Thornmere Wilds chest |
+| Thornspear | 30 | +3 SPD | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
+| Wyrmbone Lance | 35 | — | – | — | 4,500 | 3 | Interlude shop |
+| Ley Lance | 45 | — | Ley | — | 7,500 | 4 | Act III shop |
+| Pallor Pike | 50 | — | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
+| Grey Cleaver | 55 | — | Spirit (purified) | +50% vs Pallor, Despair immunity | — | 5 | Grey Cleaver Unbound boss |
 
 > **Design note — Grey Cleaver classification:** The Grey Cleaver is
 > described as a "greatsword" in bosses.md, but Torren's weapon type is
@@ -334,7 +338,7 @@ higher tiers.
 | Crystal Helm | 22 | 16 | — | 2,500 | 3 | Interlude shop |
 | Pallor Veil | 18 | 24 | Despair resist 25% | 3,000 | 3 | Axis Tower chest |
 | Warding Crown | 20 | 20 | Silence immune | 2,800 | 3 | Catacombs chest |
-| Arcanite Helm | 30 | 22 | — | Material | Forged | Lira forges |
+| Arcanite Helm | 30 | 22 | — | — (Forged) | Forged | Lira forges |
 | Genji Helm | 32 | 24 | — | 5,500 | 4 | Act III shop |
 | Ley Crown | 28 | 30 | +5 MAG | 6,500 | 4 | Dry Well chest |
 | Spiritguard Helm | 30 | 28 | Sleep immune | 5,000 | 4 | Pallor Wastes shop |
@@ -366,7 +370,7 @@ and MDEF without class restrictions.
 | Mythril Vest | 18 | 10 | — | 1,200 | 2 | Act II shops |
 | Compact Uniform | 20 | 8 | — | 1,800 | 2 | Valdris Siege reward |
 | Crystal Vest | 30 | 18 | — | 3,500 | 3 | Interlude shop |
-| Pallor Ward Vest | 38 | 25 | Despair resist 50% | Material | Forged | Lira forges (Act III) |
+| Pallor Ward Vest | 38 | 25 | Despair resist 50% | — (Forged) | Forged | Lira forges (Act III) |
 | Genji Armor | 45 | 28 | — | 7,000 | 4 | Act III shop |
 | Ley-Thread Mail | 42 | 32 | +5 MAG | 8,000 | 4 | Dry Well chest |
 | Spirit Shroud | 60 | 50 | Halve Spirit + Void | — | 5 | Dreamer's Fault chest |
@@ -410,7 +414,7 @@ making them the best choice for magic-focused characters.
 |------|-----|------|---------|-------|------|----------|
 | Silk Robe | 6 | 10 | — | 300 | 1 | Act I shops |
 | Ley Vestment | 10 | 20 | — | 1,200 | 2 | Act II shops |
-| Ley-Woven Cloak | 20 | 40 | MP Regen 3%/turn | Material | Forged | Lira forges (Act III) |
+| Ley-Woven Cloak | 20 | 40 | MP Regen 3%/turn | — (Forged) | Forged | Lira forges (Act III) |
 | Archmage's Robe | 28 | 48 | +10 MAG | 7,500 | 4 | Act III shop |
 | Thornmere Raiment | 35 | 65 | +15 MAG, Spirit resist | — | 5 | Torren sidequest |
 
