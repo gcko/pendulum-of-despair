@@ -1129,19 +1129,479 @@ Act III.
 
 #### The Crowned Hollow (Edren's Trial)
 
-*AI script pending -- see Task 5*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Crowned Hollow* | Boss | 30 | 8,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Crown Fragment (100%) | Crown Shard (100%) | Spirit (150%) | Physical (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 1 |
+
+**Modes:** 2 (Hollow King, Weight of the Crown)
+
+**AI Script:**
+
+```
+=== Phase 1: Hollow King (8,000--2,000 HP) ===
+
+Mode: Hollow King
+  Note: A spectral king that mirrors Edren's leadership burden. High
+        physical resistance (75%) makes brute force inefficient. Summons
+        Hollow Knights and counterattacks physical hits with Royal Guard.
+        The "correct" approach is hinted by the boss's nature -- it tests
+        whether Edren can endure rather than overpower.
+  Priority:
+    1. turn_counter % 4 == 0 AND active_adds < 2 → Formation Call
+       (add_spawn, summons 2 Hollow Knights; 1,000 HP each, standard
+       melee AI; max 2 active at a time; they guard the Crowned Hollow)
+    2. turn_counter % 3 == 0 → Crown's Burden (party_wide AoE,
+       300--350 magic damage + ATK reduction -20% for 3 turns;
+       spectral crown pulses with grey light)
+    3. Default → Mirror Strike (single_target highest threat,
+       400--450 physical damage; copies Edren's equipped weapon type;
+       if Edren has a sword, boss swings a spectral sword, etc.)
+
+  Counters:
+    On physical_attack_received → Royal Guard (single_target attacker,
+       250 physical damage counterattack; once per turn; spectral shield
+       manifests and lashes out)
+
+Transition: At boss.hp <= 2,000 → enter Phase 2
+
+=== Phase 2: Weight of the Crown (below 2,000 HP -- Invulnerable) ===
+
+Mode: Weight of the Crown
+  Note: The Crowned Hollow becomes invulnerable. All damage is nullified.
+        It hammers the party with escalating despair. The ONLY resolution
+        is for Edren to use Defend on 3 consecutive turns, accepting the
+        weight of command rather than fighting it. This is a character
+        test, not a DPS check.
+  Modifier: boss.invulnerable = true (all damage nullified)
+  Priority:
+    1. Default → Weight of Command (party_wide, 500 damage per turn;
+       spectral crown presses down on the entire party; unavoidable)
+
+  Counters: None
+
+  Special Mechanic: Edren Defend Tracker
+    - Track consecutive turns where Edren uses Defend.
+    - If Edren uses any action other than Defend, reset counter to 0.
+    - At 3 consecutive Defends → trigger Stagger resolution.
+
+Scripted Events:
+  At boss.hp <= 2,000 (once):
+    - dialogue: "The Crowned Hollow rises to its full height. The crown
+      burns with grey fire. Its voice echoes across the wastes --
+      every command Edren has ever given, every life spent under his
+      orders."
+    - mode_switch: Hollow King → Weight of the Crown
+    - Note: Boss becomes invulnerable. Normal attacks show "0" damage.
+
+  At Edren Defend consecutive count == 1 (once per attempt):
+    - dialogue: "The weight presses down. Edren's knees buckle --
+      but hold."
+
+  At Edren Defend consecutive count == 2 (once per attempt):
+    - dialogue: "The crown's fire dims. The Hollow falters. Something
+      shifts in Edren's expression."
+
+  At Edren Defend consecutive count == 3 (once):
+    - cutscene: "Edren plants his feet. The crown's fire gutters and
+      dies. The Crowned Hollow staggers, its form cracking like old
+      stone. It speaks -- not with malice, but with exhaustion:
+      'You stayed.' The spectral king crumbles. A single crown
+      shard falls to the ground."
+    - boss.invulnerable = false
+    - boss.hp = 0 (defeat)
+    - ability_unlock: Edren learns Steadfast Resolve
+
+  Every Name They Carried (triggered once during Phase 2, turn 2):
+    - dialogue: "Every name they carried..." (spectral voices recite
+      names of the fallen)
+    - party_change: Despair status applied to all party members
+    - Note: Despair persists until boss is defeated via the Defend
+      resolution. Healing Despair is possible but it reapplies
+      next turn.
+```
+
+**Design Note:** The Crowned Hollow tests Edren's identity as a leader
+who endures. Phase 1 is winnable through conventional combat (albeit
+slowly due to Physical resistance and Royal Guard counters), but Phase 2
+is a hard puzzle gate. The boss becomes invulnerable and the only
+resolution is Edren choosing to Defend -- to stand and bear the weight
+rather than strike back. This mirrors his character arc: a commander who
+learned that leadership means absorbing the cost, not dealing damage.
+The Mirror Strike mechanic (copying Edren's weapon) reinforces that the
+boss IS Edren's shadow. Every Name They Carried applying party-wide
+Despair creates urgency without a combat solution, teaching the player
+that some problems cannot be fought through.
 
 #### The Perfect Machine (Lira's Trial)
 
-*AI script pending -- see Task 5*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Perfect Machine* | Boss | 30 | 7,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Cael's Gear (100%) | Unfinished Ring (100%) | Void (150%) | Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 2 |
+
+**Modes:** 1 (Waiting)
+
+**AI Script:**
+
+```
+=== Scripted Encounter: The Perfect Machine ===
+
+Mode: Waiting
+  Note: The Perfect Machine is a construct shaped like Cael -- or what
+        Cael could have been, if Lira had been able to save him. It does
+        NOT attack unprovoked. It stands in the center of the arena,
+        incomplete, and asks Lira to repair it. High DEF (halves physical
+        damage). This is a scripted event boss, not a priority-list boss.
+        The AI is almost entirely event-driven.
+  Modifier: boss.def_multiplier = 2.0 (physical damage halved)
+  Priority:
+    1. Default → Wait (self, no action; the Machine stands motionless,
+       gears turning slowly; it does not attack)
+
+  Counters: None
+
+  Special Mechanic: Repair Prompt
+    - Each turn the Machine is undamaged, it speaks to Lira.
+    - If the party attacks the Machine, it does not retaliate. It
+      takes damage normally (subject to high DEF) and speaks sadly.
+    - A "Repair" command appears in Lira's ability menu on turn 2.
+    - Using Repair triggers one of two scripted responses (see below).
+
+Scripted Events:
+  Turn 1 (once):
+    - dialogue: Machine: "Lira. You came back."
+    - dialogue: Machine: "I am almost finished. I just need your hands."
+    - ability_unlock: "Repair" appears in Lira's command menu
+    - Note: Repair is a trap. Using it feeds the Machine's false hope.
+
+  On Lira uses "Repair" (each use):
+    - boss.hp += 1,500 (Machine heals 1,500 HP)
+    - 50% chance → Hopeful Spark: (single_target Lira, 400 magic
+      damage; the Machine sparks violently)
+      - dialogue: Machine: "Almost... almost right. Try again."
+    - 50% chance → False Promise: (boss heals to current HP + 1,500;
+      party_wide 200 magic damage; gears grind and shriek)
+      - dialogue: Machine: "It hurts. But it will be worth it.
+        Keep going."
+    - Note: Repair is always harmful. The Machine can heal beyond
+      its starting HP. There is no limit to Repair uses, but
+      each one makes the fight harder.
+
+  On party attacks Machine (first time, once):
+    - dialogue: Machine: "...that hurts. But I understand."
+    - dialogue: Machine: "You always did break things before you
+      fixed them."
+
+  On Machine HP <= 3,500 from attacks (once):
+    - dialogue: Machine: "Please. I can be better. I can be what
+      you wanted."
+    - dialogue: "Lira's hands are shaking."
+
+  On examining the Machine (inspect/scan command, once):
+    - dialogue: "The Machine is exquisitely crafted -- every gear,
+      every joint, perfect. But the core is hollow. There is nothing
+      inside to fix."
+    - ability_unlock: "Dismantle" appears in Lira's Forgewright menu
+    - Note: Dismantle is the resolution. It requires Lira's
+      Forgewright class ability. Inspect/scan triggers this
+      regardless of Machine HP.
+
+  On Lira uses "Dismantle" (each use):
+    - boss.hp -= 3,500 (massive damage, bypasses DEF)
+    - dialogue (first use): Lira: "I cannot fix you."
+    - dialogue (second use): Lira: "I could not fix him. That was
+      never my job."
+    - Note: Two Dismantles deal 7,000 total damage (equal to
+      starting HP). If Machine has healed beyond 7,000 from
+      Repair uses, additional Dismantles are needed.
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Machine falls still. Its gears slow, then stop.
+      The shape that looked like Cael softens into shapeless metal.
+      Lira kneels. She places the Unfinished Ring beside it.
+      'Goodbye.'"
+    - ability_unlock: Lira unlocks latent ability (Cael weapon
+      prerequisite fulfilled)
+```
+
+**Design Note:** The Perfect Machine is the most emotionally demanding
+trial boss. It has no combat AI -- it waits, speaks, and hopes. The
+"Repair" trap is designed to exploit the player's instinct to use
+character-specific abilities helpfully: Lira is a Forgewright, and
+repairing things is what she does. But the Machine cannot be fixed
+because it was never alive. The hidden "Dismantle" command (requiring an
+inspect action to discover) is the anti-repair -- Lira using her craft
+to unmake rather than create. The dialogue ("I cannot fix you. I could
+not fix him. That was never my job.") is the emotional climax of her
+arc. The high DEF means brute-forcing the Machine through normal attacks
+is possible but slow and unsatisfying -- the game rewards the player for
+finding the narrative solution. No time pressure, no enrage timer. The
+Machine will wait forever.
 
 #### The Last Voice (Torren's Trial)
 
-*AI script pending -- see Task 5*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Last Voice* | Boss | 32 | 6,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Petrified Seed (100%) | Petrified Heartwood (100%) | Flame (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 3 |
+
+**Modes:** 2 (Crumbling, The Request)
+
+**AI Script:**
+
+```
+=== Phase 1: Crumbling (6,000--1,500 HP) ===
+
+Mode: Crumbling
+  Note: The Last Voice is a petrified spirit-tree, the last remnant
+        of a ley network node Torren once tended. It is already dying --
+        Crumbling Form drains 100 HP from itself each turn passively.
+        The boss fights defensively, not aggressively. It is afraid,
+        not hostile. Flame weakness (150%) makes it fragile if the
+        party chooses to burn it down.
+  Passive: Crumbling Form (boss loses 100 HP at start of each boss
+           turn; this is automatic and cannot be prevented)
+  Priority:
+    1. turn_counter % 4 == 0 → Silent Scream (party_wide AoE,
+       250 magic damage + Silence status for 2 turns; the tree
+       shrieks without sound -- the air itself warps)
+    2. turn_counter % 3 == 0 → Stone Grasp (single_target lowest
+       SPD party member, 350 physical damage + Slow status for
+       3 turns; petrified roots erupt from the ground)
+    3. Default → Petrified Lash (single_target highest threat,
+       200--250 physical damage; a stone branch swings weakly)
+
+  Counters: None
+
+Transition: At boss.hp <= 1,500 → enter Phase 2
+
+=== Phase 2: The Request (below 1,500 HP) ===
+
+Mode: The Request
+  Note: The Last Voice stops fighting. It speaks -- the first words
+        it has managed in centuries. Standard attacks deal reduced
+        damage (50% of normal values). The boss continues to lose
+        100 HP/turn from Crumbling Form. The party can kill it
+        through damage or waiting. But the intended resolution is
+        Torren using Spiritcall -> Release.
+  Modifier: boss.damage_multiplier = 0.5 (all boss attacks deal
+            half damage)
+  Passive: Crumbling Form continues (boss loses 100 HP/turn)
+  Priority:
+    1. Default → Fading Grasp (single_target random, 100--125
+       physical damage; the tree reaches out -- not to harm,
+       but to hold)
+
+  Counters: None
+
+  Special Mechanic: Release
+    - When Phase 2 begins, "Release" replaces "Call" in Torren's
+      Spiritcall ability menu.
+    - Using Release once ends the fight immediately.
+    - If the party kills the boss through damage before using
+      Release, the fight ends but the emotional resolution is
+      diminished (no green shoot, no Rootsong unlock).
+
+Scripted Events:
+  At boss.hp <= 1,500 (once):
+    - cutscene: "The Last Voice goes still. Stone cracks along its
+      trunk. A sound emerges -- not a scream, but a word. Thin.
+      Desperate. Unmistakable."
+    - dialogue: The Last Voice: "Let me go."
+    - mode_switch: Crumbling → The Request
+    - ability_unlock: "Release" replaces "Call" in Torren's
+      Spiritcall menu
+    - dialogue: "Torren's hand trembles over his staff. He
+      recognizes this voice."
+
+  At boss.hp <= 750 (once, if Release not yet used):
+    - dialogue: The Last Voice: "Please. I have been here so long."
+    - dialogue: "Stone flakes fall from the tree like dead leaves."
+
+  At boss.hp <= 200 (once, if Release not yet used):
+    - dialogue: The Last Voice: "...it's alright. You don't have to."
+    - dialogue: "The voice fades. The tree is almost gone."
+
+  On Torren uses "Release" (once):
+    - cutscene: "Torren closes his eyes. The staff hums. Green light
+      flows from his hands into the petrified bark. Not to heal --
+      to release. The stone softens. The tree sighs. Its voice is
+      warm now, and grateful: 'Thank you.' The Last Voice dissolves
+      into motes of green light. Where it stood, a single green
+      shoot pushes through cracked stone."
+    - boss.hp = 0 (defeat)
+    - environmental: Green shoot appears in arena
+    - ability_unlock: Torren learns Rootsong (HP + MP healing,
+      draws from ley network)
+
+  At boss.hp <= 0 via damage (if Release not used):
+    - dialogue: "The tree shatters. Stone fragments scatter across
+      the wastes. No voice. No light. Just silence."
+    - Note: No green shoot. Rootsong is NOT unlocked. The trial
+      is technically passed but the reward is lost. This is
+      intentional -- mercy cannot be taken by force.
+```
+
+**Design Note:** The Last Voice is a boss designed to make the player
+feel guilty for fighting it. Everything about its AI communicates that
+it is dying regardless: Crumbling Form's passive self-damage means the
+boss will kill itself in 60 turns even if the party does nothing.
+Phase 2's reduced damage and pleading dialogue ("Let me go") create
+intense emotional pressure to find an alternative to violence. The
+Flame weakness is a deliberate temptation -- the fastest way to end the
+fight is fire, but burning a dying tree that is begging for release
+feels terrible. The Release mechanic (replacing Torren's Call ability)
+reframes his Spiritcall class identity: he has always called spirits TO
+him, but this trial teaches him to let one go. The branching outcome
+(green shoot + Rootsong vs. silence + nothing) is one of the few places
+where the game materially punishes the "just kill it" approach. The
+declining HP dialogue creates a ticking clock that rewards paying
+attention to the boss's words.
 
 #### The Index (Maren's Trial)
 
-*AI script pending -- see Task 5*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Index* | Boss | 32 | 7,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Lost Page (100%) | Archivist's Lens (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 5 |
+
+**Modes:** 1 (Catalogue)
+
+**AI Script:**
+
+```
+=== Scripted Encounter: The Index ===
+
+Mode: Catalogue
+  Note: The Index is not a creature. It is a vast, floating catalogue
+        of every recorded death from every Pallor cycle -- thousands of
+        entries, each a person's final moments. It hovers in the arena,
+        pages turning slowly, radiating Void energy. It does not attack.
+        It presents a binary choice. Neither option is correct. The
+        resolution is a hidden third option that only appears when the
+        player examines the Index instead of choosing.
+
+        This is the most heavily scripted trial boss. There is almost
+        no conventional combat.
+  Priority:
+    1. Default → Turn Pages (self, no damage; pages flutter;
+       the Index waits for a decision)
+
+  Counters: None
+
+  Special Mechanic: The Binary Choice
+    - On turn 2, two commands appear in Maren's ability menu:
+      "Absorb" and "Destroy."
+    - Absorb: Maren absorbs the Index's knowledge. Massive INT buff
+      (+50%) but 90% max HP damage to Maren + permanent Despair
+      status (persists after battle, cannot be cured until
+      Convergence). The Index is consumed. Fight ends.
+    - Destroy: Maren destroys the Index. Instant defeat -- the
+      Index detonates (party_wide 9,999 damage, lethal). Game Over.
+      On reload, the fight restarts from the beginning.
+    - Neither option is "correct." Both are traps representing
+      Maren's fundamental flaw: she believes knowledge must be
+      either possessed or eliminated.
+
+  Special Mechanic: The Third Option
+    - If the player uses Examine/Inspect/Scan on the Index (any
+      party member), a hidden third command appears in Maren's
+      menu: "Read One Entry."
+    - This is the intended resolution.
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The Index unfolds before Maren. Thousands of pages,
+      each one a life. Each one an ending. The Pallor's perfect
+      record of everyone it has consumed across every cycle."
+    - dialogue: The Index: "All of it. Every name. Every scream.
+      Every quiet surrender. It is yours if you want it."
+    - dialogue: "Maren's eyes widen. She can feel the knowledge
+      pressing against her mind like a tide."
+
+  Turn 2 (once):
+    - ability_unlock: "Absorb" and "Destroy" appear in Maren's
+      command menu
+    - dialogue: The Index: "Take it all. Or end it all. There is
+      no middle ground for someone like you."
+
+  On party attacks the Index:
+    - dialogue: The Index: "You cannot damage a record. I am not
+      alive. I am what happened."
+    - Note: The Index takes damage normally (7,000 HP, Spirit
+      weakness 150%), but reducing it to 0 HP through attacks
+      triggers the same detonation as "Destroy" (party_wide
+      9,999 damage, Game Over). The Index cannot be beaten
+      through conventional combat.
+
+  On Maren uses "Absorb" (once):
+    - cutscene: "Maren reaches out. The pages surge into her --
+      thousands of deaths, thousands of final breaths. Her INT
+      soars. Her body buckles. Blood runs from her nose.
+      She knows everything. She cannot unknow it."
+    - Maren.INT *= 1.5 (permanent buff)
+    - Maren.current_hp = Maren.max_hp * 0.10 (90% HP lost)
+    - Maren.status = Despair (permanent, persists after battle)
+    - boss.hp = 0 (defeat)
+    - Note: This "wins" the fight but at enormous cost. Despair
+      cannot be cured until a specific Convergence event.
+      The game flags this as a tragic outcome in later dialogue.
+
+  On Maren uses "Destroy" (once):
+    - cutscene: "Maren raises her hand. The Index ignites. For one
+      moment, every page burns at once -- a bonfire of memory. Then
+      the detonation. White light. Nothing."
+    - party_wide: 9,999 damage (lethal, Game Over)
+    - Note: This is an intentional Game Over. On reload, the fight
+      restarts. The player is meant to realize Destroy is not
+      the answer.
+
+  On Examine/Inspect/Scan the Index (any party member, once):
+    - dialogue: "Looking closer, the pages are not abstract. Each
+      entry is a person. A name. A place. A moment. Not statistics.
+      Stories."
+    - dialogue: "One entry catches Maren's eye. She recognizes the
+      handwriting."
+    - ability_unlock: "Read One Entry" appears in Maren's command
+      menu (replaces Absorb and Destroy)
+
+  On Maren uses "Read One Entry" (once):
+    - cutscene: "Maren does not take all of it. She does not destroy
+      any of it. She reads one entry. One person. She speaks their
+      name aloud. She learns how they lived, not just how they died.
+      And she grieves for them -- not as data, not as a pattern,
+      but as a person she will never meet."
+    - dialogue: Maren: "I don't need all of you. I just needed to
+      understand one."
+    - cutscene: "The Index shudders. Pages scatter like startled
+      birds. The binding cracks. Not from violence -- from being
+      seen. The catalogue was never meant to be read with compassion.
+      It shatters. Fragments of pages drift down like snow."
+    - boss.hp = 0 (defeat)
+    - ability_unlock: Maren learns Pallor Sight (see corruption
+      levels, reveal hidden weaknesses in Vaelith fight and
+      Convergence)
+
+  Turn 8+ (if no choice made, repeating every 3 turns):
+    - dialogue: The Index: "Decide. The weight grows."
+    - party_wide: Pressure Pulse (150 magic damage; the Index's
+      patience erodes; creates urgency without being lethal)
+```
+
+**Design Note:** The Index is the most unconventional boss in the game.
+It presents a false binary (Absorb/Destroy) that maps directly to
+Maren's character flaw: her belief that knowledge is either a weapon to
+be seized or a threat to be eliminated. Both options have catastrophic
+consequences. The hidden third option ("Read One Entry") requires the
+player to do something counterintuitive: slow down and examine the boss
+instead of interacting with the choice presented. This teaches Maren --
+and the player -- that the correct response to overwhelming information
+is not to consume or destroy it, but to engage with it humanely, one
+piece at a time. The Pressure Pulse timer (starting turn 8) prevents
+indefinite stalling without making the fight unwinnable. Pallor Sight
+(the unlock) is mechanically significant: it reveals hidden weaknesses
+in both the Vaelith fight and the Convergence, making Maren's trial
+reward the most strategically impactful of the four. The "Absorb" path
+is intentionally viable but costly -- a player who chooses it is not
+locked out of completing the game, but carries permanent Despair as a
+narrative scar.
 
 ### Pallor Wastes
 
