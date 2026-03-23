@@ -312,7 +312,37 @@ theme reflecting Torren's role as spiritspeaker.
 
 ## Head Armor
 
-*Content pending — see Task 5*
+All characters can equip all head armor — there are no class restrictions.
+Head armor provides DEF and MDEF with occasional status resistances at
+higher tiers.
+
+**DEF progression by tier:** 0: 2–3, 1: 5–8, 2: 10–15, 3: 18–24, 4: 28–35, 5: 40–55
+
+| Name | DEF | MDEF | Special | Price | Tier | Acquired |
+|------|-----|------|---------|-------|------|----------|
+| Leather Cap | 2 | 1 | — | — | 0 | Starting (Edren) |
+| Cloth Hood | 2 | 2 | — | — | 0 | Starting (Maren, Sable) |
+| Iron Helm | 6 | 3 | — | 200 | 1 | Act I shops |
+| Traveler's Hood | 5 | 5 | — | 250 | 1 | Act I shops |
+| Ember Circlet | 7 | 4 | — | 350 | 1 | Ember Vein chest |
+| Mythril Helm | 12 | 8 | — | 800 | 2 | Act II shops |
+| Scholar's Cap | 8 | 12 | — | 900 | 2 | Act II shops |
+| Compact Officer's Helm | 14 | 6 | — | 1,200 | 2 | Valdris Siege reward |
+| Forgewright Visor | 10 | 10 | — | 1,000 | 2 | Ashmark shop |
+| Crystal Helm | 22 | 16 | — | 2,500 | 3 | Interlude shop |
+| Pallor Veil | 18 | 24 | Despair resist 25% | 3,000 | 3 | Axis Tower chest |
+| Warding Crown | 20 | 20 | Silence immune | 2,800 | 3 | Catacombs chest |
+| Arcanite Helm | 30 | 22 | — | Material | Forged | Lira forges |
+| Genji Helm | 32 | 24 | — | 5,500 | 4 | Act III shop |
+| Ley Crown | 28 | 30 | +5 MAG | 6,500 | 4 | Dry Well chest |
+| Spiritguard Helm | 30 | 28 | Sleep immune | 5,000 | 4 | Pallor Wastes shop |
+| Thornweave Hood | 26 | 32 | +3 SPD | 6,000 | 4 | Thornmere quest |
+| Root Crown | 45 | 38 | +10 all stats | — | 5 | Rootking boss drop |
+| Dreamer's Crown | 50 | 45 | +5 all stats, auto-Regen | — | 5 | Dreamer's Fault chest |
+| Void Helm | 40 | 50 | Halve Void damage | — | 5 | Convergence chest |
+
+> **Total:** 20 head armor pieces (2 starting, 3 Tier 1, 4 Tier 2,
+> 4 Tier 3 including 1 Forged, 4 Tier 4, 3 Tier 5).
 
 ---
 
