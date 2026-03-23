@@ -85,11 +85,11 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
 
 ### 1.3 Enemy Bestiary
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P0 — blocks encounter implementation, economy
-**Files:** `docs/story/bestiary/README.md`, `docs/story/bestiary/act-i.md`, `docs/story/bestiary/palette-families.md`
+**Files:** `docs/story/bestiary/README.md`, `docs/story/bestiary/act-i.md`, `docs/story/bestiary/act-ii.md`, `docs/story/bestiary/interlude.md`, `docs/story/bestiary/act-iii.md`, `docs/story/bestiary/optional.md`, `docs/story/bestiary/bosses.md`, `docs/story/bestiary/palette-families.md`
 **Depends On:** 1.1 (Damage Formulas), 1.2 (Stat System)
-**Completed (partial):** 2026-03-23 — Foundation + Act I–III + Interlude + Optional (198 enemies, 32 families). Only Boss Compendium remains.
+**Completed:** 2026-03-23 — Foundation + Act I–III + Interlude + Optional (198 enemies, 32 families) + Boss Compendium (29+1 bosses with full AI scripts).
 
 **What's Needed:**
 - [x] Complete stat sheet template: HP, MP, ATK, DEF, MAG, MDEF, SPD, Gold, Exp (19 columns)
@@ -105,19 +105,20 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
   - [x] Act III enemies (enhanced variants, Pallor creatures)
   - [x] Optional enemies (Dreamer's Fault — 24 enemies)
   - [x] Overworld Act I enemies per terrain type
-- [ ] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
-- [ ] Status effect vulnerability per enemy
-- [ ] Drop tables: common item, rare item, steal item (common/rare)
-- [ ] AI behavior scripts per enemy (attack patterns, conditional actions, phase triggers)
-- [ ] Boss stat sheets (all bosses from dungeons-world.md and dungeons-city.md):
-  - [ ] HP thresholds for phase changes
-  - [ ] Phase-specific ability sets
-  - [ ] Immunity lists
-  - [ ] Scripted events during battle
-- [ ] Palette-swap variant families (groups of enemies sharing sprites but different stats)
-- [ ] Recommended level range per dungeon verified against enemy stats
+- [x] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
+- [x] Status effect vulnerability per enemy
+- [x] Drop tables: common item, rare item, steal item (common/rare)
+- [x] AI behavior scripts for bosses (attack patterns, conditional actions, phase triggers — regular enemies use weighted-random selection, no explicit scripts)
+- [x] Boss stat sheets (all bosses from dungeons-world.md and dungeons-city.md):
+  - [x] HP thresholds for phase changes
+  - [x] Phase-specific ability sets
+  - [x] Immunity lists
+  - [x] Scripted events during battle
+- [x] Palette-swap variant families (groups of enemies sharing sprites but different stats)
+- [x] Recommended level range per dungeon verified against enemy stats
 
-**Blocking:** Combat encounters, drop system, economy balance, XP pacing
+**Blocking:** ~~Combat encounters, drop system, economy balance, XP pacing~~
+Now unblocks: 1.4 (Items), 1.6 (Economy), 2.1 (XP Curve), 2.4 (Encounter Rates)
 
 ---
 
@@ -514,3 +515,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Act II enemies (33): Ley Line Depths F1–3, Ashmark, Bellhaven, Valdris Siege gauntlet, Overworld. 9 new families, 11 Tier 2 revisions. Airborne spawn-on-death mechanic. | b4358a2 |
 | 2026-03-22 | 1.3 Enemy Bestiary | PARTIAL update. Interlude enemies (52): Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark. Pallor Infection mechanic (4 sources, 3 set-pieces). 4 new families, ~15 Tier 3/4 updates. | 781f4ce |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 5 ages, Lv 42–100). Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |
+| 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL → COMPLETE. Boss Compendium (29+1 bosses): full AI scripts, phase mechanics, scripted events, stat tables verified against act files. Gap 1.3 fully closed. | — |

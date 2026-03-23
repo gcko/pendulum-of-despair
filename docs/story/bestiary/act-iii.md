@@ -115,101 +115,15 @@ with special resolution mechanics. One is non-combat.
 > encounter. No stat block. Sable faces shadows of herself and must
 > choose to walk back into the alley, toward the party, toward danger.
 
-### The Crowned Hollow (Boss —Edren's Trial)
+### Boss Notes — Trial Bosses
 
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 8,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 30
-- **Phase 1 (8,000--2,000 HP):** Mirror Strike (uses Edren's
-  equipped weapon attack), Crown's Burden (AoE + ATK reduction),
-  Formation Call (summons 2 Hollow Knights at 1,000 HP each),
-  Royal Guard (counterattacks physical). See dungeons-world.md.
-- **Phase 2 (below 2,000 HP -- Invulnerability):** Weight of
-  Command (party-wide 500 damage/turn), Every Name They Carried
-  (Despair on all party members). The Crowned Hollow becomes
-  invulnerable.
-- **Resolution:** Edren must use **Defend** for 3 consecutive
-  turns. Not attacking -- just enduring. Each Defend causes the
-  Hollow to stagger.
-- **Unlock:** Steadfast Resolve (party-wide defensive buff,
-  cleanses Pallor status effects).
-- **Weakness:** Spirit (150%)
-- **Resistance:** Physical (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Crown Fragment (crafting)
-- **Drop:** Crown Shard (accessory -- leadership-themed buff)
-
-### The Perfect Machine (Boss —Lira's Trial)
-
-> **Note:** docs/story/dungeons-world.md is authoritative.
-
-- **HP:** 7,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 30
-- **Mechanic:** Does NOT attack unprovoked. Stands in the center
-  and asks Lira to repair it. Each "repair" action adds 1,500 HP
-  and triggers counterattack (Hopeful Spark: 400 damage + "Almost...
-  try again"; False Promise: heals to current HP + 1,500, party-wide
-  200 damage). High DEF (halves physical).
-- **Resolution:** Lira must use Forgewright to select **Dismantle**.
-  Each Dismantle deals 3,500 damage. Two Dismantles end the fight.
-  Dialogue: "I cannot fix you. I could not fix him. That was never
-  my job."
-- **Unlock:** Latent ability (prerequisite for manifesting Cael's
-  connection as weapon against Vaelith).
-- **Weakness:** Void (150%)
-- **Resistance:** Flame (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Cael's Gear (crafting)
-- **Drop:** Unfinished Ring (accessory -- Lira-specific, boosts
-  Forgewright abilities)
-
-### The Last Voice (Boss —Torren's Trial)
-
-> **Note:** docs/story/dungeons-world.md is authoritative.
-
-- **HP:** 6,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 32
-- **Phase 1 (6,000--1,500 HP):** Stone Grasp (single-target 350
-  damage + Slow), Silent Scream (AoE 250 damage + Silence),
-  Crumbling Form (loses 100 HP passively per turn -- it is dying
-  regardless). See dungeons-world.md.
-- **Phase 2 (below 1,500 HP -- The Request):** Speaks clearly:
-  "Let me go." Standard attacks deal reduced damage.
-- **Resolution:** Torren uses Spiritcall and selects **Release**
-  (replaces "Call"). One Release ends the fight. The Great Spirit
-  dies peacefully. A single green shoot appears.
-- **Unlock:** Rootsong (healing ability restoring HP and MP,
-  drawing from the ley network).
-- **Weakness:** Flame (150%)
-- **Resistance:** Spirit (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Petrified Seed (crafting)
-- **Drop:** Petrified Heartwood (crafting material)
-
-### The Index (Boss —Maren's Trial)
-
-> **Note:** docs/story/dungeons-world.md is authoritative.
-
-- **HP:** 7,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 32
-- **Mechanic:** A vast catalogue entity containing every recorded
-  death from every Pallor cycle. Presents a binary choice: Absorb
-  (massive INT buff but 90% max HP damage + permanent Despair) or
-  Destroy (instant defeat, loses INT buffs and unique lore item).
-  Neither is correct.
-- **Resolution:** Select **Read One Entry** (third option, appears
-  when examining the Index). Maren reads one person's entry and
-  grieves for them individually. The Index shatters -- built on the
-  premise that people are data, one person mourned breaks its logic.
-- **Unlock:** Pallor Sight (see corruption levels on enemies/objects,
-  revealing hidden weaknesses during Vaelith fight and Convergence).
-- **Weakness:** Spirit (150%)
-- **Resistance:** Void (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Lost Page (lore item)
-- **Drop:** Archivist's Lens (accessory -- boosts Arcanum abilities)
+- **The Crowned Hollow** (Edren's Trial) — Lv 30, 8,000 HP, Boss. 2 phases.
+- **The Perfect Machine** (Lira's Trial) — Lv 30, 7,000 HP, Boss. 1 phase.
+- **The Last Voice** (Torren's Trial) — Lv 32, 6,000 HP, Boss. 2 phases.
+- **The Index** (Maren's Trial) — Lv 32, 7,000 HP, Boss. 1 phase.
 
 ---
 
@@ -224,71 +138,17 @@ of the main story. Multi-phase encounter at Plateau's Edge
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
 
-### Vaelith (Boss)
+### Boss Notes — Pallor Wastes
 
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 50,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 34
-
-**Pre-Fight Phase (10-Attack Threshold):**
-The fight begins like the unwinnable Valdris siege encounter. Party
-attacks deal 0 damage. Vaelith attacks 10 times with taunting
-dialogue. After the 10th attack, Lira's weapon-forging cutscene
-triggers -- Cael's lingering connection manifests as raw energy that
-Lira shapes into a weapon mid-battle. All party members can then
-damage Vaelith. See dungeons-world.md.
-
-**Phase 1 (50,000--25,000 HP) -- The Scholar Fights:**
-- Epoch's End -- party-wide AoE, 500--600 damage
-- Grey Archive -- single-target, 700--800 damage + Silence (3 turns)
-- Cycle's Weight -- stacking debuff reducing ATK/DEF by 10% per stack
-- Temporal Cascade -- acts twice in one turn, every 4th turn
-- Dialogue at 37,500 HP: "You are the first to draw blood in eight
-  centuries."
-
-**Phase 2 (below 25,000 HP) -- The Shepherd Falls:**
-- All Phase 1 attacks, plus:
-- Despair Pulse -- party-wide 400 damage + Despair status, every 3 turns
-- Reality Warp -- corrupts ley lines; Lira must re-forge the weapon
-  (timed input)
-- Unraveling -- targets Lira, 600 damage; if Lira falls below 25% HP,
-  party damage reduced 25%
-- Dialogue at 12,500 HP: "This was not in the pattern."
-- Dialogue at 5,000 HP: "...Interesting."
-
-**Special Interactions:**
-- **Lira:** Forgewright during Reality Warp re-forges weapon
-- **Torren:** Spiritcall reveals Vaelith's next attack during Phase 2
-- **Maren:** Pallor Sight (from trial) doubles critical hit rate
-- **Sable:** Unbreakable Thread prevents forced removal from battle
-
-- **Weakness:** Spirit (125%)
-- **Resistance:** Phase 1: Void (50%), Frost (75%). Phase 2: Void (50%) only — Frost resistance lost as form destabilizes
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
-- **Steal:** Vaelith's Quill (lore item)
-- **Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic
-  damage), Grey Mist Essence (crafting -- Lira's ultimate weapon
-  component)
-
-### Vaelith — Unwinnable Siege Encounter (Act II)
-
-Stat block exists for completeness. The encounter demonstrates
-Vaelith's overwhelming power before the party earns the ability
-to fight back in Act III. Placed in act-iii.md alongside Vaelith's
-complete combat arc.
+- **Vaelith, the Ashen Shepherd** — Lv 34, 50,000 HP, Boss. 2 phases + pre-fight.
+- **Vaelith (Siege)** — Lv 150, 999,999 HP, Boss. Scripted loss. See [bosses.md appendix](bosses.md#appendix-unwinnable-encounters).
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Vaelith (Siege)* | Boss | 150 | 999,999 | 525 | 372 | 240 | 388 | 231 | 153 | 0 | 0 | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair, Poison, Silence, Slow, Berserk | Valdris Siege (scripted loss) |
-
-- **HP:** 999,999 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 150 (level cap)
-- Scripted loss. Party attacks deal 0--1 damage. Vaelith attacks with
-  full power (kills in 2--3 hits). After ~5 party turns, cutscene
-  triggers -- party wakes in siege aftermath.
-- All immunities. No rewards.
 
 ---
 
@@ -316,34 +176,12 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 5,000 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
 
-### Ley Titan (Boss)
+### Boss Notes — Ley Line Depths
 
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 18,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 28
-- **Phase 1 (100%--60%):** Crystal Fist (heavy single-target
-  physical), Ley Pulse (AoE magic, 1-turn charge with brightening
-  chest tell), Confluence Tide (wave of ley energy across platform
-  -- telegraphed by river brightening 1 turn before, positional
-  damage). See dungeons-world.md.
-- **Phase 2 (60%--30%):** Fractures into 3 Ley Aspects (Strength,
-  Precision, Endurance) sharing a HP pool. Kill order matters --
-  Endurance first prevents healing, Precision first prevents burst
-  damage. See dungeons-world.md.
-- **Phase 3 (30%--0%):** Reforms human-sized, dense, fast. Gains
-  Nexus Flare (party-wide, mitigated near platform edges), Resonance
-  (reflect damage on hit -- sustained DPS beats burst). Loses
-  Confluence Tide. See dungeons-world.md.
-- **Post-battle:** Dims to a sphere of light. Touching grants
-  Titan's Core.
-- **Absorbs:** Flame, Frost, Storm, Earth, Ley, Spirit, Void
-  (all 7 elements)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Ley Crystal Fragment (crafting)
-- **Drop:** Titan's Core (accessory -- +25 MAG, +25 MDEF, passive
-  MP regen, pictograph reading without Archivist's Codex)
+- **Ley Titan** — Lv 28, 18,000 HP, Boss. 3 phases.
 
 ---
 
@@ -381,45 +219,13 @@ via Dry Well Floor 4 (Interlude content). ~40% Pallor encounters.
 | *Archive Keeper* | Boss | 32 | 3,000–12,000 | 112 | 88 | 55 | 90 | 54 | 39 | 1,500 | 3,000 | Ancient Tablet (100%) | Keeper's Index (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F5 (Keeper's Sanctum) |
 | *Wellspring Guardian* | Boss | 36 | 28,000 | 126 | 97 | 62 | 100 | 60 | 43 | 8,000 | 12,000 | Builder's Crest (100%) | Nexus Crest (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Dry Well F7 (The Wellspring) |
 
-### Archive Keeper (Mini-Boss)
+### Boss Notes — Dry Well of Aelhart
 
-> **Note:** docs/story/dungeons-world.md is authoritative.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 3,000–12,000 (variable, per dungeons-world.md)
-- **Type:** Boss | **Level:** 32
-- A knowledge construct -- floating geometric form that projects
-  pictographic questions. Poses three translation puzzles and attacks
-  with ley-energy blasts between each question. Correct answers
-  reduce HP by 2,000 each. Wrong answers restore 1,000 HP. All three
-  correct = 3,000 HP before combat. All three wrong = full 12,000 HP.
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Ancient Tablet (lore item)
-- **Drop:** Keeper's Index (key item -- completes pictographic
-  dictionary). Note: Archive Keeper's Lens is a Floor 5 chest
-  reward, not a boss drop (see dungeons-world.md).
-
-### Wellspring Guardian (Boss)
-
-> **Note:** docs/story/dungeons-world.md is authoritative.
-
-- **HP:** 28,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 36
-- **Phase 1 -- Test of Arms (100%--60%):** Stone Fist, Geometric
-  Cleave, Nexus Bolt. Straight combat test. See dungeons-world.md.
-- **Phase 2 -- Test of Knowledge (60%--30%):** Projects three
-  pictographic translation challenges. Each correct answer reduces
-  HP by 2,800. Wrong answers trigger Nexus Pulse (heavy AoE). Does
-  not attack during this phase. See dungeons-world.md.
-- **Phase 3 -- Test of Resolve (30%--0%):** Combines physical and
-  magical attacks. Splits into geometric form. Builder's Weight
-  (Pallor-type attack -- heavy Despair-element damage + stacking
-  stat debuff). 5 stacks = Faint. See dungeons-world.md.
-- **Post-battle:** Kneels, places hand on nexus crystal. "The water
-  flows. The builders rest. You are worthy." Goes dormant.
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Builder's Crest (accessory)
-- **Drop:** Nexus Crest (accessory -- +25 ATK, +25 DEF, +25 MAG,
-  +25 AGI, Builder's Resonance passive)
+- **Archive Keeper** (Mini-Boss) — Lv 32, 3,000–12,000 HP, Boss. 1 phase.
+- **Wellspring Guardian** — Lv 36, 28,000 HP, Boss. 3 phases.
 
 ---
 
@@ -465,69 +271,14 @@ trapped in a machine.
 | *The Architect (Stage 1)* | Boss | 34 | 20,000 | 0 | 93 | 58 | 95 | 57 | 42 | 5,000 | 8,000 | Forge Schematic (100%) | Architect's Hammer (100%) | Storm | — | — | Death, Petrify, Stop, Sleep, Confusion, Poison, Berserk, Despair | Forgotten Forge F5 (Anvil Vault) |
 | *Grey Cleaver Unbound (Stage 2)* | Boss | 36 | 25,000 | 126 | 97 | 62 | 100 | 60 | 43 | 5,000 | 8,000 | Despair Shard (100%) | Grey Cleaver (100%) | Spirit | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Forgotten Forge F5 (Anvil Vault) |
 
-### Stage 1: The Architect (Boss)
+### Boss Notes — The Forgotten Forge
 
-- **HP:** 20,000 (per spec)
-- **Type:** Boss (Construct-themed) | **Level:** 34
-- 3 Ley Anvils (2,000 HP each) act as shields. Each absorbs one
-  element (Flame, Storm, Frost). Attack an anvil with its matching
-  element to overload and destroy it. Destroy all 3 to break the
-  Architect's damage reduction.
-- While shielded: 50% damage reduction. Summons Forge Construct adds.
-  Attacks: Hammer Strike (heavy single-target), Molten Spray
-  (party-wide Flame), Precision Cut (high crit chance).
-- Unshielded: full damage, enraged. Faster attacks, no more summons.
-- **Weakness:** Storm
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Poison,
-  Berserk, Despair (Construct defaults + Boss defaults)
-- **Steal:** Forge Schematic (crafting)
-- **Drop:** Architect's Hammer (weapon)
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-### Stage 2: Grey Cleaver Unbound (Boss)
-
-The weapon awakens -- concentrated despair of centuries given form.
-
-- **HP:** 25,000 (per spec)
-- **Type:** Boss (Pallor-themed) | **Level:** 36
-- Cycles between 3 weapon stances (changes every 3 turns):
-  - **Greatsword:** Heavy single-target physical. Highest ATK.
-  - **Whip:** Party-wide attacks. Lower damage + Despair chance.
-  - **Shield:** Counter mode. Reflects all damage. BUT -- party
-    members with Despair deal bonus damage (+50%) during this
-    stance. Despair recognizes despair.
-- Periodically casts **Weight of Ages** -- party-wide Despair.
-- **The key:** Do not cure Despair during shield stance. Attack
-  through it. Players who learn this deal massive damage in the
-  window.
-- **Weakness:** Spirit
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
-- **Steal:** Despair Shard (crafting)
-- **Drop:** Grey Cleaver (Torren-exclusive greatsword)
-
-### Grey Cleaver — Cursed Weapon Quest
-
-**Reward:** Grey Cleaver (Torren-exclusive greatsword)
-
-An homage to FF6's Cursed Shield. The weapon that absorbed
-centuries of despair in the Forgotten Forge.
-
-**Tainted form:**
-- ATK +15, DEF -10, MDEF -10, SPD -10
-- Inflicts Despair on Torren at battle start
-- Weak to all elements while equipped
-- Cannot be sold or discarded
-
-**Purification:** Win 100 encounters against Pallor-type enemies
-with Grey Cleaver equipped on Torren. Counter does NOT reset if
-unequipped. Torren must be alive when battle is won. Counter is
-tracked per-weapon, not per-character.
-
-**Purified -- Pallor's End:**
-- ATK +55 (best greatsword)
-- Spirit element on all attacks
-- +50% damage vs Pallor-type enemies
-- Despair immunity for Torren
-- Absorbs Spirit element
+- **The Architect (Stage 1)** — Lv 34, 20,000 HP, Boss. 1 phase.
+- **Grey Cleaver Unbound (Stage 2)** — Lv 36, 25,000 HP, Boss. 1 phase.
+- **Grey Cleaver** — Cursed weapon quest. See [bosses.md](bosses.md).
 
 ---
 
@@ -575,81 +326,23 @@ in the grey light.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Pallor Echo* | Boss | 34 | 5,000 | 119 | 93 | 58 | 95 | 57 | 42 | 2,000 | 4,000 | Grey Echo Shard (100%) | Cael's Memory (100%) | Spirit | Void | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Phase 4, Wave 4 |
 
-### Pallor Echo (Mini-Boss)
+### Boss Notes — The Convergence
 
-- **HP:** 5,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 34
-- A complete identity consumed by the Grey -- Cael's shadow. Uses
-  his Phase 1 moveset at reduced power.
-- **Weakness:** Spirit
-- **Resistance:** Void
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
-- **Steal:** Grey Echo Shard (crafting)
-- **Drop:** Cael's Memory (key item)
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-### Cael, Knight of Despair (Boss)
-
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
+- **Pallor Echo** (Mini-Boss) — Lv 34, 5,000 HP, Boss. 1 phase.
+- **Cael, Knight of Despair** — Lv 36/38, Boss. 2 phases (Phase 1: 45,000 HP; Phase 2: 35,000 HP).
+- **The Pallor Incarnate** — Lv 40, 70,000 HP, Boss. 1 phase + conduit crystals.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *Cael, Knight of Despair (Phase 1)* | Boss | 36 | 45,000 | 126 | 97 | 62 | 100 | 60 | 43 | 10,000 | 15,000 | Cael's Knight Crest (100%) | Cael's Pendant (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
 | *Cael, Knight of Despair (Phase 2)* | Boss | 38 | 35,000 | 133 | 102 | 65 | 106 | 63 | 45 | — | — | — | — | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Convergence (Outer Ring) |
 
-**Phase 1 (45,000 HP):**
-- Uses enhanced versions of party abilities. Counters whoever
-  attacked last.
-- 75% HP: Despair Pulse (party-wide Despair debuff)
-- 50% HP: Shadow Step (disappears, reappears behind random party
-  member, critical strike)
-- 25% HP: "I'm doing this for you" -- brief invulnerability during
-  dialogue
-- 0% HP: Cael staggers but Pallor surges through him. Phase 2 begins.
-
-**Phase 2 (35,000 HP):**
-- Full Pallor aggression. No more calculated counters.
-- Pallor Rend -- heavy single-target physical, 600--700 damage,
-  ignores 25% DEF
-- Grey Tide -- party-wide AoE, 400--500 damage + Despair status
-- 50% HP: "I can still hear you. That makes it worse."
-- 0% HP: Cael falls. The machine activates. Anchor destruction
-  phase begins.
-
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal (Phase 1):** Cael's Knight Crest (accessory -- Edren only,
-  +20 all stats)
-- **Drop (Phase 1):** Cael's Pendant (key item — personal memento)
-
-### The Pallor Incarnate (Final Boss)
-
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
-
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *The Pallor Incarnate* | Boss | 40 | 70,000 | 140 | 108 | 68 | 111 | 66 | 48 | 0 | 0 | Pallor Core (100%) | Cael's Sword (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence (Central Platform) |
-
-- **HP:** 70,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 40
-- 4 conduit crystals (3,000 HP each, 500 HP/turn regen each).
-  While active, the Incarnate regenerates 2,000 HP/turn total.
-  Destroying all 4 removes regen and reduces defense by 50%.
-- **Attacks:**
-  - Grey Cascade -- party-wide heavy magic damage
-  - Hollow Voice -- targets one member with personalized despair
-    (unique dialogue per character, inflicts Despair)
-  - Reality Tear -- removes one party member from battle for 2 turns
-  - Despair Tide (at 50%) -- arena shrinks, less room to maneuver
-- At 25% HP: Cael briefly speaks from within: "Lira..." (dialogue moment, not an attack)
-- At 0% HP: The Pallor is weakened but not destroyed. Cael is
-  partially freed. Act IV begins.
-- **"What the Stars Said" bonus:** If complete, ley line resonance
-  activates -- defense drops additional 25%, Hollow Voice fails
-  against party members with trial Resolve buffs.
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
-- **Steal:** Pallor Core (crafting -- Maren's ultimate staff)
-- **Drop:** Cael's Sword (key item / memorial)
 
 ---
 

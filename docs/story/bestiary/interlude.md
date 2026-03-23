@@ -101,36 +101,15 @@ Pallor Infection mechanic is introduced. 30% Pallor source encounters.
 | Pipe Wraith | Spirit | 20 | 980 | 70 | 30 | 29 | 39 | 26 | 24 | 32 | 60 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Rail Tunnels (Maintenance Shaft) |
 | Grey Mite Swarm | Pallor | 20 | 666 | 70 | 36 | 29 | 34 | 24 | 24 | 32 | 60 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Rail Tunnels (unique dense swarm) |
 | *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 63 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
-| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm, Void | Earth, Flame | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
+| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
 
-### Corrupted Boring Engine (Mini-Boss)
+### Boss Notes — Rail Tunnels
 
-- **HP:** 6,000 (per dungeons-world.md)
-- **Type:** Construct (not Boss — can be affected by more statuses)
-- Massive drill machine. Charges in straight lines, area slam. Disable
-  by hitting the exposed Arcanite core (back attack bonus). See
-  dungeons-world.md.
-- **Weakness:** Storm
-- **Immunities:** Poison, Sleep, Confusion, Berserk, Despair (Construct defaults)
-- **Steal:** Arcanite Core (crafting)
-- **Drop:** Drill Fragment (crafting)
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-### The Ironbound (Boss)
-
-> **Note:** docs/story/dungeons-world.md is authoritative for exact
-> phase mechanics. The following summarizes.
-
-- **HP:** 22,000 (per dungeons-world.md)
-- **Type:** Boss | **Level:** 24
-- **Phase 1 (22,000–11,000 HP):** Drill Charge, Steam Vent, Tunnel
-  Collapse, Bore Forward. See dungeons-world.md.
-- **Phase 2 (below 11,000 HP):** Hesitation windows, Desperate Bore.
-  Lira/Torren special interactions. See dungeons-world.md.
-- **Weakness:** Storm (150%), Void (125%)
-- **Resistance:** Earth (50%), Flame (75%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Reinforced Drill Bit (crafting)
-- **Drop:** Operator's Badge (key item)
+- **Corrupted Boring Engine** (Mini-Boss) — Lv 22, 6,000 HP, Construct. 1 phase.
+- **The Ironbound** — Lv 24, 22,000 HP, Boss. 2 phases.
 
 ### Scripted Set-Piece: "The Wave Hits"
 
@@ -181,26 +160,12 @@ revisited with full encounters. 40% Pallor source encounters.
 | Wailing Dead | Undead | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | — | Bone Dust (25%) | Spirit | — | — | Poison, Death | Valdris Catacombs (return visit) |
 | *The Undying Warden* | Boss | 25 | 8,000 | 87 | 72 | 45 | 73 | 43 | 33 | 2,000 | 3,500 | Catacomb Map (100%) | Warden's Binding (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Valdris Catacombs (Catacomb Heart, optional) |
 
-### The Undying Warden (Boss)
+### Boss Notes — Valdris Crown Catacombs
 
-> **Note:** docs/story/dungeons-city.md is authoritative. HP is a
-> **placeholder** (8,000) — not specified in dungeons-city.md. Must be
-> resolved before finalizing. Do not treat as canonical.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 8,000 (placeholder — TBD)
-- **Type:** Boss | **Level:** 25
-- **Phase 1:** Spectral swords + ley-crystal shards. Physical attacks
-  with spectral weapons.
-- **Phase 2 (below 50% HP):** Ley-crystal eruptions from the floor,
-  AoE magic damage.
-- **Special:** Torren can attempt to calm it mid-fight (special command
-  available if Torren is in the party). Changes final dialogue from
-  rage to gratitude.
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Catacomb Map (exploration — reveals all secret passages
-  in Valdris Crown on the minimap)
-- **Drop:** Warden's Binding (accessory: auto-Protect/Shell at battle
-  start), 2,000 Gold
+- **The Undying Warden** (Optional) — Lv 25, 8,000 HP, Boss. 2 phases.
 
 ---
 
@@ -221,24 +186,12 @@ has burrowed into the deepest junction. 45% Pallor source encounters.
 | Pallor Nest | Pallor | 23 | 1,248 | 80 | 44 | 32 | 38 | 27 | 26 | 40 | 74 | Pallor Sample (75%) | Nest Fragment (25%) | Spirit | — | — | Despair, Death | Caldera Undercity (deeper tunnels, infection source) |
 | *Pallor Nest Mother* | Boss | 25 | 6,000 | 87 | 72 | 45 | 73 | 43 | 33 | 1,500 | 3,000 | Broodchamber Map (100%) | Nest Mother's Core (100%) | Flame, Spirit | Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Caldera Undercity (deepest junction, sidequest) |
 
-### Pallor Nest Mother (Boss)
+### Boss Notes — Caldera Undercity
 
-> **Note:** docs/story/dungeons-city.md is authoritative.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 6,000 (per dungeons-city.md)
-- **Type:** Boss | **Level:** 25
-- **Attacks:** Brood Pulse (AoE + Despair chance + spawns 2 Grey
-  Crawlers), Nest Defense (passive +50% DEF while spawn alive),
-  Tendril Lash (2-target physical), Corruption Surge (zone damage),
-  Spawn Brood (3 Pallor Mites every 4 turns), Desperate Contraction
-  (below 25% — 3-turn charge, 600 AoE, interruptible with 1,000+
-  damage). See dungeons-city.md.
-- **Guest NPC:** Kerra (800 HP, ATK 18, DEF 14)
-- **Weakness:** Flame (150%), Spirit (125%)
-- **Resistance:** Frost (50%)
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion, Despair
-- **Steal:** Broodchamber Map (key item)
-- **Drop:** Nest Mother's Core (crafting), 1,500 Gold
+- **Pallor Nest Mother** (Optional) — Lv 25, 6,000 HP, Boss. 1 phase.
 
 ---
 
@@ -272,20 +225,12 @@ Occurs on Floor 4 of the Axis Tower. Non-preventable story moment.
 - No infection source needed — Kole channels the Pallor directly
 - **Narrative:** Kole willingly corrupts his own soldiers
 
-### General Vassar Kole (Boss)
+### Boss Notes — Axis Tower / Ironmark
 
-> **Note:** docs/story/dungeons-world.md is authoritative.
+For full AI scripts, phase mechanics, and scripted events, see
+[bosses.md](bosses.md).
 
-- **HP:** 30,000 (per dungeons-world.md encounter table; prose paragraph has a known typo of 12,000)
-- **Type:** Boss | **Level:** 28
-- **Phase 1 (100–50% HP):** Arcanite sword attacks, summons Pallor
-  Soldiers. See dungeons-world.md.
-- **Phase 2 (50–0% HP):** Channels Ironmark conduits, Grey Shockwave,
-  Despair aura. Destroy conduit crystals to remove aura.
-  See dungeons-world.md.
-- **Immunities:** Death, Petrify, Stop, Sleep, Confusion
-- **Steal:** Kole's Epaulettes (+15 DEF, +10 MDEF)
-- **Drop:** Map to the Convergence (key item)
+- **General Vassar Kole** — Lv 28, 30,000 HP, Boss. 2 phases.
 
 ---
 

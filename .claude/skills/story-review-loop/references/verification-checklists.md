@@ -133,3 +133,17 @@ Each item is a single check. Grows from Copilot gap analysis.
 - Boss hand-tuned Gold must not exceed the logistic S-curve cap
   (10,000 Gold). Boss Exp must not exceed 30,000. These caps are
   hard ceilings even for hand-tuned values.
+
+## Formatting Consistency (from Copilot gap analysis, PR #24)
+
+- Numeric ranges in stub/summary lines must use en dash (–), matching
+  the stat table format. Do not use double ASCII hyphens (--) or
+  single hyphens (-) for ranges. Example: "3,000–12,000 HP" not
+  "3,000--12,000 HP".
+- Multi-row boss stub lines must use "Phase 1: X HP; Phase 2: Y HP"
+  format, not "X + Y HP" which reads as a sum. The per-phase
+  breakdown prevents ambiguity about total vs. per-phase HP.
+- When multiple sections in one file share the same heading text
+  (e.g., repeated `### Boss Notes`), append the area/context name
+  to create unique anchors (e.g., `### Boss Notes — Rail Tunnels`).
+  Duplicate headings create broken anchor links on GitHub.
