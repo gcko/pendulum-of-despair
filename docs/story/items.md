@@ -218,15 +218,77 @@ Forgewright devices are central to Lira's identity as an engineer and inventor. 
 
 ### Core Mechanic
 
-*Content pending — see Task 4*
+- Each equipped Ley Crystal grants **1 invocation** in the Magic menu.
+- Invocations have **limited uses per rest cycle** — restored at inns, tents, cottages, and save points.
+- Power **scales with crystal level** (Lv 1–5; see [progression.md](progression.md) for leveling details).
+- Inspired by FF6's Esper summon system: powerful per-rest abilities that complement the standard spell list.
+- Invocations **cannot be used** during Ley Crystal Suppression (see [Axis Tower Suppression](#axis-tower-suppression) below).
 
 ### Invocation Catalog
 
-*Content pending — see Task 4*
+#### Standard Invocations
+
+| Crystal | Invocation | Element | Lv 1 Effect | Lv 5 Effect | Uses/Rest | Category |
+|---------|-----------|---------|-------------|-------------|-----------|----------|
+| Ember Shard | Forge Flare | Flame | AoE 150 dmg | AoE 500 dmg | 5 | Standard |
+| Iron Core | Ironwall | — (buff) | Party DEF +30%, 3t | Party DEF +50%, 3t | 4 | Standard |
+| Ley Prism | Ley Cascade | Ley | AoE 200 dmg | AoE 600 dmg | 4 | Standard |
+| Ward Stone | Null Barrier | — (buff) | Party MDEF +30%, 3t | Party MDEF +50%, 3t | 4 | Standard |
+| Quicksilver | Time Slip | — (buff) | Party Haste 2t | Party Haste 4t | 3 | Standard |
+| Fortune Stone | Fate's Hand | — (buff) | Party LCK +50%, 3t | Party LCK +100%, 3t | 5 | Standard |
+| Lifestone | Lifespring | Spirit | Party heal 300 HP | Party heal 1,500 HP | 6 | Standard |
+| Wellspring | Mana Tide | Ley | Party 20 MP | Party 80 MP | 4 | Standard |
+| Spirit Tear | Spirit Call | Spirit | AoE 180 dmg | AoE 550 dmg + Regen | 3 | Standard |
+| Forgewright Core | Siege Engine | Non-elem | Single 400 dmg + DEF break | Single 1,200 dmg + DEF break | 3 | Standard |
+
+#### Negative-Effect Invocations
+
+These crystals carry passive downsides (see [progression.md](progression.md)), but their invocations are among the most powerful in the game.
+
+| Crystal | Invocation | Element | Lv 1 Effect | Lv 5 Effect | Uses/Rest | Category |
+|---------|-----------|---------|-------------|-------------|-----------|----------|
+| Flame Heart | Crucible Wrath | Flame | AoE 300 dmg | AoE 900 dmg + Burn | 3 | Negative |
+| Frost Veil | Absolute Zero | Frost | AoE 250 dmg | AoE 800 dmg + Slow | 3 | Negative |
+| Storm Eye | Tempest Surge | Storm | AoE 250 dmg | AoE 800 dmg (random target) | 4 | Negative |
+| Grey Remnant | Pallor Touch | Void | AoE 350 dmg | AoE 1,000 dmg + Despair | 2 | Negative |
+
+#### Special Invocations
+
+| Crystal | Invocation | Element | Lv 1 Effect | Lv 5 Effect | Uses/Rest | Category |
+|---------|-----------|---------|-------------|-------------|-----------|----------|
+| Dawn Fragment | First Light | Non-elem | AoE 500 dmg | AoE 200 dmg | 8→2 | Special |
+| Convergence Shard | Convergence Pulse | Non-elem | AoE 100 dmg | AoE 2,000 dmg | 1 | Special |
+| Null Crystal | Void Shield | — (buff) | Party Despair immune 3t | Party Despair immune 3t | 2 | Special |
+| Cael's Echo | Cael's Resolve | — (buff) | Party +20% all stats 3t + 500 HP | Same | 1 | Special |
+
+**Dawn Fragment — level scaling (invest vs. exploit):**
+
+| Level | Damage | Uses/Rest |
+|-------|--------|-----------|
+| Lv 1 | 500 | 8 |
+| Lv 2 | 400 | 6 |
+| Lv 3 | 300 | 4 |
+| Lv 4 | 250 | 3 |
+| Lv 5 | 200 | 2 |
+
+**Convergence Shard — level scaling:**
+Lv 1–4: AoE 100 dmg, 1 use. Lv 5: AoE 2,000 dmg, 1 use. The Shard is functionally inert until fully leveled — a long-term investment that pays off in the endgame.
 
 ### Axis Tower Suppression
 
-*Content pending — see Task 4*
+- **Axis Tower Floor 1:** All invocations are greyed out in the Magic menu ("Ley interference detected").
+- **Stat bonuses still apply** — passive, permanent bonuses from crystals are unaffected.
+- **Only invocations are suppressed** (active abilities). Standard spells and abilities function normally.
+- **Restored** after defeating Kole and destroying the conduit crystals.
+- **Design intent:** Forces reliance on items, character abilities, and Forgewright devices. Players who over-invest in invocations and neglect other systems will struggle in Axis Tower.
+
+### Design Notes
+
+- **FF6 Esper inspiration:** Invocations mirror the Esper summon system — powerful once-per-rest abilities that complement but do not replace standard combat options.
+- **Uses scale inversely with power:** Weaker utility invocations (Forge Flare, Fate's Hand) have 4–6 uses; devastating attacks (Pallor Touch, Convergence Pulse) have 1–2.
+- **Dawn Fragment's "invest vs. exploit" dilemma:** Using Dawn Fragment early provides 8 uses of a strong AoE. Leveling it to Lv 5 reduces uses to 2 with weaker damage — but unlocks the crystal's powerful passive stat bonuses. Players must decide when the passive payoff outweighs the active loss.
+- **Negative-effect crystals:** The passive downsides of Flame Heart, Frost Veil, Storm Eye, and Grey Remnant are offset by their invocations being the strongest elemental attacks available. Equipping them is a calculated risk.
+- **Invocations and stat bonuses are independent systems.** A crystal's passive stat bonuses apply at all times (except Suppression for invocations only). Invocations are the active, limited-use component.
 
 ---
 
