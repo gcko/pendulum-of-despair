@@ -114,3 +114,15 @@ Each item is a single check. Grows from Copilot gap analysis.
 - Before assigning a Tier N entry to a family, verify the family
   actually HAS that many tiers in palette-families.md. A 3-tier
   family cannot have a Tier 4 entry.
+
+## Stat Table Clarity (from Copilot gap analysis, PR #22 round 3)
+
+- When an enemy has a cycling or context-dependent elemental profile
+  (e.g., Confluence Elemental's rotating cycle), use "Varies (cycle)"
+  or "Varies (context)" in the stat table Weak/Absorbs columns. Em
+  dash (—) reads as "none" and will mislead implementers.
+- Design note descriptions of abilities must not contradict the stat
+  table row. If the stat table says "Absorbs=Ley" (fixed baseline),
+  the design note must not say "absorbs varies per encounter." Describe
+  variable behavior as attack/cast element variation, not absorption
+  variation.
