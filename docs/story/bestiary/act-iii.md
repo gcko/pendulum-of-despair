@@ -104,10 +104,10 @@ with special resolution mechanics. One is non-combat.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The Crowned Hollow* | Boss | 30 | 8,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Crown Fragment (100%) | Crown Shard (100%) | Spirit | Physical | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 1 |
-| *The Perfect Machine* | Boss | 30 | 7,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Cael's Gear (100%) | Unfinished Ring (100%) | Void | Flame | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 2 |
-| *The Last Voice* | Boss | 32 | 6,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Petrified Seed (100%) | Petrified Heartwood (100%) | Flame | Spirit | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 3 |
-| *The Index* | Boss | 32 | 7,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Lost Page (100%) | Archivist's Lens (100%) | Spirit | Void | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 5 |
+| *The Crowned Hollow* | Boss | 30 | 8,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Crown Fragment (100%) | Crown Shard (100%) | Spirit (150%) | Physical (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 1 |
+| *The Perfect Machine* | Boss | 30 | 7,000 | 105 | 84 | 53 | 86 | 51 | 38 | 2,000 | 4,000 | Cael's Gear (100%) | Unfinished Ring (100%) | Void (150%) | Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 2 |
+| *The Last Voice* | Boss | 32 | 6,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Petrified Seed (100%) | Petrified Heartwood (100%) | Flame (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 3 |
+| *The Index* | Boss | 32 | 7,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Lost Page (100%) | Archivist's Lens (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 5 |
 
 > **The Open Door** (Trial 4 -- Sable's Trial) is a non-combat
 > encounter. No stat block. Sable faces shadows of herself and must
@@ -220,7 +220,7 @@ of the main story. Multi-phase encounter at Plateau's Edge
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome + Grey Mist Essence (100%) | Spirit | Void, Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
+| *Vaelith, the Ashen Shepherd* | Boss | 34 | 50,000 | 119 | 93 | 58 | 95 | 57 | 42 | 10,000 | 15,000 | Vaelith's Quill (100%) | Ashen Scholar's Tome + Grey Mist Essence (100%) | Spirit (125%) | Void (50%), Frost (75%, Phase 1 only) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Pallor Wastes Section 5 (Plateau's Edge) |
 
 ### Vaelith (Boss)
 
