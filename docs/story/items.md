@@ -167,19 +167,50 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 ### Core Mechanic
 
-*Content pending — see Task 3*
+- **Lira crafts** at save points, camps, and inns — never mid-battle.
+- **Anyone can USE** a device in battle, but only Lira can **CRAFT** them.
+- **5 active device types** may be carried at once. Each type stacks to **3** (max 15 total devices).
+- **Pre-crafted devices persist** when Lira leaves the party (e.g., during the Convergence split). Plan ahead.
 
 ### Recipes
 
-*Content pending — see Task 3*
+| Device | Category | Effect | Materials | Gold | Unlocked |
+|--------|----------|--------|-----------|------|----------|
+| Thermal Charge | Offensive | Flame AoE: 400 dmg | 2 Element Shard + 1 Scrap Metal | 100 | Act I (Lira joins) |
+| Frost Bomb | Offensive | Frost AoE: 400 dmg | 2 Element Shard + 1 Crystal Shard | 100 | Act II (Ashmark) |
+| Shock Coil | Offensive | Storm single: 600 dmg + Slow | 1 Elemental Core + 1 Scrap Metal | 200 | Act II (Ashmark) |
+| Pallor Grenade | Offensive | Spirit AoE: 500 dmg (2x vs Pallor) | 2 Pallor Sample + 1 Spirit Essence | 250 | Act III (Pallor Wastes) |
+| Barrier Node | Defensive | Party DEF +25%, 3 turns | 2 Scrap Metal + 1 Crystal Shard | 150 | Act II (Ashmark) |
+| Ward Emitter | Defensive | Party MDEF +25%, 3 turns | 2 Crystal Shard + 1 Ether Wisp | 150 | Act II (Ashmark) |
+| Mending Engine | Defensive | Heal 800 HP + cure Poison/Burn | 2 Beast Hide + 1 Spirit Essence | 150 | Act I (Lira joins) |
+| Flashbang | Utility | All enemies: 80% Blind, 2 turns | 1 Element Shard + 1 Bone Fragment | 100 | Act I (Lira joins) |
+| Gravity Anchor | Utility | All enemies: SPD -30%, 3 turns | 1 Scrap Metal + 1 Arcanite Shard | 300 | Interlude (Rail Tunnels) |
+| Disruption Pulse | Utility | Remove all enemy buffs | 1 Arcanite Shard + 1 Pallor Sample | 350 | Interlude (Rail Tunnels) |
+| Arcanite Lance | Advanced | Non-elem single: 1,500 dmg | 1 Arcanite Core + 1 Elemental Core | 500 | Act III (Forgotten Forge) |
+| Emergency Beacon | Advanced | Revive all fainted at 50% HP | 1 Arcanite Core + 2 Spirit Essence | 800 | Post-Convergence |
+| Pallor Salve | Consumable/Craft | Cure Despair (instant) | 2 Pallor Sample + 1 Spirit Essence | 200 | Act III (Pallor Wastes) |
 
 ### Unlocking
 
-*Content pending — see Task 3*
+Recipes unlock as the story progresses and Lira encounters new materials and schematics:
+
+| Phase | Recipes Available |
+|-------|-------------------|
+| Act I (Lira joins) | Thermal Charge, Mending Engine, Flashbang |
+| Act II (Ashmark) | Frost Bomb, Shock Coil, Barrier Node, Ward Emitter |
+| Interlude (Rail Tunnels) | Gravity Anchor, Disruption Pulse |
+| Act III (Pallor Wastes) | Pallor Grenade, Pallor Salve |
+| Act III (Forgotten Forge) | Arcanite Lance |
+| Post-Convergence | Emergency Beacon |
 
 ### Design Philosophy
 
-*Content pending — see Task 3*
+Forgewright devices are central to Lira's identity as an engineer and inventor. The system serves several design goals:
+
+- **Character identity:** Crafting is Lira's unique contribution — no other party member can create devices, reinforcing her role as the party's engineer.
+- **Material economy:** Enemy drops and exploration rewards gain tangible purpose through the crafting system. Players weigh selling materials for gold against saving them for devices.
+- **Pre-dungeon planning:** The 5-type active loadout forces players to anticipate what they will face. Bringing Pallor Grenades into the Pallor Wastes is wise; bringing them into a fire dungeon wastes a slot.
+- **Story-locked progression:** Recipe unlocking tracks narrative milestones, ensuring new devices arrive when the story introduces the threats they counter.
 
 ---
 
