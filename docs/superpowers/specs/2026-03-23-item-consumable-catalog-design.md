@@ -8,8 +8,9 @@ catalog: consumables with effects and prices, crafting materials with
 dual-purpose economy, key items with auto-use rules, Ley Crystal
 invocations with limited uses, and Lira's Forgewright battle devices.
 
-**Scope:** ~45 consumables + ~40 crafting materials + ~35 key items +
-18 crystal invocations + ~12 Forgewright device recipes.
+**Scope:** ~32 consumables + ~12 Forgewright devices (~44 usable item
+types total) + ~67 crafting materials + ~24 key items + 18 crystal
+invocations.
 
 **Reference:** `docs/references/items/quick-stats.md` — FF6's 45 items
 is our target for consumables. CT's stat capsules and SoM's Watts
@@ -63,8 +64,9 @@ Each cure maps 1:1 to a status, plus Remedy as the expensive universal.
 | Eye Drops | Blind | 50 | Act I shops |
 | Soft Stone | Petrify | 200 | Act II shops |
 | Chronos Dust | Slow | 150 | Act II shops |
-| Remedy | All statuses except Stop, Despair, Faint | 1,000 | Act II shops |
-| Pallor Salve | Despair (4-turn reduction → instant cure) | 2,500 | Act III Oases only (very limited stock) |
+| Smelling Salts | Confusion | 75 | Act I shops |
+| Remedy | All statuses except Stop, Berserk, Despair, Faint | 800 | Act II shops |
+| Pallor Salve | Despair (instant cure) | 2,500 | Act III Oases only (limited stock). Also craftable: 2 Pallor Sample + 1 Spirit Essence (Forgewright recipe, unlocked Act III) |
 | Hope Shard | Despair (instant cure, per magic.md) | — | Rare chest/quest reward only (not sold) |
 
 > **Design note on Despair:** Per magic.md, Despair "cannot be cured by
@@ -113,13 +115,13 @@ in shops. Each grants a permanent +1 to one stat for one character.
 | HP Healing | 8 |
 | MP Restoration | 3 |
 | Revival | 2 |
-| Status Cure | 9 |
+| Status Cure | 10 |
 | Battle Utility | 3 |
 | Stat Capsules | 6 types (~82 total) |
-| **Total Consumable Types** | **31** |
+| **Total Consumable Types** | **32** |
 
 With Lira's Forgewright devices (~12 types, Section 4), total
-unique consumable/usable items reaches **~43** — right at the FF6
+unique consumable/usable items reaches **~44** — right at the FF6
 sweet spot of 45.
 
 ---
@@ -167,7 +169,7 @@ on enemy level and rarity.
 | Material | Source Type | Sell Price | Crafting Use |
 |----------|-----------|------------|--------------|
 | Arcanite Shard | Carradan Constructs | 200 | Advanced Forgewright devices |
-| Arcanite Core | Boss steal | 500 | High-tier weapon/armor forging |
+| Arcanite Core | Construct mini-boss steal (75%), rare Construct drops | 200 | High-tier weapon/armor forging |
 | Pallor Sample | Pallor enemies | 150 | Anti-Pallor consumables, Pallor Salve |
 | Grey Residue | Pallor enemies | 100 | Void-element infusions |
 
@@ -176,8 +178,8 @@ on enemy level and rarity.
 | Material | Source Type | Sell Price | Crafting Use |
 |----------|-----------|------------|--------------|
 | Arcanite Ingot | Fixed dungeon locations (3 total) | 1,000 | Lira's ultimate weapon/armor |
-| Pallor Core | Pallor Incarnate steal | 2,000 | Maren's ultimate staff |
-| Grey Mist Essence | Vaelith drop | 1,500 | Lira's ultimate weapon |
+| Pallor Core | Pallor Incarnate steal (unique, 1 in game) | — | Maren's ultimate staff. Cannot be sold. |
+| Grey Mist Essence | Vaelith defeat (secondary drop in bosses.md scripted event) | — | Lira's ultimate weapon. Cannot be sold. |
 | Dreamer's Fault materials (8 types) | Post-game age-specific | 300–800 | Age-specific crafting recipes |
 
 ### 2.3 Complete Material List
@@ -185,17 +187,17 @@ on enemy level and rarity.
 All materials already named in bestiary drop tables, organized by
 source enemy type. The item catalog must include every one of these.
 
-**Beast Parts (15):**
+**Beast Parts (20):**
 Beast Hide, Sharp Fang, Drake Fang, Drake Scale, Serpent Fang,
 Leech Ichor, Lurker Shell, Wolf Pelt, Boar Tusk, Hawk Feather,
 Hare Pelt, Beetle Carapace, Crab Claw, Viper Fang, Mite Husk,
 Roach Wing, Rat Tail, Vermin Fang, Crawler Shell, Petrified Bark
 
-**Construct Salvage (7):**
+**Construct Salvage (6):**
 Scrap Metal, Crystal Shard, Drill Fragment, Molten Gear, Hound Gear,
-Stone Fragment, Arcanite Core
+Stone Fragment
 
-**Spirit/Elemental (4):**
+**Spirit/Elemental (5):**
 Ether Wisp, Spirit Essence, Spirit Dust, Element Shard, Elemental Core
 
 **Pallor (5):**
@@ -207,11 +209,29 @@ Bone Fragment, Bone Dust
 **Arcanite (3):**
 Arcanite Shard, Arcanite Core, Arcanite Ingot
 
+**Humanoid/Flavor Drops (14):**
+Compact Insignia, Elite Insignia, Pallor Insignia, Leather Pouch,
+Stolen Purse, Bandit's Coin, Repair Kit, Ballista Bolt, Pilot's
+Goggles, Royal Signet, Roc Feather, Forge Hammer, Ley Residue,
+Pallor Blade
+
+> These are primarily sell-only vendor trash from humanoid and rare
+> enemies. Some may gain crafting uses in Gap 1.5 (Equipment) or
+> Gap 3.5 (Crafting). For now, they have sell prices only.
+
 **Post-game Placeholders (8):**
 Ancient Glyph, Carved Stone, Crystal Fragment, Prism Shard,
 Living Bark, Heartwood Splint, Iron Cog, Tempered Plate
 
-**Total: ~44 unique materials**
+**Boss-Specific Materials (4):**
+Dark Scale (Corrupted Spawn), Vein Shard (Vein Guardian steal),
+Ley Crystal Fragment (Ley Colossus/Ley Titan steal),
+Reinforced Drill Bit (Ironbound steal)
+
+> These boss steals are crafting materials or sell-only items.
+> Exact crafting uses defined in Gap 1.5 (Equipment).
+
+**Total: ~67 unique materials**
 
 ### 2.4 Sell Price Formula
 
@@ -265,7 +285,7 @@ FF6's Esper summon system.
 | Storm Eye | Tempest Surge | Storm AoE: 250 → 800 + random targeting | 4 |
 | Grey Remnant | Pallor Touch | Void AoE: 350 → 1,000 + Despair chance (on enemies) | 2 |
 | **Special Crystals** | | | |
-| Dawn Fragment | First Light | Non-elemental AoE: 500 → 200 (DIMINISHES with level) | 8 → 2 |
+| Dawn Fragment | First Light | Non-elemental AoE: 500/400/300/250/200 (DIMINISHES) | 8/6/4/3/2 |
 | Convergence Shard | Convergence Pulse | Non-elem AoE: 100 → 100 → 100 → 100 → **2,000** (Lv 5 only) | 1 |
 | Null Crystal | Void Shield | Party Despair immunity, 3 turns | 2 |
 | Cael's Echo | Cael's Resolve | Party all stats +20%, 3 turns + heals 500 HP | 1 |
@@ -317,6 +337,7 @@ Lira can CRAFT them.
 - Maximum 15 devices total in the field
 - Crafting more requires being at a save point/camp
 - Leftover materials stay in inventory — only the forged devices are limited
+- **Party split persistence:** Pre-crafted devices persist in inventory even when Lira leaves the party (e.g., Convergence Anchor Stations). The party cannot craft NEW devices without Lira, but existing ones remain usable.
 
 ### 4.2 Device Recipes
 
@@ -480,13 +501,13 @@ item cure (or an explicit "no item cure" note):
 | Poison | Antidote | Also cures Burn |
 | Burn | Antidote | Shares cure with Poison |
 | Sleep | Alarm Clock | |
-| Confusion | Remedy | No dedicated single cure (like FF6) |
+| Confusion | Smelling Salts | Dedicated cure added |
 | Silence | Echo Drop | |
 | Blind | Eye Drops | |
 | Petrify | Soft Stone | |
 | Slow | Chronos Dust | |
 | Stop | — | Wears off only (per magic.md) |
-| Berserk | Remedy | No dedicated single cure |
+| Berserk | — | No item cure (Purge spell only, per magic.md) |
 | Faint | Phoenix Feather / Phoenix Pinion | Revival items |
 | Despair | Pallor Salve (Act III), Hope Shard (rare) | Cannot be cured by Remedy |
 
