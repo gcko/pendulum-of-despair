@@ -130,3 +130,7 @@ Each item is a single check. Grows from Copilot gap analysis.
   Multiple guaranteed drops (e.g., bosses with 2 rewards) should list
   the primary drop in the stat table and the secondary in the boss
   notes section. Do not combine with "+" in the cell.
+- Boss hand-tuned Gold must not exceed the logistic S-curve cap
+  (10,000 Gold). Boss Exp may exceed 30,000 only if explicitly
+  documented as an exception. The caps are hard floors even for
+  hand-tuned values.
