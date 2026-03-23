@@ -59,7 +59,7 @@ Lira IS hammers.
 | 3 | Interlude | 1-2 | 8 |
 | 4 | Act III | 2 | 12 |
 | 5 | Ultimate | 1 | 6 |
-| Forged | Various | 1-2 per type | ~8 |
+| Forged | Various | ~1 per type | ~5 weapons (+ 3 armor) |
 | **Total** | | **~10 per type** | **~60** |
 
 ### 2.2 Weapon Stat Template
@@ -100,20 +100,20 @@ progression.md.
 | Character | Current ATK Growth | Current ATK @ Lv 50 |
 |-----------|-------------------|---------------------|
 | Edren | +1.8 | 106 |
-| Cael | +1.5 | 88 |
+| Cael | +1.5 | 89 |
 | Lira | +1.2 | 73 |
 | Sable | +1.4 | 82 |
 | Torren | +0.8 | 49 |
-| Maren | +0.5 | 30 |
+| Maren | +0.5 | 31 |
 
 **Proposed ATK growth (reduced ~20%):**
 
 | Character | New ATK Growth | New ATK @ Lv 50 | Weapon % of Total (Tier 4, +48) |
 |-----------|---------------|-----------------|-------------------------------|
 | Edren | +1.4 | 87 | 87+48=135 → 36% from weapon |
-| Cael | +1.2 | 73 | 73+48=121 → 40% from weapon |
+| Cael | +1.2 | 74 | 74+48=122 → 39% from weapon |
 | Lira | +1.0 | 63 | 63+48=111 → 43% from weapon |
-| Sable | +1.1 | 68 | 68+48=116 → 41% from weapon |
+| Sable | +1.1 | 67 | 67+48=115 → 42% from weapon |
 | Torren | +0.6 | 39 | 39+48=87 → 55% from weapon |
 | Maren | +0.4 | 26 | 26+48=74 → 65% from weapon |
 
@@ -126,27 +126,31 @@ which makes sense — their physical damage is weapon-dependent.
 
 Physical damage formula: `ATK² / 6 - DEF`
 
+**Formula:** `ATK_at_level = floor(base + growth × (level - 1) + 0.5)`
+per progression.md canonical formula.
+
 **Edren Lv 18 (end of Act I), Tier 1 weapon (+10):**
-- New ATK at Lv 18: floor(18 × 1.4 + 18) = 43
-- Total ATK: 43 + 10 = 53
-- vs Lv 12 enemy (DEF 19): (53² / 6) - 19 = 449
+- New ATK at Lv 18: floor(18 + 1.4 × 17 + 0.5) = 42
+- Total ATK: 42 + 10 = 52
+- vs Lv 12 enemy (DEF 19): floor(52² / 6) - 19 = 431
 - Lv 12 enemy HP ~320: dies in 1 hit. Fine — Act I enemies at
   end-of-act level should be easy.
 
 **Edren Lv 18, Tier 2 weapon (+18, just bought in Act II):**
-- Total ATK: 43 + 18 = 61
-- vs Lv 18 enemy (DEF 26): (61² / 6) - 26 = 594
+- Total ATK: 42 + 18 = 60
+- vs Lv 18 enemy (DEF 26): floor(60² / 6) - 26 = 574
 - Lv 18 enemy HP ~819: dies in 2 hits. Good.
 
 **Edren Lv 35 (end of Act II), Tier 3 weapon (+32):**
-- New ATK at Lv 35: floor(35 × 1.4 + 18) = 67
-- Total ATK: 67 + 32 = 99
-- vs Lv 35 enemy (DEF 47): (99² / 6) - 47 = 1,587
+- New ATK at Lv 35: floor(18 + 1.4 × 34 + 0.5) = 66
+- Total ATK: 66 + 32 = 98
+- vs Lv 35 enemy (DEF 47): floor(98² / 6) - 47 = 1,553
 - Lv 35 enemy HP ~2,645: dies in 2 hits. Good.
 
 **Edren Lv 50 (post-game), Tier 4 weapon (+48):**
+- New ATK at Lv 50: floor(18 + 1.4 × 49 + 0.5) = 87
 - Total ATK: 87 + 48 = 135
-- vs Lv 50 enemy (DEF 65): (135² / 6) - 65 = 2,972
+- vs Lv 50 enemy (DEF 65): floor(135² / 6) - 65 = 2,972
 - Lv 50 enemy HP ~5,120: dies in 2 hits. Good.
 
 Numbers hold. The 20% ATK reduction is compensated by weapon ATK
@@ -230,7 +234,7 @@ resistance. Some have stat bonuses at higher tiers.
 | Category | Who Can Equip | DEF Modifier | Examples |
 |----------|--------------|-------------|---------|
 | Light Armor | All characters | ×1.0 | Leather, Chain, Mythril Vest |
-| Heavy Armor | Edren, Lira, Torren | ×1.3 | Plate, Crystal Mail, Genji Armor |
+| Heavy Armor | Edren, Lira | ×1.3 | Plate, Crystal Mail, Genji Armor |
 | Robes | Maren, Torren | ×0.7, MDEF ×1.5 | Silk Robe, Ley Vestment |
 
 This gives 3 body armor sub-types with different stat profiles,
@@ -337,7 +341,7 @@ the old one. Infusion requires materials + gold.
   save point)
 - Infused weapons gain an "(Infused: Element)" suffix in the menu
 
-### 7.3 Secret Infusion Synergies (6 combos)
+### 7.3 Secret Infusion Synergies (7 combos)
 
 When specific weapons receive specific infusions, a hidden synergy
 activates — granting a bonus effect beyond the normal elemental
@@ -351,6 +355,7 @@ damage. The weapon name changes and a discovery notification appears.
 | Any Maren Staff | Ley | Resonance Staff | MP cost of all spells reduced by 15% |
 | Any Sable Dagger | Void | Shadowfang | Steal rate +25%, successful steals have 15% chance to inflict Despair |
 | Any Lira Hammer | Flame | Crucible Maul | Forgewright device crafting gold cost reduced by 50% |
+| Any Edren Sword | Spirit | Oathkeeper | +15% damage when any party member has Faint status (protector's fury) |
 
 **Design intent:** Each synergy reflects the character's narrative
 identity meeting the element that defines their tradition or arc:
@@ -360,6 +365,7 @@ identity meeting the element that defines their tradition or arc:
 - Lira (Forgewright) + Flame = forge-fire mastery
 - Grey Cleaver (cursed by despair) + Spirit = despair's antithesis
 - Architect's Hammer (Construct-made) + Storm = Construct weakness
+- Edren's Sword + Spirit = protector's oath (fights harder when allies fall)
 
 Players discover these by experimentation. No in-game hints until
 the synergy activates — then the discovery notification says:
@@ -375,7 +381,7 @@ infusion. The weapon transforms..."
 Equipment prices follow a tier-based curve:
 
 ```
-base_price(tier) = floor(200 × 2.5^tier)
+base_price(tier) = floor(200 × 2.5^(tier - 1))
 ```
 
 | Tier | Base Price | Weapon | Head | Body |
@@ -407,13 +413,14 @@ base_price(tier) = floor(200 × 2.5^tier)
 
 Rather than designing dedicated "Flame Sword," "Ice Sword," etc.,
 the elemental infusion system (Section 7.2) handles this. Players
-choose which element to apply to their weapon. A few boss drops
-have FIXED elements that cannot be changed:
+choose which element to apply to their weapon. A few boss drops have FIXED elements that cannot be changed:
 
 | Weapon | Fixed Element | Source |
 |--------|-------------|--------|
 | Grey Cleaver (purified) | Spirit | Grey Cleaver Unbound boss |
-| Titan's Core (accessory) | Ley | Ley Titan boss |
+
+> **Note:** Titan's Core is an accessory with Ley affinity, not a
+> weapon. See Accessories section.
 
 ### 9.2 Elemental Armor
 
