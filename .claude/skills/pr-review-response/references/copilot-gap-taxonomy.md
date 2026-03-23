@@ -107,6 +107,21 @@ word-by-word comparison with dungeon source, not just HP verification.
   - Thunder Drake/Void Moth deployed at lower level+threat than projected
 - Ambiguity (missing early deployment notes): 2 comments
   - Thunder Drake, Void Moth, Void Wisp all lacked notes
+
+### PR #24 (2026-03-23) — 6 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Self-contradiction (formatting): 3 comments
+  - Archive Keeper HP dash inconsistency (double-hyphen vs en dash)
+  - Duplicate `### Boss Notes` headings in interlude.md and optional.md
+- Ambiguity: 1 comment
+  - Cael HP "45,000 + 35,000" reads as sum, not per-phase breakdown
+- False positive: 1 comment
+  - `.beads-credential-key` flagged as secret (it is not)
+
+**Outcome:** 3 new checklist items added to "Formatting Consistency"
+section: en dash for numeric ranges in stubs, per-phase HP notation
+for multi-row bosses, unique heading names when repeated in one file.
 - Reference format (naming inconsistency): 1 comment
   - "Crystal Warden Deep" vs "Crystal Warden (Deep)"
 
