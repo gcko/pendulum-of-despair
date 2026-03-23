@@ -166,7 +166,7 @@ Now unblocks: 1.4 (Items), 1.6 (Economy), 2.1 (XP Curve), 2.4 (Encounter Rates)
 - [x] Key items list (quest-required items with descriptions and usage)
 - [x] Crafting materials (Arcanite Ingots, Spirit Essence, Pallor Fragments, etc.)
 - [x] Crafting recipes for Lira's Forgewright system
-- [x] Item acquisition matrix: which items available from shops, chests, drops, steals, quests
+- [ ] Item acquisition matrix: which items available from shops, chests, drops, steals, quests — deferred to Gap 1.6 (Economy/shop inventories)
 - [x] Item stack limits and inventory constraints
 - [x] Sell price formula (typically 50% of buy price)
 
