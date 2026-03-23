@@ -4,10 +4,9 @@ Each family is a base creature design with 2–4 tiers (with multiple biome/batt
 power levels. See [README.md](README.md) Section 7 for tier rules,
 stat derivation, and naming conventions.
 
-> **Status:** Act I + Act II + Interlude families populated. Tier 1–4
-> entries present. 4 new families added (Sentry, Guardian, Royal Wraith,
-> Hound). ~15 existing families updated with Tier 3/4 entries and
-> dual-variant biome patterns.
+> **Status:** Act I + Act II + Interlude + Act III families populated.
+> Tier 1–4 entries present. No new families added in Act III —
+> existing families reach their Tier 3/4 endpoints.
 
 > **Early tier deployment:** Act files may deploy tier variants at
 > lower levels than projected here during narrative events. The
@@ -36,6 +35,10 @@ stat derivation, and naming conventions.
 > Vermin family has two Tier 3 biome variants: Tunnel Vermin (Lv 22,
 > Rail Tunnels — plague-carrying tunnel rats) and Blight Vermin (Lv 24,
 > blight zones). Same family tier, different biomes.
+>
+> **Act III early deployment:** Pallor Vermin (Tier 4) is deployed at
+> Lv 30 in the Pallor Wastes outer sections (projected Lv 38). Stats
+> in act-iii.md are computed from the deployment level.
 
 ---
 
@@ -70,6 +73,10 @@ stat derivation, and naming conventions.
 > The Dead family represents basic humanoid undead. Tier 2 already
 > appears in Act I (Fenmother's Hollow). Tier 4 transitions to Pallor
 > -- the corruption that raised them consumes what remains.
+>
+> **Act III early deployment:** Pallor Revenant (Tier 4) is deployed at
+> Lv 34 in overworld grey zones (projected Lv 40). Stats in act-iii.md
+> are computed from the deployment level.
 
 ---
 
@@ -82,10 +89,12 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Unstable Crystal | 3 | Elemental | — | Shard Burst (AoE on death) | Low |
 | 2 | Crystal Sentry | 20 | Elemental | Weak->Storm, Absorbs->Earth | +Ley Pulse (AoE Ley damage), +Crystal Shell (DEF up) | Standard |
-| 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Flame | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
+| 3 | Void Crystal | 34 | Elemental | Absorbs->Void, Weak->Spirit | +Nullify (dispel party buffs), +Shatter (high single-target) | Dangerous |
 
 > Crystals are environmental Elementals tied to ley energy. They never
 > become Pallor-type -- corruption twists them into Void affinity instead.
+> Void Crystal deploys at Lv 32 in Act III overworld grey zones
+> (projected Lv 34).
 
 ---
 
@@ -140,11 +149,22 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Ember Wisp | 5 | Elemental | — | Flicker (Flame ranged) | Low |
 | 2 | Ley Wisp | 18 | Elemental | — | +Chain Spark (2-target Storm), +Erratic Flight (SPD up) | Standard |
+| 3 | Pictograph Wisp | 30 | Elemental | Absorbs->Ley | +Script Read (reads attack descriptions aloud), +Text Bolt (Ley ranged) | Standard |
 | 3 | Void Wisp | 36 | Elemental | Weak->Spirit, Absorbs->Void | +Null Flare (Void AoE), +Blink (evade next attack) | Dangerous |
 
 > Wisps shift element affinity across tiers rather than gaining Pallor
-> corruption. Each tier is a different elemental variant. Three tiers
-> covers the main element progression.
+> corruption. Each tier is a different elemental variant. Wisps are
+> Elemental type throughout — never Spirit.
+>
+> Wisp family has two Tier 3 biome variants: Pictograph Wisp (Lv 30,
+> Dry Well F5 — ghostly text fragments, builders' records given form,
+> casts by reading attack descriptions aloud) and Void Wisp (Lv 36,
+> late-game — void-aligned). Same family tier, different biomes and
+> elemental affinities.
+>
+> **Act III early deployment:** Void Wisp (Tier 3) is deployed at
+> Lv 30 in Pallor Wastes inner clearings (projected Lv 36). Stats
+> in act-iii.md are computed from the deployment level.
 
 ---
 
@@ -163,6 +183,11 @@ stat derivation, and naming conventions.
 > Drakes are the apex beast family -- always Dangerous or Rare threat.
 > Each tier shifts elemental affinity. The Pallor Drake is one of the
 > most threatening non-boss enemies in the game.
+>
+> **Act III early deployment:** Thunder Drake (Tier 3) is deployed at
+> Lv 30 in overworld safe zones (projected Lv 36). Pallor Drake
+> (Tier 4) is deployed at Lv 36 in the Convergence (projected Lv 50).
+> Stats in act-iii.md are computed from the deployment level.
 
 ---
 
@@ -182,10 +207,14 @@ stat derivation, and naming conventions.
 > Serpents are fast and status-oriented. Tier 2 already appears in
 > Act I (Corrupted Spawn in Fenmother's Hollow). The Ashen Serpent
 > combines Poison and Despair for dangerous status stacking.
-
+>
 > Serpent family has two Tier 2 variants: Corrupted Spawn (Lv 10,
 > Fenmother's Hollow) and Deep Serpent (Lv 19, Ley Line Depths).
 > Same family tier, different biomes and levels.
+>
+> **Act III early deployment:** Ashen Serpent (Tier 4) is deployed at
+> Lv 34 in the Convergence (projected Lv 42). Stats in act-iii.md are
+> computed from the deployment level.
 
 ---
 
@@ -221,6 +250,10 @@ stat derivation, and naming conventions.
 > Lurkers are high-DEF ambush predators. Tank role with surprise
 > mechanics. The Pallor variant is terrifying -- back-attack Despair
 > means parties must stay vigilant.
+>
+> **Act III early deployment:** Pallor Lurker (Tier 4) is deployed at
+> Lv 36 in the Convergence (projected Lv 46). Stats in act-iii.md are
+> computed from the deployment level.
 
 ---
 
@@ -251,6 +284,8 @@ stat derivation, and naming conventions.
 | 1 | Polluted Elemental | 9 | Elemental | — | Frost Burst (AoE Frost), Elemental Shield (MDEF up) | Standard |
 | 2 | Raging Elemental | 24 | Elemental | Weak->Frost, Absorbs->Flame | +Eruption (high AoE Flame), +Melt (DEF down on target) | Dangerous |
 | 2 | Steam Elemental | 20 | Elemental | Weak->Frost, Absorbs->Flame | +Flame AoE, +Blind (steam cloud) | Standard |
+| 3 | Confluence Elemental | 28 | Elemental | Absorbs->rotating (cycle) | +Cycle Cast (Flame→Frost→Storm→Earth), absorbs element just cast, weak to NEXT element in cycle | Standard |
+| 3 | Slag Elemental | 34 | Elemental | Weak->Frost, Absorbs->Flame | +Molten Splash (Flame AoE), +Slag Wave (AoE + DEF down) | Standard |
 | 3 | Primordial Elemental | 40 | Elemental | Weak->Spirit, Absorbs->Ley | +Ley Storm (heavy AoE), +Elemental Shift (change weakness mid-fight), +Mana Burn (MP drain) | Rare |
 
 > The generic Elemental family represents corrupted ley energy
@@ -262,6 +297,13 @@ stat derivation, and naming conventions.
 > volcanic/forge areas — eruption specialist) and Steam Elemental
 > (Lv 20, Rail Tunnels — superheated steam, Flame/Blind). Same family
 > tier, different biomes and power levels.
+>
+> Elemental family has three Tier 3 biome variants: Confluence
+> Elemental (Lv 28, Ley Confluence — living ley vortex with rotating
+> element cycle puzzle), Slag Elemental (Lv 34, Forgotten Forge —
+> molten ley waste, failed forging experiment), and Primordial
+> Elemental (Lv 40, late-game ley groves). Same family tier, different
+> biomes and elemental affinities.
 
 ---
 
@@ -366,6 +408,12 @@ stat derivation, and naming conventions.
 > with an early Pallor transition at Tier 3 (level 36) because boars
 > are primal creatures easily overtaken by corruption. The Pallor Boar
 > is a berserker that hits the whole party.
+>
+> **Act III early deployment:** Pallor Boar (Tier 3) is deployed at
+> Lv 28 in the Pallor Wastes outer sections (projected Lv 36). The
+> Boar family has only 3 tiers — Tier 3 IS the Pallor endpoint. Stats
+> in act-iii.md are computed from the deployment level (Lv 28), not
+> the projected level.
 
 ---
 
@@ -386,6 +434,13 @@ stat derivation, and naming conventions.
 > it drags on. The Pallor Wolf pack is one of the most dangerous
 > regular encounters, as Pallor Howl applies Despair while buffing
 > every wolf simultaneously.
+>
+> **Act III early deployment:** Shadow Wolf (Tier 3) is deployed at
+> Lv 28 in the Pallor Wastes outer sections (projected Lv 33). Still
+> Beast type — fighting the Grey but not yet consumed. Pallor Wolf
+> (Tier 4) is deployed at Lv 34 in overworld grey zones (projected
+> Lv 45). Stats in act-iii.md are computed from the deployment level,
+> not the projected level.
 
 ---
 
@@ -411,6 +466,10 @@ stat derivation, and naming conventions.
 > Undercity — acid-spitting tunneler) and Blight Crawler (Lv 32,
 > late-game blight zones). Same family tier, different biomes and
 > power levels.
+>
+> **Act III early deployment:** Pallor Crawler (Tier 4) is deployed at
+> Lv 34 in overworld grey zones (projected Lv 46). Stats in act-iii.md
+> are computed from the deployment level.
 
 ---
 
@@ -425,6 +484,8 @@ stat derivation, and naming conventions.
 | 2 | Overclocked Automata | 20 | Construct | — | +Overdrive (2-hit), +Spark Burst (Storm AoE) | Standard |
 | 2 | Service Automata | 20 | Construct | — | +Haywire Drone (erratic multi-target), +Spark Burst (Storm AoE) | Standard |
 | 2 | Corrupted Forge Construct | 23 | Construct | — | +Flame Burst (fire AoE), +Meltdown (self-damage + AoE on death) | Standard |
+| 3 | Ley-Warped Construct | 32 | Construct | — | +Glitch Strike (unpredictable multi-tool attack), +Tool Flurry (3-hit random target) | Standard |
+| 3 | Forgewright Automaton | 34 | Construct | — | +War Protocol (ATK + DEF up), +Armor Plate (high DEF, passive) | Standard |
 | 3 | Haywire Colossus | 36 | Construct | Weak->Storm | +Self-Destruct (AoE on death), +Berserk Protocol (ATK up, random target) | Dangerous |
 
 > Automata are Carradan Compact machines. Construct-type throughout —
@@ -440,6 +501,13 @@ stat derivation, and naming conventions.
 > Service Automata and Corrupted Forge Construct are Tier 2 biome variants
 > (similar power tier (Lv 20–23 range) as Overclocked Automata), not Tier 3
 > as originally specified.
+>
+> Automata family has three Tier 3 biome variants: Ley-Warped Construct
+> (Lv 32, Dry Well F6 — overloaded ley core, glitching between
+> functions), Forgewright Automaton (Lv 34, Convergence — still
+> running on pre-Pallor orders), and Haywire Colossus (Lv 36, late-game
+> — self-destruct time-pressure). Same family tier, different biomes
+> and combat profiles.
 
 ---
 
@@ -452,6 +520,7 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Compact Soldier | 18 | Humanoid | — | Sword Strike, Cover (protects adjacent ally) | Low |
 | 2 | Compact Officer | 24 | Humanoid | — | +Rally (ATK up party), +Shield Bash (Stun) | Standard |
+| 3 | Deserter Captain | 30 | Humanoid | — | +Rally Cry (summon 2 deserters), +Desperate Slash (high single-target) | Standard |
 | 3 | Elite Guard | 34 | Humanoid | — | +Counter Stance, +Arcanite Blade (magic damage on physical hit) | Dangerous |
 | 4 | Pallor Soldier | 48 | Pallor | Weak->Spirit, Resist->Void | +Despair Strike, +Grey March (AoE + Despair), +Deathless (auto-revive once) | Dangerous |
 
@@ -465,6 +534,11 @@ stat derivation, and naming conventions.
 > heals Constructs), and Siege Ballista Crew (Lv 20, Standard — ranged,
 > back-row targeting). All share the same family but fill different
 > battlefield roles during the Valdris Siege gauntlet.
+>
+> Soldier family has two Tier 3 biome variants: Deserter Captain (Lv 30,
+> Overworld Act III safe zones — army deserters with no allegiance left)
+> and Elite Guard (Lv 34, late-game military encounters). Same family
+> tier, different contexts and power levels.
 
 ---
 
@@ -532,6 +606,10 @@ stat derivation, and naming conventions.
 > Wraith family has two Tier 1 variants: Pipe Wraith (Ashmark Factory,
 > Ley energy) and Tide Wraith (Bellhaven coast, water-bound). Same
 > power tier, different biomes and elemental profiles.
+>
+> **Act III early deployment:** Pallor Wraith (Tier 3) is deployed at
+> Lv 34 in overworld grey zones (projected Lv 44). Stats in act-iii.md
+> are computed from the deployment level.
 
 ---
 
@@ -550,6 +628,10 @@ stat derivation, and naming conventions.
 > but their group MAG buff makes them dangerous in numbers. Three
 > tiers — they shift element affinity rather than gaining Pallor
 > corruption.
+>
+> **Act III early deployment:** Void Moth (Tier 3) is deployed at
+> Lv 30 in overworld safe zones (projected Lv 38). Stats in
+> act-iii.md are computed from the deployment level.
 
 ---
 
@@ -568,6 +650,10 @@ stat derivation, and naming conventions.
 > ability bypasses front-row protection, forcing parties to consider
 > positioning. The Roc's Carry Off is a unique removal mechanic —
 > temporarily reducing party size mid-combat.
+>
+> **Act III early deployment:** Roc (Tier 3) is deployed at Lv 32
+> in overworld safe zones (projected Lv 38). Stats in act-iii.md
+> are computed from the deployment level.
 
 ---
 
@@ -587,22 +673,34 @@ stat derivation, and naming conventions.
 > attacks the land before it attacks people. The Pallor Treant's
 > Despair Roots combine crowd control with Despair, making it a
 > priority target despite its massive HP pool.
+>
+> **Act III early deployment:** Pallor Treant (Tier 3) is deployed
+> at Lv 30 in Pallor Wastes inner sections (projected Lv 36).
+> Stats in act-iii.md are computed from the deployment level.
 
 ---
 
 ## Sentry Family
 
 **Base:** Rail Sentry (Lv 18, Construct, Low)
-**Planned Tiers:** 2
+**Planned Tiers:** 3
 
 | Tier | Name | Lv | Type | Element Shift | New Abilities | Threat |
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Rail Sentry | 18 | Construct | — | Turret Fire (ranged), Scan Lock (increases accuracy) | Low |
 | 2 | Forgewright Sentry | 24 | Construct | — | +Cone Scan (reveals row), +High-Caliber Shot (heavy single-target) | Standard |
+| 3 | Warp Sentinel | 32 | Construct | — | +Warp Blink (teleport), +Precision Ley Beam (heavy single-target) | Standard |
+| 3 | Forge Sentinel | 32 | Construct | — | +Element Shield (absorbs one element per turn, cycling), +Ley Pulse (AoE) | Standard |
 
 > Sentries are stationary Construct turrets. Construct-type throughout —
-> immune to Pallor infection. Two tiers is sufficient; they exist to
-> provide ranged mechanical threats in industrial and military areas.
+> immune to Pallor infection. Tier 3 brings two biome variants that
+> represent ancient builder security systems.
+>
+> Sentry family has two Tier 3 biome variants: Warp Sentinel (Lv 32,
+> Dry Well F6 — ancient security that teleports short distances and
+> fires precision ley beams) and Forge Sentinel (Lv 32, Forgotten
+> Forge — larger sentry with cycling element absorption shield). Same
+> family tier, different biomes and combat profiles.
 
 ---
 
@@ -615,13 +713,20 @@ stat derivation, and naming conventions.
 |------|------|----|------|---------------|---------------|--------|
 | 1 | Tomb Guardian | 23 | Construct | — | Stone Slam (heavy physical), Sentinel Stance (counter-attack) | Standard |
 | 2 | Temple Guardian | 32 | Construct | Resist->Earth | +Quake Stomp (AoE + Stun), +Stone Skin (DEF way up 2 turns) | Dangerous |
+| 3 | Crystal Warden (Deep) | 30 | Construct | — | +Crystal Shell (regenerating armor), +Ley Pulse (AoE) | Standard |
+| 3 | Tempered Construct | 34 | Construct | — | +Heated Arms (Flame on physical), +Forge Slam (heavy AoE) | Standard |
 | 3 | Grey Guardian | 42 | Construct | Weak->Storm | +Pallor Pulse (Despair AoE, Construct-channeled), +Immovable (immune to knockback/Stun) | Rare |
 
 > Guardians are animated stone constructs. Construct-type throughout —
-> immune to infection. The Grey Guardian (Tier 3) is NOT infected — it
-> was BUILT by Pallor-corrupted engineers to channel Despair through
-> stone circuits. A weapon of despair, not a victim. Foreshadows the
-> Act III/IV "designed Pallor Construct" concept.
+> immune to infection. The Grey Guardian is NOT infected — it was BUILT
+> by Pallor-corrupted engineers to channel Despair through stone
+> circuits. A weapon of despair, not a victim.
+>
+> Guardian family has three Tier 3 biome variants: Crystal Warden (Deep)
+> (Lv 30, Dry Well F5 — crystalline armor that regenerates), Tempered
+> Construct (Lv 34, Forgotten Forge — superheated ley-infused builder
+> war machine), and Grey Guardian (Lv 42, late-game — designed Pallor
+> Construct). Same family tier, different biomes and power levels.
 
 ---
 
@@ -638,7 +743,8 @@ stat derivation, and naming conventions.
 
 > Royal Wraiths are spectral knights — the ghosts of Valdris royalty.
 > They command other spirits in combat. The Pallor Regent is a king
-> consumed by despair who commands shade armies.
+> consumed by despair who commands shade armies. Pallor Regent does
+> not appear in Act III; it is projected for post-game content.
 
 ---
 

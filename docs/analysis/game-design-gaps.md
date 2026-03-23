@@ -102,7 +102,7 @@ Now unblocks: 1.1 (Damage Formulas), 2.2 (ATB Mechanics)
   - [x] Bellhaven Tunnels (Smuggler Thug, Sea Crawler, Tide Wraith)
   - [x] Overworld Act II (11 enemies across 5 terrain types)
   - [x] Interlude enemies (Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark — 52 enemies + Pallor Infection mechanic)
-  - [ ] Act III enemies (enhanced variants, Pallor creatures)
+  - [x] Act III enemies (enhanced variants, Pallor creatures)
   - [x] Overworld Act I enemies per terrain type
 - [ ] Elemental profile per enemy (weaknesses, resistances, immunities, absorb)
 - [ ] Status effect vulnerability per enemy
@@ -348,6 +348,30 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 - [ ] Area-of-effect targeting rules (hit front row first? All enemies?)
 
 **Blocking:** Battle layout, damage calculation, enemy targeting
+
+---
+
+### 2.6 Pallor Wastes Oases
+
+**Status:** MISSING
+**Priority:** P1
+**Files:** None yet (add to `docs/story/locations.md` and/or new `docs/story/oases.md`)
+**Depends On:** 1.4 (Items), 1.5 (Equipment), 1.6 (Economy)
+
+**What's Needed:**
+- [ ] Number and placement of Oases in Act III overworld (closer to Convergence = rarer/smaller)
+- [ ] Each Oasis as a micro-settlement: displaced villagers from fallen towns
+- [ ] Services per Oasis:
+  - [ ] Rest point (full HP/MP restore, save point)
+  - [ ] Item shop (limited supplies — scarcity theme)
+  - [ ] Weapon/armor vendor (scrounged/repaired gear, not top-tier)
+  - [ ] Optional NPC quest givers (minor sidequests for crafting mats, lore, gear)
+- [ ] Oasis protection mechanic: what keeps the Pallor out? (Ley ward stones? A Spirit anchor? Sheer collective will?)
+- [ ] Narrative flavor: each Oasis has refugees from a specific fallen town, giving news/rumors about the spreading Grey
+- [ ] Oasis discovery: visible on overworld map, or hidden and require exploration?
+- [ ] Act progression: do Oases change/fall as the story advances? (e.g., one overrun between dungeon visits)
+
+**Blocking:** Act III overworld pacing, player resource management in endgame, narrative worldbuilding
 
 ---
 

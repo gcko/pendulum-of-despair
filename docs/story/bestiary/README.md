@@ -11,7 +11,7 @@
 | [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I (25 enemies) |
 | [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
-| [act-iii.md](act-iii.md) | Pallor Wastes, Convergence (TBD) |
+| [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Overworld (64 enemies) |
 | [optional.md](optional.md) | Sidequests, Superbosses, Rare Encounters (TBD) |
 | [bosses.md](bosses.md) | All Bosses & Mini-Bosses with AI Scripts (TBD) |
 | [palette-families.md](palette-families.md) | Base -> Variant Mappings |
@@ -145,7 +145,7 @@ and keeps the system simple (FF6's approach).
 | Act I | 1-12 | 1-12 |
 | Act II | 13-25 | 13-25 |
 | Interlude | 20-35 | 20-35 |
-| Act III | 30-45 | 30-45 |
+| Act III | 26-45 | 26-45 |
 | Post-game | 40-80 | 40-80 |
 | Optional / Superboss | 70-150 | 70-150 |
 
@@ -310,7 +310,10 @@ own level, with role adjustments and ability/element additions.
 > levels than projected during narrative escalation events (e.g., the
 > Interlude). The act file's enemy level is authoritative for stat
 > computation. palette-families.md levels are projections for the
-> "full power" appearance, not hard floors.
+> "full power" appearance, not hard floors. **Threat level is
+> preserved** — a Dangerous enemy remains Dangerous at any deployment
+> level. Only stats (computed from level) change; the reward
+> multiplier matches palette-families.md.
 
 ### Tier 4 Type Change
 

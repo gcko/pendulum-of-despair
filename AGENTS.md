@@ -26,6 +26,24 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 - Build shared package before testing: `pnpm run build:shared`
 - Use strict TypeScript — no `any` types
 - **Run story-review-loop after fixing PR review comments.** When `/pr-review-response` fixes valid Copilot comments (any file edit, not just replies), `/story-review-loop <PR#> 1` MUST run before pushing. This is non-negotiable and enforced by the PUSH-GATE in the skill.
+- **Read the FULL skill file, not the system-reminder version.** The system-reminder version of `/pr-review-response` is INCOMPLETE — it omits Steps 6 (gap analysis) and 6b (story-review-loop) entirely. You MUST read `.claude/skills/pr-review-response/SKILL.md` before executing the skill. This rule exists because the agent repeatedly followed the incomplete system-reminder version on PR #22, skipping mandatory gap analysis and story-review-loop steps.
+
+### pr-review-response PUSH-GATE (mandatory)
+
+When running `/pr-review-response` and Copilot has commented, STOP
+before `git push`. Complete ALL steps in order:
+
+- [ ] **Step 5:** Fixes committed locally (NO push)
+- [ ] **Step 6:** Copilot gap analysis completed — categorize every
+  comment using `copilot-gap-taxonomy.md`, map to responsible agent,
+  check verification-checklists.md for existing coverage, propose
+  new checklist items, present to user for approval, commit updates
+- [ ] **Step 6b:** `/story-review-loop <PR#> 1` run and reports CLEAN
+- [ ] **Step 6b fixes:** If the loop found issues, fix and re-commit
+- [ ] **ONLY THEN:** `git push`
+
+If ANY checkbox is unchecked, DO NOT PUSH. This is the ONLY
+authorized push point in the entire pr-review-response workflow.
 
 ---
 
