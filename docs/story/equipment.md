@@ -16,10 +16,11 @@
   - [Weapon ATK Progression by Tier](#weapon-atk-progression-by-tier)
   - [Swords (Edren)](#swords-edren)
   - [Greatswords (Cael)](#greatswords-cael)
-  - [Staves (Torren, Maren)](#staves-torren-maren)
-  - [Daggers (Lira)](#daggers-lira)
-  - [Hammers (Sable)](#hammers-sable)
-  - [Spears (Cael alt, Sable alt)](#spears-cael-alt-sable-alt)
+  - [Staves (Maren)](#staves-maren)
+  - [Daggers (Sable)](#daggers-sable)
+  - [Hammers (Lira)](#hammers-lira)
+  - [Spears (Torren)](#spears-torren)
+  - [Weapon Summary by Tier](#weapon-summary-by-tier)
 - [Head Armor](#head-armor)
 - [Body Armor](#body-armor)
   - [Light Armor](#light-armor)
@@ -101,12 +102,12 @@ a secondary type with reduced proficiency.
 
 | Character | Primary Type | Secondary Type |
 |-----------|-------------|----------------|
-| Edren     | Sword       | —              |
-| Cael      | Greatsword  | Spear          |
-| Lira      | Dagger      | —              |
-| Sable     | Hammer      | Spear          |
-| Torren    | Staff       | —              |
-| Maren     | Staff       | —              |
+| Edren     | Sword       | –              |
+| Cael      | Greatsword  | –              |
+| Maren     | Staff       | –              |
+| Sable     | Dagger      | –              |
+| Lira      | Hammer      | –              |
+| Torren    | Spear       | –              |
 
 ### ATK Modifier by Weapon Type
 
@@ -153,13 +154,47 @@ All weapon tables in the sections below use these columns:
 
 ### Swords (Edren)
 
-*Content pending — see Task 2*
+Edren's weapon line. Swords use a ×1.0 ATK modifier -- balanced baseline
+with no penalties. Naming follows a knight/duty theme reflecting Edren's
+Compact oath. Occasional MAG or DEF bonuses appear on special or
+endgame swords.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Training Sword | 4 | – | – | – | – | 0 | Starting equipment |
+| Valdris Blade | 10 | – | – | – | 300 | 1 | Valdris shop |
+| Knight's Edge | 12 | – | – | – | 500 | 1 | Ember Vein chest |
+| Mythril Sword | 18 | – | – | – | 1,200 | 2 | Act II shops |
+| Compact Saber | 22 | – | – | Stolen Compact design | 2,000 | 2 | Ashmark chest |
+| Arcanite Blade | 35 | +5 MAG | – | Forged | Material | 3 | Lira forges (Interlude) |
+| Crystal Sword | 33 | – | – | – | 4,000 | 3 | Interlude shop |
+| Ley-Forged Longsword | 48 | – | Ley | – | 8,000 | 4 | Act III shop |
+| Pallor Bane | 52 | – | Spirit | +25% vs Pallor | 10,000 | 4 | Pallor Wastes chest |
+| Edren's Oath | 80 | +10 DEF | Spirit | Auto-Protect 1 turn at battle start | – | 5 | Edren sidequest |
 
 ---
 
 ### Greatswords (Cael)
 
-*Content pending — see Task 2*
+Cael's weapon line. Greatswords use a ×1.15 ATK modifier with a mandatory
+SPD penalty (–2 to –5). Naming follows a commander/shadow theme reflecting
+Cael's authority and eventual betrayal.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Recruit's Claymore | 5 | SPD –2 | – | – | – | 0 | Starting equipment |
+| Commander's Blade | 12 | SPD –2 | – | – | 400 | 1 | Valdris armory |
+| War Cleaver | 14 | SPD –3 | – | – | 600 | 1 | Fenmother chest |
+| Ironbound Greatsword | 22 | SPD –3 | – | – | 1,500 | 2 | Act II shop |
+| Twilight Edge | 26 | SPD –3 | – | +10% crit rate | 2,500 | 2 | Ley Line Depths chest |
+| Dusk Reaver | 40 | SPD –4 | – | – | 5,000 | 3 | Interlude shop (brief window) |
+
+> **Design note:** Cael's betrayal during the Interlude removes him from the
+> party permanently. Tiers 3--5 greatswords have extremely limited
+> availability. The Grey Cleaver (his narrative weapon) is actually a
+> Torren-exclusive spear-class weapon obtained post-betrayal. Cael's
+> greatswords represent who he *was*, not who he becomes. His equipment
+> line intentionally ends abruptly at Tier 3 with no Tier 4--5 entries.
 
 ---
 
