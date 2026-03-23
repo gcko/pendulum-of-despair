@@ -455,25 +455,103 @@ sell_price = floor(base_value x tier_multiplier)
 
 ## Key Items
 
+> **Inventory rules:** Key Items occupy a separate inventory tab. They cannot be sold, discarded, or stacked. Functional key items (dungeon access, schematics) auto-activate when their trigger conditions are met. Boss mementos and story items are purely narrative — they sit in the tab as trophies and lore anchors.
+
 ### Dungeon Access
 
-*Content pending — see Task 6*
+These items gate progression into specific dungeons or areas. They activate automatically when the player approaches the relevant trigger point — no manual use required.
+
+| Item | Acquired From | Auto-Use Trigger | Dungeon/Area Affected |
+|------|--------------|-----------------|----------------------|
+| Mine Water Vial | Ember Vein F2 chest | Approach Dying Ember Crystal | Ember Vein F3 |
+| Archivist's Codex | Archive of Ages quest | Approach sealed ley door | Ley Depths F5, Forgotten Forge |
+| Ironmark Tunnel Map | Interlude quest | Enter Ironmark passage | Ironmark Citadel |
+| Ironmark Key | Post-Kole, Axis Tower | Approach sealed Armory | Ironmark Armory |
+| Forgewright Master Key | Ashmark Factory quest | Approach Compact-era locked door | All Compact dungeons |
+| Boring Engine Schematic | Caldera Undercity secret room | Give to Lira | Unlocks Forgewright recipe |
+| Map to the Convergence | General Kole drop | Open world map | Reveals Convergence location |
+| Catacomb Map | Undying Warden steal | Open minimap in Valdris | Reveals secret passages |
+| Broodchamber Map | Pallor Nest Mother steal | Open map in Caldera | Reveals nest network |
+| Keeper's Index | Archive Keeper drop | Approach pictographic text | Completes Dry Well dictionary |
+
+> **Steal-only access items:** Catacomb Map and Broodchamber Map are only obtainable via stealing from their respective bosses. Missing these steals locks out optional content until New Game+.
 
 ### Boss Mementos
 
-*Content pending — see Task 6*
+Narrative trophies dropped by major bosses. These have no gameplay effect — they exist as story anchors and emotional bookmarks that sit in the Key Items tab.
+
+| Item | Dropped By | Description |
+|------|-----------|-------------|
+| Vein Guardian's Core | Vein Guardian | A crystalline core still warm with ember heat. |
+| Fenmother's Tear | Corrupted Fenmother | A single clear drop — the Fenmother's grief, crystallized. |
+| Operator's Badge | The Ironbound | Tarnished name badge. The second operator's name is still legible. |
+| Cael's Pendant | Cael (Phase 1) | A locket with a pressed flower inside. Lira recognizes it. |
+| Cael's Sword | Pallor Incarnate | The blade is cold. It will not rust. |
+| Vaelith's Quill | Vaelith | An 800-year-old scholar's quill. The ink is still wet. |
+| Lost Page | The Index | A single page from the catalogue. One name. One story. |
+| Grey Echo Shard | Pallor Echo | A fragment of someone Cael used to be. |
+
+> **8 mementos total.** Each memento corresponds to a major narrative turning point. They appear in the Key Items tab in the order acquired and cannot be reordered or hidden.
 
 ### Crafting Schematics
 
-*Content pending — see Task 6*
+Schematics are key items that unlock new Forgewright recipes when given to Lira. They are found in the world, not dropped by enemies (with one exception).
+
+| Item | Acquired From | Recipe Unlocked |
+|------|--------------|----------------|
+| Boring Engine Schematic | Caldera Undercity secret room | Advanced Forgewright weapon component |
+| Forge Schematic | The Architect (steal) | Arcanite Lance recipe prerequisite |
+
+> **Forge Schematic** is the only steal-only crafting schematic in the game. Missing it locks out the Arcanite Lance recipe until New Game+.
 
 ### Story Items
 
-*Content pending — see Task 6*
+Items that advance or gate specific plot events. Unlike dungeon access items, these do not auto-activate — they are checked by NPCs or event triggers during cutscenes.
+
+| Item | Acquired From | Plot Effect |
+|------|--------------|------------|
+| Fenmother's Blessing | Corrupted Fenmother | Safe passage through Fenmother's domain |
+| Compact Battle Standard | The Ashen Ram | Proof of Valdris Siege victory |
+| Pallor-Laced Iron | The Ashen Ram (steal) | Evidence of Pallor in Compact war machines |
+| Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
+
+> **Pallor-Laced Iron** and **Corrupted Tuning Fork** are steal-only story items. They unlock optional dialogue and lore scenes but are not required for main story progression.
 
 ### Equipment Cross-Reference
 
-*Content pending — see Task 6*
+The following **18 boss drops** are equipment pieces (weapons, armor, or accessories) rather than key items or materials. They are documented in full in the equipment catalog (Gap 1.5). Listed here for cross-reference to avoid duplication.
+
+| Equipment Drop | Dropped By | Slot |
+|---------------|-----------|------|
+| Colossus Shard | Ley Colossus | Accessory |
+| Drayce's Failsafe Core | Drayce | Accessory |
+| Warden's Binding | Forge Warden | Accessory |
+| Kole's Epaulettes | General Kole | Armor |
+| Crown Shard | Pallor Queen | Accessory |
+| Unfinished Ring | The Architect | Accessory |
+| Ashen Scholar's Tome | Ashen Scholar | Weapon (Sable) |
+| Titan's Core | Ley Titan | Accessory |
+| Nexus Crest | Nexus Guardian | Accessory |
+| Architect's Hammer | The Architect | Weapon (Lira) |
+| Grey Cleaver | Grey Knight | Weapon (Drayce) |
+| Cael's Knight Crest | Cael (Phase 1) | Accessory |
+| Cael's Memory | Pallor Incarnate | Accessory |
+| Scholar's Codex | Vaelith | Accessory |
+| Queen's Facet | Pallor Queen | Weapon (Sable) |
+| Root Crown | Elder Treant | Armor |
+| Warden's Core | Vein Guardian | Accessory |
+| Dreamer's Crest | Dreamer (final) | Accessory |
+
+> **Equipment drops vs. boss mementos:** Equipment drops are usable gear with stats. Boss mementos are narrative-only key items. Some bosses drop both (e.g., Cael Phase 1 drops Cael's Knight Crest as equipment AND Cael's Pendant as a memento).
+
+### Drake Fang Special Case
+
+**Drake Fang** is the only dual-purpose item in the game. It exists simultaneously as:
+
+- **Consumable:** Use in battle to deal 500 fixed damage to a single target. Particularly effective in the Vein Guardian fight where it bypasses the boss's high DEF.
+- **Crafting material:** Tier 2 beast part (sell value 80g) used in weapon crafting recipes.
+
+Drake Fangs stack in the **Materials** tab (not Consumables). When used in battle, one is consumed from the material stack. Players must weigh immediate combat utility against long-term crafting value.
 
 ---
 
