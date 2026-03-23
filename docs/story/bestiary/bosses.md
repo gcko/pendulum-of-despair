@@ -2317,7 +2317,7 @@ Scripted Events:
     - drop: Grey Cleaver (weapon; Torren-exclusive halberd-class
       polearm; ATK +55 when purified, Spirit element, +50% damage
       vs Pallor-type, Despair immunity. See equipment.md and
-      items.md Grey Cleaver Cursed Weapon Quest.)
+      items.md Grey Cleaver Cursed Weapon Quest)
 ```
 
 **Design Note:** The Grey Cleaver Unbound is one of the most

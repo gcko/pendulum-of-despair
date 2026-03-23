@@ -148,13 +148,13 @@ All weapon tables in the sections below use these columns:
 
 | Tier | Act | ATK Range | Price Range | Acquisition |
 |------|-----|-----------|-------------|-------------|
-| 0 — Starting | Prologue | 3—5 | Free | Initial equipment |
-| 1 | Act I | 8—12 | 200—600 | Shops, chests |
-| 2 | Act II | 15—22 | 800—2,500 | Shops, dungeons |
-| 3 | Interlude | 28—38 | 2,000—5,000 | Limited shops, chests |
-| 4 | Act III | 42—55 | 4,000—10,000 | Shops, Pallor Wastes |
-| 5 — Ultimate | Endgame | 65—100 | Not sold | Sidequests, bosses, Dreamer's Fault |
-| Forged | Various | +5—10 above tier | — (Forged) | Lira's Arcanite Forging |
+| 0 — Starting | Prologue | 3–5 | Free | Initial equipment |
+| 1 | Act I | 8–12 | 200–600 | Shops, chests |
+| 2 | Act II | 15–22 | 800–2,500 | Shops, dungeons |
+| 3 | Interlude | 28–38 | 2,000–5,000 | Limited shops, chests |
+| 4 | Act III | 42–55 | 4,000–10,000 | Shops, Pallor Wastes |
+| 5 — Ultimate | Endgame | 65–100 | Not sold | Sidequests, bosses, Dreamer's Fault |
+| Forged | Various | +5–10 above tier | — (Forged) | Lira's Arcanite Forging |
 
 ---
 
@@ -196,11 +196,11 @@ Cael's authority and eventual betrayal.
 | Dusk Reaver | 40 | SPD —4 | — | — | 5,000 | 3 | Interlude shop (brief window) |
 
 > **Design note:** Cael's betrayal during the Interlude removes him from the
-> party permanently. Tiers 3--5 greatswords have extremely limited
+> party permanently. Tiers 3–5 greatswords have extremely limited
 > availability. The Grey Cleaver (his narrative weapon) is actually a
 > Torren-exclusive spear-class weapon obtained post-betrayal. Cael's
 > greatswords represent who he *was*, not who he becomes. His equipment
-> line intentionally ends abruptly at Tier 3 with no Tier 4--5 entries.
+> line intentionally ends abruptly at Tier 3 with no Tier 4–5 entries.
 
 ---
 
@@ -222,7 +222,7 @@ research background.
 | Arcane Conduit | 18 | +16 MAG | — | — | 3,500 | 3 | Interlude shop |
 | Ley Conduit | 25 | +18 MAG | Ley | — | 7,000 | 4 | Act III shop |
 | Archive Staff | 22 | +20 MAG | — | +10% healing | 9,000 | 4 | Dry Well chest |
-| Maren's Requiem | 40 | +25 MAG | Ley | MP cost —10% | — | 5 | Crafted from Pallor Core |
+| Maren's Requiem | 40 | +25 MAG | Ley | MP cost -10% | — | 5 | Crafted from Pallor Core |
 
 ---
 
@@ -307,12 +307,12 @@ theme reflecting Torren's role as spiritspeaker.
 
 | Tier | Weapons Available | ATK Range | Characters |
 |------|-------------------|-----------|------------|
-| 0 — Starting | Training Sword, Recruit's Claymore, Scholar's Rod, Street Knife, Maintenance Wrench, Hunting Spear | 2--5 | All six |
-| 1 | Valdris Blade, Knight's Edge, Commander's Blade, War Cleaver, Ley Wand, Glyph Staff, Stiletto, Pickpocket's Blade, Iron Mallet, Pipe Hammer, Iron Lance, Spirit-Bound Spear | 6--14 | All six |
-| 2 | Mythril Sword, Compact Saber, Ironbound Greatsword, Twilight Edge, Mythril Staff, Runic Focus, Mythril Dagger, Trick Blade, Compact Sledge, Forge Hammer, Mythril Spear, Thornwood Pike | 10--26 | All six |
-| 3 | Arcanite Blade, Crystal Sword, Dusk Reaver, Resonance Rod, Arcane Conduit, Shadowsteel Knife, Whisper Edge, Forgewright Maul, Arcanite Maul, Thornspear, Wyrmbone Lance | 15--40 | All six (Cael: brief window) |
-| 4 | Ley-Forged Longsword, Pallor Bane, Ley Conduit, Archive Staff, Twilight Fang, Shade Razor, Piston Driver, Architect's Hammer, Ley Lance, Pallor Pike | 22--52 | Five (no Cael) |
-| 5 — Ultimate | Edren's Oath, Maren's Requiem, Sable's Thread, Lira's Masterwork, Grey Cleaver | 40--90 | Five (no Cael) |
+| 0 — Starting | Training Sword, Recruit's Claymore, Scholar's Rod, Street Knife, Maintenance Wrench, Hunting Spear | 2–5 | All six |
+| 1 | Valdris Blade, Knight's Edge, Commander's Blade, War Cleaver, Ley Wand, Glyph Staff, Stiletto, Pickpocket's Blade, Iron Mallet, Pipe Hammer, Iron Lance, Spirit-Bound Spear | 6–14 | All six |
+| 2 | Mythril Sword, Compact Saber, Ironbound Greatsword, Twilight Edge, Mythril Staff, Runic Focus, Mythril Dagger, Trick Blade, Compact Sledge, Forge Hammer, Mythril Spear, Thornwood Pike | 10–26 | All six |
+| 3 | Arcanite Blade, Crystal Sword, Dusk Reaver, Resonance Rod, Arcane Conduit, Shadowsteel Knife, Whisper Edge, Forgewright Maul, Arcanite Maul, Thornspear, Wyrmbone Lance | 15–40 | All six (Cael: brief window) |
+| 4 | Ley-Forged Longsword, Pallor Bane, Ley Conduit, Archive Staff, Twilight Fang, Shade Razor, Piston Driver, Architect's Hammer, Ley Lance, Pallor Pike | 22–52 | Five (no Cael) |
+| 5 — Ultimate | Edren's Oath, Maren's Requiem, Sable's Thread, Lira's Masterwork, Grey Cleaver | 40–90 | Five (no Cael) |
 
 ---
 
@@ -464,7 +464,7 @@ status-inflicting enemies grow more common.
 | Silence Ward | Silence immune | 800 | II | Interlude shop |
 | Stone Guard | Petrify immune | 1,500 | Int | Interlude shop |
 | Berserk Collar | Berserk immune | 2,000 | III | Act III shop |
-| Despair Ward | Despair immune | 5,000 | III | Act III Oases (very limited, 1--2 available) |
+| Despair Ward | Despair immune | 5,000 | III | Act III Oases (very limited, 1–2 available) |
 
 ### Elemental Resistance Accessories
 
@@ -621,10 +621,10 @@ have no gold price — they cost materials + a forging fee (300–500g).
 | Tier | Weapons | Head Armor | Body Armor (Light) | Body Armor (Heavy) | Robes | Accessories |
 |------|---------|------------|--------------------|--------------------|-------|-------------|
 | 0 | Free | Free | Free | — | — | — |
-| 1 | 250—600 | 200—350 | 300—500 | 400 | 300 | 300—500 |
-| 2 | 800—2,500 | 800—1,200 | 1,200—1,800 | 1,000—2,000 | 1,200 | 500—800 |
-| 3 | 2,000—5,000 | 2,500—3,000 | 3,200—3,500 | 4,500 | — | 1,500—3,000 |
-| 4 | 4,000—10,000 | 5,000—6,500 | 7,000—8,000 | 8,000—9,000 | 7,500 | 3,000—5,000 |
+| 1 | 250–600 | 200–350 | 300–500 | 400 | 300 | 300–500 |
+| 2 | 800–2,500 | 800–1,200 | 1,200–1,800 | 1,000–2,000 | 1,200 | 500–800 |
+| 3 | 2,000–5,000 | 2,500–3,000 | 3,200–3,500 | 4,500 | — | 1,500–3,000 |
+| 4 | 4,000–10,000 | 5,000–6,500 | 7,000–8,000 | 8,000–9,000 | 7,500 | 3,000–5,000 |
 | 5 | Not sold | Not sold | Not sold | Not sold | Not sold | Not sold |
 | Forged | — (Forged) | — (Forged) | — (Forged) | — | — (Forged) | — |
 
