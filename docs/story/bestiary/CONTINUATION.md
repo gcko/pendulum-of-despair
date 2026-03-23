@@ -4,7 +4,7 @@
 > is compacted or a new session starts, read this file FIRST to understand
 > what has been done, what remains, and how to continue.
 >
-> **Last updated:** 2026-03-23 (after Sub-project 3b Dreamer's Fault implementation)
+> **Last updated:** 2026-03-23 (after Sub-project 4 Boss Compendium verification)
 
 ---
 
@@ -17,9 +17,9 @@
 | **2b: Interlude** | COMPLETE | — (pending PR) | 52 | interlude.md, palette-families.md |
 | **3a: Act III** | COMPLETE | — (pending PR) | ~65 | act-iii.md, palette-families.md |
 | **3b: Optional** | COMPLETE | — (pending PR) | 24 | optional.md, palette-families.md |
-| **4: Boss Compendium** | NOT STARTED | — | ~20–25 target | bosses.md |
+| **4: Boss Compendium** | COMPLETE | — | 29+1 bosses | bosses.md |
 
-**Gap 1.3 status:** PARTIAL — Act I + Act II + Interlude + Act III + Optional complete. Only Boss Compendium remains (in `docs/analysis/game-design-gaps.md`)
+**Gap 1.3 status:** COMPLETE — Act I + Act II + Interlude + Act III + Optional + Boss Compendium all complete (in `docs/analysis/game-design-gaps.md`)
 
 ---
 
