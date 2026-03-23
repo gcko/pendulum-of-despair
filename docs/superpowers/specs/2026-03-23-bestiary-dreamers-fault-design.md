@@ -92,7 +92,7 @@ glyph-based magic, stone guardians. Floor rotation mechanic.
 | First Age Sentinel | 42 | Construct | Dangerous | Tank | Stone guardian. Geometric attacks. Rotates facing when floor rotates — attacks change based on facing. |
 | Glyphscribe | 44 | Humanoid | Dangerous | Caster | Scholar-soldier. Writes attack glyphs in the air. Each glyph charges for 1 turn, then fires. Interruptible. |
 | Carved Watcher | 46 | Construct | Dangerous | Balanced | A carved face in the wall that detaches. Tracks party movement. Stronger when the party is stationary. Animated stone — not a spirit. |
-| Ember Remnant | 48 | Elemental | Dangerous | Glass cannon | Dying flame from the First Age's collapse. High MAG, fragile. Self-destructs for massive AoE on death. |
+| Ember Remnant | 48 | Elemental | Dangerous | Glass cannon | Dying flame from the First Age's collapse. High ATK, fragile. Self-destructs for massive AoE on death. |
 
 ### 3.2 The Crystal Age (Floors 5–8, Lv 52–58) — Alien Crystal
 
