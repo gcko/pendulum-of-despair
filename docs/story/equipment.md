@@ -241,15 +241,72 @@ a street/shadow theme reflecting Sable's underworld background.
 
 ---
 
-### Hammers (Sable)
+### Hammers (Lira)
 
-*Content pending — see Task 4*
+Lira's weapon line. Hammers use a ×1.1 ATK modifier with no secondary
+stat bonuses -- pure physical damage tools. Naming follows a tool/forge
+theme reflecting Lira's engineering background.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Maintenance Wrench | 4 | – | – | – | – | 0 | Starting equipment |
+| Iron Mallet | 10 | – | – | – | 300 | 1 | Corrund shop |
+| Pipe Hammer | 12 | – | – | – | 500 | 1 | Rail Tunnels chest |
+| Compact Sledge | 20 | – | – | – | 1,200 | 2 | Act II shop |
+| Forge Hammer | 24 | – | Flame | – | 2,200 | 2 | Ashmark Factory chest |
+| Forgewright Maul | 40 | – | – | Forged | Material | 3 | Lira forges (Interlude) |
+| Arcanite Maul | 38 | – | – | – | 5,000 | 3 | Interlude shop |
+| Piston Driver | 52 | – | – | 15% Stun chance | 8,500 | 4 | Act III shop |
+| Architect's Hammer | 52 | – | Storm | +25% vs Constructs | – | 4 | The Architect boss drop |
+| Lira's Masterwork | 90 | +5 DEF | – | Forgewright device uses +1 | – | 5 | Crafted from Grey Mist Essence + Arcanite Ingot |
 
 ---
 
-### Spears (Cael alt, Sable alt)
+### Spears (Torren)
 
-*Content pending — see Task 4*
+Torren's weapon line. Spears use a ×0.95 ATK modifier -- slightly below
+swords but capable of back-row attacks. Naming follows a nature/spirit
+theme reflecting Torren's role as spiritspeaker.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Hunting Spear | 3 | – | – | – | – | 0 | Starting equipment |
+| Iron Lance | 8 | – | – | – | 250 | 1 | Thornmere shop |
+| Spirit-Bound Spear | 12 | – | Spirit | – | – | 1 | Fenmother boss reward |
+| Mythril Spear | 17 | – | – | – | 1,000 | 2 | Act II shop |
+| Thornwood Pike | 20 | – | Earth | – | 1,800 | 2 | Thornmere Wilds chest |
+| Thornspear | 30 | +3 SPD | – | Forged | Material | 3 | Lira forges (Act III) |
+| Wyrmbone Lance | 35 | – | – | – | 4,500 | 3 | Interlude shop |
+| Ley Lance | 45 | – | Ley | – | 7,500 | 4 | Act III shop |
+| Pallor Pike | 50 | – | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
+| Grey Cleaver | 55 | – | Spirit (purified) | +50% vs Pallor, Despair immunity | – | 5 | Grey Cleaver Unbound boss |
+
+> **Design note — Grey Cleaver classification:** The Grey Cleaver is
+> described as a "greatsword" in bosses.md, but Torren's weapon type is
+> Spears. Resolution: the Grey Cleaver is reclassified as a heavy
+> two-handed polearm (halberd-class) within the Spear type. Narratively,
+> it was forged as a builder's tool (not a traditional blade), and its
+> shape is closer to a massive cleaving polearm than a sword. Torren
+> wields it as an extension of his spiritspeaker reach.
+>
+> **Grey Cleaver quest stages** (see items.md Grey Cleaver section):
+>
+> - **Tainted:** ATK +15, DEF/MDEF/SPD –10, Despair at battle start
+> - **Purified** (100 Pallor encounters): ATK +55, Spirit element,
+>   +50% vs Pallor, Despair immunity
+
+---
+
+### Weapon Summary by Tier
+
+| Tier | Weapons Available | ATK Range | Characters |
+|------|-------------------|-----------|------------|
+| 0 — Starting | Training Sword, Recruit's Claymore, Scholar's Rod, Street Knife, Maintenance Wrench, Hunting Spear | 2--5 | All six |
+| 1 | Valdris Blade, Knight's Edge, Commander's Blade, War Cleaver, Ley Wand, Glyph Staff, Stiletto, Pickpocket's Blade, Iron Mallet, Pipe Hammer, Iron Lance, Spirit-Bound Spear | 6--14 | All six |
+| 2 | Mythril Sword, Compact Saber, Ironbound Greatsword, Twilight Edge, Mythril Staff, Runic Focus, Mythril Dagger, Trick Blade, Compact Sledge, Forge Hammer, Mythril Spear, Thornwood Pike | 10--26 | All six |
+| 3 | Arcanite Blade, Crystal Sword, Dusk Reaver, Resonance Rod, Arcane Conduit, Shadowsteel Knife, Whisper Edge, Forgewright Maul, Arcanite Maul, Thornspear, Wyrmbone Lance | 15--40 | All six (Cael: brief window) |
+| 4 | Ley-Forged Longsword, Pallor Bane, Ley Conduit, Archive Staff, Twilight Fang, Shade Razor, Piston Driver, Architect's Hammer, Ley Lance, Pallor Pike | 22--52 | Five (no Cael) |
+| 5 — Ultimate | Edren's Oath, Maren's Requiem, Sable's Thread, Lira's Masterwork, Grey Cleaver | 40--90 | Five (no Cael) |
 
 ---
 
