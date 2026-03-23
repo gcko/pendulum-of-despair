@@ -285,7 +285,8 @@ theme reflecting Torren's role as spiritspeaker.
 | Wyrmbone Lance | 35 | — | — | — | 4,500 | 3 | Interlude shop |
 | Ley Lance | 45 | — | Ley | — | 7,500 | 4 | Act III shop |
 | Pallor Pike | 50 | — | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
-| Grey Cleaver | 55 | — | Spirit (purified) | +50% vs Pallor, Despair immunity | — | 5 | Grey Cleaver Unbound boss |
+| Grey Cleaver (tainted) | 15 | DEF/MDEF/SPD –10 | — | Despair at battle start | — | 5 | Grey Cleaver Unbound boss |
+| Grey Cleaver (purified) | 55 | — | Spirit | +50% vs Pallor, Despair immunity | — | 5 | 100 Pallor encounters |
 
 > **Design note — Grey Cleaver classification:** The Grey Cleaver is
 > described as a "greatsword" in bosses.md, but Torren's weapon type is
@@ -295,7 +296,7 @@ theme reflecting Torren's role as spiritspeaker.
 > shape is closer to a massive cleaving polearm than a sword. Torren
 > wields it as an extension of his spiritspeaker reach.
 >
-> **Grey Cleaver quest stages** (see items.md Grey Cleaver section):
+> **Grey Cleaver quest stages** (see [bosses.md](bestiary/bosses.md#grey-cleaver--cursed-weapon-quest)):
 >
 > - **Tainted:** ATK +15, DEF/MDEF/SPD –10, Despair at battle start
 > - **Purified** (100 Pallor encounters): ATK +55, Spirit element,
@@ -439,7 +440,7 @@ design: stat-focused early, effect-focused late.
 
 ### Stat Boost Accessories
 
-Basic stat accessories available from shops in Acts I--II.
+Basic stat accessories available from shops in Acts I–II.
 
 | Name | Effect | Price | Act | Acquired |
 |------|--------|-------|-----|----------|
