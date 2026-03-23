@@ -101,7 +101,7 @@ Pallor Infection mechanic is introduced. 30% Pallor source encounters.
 | Pipe Wraith | Spirit | 20 | 980 | 70 | 30 | 29 | 39 | 26 | 24 | 32 | 60 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Rail Tunnels (Maintenance Shaft) |
 | Grey Mite Swarm | Pallor | 20 | 666 | 70 | 36 | 29 | 34 | 24 | 24 | 32 | 60 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Rail Tunnels (unique dense swarm) |
 | *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 63 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
-| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm, Void | Earth, Flame | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
+| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
 
 ### Boss Notes
 

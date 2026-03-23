@@ -519,19 +519,19 @@ for the Override or burn through 20% HP in 3 turns. Storm weakness
 ```
 === Pre-Fight Gauntlet ===
 
-The party and Dame Cordwyn face waves of Imperial forces before the
+The party and Dame Cordwyn face waves of Compact forces before the
 Ashen Ram reaches the wall. Short breather between Wave 3 and the boss.
 
   Wave 1 -- "Vanguard":
-    - 4 Imperial Soldiers + 2 Siege Engineers
+    - 4 Compact Soldiers + 2 Compact Engineers
     - Note: Engineers repair barricades if left alive; prioritize them.
 
   Wave 2 -- "Suppression":
-    - 3 Imperial Soldiers + 2 Ballista Crews
+    - 3 Compact Soldiers + 2 Siege Ballista Crews
     - Note: Ballista Crews deal heavy single-target damage from back row.
 
   Wave 3 -- "Air Support":
-    - 2 Gyrocopters + 2 Imperial Soldiers
+    - 2 Compact Gyrocopters + 2 Compact Soldiers
     - Note: Gyrocopters are airborne (immune to melee until grounded
       by Storm or ranged attacks).
 
@@ -542,10 +542,10 @@ Ashen Ram reaches the wall. Short breather between Wave 3 and the boss.
 NPC: Dame Cordwyn (fights alongside party for entire encounter)
   HP: 5,000 | ATK: 85 | DEF: 70
   AI:
-    1. party_avg_hp < 40% → Rally Cry (party_wide, restores 15% max HP
-       to all party members; 5-turn cooldown)
-    2. single ally below 25% HP → Shield Wall (positional, interposes
-       to absorb next hit targeting that ally; 3-turn cooldown)
+    1. any party member has Despair → Rally Cry (party_wide, removes
+       Despair from all party members; 3-turn cooldown)
+    2. single ally below 25% HP → Shield Wall (positional, reduces
+       damage to target ally by 50% for 1 turn; per dungeons-world.md)
     3. Default → Sword Strike (single_target, same target as party leader;
        physical damage based on ATK 85)
 
@@ -554,30 +554,30 @@ NPC: Dame Cordwyn (fights alongside party for entire encounter)
 Mode: Ranged
   Note: The Ashen Ram is approaching the wall. It attacks at range while
         deploying soldiers. Despair Pulse is a passive aura.
-  Passive: Despair Pulse (party_wide, drains 3% max MP per turn from all
+  Passive: Despair Pulse (party_wide, drains 5% max MP per turn from all
            party members; cannot be dispelled while Ram is in Ranged mode)
   Priority:
     1. turn_counter % 5 == 0 → Compact Escalade (add_spawn, deploys 2
-       Imperial Soldiers from the Ram's side hatches; max 4 active)
+       Compact Soldiers from the Ram's side hatches; max 4 active)
     2. turn_counter % 4 == 0 → Lord Haren's Orders (party_wide, ATK/MAG
        buff to all active adds for 3 turns)
     3. turn_counter % 3 == 0 → Battering Advance (single_target highest DEF,
-       heavy physical damage; Ram moves closer -- after 3 uses, triggers
-       Phase 2 transition regardless of HP)
+       heavy physical damage; Ram moves closer)
     4. Default → Battering Advance (single_target highest DEF, heavy
        physical damage)
 
   Counters: None
 
-Transition: At boss.hp_percent <= 60 OR Battering Advance used 3 times
-            → enter Phase 2
+Transition: At boss.hp_percent <= 60 OR turn_counter >= 5
+            → enter Phase 2 (per dungeons-world.md: "After 5 turns,
+            it breaches the wall")
 
 === Phase 2: Breach (15,000--7,500 HP) ===
 
 Mode: Breach
   Note: The Ram has reached the wall. Close-range combat. Despair Pulse
         passive continues. No more soldier deployment.
-  Passive: Despair Pulse (party_wide, drains 3% max MP per turn)
+  Passive: Despair Pulse (party_wide, drains 5% max MP per turn)
   Priority:
     1. turn_counter % 5 == 0 → Engine Surge (party_wide AoE, moderate
        physical damage + knockback to back row; 1-turn charge --
@@ -599,11 +599,11 @@ Mode: Core
         Flame (applies the boss's Flame weakness). Storm weakness
         applies to the Ram throughout all phases.
   Priority:
-    1. turn_counter % 5 == 0 → Core Overload (party_wide AoE, massive
-       magic damage; 2-turn charge -- core pulses on charge turn 1,
-       energy builds on charge turn 2, detonates turn 3; interruptible
-       by Flame damage during charge -- Flame hits the exposed core
-       and disrupts the overload)
+    1. turn_counter % 5 == 0 → Core Overload (single_target, massive
+       magic damage 800--900; 2-turn charge -- core pulses on charge
+       turn 1, energy builds on charge turn 2, detonates turn 3;
+       interruptible by Flame damage during charge -- Flame hits the
+       exposed core and disrupts the overload)
     2. turn_counter % 3 == 0 → Despair Pulse (active) (party_wide AoE,
        moderate magic damage + drains 5% max MP; replaces passive aura)
     3. Default → Drill Arm (single_target highest threat, heavy physical
@@ -646,8 +646,8 @@ a pre-fight gauntlet with a three-phase siege boss. The gauntlet teaches
 wave management and establishes Dame Cordwyn as a reliable NPC ally. The
 Despair Pulse MP drain creates resource tension across all phases, forcing
 players to choose between conserving MP and going all-out. Phase
-transitions are driven by both HP thresholds and mechanical triggers
-(Battering Advance count), keeping the pacing dynamic. Phase 3's Core
+transitions are driven by both HP thresholds and a turn timer
+(5 turns per dungeons-world.md), keeping the pacing dynamic. Phase 3's Core
 Overload interrupt mechanic (Flame disrupts the charge) rewards players
 who saved fire-element resources despite the MP drain. The encounter
 serves as both a mechanical climax and a narrative one -- defending Valdris
@@ -719,7 +719,7 @@ mini-boss that gates access to the deeper Rail Tunnels and The Ironbound.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm, Void | Earth, Flame | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
+| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
 
 > **Note:** The Ironbound is a massive boring engine fused with its
 > operator -- a Drayce-series construct frame. Phase 1 ("The Machine")
@@ -1151,7 +1151,7 @@ Mode: Hollow King
        (add_spawn, summons 2 Hollow Knights; 1,000 HP each, standard
        melee AI; max 2 active at a time; they guard the Crowned Hollow)
     2. turn_counter % 3 == 0 → Crown's Burden (party_wide AoE,
-       300--350 magic damage + ATK reduction -20% for 3 turns;
+       300--350 magic damage + ATK reduction -20% for 2 turns;
        spectral crown pulses with grey light)
     3. Default → Mirror Strike (single_target highest threat,
        400--450 physical damage; copies Edren's equipped weapon type;
@@ -1159,8 +1159,8 @@ Mode: Hollow King
 
   Counters:
     On physical_attack_received → Royal Guard (single_target attacker,
-       250 physical damage counterattack; once per turn; spectral shield
-       manifests and lashes out)
+       150% of received damage returned as counterattack; once per turn;
+       spectral shield manifests and lashes out)
 
 Transition: At boss.hp <= 2,000 → enter Phase 2
 
@@ -1679,9 +1679,8 @@ Scripted Events:
     - mode_switch: Invulnerable → Scholar
 
   At boss.hp <= 37,500 (once):
-    - dialogue: Vaelith: "Interesting. You have read the cycle's
-      pattern and still choose to fight it. That is either courage
-      or illiteracy."
+    - dialogue: Vaelith: "You are the first to draw blood in eight
+      centuries."
     - dialogue: "Vaelith adjusts his spectacles. For the first time,
       he looks directly at the party."
 
@@ -1725,6 +1724,12 @@ Scripted Events:
     - Sable (passive): "Sable's shadow wraps protectively around
       the party's buffs." → Sable prevents Cycle's Weight from
       being dispelled or removed by Vaelith's abilities
+
+  At boss.hp <= 0 (once):
+    - cutscene: Vaelith falls. Extended narrative scene.
+    - drop: Ashen Scholar's Tome (accessory, primary -- stat table)
+    - drop: Grey Mist Essence (crafting material -- Lira's ultimate
+      weapon component; secondary drop per dungeons-world.md)
 ```
 
 **Design Note:** Vaelith is the Act III story boss, the culmination of
@@ -1786,9 +1791,9 @@ Mode: Fractured (HP 60%-30%)
         has its own stat line but they SHARE a single HP pool (the
         remaining Titan HP). Killing any Aspect removes it from the
         field; when all three are gone, the Titan reforms in Condensed
-        mode. Kill order matters: destroying Endurance last makes
-        Condensed mode easier (lower DEF); destroying Strength last
-        makes it harder (higher ATK on reform).
+        mode. Kill order matters: destroy Endurance FIRST to stop its
+        healing (per dungeons-world.md), then Precision to prevent
+        burst damage, then Strength last.
 
   Aspect of Strength:
     - HP: shared pool | ATK: 95 | DEF: 35 | SPD: 40
@@ -1808,9 +1813,11 @@ Mode: Fractured (HP 60%-30%)
   Aspect of Endurance:
     - HP: shared pool | DEF: 70 | MDEF: 70 | SPD: 30
     - Priority:
-      1. turn_counter % 3 == 0 → Crystallize (self buff; +20% DEF
+      1. any Aspect HP < 50% → Crystal Mend (heals all Aspects for
+         500 HP from shared pool; "The crystal knits itself together.")
+      2. turn_counter % 3 == 0 → Crystallize (self buff; +20% DEF
          and MDEF for 3 turns, stacking; "The crystal thickens.")
-      2. Default → Stone Wall (reduces party damage by 25% for 1
+      3. Default → Stone Wall (reduces party damage by 25% for 1
          turn; protective barrier)
 
   Counters: None (Aspects do not absorb elements)
