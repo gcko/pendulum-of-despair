@@ -198,15 +198,46 @@ Cael's authority and eventual betrayal.
 
 ---
 
-### Staves (Torren, Maren)
+### Staves (Maren)
 
-*Content pending — see Task 3*
+Maren's weapon line. Staves use a ×0.6 ATK modifier but grant substantial
+MAG bonuses, making them spell-amplification tools rather than physical
+weapons. Naming follows a scholar/arcane theme reflecting Maren's
+research background.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Scholar's Rod | 2 | +3 MAG | – | – | – | 0 | Starting equipment |
+| Ley Wand | 6 | +5 MAG | – | – | 250 | 1 | Valdris shop |
+| Glyph Staff | 8 | +7 MAG | – | – | 500 | 1 | Archive of Ages chest |
+| Mythril Staff | 12 | +10 MAG | – | – | 1,000 | 2 | Act II shop |
+| Runic Focus | 10 | +12 MAG | Ley | +5% spell crit | 1,800 | 2 | Ley Line Depths chest |
+| Resonance Rod | 15 | +15 MAG | – | Forged | Material | 3 | Lira forges (Act III) |
+| Arcane Conduit | 18 | +16 MAG | – | – | 3,500 | 3 | Interlude shop |
+| Ley Conduit | 25 | +18 MAG | Ley | – | 7,000 | 4 | Act III shop |
+| Archive Staff | 22 | +20 MAG | – | +10% healing | 9,000 | 4 | Dry Well chest |
+| Maren's Requiem | 40 | +25 MAG | Ley | MP cost –10% | – | 5 | Crafted from Pallor Core |
 
 ---
 
-### Daggers (Lira)
+### Daggers (Sable)
 
-*Content pending — see Task 3*
+Sable's weapon line. Daggers use a ×0.85 ATK modifier but grant SPD and
+LCK bonuses, making them crit-oriented and speed-focused. Naming follows
+a street/shadow theme reflecting Sable's underworld background.
+
+| Name | ATK | Bonus | Element | Special | Price | Tier | Acquired |
+|------|-----|-------|---------|---------|-------|------|----------|
+| Street Knife | 3 | +1 SPD | – | – | – | 0 | Starting equipment |
+| Stiletto | 8 | +2 SPD | – | – | 250 | 1 | Bellhaven shop |
+| Pickpocket's Blade | 7 | +2 LCK | – | Steal rate +10% | 400 | 1 | Sable sidequest |
+| Mythril Dagger | 15 | +3 SPD | – | – | 1,000 | 2 | Act II shop |
+| Trick Blade | 14 | +3 LCK | – | +5% crit rate | 1,500 | 2 | Bellhaven Tunnels chest |
+| Shadowsteel Knife | 28 | +4 SPD, +3 LCK | – | Forged | Material | 3 | Lira forges (Act III) |
+| Whisper Edge | 32 | +5 SPD | – | – | 4,500 | 3 | Interlude shop |
+| Twilight Fang | 42 | +4 LCK | – | 10% Poison on hit | 8,000 | 4 | Act III shop |
+| Shade Razor | 48 | +6 SPD | Void | – | 10,000 | 4 | Convergence chest |
+| Sable's Thread | 70 | +8 SPD, +5 LCK | – | Steal rate +25%, auto-Haste 1 turn | – | 5 | Sable sidequest |
 
 ---
 
