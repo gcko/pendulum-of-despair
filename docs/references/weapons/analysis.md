@@ -11,7 +11,7 @@
 |--------|-----|-----|----------------|----------------|
 | **Total Weapons** | **171** | **164** | **87** | **72** |
 | Weapon Types | 15 | 17 | 7 (per-character) | 8 (symmetric) |
-| ATK Range | 1–220 | 10–90+ | 3–240 | +3–+65 |
+| ATK Range | 1–220 | 10–90+ | 3–240 | +2–+65 |
 | ATK Multiplier (min→max) | 220x | ~9x | 80x | 22x |
 | Elemental Weapons | Yes (6 elements) | Yes (built into types) | Yes (bonus damage) | No (enemy-type instead) |
 | Status Weapons | Yes (death, sleep, confuse) | Yes (death, poison, petrify) | Yes (stop) | Yes (sleep, confuse, slow) |
@@ -197,13 +197,13 @@
 | Type | Count | ATK Range | Final Weapon |
 |------|-------|-----------|--------------|
 | Swords | 9 | +3 → +65 | Mana Sword |
-| Spears | 9 | +4 → +56 | Daedalus Lance |
-| Axes | 9 | +3 → +58 | Doom Axe |
+| Spears | 9 | +2 → +56 | Daedalus Lance |
+| Axes | 9 | +4 → +59 | Doom Axe |
 | Whips | 9 | +2 → +51 | Dragon Whip |
-| Boomerangs | 9 | +4 → +53 | Ninja's Trump |
-| Gloves | 9 | +3 → +53 | Dragon Claws |
-| Bows | 9 | +4 → +55 | Garuda Buster |
-| Javelins | 9 | +3 → +54 | Dragoon Lance |
+| Boomerangs | 9 | +2 → +53 | Ninja's Trump |
+| Gloves | 9 | +2 → +56 | Aura Glove |
+| Bows | 9 | +2 → +55 | Garuda Buster |
+| Javelins | 9 | +2 → +54 | Dragoon Lance |
 
 ### ATK Progression (Swords as reference)
 

@@ -87,7 +87,7 @@ Effects  | Effective against Slimes/Lizards.
 [](https://static.wikia.nocookie.net/mana/images/f/ff/SecretHalberd.png/revision/latest?cb=20120421140525)  
 **Name** | **Halberd**  
 **Attack** | **+29**  
-**Location** | Found in a treasure cheat in the Northtown ruins.   
+**Location** | Found in a treasure chest in the Northtown ruins.   
 Effects  | Confuses enemy.   
 [](https://static.wikia.nocookie.net/mana/images/9/9e/OceanidSpear.png/revision/latest?cb=20120421140622)  
 **Name** | **Oceanid Spear**  

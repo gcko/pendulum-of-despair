@@ -468,7 +468,6 @@ These items gate progression into specific dungeons or areas. They activate auto
 | Ironmark Tunnel Map | Interlude quest | Enter Ironmark passage | Ironmark Citadel |
 | Ironmark Key | Post-Kole, Axis Tower | Approach sealed Armory | Ironmark Armory |
 | Forgewright Master Key | Ashmark Factory quest | Approach Compact-era locked door | All Compact dungeons |
-| Boring Engine Schematic | Caldera Undercity secret room | Give to Lira | Unlocks Forgewright recipe |
 | Map to the Convergence | General Kole drop | Open world map | Reveals Convergence location |
 | Catacomb Map | Undying Warden steal | Open minimap in Valdris | Reveals secret passages |
 | Broodchamber Map | Pallor Nest Mother steal | Open map in Caldera | Reveals nest network |

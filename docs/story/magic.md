@@ -1399,7 +1399,7 @@ For quick reference, here are all status effects that spells in this system can 
 | Slow | Negative | ATB speed -50% | 5 turns | Purge, Chronos Dust item |
 | Stop | Negative | ATB frozen | 3 real-time seconds (not turn-based) | Wears off only |
 | Berserk | Negative | ATB speed +25%, auto-attack random enemy with +50% basic attack damage | Until cured | Purge only |
-| Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
+| Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item, Phoenix Pinion item |
 | Despair | Negative (Void) | ATB speed -25%, damage dealt -20% | 4 turns | Hollow Mend, Pallor Salve item, Hope Shard item (rare) |
 | Float | Positive | Immune to Earth spells and ground attacks | Until end of battle | Dispersion / Mass Dispersion |
 | Reflect | Positive | Bounces next 3 spells back at caster | Until charges expire | Dispersion / Mass Dispersion |
