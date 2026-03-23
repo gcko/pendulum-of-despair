@@ -2727,19 +2727,776 @@ there are stars. That is enough.
 
 ### The First Scholar (Echo Boss)
 
-*AI script pending -- see Task 8*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The First Scholar* | Boss | 50 | 40,000 | 175 | 132 | 84 | 136 | 81 | 57 | 10,000 | 15,000 | Ancient Manuscript (100%) | Scholar's Codex (100%) | Void (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F4 |
+
+**Modes:** 2 (Pattern, Accelerated)
+
+**AI Script:**
+
+```
+=== Echo Boss Encounter: The First Scholar ===
+
+Note: The First Scholar is the echo of a long-dead archivist who
+      catalogued the world's magic into glyphs -- symbols that bind
+      elemental forces into repeatable patterns. In death, the Scholar
+      became the pattern. Every action follows a fixed 4-spell rotation
+      that never deviates: Flame, Frost, Storm, Void. Each glyph is
+      telegraphed one full turn in advance by a glowing symbol that
+      appears above the Scholar's head. The entire fight is a test of
+      pattern recognition: players who read the telegraphs and apply
+      the correct elemental resistance each turn take minimal damage.
+      Players who ignore the pattern are destroyed by escalating
+      elemental pressure.
+
+      The Scholar does not speak. The glyphs speak for it.
+
+Mode: Pattern (HP 40,000–20,001)
+  Note: The Scholar cycles through a fixed 4-spell rotation, casting
+        one glyph per turn. Each glyph is telegraphed 1 turn in advance
+        by a symbol that appears above the Scholar. The pattern never
+        changes: Flame → Frost → Storm → Void → Flame → ...
+
+  Glyph Rotation (fixed, repeating):
+    Turn 1: Telegraph — Flame symbol appears ("A burning glyph ignites
+            above the Scholar's head.")
+    Turn 2: Glyph of Flame (party_wide, 500-600 Flame magic damage;
+            "The glyph detonates. Fire fills the chamber.")
+            Telegraph — Frost symbol appears ("A freezing glyph
+            crystallizes in the air.")
+    Turn 3: Glyph of Frost (party_wide, 500-600 Frost magic damage;
+            "The glyph shatters. Cold bites to the bone.")
+            Telegraph — Storm symbol appears ("A crackling glyph arcs
+            with lightning.")
+    Turn 4: Glyph of Storm (party_wide, 500-600 Storm magic damage;
+            "The glyph discharges. Thunder rolls through stone.")
+            Telegraph — Void symbol appears ("A hollow glyph opens
+            like an eye.")
+    Turn 5: Glyph of Void (party_wide, 500-600 Void magic damage;
+            "The glyph collapses inward. Something is taken from you.")
+            Telegraph — Flame symbol appears (cycle restarts)
+    ...repeat indefinitely
+
+  Priority:
+    1. Execute next glyph in rotation (see above)
+    Note: The Scholar has NO conditional behavior in this mode. It does
+          not react to HP thresholds, party composition, or player
+          actions. It simply follows the pattern. This is the point.
+
+  Counters: None
+
+Mode: Accelerated (HP 20,000 or below)
+  Note: At 50% HP, the Scholar's rhythm doubles. It now casts TWO
+        glyphs per turn instead of one, following the same Flame →
+        Frost → Storm → Void rotation but at double speed. Telegraphs
+        still appear but now show two symbols simultaneously (the
+        current glyph and the next). The damage per glyph is unchanged
+        -- the danger is volume, not intensity.
+
+  Glyph Rotation (doubled):
+    Each turn: Cast 2 consecutive glyphs from the rotation.
+    Turn 1: Glyph of Flame + Glyph of Frost (party_wide, 500-600
+            each; two glyphs fire in rapid succession)
+            Telegraph — Storm + Void symbols appear
+    Turn 2: Glyph of Storm + Glyph of Void (party_wide, 500-600 each)
+            Telegraph — Flame + Frost symbols appear
+    Turn 3: Glyph of Flame + Glyph of Frost (cycle continues)
+    ...repeat indefinitely
+
+  Priority:
+    1. Execute next two glyphs in rotation (see above)
+    Note: Still no conditional behavior. Still pure pattern. Faster.
+
+  Counters: None
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The chamber at the end of the fourth floor is a
+      library that has become a tomb. Books line every wall, their
+      pages grey and still. At the center, a figure sits at a desk,
+      writing. It has been writing for a very long time. The ink is
+      light. The pen is bone."
+    - dialogue: "The Scholar does not look up. A glyph ignites above
+      its head -- the first symbol in a sequence that has not changed
+      in a thousand years."
+
+  At boss.hp_percent <= 50 (once):
+    - mode_switch: Pattern → Accelerated
+    - environmental: "The Scholar's writing hand accelerates. The pen
+      blurs. Two glyphs now burn above its head simultaneously --
+      overlapping, layered. The pattern has not changed. The pace has."
+    - dialogue: "The pages beneath the pen fill faster. Whatever the
+      Scholar is transcribing, it is running out of time to finish."
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Scholar's pen stops. The final glyph above its
+      head gutters and dies. The figure looks up -- not at the party,
+      but at the book beneath its hand. The last page is complete.
+      Every glyph, every element, every pattern -- transcribed in
+      light that fades as you watch."
+    - dialogue: "The Scholar closes the book. Sets down the pen. And
+      is gone. Not destroyed -- finished. The echo has completed what
+      the living scholar could not."
+    - drop: Scholar's Codex (accessory; +15% magic damage when
+      exploiting elemental weakness; "Every element, catalogued.")
+    - drop: Ancient Manuscript (key item; unlocks Scholar's glyph
+      entries in the bestiary)
+```
+
+**Design Note:** The First Scholar is pure pattern recognition -- the
+simplest possible boss mechanic executed with absolute discipline. The
+fixed Flame → Frost → Storm → Void rotation never changes, never
+reacts, never adapts. The telegraph system gives players complete
+information one turn in advance. In Pattern mode, a prepared party
+can rotate elemental resistance accessories or use Shell timing to
+trivialize every hit. Accelerated mode doubles the throughput without
+changing the pattern, testing whether the party can sustain their
+defensive rotation under pressure. The Scholar's identity IS the
+pattern: a creature of pure academic order, grinding through its
+sequence even in death. There is something melancholy about fighting
+an enemy that is not trying to kill you -- it is simply completing its
+work, and you happen to be standing in the library.
 
 ### The Crystal Queen (Echo Boss)
 
-*AI script pending -- see Task 8*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Crystal Queen* | Boss | 60 | 60,000 | 210 | 156 | 100 | 162 | 96 | 67 | 10,000 | 20,000 | Queen's Prism (100%) | Queen's Facet (100%) | Earth (150%) | Ley (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F8 |
+
+**Modes:** 2 (Unified, Shattered)
+
+**AI Script:**
+
+```
+=== Echo Boss Encounter: The Crystal Queen ===
+
+Note: The Crystal Queen is the echo of a monarch who fused her body
+      with the ley crystal throne to protect her kingdom from the
+      Pallor. She became the crystal. The crystal became her. In death,
+      she is a prism -- beautiful, symmetric, and lethal. Her core
+      mechanic is Reflection: all single-target damage is reflected
+      back at the attacker at 50% of the original value. Only AoE and
+      multi-target attacks bypass Reflection entirely. Additionally,
+      healing spells targeting the Queen deal damage to her instead
+      (reversed polarity). The fight tests party composition and the
+      willingness to abandon single-target strategies.
+
+      The Queen speaks in refracted fragments -- the same sentence
+      split across multiple voices, each slightly different.
+
+Mode: Unified (HP 60,000–30,001)
+  Note: The Crystal Queen fights as a single entity. Reflection is
+        active at all times -- any single-target damage directed at
+        the Queen is reflected back at the attacker for 50% of the
+        damage dealt. AoE and multi-target attacks are NOT reflected.
+        Healing spells targeting the Queen deal their heal value as
+        damage to her instead (reversed polarity).
+
+  Passive — Crystalline Reflection:
+    - Any single_target physical or magic attack → 50% of damage
+      dealt is reflected back at the attacker as magic damage
+    - AoE / multi_target attacks → NOT reflected (full damage to Queen)
+    - Healing spells targeting the Queen → deal heal amount as damage
+      to her ("The light bends. What was meant to mend, breaks.")
+
+  Priority:
+    1. turn_counter % 5 == 0 → Prismatic Beam (party_wide, 600-700
+       magic damage, random element each cast [Flame/Frost/Storm/Ley];
+       "Light splits through the Queen's body. Every color at once.")
+    2. turn_counter % 3 == 0 → Crystal Shards (single_target highest
+       threat, 500-600 physical damage; crystalline fragments launch
+       from the Queen's body; "A piece of the throne, sharpened to a
+       point.")
+    3. party_avg_hp > 70% → Refracted Light (party_wide, 350-400
+       magic damage + Slow status 30% chance; light bends painfully
+       through the arena; "The light here does not behave.")
+    4. Default → Throne Strike (single_target random, 400-500
+       physical damage; a crystalline arm extends impossibly far;
+       "She does not move. The crystal moves for her.")
+
+  Counters:
+    On single_target attack received → Crystalline Reflection
+      (single_target attacker, 50% of damage dealt as magic damage;
+      "The crystal sings. Your attack returns.")
+
+Mode: Shattered (HP 30,000 or below — phase transition)
+  Note: At 50% HP, the Crystal Queen shatters into four Crystal
+        Aspects. Each Aspect has 15,000 HP and reflects a different
+        element (Flame, Frost, Storm, Ley). Attacks matching an
+        Aspect's element are absorbed; all other damage types work
+        normally. The Queen's main body is untargetable until all
+        four Aspects are destroyed. Reflection is no longer active
+        on the Aspects (only the unified Queen reflected).
+
+  Crystal Aspect stats (x4):
+    - Crystal Aspect (Flame): 15,000 HP | Absorbs Flame | Weak to
+      Frost | DEF: 60 | MDEF: 60 | SPD: 40
+    - Crystal Aspect (Frost): 15,000 HP | Absorbs Frost | Weak to
+      Flame | DEF: 60 | MDEF: 60 | SPD: 40
+    - Crystal Aspect (Storm): 15,000 HP | Absorbs Storm | Weak to
+      Earth | DEF: 60 | MDEF: 60 | SPD: 40
+    - Crystal Aspect (Ley): 15,000 HP | Absorbs Ley | Weak to
+      Void | DEF: 60 | MDEF: 60 | SPD: 40
+
+  Aspect Priority (each Aspect acts independently):
+    1. turn_counter % 4 == 0 → Aspect Beam (party_wide, 300-400
+       magic damage of the Aspect's element; "One facet of the
+       Queen's light, concentrated.")
+    2. Default → Facet Strike (single_target random, 250-350
+       physical damage; a shard lashes out)
+
+  Counters:
+    On matching element attack → Absorb (Aspect heals for damage
+      value; "The crystal drinks the [element]. It was always part
+      of her.")
+
+  Victory condition: Destroy all 4 Crystal Aspects. When the last
+    Aspect falls, the Crystal Queen is defeated.
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The eighth floor opens into a throne room carved
+      from a single crystal. The walls refract light that has no
+      source -- bending, splitting, recombining. On the throne sits
+      a woman who is also the throne. Her crown is the crystal. Her
+      body is the crystal. There is no boundary between monarch and
+      mineral."
+    - dialogue: The Crystal Queen (fragmented, overlapping voices):
+      "You are... light. Light... bends. Bends... here. Here... you
+      are."
+    - dialogue: Maren: "She's fused with the ley crystal. The
+      reflection -- don't use single-target attacks. It'll come
+      back at you."
+
+  At boss.hp_percent <= 50 (once):
+    - mode_switch: Unified → Shattered
+    - cutscene: "The Queen screams -- four voices, four pitches. Her
+      body fractures along invisible fault lines. Four shards of
+      crystal tear free, each blazing with a different element. Flame.
+      Frost. Storm. Ley. The throne is empty. The Queen is everywhere."
+    - environmental: Four Crystal Aspects appear at cardinal positions
+      in the arena. The Queen's central body becomes untargetable
+      (crystallized shell, immune to all damage until Aspects are
+      destroyed).
+
+  At 2 Aspects destroyed (once):
+    - dialogue: The Crystal Queen (strained, only two voices now):
+      "Less... of me. Less... light. The dark... between..."
+    - environmental: Arena lighting dims. Remaining Aspects glow
+      brighter to compensate.
+
+  At all 4 Aspects destroyed (once):
+    - cutscene: "The last Aspect shatters. The fragments hang in the
+      air for one impossibly long moment -- then fall. They do not
+      re-form. On the empty throne, a shape remains: not crystal,
+      but light. The memory of a queen who gave everything to protect
+      a kingdom that is now dust."
+    - dialogue: "The light fades. A crown of crystal rolls across the
+      floor and comes to rest at your feet."
+    - drop: Queen's Facet (accessory; reflects 25% of single-target
+      magic damage back at caster; "A fragment of her reflection.")
+    - drop: Queen's Prism (key item; refracts light sources in
+      dungeons, revealing hidden passages)
+```
+
+**Design Note:** The Crystal Queen tests party composition and
+strategic flexibility. The Reflection mechanic punishes players who
+rely on single-target damage dealers -- the standard JRPG approach of
+focusing fire on the boss actively hurts you here. AoE becomes the
+optimal damage strategy, which inverts the usual calculus (AoE is
+typically weaker per-target than single-target). The healing reversal
+adds a clever wrinkle: a White Mage can deal significant damage by
+casting Cure on the Queen, turning the healer into an attacker. The
+Shattered phase shifts the problem entirely -- now you NEED targeted
+damage against four separate enemies with elemental immunities,
+requiring the party to have broad elemental coverage. The two phases
+together demand versatility: AoE for Phase 1, targeted elemental
+attacks for Phase 2. A one-dimensional party will struggle with at
+least one phase.
 
 ### The Rootking (Echo Boss)
 
-*AI script pending -- see Task 8*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Rootking* | Boss | 72 | 80,000 | 252 | 184 | 118 | 190 | 114 | 78 | 10,000 | 25,000 | Living Root (100%) | Root Crown (100%) | Flame (150%) | Earth (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F12 |
+
+**Modes:** 2 (Rooted, Desperate)
+
+**AI Script:**
+
+```
+=== Echo Boss Encounter: The Rootking ===
+
+Note: The Rootking is the echo of a forest sovereign who tried to
+      outlast the Pallor by growing -- endlessly, relentlessly,
+      burying the corruption under layers of living wood. It did not
+      work. The roots grew through the Pallor and the Pallor grew
+      through the roots. Now the Rootking is both: a towering figure
+      of bark and grey, regenerating endlessly, spawning lesser roots
+      to defend itself. The fight is a war of attrition. The Rootking
+      heals 2,000 HP per turn passively. It summons Root Weavers as
+      additional targets. The only way to suppress its regeneration
+      is to destroy the Root Anchor -- a hidden targetable part that
+      surfaces periodically. This is a sustained DPS check with add
+      management.
+
+      The Rootking speaks in slow, creaking sentences. Its voice
+      sounds like wood splitting.
+
+Mode: Rooted (HP 80,000–40,001)
+  Note: The Rootking regenerates 2,000 HP per turn (passive, not an
+        action). It summons 2 Root Weavers every 3 turns. Every 5
+        turns, a Root Anchor (hidden targetable part, 10,000 HP)
+        surfaces for 2 turns. Destroying the Root Anchor suppresses
+        all regeneration until the next Anchor appears. The party
+        must balance boss DPS, add management, and Anchor destruction.
+
+  Passive — Endless Growth:
+    - Regenerate 2,000 HP per turn (suppressed while Root Anchor is
+      destroyed; resumes when next Anchor surfaces)
+
+  Root Weaver (summoned add):
+    - HP: 4,000 | ATK: 107 | DEF: 90 | MAG: 92 | MDEF: 66 | SPD: 44
+    - Weak: Flame | Absorbs: Earth
+    - Actions: Entangling Roots (single_target, 300-400 physical
+      damage + Slow 40%; "Roots erupt from the floor and coil around
+      [Name]'s legs."), Root Lash (single_target, 250-300 physical)
+    - Summoned in pairs every 3 turns (max 4 active at once)
+
+  Root Anchor (hidden targetable part):
+    - HP: 10,000 | DEF: 50 | MDEF: 50 | Weak: Flame (150%)
+    - Appears every 5 turns, remains targetable for 2 turns
+    - Destroying it suppresses Rootking regen until next Anchor cycle
+    - If not destroyed within 2 turns, submerges and regen continues
+    - "A massive root bulges from the floor — pulsing, feeding.
+      This is what sustains him."
+
+  Priority:
+    1. turn_counter % 3 == 0 AND active_adds < 4 → Summon Root
+       Weavers (spawns 2 Root Weavers; "The floor splits. Living
+       wood erupts, forming shapes that move with terrible purpose.")
+    2. turn_counter % 4 == 0 → Canopy Crush (party_wide, 600-700
+       physical damage; the ceiling of roots collapses downward;
+       "The canopy descends. Everything above you is wood and weight.")
+    3. turn_counter % 3 == 0 AND active_adds >= 4 → Deeproot Slam
+       (single_target highest threat, 700-800 physical damage; a
+       root the size of a tree trunk drives downward; "The earth
+       itself swings at you.")
+    4. party_avg_hp > 60% → Thorn Volley (party_wide, 400-500
+       physical damage; thorns fire in all directions; "Every
+       surface bristles.")
+    5. Default → Root Strike (single_target random, 500-600
+       physical damage; a heavy root lashes out; "Wood cracks like
+       a whip.")
+
+  Counters:
+    On Root Anchor destroyed → Rootscream (party_wide, 400 magic
+      damage; the Rootking convulses as its lifeline is severed;
+      "The entire chamber shudders. The Rootking screams — a sound
+      like a forest falling.")
+
+Mode: Desperate (HP 40,000 or below)
+  Note: At 50% HP, the Rootking's growth accelerates. Regeneration
+        doubles to 4,000 HP/turn. Root Weavers are summoned every
+        2 turns instead of 3. The Root Anchor appears every 4 turns
+        instead of 5 (still 2-turn window). The Rootking also gains
+        Desperate Bloom — a party-wide attack that heals it for
+        damage dealt. The DPS check intensifies significantly.
+
+  Passive — Accelerated Growth:
+    - Regenerate 4,000 HP per turn (suppressed while Root Anchor is
+      destroyed; resumes when next Anchor surfaces)
+
+  Root Weaver summoning: Every 2 turns (max 4 active)
+  Root Anchor cycle: Every 4 turns, 2-turn window, still 10,000 HP
+
+  Priority:
+    1. turn_counter % 2 == 0 AND active_adds < 4 → Summon Root
+       Weavers (spawns 2 Root Weavers; accelerated growth)
+    2. turn_counter % 4 == 0 → Desperate Bloom (party_wide, 500-600
+       magic damage; Rootking heals for 50% of total damage dealt;
+       "Flowers erupt from the roots — beautiful, wrong. Each bloom
+       drinks something from you and feeds it back to him.")
+    3. turn_counter % 3 == 0 → Canopy Crush (party_wide, 700-800
+       physical damage; stronger in desperation)
+    4. Default → Root Strike (single_target highest threat, 600-700
+       physical damage; faster, wilder)
+
+  Counters:
+    On Root Anchor destroyed → Rootscream (party_wide, 500 magic
+      damage; intensified)
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The twelfth floor is a forest that should not exist
+      underground. Trees grow from stone. Roots weave through walls.
+      At the center, a figure sits on a throne of living wood — or
+      the throne is growing through it, or it is growing into the
+      throne. The distinction does not matter anymore. The Rootking
+      is the forest. The forest is the Rootking."
+    - dialogue: The Rootking (slow, creaking): "Grew... to survive.
+      Grew... through everything. Still... growing. Cannot... stop."
+    - dialogue: Torren: "It's regenerating constantly. We need to
+      find the source — cut it off."
+
+  Turn 5 (first Root Anchor appearance):
+    - environmental: "A massive root pushes through the stone floor,
+      throbbing with green-grey light. It pulses like a heartbeat.
+      This is what feeds the Rootking's endless growth."
+    - dialogue: Maren: "There — that root. It's the anchor. Destroy
+      it before it submerges again."
+
+  At boss.hp_percent <= 50 (once):
+    - mode_switch: Rooted → Desperate
+    - cutscene: "The Rootking rises from its throne. It has not moved
+      in centuries. Wood screams as it separates from wood. The entire
+      chamber shakes. New roots — faster, thicker, desperate — erupt
+      from every surface."
+    - dialogue: The Rootking: "Not... enough. Need... more. MORE."
+    - environmental: Root growth accelerates visibly. The floor
+      becomes a shifting carpet of living wood. Root Weavers emerge
+      faster.
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Rootking falls. Not like a creature — like a
+      tree. Slowly, with great weight, the trunk of its body tilts
+      and crashes into the root-covered floor. The roots stop growing.
+      For the first time in an age, the forest is still."
+    - dialogue: "In the silence, you hear it: the sound of wood
+      settling. The roots are not dying. They are resting. The echo
+      of the Rootking has finally stopped growing."
+    - drop: Root Crown (accessory; regenerate 3% max HP per turn;
+      "It still grows. Slowly. Gently. Without desperation.")
+    - drop: Living Root (key item; can be planted in the overworld
+      to unlock a hidden grove with rare crafting materials)
+```
+
+**Design Note:** The Rootking is a sustained DPS check disguised as a
+boss fight. The passive regeneration creates a damage floor -- if the
+party cannot deal more than 2,000 (later 4,000) damage per turn net
+of healing, they literally cannot win. The Root Anchor mechanic gives
+skilled players a way to suppress regeneration, but it requires
+target-switching discipline (stop hitting the boss, kill the Anchor,
+resume). Root Weavers create add pressure that competes for the same
+attention. The fundamental tension is resource allocation: every turn
+spent on adds or the Anchor is a turn not spent on the boss, but
+ignoring adds or the Anchor makes the boss unkillable. Flame weakness
+on everything (boss, adds, Anchor) rewards parties that invested in
+fire damage but does not require it. The Desperate mode at 50% is
+genuinely threatening -- 4,000 HP/turn regen with adds spawning every
+2 turns creates a legitimate fail state if the party's DPS cannot
+keep pace.
 
 ### The Iron Warden (Echo Boss)
 
-*AI script pending -- see Task 8*
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Iron Warden* | Boss | 86 | 100,000 | 301 | 217 | 140 | 226 | 135 | 91 | 10,000 | 30,000 | Warden's Blueprint (100%) | Warden's Core (100%) | Storm (150%) | Flame (50%), Frost (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F16 |
+
+**Modes:** 3 (Disciplined, Reinforced, Overclocked)
+
+**AI Script:**
+
+```
+=== Echo Boss Encounter: The Iron Warden (TRUE FINAL BOSS) ===
+
+Note: The Iron Warden is the echo of the engineer who built the
+      Dreamer's Fault — a mechanical genius who fused himself with
+      the fortress's defense system to become its eternal guardian.
+      He is the last echo, the deepest floor, the true final challenge
+      of the post-game. Everything about this fight demands tactical
+      discipline.
+
+      The Warden's core mechanic is Counter Defense — a strict
+      attack-type counter system that punishes thoughtless aggression:
+        - Physical attacks against the Warden trigger an immediate
+          physical counter (Piston Counter, 400-500 to attacker)
+        - Magic attacks against the Warden trigger an Absorb Shield
+          that absorbs the NEXT magic attack completely (negating it)
+        - The optimal pattern is: Physical → Magic → Physical → Magic
+          (alternating). Physical triggers a counter but deals damage.
+          Magic lands only if no Absorb Shield is active (i.e., magic
+          was not used on the previous hit). Two consecutive magic
+          attacks = second one absorbed. Two consecutive physical
+          attacks = two counters taken, but no shield buildup.
+
+      Players must track what they last used and alternate. In later
+      phases, this discipline must extend to target selection with
+      summoned Gear Wraiths.
+
+      The Warden speaks in clipped, precise sentences. Military
+      cadence. No wasted words.
+
+Mode: Disciplined (HP 100,000–50,001)
+  Note: The Warden fights with mechanical precision. Counter Defense
+        is active. Physical attacks are countered. Magic attacks
+        generate an Absorb Shield for the next magic hit. Alternating
+        physical and magic is the intended rhythm.
+
+  Passive — Counter Defense:
+    - On physical attack received → Piston Counter (immediate,
+      single_target attacker, 400-500 physical damage; "Gears turn.
+      The counterstrike is automatic — faster than thought.")
+    - On magic attack received → Absorb Shield activates (absorbs
+      the next magic attack completely, negating all damage;
+      "Arcane energy is drawn into the Warden's chassis. A shield
+      of stolen magic shimmers into place."; shield persists until
+      consumed or until a physical attack clears it)
+    - Physical attack while Absorb Shield is active → shield is
+      consumed (no effect), Piston Counter fires as normal
+    - Magic attack while Absorb Shield is active → attack is fully
+      absorbed (0 damage), no new shield generated
+    Note: The optimal rotation is Physical (take counter, clear any
+          shield) → Magic (no shield active, full damage) → repeat.
+          Deviating costs either damage (absorbed magic) or HP
+          (extra counters).
+
+  Priority:
+    1. turn_counter % 5 == 0 → Fortress Protocol (self, +30% DEF
+       and MDEF for 3 turns; "The Warden's armor reconfigures.
+       Plates shift, interlock, harden.")
+    2. turn_counter % 4 == 0 → Siege Cannon (party_wide, 700-800
+       physical damage; a massive weapon arm unfolds from the
+       Warden's back; "The cannon charges. The sound alone hurts.")
+    3. turn_counter % 3 == 0 → Arc Welder (single_target highest
+       threat, 600-700 Storm magic damage + Slow 40%; lightning
+       arcs between the Warden's hands; "Current flows. The air
+       smells of ozone and old iron.")
+    4. party_avg_hp > 70% → Piston Barrage (single_target lowest
+       DEF, 550-650 physical damage x2 hits; rapid mechanical
+       strikes; "Two hits. Precise. Mechanical.")
+    5. Default → Iron Fist (single_target highest threat, 500-600
+       physical damage; a heavy mechanical arm strikes; "Economy
+       of motion. Nothing wasted.")
+
+  Counters:
+    On physical attack → Piston Counter (see Counter Defense above)
+    On magic attack → Absorb Shield (see Counter Defense above)
+
+Mode: Reinforced (HP 50,000–25,001)
+  Note: At 50% HP, the Warden summons 2 Gear Wraiths — spectral
+        engineers that serve as additional targets. Counter Defense
+        now applies to the Gear Wraiths as well: attacking the wrong
+        target with the wrong type triggers a PARTY-WIDE counterattack
+        (Synchronous Counter, 300-400 to all). The intended strategy
+        is to maintain the physical/magic alternation while also
+        distributing attacks correctly across targets.
+
+  Passive — Counter Defense (expanded):
+    - All Counter Defense rules from Disciplined mode still apply
+      to attacks against the Warden
+    - Gear Wraith Counter Defense: each Wraith independently tracks
+      the last attack type used against it
+      - Physical on Wraith → Wraith counters attacker (250-300
+        physical)
+      - Magic on Wraith → Wraith generates Absorb Shield (same
+        rules as Warden)
+    - Synchronous Counter: if BOTH the Warden and any Wraith are
+      hit with the same attack type on the same turn (e.g., physical
+      on Warden AND physical on Wraith) → Synchronous Counter fires
+      (party_wide, 300-400 physical damage; "The machines synchronize.
+      Everything hits at once.")
+    Note: The party must now track alternation per-target AND avoid
+          matching attack types across targets in the same turn.
+
+  Gear Wraith (summoned add, x2):
+    - HP: 12,000 | ATK: 101 | DEF: 98 | MAG: 132 | MDEF: 82
+    - SPD: 70 | Weak: Ley | Absorbs: — | Resists: —
+    - Status Immunities: Poison, Petrify
+    - Independent Counter Defense (see above)
+    - Priority:
+      1. turn_counter % 3 == 0 → Spectral Wrench (single_target
+         random, 400-500 physical damage; "A ghostly tool swings
+         with mechanical memory.")
+      2. Default → Phantom Spark (single_target random, 300-400
+         Storm magic damage; "Dead fingers trace circuits in the
+         air. Lightning follows.")
+    - If a Gear Wraith is destroyed, the Warden resummons it after
+      3 turns (once per Wraith; each Wraith can only be resummoned
+      once). Mark destroyed Wraiths.
+
+  Priority:
+    1. active_adds < 2 AND turn_counter >= wraith_death_turn + 3 →
+       Resummon Gear Wraith (resummons 1 destroyed Wraith at 12,000
+       HP; once per destroyed Wraith; "Gears grind. The fallen
+       engineer reforms from scattered cogs.")
+    2. turn_counter % 5 == 0 → Fortress Protocol (self, +30%
+       DEF/MDEF for 3 turns)
+    3. turn_counter % 4 == 0 → Siege Cannon (party_wide, 800-900
+       physical damage; stronger)
+    4. turn_counter % 3 == 0 → Arc Welder (single_target highest
+       threat, 700-800 Storm magic damage + Slow 40%)
+    5. Default → Iron Fist (single_target highest threat, 600-700
+       physical damage)
+
+  Counters:
+    On physical attack → Piston Counter (500-600 to attacker;
+      stronger in this mode)
+    On magic attack → Absorb Shield
+    On same-type attack on Warden + Wraith in same turn →
+      Synchronous Counter (party_wide, 300-400)
+
+Mode: Overclocked (HP 25,000 or below)
+  Note: At 25% HP, the Warden enters Overclocked mode. It now takes
+        2 actions per turn. The Absorb Shield window shrinks: the
+        shield now lasts only until the Warden's next action (not the
+        next magic attack), meaning the party has less time to
+        capitalize. Piston Counter damage increases. Gear Wraiths
+        (if alive) also gain +25% ATK/MAG. This is the final test:
+        everything the party has learned about the counter pattern
+        must be executed under extreme time pressure.
+
+  Passive — Counter Defense (tightened):
+    - Piston Counter: 600-700 physical damage to attacker (increased)
+    - Absorb Shield: now expires at the START of the Warden's next
+      turn if not consumed (window is approximately 1 party action)
+    - Synchronous Counter: 400-500 party_wide (increased)
+    Note: The tighter shield window means magic must land IMMEDIATELY
+          after a physical attack clears the shield. Hesitation =
+          wasted magic. The fight becomes a rhythm game.
+
+  Overclocked Actions (2 per turn):
+    The Warden selects from its priority list TWICE each turn. Both
+    actions resolve before the next party member acts. This effectively
+    doubles its offensive pressure and makes Fortress Protocol
+    particularly dangerous (can buff AND attack on the same turn).
+
+  Priority (evaluated twice per turn):
+    1. turn_counter % 4 == 0 → Overclock Surge (party_wide, 900-1000
+       Storm magic damage; the Warden's chassis overheats, venting
+       energy in all directions; "Warning. Thermal capacity exceeded.
+       Venting." The Warden does not care.)
+    2. turn_counter % 3 == 0 → Siege Cannon (party_wide, 900-1000
+       physical damage; maximum output)
+    3. boss.hp_percent <= 10 → Last Protocol (single_target lowest
+       HP, 1000-1200 physical damage, ignores 50% DEF; "Final
+       directive. Eliminate all intruders."; only triggers once per
+       turn despite 2-action rule)
+    4. Default → Iron Fist (single_target highest threat, 700-800
+       physical damage; relentless)
+
+  Counters:
+    On physical attack → Piston Counter (600-700 to attacker)
+    On magic attack → Absorb Shield (tight window — expires at
+      Warden's next action)
+    On same-type attack on Warden + Wraith → Synchronous Counter
+      (400-500 party_wide)
+
+Scripted Events:
+  Turn 1 (once):
+    - cutscene: "The sixteenth floor is a foundry. Molten metal flows
+      in channels cut into the stone. Gears the size of houses turn
+      in the walls. At the center, standing motionless on a platform
+      of interlocking iron plates, is the Warden. It is not a suit
+      of armor. It is not a machine. It is both — a body rebuilt in
+      iron, powered by something that refuses to stop. Its eyes are
+      furnace-orange. They track you the moment you enter."
+    - dialogue: The Iron Warden (clipped, precise): "Intrusion
+      detected. Floor sixteen. Dreamer's Fault defense protocol
+      engaged."
+    - dialogue: Lira: "It's still following orders. After all this
+      time."
+    - dialogue: The Iron Warden: "Orders do not expire. Duty does
+      not expire. You will be repelled."
+
+  Turn 3 (once):
+    - dialogue: The Iron Warden (after first counter triggers):
+      "Countermeasure deployed. Analyze. Adapt. Or be destroyed."
+    - Note: This dialogue fires after the party has experienced
+      Counter Defense, serving as an in-fiction hint to alternate
+      attack types.
+
+  At boss.hp_percent <= 50 (once):
+    - mode_switch: Disciplined → Reinforced
+    - cutscene: "The Warden's chest plate splits open. Inside, where
+      a heart would be, gears spin around a core of white light.
+      The Warden raises both arms. From the molten channels, two
+      shapes rise — translucent, skeletal, wearing the ghosts of
+      engineer's uniforms. Gear Wraiths. The engineers who built
+      this place, still serving."
+    - add_spawn: 2 Gear Wraiths (see Reinforced mode for stats)
+    - dialogue: The Iron Warden: "Reinforcements deployed. All
+      units, synchronize defense protocols."
+    - dialogue: Sable: "They're linked. Hit the wrong one the wrong
+      way and they all hit back."
+
+  At boss.hp_percent <= 25 (once):
+    - mode_switch: Reinforced → Overclocked
+    - cutscene: "The Warden's core flares. The orange glow of its
+      eyes turns white. Steam erupts from every joint. The
+      temperature in the foundry spikes. The gears in the walls
+      spin faster. The Warden is exceeding its design parameters
+      and it does not care."
+    - dialogue: The Iron Warden (faster, staccato): "Overclock
+      engaged. Performance limiters disengaged. Structural integrity
+      non-critical. Mission priority: eliminate intruders."
+    - dialogue: Maren: "It's burning itself out. It can't sustain
+      this."
+    - dialogue: The Iron Warden: "Sustainability: non-critical.
+      Duty: absolute."
+    - environmental: Arena hazard — molten metal channels overflow,
+      creating hazard zones at arena edges. Party confined to center
+      platform.
+
+  At boss.hp_percent <= 10 (once):
+    - dialogue: The Iron Warden (voice distorting, metal grinding):
+      "System... failure... imminent. Core temperature... exceeding...
+      Final directive... engaged."
+    - dialogue: "Something in the Warden's voice changes. Beneath
+      the mechanical precision, beneath the protocols and the duty,
+      there is something else. Something that sounds almost like
+      pride."
+    - dialogue: The Iron Warden: "You are... adequate."
+
+  At boss.hp <= 0 (once):
+    - cutscene: "The Warden's core goes dark. The white light in
+      its chest dims to orange, then red, then nothing. It stands
+      for one more moment — still upright, still at attention, still
+      guarding the sixteenth floor of a fortress that no longer needs
+      guarding. Then, slowly, with mechanical dignity, it kneels.
+      One knee on the iron platform. Head bowed. The posture of a
+      soldier at rest."
+    - dialogue: The Iron Warden (barely audible, the last power
+      fading): "Defense protocol... complete. The Dreamer's Fault...
+      is yours. You have earned... what lies beyond."
+    - dialogue: "The gears in the walls slow. The molten metal cools.
+      The foundry, for the first time since it was built, is quiet."
+    - dialogue: Lira: "It wasn't trying to kill us. It was trying to
+      make sure we were strong enough."
+    - drop: Warden's Core (accessory; +20% ATK and MAG, counters
+      physical attacks for 25% damage; "The core still hums. Duty
+      does not expire.")
+    - drop: Warden's Blueprint (key item; unlocks the Warden's
+      engineering notes in the bestiary, revealing the full history
+      of the Dreamer's Fault)
+    - Note: Defeating the Iron Warden completes the Dreamer's Fault.
+      The door behind the Warden opens to a final chamber containing
+      the Dreamer's Legacy — the post-game's ultimate reward. The
+      Iron Warden is the true final boss of Pendulum of Despair.
+```
+
+**Design Note:** The Iron Warden is the hardest fight in the game and
+it earns that status through mechanical complexity, not stat inflation
+(though its stats are the highest of any boss). The Counter Defense
+system is the entire fight: physical attacks are countered, magic
+attacks generate an absorb shield. The intended rhythm — physical,
+magic, physical, magic — is simple to understand and demanding to
+execute under pressure. Disciplined mode teaches the pattern.
+Reinforced mode expands it to multiple targets with Synchronous
+Counter punishing same-type attacks across targets on the same turn,
+forcing the party to coordinate who attacks what and with which type.
+Overclocked mode is the crucible: 2 actions per turn, tighter shield
+windows, increased counter damage. The party must execute the
+alternation pattern flawlessly while managing Gear Wraith adds and
+healing through doubled offensive output. The Warden's dialogue
+reinforces its identity — a soldier following orders, a guardian
+testing worthiness. The "You are... adequate" line at 10% HP is the
+game's acknowledgment that the player has mastered its deepest combat
+system. The kneeling death animation communicates respect through
+mechanics: the Warden does not collapse, it yields. The post-game's
+final message is that the hardest challenge was never about power — it
+was about discipline.
 
 ---
 
