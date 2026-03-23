@@ -3,7 +3,8 @@
 > **Scope:** Post-game super dungeon enemy bestiary — 20 floors across
 > 5 ages, 20 regular enemies, 4 Echo Bosses, 1 non-combat encounter.
 >
-> **Target:** ~24 enemies (20 regular + 4 bosses)
+> **Target:** 24 stat-block enemies (20 regular + 4 Echo Bosses)
+> plus 1 non-combat encounter (Cael's Echo, Floor 20)
 >
 > **Files requiring changes:**
 > - `docs/story/bestiary/optional.md` — Rewrite (from TBD)
@@ -52,6 +53,13 @@ Level curve accelerates — gentle start, brutal finish:
 Players at max level (150) will find the dungeon challenging but
 achievable. Players entering at 40–50 will be severely tested.
 
+> **README classification:** Floors 1–12 (Lv 42–70) fall within the
+> Post-game range (40–80). Floors 13–20 (Lv 74–100) fall within the
+> Optional/Superboss range (70–150). The dungeon entry level (40–50
+> per dungeons-world.md) is the access threshold, not the completion
+> level. Echo Boss HP (40K–100K) exceeds the README illustrative
+> Boss HP range (6K–70K), which describes main-story bosses only.
+
 ### 1.5 No New Families
 
 The Dreamer's Fault introduces zero new palette-swap families.
@@ -83,7 +91,7 @@ glyph-based magic, stone guardians. Floor rotation mechanic.
 |------|----|------|--------|------|-------------|
 | First Age Sentinel | 42 | Construct | Dangerous | Tank | Stone guardian. Geometric attacks. Rotates facing when floor rotates — attacks change based on facing. |
 | Glyphscribe | 44 | Humanoid | Dangerous | Caster | Scholar-soldier. Writes attack glyphs in the air. Each glyph charges for 1 turn, then fires. Interruptible. |
-| Carved Watcher | 46 | Spirit | Dangerous | Balanced | A carved face in the wall that detaches. Tracks party movement. Stronger when the party is stationary. |
+| Carved Watcher | 46 | Construct | Dangerous | Balanced | A carved face in the wall that detaches. Tracks party movement. Stronger when the party is stationary. Animated stone — not a spirit. |
 | Ember Remnant | 48 | Elemental | Dangerous | Glass cannon | Dying flame from the First Age's collapse. High MAG, fragile. Self-destructs for massive AoE on death. |
 
 ### 3.2 The Crystal Age (Floors 5–8, Lv 52–58) — Alien Crystal
@@ -325,6 +333,7 @@ gap resolution:
 | Echo Boss accessories (5 items) | Gap 1.5 (Equipment) | Stat blocks are summaries, full details TBD |
 | Dreamer's Crest (+30 all stats) | Gap 1.5 (Equipment) | Best accessory in game, needs balance check |
 | Age materials → crafting recipes | Gap 1.4 + 1.5 | Post-game gear progression |
+| Void deployment notes (3 families) | This PR | Add to palette-families.md during implementation |
 
 ### 7.4 Enemy Count
 
