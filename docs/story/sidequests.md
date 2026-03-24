@@ -29,7 +29,7 @@ Lira can then stabilize the rupture using a combination of Forgewright engineeri
 
 Dael's response is complicated. He is grateful but unsatisfied — the damage is done, the workers won't recover, and the guild will claim the problem fixed itself. He asks Lira to write a technical report he can distribute to other factory districts. She agrees. This is a seed that, in the epilogue, becomes the foundation of the Bridgewrights — Lira's guild that merges Forgewright craft with ley line stewardship.
 
-**Rewards:** Forgewright Stabilizer (accessory — reduces magical damage taken, unique to Lira), Dael's Ledger (key item — unlocks Lira's ultimate weapon forge in Act III), 3x Arcanite Ingot (crafting material)
+**Rewards:** 2,500g + Forgewright Stabilizer (accessory — reduces magical damage taken, unique to Lira), Dael's Ledger (key item — unlocks Lira's ultimate weapon forge in Act III), 3x Arcanite Ingot (crafting material)
 
 **Thematic Resonance:** The fading is a mirror of the Pallor's work — emotional death through systemic neglect rather than cosmic malice. It asks whether the everyday despair of exploitation is really so different from the Pallor's influence. Dael's insistence on documentation over heroism models the kind of persistent, unglamorous resistance that actually changes institutions.
 
@@ -52,7 +52,7 @@ At Greyvale, the party finds Cael's family home — abandoned, half-collapsed, b
 
 The quest ends back at the barracks. Cordwyn locks the gloves away again. She tells Edren: "I can't undo it. I can't go back and take off the gloves and hold his hand and say something human. But I can remember that I should have. That's not nothing." She gives Edren Cael's old training sword — the one he used as a recruit, before he earned his knight's blade.
 
-**Rewards:** Cael's Training Sword (weapon — moderate stats, but triggers bonus dialogue in Edren's Act III Pallor trial), Cordwyn's Commendation (accessory — boosts Edren's defense and grants passive HP regen)
+**Rewards:** 1,000g + Cael's Training Sword (weapon — moderate stats, but triggers bonus dialogue in Edren's Act III Pallor trial), Cordwyn's Commendation (accessory — boosts Edren's defense and grants passive HP regen)
 
 **Thematic Resonance:** This quest is about the small failures that precede catastrophic ones. Cordwyn didn't cause Cael's fall. But she carries a specific, concrete moment of human failure — not taking off her gloves — that she can never fix. The quest argues that guilt over small things is not weakness; it is proof of conscience. Edren carrying Cael's training sword into the final battle adds weight to their confrontation.
 
@@ -75,7 +75,7 @@ The second lead takes the party back to the Archive of Ages, where the Archivist
 
 Mirren presents the findings to Maren. The two women argue — their first real conversation in years. Maren says the cost is too high, that asking someone to carry that weight is worse than a clean death. Mirren says that's not her decision to make. The quest ends without resolution. The information is available to the player but never forces a gameplay choice. It exists to deepen the tragedy: there was another way, and it might have been worse.
 
-**Rewards:** Harmonic Shard (accessory — unique item that boosts the entire party's resistance to Pallor-type status effects), Mirren's Index (key item — unlocks all lore entries in the bestiary retroactively), experience points
+**Rewards:** 3,000g + Harmonic Shard (accessory — unique item that boosts the entire party's resistance to Pallor-type status effects), Mirren's Index (key item — unlocks all lore entries in the bestiary retroactively), experience points
 
 **Thematic Resonance:** This quest interrogates the game's central sacrifice. If there was another way — one that preserved life but destroyed joy — was Cael's death actually the kinder outcome? It refuses to answer. The argument between Mirren and Maren mirrors the game's core tension: is acceptance of loss wisdom, or is it surrender? The player is left to decide.
 
@@ -106,7 +106,7 @@ The calming of the Gale also makes the subsequent Roothollow ritual more powerfu
 
 The quest's resolution happens at Roothollow, where the ley line nexus the party stabilized during the Interlude provides enough safe energy for Elara to attempt a modified pact. The new pact is different — weaker, more fragile, but mutual. The spirit isn't bound; it is invited. Elara can call a breeze, not a gale. She weeps, not from disappointment but from relief. "It's enough," she says. "It's talking to me again. That's enough."
 
-**Rewards:** Windcaller's Pendant (accessory — party evasion boost, Storm resistance +25%), Spirit's Whisper (Torren ability — a new healing skill that restores HP and cures Pallor-type status effects)
+**Rewards:** 2,500g + Windcaller's Pendant (accessory — party evasion boost, Storm resistance +25%), Spirit's Whisper (Torren ability — a new healing skill that restores HP and cures Pallor-type status effects)
 
 **Thematic Resonance:** The old pacts were based on power — spirits bound to serve. The new pact is based on mutual trust. This quest models in miniature the world's larger transformation: the rigid structures are gone, and what replaces them is smaller, more fragile, and more honest. Elara accepting a weaker connection instead of demanding the old power back is the personal-scale version of the game's acceptance theme.
 
@@ -129,7 +129,7 @@ The rail tunnels between Ashmark and Corrund contain the expedition's supply rec
 
 Fenn reads the full accounting in his office, alone. The party witnesses through the door. He sits for a long time. Then he signs a document — a public disclosure of Project Pendulum's full history, including his authorization and the covered-up deaths. He asks Lira to witness his signature. He says: "I can't undo this. But I can make sure the next Guildmaster knows what 'potential military application' actually cost."
 
-**Rewards:** Compact Trade Writ (key item — unlocks all Compact shops' full inventories for the rest of the game, including rare Forgewright equipment), Fenn's Seal (accessory — boosts gold earned from battles), experience points
+**Rewards:** 2,000g + Compact Trade Writ (key item — unlocks all Compact shops' full inventories for the rest of the game, including rare Forgewright equipment), Fenn's Seal (accessory — +25% gold from all battle sources), experience points
 
 **Thematic Resonance:** Fenn is not redeemed by this quest. Eleven workers are still dead. The Pendulum still destroyed the world. But he chooses accountability over denial — the hardest version of acceptance the game offers. His public disclosure mirrors Maren's mission to write the Pallor's history: both are acts of documentation as resistance, the belief that recording truth matters even when it can't fix what happened.
 
@@ -152,7 +152,7 @@ The quest sends the party to Millhaven's ruins. The extraction pit has erupted, 
 
 The party returns to Osric with soil from his old farm — not as proof or persuasion, but as an offering. Osric holds the soil for a long time. Then he says: "Hanna would have planted it the first day. She wasn't sentimental about seeds. She was sentimental about growing things." He doesn't plant the grain in Valdris. He asks Captain Isen to take him downriver, toward the highland settlements, where refugees have been gathering. He's going to plant it there — not in his soil, but in new soil, for new people. It won't be Millhaven. It will be something else.
 
-**Rewards:** Hanna's Blessing (accessory — passive HP regen for the entire party while equipped), Osric's Gratitude (consumable — fully restores all party HP and MP, single use)
+**Rewards:** 3,500g + Hanna's Blessing (accessory — passive HP regen for the entire party while equipped), Osric's Gratitude (consumable — fully restores all party HP and MP, single use)
 
 **Thematic Resonance:** Osric's seed grain is the Pendulum in miniature — an object that means nothing and everything, carried out of grief and denial. His choice to plant it somewhere new, for strangers, is the game's acceptance theme made tangible: letting go doesn't mean forgetting. It means choosing to grow something from the loss instead of preserving it forever.
 
@@ -175,7 +175,7 @@ The complication: the warehouse doesn't just contain medical supplies. It contai
 
 If they take the documents, Tash passes them to Sera Linn, who uses them to rally support against the merchant princes' hoarding. The supplies reach the workers. The documentation triggers a political crisis in Bellhaven that, in the epilogue, contributes to the Compact's fracture into independent city-states — a fracture that, paradoxically, allows the more humane cities to reform.
 
-**Rewards:** Shadowstep Boots (accessory — increases Sable's speed and grants pre-emptive strike chance), Medical Cache (consumable set — 10x full-heal items), Sera's Trust (key item — Sera Linn provides free safe passage through any Compact city for the rest of the game)
+**Rewards:** 1,500g + Shadowstep Boots (accessory — increases Sable's speed and grants pre-emptive strike chance), Medical Cache (consumable set — 10x full-heal items), Sera's Trust (key item — Sera Linn provides free safe passage through any Compact city for the rest of the game)
 
 **Thematic Resonance:** This is Sable's quest — not a world-shaking confrontation with the Pallor, but the kind of small, practical good she's been doing all along. Stealing medicine for dying workers is not heroic in the storybook sense. It is heroic in the way that actually matters. The quest validates Sable's way of fighting: not with swords or speeches, but by showing up and doing the unglamorous work.
 
@@ -200,7 +200,7 @@ Maren examines the assembled pattern and recognizes it: this is the counter-reso
 
 The quest does not change the main story's outcome. Cael still closes the door. But during the final battle, if this quest is complete, the ley line resonance activates during Phase 3 — the Pallor's incarnation is visibly weakened, the fight is mechanically easier, and Cael's farewell scene includes an additional line: "I can feel them. The lines. They're singing." It doesn't save him. But it means he doesn't close the door in silence.
 
-**Rewards:** Starweave Mantle (accessory — best magic defense item in the game, equippable by any party member), Ley Resonance (passive ability for Torren — boosts all party members' magic stats in battle), modified final battle Phase 3 (mechanical and narrative)
+**Rewards:** 4,000g + Starweave Mantle (accessory — best magic defense item in the game, equippable by any party member), Ley Resonance (passive ability for Torren — boosts all party members' magic stats in battle), modified final battle Phase 3 (mechanical and narrative)
 
 **Thematic Resonance:** The world is not passive in its own salvation. The ley lines — the natural magic that both factions have exploited — have their own voice, their own resistance. Grandmother Seyth, who has no magic, preserves the key to the world's defense through nothing but memory and storytelling. The quest argues that oral tradition, the simple act of passing down what you know, is itself a form of magic.
 
@@ -221,7 +221,7 @@ Brant asks the party to escort him to Corrund, where he intends to testify befor
 
 At Corrund, Brant delivers his testimony to Fenn Acari and the remnant Consortium. He names every soldier who refused the Pallor. He names every soldier who was forced. He names himself as someone who did neither — who simply looked away. His testimony is not heroic. It is ugly, halting, and deeply uncomfortable. Fenn accepts it into the official record.
 
-**Rewards:** Brant's Insignia (accessory — boosts physical defense, represents the weight of accountability), Compact Military Intelligence (key item — reveals Pallor-touched patrol routes on the world map, allowing encounter avoidance)
+**Rewards:** 3,000g + Brant's Insignia (accessory — boosts physical defense, represents the weight of accountability), Compact Military Intelligence (key item — reveals Pallor-touched patrol routes on the world map, allowing encounter avoidance)
 
 **Thematic Resonance:** Brant is the game's study in moral mediocrity — not a villain, not a hero, just a man who chose the path of least resistance and watched others pay for it. His confession doesn't redeem him. It can't. But it places his failure into the record, alongside the truth. The quest argues that cowardice acknowledged is less dangerous than cowardice denied.
 
@@ -244,7 +244,7 @@ Aldis asks the party to bring the unfinished letter to Maren's Refuge, where Mar
 
 If the player chooses, the reconstructed letter can be given to Lira. She holds it. She doesn't read it, because there's nothing written. She just holds it and feels what Cael felt in that moment before the Pallor took him. She says: "He tried. That's something." The letter can also be carried to the Convergence, where it provides a bonus dialogue option during Lira's scene with Cael in Phase 3.
 
-**Rewards:** Cael's Unfinished Letter (key item — optional bonus dialogue in the final battle), Scholar's Insight (Maren ability — a new analysis skill that reveals enemy weaknesses)
+**Rewards:** 5,000g + Cael's Unfinished Letter (key item — optional bonus dialogue in the final battle), Scholar's Insight (Maren ability — a new analysis skill that reveals enemy weaknesses)
 
 **Thematic Resonance:** The Pallor's cruelest weapon is not despair itself but the prevention of connection. Cael tried to reach out. He was stopped by a whisper. This quest asks: how many people were one conversation away from being saved? The answer — many, too many — is the Pallor's true victory and the reason Maren writes her history, and the reason Sable opens her tavern. So nobody forgets what it cost.
 
@@ -258,7 +258,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Location:** Aelhart
 **Availability:** Act I, from game start
 **Description:** The village elder asks the party to investigate why the well ran dry. An examination reveals the ley line beneath the village has been diverted — not by the Compact, but by a natural shift. The party can reroute a small trickle of energy back using Maren's techniques (if she's joined) or brute-force clear the blockage. The well flows again, weakly.
-**Reward:** Aelhart Charm (minor accessory — small HP boost), villager gratitude (unlocks a free rest at the inn for the remainder of the game)
+**Reward:** 200g + Aelhart Charm (minor accessory — small HP boost), villager gratitude (unlocks a free rest at the inn for the remainder of the game)
 **Connection:** Foreshadows the Dry Well of Aelhart dungeon (Floors 1-4 in Interlude, Floors 5-7 in Act III).
 
 ---
@@ -269,7 +269,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Location:** Thornwatch perimeter, surrounding forest
 **Availability:** Act I, upon first visiting Thornwatch
 **Description:** Halda's garrison is understaffed. Compact scouts have been probing the border, and aggressive wildlife driven from the Wilds has been harassing patrols. She asks the party to clear three patrol routes of threats — two wildlife encounters and one Compact scout party that can be fought or persuaded to withdraw. Completing all three earns Halda's trust.
-**Reward:** Garrison-forged equipment (weapon upgrade for Edren or Cael), Halda's Border Report (key item — provides context for Compact movements referenced in Act II)
+**Reward:** 350g + Garrison-forged equipment (weapon upgrade for Edren or Cael), Halda's Border Report (key item — provides context for Compact movements referenced in Act II)
 **Connection:** Halda's report feeds into the Act II diplomatic mission, where her intelligence about Compact probing foreshadows the assault on Valdris Crown.
 
 ---
@@ -280,7 +280,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Location:** Roothollow, surrounding forest
 **Availability:** Act I, upon arriving at Roothollow
 **Description:** Vessa asks the party to retrieve heartwood sap from a grove north of the settlement. The grove has become infested with ley-corrupted insects — normally harmless creatures driven aggressive by unstable magical energy. The party clears the grove and collects the sap, which Vessa uses to reinforce the great tree's failing root system. A stopgap measure, not a cure.
-**Reward:** Spirit-Touched Salve (consumable — removes all status effects from the party), Roothollow Hospitality (free rest and herb shop discount)
+**Reward:** 300g + Spirit-Touched Salve (consumable — removes all status effects from the party), Roothollow Hospitality (free rest and herb shop discount)
 **Connection:** The corrupted insects foreshadow the Wilds' broader deterioration. The heartwood sap becomes relevant during the Interlude when Torren attempts to stabilize the great tree.
 
 ---
@@ -291,7 +291,7 @@ If the player chooses, the reconstructed letter can be given to Lira. She holds 
 **Location:** Caldera, Ashmark rail station
 **Availability:** Act II or Interlude, when visiting Compact territory
 **Description:** Cira, Lira's former colleague, has been secretly copying classified extraction reports and needs to smuggle them out of the academy before the Guild's internal security audit. She asks Sable (if present) or any party member to carry a sealed tube through the rail station checkpoint, where Forgewright security scans for magical signatures. The tube is disguised as a cartography cylinder. The quest involves a timed stealth sequence through the station, avoiding patrols and scanners.
-**Reward:** Cira's Data (key item — extraction rate documentation that Lira references in the Bridgewrights' founding charter), experience points
+**Reward:** 400g + Cira's Data (key item — extraction rate documentation that Lira references in the Bridgewrights' founding charter), experience points
 **Connection:** Directly feeds into the Fading Shifts major quest and the epilogue's establishment of the Bridgewrights.
 
 ---
@@ -307,7 +307,7 @@ The Grey Stag (5,500 HP) is a boss encounter in the highland forest clearing. It
 
 Defeating the Grey Stag visibly weakens the corruption in the immediate area — the grey residue on the trees begins to fade, and natural sound returns to the forest. Tomas, the surviving ranger, is escorted home to Greywood Camp. He later joins the Valdris militia during the Interlude and appears during the siege of Valdris Crown as a named allied NPC, his experience in the Wilds making him a capable scout.
 
-**Reward:** Thornwalker's Bow (weapon — ranged weapon for Torren, built from deep-Wilds wood), Kael's grudging respect (unlocks additional dialogue and a minor ally during Act III), Stag's Antler (crafting material — crystallized Pallor-tainted bone, used in late-game weapon forging)
+**Reward:** 400g + Thornwalker's Bow (weapon — ranged weapon for Torren, built from deep-Wilds wood), Kael's grudging respect (unlocks additional dialogue and a minor ally during Act III), Stag's Antler (crafting material — crystallized Pallor-tainted bone, used in late-game weapon forging)
 **Connection:** The Grey Stag is the first wildlife mutation the party encounters as a full boss-level threat. Kael's dialogue references it in the Interlude as evidence that the corruption was visible long before anyone took it seriously. Tomas's survival and later militia service demonstrates that saving individuals during side content has tangible consequences in the main story.
 
 ---
@@ -318,7 +318,7 @@ Defeating the Grey Stag visibly weakens the corruption in the immediate area —
 **Location:** Deeproot Shrine, Maren's Refuge
 **Availability:** Act I or Act II, when traveling through the deep Wilds
 **Description:** Brenn has a sealed message from Maren that he cannot open — it's warded against everyone but the intended recipient. The problem is, Brenn can't remember who Maren told him to give it to. He's been living alone for thirty years and his memory isn't what it was. He asks the party to check Maren's Refuge for a recipient list she kept. At the refuge, the list is found — the message was meant for Torren, containing Maren's early research on the Pallor's presence in the spirit world.
-**Reward:** Maren's Sealed Research (key item — unlocks early access to Pallor-related lore in Torren's dialogue), Brenn's Stew Recipe (consumable crafting recipe — produces a meal that boosts all stats temporarily)
+**Reward:** 250g + Maren's Sealed Research (key item — unlocks early access to Pallor-related lore in Torren's dialogue), Brenn's Stew Recipe (consumable crafting recipe — produces a meal that boosts all stats temporarily)
 **Connection:** The sealed research gives Torren foreknowledge that helps him understand what's happening to the Wilds in the Interlude. A player who completes this quest finds Torren's Interlude section enriched with additional dialogue.
 
 ---
@@ -329,7 +329,7 @@ Defeating the Grey Stag visibly weakens the corruption in the immediate area —
 **Location:** Ashfen, Compact border road
 **Availability:** Act II, when passing through the Wilds-Compact border
 **Description:** Rhona's trading post has been cut off. Compact soldiers have established a checkpoint on the border road and are demanding tariffs that no independent trader can afford. Rhona's family depends on the trade route. She asks the party to negotiate, intimidate, or find an alternate route around the checkpoint. The diplomatic solution involves Lira using her Compact credentials (real or forged). The combat solution involves a skirmish with the checkpoint guards. The exploration solution involves Torren guiding the party through a marsh passage.
-**Reward:** Rhona's Trader Pack (consumable set — assorted potions and provisions at below-market cost), Border Map (key item — reveals hidden paths on the overworld map between the Wilds and Compact territory)
+**Reward:** 300g + Rhona's Trader Pack (consumable set — assorted potions and provisions at below-market cost), Border Map (key item — reveals hidden paths on the overworld map between the Wilds and Compact territory)
 **Connection:** Rhona's intelligence about Compact border movements feeds into the Interlude's infiltration sequence.
 
 ---
@@ -340,7 +340,7 @@ Defeating the Grey Stag visibly weakens the corruption in the immediate area —
 **Location:** Three Roads Inn, surrounding crossroads area
 **Availability:** Interlude
 **Description:** Hadley is sheltering Valdris refugees and Compact deserters under the same roof. Tensions are escalating — a Valdris noble's son blames all Compact citizens for the king's death, and a Compact engineer insists Valdris's reliance on "fairy magic" caused the ley line collapse. Hadley asks the party to mediate before violence breaks out. The quest involves talking to both parties, finding common ground (both lost homes, both are afraid), and brokering a fragile peace. No combat. Just conversation.
-**Reward:** Hadley's Bell (accessory — when equipped, reduces random encounter rate on the overworld), free rest and resupply at the Three Roads Inn permanently
+**Reward:** 300g + Hadley's Bell (accessory — when equipped, reduces random encounter rate on the overworld), free rest and resupply at the Three Roads Inn permanently
 **Connection:** The fragile peace at Hadley's inn foreshadows the post-war world where the factions must coexist. If completed, the Three Roads Inn appears in the epilogue as a thriving waystation — proof that Hadley's approach worked.
 
 ---
@@ -351,7 +351,7 @@ Defeating the Grey Stag visibly weakens the corruption in the immediate area —
 **Location:** Caldera, Ley Line Depths (surface entrance)
 **Availability:** Act II or Interlude
 **Description:** Mira Thenn wants to create one final map — a complete picture of the ley line network as it exists now, before the Unraveling destroys what's left. She needs measurements from the surface entrance to the Ley Line Depths at Millhaven. The party escorts her there and protects her while she works. She's not a combatant — the party must defend her through three waves of ley-born creatures while she takes readings. At the end, she produces the map: a beautiful, heartbreaking document showing the network's collapse.
-**Reward:** Mira's Final Map (key item — reveals all ley line nexus points on the world map, including hidden ones), Cartographer's Compass (accessory — increases item drop rate from encounters)
+**Reward:** 400g + Mira's Final Map (key item — reveals all ley line nexus points on the world map, including hidden ones), Cartographer's Compass (accessory — increases item drop rate from encounters)
 **Connection:** Mira's map is used by Lira in the epilogue as the foundation for the Bridgewrights' sustainable extraction program. The map also reveals the location of a hidden ley nexus that contains the game's best crafting materials.
 
 ---
@@ -369,7 +369,7 @@ The tunnels' deepest point — the only safe route that avoids both Compact patr
 
 Kerra fights beside the party during the Nest Mother encounter. Kerra can be incapacitated (0 HP) during the fight but always survives. If she finishes the fight on her feet, she appears in the epilogue as a full militia leader during Caldera's reconstruction, organizing the same kind of civilian evacuations she helped with here — but now with authority, training, and a network of people who trust her because she earned it in these tunnels. If incapacitated, her epilogue role is reduced but not eliminated.
 
-**Reward:** Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints)
+**Reward:** 500g + Resistance Token (accessory — Compact NPCs offer better prices and additional dialogue options), Forged Identity Papers (key item — allows free movement through Compact checkpoints)
 **Connection:** Sera's network, if preserved, provides critical intelligence for the party's movements through Compact territory in Act III. If Kerra finishes the fight on her feet, she branches into a meaningful epilogue presence, and the Nest Mother's destruction permanently clears the Pallor infestation from the undercity tunnel network, making subsequent traversals encounter-free.
 
 ---
@@ -380,7 +380,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Valdris Crown training yard
 **Availability:** Interlude, after Cael's betrayal
 **Description:** Marek doesn't ask for anything. He doesn't give quests. But if the player examines the training post in the barracks yard during the Interlude, they find Cael's name freshly carved into the wood — Marek does this every morning. Speaking to Marek after examining the post triggers a brief, brutal scene: Marek hands Edren a practice sword and says "Show me your guard stance." The quest is a training mini-game — a series of combat drills against Marek, who fights at his full ability despite his age. Completing the drills earns Marek's nod. He says nothing else. He doesn't need to.
-**Reward:** Marek's Discipline (passive ability for Edren — permanent boost to counterattack rate), experience points
+**Reward:** 300g + Marek's Discipline (passive ability for Edren — permanent boost to counterattack rate), experience points
 **Connection:** Marek's silent grief for Cael parallels Edren's louder struggle. The training drills are a metaphor: Marek processes grief through routine. The ability he teaches Edren — counterattacking — is the physical expression of his philosophy: keep your guard up, keep moving, don't stop.
 
 ---
@@ -391,7 +391,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Any crossroads where Marrek appears
 **Availability:** Act II onward
 **Description:** Marrek, the enigmatic traveling merchant, occasionally offers a trade: bring him a specific item from a specific location, and he'll trade it for something of greater value. The items he requests are always odd — a stone from the Ember Vein, a reed from Duskfen, a gear from the rail tunnels — and the items he gives in return are always useful but slightly wrong. A healing potion that tastes like starlight. A blade that hums a song nobody recognizes. Each trade deepens the mystery of who or what Marrek is, without ever answering it.
-**Reward:** Varies per trade — unique items with unusual properties not found anywhere else in the game
+**Reward:** 200g per trade + varies per trade — unique items with unusual properties not found anywhere else in the game
 **Connection:** Marrek's trades form a passive collectible chain. A player who completes all trades by the Interlude receives the Wanderer's Gift — an accessory that grants immunity to the Pallor's despair status effect. Marrek's comment: "You've been everywhere. Good. The world needs people who've been everywhere."
 
 ---
@@ -402,7 +402,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Haren's estate, outskirts of Valdris Crown
 **Availability:** Interlude
 **Description:** Haren is a broken man writing letters no one answers. He asks the party for one thing: news. Not intelligence, not strategy — just news. What is happening outside his walls? The quest is a conversation. The player tells Haren about the state of the world — the Wilds' corruption, the Compact's fracture, the party's mission. Haren listens. At the end, he produces a document he's been drafting: a proposed charter for a Valdris governing council, replacing the monarchy with shared leadership. He hasn't sent it because he doesn't believe anyone would listen. The party can encourage him to send it or leave him to his despair.
-**Reward:** If encouraged: Haren's Charter (key item — referenced in the epilogue as the founding document of the Valdris council), Council's Mandate (accessory — boosts entire party's experience gain). If left: no reward, and the epilogue's Valdris council forms more slowly and with more conflict.
+**Reward:** If encouraged: 500g + Haren's Charter (key item — referenced in the epilogue as the founding document of the Valdris council), Council's Mandate (accessory — boosts entire party's experience gain). If left: no reward, and the epilogue's Valdris council forms more slowly and with more conflict.
 **Connection:** This quest directly shapes the epilogue. Haren's charter, if delivered, becomes the framework for the post-war Valdris government that Edren declines to lead.
 
 ---
@@ -413,7 +413,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Bellhaven harbor, Sunken Rig
 **Availability:** Interlude
 **Description:** One of Bellhaven's offshore extraction rigs has drifted ashore, its crew missing. Dock workers are afraid to approach it. The quest introduces the Sunken Rig optional dungeon — the party enters the half-beached rig, fights through Pallor manifestations, and discovers the crew logs: a day-by-day descent into despair as the Pallor seeped through the ley lines the rig was extracting. The final log reads: "We stopped caring. Not all at once. One at a time. Like candles going out."
-**Reward:** Access to the Sunken Rig dungeon (Sable-focused loot, unique daggers, Pallor-resistant armor), Crew Manifest (key item — the names of the lost crew, which can be delivered to their families in Bellhaven for additional dialogue and a minor accessory)
+**Reward:** 400g + access to the Sunken Rig dungeon (Sable-focused loot, unique daggers, Pallor-resistant armor), Crew Manifest (key item — the names of the lost crew, which can be delivered to their families in Bellhaven for additional dialogue and a minor accessory)
 **Connection:** The Sunken Rig's crew logs parallel Dael Corran's descriptions of the fading. They are the maritime equivalent of the factory workers' plight — people killed by the system they served.
 
 ---
@@ -424,7 +424,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Caldera academy, Windshear Peak
 **Availability:** Interlude, after finding Lira
 **Description:** Jace Renn, the theoretical physicist who secretly gave Lira the extraction data, wants to test a theory. He believes ley line energy and Forgewright engineering are not opposites but complements — that the machines could be redesigned to amplify ley energy rather than drain it. He has a prototype device but needs a location with a stable, uncontaminated ley line to test it. Torren suggests Windshear Peak, where the wind-spirits gather and the ley lines run shallow and clean. At the peak, Jace's device works — briefly, imperfectly, but it works. Ley energy flows through the Forgewright mechanism and comes out stronger, not diminished. Jace stares at the reading and says: "Lira was right. We were doing it backward the whole time."
-**Reward:** Prototype Harmonizer (accessory — boosts both physical and magical attack, symbolizing the fusion of old and new), Jace's Notes (key item — referenced in the epilogue as contributing to the Bridgewrights' founding research)
+**Reward:** 450g + Prototype Harmonizer (accessory — boosts both physical and magical attack, symbolizing the fusion of old and new), Jace's Notes (key item — referenced in the epilogue as contributing to the Bridgewrights' founding research)
 **Connection:** This quest is the scientific proof of concept for the Bridgewrights. Combined with the Fading Shifts quest and Cira's data, it forms a complete foundation for Lira's epilogue arc.
 
 ---
