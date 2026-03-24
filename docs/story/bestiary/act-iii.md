@@ -416,9 +416,9 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Ley-Warped Drake | Beast | 40 | 3,380 | 140 | 82 | 53 | 62 | 44 | 40 | 241 | 500 | Element Shard (75%) / Elemental Core (25%) | Drake Scale (75%) / Arcanite Shard (25%) | Frost | Flame | — | — | The Ley Scar |
-| Ley-Warped Wraith | Spirit | 42 | 3,699 | 147 | 57 | 55 | 73 | 46 | 41 | 279 | 575 | Ether Wisp (75%) / Spirit Essence (25%) | Ley Crystal Fragment (75%) / Grey Residue (25%) | Spirit | Ley | — | Poison, Petrify | The Ley Scar |
-| Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 347 | 700 | Scrap Metal (75%) / Iron Cog (25%) | Tempered Plate (75%) / Arcanite Ingot (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
-| Ley Abomination | Boss | 48 | 18,000 | 168 | 126 | 80 | 131 | 78 | 55 | 654 | 1,050 | Arcanite Shard (75%) / Arcanite Core (25%) | Arcanite Ingot (100%) | Void | Flame, Frost, Storm | — | Death, Sleep, Confusion | The Ley Scar (rare ~10%) |
+| Ley-Warped Wraith | Spirit | 42 | 3,699 | 147 | 57 | 55 | 73 | 46 | 41 | 279 | 575 | Ether Wisp (75%) / Spirit Essence (25%) | Spirit Essence (75%) / Arcanite Shard (25%) | Spirit | Ley | — | Poison, Petrify | The Ley Scar |
+| Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 348 | 700 | Scrap Metal (75%) / Crystal Shard (25%) | Crystal Shard (75%) / Arcanite Shard (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
+| Ley Abomination | Boss | 48 | 18,000 | 168 | 126 | 80 | 131 | 78 | 55 | 654 | 1,050 | Arcanite Shard (75%) / Elemental Core (25%) | Arcanite Shard (100%) | Void | Flame, Frost, Storm | — | Death, Petrify, Stop, Sleep, Confusion | The Ley Scar (rare ~10%) |
 
 > **Design note:** XP values are hand-tuned overrides (~25% above bestiary formula baseline). The Ley field canonically enhances everything in the zone. See [dungeons-world.md](../dungeons-world.md) for zone layout and encounter tables.
 
