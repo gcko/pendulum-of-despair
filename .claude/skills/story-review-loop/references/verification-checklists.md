@@ -147,3 +147,16 @@ Each item is a single check. Grows from Copilot gap analysis.
   (e.g., repeated `### Boss Notes`), append the area/context name
   to create unique anchors (e.g., `### Boss Notes — Rail Tunnels`).
   Duplicate headings create broken anchor links on GitHub.
+
+## Economy Rule Consistency (from Copilot gap analysis, PR #27)
+
+- When economy.md states a universal rule (e.g., "no vendor trash",
+  "no financial services", "single currency"), grep ALL story docs for
+  counterexamples. Pre-existing content may contradict the new rule.
+  Either acknowledge the exception in economy.md or update the source.
+- When a stack limit differs from the default (199 for HP/MP items),
+  add an explicit note in BOTH the economy doc AND items.md to prevent
+  implementer confusion about which cap applies.
+- After find-and-replace operations in ASCII art sections (maps,
+  diagrams), visually verify bracket alignment and spacing. Automated
+  replacements can break fixed-width formatting.

@@ -220,36 +220,38 @@ Now unblocks: 1.6 (Economy — equipment prices defined), 3.5 (Crafting — Forg
 
 ### 1.6 Economy & Pricing
 
-**Status:** SKELETAL
+**Status:** COMPLETE
 **Priority:** P0 — blocks shops, balance, progression feel
-**Files:** None yet (create `docs/story/economy.md`)
+**Files:** `docs/story/economy.md`
 **Depends On:** 1.3 (Bestiary for gold drops), 1.4 (Items for prices), 1.5 (Equipment for prices)
+**Completed:** 2026-03-24 — Currency rules, shop inventories (10 towns with event-triggered restocking), treasure chest formula, boss gold drop system (rank + narrative split), steal economy, crafting costs, quest rewards, gold pacing targets, wealth curve. Caldera 150% inflation with Employee Card discount. Sleeping Bag/Tent/Pavilion rest item progression.
 
 **What's Needed:**
-- [ ] Currency system: Gold (primary), Scrip (Compact currency, conversion rate)
-- [ ] Gold sources per act:
-  - [ ] Enemy gold drops (tied to bestiary)
-  - [ ] Treasure chest gold amounts per dungeon
-  - [ ] Quest reward gold amounts
-  - [ ] Sellable loot items (vendor trash)
-- [ ] Gold sinks per act:
-  - [ ] Equipment prices (tied to equipment tables)
-  - [ ] Consumable prices
-  - [ ] Inn prices per town
-  - [ ] Special services (money lender interest rate, etc.)
-- [ ] Economic pacing targets:
-  - [ ] Expected gold at end of each act
-  - [ ] Can player afford ~75% of new equipment per town?
-  - [ ] Is there meaningful choice in purchases?
-- [ ] Shop inventory per town (complete stock lists with prices):
-  - [ ] All Valdris faction shops
-  - [ ] All Carradan faction shops
-  - [ ] All Thornmere faction shops
-  - [ ] Act-gated inventory changes
-- [ ] Steal economy (Sable's Tricks) — value of stolen items relative to shop goods
-- [ ] Crafting economy — material costs and crafted item values
+- [x] Currency system: Gold (single currency; Scrip as regional name, no conversion)
+- [x] Gold sources per act:
+  - [x] Enemy gold drops (tied to bestiary)
+  - [x] Treasure chest gold amounts per dungeon
+  - [x] Quest reward gold amounts
+  - [x] Sellable loot items / materials (no separate vendor trash tier)
+- [x] Gold sinks per act:
+  - [x] Equipment prices (tied to equipment tables)
+  - [x] Consumable prices
+  - [x] Inn prices per town
+  - [x] Special services (unique town pricing quirks; see economy.md)
+- [x] Economic pacing targets:
+  - [x] Expected gold at end of each act
+  - [x] Can player afford 70% of new equipment per town?
+  - [x] Is there meaningful choice in purchases?
+- [x] Shop inventory per town (complete stock lists with prices):
+  - [x] All Valdris faction shops
+  - [x] All Carradan faction shops
+  - [x] All Thornmere faction shops
+  - [x] Act-gated inventory changes
+- [x] Steal economy (Sable's Tricks) — value of stolen items relative to shop goods
+- [x] Crafting economy — material costs and crafted item values
 
-**Blocking:** All shops, treasure design, reward balancing
+**Blocking:** ~~All shops, treasure design, reward balancing~~
+Now unblocks: 2.6 (Pallor Wastes Oases), 3.4 (Difficulty & Balance)
 
 ---
 
@@ -548,3 +550,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL → COMPLETE. Boss Compendium (29+1 bosses): full AI scripts, phase mechanics, scripted events, stat tables verified against act files. Gap 1.3 fully closed. | — |
 | 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, 23 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |
 | 2026-03-23 | 1.5 Equipment Stat Tables | SKELETAL → COMPLETE. 56 weapons, 49 armor, 38 accessories, Forgewright crafting (8 recipes, 7 infusions, 7 synergies), ATK rebalance proposal, boss drop cross-reference. Unblocks 1.6, 3.5. | — |
+| 2026-03-24 | 1.6 Economy & Pricing | SKELETAL → COMPLETE. Currency (Gold/Scrip unified), 10 town shop inventories, event-triggered restocking, treasure chest formula, boss gold system (rank × narrative split), steal economy, crafting costs, quest rewards, gold pacing (70% affordability), wealth curve. Unblocks 2.6, 3.4. | — |

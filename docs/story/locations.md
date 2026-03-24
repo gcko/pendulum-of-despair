@@ -49,6 +49,7 @@ By Act II, the city shows the strain. Markets are half-empty, ley-lamps flicker,
 - The Royal Keep (throne room, Maren's old study, the war council chamber)
 - Cael's quarters (where the Pendulum is stored in Act II; site of his nightmares)
 - The Lower Ward market (NPC hub, shopping, side quests)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - The collapsed eastern wall (Act II set piece, later a ruined zone in the Interlude)
 
 **What the player does here:**
@@ -70,6 +71,7 @@ The surrounding farmland is turning fallow. Older residents remember when the so
 
 **Key features:**
 - Starting area inn (save point, initial equipment shop)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - The dry well (environmental storytelling — ley line failure)
 - Carradan trader (introduces the faction tension through commerce, not combat)
 - Border road south (leads toward the Thornmere Wilds and the Ember Vein ruin)
@@ -94,6 +96,7 @@ During the Interlude, Edren retreats here. The monastery's isolation suits his g
 - The great hall (Edren's confrontation scene)
 - Highland overlook (panoramic view of the continent — used for a story beat where Edren sees the Pallor's spread)
 - Provisioner (limited shop, appropriate for a remote location)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 
 **What the player does here:**
 - Interlude: Sable travels here to find Edren. The player controls Sable through a short dungeon (Pallor-infested monastery). Edren rejoins the party after a boss fight against a Pallor Hollow — a manifestation of Edren's guilt given monstrous form.
@@ -160,6 +163,7 @@ The Compact's ruling body, the Consortium of Engineers, meets in the Axis Tower 
 **Key features:**
 - The Axis Tower (Consortium headquarters; Interlude dungeon when Lira and Sable infiltrate)
 - The Undercroft (NPC hub for Sable's contacts; black market shopping)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - Canal District (exploration area; environmental puzzles using water levels and bridge mechanics)
 - Lira's hidden workshop (safe room, cutscene location)
 - General Kole's command post (Interlude boss location — the Pallor-embracing general)
@@ -205,6 +209,7 @@ The harbor is dominated by Forgewright-powered vessels — ironclad barges and s
 
 **Key features:**
 - The Stilts (harbor district — NPC hub, shopping, taverns)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - Merchant Prince manor district (political intrigue, optional quest line)
 - Offshore rigs (referenced in NPC dialogue; one becomes an optional dungeon during Interlude)
 - Sable's childhood neighborhood (character backstory content — she grew up here before losing everything)
@@ -275,6 +280,7 @@ During the Interlude, Caldera's forges run erratically. Ley line instability cau
 - The Upper Terrace (Merchants' Council Hall, Fenn Acari's offices, political intrigue)
 - The Forgewrights' Academy (Lira's alma mater, Cira and Jace Renn's workplace)
 - The Undercity (Tash's black market, Sera Linn's resistance network, Sable's infiltration route)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - Lira's Hidden Workshop (safe room, Interlude cutscene location)
 - The Central Smelting Complex (environmental hazard area, connects to Millhaven extraction pipeline)
 
@@ -390,6 +396,7 @@ During the Interlude, Roothollow is one of the first settlements to suffer the W
 - The root chambers (NPC hub, organic architecture unlike anything in Valdris or the Compact)
 - Spirit-speaker Vessa (quest-giver, lore source, warns about the Pendulum)
 - Herbalist's alcove (shop — potions, remedies, spirit-linked accessories)
+  > See [economy.md](economy.md) for complete shop inventory and pricing.
 - The heartwood shrine (save point, story cutscene location)
 - The great tree canopy (explorable upper area, optional in Act I)
 

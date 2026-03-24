@@ -248,7 +248,7 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
     #   [ on the wall-]===  ~ CHANNEL ~   [CACHE A    ]#
     #   [ follow the  ]  |  ~ (flowing~===[(resistance]#
     #   [ scratches)  ]  |  ~ west)   ~   [ supplies, ]#
-    #                    |  ~~~~~~~~~~~   [ 800 scrip)]#
+    #                    |  ~~~~~~~~~~~   [ 800 gold)]#
     #              ======+======                       #
     #              |            |                       #
     #   [JUNCTION      ]  [VALVE           ]           #
@@ -275,7 +275,7 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 **Encounters:** Forge-Smoke Creatures (gaseous, fire-element, weak to water), Malfunctioning Service Automata (Compact maintenance drones gone haywire, physical attackers), Sewer Rats (weak, appear in swarms). The Tunnel Map key item from Tash's Black Market reveals enemy patrol routes, reducing encounter rate by 50%.
 
 **Treasure:**
-- Supply Cache A: 800 scrip, 3x Standard Ration, 1x Repair Kit
+- Supply Cache A: 800 gold, 3x Standard Ration, 1x Repair Kit
 - Valve Room (after solving puzzle): Forgewright Prototype Gauntlet (equipment -- DEF +8, grants +15% damage to mechanical enemies)
 - Hidden in the sewer water near the Junction Platform (requires wading): Corrund Sewer Ring (accessory -- poison immunity, "Whoever made this spent too much time down here")
 
@@ -306,7 +306,7 @@ KEY:  ### = brick/iron wall   === = conduit pipe (glowing blue)
     #   [ intel    ]     [ conduits -- the ley ]       #
     #   [ documents]     [ line feed for the   ]       #
     #   [ + 1200   ]     [ Axis Tower. |P|     ]       #
-    #   [ scrip)   ]     [ Pallor residue      ]       #
+    #   [ gold)    ]     [ Pallor residue      ]       #
     #                    [ visible on pipes)    ]       #
     #                         |                        #
     #   [ABANDONED  ]    [OLD FOREMAN'S        ]       #
@@ -324,7 +324,7 @@ KEY:  ### = brick/iron wall   === = conduit pipe (glowing blue)
 ```
 
 **Treasure:**
-- Supply Cache B: Compact Military Intelligence Documents (key item -- reveals patrol routes, used in "The Commissar's Confession" side quest), 1200 scrip
+- Supply Cache B: Compact Military Intelligence Documents (key item -- reveals patrol routes, used in "The Commissar's Confession" side quest), 1,200 gold
 - Old Foreman's Office hidden compartment: Ironmark Tunnel Map (key item -- required to navigate the Ironmark passage without getting lost; without it, the tunnel has random dead ends that loop back), 1x Arcanite Torch
 - Resistance Waypoint: Free rest (bedrolls restore HP/MP), resistance graffiti reads "WE REMEMBER WHAT WE WERE"
 - Resistance Waypoint (wall): A beautiful tapestry hanging on the brick wall, donated by "a kind traveler" according to the resistance fighters who cannot remember exactly when it appeared. Depicts a pastoral scene -- rolling hills, a village, figures at rest. Fine grey thread embroidery, exquisite craftsmanship. If examined after the Doma moment cutscene (flag: vaelith_doma_moment), the party notices the pastoral figures have grey eyes. Sable: "Those eyes. I have seen those eyes." Maren: "The thread is grey. Not dyed grey -- the material itself. I do not know what fiber this is." The tapestry cannot be removed without destroying it. The resistance fighters consider it good luck.
@@ -375,7 +375,7 @@ KEY:  ### = iron-reinforced wall   === = ley conduit (bright blue)
 **Puzzle:** The elevator to the Axis Tower is unpowered. The Conduit Control Room has three switches that redirect ley energy through the Power Core. The correct combination routes energy to the elevator without overloading the core. Incorrect combinations cause energy arcs (party-wide damage). The solution is written in maintenance shorthand on the Control Room wall -- Lira reads it automatically; other party leaders must pass an inspection check (examine the faded placard three times to decipher it).
 
 **Treasure:**
-- Sealed Armory (requires Ironmark Key from Kole's defeat -- only accessible on return): Arcanite-Bonded Blade (weapon -- ATK +26, +10% damage to Pallor enemies), Compact Officer's Shield (DEF +16), 3000 scrip
+- Sealed Armory (requires Ironmark Key from Kole's defeat -- only accessible on return): Arcanite-Bonded Blade (weapon -- ATK +26, +10% damage to Pallor enemies), Compact Officer's Shield (DEF +16), 3,000 gold
 - Conduit Control Room: Ley-Conduit Regulator (accessory -- +MP regen, reduces ley-exposure damage)
 
 ---
@@ -458,7 +458,7 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 **Encounters:** Heat Sprites (fire-element, weak to water), Corrupted Forge Constructs (half-melted automata reactivated by ley surges, physical/fire attacks), Pallor Seep (Interlude only -- grey ooze that inflicts Despair status, weak to all elements but high HP).
 
 **Treasure:**
-- Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1500 scrip
+- Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
 - Forge Channel (hidden chest in a dead-end branch): Molten Core (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
 - Escape Tunnel entrance: Survival Pack (3x Standard Ration, 2x Healing Draught, 1x Smoke Capsule)
 
@@ -808,7 +808,7 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 
 **Treasure:**
 - Sable's Hideaway: Tin Box (examine for Sable character scene -- contains a copper coin, blue fabric scrap, and a child's drawing. "I hid here when the world got too loud. Guess some things don't change.")
-- Old Smuggler Stash: 500 scrip (old Compact coins, pre-reformation), Corroded Dagger (weapon -- low ATK, but Sable: "My first real blade. I stole it from a drunk. I was nine.")
+- Old Smuggler Stash: 500 gold (old Compact coins, pre-reformation), Corroded Dagger (weapon -- low ATK, but Sable: "My first real blade. I stole it from a drunk. I was nine.")
 - Smuggler's Den: Sea Chart Collection (key item -- reveals hidden coastal locations on the overworld map), 3x Smoke Capsule, 1x Grappling Line
 - Sea Caves: Tidecaller's Horn (unique item -- summons a water elemental once per battle, as referenced in city-carradan.md)
 - Dock Tunnel (hidden behind crate stack, push puzzle): Merchant Prince's Private Ledger (key item -- evidence of dual arms sales, used in "The Honest Thief" side quest)
@@ -874,9 +874,9 @@ Every secret passage follows the same design rules: (1) there is always a discov
 #### SP-C2: Canalside Inn Secret Room
 
 **Entrance location:** Canalside Inn (Canal District) -- the second-floor guest room, behind the wardrobe
-**Discovery method:** Rent the second-floor room (costs 200 scrip). Examine the wardrobe -- its back panel is false. Sable spots it automatically. Without Sable, the innkeeper hints: "That room has a draft. Can't figure out where it comes from."
+**Discovery method:** Rent the second-floor room (costs 200 gold). Examine the wardrobe -- its back panel is false. Sable spots it automatically. Without Sable, the innkeeper hints: "That room has a draft. Can't figure out where it comes from."
 **Where it leads:** A small hidden room between the inn's walls -- a merchant's panic room from an earlier era.
-**Contents:** Merchant's Strongbox (600 scrip, 2x Precision Lens, 1x Compact Trade Writ -- if "The Auditor's Conscience" has not been completed, this provides an alternate path to unlocking full Compact shop inventories), and a peephole looking into the Bargeman's Tavern below (Sable: "Now that's useful.").
+**Contents:** Merchant's Strongbox (600 gold, 2x Precision Lens, 1x Compact Trade Writ -- if "The Auditor's Conscience" has not been completed, this provides an alternate path to unlocking full Compact shop inventories), and a peephole looking into the Bargeman's Tavern below (Sable: "Now that's useful.").
 **Availability:** Act II onward.
 
 #### SP-C3: Records Archive Basement
@@ -938,7 +938,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Prince Aldara's Manor (Merchant Prince District) -- the study, behind a portrait
 **Discovery method:** During "The Honest Thief" quest, Sable identifies the vault entrance based on intelligence from her contacts: "Aldara keeps his real books behind the painting of his father. Old money, old tricks." Without the quest, examining the portrait closely reveals a hinge.
 **Where it leads:** A walk-in vault beneath the manor.
-**Contents:** Aldara's Private Ledger (key item -- proof of dual arms sales to both Valdris and the Compact during the border war; primary evidence for "The Honest Thief"), 5000 scrip in locked strongboxes (Sable can pick them), a collection of foreign artifacts (lore -- Aldara has been trading with nations beyond the known continent), and the Sea Prince's Signet (accessory -- +gold earned from sales, +charm in negotiations).
+**Contents:** Aldara's Private Ledger (key item -- proof of dual arms sales to both Valdris and the Compact during the border war; primary evidence for "The Honest Thief"), 5,000 gold in locked strongboxes (Sable can pick them), a collection of foreign artifacts (lore -- Aldara has been trading with nations beyond the known continent), and the Sea Prince's Signet (accessory -- +15% sell-price modifier (50% to 57.5%), +charm in negotiations).
 **Availability:** Interlude (quest-triggered or independent exploration with Sable).
 
 #### SP-B2: Breakwater Hidden Passage
@@ -982,7 +982,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Corrund Sewer Network (Maintenance Tunnels, Screen 2) -- the passage labeled "TO PUMP STATION"
 **Discovery method:** The Tunnel Map key item from Tash reveals this connection. Without it, the passage appears to dead-end at a collapsed section. With the map, the party can navigate around the collapse through a narrow detour.
 **Where it leads:** A multi-screen tunnel passage (3 screens of linear corridor with random encounters) that eventually connects to the Caldera Undercity via the Abandoned Forge Channel.
-**Contents:** Screen 1: Resistance waypoint (bedrolls, graffiti: "KEEP MOVING"). Screen 2: A junction where a side passage leads to a collapsed room containing a chest with 2000 scrip and a Compact Military Dispatch (lore -- orders for Kole's Pallor experiments, predating his promotion). Screen 3: The final passage opens into Caldera's Abandoned Forge Channel.
+**Contents:** Screen 1: Resistance waypoint (bedrolls, graffiti: "KEEP MOVING"). Screen 2: A junction where a side passage leads to a collapsed room containing a chest with 2,000 gold and a Compact Military Dispatch (lore -- orders for Kole's Pallor experiments, predating his promotion). Screen 3: The final passage opens into Caldera's Abandoned Forge Channel.
 **Availability:** Interlude.
 
 #### SP-X2: Greyvale Hidden Cellar
@@ -1080,7 +1080,7 @@ These areas within cities only become accessible when a specific side quest is a
 **Quest:** "The Honest Thief" (Major Side Quest #7)
 **Trigger:** After obtaining Prince Aldara's Private Ledger, Prince Venn's door is marked as accessible. Venn himself invites the party in -- he wants to see what Aldara was hiding.
 **Location:** Prince Venn's Manor (Merchant Prince District) -- the archive room on the upper floor
-**What the player finds:** Venn's counter-intelligence files on Aldara -- years of surveillance documenting Aldara's dual arms sales. Venn knew all along and was waiting for leverage. The archive contains: Venn's Dossier on Aldara (key item -- combined with Aldara's Ledger, provides complete evidence for the quest's political crisis), the Merchant Prince's Signet Ring (accessory -- referenced in city-carradan.md as hidden in Warehouse 2, but this is a second copy Venn had made), and 3000 scrip in a strongbox that Venn offers as payment for the party's discretion.
+**What the player finds:** Venn's counter-intelligence files on Aldara -- years of surveillance documenting Aldara's dual arms sales. Venn knew all along and was waiting for leverage. The archive contains: Venn's Dossier on Aldara (key item -- combined with Aldara's Ledger, provides complete evidence for the quest's political crisis), the Merchant Prince's Signet Ring (accessory -- referenced in city-carradan.md as hidden in Warehouse 2, but this is a second copy Venn had made), and 3,000 gold in a strongbox that Venn offers as payment for the party's discretion.
 
 ### Ashmark: Black Forge C Interior
 
@@ -1335,7 +1335,7 @@ HEIST ROUTE -- Bellhaven (The Honest Thief Quest)
     The medical supplies are heavy (movement speed reduced)
     unless the party uses the Dock Tunnel crate transport
     (a smuggler's pulley system, activated by Sable's
-    contact for 500 scrip).
+    contact for 500 gold).
 ```
 
 **Encounters:** The heist is stealth-focused. Combat encounters only occur if the party is detected. Detection triggers an escalation: first patrol reinforcements, then Forgewright Security Drones, then (if the alarm rings for 3 turns) a mini-boss: Aldara's Head of Security (human boss, high DEF, calls reinforcements).

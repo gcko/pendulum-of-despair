@@ -285,12 +285,12 @@ Yes. Every secret passage has at least one environmental/examination trigger. No
 | City | Price | Currency | Notes |
 |------|-------|----------|-------|
 | Valdris Crown | ~50 (implied standard) | Gil | Standard pricing |
-| Corrund Supply Depot | 40 scrip | Scrip | Fair price |
-| Caldera Apothecary | ~60 (implied) | Scrip | Slightly higher |
-| Ashmark General Store | 40 scrip | Scrip | Same as Corrund |
-| Millhaven Company Store | 80 scrip | Scrip | **Double price** (deliberate) |
-| Gael's Span Provisioner | 60 scrip | Scrip | Border markup |
-| Kettleworks Campus Store | 60 scrip ("Research Ration") | Scrip | Better quality |
+| Corrund Supply Depot | 40 gold | Gold | Fair price |
+| Caldera Apothecary | ~60 (implied) | Gold | Slightly higher |
+| Ashmark General Store | 40 gold | Gold | Same as Corrund |
+| Millhaven Company Store | 80 gold | Gold | **Double price** (deliberate) |
+| Gael's Span Provisioner | 60 gold | Gold | Border markup |
+| Kettleworks Campus Store | 60 gold ("Research Ration") | Gold | Better quality |
 
 Millhaven's inflated prices are documented as intentional design ("the player should feel the exploitation"). This is consistent.
 
@@ -298,8 +298,8 @@ Millhaven's inflated prices are documented as intentional design ("the player sh
 
 Valdris weapon/armor shop prices are not fully itemized in city-valdris.md (shop inventories are described narratively, not in tables like Carradan cities). The Carradan cities have extensive price tables. From the data available:
 - Valdris Crown weapon shop sells "standard Valdris arms" at unspecified prices
-- Corrund Glass-Front Merchant Hall sells Arcanite Edge at 2400 scrip
-- Caldera Upper Market sells Arcanite Saber at 3200 scrip (higher tier, higher price)
+- Corrund Glass-Front Merchant Hall sells Arcanite Edge at 2,400 gold
+- Caldera Upper Market sells Arcanite Saber at 3,200 gold (higher tier, higher price)
 
 The Compact cities do show a price gradient: Caldera > Corrund > Ashmark, which makes sense (Caldera is the largest forge-city). Cross-faction comparison is not fully possible due to Valdris lacking itemized price tables.
 
@@ -310,10 +310,10 @@ city-valdris.md now includes itemized shop tables for all Valdris cities, matchi
 
 Severity: **RESOLVED**
 
-**MINOR-06: Currency exchange rates not fully documented**
-Corrund has an Exchange House that "converts Valdris coin to Compact scrip." Bellhaven has a Money Changer with "better rates than Corrund." But the actual exchange rate (gil-to-scrip ratio) is never specified in any document. Thornmere spirit tokens have a documented 2:1 penalty for Valdris gil at Roothollow. But the base gil:scrip:token ratio is undefined.
+**MINOR-06: Currency exchange rates — RESOLVED**
+Per economy.md, Gold is the universal currency. "Scrip" and "Gil" are regional names for the same coin — no conversion mechanics exist. The Exchange House in Corrund re-mints foreign coins into local Compact coinage at 1:1 (flavor only, no value change). Thornmere spirit tokens remain a separate narrative system documented in city-thornmere.md.
 
-Severity: **MINOR**
+Severity: **RESOLVED** (economy.md establishes single-currency design)
 
 ### 5.2 Soft-Lock Check: Essential Items
 

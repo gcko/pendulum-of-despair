@@ -80,8 +80,11 @@
 | Ley Tonic | Restore 300 HP to all party | 800 | 400 | Act II shops (limited stock) |
 | Elixir | Restore 100% HP and MP | — | — | Chests, boss drops only |
 | Megalixir | Restore 100% HP and MP to all party | — | — | 3 total (Convergence, Dreamer's Fault) |
+| Sleeping Bag | Restore 25% HP/MP to all party (save point only) | 250 | 125 | Act I shops |
 | Tent | Restore 50% HP/MP to all party (save point only) | 500 | 250 | Act I shops |
-| Cottage | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Interlude shops |
+| Pavilion | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Act II shops |
+
+> **Rest item stack limit:** Sleeping Bag, Tent, and Pavilion stack to **99** (not 199 like other HP/MP items). Their full-party out-of-town utility warrants a lower cap. See [economy.md](economy.md) for pricing and availability details.
 
 ### MP Restoration
 
@@ -110,7 +113,7 @@
 | Soft Stone | Petrify | 200 | 100 | Act II shops |
 | Chronos Dust | Slow | 150 | 75 | Act II shops |
 | Remedy | All except Stop, Berserk, Despair, Faint | 800 | 400 | Act II shops |
-| Pallor Salve | Despair (instant cure) | 2,500 | 1,250 | Act III Oases (limited). Also craftable. |
+| Pallor Salve | Despair (instant cure) | 2,500 | 1,250 | Act II (Bellhaven, limited 3/visit), Interlude (Ironmark, limited 2/visit), Act III Oases. Also craftable. |
 | Hope Shard | Despair (instant cure) | — | — | Rare chests/quest rewards only |
 
 > **Despair** is the signature status of the Pallor — a creeping hopelessness
@@ -153,13 +156,13 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 | Category | Count |
 |----------|-------|
-| HP Healing | 8 |
+| HP Healing | 9 |
 | MP Restoration | 3 |
 | Revival | 2 |
 | Status Cure | 10 |
 | Battle Utility | 3 |
 | Stat Capsules | 6 types |
-| **Total** | **32** |
+| **Total** | **33** |
 
 ---
 
@@ -219,7 +222,7 @@ Forgewright devices are central to Lira's identity as an engineer and inventor. 
 ### Core Mechanic
 
 - Each equipped Ley Crystal grants **1 invocation** in the Magic menu.
-- Invocations have **limited uses per rest cycle** — restored at inns, tents, cottages, and save points.
+- Invocations have **limited uses per rest cycle** — restored at inns, Sleeping Bags, Tents, Pavilions, and save points.
 - Power **scales with crystal level** (Lv 1–5; see [progression.md](progression.md) for leveling details).
 - Inspired by FF6's Esper summon system: powerful per-rest abilities that complement the standard spell list.
 - Invocations **cannot be used** during Ley Crystal Suppression (see [Axis Tower Suppression](#axis-tower-suppression) below).
@@ -513,6 +516,7 @@ Items that advance or gate specific plot events. Unlike dungeon access items, th
 | Compact Battle Standard | The Ashen Ram | Proof of Valdris Siege victory |
 | Pallor-Laced Iron | The Ashen Ram (steal) | Evidence of Pallor in Compact war machines |
 | Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
+| Caldera Employee Card | Sable pickpockets from Compact officer (Caldera) | 25% discount at all Caldera shops (net 112.5% of standard). See [economy.md](economy.md). |
 
 > **Pallor-Laced Iron** and **Corrupted Tuning Fork** are steal-only story items. They unlock optional dialogue and lore scenes but are not required for main story progression.
 

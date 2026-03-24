@@ -127,7 +127,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 | 7 | Engineer's Guild Office | Guild | Consortium Quarter | Guild clerk | Job board | Side quest source |
 | 8 | Brass Fountain Plaza | Plaza | Consortium Quarter | Various NPCs | -- | Central gathering area, environmental storytelling |
 | 9 | Streetcar Station | Transit | Merchant Mile | -- | -- | Non-functional; environmental detail |
-| 10 | Exchange House | Commerce | Merchant Mile | Moneylender | Currency exchange | Converts Valdris coin to Compact scrip |
+| 10 | Exchange House | Commerce | Merchant Mile | Moneylender | Coin stamping (1:1) | Re-mints foreign gold into Compact coins; flavor only, no value change |
 | 11 | Axis Tower | Dungeon/Government | City center | Consortium leaders, boss | -- | Interlude dungeon (4 floors) |
 | 12 | Records Archive | Government | West of Axis Tower | Archivist NPC | Lore | Optional deep-lore content |
 | 13 | Courier Office | Service | West of Axis Tower | Courier NPC | Message delivery | Flavor |
@@ -161,7 +161,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 
 **Glass-Front Merchant Hall (Upper City)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Arcanite Edge | Weapon | 2400 | Yes | Yes | Forgewright-forged blade, +ATK |
 | Brasshide Vest | Armor | 1800 | Yes | Yes | Arcanite-bonded leather |
@@ -173,7 +173,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 
 **Tash's Black Market (Undercroft)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Identity Papers (Grade 3) | Key item | 1500 | Yes | Yes | Allows passage in restricted areas |
 | Stolen Arcanite Core | Material | 800 | Yes | Yes | Crafting component |
@@ -185,7 +185,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 
 **Supply Depot (Canal District)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Standard Ration | Consumable | 40 | Yes | Yes | Moderate HP restore |
 | Repair Kit | Consumable | 100 | Yes | Yes | Restores equipment condition |
@@ -203,7 +203,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 
 **Hidden Treasures:**
 - Warehouse A: Locked chest containing Arcanite Ingot (crafting material). Requires lockpick or Sable's skill.
-- Sewer tunnels: 3 hidden chests along the sewer route. Contains Compact military intelligence documents, a Forgewright prototype gauntlet, and 2000 scrip.
+- Sewer tunnels: 3 hidden chests along the sewer route. Contains Compact military intelligence documents, a Forgewright prototype gauntlet, and 2,000 gold.
 - Abandoned Pump Station: Behind a rusted panel, a passage leads to a small room with a chest containing the Conduit Ring (accessory: +MP regen near machinery).
 - Brass Fountain Plaza: Examine the fountain's base to find an inscription. Reading it with Lira in the party triggers a lore scene about Corrund's founding.
 
@@ -379,7 +379,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 
 **Upper Market (Upper Rim)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Arcanite Saber | Weapon | 3200 | Yes | Yes | High-tier Forgewright blade |
 | Heat-Treated Plate | Armor | 2800 | Yes | Yes | Volcanic-forged; fire resist |
@@ -391,7 +391,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 
 **Arcanite Weapons Smith (Middle Tiers)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Forgewright Blade | Weapon | 1600 | Yes | Yes | Standard issue, reliable |
 | Arcanite Dagger | Weapon | 900 | Yes | Yes | Quick, Sable-appropriate |
@@ -402,7 +402,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 
 **Tash's Black Market (Undercity)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Forged Identity Papers | Key item | 1200 | Yes | Yes | Grade 2-3 clearance |
 | Stolen Guild Seal | Key item | 800 | Yes | Yes | Opens Guild-locked doors |
@@ -421,7 +421,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 
 **Hidden Treasures:**
 - Terrace Garden: Examine the withered tree in the Interlude. Lira identifies it as a ley-grafted specimen. Behind its roots: the Rootspark Pendant (accessory: +nature magic affinity).
-- Abandoned Forge Channel: 2 chests in dead-end branches. Contains Molten Core (crafting material) and 1500 scrip.
+- Abandoned Forge Channel: 2 chests in dead-end branches. Contains Molten Core (crafting material) and 1,500 gold.
 - Kel's Bellows Station: If the player speaks to Kel three times across different visits, he gives them a Lucky Cog he found in the smelting waste. Accessory: +luck.
 - Central Smelting Complex rim: A narrow walkway along the pit edge (requires heat-resistant gear) leads to a chest with the Caldera Ember (unique fire-element weapon upgrade).
 
@@ -556,7 +556,7 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 
 **Ashmark General Store**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Forgewright Hammer | Weapon | 1400 | Yes | Yes | Heavy, forge-built |
 | Soot-Hardened Mail | Armor | 1200 | Yes | Yes | Blackite-treated iron |
@@ -568,7 +568,7 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 
 **The Soot (tavern -- under the counter)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Bootleg Tonic | Consumable | 80 | Yes | Yes | HP restore, slight random effect |
 | Worker's Manifesto | Key item | 200 | No | Yes | Dael's writings; side quest trigger |
@@ -584,7 +584,7 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 **Hidden Treasures:**
 - Lira's Old Room: Examine the desk to find hidden letters. Contains the Forge Apprentice's Ring (accessory: +crafting quality when Lira is in party).
 - Black Forge B upper level: A chest on a catwalk over the molten metal. Contains the Emberstone (unique fire-element crafting material).
-- Coal Yard: Behind stacked coal crates, a passage leads to a hidden maintenance tunnel with a chest containing 1200 scrip and a Compact military cipher.
+- Coal Yard: Behind stacked coal crates, a passage leads to a hidden maintenance tunnel with a chest containing 1,200 gold and a Compact military cipher.
 - Prayer Wheel Garden: If all functioning prayer wheels are activated in sequence, a compartment opens in the central pedestal. Contains the Forgewright's Creed (lore document + minor stat boost).
 
 **Environmental Storytelling:**
@@ -725,7 +725,7 @@ KEY:  ~~~ = ocean/tidal water   === = dock/pier   ### = walkway
 
 **Sailor's Outfitter (Market Quarter)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Sea-Steel Cutlass | Weapon | 1400 | Yes | Yes | Salt-resistant blade |
 | Stormhide Vest | Armor | 1200 | Yes | Yes | Water-resistant leather |
@@ -736,7 +736,7 @@ KEY:  ~~~ = ocean/tidal water   === = dock/pier   ### = walkway
 
 **Import House (Merchant Prince District)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Valdris Moonblade | Weapon | 3600 | Yes | No | Imported; ley-touched |
 | Foreign Silk Robe | Armor | 2000 | Yes | Yes | +magic resist |
@@ -746,7 +746,7 @@ KEY:  ~~~ = ocean/tidal water   === = dock/pier   ### = walkway
 
 **Salvage & Scrap Shop (Stilts District)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Patched Mail | Armor | 400 | Yes | Yes | Cheap but functional |
 | Rusted Blade | Weapon | 200 | Yes | Yes | Low ATK but available early |
@@ -857,7 +857,7 @@ KEY:  ooo = Millglow pit (glowing)   |P| = pumping station
 
 **Company Store**
 
-| Item | Type | Price (scrip) | Notes |
+| Item | Type | Price (gold) | Notes |
 |------|------|---------------|-------|
 | Standard Ration | Consumable | 80 | **Double normal price** -- company markup |
 | Extraction Mask | Accessory | 600 | Reduces ley-exposure damage; workers cannot afford this |
@@ -985,7 +985,7 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 
 **Holt Varen's Weapons Export**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Arcanite Longblade | Weapon | 2000 | Yes | Yes | Export quality, polished |
 | Compact Officer's Saber | Weapon | 2800 | Yes | No | Military grade; limited stock |
@@ -996,7 +996,7 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 
 **Arms Dealer (Merchant Quarter)**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Forgewright Blade | Weapon | 1400 | Yes | Yes | Standard issue |
 | Iron-Brass Shield | Armor | 1000 | Yes | Yes | Compact standard |
@@ -1013,7 +1013,7 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 **Hidden Treasures:**
 - Munitions Warehouse: Side quest grants access. Inside: Military-Grade Arcanite Core (crafting material, highest purity) and the Export Manifest (key item: reveals Compact arms sales to foreign nations -- lore).
 - Pell's Boarding House: Examine the window ledge in Pell's room to find a carved bone trinket (his wife's work). Key item: Bone Whistle (accessory: +evasion, Thornmere origin).
-- Testing Range: Cannot enter, but examining the harbor wall near it at night reveals a loose brick. Behind it: 1000 scrip and a Prototype Arcanite Round (consumable: massive single-target damage, one use).
+- Testing Range: Cannot enter, but examining the harbor wall near it at night reveals a loose brick. Behind it: 1,000 gold and a Prototype Arcanite Round (consumable: massive single-target damage, one use).
 
 **Environmental Storytelling:**
 - The testing range flashes are visible and audible from anywhere in the city. A periodic white flash on the horizon followed by a delayed rumble. In the Interlude, the flashes stop. The silence is conspicuous.
@@ -1238,7 +1238,7 @@ No formal shops. The Supply Shed contains lootable crates:
 
 **Hidden Treasures:**
 - Barracks: After soldiers flee, examine the bunk in the back corner. Under the mattress: a soldier's journal describing increasingly aggressive wildlife and strange sounds from the mine. Key item: Miner's Compass (accessory: reveals hidden passages in the Ember Vein).
-- Behind the Forgewright engine: A maintenance panel conceals a small cache. Contains Arcanite Spark (consumable: deals moderate lightning damage, single target) and 300 scrip.
+- Behind the Forgewright engine: A maintenance panel conceals a small cache. Contains Arcanite Spark (consumable: deals moderate lightning damage, single target) and 300 gold.
 - Mine entrance exterior: Examine the survey markers on nearby trees. Lira identifies the dating system -- these claims were filed months before the expedition. The Compact knew something was here.
 
 **Environmental Storytelling:**
@@ -1333,7 +1333,7 @@ KEY:  TTT = forest (Thornmere)   ### = stone bridge
 
 **Bridge Provisioner**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Standard Ration | Consumable | 60 | Yes | Yes | Border markup |
 | Healing Draught | Consumable | 120 | Yes | Yes | Moderate HP restore |
@@ -1343,7 +1343,7 @@ KEY:  TTT = forest (Thornmere)   ### = stone bridge
 
 **Ranger's Hut**
 
-| Item | Type | Price (scrip/barter) | Act II | Interlude | Notes |
+| Item | Type | Price (gold/barter) | Act II | Interlude | Notes |
 |------|------|----------------------|--------|-----------|-------|
 | Thornmere Salve | Consumable | 80 | Yes | Yes | HP restore + poison cure |
 | Spirit Ward (minor) | Accessory | 300 | Yes | No | +resist spirit damage |
@@ -1473,7 +1473,7 @@ KEY:  [...] = building   === = rail line   ((( = glass dome
 
 **Campus Store**
 
-| Item | Type | Price (scrip) | Act II | Interlude | Notes |
+| Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Precision Tool Set | Tool | 400 | Yes | Yes | Required for Forgewright crafting |
 | Arcanite Calibrator | Accessory | 1000 | Yes | Yes | +accuracy with Forgewright weapons |
