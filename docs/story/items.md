@@ -523,23 +523,23 @@ The following **18 boss drops** are equipment pieces (weapons, armor, or accesso
 | Equipment Drop | Dropped By | Slot |
 |---------------|-----------|------|
 | Colossus Shard | Ley Colossus | Accessory |
-| Drayce's Failsafe Core | Drayce | Accessory |
-| Warden's Binding | Forge Warden | Accessory |
+| Drayce's Failsafe Core | Forge Warden | Accessory |
+| Warden's Binding | Undying Warden | Accessory |
 | Kole's Epaulettes | General Kole | Armor |
-| Crown Shard | Pallor Queen | Accessory |
-| Unfinished Ring | The Architect | Accessory |
-| Ashen Scholar's Tome | Ashen Scholar | Weapon (Sable) |
+| Crown Shard | Crowned Hollow | Accessory |
+| Unfinished Ring | Perfect Machine | Accessory |
+| Ashen Scholar's Tome | Vaelith | Accessory |
 | Titan's Core | Ley Titan | Accessory |
-| Nexus Crest | Nexus Guardian | Accessory |
+| Nexus Crest | Wellspring Guardian | Accessory |
 | Architect's Hammer | The Architect | Weapon (Lira) |
-| Grey Cleaver | Grey Knight | Weapon (Drayce) |
+| Grey Cleaver | Grey Cleaver Unbound | Weapon (Torren) |
 | Cael's Knight Crest | Cael (Phase 1) | Accessory |
-| Cael's Memory | Pallor Incarnate | Accessory |
-| Scholar's Codex | Vaelith | Accessory |
-| Queen's Facet | Pallor Queen | Weapon (Sable) |
-| Root Crown | Elder Treant | Armor |
-| Warden's Core | Vein Guardian | Accessory |
-| Dreamer's Crest | Dreamer (final) | Accessory |
+| Cael's Memory | Pallor Echo | Accessory |
+| Scholar's Codex | First Scholar | Accessory |
+| Queen's Facet | Crystal Queen | Accessory |
+| Root Crown | Rootking | Armor |
+| Warden's Core | Iron Warden | Accessory |
+| Dreamer's Crest | Cael's Echo (non-combat) | Accessory |
 
 > **Equipment drops vs. boss mementos:** Equipment drops are usable gear with stats. Boss mementos are narrative-only key items. Some bosses drop both (e.g., Cael Phase 1 drops Cael's Knight Crest as equipment AND Cael's Pendant as a memento).
 

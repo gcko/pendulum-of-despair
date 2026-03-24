@@ -177,40 +177,44 @@ Now unblocks: 1.5 (Equipment partial — items defined), 1.6 (Economy — item p
 
 ### 1.5 Equipment Stat Tables
 
-**Status:** SKELETAL
+**Status:** COMPLETE
 **Priority:** P0 — blocks character progression feel
-**Files:** None yet (create `docs/story/equipment.md`)
-**Depends On:** 1.2 (Stat System), 1.6 (Economy)
+**Files:** `docs/story/equipment.md`
+**Depends On:** 1.2 (Stat System) — 1.6 (Economy) was originally listed but is a circular dependency (equipment defines prices that economy uses). Removed.
 **Reference:** `docs/references/weapons/analysis.md` — weapon counts, ATK curves, character specialization across FF4/FF6/CT/SoM. `docs/references/armor/analysis.md` — armor counts, DEF curves, slot philosophy, elemental/status design. Target ~50–80 weapons, ~60–80 armor, 4 equipment slots.
+**Completed:** 2026-03-23 — 56 weapons (6 types, Tiers 0–5 + Forged), 49 armor (head/body/heavy/robe), 38 accessories, 8 Forged recipes, 7 elemental infusions, 7 secret synergies. ATK growth rebalance proposed. Boss drop cross-reference verified against bestiary.
 
 **What's Needed:**
-- [ ] Equipment slot definitions (weapon, shield/off-hand, head, body, accessory x2?)
-- [ ] Per-character equipment restrictions (who can equip what)
-- [ ] Complete weapon list with stats:
-  - [ ] Swords (Edren, Cael)
-  - [ ] Staves/rods (Maren)
-  - [ ] Daggers/tools (Sable)
-  - [ ] Hammers/wrenches (Lira)
-  - [ ] Bows/spears (Torren)
-  - [ ] Elemental weapons
-  - [ ] Ultimate weapons (one per character, sidequest rewards)
-- [ ] Complete armor list (head, body) with stats per tier
-- [ ] Complete shield list with stats
-- [ ] Complete accessory list with special properties:
-  - [ ] Stat boost accessories
-  - [ ] Status immunity accessories
-  - [ ] Elemental resistance accessories
-  - [ ] Unique mechanical accessories (auto-haste, counter-attack, etc.)
-- [ ] Equipment tiers mapped to game progression:
-  - [ ] Act I gear (starter + first upgrade)
-  - [ ] Act II gear (diplomatic mission upgrades)
-  - [ ] Interlude gear (found/scrounged in broken world)
-  - [ ] Act III gear (endgame preparation)
-  - [ ] Ultimate/optional gear (sidequests, superbosses)
-- [ ] Equipment prices per tier
-- [ ] Arcanite Forging integration (Lira's crafting upgrades)
+- [x] Equipment slot definitions (weapon, head, body, accessory, Ley Crystal — 5 slots)
+- [x] Per-character equipment restrictions (who can equip what)
+- [x] Complete weapon list with stats:
+  - [x] Swords (Edren)
+  - [x] Greatswords (Cael)
+  - [x] Staves (Maren)
+  - [x] Daggers (Sable)
+  - [x] Hammers (Lira)
+  - [x] Spears (Torren)
+  - [x] Elemental weapons (infusions + innate)
+  - [x] Ultimate weapons (one per character, sidequest rewards)
+- [x] Complete armor list (head, body) with stats per tier
+- [x] No shield slot — removed in favor of accessory (design decision documented)
+- [x] Complete accessory list with special properties:
+  - [x] Stat boost accessories (8)
+  - [x] Status immunity accessories (6)
+  - [x] Elemental resistance accessories (4)
+  - [x] Unique mechanical accessories (6 — auto-haste, counter-attack, etc.)
+  - [x] Character-specific / boss drop accessories (14)
+- [x] Equipment tiers mapped to game progression:
+  - [x] Act I gear (starter + first upgrade)
+  - [x] Act II gear (diplomatic mission upgrades)
+  - [x] Interlude gear (found/scrounged in broken world)
+  - [x] Act III gear (endgame preparation)
+  - [x] Ultimate/optional gear (sidequests, superbosses)
+- [x] Equipment prices per tier
+- [x] Arcanite Forging integration (8 recipes, 7 infusions, 7 synergies)
 
-**Blocking:** Shop inventories, treasure chest contents, character progression
+**Blocking:** ~~Shop inventories, treasure chest contents, character progression~~
+Now unblocks: 1.6 (Economy — equipment prices defined), 3.5 (Crafting — Forgewright recipes defined)
 
 ---
 
@@ -543,3 +547,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL update. Optional enemies (24): Dreamer's Fault (20 floors, 5 ages, Lv 42–100). Void deployment notes for Drake/Wolf/Lurker families. Only Boss Compendium remains. | — |
 | 2026-03-23 | 1.3 Enemy Bestiary | PARTIAL → COMPLETE. Boss Compendium (29+1 bosses): full AI scripts, phase mechanics, scripted events, stat tables verified against act files. Gap 1.3 fully closed. | — |
 | 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, 23 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |
+| 2026-03-23 | 1.5 Equipment Stat Tables | SKELETAL → COMPLETE. 56 weapons, 49 armor, 38 accessories, Forgewright crafting (8 recipes, 7 infusions, 7 synergies), ATK rebalance proposal, boss drop cross-reference. Unblocks 1.6, 3.5. | — |
