@@ -507,7 +507,7 @@ Cael's departure at the end of Act II removes the party's dedicated buffer. This
 
 ### Row-Restricted Abilities
 
-**Row-restricted abilities:** Steal (Sable) requires front row. All other abilities work from either row.
+**Row-restricted abilities:** Sable's Filch and Ransack require the front row, as does the item-steal component of Wild Card. All other abilities work from either row.
 
 ### Balance Targets
 

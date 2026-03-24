@@ -151,7 +151,7 @@ variance = random_int(240, 255) / 256
 ```
 
 - Range: 0.9375 to 0.99609375 (93.75%–99.61% of raw damage, i.e., up to -6.25% below nominal). Variance always reduces from maximum — it is not symmetric. This matches FF6's exact implementation.
-- Applied as a final multiplier before capping.
+- For physical damage: applied after DEF subtraction but before row modifiers (see [Row Modifier](#row-modifier)). For magic and healing: applied as the final multiplier before capping.
 - Each hit rolls independently (multi-hit abilities get separate rolls).
 - Healing also uses variance (potions and spells fluctuate slightly).
 
