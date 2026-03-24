@@ -558,13 +558,105 @@ gear for sale.
 
 ## Treasure Chest Gold Formula
 
-> To be filled in Task 5.
+### Base Formula
+
+Chest gold = percentage of the average equipment cost at the current act tier.
+
+**Act tier average equipment costs:**
+- Act I (Tier 1): ~400g average
+- Act II (Tier 2): ~1,500g average
+- Interlude (Tier 3): ~4,000g average
+- Act III (Tier 4): ~8,000g average
+
+### Placement Multipliers
+
+| Chest Placement | % of Tier Avg | Act I | Act II | Interlude | Act III |
+|----------------|--------------|-------|--------|-----------|---------|
+| Main path (easy to find) | 15% | 60g | 225g | 600g | 1,200g |
+| Side room (minor detour) | 25% | 100g | 375g | 1,000g | 2,000g |
+| Hidden/puzzle (exploration) | 40% | 160g | 600g | 1,600g | 3,200g |
+| Boss lair chest | 50–75% | 200–300g | 750–1,125g | 2,000–3,000g | 4,000–6,000g |
+
+### Per-Dungeon Budget
+
+Each dungeon gets 2–4 gold chests (alongside equipment/item chests). Total gold-from-chests per dungeon = ~30–40% of one full equipment piece at that tier.
+
+### Design Rules
+
+- Gold chests never appear in the first room — player must commit to exploration
+- Boss lair chests are the narrative justification for beast/spirit boss gold (see Boss Gold Drop System below)
+- Hidden chests should be discoverable without a guide — visual clue, suspicious wall, NPC hint
+- Dungeon docs (dungeons-world.md, dungeons-city.md) list chest locations; this section provides the gold amounts
 
 ---
 
 ## Boss Gold Drop System
 
-> To be filled in Task 5.
+### Formula
+
+```
+total_payday   = act_tier_base × boss_rank_multiplier
+direct_gold    = floor(total_payday × narrative_split)
+lair_chest_gold = total_payday - direct_gold
+```
+
+The **boss rank** determines the total gold reward. The **narrative split** determines how much the boss drops directly vs. how much is found in lair chests.
+
+### Act Tier Base
+
+| Act | Tier Base | Notes |
+|-----|-----------|-------|
+| Act I | 500g | Starting bosses |
+| Act II | 1,500g | Scales with Tier 2 gear costs |
+| Interlude | 2,500g | Mid-game |
+| Act III | 4,000g | Endgame |
+| Optional/Post-game | 6,000g | Premium |
+
+### Boss Rank Multiplier
+
+Not all bosses in the same act are equal.
+
+| Rank | Multiplier | Examples |
+|------|-----------|---------|
+| Minor | 1.0× | First boss of an act, tutorial encounters |
+| Standard | 2.0× | Most dungeon-end bosses |
+| Climactic | 3.0× | Act-ending bosses, narrative-critical encounters |
+
+### Narrative Split
+
+Determines what fraction of the total payday the boss drops directly. The remainder goes into lair chests. The gold source must be **narratively justified:**
+
+| Boss Type | Narrative Split | Justification |
+|-----------|----------------|---------------|
+| Humanoid/Military | 1.0 (all direct) | Carries gold — war chest, payment, plunder |
+| Construct/Machine | 0.5 | Salvage value, workshop stash |
+| Beast/Creature | 0.1 | Beasts don't carry money — lair hoard from past victims |
+| Spirit/Magical | 0.1 | Guards a treasury or offering pile |
+| Pallor/Corrupted | 0.05 (+ 0.7× total) | Corruption consumed the wealth — lower net payday |
+
+**Pallor exception:** Pallor bosses reduce the **total payday** to 0.7× the normal rank amount first, because the corruption has consumed surrounding wealth. Then the 0.05 split applies to that reduced total.
+
+### Worked Examples
+
+| Boss | Act | Rank | Type | Total Payday | Direct Gold | Lair Chest |
+|------|-----|------|------|-------------|------------|------------|
+| Vein Guardian | I | Minor (1.0×) | Beast | **500g** | 50g | 450g |
+| Corrupted Fenmother | I | Climactic (3.0×) | Beast | **1,500g** | 150g | 1,350g |
+| Commander Drayce | II | Standard (2.0×) | Humanoid | **3,000g** | 3,000g | — |
+| Forge Warden | II | Standard (2.0×) | Construct | **3,000g** | 1,500g | 1,500g |
+| Kole | Int | Climactic (3.0×) | Humanoid | **7,500g** | 7,500g | — |
+| Ley Titan | Int | Standard (2.0×) | Spirit | **5,000g** | 500g | 4,500g |
+| Crystal Queen | III | Standard (2.0×) | Pallor | **5,600g** | 280g | 5,320g |
+| Vaelith | III | Climactic (3.0×) | Spirit | **12,000g** | 1,200g | 10,800g |
+
+### Narrative Principle
+
+Every boss encounter delivers roughly the same **total value** for its rank — the delivery mechanism just shifts to match the narrative:
+- **Humanoid bosses** carry gold directly (war chest, payment)
+- **Beast bosses** have gold in their lair (victims' belongings, hoard)
+- **Spirit bosses** guard ancient treasuries or offering piles
+- **Construct bosses** yield salvageable components
+- **Pallor bosses** have consumed/corrupted the surrounding area — less to scavenge, lower net total (~0.7× tier)
 
 ---
 
