@@ -145,7 +145,7 @@ Roothollow is the player's introduction to the Wilds and must immediately establ
 
 ### Trade Goods
 
-**Currency system:** Roothollow uses spirit tokens -- small heartwood discs carved with spirit-marks. They accept Valdris gil at a 2:1 penalty ("Your metal coins mean nothing to the roots"). Compact gold is refused entirely. Barter is preferred -- bring pelts, herbs from other regions, or news.
+**Currency system:** Roothollow uses spirit tokens -- small heartwood discs carved with spirit-marks. They may grudgingly accept Valdris gil, valuing it well below local spirit tokens ("Your metal coins mean nothing to the roots"), but without any fixed conversion rate. Compact gold is refused entirely. Barter is preferred -- bring pelts, herbs from other regions, or news.
 
 **Unique items (only available here):**
 

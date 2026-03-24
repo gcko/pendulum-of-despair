@@ -2758,7 +2758,7 @@ there are stars. That is enough.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The First Scholar* | Boss | 50 | 40,000 | 175 | 132 | 84 | 136 | 81 | 57 | 800 | 15,000 | Ancient Manuscript (100%) | Scholar's Codex (100%) | Void (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F4 |
+| *The First Scholar* | Boss | 50 | 40,000 | 175 | 132 | 84 | 136 | 81 | 57 | 1,200 | 15,000 | Ancient Manuscript (100%) | Scholar's Codex (100%) | Void (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F4 |
 
 **Modes:** 2 (Pattern, Accelerated)
 
@@ -3048,7 +3048,7 @@ least one phase.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The Rootking* | Boss | 72 | 80,000 | 252 | 184 | 118 | 190 | 114 | 78 | 800 | 25,000 | Living Root (100%) | Root Crown (100%) | Flame (150%) | Earth (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F12 |
+| *The Rootking* | Boss | 72 | 80,000 | 252 | 184 | 118 | 190 | 114 | 78 | 1,200 | 25,000 | Living Root (100%) | Root Crown (100%) | Flame (150%) | Earth (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F12 |
 
 **Modes:** 2 (Rooted, Desperate)
 

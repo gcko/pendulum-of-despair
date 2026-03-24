@@ -96,14 +96,17 @@ different label on the coin.
   [items.md](items.md)** (many materials have no buy price and are not directly
   purchasable — their sell values are set by tier formula).
 - **Exception — Sea Prince's Signet (accessory):** raises sell rate to 57.5%
-  of buy price for all applicable items while equipped. Marginal but meaningful
-  for players liquidating large material stockpiles.
+  of buy price for all items whose sell value is derived as a percentage of buy
+  price (standard buyable items & equipment). It does not modify items that use
+  explicit sell values (materials, sell-only curios). Marginal but meaningful
+  for players liquidating large stockpiles of buyable goods.
 
 **Minimal vendor trash:** crafting materials serve dual purpose — sell them now
 for gold, or save them for recipes. Most items are not "gold bags," so sell
 decisions usually carry an opportunity cost. A small number of curios and junk
 items flagged as sell-only in [items.md](items.md) exist for flavor and gold
-pacing; they are never required for crafting and follow the same 50% sell rule.
+pacing; they are never required for crafting and simply sell for their listed
+values.
 
 **No special financial services:** there are no loan systems, interest-bearing
 accounts, or time-based debt mechanics. Locations like Exchange Houses or
@@ -793,7 +796,7 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 | Enemy drops | ~1,500–2,000g | ~80 encounters × 15–25g avg |
 | Treasure chests | ~800–1,200g | 4–6 gold chests, 200–300g each |
 | Boss gold (Vein Guardian + Fenmother) | ~2,000g | 500g + 1,500g total paydays |
-| **Total income** | **~4,300–5,200g** | Quest gold excluded (Act I quests are optional, reward ~200–500g total) |
+| **Total income** | **~4,300–5,200g** | Critical-path only. Optional Act I quests add ~800–1,200g (see [sidequests.md](sidequests.md)). |
 
 **Expenses:**
 
@@ -815,8 +818,8 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 | Enemy drops | ~9,000g | ~150 encounters × 60g avg |
 | Treasure chests | ~3,500g | 8–10 gold chests, 350–500g each |
 | Boss gold (4 bosses: 2 standard + 1 minor + 1 climactic) | ~10,500g | Mix of ranks per formula |
-| Quest rewards | ~1,500g | Minor + standard quests |
-| **Total income** | **~24,500g** | |
+| Quest rewards | ~4,500g | 2–3 major quests (~3,000g) + minor quests (~1,500g) available during Act II |
+| **Total income** | **~27,500g** | |
 
 **Expenses:**
 
@@ -827,7 +830,7 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 | Inns + travel | ~600g | Multiple cities visited |
 | **Total needed** | **~30,100g** | |
 
-**Affordability: ~81% of equipment budget.** But consumable and inn costs bring effective affordability to ~70% of total needs. Caldera's 150% markup creates a pinch point mid-act.
+**Affordability: ~91% of total needs for engaged players.** Players who skip sidequests drop to ~76% (enemy drops + chests + bosses only). The 70% target reflects critical-path play; quest rewards push completionists above 80%. Caldera's 150% markup creates a pinch point mid-act.
 
 ### Interlude (Levels 25–32, scarcity arc)
 
@@ -907,7 +910,7 @@ Gold becomes abundant. Tier 5 gear is non-purchasable (boss/quest only). The eco
 5. **Sable value:** A player who steals from every humanoid encounter gains ~2,000–4,000g extra per act. Meaningful but not dominant.
 6. **Forging parity:** Forged Tier 3 equipment (400–500g fee + material sell value) totals ~1,500–2,500g effective cost vs Tier 3 shop prices (3,500–5,000g). Forging is cheaper but the forged item is better — neither path is strictly dominant.
 7. **Inn vs rest items:** A full dungeon run using 2 Tents (1,000g) is more expensive than 2 inn stays (~200–300g). Field resting is a convenience premium.
-8. **Quest reward totals:** Sum all quest gold rewards per act. Should approximate pacing table estimates: Act II ~1,500g, Act III ~3,000–5,000g.
+8. **Quest reward totals:** Sum all quest gold rewards per act. Compare against the quest income lines in the pacing tables above. Update either the tables or quest rewards if they drift significantly.
 
 ---
 
