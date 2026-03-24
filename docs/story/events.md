@@ -866,6 +866,26 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 33 | Archive of Ages | Maren | Found in the deepest chamber. The truth delivered: the door closes from the inside. Someone stays. | `maren_found` flag; Maren rejoins |
 | 34 | (Any safe location) | Maren (briefing scene) | Full party assembled. Maren explains everything. Everyone understands. No one says Cael's name. | `party_reassembled` flag; Convergence marked on map; Act III enabled |
 
+#### Reunion Ability-Acknowledgment Notes
+
+Each reunion scene (Steps 23, 28, 29, 33) should check whether the rejoining character gained abilities during the separation and surface those gains in dialogue. See [progression.md](progression.md) for the absent XP share and rejoin level formula that govern what they may have unlocked.
+
+> **Ability acknowledgment (XP & Leveling rule) — Edren (Step 23):** If Edren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
+> - Aegis Veil (Lv 15): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
+> - Shatter Guard (Lv 22): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
+
+> **Ability acknowledgment (XP & Leveling rule) — Lira (Step 28):** If Lira gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
+> - Mending Engine (Lv 17, Interlude story trigger): *"Built this from scrap while I was hiding in the tunnels. Field medic kit — I'll show you."*
+
+> **Ability acknowledgment (XP & Leveling rule) — Torren (Step 29):** If Torren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
+> - Stoneheart (Lv 16): *"The spirits of this place spoke to me. Not all of them were kind."*
+> - Greyveil (Lv 20): *"The spirits of this place spoke to me. Not all of them were kind."*
+
+> **Ability acknowledgment (XP & Leveling rule) — Maren (Step 33):** If Maren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
+> - Unweave (Lv 13+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
+> - Ley Surge (Lv 18+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
+> - Mirrorsong (Lv 23+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
+
 ### Act III
 
 | Step | Location | NPC / Event | What Happens | Unlocks |
