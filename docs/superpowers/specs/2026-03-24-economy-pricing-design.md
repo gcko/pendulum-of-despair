@@ -272,7 +272,7 @@ adds Commander's Blade (400g), Glyph Staff (500g), Pickpocket's Blade
 | Item | Price | Notes |
 |------|-------|-------|
 | Trick Blade | 1,500g | Sable dagger, early access |
-| Clarity Band | 800g | Silence immunity |
+| Clarity Band | 800g | Confusion immunity |
 | Soft Stone | 200g | Petrify cure, rare in shops |
 | Remedy | 800g | Early access |
 
