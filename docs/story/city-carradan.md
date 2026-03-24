@@ -127,7 +127,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 | 7 | Engineer's Guild Office | Guild | Consortium Quarter | Guild clerk | Job board | Side quest source |
 | 8 | Brass Fountain Plaza | Plaza | Consortium Quarter | Various NPCs | -- | Central gathering area, environmental storytelling |
 | 9 | Streetcar Station | Transit | Merchant Mile | -- | -- | Non-functional; environmental detail |
-| 10 | Exchange House | Commerce | Merchant Mile | Moneylender | Currency exchange | Converts Valdris coin to Compact gold |
+| 10 | Exchange House | Commerce | Merchant Mile | Moneylender | Coin stamping (1:1) | Re-mints foreign gold into Compact coins; flavor only, no value change |
 | 11 | Axis Tower | Dungeon/Government | City center | Consortium leaders, boss | -- | Interlude dungeon (4 floors) |
 | 12 | Records Archive | Government | West of Axis Tower | Archivist NPC | Lore | Optional deep-lore content |
 | 13 | Courier Office | Service | West of Axis Tower | Courier NPC | Message delivery | Flavor |

@@ -84,6 +84,8 @@
 | Tent | Restore 50% HP/MP to all party (save point only) | 500 | 250 | Act I shops |
 | Pavilion | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Act II shops |
 
+> **Rest item stack limit:** Sleeping Bag, Tent, and Pavilion stack to **99** (not 199 like other HP/MP items). Their full-party out-of-town utility warrants a lower cap. See [economy.md](economy.md) for pricing and availability details.
+
 ### MP Restoration
 
 | Item | Effect | Buy | Sell | Availability |

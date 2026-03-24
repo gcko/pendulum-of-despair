@@ -88,23 +88,30 @@ conversion rate, no separate wallet. The name evokes the Compact's controlled
 economy. Functions identically to how "Gil" works in Final Fantasy VI: same
 item, different label on the coin.
 
-**Sell price rule:** all items, equipment, and materials sell to vendors at
-**50% of buy price** by default.
-
+**Sell price rule:**
+- **Buyable items & equipment:** sell to vendors at **50% of their listed buy
+  price** by default.
+- **Materials:** sell to vendors at their **explicit sell values as listed in
+  [items.md](items.md)** (many materials have no buy price and are not directly
+  purchasable — their sell values are set by tier formula).
 - **Exception — Sea Prince's Signet (accessory):** raises sell rate to 57.5%
-  of buy price for all items while equipped. Marginal but meaningful for
-  players liquidating large material stockpiles.
+  of buy price for all applicable items while equipped. Marginal but meaningful
+  for players liquidating large material stockpiles.
 
-**No vendor trash:** crafting materials serve dual purpose — sell them now for
-gold, or save them for recipes. No items exist solely as gold bags. Every sell
-decision carries an opportunity cost.
+**Minimal vendor trash:** crafting materials serve dual purpose — sell them now
+for gold, or save them for recipes. Most items are not "gold bags," so sell
+decisions usually carry an opportunity cost. A small number of curios and junk
+items flagged as sell-only in [items.md](items.md) exist for flavor and gold
+pacing; they are never required for crafting and follow the same 50% sell rule.
 
-**No special financial services:** there is no bank or interest mechanic.
-Corrund's Moneylender NPC (city-carradan.md) offers usurious loans as a
-narrative element and emergency gold source, but it is not a core economic
-system — players who use it pay a steep penalty. Economic complexity comes
-from the sell-or-save decision on crafting materials and from the Caldera
-inflation system.
+**No special financial services:** there are no loan systems, interest-bearing
+accounts, or time-based debt mechanics. Locations like Exchange Houses or
+Moneylenders that appear in town descriptions (city-carradan.md) are
+**flavor-only**: the Exchange House re-mints foreign coins into local
+Compact coinage at 1:1 (no value change), and the Moneylender exists as a
+narrative element and emergency gold source with a steep penalty — not a core
+economic system. Economic complexity comes from the sell-or-save decision on
+crafting materials and from the Caldera inflation system.
 
 ---
 
@@ -127,9 +134,10 @@ progress.
 | Ironmark | Interlude | 75g | War-torn; discounted from desperation |
 | Act III Oases | III | 50–100g | Refugee camps, scraping by |
 
-> **Caldera note:** the base inn cost in Caldera is 300g (150% of the 200g
-> standard-equivalent rate). Without the Caldera Employee Card the party pays
-> 450g. With the card they pay 300g — still above market rate.
+> **Caldera note:** Caldera's standard inn rate would be ~200g (comparable to
+> Valdris/Bellhaven). At 150% markup, the inflated price is **300g**. With the
+> Caldera Employee Card (25% off 300g), the party pays **225g** — still above
+> the ~200g standard rate, consistent with the 112.5% net rule.
 
 ---
 
@@ -144,7 +152,9 @@ alternative to inns. They are single-use and consumed on activation.
 | Tent | 500g | 250g | Restore 50% HP/MP to all party (save point only) | Act I |
 | Pavilion | 1,200g | 600g | Restore 100% HP/MP to all party (save point only) | Act II |
 
-**Stack limit:** 99 for all rest items.
+**Stack limit:** 99 for all rest items. Unlike standard HP/MP recovery items
+(which stack to 199 per [items.md](items.md)), rest items are capped lower due
+to their powerful out-of-town full-party utility.
 
 **Design note:** inns are cheaper per-rest but require being in town. Rest items
 trade gold efficiency for flexibility — essential in long dungeons. The
@@ -904,15 +914,20 @@ Gold becomes abundant. Tier 5 gear is non-purchasable (boss/quest only). The eco
 
 ### Document Ownership
 
-| Document | Owns | economy.md References |
-|----------|------|----------------------|
-| items.md | Consumable prices, material sell prices, Forgewright costs | Rest items, consumable sink estimates |
-| equipment.md | Weapon/armor/accessory prices, forging fees, infusion costs | Equipment sink estimates, forging parity |
-| bestiary/README.md | Enemy gold drop formula (logistic curve) | Gold income estimates |
-| bestiary/bosses.md | Boss direct gold drops | Boss payday calculations |
-| sidequests.md | Quest gold rewards | Quest income estimates |
-| dungeons-world.md | Treasure chest contents + gold amounts | Chest income estimates |
-| dungeons-city.md | Treasure chest contents + gold amounts | Chest income estimates |
-| locations.md | Town shop references | Shop inventory details |
+| Document | Owns (canonical data) | economy.md Uses / Mirrors |
+|----------|----------------------|--------------------------|
+| economy.md | Inn prices, shop inventories (line-item prices), event restocks, gold pacing tables, boss gold formula | Defines economic structure; may restate prices when building shop tables or pacing models |
+| items.md | Consumable definitions and base prices, material sell prices, Forgewright costs | Referenced for consumable prices; economy.md restates key items in rest progression and shop tables |
+| equipment.md | Weapon/armor/accessory definitions, base prices, forging fees, infusion costs | Referenced for equipment prices; economy.md restates in shop inventory tables |
+| bestiary/README.md | Enemy gold drop formula (logistic curve) | Referenced for gold income estimates |
+| bestiary/bosses.md | Boss direct gold drops (Gold column) | Referenced for boss payday calculations |
+| sidequests.md | Quest gold rewards | Referenced for quest income estimates |
+| dungeons-world.md | Treasure chest contents + gold amounts | Referenced for chest income estimates |
+| dungeons-city.md | Treasure chest contents + gold amounts | Referenced for chest income estimates |
+| locations.md | Town & region metadata, which shops/inns exist | Referenced to attach inventories to locations |
 
-> **Rule:** economy.md defines the *system* (formulas, targets, guidelines). Source docs own the *data* (individual prices, drop amounts, chest contents). Do not duplicate data — reference the source.
+> **Rule:** economy.md is canonical for *economic structure* (inn pricing, shop
+> inventories, restocks, global targets, pacing). Per-item definitions and base
+> prices remain canonical in their home docs (items.md, equipment.md, bestiary,
+> quests, chests). When economy.md restates a specific price (e.g., a Potion in
+> a shop table), the source doc is authoritative — keep values in sync.

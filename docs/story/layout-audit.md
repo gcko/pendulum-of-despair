@@ -310,10 +310,10 @@ city-valdris.md now includes itemized shop tables for all Valdris cities, matchi
 
 Severity: **RESOLVED**
 
-**MINOR-06: Currency exchange rates not fully documented**
-Corrund has an Exchange House that "converts Valdris coin to Compact gold." Bellhaven has a Money Changer with "better rates than Corrund." But the actual exchange rate (gil-to-gold ratio) is never specified in any document. Thornmere spirit tokens have a documented 2:1 penalty for Valdris gil at Roothollow. But the base gil:gold:token ratio is undefined.
+**MINOR-06: Currency exchange rates — RESOLVED**
+Per economy.md, Gold is the universal currency. "Scrip" and "Gil" are regional names for the same coin — no conversion mechanics exist. The Exchange House in Corrund re-mints foreign coins into local Compact coinage at 1:1 (flavor only, no value change). Thornmere spirit tokens remain a separate narrative system documented in city-thornmere.md.
 
-Severity: **MINOR**
+Severity: **RESOLVED** (economy.md establishes single-currency design)
 
 ### 5.2 Soft-Lock Check: Essential Items
 

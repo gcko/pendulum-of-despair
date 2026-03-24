@@ -227,17 +227,17 @@ Now unblocks: 1.6 (Economy — equipment prices defined), 3.5 (Crafting — Forg
 **Completed:** 2026-03-24 — Currency rules, shop inventories (10 towns with event-triggered restocking), treasure chest formula, boss gold drop system (rank + narrative split), steal economy, crafting costs, quest rewards, gold pacing targets, wealth curve. Caldera 150% inflation with Employee Card discount. Sleeping Bag/Tent/Pavilion rest item progression.
 
 **What's Needed:**
-- [x] Currency system: Gold (primary), Scrip (Compact currency, conversion rate)
+- [x] Currency system: Gold (single currency; Scrip as regional name, no conversion)
 - [x] Gold sources per act:
   - [x] Enemy gold drops (tied to bestiary)
   - [x] Treasure chest gold amounts per dungeon
   - [x] Quest reward gold amounts
-  - [x] Sellable loot items (vendor trash)
+  - [x] Sellable loot items / materials (no separate vendor trash tier)
 - [x] Gold sinks per act:
   - [x] Equipment prices (tied to equipment tables)
   - [x] Consumable prices
   - [x] Inn prices per town
-  - [x] Special services (money lender interest rate, etc.)
+  - [x] Special services (unique town pricing quirks; see economy.md)
 - [x] Economic pacing targets:
   - [x] Expected gold at end of each act
   - [x] Can player afford 70% of new equipment per town?

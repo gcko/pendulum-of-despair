@@ -248,7 +248,7 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
     #   [ on the wall-]===  ~ CHANNEL ~   [CACHE A    ]#
     #   [ follow the  ]  |  ~ (flowing~===[(resistance]#
     #   [ scratches)  ]  |  ~ west)   ~   [ supplies, ]#
-    #                    |  ~~~~~~~~~~~   [ 800 gold) ]#
+    #                    |  ~~~~~~~~~~~   [ 800 gold)]#
     #              ======+======                       #
     #              |            |                       #
     #   [JUNCTION      ]  [VALVE           ]           #
@@ -938,7 +938,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Prince Aldara's Manor (Merchant Prince District) -- the study, behind a portrait
 **Discovery method:** During "The Honest Thief" quest, Sable identifies the vault entrance based on intelligence from her contacts: "Aldara keeps his real books behind the painting of his father. Old money, old tricks." Without the quest, examining the portrait closely reveals a hinge.
 **Where it leads:** A walk-in vault beneath the manor.
-**Contents:** Aldara's Private Ledger (key item -- proof of dual arms sales to both Valdris and the Compact during the border war; primary evidence for "The Honest Thief"), 5,000 gold in locked strongboxes (Sable can pick them), a collection of foreign artifacts (lore -- Aldara has been trading with nations beyond the known continent), and the Sea Prince's Signet (accessory -- +gold earned from sales, +charm in negotiations).
+**Contents:** Aldara's Private Ledger (key item -- proof of dual arms sales to both Valdris and the Compact during the border war; primary evidence for "The Honest Thief"), 5,000 gold in locked strongboxes (Sable can pick them), a collection of foreign artifacts (lore -- Aldara has been trading with nations beyond the known continent), and the Sea Prince's Signet (accessory -- +15% sell-price modifier (50% to 57.5%), +charm in negotiations).
 **Availability:** Interlude (quest-triggered or independent exploration with Sable).
 
 #### SP-B2: Breakwater Hidden Passage
