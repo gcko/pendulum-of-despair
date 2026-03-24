@@ -1888,6 +1888,41 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 **Immunity:** Despair status, Instant Defeat.
 **Drop:** Ashen Scholar's Tome (accessory -- party-wide +15% magic damage), Grey Mist Essence (crafting material -- Lira's ultimate weapon component).
 
+### The Ley Scar (Optional — Act III)
+
+A rift in the Pallor Wastes where concentrated Ley energy bleeds through the Grey. Hyper-aggressive mutated creatures roam here, 5–10 levels above the surrounding area. High-risk, high-reward XP farming zone. Accessible after the party reaches the Pallor Wastes, before the final dungeon.
+
+- **Floors:** None (single open area)
+- **Size:** Small -- tight enough for farming loops
+- **Theme:** Raw Ley energy crackling through fissures in the Grey. Visually distinct from the muted Pallor Wastes -- bright fractures of energy splitting dead earth, the air humming with power. The ground vibrates underfoot.
+- **Difficulty:** Very hard. Encounters are 5–10 levels above standard Act III.
+- **Recommended Level:** 40-48
+- **Estimated Play Time:** Variable (grinding zone)
+
+**Discovery:** An NPC at an Act III Oasis mentions rumors of "a place where the ground hums and the beasts are twice the size." Marked on the overworld map with a distinct visual indicator (crackling energy).
+
+**Key Features:**
+
+- No save point inside -- must return to overworld to save
+- High encounter rate (Ley energy draws creatures constantly)
+- 2–3 enemies per encounter group (tougher than normal Act III)
+- Ley Abomination appears as a rare encounter (~10% chance), functions as mini-boss
+
+**Encounter Table:**
+
+| Encounter | Rate |
+|-----------|------|
+| Ley-Warped Drake (Lv 40) + Ley-Warped Wraith (Lv 42) | 40% |
+| 2× Ley-Warped Colossus (Lv 45) | 30% |
+| Ley-Warped Drake + Ley-Warped Colossus + Ley-Warped Wraith | 20% |
+| Ley Abomination (Lv 48) -- rare mini-boss | 10% |
+
+See `bestiary/act-iii.md` (Ley Scar section) for full enemy stat blocks and hand-tuned XP overrides.
+
+**Treasure:** 1 hidden chest containing an Arcanite Ingot (Tier 4 crafting material). Finding it requires examining a specific energy fissure -- visual clue, no puzzle.
+
+**Lore:** The Convergence's energy first began bleeding into the physical world here. The concentrated Ley field accelerates growth, mutation, and aggression -- the in-world explanation for why XP yields are higher than anywhere else in Act III.
+
 ---
 
 ## 7. The Convergence
