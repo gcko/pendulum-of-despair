@@ -80,8 +80,9 @@
 | Ley Tonic | Restore 300 HP to all party | 800 | 400 | Act II shops (limited stock) |
 | Elixir | Restore 100% HP and MP | — | — | Chests, boss drops only |
 | Megalixir | Restore 100% HP and MP to all party | — | — | 3 total (Convergence, Dreamer's Fault) |
+| Sleeping Bag | Restore 25% HP/MP to all party (save point only) | 250 | 125 | Act I shops |
 | Tent | Restore 50% HP/MP to all party (save point only) | 500 | 250 | Act I shops |
-| Cottage | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Interlude shops |
+| Pavilion | Restore 100% HP/MP to all party (save point only) | 1,200 | 600 | Act II shops |
 
 ### MP Restoration
 
@@ -153,13 +154,13 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 | Category | Count |
 |----------|-------|
-| HP Healing | 8 |
+| HP Healing | 9 |
 | MP Restoration | 3 |
 | Revival | 2 |
 | Status Cure | 10 |
 | Battle Utility | 3 |
 | Stat Capsules | 6 types |
-| **Total** | **32** |
+| **Total** | **33** |
 
 ---
 
