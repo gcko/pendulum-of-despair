@@ -24,9 +24,9 @@ not from navigating enemy formations.
 
 ### Back Row
 
-- Deal **50% physical damage** (ATK halved before damage calculation)
-- Receive **50% physical damage** from enemies (incoming physical
-  damage halved after defense)
+- Deal **50% physical damage** (final physical damage halved via row modifier)
+- Receive **50% physical damage** from enemies (final incoming physical
+  damage halved via row modifier)
 - **Exception — Ranged weapons:** Spears (Torren's weapon type) deal
   **100% physical damage from back row**. The "back-row capable" tag
   in equipment.md marks weapons that bypass this penalty.

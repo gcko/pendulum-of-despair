@@ -4,7 +4,7 @@
 
 **Goal:** Formalize the front/back row system by adding row damage modifiers to combat-formulas.md, default rows to characters.md, a Steal front-row requirement to abilities.md, and updating the gap tracker.
 
-**Architecture:** Small updates to 3 existing story docs + gap tracker. No new files. The row system is compact — most of the design is already implicit in equipment.md (spears "back-row capable") and abilities.md (Rampart "guards the back row").
+**Architecture:** Small updates to 3 existing story docs + gap tracker. No new story docs or code files; this plan and its spec are the only new docs under `docs/superpowers/`. The row system is compact — most of the design is already implicit in equipment.md (spears "back-row capable") and abilities.md (Rampart "guards the back row").
 
 **Tech Stack:** Markdown documentation only. No code changes.
 

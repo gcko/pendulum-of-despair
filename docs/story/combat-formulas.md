@@ -67,11 +67,13 @@ The row system uses 2 rows (Front and Back) for the player party. Enemies have n
 | Back row defender (physical attack) | ×0.5 |
 | Any row (magic damage) | No modifier — magic ignores rows |
 
-Row modifiers apply as a **final multiplier** after all other damage calculations (ATK², ability multiplier, DEF subtraction, variance):
+Row modifiers apply as the **last step** in the physical damage pipeline, after all other calculations (ATK², ability multiplier, DEF subtraction, variance). The input is the damage value produced by variance (step 7 in the resolution pipeline):
 
 ```
-final_physical_damage = floor(base_damage × attacker_row_mod × defender_row_mod)
+final_physical_damage = floor(damage_after_variance × attacker_row_mod × defender_row_mod)
 ```
+
+When a party member attacks an enemy: `attacker_row_mod` = party member's row modifier, `defender_row_mod` = ×1.0 (enemies have no rows). When an enemy attacks a party member: `attacker_row_mod` = ×1.0 (enemies have no rows), `defender_row_mod` = party member's row modifier.
 
 **Row swapping** is a free action — no turn cost or ATB delay. Characters can reposition at any time during their turn.
 
