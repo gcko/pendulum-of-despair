@@ -883,7 +883,7 @@ He lives in a shrine ruin, talks to the trees, and makes an excellent stew from 
 **Backstory:** Rhona runs a trading post at the edge of the Wilds, where Thornmere meets Compact territory. She sells to both sides, speaks three languages, and is universally distrusted and universally needed. She has no loyalty to any faction — only to her family, who live in a stilt-house above the marshes. She has two children and a husband who carves bone trinkets for the Compact tourist trade.
 
 **Dialogue hints:**
-- *"Valdris coin, Compact scrip — I take both. Information? That costs more, but I take that in favors."*
+- *"Valdris coin, Compact gold — I take both. Information? That costs more, but I take that in favors."*
 - (Interlude) *"The marsh is changing. Water's going grey. Fish float belly-up and they're not rotting — just floating there, perfectly still. My kids won't go near the water anymore. I don't blame them."*
 
 **Story relevance:** Side quest giver

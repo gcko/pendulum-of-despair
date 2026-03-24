@@ -145,7 +145,7 @@ Roothollow is the player's introduction to the Wilds and must immediately establ
 
 ### Trade Goods
 
-**Currency system:** Roothollow uses spirit tokens -- small heartwood discs carved with spirit-marks. They accept Valdris gil at a 2:1 penalty ("Your metal coins mean nothing to the roots"). Compact scrip is refused entirely. Barter is preferred -- bring pelts, herbs from other regions, or news.
+**Currency system:** Roothollow uses spirit tokens -- small heartwood discs carved with spirit-marks. They accept Valdris gil at a 2:1 penalty ("Your metal coins mean nothing to the roots"). Compact gold is refused entirely. Barter is preferred -- bring pelts, herbs from other regions, or news.
 
 **Unique items (only available here):**
 
@@ -298,7 +298,7 @@ Duskfen is built on nothing solid. Every structure sits on platforms of woven re
 
 ### Trade Goods
 
-**Currency system:** Duskfen uses spirit tokens like all Thornmere settlements but also accepts barter in kind. They trade in marsh goods and spirit-bound objects. Valdris gil is accepted grudgingly ("Outsider metal. It buys you less than you think"). Compact scrip is spat upon.
+**Currency system:** Duskfen uses spirit tokens like all Thornmere settlements but also accepts barter in kind. They trade in marsh goods and spirit-bound objects. Valdris gil is accepted grudgingly ("Outsider metal. It buys you less than you think"). Compact gold is spat upon.
 
 **Unique items (only available here):**
 
@@ -698,7 +698,7 @@ Greywood Camp is the political heart of the Thornmere Wilds. Unlike the organic 
 
 ### Trade Goods
 
-**Currency system:** Greywood Camp is the Wilds' economic center. Spirit tokens are standard. Barter is active. Valdris gil is accepted at fair rates -- Greywood is pragmatic about outsiders. Compact scrip is not accepted but is not met with hostility ("We don't use your paper here. Try the border traders").
+**Currency system:** Greywood Camp is the Wilds' economic center. Spirit tokens are standard. Barter is active. Valdris gil is accepted at fair rates -- Greywood is pragmatic about outsiders. Compact gold is not accepted but is not met with hostility ("We don't use your paper here. Try the border traders").
 
 **Unique items (only available here):**
 
@@ -1315,7 +1315,7 @@ Gael's Span is a massive stone bridge crossing the Corrund River at its upper re
 | Wilds Tavern | 6x6 | Rest, NPC conversations | Tavern Keeper | Thornmere mead, pelts on the walls, carved wood. A slice of the Wilds at the border. |
 | Compact Tavern | 6x6 | Rest, NPC conversations | Tavern Keeper | Compact spirits, metal tables and chairs, a Forgewright lamp. Industrial comfort. |
 | Wilds Provisioner | 6x4 | Trade | Provisioner | Herbs, nature-crafted goods, spirit tokens accepted. Border pricing (10% markup). |
-| Compact Provisioner | 6x4 | Trade | Provisioner | Metal goods, tools, rations. Compact scrip and gil accepted. Border pricing. |
+| Compact Provisioner | 6x4 | Trade | Provisioner | Metal goods, tools, rations. Compact gold and gil accepted. Border pricing. |
 
 #### Act-by-Act Changes
 
@@ -1365,7 +1365,7 @@ Rhona's trading post sits at the edge of the Wilds where Thornmere meets Compact
 
 #### Key Details
 
-- **Currency:** Rhona accepts everything -- Valdris coin, Compact scrip, spirit tokens, barter, favors, information.
+- **Currency:** Rhona accepts everything -- Valdris coin, Compact gold, spirit tokens, barter, favors, information.
 - **Unique goods:** Regional intelligence (dialogue-based), marsh-specific herbs, bone trinkets (her husband's craft -- cosmetic accessories), smuggled goods from both factions.
 - **Act changes:** In the Interlude, the marsh around the post is going grey. Fish float belly-up. Her children won't go near the water. Rhona is still trading -- she has nowhere else to go.
 
@@ -1441,7 +1441,7 @@ All Thornmere settlements share a visual vocabulary that distinguishes them from
 
 ### Currency and Economy Summary
 
-| Settlement | Primary Currency | Accepts Gil? | Accepts Scrip? | Barter? |
+| Settlement | Primary Currency | Accepts Gil? | Accepts Gold? | Barter? |
 |-----------|-----------------|-------------|---------------|---------|
 | Roothollow | Spirit tokens | Yes (2:1 penalty) | No (refused) | Yes |
 | Duskfen | Spirit tokens | Yes (grudging) | No (hostile) | Yes |

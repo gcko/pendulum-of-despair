@@ -667,7 +667,7 @@ Changes:
 ```
 
 **Shopkeeper:** Forgewright smith, behind counter, facing south. Practical dialogue, no charm.
-**Display items:** Glass cases show Arcanite-edged blades with engraved specifications. Examining: "Forgewright Blade. Tensile strength: 4200 units. Edge retention: superior. Price: 1600 scrip."
+**Display items:** Glass cases show Arcanite-edged blades with engraved specifications. Examining: "Forgewright Blade. Tensile strength: 4200 units. Edge retention: superior. Price: 1,600 gold."
 
 ---
 
