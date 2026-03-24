@@ -873,7 +873,7 @@ Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. Ther
 1. **Level-up unlocks** — gained off-screen via absent XP share or rejoin level formula (see [progression.md](progression.md)). Reference as things learned "while we were apart."
 2. **Story-triggered `[S]` unlocks** — granted at or during the reunion sequence itself. Reference as discoveries made *here and now*, not off-screen gains.
 
-> **Ability acknowledgment (XP & Leveling rule) — Edren (Step 23):** If Edren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
+> **Ability acknowledgment — Edren (Step 23):** If Edren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Example level-up abilities Edren might have gained off-screen before rejoining:
 > - Aegis Veil (Lv 15): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
 > - Shatter Guard (Lv 22): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
 
