@@ -177,3 +177,32 @@ caught the stale Pallor Regent note during the rename.
 **Outcome:** 1 new checklist item (boss Gold must respect 10K cap).
 Story-review-loop caught the README stale text before Copilot.
 6 of 10 issues were already covered by existing checklists.
+
+### PR #27 (2026-03-24) — 14 Copilot comments, 7 new gaps
+
+**Top patterns:**
+- Self-contradiction (economy rules vs pre-existing story content): 8 comments
+  - "No vendor trash" but items.md has sell-only items
+  - "No financial services" but city-carradan.md has Moneylender
+  - Cross-references rule says "don't duplicate" but economy.md has shop prices
+  - Rest item stack 99 vs items.md default 199
+  - Sell price rule doesn't address materials without buy prices
+- Mirror staleness (gap tracker checklist wording): 2 comments
+  - Scrip conversion rate still in checklist after single-currency design
+  - Special services wording doesn't match implemented design
+- Formula precision (Caldera inn pricing): 1 comment
+  - Math unclear for standard vs inflated vs card prices
+- Reference format (ASCII map bracket spacing): 1 comment
+- Ambiguity (Sea Prince's Signet vague description): 1 comment
+- Already fixed (Caldera Potion example): 1 comment
+
+**New pattern identified:** Economy rule establishment. When a new doc
+(economy.md) asserts a universal rule, pre-existing content in other
+files may contradict it. Our agents check propagation of CHANGES but
+not whether a NEW RULE contradicts OLD UNCHANGED content.
+
+**Outcome:** 3 new checklist items added to "Economy Rule Consistency"
+section. 6 of 14 already covered by existing checklists. 1 already
+fixed by story-review-loop. Story-review-loop (pre-Copilot) caught the
+moneylender issue partially — Round 1 acknowledged it but didn't
+fully resolve the "no financial services" wording.
