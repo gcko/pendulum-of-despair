@@ -442,9 +442,9 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 
 - **Total:** 68 enemies across 9 areas (49 regular + 4 trial-specific +
   15 bosses/mini-bosses)
-- **Type distribution:** Pallor (~52%), Construct (16%),
-  Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
-  Humanoid (2%), Boss (1%)
+- **Type distribution (regular enemies only, excludes bosses):** Pallor (~52%),
+  Construct (16%), Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
+  Humanoid (2%). Bosses/mini-bosses (15) tracked separately in bosses.md.
 - **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
 - **Tier 2 early deployments:** Storm Wraith (Wraith Tier 2, Lv 30
   vs projected Lv 32)

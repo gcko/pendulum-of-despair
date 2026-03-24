@@ -452,16 +452,16 @@ This matches the Act I XP supply estimate of ~14,000.
 
 | Document | Relationship |
 |----------|-------------|
-| `docs/story/progression.md` | Stat growth curves, milestone levels, Ley Crystal XP. **Update needed:** add XP-to-level formula, distribution rules, level-up restore rule. |
+| `docs/story/progression.md` | Stat growth curves, milestone levels, Ley Crystal XP. **Updated:** XP-to-level formula, distribution rules, level-up restore rule added. |
 | `docs/story/combat-formulas.md` | Level affects stats which affect damage/hit/crit. No changes needed. |
-| `docs/story/bestiary/README.md` | XP reward formula (logistic curve, threat multipliers). No changes needed. |
-| `docs/story/bestiary/act-iii.md` | Ley Scar enemies to be added. **Update needed.** |
+| `docs/story/bestiary/README.md` | XP reward formula (logistic curve, threat multipliers). **Updated:** Ley Scar level range noted. |
+| `docs/story/bestiary/act-iii.md` | **Updated:** Ley Scar enemies added (4 Ley-Warped types). |
 | `docs/story/abilities.md` | Ability learning schedules by level. No changes needed (schedules already defined). |
 | `docs/story/magic.md` | Spell learning schedules by level. No changes needed. |
-| `docs/story/events.md` | Interlude reunion scenes. **Update needed:** add ability acknowledgment dialogue. |
+| `docs/story/events.md` | **Updated:** Interlude reunion ability-acknowledgment dialogue notes added. |
 | `docs/story/economy.md` | Gold pacing aligns with XP pacing (same encounter counts). No changes needed. |
-| `docs/story/dungeons-world.md` | Ley Scar zone to be added. **Update needed.** |
-| `docs/analysis/game-design-gaps.md` | Gap 2.1 status → COMPLETE. |
+| `docs/story/dungeons-world.md` | **Updated:** Ley Scar zone description added. |
+| `docs/analysis/game-design-gaps.md` | **Updated:** Gap 2.1 status → COMPLETE. |
 
 ---
 

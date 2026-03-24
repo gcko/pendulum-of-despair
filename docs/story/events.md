@@ -868,18 +868,22 @@ Every NPC interaction required to progress the main story, in chronological orde
 
 #### Reunion Ability-Acknowledgment Notes
 
-Each reunion scene (Steps 23, 28, 29, 33) should check whether the rejoining character gained abilities during the separation and surface those gains in dialogue. See [progression.md](progression.md) for the absent XP share and rejoin level formula that govern what they may have unlocked.
+Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. There are two categories:
+
+1. **Level-up unlocks** — gained off-screen via absent XP share or rejoin level formula (see [progression.md](progression.md)). Reference as things learned "while we were apart."
+2. **Story-triggered `[S]` unlocks** — granted at or during the reunion sequence itself. Reference as discoveries made *here and now*, not off-screen gains.
 
 > **Ability acknowledgment (XP & Leveling rule) — Edren (Step 23):** If Edren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
 > - Aegis Veil (Lv 15): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
 > - Shatter Guard (Lv 22): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
 
-> **Ability acknowledgment (XP & Leveling rule) — Lira (Step 28):** If Lira gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
-> - Mending Engine (Lv 17, Interlude story trigger): *"Built this from scrap while I was hiding in the tunnels. Field medic kit — I'll show you."*
+> **Ability acknowledgment — Lira (Step 28):**
+> - **Story-triggered `[S]`:** Mending Engine (Lv 17+ required, unlocks *during* this reunion): *"Built this from scrap while I was hiding in the tunnels. Field medic kit — I'll show you."* — present as a discovery made *here*, not off-screen.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
 
-> **Ability acknowledgment (XP & Leveling rule) — Torren (Step 29):** If Torren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
-> - Stoneheart (Lv 16): *"The spirits of this place spoke to me. Not all of them were kind."*
-> - Greyveil (Lv 20): *"The spirits of this place spoke to me. Not all of them were kind."*
+> **Ability acknowledgment — Torren (Step 29):**
+> - **Story-triggered `[S]`:** Stoneheart (Lv 16+), Greyveil (Lv 20+) — both unlock *during* this reunion: *"The spirits of this place spoke to me. Not all of them were kind."* — present as bonds formed *here*.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
 
 > **Ability acknowledgment (XP & Leveling rule) — Maren (Step 33):** If Maren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
 > - Unweave (Lv 13+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
