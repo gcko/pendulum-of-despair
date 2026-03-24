@@ -662,19 +662,110 @@ Every boss encounter delivers roughly the same **total value** for its rank — 
 
 ## Sable's Steal Economy
 
-> To be filled in Task 6.
+### Steal Value Principle
+
+Stolen items should be worth ~2–3 battles of gold income at the current act. Enough to feel rewarding, not enough to replace normal income.
+
+### Steal Tiers by Enemy Type
+
+| Enemy Type | Common Steal (75%) | Rare Steal (25%) | Value Range |
+|------------|-------------------|------------------|-------------|
+| Beast | Tier 1 material (25–40g sell) | Tier 2 material (50–100g sell) | Low — animals don't carry loot |
+| Construct | Scrap Metal (35g) | Elemental Core (100g) | Moderate — salvageable parts |
+| Humanoid | Consumable (Potion, Antidote) | Gold Pouch (150–500g) | High — they carry things |
+| Spirit | Ether Wisp (40g) | Ley Crystal Fragment (200g) | Moderate — magical residue |
+| Pallor | Grey Residue (100g) | Pallor Shard (175g) | Moderate — corrupted material |
+| Undead | Bone Fragment (30g) | Ancient Glyph (300g) | Low common, high rare |
+
+### Gold Pouch Mechanic
+
+Humanoid enemies (soldiers, smugglers, bandits) can have "Gold Pouch" as a rare steal. Amount scales with act:
+
+| Act | Gold Pouch Value |
+|-----|-----------------|
+| Act I | 150g |
+| Act II | 350g |
+| Interlude | 500g |
+| Act III | 800g |
+
+Sable is especially valuable in military dungeons (Valdris Siege, Compact encounters) where humanoid enemies are common.
+
+### Boss Steals
+
+Every boss has a unique steal documented in `bestiary/bosses.md`. These are exclusive items — accessories, rare materials, or consumables not yet available in shops. Economic value is secondary to exclusivity.
+
+### Gold-Boosting Accessories
+
+**Fenn's Seal** (sidequest reward — The Auditor's Conscience):
+- **+25% gold from all battle sources** (enemy drops, gold pouches, boss direct gold)
+- Does NOT affect shop prices, chest gold, or quest rewards
+- Pays for itself over time — long-term investment
+
+**Sea Prince's Signet** (sidequest reward):
+- **+15% sell price on all items** (base 50% sell rate becomes 57.5%)
+- Subtle but meaningful for players selling crafting materials
+- Stacks with Fenn's Seal for a "merchant build"
 
 ---
 
 ## Crafting Economy
 
-> To be filled in Task 6.
+### Forgewright Battle Devices
+
+Already priced in `items.md` (100–800g per device + materials). See the Forgewright Devices section in items.md for the complete recipe table. No duplication here — items.md is the canonical source.
+
+### Arcanite Equipment Forging
+
+`equipment.md` is the canonical source for forging recipes, fees, and materials. Key economic facts:
+
+- **Forging fees:** 400–500g per item (low gold cost)
+- **Real cost is materials:** An Arcanite Ingot sells for 1,000g; using it to forge a weapon is a 1,000g opportunity cost on top of the fee
+- **Total effective cost:** Gold fee + material sell value = ~1,500–2,500g — comparable to buying Tier 3 shop equivalents (3,500–5,000g), but forged items have superior stats
+- **8 forgeable items:** 5 weapons (one per character except Cael) + 3 armor pieces
+- **No forged greatsword:** Intentional — Cael departs during the Interlude and returns briefly. His progression relies on shop/chest gear.
+
+### Elemental Infusions
+
+`equipment.md` is the canonical source. Economic summary:
+- **Basic infusions (Flame/Frost/Storm/Earth):** 300g + common materials
+- **Advanced infusions (Ley/Spirit/Void):** 500g + rarer materials
+- **Secret Synergies:** No extra cost — the bonus effect is the reward for discovering the right weapon + element combination
+
+### Economic Impact
+
+Players who sell materials have more gold for shop purchases. Players who hoard materials get better gear through forging. Neither path is strictly dominant — both roughly equalize in total value, rewarding either playstyle.
 
 ---
 
 ## Quest Reward Guidelines
 
-> To be filled in Task 6.
+### Quest Reward Tiers
+
+| Quest Tier | Gold Reward | Example |
+|-----------|-------------|---------|
+| Minor (fetch/delivery) | 200–500g | Deliver a message, find a lost item |
+| Standard (combat/explore) | 500–1,500g | Clear a monster den, escort an NPC |
+| Major (multi-step chain) | 2,000–5,000g | Ashmark liberation, Bellhaven smuggler ring |
+| Epic (sidequest dungeon) | 5,000–10,000g | Dreamer's Fault floors, Grey Cleaver purification |
+
+### Reward Composition
+
+Not all quests pay pure gold. The mix shifts by tier:
+
+| Quest Tier | Gold | Equipment | Materials | Consumables |
+|-----------|------|-----------|-----------|-------------|
+| Minor | 80% gold | — | — | 1–2 Potions/status cures |
+| Standard | 50% gold | 30% chance of act-tier gear | 2–4 Tier 2 materials | — |
+| Major | 40% gold | Unique accessory or weapon | 4–6 mixed materials | Elixir or rare consumable |
+| Epic | 30% gold | Guaranteed unique equipment | Tier 3–4 materials | — |
+
+### Design Rule
+
+The best quest rewards are items you **can't buy**: unique accessories (Fenn's Seal, Sea Prince's Signet), early-access equipment, rare consumables (Megalixir, Sable's Coin). Gold is the filler; exclusivity is the incentive.
+
+### NPC Tip Rewards
+
+Small gold tips (50–100g) from NPCs for information or returning lost items. Flavor rewards — no economic impact, but the world feels responsive.
 
 ---
 
