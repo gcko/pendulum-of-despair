@@ -189,6 +189,107 @@ Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actio
 
 ---
 
+## Experience & Leveling
+
+### Two-Phase XP Curve
+
+The game uses a two-phase XP curve that mirrors the narrative structure: a gentle main-story arc followed by a steeper post-game long tail.
+
+- **Phase 1 (Levels 1–70, main story):** `XP_to_next_level(n) = floor(24 × n^1.5)`
+- **Phase 2 (Levels 71–150, post-game):** `XP_to_next_level(n) = floor(10 × n^1.8)`
+
+Different base constants (24 vs 10) create a 53% jump at the phase transition (level 71). Phase 1 is gentle; Phase 2 steepens for the post-game long tail.
+
+| Level | XP to Next | Cumulative | Context |
+|-------|-----------|-----------|---------|
+| 1→2 | 24 | 24 | Game start |
+| 2→3 | 67 | 91 | Early Act I |
+| 5→6 | 268 | 675 | Early Act I |
+| 10→11 | 758 | 3,420 | Mid Act I |
+| 18→19 | 1,832 | 14,117 | End of Act I |
+| 25→26 | 3,000 | 31,503 | Mid Act II |
+| 35→36 | 4,969 | 72,059 | End of Act II |
+| 50→51 | 8,485 | 173,946 | End of Interlude |
+| 70→71 | 14,055 | 400,587 | End of Act III (Phase 1 last) |
+| 71→72 | 21,491 | 422,078 | Phase 2 start (+53% jump) |
+| 80→81 | 26,641 | 640,884 | Dreamer's Fault early |
+| 100→101 | 39,810 | 1,308,086 | Dreamer's Fault mid |
+| 120→121 | 55,274 | 2,262,921 | Dreamer's Fault late |
+| 140→141 | 72,950 | 3,550,386 | Dreamer's Fault F20 |
+| 150 (cap) | — | 4,332,504 | Level cap |
+
+**Phase transition note:** At level 71, XP requirement jumps 53% (14,055 → 21,491). Intentional, not smoothed. Matches the narrative shift from Act III urgency to post-game exploration.
+
+### XP Distribution Rules
+
+- **Active battle members (4):** receive full enemy XP (not divided)
+- **KO'd members at battle end:** 0 XP
+- **Absent party members (2 reserves):** 50% of battle XP
+- **Ley Crystals:** gain 30% of wearer's XP (see [Ley Crystal System](#ley-crystal-system) below)
+- **Guest NPCs (Cordwyn, Kerra):** do not receive XP
+
+### Level-Up Effects
+
+When a character levels up:
+
+1. Max HP/MP increase per growth rate
+2. All stats increase per growth rates
+3. Current HP and MP fully restored (FF6 model — creates clutch moments)
+4. New abilities/spells unlock per learning schedules in [abilities.md](abilities.md) and [magic.md](magic.md)
+
+Level-up notification: character name, new level, stat deltas, newly learned abilities.
+
+### Flat XP Model
+
+Enemies always give listed XP regardless of party level. No bonuses for higher-level enemies, no penalties for lower-level. The FF6 approach — simple, transparent, predictable.
+
+### Catch-Up Mechanics
+
+- **Join/rejoin formula:** `join_level = max(1, floor(party_average_level) - 1)` (see [Join Rule](#join-rule) above)
+- 50% absent XP share is the ongoing safety net
+- No additional XP bonus for underleveled characters
+- Combined: no character is ever more than 2–3 levels behind
+
+### XP Pacing Targets
+
+| Milestone | Target Level | Cumulative XP | Act |
+|-----------|-------------|--------------|-----|
+| After Ember Vein | ~8 | ~2,000 | I |
+| After Fenmother's Hollow | ~12 | ~5,300 | I |
+| End of Act I | ~18 | ~14,100 | I |
+| Mid Act II (Corrund) | ~25 | ~31,500 | II |
+| End of Act II | ~35 | ~72,000 | II |
+| Mid Interlude (Sable solo) | ~38 | ~90,000 | Int |
+| End of Interlude | ~50 | ~174,000 | Int |
+| Mid Act III (Oases) | ~60 | ~273,000 | III |
+| End of Act III | ~70 | ~401,000 | III |
+| Dreamer's Fault F4 | ~80 | ~641,000 | Post |
+| Dreamer's Fault F8 | ~90 | ~941,000 | Post |
+| Dreamer's Fault F12 | ~100 | ~1,308,000 | Post |
+| Dreamer's Fault F16 | ~120 | ~2,263,000 | Post |
+| Dreamer's Fault F20 | ~140 | ~3,550,000 | Post |
+| Level cap | 150 | ~4,333,000 | Post |
+
+> These targets assume critical-path + moderate exploration, no intentional grinding. The Ley Scar (see [dungeons-world.md](dungeons-world.md)) provides optional high-XP farming in Act III.
+
+### XP Pacing Per Act
+
+**Act I (Fast Levels):** Levels 1→18 in ~2–3 hours. Level-up every ~15–20 minutes. New ability every 3–5 levels. Purpose: teach the player that leveling = new capabilities.
+
+**Act II (Steady Progression):** Levels 18→35 in ~4–5 hours. Level-up every ~20–25 minutes. Abilities space out (every 4–6 levels). System depth provides non-level rewards.
+
+**Interlude (Survival Pacing):** Levels 35→50 in ~3–4 hours. Level-up every ~15–20 minutes (faster due to harder enemies). Story-triggered abilities supplement level-based ones. 50% absent share keeps reunited characters close.
+
+**Act III (Strategic Climbing):** Levels 50→70 in ~4–6 hours. Level-up every ~25–30 minutes (curve steepening). Ley Scar available for players who want to push harder. Final abilities learned in the 55–65 range.
+
+**Post-Game (The Long Tail):** Levels 70→150 in ~20–40+ hours. Level-up frequency drops dramatically (every 45–90 minutes). Phase 2 exponent makes each level noticeably harder. Dreamer's Fault provides scaled XP.
+
+### Interlude Reunion Rule
+
+When a character rejoins during the Interlude, any abilities or spells they gained during the separation (via level-ups from absent XP share or the rejoin level formula) must be acknowledged in the reunion dialogue. This ensures players know the character has new capabilities and provides narrative explanation for abilities learned "off-screen." See [events.md](events.md) for specific reunion dialogue notes.
+
+---
+
 ## Ley Crystal System
 
 Ley Crystals are crystallized fragments of the ley line network — raw magical energy solidified over millennia. They serve as the game's Esper/Magicite equivalent: equip one to a character, and they gain permanent stat bonuses each time they level up.

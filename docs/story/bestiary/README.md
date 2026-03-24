@@ -11,7 +11,7 @@
 | [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I (25 enemies) |
 | [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
-| [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Overworld (64 enemies) |
+| [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Ley Scar, Overworld (68 enemies) |
 | [optional.md](optional.md) | Dreamer's Fault (24 enemies across 5 ages, Lv 42–100) |
 | [bosses.md](bosses.md) | All Bosses & Mini-Bosses with AI Scripts (29 combat + 1 siege) |
 | [palette-families.md](palette-families.md) | Base -> Variant Mappings |
@@ -142,12 +142,12 @@ and keeps the system simple (FF6's approach).
 
 | Act | Enemy Level Range | Recommended Party Level |
 |-----|------------------|------------------------|
-| Act I | 1-12 | 1-12 |
-| Act II | 13-25 | 13-25 |
-| Interlude | 20-35 | 20-35 |
-| Act III | 26-45 | 26-45 |
-| Post-game | 40-80 | 40-80 |
-| Optional / Superboss | 70-150 | 70-150 |
+| Act I | 1–12 | 1–12 |
+| Act II | 13–25 | 13–25 |
+| Interlude | 20–35 | 20–35 |
+| Act III | 26–45 (Ley Scar: 40–48) | 26–45 (Ley Scar: 40–48) |
+| Post-game | 40–80 | 40–80 |
+| Optional / Superboss | 70–150 | 70–150 |
 
 ### Base Stat Curves (Regular Enemies)
 

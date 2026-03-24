@@ -261,22 +261,24 @@ These gaps block specific subsystems but not the core game loop.
 
 ### 2.1 XP & Leveling Curve
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P1
-**Files:** None yet (add to `docs/story/combat-formulas.md` or separate file)
+**Files:** `docs/story/progression.md`, `docs/story/dungeons-world.md`, `docs/story/bestiary/act-iii.md`, `docs/story/events.md`
 **Depends On:** 1.2 (Stat System), 1.3 (Bestiary for XP per enemy)
+**Completed:** 2026-03-24 — Two-phase XP curve (base=24 n^1.5 / base=10 n^1.8), full HP/MP restore on level-up, 50% absent XP share, flat XP model, Ley Scar grinding zone (4 enemies), Interlude reunion ability-acknowledgment rule.
 
 **What's Needed:**
-- [ ] XP-to-level formula (exponential curve: `XP_needed = base * level^exponent`)
-- [ ] XP per enemy (tied to bestiary, scaling by area)
-- [ ] XP distribution rules: equal split among living party? Absent members get partial?
-- [ ] Stat gains per level per character (tied to growth curves in 1.2)
-- [ ] Ability/spell learning schedule per character per level
-- [ ] Expected level per dungeon/act milestone
-- [ ] Catch-up mechanics for underleveled party members (if any)
-- [ ] Does level-up restore HP/MP? (FF6: yes)
+- [x] XP-to-level formula (two-phase: floor(24 × n^1.5) levels 1–70, floor(10 × n^1.8) levels 71–150)
+- [x] XP per enemy (tied to bestiary logistic curve + Ley Scar hand-tuned overrides)
+- [x] XP distribution rules: full share to 4 active members, 50% to 2 absent, 0 to KO'd
+- [x] Stat gains per level per character (already complete in progression.md growth rates)
+- [x] Ability/spell learning schedule per character per level (already complete in abilities.md/magic.md)
+- [x] Expected level per dungeon/act milestone (pacing targets table in progression.md)
+- [x] Catch-up mechanics: join at party_avg - 1, 50% absent XP share
+- [x] Does level-up restore HP/MP? Yes — full HP/MP restore (FF6 model)
 
-**Blocking:** Progression pacing, difficulty tuning
+**Blocking:** ~~Progression pacing, difficulty tuning~~
+Now partially unblocks: 3.4 (Difficulty & Balance — still needs other Tier 2 gaps)
 
 ---
 
@@ -551,3 +553,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-23 | 1.4 Item & Consumable Catalog | MISSING → COMPLETE. 32 consumables, 13 Forgewright devices, 18 Ley Crystal invocations, 67 materials, 23 key items, cross-reference tables. Unblocks 1.5, 1.6, 3.5. | — |
 | 2026-03-23 | 1.5 Equipment Stat Tables | SKELETAL → COMPLETE. 56 weapons, 49 armor, 38 accessories, Forgewright crafting (8 recipes, 7 infusions, 7 synergies), ATK rebalance proposal, boss drop cross-reference. Unblocks 1.6, 3.5. | — |
 | 2026-03-24 | 1.6 Economy & Pricing | SKELETAL → COMPLETE. Currency (Gold/Scrip unified), 10 town shop inventories, event-triggered restocking, treasure chest formula, boss gold system (rank × narrative split), steal economy, crafting costs, quest rewards, gold pacing (70% affordability), wealth curve. Unblocks 2.6, 3.4. | — |
+| 2026-03-24 | 2.1 XP & Leveling Curve | PARTIAL → COMPLETE. Two-phase XP curve, full HP/MP restore on level-up, 50% absent XP share, Ley Scar grinding zone (4 enemies), Interlude reunion rule. | — |

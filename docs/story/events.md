@@ -866,6 +866,29 @@ Every NPC interaction required to progress the main story, in chronological orde
 | 33 | Archive of Ages | Maren | Found in the deepest chamber. The truth delivered: the door closes from the inside. Someone stays. | `maren_found` flag; Maren rejoins |
 | 34 | (Any safe location) | Maren (briefing scene) | Full party assembled. Maren explains everything. Everyone understands. No one says Cael's name. | `party_reassembled` flag; Convergence marked on map; Act III enabled |
 
+#### Reunion Ability-Acknowledgment Notes
+
+Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. There are two categories:
+
+1. **Level-up unlocks** — gained off-screen via absent XP share or rejoin level formula (see [progression.md](progression.md)). Reference as things learned "while we were apart."
+2. **Story-triggered `[S]` unlocks** — granted at or during the reunion sequence itself. Reference as discoveries made *here and now*, not off-screen gains.
+
+> **Ability acknowledgment — Edren (Step 23):** If Edren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Example level-up abilities Edren might have gained off-screen before rejoining:
+> - Aegis Veil (Lv 15): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
+> - Shatter Guard (Lv 22): *"I had nothing but time and a training dummy. I found some new ways to use this shield."* *(Proposed dialogue — flag for writer review.)*
+
+> **Ability acknowledgment — Lira (Step 28):**
+> - **Story-triggered `[S]`:** Mending Engine (Lv 17+ required, unlocks *during* this reunion): *"Built this from scrap while I was hiding in the tunnels. Field medic kit — I'll show you."* — present as a discovery made *here*, not off-screen.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
+
+> **Ability acknowledgment — Torren (Step 29):**
+> - **Story-triggered `[S]`:** Stoneheart (Lv 16+), Greyveil (Lv 20+) — both unlock *during* this reunion: *"The spirits of this place spoke to me. Not all of them were kind."* — present as bonds formed *here*.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
+
+> **Ability acknowledgment — Maren (Step 33):**
+> - **Story-triggered `[S]`:** Unweave (Lv 13+), Ley Surge (Lv 18+), Mirrorsong (Lv 23+) — unlock *during* this Interlude reunion when you find Maren: *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)* — present as discoveries made *here*, not off-screen.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
+
 ### Act III
 
 | Step | Location | NPC / Event | What Happens | Unlocks |
