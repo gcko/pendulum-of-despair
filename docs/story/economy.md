@@ -826,7 +826,7 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 | Enemy drops | ~9,000g | ~150 encounters × 60g avg |
 | Treasure chests | ~3,500g | 8–10 gold chests, 350–500g each |
 | Boss gold (4 bosses: 2 standard + 1 minor + 1 climactic) | ~10,500g | Mix of ranks per formula |
-| Quest rewards | ~4,500g | 2–3 major quests (~3,000g) + minor quests (~1,500g) available during Act II |
+| Quest rewards | ~4,500g | Mix of standard and major quests totaling ~4,500g per [sidequests.md](sidequests.md) during Act II |
 | **Total income** | **~27,500g** | |
 
 **Expenses:**
