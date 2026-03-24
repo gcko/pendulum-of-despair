@@ -771,16 +771,146 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 
 ## Gold Pacing Targets
 
-> To be filled in Task 7.
+### Act I (Levels 1–12, 2 dungeons + overworld)
+
+**Income:**
+
+| Source | Estimate | Notes |
+|--------|----------|-------|
+| Enemy drops | ~1,500–2,000g | ~80 encounters × 15–25g avg |
+| Treasure chests | ~800–1,200g | 4–6 gold chests, 200–300g each |
+| Boss gold (Vein Guardian + Fenmother) | ~2,000g | 500g + 1,500g total paydays |
+| **Total income** | **~4,300–5,200g** | |
+
+**Expenses:**
+
+| Sink | Cost | Notes |
+|------|------|-------|
+| Full Tier 1 equipment (4 characters) | ~6,000–7,000g | Weapon + head + body + accessory × 4 |
+| Consumables | ~500–800g | Potions, status cures, Sleeping Bags |
+| Inns | ~100–200g | 2–3 rests |
+| **Total needed** | **~6,600–8,000g** | |
+
+**Affordability: ~65–70%.** Player equips most of the party but skips 1–2 pieces. Selling a few crafting materials closes the gap.
+
+### Act II (Levels 12–25, 4 dungeons + diplomatic travel)
+
+**Income:**
+
+| Source | Estimate | Notes |
+|--------|----------|-------|
+| Enemy drops | ~9,000g | ~150 encounters × 60g avg |
+| Treasure chests | ~3,500g | 8–10 gold chests, 350–500g each |
+| Boss gold (4 bosses: 2 standard + 1 minor + 1 climactic) | ~10,500g | Mix of ranks per formula |
+| Quest rewards | ~1,500g | Minor + standard quests |
+| **Total income** | **~24,500g** | |
+
+**Expenses:**
+
+| Sink | Cost | Notes |
+|------|------|-------|
+| Full Tier 2 equipment (5 characters) | ~27,000g | 5 party members by end of Act II |
+| Consumables | ~2,500g | Hi-Potions, Ethers, Tents |
+| Inns + travel | ~600g | Multiple cities visited |
+| **Total needed** | **~30,100g** | |
+
+**Affordability: ~81% of equipment budget.** But consumable and inn costs bring effective affordability to ~70% of total needs. Caldera's 150% markup creates a pinch point mid-act.
+
+### Interlude (Levels 25–32, scarcity arc)
+
+**Income:**
+
+| Source | Estimate | Notes |
+|--------|----------|-------|
+| Enemy drops | ~6,000g | ~100 encounters × 60g avg |
+| Treasure chests | ~4,000g | 6–8 chests, higher-value Tier 3 range |
+| Boss gold (3 bosses: 1 minor + 1 standard + 1 climactic) | ~15,000g | Kole (climactic) is a big payday |
+| Salvage/scrounging | ~2,500g | Selling Pallor-enemy materials |
+| **Total income** | **~27,500g** | |
+
+**Expenses:**
+
+| Sink | Cost | Notes |
+|------|------|-------|
+| Tier 3 equipment (selective) | ~18,000g | Limited shops — can't buy everything |
+| Consumables (Pallor Salve!) | ~4,000g | Pallor Salve at 2,500g each is expensive |
+| Forgewright crafting | ~1,500g | Material + gold for devices + forged gear |
+| **Total needed** | **~23,500g** | |
+
+**Affordability: ~80% of what's available.** Paradoxically higher because shops are limited — there's less to buy. Scarcity is in *availability*, not gold. Pallor Salve at 2,500g each creates a new drain.
+
+### Act III (Levels 32–45, Pallor Wastes + endgame)
+
+**Income:**
+
+| Source | Estimate | Notes |
+|--------|----------|-------|
+| Enemy drops | ~18,000g | ~120 encounters × 150g avg |
+| Treasure chests | ~10,000g | 12–15 chests, 800–1,200g each |
+| Boss gold (5 bosses: 1 minor + 3 standard + 1 climactic) | ~40,000g | Climactic boss is a major payday |
+| Material sales (if chosen) | ~7,000g | Tier 3–4 materials sell well |
+| **Total income** | **~75,000g** | (without material sales: ~68,000g) |
+
+**Expenses:**
+
+| Sink | Cost | Notes |
+|------|------|-------|
+| Tier 4 equipment (6 characters) | ~70,000g | Full party, expensive gear |
+| Consumables (X-Potions, Pavilions) | ~6,000g | Premium consumables |
+| Forgewright advanced devices | ~3,000g | Arcanite Lance, Emergency Beacon |
+| **Total needed** | **~79,000g** | |
+
+**Affordability: ~86% with material sales, ~76% without.** Players still can't buy everything. The sell-or-save decision peaks here.
+
+### Post-Game (Dreamer's Fault, Level 45+)
+
+Gold becomes abundant. Tier 5 gear is non-purchasable (boss/quest only). The economy shifts from "can I afford this?" to "should I sell rare materials or save them for ultimate Forgewright recipes?" Gold surplus is intentional.
 
 ---
 
 ## Wealth Curve & Verification
 
-> To be filled in Task 7.
+### Expected Wealth at Key Milestones
+
+| Milestone | Cumulative Earned | In Wallet | Notes |
+|-----------|------------------|-----------|-------|
+| After Ember Vein | ~1,500g | ~800g | Bought basic gear in Aelhart |
+| Arrive Valdris | ~3,000g | ~500g | Equipped at Valdris shops |
+| End of Act I | ~5,000g | ~1,000g | Some Tier 1 gaps remain |
+| Mid Act II (Corrund) | ~14,000g | ~2,500g | Tier 2 partially equipped |
+| End of Act II | ~30,000g | ~4,000g | Most Tier 2 equipped |
+| Mid Interlude | ~42,000g | ~8,000g | Limited shops, gold accumulates |
+| End of Interlude | ~57,000g | ~12,000g | Tier 3 equipped, surplus building |
+| Mid Act III | ~80,000g | ~8,000g | Tier 4 purchases draining wallet |
+| Final dungeon | ~110,000g | ~5,000–10,000g | Fully equipped or close |
+| Post-game | ~140,000g+ | ~20,000g+ | Gold surplus |
+
+### Verification Checks
+
+1. **70% test:** At each town, sum the cost of equipping 4 active members. Multiply by 0.70. Does the player's expected wallet cover it?
+2. **Consumable drain:** Can the player afford 10 Hi-Potions + 5 Ethers + 2 Phoenix Feathers per dungeon without dipping below equipment budget? (~3,000g per dungeon run in Act II)
+3. **Caldera pinch:** At 150% markup, Tier 2 gear costs ~2,250–3,300g per piece. Player should feel the squeeze but not be locked out.
+4. **Material sell-or-save:** Selling ALL materials through Act II gains ~3,000–5,000g extra. Closes the 70% gap to ~85%. Meaningful but not game-breaking.
+5. **Sable value:** A player who steals from every humanoid encounter gains ~2,000–4,000g extra per act. Meaningful but not dominant.
+6. **Forging parity:** Forged Tier 3 equipment (400–500g fee + material sell value) totals ~1,500–2,500g effective cost vs Tier 3 shop prices (3,500–5,000g). Forging is cheaper but the forged item is better — neither path is strictly dominant.
+7. **Inn vs rest items:** A full dungeon run using 2 Tents (1,000g) is more expensive than 2 inn stays (~200–300g). Field resting is a convenience premium.
+8. **Quest reward totals:** Sum all quest gold rewards per act. Should approximate pacing table estimates: Act II ~1,500g, Act III ~3,000–5,000g.
 
 ---
 
 ## Cross-References
 
-> To be filled in Task 7.
+### Document Ownership
+
+| Document | Owns | economy.md References |
+|----------|------|----------------------|
+| items.md | Consumable prices, material sell prices, Forgewright costs | Rest items, consumable sink estimates |
+| equipment.md | Weapon/armor/accessory prices, forging fees, infusion costs | Equipment sink estimates, forging parity |
+| bestiary/README.md | Enemy gold drop formula (logistic curve) | Gold income estimates |
+| bestiary/bosses.md | Boss direct gold drops | Boss payday calculations |
+| sidequests.md | Quest gold rewards | Quest income estimates |
+| dungeons-world.md | Treasure chest contents + gold amounts | Chest income estimates |
+| dungeons-city.md | Treasure chest contents + gold amounts | Chest income estimates |
+| locations.md | Town shop references | Shop inventory details |
+
+> **Rule:** economy.md defines the *system* (formulas, targets, guidelines). Source docs own the *data* (individual prices, drop amounts, chest contents). Do not duplicate data — reference the source.
