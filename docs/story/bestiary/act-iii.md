@@ -6,7 +6,7 @@ Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 64 enemies across 8 areas (45 regular + 4 trial-specific + 15 bosses/mini-bosses)
+**Total:** 68 enemies across 9 areas (49 regular + 4 trial-specific + 15 bosses/mini-bosses)
 
 ---
 
@@ -406,13 +406,45 @@ progresses here.
 
 ---
 
+## The Ley Scar (Optional — Lv 40–48)
+
+A rift where raw ley energy bleeds through fractured bedrock, warping
+every living thing in the zone into something larger, faster, and
+meaner. The creatures here are not Pallor-touched — they are
+ley-saturated mutations, twisted by unfiltered magical radiation.
+
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| Ley-Warped Drake | Beast | 40 | 3,380 | 140 | 82 | 53 | 62 | 44 | 40 | 241 | 500 | Element Shard (75%) / Elemental Core (25%) | Drake Scale (75%) / Arcanite Shard (25%) | Frost | Flame | — | — | The Ley Scar |
+| Ley-Warped Wraith | Spirit | 42 | 3,699 | 147 | 57 | 55 | 73 | 46 | 41 | 279 | 575 | Ether Wisp (75%) / Spirit Essence (25%) | Ley Crystal Fragment (75%) / Grey Residue (25%) | Spirit | Ley | — | Poison, Petrify | The Ley Scar |
+| Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 347 | 700 | Scrap Metal (75%) / Iron Cog (25%) | Tempered Plate (75%) / Arcanite Ingot (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
+| Ley Abomination | Boss | 48 | 18,000 | 168 | 126 | 80 | 131 | 78 | 55 | 654 | 1,050 | Arcanite Shard (75%) / Arcanite Core (25%) | Arcanite Ingot (100%) | Void | Flame, Frost, Storm | — | Death, Sleep, Confusion | The Ley Scar (rare ~10%) |
+
+> **Design note:** XP values are hand-tuned overrides (~25% above bestiary formula baseline). The Ley field canonically enhances everything in the zone. See [dungeons-world.md](../dungeons-world.md) for zone layout and encounter tables.
+
+**Design notes:**
+- Ley-Warped Drake: high ATK glass cannon (+15% ATK). Fire breath,
+  aggressive charges. Ley energy crackles along its spine.
+- Ley-Warped Wraith: caster role (+15% MAG, -23% ATK). MP drain,
+  inflicts Silence and Confusion. Physical damage halved (Spirit type).
+  Evasive — shimmers in and out of the ley field.
+- Ley-Warped Colossus: tank role (+15% DEF, -22% SPD). AoE slam,
+  high DEF, very slow. No MP (Construct type). Ley crystals embedded
+  in its chassis glow with unstable energy.
+- Ley Abomination: rare spawn (~10% encounter rate). Multi-phase
+  mini-boss with Boss-type stat multipliers and Boss default
+  immunities. Highest XP in the zone. A fusion of multiple warped
+  creatures — no longer identifiable as any single species.
+
+---
+
 ## Act III Summary
 
-- **Total:** 64 enemies across 8 areas (45 regular + 4 trial-specific +
+- **Total:** 68 enemies across 9 areas (49 regular + 4 trial-specific +
   15 bosses/mini-bosses)
-- **Type distribution:** Pallor (~55%), Construct (15%),
+- **Type distribution:** Pallor (~52%), Construct (16%),
   Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
-  Humanoid (2%)
+  Humanoid (2%), Boss (1%)
 - **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
 - **Tier 2 early deployments:** Storm Wraith (Wraith Tier 2, Lv 30
   vs projected Lv 32)
