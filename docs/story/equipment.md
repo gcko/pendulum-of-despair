@@ -511,7 +511,7 @@ content. Not sold in any shop.
 | Unfinished Ring | +15 MAG, Forgewright ability boost (Lira only) | Perfect Machine | III |
 | Ashen Scholar's Tome | +15% party magic damage | Vaelith | III |
 | Titan's Core | +25 MAG, +25 MDEF, Ley affinity, MP Regen 2%/turn | Ley Titan | III |
-| Nexus Crest | +25 ATK, +25 DEF, +25 MAG, +25 SPD | Wellspring Guardian | III |
+| Nexus Crest | +25 ATK, +25 DEF, +25 MAG, +25 SPD, Builder's Resonance (halve ley damage, double healing received) | Wellspring Guardian | III |
 | Cael's Knight Crest | +20 all stats (Edren only) | Cael Phase 1 | III |
 | Cael's Memory | +10% damage vs Pallor, grief resonance | Pallor Echo | III |
 | Scholar's Codex | +20 MAG, +10 SPD, spell cost -10% | First Scholar | Post |
@@ -562,6 +562,11 @@ Any weapon can receive an elemental infusion. Infusions are permanent
 but replaceable — applying a new infusion overwrites the previous one.
 Infusions can be removed for free at save points. Infused weapons
 display an **(Infused: Element)** suffix in the equipment menu.
+
+> **Exception:** Weapons with narrative-fixed elements (Grey Cleaver
+> purified = Spirit) cannot be infused. Their element is part of the
+> quest reward and cannot be overwritten. Tainted Grey Cleaver CAN be
+> infused (the tainted form has no fixed element).
 
 | Infusion | Element | Materials | Gold |
 |----------|---------|-----------|------|
