@@ -155,7 +155,7 @@ Crystal system.
 | Sable | Front | Thief — dagger user, needs front row for Steal |
 | Maren | Back | Archmage — highest MAG, lowest DEF/HP |
 
-Default rows apply at the start of every battle. Players can freely swap rows during battle (free action — no turn cost).
+Default rows apply at the start of every battle. Players can freely swap rows during battle (free action — no turn cost, no ATB delay).
 
 Front row: full physical damage dealt and received. Back row: 50% physical damage dealt and received. Magic is unaffected by row. See [combat-formulas.md](combat-formulas.md) for the full row modifier rules.
 
