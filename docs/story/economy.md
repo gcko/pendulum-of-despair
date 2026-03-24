@@ -83,10 +83,11 @@ crafting under-resourced.
 **Gold** is the universal currency used throughout Pendulum of Despair.
 
 **Scrip** is the regional name for Gold within Carradan Compact territory
-(Caldera, Corrund, and affiliated ports). Mechanically identical to Gold — no
-conversion rate, no separate wallet. The name evokes the Compact's controlled
-economy. Functions identically to how "Gil" works in Final Fantasy VI: same
-item, different label on the coin.
+(Caldera, Corrund, and affiliated ports). **Gil** is the Valdris name for
+Gold, often styled as "gil" in dialogue and regional notes. Both are
+mechanically identical to Gold — no conversion rate, no separate wallet.
+Functions identically to how "Gil" works in Final Fantasy VI: same item,
+different label on the coin.
 
 **Sell price rule:**
 - **Buyable items & equipment:** sell to vendors at **50% of their listed buy
@@ -792,7 +793,7 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 | Enemy drops | ~1,500–2,000g | ~80 encounters × 15–25g avg |
 | Treasure chests | ~800–1,200g | 4–6 gold chests, 200–300g each |
 | Boss gold (Vein Guardian + Fenmother) | ~2,000g | 500g + 1,500g total paydays |
-| **Total income** | **~4,300–5,200g** | |
+| **Total income** | **~4,300–5,200g** | Quest gold excluded (Act I quests are optional, reward ~200–500g total) |
 
 **Expenses:**
 

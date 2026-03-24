@@ -698,7 +698,7 @@ Greywood Camp is the political heart of the Thornmere Wilds. Unlike the organic 
 
 ### Trade Goods
 
-**Currency system:** Greywood Camp is the Wilds' economic center. Spirit tokens are standard. Barter is active. Valdris gil is accepted at fair rates -- Greywood is pragmatic about outsiders. Compact gold is not accepted but is not met with hostility ("We don't use your paper here. Try the border traders").
+**Currency system:** Greywood Camp is the Wilds' economic center. Spirit tokens are standard. Barter is active. Valdris gil is accepted at fair rates -- Greywood is pragmatic about outsiders. Compact gold is not accepted but is not met with hostility ("We don't use your minted coins here. Try the border traders.").
 
 **Unique items (only available here):**
 
