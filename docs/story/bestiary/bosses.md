@@ -2355,7 +2355,7 @@ unequipped. Torren must be alive when battle is won. Counter is
 tracked per-weapon, not per-character.
 
 **Purified — Pallor's End:**
-- ATK +55 (best greatsword)
+- ATK +55 (best polearm — halberd-class)
 - Spirit element on all attacks
 - +50% damage vs Pallor-type enemies
 - Despair immunity for Torren

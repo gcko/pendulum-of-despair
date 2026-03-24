@@ -56,9 +56,9 @@ restrictions. Ley Crystal is a separate progression system (see
 
 Weapon ATK must be a meaningful portion of total ATK so that upgrades feel
 impactful. The original character growth rates left weapons contributing
-only 28–45% of total ATK at Lv 50 with a Tier 4 weapon, making mid-game
-upgrades feel less impactful than they should. The revised rates shift
-the balance so weapons provide 36–65% of ATK at Lv 50.
+only 31–61% of total ATK at Lv 50 with a Tier 4 weapon (Edren 31% to
+Maren 61%). The revised rates shift the balance so weapons provide
+36–65% of ATK at Lv 50.
 
 **Formula:** `ATK_at_level = floor(base + growth × (level - 1) + 0.5)` per progression.md.
 
