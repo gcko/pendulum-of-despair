@@ -181,27 +181,161 @@ standard price. A Potion that costs 100g elsewhere costs 150g in Caldera.
 
 ## Shop Inventories
 
-> To be filled in Tasks 3–4.
-
 ### Aelhart
 
-> To be filled in Task 3.
+**General Store**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Antidote | 50g |
+| Eye Drops | 50g |
+| Smoke Bomb | 100g |
+
+> **Restock — after Ember Vein completion:** +Hi-Potion (300g), +Phoenix Feather
+> (500g), +Sleeping Bag (250g), +Tent (500g).
+
+No armorer in Aelhart. Edren starts with basic gear. Carradan trader sells
+Lira's starting Forgewright tools.
+
+---
 
 ### Highcairn
 
-> To be filled in Task 3.
+**Provisioner**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Antidote | 50g |
+| Sleeping Bag | 250g |
+| Echo Drop | 75g |
+
+No armorer, no specialty shop. Monastery town — austere.
+
+---
 
 ### Valdris Crown
 
-> To be filled in Task 3.
+**General Store (Lower Ward)**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Hi-Potion | 300g |
+| Ether | 200g |
+| Antidote | 50g |
+| Alarm Clock | 75g |
+| Echo Drop | 75g |
+| Eye Drops | 50g |
+| Phoenix Feather | 500g |
+| Sleeping Bag | 250g |
+| Tent | 500g |
+| Smoke Bomb | 100g |
+| Waystone | 300g |
+
+**Armorer (Lower Ward)**
+
+| Weapons | Price | Head Armor | Price | Body Armor | Price |
+|---------|-------|------------|-------|------------|-------|
+| Valdris Blade | 300g | Iron Helm | 200g | Chain Mail | 300g |
+| Knight's Edge | 500g | Traveler's Hood | 250g | Iron Plate | 400g |
+| Ley Wand | 250g | Ember Circlet | 350g | Silk Robe | 300g |
+| Stiletto | 250g | | | Reinforced Vest | 500g |
+| Iron Mallet | 300g | | | | |
+| Iron Lance | 250g | | | | |
+
+**Specialty Shop (Citizen's Walk)**
+
+| Accessory | Price |
+|-----------|-------|
+| Power Ring | 300g |
+| Iron Bracelet | 300g |
+| Magic Earring | 400g |
+| Warding Charm | 400g |
+| Sprint Shoes | 500g |
+| Lucky Coin | 500g |
+| Antidote Charm | 600g |
+
+> **Restock — when Act II diplomatic mission begins:** General Store adds
+> Hi-Ether (800g), Smelling Salts (75g), Chronos Dust (150g). Armorer adds
+> Commander's Blade (400g), Glyph Staff (500g), Pickpocket's Blade (400g),
+> Pipe Hammer (500g).
+
+---
 
 ### Corrund
 
-> To be filled in Task 4.
+**General Store (Canal District)**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Hi-Potion | 300g |
+| Ether | 200g |
+| Hi-Ether | 800g |
+| Antidote | 50g |
+| Smelling Salts | 75g |
+| Alarm Clock | 75g |
+| Phoenix Feather | 500g |
+| Tent | 500g |
+| Smoke Bomb | 100g |
+
+**Armorer**
+
+| Weapons | Price | Head Armor | Price | Body Armor | Price |
+|---------|-------|------------|-------|------------|-------|
+| Mythril Sword | 1,200g | Mythril Helm | 800g | Mythril Vest | 1,200g |
+| Mythril Staff | 1,000g | Scholar's Cap | 900g | Steel Plate | 1,000g |
+| Mythril Dagger | 1,000g | | | Ley Vestment | 1,200g |
+| Mythril Spear | 1,000g | | | | |
+| Compact Sledge | 1,200g | | | | |
+
+**Sable's Black Market (Undercroft — requires Sable in active party)**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| Trick Blade | 1,500g | Sable dagger, early access |
+| Clarity Band | 800g | Silence immunity |
+| Soft Stone | 200g | Petrify cure, rare in shops |
+| Remedy | 800g | Early access |
+
+---
 
 ### Caldera
 
-> To be filled in Task 4.
+All prices ×1.50. Caldera Employee Card reduces effective price to ×1.125.
+
+**Company Store (General)**
+
+| Item | Standard | Caldera Price | With Card |
+|------|----------|--------------|-----------|
+| Hi-Potion | 300g | 450g | 338g |
+| Hi-Ether | 800g | 1,200g | 900g |
+| Phoenix Feather | 500g | 750g | 563g |
+| Remedy | 800g | 1,200g | 900g |
+| Tent | 500g | 750g | 563g |
+| Pavilion | 1,200g | 1,800g | 1,350g |
+
+**Company Armorer**
+
+| Item | Standard | Caldera Price | With Card |
+|------|----------|--------------|-----------|
+| Compact Saber | 2,000g | 3,000g | 2,250g |
+| Ironbound Greatsword | 1,500g | 2,250g | 1,688g |
+| Forge Hammer | 2,200g | 3,300g | 2,475g |
+| Forgewright Visor | 1,000g | 1,500g | 1,125g |
+| Compact Plate | 2,000g | 3,000g | 2,250g |
+
+**Tash's Black Market (Undercity — Sable access, standard prices)**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| Berserk Collar | 2,000g | Standard — underground ignores inflation |
+| Counter Ring | 3,000g | Standard |
+| Stone Guard | 1,500g | Standard |
+
+---
 
 ### Ashmark
 
