@@ -77,6 +77,12 @@ final_physical_damage = floor(base_damage × attacker_row_mod × defender_row_mo
 
 Items, Forgewright devices, and Ley Crystal invocations work at full effect from either row.
 
+**Entities without a row** (all enemies) use ×1.0 for both attacker and defender modifiers.
+
+**AoE and rows:** AoE abilities hit all party members regardless of row. Physical AoE damage is still modified by each target's individual row modifier — back-row defenders take ×0.5 physical AoE damage. Magic AoE ignores rows entirely.
+
+**Staves note:** Staves are melee weapons subject to the ×0.5 back-row penalty, but Maren's physical ATK is negligible — she attacks with magic, which ignores rows.
+
 ---
 
 ## Magic Damage
