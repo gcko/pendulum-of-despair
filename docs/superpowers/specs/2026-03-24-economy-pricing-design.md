@@ -601,11 +601,11 @@ wealth. Then the 0.05 split applies to that reduced total.
 |------|-----|------|------|-------------|------------|------------|
 | Vein Guardian | I | Minor (1.0x) | Beast | **500g** | 50g | 450g |
 | Corrupted Fenmother | I | Climactic (3.0x) | Beast | **1,500g** | 150g | 1,350g |
-| Commander Drayce | II | Standard (2.0x) | Humanoid | **3,000g** | 3,000g | — |
+| Ashen Ram | II | Climactic (3.0x) | Construct | **4,500g** | 2,250g | 2,250g |
 | Forge Warden | II | Standard (2.0x) | Construct | **3,000g** | 1,500g | 1,500g |
 | Kole | Int | Climactic (3.0x) | Humanoid | **7,500g** | 7,500g | — |
-| Ley Titan | Int | Standard (2.0x) | Spirit | **5,000g** | 500g | 4,500g |
-| Crystal Queen | III | Standard (2.0x) | Pallor | **5,600g** | 280g | 5,320g |
+| Ley Titan | III | Standard (2.0x) | Spirit | **8,000g** | 800g | 7,200g |
+| Crystal Queen | Post | Standard (2.0x) | Pallor | **8,400g** | 420g | 7,980g |
 | Vaelith | III | Climactic (3.0x) | Spirit | **12,000g** | 1,200g | 10,800g |
 
 ---

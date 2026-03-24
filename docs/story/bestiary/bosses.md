@@ -1755,7 +1755,7 @@ party's own potential despair.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 500 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
+| *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 800 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
 
 **Modes:** 3 (Whole, Fractured, Condensed)
 
@@ -2891,7 +2891,7 @@ work, and you happen to be standing in the library.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The Crystal Queen* | Boss | 60 | 60,000 | 210 | 156 | 100 | 162 | 96 | 67 | 280 | 20,000 | Queen's Prism (100%) | Queen's Facet (100%) | Earth (150%) | Ley (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F8 |
+| *The Crystal Queen* | Boss | 60 | 60,000 | 210 | 156 | 100 | 162 | 96 | 67 | 420 | 20,000 | Queen's Prism (100%) | Queen's Facet (100%) | Earth (150%) | Ley (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F8 |
 
 **Modes:** 2 (Unified, Shattered)
 

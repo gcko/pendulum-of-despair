@@ -99,10 +99,12 @@ item, different label on the coin.
 gold, or save them for recipes. No items exist solely as gold bags. Every sell
 decision carries an opportunity cost.
 
-**No special financial services:** there is no money lender, bank, or interest
-mechanic. Economic complexity comes from the sell-or-save decision on crafting
-materials and from the Caldera inflation system. Keeping the rules simple
-ensures players focus on party decisions, not spreadsheets.
+**No special financial services:** there is no bank or interest mechanic.
+Corrund's Moneylender NPC (city-carradan.md) offers usurious loans as a
+narrative element and emergency gold source, but it is not a core economic
+system — players who use it pay a steep penalty. Economic complexity comes
+from the sell-or-save decision on crafting materials and from the Caldera
+inflation system.
 
 ---
 
@@ -156,7 +158,7 @@ The Carradan Compact's economic exploitation of Caldera manifests as inflated
 shop prices across the entire city.
 
 **Markup: 150%** — all Caldera vendors (items, equipment, inn) charge 1.5×
-standard price. A Potion that costs 100g elsewhere costs 150g in Caldera.
+standard price. A Potion that costs 50g elsewhere costs 75g in Caldera.
 
 **Caldera Employee Card**
 
@@ -296,7 +298,7 @@ No armorer, no specialty shop. Monastery town — austere.
 | Item | Price | Notes |
 |------|-------|-------|
 | Trick Blade | 1,500g | Sable dagger, early access |
-| Clarity Band | 800g | Silence immunity |
+| Clarity Band | 800g | Confusion immunity |
 | Soft Stone | 200g | Petrify cure, rare in shops |
 | Remedy | 800g | Early access |
 
@@ -642,11 +644,11 @@ Determines what fraction of the total payday the boss drops directly. The remain
 |------|-----|------|------|-------------|------------|------------|
 | Vein Guardian | I | Minor (1.0×) | Beast | **500g** | 50g | 450g |
 | Corrupted Fenmother | I | Climactic (3.0×) | Beast | **1,500g** | 150g | 1,350g |
-| Commander Drayce | II | Standard (2.0×) | Humanoid | **3,000g** | 3,000g | — |
+| Ashen Ram | II | Climactic (3.0×) | Construct | **4,500g** | 2,250g | 2,250g |
 | Forge Warden | II | Standard (2.0×) | Construct | **3,000g** | 1,500g | 1,500g |
 | Kole | Int | Climactic (3.0×) | Humanoid | **7,500g** | 7,500g | — |
-| Ley Titan | Int | Standard (2.0×) | Spirit | **5,000g** | 500g | 4,500g |
-| Crystal Queen | III | Standard (2.0×) | Pallor | **5,600g** | 280g | 5,320g |
+| Ley Titan | III | Standard (2.0×) | Spirit | **8,000g** | 800g | 7,200g |
+| Crystal Queen | Post | Standard (2.0×) | Pallor | **8,400g** | 420g | 7,980g |
 | Vaelith | III | Climactic (3.0×) | Spirit | **12,000g** | 1,200g | 10,800g |
 
 ### Narrative Principle
