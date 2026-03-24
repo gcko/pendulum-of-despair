@@ -25,8 +25,8 @@
 
 ```
 raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
-after_variance = raw × variance
-final = min(14999, floor(after_variance × attacker_row_mod × defender_row_mod))
+damage_after_variance = raw × variance
+final = clamp(floor(damage_after_variance × attacker_row_mod × defender_row_mod), 1, 14999)
 ```
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).

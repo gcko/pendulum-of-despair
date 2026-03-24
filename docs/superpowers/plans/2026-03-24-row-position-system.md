@@ -162,7 +162,7 @@ In `docs/analysis/game-design-gaps.md`, Gap 2.5:
   - `[x] Front row: full physical damage dealt and received`
   - `[x] Back row: 50% physical damage dealt and received`
   - `[x] Magic unaffected by row`
-  - `[x] Ranged weapons (spears) ignore row penalty`
+  - `[x] Back-row capable weapons (spears) bypass row penalty`
   - `[x] Row swap action: free (no turn cost)`
   - `[x] Default row per character (6 assignments)`
   - `[x] Enemy positioning: no enemy rows (player-only system)`

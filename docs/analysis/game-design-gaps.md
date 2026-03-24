@@ -377,7 +377,7 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
   - [x] Front row: full physical damage dealt and received
   - [x] Back row: reduced physical damage dealt and received (50%?)
   - [x] Magic unaffected by row
-  - [x] Ranged weapons ignore row penalty
+  - [x] Back-row capable weapons (spears) bypass row penalty
   - [x] Row swap action (costs a turn? Free?)
   - [x] Default row per character (tanks front, mages back)
 - [x] If no: document the decision and rationale (N/A — we chose yes)
