@@ -45,10 +45,10 @@ The row system uses 2 rows (Front and Back) for the player party. Enemies have n
 Row modifiers apply as a **final multiplier** after all other damage calculations (ATK², ability multiplier, DEF subtraction, variance). Applied separately for attacker and defender:
 
 ```
-final_physical_damage = floor(damage_after_variance × attacker_row_mod × defender_row_mod)
+final_physical_damage = min(14999, floor(damage_after_variance × attacker_row_mod × defender_row_mod))
 ```
 
-(Flooring and the 14,999 damage cap are applied after row modifiers — see combat-formulas.md resolution pipeline step 9.)
+Row modifiers are the last multiplication step. Flooring and the 14,999 cap are applied after — see combat-formulas.md resolution pipeline.
 
 Items, Forgewright devices, and Ley Crystal invocations work at full effect from either row.
 

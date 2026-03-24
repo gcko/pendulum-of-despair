@@ -369,7 +369,7 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 **Priority:** P1
 **Files:** `docs/story/combat-formulas.md`, `docs/story/characters.md`, `docs/story/abilities.md`
 **Depends On:** 1.1 (Damage Formulas)
-**Completed:** 2026-03-24 — Front/back row system (FF6 model): 50% physical damage modifier, free swap, ranged spears bypass penalty, player-only rows (no enemy rows), 6 character default assignments.
+**Completed:** 2026-03-24 — Front/back row system (FF6 model): 50% physical damage modifier, free swap, back-row capable spears bypass penalty, player-only rows (no enemy rows), 6 character default assignments.
 
 **What's Needed:**
 - [x] Decision: Does this game have front/back rows? (FF4/FF6 had them)
@@ -556,4 +556,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-23 | 1.5 Equipment Stat Tables | SKELETAL → COMPLETE. 56 weapons, 49 armor, 38 accessories, Forgewright crafting (8 recipes, 7 infusions, 7 synergies), ATK rebalance proposal, boss drop cross-reference. Unblocks 1.6, 3.5. | — |
 | 2026-03-24 | 1.6 Economy & Pricing | SKELETAL → COMPLETE. Currency (Gold/Scrip unified), 10 town shop inventories, event-triggered restocking, treasure chest formula, boss gold system (rank × narrative split), steal economy, crafting costs, quest rewards, gold pacing (70% affordability), wealth curve. Unblocks 2.6, 3.4. | — |
 | 2026-03-24 | 2.1 XP & Leveling Curve | PARTIAL → COMPLETE. Two-phase XP curve, full HP/MP restore on level-up, 50% absent XP share, Ley Scar grinding zone (4 enemies), Interlude reunion rule. | — |
-| 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, ranged spears bypass, player-only (no enemy rows), 6 default assignments. | — |
+| 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |

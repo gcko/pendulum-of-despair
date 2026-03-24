@@ -25,15 +25,17 @@
 
 ```
 raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
-final = min(14999, raw × variance)
+after_variance = raw × variance
+final = min(14999, floor(after_variance × attacker_row_mod × defender_row_mod))
 ```
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
-- **variance** is applied last, before the cap (see [Damage Variance](#damage-variance)).
+- **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
+- **row modifiers** are applied last (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
 
-**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after variance is applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated. This produces deterministic results matching the milestone tables below.
+**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after row modifiers are applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
 
