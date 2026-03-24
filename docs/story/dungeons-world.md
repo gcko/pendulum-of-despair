@@ -1919,7 +1919,7 @@ A rift in the Pallor Wastes where concentrated Ley energy bleeds through the Gre
 
 See `bestiary/act-iii.md` (Ley Scar section) for full enemy stat blocks and hand-tuned XP overrides.
 
-**Treasure:** 1 hidden chest containing an Arcanite Ingot (Tier 4 crafting material). Finding it requires examining a specific energy fissure -- visual clue, no puzzle.
+**Treasure:** 1 hidden chest containing 2 Arcanite Shards (Tier 3 crafting material, 200g sell each). Finding it requires examining a specific energy fissure -- visual clue, no puzzle.
 
 **Lore:** The Convergence's energy first began bleeding into the physical world here. The concentrated Ley field accelerates growth, mutation, and aggression -- the in-world explanation for why XP yields are higher than anywhere else in Act III.
 

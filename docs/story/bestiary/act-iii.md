@@ -6,7 +6,7 @@ Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 68 enemies across 9 areas (49 regular + 4 trial-specific + 15 bosses/mini-bosses)
+**Total:** 68 enemies across 9 areas (48 regular + 4 trial-specific + 16 bosses/mini-bosses)
 
 ---
 
@@ -420,7 +420,7 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 | Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 348 | 700 | Scrap Metal (75%) / Crystal Shard (25%) | Crystal Shard (75%) / Arcanite Shard (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
 | Ley Abomination | Boss | 48 | 18,000 | 168 | 126 | 80 | 131 | 78 | 55 | 654 | 1,050 | Arcanite Shard (75%) / Elemental Core (25%) | Arcanite Shard (100%) | Void | Flame, Frost, Storm | — | Death, Petrify, Stop, Sleep, Confusion | The Ley Scar (rare ~10%) |
 
-> **Design note:** XP values are hand-tuned overrides (~25% above bestiary formula baseline). The Ley field canonically enhances everything in the zone. See [dungeons-world.md](../dungeons-world.md) for zone layout and encounter tables.
+> **Design note:** Non-boss Ley-Warped enemies use hand-tuned XP overrides (~25% above the bestiary formula baseline). Boss/rare XP (Ley Abomination) follows the standard rare reward table. The Ley field canonically enhances everything in the zone. See [dungeons-world.md](../dungeons-world.md) for zone layout and encounter tables.
 
 **Design notes:**
 - Ley-Warped Drake: high ATK glass cannon (+15% ATK). Fire breath,
@@ -440,8 +440,8 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 
 ## Act III Summary
 
-- **Total:** 68 enemies across 9 areas (49 regular + 4 trial-specific +
-  15 bosses/mini-bosses)
+- **Total:** 68 enemies across 9 areas (48 regular + 4 trial-specific +
+  16 bosses/mini-bosses)
 - **Type distribution (regular enemies only, excludes bosses):** Pallor (~52%),
   Construct (16%), Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
   Humanoid (2%). Bosses/mini-bosses (15) tracked separately in bosses.md.

@@ -142,12 +142,12 @@ and keeps the system simple (FF6's approach).
 
 | Act | Enemy Level Range | Recommended Party Level |
 |-----|------------------|------------------------|
-| Act I | 1-12 | 1-12 |
-| Act II | 13-25 | 13-25 |
-| Interlude | 20-35 | 20-35 |
+| Act I | 1–12 | 1–12 |
+| Act II | 13–25 | 13–25 |
+| Interlude | 20–35 | 20–35 |
 | Act III | 26–45 (Ley Scar: 40–48) | 26–45 |
 | Post-game | 40–80 | 40–80 |
-| Optional / Superboss | 70-150 | 70-150 |
+| Optional / Superboss | 70–150 | 70–150 |
 
 ### Base Stat Curves (Regular Enemies)
 

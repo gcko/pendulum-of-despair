@@ -885,10 +885,9 @@ Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. Ther
 > - **Story-triggered `[S]`:** Stoneheart (Lv 16+), Greyveil (Lv 20+) — both unlock *during* this reunion: *"The spirits of this place spoke to me. Not all of them were kind."* — present as bonds formed *here*.
 > - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
 
-> **Ability acknowledgment (XP & Leveling rule) — Maren (Step 33):** If Maren gained abilities during the separation (via absent XP share or rejoin level formula — see [progression.md](progression.md)), the reunion dialogue should reference them. Potential abilities in the Interlude level window:
-> - Unweave (Lv 13+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
-> - Ley Surge (Lv 18+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
-> - Mirrorsong (Lv 23+): *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)*
+> **Ability acknowledgment — Maren (Step 33):**
+> - **Story-triggered `[S]`:** Unweave (Lv 13+), Ley Surge (Lv 18+), Mirrorsong (Lv 23+) — unlock *during* this Interlude reunion when you find Maren: *"The Ley lines here are... different. I learned things I couldn't have in Valdris."* *(Proposed dialogue — flag for writer review.)* — present as discoveries made *here*, not off-screen.
+> - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
 
 ### Act III
 
