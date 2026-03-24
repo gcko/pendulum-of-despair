@@ -56,9 +56,9 @@ restrictions. Ley Crystal is a separate progression system (see
 
 Weapon ATK must be a meaningful portion of total ATK so that upgrades feel
 impactful. The original character growth rates left weapons contributing
-only 15-25% of total ATK at endgame, making shop upgrades feel negligible.
-The revised rates below shift the balance so weapons provide 36-65% of
-endgame ATK.
+only 28–45% of total ATK at Lv 50 with a Tier 4 weapon, making mid-game
+upgrades feel less impactful than they should. The revised rates shift
+the balance so weapons provide 36–65% of ATK at Lv 50.
 
 **Formula:** `ATK_at_level = floor(base + growth × (level - 1) + 0.5)` per progression.md.
 
@@ -285,8 +285,12 @@ theme reflecting Torren's role as spiritspeaker.
 | Wyrmbone Lance | 35 | — | — | — | 4,500 | 3 | Interlude shop |
 | Ley Lance | 45 | — | Ley | — | 7,500 | 4 | Act III shop |
 | Pallor Pike | 50 | — | Spirit | +15% vs Pallor | 9,500 | 4 | Pallor Wastes chest |
-| Grey Cleaver (tainted) | 15 | DEF/MDEF/SPD –10 | — | Despair at battle start | — | 5 | Grey Cleaver Unbound boss |
+| Grey Cleaver (tainted) | 15 | DEF/MDEF/SPD –10 | — | Despair at battle start. Cursed — see quest below | — | * | Grey Cleaver Unbound boss |
 | Grey Cleaver (purified) | 55 | — | Spirit | +50% vs Pallor, Despair immunity | — | 5 | 100 Pallor encounters |
+
+> **Note:** Grey Cleaver (tainted) is marked Tier * because its ATK 15
+> is intentionally below Tier 5 range. It is a cursed weapon that must
+> be purified through 100 Pallor encounters to reach its Tier 5 stats.
 
 > **Design note — Grey Cleaver classification:** The Grey Cleaver is
 > described as a "greatsword" in bosses.md, but Torren's weapon type is
