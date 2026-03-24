@@ -1443,7 +1443,7 @@ All Thornmere settlements share a visual vocabulary that distinguishes them from
 
 | Settlement | Primary Currency | Accepts Gil? | Accepts Gold? | Barter? |
 |-----------|-----------------|-------------|---------------|---------|
-| Roothollow | Spirit tokens | Yes (2:1 penalty) | No (refused) | Yes |
+| Roothollow | Spirit tokens | Yes (undervalued; no fixed rate) | No (refused) | Yes |
 | Duskfen | Spirit tokens | Yes (grudging) | No (hostile) | Yes |
 | Ashgrove (market) | Spirit tokens | Yes (fair rate) | No | Yes |
 | Canopy Reach | Spirit tokens | Yes (fair rate) | No | Yes |

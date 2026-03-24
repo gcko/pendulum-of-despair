@@ -89,6 +89,14 @@ mechanically identical to Gold — no conversion rate, no separate wallet.
 Functions identically to how "Gil" works in Final Fantasy VI: same item,
 different label on the coin.
 
+**Spirit Tokens (Thornmere only)** are a localized ritual resource referenced
+in [city-thornmere.md](city-thornmere.md). They are **not** a second global
+currency and have no fixed conversion rate to Gold. Spirit tokens are earned
+and spent within Thornmere's spirit shrines and ritual vendors only — they
+cannot be used at standard shops. This is the one sanctioned exception to the
+Gold-only rule. Regular shop inventories in Thornmere (as listed in this file)
+still price items in Gold.
+
 **Sell price rule:**
 - **Buyable items & equipment:** sell to vendors at **50% of their listed buy
   price** by default.
