@@ -37,7 +37,7 @@ The row system uses 2 rows (Front and Back) for the player party. Enemies have n
 |-----------|----------|
 | Front row attacker | ×1.0 (no change) |
 | Back row attacker (melee weapon) | ×0.5 |
-| Back row attacker (ranged weapon — spears) | ×1.0 (penalty bypassed) |
+| Back row attacker (back-row capable weapon — spears) | ×1.0 (penalty bypassed) |
 | Front row defender (physical attack) | ×1.0 (no change) |
 | Back row defender (physical attack) | ×0.5 |
 | Any row (magic damage) | No modifier — magic ignores rows |

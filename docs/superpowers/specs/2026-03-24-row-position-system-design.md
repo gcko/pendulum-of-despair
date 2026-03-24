@@ -1,7 +1,7 @@
 # Row/Position System Design
 
 > Spec for Gap 2.5. Defines the front/back row system: damage modifiers,
-> ranged weapon rules, default character rows, free swap action, and
+> back-row capable weapon rules, default character rows, free swap action, and
 > enemy positioning (none — player-only rows).
 
 ---
@@ -27,7 +27,7 @@ not from navigating enemy formations.
 - Deal **50% physical damage** (final physical damage halved via row modifier)
 - Receive **50% physical damage** from enemies (final incoming physical
   damage halved via row modifier)
-- **Exception — Ranged weapons:** Spears (Torren's weapon type) deal
+- **Exception — Back-row capable weapons:** Spears (Torren's weapon type) deal
   **100% physical damage from back row**. The "back-row capable" tag
   in equipment.md marks weapons that bypass this penalty.
 
@@ -137,7 +137,7 @@ system is exclusively player-side.
 - Row modifier applies as a **final multiplier** after all other
   calculations:
   - Front row attacker → no modifier (×1.0)
-  - Back row attacker (non-ranged weapon) → damage × 0.5
+  - Back row attacker (non-back-row-capable weapon) → damage × 0.5
   - Back row defender → incoming physical damage × 0.5
 - Row modifiers stack multiplicatively: a back-row attacker hitting a
   back-row-defended target results in 0.5 × 0.5 = 0.25 of normal

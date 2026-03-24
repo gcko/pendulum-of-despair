@@ -81,7 +81,7 @@ Items, Forgewright devices, and Ley Crystal invocations work at full effect from
 
 **Entities without a row** (all enemies) use ×1.0 for both attacker and defender modifiers.
 
-**AoE and rows:** AoE abilities hit all party members regardless of row. Physical AoE damage is still modified by each target's individual row modifier — back-row defenders take ×0.5 physical AoE damage. Magic AoE ignores rows entirely.
+**AoE and rows:** Party-wide AoE abilities target the entire party and always hit both rows. Physical AoE damage is still modified per target by that character's row modifier — back-row defenders take ×0.5 physical AoE damage. Magic AoE ignores rows entirely. Abilities that explicitly target a specific row (e.g., "front row only" boss patterns, knockback effects) follow their own targeting rules but still apply the per-target row modifier to each character they hit.
 
 **Staves note:** Staves are melee weapons subject to the ×0.5 back-row penalty, but Maren's physical ATK is negligible — she attacks with magic, which ignores rows.
 
