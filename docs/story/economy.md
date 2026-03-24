@@ -339,29 +339,220 @@ All prices ×1.50. Caldera Employee Card reduces effective price to ×1.125.
 
 ### Ashmark
 
-> To be filled in Task 4.
+**General Store**
+
+| Item | Price |
+|------|-------|
+| Hi-Potion | 300g |
+| Ether | 200g |
+| Antidote | 50g |
+| Echo Drop | 75g |
+| Phoenix Feather | 500g |
+| Sleeping Bag | 250g |
+| Tent | 500g |
+
+**Armorer**
+
+| Item | Price |
+|------|-------|
+| Compact Saber | 2,000g |
+| Twilight Edge | 2,500g |
+| Runic Focus | 1,800g |
+| Compact Officer's Helm | 1,200g |
+| Compact Uniform | 1,800g |
+
+> **Restock — after Ashmark liberation:** +Thornwood Pike (1,800g),
+> +Whisper Edge (4,500g — early Tier 3), +Preemptive Charm (2,000g).
+
+---
 
 ### Bellhaven
 
-> To be filled in Task 4.
+**General Store**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Hi-Potion | 300g |
+| Ether | 200g |
+| Hi-Ether | 800g |
+| Antidote | 50g |
+| Alarm Clock | 75g |
+| Echo Drop | 75g |
+| Eye Drops | 50g |
+| Smelling Salts | 75g |
+| Phoenix Feather | 500g |
+| Smoke Bomb | 100g |
+| Waystone | 300g |
+| Pallor Salve | 2,500g |
+| Tent | 500g |
+| Pavilion | 1,200g |
+
+> **Pallor Salve** is first available here. Limited to 3 per visit.
+
+**Armorer**
+
+| Item | Price |
+|------|-------|
+| Trick Blade | 1,500g |
+| Thornwood Pike | 1,800g |
+| Runic Focus | 1,800g |
+| Forge Hammer | 2,200g |
+| Compact Plate | 2,000g |
+| Compact Uniform | 1,800g |
+
+**Specialty (Harbor Traders)**
+
+| Accessory | Price |
+|-----------|-------|
+| Flame Ring | 3,000g |
+| Frost Amulet | 3,000g |
+| Storm Pendant | 3,000g |
+| Haste Bangle | 2,500g |
+| Life Pendant | 800g |
+
+> Bellhaven's identity: best accessory selection in Act II. The Harbor
+> Traders have the widest elemental resist and utility accessory stock
+> of any town before the Interlude.
+
+---
 
 ### Thornmere
 
-> To be filled in Task 4.
+**Provisioner**
+
+| Item | Price |
+|------|-------|
+| Potion | 50g |
+| Hi-Potion | 300g |
+| Ether | 200g |
+| Antidote | 50g |
+| Alarm Clock | 75g |
+| Echo Drop | 75g |
+| Eye Drops | 50g |
+| Smelling Salts | 75g |
+| Tent | 500g |
+
+**Local Craftsman**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| Wyrmbone Lance | 4,500g | Unique to Thornmere; forged from local materials |
+| Warding Crown | 2,800g | Thornmere specialty |
+| Despair Ward | 5,000g | **Only shop selling this** |
+
+> Thornmere's identity: the only town stocking Pallor-specific gear.
+> The Despair Ward and Warding Crown are not available through normal
+> shops anywhere else. Players who skip Thornmere will be locked out
+> of purchasing these until Act III Oases (Despair Ward) or not at all
+> (Warding Crown, which is otherwise chest-only from the Catacombs).
+
+---
 
 ### Ironmark
 
-> To be filled in Task 4.
+**Refugee Quartermaster**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| Hi-Potion | 300g | |
+| Hi-Ether | 800g | |
+| Phoenix Feather | 500g | Limited 5 per visit |
+| Pallor Salve | 2,500g | Limited 2 per visit |
+| Sleeping Bag | 250g | |
+| Tent | 500g | No Pavilions — luxury is gone |
+| Remedy | 800g | |
+
+**Scavenger Armorer**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| Crystal Sword | 4,000g | Tier 3, scrounged from ruins |
+| Dusk Reaver | 5,000g | |
+| Arcane Conduit | 3,500g | |
+| Arcanite Maul | 5,000g | |
+| Crystal Helm | 2,500g | |
+| Pallor Veil | 3,000g | |
+| Crystal Vest | 3,500g | |
+| Arcanite Plate | 4,500g | |
+
+> Ironmark's identity: stripped-down survival shopping. No accessories,
+> no specialty shop, no luxuries. Pavilions are gone — the refugees
+> aren't sleeping well regardless. Ironmark is the only reliable
+> shopping destination during the Interlude; all other towns either
+> close or reduce stock to basics after the world breaks.
+
+---
 
 ### Act III Oases
 
-> To be filled in Task 4.
+Three distinct refugee camps scattered across the Pallor Wastes.
+Each Oasis has a unique identity based on the faction that settled it.
+
+**Oasis A — Valdris Refugees (nearest to Ironmark)**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| X-Potion | 1,500g | |
+| Pavilion | 1,200g | |
+| Phoenix Pinion | 3,000g | |
+| Pallor Salve | 2,500g | Limited 3 per visit |
+| Ley-Forged Longsword | 8,000g | Tier 4 sword |
+| Ley Lance | 7,500g | Tier 4 spear |
+| Genji Helm | 5,500g | |
+| Genji Armor | 7,000g | |
+
+**Oasis B — Compact Refugees (central Wastes)**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| X-Ether | 2,000g | |
+| Pavilion | 1,200g | |
+| Pallor Salve | 2,500g | Limited 2 per visit |
+| Pallor Bane Charm | 3,500g | |
+| Piston Driver | 8,500g | Tier 4 hammer |
+| Ley Conduit | 7,000g | Tier 4 staff |
+| Spiritguard Helm | 5,000g | |
+| Forgeheart Plate | 8,000g | |
+
+**Oasis C — Thornmere Refugees (deep Wastes, near Convergence)**
+
+| Item | Price | Notes |
+|------|-------|-------|
+| X-Potion | 1,500g | |
+| X-Ether | 2,000g | |
+| Pallor Salve | 2,500g | Limited 2 per visit |
+| Despair Ward | 5,000g | |
+| Twilight Fang | 8,000g | Tier 4 dagger |
+| Pallor Pike | 9,500g | Tier 4 spear |
+| Ley Crown | 6,500g | |
+| Ley-Thread Mail | 8,000g | |
+
+> **Post-Convergence restock:** All surviving Oases expand stock. Adds
+> the full consumable line, remaining Tier 4 accessories, and Elixirs
+> (5,000g — first time purchasable anywhere in the game).
 
 ---
 
 ## Event-Triggered Restocking
 
-> To be filled in Task 4.
+| Event | Shops Affected | Change |
+|-------|----------------|--------|
+| Complete Ember Vein | Aelhart general store | +Hi-Potion (300g), +Phoenix Feather (500g), +Sleeping Bag (250g), +Tent (500g) |
+| Arrive in Valdris | Valdris Crown all shops | Full Tier 1 stock unlocked |
+| Diplomatic mission begins | All visited Act I towns | +Select Tier 2 consumables and weapons |
+| Ashmark liberation | Ashmark shops | +Thornwood Pike (1,800g), +Whisper Edge (4,500g), +Preemptive Charm (2,000g) |
+| Interlude (world breaks) | All pre-Interlude shops | Most shops close or reduce to basic consumables only — scarcity |
+| Ironmark established | Ironmark refugee shops | Limited Tier 3 stock unlocked, quantity caps apply |
+| Act III Oases discovered | Each Oasis individually | Unique limited stock per Oasis (see above) |
+| Post-Convergence | Surviving towns + Oases | Premium stock returns: Tier 4 gear, Elixirs (5,000g), full consumable lines |
+
+**Interlude scarcity rule:** When the world breaks, most Act I–II town
+shops either close entirely or reduce to basic consumables only. Inns
+remain open but armorers and specialty shops go dark. Ironmark is the
+only reliable shopping destination during the Interlude — its Scavenger
+Armorer and Refugee Quartermaster provide the only access to Tier 3
+gear for sale.
 
 ---
 
