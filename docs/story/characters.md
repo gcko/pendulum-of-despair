@@ -142,6 +142,25 @@ Crystal system.
 
 **Fate:** Survives. Returns to the ancient ruin and writes a complete history of the Pallor's cycle, so the next generation won't have to learn it from scratch.
 
+## Combat Reference
+
+### Default Battle Rows
+
+| Character | Default Row | Rationale |
+|-----------|-------------|-----------|
+| Edren | Front | Tank — highest DEF/HP, sword user |
+| Cael | Front | Commander — balanced stats, greatsword user |
+| Lira | Front | Engineer — hammer user, moderate DEF |
+| Torren | Back | Sage — spear user (back-row capable), high MAG |
+| Sable | Front | Thief — dagger user, needs front row for Steal |
+| Maren | Back | Archmage — highest MAG, lowest DEF/HP |
+
+Default rows apply at the start of every battle. Players can freely swap rows during battle (free action — no turn cost).
+
+Front row: full physical damage dealt and received. Back row: 50% physical damage dealt and received. Magic is unaffected by row. See [combat-formulas.md](combat-formulas.md) for the full row modifier rules.
+
+Torren's spears deal full damage from back row — he never needs to move forward. Maren's magic is unaffected by row — back row is strictly superior for her.
+
 ## The Antagonist
 
 ### The Pallor
