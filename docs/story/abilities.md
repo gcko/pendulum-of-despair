@@ -162,7 +162,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 > *Sable doesn't fight fair. She doesn't fight dirty either — she fights smart. When you grow up with nothing, you learn that everything is a weapon if you're creative enough.*
 
-**Mechanic:** Sable's Tricks command opens a sub-menu of utility abilities focused on theft, debuffs, and improvised combat. Several Tricks have bonus effects depending on what Sable has stolen in the current battle. Tricks cost little or no MP but have cooldowns (measured in Sable's turns, not global turns).
+**Mechanic:** Sable's Tricks command opens a sub-menu of utility abilities focused on theft, debuffs, and improvised combat. Several Tricks have bonus effects depending on what Sable has stolen in the current battle. Tricks cost little or no MP but have cooldowns (measured in Sable's turns, not global turns). **Requires front row.** Steal abilities (Filch, Ransack, Wild Card item component) are unavailable if Sable is in the back row — physical contact with the target is required.
 
 **Resource: Stolen Goods**
 - Sable can hold up to 3 stolen items at a time (separate from regular inventory).
@@ -504,6 +504,10 @@ The six characters fill distinct combat roles with intentional overlap to preven
 | Utility / Debuffs | Sable | Maren (Unweave), Lira (Arc Trap) |
 
 Cael's departure at the end of Act II removes the party's dedicated buffer. This gap is intentionally painful — the player must redistribute buffing duties across Torren, Maren, and Edren's expanded kits. The combat difficulty spike after the betrayal is a feature, not a bug.
+
+### Row-Restricted Abilities
+
+**Row-restricted abilities:** Steal (Sable) requires front row. All other abilities work from either row.
 
 ### Balance Targets
 
