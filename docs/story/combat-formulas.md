@@ -52,6 +52,31 @@ final = min(14999, raw × variance)
 | Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
 | Any Lv150 2.0× technique | 255 | 2.0 | 60 | 14,999 | Bum Rush equivalent |
 
+### Row Modifier
+
+**Row Modifier (Physical Damage Only)**
+
+The row system uses 2 rows (Front and Back) for the player party. Enemies have no rows — the system is player-side only.
+
+| Condition | Modifier |
+|-----------|----------|
+| Front row attacker | ×1.0 (no change) |
+| Back row attacker (melee weapon) | ×0.5 |
+| Back row attacker (ranged weapon — spears) | ×1.0 (penalty bypassed) |
+| Front row defender (physical attack) | ×1.0 (no change) |
+| Back row defender (physical attack) | ×0.5 |
+| Any row (magic damage) | No modifier — magic ignores rows |
+
+Row modifiers apply as a **final multiplier** after all other damage calculations (ATK², ability multiplier, DEF subtraction, variance):
+
+```
+final_physical_damage = floor(base_damage × attacker_row_mod × defender_row_mod)
+```
+
+**Row swapping** is a free action — no turn cost or ATB delay. Characters can reposition at any time during their turn.
+
+Items, Forgewright devices, and Ley Crystal invocations work at full effect from either row.
+
 ---
 
 ## Magic Damage
@@ -82,6 +107,8 @@ final = min(14999, raw × element_mod × variance)
 **Reaching the 14,999 cap requires:** Best spell + elemental weakness + Attunement buff + Resonance combo. The math: 8,220 base × 1.5 element × 1.3 Resonance = 16,029, capped at 14,999. This is the "perfect setup" moment — rare, earned, and spectacular.
 
 *Note: Ley Ruin (power 100) is AoE per [magic.md](magic.md). No single-target Tier 4 spell currently exists; if one is added during the ability pass, it would reach cap more easily.*
+
+Magic damage is unaffected by row position.
 
 ---
 
@@ -286,7 +313,8 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 5. **Critical% roll** — `attacker.LCK / 4`, cap 50%. If crit: × 2.
 6. **Apply combat interaction modifiers** (Frozen Shatter, Glintmark, etc.)
 7. **Apply variance** — `× random_int(240, 255) / 256`
-8. **Floor and clamp** — `max(1, min(14999, floor(result)))`
+8. **Apply row modifiers** — `× attacker_row_mod × defender_row_mod` (see [Row Modifier](#row-modifier))
+9. **Floor and clamp** — `max(1, min(14999, floor(result)))`
 
 ### Magic Damage Resolution
 
