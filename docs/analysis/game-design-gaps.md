@@ -365,25 +365,27 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 
 ### 2.5 Row/Position System
 
-**Status:** MISSING (design decision needed)
+**Status:** COMPLETE
 **Priority:** P1
-**Files:** None
+**Files:** `docs/story/combat-formulas.md`, `docs/story/characters.md`, `docs/story/abilities.md`
 **Depends On:** 1.1 (Damage Formulas)
+**Completed:** 2026-03-24 — Front/back row system (FF6 model): 50% physical damage modifier, free swap, back-row capable spears bypass penalty, player-only rows (no enemy rows), 6 character default assignments.
 
 **What's Needed:**
-- [ ] Decision: Does this game have front/back rows? (FF4/FF6 had them)
-- [ ] If yes:
-  - [ ] Front row: full physical damage dealt and received
-  - [ ] Back row: reduced physical damage dealt and received (50%?)
-  - [ ] Magic unaffected by row
-  - [ ] Ranged weapons ignore row penalty
-  - [ ] Row swap action (costs a turn? Free?)
-  - [ ] Default row per character (tanks front, mages back)
-- [ ] If no: document the decision and rationale
-- [ ] Enemy positioning (do enemies have rows/positions?)
-- [ ] Area-of-effect targeting rules (hit front row first? All enemies?)
+- [x] Decision: Does this game have front/back rows? (FF4/FF6 had them)
+- [x] If yes:
+  - [x] Front row: full physical damage dealt and received
+  - [x] Back row: reduced physical damage dealt and received (50%?)
+  - [x] Magic unaffected by row
+  - [x] Back-row capable weapons (spears) bypass row penalty
+  - [x] Row swap action (costs a turn? Free?)
+  - [x] Default row per character (tanks front, mages back)
+- [x] If no: document the decision and rationale (N/A — we chose yes)
+- [x] Enemy positioning (do enemies have rows/positions?)
+- [x] Area-of-effect targeting rules (hit front row first? All enemies?)
 
-**Blocking:** Battle layout, damage calculation, enemy targeting
+**Blocking:** ~~Battle layout, damage calculation, enemy targeting~~
+Now unblocks: 2.3 (UI Design — battle layout can reference row positions)
 
 ---
 
@@ -554,3 +556,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-23 | 1.5 Equipment Stat Tables | SKELETAL → COMPLETE. 56 weapons, 49 armor, 38 accessories, Forgewright crafting (8 recipes, 7 infusions, 7 synergies), ATK rebalance proposal, boss drop cross-reference. Unblocks 1.6, 3.5. | — |
 | 2026-03-24 | 1.6 Economy & Pricing | SKELETAL → COMPLETE. Currency (Gold/Scrip unified), 10 town shop inventories, event-triggered restocking, treasure chest formula, boss gold system (rank × narrative split), steal economy, crafting costs, quest rewards, gold pacing (70% affordability), wealth curve. Unblocks 2.6, 3.4. | — |
 | 2026-03-24 | 2.1 XP & Leveling Curve | PARTIAL → COMPLETE. Two-phase XP curve, full HP/MP restore on level-up, 50% absent XP share, Ley Scar grinding zone (4 enemies), Interlude reunion rule. | — |
+| 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |

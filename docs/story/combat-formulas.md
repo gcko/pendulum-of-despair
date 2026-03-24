@@ -25,15 +25,17 @@
 
 ```
 raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
-final = min(14999, raw × variance)
+damage_after_variance = raw × variance
+final = clamp(floor(damage_after_variance × attacker_row_mod × defender_row_mod), 1, 14999)
 ```
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
-- **variance** is applied last, before the cap (see [Damage Variance](#damage-variance)).
+- **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
+- **row modifiers** are applied last (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
 
-**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after variance is applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated. This produces deterministic results matching the milestone tables below.
+**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after row modifiers are applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
 
@@ -51,6 +53,39 @@ final = min(14999, raw × variance)
 | Edren Lv150 basic | 255 | 1.0 | 80 | ~10,757 | Post-game power fantasy |
 | Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
 | Any Lv150 2.0× technique | 255 | 2.0 | 60 | 14,999 | Bum Rush equivalent |
+
+### Row Modifier
+
+**Row Modifier (Physical Damage Only)**
+
+The row system uses 2 rows (Front and Back) for the player party. Enemies have no rows — the system is player-side only.
+
+| Condition | Modifier |
+|-----------|----------|
+| Front row attacker | ×1.0 (no change) |
+| Back row attacker (melee weapon) | ×0.5 |
+| Back row attacker (back-row capable weapon — spears) | ×1.0 (penalty bypassed) |
+| Front row defender (physical attack) | ×1.0 (no change) |
+| Back row defender (physical attack) | ×0.5 |
+| Any row (magic damage) | No modifier — magic ignores rows |
+
+Row modifiers apply as the **last step** in the physical damage pipeline, after all other calculations (ATK², ability multiplier, DEF subtraction, variance). The input is the damage value produced by variance (step 7 in the resolution pipeline):
+
+```
+final_physical_damage = floor(damage_after_variance × attacker_row_mod × defender_row_mod)
+```
+
+When a party member attacks an enemy: `attacker_row_mod` = party member's row modifier, `defender_row_mod` = ×1.0 (enemies have no rows). When an enemy attacks a party member: `attacker_row_mod` = ×1.0 (enemies have no rows), `defender_row_mod` = party member's row modifier.
+
+**Row swapping** is a free action — no turn cost or ATB delay. Characters can reposition at any time during their turn.
+
+Items, Forgewright devices, and Ley Crystal invocations work at full effect from either row.
+
+**Entities without a row** (all enemies) use ×1.0 for both attacker and defender modifiers.
+
+**AoE and rows:** Party-wide AoE abilities target the entire party and always hit both rows. Physical AoE damage is still modified per target by that character's row modifier — back-row defenders take ×0.5 physical AoE damage. Magic AoE ignores rows entirely. Abilities that explicitly target a specific row (e.g., "front row only" boss patterns, knockback effects) follow their own targeting rules but still apply the per-target row modifier to each character they hit.
+
+**Staves note:** Staves are melee weapons subject to the ×0.5 back-row penalty, but Maren's physical ATK is negligible — she attacks with magic, which ignores rows.
 
 ---
 
@@ -83,6 +118,8 @@ final = min(14999, raw × element_mod × variance)
 
 *Note: Ley Ruin (power 100) is AoE per [magic.md](magic.md). No single-target Tier 4 spell currently exists; if one is added during the ability pass, it would reach cap more easily.*
 
+Magic damage is unaffected by row position.
+
 ---
 
 ## Healing
@@ -114,7 +151,7 @@ variance = random_int(240, 255) / 256
 ```
 
 - Range: 0.9375 to 0.99609375 (93.75%–99.61% of raw damage, i.e., up to -6.25% below nominal). Variance always reduces from maximum — it is not symmetric. This matches FF6's exact implementation.
-- Applied as a final multiplier before capping.
+- For physical damage: applied after DEF subtraction but before row modifiers (see [Row Modifier](#row-modifier)). For magic and healing: applied as the final multiplier before capping.
 - Each hit rolls independently (multi-hit abilities get separate rolls).
 - Healing also uses variance (potions and spells fluctuate slightly).
 
@@ -286,7 +323,8 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 5. **Critical% roll** — `attacker.LCK / 4`, cap 50%. If crit: × 2.
 6. **Apply combat interaction modifiers** (Frozen Shatter, Glintmark, etc.)
 7. **Apply variance** — `× random_int(240, 255) / 256`
-8. **Floor and clamp** — `max(1, min(14999, floor(result)))`
+8. **Apply row modifiers** — `× attacker_row_mod × defender_row_mod` (see [Row Modifier](#row-modifier))
+9. **Floor and clamp** — `max(1, min(14999, floor(result)))`
 
 ### Magic Damage Resolution
 
