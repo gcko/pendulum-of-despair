@@ -497,9 +497,9 @@ Preemptive Charm, Infiltrator's Cloak).
 | Ley Amplifier | +20% spell damage | 4,000 | III | Dry Well chest |
 | Pallor Bane Charm | +25% damage vs Pallor-type | 3,500 | III | Act III shop |
 | MP Regen Ring | Restore 3% max MP per turn | 4,500 | III | Ley Line Depths F5 chest |
-| Ward Talisman | Halves encounter rate (danger counter ×0.5) | 1,500 | II | Bellhaven, Corrund shops |
-| Lure Talisman | Doubles encounter rate (danger counter ×2.0) | 800 | II | Corrund, Ironmark shops |
-| Infiltrator's Cloak | Halves encounter rate (danger counter ×0.5) | — | Int | Axis Tower F2 treasure |
+| Ward Talisman | Danger counter increment ×0.5 (fewer encounters) | 1,500 | II | Bellhaven, Corrund shops |
+| Lure Talisman | Danger counter increment ×2.0 (more encounters) | 800 | II | Corrund, Ironmark shops |
+| Infiltrator's Cloak | Danger counter increment ×0.5 (fewer encounters) | — | Int | Axis Tower F2 treasure |
 
 > **Encounter rate accessories:** See [combat-formulas.md](combat-formulas.md)
 > (Encounter System section) for the danger counter model, stacking

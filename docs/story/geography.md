@@ -525,7 +525,7 @@ Coordinates are given as (x, y) where (0, 0) is the top-left (northwest) corner.
 
 Random encounters are governed by terrain type and story act. Each tile has an encounter rate modifier.
 
-| Zone Type | Encounter Rate | Danger Counter Increment | Avg Steps (Act I base) | Examples |
+| Zone Type | Encounter Rate | Danger Counter Increment | Avg Steps (base, before act scaling) | Examples |
 |-----------|---------------|--------------------------|-----------|----------|
 | **Roads** | Low | 96 | ~32 | Valdris Highroad, Compact rail routes |
 | **Farmland / Settled** | Very low | 48 | ~48 | Aelhart Valley, Compact urban outskirts |

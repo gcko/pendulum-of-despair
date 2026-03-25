@@ -345,10 +345,10 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1-2 | 1 | 2x Ley Vermin + 1x Unstable Crystal | 31.25% |
-| 1-2 | 2 | 3x Ley Vermin | 31.25% |
-| 1-2 | 3 | 2x Unstable Crystal | 31.25% |
-| 1-2 | 4 | 4x Ley Vermin + 1x Unstable Crystal (rare swarm) | 6.25% |
+| 1–2 | 1 | 2x Ley Vermin + 1x Unstable Crystal | 31.25% |
+| 1–2 | 2 | 3x Ley Vermin | 31.25% |
+| 1–2 | 3 | 2x Unstable Crystal | 31.25% |
+| 1–2 | 4 | 4x Ley Vermin + 1x Unstable Crystal (rare swarm) | 6.25% |
 | 3 | 1 | 2x Mine Shade + 1x Ember Wisp | 31.25% |
 | 3 | 2 | 1x Unstable Crystal + 2x Ember Wisp | 31.25% |
 | 3 | 3 | 2x Unstable Crystal + 1x Mine Shade | 31.25% |
@@ -610,10 +610,10 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | 1 | 2 | 2x Marsh Serpent + 1x Drowned Bones | 31.25% |
 | 1 | 3 | 2x Drowned Bones | 31.25% |
 | 1 | 4 | 1x Drowned Bones + 3x Marsh Serpent (ambush swarm) | 6.25% |
-| 2-3 | 1 | 2x Ley Jellyfish + 1x Marsh Serpent | 31.25% |
-| 2-3 | 2 | 1x Polluted Elemental + 2x Marsh Serpent | 31.25% |
-| 2-3 | 3 | 2x Marsh Serpent + 1x Ley Jellyfish | 31.25% |
-| 2-3 | 4 | 1x Polluted Elemental + 2x Ley Jellyfish (caster pack) | 6.25% |
+| 2–3 | 1 | 2x Ley Jellyfish + 1x Marsh Serpent | 31.25% |
+| 2–3 | 2 | 1x Polluted Elemental + 2x Marsh Serpent | 31.25% |
+| 2–3 | 3 | 2x Marsh Serpent + 1x Ley Jellyfish | 31.25% |
+| 2–3 | 4 | 1x Polluted Elemental + 2x Ley Jellyfish (caster pack) | 6.25% |
 
 ### Treasure/Loot
 
@@ -1151,18 +1151,18 @@ When defeated, his soldiers collapse. Brant watches silently.
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1-2 | 1 | 2x Compact Officer + 1x Arcanite Hound | 31.25% |
-| 1-2 | 2 | 2x Arcanite Hound | 31.25% |
-| 1-2 | 3 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
-| 1-2 | 4 | 3x Compact Officer + 1x Arcanite Hound (patrol squad) | 6.25% |
+| 1–2 | 1 | 2x Compact Officer + 1x Arcanite Hound | 31.25% |
+| 1–2 | 2 | 2x Arcanite Hound | 31.25% |
+| 1–2 | 3 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
+| 1–2 | 4 | 3x Compact Officer + 1x Arcanite Hound (patrol squad) | 6.25% |
 | 3 | 1 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
 | 3 | 2 | 3x Compact Officer | 31.25% |
 | 3 | 3 | 1x Compact Officer + 1x Forgewright Sentry + 1x Arcanite Hound | 31.25% |
 | 3 | 4 | 2x Forgewright Sentry + 2x Compact Officer (elite patrol) | 6.25% |
-| 4-5 | 1 | 2x Pallor Soldier | 31.25% |
-| 4-5 | 2 | 1x Pallor Soldier + 2x Compact Officer | 31.25% |
-| 4-5 | 3 | 3x Pallor Soldier | 31.25% |
-| 4-5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
+| 4–5 | 1 | 2x Pallor Soldier | 31.25% |
+| 4–5 | 2 | 1x Pallor Soldier + 2x Compact Officer | 31.25% |
+| 4–5 | 3 | 3x Pallor Soldier | 31.25% |
+| 4–5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
 
 ### Treasure/Loot
 
@@ -1560,14 +1560,14 @@ Edren (if present): "It recognized me. The offering gesture. The Colossus did th
 | 1 | 2 | 3x Cave Crawler | 31.25% |
 | 1 | 3 | 2x Extraction Drone | 31.25% |
 | 1 | 4 | 4x Cave Crawler (swarming nest) | 6.25% |
-| 2-3 | 1 | 2x Ley Wisp + 1x Deep Serpent | 31.25% |
-| 2-3 | 2 | 1x Cave Crawler + 2x Ley Wisp | 31.25% |
-| 2-3 | 3 | 2x Deep Serpent + 1x Crystal Sentry | 31.25% |
-| 2-3 | 4 | 2x Prism Moth + 1x Crystal Sentry + 1x Deep Serpent (labyrinth ambush) | 6.25% |
-| 4-5 | 1 | 2x Ley Construct + 1x Vein Stalker | 31.25% |
-| 4-5 | 2 | 1x Confluence Elemental + 1x Ley Construct | 31.25% |
-| 4-5 | 3 | 2x Vein Stalker | 31.25% |
-| 4-5 | 4 | 1x Confluence Elemental + 2x Ley Construct (nexus patrol) | 6.25% |
+| 2–3 | 1 | 2x Ley Wisp + 1x Deep Serpent | 31.25% |
+| 2–3 | 2 | 1x Cave Crawler + 2x Ley Wisp | 31.25% |
+| 2–3 | 3 | 2x Deep Serpent + 1x Crystal Sentry | 31.25% |
+| 2–3 | 4 | 2x Prism Moth + 1x Crystal Sentry + 1x Deep Serpent (labyrinth ambush) | 6.25% |
+| 4–5 | 1 | 2x Ley Construct + 1x Vein Stalker | 31.25% |
+| 4–5 | 2 | 1x Confluence Elemental + 1x Ley Construct | 31.25% |
+| 4–5 | 3 | 2x Vein Stalker | 31.25% |
+| 4–5 | 4 | 1x Confluence Elemental + 2x Ley Construct (nexus patrol) | 6.25% |
 
 ### Environmental Hazards
 
@@ -1791,20 +1791,20 @@ Maren faces the Index -- a vast catalogue entity containing every recorded death
 
 ### Encounter Rates & Formations
 
-**Encounter rate:** Tier 4 (Intense, increment 700, ~10 steps) for all sections. Trial clearings and boss arena: Tier 0 (Safe).
+**Encounter rate:** Tier 4 (Intense, increment 700, ~10 steps) for combat sections (Sections 1–4 / The Grey March). Trial clearings and boss arena: Tier 0 (Safe).
 
 **Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
 
 | Section(s) | Fmt | Enemies | Weight |
 |------------|-----|---------|--------|
-| 1-2 | 1 | 2x Hollow Walker + 1x Despair Cloud | 31.25% |
-| 1-2 | 2 | 1x Petrified Beast + 2x Hollow Walker | 31.25% |
-| 1-2 | 3 | 2x Despair Cloud + 1x Grief Shade | 31.25% |
-| 1-2 | 4 | 1x Grief Shade + 2x Hollow Walker + 1x Despair Cloud (grey patrol) | 6.25% |
-| 3-4 | 1 | 2x Pallor Knight + 1x Hollow Walker | 31.25% |
-| 3-4 | 2 | 1x Pallor Knight + 2x Despair Cloud | 31.25% |
-| 3-4 | 3 | 1x Grief Shade + 1x Petrified Beast + 1x Hollow Walker | 31.25% |
-| 3-4 | 4 | 2x Pallor Knight + 1x Grief Shade (elite grey vanguard) | 6.25% |
+| 1–2 | 1 | 2x Hollow Walker + 1x Despair Cloud | 31.25% |
+| 1–2 | 2 | 1x Petrified Beast + 2x Hollow Walker | 31.25% |
+| 1–2 | 3 | 2x Despair Cloud + 1x Grief Shade | 31.25% |
+| 1–2 | 4 | 1x Grief Shade + 2x Hollow Walker + 1x Despair Cloud (grey patrol) | 6.25% |
+| 3–4 | 1 | 2x Pallor Knight + 1x Hollow Walker | 31.25% |
+| 3–4 | 2 | 1x Pallor Knight + 2x Despair Cloud | 31.25% |
+| 3–4 | 3 | 1x Grief Shade + 1x Petrified Beast + 1x Hollow Walker | 31.25% |
+| 3–4 | 4 | 2x Pallor Knight + 1x Grief Shade (elite grey vanguard) | 6.25% |
 
 ### Treasure/Loot
 
@@ -2459,14 +2459,14 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1-2 | 1 | 2x Pictograph Wisp + 1x Dust Golem | 31.25% |
-| 1-2 | 2 | 2x Dust Golem | 31.25% |
-| 1-2 | 3 | 3x Pictograph Wisp | 31.25% |
-| 1-2 | 4 | 1x Archive Sentinel + 2x Pictograph Wisp (guardian encounter) | 6.25% |
-| 2-3 | 1 | 1x Crystal Warden + 1x Pictograph Wisp | 31.25% |
-| 2-3 | 2 | 2x Crystal Warden | 31.25% |
-| 2-3 | 3 | 1x Archive Sentinel + 1x Dust Golem | 31.25% |
-| 2-3 | 4 | 2x Crystal Warden + 1x Archive Sentinel (vault patrol) | 6.25% |
+| 1–2 | 1 | 2x Pictograph Wisp + 1x Dust Golem | 31.25% |
+| 1–2 | 2 | 2x Dust Golem | 31.25% |
+| 1–2 | 3 | 3x Pictograph Wisp | 31.25% |
+| 1–2 | 4 | 1x Archive Sentinel + 2x Pictograph Wisp (guardian encounter) | 6.25% |
+| 2–3 | 1 | 1x Crystal Warden + 1x Pictograph Wisp | 31.25% |
+| 2–3 | 2 | 2x Crystal Warden | 31.25% |
+| 2–3 | 3 | 1x Archive Sentinel + 1x Dust Golem | 31.25% |
+| 2–3 | 4 | 2x Crystal Warden + 1x Archive Sentinel (vault patrol) | 6.25% |
 
 ### Treasure/Loot
 
@@ -2507,11 +2507,11 @@ The Dreamer's Fault is entered from The Pendulum tavern (post-game hub). A crack
 
 | Floors | Theme | Visual Style | Unique Mechanic |
 |--------|-------|-------------|-----------------|
-| 1-4 | The First Age | Ancient stone, Ember Vein geometry | Floors rotate 90 degrees between rooms |
-| 5-8 | The Crystal Age | Alien crystal formations, refracting light | Light/shadow puzzles -- enemies visible only in light/shadow |
-| 9-12 | The Green Age | Living wood, overgrown ruins | Floors grow and shift -- paths change between visits |
-| 13-16 | The Iron Age | Twisted industrial metal, gears, pipes | Gravity reversal -- ceiling becomes floor periodically |
-| 17-20 | The Void | Pure grey, featureless, minimal geometry | No map. The player navigates by sound cues only. |
+| 1–4 | The First Age | Ancient stone, Ember Vein geometry | Floors rotate 90 degrees between rooms |
+| 5–8 | The Crystal Age | Alien crystal formations, refracting light | Light/shadow puzzles -- enemies visible only in light/shadow |
+| 9–12 | The Green Age | Living wood, overgrown ruins | Floors grow and shift -- paths change between visits |
+| 13–16 | The Iron Age | Twisted industrial metal, gears, pipes | Gravity reversal -- ceiling becomes floor periodically |
+| 17–20 | The Void | Pure grey, featureless, minimal geometry | No map. The player navigates by sound cues only. |
 
 **Every 4th floor:** Echo Boss -- a shade of a past Pallor host. Each is a unique boss with mechanics themed to their age.
 
@@ -2578,11 +2578,11 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 | Enemy | Age | Description |
 |-------|-----|-------------|
-| First Age Sentinel | 1-4 | Stone guardian, geometric attacks |
-| Crystal Refractor | 5-8 | Prism creature, reflects spells |
-| Root Weaver | 9-12 | Living vine construct, entangle |
-| Iron Automaton | 13-16 | Mechanical soldier, heavy armor |
-| Void Walker | 17-20 | Featureless grey shape, drains all |
+| First Age Sentinel | 1–4 | Stone guardian, geometric attacks |
+| Crystal Refractor | 5–8 | Prism creature, reflects spells |
+| Root Weaver | 9–12 | Living vine construct, entangle |
+| Iron Automaton | 13–16 | Mechanical soldier, heavy armor |
+| Void Walker | 17–20 | Featureless grey shape, drains all |
 | Echo Bosses (x4) | Every 4th floor | Unique, extremely powerful |
 
 ### Encounter Rates & Formations
@@ -2593,26 +2593,26 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1-4 | 1 | 2x First Age Sentinel | 31.25% |
-| 1-4 | 2 | 3x First Age Sentinel | 31.25% |
-| 1-4 | 3 | 1x First Age Sentinel (tough solo) | 31.25% |
-| 1-4 | 4 | 4x First Age Sentinel (ancient garrison) | 6.25% |
-| 5-8 | 1 | 2x Crystal Refractor | 31.25% |
-| 5-8 | 2 | 1x Crystal Refractor + 2x First Age Sentinel | 31.25% |
-| 5-8 | 3 | 3x Crystal Refractor | 31.25% |
-| 5-8 | 4 | 2x Crystal Refractor + 2x First Age Sentinel (prism ambush) | 6.25% |
-| 9-12 | 1 | 2x Root Weaver + 1x Crystal Refractor | 31.25% |
-| 9-12 | 2 | 3x Root Weaver | 31.25% |
-| 9-12 | 3 | 1x Root Weaver + 2x Crystal Refractor | 31.25% |
-| 9-12 | 4 | 4x Root Weaver (entangle swarm) | 6.25% |
-| 13-16 | 1 | 2x Iron Automaton | 31.25% |
-| 13-16 | 2 | 1x Iron Automaton + 2x Root Weaver | 31.25% |
-| 13-16 | 3 | 3x Iron Automaton | 31.25% |
-| 13-16 | 4 | 2x Iron Automaton + 2x Root Weaver (mechanized advance) | 6.25% |
-| 17-20 | 1 | 2x Void Walker | 31.25% |
-| 17-20 | 2 | 1x Void Walker + 2x Iron Automaton | 31.25% |
-| 17-20 | 3 | 3x Void Walker | 31.25% |
-| 17-20 | 4 | 4x Void Walker (the abyss stares back) | 6.25% |
+| 1–4 | 1 | 2x First Age Sentinel | 31.25% |
+| 1–4 | 2 | 3x First Age Sentinel | 31.25% |
+| 1–4 | 3 | 1x First Age Sentinel (tough solo) | 31.25% |
+| 1–4 | 4 | 4x First Age Sentinel (ancient garrison) | 6.25% |
+| 5–8 | 1 | 2x Crystal Refractor | 31.25% |
+| 5–8 | 2 | 1x Crystal Refractor + 2x First Age Sentinel | 31.25% |
+| 5–8 | 3 | 3x Crystal Refractor | 31.25% |
+| 5–8 | 4 | 2x Crystal Refractor + 2x First Age Sentinel (prism ambush) | 6.25% |
+| 9–12 | 1 | 2x Root Weaver + 1x Crystal Refractor | 31.25% |
+| 9–12 | 2 | 3x Root Weaver | 31.25% |
+| 9–12 | 3 | 1x Root Weaver + 2x Crystal Refractor | 31.25% |
+| 9–12 | 4 | 4x Root Weaver (entangle swarm) | 6.25% |
+| 13–16 | 1 | 2x Iron Automaton | 31.25% |
+| 13–16 | 2 | 1x Iron Automaton + 2x Root Weaver | 31.25% |
+| 13–16 | 3 | 3x Iron Automaton | 31.25% |
+| 13–16 | 4 | 2x Iron Automaton + 2x Root Weaver (mechanized advance) | 6.25% |
+| 17–20 | 1 | 2x Void Walker | 31.25% |
+| 17–20 | 2 | 1x Void Walker + 2x Iron Automaton | 31.25% |
+| 17–20 | 3 | 3x Void Walker | 31.25% |
+| 17–20 | 4 | 4x Void Walker (the abyss stares back) | 6.25% |
 
 ### Treasure/Loot
 
@@ -3130,18 +3130,18 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | 1 | 2 | 3x Well Shade | 31.25% |
 | 1 | 3 | 1x Well Shade (sluggish solo) | 31.25% |
 | 1 | 4 | 4x Well Shade (dormant mass awakening) | 6.25% |
-| 2-3 | 1 | 2x Cave Lurker + 1x Ley Vermin (deep) | 31.25% |
-| 2-3 | 2 | 3x Ley Vermin (deep) | 31.25% |
-| 2-3 | 3 | 1x Pipe Specter + 2x Cave Lurker | 31.25% |
-| 2-3 | 4 | 2x Pipe Specter + 2x Ley Vermin (deep) (waterworks ambush) | 6.25% |
+| 2–3 | 1 | 2x Cave Lurker + 1x Ley Vermin (deep) | 31.25% |
+| 2–3 | 2 | 3x Ley Vermin (deep) | 31.25% |
+| 2–3 | 3 | 1x Pipe Specter + 2x Cave Lurker | 31.25% |
+| 2–3 | 4 | 2x Pipe Specter + 2x Ley Vermin (deep) (waterworks ambush) | 6.25% |
 | 4 | 1 | 2x Guardian Sentinel + 1x Hearthstone Shade | 31.25% |
 | 4 | 2 | 2x Hearthstone Shade | 31.25% |
 | 4 | 3 | 1x Guardian Sentinel + 2x Hearthstone Shade | 31.25% |
 | 4 | 4 | 3x Guardian Sentinel (residential ward patrol) | 6.25% |
-| 5-6 | 1 | 2x Crystal Warden (deep) + 1x Pictograph Wisp (deep) | 31.25% |
-| 5-6 | 2 | 2x Ley-Warped Construct + 1x Warp Sentinel | 31.25% |
-| 5-6 | 3 | 1x Crystal Warden (deep) + 2x Ley-Warped Construct | 31.25% |
-| 5-6 | 4 | 2x Warp Sentinel + 1x Crystal Warden (deep) (gravity-warped ambush) | 6.25% |
+| 5–6 | 1 | 2x Crystal Warden (deep) + 1x Pictograph Wisp (deep) | 31.25% |
+| 5–6 | 2 | 2x Ley-Warped Construct + 1x Warp Sentinel | 31.25% |
+| 5–6 | 3 | 1x Crystal Warden (deep) + 2x Ley-Warped Construct | 31.25% |
+| 5–6 | 4 | 2x Warp Sentinel + 1x Crystal Warden (deep) (gravity-warped ambush) | 6.25% |
 | 7 | 1 | 2x Ley-Born Echo | 31.25% |
 | 7 | 2 | 3x Ley-Born Echo | 31.25% |
 | 7 | 3 | 1x Ley-Born Echo (solo sparring test) | 31.25% |
@@ -5273,25 +5273,25 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 
 | # | Dungeon | Act | Floors | Rec. Level | Time | Boss | Gimmick |
 |---|---------|-----|--------|-----------|------|------|---------|
-| 1 | Ember Vein | I | 4 | 3-7 | 40-55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
-| 2 | Fenmother's Hollow | II | 3 | 12-15 | 55-75 min | Corrupted Fenmother | Water level control, Water of Life |
-| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
-| 4 | Axis Tower | Interlude | 5 | 22-26 | 50-65 min | General Kole | Stealth/alarm system |
-| 5 | Ley Line Depths | II (optional), III | 5 | 16-28 | 90-120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
-| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
-| 7 | The Convergence | III-IV | 4 phases | 32-36 | 75-100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
-| 8 | Archive of Ages | Interlude | 3 | 24-28 | 45-55 min | Archive Guardian | Translation puzzle |
-| 9 | Dreamer's Fault | Post-game | 20 | 40-50 | 3-5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
-| 10 | Dry Well of Aelhart | Interlude/III | 7 | 22-36 | 2-3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
-| 11 | Sunken Rig | Interlude | 3 | 22-26 | 30-40 min | The Grey Engine | Pressure valve routing, deck plate traps |
-| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
-| 13a | Wilds Gate Pass | I-II | 1 | 5-10 | 10 min | None | Transition area |
-| 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20-24 | 20-30 min | None | Ice sliding puzzle, thin ice traps |
-| 13c | Broken Hills Crossing | II-Interlude | 1 | 14-18 | 10 min | None | Transition area |
-| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
-| 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
-| 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
-| 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
-| 18 | Valdris Siege Battlefield | II | 1 | 18-22 | 25-35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
-| 19 | Ley Nexus Hollow | Interlude | 1 | 20-24 | 20-30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
-| 20 | Highcairn Monastery | Interlude | 2 | 20-24 | 25-35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
+| 1 | Ember Vein | I | 4 | 3–7 | 40–55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
+| 2 | Fenmother's Hollow | II | 3 | 12–15 | 55–75 min | Corrupted Fenmother | Water level control, Water of Life |
+| 3 | Rail Tunnels | Interlude | 4 sections | 18–22 | 40–50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
+| 4 | Axis Tower | Interlude | 5 | 22–26 | 50–65 min | General Kole | Stealth/alarm system |
+| 5 | Ley Line Depths | II (optional), III | 5 | 16–28 | 90–120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
+| 6 | Pallor Wastes | III | 5 sections | 28–32 | 60–80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
+| 7 | The Convergence | III-IV | 4 phases | 32–36 | 75–100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
+| 8 | Archive of Ages | Interlude | 3 | 24–28 | 45–55 min | Archive Guardian | Translation puzzle |
+| 9 | Dreamer's Fault | Post-game | 20 | 40–50 | 3–5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
+| 10 | Dry Well of Aelhart | Interlude/III | 7 | 22–36 | 2–3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
+| 11 | Sunken Rig | Interlude | 3 | 22–26 | 30–40 min | The Grey Engine | Pressure valve routing, deck plate traps |
+| 12 | Windshear Peak | II-III | 1 | Any | 10–15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
+| 13a | Wilds Gate Pass | I-II | 1 | 5–10 | 10 min | None | Transition area |
+| 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20–24 | 20–30 min | None | Ice sliding puzzle, thin ice traps |
+| 13c | Broken Hills Crossing | II-Interlude | 1 | 14–18 | 10 min | None | Transition area |
+| 14a-e | Caves/Grottos | Various | 1 each | Various | 5–10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
+| 15 | Caldera Forge Depths | II/Interlude | 4 | 16–26 | 50–65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
+| 16 | Frostcap Caverns | Interlude/III | 3 | 24–28 | 45–55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
+| 17 | Thornvein Passage | III | 2 | 28–30 | 25–35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
+| 18 | Valdris Siege Battlefield | II | 1 | 18–22 | 25–35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
+| 19 | Ley Nexus Hollow | Interlude | 1 | 20–24 | 20–30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
+| 20 | Highcairn Monastery | Interlude | 2 | 20–24 | 25–35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
