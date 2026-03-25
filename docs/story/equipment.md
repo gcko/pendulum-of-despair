@@ -496,6 +496,14 @@ rewarding exploration and sidequests.
 | Ley Amplifier | +20% spell damage | 4,000 | III | Dry Well chest |
 | Pallor Bane Charm | +25% damage vs Pallor-type | 3,500 | III | Act III shop |
 | MP Regen Ring | Restore 3% max MP per turn | 4,500 | III | Ley Line Depths F5 chest |
+| Ward Talisman | Halves encounter rate (danger counter ×0.5) | 1,500 | II | Bellhaven, Corrund shops |
+| Lure Talisman | Doubles encounter rate (danger counter ×2.0) | 800 | II | Corrund, Ironmark shops |
+| Infiltrator's Cloak | Halves encounter rate (danger counter ×0.5) | — | I | Axis Tower F2 treasure |
+
+> **Encounter rate accessories:** See [combat-formulas.md](combat-formulas.md)
+> (Encounter System section) for the danger counter model, stacking
+> rules, and interaction with location-specific modifiers (Tunnel Map,
+> Kole's patrol timing).
 
 ### Character-Specific / Boss Drop Accessories
 
@@ -526,9 +534,9 @@ content. Not sold in any shop.
 | Stat Boost | 8 |
 | Status Immunity | 6 |
 | Elemental Resistance | 4 |
-| Combat Mechanic | 6 |
+| Combat Mechanic | 9 |
 | Character-Specific / Boss Drop | 14 |
-| **Total** | **38** |
+| **Total** | **41** |
 
 ---
 

@@ -82,6 +82,19 @@ KEY:  ### = limestone wall   [...] = alcove/room   === = passage
 
 **Encounters (optional return):** Random encounters with Crypt Shades (incorporeal, weak to light magic), Bone Wardens (physical attackers, slow), and Tomb Mites (small, fast, annoying). The Flooded Chamber has waterborne encounters: Drowned Sentinels (rusted armor, heavy but sluggish).
 
+**Encounter rate (Interlude escape):** Tier 1 (Low, increment 48, ~48 steps). Fixed encounters only; the party is fleeing and random encounters are minimal.
+
+**Encounter rate (optional return):** Tier 2 (Normal, increment 120, ~30 steps).
+
+**Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Crypt Shade, 1x Bone Warden | 31.25% |
+| 2 | 3x Tomb Mite, 1x Crypt Shade | 31.25% |
+| 3 | 1x Bone Warden, 2x Tomb Mite | 31.25% |
+| 4 | 2x Drowned Sentinel, 1x Crypt Shade (rare) | 6.25% |
+
 **Treasure:**
 - Burial Alcove A: Royal Funeral Urn (sell for 800g, or keep -- Mirren will identify it as belonging to Queen Verath, third dynasty, for lore)
 - Burial Alcove C: Ley-Etched Shield (equipment -- DEF +14, MAG DEF +8, faint glow in dark areas)
@@ -274,6 +287,17 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 
 **Encounters:** Forge-Smoke Creatures (gaseous, fire-element, weak to water), Malfunctioning Service Automata (Compact maintenance drones gone haywire, physical attackers), Sewer Rats (weak, appear in swarms). The Tunnel Map key item from Tash's Black Market reveals enemy patrol routes, reducing encounter rate by 50%.
 
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies x0.5 modifier (effective ~60 steps).
+
+**Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Forge-Smoke Creature, 1x Sewer Rat | 31.25% |
+| 2 | 1x Malfunctioning Service Automaton, 2x Sewer Rat | 31.25% |
+| 3 | 2x Malfunctioning Service Automaton, 1x Forge-Smoke Creature | 31.25% |
+| 4 | 1x Forge-Smoke Creature, 1x Malfunctioning Service Automaton, 2x Sewer Rat (rare) | 6.25% |
+
 **Treasure:**
 - Supply Cache A: 800 gold, 3x Standard Ration, 1x Repair Kit
 - Valve Room (after solving puzzle): Forgewright Prototype Gauntlet (equipment -- DEF +8, grants +15% damage to mechanical enemies)
@@ -457,6 +481,17 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 
 **Encounters:** Heat Sprites (fire-element, weak to water), Corrupted Forge Constructs (half-melted automata reactivated by ley surges, physical/fire attacks), Pallor Seep (Interlude only -- grey ooze that inflicts Despair status, weak to all elements but high HP).
 
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Kole's patrol timing (from Ansa Veld intel) applies x0.5 modifier in the Inner Ring.
+
+**Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Heat Sprite, 1x Corrupted Forge Construct | 31.25% |
+| 2 | 3x Heat Sprite | 31.25% |
+| 3 | 1x Corrupted Forge Construct, 1x Pallor Seep | 31.25% |
+| 4 | 2x Corrupted Forge Construct, 1x Heat Sprite (rare) | 6.25% |
+
 **Treasure:**
 - Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
 - Forge Channel (hidden chest in a dead-end branch): Molten Core (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
@@ -553,6 +588,19 @@ KEY:  ### = iron wall   === = pipe (ley energy, blue glow)
 **Puzzle:** The Pump Control Room puzzle requires balancing pressure across four valves to prevent a steam explosion. The correct sequence is indicated by the pressure readings on each gauge. Lira solves it in one action. Without Lira, the player must read the gauges and match flow rates (a numerical matching puzzle -- pair the gauges so each pair sums to 100).
 
 **Encounters:** Overclocked Automata (machines running at dangerous speeds, fast physical attacks), Pipe Wraiths (entities formed from leaked ley energy, magic attacks), Forge Roaches (swarm enemies, low damage, high annoyance). In areas marked |P|, encounters include Pallor-Touched Workers -- these cannot be killed. They are fought to 0 HP and then "wake up" confused. They were the missing workers, sleepwalking through the maintenance level. Defeating them in combat snaps them out of the fugue state temporarily.
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for the Maintenance Level. Tier 3 (High, increment 252, ~20 steps) for the Extraction Pipeline depths.
+
+**Formation type (Maintenance Level):** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive) for the factory floor areas.
+
+**Formation type (Extraction Pipeline):** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Overclocked Automaton, 1x Forge Roach | 31.25% |
+| 2 | 1x Pipe Wraith, 3x Forge Roach | 31.25% |
+| 3 | 1x Overclocked Automaton, 1x Pipe Wraith | 31.25% |
+| 4 | 1x Pallor-Touched Worker, 1x Pipe Wraith, 1x Overclocked Automaton (rare) | 6.25% |
 
 **Treasure:**
 - Worker's Last Station: Shift Foreman's Key (key item -- opens the Sealed Maintenance Closet)
@@ -723,6 +771,17 @@ KEY:  ### = Arcanite-bonded iron wall   |B| = cell bars
 
 **Encounters:** Pallor-Touched Soldiers (human enemies -- slow, heavy, hits hard, empty eyes; they do not speak during combat). The Guard Station has two fixed encounters. Cell Block corridors have random encounters with Pallor Wisps (grey entities that inflict Despair status).
 
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps).
+
+**Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Pallor-Touched Soldier | 31.25% |
+| 2 | 1x Pallor-Touched Soldier, 2x Pallor Wisp | 31.25% |
+| 3 | 3x Pallor Wisp | 31.25% |
+| 4 | 2x Pallor-Touched Soldier, 1x Pallor Wisp (rare) | 6.25% |
+
 **Key NPC:** Ansa Veld, Cell 5. She is gaunt but sharp. She provides:
 - Kole's patrol timing (reduces encounters in the Inner Ring)
 - The Command Chamber's weak point (a conduit panel behind the throne that can be sabotaged, reducing Kole's Phase 2 healing)
@@ -805,6 +864,17 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 **Puzzle:** The Tidal Passage floods on a timer (the tide). The player has a limited window to cross between high tides. A gauge on the wall (installed by the smugglers) shows the current tide level. Crossing during high tide inflicts continuous water damage. Sable knows the timing automatically ("Twelve seconds between surges. Run when I say run.").
 
 **Encounters:** Sea Crawlers (crustacean creatures, high DEF, weak to lightning), Tide Wraiths (waterborne spectral enemies, Act II only -- the Pallor hasn't reached the ocean yet), Drowned Lookouts (Interlude only -- Pallor-touched smugglers who wandered into the deeper caves and didn't come back).
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies x0.5 modifier.
+
+**Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Sea Crawler, 1x Tide Wraith | 31.25% |
+| 2 | 3x Sea Crawler | 31.25% |
+| 3 | 1x Drowned Lookout, 2x Sea Crawler | 31.25% |
+| 4 | 2x Drowned Lookout, 1x Tide Wraith (rare) | 6.25% |
 
 **Treasure:**
 - Sable's Hideaway: Tin Box (examine for Sable character scene -- contains a copper coin, blue fabric scrap, and a child's drawing. "I hid here when the world got too loud. Guess some things don't change.")
@@ -1153,6 +1223,8 @@ ESCAPE ROUTE -- Valdris Crown Interlude
     The party splits for the Interlude's individual arcs.
 ```
 
+**Encounter rate:** Tier 0 (Safe). Fixed encounters only; no random encounters during the escape sequence.
+
 **Encounters along the route:** 3 fixed encounters total. The escape is not about combat difficulty -- it's about emotional weight. The encounters are speed bumps, not roadblocks. The real challenge is navigating the catacombs (simple but unfamiliar) under narrative pressure.
 
 **Key moments:**
@@ -1218,6 +1290,8 @@ INFILTRATION ROUTE -- Corrund (Sable's Arc)
     The Axis Tower dungeon sequence begins.
 ```
 
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) in sewer sections. Surface sections use stealth mechanics, not random encounters.
+
 **Encounters along the route:** Standard sewer encounters plus Corrund-specific enemies (Compact Security Drones in the surface sections if spotted). The infiltration route is designed to feel tense but navigable -- Sable is in her element. Her dialogue reflects this: "Sewers, fake papers, talking my way past guards. This is literally my job."
 
 **Key moments:**
@@ -1272,6 +1346,8 @@ EVACUATION ROUTE -- Caldera Undercity (Unbowed Quest)
     The families file in. A child asks: "Is this home now?"
     Sera: "For now. That's enough."
 ```
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Escort pace and fixed encounters dominate; random encounters are sparse.
 
 **Encounters:** Pallor Nests (3 fixed encounters -- clearing corrupted residue from the tunnel walls), Grey Crawlers (random encounters spawned by the nests), and one Compact Security Drone patrol (avoidable with timing, fightable if caught).
 
@@ -1338,6 +1414,8 @@ HEIST ROUTE -- Bellhaven (The Honest Thief Quest)
     contact for 500 gold).
 ```
 
+**Encounter rate:** Tier 0 (Safe). Stealth-focused; combat encounters only trigger on detection.
+
 **Encounters:** The heist is stealth-focused. Combat encounters only occur if the party is detected. Detection triggers an escalation: first patrol reinforcements, then Forgewright Security Drones, then (if the alarm rings for 3 turns) a mini-boss: Aldara's Head of Security (human boss, high DEF, calls reinforcements).
 
 ---
@@ -1403,3 +1481,5 @@ All city dungeon and secret passage connections visualized:
 **Passage discovery philosophy:** Every secret passage has at minimum two discovery methods: one NPC hint and one environmental clue. No passage should require a guide to find. The most rewarding passages are the ones the player suspects exist before finding them -- the hollow wall they knocked on three hours ago, the bookshelf with no dust.
 
 **Escape route philosophy:** Escape sequences should repurpose familiar spaces. The player should recognize where they are -- this is the city they've been shopping in, talking to NPCs in, saving at. Now it's hostile. Now the buildings they browsed are obstacles. The emotional weight comes from the contrast between what the city was and what it is now.
+
+**Encounter rate system:** City dungeons use the danger counter system defined in [combat-formulas.md](combat-formulas.md). Most city dungeon areas use Tier 2 (Normal, ~30 steps). Location-specific modifiers (Tunnel Map for Bellhaven and Corrund, Kole's patrol timing for Caldera Inner Ring) reduce rates in their respective areas. Escape routes use Tier 0 (Safe, fixed encounters only) or Tier 1 (Low, ~48 steps) depending on whether the route includes random encounters.

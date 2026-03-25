@@ -162,7 +162,7 @@ Now unblocks: 1.4 (Items), 1.6 (Economy), 2.1 (XP Curve), 2.4 (Encounter Rates)
   - [x] Status infliction items (handled by Forgewright devices: Flashbang, Gravity Anchor)
   - [x] Stat boost items (permanent capsules; temporary buffs handled by Ley Crystal invocations)
   - [x] Escape items (Smoke Bomb)
-  - [ ] Encounter rate items (Repel equivalent) — deferred to Gap 2.4 (Encounter Rates)
+  - [x] Encounter rate items (Repel equivalent) — resolved in Gap 2.4: Ward Talisman and Infiltrator's Cloak (accessories in equipment.md) halve encounter rate
 - [x] Key items list (quest-required items with descriptions and usage)
 - [x] Crafting materials (Arcanite Ingots, Spirit Essence, Pallor Fragments, etc.)
 - [x] Crafting recipes for Lira's Forgewright system
@@ -342,24 +342,26 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 
 ### 2.4 Encounter Rates & Weighted Tables
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P1
-**Files:** `docs/story/dungeons-world.md` (encounter structures exist, rates missing)
+**Files:** `docs/story/combat-formulas.md`, `docs/story/equipment.md`, `docs/story/geography.md`, `docs/story/dungeons-world.md`, `docs/story/dungeons-city.md`
 **Depends On:** 1.3 (Bestiary)
+**Completed:** 2026-03-25 — Danger counter model (FF6-derived), per-terrain increment values (Monte Carlo-verified), act scaling (×1.0/1.1/1.2/1.1), 3 formation types (Normal/Back Attack/Preemptive) with terrain-dependent rates, 4-pack encounter group tables for all dungeons, flee formula (SPD-based), Ward Talisman/Lure Talisman/Infiltrator's Cloak accessories, boss trigger categories, safe corridor rule.
 
 **What's Needed:**
-- [ ] Base encounter rate per area type (overworld, dungeon, town)
-- [ ] Steps-between-encounters formula with variance
-- [ ] Encounter rate modifiers (Sprint Shoes, abilities, terrain type)
-- [ ] Weighted encounter group tables per dungeon floor:
-  - [ ] Group composition (e.g., 40% chance: 2x Restless Dead + 1x Tomb Mite)
-  - [ ] Per-floor escalation (deeper = harder groups)
-- [ ] Preemptive strike rate and modifiers
-- [ ] Back attack / ambush rate and modifiers
-- [ ] Boss trigger conditions (tile, interact, cutscene, HP threshold)
-- [ ] Overworld encounter table per terrain type
+- [x] Base encounter rate per area type (danger counter with per-terrain increments)
+- [x] Steps-between-encounters formula with variance (danger counter model, Monte Carlo-verified averages)
+- [x] Encounter rate modifiers (Ward Talisman ×0.5, Lure Talisman ×2.0, Infiltrator's Cloak ×0.5, location-specific: Tunnel Map, Kole's patrol)
+- [x] Weighted encounter group tables per dungeon floor:
+  - [x] Group composition (4-pack system: 31.25/31.25/31.25/6.25%)
+  - [x] Per-floor escalation (deeper floors use higher tier + harder groups)
+- [x] Preemptive strike rate and modifiers (12.5% base, Preemptive Charm +25pp, Sable's Coin 100%)
+- [x] Back attack / ambush rate and modifiers (0–25% by terrain, Preemptive Charm eliminates)
+- [x] Boss trigger conditions (Zone, Interact, Cutscene, HP Threshold — 4 categories)
+- [x] Overworld encounter table per terrain type (10 zone types with danger counter increments)
 
-**Blocking:** Dungeon pacing, difficulty tuning
+**Blocking:** ~~Dungeon pacing, difficulty tuning~~
+Now partially unblocks: 3.4 (Difficulty & Balance)
 
 ---
 
@@ -557,3 +559,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-24 | 1.6 Economy & Pricing | SKELETAL → COMPLETE. Currency (Gold/Scrip unified), 10 town shop inventories, event-triggered restocking, treasure chest formula, boss gold system (rank × narrative split), steal economy, crafting costs, quest rewards, gold pacing (70% affordability), wealth curve. Unblocks 2.6, 3.4. | — |
 | 2026-03-24 | 2.1 XP & Leveling Curve | PARTIAL → COMPLETE. Two-phase XP curve, full HP/MP restore on level-up, 50% absent XP share, Ley Scar grinding zone (4 enemies), Interlude reunion rule. | — |
 | 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |
+| 2026-03-25 | 2.4 Encounter Rates | PARTIAL → COMPLETE. Danger counter model (FF6-derived), per-terrain increments (Monte Carlo-verified), act scaling, 3 formation types with terrain rates, 4-pack tables for all dungeons, flee formula, Ward/Lure Talisman + Infiltrator's Cloak, boss trigger types, safe corridor rule. | — |

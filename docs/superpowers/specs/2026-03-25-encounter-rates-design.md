@@ -102,7 +102,7 @@ for fine-grained control.
 |------|--------|------|--------------|
 | Ward Talisman | Halves danger counter increment (×0.5) | 1,500 | Act II shops (Bellhaven, Corrund) |
 | Lure Talisman | Doubles danger counter increment (×2.0) | 800 | Act II shops (Corrund, Ironmark) |
-| Infiltrator's Cloak | Reduces encounter rate (×0.5) | — | Ley Line Depths F2 treasure chest |
+| Infiltrator's Cloak | Reduces encounter rate (×0.5) | — | Axis Tower F2 treasure chest |
 
 Both Talismans occupy the accessory slot, creating a meaningful
 tradeoff: the player gives up a stat boost or status immunity to
@@ -114,7 +114,7 @@ modify encounter frequency.
 - **Lure Talisman** is for players who want to grind — pairs naturally
   with the Ley Scar zone. Priced lower (800g) to encourage its use.
 - **Infiltrator's Cloak** is already referenced in dungeons-world.md
-  (Ley Line Depths F2 treasure) as an encounter-reducing accessory.
+  (Axis Tower F2 treasure) as an encounter-reducing accessory.
   It functions identically to the Ward Talisman but is acquired as
   loot rather than purchased — an earlier, free alternative for
   players who explore thoroughly.

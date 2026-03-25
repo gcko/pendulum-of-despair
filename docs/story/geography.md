@@ -525,22 +525,31 @@ Coordinates are given as (x, y) where (0, 0) is the top-left (northwest) corner.
 
 Random encounters are governed by terrain type and story act. Each tile has an encounter rate modifier.
 
-| Zone Type | Encounter Rate | Examples |
-|-----------|---------------|----------|
-| **Roads** | Low (1/32 steps) | Valdris Highroad, Compact rail routes |
-| **Farmland / Settled** | Very low (1/48 steps) | Aelhart Valley, Compact urban outskirts |
-| **Forest (light)** | Moderate (1/24 steps) | Valdris border woods, Wilds edges |
-| **Forest (dense)** | High (1/16 steps) | Deep Thornmere, ley-line corridors |
-| **Marshland** | High (1/16 steps) | Duskfen system |
-| **Mountains** | Moderate (1/20 steps) | Frostcap foothills, Broken Hills |
-| **Quarried plains** | Moderate (1/24 steps) | Compact industrial hinterland |
-| **Sacred sites** | None (0) | Ashgrove, Stillwater Hollow, save points |
-| **Pallor Wastes (Act III)** | Very high (1/10 steps) | 10-mile radius around Convergence |
-| **Urban interior** | None (0) | Inside city/town boundaries |
+| Zone Type | Encounter Rate | Danger Counter Increment | Avg Steps | Examples |
+|-----------|---------------|--------------------------|-----------|----------|
+| **Roads** | Low | 96 | ~32 | Valdris Highroad, Compact rail routes |
+| **Farmland / Settled** | Very low | 48 | ~48 | Aelhart Valley, Compact urban outskirts |
+| **Forest (light)** | Moderate | 148 | ~24 | Valdris border woods, Wilds edges |
+| **Forest (dense)** | High | 380 | ~16 | Deep Thornmere, ley-line corridors |
+| **Marshland** | High | 380 | ~16 | Duskfen system |
+| **Mountains** | Moderate | 252 | ~20 | Frostcap foothills, Broken Hills |
+| **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
+| **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
+| **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
+| **Urban interior** | None | 0 | — | Inside city/town boundaries |
 
 **Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart. The Wilds have no safe corridors -- there are no roads.
 
-**Act scaling:** Encounter rate increases by 10% per act transition (the world becomes more dangerous). During the Interlude, all zones gain a baseline encounter increase of 20% due to wild magic and Pallor manifestations.
+**Act scaling:** Encounter rate increases per act transition:
+Act I ×1.0, Act II ×1.1, Interlude ×1.2, Act III ×1.1. The multiplier
+applies to the base danger counter increment before item modifiers.
+See [combat-formulas.md](combat-formulas.md) (Encounter System section)
+for the full formula and modifier stacking rules.
+
+**Battle formations:** Terrain affects ambush risk. Back attack chance
+ranges from 0% (roads) to 25% (Pallor Wastes). Low-visibility terrain
+(forests, caves) has elevated back attack rates (18.75%). See
+[combat-formulas.md](combat-formulas.md) for full formation rate tables.
 
 ---
 

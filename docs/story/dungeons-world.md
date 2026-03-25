@@ -337,6 +337,23 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 | **Ember Drake** (Mini-boss) | Crystalline lizard-construct. Fast, aggressive, angular geometry. Teaches full-party coordination. | Floor 2, mini-boss room | 1,500 |
 | **Vein Guardian** (Boss) | Geometric crystal construct. Slow charge attacks, area slam. Telegraphs with floor glow. Reconstructs at 50% HP. | Floor 4, boss room | 6,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-3. Floor 4 boss corridor: Tier 0 (Safe).
+
+**Formation type:** Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1-2 | 1 | 2x Ley Vermin + 1x Unstable Crystal | 31.25% |
+| 1-2 | 2 | 3x Ley Vermin | 31.25% |
+| 1-2 | 3 | 1x Unstable Crystal + 1x Mine Shade | 31.25% |
+| 1-2 | 4 | 4x Ley Vermin + 1x Mine Shade (rare swarm) | 6.25% |
+| 3 | 1 | 2x Mine Shade + 1x Ember Wisp | 31.25% |
+| 3 | 2 | 1x Unstable Crystal + 2x Ember Wisp | 31.25% |
+| 3 | 3 | 2x Unstable Crystal + 1x Mine Shade | 31.25% |
+| 3 | 4 | 2x Mine Shade + 2x Ember Wisp (caster pack) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -580,6 +597,23 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | Corrupted Spawn | Dark-scaled serpent, fast, targets backline. Cleansing sequence only. | Floor 3 (Wave 4) |
 | **Drowned Sentinel** (Mini-boss) | Stone guardian covered in barnacles. Heavy physical, Frost area attack. 4,000 HP. | Floor 2 |
 | **Corrupted Fenmother** (Boss) | Frost serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 18,000 HP. | Floor 3 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-2. Tier 3 (High, increment 252, ~20 steps) for Floor 3. Boss sanctum: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (swamp) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 3x Marsh Serpent | 31.25% |
+| 1 | 2 | 2x Marsh Serpent + 1x Drowned Bones | 31.25% |
+| 1 | 3 | 2x Drowned Bones | 31.25% |
+| 1 | 4 | 1x Drowned Bones + 3x Marsh Serpent (ambush swarm) | 6.25% |
+| 2-3 | 1 | 2x Ley Jellyfish + 1x Marsh Serpent | 31.25% |
+| 2-3 | 2 | 1x Polluted Elemental + 2x Marsh Serpent | 31.25% |
+| 2-3 | 3 | 2x Drowned Bones + 1x Ley Jellyfish | 31.25% |
+| 2-3 | 4 | 1x Polluted Elemental + 2x Ley Jellyfish (caster pack) | 6.25% |
 
 ### Treasure/Loot
 
@@ -865,6 +899,23 @@ The operator's voice breaks through. Attacks become erratic -- the machine hesit
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
 | **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 22,000 HP. | Deepest tunnel section |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Hub and East sections. Tier 3 (High, increment 252, ~20 steps) for West and Maintenance Shaft. Boss corridor: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (tunnel) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Section(s) | Fmt | Enemies | Weight |
+|------------|-----|---------|--------|
+| Hub, East | 1 | 2x Forge Phantom + 1x Rail Sentry | 31.25% |
+| Hub, East | 2 | 1x Pallor Nest + 2x Grey Mite | 31.25% |
+| Hub, East | 3 | 1x Steam Elemental + 1x Forge Phantom | 31.25% |
+| Hub, East | 4 | 2x Rail Sentry + 1x Steam Elemental (turret corridor) | 6.25% |
+| West, Maint. | 1 | 2x Forge Phantom + 1x Pallor Nest | 31.25% |
+| West, Maint. | 2 | 1x Pipe Wraith + 2x Grey Mite | 31.25% |
+| West, Maint. | 3 | 1x Steam Elemental + 1x Pipe Wraith | 31.25% |
+| West, Maint. | 4 | 2x Pipe Wraith + 1x Pallor Nest (haunted junction) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -1091,6 +1142,23 @@ When defeated, his soldiers collapse. Brant watches silently.
 | Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4-5 (and Ironmark tunnel) |
 | Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1-2 |
 | **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 30,000 HP. | Ironmark Citadel Command Chamber (via Floor 5 tunnel) |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-3. Tier 3 (High, increment 252, ~20 steps) for Floors 4-5. Boss room (Ironmark Command Chamber): Tier 0 (Safe).
+
+**Formation type:** Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1-2 | 1 | 2x Compact Guard + 1x Arcanite Hound | 31.25% |
+| 1-2 | 2 | 2x Arcanite Hound | 31.25% |
+| 1-2 | 3 | 2x Compact Guard + 1x Forgewright Sentry | 31.25% |
+| 1-2 | 4 | 3x Compact Guard + 1x Arcanite Hound (patrol squad) | 6.25% |
+| 3-5 | 1 | 2x Compact Guard + 1x Forgewright Sentry | 31.25% |
+| 3-5 | 2 | 2x Pallor Soldier | 31.25% |
+| 3-5 | 3 | 1x Pallor Soldier + 1x Forgewright Sentry + 1x Compact Guard | 31.25% |
+| 3-5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
 
 ### Treasure/Loot
 
@@ -1476,6 +1544,27 @@ Edren (if present): "It recognized me. The offering gesture. The Colossus did th
 | **Ley Colossus** (Mini-boss) | Humanoid energy construct. Heavy magic attacks, area pulse. 7,000 HP. Phase 1: physical + area. Phase 2: shatters, reforms smaller, gains precision beam. | Floor 3 |
 | **Ley Titan** (Boss) | Evolved form of the Colossus. Three-phase fight: brute force, fracture into Aspects, reform into fast dense form. 18,000 HP. | Floor 5 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-2. Tier 3 (High, increment 252, ~20 steps) for Floors 3-4. Tier 4 (Intense, increment 506, ~14 steps) for Floor 5. Boss arena: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground caves) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 2x Extraction Drone + 1x Cave Crawler | 31.25% |
+| 1 | 2 | 3x Cave Crawler | 31.25% |
+| 1 | 3 | 2x Extraction Drone | 31.25% |
+| 1 | 4 | 4x Cave Crawler (swarming nest) | 6.25% |
+| 2-3 | 1 | 2x Ley Wisp + 1x Deep Serpent | 31.25% |
+| 2-3 | 2 | 1x Cave Crawler + 2x Ley Wisp | 31.25% |
+| 2-3 | 3 | 2x Deep Serpent + 1x Crystal Sentry | 31.25% |
+| 2-3 | 4 | 2x Prism Moth + 1x Crystal Sentry + 1x Deep Serpent (labyrinth ambush) | 6.25% |
+| 4-5 | 1 | 2x Ley Construct + 1x Vein Stalker | 31.25% |
+| 4-5 | 2 | 1x Confluence Elemental + 1x Ley Construct | 31.25% |
+| 4-5 | 3 | 2x Vein Stalker | 31.25% |
+| 4-5 | 4 | 1x Confluence Elemental + 2x Ley Construct (nexus patrol) | 6.25% |
+
 ### Environmental Hazards
 
 - **Magical burn timer:** On Floors 2-5, a burn meter fills while in the deepest caverns. The rate increases with depth: Floor 2 fills slowly (comfortable exploration with pauses), Floor 3 fills at moderate pace, Floors 4-5 fill quickly. At 75%, the screen flashes and the party's movement animations slow (visual stress). At 100%, all party members take 10% max HP damage per step. Retreating to safe zones (save points, shallow areas) resets the meter. On Floor 5, the master valve's RESTRICTED position halves the fill rate. Encourages efficient exploration, not dawdling -- but the dungeon is designed so that no floor requires more burn time than the meter allows if the player moves purposefully.
@@ -1696,6 +1785,23 @@ Maren faces the Index -- a vast catalogue entity containing every recorded death
 | Archived | Humanoid figures of compressed pages. Attack with factual recitations of how they died. | Trial 5 (B5) |
 | Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 50,000 HP. Multi-phase. | Section 5 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 4 (Intense, increment 700, ~10 steps) for all sections. Trial clearings and boss arena: Tier 0 (Safe).
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
+| Section(s) | Fmt | Enemies | Weight |
+|------------|-----|---------|--------|
+| 1-2 | 1 | 2x Hollow Walker + 1x Despair Cloud | 31.25% |
+| 1-2 | 2 | 1x Petrified Beast + 2x Hollow Walker | 31.25% |
+| 1-2 | 3 | 2x Despair Cloud + 1x Grief Shade | 31.25% |
+| 1-2 | 4 | 1x Grief Shade + 2x Hollow Walker + 1x Despair Cloud (grey patrol) | 6.25% |
+| 3-4 | 1 | 2x Pallor Knight + 1x Hollow Walker | 31.25% |
+| 3-4 | 2 | 1x Pallor Knight + 2x Despair Cloud | 31.25% |
+| 3-4 | 3 | 1x Grief Shade + 1x Petrified Beast + 1x Hollow Walker | 31.25% |
+| 3-4 | 4 | 2x Pallor Knight + 1x Grief Shade (elite grey vanguard) | 6.25% |
+
 ### Treasure/Loot
 
 Treasure is deliberately sparse. The Wastes strip away resources; they do not give.
@@ -1908,13 +2014,17 @@ A rift in the Pallor Wastes where concentrated Ley energy bleeds through the Gre
 - 2–3 enemies per encounter group (tougher than normal Act III)
 - Ley Abomination appears as a rare encounter (~10% chance), functions as mini-boss
 
+**Encounter rate:** Tier 4 (Intense, increment 506, ~14 steps). No safe zones.
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
 **Encounter Table:**
 
 | Encounter | Rate |
 |-----------|------|
-| Ley-Warped Drake (Lv 40) + Ley-Warped Wraith (Lv 42) | 40% |
-| 2× Ley-Warped Colossus (Lv 45) | 30% |
-| Ley-Warped Drake + Ley-Warped Colossus + Ley-Warped Wraith | 20% |
+| 2x Ley-Warped Drake (Lv 40) | 30% |
+| 2x Ley-Warped Wraith (Lv 42) + 1x Ley-Warped Colossus (Lv 45) | 30% |
+| 1x Ley-Warped Colossus + 2x Ley-Warped Drake | 30% |
 | Ley Abomination (Lv 48) -- rare mini-boss | 10% |
 
 See `bestiary/act-iii.md` (Ley Scar section) for full enemy stat blocks and hand-tuned XP overrides.
@@ -2154,6 +2264,27 @@ After Wave 4, Cael closes the door. The Pendulum shatters. Grey light collapses 
 | **The Pallor Incarnate** (Boss, Phase 3) | Towering grey entity. Conduit crystals, area attacks. 70,000 HP. | Central Platform |
 | **Pallor Echo** (Mini-boss, Phase 4) | Shadow of Cael. Reduced Phase 1 moveset. 5,000 HP. | The Door |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 3 (High, increment 252, ~20 steps) for Outer Ring and Anchor Stations. Tier 4 (Intense, increment 506, ~14 steps) for Central Platform and The Door. Boss arenas: Tier 0 (Safe).
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
+| Area | Fmt | Enemies | Weight |
+|------|-----|---------|--------|
+| Outer Ring | 1 | 2x Pallor Soldier | 31.25% |
+| Outer Ring | 2 | 1x Pallor Soldier + 1x Ley Construct | 31.25% |
+| Outer Ring | 3 | 2x Pallor Soldier + 1x Forgewright Automaton | 31.25% |
+| Outer Ring | 4 | 3x Pallor Soldier + 1x Ley Construct (heavy patrol) | 6.25% |
+| Anchors | 1 | 2x Ley Construct (Anchor A) / 2x Forgewright Automaton (Anchor B) / 2x Corrupted Spirit (Anchor C) | 31.25% |
+| Anchors | 2 | 1x Pallor Soldier + 1x Ley Construct / Forgewright Automaton / Corrupted Spirit | 31.25% |
+| Anchors | 3 | 3x Corrupted Spirit / Ley Construct / Forgewright Automaton (anchor-themed pack) | 31.25% |
+| Anchors | 4 | 2x Pallor Soldier + 2x anchor-themed enemy (elite anchor guard) | 6.25% |
+| Phase 4 | 1 | 3x Hollow Walker | 31.25% |
+| Phase 4 | 2 | 2x Despair Cloud + 1x Pallor Knight | 31.25% |
+| Phase 4 | 3 | 2x Grief Shade + 1x Hollow Walker | 31.25% |
+| Phase 4 | 4 | 2x Pallor Knight + 1x Grief Shade (final grey vanguard) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -2308,6 +2439,23 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 | Crystal Warden | Small floating crystal. Fires ley bolts. Shatters on defeat (area damage). | Floor 2-3 |
 | **Archive Guardian** (Boss) | Geometric construct. Three-phase test. 28,000 HP. | Floor 3 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-2. Tier 3 (High, increment 252, ~20 steps) for Floor 3. Boss arena (Truth Chamber): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1-2 | 1 | 2x Pictograph Wisp + 1x Dust Golem | 31.25% |
+| 1-2 | 2 | 2x Dust Golem | 31.25% |
+| 1-2 | 3 | 3x Pictograph Wisp | 31.25% |
+| 1-2 | 4 | 1x Archive Sentinel + 2x Pictograph Wisp (guardian encounter) | 6.25% |
+| 2-3 | 1 | 1x Crystal Warden + 1x Pictograph Wisp | 31.25% |
+| 2-3 | 2 | 2x Crystal Warden | 31.25% |
+| 2-3 | 3 | 1x Archive Sentinel + 1x Dust Golem | 31.25% |
+| 2-3 | 4 | 2x Crystal Warden + 1x Archive Sentinel (vault patrol) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -2424,6 +2572,35 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 | Iron Automaton | 13-16 | Mechanical soldier, heavy armor |
 | Void Walker | 17-20 | Featureless grey shape, drains all |
 | Echo Bosses (x4) | Every 4th floor | Unique, extremely powerful |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-5. Tier 3 (High, increment 252, ~20 steps) for Floors 6-10. Tier 4 (Intense, increment 506, ~14 steps) for Floors 11-20. Boss floors (4, 8, 12, 16, 20): Tier 0 (Safe) in boss rooms.
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1-4 | 1 | 2x First Age Sentinel | 31.25% |
+| 1-4 | 2 | 3x First Age Sentinel | 31.25% |
+| 1-4 | 3 | 1x First Age Sentinel (tough solo) | 31.25% |
+| 1-4 | 4 | 4x First Age Sentinel (ancient garrison) | 6.25% |
+| 5-8 | 1 | 2x Crystal Refractor | 31.25% |
+| 5-8 | 2 | 1x Crystal Refractor + 2x First Age Sentinel | 31.25% |
+| 5-8 | 3 | 3x Crystal Refractor | 31.25% |
+| 5-8 | 4 | 2x Crystal Refractor + 2x First Age Sentinel (prism ambush) | 6.25% |
+| 9-12 | 1 | 2x Root Weaver + 1x Crystal Refractor | 31.25% |
+| 9-12 | 2 | 3x Root Weaver | 31.25% |
+| 9-12 | 3 | 1x Root Weaver + 2x Crystal Refractor | 31.25% |
+| 9-12 | 4 | 4x Root Weaver (entangle swarm) | 6.25% |
+| 13-16 | 1 | 2x Iron Automaton | 31.25% |
+| 13-16 | 2 | 1x Iron Automaton + 2x Root Weaver | 31.25% |
+| 13-16 | 3 | 3x Iron Automaton | 31.25% |
+| 13-16 | 4 | 2x Iron Automaton + 2x Root Weaver (mechanized advance) | 6.25% |
+| 17-20 | 1 | 2x Void Walker | 31.25% |
+| 17-20 | 2 | 1x Void Walker + 2x Iron Automaton | 31.25% |
+| 17-20 | 3 | 3x Void Walker | 31.25% |
+| 17-20 | 4 | 4x Void Walker (the abyss stares back) | 6.25% |
 
 ### Treasure/Loot
 
@@ -2929,6 +3106,35 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Ley-Born Echo | Impression of a builder given temporary form. Tests rather than attacks. | Floor 7 | 3,000 |
 | **Wellspring Guardian** (Boss) | Three-phase construct. Physical, knowledge, and resolve tests. Builder's Weight despair attack. | Floor 7 | 28,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-3. Tier 3 (High, increment 252, ~20 steps) for Floors 4-5. Tier 4 (Intense, increment 506, ~14 steps) for Floors 6-7. Boss arena (Wellspring): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 2x Well Shade | 31.25% |
+| 1 | 2 | 3x Well Shade | 31.25% |
+| 1 | 3 | 1x Well Shade (sluggish solo) | 31.25% |
+| 1 | 4 | 4x Well Shade (dormant mass awakening) | 6.25% |
+| 2-3 | 1 | 2x Cave Lurker + 1x Ley Vermin (deep) | 31.25% |
+| 2-3 | 2 | 3x Ley Vermin (deep) | 31.25% |
+| 2-3 | 3 | 1x Pipe Specter + 2x Cave Lurker | 31.25% |
+| 2-3 | 4 | 2x Pipe Specter + 2x Ley Vermin (deep) (waterworks ambush) | 6.25% |
+| 4 | 1 | 2x Guardian Sentinel + 1x Hearthstone Shade | 31.25% |
+| 4 | 2 | 2x Hearthstone Shade | 31.25% |
+| 4 | 3 | 1x Guardian Sentinel + 2x Hearthstone Shade | 31.25% |
+| 4 | 4 | 3x Guardian Sentinel (residential ward patrol) | 6.25% |
+| 5-6 | 1 | 2x Crystal Warden (deep) + 1x Pictograph Wisp (deep) | 31.25% |
+| 5-6 | 2 | 2x Ley-Warped Construct + 1x Warp Sentinel | 31.25% |
+| 5-6 | 3 | 1x Crystal Warden (deep) + 2x Ley-Warped Construct | 31.25% |
+| 5-6 | 4 | 2x Warp Sentinel + 1x Crystal Warden (deep) (gravity-warped ambush) | 6.25% |
+| 7 | 1 | 2x Ley-Born Echo | 31.25% |
+| 7 | 2 | 3x Ley-Born Echo | 31.25% |
+| 7 | 3 | 1x Ley-Born Echo (solo sparring test) | 31.25% |
+| 7 | 4 | 4x Ley-Born Echo (builder's gauntlet) | 6.25% |
+
 **Encounter Design Philosophy:**
 
 The Dry Well's enemies follow a progression that mirrors the dungeon's narrative arc: from mindless guardians to purposeful testers.
@@ -3426,6 +3632,27 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 | **Pallor Amalgam** (Mini-boss) | Grey corruption fused with rig machinery. Part organic, part mechanical. Area attacks, regenerates if not burst-damaged. 5,500 HP. | Engine Room |
 | **The Grey Engine** (Boss) | Arcanite engine consumed by Pallor. Steam jets, pipe strikes, Despair Pulse. Stunnable via pressure valves. 22,000 HP. | Engine Room |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Exposed Hull. Tier 3 (High, increment 252, ~20 steps) for Upper Deck and Engine Room. Boss arena: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underwater/industrial) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Section | Fmt | Enemies | Weight |
+|---------|-----|---------|--------|
+| Exposed Hull | 1 | 3x Salt Crab | 31.25% |
+| Exposed Hull | 2 | 1x Rust Elemental + 2x Salt Crab | 31.25% |
+| Exposed Hull | 3 | 2x Rust Elemental | 31.25% |
+| Exposed Hull | 4 | 5x Salt Crab (crab swarm) | 6.25% |
+| Upper Deck | 1 | 3x Bilge Rat + 1x Pallor Barnacle | 31.25% |
+| Upper Deck | 2 | 2x Drowned Worker + 1x Bilge Rat | 31.25% |
+| Upper Deck | 3 | 1x Pallor Barnacle + 3x Bilge Rat | 31.25% |
+| Upper Deck | 4 | 2x Drowned Worker + 1x Pallor Barnacle (flooded corridor) | 6.25% |
+| Engine Room | 1 | 2x Drowned Worker + 1x Pallor Barnacle | 31.25% |
+| Engine Room | 2 | 3x Drowned Worker | 31.25% |
+| Engine Room | 3 | 1x Drowned Worker + 2x Pallor Barnacle | 31.25% |
+| Engine Room | 4 | 3x Drowned Worker + 2x Pallor Barnacle (engine room infestation) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -3505,6 +3732,12 @@ The map represents a switchback trail ascending to the summit. The path narrows 
 
 No encounters, treasure, or hazards during normal exploration. During "The Spirit That Stopped Singing" sidequest, the Howling Gale boss encounter activates at the summit.
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). No random encounters. The peak is a place of rest and contemplation.
+
+**Sidequest exception:** During "The Spirit That Stopped Singing," the Howling Gale boss activates at the summit as a scripted encounter (not random).
+
 ### Sidequest Boss: The Howling Gale (7000 HP)
 
 **Availability:** During "The Spirit That Stopped Singing" sidequest (Interlude, after finding Torren). The Howling Gale appears at the summit when Torren performs his calling ritual. The peak's peaceful nature is temporarily overridden by the encounter.
@@ -3572,6 +3805,19 @@ E.......................................X
 - `H` (left-center): Hidden alcove in the cliff face. Contains: Old Valdris Map (lore item, shows pre-war border).
 
 **Encounters:** Low-to-mid level. Wolves, Compact scouts (can be fought or avoided), aggressive boars.
+
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Road/farmland transition area.
+
+**Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Wolf | 31.25% |
+| 2 | 1x Compact Scout + 1x Wolf | 31.25% |
+| 3 | 2x Aggressive Boar | 31.25% |
+| 4 | 2x Compact Scout + 1x Wolf (patrol ambush) | 6.25% |
 
 ### 13b. Frostcap Descent
 
@@ -3736,6 +3982,31 @@ E.......................................
 **Encounters (Sub-Level):**
 - Ice Grub Cluster (4x Ice Grub, 60 HP each -- nuisance enemies, very weak)
 
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) for Floor 1 (Switchback Trail). Tier 2 (Normal, increment 120, ~30 steps) for Floor 2 (Ice Cave rooms). Boss rooms: N/A (no bosses).
+
+**Formation type:** Floor 1 open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive). Floor 2 low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Area | Fmt | Enemies | Weight |
+|------|-----|---------|--------|
+| Floor 1 | 1 | 2x Ice Wolf | 31.25% |
+| Floor 1 | 2 | 1x Frost Elemental + 1x Ice Wolf | 31.25% |
+| Floor 1 | 3 | 3x Ice Wolf | 31.25% |
+| Floor 1 | 4 | 1x Frost Elemental + 2x Ice Wolf (blizzard ambush) | 6.25% |
+| Room 1 | 1 | 3x Ice Wolf | 31.25% |
+| Room 1 | 2 | 1x Frost Elemental | 31.25% |
+| Room 1 | 3 | 2x Ice Wolf + 1x Frost Elemental | 31.25% |
+| Room 1 | 4 | 1x Ice Wolf Alpha + 2x Ice Wolf (cave alpha pack) | 6.25% |
+| Room 2 | 1 | 1x Ice Sculptor | 31.25% |
+| Room 2 | 2 | 5x Frost Sprite | 31.25% |
+| Room 2 | 3 | 1x Ice Sculptor + 3x Frost Sprite | 31.25% |
+| Room 2 | 4 | 2x Ice Sculptor (frozen lake guardians) | 6.25% |
+| Room 3 | 1 | 1x Ice Wolf Alpha + 2x Ice Wolf | 31.25% |
+| Room 3 | 2 | 1x Crystal Stalactite (ambush) | 31.25% |
+| Room 3 | 3 | 1x Frozen Revenant | 31.25% |
+| Room 3 | 4 | 1x Frozen Revenant + 1x Crystal Stalactite + 2x Ice Wolf (deep ice gauntlet) | 6.25% |
+
 ### 13c. Broken Hills Crossing
 
 **Location:** Between the Thornmere Wilds (south edge) and Carradan Compact territory, near Gael's Span.
@@ -3774,6 +4045,19 @@ E.......................................X
 
 **Encounters:** Moderate. Compact patrols, displaced wildlife, rogue Forgewright constructs.
 
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Transition area.
+
+**Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Compact Patrol + 1x Displaced Boar | 31.25% |
+| 2 | 1x Rogue Forgewright Construct + 1x Compact Patrol | 31.25% |
+| 3 | 2x Displaced Wildlife | 31.25% |
+| 4 | 2x Rogue Forgewright Construct (mechanical ambush) | 6.25% |
+
 ---
 
 ## 14. Caves and Grottos
@@ -3805,6 +4089,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (bottom): Chest -- Amber Pebble (accessory, +3 MAG, minor).
 - Encounters: Ley-touched cave bats, small crystal formations.
 
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 3x Ley-Touched Cave Bat | 31.25% |
+| 2 | 2x Small Crystal Formation | 31.25% |
+| 3 | 2x Ley-Touched Cave Bat + 1x Small Crystal Formation | 31.25% |
+| 4 | 4x Ley-Touched Cave Bat (bat swarm) | 6.25% |
+
 ### 14b. Duskfen Hollow
 
 **Location:** In the marshland near Duskfen, off the main path.
@@ -3829,6 +4124,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (right): Chest -- Marsh Root (crafting material).
 - `T` (bottom): Chest -- Will-o'-Wisp Lantern (accessory, increases visibility in marshland, reduces ambush chance).
 - Encounters: Marsh serpents, bloated toads.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave/swamp) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Marsh Serpent + 1x Bloated Toad | 31.25% |
+| 2 | 3x Marsh Serpent | 31.25% |
+| 3 | 2x Bloated Toad | 31.25% |
+| 4 | 3x Marsh Serpent + 2x Bloated Toad (marsh ambush) | 6.25% |
 
 ### 14c. Highcairn Hermit Cave
 
@@ -3855,6 +4161,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (bottom): Chest -- Monk's Staff (weapon, Maren alternative).
 - Encounters: Pallor-corrupted highland creatures.
 
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Pallor-Corrupted Highland Creature | 31.25% |
+| 2 | 3x Pallor-Corrupted Highland Creature | 31.25% |
+| 3 | 1x Pallor-Corrupted Highland Creature (tough solo) | 31.25% |
+| 4 | 4x Pallor-Corrupted Highland Creature (corruption swarm) | 6.25% |
+
 ### 14d. Corrund River Cave
 
 **Location:** Along the river road between Gael's Span and Corrund.
@@ -3879,6 +4196,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (left): Chest -- 5x Potion.
 - `T` (right): Chest -- Compact Supply Kit (consumable set: 3x Antidote, 2x Smelling Salts, 1x Elixir).
 - Encounters: Forge Phantoms, rogue Compact automatons.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Forge Phantom | 31.25% |
+| 2 | 1x Rogue Compact Automaton + 1x Forge Phantom | 31.25% |
+| 3 | 2x Rogue Compact Automaton | 31.25% |
+| 4 | 2x Forge Phantom + 1x Rogue Compact Automaton (haunted cache) | 6.25% |
 
 ### 14e. Ashgrove Undercroft
 
@@ -3906,6 +4234,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (left): Chest -- Ash Blossom (accessory, +8 MAG, Flame resistance).
 - `T` (right): Chest -- First Tree Seed (key item, used in post-game content at the Convergence meadow -- planting it triggers a unique epilogue scene).
 - Encounters: Ash elementals, ancient spirit remnants.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Ash Elemental | 31.25% |
+| 2 | 1x Ancient Spirit Remnant + 1x Ash Elemental | 31.25% |
+| 3 | 2x Ancient Spirit Remnant | 31.25% |
+| 4 | 2x Ash Elemental + 1x Ancient Spirit Remnant (undercroft awakening) | 6.25% |
 
 ### Sidequest Boss: The Grey Stag (5500 HP)
 
@@ -4210,6 +4549,31 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 | **Slag Golem** (Mini-boss) | Molten slag animated by wild ley energy. 25% Burn chance on Molten Spray. Core Meltdown below 25% HP. | Floor 2 | 5,000 |
 | **The Forge Heart** (Boss) | Ancient forge mechanism. Two phases. Lira special interaction available. | Floor 4 | 35,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-2. Tier 3 (High, increment 252, ~20 steps) for Floors 3-4. Boss arena (Caldera Heart): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (forge/industrial) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 4x Furnace Rat | 31.25% |
+| 1 | 2 | 1x Steam Phantom + 1x Compact Sentry | 31.25% |
+| 1 | 3 | 2x Furnace Rat + 1x Compact Sentry | 31.25% |
+| 1 | 4 | 1x Compact Sentry + 1x Steam Phantom + 2x Lava Grub (sub-level ambush) | 6.25% |
+| 2 | 1 | 2x Magma Crawler + 1x Forge Phantom | 31.25% |
+| 2 | 2 | 6x Ley Wisp Cluster | 31.25% |
+| 2 | 3 | 1x Forge Phantom + 2x Magma Crawler | 31.25% |
+| 2 | 4 | 2x Forge Phantom + 4x Ley Wisp Cluster (spectral swarm) | 6.25% |
+| 3 | 1 | 2x Ember Wraith + 1x Ancient Forge Guardian | 31.25% |
+| 3 | 2 | 1x Magma Serpent + 2x Ember Wraith | 31.25% |
+| 3 | 3 | 2x Ancient Forge Guardian | 31.25% |
+| 3 | 4 | 1x Ancient Forge Guardian + 1x Magma Serpent + 1x Ember Wraith (forge defense) | 6.25% |
+| 4 | 1 | 1x Caldera Wyrm + 2x Molten Golem | 31.25% |
+| 4 | 2 | 2x Caldera Wyrm | 31.25% |
+| 4 | 3 | 2x Molten Golem + 3x Ley Spark | 31.25% |
+| 4 | 4 | 2x Caldera Wyrm + 1x Molten Golem (volcanic frenzy) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4452,6 +4816,27 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 | **Ice Wyvern** (Mini-boss) | Massive ice-blue wyvern. Frost Breath, Wing Buffet, Dive Strike, Ice Armor. | Floor 2 | 6,000 |
 | **The Frost Warden** (Boss) | Ancient Valdris spirit guardian. Two-phase test. Torren special interaction available. | Floor 3 | 38,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floor 1. Tier 3 (High, increment 252, ~20 steps) for Floors 2-3. Boss shrine: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (ice caves) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 1x Ice Gallery Sentinel + 2x Crystal Spider | 31.25% |
+| 1 | 2 | 6x Frost Bat Swarm | 31.25% |
+| 1 | 3 | 2x Crystal Spider + 1x Ice Gallery Sentinel | 31.25% |
+| 1 | 4 | 2x Ice Gallery Sentinel + 4x Frost Bat Swarm (gallery ambush) | 6.25% |
+| 2 | 1 | 2x Frost Stalker + 1x Wind Howler | 31.25% |
+| 2 | 2 | 1x Valdris Shade + 2x Frost Stalker | 31.25% |
+| 2 | 3 | 2x Wind Howler | 31.25% |
+| 2 | 4 | 1x Valdris Shade + 2x Wind Howler + 1x Frost Stalker (spirit blizzard) | 6.25% |
+| 3 | 1 | 2x Shrine Guardian + 1x Frozen Offering | 31.25% |
+| 3 | 2 | 1x Valdris Ancestor Spirit + 1x Shrine Guardian | 31.25% |
+| 3 | 3 | 2x Shrine Guardian + 1x Valdris Ancestor Spirit | 31.25% |
+| 3 | 4 | 1x Valdris Ancestor Spirit + 2x Shrine Guardian + 1x Frozen Offering (shrine gauntlet) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4609,6 +4994,23 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
 | **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 3 (High, increment 252, ~20 steps) for both floors. Mini-boss room: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground passage) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 3x Root Tendril + 1x Tunnel Beetle | 31.25% |
+| 1 | 2 | 2x Pallor Fungus + 2x Tunnel Beetle | 31.25% |
+| 1 | 3 | 3x Root Tendril + 1x Pallor Fungus | 31.25% |
+| 1 | 4 | 4x Tunnel Beetle + 2x Pallor Fungus (corrupted tunnel swarm) | 6.25% |
+| 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth | 31.25% |
+| 2 | 2 | 8x Ley Moth Swarm | 31.25% |
+| 2 | 3 | 1x Pallor Seep + 4x Ley Moth | 31.25% |
+| 2 | 4 | 1x Pallor Seep + 1x Ancient Root Guardian (corrupted passage) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4697,6 +5099,14 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 | Compact Soldier | Carradan infantry. Scales walls in waves. Basic physical attacks. | Battlements (all phases) | 800 |
 | **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 25,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). This is a scripted battle sequence, not a dungeon with random encounters. All encounters are scripted waves tied to the Ashen Ram boss phases.
+
+**Formation type:** Open terrain (battlefield) rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive) -- applies to the Compact Soldier add waves during the boss fight.
+
+**Scripted waves:** Compact Soldiers scale the walls in waves of 3-4 during Phase 1, reduced to 2 per wave during Phase 2. See boss description for details.
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4760,6 +5170,12 @@ The Leech moves toward the nexus center.
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
 | **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 24,000 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). This is a single boss arena with no random encounters. The Ley Leech fight is the only combat encounter.
+
+**Formation type:** N/A -- scripted boss encounter only.
 
 ### Treasure/Loot
 
@@ -4825,6 +5241,12 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
 | **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 40,000 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). The monastery is a narrative boss encounter dungeon with no random encounters. The Pallor Hollow fight is the only combat.
+
+**Formation type:** N/A -- scripted boss encounter only. Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive) would apply if random encounters were present.
 
 ### Treasure/Loot
 
