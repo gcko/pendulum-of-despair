@@ -393,25 +393,27 @@ Now unblocks: 2.3 (UI Design — battle layout can reference row positions)
 
 ### 2.6 Pallor Wastes Oases
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P1
-**Files:** None yet (add to `docs/story/locations.md` and/or new `docs/story/oases.md`)
+**Files:** `docs/story/locations.md`, `docs/story/dungeons-world.md`, `docs/story/npcs.md`, `docs/story/sidequests.md`, `docs/story/events.md`, `docs/story/bestiary/act-iii.md`, `docs/story/bestiary/bosses.md`, `docs/story/equipment.md`, `docs/story/items.md`
 **Depends On:** 1.4 (Items), 1.5 (Equipment), 1.6 (Economy)
+**Completed:** 2026-03-25 — Three Oases (Valdris/Compact/Thornmere refugees) with ley ward stone protection, shops/inn/save, 12 NPCs (including familiar faces from earlier acts), 3 minor sidequests, Oasis C fall event with The Grey Keeper mini-boss, post-Convergence state.
 
 **What's Needed:**
-- [ ] Number and placement of Oases in Act III overworld (closer to Convergence = rarer/smaller)
-- [ ] Each Oasis as a micro-settlement: displaced villagers from fallen towns
-- [ ] Services per Oasis:
-  - [ ] Rest point (full HP/MP restore, save point)
-  - [ ] Item shop (limited supplies — scarcity theme)
-  - [ ] Weapon/armor vendor (scrounged/repaired gear, not top-tier)
-  - [ ] Optional NPC quest givers (minor sidequests for crafting mats, lore, gear)
-- [ ] Oasis protection mechanic: what keeps the Pallor out? (Ley ward stones? A Spirit anchor? Sheer collective will?)
-- [ ] Narrative flavor: each Oasis has refugees from a specific fallen town, giving news/rumors about the spreading Grey
-- [ ] Oasis discovery: visible on overworld map, or hidden and require exploration?
-- [ ] Act progression: do Oases change/fall as the story advances? (e.g., one overrun between dungeon visits)
+- [x] Number and placement of Oases in Act III overworld (3 Oases: NW/Central/SE Pallor Wastes, visible on overworld map)
+- [x] Each Oasis as a micro-settlement: displaced villagers from fallen towns (Valdris, Compact, Thornmere refugees with familiar NPCs)
+- [x] Services per Oasis:
+  - [x] Rest point (full HP/MP restore, save point) — 50g/75g/100g
+  - [x] Item shop (limited supplies — unique per Oasis, per economy.md)
+  - [x] Weapon/armor vendor (Tier 4 gear per economy.md inventories)
+  - [x] Optional NPC quest givers (3 minor sidequests: The Last Banner, Amplifier Stabilization, The Cracking Stone)
+- [x] Oasis protection mechanic: ley ward stones (natural ley energy nodes creating protective bubbles)
+- [x] Narrative flavor: each Oasis has refugees from a specific fallen town with news/rumors about the Grey
+- [x] Oasis discovery: visible on overworld map (green/golden shimmer), no searching required
+- [x] Act progression: Oasis C falls after Archive of Ages completion. The Grey Keeper mini-boss encounter. Oases A and B survive. Post-Convergence: survivors rebuild, shops expand.
 
-**Blocking:** Act III overworld pacing, player resource management in endgame, narrative worldbuilding
+**Blocking:** ~~Act III overworld pacing, player resource management in endgame, narrative worldbuilding~~
+Now complete.
 
 ---
 
@@ -560,3 +562,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-24 | 2.1 XP & Leveling Curve | PARTIAL → COMPLETE. Two-phase XP curve, full HP/MP restore on level-up, 50% absent XP share, Ley Scar grinding zone (4 enemies), Interlude reunion rule. | — |
 | 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |
 | 2026-03-25 | 2.4 Encounter Rates | PARTIAL → COMPLETE. Danger counter model (FF6-derived), per-terrain increments (Monte Carlo-verified), act scaling, 3 formation types with terrain rates, 4-pack tables for all dungeons, flee formula, Ward/Lure Talisman + Infiltrator's Cloak, boss trigger types, safe corridor rule. | — |
+| 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING → COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | — |

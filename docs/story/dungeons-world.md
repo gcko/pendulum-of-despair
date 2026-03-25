@@ -1635,6 +1635,27 @@ The sidequest's full resolution happens on Floor 5. The contamination that cause
 - **Recommended Level:** 28-32
 - **Estimated Play Time:** 60-80 minutes
 
+### Pallor Wastes Overworld (Pre-Gauntlet)
+
+Before entering the gauntlet, the party traverses the Pallor Wastes
+overworld. Three Oases (ley ward stone settlements) serve as safe
+harbors — see [locations.md](locations.md) for full details:
+
+- **Oasis A** (Northwest, Valdris Refugees) — first rest stop after
+  Ironmark.
+- **Oasis B** (Central, Compact Refugees) — midway point with
+  jury-rigged ley amplifiers.
+- **Oasis C** (Southeast, Thornmere Refugees) — last stop before
+  the Convergence. Falls after the Archive of Ages, triggering The
+  Grey Keeper mini-boss encounter.
+
+The Oases use Tier 0 (Safe) encounter rate. The overworld between
+them uses Tier 4 (Intense, increment 700, ~10 steps) with Pallor
+Wastes formation rules. See combat-formulas.md for encounter details.
+
+Once the party enters the gauntlet (Section 1), there is no retreat
+to the overworld. The Oases are inaccessible during the gauntlet.
+
 ### Puzzle Mechanic: Reality Fracture (Pallor Trials)
 
 Each trial clearing is a self-contained encounter where a party member faces their deepest fear. These are NOT standard combat. The trial presents a dialogue/choice sequence interleaved with combat phases:

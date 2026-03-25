@@ -316,6 +316,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 33 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
 | 34 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
 | 35 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
+| 53 | `oasis_c_fallen` | Archive of Ages completed | Oasis C overworld marker turns grey. Ward stone cracked. Shop/inn/save removed. The Grey Keeper mini-boss available. Survivor NPC (Senna) appears at Oasis B. | Oasis C NPCs (petrified), Oasis B survivor NPC (appears) |
 
 ### Act IV Flags
 
@@ -890,6 +891,29 @@ Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. Ther
 > - **Level-up:** Any other abilities gained via absent XP share — reference as things learned "while apart."
 
 ### Act III
+
+#### The Fall of Oasis C
+
+**Trigger:** `oasis_c_fallen` flag (set after Archive of Ages completion)
+**Type:** Environmental — discovered by visiting Oasis C on the overworld, or reported by survivor NPC at Oasis B.
+**Tier:** Full Cutscene (T1) if visiting Oasis C directly.
+
+**Sequence:**
+1. The overworld map shows Oasis C's shimmer is gone (grey marker).
+2. Entering Oasis C: the ward stone is cracked in half. Everything is Grey — petrified tents, frozen refugees, silence.
+3. The ward keeper (Keeper Yara) is found by the cracked stone, half-Grey.
+4. Dialogue (4 lines):
+   - "You came back... I held it... three days..."
+   - "The stone cracked. I pushed everything I had into it."
+   - "The others... some ran to the northern camp. Most didn't make it."
+   - "I can feel it taking me. Don't... don't let it use me against—"
+5. Transformation: eyes go Grey, stands up wreathed in grey energy.
+6. Battle: The Grey Keeper (mini-boss, see bosses.md).
+7. After battle: body dissolves into grey mist. Ward stone goes dark. Torren: "The node is dead. The Grey drank it dry."
+
+**If the player visits Oasis B instead:** The survivor NPC (Senna, ward keeper's apprentice) reports the fall. The player can then visit Oasis C to trigger the mini-boss encounter, or skip it.
+
+**Post-Convergence:** Oasis C remains fallen. Petrified refugees do not recover. The cracked ward stone is a permanent memorial.
 
 | Step | Location | NPC / Event | What Happens | Unlocks |
 |------|----------|-------------|--------------|---------|
