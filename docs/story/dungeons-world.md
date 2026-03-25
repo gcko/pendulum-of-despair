@@ -4990,7 +4990,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 **Encounter Zones:**
 - Ancient Root Guardian (1x, 600 HP -- a petrified root construct that activates when the party enters. Not corrupted -- a defense mechanism. Can be spoken to by Torren to deactivate peacefully)
-- Ley Moth Swarm (4x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
+- Ley Moth Swarm (1 swarm unit, 40 HP total -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
 - Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, Void-element, regenerates unless the crack is sealed with ley water)
 
 
