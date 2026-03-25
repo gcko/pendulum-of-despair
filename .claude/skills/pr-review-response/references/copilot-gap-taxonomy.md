@@ -206,3 +206,33 @@ section. 6 of 14 already covered by existing checklists. 1 already
 fixed by story-review-loop. Story-review-loop (pre-Copilot) caught the
 moneylender issue partially — Round 1 acknowledged it but didn't
 fully resolve the "no financial services" wording.
+
+### PR #30 (2026-03-25) — 11 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Mirror staleness (Infiltrator's Cloak location, Tunnel Map scope): 4 comments
+  - Spec/plan said "Ley Line Depths F2" (should be Axis Tower F2)
+  - Tunnel Map scoped to "Bellhaven only" but dungeons-city.md applies it
+    to Corrund sewers too
+- Source verification (Infiltrator's Cloak Act I vs Interlude): 1 comment
+- Self-contradiction (Tier 1 + "fixed only", section intro scope): 2 comments
+  - Catacombs escape: Tier 1 implies random encounters but text says fixed only
+  - Combat Mechanic Accessories intro says "Interlude through Act III"
+    but table has Act II entries
+- Formula precision (random() vs random_int() notation): 1 comment
+- Numeric consistency (8x Ley Moth exceeds enemy count limit): 1 comment
+- Ambiguity (em dash consistency): 1 comment
+- Already fixed by story-review-loop: 1 comment (Infiltrator's Cloak Act)
+
+**New patterns identified:**
+1. Function notation consistency within a document — agents don't check
+   that new pseudocode matches the existing notation style
+2. Section intro scope drift — agents don't verify that header/intro
+   text still covers all entries after new rows are added to a table
+3. Formation enemy count limits — agents don't verify enemy counts in
+   formation tables against the documented per-encounter maximum
+
+**Outcome:** 3 new checklist items added: notation consistency (Formula
+Precision), section intro scope (Internal Coherence), formation enemy
+count limit (Numeric Consistency). Story-review-loop caught 5 of 8
+unique issues before Copilot. Copilot found 3 genuinely new gaps.
