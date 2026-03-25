@@ -1608,8 +1608,8 @@ narrative scar.
 
 #### The Grey Keeper (Oasis C Mini-Boss)
 
-| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resist | Absorb | Status Immunities | Location(s) |
-|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|--------|--------|-------------------|-------------|
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|---------|---------|-------------------|-------------|
 | The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
 
 **Modes:** 2 (Normal, Desperate)

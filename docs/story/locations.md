@@ -817,8 +817,8 @@ The most precarious of the three Oases. A ley ward bubble flickers visibly at it
 **Services (after fall):** None — the Oasis is consumed by the Pallor.
 
 **NPCs (before fall):**
-- **Herbalist** — Sells unique Thornmere consumables, including the Despair Ward
-- **Innkeeper** — Runs a quiet rest area; charges the highest rate because resources are scarce this close to the Convergence
+- **Elder Thessa Roothollow (Herbalist)** — Sells unique Thornmere consumables, including the Despair Ward
+- **Fen (Innkeeper)** — Runs a quiet rest area; charges the highest rate because resources are scarce this close to the Convergence
 - **Keeper Elara** — Quest giver for *The Cracking Stone*; exhausted and barely standing, channeling the last of the node's power
 
 **NPCs (after fall):**

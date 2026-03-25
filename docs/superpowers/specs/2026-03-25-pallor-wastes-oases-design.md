@@ -423,10 +423,10 @@ After the final boss is defeated and the Pallor recedes:
 - Valdris Crest (key item, Oasis A quest reward) needs to be added
   to items.md.
 
-### Dynamic World (dynamic-world.md)
+### Events (events.md)
 
 - Oasis C fall is a world state change triggered by story progression.
-- Needs a flag: `oasis_c_fallen` (set when the player first visits Oasis B).
+- Flag: `oasis_c_fallen` (set when the player first visits Oasis B) — implemented in events.md.
 - The Oasis C overworld visual changes from green shimmer to grey.
 
 ---
@@ -440,8 +440,7 @@ After the final boss is defeated and the Pallor recedes:
 | `docs/story/dungeons-world.md` | **Update needed:** Add Oasis placement details to Pallor Wastes section. Update Ley Scar NPC reference. |
 | `docs/story/npcs.md` | **Update needed:** Add Oasis NPCs (shopkeepers, innkeepers, quest givers, ward keepers, flavor NPCs). |
 | `docs/story/sidequests.md` | **Update needed:** Add 3 minor Oasis quests (The Last Banner, Amplifier Stabilization, The Cracking Stone). |
-| `docs/story/dynamic-world.md` | **Update needed:** Add Oasis C fall event trigger and world state flag. |
-| `docs/story/events.md` | **Update needed:** Add Oasis C fall cutscene and ward keeper dialogue. |
+| `docs/story/events.md` | **Update needed:** Add Oasis C fall event trigger, world state flag (`oasis_c_fallen`), cutscene, and ward keeper dialogue. |
 | `docs/story/bestiary/act-iii.md` | **Update needed:** Add The Grey Keeper mini-boss stat block. |
 | `docs/story/bestiary/bosses.md` | **Update needed:** Add The Grey Keeper boss entry with AI script. |
 | `docs/story/equipment.md` | **Update needed:** Add Keeper's Resolve accessory. |

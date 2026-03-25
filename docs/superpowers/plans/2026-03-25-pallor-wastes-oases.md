@@ -348,9 +348,8 @@ Message: `docs(shared): add 3 Oasis minor sidequests to sidequests.md`
 
 **Files:**
 - Modify: `docs/story/events.md`
-- Modify: `docs/story/dynamic-world.md`
 
-**Context:** The fall of Oasis C is a story event triggered after the Archive of Ages dungeon. It needs an event entry in events.md (cutscene catalog) and a world state flag in dynamic-world.md.
+**Context:** The fall of Oasis C is a story event triggered when the player first visits Oasis B. It needs an event entry and world state flag in events.md.
 
 - [ ] **Step 1: Read events.md Act III section**
 
