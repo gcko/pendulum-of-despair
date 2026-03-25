@@ -803,7 +803,7 @@ Engineer Calder's amplifiers are losing coherence — the ley node's energy is f
 #### Oasis C — Thornmere Refugees
 
 **Faction:** Thornmere Wilds (displaced)
-**Acts:** III (falls after Archive of Ages)
+**Acts:** III (falls when the party first visits Oasis B)
 **Type:** Oasis (overworld rest stop)
 **Location:** Southeast Pallor Wastes, closest to the Convergence
 
@@ -1185,7 +1185,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
 | 29a | Oasis A — Valdris Refugees | Oasis (overworld) | Shop, inn, save; The Last Banner sidequest |
 | 29b | Oasis B — Compact Refugees | Oasis (overworld) | Shop, inn, save; Amplifier Stabilization sidequest |
-| 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls after Pallor Wastes Trial 3 |
+| 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls when the party first visits Oasis B |
 | 30 | Pallor Wastes | Gauntlet | Party trials, final approach |
 | 31 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 

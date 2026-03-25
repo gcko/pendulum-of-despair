@@ -225,17 +225,16 @@ Inn (100g, full restore), Save Point.
 
 ### Trigger
 
-Story progression — automatic after the party completes the **Archive
-of Ages** dungeon (the last major dungeon before the Convergence
-march). When the party returns to the overworld and heads toward the
-Convergence, Oasis C has fallen. The fall happens off-screen; the
-player discovers it by visiting Oasis C on the overworld, or learns
-about it from the survivor NPC at Oasis B.
+Story progression — automatic when the **player first visits Oasis B**.
+Oasis C falls off-screen during the party's travel to Oasis B. The
+player discovers it by visiting Oasis C on the overworld afterward, or
+learns about it from the survivor NPC (Senna) who arrives at Oasis B
+with the news.
 
 **Why this trigger:** The Pallor Trials occur inside the Pallor Wastes
 gauntlet, which has a no-retreat rule. The player cannot return to the
-overworld once inside. By triggering the fall after the Archive of Ages
-(an overworld-accessible dungeon), the player can still visit the
+overworld once inside. By triggering the fall when the player visits
+Oasis B (a natural mid-overworld event), the player can still visit the
 fallen Oasis C on the overworld before entering the gauntlet. This
 creates a natural "last stop" at Oases A/B before the final push.
 
@@ -427,7 +426,7 @@ After the final boss is defeated and the Pallor recedes:
 ### Dynamic World (dynamic-world.md)
 
 - Oasis C fall is a world state change triggered by story progression.
-- Needs a flag: `oasis_c_fallen` (set after Archive of Ages completion).
+- Needs a flag: `oasis_c_fallen` (set when the player first visits Oasis B).
 - The Oasis C overworld visual changes from green shimmer to grey.
 
 ---

@@ -410,7 +410,7 @@ Now unblocks: 2.3 (UI Design — battle layout can reference row positions)
 - [x] Oasis protection mechanic: ley ward stones (natural ley energy nodes creating protective bubbles)
 - [x] Narrative flavor: each Oasis has refugees from a specific fallen town with news/rumors about the Grey
 - [x] Oasis discovery: visible on overworld map (green/golden shimmer), no searching required
-- [x] Act progression: Oasis C falls after Archive of Ages completion. The Grey Keeper mini-boss encounter. Oases A and B survive. Post-Convergence: survivors rebuild, shops expand.
+- [x] Act progression: Oasis C falls when the party first visits Oasis B. The Grey Keeper mini-boss encounter. Oases A and B survive. Post-Convergence: survivors rebuild, shops expand.
 
 **Blocking:** ~~Act III overworld pacing, player resource management in endgame, narrative worldbuilding~~
 Now complete.

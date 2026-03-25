@@ -316,7 +316,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 33 | `trial_maren_complete` | Maren completes the Restricted Stacks | Maren unlocks Pallor Sight ability. Her younger self questions the cost of knowledge; Maren affirms it was worth it. | Maren |
 | 34 | `vaelith_defeated` | Party defeats Vaelith in the Pallor Wastes. Prerequisites: `trial_lira_complete` and `torren_found` | The Pallor Wastes destabilize, path to the Convergence opens fully. Vaelith's influence over the ley nodes shatters, and the creatures and corruption they engineered begin to unravel. | Vaelith (defeated/released), Lira (manifests weapon from Cael's connection) |
 | 35 | `convergence_reached` | Party arrives at the Convergence plateau | Final dungeon begins. Cael visible at the machine's center. Three-phase boss battle initiated. | Cael |
-| 53 | `oasis_c_fallen` | Pallor Wastes Trial 3 completed | Oasis C overworld marker turns grey. Ward stone cracked. Shop/inn/save removed. The Grey Keeper mini-boss available. Survivor NPC (Senna) appears at Oasis B. | Oasis C NPCs (petrified), Oasis B survivor NPC (appears) |
+| 53 | `oasis_c_fallen` | Player first visits Oasis B (off-screen during travel) | Oasis C overworld marker turns grey. Ward stone cracked. Shop/inn/save removed. The Grey Keeper mini-boss available. Survivor NPC (Senna) appears at Oasis B. | Oasis C NPCs (petrified), Oasis B survivor NPC (appears) |
 
 ### Act IV Flags
 
@@ -894,7 +894,7 @@ Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. Ther
 
 #### The Fall of Oasis C
 
-**Trigger:** `oasis_c_fallen` flag (set after Pallor Wastes Trial 3 completion)
+**Trigger:** `oasis_c_fallen` flag (set when the player first visits Oasis B — Oasis C falls off-screen during travel)
 **Type:** Environmental — discovered by visiting Oasis C on the overworld, or reported by survivor NPC at Oasis B.
 **Tier:** Full Cutscene (T1) if visiting Oasis C directly.
 

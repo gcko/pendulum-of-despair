@@ -32,7 +32,7 @@ Insert three Oasis rows into the Act III journey order table, positioned between
 ```markdown
 | [N] | Oasis A (Valdris Refugees) | Overworld (Pallor Wastes) | Rest, shop, save. First safe harbor. Sidequest: The Last Banner. |
 | [N+1] | Oasis B (Compact Refugees) | Overworld (Pallor Wastes) | Rest, shop, save. Sidequest: Amplifier Stabilization. |
-| [N+2] | Oasis C (Thornmere Refugees) | Overworld (Pallor Wastes) | Rest, shop, save. Sidequest: The Cracking Stone. Falls after Archive of Ages. |
+| [N+2] | Oasis C (Thornmere Refugees) | Overworld (Pallor Wastes) | Rest, shop, save. Sidequest: The Cracking Stone. Falls when the party first visits Oasis B. |
 ```
 
 Adjust order numbers to fit the existing sequence.
@@ -83,7 +83,7 @@ something clever. But the core is weakening."
 #### Oasis C — Thornmere Refugees
 
 **Location:** Southeast Pallor Wastes, closest to the Convergence.
-**Acts:** III (falls after Archive of Ages completion — see events.md).
+**Acts:** III (falls when the party first visits Oasis B — see events.md).
 **Services (before fall):** Shop (economy.md Oasis C inventory — only
 source of Despair Ward), Inn (100g), Save Point.
 **Services (after fall):** None. Ward stone cracked. Camp is Grey.
@@ -139,7 +139,7 @@ harbors — see [locations.md](locations.md) for full details:
 - **Oasis B** (Central, Compact Refugees) — midway point with
   jury-rigged ley amplifiers.
 - **Oasis C** (Southeast, Thornmere Refugees) — last stop before
-  the Convergence. Falls after the Archive of Ages, triggering The
+  the Convergence. Falls when the party first visits Oasis B, triggering The
   Grey Keeper mini-boss encounter.
 
 The Oases use Tier 0 (Safe) encounter rate. The overworld between
@@ -363,8 +363,8 @@ Add to the Act III events section:
 ```markdown
 #### The Fall of Oasis C
 
-**Trigger:** `oasis_c_fallen` flag (set after Archive of Ages
-completion)
+**Trigger:** `oasis_c_fallen` flag (set when the player first visits
+Oasis B — Oasis C falls off-screen during travel)
 **Type:** Environmental — discovered by visiting Oasis C on the
 overworld, or reported by survivor NPC at Oasis B.
 **Tier:** Full Cutscene (T1) if visiting Oasis C directly.
@@ -401,7 +401,7 @@ Read `docs/story/dynamic-world.md` lines 306-320 (Act III Flags section).
 Add a new row to the Act III flags table:
 
 ```markdown
-| [N] | `oasis_c_fallen` | Archive of Ages completed | Oasis C overworld marker turns grey. Ward stone cracked. Shop/inn/save removed. The Grey Keeper mini-boss available. Survivor NPC appears at Oasis B. | Oasis C NPCs (petrified), Oasis B survivor NPC (appears) |
+| [N] | `oasis_c_fallen` | Player first visits Oasis B (off-screen during travel) | Oasis C overworld marker turns grey. Ward stone cracked. Shop/inn/save removed. The Grey Keeper mini-boss available. Survivor NPC appears at Oasis B. | Oasis C NPCs (petrified), Oasis B survivor NPC (appears) |
 ```
 
 - [ ] **Step 5: Commit**
@@ -593,7 +593,7 @@ Replace the section with:
 - [x] Oasis protection mechanic: ley ward stones (natural ley energy nodes creating protective bubbles)
 - [x] Narrative flavor: each Oasis has refugees from a specific fallen town with news/rumors about the Grey
 - [x] Oasis discovery: visible on overworld map (green/golden shimmer), no searching required
-- [x] Act progression: Oasis C falls after Archive of Ages completion. The Grey Keeper mini-boss encounter. Oases A and B survive. Post-Convergence: survivors rebuild, shops expand.
+- [x] Act progression: Oasis C falls when the party first visits Oasis B. The Grey Keeper mini-boss encounter. Oases A and B survive. Post-Convergence: survivors rebuild, shops expand.
 
 **Blocking:** ~~Act III overworld pacing, player resource management in endgame, narrative worldbuilding~~
 Now complete. Unblocks nothing directly (all downstream gaps were already unblocked by Tier 1 completions).

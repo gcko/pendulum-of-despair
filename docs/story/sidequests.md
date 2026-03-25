@@ -459,7 +459,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 **Location:** Pallor Wastes overworld (nearby ley fissure)
 **Availability:** Act III, after discovering Oasis C (before the fall)
 **Estimated Length:** Short (5 minutes)
-**Description:** The ward keeper is on their knees by the cracking ward stone, visibly strained. They ask the party to bring ley water from a fissure they sensed nearby (~1 encounter away). The party retrieves it and returns. The keeper pours it into the crack. The stone stabilizes. The shimmer brightens. "This will hold. For now." The next time the player returns (after the Archive of Ages), the Oasis has fallen. The ley water bought days, not salvation.
+**Description:** The ward keeper is on their knees by the cracking ward stone, visibly strained. They ask the party to bring ley water from a fissure they sensed nearby (~1 encounter away). The party retrieves it and returns. The keeper pours it into the crack. The stone stabilizes. The shimmer brightens. "This will hold. For now." The next time the player returns (after visiting Oasis B), the Oasis has fallen. The ley water bought days, not salvation.
 **Reward:** 2,500g + Spirit Essence (Tier 2 crafting material)
 **Connection:** Not every effort succeeds. The tragedy is that you did everything right and it still wasn't enough — the core theme of the Pallor. Elara's quiet confidence in the moment of stabilization makes the later discovery of Oasis C's fall genuinely devastating.
 
