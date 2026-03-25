@@ -407,7 +407,7 @@ Insert after line 339 (end of Encounter Table), before line 340 (`### Treasure/L
 ```markdown
 ### Encounter Rates & Formations
 
-**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) all floors. Boss corridor (Floor 4 approach) is Tier 0 (Safe).
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-3. Floor 4 boss corridor: Tier 0 (Safe).
 
 **Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive). This is a mine with good visibility.
 
@@ -428,7 +428,7 @@ Insert after line 339 (end of Encounter Table), before line 340 (`### Treasure/L
 Read the Fenmother's Hollow Encounter Table (around line 572). Build formation tables using the dungeon's enemy pool (Drowned Sentinel, Marsh Serpent, Bog Lurker, etc.). Insert after the Encounter Table.
 
 Pattern:
-- Tier 3 (High, increment 252, ~20 steps) — this is a swamp/forest dungeon with low visibility.
+- Tier 2 (Normal) for Floors 1-2, Tier 3 (High) for Floor 3. Boss sanctum Tier 0. This is a swamp/forest dungeon with low visibility.
 - Formation type: Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 - Build 4-pack tables per floor using the floor's enemy pool from the existing Encounter Table.
 

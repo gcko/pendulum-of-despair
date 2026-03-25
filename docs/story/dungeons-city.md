@@ -489,8 +489,10 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 |-----|---------|--------|
 | 1 | 2x Heat Sprite + 1x Corrupted Forge Construct | 31.25% |
 | 2 | 3x Heat Sprite | 31.25% |
-| 3 | 1x Corrupted Forge Construct + 1x Pallor Seep (Interlude only) | 31.25% |
+| 3 | 2x Corrupted Forge Construct | 31.25% |
 | 4 | 2x Corrupted Forge Construct + 1x Heat Sprite (rare) | 6.25% |
+
+**Interlude variant:** During the Interlude, Formation 3 becomes 1x Corrupted Forge Construct + 1x Pallor Seep (replacing the Act II composition).
 
 **Treasure:**
 - Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
