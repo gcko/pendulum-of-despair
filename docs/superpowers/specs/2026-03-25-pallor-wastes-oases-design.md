@@ -427,7 +427,7 @@ After the final boss is defeated and the Pallor recedes:
 ### Dynamic World (dynamic-world.md)
 
 - Oasis C fall is a world state change triggered by story progression.
-- Needs a flag: `OASIS_C_FALLEN` (set after Archive of Ages completion).
+- Needs a flag: `oasis_c_fallen` (set after Archive of Ages completion).
 - The Oasis C overworld visual changes from green shimmer to grey.
 
 ---
@@ -459,7 +459,7 @@ After the final boss is defeated and the Pallor recedes:
 | Modify | `docs/story/dungeons-world.md` | Add Oasis placement and ward stone details to Pallor Wastes section |
 | Modify | `docs/story/npcs.md` | Add ~13 Oasis NPCs across all three Oases |
 | Modify | `docs/story/sidequests.md` | Add 3 minor sidequests (The Last Banner, Amplifier Stabilization, The Cracking Stone) |
-| Modify | `docs/story/dynamic-world.md` | Add OASIS_C_FALLEN flag and world state change |
+| Modify | `docs/story/dynamic-world.md` | Add oasis_c_fallen flag and world state change |
 | Modify | `docs/story/events.md` | Add Oasis C fall cutscene and ward keeper transformation |
 | Modify | `docs/story/bestiary/act-iii.md` | Add The Grey Keeper stat block |
 | Modify | `docs/story/bestiary/bosses.md` | Add The Grey Keeper boss entry with AI script |

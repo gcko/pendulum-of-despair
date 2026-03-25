@@ -233,7 +233,7 @@ someone said they have machines that make the light bigger."
 
 Find the end of `## The Carradan Compact` section. Add 4 Oasis B NPCs (5th NPC — the Oasis C survivor — is added conditionally after the fall):
 
-Follow the same condensed format. Include the quartermaster (shopkeeper), rest attendant, engineer (quest giver), and Oasis A survivor (flavor). Add the Oasis C survivor as a conditional entry: "Appears after OASIS_C_FALLEN flag is set."
+Follow the same condensed format. Include the quartermaster (shopkeeper), rest attendant, engineer (quest giver), and Oasis A survivor (flavor). Add the Oasis C survivor as a conditional entry: "Appears after oasis_c_fallen flag is set."
 
 - [ ] **Step 4: Add Oasis C NPCs to the Thornmere Wilds section**
 
@@ -396,7 +396,7 @@ not recover. The cracked ward stone is a permanent memorial.
 
 Read `docs/story/dynamic-world.md` lines 306-320 (Act III Flags section).
 
-- [ ] **Step 4: Add OASIS_C_FALLEN flag**
+- [ ] **Step 4: Add oasis_c_fallen flag**
 
 Add a new row to the Act III flags table:
 
@@ -409,7 +409,7 @@ Add a new row to the Act III flags table:
 ```bash
 git add docs/story/events.md docs/story/dynamic-world.md
 ```
-Message: `docs(shared): add Oasis C fall event and OASIS_C_FALLEN flag`
+Message: `docs(shared): add Oasis C fall event and oasis_c_fallen flag`
 
 ---
 
@@ -438,7 +438,7 @@ fallen Oasis C.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resist | Absorb | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|--------|--------|-------------------|-------------|
-| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
 
 > **Design note:** Zero gold drop — this is a tragedy, not a reward.
 > The Spirit weakness is ironic: the element of protection is the
@@ -466,7 +466,7 @@ Add after the trial bosses section (or as a separate subsection for Oasis bosses
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resist | Absorb | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|--------|--------|-------------------|-------------|
-| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
 
 **Modes:** 2 (Normal, Desperate)
 

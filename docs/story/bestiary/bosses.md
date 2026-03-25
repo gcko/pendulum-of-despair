@@ -27,7 +27,7 @@
 | 14 | The Perfect Machine | III | Pallor Wastes Trial 2 | 30 | 7,000 | Boss | 1 |
 | 15 | The Last Voice | III | Pallor Wastes Trial 3 | 32 | 6,000 | Boss | 2 |
 | 16 | The Index | III | Pallor Wastes Trial 5 | 32 | 7,000 | Boss | 1 |
-| 17 | The Grey Keeper | III | Oasis C (fallen) | 32 | 15,000 | Pallor/Boss | 2 |
+| 17 | The Grey Keeper | III | Oasis C (fallen) | 32 | 15,000 | Boss | 2 |
 | 18 | Vaelith, the Ashen Shepherd | III | Pallor Wastes Section 5 | 34 | 50,000 | Boss | 2+pre |
 | 19 | Ley Titan | III | Ley Line Depths F5 | 28 | 18,000 | Boss | 3 |
 | 20 | Archive Keeper | III | Dry Well F5 | 32 | 3,000–12,000 | Boss | 1 |
@@ -1610,7 +1610,7 @@ narrative scar.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resist | Absorb | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|--------|--------|-------------------|-------------|
-| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
 
 **Modes:** 2 (Normal, Desperate)
 

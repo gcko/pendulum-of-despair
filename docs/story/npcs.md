@@ -433,13 +433,13 @@ The banner itself is intact, driven into the ground where the standard-bearer di
 
 ---
 
-### Lira
+### Tev
 
 **Location:** Oasis A, near the ward stone
 
 **Role:** Flavor NPC (child, news source)
 
-**Backstory:** Lira is ten years old. She lost her father during the evacuation and her mother doesn't talk about it. She is perceptive in the way that children are when adults stop shielding them from the truth — she watches the ward stone's light, she listens to the adults' whispered conversations, and she pieces things together faster than anyone gives her credit for. She has heard rumors of Oasis B from a trader who passed through, and she reports this to the party as fact.
+**Backstory:** Tev is ten years old. She lost her father during the evacuation and her mother doesn't talk about it. She is perceptive in the way that children are when adults stop shielding them from the truth — she watches the ward stone's light, she listens to the adults' whispered conversations, and she pieces things together faster than anyone gives her credit for. She has heard rumors of Oasis B from a trader who passed through, and she reports this to the party as fact.
 
 **Dialogue hints:**
 - *"Mama says the light is keeping us safe. But I can see it getting smaller. And there's another camp, further south — someone said they have machines that make the light bigger."*
@@ -811,13 +811,13 @@ If the player visited Ashmark's markets in Acts I-II, Dellen recognizes them and
 
 ---
 
-### Engineer Voss
+### Engineer Calder
 
 **Location:** Oasis B, Amplifier Array
 
 **Role:** Quest giver — Amplifier Stabilization
 
-**Backstory:** Voss was a senior ley engineer in Corrund's power grid division. She designed the amplifier array that extends Oasis B's ward stone range — a jury-rigged network of salvaged Compact capacitors and ley conduits that pushes the safe zone fifty meters beyond its natural radius. The system works. It also burns through capacitors at a rate she cannot sustain. The last Pallor-Fused Capacitor in her reserve failed two days ago. Without a replacement, the amplifiers go dark within the week, and the ward's effective range contracts to its natural limit — cutting off the outer ring of shelters where forty people sleep.
+**Backstory:** Calder was a senior ley engineer in Corrund's power grid division. She designed the amplifier array that extends Oasis B's ward stone range — a jury-rigged network of salvaged Compact capacitors and ley conduits that pushes the safe zone fifty meters beyond its natural radius. The system works. It also burns through capacitors at a rate she cannot sustain. The last Pallor-Fused Capacitor in her reserve failed two days ago. Without a replacement, the amplifiers go dark within the week, and the ward's effective range contracts to its natural limit — cutting off the outer ring of shelters where forty people sleep.
 
 She knows where to find one: a collapsed Compact relay station in the deep Wastes, two hours into Pallor-dense territory. She cannot leave the array — if a capacitor fails while she is gone, the cascade takes the whole system down. She needs someone expendable enough to risk the trip and competent enough to identify the right component.
 
@@ -853,11 +853,11 @@ She knows where to find one: a collapsed Compact relay station in the deep Waste
 
 **Location:** Oasis B, Outer Shelters
 
-**Role:** Conditional NPC — Oasis C fall witness (appears after OASIS_C_FALLEN flag)
+**Role:** Conditional NPC — Oasis C fall witness (appears after oasis_c_fallen flag)
 
 **Backstory:** Senna was the ward keeper's apprentice at Oasis C. She was fifteen when the Thornmere elders began training her in spirit-speaking. She was sixteen when the ward stone cracked. She held the secondary wards while her mentor, the ward keeper, poured everything into the primary stone. It was not enough. The stone shattered. The Grey rushed in. The keeper held on longer than anyone thought possible — three days of continuous channeling, blood from her nose and ears — but the Pallor consumed the camp from the edges inward. Senna escaped because the keeper spent her last reserves pushing the apprentice through a gap in the Grey. She walked for two days to reach Oasis B.
 
-She does not appear until the OASIS_C_FALLEN flag triggers. When she arrives, she is the first confirmation that an oasis can fall — that the ward stones are not permanent, and the safe zones are temporary.
+She does not appear until the oasis_c_fallen flag triggers. When she arrives, she is the first confirmation that an oasis can fall — that the ward stones are not permanent, and the safe zones are temporary.
 
 **Dialogue hints:**
 - *"The stone cracked. Three days ago. [The keeper] held on... longer than anyone thought possible. But the Grey..."*
@@ -865,7 +865,7 @@ She does not appear until the OASIS_C_FALLEN flag triggers. When she arrives, sh
 
 **Story relevance:** Ties to main quest. Confirms Oasis C's fall. Provides emotional weight and firsthand testimony. Her arrival at Oasis B is a narrative turning point — the player now knows any oasis can fall.
 
-**Act presence:** Act III only. Appears at Oasis B after OASIS_C_FALLEN flag triggers. Not present before the fall.
+**Act presence:** Act III only. Appears at Oasis B after oasis_c_fallen flag triggers. Not present before the fall.
 
 ---
 
@@ -1254,7 +1254,7 @@ If the player visited Roothollow or Greywood in earlier acts, she recognizes the
 
 **Story relevance:** Commerce (Oasis C shop). Sole source of Despair Wards — mechanically critical for deep Wastes exploration. Familiar face callback for Thornmere players.
 
-**Act presence:** Act III only. Present at Oasis C until OASIS_C_FALLEN. Lost with the camp if the player does not complete The Cracking Stone in time.
+**Act presence:** Act III only. Present at Oasis C until oasis_c_fallen. Lost with the camp when Oasis C falls. The Cracking Stone quest delays but does not prevent the fall.
 
 ---
 
@@ -1271,7 +1271,7 @@ If the player visited Roothollow or Greywood in earlier acts, she recognizes the
 
 **Story relevance:** Flavor (rest point). Highest-cost rest in the Wastes, reflecting Oasis C's remoteness and the premium on Thornmere spirit-protection.
 
-**Act presence:** Act III only. Present at Oasis C until OASIS_C_FALLEN.
+**Act presence:** Act III only. Present at Oasis C until oasis_c_fallen.
 
 ---
 
@@ -1285,16 +1285,16 @@ If the player visited Roothollow or Greywood in earlier acts, she recognizes the
 
 The ward stone's deterioration is accelerating because a nearby ley fissure is leaking corrupted energy into the ground beneath the camp. If the fissure could be sealed — or if purified water from its source could be brought back — the stone's degradation would slow enough for Elara to stabilize it. This is the quest: The Cracking Stone. The fissure is in deep Pallor territory, guarded by Grey-twisted wildlife.
 
-If the player fails to complete the quest in time, or if the OASIS_C_FALLEN flag triggers, Elara does not escape. She channels everything she has into the stone in a final attempt to hold it. She fails. The Pallor consumes her. In the aftermath, she rises as The Grey Keeper — a mini-boss encountered if the player returns to the fallen Oasis C site. She retains fragments of her spirit-speaking ability, twisted into Pallor-channeling attacks. Defeating her is one of the most emotionally difficult encounters in the game.
+When the oasis_c_fallen flag triggers, Elara does not escape. She channels everything she has into the stone in a final attempt to hold it. She fails. The Pallor consumes her. In the aftermath, she rises as The Grey Keeper — a mini-boss encountered if the player returns to the fallen Oasis C site. She retains fragments of her spirit-speaking ability, twisted into Pallor-channeling attacks. Defeating her is one of the most emotionally difficult encounters in the game.
 
 **Dialogue hints:**
 - *"The stone is cracking. I can hold it — but not forever. There's a ley fissure, nearby. If you could bring water from it..."*
 - *"Every hour I hold this stone, I feel the Grey pressing back. It knows I'm here. It's patient."*
 - (If player returns post-fall, as The Grey Keeper) *"...still... holding..."* (combat dialogue, fragmented)
 
-**Story relevance:** Side quest (The Cracking Stone). Critical narrative beat — her fate determines whether Oasis C survives or falls. If the oasis falls, she becomes The Grey Keeper mini-boss, one of the game's most significant optional encounters.
+**Story relevance:** Side quest (The Cracking Stone). Keeper Elara is consumed by the Pallor when the ley ward stone fails. Her transformation into The Grey Keeper is the dramatic climax of the Oasis C storyline.
 
-**Act presence:** Act III only. Present at Oasis C as quest giver. Transforms into The Grey Keeper mini-boss after OASIS_C_FALLEN.
+**Act presence:** Act III only. Present at Oasis C as quest giver. Transforms into The Grey Keeper mini-boss after oasis_c_fallen.
 
 ---
 

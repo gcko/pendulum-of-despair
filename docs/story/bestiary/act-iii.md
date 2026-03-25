@@ -448,7 +448,7 @@ fallen Oasis C.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resist | Absorb | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|--------|--------|-------------------|-------------|
-| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
 
 > **Design note:** Zero gold drop — this is a tragedy, not a reward. The Spirit weakness is ironic: the element of protection is the vulnerability of the corrupted protector.
 

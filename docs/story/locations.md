@@ -791,12 +791,12 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 **NPCs:**
 - **Quartermaster** — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
 - **Rest Attendant** — Manages the inn; a former barracks keeper who insists on clean bedrolls despite everything
-- **Engineer Voss** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
+- **Engineer Calder** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
 - **Oasis A Survivor** — A refugee who fled Oasis A after hearing rumors of the Grey's advance; provides context on the other camps
 - **Oasis C Survivor** *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
 
 **Sidequest: Amplifier Stabilization**
-Engineer Voss's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
+Engineer Calder's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
 
 **Ward stone:** Weakening. Torren: *"The engineers have done something clever. But the core is weakening."*
 
@@ -1183,17 +1183,17 @@ This table maps the intended player progression through locations, reflecting JR
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
 | 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
 | 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
-| 29 | Pallor Wastes | Gauntlet | Party trials, final approach |
 | 29a | Oasis A — Valdris Refugees | Oasis (overworld) | Shop, inn, save; The Last Banner sidequest |
 | 29b | Oasis B — Compact Refugees | Oasis (overworld) | Shop, inn, save; Amplifier Stabilization sidequest |
-| 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls after Archive of Ages |
-| 30 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
+| 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls after Pallor Wastes Trial 3 |
+| 30 | Pallor Wastes | Gauntlet | Party trials, final approach |
+| 31 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 
 ### Post-Game
 
 | Order | Location | Type | Purpose |
 |-------|----------|------|---------|
-| 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
-| 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 33 | Windshear Peak | Vista | Oracle hints, atmosphere |
-| 34 | Sunken Rig | Dungeon | Sable-focused optional content |
+| 32 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
+| 33 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
+| 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
+| 35 | Sunken Rig | Dungeon | Sable-focused optional content |
