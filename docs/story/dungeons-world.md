@@ -1137,7 +1137,7 @@ When defeated, his soldiers collapse. Brant watches silently.
 
 | Enemy | Description | Location |
 |-------|-------------|----------|
-| Compact Guard | Disciplined soldier. Attacks in pairs, covers each other. | All floors |
+| Compact Officer | Disciplined soldier. Attacks in pairs, covers each other. | Floors 1–3 |
 | Forgewright Sentry | Automated turret. Scans in a cone. High damage, low HP. | Floors 2–3 |
 | Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4–5 (and Ironmark tunnel) |
 | Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1–2 |
@@ -5002,7 +5002,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
-| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 4. | Floor 2 | 40 |
+| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Treated as 1 encounter unit (swarm of 4 moths, 40 HP total). | Floor 2 | 40 |
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
 | **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
 
