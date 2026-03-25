@@ -639,7 +639,7 @@ final_increment = floor(base_increment × act_scale × accessory_mod × location
 | Ward Talisman (accessory) | ×0.5 | All areas |
 | Infiltrator's Cloak (accessory) | ×0.5 | All areas |
 | Lure Talisman (accessory) | ×2.0 | All areas |
-| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels only |
+| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels, Corrund Sewers |
 | Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only |
 
 Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak

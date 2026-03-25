@@ -294,9 +294,9 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
 | 1 | 2x Forge-Smoke Creature, 1x Sewer Rat | 31.25% |
-| 2 | 1x Malfunctioning Service Automaton, 2x Sewer Rat | 31.25% |
-| 3 | 2x Malfunctioning Service Automaton, 1x Forge-Smoke Creature | 31.25% |
-| 4 | 1x Forge-Smoke Creature, 1x Malfunctioning Service Automaton, 2x Sewer Rat (rare) | 6.25% |
+| 2 | 1x Service Automata, 2x Sewer Rat | 31.25% |
+| 3 | 2x Service Automata, 1x Forge-Smoke Creature | 31.25% |
+| 4 | 1x Forge-Smoke Creature, 1x Service Automata, 2x Sewer Rat (rare) | 6.25% |
 
 **Treasure:**
 - Supply Cache A: 800 gold, 3x Standard Ration, 1x Repair Kit
@@ -597,10 +597,10 @@ KEY:  ### = iron wall   === = pipe (ley energy, blue glow)
 
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Overclocked Automaton, 1x Forge Roach | 31.25% |
+| 1 | 2x Overclocked Automata, 1x Forge Roach | 31.25% |
 | 2 | 1x Pipe Wraith, 3x Forge Roach | 31.25% |
-| 3 | 1x Overclocked Automaton, 1x Pipe Wraith | 31.25% |
-| 4 | 1x Pallor-Touched Worker, 1x Pipe Wraith, 1x Overclocked Automaton (rare) | 6.25% |
+| 3 | 1x Overclocked Automata, 1x Pipe Wraith | 31.25% |
+| 4 | 1x Pallor-Touched Worker, 1x Pipe Wraith, 1x Overclocked Automata (rare) | 6.25% |
 
 **Treasure:**
 - Worker's Last Station: Shift Foreman's Key (key item -- opens the Sealed Maintenance Closet)
@@ -863,7 +863,7 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 
 **Puzzle:** The Tidal Passage floods on a timer (the tide). The player has a limited window to cross between high tides. A gauge on the wall (installed by the smugglers) shows the current tide level. Crossing during high tide inflicts continuous water damage. Sable knows the timing automatically ("Twelve seconds between surges. Run when I say run.").
 
-**Encounters:** Sea Crawlers (crustacean creatures, high DEF, weak to lightning), Tide Wraiths (waterborne spectral enemies, Act II only -- the Pallor hasn't reached the ocean yet), Drowned Lookouts (Interlude only -- Pallor-touched smugglers who wandered into the deeper caves and didn't come back).
+**Encounters:** Sea Crawlers (crustacean creatures, high DEF, weak to lightning), Tide Wraiths (waterborne spectral enemies, Act II only -- the Pallor hasn't reached the ocean yet), Smuggler Thugs (Interlude only -- Pallor-touched smugglers who wandered into the deeper caves and didn't come back).
 
 **Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies x0.5 modifier.
 
@@ -873,8 +873,8 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 |-----|---------|--------|
 | 1 | 2x Sea Crawler, 1x Tide Wraith | 31.25% |
 | 2 | 3x Sea Crawler | 31.25% |
-| 3 | 1x Drowned Lookout, 2x Sea Crawler | 31.25% |
-| 4 | 2x Drowned Lookout, 1x Tide Wraith (rare) | 6.25% |
+| 3 | 1x Smuggler Thug, 2x Sea Crawler | 31.25% |
+| 4 | 2x Smuggler Thug, 1x Tide Wraith (rare) | 6.25% |
 
 **Treasure:**
 - Sable's Hideaway: Tin Box (examine for Sable character scene -- contains a copper coin, blue fabric scrap, and a child's drawing. "I hid here when the world got too loud. Guess some things don't change.")

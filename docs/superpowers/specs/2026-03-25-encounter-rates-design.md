@@ -136,7 +136,7 @@ trivializes exploration.
 
 | Item | Effect | Scope |
 |------|--------|-------|
-| Tunnel Map | ×0.5 encounter rate | Bellhaven Tunnels only |
+| Tunnel Map | ×0.5 encounter rate | Bellhaven Tunnels, Corrund Sewers |
 | Kole's patrol timing | ×0.5 encounter rate | Caldera Inner Ring only |
 
 These stack with accessory modifiers.
@@ -440,8 +440,8 @@ randomly weakened by a back attack 3 steps from the boss door.
 
 - Preemptive Charm already defined in equipment.md (+25% preemptive
   rate, 2,000g, Bellhaven quest).
-- Infiltrator's Cloak already referenced in dungeons-world.md (Ley
-  Line Depths F2 treasure) but not yet in equipment.md — needs adding.
+- Infiltrator's Cloak already referenced in dungeons-world.md (Axis
+  Tower F2 treasure) and now added to equipment.md.
 - Ward Talisman and Lure Talisman to be added as new accessories.
 
 ### Bestiary (Gap 1.3)

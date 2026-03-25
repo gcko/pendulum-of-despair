@@ -208,7 +208,7 @@ Add three new rows to the Combat Mechanic Accessories table (after the existing 
 ```markdown
 | Ward Talisman | Halves encounter rate (danger counter ×0.5) | 1,500 | II | Bellhaven, Corrund shops |
 | Lure Talisman | Doubles encounter rate (danger counter ×2.0) | 800 | II | Corrund, Ironmark shops |
-| Infiltrator's Cloak | Halves encounter rate (danger counter ×0.5) | — | I | Ley Line Depths F2 treasure |
+| Infiltrator's Cloak | Halves encounter rate (danger counter ×0.5) | — | I | Axis Tower F2 treasure |
 ```
 
 **Design note:** Ward Talisman and Infiltrator's Cloak have the same effect (×0.5). The Cloak is an early, free version found via exploration; the Talisman is buyable in Act II for players who missed the Cloak or want one for a second party member in a future playthrough. They occupy the same accessory slot, so they cannot stack.

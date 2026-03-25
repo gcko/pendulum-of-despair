@@ -198,7 +198,7 @@ The Compact occupies the southeast: a region of river basins, quarried plains, a
 
 - **Quarried plains:** Normal movement speed. Encounter rate moderate -- Compact patrols, rogue Forgewright constructs, displaced wildlife. Dust storms occasionally reduce visibility (back-attack chance increased).
 - **Industrial urban:** Movement speed normal but navigation is channeled -- streets, bridges, and tunnels create a more linear path. Encounters are replaced by scripted events (guard patrols, factory hazards).
-- **Broken Hills:** Movement speed reduced by 20%. High encounter rate -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
+- **Broken Hills:** Movement speed reduced by 20%. Moderate encounter rate (Mountains tier) -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
 - **Coastal:** Normal speed. Low encounter rate near cities. Sea routes between Bellhaven and Ashport allow fast travel after Act II (if unlocked).
 - **Caldera interior:** Movement speed reduced by 10% due to terrain (stairs, catwalks, narrow streets). Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
 
@@ -249,7 +249,7 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 **Terrain Effects on Gameplay:**
 
 - **Dense forest:** Movement speed reduced by 25%. Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (the player is turned back with a "you can't find your way" message).
-- **Marshland:** Movement speed reduced by 40%. Encounter rate moderate but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
+- **Marshland:** Movement speed reduced by 40%. Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
 - **Canopy level:** Normal movement speed on established bridges and platforms. Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
 - **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. Movement speed normal. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
 - **Sunstone Ridge:** Movement speed reduced by 15%. Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
@@ -536,6 +536,8 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
 | **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
+| **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |
+| **Dreamer's Fault (deep)** | Intense | 506 | ~14 | Optional dungeon floors 11–20 |
 | **Urban interior** | None | 0 | — | Inside city/town boundaries |
 
 **Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart. The Wilds have no safe corridors -- there are no roads.
