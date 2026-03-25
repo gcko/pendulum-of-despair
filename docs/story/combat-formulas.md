@@ -595,7 +595,7 @@ Fully deterministic — no RNG.
 
 Random encounters use a danger counter model (FF6-derived). A hidden
 counter starts at 0 and increments by an area-defined value each step.
-Each step, the game rolls `random(0, 255)` — if the result is less than
+Each step, the game rolls `random_int(0, 255)` — if the result is less than
 `floor(counter / 256)`, a battle triggers. The counter resets to 0
 after each battle.
 

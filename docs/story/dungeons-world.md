@@ -2029,7 +2029,7 @@ A rift in the Pallor Wastes where concentrated Ley energy bleeds through the Gre
 | 2x Ley-Warped Drake (Lv 40) | 30% |
 | 2x Ley-Warped Wraith (Lv 42) + 1x Ley-Warped Colossus (Lv 45) | 30% |
 | 1x Ley-Warped Colossus + 2x Ley-Warped Drake | 30% |
-| Ley Abomination (Lv 48) -- rare mini-boss | 10% |
+| Ley Abomination (Lv 48) — rare mini-boss | 10% |
 
 See `bestiary/act-iii.md` (Ley Scar section) for full enemy stat blocks and hand-tuned XP overrides.
 
@@ -5011,7 +5011,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | 1 | 3 | 3x Root Tendril + 1x Pallor Fungus | 31.25% |
 | 1 | 4 | 4x Tunnel Beetle + 2x Pallor Fungus (corrupted tunnel swarm) | 6.25% |
 | 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth | 31.25% |
-| 2 | 2 | 8x Ley Moth Swarm | 31.25% |
+| 2 | 2 | 4x Ley Moth (swarm) | 31.25% |
 | 2 | 3 | 1x Pallor Seep + 4x Ley Moth | 31.25% |
 | 2 | 4 | 1x Pallor Seep + 1x Ancient Root Guardian (corrupted passage) | 6.25% |
 

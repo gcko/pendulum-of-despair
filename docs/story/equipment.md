@@ -485,8 +485,8 @@ when elemental-heavy encounters become routine.
 
 ### Combat Mechanic Accessories
 
-Grant passive combat effects. Interlude through Act III availability,
-rewarding exploration and sidequests.
+Grant passive combat effects. Act II through Act III availability
+(one exception: Infiltrator's Cloak found in the Interlude).
 
 | Name | Effect | Price | Act | Acquired |
 |------|--------|-------|-----|----------|

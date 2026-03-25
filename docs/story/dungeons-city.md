@@ -82,7 +82,7 @@ KEY:  ### = limestone wall   [...] = alcove/room   === = passage
 
 **Encounters (optional return):** Random encounters with Crypt Shades (incorporeal, weak to light magic), Bone Wardens (physical attackers, slow), and Tomb Mites (small, fast, annoying). The Flooded Chamber has waterborne encounters: Drowned Sentinels (rusted armor, heavy but sluggish).
 
-**Encounter rate (Interlude escape):** Tier 1 (Low, increment 48, ~48 steps). Fixed encounters only; the party is fleeing and random encounters are minimal.
+**Encounter rate (Interlude escape):** Tier 0 (Safe). Fixed encounters only — the party is fleeing, no random encounters.
 
 **Encounter rate (optional return):** Tier 2 (Normal, increment 120, ~30 steps).
 
