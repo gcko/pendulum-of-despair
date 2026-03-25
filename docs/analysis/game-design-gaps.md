@@ -311,32 +311,34 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 
 ### 2.3 UI & Menu Design
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P1
-**Files:** None yet (create `docs/story/ui-design.md`)
-**Depends On:** None (can be designed independently)
+**Files:** `docs/story/ui-design.md`
+**Depends On:** None (references 2.2 ATB Mechanics, 2.5 Row System, 1.2 Stat System)
+**Completed:** 2026-03-25 — FF6 minimalist SNES pixel art UI. Battle screen (classic FF6 layout, horizontal ATB bars, status icons above names), 9-command main menu, item/equipment/magic/abilities/status/formation/config screens, Buy/Sell shop interface, full-width dialogue box (no portraits, typewriter effect), enhanced save/load (all 4 party members per slot), Ley Crystal screen, no exploration HUD, unified 22-icon status effect system, Pallor narrative integration, input mapping.
 
 **What's Needed:**
-- [ ] Battle screen layout:
-  - [ ] Party member positions and info display (HP/MP bars, names, ATB gauge)
-  - [ ] Enemy display area
-  - [ ] Command menu layout (Attack/Magic/Ability/Item/Defend/Flee)
-  - [ ] Damage number display
-  - [ ] Status effect indicators
-  - [ ] Battle message area
-- [ ] Main menu structure and navigation:
-  - [ ] Items, Equipment, Magic/Abilities, Status, Party, Config, Save
-- [ ] Equipment screen with stat comparison
-- [ ] Shop interface (buy/sell with equipped indicator)
-- [ ] Dialogue/text box specifications:
-  - [ ] Position, size, font, text speed options
-  - [ ] Character portrait display rules
-  - [ ] Choice prompt layout
-- [ ] Save/Load screen
-- [ ] Config screen options (battle speed, ATB mode, text speed, sound)
-- [ ] HUD elements during exploration (minimap? party HP?)
+- [x] Battle screen layout:
+  - [x] Party member positions and info display (HP/MP bars, names, ATB gauge)
+  - [x] Enemy display area
+  - [x] Command menu layout (Attack/Magic/Ability/Item/Defend/Flee)
+  - [x] Damage number display
+  - [x] Status effect indicators
+  - [x] Battle message area
+- [x] Main menu structure and navigation:
+  - [x] Items, Equipment, Magic/Abilities, Status, Party, Config, Save
+- [x] Equipment screen with stat comparison
+- [x] Shop interface (buy/sell with equipped indicator)
+- [x] Dialogue/text box specifications:
+  - [x] Position, size, font, text speed options
+  - [x] Character portrait display rules (no portraits in dialogue; menu portraits only)
+  - [x] Choice prompt layout
+- [x] Save/Load screen
+- [x] Config screen options (battle speed, ATB mode, text speed, sound)
+- [x] HUD elements during exploration (none — clean game world, location name flash only)
 
-**Blocking:** All player-facing interfaces
+**Blocking:** ~~All player-facing interfaces~~
+Now unblocks: 3.3 (Dialogue System — text box specs defined). Also resolves ATB visual representation deferred from Gap 2.2.
 
 ---
 
@@ -563,3 +565,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |
 | 2026-03-25 | 2.4 Encounter Rates | PARTIAL → COMPLETE. Danger counter model (FF6-derived), per-terrain increments (Monte Carlo-verified), act scaling, 3 formation types with terrain rates, 4-pack tables for all dungeons, flee formula, Ward/Lure Talisman + Infiltrator's Cloak, boss trigger types, safe corridor rule. | — |
 | 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING → COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | — |
+| 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 18 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
