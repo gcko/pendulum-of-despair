@@ -84,7 +84,7 @@ Each item is a single check. Grows from Copilot gap analysis.
 - Numeric thresholds in encounters must be achievable given the damage
   output at the recommended progression level
 - Formation enemy counts must not exceed the documented per-encounter
-  limit (currently 4 standard, 6 absolute max per combat-formulas.md)
+  limit (up to 6 per combat-formulas.md; typically 2-4)
 
 ## Mirror Propagation (from Copilot gap analysis, PR #19-20)
 

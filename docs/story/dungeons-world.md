@@ -4059,7 +4059,7 @@ E.......................................X
 
 #### Encounter Rates & Formations
 
-**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Transition area.
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Mountain transition area with moderate encounters.
 
 **Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
 
@@ -5115,7 +5115,7 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 
 **Encounter rate:** Tier 0 (Safe). This is a scripted battle sequence, not a dungeon with random encounters. All encounters are scripted waves tied to the Ashen Ram boss phases.
 
-**Formation type:** Open terrain (battlefield) rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive) -- applies to the Compact Soldier add waves during the boss fight.
+**Formation type:** Normal only (scripted encounters always use Normal formation per combat-formulas.md).
 
 **Scripted waves:** Compact Soldiers scale the walls in waves of 3-4 during Phase 1, reduced to 2 per wave during Phase 2. See boss description for details.
 

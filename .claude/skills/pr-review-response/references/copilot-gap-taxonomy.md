@@ -212,8 +212,8 @@ fully resolve the "no financial services" wording.
 **Top patterns:**
 - Mirror staleness (Infiltrator's Cloak location, Tunnel Map scope): 4 comments
   - Spec/plan said "Ley Line Depths F2" (should be Axis Tower F2)
-  - Tunnel Map scoped to "Bellhaven only" but dungeons-city.md applies it
-    to Corrund sewers too
+  - Tunnel Map was scoped to "Bellhaven only" but dungeons-city.md applied
+    it to Corrund sewers too (fixed: now "Bellhaven Tunnels, Corrund Sewers")
 - Source verification (Infiltrator's Cloak Act I vs Interlude): 1 comment
 - Self-contradiction (Tier 1 + "fixed only", section intro scope): 2 comments
   - Catacombs escape: Tier 1 implies random encounters but text says fixed only
