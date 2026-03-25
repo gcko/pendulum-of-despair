@@ -537,7 +537,6 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
 | **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
 | **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |
-| **Dreamer's Fault (deep)** | Intense | 506 | ~14 | Optional dungeon floors 11–20 |
 | **Urban interior** | None | 0 | — | Inside city/town boundaries |
 
 **Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart. The Wilds have no safe corridors -- there are no roads.

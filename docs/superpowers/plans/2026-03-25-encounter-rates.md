@@ -620,8 +620,9 @@ The Design Notes section (line 1397) has encounter philosophy text. Add a refere
 **Encounter rate system:** City dungeons use the danger counter system
 defined in [combat-formulas.md](combat-formulas.md). Most city dungeon
 areas use Tier 2 (Normal, ~30 steps). Location-specific modifiers
-(Tunnel Map for Bellhaven, Kole's patrol for Caldera Inner Ring) reduce
-rates in their respective areas. See the spec for full details.
+(Tunnel Map for Bellhaven and Corrund, Kole's patrol for Caldera Inner
+Ring) reduce rates in their respective areas. See the spec for full
+details.
 ```
 
 - [ ] **Step 7: Commit**
@@ -675,7 +676,7 @@ Now partially unblocks: 3.4 (Difficulty & Balance)
 
 - [ ] **Step 3: Update the "Sprint Shoes" reference**
 
-The checklist at line 353 mentions "Sprint Shoes" as an encounter rate modifier. Sprint Shoes do not exist in this game. Change the checked item to reference the actual modifiers (Ward Talisman, Lure Talisman, Infiltrator's Cloak, etc.) as shown above.
+The original gap checklist at line 353 mentioned "Sprint Shoes" as an encounter rate modifier. Sprint Shoes exist as a stat-boost accessory (+5 SPD) in equipment.md but are NOT an encounter rate modifier. The checked item now references the actual encounter modifiers (Ward Talisman, Lure Talisman, Infiltrator's Cloak, etc.) as shown above.
 
 - [ ] **Step 4: Add Progress Tracking row**
 

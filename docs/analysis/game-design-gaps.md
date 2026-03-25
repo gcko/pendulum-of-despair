@@ -358,7 +358,7 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
 - [x] Preemptive strike rate and modifiers (12.5% base, Preemptive Charm +25pp, Sable's Coin 100%)
 - [x] Back attack / ambush rate and modifiers (0–25% by terrain, Preemptive Charm eliminates)
 - [x] Boss trigger conditions (Zone, Interact, Cutscene, HP Threshold — 4 categories)
-- [x] Overworld encounter table per terrain type (10 zone types with danger counter increments)
+- [x] Overworld encounter table per terrain type (10 overworld zone types + dungeon tiers, with danger counter increments)
 
 **Blocking:** ~~Dungeon pacing, difficulty tuning~~
 Now partially unblocks: 3.4 (Difficulty & Balance)

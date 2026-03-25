@@ -2280,10 +2280,18 @@ After Wave 4, Cael closes the door. The Pendulum shatters. Grey light collapses 
 | Outer Ring | 2 | 1x Pallor Soldier + 1x Ley Construct | 31.25% |
 | Outer Ring | 3 | 2x Pallor Soldier + 1x Forgewright Automaton | 31.25% |
 | Outer Ring | 4 | 3x Pallor Soldier + 1x Ley Construct (heavy patrol) | 6.25% |
-| Anchors | 1 | 2x Ley Construct (Anchor A) / 2x Forgewright Automaton (Anchor B) / 2x Corrupted Spirit (Anchor C) | 31.25% |
-| Anchors | 2 | 1x Pallor Soldier + 1x Ley Construct / Forgewright Automaton / Corrupted Spirit | 31.25% |
-| Anchors | 3 | 3x Corrupted Spirit / Ley Construct / Forgewright Automaton (anchor-themed pack) | 31.25% |
-| Anchors | 4 | 2x Pallor Soldier + 2x anchor-themed enemy (elite anchor guard) | 6.25% |
+| Anchor A | 1 | 2x Ley Construct | 31.25% |
+| Anchor A | 2 | 1x Pallor Soldier + 1x Ley Construct | 31.25% |
+| Anchor A | 3 | 3x Ley Construct | 31.25% |
+| Anchor A | 4 | 2x Pallor Soldier + 2x Ley Construct (elite guard) | 6.25% |
+| Anchor B | 1 | 2x Forgewright Automaton | 31.25% |
+| Anchor B | 2 | 1x Pallor Soldier + 1x Forgewright Automaton | 31.25% |
+| Anchor B | 3 | 3x Forgewright Automaton | 31.25% |
+| Anchor B | 4 | 2x Pallor Soldier + 2x Forgewright Automaton (elite guard) | 6.25% |
+| Anchor C | 1 | 2x Corrupted Spirit | 31.25% |
+| Anchor C | 2 | 1x Pallor Soldier + 1x Corrupted Spirit | 31.25% |
+| Anchor C | 3 | 3x Corrupted Spirit | 31.25% |
+| Anchor C | 4 | 2x Pallor Soldier + 2x Corrupted Spirit (elite guard) | 6.25% |
 | Phase 4 | 1 | 3x Hollow Walker | 31.25% |
 | Phase 4 | 2 | 2x Despair Cloud + 1x Pallor Knight | 31.25% |
 | Phase 4 | 3 | 2x Grief Shade + 1x Hollow Walker | 31.25% |
@@ -5010,9 +5018,9 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | 1 | 2 | 2x Pallor Fungus + 2x Tunnel Beetle | 31.25% |
 | 1 | 3 | 3x Root Tendril + 1x Pallor Fungus | 31.25% |
 | 1 | 4 | 4x Tunnel Beetle + 2x Pallor Fungus (corrupted tunnel swarm) | 6.25% |
-| 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth | 31.25% |
-| 2 | 2 | 4x Ley Moth (swarm) | 31.25% |
-| 2 | 3 | 1x Pallor Seep + 4x Ley Moth | 31.25% |
+| 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth Swarm | 31.25% |
+| 2 | 2 | 4x Ley Moth Swarm | 31.25% |
+| 2 | 3 | 1x Pallor Seep + 4x Ley Moth Swarm | 31.25% |
 | 2 | 4 | 1x Pallor Seep + 1x Ancient Root Guardian (corrupted passage) | 6.25% |
 
 ### Treasure/Loot
