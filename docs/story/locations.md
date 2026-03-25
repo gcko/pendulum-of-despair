@@ -791,12 +791,12 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 **NPCs:**
 - **Quartermaster** — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
 - **Rest Attendant** — Manages the inn; a former barracks keeper who insists on clean bedrolls despite everything
-- **Compact Engineer** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
+- **Engineer Voss** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
 - **Oasis A Survivor** — A refugee who fled Oasis A after hearing rumors of the Grey's advance; provides context on the other camps
 - **Oasis C Survivor** *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
 
 **Sidequest: Amplifier Stabilization**
-The Compact Engineer's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
+Engineer Voss's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
 
 **Ward stone:** Weakening. Torren: *"The engineers have done something clever. But the core is weakening."*
 
@@ -819,14 +819,14 @@ The most precarious of the three Oases. A ley ward bubble flickers visibly at it
 **NPCs (before fall):**
 - **Herbalist** — Sells unique Thornmere consumables, including the Despair Ward
 - **Innkeeper** — Runs a quiet rest area; charges the highest rate because resources are scarce this close to the Convergence
-- **Ward Keeper** — Quest giver for *The Cracking Stone*; exhausted and barely standing, channeling the last of the node's power
+- **Keeper Elara** — Quest giver for *The Cracking Stone*; exhausted and barely standing, channeling the last of the node's power
 
 **NPCs (after fall):**
-- **The Grey Keeper** — Mini-boss. The ward keeper, consumed by the Pallor when the node collapsed. Fights with corrupted ley magic. A tragic encounter — the party saw this person alive and struggling just hours ago.
+- **The Grey Keeper** — Mini-boss. Keeper Elara, consumed by the Pallor when the node collapsed. Fights with corrupted ley magic. A tragic encounter — the party saw this person alive and struggling just hours ago.
 - **Petrified Refugees** — The Thornmere folk, frozen in grey stone mid-action. Cannot be saved. Environmental storytelling at its bleakest.
 
 **Sidequest: The Cracking Stone**
-The Ward Keeper's ley node is fracturing — the Grey is pressing through micro-fissures in the ward. The party must bring ley water from a ley fissure nearby (~1 encounter away) to stabilize the ward stone. Success delays the fall; the node eventually collapses regardless after the Archive of Ages is completed. Reward: 2,500g + Spirit Essence.
+Keeper Elara's ley node is fracturing — the Grey is pressing through micro-fissures in the ward. The party must bring ley water from a ley fissure nearby (~1 encounter away) to stabilize the ward stone. Success delays the fall; the node eventually collapses regardless after the Archive of Ages is completed. Reward: 2,500g + Spirit Essence.
 
 **Ward stone:** Barely holding. Torren: *"This one is barely holding. I can feel the Grey pressing in."*
 
