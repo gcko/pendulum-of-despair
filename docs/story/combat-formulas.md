@@ -602,7 +602,7 @@ after each battle.
 Each terrain/area has a base increment that determines average steps
 between encounters:
 
-| Zone Type | Increment | Avg Steps |
+| Zone Type | Increment | Avg Steps (Act I base) |
 |-----------|-----------|-----------|
 | Sacred sites / Urban / Boss corridors | 0 | None |
 | Farmland / Settled | 48 | ~48 |
