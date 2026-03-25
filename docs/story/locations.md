@@ -764,8 +764,8 @@ A ley ward bubble shelters an organized encampment under a weathered Valdris ban
 - Save Point
 
 **NPCs:**
-- **Displaced Merchant** — Sells consumables, basic equipment, and a few Valdris-specific items salvaged during the evacuation
-- **Former Innkeeper** — Runs the makeshift inn; weary but determined to maintain normalcy
+- **Nessa Ashvale** — Shopkeeper; sells consumables, basic equipment, and a few Valdris-specific items salvaged during the evacuation. Recognizes returning players from her Crown District shop and offers a small discount
+- **Bren Ashford** — Runs the makeshift inn; weary but determined to maintain normalcy
 - **Valdris Knight** — Quest giver for *The Last Banner*; one of the last soldiers still wearing Valdris colors
 - **Refugee Child** — Provides incidental dialogue about what it was like to watch the Grey take their home
 
