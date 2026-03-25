@@ -122,7 +122,7 @@ them everywhere.
 | Stop | Hourglass | Red-grey `#aa6666` | ATB frozen |
 | Berserk | Rage face | Orange `#ff8844` | Auto-attack |
 | Faint | Skull (hollow) | Dark red `#882222` | KO / unconscious |
-| Despair | Grey static swirl | Grey `#777777` | ATB -25%, damage -20% |
+| Despair | Grey down-arrow | Grey `#777777` | ATB -25%, damage -20% (distinct from Slow's blue arrow via color and grey static particle effect) |
 
 **Positive status icons (warm/cool positive colors):**
 
@@ -302,9 +302,10 @@ After winning a battle, a results window appears over the battle screen:
 
 Maren's party panel row includes a third gauge below her MP bar:
 a thin Weave Gauge bar (purple `#aa44ff` fill on dark background).
-This gauge fills when any magic is cast in battle — +10 WG from
-ally spells, +5 WG from Maren's own spells, +15 WG from enemy
-spells (per [abilities.md](abilities.md) § Maren — Arcanum). Max
+This gauge fills when any magic is cast in battle — +10 WG when
+any ally other than Maren casts a spell, +5 WG when Maren herself
+casts, +15 WG when any enemy casts (per
+[abilities.md](abilities.md) § Maren — Arcanum). Max
 100 WG, starts at 0 each battle. In the menu Abilities screen, the
 current charge is shown (typically 0 outside battle). The Weave
 Gauge is narrower than HP/MP bars and does not appear for other
@@ -512,7 +513,9 @@ for that slot type.
 
 ### 5.6 Stat Comparison (Right)
 
-All 8 core stats + 3 derived stats:
+6 core combat stats + 3 derived stats (HP and MP are shown in the
+party panel but not in the equipment stat comparison, since equipment
+does not directly modify HP/MP):
 - Left column: ATK, DEF, MAG, MDEF, EVA%
 - Right column: SPD, LCK, MEVA%, CRIT%
 
