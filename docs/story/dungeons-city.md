@@ -1294,7 +1294,7 @@ INFILTRATION ROUTE -- Corrund (Sable's Arc)
     The Axis Tower dungeon sequence begins.
 ```
 
-**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) in sewer sections. Surface sections use stealth mechanics, not random encounters.
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) in sewer sections — reduced from the standard Corrund Sewer Tier 2 rate during this infiltration sequence. Surface sections use stealth mechanics, not random encounters.
 
 **Encounters along the route:** Standard sewer encounters plus Corrund-specific enemies (Compact Security Drones in the surface sections if spotted). The infiltration route is designed to feel tense but navigable -- Sable is in her element. Her dialogue reflects this: "Sewers, fake papers, talking my way past guards. This is literally my job."
 
@@ -1351,7 +1351,7 @@ EVACUATION ROUTE -- Caldera Undercity (Unbowed Quest)
     Sera: "For now. That's enough."
 ```
 
-**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Escort pace and fixed encounters dominate; random encounters are sparse.
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) — reduced from the standard Caldera Undercity Tier 2 rate due to escort pacing. Fixed encounters dominate; random encounters are sparse.
 
 **Encounters:** Pallor Nests (3 fixed encounters -- clearing corrupted residue from the tunnel walls), Grey Crawlers (random encounters spawned by the nests), and one Compact Security Drone patrol (avoidable with timing, fightable if caught).
 

@@ -2587,7 +2587,7 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 ### Encounter Rates & Formations
 
-**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1-5. Tier 3 (High, increment 252, ~20 steps) for Floors 6-10. Tier 4 (Intense, increment 506, ~14 steps) for Floors 11-20. Boss floors (4, 8, 12, 16, 20): Tier 0 (Safe) in boss rooms.
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–5. Tier 3 (High, increment 252, ~20 steps) for Floors 6–10. Tier 4 (Intense, increment 506, ~14 steps) for Floors 11–20. Boss floors (4, 8, 12, 16, 20): Tier 0 (Safe) in boss rooms.
 
 **Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 
@@ -4574,9 +4574,9 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 | 1 | 3 | 2x Furnace Rat + 1x Compact Sentry | 31.25% |
 | 1 | 4 | 1x Compact Sentry + 1x Steam Phantom + 2x Lava Grub (sub-level ambush) | 6.25% |
 | 2 | 1 | 2x Magma Crawler + 1x Forge Phantom | 31.25% |
-| 2 | 2 | 6x Ley Wisp Cluster | 31.25% |
+| 2 | 2 | 1x Ley Wisp Cluster | 31.25% |
 | 2 | 3 | 1x Forge Phantom + 2x Magma Crawler | 31.25% |
-| 2 | 4 | 2x Forge Phantom + 4x Ley Wisp Cluster (spectral swarm) | 6.25% |
+| 2 | 4 | 2x Forge Phantom + 1x Ley Wisp Cluster (spectral swarm) | 6.25% |
 | 3 | 1 | 2x Ember Wraith + 1x Ancient Forge Guardian | 31.25% |
 | 3 | 2 | 1x Magma Serpent + 2x Ember Wraith | 31.25% |
 | 3 | 3 | 2x Ancient Forge Guardian | 31.25% |
@@ -4837,9 +4837,9 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
 | 1 | 1 | 1x Ice Gallery Sentinel + 2x Crystal Spider | 31.25% |
-| 1 | 2 | 6x Frost Bat Swarm | 31.25% |
+| 1 | 2 | 1x Frost Bat Swarm | 31.25% |
 | 1 | 3 | 2x Crystal Spider + 1x Ice Gallery Sentinel | 31.25% |
-| 1 | 4 | 2x Ice Gallery Sentinel + 4x Frost Bat Swarm (gallery ambush) | 6.25% |
+| 1 | 4 | 2x Ice Gallery Sentinel + 1x Frost Bat Swarm (gallery ambush) | 6.25% |
 | 2 | 1 | 2x Frost Stalker + 1x Wind Howler | 31.25% |
 | 2 | 2 | 1x Valdris Shade + 2x Frost Stalker | 31.25% |
 | 2 | 3 | 2x Wind Howler | 31.25% |
@@ -5019,8 +5019,8 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | 1 | 3 | 3x Root Tendril + 1x Pallor Fungus | 31.25% |
 | 1 | 4 | 4x Tunnel Beetle + 2x Pallor Fungus (corrupted tunnel swarm) | 6.25% |
 | 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth Swarm | 31.25% |
-| 2 | 2 | 4x Ley Moth Swarm | 31.25% |
-| 2 | 3 | 1x Pallor Seep + 4x Ley Moth Swarm | 31.25% |
+| 2 | 2 | 1x Ley Moth Swarm | 31.25% |
+| 2 | 3 | 1x Pallor Seep + 1x Ley Moth Swarm | 31.25% |
 | 2 | 4 | 1x Pallor Seep + 1x Ancient Root Guardian (corrupted passage) | 6.25% |
 
 ### Treasure/Loot
