@@ -39,6 +39,9 @@ Each item is a single check. Grows from Copilot gap analysis.
   and push" in step 5 AND step 5b without clarifying which push is canonical)
 - Template/example values must be generic or conditional on context (not
   hard-coded to one use case when multiple exist)
+- Section intro/header text must match the actual range of content in
+  the section (e.g., availability range must cover all entries in the
+  table below it)
 
 ## Spec/Plan Mirror Checks
 
@@ -60,6 +63,9 @@ Each item is a single check. Grows from Copilot gap analysis.
   or be explicitly labeled as partial with a link to the full formula
 - Resolution/pipeline steps must include all bounds (floor, cap) stated
   elsewhere in the same document
+- Function notation must be consistent within a document (e.g.,
+  `random_int()` not `random()` when the rest of the file uses
+  `random_int`)
 
 ## Ambiguity Prevention (from Copilot gap analysis, PR #17-18)
 
@@ -77,6 +83,8 @@ Each item is a single check. Grows from Copilot gap analysis.
   damage totals within the same encounter
 - Numeric thresholds in encounters must be achievable given the damage
   output at the recommended progression level
+- Formation enemy counts must not exceed the documented per-encounter
+  limit (up to 6 per combat-formulas.md; typically 2-4)
 
 ## Mirror Propagation (from Copilot gap analysis, PR #19-20)
 

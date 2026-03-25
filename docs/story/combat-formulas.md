@@ -589,6 +589,143 @@ Fully deterministic — no RNG.
 
 ---
 
+## Encounter System
+
+### Danger Counter
+
+Random encounters use a danger counter model (FF6-derived). A hidden
+counter starts at 0 and increments by an area-defined value each step.
+Each step, the game rolls `random_int(0, 255)` — if the result is less than
+`floor(counter / 256)`, a battle triggers. The counter resets to 0
+after each battle.
+
+Each terrain/area has a base increment that determines average steps
+between encounters:
+
+| Zone Type | Increment | Avg Steps (Act I base) |
+|-----------|-----------|-----------|
+| Sacred sites / Urban / Boss corridors | 0 | None |
+| Farmland / Settled | 48 | ~48 |
+| Roads | 96 | ~32 |
+| Forest (light) / Quarried plains | 148 | ~24 |
+| Standard dungeons | 120 | ~30 |
+| Mountains / Deep dungeon floors | 252 | ~20 |
+| Forest (dense) / Marshland | 380 | ~16 |
+| Ley Scar / Dreamer's Fault (deep) | 506 | ~14 |
+| Pallor Wastes | 700 | ~10 |
+
+See [geography.md](geography.md) for terrain zone definitions and
+examples.
+
+**Act scaling:** The base increment scales with story progression:
+
+| Period | Multiplier |
+|--------|------------|
+| Act I | ×1.0 |
+| Act II | ×1.1 |
+| Interlude | ×1.2 |
+| Act III | ×1.1 |
+
+**Final increment formula:**
+
+```
+final_increment = floor(base_increment × act_scale × accessory_mod × location_mod)
+```
+
+**Encounter rate modifiers:**
+
+| Source | Modifier | Scope |
+|--------|----------|-------|
+| Ward Talisman (accessory) | ×0.5 | All areas |
+| Infiltrator's Cloak (accessory) | ×0.5 | All areas |
+| Lure Talisman (accessory) | ×2.0 | All areas |
+| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels, Corrund Sewers |
+| Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only |
+
+Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak
+provide the same effect (×0.5) and do not stack with each other (same
+accessory slot).
+
+### Battle Formations
+
+Three formation types determine battle start conditions:
+
+| Formation | Party Effect | Enemy Effect | Frequency |
+|-----------|-------------|--------------|-----------|
+| Normal | Rows as assigned | Standard ATB start | Most common |
+| Back Attack | Rows reversed for 1st round | 50% ATB fill at battle start | Terrain-dependent |
+| Preemptive | Full ATB gauges | Empty ATB gauges | 12.5% base |
+
+Back attacks and preemptive strikes are mutually exclusive. Bosses and
+scripted encounters always use Normal formation.
+
+**Formation rates by terrain:**
+
+| Terrain | Normal | Back Attack | Preemptive |
+|---------|--------|-------------|------------|
+| Roads / safe paths | 87.5% | 0% | 12.5% |
+| Open (grassland, desert, highland) | 75% | 12.5% | 12.5% |
+| Low-visibility (forest, caves, tunnels) | 68.75% | 18.75% | 12.5% |
+| Pallor Wastes | 62.5% | 25% | 12.5% |
+
+**Preemptive Charm interaction:** +25 percentage points to preemptive,
+deducted from back attack first then normal. Normalizes all terrains to
+62.5% Normal / 0% Back Attack / 37.5% Preemptive.
+
+**Sable's Coin:** Guarantees preemptive on next battle (overrides roll).
+Does not work on bosses.
+
+### Encounter Group Selection (4-Pack)
+
+Each area defines 4 possible enemy formations:
+
+| Slot | Weight | Range (0–255) |
+|------|--------|---------------|
+| Formation 1 | 31.25% | 0–79 |
+| Formation 2 | 31.25% | 80–159 |
+| Formation 3 | 31.25% | 160–239 |
+| Formation 4 (rare) | 6.25% | 240–255 |
+
+Areas may override these weights for narrative reasons (e.g., Ley Scar
+uses 30/30/30/10 to give the Ley Abomination a 10% spawn rate). See
+individual dungeon encounter tables in [dungeons-world.md](dungeons-world.md)
+and [dungeons-city.md](dungeons-city.md).
+
+### Flee
+
+Single roll for the entire party:
+
+```
+flee_chance = clamp(50 + (party_avg_SPD - enemy_avg_SPD) × 2, 10, 90)
+```
+
+- Success: battle ends, no rewards.
+- Failure: acting character loses their turn.
+- Bosses: flee disabled entirely.
+- Smoke Bomb (100g consumable): 100% flee, non-boss only.
+- Smokeveil (Sable, 4 MP): 100% flee, non-boss only.
+
+### Boss Encounter Rules
+
+All boss encounters are authored — no random boss spawns. Four trigger
+types:
+
+| Type | Trigger Condition |
+|------|-------------------|
+| Zone | Player steps into a marked tile/area |
+| Interact | Player examines an object or talks to an NPC |
+| Cutscene | Story event auto-transitions to battle |
+| HP Threshold | Dungeon environmental variable crosses threshold |
+
+Bosses always use Normal formation (preemptive and back attack
+disabled). Flee is disabled in boss battles.
+
+**Safe Corridor Rule:** The area immediately before a boss encounter
+uses Tier 0 (Safe) — no random encounters. This prevents being
+weakened by a random back attack right before a boss fight.
+
+---
+
 ## Integration Notes
 
 This document replaces the placeholder formulas that existed in [magic.md](magic.md) and resolves the scaling warning in [progression.md](progression.md):
@@ -601,3 +738,8 @@ This document replaces the placeholder formulas that existed in [magic.md](magic
 The `random(-3, 3)` and `random(0, 5)` placeholders are replaced by percentage-based variance (`random_int(240, 255) / 256`) that scales properly at all damage levels.
 
 The physical damage formula (`ATK² / 6 - DEF`) is entirely new — no prior placeholder existed.
+
+- **Encounter System → Row System:** Back attacks reverse party rows
+  for the first round. Preemptive strikes use normal row assignments.
+- **Encounter System → ATB:** Preemptive fills all party ATB gauges.
+  Back attacks give enemies 50% ATB fill.

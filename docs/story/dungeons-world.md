@@ -71,7 +71,7 @@ This document provides detailed dungeon layouts for every explorable dungeon, mo
 
 - **Floors:** 4 (Upper Mine + Lower Mine + Ancient Ruin + The Pendulum Chamber)
 - **Size:** Floor 1: 40x30 tiles. Floor 2: 40x30 tiles. Floor 3: 45x35 tiles. Floor 4: 35x30 tiles.
-- **Theme:** Orange-amber crystallized ley energy in dark stone. Carradan mine infrastructure (wooden supports, rail tracks, lanterns) gives way to smooth pre-civilization geometry across Floors 2-3. Floor 4 is pure ancient architecture. Dead miners slumped against walls -- their faces frozen in despair grow more frequent and more disturbing the deeper the party descends.
+- **Theme:** Orange-amber crystallized ley energy in dark stone. Carradan mine infrastructure (wooden supports, rail tracks, lanterns) gives way to smooth pre-civilization geometry across Floors 2–3. Floor 4 is pure ancient architecture. Dead miners slumped against walls -- their faces frozen in despair grow more frequent and more disturbing the deeper the party descends.
 - **Narrative Purpose:** First dungeon. Edren and Cael discover the Pendulum. Lira and Sable join during the escape. Introduces dungeon mechanics (puzzles, traps, combat, exploration) and the Pallor's calling card (faces frozen in despair). The "dying ember crystal" puzzle on Floor 3 is the first seed of the Water of Life mechanic that pays off in the Dry Well and Fenmother's Hollow.
 - **Difficulty:** Introductory. Enemies are forgiving. Puzzles are simple and telegraphed. Traps are gentle -- no death risk. Save points before the mini-boss and boss.
 - **Recommended Level:** 3-7
@@ -330,12 +330,29 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
-| Ley Vermin | Crystalline rats with ember-orange eyes. Fast, weak, attack in groups of 2-4. | Floors 1-2 | 80 |
-| Unstable Crystal | Floating crystal formation. Shatters when defeated, dealing area damage. Teaches "kill it fast or move away." | Floors 1-3 | 150 |
-| Mine Shade | Ghostly silhouette of a dead miner. Casts a weak despair debuff (attack down, 2 turns). Foreshadows the Pallor. | Floors 2-3 | 200 |
+| Ley Vermin | Crystalline rats with ember-orange eyes. Fast, weak, attack in groups of 2-4. | Floors 1–2 | 80 |
+| Unstable Crystal | Floating crystal formation. Shatters when defeated, dealing area damage. Teaches "kill it fast or move away." | Floors 1–3 | 150 |
+| Mine Shade | Ghostly silhouette of a dead miner. Casts a weak despair debuff (attack down, 2 turns). Foreshadows the Pallor. | Floors 2–3 | 200 |
 | Ember Wisp | Small floating flame-crystal. Weak Flame magic, appears in pairs. | Floor 3 only | 120 |
 | **Ember Drake** (Mini-boss) | Crystalline lizard-construct. Fast, aggressive, angular geometry. Teaches full-party coordination. | Floor 2, mini-boss room | 1,500 |
 | **Vein Guardian** (Boss) | Geometric crystal construct. Slow charge attacks, area slam. Telegraphs with floor glow. Reconstructs at 50% HP. | Floor 4, boss room | 6,000 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–3. Floor 4 boss corridor: Tier 0 (Safe).
+
+**Formation type:** Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1–2 | 1 | 2x Ley Vermin + 1x Unstable Crystal | 31.25% |
+| 1–2 | 2 | 3x Ley Vermin | 31.25% |
+| 1–2 | 3 | 2x Unstable Crystal | 31.25% |
+| 1–2 | 4 | 4x Ley Vermin + 1x Unstable Crystal (rare swarm) | 6.25% |
+| 3 | 1 | 2x Mine Shade + 1x Ember Wisp | 31.25% |
+| 3 | 2 | 1x Unstable Crystal + 2x Ember Wisp | 31.25% |
+| 3 | 3 | 2x Unstable Crystal + 1x Mine Shade | 31.25% |
+| 3 | 4 | 2x Mine Shade + 2x Ember Wisp (caster pack) | 6.25% |
 
 ### Treasure/Loot
 
@@ -581,6 +598,23 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | **Drowned Sentinel** (Mini-boss) | Stone guardian covered in barnacles. Heavy physical, Frost area attack. 4,000 HP. | Floor 2 |
 | **Corrupted Fenmother** (Boss) | Frost serpent, dive/surface pattern. Spawns adds at 50%. Cleansed, not killed. 18,000 HP. | Floor 3 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–2. Tier 3 (High, increment 252, ~20 steps) for Floor 3. Boss sanctum: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (swamp) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 3x Marsh Serpent | 31.25% |
+| 1 | 2 | 2x Marsh Serpent + 1x Drowned Bones | 31.25% |
+| 1 | 3 | 2x Drowned Bones | 31.25% |
+| 1 | 4 | 1x Drowned Bones + 3x Marsh Serpent (ambush swarm) | 6.25% |
+| 2–3 | 1 | 2x Ley Jellyfish + 1x Marsh Serpent | 31.25% |
+| 2–3 | 2 | 1x Polluted Elemental + 2x Marsh Serpent | 31.25% |
+| 2–3 | 3 | 2x Marsh Serpent + 1x Ley Jellyfish | 31.25% |
+| 2–3 | 4 | 1x Polluted Elemental + 2x Ley Jellyfish (caster pack) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -595,7 +629,7 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 
 ### Environmental Hazards
 
-- **Poisoned water patches:** Dark-tinted floor tiles deal poison status on contact. Present on Floors 2-3. On Floor 2, the contamination is visibly worse -- the water is darker, thicker, with an oily rainbow sheen. Dead aquatic life clusters in the corners where the current pools.
+- **Poisoned water patches:** Dark-tinted floor tiles deal poison status on contact. Present on Floors 2–3. On Floor 2, the contamination is visibly worse -- the water is darker, thicker, with an oily rainbow sheen. Dead aquatic life clusters in the corners where the current pools.
 - **Rising water:** When water wheels are in certain states, corridors flood over 10 seconds. The player must move quickly or be pushed back to the last dry room.
 - **Collapsing ceiling:** Two spots on Floor 1 where the ancient stone is crumbling. Walking under them triggers falling debris (minor damage, cosmetic dust cloud).
 - **Air pocket timer:** In flooded corridors on Floor 2, the party has a breath timer (30 seconds) between air pockets. Running out triggers forced retreat, not death. Teaches urgency without punishment.
@@ -865,6 +899,23 @@ The operator's voice breaks through. Attacks become erratic -- the machine hesit
 | **Corrupted Boring Engine** (Mini-boss) | Massive drill machine. Charges in straight lines, area slam. Disable by hitting the exposed Arcanite core (back attack bonus). 6,000 HP. | West Tunnel |
 | **The Ironbound** (Boss) | Boring engine fused with its operator during Pallor corruption. 22,000 HP. | Deepest tunnel section |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Hub and East sections. Tier 3 (High, increment 252, ~20 steps) for West and Maintenance Shaft. Boss corridor: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (tunnel) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Section(s) | Fmt | Enemies | Weight |
+|------------|-----|---------|--------|
+| Hub, East | 1 | 2x Forge Phantom + 1x Rail Sentry | 31.25% |
+| Hub, East | 2 | 1x Pallor Nest + 2x Grey Mite | 31.25% |
+| Hub, East | 3 | 1x Steam Elemental + 1x Forge Phantom | 31.25% |
+| Hub, East | 4 | 2x Rail Sentry + 1x Steam Elemental (turret corridor) | 6.25% |
+| West, Maint. | 1 | 2x Forge Phantom + 1x Pallor Nest | 31.25% |
+| West, Maint. | 2 | 1x Pipe Wraith + 2x Grey Mite | 31.25% |
+| West, Maint. | 3 | 1x Steam Elemental + 1x Pipe Wraith | 31.25% |
+| West, Maint. | 4 | 2x Pipe Wraith + 1x Pallor Nest (haunted junction) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -1086,11 +1137,32 @@ When defeated, his soldiers collapse. Brant watches silently.
 
 | Enemy | Description | Location |
 |-------|-------------|----------|
-| Compact Guard | Disciplined soldier. Attacks in pairs, covers each other. | All floors |
-| Forgewright Sentry | Automated turret. Scans in a cone. High damage, low HP. | Floors 2-3 |
-| Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4-5 (and Ironmark tunnel) |
-| Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1-2 |
+| Compact Officer | Disciplined soldier. Attacks in pairs, covers each other. | Floors 1–3 |
+| Forgewright Sentry | Automated turret. Scans in a cone. High damage, low HP. | Floors 2–3 |
+| Pallor Soldier | Grey-eyed Compact soldier running on Pallor energy. Hits hard, no self-preservation. | Floors 4–5 (and Ironmark tunnel) |
+| Arcanite Hound | Mechanical dog construct. Fast, lunges for back attacks. | Floors 1–2 |
 | **General Kole** (Boss) | Pallor-enhanced commander. Summons soldiers, channels conduits. 30,000 HP. | Ironmark Citadel Command Chamber (via Floor 5 tunnel) |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–3. Tier 3 (High, increment 252, ~20 steps) for Floors 4–5. Boss room (Ironmark Command Chamber): Tier 0 (Safe).
+
+**Formation type:** Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1–2 | 1 | 2x Compact Officer + 1x Arcanite Hound | 31.25% |
+| 1–2 | 2 | 2x Arcanite Hound | 31.25% |
+| 1–2 | 3 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
+| 1–2 | 4 | 3x Compact Officer + 1x Arcanite Hound (patrol squad) | 6.25% |
+| 3 | 1 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
+| 3 | 2 | 3x Compact Officer | 31.25% |
+| 3 | 3 | 1x Compact Officer + 1x Forgewright Sentry + 1x Arcanite Hound | 31.25% |
+| 3 | 4 | 2x Forgewright Sentry + 2x Compact Officer (elite patrol) | 6.25% |
+| 4–5 | 1 | 2x Pallor Soldier | 31.25% |
+| 4–5 | 2 | 1x Pallor Soldier + 2x Compact Officer | 31.25% |
+| 4–5 | 3 | 3x Pallor Soldier | 31.25% |
+| 4–5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
 
 ### Treasure/Loot
 
@@ -1110,7 +1182,7 @@ When defeated, his soldiers collapse. Brant watches silently.
 
 - **Forgewright sensor traps:** Invisible tripwires that trigger alarms. Lira can detect and disable them.
 - **Steam conduit bursts:** On the Engine Level, periodic steam releases deal Flame damage in narrow corridors.
-- **Pallor conduit zones:** On Floors 4-5, grey-lit corridors apply Despair debuff while inside. Move through quickly.
+- **Pallor conduit zones:** On Floors 4–5, grey-lit corridors apply Despair debuff while inside. Move through quickly.
 - **Elevator shaft:** On Floor 2, the elevator shaft is exposed. Falling deals significant damage. A railing prevents accidental falls; only a failed stealth sequence near the shaft causes it.
 
 ---
@@ -1123,10 +1195,10 @@ When defeated, his soldiers collapse. Brant watches silently.
 - **Size:** Floor 1: 40x30 tiles. Floor 2: 50x35 tiles. Floor 3: 45x35 tiles. Floor 4: 45x30 tiles. Floor 5: 50x35 tiles.
 - **Theme:** Transition from Compact industrial extraction (scaffolding, pumps, pipes) to raw natural wonder (ley energy rivers flowing through dark stone, shifting blue-white-amber light) to crystalline maze (refracting prismatic light, millennia of mineral growth) to ancient pre-civilization architecture (geometric carvings, sealed passages, the Pendulum symbol) to revelation (the ley network as engineered life support, planetary infrastructure laid bare). The deeper you go, the older the world gets -- and the more you understand that "old" means "designed."
 - **Narrative Purpose:** Optional dungeon in Act II. The best magic equipment before the Interlude. Ancient carvings connect to the Ember Vein and foreshadow the Archive of Ages. The sealed door at the bottom is an unanswered mystery in Act II; in Act III (with the Archivist's Codex from the Archive of Ages), it opens to reveal the Ley Confluence -- where the truth about the ley network is laid bare. The Fading Shifts sidequest resolves here.
-- **Difficulty:** Hard. Magical burn timer adds pressure. Enemies are tough. Floors 4-5 are very hard.
-- **Recommended Level:** 16-20 (Act II, Floors 1-4). 24-28 (Act III, Floor 5).
+- **Difficulty:** Hard. Magical burn timer adds pressure. Enemies are tough. Floors 4–5 are very hard.
+- **Recommended Level:** 16-20 (Act II, Floors 1–4). 24-28 (Act III, Floor 5).
 - **Estimated Play Time:** 90-120 minutes (full clear, all floors)
-- **Revisitable:** Floors 1-4 available in Act II via the Millhaven extraction pit. During the Interlude, the Millhaven pit erupts and the surface infrastructure collapses -- Floor 1 (Extraction Works) is destroyed, and the Millhaven entrance is sealed under rubble. However, the pre-civilization chambers (Floors 2-5) survive intact; the builders' architecture endures what Compact scaffolding cannot. In Act III, a secondary entrance opens through the Thornvein root network (accessible from the Thornvein Passage dungeon or Roothollow), bypassing the destroyed upper floors and entering directly at Floor 2. Floor 5 unlocks in Act III (requires Archivist's Codex from the Archive of Ages). The Crystal Labyrinth's second beam puzzle can only be solved with an item from the Interlude, rewarding return visits.
+- **Revisitable:** Floors 1–4 available in Act II via the Millhaven extraction pit. During the Interlude, the Millhaven pit erupts and the surface infrastructure collapses -- Floor 1 (Extraction Works) is destroyed, and the Millhaven entrance is sealed under rubble. However, the pre-civilization chambers (Floors 2–5) survive intact; the builders' architecture endures what Compact scaffolding cannot. In Act III, a secondary entrance opens through the Thornvein root network (accessible from the Thornvein Passage dungeon or Roothollow), bypassing the destroyed upper floors and entering directly at Floor 2. Floor 5 unlocks in Act III (requires Archivist's Codex from the Archive of Ages). The Crystal Labyrinth's second beam puzzle can only be solved with an item from the Interlude, rewarding return visits.
 
 ### Puzzle Mechanic: Ley Energy Channeling (Floors 2, 4)
 
@@ -1476,14 +1548,35 @@ Edren (if present): "It recognized me. The offering gesture. The Colossus did th
 | **Ley Colossus** (Mini-boss) | Humanoid energy construct. Heavy magic attacks, area pulse. 7,000 HP. Phase 1: physical + area. Phase 2: shatters, reforms smaller, gains precision beam. | Floor 3 |
 | **Ley Titan** (Boss) | Evolved form of the Colossus. Three-phase fight: brute force, fracture into Aspects, reform into fast dense form. 18,000 HP. | Floor 5 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–2. Tier 3 (High, increment 252, ~20 steps) for Floors 3–4. Tier 4 (Intense, increment 506, ~14 steps) for Floor 5. Boss arena: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground caves) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 2x Extraction Drone + 1x Cave Crawler | 31.25% |
+| 1 | 2 | 3x Cave Crawler | 31.25% |
+| 1 | 3 | 2x Extraction Drone | 31.25% |
+| 1 | 4 | 4x Cave Crawler (swarming nest) | 6.25% |
+| 2–3 | 1 | 2x Ley Wisp + 1x Deep Serpent | 31.25% |
+| 2–3 | 2 | 1x Cave Crawler + 2x Ley Wisp | 31.25% |
+| 2–3 | 3 | 2x Deep Serpent + 1x Crystal Sentry | 31.25% |
+| 2–3 | 4 | 2x Prism Moth + 1x Crystal Sentry + 1x Deep Serpent (labyrinth ambush) | 6.25% |
+| 4–5 | 1 | 2x Ley Construct + 1x Vein Stalker | 31.25% |
+| 4–5 | 2 | 1x Confluence Elemental + 1x Ley Construct | 31.25% |
+| 4–5 | 3 | 2x Vein Stalker | 31.25% |
+| 4–5 | 4 | 1x Confluence Elemental + 2x Ley Construct (nexus patrol) | 6.25% |
+
 ### Environmental Hazards
 
-- **Magical burn timer:** On Floors 2-5, a burn meter fills while in the deepest caverns. The rate increases with depth: Floor 2 fills slowly (comfortable exploration with pauses), Floor 3 fills at moderate pace, Floors 4-5 fill quickly. At 75%, the screen flashes and the party's movement animations slow (visual stress). At 100%, all party members take 10% max HP damage per step. Retreating to safe zones (save points, shallow areas) resets the meter. On Floor 5, the master valve's RESTRICTED position halves the fill rate. Encourages efficient exploration, not dawdling -- but the dungeon is designed so that no floor requires more burn time than the meter allows if the player moves purposefully.
+- **Magical burn timer:** On Floors 2–5, a burn meter fills while in the deepest caverns. The rate increases with depth: Floor 2 fills slowly (comfortable exploration with pauses), Floor 3 fills at moderate pace, Floors 4–5 fill quickly. At 75%, the screen flashes and the party's movement animations slow (visual stress). At 100%, all party members take 10% max HP damage per step. Retreating to safe zones (save points, shallow areas) resets the meter. On Floor 5, the master valve's RESTRICTED position halves the fill rate. Encourages efficient exploration, not dawdling -- but the dungeon is designed so that no floor requires more burn time than the meter allows if the player moves purposefully.
 - **Ley energy rivers:** Adjacent tiles restore 1 MP per step. Standing ON the river deals escalating energy damage (10, 20, 40, 80...). On Floor 5, the confluence is too intense to enter at all -- walking onto an `L` tile immediately deals 200 damage and pushes the party back. The rivers are beautiful and lethal.
-- **Unstable crystal formations (Floors 2-3):** Some ceiling crystals drop when the party passes underneath. Visual warning (dust particles fall first, 1-second delay). Minor damage (5-10% max HP). On Floor 3, the crystal formations are denser and the drops more frequent -- the labyrinth punishes careless movement.
+- **Unstable crystal formations (Floors 2–3):** Some ceiling crystals drop when the party passes underneath. Visual warning (dust particles fall first, 1-second delay). Minor damage (5-10% max HP). On Floor 3, the crystal formations are denser and the drops more frequent -- the labyrinth punishes careless movement.
 - **Crystal floor pitfalls (Floor 3):** Thin crystal sections that crack and shatter underfoot, dropping the party to Floor 2. Visual tell: blue-tinged crystal versus amber-white stable crystal. One mandatory pitfall leads to a hidden alcove with a secret chest. See Floor 3 puzzle section for details.
 - **Volatile crystal clusters (Floor 3):** Scattered throughout the labyrinth. If a ley-light beam strikes one (during puzzle attempts), it erupts in a blinding flash -- screen white-out for 1 second, followed by a forced encounter with Prism Moth swarms. The clusters are also visible during normal exploration and can be avoided.
-- **Gravity anomalies (Floors 4-5):** Near the sealed door and throughout the Confluence, gravity occasionally reverses for 2 seconds -- the screen flips. On Floor 4, this is cosmetic disorientation with no gameplay effect. On Floor 5, gravity shifts during the Ley Titan fight can reposition party members (minor -- shifts position by 1 tile in a random direction). Foreshadows the Dreamer's Fault. Caused by ley-line density warping local spacetime -- the same phenomenon seen in the Dry Well of Aelhart.
+- **Gravity anomalies (Floors 4–5):** Near the sealed door and throughout the Confluence, gravity occasionally reverses for 2 seconds -- the screen flips. On Floor 4, this is cosmetic disorientation with no gameplay effect. On Floor 5, gravity shifts during the Ley Titan fight can reposition party members (minor -- shifts position by 1 tile in a random direction). Foreshadows the Dreamer's Fault. Caused by ley-line density warping local spacetime -- the same phenomenon seen in the Dry Well of Aelhart.
 - **Nexus radiation (Floor 5):** Standing within 3 tiles of the nexus column outside of the boss arena deals escalating magic damage (similar to ley river damage but faster). The boss arena platform is shielded -- the builders designed it for prolonged presence near the nexus.
 
 ### Treasure Summary
@@ -1520,8 +1613,8 @@ The Ley Line Depths is the game's first encounter with pre-civilization infrastr
 
 **Connections to Other Dungeons:**
 - **Ember Vein:** The geometric carvings on Floor 4 are identical to the Ember Vein's deeper chambers. The Ley Depths confirms that the Ember Vein was a minor sentry node in a continent-spanning network. Players who explored the Ember Vein's second floor thoroughly will recognize the pictographic style on Floor 4's murals. The same directional symbols used in the Ember Vein's mine cart puzzle appear on the Crystal Labyrinth's beam-routing mural.
-- **Archive of Ages:** The sealed door's inscription references the Archive directly ("Do not open until the Archive speaks"). The Archivist's Codex is the literal key. The pictographic language on Floors 4-5 is the same language taught in the Archive's translation puzzles. Players who completed the Archive first can read the Confluence's wall inscriptions in full. Players who come here first will recognize the symbols when they encounter the Archive later.
-- **Dry Well of Aelhart:** The Confluence is visible on the Wellspring's network map (Floor 7 of the Dry Well), labeled "The Deep Root." The gravity anomalies on Floors 4-5 foreshadow the Dry Well's Folded Space floor. Both effects are caused by ley-line density warping local spacetime. The sealed door and the Wellspring's network tunnel are two ends of the same collapsed passage -- architecturally connected but impassable.
+- **Archive of Ages:** The sealed door's inscription references the Archive directly ("Do not open until the Archive speaks"). The Archivist's Codex is the literal key. The pictographic language on Floors 4–5 is the same language taught in the Archive's translation puzzles. Players who completed the Archive first can read the Confluence's wall inscriptions in full. Players who come here first will recognize the symbols when they encounter the Archive later.
+- **Dry Well of Aelhart:** The Confluence is visible on the Wellspring's network map (Floor 7 of the Dry Well), labeled "The Deep Root." The gravity anomalies on Floors 4–5 foreshadow the Dry Well's Folded Space floor. Both effects are caused by ley-line density warping local spacetime. The sealed door and the Wellspring's network tunnel are two ends of the same collapsed passage -- architecturally connected but impassable.
 - **Sunken Rig:** The Ley Prism Fragment (Sunken Rig reward) unlocks the Crystal Labyrinth's secret beam puzzle, creating a mechanical dependency between the two Interlude-era dungeons.
 - **The Convergence:** The Confluence's wall inscription identifies the Convergence as the central hub of the ley network -- "where all lines meet." This knowledge (gained in Act III, before the final dungeon) recontextualizes the Convergence from "a place of power" to "the builders' masterwork being used as a weapon."
 
@@ -1695,6 +1788,23 @@ Maren faces the Index -- a vast catalogue entity containing every recorded death
 | Stone Spirits | Petrified nature spirits that animate on approach. Cannot speak. | Trial 3 (B3) |
 | Archived | Humanoid figures of compressed pages. Attack with factual recitations of how they died. | Trial 5 (B5) |
 | Vaelith, the Ashen Shepherd | 800-year-old champion of Despair. Penultimate boss. 50,000 HP. Multi-phase. | Section 5 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 4 (Intense, increment 700, ~10 steps) for combat sections (Sections 1–4 / The Grey March). Trial clearings and boss arena: Tier 0 (Safe).
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
+| Section(s) | Fmt | Enemies | Weight |
+|------------|-----|---------|--------|
+| 1–2 | 1 | 2x Hollow Walker + 1x Despair Cloud | 31.25% |
+| 1–2 | 2 | 1x Petrified Beast + 2x Hollow Walker | 31.25% |
+| 1–2 | 3 | 2x Despair Cloud + 1x Grief Shade | 31.25% |
+| 1–2 | 4 | 1x Grief Shade + 2x Hollow Walker + 1x Despair Cloud (grey patrol) | 6.25% |
+| 3–4 | 1 | 2x Pallor Knight + 1x Hollow Walker | 31.25% |
+| 3–4 | 2 | 1x Pallor Knight + 2x Despair Cloud | 31.25% |
+| 3–4 | 3 | 1x Grief Shade + 1x Petrified Beast + 1x Hollow Walker | 31.25% |
+| 3–4 | 4 | 2x Pallor Knight + 1x Grief Shade (elite grey vanguard) | 6.25% |
 
 ### Treasure/Loot
 
@@ -1908,14 +2018,18 @@ A rift in the Pallor Wastes where concentrated Ley energy bleeds through the Gre
 - 2–3 enemies per encounter group (tougher than normal Act III)
 - Ley Abomination appears as a rare encounter (~10% chance), functions as mini-boss
 
+**Encounter rate:** Tier 4 (Intense, increment 506, ~14 steps). No safe zones.
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
 **Encounter Table:**
 
 | Encounter | Rate |
 |-----------|------|
-| Ley-Warped Drake (Lv 40) + Ley-Warped Wraith (Lv 42) | 40% |
-| 2× Ley-Warped Colossus (Lv 45) | 30% |
-| Ley-Warped Drake + Ley-Warped Colossus + Ley-Warped Wraith | 20% |
-| Ley Abomination (Lv 48) -- rare mini-boss | 10% |
+| 2x Ley-Warped Drake (Lv 40) | 30% |
+| 2x Ley-Warped Wraith (Lv 42) + 1x Ley-Warped Colossus (Lv 45) | 30% |
+| 1x Ley-Warped Colossus + 2x Ley-Warped Drake | 30% |
+| Ley Abomination (Lv 48) — rare mini-boss | 10% |
 
 See `bestiary/act-iii.md` (Ley Scar section) for full enemy stat blocks and hand-tuned XP overrides.
 
@@ -2154,6 +2268,35 @@ After Wave 4, Cael closes the door. The Pendulum shatters. Grey light collapses 
 | **The Pallor Incarnate** (Boss, Phase 3) | Towering grey entity. Conduit crystals, area attacks. 70,000 HP. | Central Platform |
 | **Pallor Echo** (Mini-boss, Phase 4) | Shadow of Cael. Reduced Phase 1 moveset. 5,000 HP. | The Door |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 3 (High, increment 252, ~20 steps) for Outer Ring and Anchor Stations. Tier 4 (Intense, increment 506, ~14 steps) for Central Platform and The Door. Boss arenas: Tier 0 (Safe).
+
+**Formation type:** Pallor Wastes rules (62.5% Normal / 25% Back Attack / 12.5% Preemptive).
+
+| Area | Fmt | Enemies | Weight |
+|------|-----|---------|--------|
+| Outer Ring | 1 | 2x Pallor Soldier | 31.25% |
+| Outer Ring | 2 | 1x Pallor Soldier + 1x Ley Construct | 31.25% |
+| Outer Ring | 3 | 2x Pallor Soldier + 1x Forgewright Automaton | 31.25% |
+| Outer Ring | 4 | 3x Pallor Soldier + 1x Ley Construct (heavy patrol) | 6.25% |
+| Anchor A | 1 | 2x Ley Construct | 31.25% |
+| Anchor A | 2 | 1x Pallor Soldier + 1x Ley Construct | 31.25% |
+| Anchor A | 3 | 3x Ley Construct | 31.25% |
+| Anchor A | 4 | 2x Pallor Soldier + 2x Ley Construct (elite guard) | 6.25% |
+| Anchor B | 1 | 2x Forgewright Automaton | 31.25% |
+| Anchor B | 2 | 1x Pallor Soldier + 1x Forgewright Automaton | 31.25% |
+| Anchor B | 3 | 3x Forgewright Automaton | 31.25% |
+| Anchor B | 4 | 2x Pallor Soldier + 2x Forgewright Automaton (elite guard) | 6.25% |
+| Anchor C | 1 | 2x Corrupted Spirit | 31.25% |
+| Anchor C | 2 | 1x Pallor Soldier + 1x Corrupted Spirit | 31.25% |
+| Anchor C | 3 | 3x Corrupted Spirit | 31.25% |
+| Anchor C | 4 | 2x Pallor Soldier + 2x Corrupted Spirit (elite guard) | 6.25% |
+| Phase 4 | 1 | 3x Hollow Walker | 31.25% |
+| Phase 4 | 2 | 2x Despair Cloud + 1x Pallor Knight | 31.25% |
+| Phase 4 | 3 | 2x Grief Shade + 1x Hollow Walker | 31.25% |
+| Phase 4 | 4 | 2x Pallor Knight + 1x Grief Shade (final grey vanguard) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -2308,6 +2451,23 @@ A construct of geometric crystal and ancient stone. It does not speak. It tests.
 | Crystal Warden | Small floating crystal. Fires ley bolts. Shatters on defeat (area damage). | Floor 2-3 |
 | **Archive Guardian** (Boss) | Geometric construct. Three-phase test. 28,000 HP. | Floor 3 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–2. Tier 3 (High, increment 252, ~20 steps) for Floor 3. Boss arena (Truth Chamber): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1–2 | 1 | 2x Pictograph Wisp + 1x Dust Golem | 31.25% |
+| 1–2 | 2 | 2x Dust Golem | 31.25% |
+| 1–2 | 3 | 3x Pictograph Wisp | 31.25% |
+| 1–2 | 4 | 1x Archive Sentinel + 2x Pictograph Wisp (guardian encounter) | 6.25% |
+| 2–3 | 1 | 1x Crystal Warden + 1x Pictograph Wisp | 31.25% |
+| 2–3 | 2 | 2x Crystal Warden | 31.25% |
+| 2–3 | 3 | 1x Archive Sentinel + 1x Dust Golem | 31.25% |
+| 2–3 | 4 | 2x Crystal Warden + 1x Archive Sentinel (vault patrol) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -2347,11 +2507,11 @@ The Dreamer's Fault is entered from The Pendulum tavern (post-game hub). A crack
 
 | Floors | Theme | Visual Style | Unique Mechanic |
 |--------|-------|-------------|-----------------|
-| 1-4 | The First Age | Ancient stone, Ember Vein geometry | Floors rotate 90 degrees between rooms |
-| 5-8 | The Crystal Age | Alien crystal formations, refracting light | Light/shadow puzzles -- enemies visible only in light/shadow |
-| 9-12 | The Green Age | Living wood, overgrown ruins | Floors grow and shift -- paths change between visits |
-| 13-16 | The Iron Age | Twisted industrial metal, gears, pipes | Gravity reversal -- ceiling becomes floor periodically |
-| 17-20 | The Void | Pure grey, featureless, minimal geometry | No map. The player navigates by sound cues only. |
+| 1–4 | The First Age | Ancient stone, Ember Vein geometry | Floors rotate 90 degrees between rooms |
+| 5–8 | The Crystal Age | Alien crystal formations, refracting light | Light/shadow puzzles -- enemies visible only in light/shadow |
+| 9–12 | The Green Age | Living wood, overgrown ruins | Floors grow and shift -- paths change between visits |
+| 13–16 | The Iron Age | Twisted industrial metal, gears, pipes | Gravity reversal -- ceiling becomes floor periodically |
+| 17–20 | The Void | Pure grey, featureless, minimal geometry | No map. The player navigates by sound cues only. |
 
 **Every 4th floor:** Echo Boss -- a shade of a past Pallor host. Each is a unique boss with mechanics themed to their age.
 
@@ -2418,21 +2578,50 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 | Enemy | Age | Description |
 |-------|-----|-------------|
-| First Age Sentinel | 1-4 | Stone guardian, geometric attacks |
-| Crystal Refractor | 5-8 | Prism creature, reflects spells |
-| Root Weaver | 9-12 | Living vine construct, entangle |
-| Iron Automaton | 13-16 | Mechanical soldier, heavy armor |
-| Void Walker | 17-20 | Featureless grey shape, drains all |
+| First Age Sentinel | 1–4 | Stone guardian, geometric attacks |
+| Crystal Refractor | 5–8 | Prism creature, reflects spells |
+| Root Weaver | 9–12 | Living vine construct, entangle |
+| Iron Automaton | 13–16 | Mechanical soldier, heavy armor |
+| Void Walker | 17–20 | Featureless grey shape, drains all |
 | Echo Bosses (x4) | Every 4th floor | Unique, extremely powerful |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–5. Tier 3 (High, increment 252, ~20 steps) for Floors 6–10. Tier 4 (Intense, increment 506, ~14 steps) for Floors 11–20. Boss floors (4, 8, 12, 16, 20): Tier 0 (Safe) in boss rooms.
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1–4 | 1 | 2x First Age Sentinel | 31.25% |
+| 1–4 | 2 | 3x First Age Sentinel | 31.25% |
+| 1–4 | 3 | 1x First Age Sentinel (tough solo) | 31.25% |
+| 1–4 | 4 | 4x First Age Sentinel (ancient garrison) | 6.25% |
+| 5–8 | 1 | 2x Crystal Refractor | 31.25% |
+| 5–8 | 2 | 1x Crystal Refractor + 2x First Age Sentinel | 31.25% |
+| 5–8 | 3 | 3x Crystal Refractor | 31.25% |
+| 5–8 | 4 | 2x Crystal Refractor + 2x First Age Sentinel (prism ambush) | 6.25% |
+| 9–12 | 1 | 2x Root Weaver + 1x Crystal Refractor | 31.25% |
+| 9–12 | 2 | 3x Root Weaver | 31.25% |
+| 9–12 | 3 | 1x Root Weaver + 2x Crystal Refractor | 31.25% |
+| 9–12 | 4 | 4x Root Weaver (entangle swarm) | 6.25% |
+| 13–16 | 1 | 2x Iron Automaton | 31.25% |
+| 13–16 | 2 | 1x Iron Automaton + 2x Root Weaver | 31.25% |
+| 13–16 | 3 | 3x Iron Automaton | 31.25% |
+| 13–16 | 4 | 2x Iron Automaton + 2x Root Weaver (mechanized advance) | 6.25% |
+| 17–20 | 1 | 2x Void Walker | 31.25% |
+| 17–20 | 2 | 1x Void Walker + 2x Iron Automaton | 31.25% |
+| 17–20 | 3 | 3x Void Walker | 31.25% |
+| 17–20 | 4 | 4x Void Walker (the abyss stares back) | 6.25% |
 
 ### Treasure/Loot
 
 - Each floor has 1-2 chests with escalating quality.
-- Floors 1-4: Best-in-class consumables.
-- Floors 5-8: Unique accessories not found elsewhere.
-- Floors 9-12: Ultimate weapon materials.
-- Floors 13-16: Ultimate armor materials.
-- Floors 17-20: Cosmetic rewards and the Dreamer's Crest (accessory, best in game: +30 all stats).
+- Floors 1–4: Best-in-class consumables.
+- Floors 5–8: Unique accessories not found elsewhere.
+- Floors 9–12: Ultimate weapon materials.
+- Floors 13–16: Ultimate armor materials.
+- Floors 17–20: Cosmetic rewards and the Dreamer's Crest (accessory, best in game: +30 all stats).
 
 ### Environmental Hazards
 
@@ -2452,16 +2641,16 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 - **Size:** Floor 1: 30x20. Floor 2: 40x25. Floor 3: 50x30. Floor 4: 55x35. Floor 5: 60x35. Floor 6: 50x30. Floor 7: 45x30.
 - **Theme:** Vertical descent from the familiar into the ancient. The dungeon begins as a cramped, crumbling well shaft -- damp stone, roots poking through, the smell of old earth. By Floor 3 the player has entered a pre-civilization waterworks complex of staggering engineering. By Floor 5 they are walking through rooms where the builders lived, studied, and recorded everything they knew. By Floor 7 they stand at a ley line nexus that connects to the same underground network as the Archive of Ages, the Ember Vein, and the Ley Line Depths. The architecture follows the Ancient Ruins biome: smooth-cut stone, geometric relief carvings, inlaid ley channels (dormant on upper floors, increasingly active as the player descends), self-illuminating chambers, and the same pictographic language found in the Archive. The scale increases with depth -- ceilings rise, corridors widen, rooms dwarf the party. The builders were here first. Aelhart is an afterthought.
 - **Narrative Purpose:** The definitive pre-civilization dungeon. Transforms Aelhart from a quaint starting village into the cap on something immense. Progressive lore revelation: each floor answers one question and raises two more. By Floor 7, the player understands that the pre-civilization builders created a continent-spanning underground network to monitor the Pallor's cycle, that they built Wellspring nexus points at key locations, and that they sealed their own network when they realized they could not stop the cycle -- only endure it. Edren's Family Crest (found on Floor 4) reveals that his ancestors were not random settlers but descendants of the last generation of builders. "The Third Door" sidequest tablet (Floor 5) confirms a third closing of the Pallor's door. The Water of Life puzzle (Floor 3) has a cosmetic payoff: completing it causes Aelhart's dry well to flow again in the epilogue, a small restoration that means everything.
-- **Difficulty:** Progressive. Floors 1-4 are moderate (Interlude-appropriate). Floor 5 spikes to hard. Floors 6-7 are very hard (Act III or post-game recommended).
-- **Recommended Level:** Floors 1-4: 22-26. Floors 5-7: 30-36.
-- **Estimated Play Time:** Floors 1-4: 60-80 minutes. Full dungeon: 2-3 hours.
-- **Act Availability:** Floors 1-4 accessible during the Interlude. A sealed door on Floor 4 blocks further descent until Act III (requires the Archivist's Codex from the Archive of Ages to translate the lock mechanism). Post-game players can clear the entire dungeon in one descent.
+- **Difficulty:** Progressive. Floors 1–4 are moderate (Interlude-appropriate). Floor 5 spikes to hard. Floors 6–7 are very hard (Act III or post-game recommended).
+- **Recommended Level:** Floors 1–4: 22-26. Floors 5–7: 30-36.
+- **Estimated Play Time:** Floors 1–4: 60-80 minutes. Full dungeon: 2-3 hours.
+- **Act Availability:** Floors 1–4 accessible during the Interlude. A sealed door on Floor 4 blocks further descent until Act III (requires the Archivist's Codex from the Archive of Ages to translate the lock mechanism). Post-game players can clear the entire dungeon in one descent.
 
 ### Puzzle Mechanics
 
 Six distinct puzzle types are woven across the seven floors, each introduced on its home floor and occasionally referenced later.
 
-**1. Pitfall Traps (Floors 2-4):**
+**1. Pitfall Traps (Floors 2–4):**
 Crumbling stone tiles marked by hairline cracks in the floor pattern. Stepping on a pitfall drops the party to a lower section of the previous floor, requiring re-navigation through already-cleared rooms to reach the stairs again. Pitfalls are visible to observant players -- the geometric floor pattern breaks where the stone is weakened. On Floor 2, pitfalls drop to Floor 1 (short recovery). On Floor 3, pitfalls drop to Floor 2 (moderate recovery). On Floor 4, one nasty pitfall drops two floors to Floor 2 (long recovery, but a shortcut back is available). Pitfalls are never required -- they punish carelessness, not progress.
 
 **2. Water of Life (Floor 3):**
@@ -2481,7 +2670,7 @@ A massive stone interface identical to the Archive of Ages' translation puzzles,
 
 ### Echo Visions
 
-The Dry Well's signature mechanic. On Floors 3-7, certain tiles glow with a faint amber-blue light -- residual ley energy imprinted with the memories of the pre-civilization builders. Stepping on an echo tile triggers a brief (5-10 second) flashback vision: the screen desaturates, the party vanishes, and ghostly figures of the builders appear, performing an action. No dialogue -- only visual storytelling. The visions are silent, brief, and haunting.
+The Dry Well's signature mechanic. On Floors 3–7, certain tiles glow with a faint amber-blue light -- residual ley energy imprinted with the memories of the pre-civilization builders. Stepping on an echo tile triggers a brief (5-10 second) flashback vision: the screen desaturates, the party vanishes, and ghostly figures of the builders appear, performing an action. No dialogue -- only visual storytelling. The visions are silent, brief, and haunting.
 
 The Echo Visions tell a progressive story across the dungeon:
 
@@ -2714,7 +2903,7 @@ This floor also contains the wall switch sequence puzzle and a nasty two-floor p
 - `T` (hidden room): Chest -- Crest Bearer's Mantle (armor, Edren, +20 DEF, +10 MAG RES). A cloak of woven ley-crystal fiber, preserved perfectly. It was made for someone who carried the crest. It was made for Edren's ancestor.
 - `*` (lower hall): **Mini-boss: Hearthstone Warden.** The guardian of the residential quarter. Unlike the Pipe Warden, this construct is not mechanical -- it is domestic. A suit of geometric armor animated by ley energy, standing in the central hall like a sentry. It wields a stone blade and a geometric shield. It does not attack immediately -- it salutes the party first (a gesture from the Echo Visions: the builders saluted their wardens). If Edren is in the party and has the Family Crest equipped, the Warden pauses, examines him, and lowers its weapon. Edren can choose: "I am of the builders" (skip the fight entirely, the Warden stands aside) or "Test me" (fight at full strength). If Edren does not have the crest, the fight is mandatory. 8,000 HP. Drops: Warden's Stone Blade (weapon, Edren, +22 ATK, geometric design).
 - `S` (central hall): Save point. A ley crystal formation in the center of the hall. The largest yet. The glow is warm, steady, and old.
-- `L` (bottom): Locked door. Sealed with a pictographic lock that requires the Archivist's Codex (from the Archive of Ages) to read. The inscription translates to: "Below this point, the weight increases. Bring understanding, not weapons." This door blocks access to Floors 5-7 during the Interlude (the player does not yet have the Codex). In Act III or post-game, the player returns with the Codex and the door opens.
+- `L` (bottom): Locked door. Sealed with a pictographic lock that requires the Archivist's Codex (from the Archive of Ages) to read. The inscription translates to: "Below this point, the weight increases. Bring understanding, not weapons." This door blocks access to Floors 5–7 during the Interlude (the player does not yet have the Codex). In Act III or post-game, the player returns with the Codex and the door opens.
 
 ### Floor 5: The Deep Archive (60x35)
 
@@ -2915,13 +3104,13 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 |-------|-------------|----------|----|
 | Well Shade | Dormant construct, sluggish. Stone limbs, faint amber glow. Awakened by footsteps after centuries of silence. | Floor 1 | 800 |
 | Cave Lurker | Ley-mutated cave crawler. Six-legged, crystalline carapace. Attacks in groups of 2-3. | Floor 2 | 1,200 |
-| Ley Vermin (deep) | Stronger variant of the Ember Vein's crystalline rats. Faster, hits harder, glows blue instead of amber. | Floors 2-3 | 1,000 |
+| Ley Vermin (deep) | Stronger variant of the Ember Vein's crystalline rats. Faster, hits harder, glows blue instead of amber. | Floors 2–3 | 1,000 |
 | Pipe Specter | Frost-element construct. Manifests in waterwork channels. Sprays pressurized ley-water. | Floor 3 | 1,800 |
 | **Pipe Warden** (Mini-boss) | Waterworks guardian construct. Frost attacks, valve-sealing ability. | Floor 3 | 6,500 |
 | Guardian Sentinel | Standard ruin guardian. Stone body, geometric attacks. Triggered by failed wall switch sequence. | Floor 4 | 3,000 |
 | Hearthstone Shade | Domestic guardian echo. Slower than combat constructs but durable. Appears in residential areas. | Floor 4 | 2,500 |
 | **Hearthstone Warden** (Mini-boss) | Residential quarter guardian. Stone blade and shield. Salutes before combat. Skippable with Family Crest. | Floor 4 | 8,000 |
-| Crystal Warden (deep) | Stronger variant. Fires concentrated ley bolts. Shatters on defeat (area damage). | Floors 5-6 | 3,500 |
+| Crystal Warden (deep) | Stronger variant. Fires concentrated ley bolts. Shatters on defeat (area damage). | Floors 5–6 | 3,500 |
 | Pictograph Wisp (deep) | Stronger variant. Magic attacks themed to the tablet's content -- history attacks (Non-elemental), warning attacks (Flame-element). | Floor 5 | 2,800 |
 | **Archive Keeper** (Mini-boss) | Knowledge construct. Translation puzzle combat. Strength varies with player's answers. | Floor 5 | 3,000-12,000 |
 | Ley-Warped Construct | Gravity-exploiting guardian. Attacks from walls and ceilings. | Floor 6 | 4,000 |
@@ -2929,11 +3118,40 @@ When defeated, the Guardian does not shatter. It kneels. It places one hand on t
 | Ley-Born Echo | Impression of a builder given temporary form. Tests rather than attacks. | Floor 7 | 3,000 |
 | **Wellspring Guardian** (Boss) | Three-phase construct. Physical, knowledge, and resolve tests. Builder's Weight despair attack. | Floor 7 | 28,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–3. Tier 3 (High, increment 252, ~20 steps) for Floors 4–5. Tier 4 (Intense, increment 506, ~14 steps) for Floors 6–7. Boss arena (Wellspring): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 2x Well Shade | 31.25% |
+| 1 | 2 | 3x Well Shade | 31.25% |
+| 1 | 3 | 1x Well Shade (sluggish solo) | 31.25% |
+| 1 | 4 | 4x Well Shade (dormant mass awakening) | 6.25% |
+| 2–3 | 1 | 2x Cave Lurker + 1x Ley Vermin (deep) | 31.25% |
+| 2–3 | 2 | 3x Ley Vermin (deep) | 31.25% |
+| 2–3 | 3 | 1x Pipe Specter + 2x Cave Lurker | 31.25% |
+| 2–3 | 4 | 2x Pipe Specter + 2x Ley Vermin (deep) (waterworks ambush) | 6.25% |
+| 4 | 1 | 2x Guardian Sentinel + 1x Hearthstone Shade | 31.25% |
+| 4 | 2 | 2x Hearthstone Shade | 31.25% |
+| 4 | 3 | 1x Guardian Sentinel + 2x Hearthstone Shade | 31.25% |
+| 4 | 4 | 3x Guardian Sentinel (residential ward patrol) | 6.25% |
+| 5–6 | 1 | 2x Crystal Warden (deep) + 1x Pictograph Wisp (deep) | 31.25% |
+| 5–6 | 2 | 2x Ley-Warped Construct + 1x Warp Sentinel | 31.25% |
+| 5–6 | 3 | 1x Crystal Warden (deep) + 2x Ley-Warped Construct | 31.25% |
+| 5–6 | 4 | 2x Warp Sentinel + 1x Crystal Warden (deep) (gravity-warped ambush) | 6.25% |
+| 7 | 1 | 2x Ley-Born Echo | 31.25% |
+| 7 | 2 | 3x Ley-Born Echo | 31.25% |
+| 7 | 3 | 1x Ley-Born Echo (solo sparring test) | 31.25% |
+| 7 | 4 | 4x Ley-Born Echo (builder's gauntlet) | 6.25% |
+
 **Encounter Design Philosophy:**
 
 The Dry Well's enemies follow a progression that mirrors the dungeon's narrative arc: from mindless guardians to purposeful testers.
 
-*Floors 1-2 (Dormant):* Enemies here have been asleep for centuries. They activate when the party's footsteps disturb them, but they fight sluggishly -- attack patterns are slow, damage is low, and they frequently pause mid-combat as if confused. The Well Shades in particular sometimes stop attacking to examine the party, as if trying to determine whether the intruders are threats or authorized visitors. These encounters teach the dungeon's combat rhythm without punishing.
+*Floors 1–2 (Dormant):* Enemies here have been asleep for centuries. They activate when the party's footsteps disturb them, but they fight sluggishly -- attack patterns are slow, damage is low, and they frequently pause mid-combat as if confused. The Well Shades in particular sometimes stop attacking to examine the party, as if trying to determine whether the intruders are threats or authorized visitors. These encounters teach the dungeon's combat rhythm without punishing.
 
 *Floor 3 (Mechanical):* The waterworks enemies are infrastructure -- Pipe Specters manifest from the channels themselves, and the Pipe Warden is literally built into the valve system. These enemies are not guardians in the traditional sense; they are maintenance systems interpreting the party's actions as unauthorized use. The Pipe Warden fight is the dungeon's first significant challenge. Its ability to seal valves mid-fight (re-locking pipe sections the player has already opened) creates urgency: defeat it before it undoes your puzzle progress.
 
@@ -2977,7 +3195,7 @@ The Dry Well's enemies follow a progression that mirrors the dungeon's narrative
 
 ### Environmental Hazards
 
-- **Pitfall traps (Floors 2-4):** Cracked geometric floor tiles that collapse under weight. Drop to the previous floor (or two floors down on Floor 4). Visible to careful players. Sable can detect them. Recovery requires re-navigation.
+- **Pitfall traps (Floors 2–4):** Cracked geometric floor tiles that collapse under weight. Drop to the previous floor (or two floors down on Floor 4). Visible to careful players. Sable can detect them. Recovery requires re-navigation.
 - **Residual ley-water (Floor 3):** Shallow water in channels reduces movement speed. Not damaging, but slows escape from encounters.
 - **Domestic dust (Floor 4):** Millennia-old dust in the residential chambers. Disturbing it triggers coughing (cosmetic, no gameplay effect) and occasionally reveals hidden inscriptions in the dust patterns -- footprints of the builders, preserved in settled dust.
 - **Gravity anomalies (Floor 6):** Room orientation shifts. The minimap rotates. Navigation becomes a spatial puzzle. No direct damage, but disorientation during combat (enemies exploit positioning) is the real hazard.
@@ -3097,7 +3315,7 @@ After defeating the Wellspring Guardian, examining the nexus crystal directly (n
 
 The Dry Well changes based on when and how the player visits. Returning to cleared floors reveals new details and reflects the dungeon's evolving relationship with the surface world.
 
-**Interlude (First Visit, Floors 1-4):**
+**Interlude (First Visit, Floors 1–4):**
 - The well crack is narrow. Edren comments on childhood memories.
 - All enemies are dormant and confused. The dungeon has been asleep.
 - The waterworks is dry. The ley-crystal plant is dead.
@@ -3105,17 +3323,17 @@ The Dry Well changes based on when and how the player visits. Returning to clear
 - Completing the Water of Life puzzle restores the waterworks and blooms the plant. This change is permanent.
 - Edren's Family Crest discovery triggers a personal cutscene regardless of party composition.
 
-**Act III (Return Visit, Floors 5-7 unlock):**
+**Act III (Return Visit, Floors 5–7 unlock):**
 - The well crack is wider. The flowing water from the completed puzzle makes the descent easier.
 - Cleared floors have reduced encounters (50% encounter rate). The guardians recognize the party and activate less frequently.
 - The waterworks channels are flowing. Ley-crystal plants are blooming along the walls of Floor 3. The dungeon is healthier than during the first visit.
 - The locked door on Floor 4 opens with the Archivist's Codex. Edren's reaction: "We're going deeper. Under everything. Under the foundations." If Maren is present, she adds: "The Codex was the key all along. The Archive and the Wellspring were one system. The builders intended this."
-- Floors 5-7 are fully active. Enemies are stronger, puzzles are harder, and the lore is the game's deepest.
+- Floors 5–7 are fully active. Enemies are stronger, puzzles are harder, and the lore is the game's deepest.
 - If "The Third Door" sidequest is active, the Floor 5 tablet triggers a critical quest update and potential party argument.
 
 **Post-Game (Full Access):**
 - All seven floors accessible in one descent.
-- Encounter rate further reduced on Floors 1-4 (25%). Floors 5-7 maintain full encounter rate.
+- Encounter rate further reduced on Floors 1–4 (25%). Floors 5–7 maintain full encounter rate.
 - The Wellspring Guardian does not respawn (it is kneeling by the nexus, dormant). The player can examine it to receive a unique dialogue: "The test is passed. The water flows. Rest, builder's kin."
 - The nexus crystal in Floor 7 displays a new pictographic message (post-game only): "The door is closed. The weight is carried. The water remembers." This references Cael's sacrifice and the game's ending.
 - The spirit-path exit to Aelhart now shows the well flowing with a queue of villagers filling buckets. Life has returned.
@@ -3150,7 +3368,7 @@ The following moments are the dungeon's key visual set-pieces -- the images the 
 
 For 100% dungeon completion, the player must:
 
-**Floors 1-4 (Interlude):**
+**Floors 1–4 (Interlude):**
 - [ ] Find Aelhart History (Floor 1 chest)
 - [ ] Find Well-Stone Ring (Floor 1 chest)
 - [ ] Discover the Elder's Cache secret room (Floor 1)
@@ -3170,9 +3388,9 @@ For 100% dungeon completion, the player must:
 - [ ] Find Edren's Family Crest (Floor 4 residential chamber)
 - [ ] Discover the hidden vault and obtain Crest Bearer's Mantle (Floor 4 secret)
 - [ ] Use Elder's Seal to access the Genealogy Chamber (Floor 4 secret)
-- [ ] View all Echo Visions on Floors 3-4 (4 total)
+- [ ] View all Echo Visions on Floors 3–4 (4 total)
 
-**Floors 5-7 (Act III / Post-Game):**
+**Floors 5–7 (Act III / Post-Game):**
 - [ ] Find Archive Keeper's Lens (Floor 5 chest)
 - [ ] Find Harmonic Shard Fragment (Floor 5 chest)
 - [ ] Defeat the Archive Keeper mini-boss (Floor 5)
@@ -3191,7 +3409,7 @@ For 100% dungeon completion, the player must:
 - [ ] Obtain Nexus Crest (Floor 7 post-boss chest)
 - [ ] Discover the Builder's Farewell chamber (Floor 7 secret)
 - [ ] Read Builder's Last Letter (Floor 7 secret)
-- [ ] View all Echo Visions on Floors 5-7 (4 total)
+- [ ] View all Echo Visions on Floors 5–7 (4 total)
 - [ ] View the Wellspring's full network map (Floor 7)
 - [ ] Exit via spirit-path and witness the well flowing
 
@@ -3228,7 +3446,7 @@ The Dry Well is designed to be experienced as a series of emotional beats, not j
 
 **Why seven floors:** The Dry Well's expansion from 1 floor to 7 is motivated by narrative necessity. The pre-civilization builders are the game's deepest lore layer -- referenced in every major dungeon, central to the Pallor's cycle, and the answer to the question "has anyone tried to stop this before?" A single three-room mini-dungeon beneath the starting village was inadequate to carry that weight. Seven floors allow progressive revelation: each floor answers one question and raises others, creating a pull that makes the player want to descend further. The dungeon's length is its argument: the builders were here for a long time, and they built something vast.
 
-**The split-access design (Floors 1-4 Interlude, 5-7 Act III):** This serves two purposes. First, it prevents Interlude players from accessing content tuned for Act III levels. Second, and more importantly, it creates a reason to return. The player clears four floors, hits a locked door, and must leave knowing there is more below. When they return with the Archivist's Codex in Act III, the dungeon rewards their patience with its deepest lore, hardest fights, and best treasure. The return visit transforms the Dry Well from "that optional Interlude dungeon" into a multi-act commitment.
+**The split-access design (Floors 1–4 Interlude, 5-7 Act III):** This serves two purposes. First, it prevents Interlude players from accessing content tuned for Act III levels. Second, and more importantly, it creates a reason to return. The player clears four floors, hits a locked door, and must leave knowing there is more below. When they return with the Archivist's Codex in Act III, the dungeon rewards their patience with its deepest lore, hardest fights, and best treasure. The return visit transforms the Dry Well from "that optional Interlude dungeon" into a multi-act commitment.
 
 **Echo Visions and wordless storytelling:** The Echo Visions are designed to work without any text. The builders do not speak. Their story is told through gesture, action, and implication. This is deliberate: the pre-civilization builders predate all current languages. Having them speak would diminish their otherness. Having them act -- care for ley-plants, carve family crests, weep over sealed tablets, hold the Pallor's door closed through sheer will -- tells the player everything they need to know about who these people were. Maren's optional commentary provides context but is not required. The visions should land on their own.
 
@@ -3426,6 +3644,27 @@ The rig's Arcanite engine, consumed and animated by Pallor energy. A mechanical 
 | **Pallor Amalgam** (Mini-boss) | Grey corruption fused with rig machinery. Part organic, part mechanical. Area attacks, regenerates if not burst-damaged. 5,500 HP. | Engine Room |
 | **The Grey Engine** (Boss) | Arcanite engine consumed by Pallor. Steam jets, pipe strikes, Despair Pulse. Stunnable via pressure valves. 22,000 HP. | Engine Room |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Exposed Hull. Tier 3 (High, increment 252, ~20 steps) for Upper Deck and Engine Room. Boss arena: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underwater/industrial) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Section | Fmt | Enemies | Weight |
+|---------|-----|---------|--------|
+| Exposed Hull | 1 | 3x Salt Crab | 31.25% |
+| Exposed Hull | 2 | 1x Rust Elemental + 2x Salt Crab | 31.25% |
+| Exposed Hull | 3 | 2x Rust Elemental | 31.25% |
+| Exposed Hull | 4 | 5x Salt Crab (crab swarm) | 6.25% |
+| Upper Deck | 1 | 3x Bilge Rat + 1x Pallor Barnacle | 31.25% |
+| Upper Deck | 2 | 2x Drowned Worker + 1x Bilge Rat | 31.25% |
+| Upper Deck | 3 | 1x Pallor Barnacle + 3x Bilge Rat | 31.25% |
+| Upper Deck | 4 | 2x Drowned Worker + 1x Pallor Barnacle (flooded corridor) | 6.25% |
+| Engine Room | 1 | 2x Drowned Worker + 1x Pallor Barnacle | 31.25% |
+| Engine Room | 2 | 3x Drowned Worker | 31.25% |
+| Engine Room | 3 | 1x Drowned Worker + 2x Pallor Barnacle | 31.25% |
+| Engine Room | 4 | 3x Drowned Worker + 2x Pallor Barnacle (engine room infestation) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -3505,6 +3744,12 @@ The map represents a switchback trail ascending to the summit. The path narrows 
 
 No encounters, treasure, or hazards during normal exploration. During "The Spirit That Stopped Singing" sidequest, the Howling Gale boss encounter activates at the summit.
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). No random encounters. The peak is a place of rest and contemplation.
+
+**Sidequest exception:** During "The Spirit That Stopped Singing," the Howling Gale boss activates at the summit as a scripted encounter (not random).
+
 ### Sidequest Boss: The Howling Gale (7000 HP)
 
 **Availability:** During "The Spirit That Stopped Singing" sidequest (Interlude, after finding Torren). The Howling Gale appears at the summit when Torren performs his calling ritual. The peak's peaceful nature is temporarily overridden by the encounter.
@@ -3572,6 +3817,19 @@ E.......................................X
 - `H` (left-center): Hidden alcove in the cliff face. Contains: Old Valdris Map (lore item, shows pre-war border).
 
 **Encounters:** Low-to-mid level. Wolves, Compact scouts (can be fought or avoided), aggressive boars.
+
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps). Road/farmland transition area.
+
+**Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Wolf | 31.25% |
+| 2 | 1x Compact Scout + 1x Wolf | 31.25% |
+| 3 | 2x Aggressive Boar | 31.25% |
+| 4 | 2x Compact Scout + 1x Wolf (patrol ambush) | 6.25% |
 
 ### 13b. Frostcap Descent
 
@@ -3736,6 +3994,31 @@ E.......................................
 **Encounters (Sub-Level):**
 - Ice Grub Cluster (4x Ice Grub, 60 HP each -- nuisance enemies, very weak)
 
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps) for Floor 1 (Switchback Trail). Tier 2 (Normal, increment 120, ~30 steps) for Floor 2 (Ice Cave rooms). Boss rooms: N/A (no bosses).
+
+**Formation type:** Floor 1 open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive). Floor 2 low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Area | Fmt | Enemies | Weight |
+|------|-----|---------|--------|
+| Floor 1 | 1 | 2x Ice Wolf | 31.25% |
+| Floor 1 | 2 | 1x Frost Elemental + 1x Ice Wolf | 31.25% |
+| Floor 1 | 3 | 3x Ice Wolf | 31.25% |
+| Floor 1 | 4 | 1x Frost Elemental + 2x Ice Wolf (blizzard ambush) | 6.25% |
+| Room 1 | 1 | 3x Ice Wolf | 31.25% |
+| Room 1 | 2 | 1x Frost Elemental | 31.25% |
+| Room 1 | 3 | 2x Ice Wolf + 1x Frost Elemental | 31.25% |
+| Room 1 | 4 | 1x Ice Wolf Alpha + 2x Ice Wolf (cave alpha pack) | 6.25% |
+| Room 2 | 1 | 1x Ice Sculptor | 31.25% |
+| Room 2 | 2 | 5x Frost Sprite | 31.25% |
+| Room 2 | 3 | 1x Ice Sculptor + 3x Frost Sprite | 31.25% |
+| Room 2 | 4 | 2x Ice Sculptor (frozen lake guardians) | 6.25% |
+| Room 3 | 1 | 1x Ice Wolf Alpha + 2x Ice Wolf | 31.25% |
+| Room 3 | 2 | 1x Crystal Stalactite (ambush) | 31.25% |
+| Room 3 | 3 | 1x Frozen Revenant | 31.25% |
+| Room 3 | 4 | 1x Frozen Revenant + 1x Crystal Stalactite + 2x Ice Wolf (deep ice gauntlet) | 6.25% |
+
 ### 13c. Broken Hills Crossing
 
 **Location:** Between the Thornmere Wilds (south edge) and Carradan Compact territory, near Gael's Span.
@@ -3774,6 +4057,19 @@ E.......................................X
 
 **Encounters:** Moderate. Compact patrols, displaced wildlife, rogue Forgewright constructs.
 
+#### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Mountain transition area with moderate encounters.
+
+**Formation type:** Open terrain rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Compact Patrol + 1x Displaced Boar | 31.25% |
+| 2 | 1x Rogue Forgewright Construct + 1x Compact Patrol | 31.25% |
+| 3 | 2x Displaced Wildlife | 31.25% |
+| 4 | 2x Rogue Forgewright Construct (mechanical ambush) | 6.25% |
+
 ---
 
 ## 14. Caves and Grottos
@@ -3805,6 +4101,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (bottom): Chest -- Amber Pebble (accessory, +3 MAG, minor).
 - Encounters: Ley-touched cave bats, small crystal formations.
 
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 3x Ley-Touched Cave Bat | 31.25% |
+| 2 | 2x Small Crystal Formation | 31.25% |
+| 3 | 2x Ley-Touched Cave Bat + 1x Small Crystal Formation | 31.25% |
+| 4 | 4x Ley-Touched Cave Bat (bat swarm) | 6.25% |
+
 ### 14b. Duskfen Hollow
 
 **Location:** In the marshland near Duskfen, off the main path.
@@ -3829,6 +4136,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (right): Chest -- Marsh Root (crafting material).
 - `T` (bottom): Chest -- Will-o'-Wisp Lantern (accessory, increases visibility in marshland, reduces ambush chance).
 - Encounters: Marsh serpents, bloated toads.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave/swamp) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Marsh Serpent + 1x Bloated Toad | 31.25% |
+| 2 | 3x Marsh Serpent | 31.25% |
+| 3 | 2x Bloated Toad | 31.25% |
+| 4 | 3x Marsh Serpent + 2x Bloated Toad (marsh ambush) | 6.25% |
 
 ### 14c. Highcairn Hermit Cave
 
@@ -3855,6 +4173,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (bottom): Chest -- Monk's Staff (weapon, Maren alternative).
 - Encounters: Pallor-corrupted highland creatures.
 
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Pallor-Corrupted Highland Creature | 31.25% |
+| 2 | 3x Pallor-Corrupted Highland Creature | 31.25% |
+| 3 | 1x Pallor-Corrupted Highland Creature (tough solo) | 31.25% |
+| 4 | 4x Pallor-Corrupted Highland Creature (corruption swarm) | 6.25% |
+
 ### 14d. Corrund River Cave
 
 **Location:** Along the river road between Gael's Span and Corrund.
@@ -3879,6 +4208,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (left): Chest -- 5x Potion.
 - `T` (right): Chest -- Compact Supply Kit (consumable set: 3x Antidote, 2x Smelling Salts, 1x Elixir).
 - Encounters: Forge Phantoms, rogue Compact automatons.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Forge Phantom | 31.25% |
+| 2 | 1x Rogue Compact Automaton + 1x Forge Phantom | 31.25% |
+| 3 | 2x Rogue Compact Automaton | 31.25% |
+| 4 | 2x Forge Phantom + 1x Rogue Compact Automaton (haunted cache) | 6.25% |
 
 ### 14e. Ashgrove Undercroft
 
@@ -3906,6 +4246,17 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 - `T` (left): Chest -- Ash Blossom (accessory, +8 MAG, Flame resistance).
 - `T` (right): Chest -- First Tree Seed (key item, used in post-game content at the Convergence meadow -- planting it triggers a unique epilogue scene).
 - Encounters: Ash elementals, ancient spirit remnants.
+
+**Encounter rate:** Tier 1 (Low, increment 48, ~48 steps).
+
+**Formation type:** Low-visibility (cave) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Fmt | Enemies | Weight |
+|-----|---------|--------|
+| 1 | 2x Ash Elemental | 31.25% |
+| 2 | 1x Ancient Spirit Remnant + 1x Ash Elemental | 31.25% |
+| 3 | 2x Ancient Spirit Remnant | 31.25% |
+| 4 | 2x Ash Elemental + 1x Ancient Spirit Remnant (undercroft awakening) | 6.25% |
 
 ### Sidequest Boss: The Grey Stag (5500 HP)
 
@@ -3947,7 +4298,7 @@ A massive elk corrupted by the Pallor -- the dominant creature of the highland f
 
 ### Puzzle Mechanics
 
-**Lava Flow Redirection (Floors 2-4):** Volcanic channels run through the cave system, carrying molten rock from the caldera heart to the surface. Three valve gates (`P`) control the flow direction. Each valve has two positions (open/closed), creating 8 possible configurations, but only 4 meaningfully change the environment. The player must redirect lava away from blocked passages (cooling the stone so it can be walked on -- takes 5 seconds after valve change, with a visual cooling animation from red to dark grey) and toward stuck mechanisms (heating them to free rusted gears and open doors). The puzzle spans multiple rooms -- changing a valve on Floor 2 affects conditions on Floor 3.
+**Lava Flow Redirection (Floors 2–4):** Volcanic channels run through the cave system, carrying molten rock from the caldera heart to the surface. Three valve gates (`P`) control the flow direction. Each valve has two positions (open/closed), creating 8 possible configurations, but only 4 meaningfully change the environment. The player must redirect lava away from blocked passages (cooling the stone so it can be walked on -- takes 5 seconds after valve change, with a visual cooling animation from red to dark grey) and toward stuck mechanisms (heating them to free rusted gears and open doors). The puzzle spans multiple rooms -- changing a valve on Floor 2 affects conditions on Floor 3.
 
 **Floor Traps (All Floors):** Thin volcanic crust sections that crack and give way when stepped on, dropping the player to a lower lava tube. Visual tell: orange-veined crust that pulses faintly, distinct from solid dark stone. The drop deals 10% max HP Flame damage and deposits the player in a warm tube with minor enemies, a chest, and a ladder back up.
 
@@ -4210,6 +4561,31 @@ The ancient pre-civilization forge mechanism, fully awakened by the Compact's dr
 | **Slag Golem** (Mini-boss) | Molten slag animated by wild ley energy. 25% Burn chance on Molten Spray. Core Meltdown below 25% HP. | Floor 2 | 5,000 |
 | **The Forge Heart** (Boss) | Ancient forge mechanism. Two phases. Lira special interaction available. | Floor 4 | 35,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floors 1–2. Tier 3 (High, increment 252, ~20 steps) for Floors 3–4. Boss arena (Caldera Heart): Tier 0 (Safe).
+
+**Formation type:** Low-visibility (forge/industrial) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 4x Furnace Rat | 31.25% |
+| 1 | 2 | 1x Steam Phantom + 1x Compact Sentry | 31.25% |
+| 1 | 3 | 2x Furnace Rat + 1x Compact Sentry | 31.25% |
+| 1 | 4 | 1x Compact Sentry + 1x Steam Phantom + 2x Lava Grub (sub-level ambush) | 6.25% |
+| 2 | 1 | 2x Magma Crawler + 1x Forge Phantom | 31.25% |
+| 2 | 2 | 1x Ley Wisp Cluster | 31.25% |
+| 2 | 3 | 1x Forge Phantom + 2x Magma Crawler | 31.25% |
+| 2 | 4 | 2x Forge Phantom + 1x Ley Wisp Cluster (spectral swarm) | 6.25% |
+| 3 | 1 | 2x Ember Wraith + 1x Ancient Forge Guardian | 31.25% |
+| 3 | 2 | 1x Magma Serpent + 2x Ember Wraith | 31.25% |
+| 3 | 3 | 2x Ancient Forge Guardian | 31.25% |
+| 3 | 4 | 1x Ancient Forge Guardian + 1x Magma Serpent + 1x Ember Wraith (forge defense) | 6.25% |
+| 4 | 1 | 1x Caldera Wyrm + 2x Molten Golem | 31.25% |
+| 4 | 2 | 2x Caldera Wyrm | 31.25% |
+| 4 | 3 | 2x Molten Golem + 3x Ley Spark | 31.25% |
+| 4 | 4 | 2x Caldera Wyrm + 1x Molten Golem (volcanic frenzy) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4452,6 +4828,27 @@ Without Torren's sidequest completion, the fight continues to 0 HP. The Warden s
 | **Ice Wyvern** (Mini-boss) | Massive ice-blue wyvern. Frost Breath, Wing Buffet, Dive Strike, Ice Armor. | Floor 2 | 6,000 |
 | **The Frost Warden** (Boss) | Ancient Valdris spirit guardian. Two-phase test. Torren special interaction available. | Floor 3 | 38,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps) for Floor 1. Tier 3 (High, increment 252, ~20 steps) for Floors 2–3. Boss shrine: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (ice caves) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 1x Ice Gallery Sentinel + 2x Crystal Spider | 31.25% |
+| 1 | 2 | 1x Frost Bat Swarm | 31.25% |
+| 1 | 3 | 2x Crystal Spider + 1x Ice Gallery Sentinel | 31.25% |
+| 1 | 4 | 2x Ice Gallery Sentinel + 1x Frost Bat Swarm (gallery ambush) | 6.25% |
+| 2 | 1 | 2x Frost Stalker + 1x Wind Howler | 31.25% |
+| 2 | 2 | 1x Valdris Shade + 2x Frost Stalker | 31.25% |
+| 2 | 3 | 2x Wind Howler | 31.25% |
+| 2 | 4 | 1x Valdris Shade + 2x Wind Howler + 1x Frost Stalker (spirit blizzard) | 6.25% |
+| 3 | 1 | 2x Shrine Guardian + 1x Frozen Offering | 31.25% |
+| 3 | 2 | 1x Valdris Ancestor Spirit + 1x Shrine Guardian | 31.25% |
+| 3 | 3 | 2x Shrine Guardian + 1x Valdris Ancestor Spirit | 31.25% |
+| 3 | 4 | 1x Valdris Ancestor Spirit + 2x Shrine Guardian + 1x Frozen Offering (shrine gauntlet) | 6.25% |
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4593,7 +4990,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 **Encounter Zones:**
 - Ancient Root Guardian (1x, 600 HP -- a petrified root construct that activates when the party enters. Not corrupted -- a defense mechanism. Can be spoken to by Torren to deactivate peacefully)
-- Ley Moth Swarm (8x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
+- Ley Moth Swarm (1 swarm unit, 40 HP total -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
 - Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, Void-element, regenerates unless the crack is sealed with ley water)
 
 
@@ -4605,9 +5002,26 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
-| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
+| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Treated as 1 encounter unit (swarm of 4 moths, 40 HP total). | Floor 2 | 40 |
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
 | **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 3 (High, increment 252, ~20 steps) for both floors. Mini-boss room: Tier 0 (Safe).
+
+**Formation type:** Low-visibility (underground passage) rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
+
+| Floor(s) | Fmt | Enemies | Weight |
+|----------|-----|---------|--------|
+| 1 | 1 | 3x Root Tendril + 1x Tunnel Beetle | 31.25% |
+| 1 | 2 | 2x Pallor Fungus + 2x Tunnel Beetle | 31.25% |
+| 1 | 3 | 3x Root Tendril + 1x Pallor Fungus | 31.25% |
+| 1 | 4 | 4x Tunnel Beetle + 2x Pallor Fungus (corrupted tunnel swarm) | 6.25% |
+| 2 | 1 | 1x Ancient Root Guardian + 2x Ley Moth Swarm | 31.25% |
+| 2 | 2 | 1x Ley Moth Swarm | 31.25% |
+| 2 | 3 | 1x Pallor Seep + 1x Ley Moth Swarm | 31.25% |
+| 2 | 4 | 1x Pallor Seep + 1x Ancient Root Guardian (corrupted passage) | 6.25% |
 
 ### Treasure/Loot
 
@@ -4697,6 +5111,14 @@ The Ram's core activates. Despair Pulse intensifies to party-wide.
 | Compact Soldier | Carradan infantry. Scales walls in waves. Basic physical attacks. | Battlements (all phases) | 800 |
 | **The Ashen Ram** (Boss) | Pallor-corrupted Carradan siege construct. Three-phase fight with add waves and positional mechanics. | The Walls of Valdris | 25,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). This is a scripted battle sequence, not a dungeon with random encounters. All encounters are scripted waves tied to the Ashen Ram boss phases.
+
+**Formation type:** Normal only (scripted encounters always use Normal formation per combat-formulas.md).
+
+**Scripted waves:** Compact Soldiers scale the walls in waves of 3-4 during Phase 1, reduced to 2 per wave during Phase 2. See boss description for details.
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4760,6 +5182,12 @@ The Leech moves toward the nexus center.
 | Enemy | Description | Location | HP |
 |-------|-------------|----------|----|
 | **The Ley Leech** (Boss) | Parasitic Pallor entity latched onto the ley nexus. Three-phase fight with shifting ley line mechanics and DPS check. | The Nexus Chamber | 24,000 |
+
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). This is a single boss arena with no random encounters. The Ley Leech fight is the only combat encounter.
+
+**Formation type:** N/A -- scripted boss encounter only.
 
 ### Treasure/Loot
 
@@ -4826,6 +5254,12 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 |-------|-------------|----------|----|
 | **The Pallor Hollow** (Boss) | Mirror-image of Edren made from his guilt. Uses Edren's own moveset. Three-phase fight with guest NPC protection mechanic. | Inner Sanctum | 40,000 |
 
+### Encounter Rates & Formations
+
+**Encounter rate:** Tier 0 (Safe). The monastery is a narrative boss encounter dungeon with no random encounters. The Pallor Hollow fight is the only combat.
+
+**Formation type:** N/A -- scripted boss encounter only. Open terrain/interior rules (75% Normal / 12.5% Back Attack / 12.5% Preemptive) would apply if random encounters were present.
+
 ### Treasure/Loot
 
 | Item | Location | Type |
@@ -4839,25 +5273,25 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 
 | # | Dungeon | Act | Floors | Rec. Level | Time | Boss | Gimmick |
 |---|---------|-----|--------|-----------|------|------|---------|
-| 1 | Ember Vein | I | 4 | 3-7 | 40-55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
-| 2 | Fenmother's Hollow | II | 3 | 12-15 | 55-75 min | Corrupted Fenmother | Water level control, Water of Life |
-| 3 | Rail Tunnels | Interlude | 4 sections | 18-22 | 40-50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
-| 4 | Axis Tower | Interlude | 5 | 22-26 | 50-65 min | General Kole | Stealth/alarm system |
-| 5 | Ley Line Depths | II (optional), III | 5 | 16-28 | 90-120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
-| 6 | Pallor Wastes | III | 5 sections | 28-32 | 60-80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
-| 7 | The Convergence | III-IV | 4 phases | 32-36 | 75-100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
-| 8 | Archive of Ages | Interlude | 3 | 24-28 | 45-55 min | Archive Guardian | Translation puzzle |
-| 9 | Dreamer's Fault | Post-game | 20 | 40-50 | 3-5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
-| 10 | Dry Well of Aelhart | Interlude/III | 7 | 22-36 | 2-3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
-| 11 | Sunken Rig | Interlude | 3 | 22-26 | 30-40 min | The Grey Engine | Pressure valve routing, deck plate traps |
-| 12 | Windshear Peak | II-III | 1 | Any | 10-15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
-| 13a | Wilds Gate Pass | I-II | 1 | 5-10 | 10 min | None | Transition area |
-| 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20-24 | 20-30 min | None | Ice sliding puzzle, thin ice traps |
-| 13c | Broken Hills Crossing | II-Interlude | 1 | 14-18 | 10 min | None | Transition area |
-| 14a-e | Caves/Grottos | Various | 1 each | Various | 5-10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
-| 15 | Caldera Forge Depths | II/Interlude | 4 | 16-26 | 50-65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
-| 16 | Frostcap Caverns | Interlude/III | 3 | 24-28 | 45-55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
-| 17 | Thornvein Passage | III | 2 | 28-30 | 25-35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
-| 18 | Valdris Siege Battlefield | II | 1 | 18-22 | 25-35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
-| 19 | Ley Nexus Hollow | Interlude | 1 | 20-24 | 20-30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
-| 20 | Highcairn Monastery | Interlude | 2 | 20-24 | 25-35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
+| 1 | Ember Vein | I | 4 | 3–7 | 40–55 min | Ember Drake, Vein Guardian | Mine cart routing, wall switches, pitfalls, dying crystal |
+| 2 | Fenmother's Hollow | II | 3 | 12–15 | 55–75 min | Corrupted Fenmother | Water level control, Water of Life |
+| 3 | Rail Tunnels | Interlude | 4 sections | 18–22 | 40–50 min | Corrupted Boring Engine, The Ironbound | Power routing, wall switch sequence |
+| 4 | Axis Tower | Interlude | 5 | 22–26 | 50–65 min | General Kole | Stealth/alarm system |
+| 5 | Ley Line Depths | II (optional), III | 5 | 16–28 | 90–120 min | Ley Colossus / Ley Titan | Ley channeling, crystal light refraction, pitfalls |
+| 6 | Pallor Wastes | III | 5 sections | 28–32 | 60–80 min | Crowned Hollow, Perfect Machine, Last Voice, The Open Door, The Index, Vaelith the Ashen Shepherd | Pallor trials (narrative combat), penultimate boss |
+| 7 | The Convergence | III–IV | 4 phases | 32–36 | 75–100 min | Cael / Pallor Incarnate | Party split, anchor destruction |
+| 8 | Archive of Ages | Interlude | 3 | 24–28 | 45–55 min | Archive Guardian | Translation puzzle |
+| 9 | Dreamer's Fault | Post-game | 20 | 40–50 | 3–5 hours | Echo Bosses x4 + Cael's Echo | Per-floor unique mechanics |
+| 10 | Dry Well of Aelhart | Interlude/III | 7 | 22–36 | 2–3 hours | Wellspring Guardian | Pitfalls, water routing, wall switches, echo tiles, gravity maze, translation |
+| 11 | Sunken Rig | Interlude | 3 | 22–26 | 30–40 min | The Grey Engine | Pressure valve routing, deck plate traps |
+| 12 | Windshear Peak | II-III | 1 | Any | 10–15 min | The Howling Gale (sidequest) | Oracle, vista, rest, sidequest boss |
+| 13a | Wilds Gate Pass | I-II | 1 | 5–10 | 10 min | None | Transition area |
+| 13b | Frostcap Descent | Interlude | 2 (3 rooms on F2) | 20–24 | 20–30 min | None | Ice sliding puzzle, thin ice traps |
+| 13c | Broken Hills Crossing | II-Interlude | 1 | 14–18 | 10 min | None | Transition area |
+| 14a-e | Caves/Grottos | Various | 1 each | Various | 5–10 min each | The Grey Stag (sidequest, highland clearing -- not a cave) | Exploration rewards |
+| 15 | Caldera Forge Depths | II/Interlude | 4 | 16–26 | 50–65 min | Slag Golem, The Forge Heart | Lava flow redirection, volcanic crust traps, Lira's character dungeon |
+| 16 | Frostcap Caverns | Interlude/III | 3 | 24–28 | 45–55 min | Ice Wyvern, The Frost Warden | Wind puzzles, ice sliding, spirit communication, Torren's character dungeon |
+| 17 | Thornvein Passage | III | 2 | 28–30 | 25–35 min | Root Horror | Spirit root manipulation, ley water purification, Convergence shortcut |
+| 18 | Valdris Siege Battlefield | II | 1 | 18–22 | 25–35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
+| 19 | Ley Nexus Hollow | Interlude | 1 | 20–24 | 20–30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
+| 20 | Highcairn Monastery | Interlude | 2 | 20–24 | 25–35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
