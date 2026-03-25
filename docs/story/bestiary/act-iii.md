@@ -6,7 +6,7 @@ Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 68 enemies across 9 areas (48 regular + 4 trial-specific + 16 bosses/mini-bosses)
+**Total:** 69 enemies across 10 areas (48 regular + 4 trial-specific + 17 bosses/mini-bosses)
 
 ---
 
@@ -446,9 +446,9 @@ The ward keeper of Oasis C, consumed by the Pallor after the ley ward
 stone cracked. Encountered as a mini-boss when the party visits the
 fallen Oasis C.
 
-| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resist | Absorb | Status Immunities | Location(s) |
-|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|--------|--------|-------------------|-------------|
-| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resist | Absorb | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|--------|--------|-------------------|-------------|
+| The Grey Keeper | Pallor/Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
 
 > **Design note:** Zero gold drop — this is a tragedy, not a reward. The Spirit weakness is ironic: the element of protection is the vulnerability of the corrupted protector.
 

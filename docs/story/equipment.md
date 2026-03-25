@@ -469,7 +469,7 @@ status-inflicting enemies grow more common.
 | Silence Ward | Silence immune | 800 | II | Interlude shop |
 | Stone Guard | Petrify immune | 1,500 | Int | Interlude shop |
 | Berserk Collar | Berserk immune | 2,000 | III | Act III shop |
-| Despair Ward | Despair immune | 5,000 | III | Act III Oases (very limited, 1–2 available) |
+| Despair Ward | Despair immune | 5,000 | III | Oasis C only (before fall; very limited, 1–2 available) |
 
 ### Elemental Resistance Accessories
 

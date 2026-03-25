@@ -374,13 +374,13 @@ The Valdris survivors at Oasis A are a cross-section of the Crown District's dis
 
 ---
 
-### Maren Ashvale
+### Nessa Ashvale
 
 **Location:** Oasis A, Market Clearing
 
 **Role:** Shopkeeper (Oasis A inventory)
 
-**Backstory:** Maren ran the most reliable general goods shop in the Valdris Crown District for twenty-three years. When the Grey consumed the city during the Interlude, she grabbed her inventory ledger before her lockbox. The ledger has every supplier, every margin, every seasonal trend for two decades — muscle memory encoded in ink. She rebuilt her stock from salvage, barter, and sheer mercantile stubbornness. Her prices are fair. She does not haggle. She never did.
+**Backstory:** Nessa ran the most reliable general goods shop in the Valdris Crown District for twenty-three years. When the Grey consumed the city during the Interlude, she grabbed her inventory ledger before her lockbox. The ledger has every supplier, every margin, every seasonal trend for two decades — muscle memory encoded in ink. She rebuilt her stock from salvage, barter, and sheer mercantile stubbornness. Her prices are fair. She does not haggle. She never did.
 
 If the player visited her Crown District shop in Acts I-II, she recognizes them and offers a small discount. This is one of the few moments in Act III where the past world acknowledges you back.
 
@@ -390,7 +390,7 @@ If the player visited her Crown District shop in Acts I-II, she recognizes them 
 
 **Story relevance:** Commerce (Oasis A shop). Familiar face callback for players who explored Valdris Crown.
 
-**Act presence:** Act III only. Present at Oasis A from the player's first visit. If Oasis A falls, Maren is lost with it.
+**Act presence:** Act III only. Present at Oasis A from the player's first visit. If Oasis A falls, Nessa is lost with it.
 
 ---
 
@@ -815,7 +815,7 @@ If the player visited Ashmark's markets in Acts I-II, Dellen recognizes them and
 
 **Location:** Oasis B, Amplifier Array
 
-**Role:** Quest giver — Dying Light
+**Role:** Quest giver — Amplifier Stabilization
 
 **Backstory:** Voss was a senior ley engineer in Corrund's power grid division. She designed the amplifier array that extends Oasis B's ward stone range — a jury-rigged network of salvaged Compact capacitors and ley conduits that pushes the safe zone fifty meters beyond its natural radius. The system works. It also burns through capacitors at a rate she cannot sustain. The last Pallor-Fused Capacitor in her reserve failed two days ago. Without a replacement, the amplifiers go dark within the week, and the ward's effective range contracts to its natural limit — cutting off the outer ring of shelters where forty people sleep.
 
@@ -825,7 +825,7 @@ She knows where to find one: a collapsed Compact relay station in the deep Waste
 - *"The amplifiers are flickering. Without a new capacitor, we lose the extra range in days."*
 - (After quest completion) *"You found one. Good. This buys us... weeks, maybe. I'll take weeks."*
 
-**Story relevance:** Side quest (Dying Light). Mechanically significant — completing the quest maintains Oasis B's extended ward range and keeps the outer shelters viable.
+**Story relevance:** Side quest (Amplifier Stabilization). Mechanically significant — completing the quest maintains Oasis B's extended ward range and keeps the outer shelters viable.
 
 **Act presence:** Act III only. Present at Oasis B. Quest available on first visit.
 
@@ -1275,17 +1275,17 @@ If the player visited Roothollow or Greywood in earlier acts, she recognizes the
 
 ---
 
-### Keeper Yara
+### Keeper Elara
 
 **Location:** Oasis C, Ward Stone Circle
 
 **Role:** Quest giver — The Cracking Stone / future mini-boss (The Grey Keeper)
 
-**Backstory:** Yara is the spirit-speaker who maintains Oasis C's ward stone through continuous channeling. She was trained in the old Thornmere tradition — direct communion with land spirits, binding their essence into protective wards that hold back corruption. She is very good at what she does. She is also dying. The ward stone is cracking — hairline fractures that widen each day — and holding it together requires more of her life force than the technique was designed to draw. She bleeds from her nose after long sessions. She does not mention this to anyone.
+**Backstory:** Elara is the spirit-speaker who maintains Oasis C's ward stone through continuous channeling. She was trained in the old Thornmere tradition — direct communion with land spirits, binding their essence into protective wards that hold back corruption. She is very good at what she does. She is also dying. The ward stone is cracking — hairline fractures that widen each day — and holding it together requires more of her life force than the technique was designed to draw. She bleeds from her nose after long sessions. She does not mention this to anyone.
 
-The ward stone's deterioration is accelerating because a nearby ley fissure is leaking corrupted energy into the ground beneath the camp. If the fissure could be sealed — or if purified water from its source could be brought back — the stone's degradation would slow enough for Yara to stabilize it. This is the quest: The Cracking Stone. The fissure is in deep Pallor territory, guarded by Grey-twisted wildlife.
+The ward stone's deterioration is accelerating because a nearby ley fissure is leaking corrupted energy into the ground beneath the camp. If the fissure could be sealed — or if purified water from its source could be brought back — the stone's degradation would slow enough for Elara to stabilize it. This is the quest: The Cracking Stone. The fissure is in deep Pallor territory, guarded by Grey-twisted wildlife.
 
-If the player fails to complete the quest in time, or if the OASIS_C_FALLEN flag triggers, Yara does not escape. She channels everything she has into the stone in a final attempt to hold it. She fails. The Pallor consumes her. In the aftermath, she rises as The Grey Keeper — a mini-boss encountered if the player returns to the fallen Oasis C site. She retains fragments of her spirit-speaking ability, twisted into Pallor-channeling attacks. Defeating her is one of the most emotionally difficult encounters in the game.
+If the player fails to complete the quest in time, or if the OASIS_C_FALLEN flag triggers, Elara does not escape. She channels everything she has into the stone in a final attempt to hold it. She fails. The Pallor consumes her. In the aftermath, she rises as The Grey Keeper — a mini-boss encountered if the player returns to the fallen Oasis C site. She retains fragments of her spirit-speaking ability, twisted into Pallor-channeling attacks. Defeating her is one of the most emotionally difficult encounters in the game.
 
 **Dialogue hints:**
 - *"The stone is cracking. I can hold it — but not forever. There's a ley fissure, nearby. If you could bring water from it..."*

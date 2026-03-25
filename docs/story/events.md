@@ -177,7 +177,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 **Environmental Changes:**
 - Progressive greyscale palette shift as the party approaches the Convergence.
 - Sound dampens to near-silence in the Pallor Wastes.
-- No shops, no save points except faint ley line clearings.
+- No shops or save points inside the gauntlet dungeon, except faint ley line clearings.
 - Hope physically heavier — reflected in gameplay (debuff mechanics, resource pressure).
 
 **New Areas Opening:** The Pallor Wastes, The Convergence, Thornvein Passage (root tunnel shortcut to Pallor Wastes Section 2), Ley Line Depths (rediscovered via Thornvein, Floors 2-5).
@@ -901,11 +901,11 @@ Each reunion scene (Steps 23, 28, 29, 33) should acknowledge new abilities. Ther
 **Sequence:**
 1. The overworld map shows Oasis C's shimmer is gone (grey marker).
 2. Entering Oasis C: the ward stone is cracked in half. Everything is Grey — petrified tents, frozen refugees, silence.
-3. The ward keeper (Keeper Yara) is found by the cracked stone, half-Grey.
+3. The ward keeper (Keeper Elara) is found by the cracked stone, half-Grey.
 4. Dialogue (4 lines):
    - "You came back... I held it... three days..."
    - "The stone cracked. I pushed everything I had into it."
-   - "The others... some ran to the northern camp. Most didn't make it."
+   - "The others... some ran to another camp. Most didn't make it."
    - "I can feel it taking me. Don't... don't let it use me against—"
 5. Transformation: eyes go Grey, stands up wreathed in grey energy.
 6. Battle: The Grey Keeper (mini-boss, see bosses.md).

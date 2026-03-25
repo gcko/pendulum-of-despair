@@ -770,7 +770,7 @@ A ley ward bubble shelters an organized encampment under a weathered Valdris ban
 - **Refugee Child** — Provides incidental dialogue about what it was like to watch the Grey take their home
 
 **Sidequest: The Last Banner**
-The Valdris Knight asks the party to recover a lost regimental banner from a Pallor-touched patrol that was separated during the march. The patrol was last seen at a nearby clearing that has since been consumed. Reward: 1,500g + Valdris Crest (accessory).
+The Valdris Knight asks the party to recover a lost regimental banner from a Pallor-touched patrol that was separated during the march. The patrol was last seen at a nearby clearing that has since been consumed. Reward: 1,500g + Valdris Crest (key item).
 
 **Ward stone:** Strong. Torren: *"This node runs deep. They're safe here — for now."*
 
@@ -796,7 +796,7 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 - **Oasis C Survivor** *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
 
 **Sidequest: Amplifier Stabilization**
-The Compact Engineer's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must venture to a nearby exposed ley vein to harvest a stabilization crystal while fighting off Pallor manifestations drawn to the energy. Reward: 2,000g + 2x Arcanite Shard.
+The Compact Engineer's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
 
 **Ward stone:** Weakening. Torren: *"The engineers have done something clever. But the core is weakening."*
 
@@ -826,7 +826,7 @@ The most precarious of the three Oases. A ley ward bubble flickers visibly at it
 - **Petrified Refugees** — The Thornmere folk, frozen in grey stone mid-action. Cannot be saved. Environmental storytelling at its bleakest.
 
 **Sidequest: The Cracking Stone**
-The Ward Keeper's ley node is fracturing — the Grey is pressing through micro-fissures in the ward. The party must descend into a shallow cave beneath the node to reinforce the ley anchor with a Spirit Essence gathered from the surrounding Wastes. Success delays the fall; the node eventually collapses regardless after the Archive of Ages is completed. Reward: 2,500g + Spirit Essence.
+The Ward Keeper's ley node is fracturing — the Grey is pressing through micro-fissures in the ward. The party must bring ley water from a ley fissure nearby (~1 encounter away) to stabilize the ward stone. Success delays the fall; the node eventually collapses regardless after the Archive of Ages is completed. Reward: 2,500g + Spirit Essence.
 
 **Ward stone:** Barely holding. Torren: *"This one is barely holding. I can feel the Grey pressing in."*
 
