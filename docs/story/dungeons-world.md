@@ -1151,14 +1151,18 @@ When defeated, his soldiers collapse. Brant watches silently.
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1-2 | 1 | 2x Compact Guard + 1x Arcanite Hound | 31.25% |
+| 1-2 | 1 | 2x Compact Officer + 1x Arcanite Hound | 31.25% |
 | 1-2 | 2 | 2x Arcanite Hound | 31.25% |
-| 1-2 | 3 | 2x Compact Guard + 1x Forgewright Sentry | 31.25% |
-| 1-2 | 4 | 3x Compact Guard + 1x Arcanite Hound (patrol squad) | 6.25% |
-| 3-5 | 1 | 2x Compact Guard + 1x Forgewright Sentry | 31.25% |
-| 3-5 | 2 | 2x Pallor Soldier | 31.25% |
-| 3-5 | 3 | 1x Pallor Soldier + 1x Forgewright Sentry + 1x Compact Guard | 31.25% |
-| 3-5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
+| 1-2 | 3 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
+| 1-2 | 4 | 3x Compact Officer + 1x Arcanite Hound (patrol squad) | 6.25% |
+| 3 | 1 | 2x Compact Officer + 1x Forgewright Sentry | 31.25% |
+| 3 | 2 | 3x Compact Officer | 31.25% |
+| 3 | 3 | 1x Compact Officer + 1x Forgewright Sentry + 1x Arcanite Hound | 31.25% |
+| 3 | 4 | 2x Forgewright Sentry + 2x Compact Officer (elite patrol) | 6.25% |
+| 4-5 | 1 | 2x Pallor Soldier | 31.25% |
+| 4-5 | 2 | 1x Pallor Soldier + 2x Compact Officer | 31.25% |
+| 4-5 | 3 | 3x Pallor Soldier | 31.25% |
+| 4-5 | 4 | 3x Pallor Soldier (Pallor-fueled assault squad) | 6.25% |
 
 ### Treasure/Loot
 
