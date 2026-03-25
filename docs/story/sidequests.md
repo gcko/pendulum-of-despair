@@ -429,6 +429,42 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 
 ---
 
+### 16. The Last Banner
+
+**Quest Giver:** Sir Aldric (Oasis A, Pallor Wastes)
+**Location:** Pallor Wastes overworld (nearby frozen patrol)
+**Availability:** Act III, after discovering Oasis A
+**Estimated Length:** Short (5-10 minutes)
+**Description:** Sir Aldric asks the party to retrieve the regimental banner of the Third Company from a Pallor-frozen patrol on the road southeast of Oasis A. The patrol is petrified mid-march — the banner is still in the standard-bearer's Grey hand. The party fights 1-2 random encounters en route, retrieves the banner, and returns. Sir Aldric salutes it and plants it next to the ward stone. No fanfare — just quiet pride.
+**Reward:** 1,500g + Valdris Crest (key item — unlocks bonus dialogue in Edren's Pallor trial)
+**Connection:** Memory and identity persist even when everything else is lost. The Third Company's final march, frozen in Grey, is a monument no one built and no one intended — but Sir Aldric treats it with the reverence of a proper memorial.
+
+---
+
+### 17. Amplifier Stabilization
+
+**Quest Giver:** Engineer Calder (Oasis B, Pallor Wastes)
+**Location:** Pallor Wastes overworld (nearby ruined outpost) or Ley Scar (rare steal)
+**Availability:** Act III, after discovering Oasis B
+**Estimated Length:** Short (5-10 minutes)
+**Description:** The Compact engineer's jury-rigged ley amplifiers are flickering. They need a Pallor-Fused Capacitor — a component corrupted by the Grey that paradoxically conducts ley energy well. The party can find one at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. The engineer installs it, the ward stone's hum grows louder. "Bought us another week. Maybe."
+**Reward:** 2,000g + 2x Arcanite Shard (Tier 3 crafting material)
+**Connection:** Compact engineering — practical, improvised, keeping people alive through ingenuity. Calder's work mirrors Lira's arc: Forgewright craft repurposed not for extraction but for survival.
+
+---
+
+### 18. The Cracking Stone
+
+**Quest Giver:** Keeper Elara (Oasis C, Pallor Wastes)
+**Location:** Pallor Wastes overworld (nearby ley fissure)
+**Availability:** Act III, after discovering Oasis C (before the fall)
+**Estimated Length:** Short (5 minutes)
+**Description:** The ward keeper is on their knees by the cracking ward stone, visibly strained. They ask the party to bring ley water from a fissure they sensed nearby (~1 encounter away). The party retrieves it and returns. The keeper pours it into the crack. The stone stabilizes. The shimmer brightens. "This will hold. For now." The next time the player returns (after visiting Oasis B), the Oasis has fallen. The ley water bought days, not salvation.
+**Reward:** 2,500g + Spirit Essence (Tier 2 crafting material)
+**Connection:** Not every effort succeeds. The tragedy is that you did everything right and it still wasn't enough — the core theme of the Pallor. Elara's quiet confidence in the moment of stabilization makes the later discovery of Oasis C's fall genuinely devastating.
+
+---
+
 ## Optional Party Member Scenes
 
 These scenes are triggered by visiting specific locations or speaking to specific NPCs at the right time. They are not quests — they have no objectives, no combat, and no mechanical rewards. They are pure character development. Each scene is 2-5 minutes of dialogue and can be missed entirely without affecting the main story. Missing them loses nothing essential. Finding them gains something irreplaceable.

@@ -6,7 +6,7 @@ Forgotten Forge (secret dungeon), and the Act III Overworld.
 See [README.md](README.md) for type rules, stat formulas, and
 reward calculations.
 
-**Total:** 68 enemies across 9 areas (48 regular + 4 trial-specific + 16 bosses/mini-bosses)
+**Total:** 69 enemies across 10 areas (48 regular + 4 trial-specific + 17 bosses/mini-bosses)
 
 ---
 
@@ -417,7 +417,7 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Ley-Warped Drake | Beast | 40 | 3,380 | 140 | 82 | 53 | 62 | 44 | 40 | 241 | 500 | Element Shard (75%) / Elemental Core (25%) | Drake Scale (75%) / Arcanite Shard (25%) | Frost | Flame | — | — | The Ley Scar |
 | Ley-Warped Wraith | Spirit | 42 | 3,699 | 147 | 57 | 55 | 73 | 46 | 41 | 279 | 575 | Ether Wisp (75%) / Spirit Essence (25%) | Spirit Essence (75%) / Arcanite Shard (25%) | Spirit | Ley | — | Poison, Petrify | The Ley Scar |
-| Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 348 | 700 | Scrap Metal (75%) / Crystal Shard (25%) | Crystal Shard (75%) / Arcanite Shard (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
+| Ley-Warped Colossus | Construct | 45 | 4,205 | 0 | 80 | 67 | 69 | 49 | 34 | 348 | 700 | Scrap Metal (75%) / Pallor-Fused Capacitor (25%) | Crystal Shard (75%) / Arcanite Shard (25%) | Storm | Earth | — | Poison, Sleep, Confusion, Berserk, Despair | The Ley Scar |
 | Ley Abomination | Boss | 48 | 18,000 | 168 | 126 | 80 | 131 | 78 | 55 | 654 | 1,050 | Arcanite Shard (75%) / Elemental Core (25%) | Arcanite Shard (100%) | Void | Flame, Frost, Storm | — | Death, Petrify, Stop, Sleep, Confusion | The Ley Scar (rare ~10%) |
 
 > **Design note:** Non-boss Ley-Warped enemies use hand-tuned XP overrides (~25% above the bestiary formula baseline). Boss/rare XP (Ley Abomination) follows the standard rare reward table. The Ley field canonically enhances everything in the zone. See [dungeons-world.md](../dungeons-world.md) for zone layout and encounter tables.
@@ -430,7 +430,9 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
   Evasive — shimmers in and out of the ley field.
 - Ley-Warped Colossus: tank role (+15% DEF, -22% SPD). AoE slam,
   high DEF, very slow. No MP (Construct type). Ley crystals embedded
-  in its chassis glow with unstable energy.
+  in its chassis glow with unstable energy. Rare steal: Pallor-Fused
+  Capacitor (25%) — a ley capacitor warped by prolonged Pallor exposure,
+  used in Oasis ward stone repairs.
 - Ley Abomination: rare spawn (~10% encounter rate). Multi-phase
   mini-boss with Boss-type stat multipliers and Boss default
   immunities. Highest XP in the zone. A fusion of multiple warped
@@ -438,13 +440,27 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
 
 ---
 
+## Oasis C — The Grey Keeper
+
+The ward keeper of Oasis C, consumed by the Pallor after the ley ward
+stone cracked. Encountered as a mini-boss when the party visits the
+fallen Oasis C.
+
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (Pallor Wastes, after fall) |
+
+> **Design note:** Zero gold drop — this is a tragedy, not a reward. The Spirit weakness is ironic: the element of protection is the vulnerability of the corrupted protector.
+
+---
+
 ## Act III Summary
 
-- **Total:** 68 enemies across 9 areas (48 regular + 4 trial-specific +
-  16 bosses/mini-bosses)
+- **Total:** 69 enemies across 10 areas (48 regular + 4 trial-specific +
+  17 bosses/mini-bosses)
 - **Type distribution (regular enemies only, excludes bosses):** Pallor (~52%),
   Construct (16%), Beast (10%), Spirit (10%), Elemental (5%), Undead (3%),
-  Humanoid (2%). Bosses/mini-bosses (16) tracked separately in bosses.md.
+  Humanoid (2%). Bosses/mini-bosses (17) tracked separately in bosses.md.
 - **Pallor gradient:** 20% (safe zones) → 90% (Convergence)
 - **Tier 2 early deployments:** Storm Wraith (Wraith Tier 2, Lv 30
   vs projected Lv 32)

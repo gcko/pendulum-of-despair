@@ -27,28 +27,29 @@
 | 14 | The Perfect Machine | III | Pallor Wastes Trial 2 | 30 | 7,000 | Boss | 1 |
 | 15 | The Last Voice | III | Pallor Wastes Trial 3 | 32 | 6,000 | Boss | 2 |
 | 16 | The Index | III | Pallor Wastes Trial 5 | 32 | 7,000 | Boss | 1 |
-| 17 | Vaelith, the Ashen Shepherd | III | Pallor Wastes Section 5 | 34 | 50,000 | Boss | 2+pre |
-| 18 | Ley Titan | III | Ley Line Depths F5 | 28 | 18,000 | Boss | 3 |
-| 19 | Archive Keeper | III | Dry Well F5 | 32 | 3,000–12,000 | Boss | 1 |
-| 20 | Wellspring Guardian | III | Dry Well F7 | 36 | 28,000 | Boss | 3 |
-| 21 | The Architect (Stage 1) | III | Forgotten Forge F5 | 34 | 20,000 | Boss | 1 |
-| 22 | Grey Cleaver Unbound (Stage 2) | III | Forgotten Forge F5 | 36 | 25,000 | Boss | 1 |
-| 23 | Pallor Echo | III | Convergence Phase 4 | 34 | 5,000 | Boss | 1 |
-| 24 | Cael, Knight of Despair | III | Convergence Outer Ring | 36/38 | 45,000/35,000 | Boss | 2 |
-| 25 | The Pallor Incarnate | III | Convergence Central | 40 | 70,000 | Boss | 1 |
-| 26 | The First Scholar | Post | Dreamer's Fault F4 | 50 | 40,000 | Boss | 2 |
-| 27 | The Crystal Queen | Post | Dreamer's Fault F8 | 60 | 60,000 | Boss | 2 |
-| 28 | The Rootking | Post | Dreamer's Fault F12 | 72 | 80,000 | Boss | 2 |
-| 29 | The Iron Warden | Post | Dreamer's Fault F16 | 86 | 100,000 | Boss | 3 |
+| 17 | The Grey Keeper | III | Oasis C (fallen) | 32 | 15,000 | Boss | 2 |
+| 18 | Vaelith, the Ashen Shepherd | III | Pallor Wastes Section 5 | 34 | 50,000 | Boss | 2+pre |
+| 19 | Ley Titan | III | Ley Line Depths F5 | 28 | 18,000 | Boss | 3 |
+| 20 | Archive Keeper | III | Dry Well F5 | 32 | 3,000–12,000 | Boss | 1 |
+| 21 | Wellspring Guardian | III | Dry Well F7 | 36 | 28,000 | Boss | 3 |
+| 22 | The Architect (Stage 1) | III | Forgotten Forge F5 | 34 | 20,000 | Boss | 1 |
+| 23 | Grey Cleaver Unbound (Stage 2) | III | Forgotten Forge F5 | 36 | 25,000 | Boss | 1 |
+| 24 | Pallor Echo | III | Convergence Phase 4 | 34 | 5,000 | Boss | 1 |
+| 25 | Cael, Knight of Despair | III | Convergence Outer Ring | 36/38 | 45,000/35,000 | Boss | 2 |
+| 26 | The Pallor Incarnate | III | Convergence Central | 40 | 70,000 | Boss | 1 |
+| 27 | The First Scholar | Post | Dreamer's Fault F4 | 50 | 40,000 | Boss | 2 |
+| 28 | The Crystal Queen | Post | Dreamer's Fault F8 | 60 | 60,000 | Boss | 2 |
+| 29 | The Rootking | Post | Dreamer's Fault F12 | 72 | 80,000 | Boss | 2 |
+| 30 | The Iron Warden | Post | Dreamer's Fault F16 | 86 | 100,000 | Boss | 3 |
 | * | Vaelith (Siege) | II | Valdris Siege | 150 | 999,999 | Boss | — |
 
-> **Notes:** Cael (#24) has two stat rows (Phase 1: Lv 36 / 45,000 HP;
-> Phase 2: Lv 38 / 35,000 HP). Archive Keeper (#19) has variable HP
-> based on a knowledge puzzle (3,000–12,000). The Architect (#21) and
-> Grey Cleaver Unbound (#22) are a two-stage fight with no break but are
+> **Notes:** Cael (#25) has two stat rows (Phase 1: Lv 36 / 45,000 HP;
+> Phase 2: Lv 38 / 35,000 HP). Archive Keeper (#20) has variable HP
+> based on a knowledge puzzle (3,000–12,000). The Architect (#22) and
+> Grey Cleaver Unbound (#23) are a two-stage fight with no break but are
 > separate bosses with different types, levels, and weaknesses.
 > Vaelith (Siege) is an unwinnable scripted-loss encounter, not counted
-> in the 29 combat bosses.
+> in the 30 combat bosses.
 
 ---
 
@@ -1602,6 +1603,52 @@ reward the most strategically impactful of the four. The "Absorb" path
 is intentionally viable but costly -- a player who chooses it is not
 locked out of completing the game, but carries permanent Despair as a
 narrative scar.
+
+### Oasis C
+
+#### The Grey Keeper (Oasis C Mini-Boss)
+
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop (100%) | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|-------------|------|---------|---------|-------------------|-------------|
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
+
+**Modes:** 2 (Normal, Desperate)
+
+**AI Script:**
+
+```
+=== Boss Encounter: The Grey Keeper ===
+
+Mode: Normal (HP > 50%)
+  Priority:
+    Turn 1: Despair Pulse (guaranteed -- party-wide Despair status,
+             30% chance per target)
+    Turns 2-3: Alternate Ley Drain (single target, absorbs 50 MP)
+               and Ward Shatter (single target, ATK × 2.5 physical)
+    Repeat: Despair Pulse every 4th turn
+
+Mode: Desperate (HP <= 50%)
+  Trigger: Grey Embrace (self-buff, ATK +30%, MAG +30%, 3 turns)
+  Priority:
+    - Prioritize Ward Shatter
+    - Despair Pulse every 3rd turn
+    - Ley Drain when MP available on targets
+
+Scripted Events:
+  Battle start:
+    - cutscene: "The keeper's eyes go Grey. Their body rises, wreathed
+      in corrupted ley energy. The cracked ward stone pulses behind them."
+
+  50% HP:
+    - cutscene: "Grey tendrils erupt from the ward stone, feeding the
+      keeper. Their attacks grow desperate -- frantic."
+
+  Defeat:
+    - cutscene: "The grey energy dissipates. The keeper's body crumbles
+      into grey mist. The ward stone goes completely dark."
+```
+
+**Design Note:** The fight should feel wrong. The player is killing someone they tried to save (if they completed The Cracking Stone quest). The Spirit weakness -- the element of protection and healing -- is ironic. Zero gold because this is not a victory. The Keeper's Resolve drop is a memorial, not loot.
 
 ### Pallor Wastes
 

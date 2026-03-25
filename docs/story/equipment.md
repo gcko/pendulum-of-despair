@@ -469,7 +469,7 @@ status-inflicting enemies grow more common.
 | Silence Ward | Silence immune | 800 | II | Interlude shop |
 | Stone Guard | Petrify immune | 1,500 | Int | Interlude shop |
 | Berserk Collar | Berserk immune | 2,000 | III | Act III shop |
-| Despair Ward | Despair immune | 5,000 | III | Act III Oases (very limited, 1–2 available) |
+| Despair Ward | Despair immune | 5,000 | III | Oasis C only (before fall; very limited, 1–2 available) |
 
 ### Elemental Resistance Accessories
 
@@ -526,6 +526,7 @@ content. Not sold in any shop.
 | Scholar's Codex | +20 MAG, +10 SPD, spell cost -10% | First Scholar | Post |
 | Queen's Facet | Reflects 25% magic damage passively | Crystal Queen | Post |
 | Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
+| Keeper's Resolve | +15% Despair resistance, +5 MDEF | The Grey Keeper drop (Oasis C) | III |
 | Dreamer's Crest | +30 all stats (best accessory in game) | Cael's Echo (non-combat) | Post |
 
 ### Accessory Summary
@@ -536,8 +537,8 @@ content. Not sold in any shop.
 | Status Immunity | 6 |
 | Elemental Resistance | 4 |
 | Combat Mechanic | 9 |
-| Character-Specific / Boss Drop | 14 |
-| **Total** | **41** |
+| Character-Specific / Boss Drop | 15 |
+| **Total** | **42** |
 
 ---
 

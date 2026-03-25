@@ -356,7 +356,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 ### Complete Material List
 
-> **67 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+> **68 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
 
 | Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
 |------|----------------|------|---------------|---------------------|
@@ -403,10 +403,11 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | **Undead (2)** | | | | |
 | Bone Fragment | Undead | 1 | 30 | Weapon hardening, Flashbang |
 | Bone Dust | Undead | 2 | 50 | Spirit-element basics |
-| **Arcanite (3)** | | | | |
+| **Arcanite (4)** | | | | |
 | Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices |
 | Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
 | Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
+| Pallor-Fused Capacitor | Ley-Warped Colossus (Ley Scar, rare steal) | 3 | 300 | Oasis B quest (Amplifier Stabilization) |
 | **Humanoid/Flavor Drops (14)** | | | | |
 | Compact Insignia | Humanoid | 2 | 45 | Vendor trash (sell only) |
 | Elite Insignia | Humanoid | 2 | 65 | Vendor trash |
@@ -517,6 +518,7 @@ Items that advance or gate specific plot events. Unlike dungeon access items, th
 | Pallor-Laced Iron | The Ashen Ram (steal) | Evidence of Pallor in Compact war machines |
 | Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
 | Caldera Employee Card | Sable pickpockets from Compact officer (Caldera) | 25% discount at all Caldera shops (net 112.5% of standard). See [economy.md](economy.md). |
+| Valdris Crest | Sir Aldric, Oasis A (The Last Banner quest) | Unlocks bonus dialogue in Edren's Pallor trial |
 
 > **Pallor-Laced Iron** and **Corrupted Tuning Fork** are steal-only story items. They unlock optional dialogue and lore scenes but are not required for main story progression.
 

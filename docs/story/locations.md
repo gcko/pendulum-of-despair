@@ -731,17 +731,104 @@ The Compact has built scaffolding and pumping rigs into the upper levels, but be
 
 The final stretch before the Convergence is not a single location but a transformed landscape — the Wilds within a ten-mile radius of the Convergence have been completely consumed by the Pallor. Trees are petrified grey. The ground is ash that wasn't burned but *drained* — robbed of color and life. The sky is a uniform grey ceiling, featureless and close. Sound is muffled. The party's footsteps are the loudest thing in the world.
 
-The Wastes are structured as a linear gauntlet — the party pushes forward through increasingly intense Pallor manifestations and environmental hazards. There are no towns, no shops, no save points except for brief clearings where the ley lines still pulse faintly. The pacing is relentless by design: the player should feel the weight of the approach, the sense that hope is being physically subtracted with every step. Each party member's Pallor trial occurs in a designated clearing along the path, functioning as mini-boss encounters that are won through narrative choice rather than pure combat.
+The Wastes are structured as a linear gauntlet — the party pushes forward through increasingly intense Pallor manifestations and environmental hazards. Inside the gauntlet dungeon there are no towns, no shops, no save points except for brief clearings where the ley lines still pulse faintly. (Three Oases exist on the overworld map surrounding the Wastes — see Pallor Wastes Oases below — but once the party enters the gauntlet itself, those safe havens are behind them.) The pacing is relentless by design: the player should feel the weight of the approach, the sense that hope is being physically subtracted with every step. Each party member's Pallor trial occurs in a designated clearing along the path, functioning as mini-boss encounters that are won through narrative choice rather than pure combat.
 
 **Key features:**
 - Grey-scale palette shift (the world loses color as the party approaches the Convergence)
 - Pallor manifestation gauntlet (escalating combat encounters)
 - Trial clearings (five mini-boss encounters — one per party member)
-- No shops or rest points (deliberate resource pressure)
+- No shops or rest points *inside the gauntlet dungeon* (deliberate resource pressure; the Oases sit on the overworld map outside the gauntlet — see Pallor Wastes Oases below)
 - Environmental dread (muffled sound, low visibility, the Convergence visible as a dark shape ahead)
 
 **What the player does here:**
 - Act III: The march to the Convergence. The party fights through manifestations and faces their individual Pallor trials. Each trial is a character-defining moment. The gauntlet ends at the Convergence plateau's edge.
+
+---
+
+### Pallor Wastes Oases
+
+The three Oases are **overworld map locations** outside the Pallor Wastes gauntlet dungeon, visible on the overworld as circles of color — green vegetation and a faint golden shimmer — against the encroaching grey. Each sits on a ley node strong enough to sustain a protective ward, and displaced refugees from across the continent have gathered around them. They provide the party's last opportunities to shop, rest, and save before committing to the gauntlet. Once the party enters the Wastes proper, the Oases are behind them.
+
+#### Oasis A — Valdris Refugees
+
+**Faction:** Valdris (displaced)
+**Acts:** III
+**Type:** Oasis (overworld rest stop)
+**Location:** Northwest Pallor Wastes, nearest to Ironmark
+
+A ley ward bubble shelters an organized encampment under a weathered Valdris banner. The refugees here are disciplined — soldiers, merchants, and civilians who evacuated together and maintained their chain of command. The ward stone glows steady and strong. Tents are arranged in neat rows around a central cooking fire. A makeshift inn occupies the largest tent, and a displaced merchant has set up shop with whatever supplies the refugees could carry.
+
+**Services:**
+- Shop (see economy.md — Oasis A inventory)
+- Inn (50g per night)
+- Save Point
+
+**NPCs:**
+- **Nessa Ashvale** — Shopkeeper; sells consumables, basic equipment, and a few Valdris-specific items salvaged during the evacuation. Recognizes returning players from her Crown District shop and offers a small discount
+- **Bren Ashford** — Runs the makeshift inn; weary but determined to maintain normalcy
+- **Sir Aldric** — Quest giver for *The Last Banner*; one of the last soldiers still wearing Valdris colors
+- **Tev** (Refugee Child) — Provides incidental dialogue about what it was like to watch the Grey take their home
+
+**Sidequest: The Last Banner**
+Sir Aldric asks the party to recover a lost regimental banner from a Pallor-touched patrol that was separated during the march. The patrol was last seen at a nearby clearing that has since been consumed. Reward: 1,500g + Valdris Crest (key item).
+
+**Ward stone:** Strong. Torren: *"This node runs deep. They're safe here — for now."*
+
+#### Oasis B — Compact Refugees
+
+**Faction:** Carradan Compact (displaced)
+**Acts:** III
+**Type:** Oasis (overworld rest stop)
+**Location:** Central Pallor Wastes
+
+A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compact engineers here have bolted brass resonators to the natural ley node, boosting its range. The camp is louder and more chaotic than Oasis A: forge-hammers ring, arguments break out over rations, and the amplifiers emit a low hum that sets teeth on edge. But the ward holds. The refugees are a mix of Compact soldiers, engineers, and laborers who fled when the Grey consumed the eastern territories.
+
+**Services:**
+- Shop (see economy.md — Oasis B inventory)
+- Inn (75g per night)
+- Save Point
+
+**NPCs:**
+- **Forgemaster Dellen** (Quartermaster) — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
+- **Corra** (Rest Attendant) — Manages the inn; a former barracks keeper who insists on clean bedrolls despite everything
+- **Engineer Calder** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
+- **Tomas** (Oasis A Survivor) — A refugee who fled Oasis A after hearing rumors of the Grey's advance; provides context on the other camps
+- **Senna** (Oasis C Survivor) *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
+
+**Sidequest: Amplifier Stabilization**
+Engineer Calder's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.
+
+**Ward stone:** Weakening. Torren: *"The engineers have done something clever. But the core is weakening."*
+
+#### Oasis C — Thornmere Refugees
+
+**Faction:** Thornmere Wilds (displaced)
+**Acts:** III (falls when the party first visits Oasis B)
+**Type:** Oasis (overworld rest stop)
+**Location:** Southeast Pallor Wastes, closest to the Convergence
+
+The most precarious of the three Oases. A ley ward bubble flickers visibly at its edges, maintained by a Thornmere ward keeper who has been channeling for days without rest. The refugees here are Thornmere folk — herbalists, hunters, root-singers — who understand ley energy instinctively but lack the raw power to sustain the ward much longer. The camp is quiet and tense. People speak in whispers. The Grey is visible just beyond the ward's edge, pressing in like fog against glass.
+
+**Services (before fall):**
+- Shop (see economy.md — Oasis C inventory; **only source of Despair Ward** in the game)
+- Inn (100g per night)
+- Save Point
+
+**Services (after fall):** None — the Oasis is consumed by the Pallor.
+
+**NPCs (before fall):**
+- **Elder Thessa Roothollow (Herbalist)** — Sells unique Thornmere consumables, including the Despair Ward
+- **Fen (Innkeeper)** — Runs a quiet rest area; charges the highest rate because resources are scarce this close to the Convergence
+- **Keeper Elara** — Quest giver for *The Cracking Stone*; exhausted and barely standing, channeling the last of the node's power
+
+**NPCs (after fall):**
+- **The Grey Keeper** — Mini-boss. Keeper Elara, consumed by the Pallor when the node collapsed. Fights with corrupted ley magic. A tragic encounter — the party saw this person alive and struggling just hours ago.
+- **Petrified Refugees** — The Thornmere folk, frozen in grey stone mid-action. Cannot be saved. Environmental storytelling at its bleakest.
+
+**Sidequest: The Cracking Stone**
+Keeper Elara's ley node is fracturing — the Grey is pressing through micro-fissures in the ward. The party must bring ley water from a ley fissure nearby (~1 encounter away) to stabilize the ward stone. Success delays the fall; the node eventually collapses regardless after the Archive of Ages is completed. Reward: 2,500g + Spirit Essence.
+
+**Ward stone:** Barely holding. Torren: *"This one is barely holding. I can feel the Grey pressing in."*
 
 ---
 
@@ -1096,14 +1183,17 @@ This table maps the intended player progression through locations, reflecting JR
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
 | 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
 | 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
-| 29 | Pallor Wastes | Gauntlet | Party trials, final approach |
-| 30 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
+| 29a | Oasis A — Valdris Refugees | Oasis (overworld) | Shop, inn, save; The Last Banner sidequest |
+| 29b | Oasis B — Compact Refugees | Oasis (overworld) | Shop, inn, save; Amplifier Stabilization sidequest |
+| 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls when the party first visits Oasis B |
+| 30 | Pallor Wastes | Gauntlet | Party trials, final approach |
+| 31 | The Convergence | Final dungeon | Three-phase boss, sacrifice, ending |
 
 ### Post-Game
 
 | Order | Location | Type | Purpose |
 |-------|----------|------|---------|
-| 31 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
-| 32 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
-| 33 | Windshear Peak | Vista | Oracle hints, atmosphere |
-| 34 | Sunken Rig | Dungeon | Sable-focused optional content |
+| 32 | The Pendulum (tavern) | Hub | Epilogue content, boss rush, bestiary |
+| 33 | Dreamer's Fault | Super dungeon | End-game challenge, Cael's echo |
+| 34 | Windshear Peak | Vista | Oracle hints, atmosphere |
+| 35 | Sunken Rig | Dungeon | Sable-focused optional content |

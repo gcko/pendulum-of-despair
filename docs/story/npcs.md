@@ -368,6 +368,88 @@ When the Pallor's name surfaces in Act II, Mirren is the NPC who can provide his
 
 ---
 
+### Oasis A Refugees (Act III)
+
+The Valdris survivors at Oasis A are a cross-section of the Crown District's displaced population — merchants, knights, and families who escaped the fall during the Interlude evacuation. They cluster around the ward stone in a makeshift camp that echoes the social hierarchies of the city they lost. The Crown's rigid structure persists even in exile: the knight still commands, the merchant still trades, the innkeeper still keeps.
+
+---
+
+### Nessa Ashvale
+
+**Location:** Oasis A, Market Clearing
+
+**Role:** Shopkeeper (Oasis A inventory)
+
+**Backstory:** Nessa ran the most reliable general goods shop in the Valdris Crown District for twenty-three years. When the Grey consumed the city during the Interlude, she grabbed her inventory ledger before her lockbox. The ledger has every supplier, every margin, every seasonal trend for two decades — muscle memory encoded in ink. She rebuilt her stock from salvage, barter, and sheer mercantile stubbornness. Her prices are fair. She does not haggle. She never did.
+
+If the player visited her Crown District shop in Acts I-II, she recognizes them and offers a small discount. This is one of the few moments in Act III where the past world acknowledges you back.
+
+**Dialogue hints:**
+- *"You remember my shop in the Crown District? Gone. All Grey. But I saved what matters — the inventory ledger. Old habits."*
+- *"Stock's thin. I won't apologize for the prices — everything here was carried on someone's back through the Wastes."*
+
+**Story relevance:** Commerce (Oasis A shop). Familiar face callback for players who explored Valdris Crown.
+
+**Act presence:** Act III only. Present at Oasis A from the player's first visit. Oasis A survives through the endgame.
+
+---
+
+### Bren Ashford
+
+**Location:** Oasis A, Rest Shelter
+
+**Role:** Innkeeper (rest point, 50g)
+
+**Backstory:** Bren kept the Hearthlight Inn near the Crown Gate for fifteen years. He was never the best innkeeper in Valdris — that was Old Harren — but he was reliable, clean, and quiet. Now he manages a lean-to with salvaged blankets and a fire pit. He charges 50 gold because it covers the firewood and gives people a reason to believe things still work like they used to.
+
+**Dialogue hints:**
+- *"We don't charge much. Gold's just weight now."*
+
+**Story relevance:** Flavor (rest point)
+
+**Act presence:** Act III only. Present at Oasis A.
+
+---
+
+### Sir Aldric
+
+**Location:** Oasis A, Perimeter Watch
+
+**Role:** Quest giver — The Last Banner
+
+**Backstory:** Sir Aldric commanded the rear guard during Valdris Crown's evacuation. His unit — Third Company, Second Regiment — held the eastern approach while civilians fled through the western gate. The company was overrun. Aldric survived because his sergeant physically dragged him through a closing ward gate. He has not forgiven himself for this. He does not sleep well. He maintains the perimeter watch at Oasis A with the rigid discipline of a man who believes that if he stops moving, he will have to think.
+
+The company's battle standard — a silver tower on blue field — was lost during the retreat. Aldric knows approximately where the overrun happened. He cannot go himself; the oasis needs every sword on the perimeter. He asks the party to retrieve it. The quest leads into a Pallor-dense area of the Wastes where the Third Company's last stand left residual echoes — spectral encounters with Grey-twisted remnants of the soldiers who fell.
+
+The banner itself is intact, driven into the ground where the standard-bearer died. Retrieving it is not mechanically difficult. Getting there and back alive is.
+
+**Dialogue hints:**
+- *"Our banner is out there. Third Company, Second Regiment. They didn't make it, but the standard doesn't have to die with them."*
+- (After quest completion) *"You brought it back. I... thank you. They deserved better than to be forgotten in the Grey."*
+
+**Story relevance:** Side quest (The Last Banner). Emotional weight — the quest reward is modest, but the narrative payoff is significant.
+
+**Act presence:** Act III only. Present at Oasis A. Quest available on first visit.
+
+---
+
+### Tev
+
+**Location:** Oasis A, near the ward stone
+
+**Role:** Flavor NPC (child, news source)
+
+**Backstory:** Tev is ten years old. She lost her father during the evacuation and her mother doesn't talk about it. She is perceptive in the way that children are when adults stop shielding them from the truth — she watches the ward stone's light, she listens to the adults' whispered conversations, and she pieces things together faster than anyone gives her credit for. She has heard rumors of Oasis B from a trader who passed through, and she reports this to the party as fact.
+
+**Dialogue hints:**
+- *"Mama says the light is keeping us safe. But I can see it getting smaller. And there's another camp, further south — someone said they have machines that make the light bigger."*
+
+**Story relevance:** Flavor. Foreshadows Oasis B (Compact technology) and ward stone degradation.
+
+**Act presence:** Act III only. Present at Oasis A.
+
+---
+
 ## The Carradan Compact
 
 The industrial empire of city-states fueled by Arcanite Forging. NPCs here reflect the tension between surface meritocracy and deep exploitation, and the fractures that appear when the ley lines — and the machines that depend on them — begin to fail.
@@ -683,6 +765,107 @@ He and Lira corresponded before her defection. He sent her the raw data that con
 **Story relevance:** Ties to main quest
 
 **Act presence:** Interlude only. Found during the citadel infiltration. She provides intelligence about Kole's defenses and the location of the map to the Convergence. Her testimony is the most visceral evidence of what the Pallor does to an institution.
+
+---
+
+### Oasis B Refugees (Act III)
+
+The Compact survivors at Oasis B are engineers, quartermasters, and laborers — the industrial backbone that kept the forges running. Their camp reflects Compact pragmatism: organized supply lines, improvised ley amplifiers extending the ward stone's range, and a chain of command that functions even in exile. They are better supplied than Oasis A but more fragile — their technology depends on components that are running out.
+
+---
+
+### Forgemaster Dellen
+
+**Location:** Oasis B, Supply Depot
+
+**Role:** Shopkeeper (Oasis B inventory)
+
+**Backstory:** Dellen was quartermaster for the Ashmark Foundry District, responsible for sourcing raw materials across three city-states. When the Compact fractured, he salvaged what he could carry and organized the supply chain for Oasis B with the same methodical efficiency he brought to industrial logistics. His inventory skews toward Compact-manufactured goods: forged equipment, alchemical supplies, and salvaged arcanite components. He tracks every item in a battered ledger with entries precise to the gram.
+
+If the player visited Ashmark's markets in Acts I-II, Dellen recognizes them and comments on the irony of selling survival gear instead of forge stock.
+
+**Dialogue hints:**
+- *"Ashmark Foundry District, sixteen years. I knew every supplier from Corrund to the northern reaches. Now my supply chain is 'whatever someone drags in from the Wastes.' Adapt or die."*
+- *"I don't do credit. Nothing personal — I just can't afford to trust anyone's tomorrow."*
+
+**Story relevance:** Commerce (Oasis B shop). Familiar face callback for players who explored Compact cities.
+
+**Act presence:** Act III only. Present at Oasis B from the player's first visit. Oasis B survives through the endgame.
+
+---
+
+### Corra
+
+**Location:** Oasis B, Pipe Section
+
+**Role:** Rest attendant (rest point, 75g)
+
+**Backstory:** Corra claimed a section of salvaged industrial piping as the camp's rest area. The pipes retain heat from a ley line seepage beneath the camp — she is not sure why and does not ask. She charges 75 gold, slightly more than Oasis A, because the warmth is genuine and warmth in the Wastes is worth the premium.
+
+**Dialogue hints:**
+- *"It's warm. Don't ask why."*
+
+**Story relevance:** Flavor (rest point)
+
+**Act presence:** Act III only. Present at Oasis B.
+
+---
+
+### Engineer Calder
+
+**Location:** Oasis B, Amplifier Array
+
+**Role:** Quest giver — Amplifier Stabilization
+
+**Backstory:** Calder was a senior ley engineer in Corrund's power grid division. She designed the amplifier array that extends Oasis B's ward stone range — a jury-rigged network of salvaged Compact capacitors and ley conduits that pushes the safe zone fifty meters beyond its natural radius. The system works. It also burns through capacitors at a rate she cannot sustain. The last Pallor-Fused Capacitor in her reserve failed two days ago. Without a replacement, the amplifiers go dark within the week, and the ward's effective range contracts to its natural limit — cutting off the outer ring of shelters where forty people sleep.
+
+She knows where to find one: a collapsed Compact relay station in the deep Wastes, two hours into Pallor-dense territory. She cannot leave the array — if a capacitor fails while she is gone, the cascade takes the whole system down. She needs someone expendable enough to risk the trip and competent enough to identify the right component.
+
+**Dialogue hints:**
+- *"The amplifiers are flickering. Without a new capacitor, we lose the extra range in days."*
+- (After quest completion) *"You found one. Good. This buys us... weeks, maybe. I'll take weeks."*
+
+**Story relevance:** Side quest (Amplifier Stabilization). Mechanically significant — completing the quest maintains Oasis B's extended ward range and keeps the outer shelters viable.
+
+**Act presence:** Act III only. Present at Oasis B. Quest available on first visit.
+
+---
+
+### Tomas
+
+**Location:** Oasis B, Outer Shelters
+
+**Role:** Flavor NPC (Oasis A survivor, news source)
+
+**Backstory:** Tomas arrived at Oasis B three days ago from Oasis A. He is gaunt, dehydrated, and rattled. He made the crossing alone after his trade caravan was scattered by a Grey surge in the Wastes. He reports that Oasis A's ward stone is dimming — the light pulses irregularly now, and the safe zone has contracted noticeably since his last visit a month ago. He does not know if this is normal degradation or something worse.
+
+**Dialogue hints:**
+- *"I was at Oasis A a month ago. The ward light was steady then. When I left three days back, it was flickering. Flickering. Ward stones don't flicker."*
+- *"The crossing took nine hours. Used to take six. The Pallor is thicker between the camps. Something is changing out there."*
+
+**Story relevance:** Flavor. Foreshadows ward stone degradation across all oases. Establishes that the safe zones are shrinking.
+
+**Act presence:** Act III only. Present at Oasis B.
+
+---
+
+### Senna
+
+**Location:** Oasis B, Outer Shelters
+
+**Role:** Conditional NPC — Oasis C fall witness (appears after oasis_c_fallen flag)
+
+**Backstory:** Senna was the ward keeper's apprentice at Oasis C. She was fifteen when the Thornmere elders began training her in spirit-speaking. She was sixteen when the ward stone cracked. She held the secondary wards while her mentor, the ward keeper, poured everything into the primary stone. It was not enough. The stone shattered. The Grey rushed in. The keeper held on longer than anyone thought possible — three days of continuous channeling, blood from her nose and ears — but the Pallor consumed the camp from the edges inward. Senna escaped because the keeper spent her last reserves pushing the apprentice through a gap in the Grey. She walked for two days to reach Oasis B.
+
+She does not appear until the oasis_c_fallen flag triggers. When she arrives, she is the first confirmation that an oasis can fall — that the ward stones are not permanent, and the safe zones are temporary.
+
+**Dialogue hints:**
+- *"The stone cracked. Three days ago. [The keeper] held on... longer than anyone thought possible. But the Grey..."*
+- *"She pushed me out. I didn't want to go. She didn't give me a choice."*
+
+**Story relevance:** Ties to main quest. Confirms Oasis C's fall. Provides emotional weight and firsthand testimony. Her arrival at Oasis B is a narrative turning point — the player now knows any oasis can fall.
+
+**Act presence:** Act III only. Appears at Oasis B after oasis_c_fallen flag triggers. Not present before the fall.
 
 ---
 
@@ -1044,6 +1227,74 @@ hear that Valdris finally understands what it costs to ignore the Wilds."*
 **Story relevance:** Ties to world event
 
 **Act presence:** Act II only. A single conversation with a child that takes on devastating weight after the player understands the Pallor. Her "something else" is the Pallor's influence seeping into the spirit world. She is hearing it because children's spiritual sensitivity in Thornmere culture is highest before training teaches them to filter.
+
+---
+
+### Oasis C Refugees (Act III)
+
+The Thornmere survivors at Oasis C maintain the oldest traditions of any oasis camp. Their ward stone is spirit-bound rather than ley-amplified — sustained by a ward keeper's continuous channeling rather than Compact technology. This makes the ward more resilient to ley fluctuations but entirely dependent on the keeper's endurance. The camp is small, intimate, and deeply connected to the land even as the land dies around them. Oasis C is the only source of Despair Wards — spirit-crafted protections that no other faction can produce.
+
+---
+
+### Elder Thessa Roothollow
+
+**Location:** Oasis C, Herbalist's Clearing
+
+**Role:** Shopkeeper (Oasis C inventory, sole source of Despair Wards)
+
+**Backstory:** Thessa was the senior herbalist in Roothollow before the Pallor consumed the settlement. She is old, sharp-eyed, and unsentimental about survival. Her knowledge of Thornmere plant lore is encyclopedic, but what makes her irreplaceable is her ability to craft Despair Wards — spirit-bound talismans that provide temporary resistance to Pallor corruption. The technique requires Thornmere spirit-speaking, specific wild-harvested reagents, and a patience that borders on meditative trance. No one else at any oasis can produce them.
+
+Her inventory is small and expensive. She does not apologize for this. The reagents are rare, the process is slow, and every Despair Ward she sells might be the one that keeps someone alive long enough to matter.
+
+If the player visited Roothollow or Greywood in earlier acts, she recognizes them and offers a terse acknowledgment — warmth, by Thornmere standards.
+
+**Dialogue hints:**
+- *"Despair Wards. You won't find them anywhere else. The Compact tried to forge equivalents — failed. You can't industrialize spirit-work."*
+- *"Roothollow is Grey now. But the recipes are here."* (taps her temple) *"The land remembers through us."*
+
+**Story relevance:** Commerce (Oasis C shop). Sole source of Despair Wards — mechanically critical for deep Wastes exploration. Familiar face callback for Thornmere players.
+
+**Act presence:** Act III only. Present at Oasis C until oasis_c_fallen. Lost with the camp when Oasis C falls. The Cracking Stone quest delays but does not prevent the fall.
+
+---
+
+### Fen
+
+**Location:** Oasis C, Root Shelter
+
+**Role:** Innkeeper (rest point, 100g)
+
+**Backstory:** Fen maintains a rest clearing beneath the root canopy of a massive dead tree whose root system still holds. The roots create natural sheltered alcoves — dry, windless, and insulated. He charges 100 gold, the highest of any oasis, because the root shelter is the safest sleeping spot in the Wastes and he knows it. The roots are spirit-touched; sleepers report dreamless rest, which in the Pallor Wastes is a luxury beyond price.
+
+**Dialogue hints:**
+- *"Hundred gold. The roots keep the whispers out. You'll sleep clean here — no Grey dreams. Worth every coin."*
+
+**Story relevance:** Flavor (rest point). Highest-cost rest in the Wastes, reflecting Oasis C's remoteness and the premium on Thornmere spirit-protection.
+
+**Act presence:** Act III only. Present at Oasis C until oasis_c_fallen.
+
+---
+
+### Keeper Elara
+
+**Location:** Oasis C, Ward Stone Circle
+
+**Role:** Quest giver — The Cracking Stone / future mini-boss (The Grey Keeper)
+
+**Backstory:** Elara is the spirit-speaker who maintains Oasis C's ward stone through continuous channeling. She was trained in the old Thornmere tradition — direct communion with land spirits, binding their essence into protective wards that hold back corruption. She is very good at what she does. She is also dying. The ward stone is cracking — hairline fractures that widen each day — and holding it together requires more of her life force than the technique was designed to draw. She bleeds from her nose after long sessions. She does not mention this to anyone.
+
+The ward stone's deterioration is accelerating because a nearby ley fissure is leaking corrupted energy into the ground beneath the camp. If the fissure could be sealed — or if purified water from its source could be brought back — the stone's degradation would slow enough for Elara to stabilize it. This is the quest: The Cracking Stone. The fissure is in deep Pallor territory, guarded by Grey-twisted wildlife.
+
+When the oasis_c_fallen flag triggers, Elara does not escape. She channels everything she has into the stone in a final attempt to hold it. She fails. The Pallor consumes her. In the aftermath, she rises as The Grey Keeper — a mini-boss encountered if the player returns to the fallen Oasis C site. She retains fragments of her spirit-speaking ability, twisted into Pallor-channeling attacks. Defeating her is one of the most emotionally difficult encounters in the game.
+
+**Dialogue hints:**
+- *"The stone is cracking. I can hold it — but not forever. There's a ley fissure, nearby. If you could bring water from it..."*
+- *"Every hour I hold this stone, I feel the Grey pressing back. It knows I'm here. It's patient."*
+- (If player returns post-fall, as The Grey Keeper) *"...still... holding..."* (combat dialogue, fragmented)
+
+**Story relevance:** Side quest (The Cracking Stone). Keeper Elara is consumed by the Pallor when the ley ward stone fails. Her transformation into The Grey Keeper is the dramatic climax of the Oasis C storyline.
+
+**Act presence:** Act III only. Present at Oasis C as quest giver. Transforms into The Grey Keeper mini-boss after oasis_c_fallen.
 
 ---
 
