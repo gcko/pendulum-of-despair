@@ -513,11 +513,11 @@ for that slot type.
 
 ### 5.6 Stat Comparison (Right)
 
-6 core combat stats + 3 derived stats (HP and MP are shown in the
-party panel but not in the equipment stat comparison, since equipment
-does not directly modify HP/MP):
-- Left column: ATK, DEF, MAG, MDEF, EVA%
-- Right column: SPD, LCK, MEVA%, CRIT%
+6 core combat stats + 3 derived stats, in a single vertical list
+(HP and MP are shown in the party panel but not in the equipment
+stat comparison, since equipment does not directly modify HP/MP):
+
+ATK, DEF, MAG, MDEF, SPD, LCK, EVA%, MEVA%, CRIT%
 
 Each stat shows: label + current value + delta indicator:
 - Green up-arrow (`▲`) + new value for improvement
