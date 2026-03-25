@@ -653,7 +653,7 @@ Three formation types determine battle start conditions:
 | Formation | Party Effect | Enemy Effect | Frequency |
 |-----------|-------------|--------------|-----------|
 | Normal | Rows as assigned | Standard ATB start | Most common |
-| Back Attack | Rows reversed for 1st round; enemies get 50% ATB fill | Advantage | Terrain-dependent |
+| Back Attack | Rows reversed for 1st round | 50% ATB fill at battle start | Terrain-dependent |
 | Preemptive | Full ATB gauges | Empty ATB gauges | 12.5% base |
 
 Back attacks and preemptive strikes are mutually exclusive. Bosses and

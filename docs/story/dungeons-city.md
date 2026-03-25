@@ -90,10 +90,10 @@ KEY:  ### = limestone wall   [...] = alcove/room   === = passage
 
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Crypt Shade, 1x Bone Warden | 31.25% |
-| 2 | 3x Tomb Mite, 1x Crypt Shade | 31.25% |
-| 3 | 1x Bone Warden, 2x Tomb Mite | 31.25% |
-| 4 | 2x Drowned Sentinel, 1x Crypt Shade (rare) | 6.25% |
+| 1 | 2x Crypt Shade + 1x Bone Warden | 31.25% |
+| 2 | 3x Tomb Mite + 1x Crypt Shade | 31.25% |
+| 3 | 1x Bone Warden + 2x Tomb Mite | 31.25% |
+| 4 | 2x Drowned Sentinel + 1x Crypt Shade (rare) | 6.25% |
 
 **Treasure:**
 - Burial Alcove A: Royal Funeral Urn (sell for 800g, or keep -- Mirren will identify it as belonging to Queen Verath, third dynasty, for lore)
@@ -293,10 +293,10 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Forge-Smoke Creature, 1x Sewer Rat | 31.25% |
-| 2 | 1x Service Automata, 2x Sewer Rat | 31.25% |
-| 3 | 2x Service Automata, 1x Forge-Smoke Creature | 31.25% |
-| 4 | 1x Forge-Smoke Creature, 1x Service Automata, 2x Sewer Rat (rare) | 6.25% |
+| 1 | 2x Forge-Smoke Creature + 1x Sewer Rat | 31.25% |
+| 2 | 1x Service Automata + 2x Sewer Rat | 31.25% |
+| 3 | 2x Service Automata + 1x Forge-Smoke Creature | 31.25% |
+| 4 | 1x Forge-Smoke Creature + 1x Service Automata + 2x Sewer Rat (rare) | 6.25% |
 
 **Treasure:**
 - Supply Cache A: 800 gold, 3x Standard Ration, 1x Repair Kit
@@ -487,10 +487,10 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Heat Sprite, 1x Corrupted Forge Construct | 31.25% |
+| 1 | 2x Heat Sprite + 1x Corrupted Forge Construct | 31.25% |
 | 2 | 3x Heat Sprite | 31.25% |
-| 3 | 1x Corrupted Forge Construct, 1x Pallor Seep | 31.25% |
-| 4 | 2x Corrupted Forge Construct, 1x Heat Sprite (rare) | 6.25% |
+| 3 | 1x Corrupted Forge Construct + 1x Pallor Seep | 31.25% |
+| 4 | 2x Corrupted Forge Construct + 1x Heat Sprite (rare) | 6.25% |
 
 **Treasure:**
 - Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
@@ -595,12 +595,14 @@ KEY:  ### = iron wall   === = pipe (ley energy, blue glow)
 
 **Formation type (Extraction Pipeline):** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 
+**Shared 4-pack** (both sub-areas draw from the same enemy pool; formation type varies by area):
+
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Overclocked Automata, 1x Forge Roach | 31.25% |
-| 2 | 1x Pipe Wraith, 3x Forge Roach | 31.25% |
-| 3 | 1x Overclocked Automata, 1x Pipe Wraith | 31.25% |
-| 4 | 1x Pallor-Touched Worker, 1x Pipe Wraith, 1x Overclocked Automata (rare) | 6.25% |
+| 1 | 2x Overclocked Automata + 1x Forge Roach | 31.25% |
+| 2 | 1x Pipe Wraith + 3x Forge Roach | 31.25% |
+| 3 | 1x Overclocked Automata + 1x Pipe Wraith | 31.25% |
+| 4 | 1x Pallor-Touched Worker + 1x Pipe Wraith + 1x Overclocked Automata (rare) | 6.25% |
 
 **Treasure:**
 - Worker's Last Station: Shift Foreman's Key (key item -- opens the Sealed Maintenance Closet)
@@ -778,9 +780,9 @@ KEY:  ### = Arcanite-bonded iron wall   |B| = cell bars
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
 | 1 | 2x Pallor-Touched Soldier | 31.25% |
-| 2 | 1x Pallor-Touched Soldier, 2x Pallor Wisp | 31.25% |
+| 2 | 1x Pallor-Touched Soldier + 2x Pallor Wisp | 31.25% |
 | 3 | 3x Pallor Wisp | 31.25% |
-| 4 | 2x Pallor-Touched Soldier, 1x Pallor Wisp (rare) | 6.25% |
+| 4 | 2x Pallor-Touched Soldier + 1x Pallor Wisp (rare) | 6.25% |
 
 **Key NPC:** Ansa Veld, Cell 5. She is gaunt but sharp. She provides:
 - Kole's patrol timing (reduces encounters in the Inner Ring)
@@ -871,10 +873,10 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 
 | Fmt | Enemies | Weight |
 |-----|---------|--------|
-| 1 | 2x Sea Crawler, 1x Tide Wraith | 31.25% |
+| 1 | 2x Sea Crawler + 1x Tide Wraith | 31.25% |
 | 2 | 3x Sea Crawler | 31.25% |
-| 3 | 1x Smuggler Thug, 2x Sea Crawler | 31.25% |
-| 4 | 2x Smuggler Thug, 1x Tide Wraith (rare) | 6.25% |
+| 3 | 1x Smuggler Thug + 2x Sea Crawler | 31.25% |
+| 4 | 2x Smuggler Thug + 1x Tide Wraith (rare) | 6.25% |
 
 **Treasure:**
 - Sable's Hideaway: Tin Box (examine for Sable character scene -- contains a copper coin, blue fabric scrap, and a child's drawing. "I hid here when the world got too loud. Guess some things don't change.")
