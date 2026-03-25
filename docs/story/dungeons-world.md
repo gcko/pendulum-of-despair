@@ -4982,7 +4982,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 
 **Encounter Zones:**
 - Ancient Root Guardian (1x, 600 HP -- a petrified root construct that activates when the party enters. Not corrupted -- a defense mechanism. Can be spoken to by Torren to deactivate peacefully)
-- Ley Moth Swarm (8x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
+- Ley Moth Swarm (4x Ley Moth, 40 HP each -- attracted to the party's torchlight, fragile but numerous, ley-energy attacks)
 - Pallor Seep (1x, 500 HP -- Pallor corruption leaking through a crack in the cavern wall. Amorphous, Void-element, regenerates unless the crack is sealed with ley water)
 
 
@@ -4994,7 +4994,7 @@ A root system fully corrupted by the Pallor. Where healthy roots are brown and a
 | Pallor Fungus | Toxic spore attacks. Poison (25% chance) + Confusion (20% chance). Groups of 2. | Floor 1 | 350 |
 | Tunnel Beetle | Armored, physical-only. High DEF, low HP. Groups of 4. | Floor 1 | 150 |
 | Ancient Root Guardian | Petrified root construct. Defense mechanism. Torren can deactivate peacefully. | Floor 2 | 600 |
-| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 8. | Floor 2 | 40 |
+| Ley Moth Swarm | Attracted to torchlight. Fragile but numerous. Ley-energy attacks. Groups of 4. | Floor 2 | 40 |
 | Pallor Seep | Pallor corruption leaking through crack. Amorphous, Void-element. Regenerates unless sealed with ley water. | Floor 2 | 500 |
 | **Root Horror** (Mini-boss) | Fully corrupted root system. Regenerates 500 HP/turn unless hit with Flame or ley water. Pallor Pulse + Bind (custom status). | Floor 1 | 7,000 |
 

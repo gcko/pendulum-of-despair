@@ -485,8 +485,9 @@ when elemental-heavy encounters become routine.
 
 ### Combat Mechanic Accessories
 
-Grant passive combat effects. Act II through Act III availability
-(one exception: Infiltrator's Cloak found in the Interlude).
+Grant passive combat effects. Available from Act II onward; several
+first appear during the Interlude (Haste Bangle, Counter Ring,
+Preemptive Charm, Infiltrator's Cloak).
 
 | Name | Effect | Price | Act | Acquired |
 |------|--------|-------|-----|----------|
