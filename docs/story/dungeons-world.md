@@ -1646,7 +1646,7 @@ harbors — see [locations.md](locations.md) for full details:
 - **Oasis B** (Central, Compact Refugees) — midway point with
   jury-rigged ley amplifiers.
 - **Oasis C** (Southeast, Thornmere Refugees) — last stop before
-  the Convergence. Falls after the Archive of Ages, triggering The
+  the Convergence. Falls after Pallor Wastes Trial 3, triggering The
   Grey Keeper mini-boss encounter.
 
 The Oases use Tier 0 (Safe) encounter rate. The overworld between

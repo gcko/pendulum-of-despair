@@ -390,7 +390,7 @@ If the player visited her Crown District shop in Acts I-II, she recognizes them 
 
 **Story relevance:** Commerce (Oasis A shop). Familiar face callback for players who explored Valdris Crown.
 
-**Act presence:** Act III only. Present at Oasis A from the player's first visit. If Oasis A falls, Nessa is lost with it.
+**Act presence:** Act III only. Present at Oasis A from the player's first visit. Oasis A survives through the endgame.
 
 ---
 
@@ -790,7 +790,7 @@ If the player visited Ashmark's markets in Acts I-II, Dellen recognizes them and
 
 **Story relevance:** Commerce (Oasis B shop). Familiar face callback for players who explored Compact cities.
 
-**Act presence:** Act III only. Present at Oasis B from the player's first visit. If Oasis B falls, Dellen is lost with it.
+**Act presence:** Act III only. Present at Oasis B from the player's first visit. Oasis B survives through the endgame.
 
 ---
 

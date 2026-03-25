@@ -246,7 +246,7 @@ Include the herbalist (shopkeeper), innkeeper, and the ward keeper (quest giver 
 ```bash
 git add docs/story/npcs.md
 ```
-Message: `docs(shared): add Oasis NPCs to npcs.md (13 NPCs across 3 factions)`
+Message: `docs(shared): add Oasis NPCs to npcs.md (12 NPCs across 3 factions)`
 
 ---
 
@@ -580,7 +580,7 @@ Replace the section with:
 **Priority:** P1
 **Files:** `docs/story/locations.md`, `docs/story/dungeons-world.md`, `docs/story/npcs.md`, `docs/story/sidequests.md`, `docs/story/dynamic-world.md`, `docs/story/events.md`, `docs/story/bestiary/act-iii.md`, `docs/story/bestiary/bosses.md`, `docs/story/equipment.md`, `docs/story/items.md`
 **Depends On:** 1.4 (Items), 1.5 (Equipment), 1.6 (Economy)
-**Completed:** 2026-03-25 — Three Oases (Valdris/Compact/Thornmere refugees) with ley ward stone protection, shops/inn/save, 13 NPCs (including familiar faces from earlier acts), 3 minor sidequests, Oasis C fall event with The Grey Keeper mini-boss, post-Convergence state.
+**Completed:** 2026-03-25 — Three Oases (Valdris/Compact/Thornmere refugees) with ley ward stone protection, shops/inn/save, 12 NPCs (including familiar faces from earlier acts), 3 minor sidequests, Oasis C fall event with The Grey Keeper mini-boss, post-Convergence state.
 
 **What's Needed:**
 - [x] Number and placement of Oases in Act III overworld (3 Oases: NW/Central/SE Pallor Wastes, visible on overworld map)
@@ -604,7 +604,7 @@ Now complete. Unblocks nothing directly (all downstream gaps were already unbloc
 Add to the Progress Tracking table:
 
 ```markdown
-| 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING -> COMPLETE. 3 Oases with ley ward stones, 13 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | -- |
+| 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING -> COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | -- |
 ```
 
 - [ ] **Step 4: Run lint and tests**

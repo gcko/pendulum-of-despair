@@ -407,6 +407,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices |
 | Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
 | Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
+| Pallor-Fused Capacitor | Ley-Warped Colossus (Ley Scar, rare steal) | 3 | 300 | Oasis B quest (Amplifier Stabilization) |
 | **Humanoid/Flavor Drops (14)** | | | | |
 | Compact Insignia | Humanoid | 2 | 45 | Vendor trash (sell only) |
 | Elite Insignia | Humanoid | 2 | 65 | Vendor trash |
