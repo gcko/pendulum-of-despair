@@ -122,7 +122,7 @@ them everywhere.
 | Stop | Hourglass | Red-grey `#aa6666` | ATB frozen |
 | Berserk | Rage face | Orange `#ff8844` | Auto-attack |
 | Faint | Skull (hollow) | Dark red `#882222` | KO / unconscious |
-| Despair | Grey down arrow | Grey `#777777` | ATB -25%, damage -20% |
+| Despair | Grey static swirl | Grey `#777777` | ATB -25%, damage -20% |
 
 **Positive status icons (warm/cool positive colors):**
 
@@ -136,10 +136,10 @@ them everywhere.
 | Quickstep (Haste) | Up arrow | Green `#44cc44` | ATB +50% |
 | Rallying Cry (ATK Up) | Sword up | Orange `#ffaa44` | ATK +30% |
 | Attunement (MAG Up) | Star | Gold `#ffcc44` | MAG +30% |
-| Last Breath (Reraise) | Phoenix feather | Warm gold `#ffdd66` | Auto-revive at 30% HP |
+| Last Breath (Reraise) | Phoenix feather | Warm gold `#ffdd66` | Revives with 30% HP on Faint |
 | Glintmark | Crosshair | White `#ffffff` | Target takes +10% damage |
 
-See [magic.md](magic.md) § Status Effect Quick Reference for the full
+See [magic.md](magic.md) § Status Effect Reference for the full
 canonical status effect list with durations and cure sources.
 
 ---
@@ -269,7 +269,8 @@ of the battle screen (over the party panel).
   - Edren (Bulwark): stance list — selecting activates (replaces current).
   - Lira (Forgewright): device list with quantity (like items).
   - Torren (Spiritcall): spirit list with Favor pips (small dots:
-    filled = available, empty = cooldown).
+    0–3 filled = current harmony rating with that spirit; all spirits
+    remain usable regardless of Favor level).
   - Sable (Tricks): technique list (Filch, Ransack, Smokescreen,
     Shiv, etc.) — cooldown-based, front-row indicator for steal abilities.
   - Maren (Arcanum): weave list with Weave Gauge cost (like MP cost).
@@ -301,10 +302,13 @@ After winning a battle, a results window appears over the battle screen:
 
 Maren's party panel row includes a third gauge below her MP bar:
 a thin Weave Gauge bar (purple `#aa44ff` fill on dark background).
-This gauge charges during battle via Arcanum abilities. In the menu
-Abilities screen, the current charge is shown (typically 0 outside
-battle). The Weave Gauge is narrower than HP/MP bars and does not
-appear for other characters.
+This gauge fills when any magic is cast in battle — +10 WG from
+ally spells, +5 WG from Maren's own spells, +15 WG from enemy
+spells (per [abilities.md](abilities.md) § Maren — Arcanum). Max
+100 WG, starts at 0 each battle. In the menu Abilities screen, the
+current charge is shown (typically 0 outside battle). The Weave
+Gauge is narrower than HP/MP bars and does not appear for other
+characters.
 
 ### 2.10 Scroll Indicators
 
@@ -473,6 +477,7 @@ portrait top-right.
 │                    │ LCK  14 ──          │
 │                    │ EVA% 12 ──          │
 │                    │ MEVA% 8 ──          │
+│                    │ CRIT% 3 ──          │
 ├────────────────────┴─────────────────────┤
 │ Fire element  Grants [haste icon]        │
 └──────────────────────────────────────────┘
@@ -507,9 +512,9 @@ for that slot type.
 
 ### 5.6 Stat Comparison (Right)
 
-All 8 core stats + 2 derived stats in two columns:
-- Left: ATK, DEF, MAG, MDEF
-- Right: SPD, LCK, EVA%, MEVA%
+All 8 core stats + 3 derived stats:
+- Left column: ATK, DEF, MAG, MDEF, EVA%
+- Right column: SPD, LCK, MEVA%, CRIT%
 
 Each stat shows: label + current value + delta indicator:
 - Green up-arrow (`▲`) + new value for improvement
@@ -584,7 +589,7 @@ set. See [abilities.md](abilities.md) for each command's full details.
 |-----------|-------------|-------------------|
 | Edren | Bulwark stances | Active stance highlighted |
 | Lira | Forgewright devices | Quantity shown (like items) |
-| Torren | Spiritcall spirits | Favor pips: filled dots = available, empty = cooldown |
+| Torren | Spiritcall spirits | Favor pips: 0–3 filled dots = harmony rating (all spirits always usable; Favor 3 = permanent upgrade) |
 | Sable | Tricks techniques | Cooldown pips (filled = ready, empty = on cooldown); front-row icon on steal abilities |
 | Maren | Arcanum weaves | Weave Gauge bar below MP (shows current charge) |
 | Cael | Rally commands | MP cost shown (like spells) |
@@ -615,7 +620,7 @@ commands bottom-left, equipment bottom-right.
 │   Next   1,230     │ LCK   14 (+ 0)      │
 │                    │ EVA%  12%            │
 │                    │ MEVA%  8%            │
-│                    │ Crit%  3%            │
+│                    │ CRIT%  3%            │
 ├────────────────────┼─────────────────────┤
 │ Battle Commands:   │ Weapon : Iron Sword │
 │  Attack            │ Head   : Leather Cap│
@@ -633,7 +638,7 @@ commands bottom-left, equipment bottom-right.
   XP to next level. Status effect icons if any active.
 - **Core stats (right):** HP and MP with bars + numeric. All 8 stats
   with equipment bonus in parentheses where nonzero. Derived stats:
-  EVA%, MEVA%, Crit%. See [progression.md](progression.md) for stat
+  EVA%, MEVA%, CRIT%. See [progression.md](progression.md) for stat
   definitions, growth curves, and caps.
 - **Battle commands (bottom-left):** Lists available commands for reference.
 - **Equipment summary (bottom-right):** All 5 equipped items by slot.
@@ -877,7 +882,7 @@ Game+) needs additional slots, this can be revisited then.
 
 ### 13.4 Empty Slot
 
-- Centered text "Empty" in muted grey (`#667799`).
+- Centered text "Empty" in muted grey (`#666688`).
 - Standard blue border.
 
 ### 13.5 Save Flow
@@ -942,7 +947,7 @@ Adapted from FF6 Relic screen: 1 crystal slot, available list, stats.
   ability, negative effect (in red), and next-level preview (muted).
 - **Available list (left):** All collected Ley Crystals. Icon + name +
   level. "E" indicator + character name for crystals equipped by others.
-  "Remove" option at top.
+  "Remove" option at bottom of the list.
 - **Stat comparison (right):** Same green/red arrow format. Also shows
   elemental affinity changes as small element icons with +/- indicators.
 - **Portrait + name (top-right):** 32×32 portrait of selected character.
@@ -1005,11 +1010,18 @@ narrative:
 - **UI windows never desaturate.** The Pallor drains color from the
   game world, but menus and dialogue boxes remain constant. The player's
   interface is their anchor.
+- **One exception:** During Cael's final dialogue before closing the
+  door (Act IV), the dialogue box border flickers grey for 2 frames,
+  then returns to normal. The only time the UI acknowledges the Pallor
+  (per [visual-style.md](visual-style.md)).
+- **Menu portrait desaturation:** Character portraits in menu screens
+  reflect status: normal coloring in healthy states, desaturated tint
+  when affected by Pallor-adjacent status effects (Despair, Pallor
+  Infection). Per [visual-style.md](visual-style.md) § Menu Backgrounds.
 - **Status effect: Despair** — when a character has the Despair status,
-  their name in the party panel dims slightly (not fully grey, just
-  reduced brightness). The grey down-arrow icon appears in their status
-  icon row. This is the only status effect that visually affects the
-  party panel beyond icons.
+  their name in the battle party panel dims slightly (not fully grey,
+  just reduced brightness). The grey down-arrow icon appears in their
+  status icon row. Menu portrait gains a desaturated tint.
 - **Act III exploration:** As the Pallor Wastes desaturate the world,
   party sprites remain in full color. The UI contrast (vivid bars and
   text against the greying world) reinforces the theme that the
@@ -1038,15 +1050,16 @@ narrative:
 | ATB fill rate formula | [combat-formulas.md](combat-formulas.md) § ATB Gauge System |
 | Battle speed settings | [combat-formulas.md](combat-formulas.md) § Battle Speed Config |
 | Active/Wait mode | [combat-formulas.md](combat-formulas.md) § Active/Wait Mode |
-| Row system | [combat-formulas.md](combat-formulas.md) § Row System |
-| Status effects | [magic.md](magic.md) § Status Effect Quick Reference |
-| Equipment slots | [equipment.md](equipment.md) § Equipment Slot System |
+| Row system | [combat-formulas.md](combat-formulas.md) § Row Modifier |
+| Status effects | [magic.md](magic.md) § Status Effect Reference |
+| Equipment slots | [equipment.md](equipment.md) § Equipment Slots |
 | Ley Crystal system | [progression.md](progression.md) § Ley Crystal System |
-| Character stats | [progression.md](progression.md) § Stat Growth |
+| Character stats | [progression.md](progression.md) § Character Growth |
 | Shop inventories | [economy.md](economy.md) § Shop Inventories |
 | Save data structure | `packages/shared/src/types/game.ts` |
 | Visual style / palette | [visual-style.md](visual-style.md) |
-| Damage formulas | [combat-formulas.md](combat-formulas.md) § Physical/Magical Damage |
+| Physical damage formula | [combat-formulas.md](combat-formulas.md) § Physical Damage |
+| Magic damage formula | [combat-formulas.md](combat-formulas.md) § Magic Damage |
 
 ### Deferred Items Resolved
 
