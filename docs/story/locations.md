@@ -766,11 +766,11 @@ A ley ward bubble shelters an organized encampment under a weathered Valdris ban
 **NPCs:**
 - **Nessa Ashvale** — Shopkeeper; sells consumables, basic equipment, and a few Valdris-specific items salvaged during the evacuation. Recognizes returning players from her Crown District shop and offers a small discount
 - **Bren Ashford** — Runs the makeshift inn; weary but determined to maintain normalcy
-- **Valdris Knight** — Quest giver for *The Last Banner*; one of the last soldiers still wearing Valdris colors
-- **Refugee Child** — Provides incidental dialogue about what it was like to watch the Grey take their home
+- **Sir Aldric** — Quest giver for *The Last Banner*; one of the last soldiers still wearing Valdris colors
+- **Tev** (Refugee Child) — Provides incidental dialogue about what it was like to watch the Grey take their home
 
 **Sidequest: The Last Banner**
-The Valdris Knight asks the party to recover a lost regimental banner from a Pallor-touched patrol that was separated during the march. The patrol was last seen at a nearby clearing that has since been consumed. Reward: 1,500g + Valdris Crest (key item).
+Sir Aldric asks the party to recover a lost regimental banner from a Pallor-touched patrol that was separated during the march. The patrol was last seen at a nearby clearing that has since been consumed. Reward: 1,500g + Valdris Crest (key item).
 
 **Ward stone:** Strong. Torren: *"This node runs deep. They're safe here — for now."*
 
@@ -789,11 +789,11 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 - Save Point
 
 **NPCs:**
-- **Quartermaster** — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
-- **Rest Attendant** — Manages the inn; a former barracks keeper who insists on clean bedrolls despite everything
+- **Forgemaster Dellen** (Quartermaster) — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
+- **Corra** (Rest Attendant) — Manages the inn; a former barracks keeper who insists on clean bedrolls despite everything
 - **Engineer Calder** — Quest giver for *Amplifier Stabilization*; visibly anxious about the ward's declining output
-- **Oasis A Survivor** — A refugee who fled Oasis A after hearing rumors of the Grey's advance; provides context on the other camps
-- **Oasis C Survivor** *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
+- **Tomas** (Oasis A Survivor) — A refugee who fled Oasis A after hearing rumors of the Grey's advance; provides context on the other camps
+- **Senna** (Oasis C Survivor) *(appears after Oasis C falls)* — Arrives shell-shocked with news of Oasis C's collapse; warns the party about The Grey Keeper
 
 **Sidequest: Amplifier Stabilization**
 Engineer Calder's amplifiers are losing coherence — the ley node's energy is fluctuating and the brass resonators are overheating. The party must find a Pallor-Fused Capacitor at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. Reward: 2,000g + 2x Arcanite Shard.

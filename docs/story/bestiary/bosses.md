@@ -1608,9 +1608,9 @@ narrative scar.
 
 #### The Grey Keeper (Oasis C Mini-Boss)
 
-| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Drop (100%) | Steal | Weak | Resists | Absorbs | Status Immunities | Location(s) |
-|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------------|-------|------|---------|---------|-------------------|-------------|
-| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Keeper's Resolve (100%) | Spirit Essence (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop (100%) | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|-------------|------|---------|---------|-------------------|-------------|
+| The Grey Keeper | Boss | 32 | 15,000 | 200 | 78 | 65 | 85 | 70 | 45 | 0 | 800 | Spirit Essence (100%) | Keeper's Resolve (100%) | Spirit | Void (×0.5) | — | Despair, Death, Petrify, Stop | Oasis C (fallen) |
 
 **Modes:** 2 (Normal, Desperate)
 
@@ -1636,7 +1636,7 @@ Mode: Desperate (HP <= 50%)
 
 Scripted Events:
   Battle start:
-    - cutscene: "The keeper's eyes go grey. Their body rises, wreathed
+    - cutscene: "The keeper's eyes go Grey. Their body rises, wreathed
       in corrupted ley energy. The cracked ward stone pulses behind them."
 
   50% HP:

@@ -356,7 +356,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 ### Complete Material List
 
-> **67 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+> **68 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
 
 | Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
 |------|----------------|------|---------------|---------------------|
@@ -403,7 +403,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | **Undead (2)** | | | | |
 | Bone Fragment | Undead | 1 | 30 | Weapon hardening, Flashbang |
 | Bone Dust | Undead | 2 | 50 | Spirit-element basics |
-| **Arcanite (3)** | | | | |
+| **Arcanite (4)** | | | | |
 | Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices |
 | Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
 | Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
