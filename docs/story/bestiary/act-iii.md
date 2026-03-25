@@ -430,7 +430,7 @@ ley-saturated mutations, twisted by unfiltered magical radiation.
   Evasive — shimmers in and out of the ley field.
 - Ley-Warped Colossus: tank role (+15% DEF, -22% SPD). AoE slam,
   high DEF, very slow. No MP (Construct type). Ley crystals embedded
-  in its chassis glow with unstable energy. Rare drop: Pallor-Fused
+  in its chassis glow with unstable energy. Rare steal: Pallor-Fused
   Capacitor (25%) — a ley capacitor warped by prolonged Pallor exposure,
   used in Oasis ward stone repairs.
 - Ley Abomination: rare spawn (~10% encounter rate). Multi-phase

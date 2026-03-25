@@ -444,7 +444,7 @@ Kerra fights beside the party during the Nest Mother encounter. Kerra can be inc
 ### 17. Amplifier Stabilization
 
 **Quest Giver:** Engineer Calder (Oasis B, Pallor Wastes)
-**Location:** Pallor Wastes overworld (nearby ruined outpost) or enemy drops
+**Location:** Pallor Wastes overworld (nearby ruined outpost) or Ley Scar (rare steal)
 **Availability:** Act III, after discovering Oasis B
 **Estimated Length:** Short (5-10 minutes)
 **Description:** The Compact engineer's jury-rigged ley amplifiers are flickering. They need a Pallor-Fused Capacitor — a component corrupted by the Grey that paradoxically conducts ley energy well. The party can find one at a nearby ruined Compact outpost (~2 encounters away) or as a rare steal from the Ley-Warped Colossus in the Ley Scar. The engineer installs it, the ward stone's hum grows louder. "Bought us another week. Maybe."
