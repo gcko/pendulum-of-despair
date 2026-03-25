@@ -11,7 +11,7 @@
 
 The game uses a **danger counter** system (FF6 model) for random
 encounters. A hidden counter increments with each step the player takes.
-Each step, the game rolls `random(0, 255)` — if the result is less than
+Each step, the game rolls `random_int(0, 255)` — if the result is less than
 `floor(counter / 256)`, a random battle triggers. The counter resets to
 0 after each battle.
 
@@ -211,7 +211,7 @@ All values are multiples of 1/16 (6.25%) for clean integer math.
 ### Formation Rate Resolution
 
 When a random encounter triggers:
-1. Roll `random(0, 255)`.
+1. Roll `random_int(0, 255)`.
 2. Compare against terrain formation table thresholds.
 3. Apply Preemptive Charm modifier if equipped.
 
@@ -266,7 +266,7 @@ random encounter triggers, the game selects which formation to use.
 | Formation 3 | 31.25% | 160–239 | Common |
 | Formation 4 | 6.25% | 240–255 | Rare |
 
-Roll `random(0, 255)` and compare to the ranges above.
+Roll `random_int(0, 255)` and compare to the ranges above.
 
 ### Ley Scar Exception
 
@@ -298,8 +298,9 @@ used by default.
   - An unusual enemy not found in the other 3 formations
   - A mini-boss patrol (single strong enemy or elite + escorts)
   - An enemy that drops a rare steal/item
-- **Enemy count per formation:** 1–4 enemies. Solo enemies should be
-  stronger; groups of 4 should be individually weaker.
+- **Enemy count per formation:** 1–6 enemies (typically 2–4). Solo
+  enemies should be stronger; groups of 5–6 should be individually
+  weaker.
 - **Level range:** All enemies in an area's 4-pack should be within
   the dungeon's recommended level range (per bestiary).
 

@@ -36,7 +36,7 @@ Insert a new `## Encounter System` section before `## Integration Notes`. Conten
 
 Random encounters use a danger counter model (FF6-derived). A hidden
 counter starts at 0 and increments by an area-defined value each step.
-Each step, the game rolls `random(0, 255)` — if the result is less than
+Each step, the game rolls `random_int(0, 255)` — if the result is less than
 `floor(counter / 256)`, a battle triggers. The counter resets to 0
 after each battle.
 
@@ -80,7 +80,7 @@ final_increment = floor(base_increment × act_scale × accessory_mod × location
 | Ward Talisman (accessory) | ×0.5 | All areas |
 | Infiltrator's Cloak (accessory) | ×0.5 | All areas |
 | Lure Talisman (accessory) | ×2.0 | All areas |
-| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels only |
+| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels, Corrund Sewers |
 | Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only |
 
 Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak

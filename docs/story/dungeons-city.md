@@ -287,7 +287,7 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 
 **Encounters:** Forge-Smoke Creatures (gaseous, fire-element, weak to water), Malfunctioning Service Automata (Compact maintenance drones gone haywire, physical attackers), Sewer Rats (weak, appear in swarms). The Tunnel Map key item from Tash's Black Market reveals enemy patrol routes, reducing encounter rate by 50%.
 
-**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies x0.5 modifier (effective ~60 steps).
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies ×0.5 modifier (effective ~60 steps).
 
 **Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 
@@ -481,7 +481,7 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 
 **Encounters:** Heat Sprites (fire-element, weak to water), Corrupted Forge Constructs (half-melted automata reactivated by ley surges, physical/fire attacks), Pallor Seep (Interlude only -- grey ooze that inflicts Despair status, weak to all elements but high HP).
 
-**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Kole's patrol timing (from Ansa Veld intel) applies x0.5 modifier in the Inner Ring.
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Kole's patrol timing (from Ansa Veld intel) applies ×0.5 modifier in the Inner Ring.
 
 **Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 
@@ -863,9 +863,9 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 
 **Puzzle:** The Tidal Passage floods on a timer (the tide). The player has a limited window to cross between high tides. A gauge on the wall (installed by the smugglers) shows the current tide level. Crossing during high tide inflicts continuous water damage. Sable knows the timing automatically ("Twelve seconds between surges. Run when I say run.").
 
-**Encounters:** Sea Crawlers (crustacean creatures, high DEF, weak to lightning), Tide Wraiths (waterborne spectral enemies, Act II only -- the Pallor hasn't reached the ocean yet), Smuggler Thugs (Interlude only -- Pallor-touched smugglers who wandered into the deeper caves and didn't come back).
+**Encounters:** Sea Crawlers (crustacean creatures, high DEF, weak to lightning), Tide Wraiths (waterborne spectral enemies, Act II -- the Pallor hasn't reached the ocean yet), Smuggler Thugs (Act II -- thugs guarding the deeper tunnels).
 
-**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies x0.5 modifier.
+**Encounter rate:** Tier 2 (Normal, increment 120, ~30 steps). Tunnel Map key item applies ×0.5 modifier.
 
 **Formation type:** Low-visibility rules (68.75% Normal / 18.75% Back Attack / 12.5% Preemptive).
 

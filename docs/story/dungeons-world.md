@@ -347,8 +347,8 @@ A crystalline construct that assembles when the Pendulum is disturbed. Geometric
 |----------|-----|---------|--------|
 | 1-2 | 1 | 2x Ley Vermin + 1x Unstable Crystal | 31.25% |
 | 1-2 | 2 | 3x Ley Vermin | 31.25% |
-| 1-2 | 3 | 1x Unstable Crystal + 1x Mine Shade | 31.25% |
-| 1-2 | 4 | 4x Ley Vermin + 1x Mine Shade (rare swarm) | 6.25% |
+| 1-2 | 3 | 2x Unstable Crystal | 31.25% |
+| 1-2 | 4 | 4x Ley Vermin + 1x Unstable Crystal (rare swarm) | 6.25% |
 | 3 | 1 | 2x Mine Shade + 1x Ember Wisp | 31.25% |
 | 3 | 2 | 1x Unstable Crystal + 2x Ember Wisp | 31.25% |
 | 3 | 3 | 2x Unstable Crystal + 1x Mine Shade | 31.25% |
@@ -612,7 +612,7 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | 1 | 4 | 1x Drowned Bones + 3x Marsh Serpent (ambush swarm) | 6.25% |
 | 2-3 | 1 | 2x Ley Jellyfish + 1x Marsh Serpent | 31.25% |
 | 2-3 | 2 | 1x Polluted Elemental + 2x Marsh Serpent | 31.25% |
-| 2-3 | 3 | 2x Drowned Bones + 1x Ley Jellyfish | 31.25% |
+| 2-3 | 3 | 2x Marsh Serpent + 1x Ley Jellyfish | 31.25% |
 | 2-3 | 4 | 1x Polluted Elemental + 2x Ley Jellyfish (caster pack) | 6.25% |
 
 ### Treasure/Loot
