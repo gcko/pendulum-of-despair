@@ -80,6 +80,12 @@ Each item is a single check. Grows from Copilot gap analysis.
   "every Z is from W"), verify no exceptions exist. If exceptions
   exist, qualify the scope explicitly (e.g., "all X that exist in Y
   match; M items are defined here and pending addition")
+- When a data format field name shares a word with a different concept
+  (e.g., `lines` array vs rendered text lines), all index references
+  must explicitly state they refer to the array element, not the
+  colloquial meaning. Notation used in one context (e.g., `[...]`
+  brackets in priority-stack pseudocode) must not leak into another
+  context (e.g., `condition:` field values) without clarification.
 
 ## Numeric Consistency (from Copilot gap analysis, PR #17-18)
 

@@ -325,4 +325,16 @@ prevent this class of error on future balance/pacing PRs.
 Hygiene" (new section) and scope claim accuracy (added to "Ambiguity
 Prevention"). 3 of 7 already partially covered by existing Internal
 Coherence and Cross-Reference Format checklists. Story-review-loop
-not yet run (first round).
+Round 1 found 7 additional issues (all fixed).
+
+### PR #34 Round 2 (2026-03-26) — 2 Copilot comments, 1 new gap
+
+**Patterns:**
+- Ambiguity (bracket notation leaking between contexts): 1 comment
+  - AND example used `[...]` priority-stack notation in condition context
+- Ambiguity (terminology overload): 1 comment
+  - `lines` array vs rendered text lines; `line_N` index ambiguous
+
+**Outcome:** 1 new checklist item added to "Ambiguity Prevention":
+terminology overload in data formats + notation consistency across
+contexts. Both comments fixed with inline clarifications.
