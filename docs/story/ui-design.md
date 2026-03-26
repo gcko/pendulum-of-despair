@@ -481,9 +481,9 @@ portrait top-right.
 │                    │ MDEF 22 ──          │
 │                    │ SPD  25 ▲27         │
 │                    │ LCK  14 ──          │
-│                    │ EVA% 12 ──          │
-│                    │ MEVA% 8 ──          │
-│                    │ CRIT% 3 ──          │
+│                    │ EVA% 12% ──         │
+│                    │ MEVA% 8% ──         │
+│                    │ CRIT% 3% ──         │
 ├────────────────────┴─────────────────────┤
 │ Fire element  Grants [Quickstep icon]    │
 └──────────────────────────────────────────┘
@@ -558,12 +558,12 @@ main area.
 │    [portrait]      │ HP  680 / 800       │
 │                    │ MP   48 /  80       │
 ├────────────────────┴─────────────────────┤
-│ ▶Ember Lance  MP 4  │ Rime Shard MP 4   │
-│  Arc Snap     MP 5  │ Leybalm    MP 3   │
-│  Kindlepyre   MP 14 │ Mend       MP 3   │
-│  Hoarfall     MP 14 │ Cleansing  MP 5   │
-│  Befuddle     MP 7  │ Ironhide   MP 8   │
-│  Quickstep    MP 14 │ Wardglass  MP 8   │
+│ ▶Ember Lance   MP 4 │ Rime Shard       MP 4 │
+│  Arc Snap      MP 5 │ Leybalm          MP 3 │
+│  Kindlepyre   MP 14 │ Mend             MP 3 │
+│  Hoarfall     MP 14 │ Cleansing Draught MP 5│
+│  Befuddle      MP 7 │ Ironhide         MP 8 │
+│  Quickstep    MP 14 │ Wardglass        MP 8 │
 └──────────────────────────────────────────┘
 ```
 
