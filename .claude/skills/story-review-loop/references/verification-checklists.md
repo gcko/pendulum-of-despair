@@ -156,6 +156,19 @@ Each item is a single check. Grows from Copilot gap analysis.
   to create unique anchors (e.g., `### Boss Notes — Rail Tunnels`).
   Duplicate headings create broken anchor links on GitHub.
 
+## ASCII Example Canonical Compliance (from Copilot gap analysis, PR #32)
+
+- ASCII diagram example data (equipment names, item names, spell names,
+  crystal names) must use canonical names from the source docs
+  (equipment.md, items.md, magic.md, progression.md). Do not use
+  placeholder names from other games (e.g., FF6 spell names) in
+  canonical game design documents.
+- ASCII diagram annotations/legends must match the prose description of
+  the same UI element in the surrounding text. If a diagram shows a
+  symbol for the ATB gauge, the legend must specify the shape/direction
+  described in the Party Panel section (e.g., "horizontal bar, fills
+  left-to-right").
+
 ## Economy Rule Consistency (from Copilot gap analysis, PR #27)
 
 - When economy.md states a universal rule (e.g., "no vendor trash",
