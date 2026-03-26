@@ -261,7 +261,7 @@ of the battle screen (over the party panel).
   - Edren (Bulwark): stance list — selecting activates (replaces current).
   - Lira (Forgewright): device list with quantity (like items).
   - Torren (Spiritcall): spirit list with Favor pips (small dots:
-    filled = available, empty = cooldown).
+    0–3 filled = current harmony rating; all spirits always usable).
   - Sable (Tricks): technique list (Filch, Ransack, Smokescreen,
     Shiv, etc.) — cooldown-based, front-row indicator for steal abilities.
   - Maren (Arcanum): weave list with Weave Gauge cost (like MP cost).
@@ -398,13 +398,12 @@ FF6 item screen: tabs top, description middle, item list bottom.
 ├──────────────────────────────────────────┤
 │ Cures [poison icon] status               │
 ├──────────────────────────────────────────┤
-│ ● Antidote         :99  ● Hi-Potion  :45│
-│ ● Dried Meat       :99  ● Echo Screen:12│
-│ ● Elixir           : 3  ● Ether      :30│
-│ ● Eye Drops        :20  ● Fenix Down : 5│
-│ ● Green Cherry     :15  ● Megalixir  : 1│
-│ ● Potion           :99  ● Remedy     : 8│
-│ ● Smoke Bomb       :10  ●            :  │
+│ ● Antidote         :12  ● Hi-Potion  : 5│
+│ ● Echo Drop        : 4  ● Ether      : 8│
+│ ● Elixir           : 1  ● Eye Drops  : 6│
+│ ● Phoenix Feather  : 3  ● Potion     :30│
+│ ● Remedy           : 2  ● Sleeping Bag:6│
+│ ● Smoke Bomb       : 4  ●            :  │
 └──────────────────────────────────────────┘
 ```
 
@@ -455,11 +454,11 @@ portrait top-right.
 ┌──────────────────────────────────────────┐
 │ [EQUIP]  OPTIMUM  REMOVE  EMPTY          │
 ├────────────────────┬─────────────────────┤
-│ Weapon: Iron Sword │ [portrait] EDREN    │
-│ Head  : Leather Cap├─────────────────────┤
-│ Body  : Chain Mail │ ATK  42 ▲48         │
-│ Access: Power Ring │ DEF  35 ──          │
-│ Crystal: Flame Lv3 │ MAG  18 ──         │
+│ Weapon: Valdris Blade│ [portrait] EDREN   │
+│ Head  : Iron Helm   ├─────────────────────┤
+│ Body  : Chain Mail  │ ATK  42 ▲48         │
+│ Access: Power Ring  │ DEF  35 ──          │
+│ Crystal: Ember Shard│ MAG  18 ──         │
 │                    │ MDEF 22 ──          │
 │                    │ SPD  25 ▲27         │
 │                    │ LCK  14 ──          │
@@ -530,18 +529,18 @@ FF6 magic screen: description top, character info below, spell grid main area.
 
 ```
 ┌──────────────────────────────────────────┐
-│ Fire-elemental attack                    │
+│ Flame-elemental attack                   │
 ├────────────────────┬─────────────────────┤
 │                    │ LV  12              │
 │    [portrait]      │ HP  680 / 800       │
 │                    │ MP   48 /  80       │
 ├────────────────────┴─────────────────────┤
-│ ▶Fire         MP 4  │ Ice        MP 4   │
-│  Fire 2       MP 12 │ Ice 2      MP 12  │
-│  Bolt         MP 4  │ Cure       MP 5   │
-│  Bolt 2       MP 12 │ Cure 2     MP 14  │
-│  Drain        MP 8  │ Life       MP 30  │
-│  Bio          MP 16 │ Remedy     MP 18  │
+│ ▶Ember Lance  MP 4  │ Rime Shard MP 4   │
+│  Arc Snap     MP 5  │ Leybalm    MP 3   │
+│  Kindlepyre   MP 14 │ Mend       MP 3   │
+│  Hoarfall     MP 14 │ Cleansing  MP 5   │
+│  Befuddle     MP 7  │ Ironhide   MP 8   │
+│  Quickstep    MP 10 │ Wardglass  MP 8   │
 └──────────────────────────────────────────┘
 ```
 
@@ -574,7 +573,7 @@ Same layout as Magic screen but shows the character's unique ability set.
 |-----------|-------------|-------------------|
 | Edren | Bulwark stances | Active stance highlighted |
 | Lira | Forgewright devices | Quantity shown (like items) |
-| Torren | Spiritcall spirits | Favor pips: filled dots = available, empty = cooldown |
+| Torren | Spiritcall spirits | Favor pips: 0–3 filled dots = harmony rating (all spirits always usable; Favor 3 = permanent upgrade) |
 | Sable | Tricks techniques | Cooldown pips (filled = ready, empty = on cooldown); front-row icon on steal abilities |
 | Maren | Arcanum weaves | Weave Gauge bar below MP (shows current charge) |
 | Cael | Rally commands | MP cost shown (like spells) |
@@ -607,12 +606,12 @@ commands bottom-left, equipment bottom-right.
 │                    │ MEVA%  8%            │
 │                    │ Crit%  3%            │
 ├────────────────────┼─────────────────────┤
-│ Battle Commands:   │ Weapon : Iron Sword │
-│  Attack            │ Head   : Leather Cap│
+│ Battle Commands:   │ Weapon : Valdris Blade│
+│  Attack            │ Head   : Iron Helm  │
 │  Magic             │ Body   : Chain Mail │
 │  Bulwark           │ Access : Power Ring │
-│  Item              │ Crystal: Flame Lv 3 │
-│  Defend            │ [fire icon]         │
+│  Item              │ Crystal: Ember Shard│
+│  Defend            │ [flame icon]        │
 └────────────────────┴─────────────────────┘
 ```
 
@@ -742,17 +741,17 @@ Small window prompt: **Buy** | **Sell** | **Exit**. Hand cursor to select.
 
 ```
 ┌──────────────────────────────────────────┐
-│ Iron Sword — ATK +22. Standard blade.    │
+│ Valdris Blade — ATK +10. Standard issue. │
 │ [Ed:lit] [Li:dim] [To:dim] [Sa:dim]     │
 ├──────────────────────────┬───────────────┤
-│ ▶● Iron Sword       350 │ ATK  42 ▲48   │
-│  ● Steel Sword      800 │ DEF  35 ──    │
-│  ● Leather Cap       200 │ MAG  18 ──    │
-│  ● Chain Mail       1200 │ MDEF 22 ──    │
-│  ● Power Ring       3000 │ SPD  25 ──    │
-│  ● Potion        (x32)50 │ LCK  14 ──    │
-│  ● Hi-Potion    (x12)200 │              │
-│  ● Antidote      (x45)50 │              │
+│ ▶● Valdris Blade    300 │ ATK  42 ▲48   │
+│  ● Knight's Edge    500 │ DEF  35 ──    │
+│  ● Iron Helm        200 │ MAG  18 ──    │
+│  ● Chain Mail       300 │ MDEF 22 ──    │
+│  ● Power Ring       300 │ SPD  25 ──    │
+│  ● Potion        (x30)50│ LCK  14 ──    │
+│  ● Ether        (x8)200 │              │
+│  ● Antidote     (x12)50 │              │
 ├──────────────────────────┴───────────────┤
 │                              Gold: 4,280 │
 └──────────────────────────────────────────┘
@@ -867,7 +866,7 @@ Game+) needs additional slots, this can be revisited then.
 
 ### 13.4 Empty Slot
 
-- Centered text "Empty" in muted grey (`#667799`).
+- Centered text "Empty" in muted grey (`#666688`).
 - Standard blue border.
 
 ### 13.5 Save Flow
@@ -904,21 +903,22 @@ Adapted from FF6 Relic screen: 1 crystal slot, available list, stats.
 
 ```
 ┌──────────────────────────────────────────┐
-│ +10% Fire damage, Fire resist +25%       │
-│ Lv 3: Grants Firaga                      │
-│ ⚠ Ice weakness +25%                     │
-│ Lv 4: Grants Fire Shield (120 XP to next)│
+│ ATK +2, DEF +1. Fire resist +25%         │
+│ Lv 5: ATK +2, DEF +1 (max)              │
+│ ⚠ Flame friendly fire once per battle   │
+│ Lv 4→5: 180 XP to next                  │
 ├──────────────────────┬───────────────────┤
-│ Crystal: Flame Lv 3  │ [portrait] EDREN │
-│ XP ████████░░ 85/120 │                   │
+│ Crystal: Flame Heart │ [portrait] EDREN │
+│   Lv 4               │                   │
+│ XP ████████░░ 120/180│                   │
 ├──────────────────────┼───────────────────┤
-│ ▶● Flame Crystal  Lv3│ ATK  42 ──       │
-│  ● Frost Crystal  Lv2│ DEF  35 ──       │
-│  ● Storm Crystal  Lv1│ MAG  18 ▲22      │
-│  ● Earth Crystal  Lv2│ MDEF 22 ▲26      │
-│  ● Spirit Crystal Lv4│ SPD  25 ▼23      │
-│  ● Void Crystal   Lv1│ LCK  14 ──       │
-│  E Ley Crystal    Lv3│ [fire+] [ice-]   │
+│ ▶● Flame Heart    Lv4│ ATK  42 ──       │
+│  ● Ember Shard    Lv3│ DEF  35 ──       │
+│  ● Iron Core      Lv2│ MAG  18 ▲22      │
+│  ● Quicksilver    Lv2│ MDEF 22 ▲26      │
+│  ● Ley Prism      Lv4│ SPD  25 ▼23      │
+│  ● Ward Stone     Lv1│ LCK  14 ──       │
+│  E Lifestone      Lv2│ [flame+] [frost-]│
 │  ● Remove             │                  │
 └──────────────────────┴───────────────────┘
 ```
@@ -932,7 +932,7 @@ Adapted from FF6 Relic screen: 1 crystal slot, available list, stats.
   ability, negative effect (in red), and next-level preview (muted).
 - **Available list (left):** All collected Ley Crystals. Icon + name +
   level. "E" indicator + character name for crystals equipped by others.
-  "Remove" option at top.
+  "Remove" option at bottom.
 - **Stat comparison (right):** Same green/red arrow format. Also shows
   elemental affinity changes as small element icons with +/- indicators.
 - **Portrait + name (top-right):** 32×32 portrait of selected character.

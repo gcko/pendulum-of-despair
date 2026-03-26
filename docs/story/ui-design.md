@@ -513,11 +513,11 @@ for that slot type.
 
 ### 5.6 Stat Comparison (Right)
 
-6 core combat stats + 3 derived stats, in a single vertical list
-(HP and MP are shown in the party panel but not in the equipment
-stat comparison, since equipment does not directly modify HP/MP):
+8 core stats + 3 derived stats, in a single vertical list. HP and
+MP appear only when the highlighted equipment modifies them (most
+gear does not, but items like Life Pendant and Mana Bead do):
 
-ATK, DEF, MAG, MDEF, SPD, LCK, EVA%, MEVA%, CRIT%
+HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK, EVA%, MEVA%, CRIT%
 
 Each stat shows: label + current value + delta indicator:
 - Green up-arrow (`▲`) + new value for improvement
@@ -1016,12 +1016,12 @@ narrative:
   interface is their anchor.
 - **One exception:** During Cael's final dialogue before closing the
   door (Act IV), the dialogue box border flickers grey for 2 frames,
-  then returns to normal. The only time the UI acknowledges the Pallor
+  then returns to silver. The only time the UI acknowledges the Pallor
   (per [visual-style.md](visual-style.md)).
 - **Menu portrait desaturation:** Character portraits in menu screens
   reflect status: normal coloring in healthy states, desaturated tint
-  when affected by Pallor-adjacent status effects (Despair, Pallor
-  Infection). Per [visual-style.md](visual-style.md) § Menu Backgrounds.
+  when affected by Pallor-adjacent status effects (e.g., Despair).
+  Per [visual-style.md](visual-style.md) § Menu Backgrounds.
 - **Status effect: Despair** — when a character has the Despair status,
   their name in the battle party panel dims slightly (not fully grey,
   just reduced brightness). The grey down-arrow icon appears in their
