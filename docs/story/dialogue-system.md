@@ -295,3 +295,208 @@ whatever Tier 1 scene variations require. Total script target remains
 > The `savanh_audience_active` flag (*) is defined here as a
 > scene-local flag for the Savanh audience sequence and will be added
 > to events.md during Gap 3.7 script work.
+
+---
+
+## 4. Dialogue Data Format
+
+Defines the structure of dialogue entries. This is the design-level
+format — the engine implementation may serialize this as JSON, YAML, or
+a custom format, but the information per entry is fixed.
+
+### 4.1 Entry Fields
+
+| Field | Required | Type | Description |
+|-------|----------|------|-------------|
+| `id` | Yes | string | Unique identifier, e.g., `aldis_act2_early` |
+| `speaker` | Yes | string | Character name shown in name tag. Empty string `""` hides the name tag entirely (used for narration). |
+| `lines` | Yes | string[] | Array of text boxes (each 1-3 lines of text). Multi-page dialogue = multiple entries in the array. |
+| `condition` | No | expression | Flag expression for priority stack. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, and AND combinations (Section 3.3). Omit for default/fallback entries. |
+| `animations` | No | animation[] | Sprite animation triggers fired between dialogue boxes. Each trigger specifies `who`, `anim`, and `when` (see Animation Trigger Fields). |
+| `choice` | No | choice[] | Choice prompt displayed after the final line. Array of options, each with a label and consequence (see Choice Option Fields). |
+| `sfx` | No | sfx_trigger[] | Sound effect triggers tied to specific lines. Each trigger specifies `line` and `id` (see SFX Trigger Fields). |
+
+### 4.2 Animation Trigger Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `who` | string | Character sprite ID (e.g., `edren`, `aldis`, `cael`) |
+| `anim` | string | Animation ID from the catalog in Section 2.1 (e.g., `shake`, `jump`, `cry`) |
+| `when` | string | Timing: `before_line_N` or `after_line_N` (zero-indexed into the `lines` array) |
+
+### 4.3 Choice Option Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `label` | string | Text shown in the choice prompt |
+| `flag_set` | string | Binary flag to set when this option is chosen (optional; omit if not needed) |
+| `score_name` | string | Score variable to increment (optional; must be paired with `score_delta`) |
+| `score_delta` | number | Points to add to `score_name` (optional; must be paired with `score_name`) |
+
+Each option must have at least one consequence (`flag_set` or
+`score_name`/`score_delta`). An option may have both.
+
+### 4.4 SFX Trigger Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `line` | number | Zero-indexed line number into the `lines` array. The sound plays when this line begins rendering. |
+| `id` | string | Sound effect asset ID (e.g., `door_breach`, `thunder_rumble`) |
+
+### 4.5 Worked Examples
+
+#### Example 1 — Simple NPC (one line, no conditions)
+
+```
+id: thornmere_villager_01_default
+speaker: Villager
+lines:
+  - "Roads aren't safe with all these ley surges."
+```
+
+A single line with no condition acts as the default/fallback entry in
+a priority stack. No animations, choices, or sound effects.
+
+#### Example 2 — Flag-Gated with Animation (Aldis post-betrayal)
+
+```
+id: aldis_post_betrayal
+speaker: Aldis
+condition: cael_betrayal_complete
+lines:
+  - "I catalogued his notes for months."
+  - "Every formula, every late-night revision..."
+  - "I should have seen it."
+animations:
+  - who: aldis, anim: head_down, when: after_line_2
+```
+
+The entry only fires when `cael_betrayal_complete` is set. Aldis drops
+his head after the final line lands — the animation punctuates the
+guilt, not every line.
+
+#### Example 3 — Party-Aware (Elder Savanh + Torren)
+
+```
+id: thornmere_elder_council_torren
+speaker: Elder Savanh
+condition: act2_thornmere_council AND party_has(torren)
+lines:
+  - "Torren? Son of Aldric?"
+  - "...You've your father's jaw. Speak, then."
+animations:
+  - who: savanh, anim: bubble_exclaim, when: before_line_0
+  - who: torren, anim: step_back, when: after_line_0
+```
+
+The AND condition requires both the council scene flag and Torren in
+the active party. Two characters animate: Savanh reacts with surprise
+before speaking, and Torren recoils after being recognized.
+
+#### Example 4 — Narration (no speaker, hidden name tag)
+
+```
+id: act1_opening_narration
+speaker: ""
+lines:
+  - "The ley lines had sustained the world for a thousand years."
+  - "No one asked what would happen when they began to fail."
+```
+
+When `speaker` is an empty string, the name tag is hidden entirely.
+The dialogue box displays text only — used for scene-setting narration
+and environmental text.
+
+#### Example 5 — Choice with Score Consequence (Savanh audience)
+
+```
+id: savanh_audience_q1
+speaker: Savanh
+condition: savanh_audience_active*
+lines:
+  - "The ley storms threaten our borders. What would you have us do?"
+choice:
+  - label: "Reinforce the ward stones together."
+    score_name: council_savanh_approval
+    score_delta: 2
+  - label: "Your warriors should hold the perimeter."
+    score_name: council_savanh_approval
+    score_delta: 1
+  - label: "We'll handle it. Stay out of our way."
+    score_name: council_savanh_approval
+    score_delta: 0
+```
+
+This is one question in the Savanh audience. The full scoring system
+(0-3, including the Grandmother Seyth bonus dialogue path) is defined
+in events.md. Note: `savanh_audience_active` (*) is a scene-local
+flag for the Savanh audience sequence, pending addition to events.md
+during Gap 3.7 script work.
+
+#### Example 6 — Reunion Order String Comparison (Maren)
+
+```
+id: maren_reunion_edren_first
+speaker: Maren
+condition: reunion_order_1 == edren
+lines:
+  - "Edren told me you'd come."
+  - "He's been keeping watch from the ridge since dawn."
+animations:
+  - who: maren, anim: nod, when: before_line_0
+```
+
+String comparison against `reunion_order_1` fires this entry only if
+Edren was the first companion reunited. Other reunion orders would
+have separate entries at the same priority level, each with their own
+condition.
+
+#### Example 7 — Sound Effect Trigger (siege door breach)
+
+```
+id: siege_door_breach
+speaker: ""
+lines:
+  - "The great doors buckle inward with a sound like thunder."
+sfx:
+  - line: 0, id: door_breach
+```
+
+The `door_breach` sound effect plays as line 0 begins rendering. No
+speaker (narration) — the sound effect and text work together to sell
+the moment without a character attribution.
+
+#### Example 8 — Multiple Characters Animating (betrayal scene)
+
+```
+id: cael_betrayal_reveal
+speaker: Cael
+condition: cael_betrayal_cutscene
+lines:
+  - "I'm sorry, Edren."
+  - "This was always how it had to end."
+animations:
+  - who: edren, anim: shake, when: after_line_0
+  - who: maren, anim: step_back, when: after_line_0
+  - who: lira, anim: bubble_exclaim, when: after_line_0
+  - who: cael, anim: turn_away, when: after_line_1
+```
+
+Three party members react simultaneously after Cael's first line
+(Edren shakes, Maren recoils, Lira is shocked). The engine plays all
+three `after_line_0` animations at the same time. Then Cael turns
+away after delivering the second line — his signature `turn_away`
+animation closing the moment.
+
+### 4.6 File Organization
+
+- **Location NPC files:** One file per location (e.g.,
+  `valdris-npcs`, `thornmere-npcs`). Contains all NPC dialogue
+  entries for that location, with each NPC's priority stack as an
+  ordered block.
+- **Scene files:** One file per major story scene (e.g.,
+  `scene-betrayal`, `scene-council`). Contains cutscene dialogue with
+  animations, choices, and sound effects.
+- **Priority stack order = entry order.** Within each NPC's block,
+  entries are evaluated top-to-bottom. Authors control priority by
+  reordering entries — no separate priority field is needed.
