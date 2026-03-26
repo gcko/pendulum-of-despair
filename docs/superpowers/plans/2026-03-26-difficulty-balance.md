@@ -151,7 +151,7 @@ git commit -m "docs(shared): add progression pacing to difficulty-balance.md"
 
 **Cross-reference files to verify against:**
 - `docs/story/events.md` § Faint and Fast Reload — instant reload, no game over screen, XP/gold preserved
-- `docs/story/combat-formulas.md` § Flee Formula — `50 + (party_avg_SPD - enemy_avg_SPD) × 2`, min 10%, max 90%
+- `docs/story/combat-formulas.md` § Flee — `50 + (party_avg_SPD - enemy_avg_SPD) × 2`, min 10%, max 90%
 - `docs/story/combat-formulas.md` — Smokeveil (Sable, 4 MP, 100% flee), Smoke Bomb (100g, 100% flee)
 - `docs/story/equipment.md` — Ward Talisman (1,500g, ×0.5 encounters), Infiltrator's Cloak (×0.5, treasure)
 
@@ -213,7 +213,7 @@ Include:
 - [ ] **Step 3: Write Section 8 (Cross-References)**
 
 Include table with all 13 system references using correct section headings:
-- combat-formulas.md § Physical Damage, § Magic Damage, § ATB Gauge System, § Encounter System, § Flee Formula
+- combat-formulas.md § Physical Damage, § Magic Damage, § ATB Gauge System, § Encounter System, § Flee
 - progression.md § Character Growth, § Two-Phase XP Curve
 - bestiary/ (act files + bosses.md)
 - equipment.md § Weapons

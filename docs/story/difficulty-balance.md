@@ -55,10 +55,10 @@ Edren's base growth + current tier weapon; see
 [progression.md](progression.md) § Character Growth and
 [equipment.md](equipment.md) § Weapons for exact values):
 
-The table below shows Edren (highest ATK) as a best-case scenario.
-Other party members deal less physical damage and need more hits.
-The "2–4 hits" target from combat-formulas.md reflects the party
-*average*, not the strongest attacker.
+The table below shows Edren (highest ATK) alongside Torren (lowest
+physical ATK). The "2–4 hits from primary attacker" target in
+combat-formulas.md refers to the strongest physical attacker (Edren
+or Cael), who should need 2–4 hits against at-level regular enemies.
 
 | Level | Edren ATK | Enemy | DEF | HP | Edren hits | Torren hits |
 |-------|-----------|-------|-----|-----|-----------|-------------|
@@ -66,13 +66,15 @@ The "2–4 hits" target from combat-formulas.md reflects the party
 | 12 | ~40 | Polluted Elemental (9) | 15 | 273 | 2 | 4+ |
 | 60 | ~120 | Pallor Boar (28) | 43 | 1,943 | 1 | 2 |
 
-Edren (primary physical attacker) kills in 1–2 hits. Torren, Maren,
-and Sable need 2–4 physical hits — or use magic/abilities instead.
-AoE spells clear groups efficiently regardless of physical ATK.
-This matches the "2–4 hits from primary attacker" target in
+In Acts I–II, Edren needs 2 hits against at-level enemies — matching
+the "2–4 hits from primary attacker" target in
 [combat-formulas.md](combat-formulas.md) § Fight Duration Targets.
-The primary attacker (Edren or Cael) trends toward 1–2 hits; other
-party members need 3–4, staying within the 2–4 range.
+By Act III, the quadratic ATK²/6 scaling causes Edren to one-shot
+most trash (Pallor Boar: 2,348 damage vs 1,943 HP). This is
+intentional — late-game random encounters should feel fast, with
+the challenge coming from encounter rate, Despair status, and boss
+fights rather than individual trash mobs. Support characters
+(Torren, Maren) still need 2–4 physical hits or use magic.
 
 ### 2.2 Boss Fight Duration
 
@@ -109,8 +111,8 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
-3–5 minute target intentionally. Later Act I bosses (Fenmother at
-~8,000 HP) hit the standard range.
+3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
+18,000 HP) hit the standard range.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -225,12 +227,12 @@ push the player 1–3 levels above these targets.
 | Area | Act | Player Level | Boss (Bestiary Lv) |
 |------|-----|--------------|--------------------|
 | Aelhart / Prologue | Prologue | 1–3 | — |
-| Ember Vein | I | 5–8 | Drake (8), Guardian (12) |
-| Fenmother's Hollow | I | 10–14 | Fenmother (14) |
-| Valdris Siege | I | 14–18 | Siege Commander (18) |
+| Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
+| Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
 | Ashmark Factory | II | 20–24 | Forge Warden (24) |
-| Bellhaven Tunnels | II | 22–26 | Tide Wraith (26) |
+| Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
+| Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
 | Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |

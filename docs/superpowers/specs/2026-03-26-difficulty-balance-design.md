@@ -103,8 +103,8 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
-3–5 minute target intentionally. Later Act I bosses (Fenmother at
-~8,000 HP) hit the standard range.
+3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
+18,000 HP) hit the standard range.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -215,15 +215,15 @@ These are the target levels for a player following the critical
 path without grinding. Side quests and optional encounters may
 push the player 1–3 levels above these targets.
 
-| Area | Act | Target Level | Boss Level | Level Buffer |
-|------|-----|-------------|------------|-------------|
-| Aelhart / Prologue | Prologue | 1–3 | — | — |
-| Ember Vein | I | 5–8 | 8 (Drake), 12 (Guardian) | 0–2 |
-| Fenmother's Hollow | I | 10–14 | 14 (Fenmother) | 0–2 |
-| Valdris Siege | I | 14–18 | 18 (Siege Commander) | 0–2 |
-| Ley Line Depths | II | 18–22 | 22 (Ley Colossus) | 0–2 |
-| Ashmark Factory | II | 20–24 | 24 (Forge Warden) | 0–2 |
-| Bellhaven Tunnels | II | 22–26 | 26 (Tide Wraith) | 0–2 |
+| Area | Act | Player Level | Boss (Bestiary Lv) |
+|------|-----|--------------|--------------------|
+| Aelhart / Prologue | Prologue | 1–3 | — |
+| Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
+| Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
+| Ley Line Depths | II | 18–22 | Ley Colossus (22) |
+| Ashmark Factory | II | 20–24 | Forge Warden (24) |
+| Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
+| Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
 | Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
