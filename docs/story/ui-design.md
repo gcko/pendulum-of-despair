@@ -197,7 +197,7 @@ and commands share the bottom ~35%.
 Kerra) is present, a compact 5th row appears below the 4th member
 with the same layout but slightly reduced vertical spacing — the
 guest does not displace a party member (per
-[combat-formulas.md](combat-formulas.md) § Party Size; see
+[combat-formulas.md](combat-formulas.md) § Party & Enemy Size; see
 [progression.md](progression.md) § Guest NPCs for stat formulas).
 
 Each row contains:
@@ -768,7 +768,7 @@ Small window prompt: **Buy** | **Sell** | **Exit**. Hand cursor to select.
 │  ● Chain Mail       300 │ MDEF 22 ──    │
 │  ● Power Ring       300 │ SPD  25 ──    │
 │  ● Potion        (x30)50│ LCK  14 ──    │
-│  ● Ether         (x8)100│              │
+│  ● Ether         (x8)200│              │
 │  ● Antidote     (x12)50 │              │
 ├──────────────────────────┴───────────────┤
 │                              Gold: 4,280 │
