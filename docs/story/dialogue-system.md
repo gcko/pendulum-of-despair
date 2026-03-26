@@ -50,7 +50,7 @@ The primary tool for conveying emotion during dialogue. These are
 character sprite animations that fire between dialogue boxes, replacing
 the portrait emotion system used in later FF6 ports.
 
-### 2.1 Animation Catalog (14 Animations)
+### 2.1 Animation Catalog (14 Animations + 1 Control Command)
 
 | ID | Animation | Visual Description | Duration | Use Case |
 |----|-----------|--------------------|----------|----------|
@@ -65,9 +65,10 @@ the portrait emotion system used in later FF6 ports.
 | `cry` | Tear streams from eyes | 2 animated streams, loops until cleared | Loop | Grief, overwhelming emotion |
 | `red_tint` | Full body flashes red | Sprite tints red, fades back | 0.5s | Embarrassment, intense rage |
 | `arms_up` | Arms raise overhead | Sprite frame swap, holds | 0.5s | Celebration, triumph, rallying |
-| `collapse` | Sprite drops to ground | Falls down, holds until cleared | 0.6s | Overwhelm, comedic shock |
+| `collapse` | Sprite drops to ground | Falls down (0.6s), holds at fallen position until sequence end or `clear` | 0.6s | Overwhelm, comedic shock |
 | `nod` | Small downward bob | Sprite dips 2px and returns, 1-2x | 0.4s | Agreement, determination |
 | `step_back` | Sprite retreats 8-16px | Quick backward move, holds | 0.3s | Fear, recoil, intimidation |
+| `clear` | Reset to idle | Control command: resets the character to idle pose, canceling any held or looping animation | — | End a `cry` loop or reset a held position early |
 
 ### 2.2 Timing Rules
 
@@ -79,7 +80,7 @@ the portrait emotion system used in later FF6 ports.
   shows a `bubble_exclaim`, all at once).
 - Looping animations (`cry`) persist across dialogue boxes until
   explicitly cleared via the special animation ID `clear` (e.g.,
-  `anim: clear` on the character resets them to idle).
+  `anim: clear` on the character resets the character to idle).
 - **Hold vs reset rule:** Non-looping animations that "hold" (`step_back`,
   `head_down`, `arms_up`, `collapse`) reset to the character's idle
   pose when the dialogue sequence ends (the full NPC interaction or
