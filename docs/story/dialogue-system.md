@@ -173,7 +173,9 @@ ordering. Moving an entry higher makes it win over entries below it.
 **Combination rules:**
 
 - **AND:** Multiple conditions on a single entry must all be true.
-  Written as: `[cael_betrayal_complete AND party_has(lira)]`.
+  Written as: `condition: cael_betrayal_complete AND party_has(lira)`.
+  (The `[...]` notation in priority stack examples is shorthand for the
+  `condition:` field — brackets are not part of the expression syntax.)
 - **OR:** Handled by separate entries in the priority stack. Each
   entry is its own condition — if you want "A or B triggers this
   line," create two entries with the same dialogue text at the same
@@ -317,7 +319,7 @@ a custom format, but the information per entry is fixed.
 |-------|----------|------|-------------|
 | `id` | Yes | string | Unique identifier, e.g., `aldis_act2_early` |
 | `speaker` | Yes | string | Character name shown in name tag. Empty string `""` hides the name tag entirely (used for narration). |
-| `lines` | Yes | string[] | Array of text boxes (each 1-3 lines of text). Multi-page dialogue = multiple entries in the array. |
+| `lines` | Yes | string[] | Array of dialogue boxes (each 1-3 rendered lines of text). Multi-page dialogue = multiple entries in the array. Index N in this array is what `before_line_N`/`after_line_N` and `sfx.line` reference — "line" in those contexts means "dialogue box at index N," not a rendered text line within a box. |
 | `condition` | No | expression | Flag expression for priority stack. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, and AND combinations (Section 3.3). Omit for default/fallback entries. |
 | `animations` | No | animation[] | Sprite animation triggers fired between dialogue boxes. Each trigger specifies `who`, `anim`, and `when` (see Animation Trigger Fields). |
 | `choice` | No | choice[] | Choice prompt displayed after the final line. Array of options, each with a label and consequence (see Choice Option Fields). |
