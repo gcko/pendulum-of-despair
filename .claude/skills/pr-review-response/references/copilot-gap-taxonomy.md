@@ -299,3 +299,30 @@ of 52 issues (4% catch rate) — worst performance to date. Root cause:
 balance docs reference boss facts and pacing targets that our agents
 have never been instructed to verify. The new checklist items should
 prevent this class of error on future balance/pacing PRs.
+
+### PR #34 (2026-03-26) — 7 Copilot comments, 2 new gaps
+
+**Top patterns:**
+- Self-contradiction (code block identifier hygiene): 3 comments
+  - `*` annotation markers inside `condition:` values in code blocks
+  - Readers/parsers would treat `*` as part of the flag name
+- Self-contradiction (rule vs example): 2 comments
+  - "exactly one" consequence type vs Section 4.3 allowing both
+  - `score_delta: 0` vs "must have at least one consequence"
+- Ambiguity (scope claim mismatch): 1 comment
+  - Flag note says "all flags match events.md" but 3 are new/pending
+- Reference format (plain text cross-ref): 1 comment
+  - `dialogue-system.md` as plain text instead of Markdown link
+
+**New patterns identified:**
+1. Code block identifier hygiene — annotation markers (`*`, `†`) must
+   not appear inside code block identifiers/expressions. Annotations
+   belong in surrounding prose, not inline in copy-pasteable syntax.
+2. Scope claim accuracy — universal scope claims ("all X match Y")
+   must account for exceptions or qualify the scope explicitly.
+
+**Outcome:** 2 new checklist items added: "Code Block Identifier
+Hygiene" (new section) and scope claim accuracy (added to "Ambiguity
+Prevention"). 3 of 7 already partially covered by existing Internal
+Coherence and Cross-Reference Format checklists. Story-review-loop
+not yet run (first round).
