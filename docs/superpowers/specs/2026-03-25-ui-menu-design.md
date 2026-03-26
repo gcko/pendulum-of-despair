@@ -16,9 +16,11 @@
 The UI is built as if running on SNES hardware. Every visual element
 is pixel art by default:
 
-- **Rendering:** Game viewport is 256×224 (SNES native) scaled to
-  800×600 with nearest-neighbor interpolation. No bilinear filtering.
-  All UI elements designed on the native pixel grid.
+- **Rendering:** Game viewport is 256×224 (SNES native) scaled using
+  the largest integer factor that fits the browser window (3× = 768×672
+  is the typical fit). Nearest-neighbor interpolation, no bilinear
+  filtering. Letterbox with black bars if the window exceeds the scaled
+  area. All UI elements designed on the native pixel grid.
 - **Borders:** 2px pixel-art window borders, no anti-aliasing, sharp
   corners (no border-radius). Consistent across all screens.
 - **Font:** Pixel bitmap font (Press Start 2P or custom pixel font),
