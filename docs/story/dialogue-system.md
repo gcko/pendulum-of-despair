@@ -189,7 +189,7 @@ Seyth before the council unlocks a bonus option that reaches 3.
 
 ### 3.4 Choice Consequences (Two Patterns Only)
 
-Dialogue choices produce exactly one of two consequence types:
+Dialogue choices produce one or both of two consequence types:
 
 1. **Binary flag set:** The choice sets a flag that gates future
    dialogue or events.
@@ -211,7 +211,10 @@ Dialogue choices produce exactly one of two consequence types:
 - No relationship meters. NPC attitudes change via binary flags and
   score thresholds, not continuous affinity values.
 - No timed choices. The player has unlimited time to decide.
-- Every consequence is one of these two patterns. No exceptions.
+- Every consequence uses one or both of these two patterns. An option
+  may set a flag AND increment a score. A `score_delta` of `0` is a
+  valid intentional outcome (records the question was answered with a
+  neutral response).
 
 ### 3.5 Party-Aware Dialogue
 
@@ -286,15 +289,15 @@ reaction higher.
 whatever Tier 1 scene variations require. Total script target remains
 5,000-8,000 lines per Gap 3.7 analysis.
 
-> **Flag note:** All flag names in examples match their canonical
-> names in [events.md](events.md). The spec originally used shorthand
-> names (`cael_betrayal`, `pallor_convergence`, `act2_started`,
-> `savanh_audience_active`) which have been corrected here to their
-> canonical forms: `cael_betrayal_complete` (flag 19),
+> **Flag note:** Flag names in examples that already exist in
+> [events.md](events.md) use their canonical names there. The spec
+> originally used shorthand names (`cael_betrayal`,
+> `pallor_convergence`, `act2_started`) which have been corrected
+> here to their canonical forms: `cael_betrayal_complete` (flag 19),
 > `convergence_reached` (flag 35), `pendulum_to_capital` (flag 6).
-> Flags marked with (*) are scene-local flags defined here and will
-> be added to events.md during Gap 3.7 script work:
-> `savanh_audience_active`, `act2_thornmere_council`,
+> Three flags are **scene-local** and do not yet exist in events.md —
+> they are defined here and slated for addition during Gap 3.7 script
+> work: `savanh_audience_active`, `act2_thornmere_council`,
 > `cael_betrayal_cutscene`.
 
 ---
@@ -381,7 +384,7 @@ guilt, not every line.
 ```
 id: thornmere_elder_council_torren
 speaker: Elder Savanh
-condition: act2_thornmere_council* AND party_has(torren)
+condition: act2_thornmere_council AND party_has(torren)
 lines:
   - "Torren? Son of Aldric?"
   - "...You've your father's jaw. Speak, then."
@@ -391,8 +394,10 @@ animations:
 ```
 
 The AND condition requires both the council scene flag and Torren in
-the active party. Two characters animate: Savanh reacts with surprise
-before speaking, and Torren recoils after being recognized.
+the active party. Note: `act2_thornmere_council` is a scene-local flag
+pending addition to events.md during Gap 3.7. Two characters animate:
+Savanh reacts with surprise before speaking, and Torren recoils after
+being recognized.
 
 #### Example 4 — Narration (no speaker, hidden name tag)
 
@@ -413,7 +418,7 @@ and environmental text.
 ```
 id: savanh_audience_q1
 speaker: Savanh
-condition: savanh_audience_active*
+condition: savanh_audience_active
 lines:
   - "The ley storms threaten our borders. What would you have us do?"
 choice:
@@ -472,7 +477,7 @@ the moment without a character attribution.
 ```
 id: cael_betrayal_reveal
 speaker: Cael
-condition: cael_betrayal_cutscene*
+condition: cael_betrayal_cutscene
 lines:
   - "I'm sorry, Edren."
   - "This was always how it had to end."
@@ -487,7 +492,8 @@ Three party members react simultaneously after Cael's first line
 (Edren shakes, Maren recoils, Lira is shocked). The engine plays all
 three `after_line_0` animations at the same time. Then Cael turns
 away after delivering the second line — his signature `turn_away`
-animation closing the moment.
+animation closing the moment. Note: `cael_betrayal_cutscene` is a
+scene-local flag pending addition to events.md during Gap 3.7.
 
 ### 4.6 File Organization
 
