@@ -99,7 +99,8 @@ scene into a puppet show.
 **Character-specific notes:**
 
 - **Edren** — favors `shake`, `nod`, restrained physicality. Rarely
-  `cry` (only the Interlude).
+  `cry` (only the Interlude reunion, when he learns of Cael's full
+  descent).
 - **Cael** — `turn_away` is his signature. Used during the betrayal and
   any moment he hides his true feelings.
 - **Maren** — `bubble_ellipsis` when processing, `head_down` when
@@ -207,7 +208,9 @@ Dialogue choices produce one or both of two consequence types:
 
 **Explicit design constraints:**
 
-- No hidden tracking. Every flag and score is documented in events.md.
+- No hidden tracking beyond what events.md documents. Scores like
+  `council_savanh_approval` are hidden from the player in-game but
+  fully documented for designers in events.md.
 - No relationship meters. NPC attitudes change via binary flags and
   score thresholds, not continuous affinity values.
 - No timed choices. The player has unlimited time to decide.
@@ -264,8 +267,8 @@ world feel aware of the party without ballooning the script.
 **Worked example:**
 
 ```
-NPC: Thornmere Villager
-  [party_has(torren)]  -> "Haven't seen a Thornmere boy in the capital in years."
+NPC: Valdris Merchant
+  [party_has(torren)]  -> "A Thornmere tribesman? Haven't seen one in the capital in years."
   [party_has(lira)]    -> "Is that a Forgewright's hammer? Compact-made, isn't it?"
   [default]            -> "Roads aren't safe with all these ley surges."
 ```
@@ -386,7 +389,7 @@ id: thornmere_elder_council_torren
 speaker: Elder Savanh
 condition: act2_thornmere_council AND party_has(torren)
 lines:
-  - "Torren? Son of Aldric?"
+  - "Torren? Son of Brennan?"
   - "...You've your father's jaw. Speak, then."
 animations:
   - who: savanh, anim: bubble_exclaim, when: before_line_0

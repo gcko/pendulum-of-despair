@@ -154,7 +154,7 @@ HP healing is effectively unlimited for prepared players:
 | Potion | 100 | 50g | 0.5g/HP | Act I shops |
 | Hi-Potion | 500 | 300g | 0.6g/HP | Act II shops |
 | Ley Tonic | 300 (party) | 800g | — (party-wide) | Act II shops (limited stock) |
-| X-Potion | 100% HP | 1,500g | Variable | Act III shops |
+| X-Potion | 100% HP | 1,500g | Variable | Act III shops (limited) |
 
 A player spending 500g on Potions (10 Potions) has 1,000 HP of
 healing — more than the entire party's HP pool in early Act I. HP

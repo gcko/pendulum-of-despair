@@ -238,11 +238,11 @@ push the player 1–3 levels above these targets.
 | Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
 | Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
-| Ashmark Factory | II | 20–24 | Forge Warden (24) |
+| Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
-| Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
+| Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–100) |
 

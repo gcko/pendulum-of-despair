@@ -111,10 +111,10 @@ in the stack.
 
 ```
 NPC: Scholar Aldis
-  [pallor_convergence]           -> "The equations... they were wrong all along."
-  [cael_betrayal]                -> "I catalogued his notes for months. I should have seen it."
+  [convergence_reached]          -> "The equations... they were wrong all along."
+  [cael_betrayal_complete]       -> "I catalogued his notes for months. I should have seen it."
   [cael_nightmares_begin]        -> "Have you noticed Cael seems... distracted lately?"
-  [act2_started]                 -> "Cael's temporal research is remarkable. Truly remarkable."
+  [pendulum_to_capital]          -> "Cael's temporal research is remarkable. Truly remarkable."
   [default]                      -> "Welcome to the Valdris archives."
 ```
 
@@ -122,7 +122,7 @@ NPC: Scholar Aldis
 
 | Type | Syntax | Example |
 |------|--------|---------|
-| Binary flag | `flag_name` | `cael_betrayal` |
+| Binary flag | `flag_name` | `cael_betrayal_complete` |
 | Numeric comparison | `score_name >= N` | `council_savanh_approval >= 2` |
 | String comparison | `flag_name == value` | `reunion_order_1 == edren` |
 | Party presence | `party_has(member)` | `party_has(torren)` |
@@ -229,7 +229,7 @@ lines:
 ```
 id: aldis_post_betrayal
 speaker: Aldis
-condition: cael_betrayal
+condition: cael_betrayal_complete
 lines:
   - "I catalogued his notes for months."
   - "Every formula, every late-night revision..."
@@ -244,7 +244,7 @@ id: thornmere_elder_council_torren
 speaker: Elder Savanh
 condition: act2_thornmere_council AND party_has(torren)
 lines:
-  - "Torren? Son of Aldric?"
+  - "Torren? Son of Brennan?"
   - "...You've your father's jaw. Speak, then."
 animations:
   - who: savanh, anim: bubble_exclaim, when: before_line_0
