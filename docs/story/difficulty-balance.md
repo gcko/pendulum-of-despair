@@ -44,31 +44,33 @@ greater challenge.
 
 ### 2.1 Regular Enemies — Hits to Kill
 
-Regular enemies die in 1–2 physical hits from an at-level attacker.
-AoE magic one-shots groups of at-level trash. This is a natural
-consequence of the ATK²/6 damage formula scaling quadratically
-against linearly scaling enemy HP.
+Regular enemies die in 2–4 physical hits from the primary attacker
+(per [combat-formulas.md](combat-formulas.md) § Fight Duration
+Targets). AoE magic clears groups efficiently. The ATK²/6 formula
+scales quadratically, so well-equipped physical attackers trend
+toward the lower end (2 hits), while support characters need 3–4.
 
 **Verification at key milestones** (approximate ATK values assume
 Edren's base growth + current tier weapon; see
 [progression.md](progression.md) § Character Growth and
 [equipment.md](equipment.md) § Weapons for exact values):
 
-| Level | ATK (Edren + weapon) | Enemy DEF | Enemy HP | Damage/hit | Hits to kill |
-|-------|---------------------|-----------|----------|------------|-------------|
-| 5 (early Act I) | ~26 | 6 | 23 | ~107 | 1 |
-| 12 (end Act I) | ~40 | 14 | 60–90 | ~253 | 1 |
-| 20 (mid Act II) | ~60 | 25 | 120–200 | ~575 | 1 |
-| 30 (Interlude) | ~80 | 40 | 250–400 | ~1,027 | 1 |
-| 40 (Act III) | ~100 | 55 | 400–700 | ~1,612 | 1 |
+| Level | ATK (Edren + weapon) | Enemy (Lv) | DEF | HP | Damage/hit | Hits |
+|-------|---------------------|------------|-----|-----|------------|------|
+| 5 (early Act I) | ~26 | Wild Boar (5) | 9 | 112 | ~104 | 2 |
+| 12 (end Act I) | ~40 | Bone Warden (4) | 10 | 105 | ~257 | 1 |
+| 20 (mid Act II) | ~60 | At-level (~20) | 25 | 200 | ~575 | 1 |
+| 35 (Interlude) | ~80 | At-level (~35) | 40 | 400 | ~1,027 | 1 |
+| 60 (Act III) | ~120 | At-level (~60) | 70 | 700 | ~2,330 | 1 |
 
-Physical attackers consistently one-shot trash. Mages and support
-characters deal less physical damage (2–3 hits) but compensate with
-AoE magic. This matches FF6 pacing exactly.
+Well-equipped physical attackers kill in 1–2 hits. Support characters
+and mages deal less physical damage (3–4 hits) but compensate with
+AoE magic. This matches FF6 pacing and aligns with combat-formulas.md's
+"2–4 hits from primary attacker" target.
 
-**When enemies take 2+ hits:** Back attacks (enemy strikes first),
-Pallor Wastes (higher-tier enemies), dungeon deep floors. These
-create pacing variety without frustration.
+**When enemies take 3–4 hits:** Back attacks, Pallor Wastes (higher-
+tier enemies), dungeon deep floors, underleveled party. These create
+pacing variety without frustration.
 
 ### 2.2 Boss Fight Duration
 
@@ -77,14 +79,16 @@ measured in real-time minutes at Battle Speed 3 (default).
 
 | Boss Type | Act | Duration Target | HP Range | Notes |
 |-----------|-----|-----------------|----------|-------|
-| Mini-boss | I | 1–2 min | 1,000–2,000 | Tutorial fights |
-| Story boss | I | 2–3 min | 4,000–8,000 | First real challenges |
-| Story boss | II | 3–4 min | 8,000–15,000 | Multi-phase begins |
-| Story boss | Interlude | 3–5 min | 15,000–30,000 | Complex mechanics |
-| Story boss | III | 4–6 min | 25,000–40,000 | Pallor pressure |
-| Act-ending boss | I–III | 5–7 min | 12,000–45,000 | Climactic set pieces |
-| Final boss (Cael) | III | 6–8 min | 80,000 (two phases) | Emotional climax |
+| Mini-boss | I | 0.5–1 min | 1,000–2,000 | Tutorial fights |
+| Standard boss | I–II | 3–5 min | 4,000–15,000 | 30–50 party actions |
+| Major boss | Int–III | 5–8 min | 15,000–45,000 | 50–80 party actions |
+| Penultimate boss (Cael) | III | 5–7 min | 80,000 (two phases) | Emotional climax |
+| Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
+
+These targets align with [combat-formulas.md](combat-formulas.md) §
+Fight Duration Targets: regular enemies 2–4 hits, mini-bosses 30–60s,
+standard bosses 3–5 min, major bosses 5–8 min.
 
 **Duration is governed by:**
 - Boss HP (primary lever)
@@ -103,14 +107,16 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** Within the 2–3 minute target for Act I story bosses.
 
-At endgame (Cael, 80,000 HP), party averaging ~1,500 damage per
-action at ~1.2s per action, ~55% damage actions (more healing/Despair
-management):
+At endgame (Cael, 80,000 HP total across 2 phases), party averaging
+~800 damage per action at ~1.5s per action, ~50% damage actions
+(significant healing/Despair/phase-mechanic overhead):
 
-`80,000 / (1,500 × 4 × 0.55) × 1.2s = ~29s base`
+`80,000 / (800 × 4 × 0.50) × 1.5s = ~75s base`
 
-Add 2 phase transitions (~45s each), Despair management, healing
-pressure, scripted dialogue: **~6–7 minutes.** Within target.
+Add 2 phase transitions (~45s each), Despair management cycles,
+scripted dialogue, and healing overhead (~2× base): **~5–6 minutes.**
+Within the 5–7 minute target. Per [combat-formulas.md](combat-formulas.md)
+§ Fight Duration Targets: major bosses target 5–8 minutes.
 
 ### 2.3 Encounter Duration (Random Battles)
 
@@ -221,14 +227,17 @@ push the player 1–3 levels above these targets.
 | Ashmark Factory | II | 20–24 | 24 (Forge Warden) | 0–2 |
 | Bellhaven Tunnels | II | 22–26 | 26 (Tide Wraith) | 0–2 |
 | Interlude dungeons | Int | 25–50 | 28–35 (various) | 0–3 |
-| Pallor Wastes / Act III | III | 50–70 | 36–38 (Cael) | 0–2 |
+| Pallor Wastes overworld | III | 50–60 | 32–36 (Grey Keeper, etc.) | — |
+| Convergence gauntlet | III | 60–70 | 36/38 (Cael), 40 (Incarnate) | — |
 | Dreamer's Fault | Post | 42–100 | 50–100 (optional) | Varies |
 
-**Level buffer:** The player should be 0–2 levels above the boss's
-level. If the player is 3+ levels above, they've been grinding and
-fights will feel easy (this is fine — they chose it). If the player
-is at or below boss level, fights will be tense but winnable with
-good strategy.
+**Note on boss levels vs player levels:** Boss "Lv" in the bestiary
+is a stat-scaling reference, not a direct comparison to player level.
+The party at level 60–70 is expected to fight Cael (Lv 36/38) and
+the Pallor Incarnate (Lv 40) — the level gap reflects that bosses
+have massively inflated stats (HP, multi-phase, AI scripts) compared
+to same-level regular enemies. The player is always "higher level"
+than bosses but faces equivalent challenge through boss mechanics.
 
 ### 4.2 Catch-Up Mechanics
 
@@ -510,6 +519,6 @@ danger counter increments per terrain type.
 | Encounter rates | [combat-formulas.md](combat-formulas.md) § Encounter System |
 | ATB timing | [combat-formulas.md](combat-formulas.md) § ATB Gauge System |
 | Party-wipe rules | [events.md](events.md) § Faint and Fast Reload |
-| Flee mechanics | [combat-formulas.md](combat-formulas.md) § Flee Formula |
+| Flee mechanics | [combat-formulas.md](combat-formulas.md) § Flee |
 | Oasis services | [locations.md](locations.md) § Pallor Wastes Oases |
 | Dreamer's Fault | [bestiary/optional.md](bestiary/optional.md) |
