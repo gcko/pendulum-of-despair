@@ -12,5 +12,9 @@ coverage/
 .vite/
 .idea/
 
-# Reference bestiaries (scraped third-party content, local-only)
+# Reference materials (scraped third-party content, local-only)
 docs/references/bestiary/
+docs/references/menus/
+
+# Superpowers brainstorm sessions
+.superpowers/

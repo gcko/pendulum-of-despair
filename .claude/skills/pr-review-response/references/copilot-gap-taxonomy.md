@@ -236,3 +236,28 @@ fully resolve the "no financial services" wording.
 Precision), section intro scope (Internal Coherence), formation enemy
 count limit (Numeric Consistency). Story-review-loop caught 5 of 8
 unique issues before Copilot. Copilot found 3 genuinely new gaps.
+
+### PR #32 (2026-03-26) — 10 Copilot comments, 2 new gaps
+
+**Top patterns:**
+- Source verification (ASCII example non-canonical names): 5 comments
+  - Item screen: "Echo Screen", "Fenix Down", "Dried Meat" (FF6 names)
+  - Magic screen: "Fire", "Bolt", "Cure 2" (FF6 spell names)
+  - Equipment screen: "Iron Sword" (not in equipment.md)
+  - Ley Crystal screen: "Flame Crystal" (generic, not canonical)
+  - Shop screen: "Iron Sword", "Steel Sword" (same pattern)
+- Reference format (cross-ref section names): 3 comments
+  - 2 already fixed by story-review-loop round 1 (Copilot reviewed old commit)
+  - 1 in spec file (not fixed by story-review-loop which only fixed ui-design.md)
+- Ambiguity (ATB diagram annotation vs prose): 1 comment
+- Mirror staleness (spec cross-refs stale): 1 comment
+
+**New pattern identified:** ASCII example canonical compliance. When
+ASCII diagrams use entity names (equipment, items, spells, crystals),
+those names must be verified against canonical source docs. Our agents
+verified prose cross-references but not example data in diagrams.
+
+**Outcome:** 2 new checklist items added to "ASCII Example Canonical
+Compliance" section. Story-review-loop caught 3 of 10 issues before
+Copilot (the cross-ref section name fixes). Copilot found 5 instances
+of the same new pattern (non-canonical ASCII names). All 10 addressed.
