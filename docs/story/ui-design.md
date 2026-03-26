@@ -563,7 +563,7 @@ main area.
 │  Kindlepyre   MP 14 │ Mend       MP 3   │
 │  Hoarfall     MP 14 │ Cleansing  MP 5   │
 │  Befuddle     MP 7  │ Ironhide   MP 8   │
-│  Quickstep    MP 10 │ Wardglass  MP 8   │
+│  Quickstep    MP 14 │ Wardglass  MP 8   │
 └──────────────────────────────────────────┘
 ```
 

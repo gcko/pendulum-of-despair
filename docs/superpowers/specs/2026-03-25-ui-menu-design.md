@@ -319,7 +319,7 @@ scrollbar — just directional arrows, matching SNES conventions.
 ### 3.1 Access
 
 Pressing Start/Menu during exploration. Game world pauses behind a
-full-screen dark overlay.
+solid black fill (no alpha blending — consistent with Section 1.1).
 
 ### 3.2 Layout
 
@@ -471,6 +471,7 @@ portrait top-right.
 │                    │ LCK  14 ──          │
 │                    │ EVA% 12 ──          │
 │                    │ MEVA% 8 ──          │
+│                    │ CRIT% 3 ──          │
 ├────────────────────┴─────────────────────┤
 │ Fire element  Grants [Quickstep icon]    │
 └──────────────────────────────────────────┘
@@ -548,7 +549,7 @@ FF6 magic screen: description top, character info below, spell grid main area.
 │  Kindlepyre   MP 14 │ Mend       MP 3   │
 │  Hoarfall     MP 14 │ Cleansing  MP 5   │
 │  Befuddle     MP 7  │ Ironhide   MP 8   │
-│  Quickstep    MP 10 │ Wardglass  MP 8   │
+│  Quickstep    MP 14 │ Wardglass  MP 8   │
 └──────────────────────────────────────────┘
 ```
 
