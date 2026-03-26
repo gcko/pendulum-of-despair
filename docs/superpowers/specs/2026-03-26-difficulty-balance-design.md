@@ -277,9 +277,9 @@ The game auto-saves at these trigger points:
 - After completing a side quest
 
 Auto-save uses a dedicated slot separate from the 3 manual save
-slots. No UI indicator — the save is silent. On game over, the
-player can choose "Continue" (loads auto-save) or "Load" (opens
-the standard load screen with manual saves).
+slots. No UI indicator — the save is silent. There is no "Continue
+vs Load" menu — the Faint-and-Fast-Reload system (Section 5.5)
+handles wipe recovery with instant automatic reload.
 
 **Relationship to Faint-and-Fast-Reload:** When the party wipes,
 the instant reload system (per [events.md](../story/events.md) §
@@ -307,7 +307,7 @@ on the critical path.
 ### 5.3 Flee Reliability
 
 Per [combat-formulas.md](../story/combat-formulas.md):
-- Base flee chance: `50 + (party_avg_SPD - enemy_avg_SPD) × 2`
+- Base flee chance: `clamp(50 + (party_avg_SPD - enemy_avg_SPD) × 2, 10, 90)`
 - Minimum: 10% (always possible)
 - Maximum: 90% (never guaranteed without items)
 - Smoke Bomb: 100% flee (100g, non-boss, no rewards)
