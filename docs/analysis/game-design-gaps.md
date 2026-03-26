@@ -27,6 +27,10 @@ counts, progression curves, and design takeaways for Pendulum of Despair.
 | `docs/references/items/` | `quick-stats.md` — item counts by type per game, design takeaways | FF4, FF6 (wiki + GameFAQs), CT (GameFAQs), SoM |
 | `docs/references/weapons/` | `analysis.md` — weapon counts, ATK curves, character specialization, acquisition models | FF4, FF6, CT, SoM |
 | `docs/references/armor/` | `analysis.md` — armor counts, DEF curves, slot philosophy, elemental/status design | FF4, FF6, CT (equipment), SoM |
+| `docs/references/scripts/ff6/` | `index.md` — FF6 SNES complete game script (4 parts, 5,907 lines) | [Fandom wiki](https://finalfantasy.fandom.com/wiki/Final_Fantasy_VI_SNES_script) |
+| `docs/references/scripts/ff4/` | `index.md` — FF4 Advance complete game script (3 parts, 4,164 lines) | [GameFAQs](https://gamefaqs.gamespot.com/gba/929937-final-fantasy-iv-advance/faqs/40689) |
+| `docs/references/scripts/chrono-trigger/` | `index.md` — Chrono Trigger complete game script (10 parts, 19,421 lines) | [GameFAQs](https://gamefaqs.gamespot.com/snes/563538-chrono-trigger/faqs/31563) |
+| `docs/references/scripts/secret-of-mana/` | `index.md` — Secret of Mana complete game script (2 parts, 3,692 lines) | [GameFAQs](https://gamefaqs.gamespot.com/snes/588646-secret-of-mana/faqs/19271) |
 
 **Key findings for story-designer:**
 - **Item count target:** ~45 consumables (FF6 sweet spot) + key items + crafting materials
@@ -37,6 +41,8 @@ counts, progression curves, and design takeaways for Pendulum of Despair.
 - **Elemental equipment:** 1–2 per element per type (weapons), 2–3 per element (armor)
 - **Crafting:** SoM's Watts blacksmith model maps to Lira's Forgewright
 - **Cursed items:** Grey Cleaver already designed; FF6's Cursed Shield is the gold standard
+- **Script length:** FF6 ~5,900 lines, FF4 ~4,200 lines, CT ~19,400 lines, SoM ~3,700 lines — target ~5,000–8,000 lines for PoD (FF6-tier scope with CT-style optional depth)
+- **Dialogue patterns:** FF6 uses terse, punchy lines (2–3 sentences max per text box); CT uses party-dependent dialogue variations; SoM is minimal; FF4 is dramatic/formal — PoD should blend FF6 brevity with CT party-awareness
 
 ---
 
@@ -519,6 +525,43 @@ Now complete.
 - [ ] Post-game content beyond Dreamer's Fault
 - [ ] Superboss encounters (optional bosses harder than final boss)
 - [ ] Completion tracking (bestiary %, item %, quest %)
+
+---
+
+### 3.7 Full Dialogue Tree & Story Script
+
+**Status:** MISSING
+**Priority:** P2
+**Files:** None yet — target `docs/story/script/`
+**Depends On:** 3.3 (Dialogue System Mechanics), Story & Narrative (outline.md, events.md), NPC Design (npcs.md), Characters (characters.md)
+**Reference:** `docs/references/scripts/` — complete game scripts for FF4, FF6, Chrono Trigger, and Secret of Mana. See index.md in each subdirectory.
+
+**What's Needed:**
+- [ ] Complete scene-by-scene dialogue script covering all story events in events.md:
+  - [ ] Act I scenes (Naxos opening through Ember Vein)
+  - [ ] Act II scenes (diplomatic missions, faction cities)
+  - [ ] Interlude scenes (Convergence, world collapse)
+  - [ ] Act III scenes (Pallor Wastes, final dungeon, ending)
+- [ ] NPC dialogue for all towns/locations per npcs.md:
+  - [ ] Townsfolk ambient dialogue (changes per act/event flag)
+  - [ ] Shop/inn/service NPC lines
+  - [ ] Quest-giver dialogue trees (accept/decline/complete)
+- [ ] Party banter and optional dialogue:
+  - [ ] CT-style party-dependent dialogue variations (who's in the active party changes lines)
+  - [ ] Character-specific reactions to key story moments
+  - [ ] Optional/examine text for environmental storytelling
+- [ ] Dialogue branching for player choices:
+  - [ ] Choice points mapped to events.md flags
+  - [ ] Branch outcomes and convergence points
+  - [ ] Faction reputation dialogue variations
+- [ ] Battle dialogue (boss intros, phase transitions, victory/defeat)
+- [ ] System text (tutorial prompts, item descriptions, menu help text)
+- [ ] Script format specification:
+  - [ ] Text box line limits (characters per line, lines per box — per ui-design.md)
+  - [ ] Speaker tags, emotion markers, timing cues
+  - [ ] Localization-ready structure
+
+**Blocking:** Full game implementation, voice acting (if any), text rendering system, localization
 
 ---
 
