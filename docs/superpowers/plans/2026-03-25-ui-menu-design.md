@@ -30,7 +30,7 @@ Write the following sections from the spec:
 - Document header with cross-reference table
 - Section 1.1: SNES Pixel Art First (viewport 256×224, nearest-neighbor, pixel borders, pixel font, pixel icons/bars, no alpha, portrait spec)
 - Section 1.2: Modern Concessions (sub-pixel text, HP/MP bars addition)
-- Section 1.3: FF6 Minimalist Windows (dark navy `#00003c`, border `#5566aa`, sharp corners, constant across biomes)
+- Section 1.3: FF6 Minimalist Windows (dark navy `#000040`, border `#5566aa`, sharp corners, constant across biomes)
 - Section 1.4: Color Palette (full table from spec — 18 entries)
 - Section 1.5: Font Sizes (6 context rows)
 - Section 1.6: Unified Status Effect Icon System (placement rules, 12 negative icons, 10 positive icons — all from magic.md canonical list)
