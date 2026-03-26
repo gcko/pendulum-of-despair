@@ -261,3 +261,41 @@ verified prose cross-references but not example data in diagrams.
 Compliance" section. Story-review-loop caught 3 of 10 issues before
 Copilot (the cross-ref section name fixes). Copilot found 5 instances
 of the same new pattern (non-canonical ASCII names). All 10 addressed.
+
+### PR #33 (2026-03-26) — 52 Copilot comments across 6 rounds, 4 new gaps
+
+**Top patterns:**
+- Source verification (wrong boss names/acts/levels/HP): 12 comments
+  - "Fenmother (14)" should be "Corrupted Fenmother (12), 18,000 HP"
+  - "Siege Commander (18) Act I" should be "The Ashen Ram (22) Act II"
+  - "Tide Wraith (26) boss" — Tide Wraith is Lv 19 regular, no boss
+  - "~8,000 HP Fenmother" should be 18,000 HP
+- Self-contradiction (pacing targets vs examples): 10 comments
+  - Doc says "2-4 hits" but examples show 1-hit kills
+  - "Party average" claim contradicts "from primary attacker" source
+  - Vein Guardian "2-3 min target" didn't exist in own table
+- Mirror staleness (spec/plan not updated): 10 comments
+- Formula precision (duration math, healing_overhead units): 8 comments
+  - 1500 DPS at 1.2s produced 29s base (absurd for 6-8 min fight)
+  - healing_overhead defined as "20-30%" but added as seconds
+- Exception tracking (flee + boss disable): 2 comments
+- Reference format (Flee Formula, Faint-and-Fast-Reload hyphenation): 6 comments
+- Item availability (missing "limited stock" qualifiers): 2 comments
+- Ambiguity (Level Buffer column vs Lv explanation): 2 comments
+
+**New patterns identified:**
+1. Boss roster verification — agents don't verify boss name/act/level
+   against bestiary/bosses.md when referenced in balance docs
+2. Cross-doc pacing target alignment — agents don't check new pacing
+   targets against existing targets in combat-formulas.md
+3. Formula term units — agents don't verify variable definitions specify
+   units (seconds vs multiplier vs percentage)
+4. Item availability qualifiers — agents don't preserve "(limited stock)"
+   qualifiers from items.md
+
+**Outcome:** 5 new checklist items added to "Boss Roster & Pacing
+Verification" section. Story-review-loop (pre-Copilot) caught only 2
+of 52 issues (4% catch rate) — worst performance to date. Root cause:
+balance docs reference boss facts and pacing targets that our agents
+have never been instructed to verify. The new checklist items should
+prevent this class of error on future balance/pacing PRs.

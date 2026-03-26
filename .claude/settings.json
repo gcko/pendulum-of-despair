@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "double-shot-latte@superpowers-marketplace": false,
+    "superpowers@claude-plugins-official": true
+  }
+}
