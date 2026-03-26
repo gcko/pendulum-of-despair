@@ -129,9 +129,10 @@ At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 
 `80,000 / (800 × 4 × 0.50) × 1.5s = ~75s base`
 
-Add healing/Despair/rebuff overhead (~2× base = ~150s) and 2 phase
-transitions with scripted dialogue (~45s each = ~90s): **~5–6
-minutes.**
+Add healing/Despair/rebuff overhead (~2.8× base = ~210s — higher than
+typical due to Despair management and Cael's Rally counter forcing
+frequent rebuffs) and 2 phase transitions with scripted dialogue
+(~45s each = ~90s): **~5–5.5 minutes.**
 Within the 5–7 minute target. Per [combat-formulas.md](combat-formulas.md)
 § Fight Duration Targets: major bosses target 5–8 minutes.
 
@@ -169,7 +170,7 @@ healing — more than the entire party's HP pool in early Act I. HP
 items are cheap enough that running out is a preparation failure,
 not a design constraint.
 
-**Healing spells supplement items:** Mend (3 MP, ~125–230 HP at early
+**Healing spells supplement items:** Mend (3 MP, ~155–250 HP at early
 levels depending on caster MAG), Leybalm (3 MP, similar), Breath of
 the Wilds (8 MP, party heal). These conserve Potions but cost the
 real resource: MP.
