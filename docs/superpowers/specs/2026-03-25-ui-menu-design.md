@@ -612,7 +612,7 @@ commands bottom-left, equipment bottom-right.
 │   Next   1,230     │ LCK   14 (+ 0)      │
 │                    │ EVA%  12%            │
 │                    │ MEVA%  8%            │
-│                    │ Crit%  3%            │
+│                    │ CRIT%  3%            │
 ├────────────────────┼─────────────────────┤
 │ Battle Commands:   │ Weapon : Valdris Blade│
 │  Attack            │ Head   : Iron Helm  │
@@ -630,7 +630,7 @@ commands bottom-left, equipment bottom-right.
   XP to next level. Status effect icons if any active.
 - **Core stats (right):** HP and MP with bars + numeric. All 8 stats
   with equipment bonus in parentheses where nonzero. Derived stats:
-  EVA%, MEVA%, Crit%.
+  EVA%, MEVA%, CRIT%.
 - **Battle commands (bottom-left):** Lists available commands for reference.
 - **Equipment summary (bottom-right):** All 5 equipped items by slot.
   Elemental affinity icons at the bottom.

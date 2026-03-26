@@ -233,7 +233,7 @@ Include:
 
 - [ ] **Step 4: Verify stat list**
 
-Read `docs/story/progression.md` and confirm: HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK (8 core) + EVA%, MEVA%, Crit% (3 derived).
+Read `docs/story/progression.md` and confirm: HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK (8 core) + EVA%, MEVA%, CRIT% (3 derived).
 
 - [ ] **Step 5: Commit**
 
