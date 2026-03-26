@@ -292,9 +292,10 @@ whatever Tier 1 scene variations require. Total script target remains
 > `savanh_audience_active`) which have been corrected here to their
 > canonical forms: `cael_betrayal_complete` (flag 19),
 > `convergence_reached` (flag 35), `pendulum_to_capital` (flag 6).
-> The `savanh_audience_active` flag (*) is defined here as a
-> scene-local flag for the Savanh audience sequence and will be added
-> to events.md during Gap 3.7 script work.
+> Flags marked with (*) are scene-local flags defined here and will
+> be added to events.md during Gap 3.7 script work:
+> `savanh_audience_active`, `act2_thornmere_council`,
+> `cael_betrayal_cutscene`.
 
 ---
 
@@ -380,7 +381,7 @@ guilt, not every line.
 ```
 id: thornmere_elder_council_torren
 speaker: Elder Savanh
-condition: act2_thornmere_council AND party_has(torren)
+condition: act2_thornmere_council* AND party_has(torren)
 lines:
   - "Torren? Son of Aldric?"
   - "...You've your father's jaw. Speak, then."
@@ -471,7 +472,7 @@ the moment without a character attribution.
 ```
 id: cael_betrayal_reveal
 speaker: Cael
-condition: cael_betrayal_cutscene
+condition: cael_betrayal_cutscene*
 lines:
   - "I'm sorry, Edren."
   - "This was always how it had to end."
