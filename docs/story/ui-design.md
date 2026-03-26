@@ -57,8 +57,11 @@ the player focuses on the game world and characters, not the menus.
   blue; CSS reference: `#00003c`)
 - **Window border:** Thin blue-grey (`#5566aa`), 2px, sharp pixel corners
 - **No per-location theming.** Windows and dialogue boxes are constant
-  across all biomes (per [visual-style.md](visual-style.md): represents
-  player connection to characters; Pallor static never touches dialogue).
+  across all biomes. This document is the canonical source for window
+  appearance (solid fill, pixel borders) and supersedes the gradient-based
+  specs in [visual-style.md](visual-style.md), which should be read for
+  thematic rationale (player connection to characters; Pallor static
+  never touches dialogue).
 
 ### 1.4 Color Palette
 
@@ -480,7 +483,7 @@ portrait top-right.
 │                    │ MEVA% 8 ──          │
 │                    │ CRIT% 3 ──          │
 ├────────────────────┴─────────────────────┤
-│ Fire element  Grants [haste icon]        │
+│ Fire element  Grants [Quickstep icon]    │
 └──────────────────────────────────────────┘
 ```
 
@@ -1011,21 +1014,26 @@ overlay, no compass. Player uses the pause menu for all information.
 The UI respects the [visual-style.md](visual-style.md) color-as-hope
 narrative:
 
-- **UI windows never desaturate.** The Pallor drains color from the
-  game world, but menus and dialogue boxes remain constant. The player's
-  interface is their anchor.
-- **One exception:** During Cael's final dialogue before closing the
-  door (Act IV), the dialogue box border flickers grey for 2 frames,
-  then returns to silver. The only time the UI acknowledges the Pallor
-  (per [visual-style.md](visual-style.md)).
-- **Menu portrait desaturation:** Character portraits in menu screens
-  reflect status: normal coloring in healthy states, desaturated tint
-  when affected by Pallor-adjacent status effects (e.g., Despair).
+- **UI chrome never desaturates.** The Pallor drains color from the
+  game world, but menu and dialogue window backgrounds, borders, and
+  core HUD elements (HP/MP bars, command windows, system frames)
+  remain in full color. The player's interface is their anchor.
+- **One scripted border flicker:** During Cael's final dialogue before
+  closing the door (Act IV), the dialogue box border flickers grey for
+  2 frames, then returns to silver. This is the only moment when the
+  window border color itself acknowledges the Pallor (per
+  [visual-style.md](visual-style.md)).
+- **Menu portrait desaturation (allowed):** Character portraits in menu
+  screens reflect status: normal coloring in healthy states, desaturated
+  tint when affected by Pallor-adjacent status effects (e.g., Despair).
+  This affects portrait art only, not window backgrounds or chrome.
   Per [visual-style.md](visual-style.md) § Menu Backgrounds.
-- **Status effect: Despair** — when a character has the Despair status,
-  their name in the battle party panel dims slightly (not fully grey,
-  just reduced brightness). The grey down-arrow icon appears in their
-  status icon row. Menu portrait gains a desaturated tint.
+- **Status effect: Despair (allowed dimming):** When a character has
+  the Despair status, their name in the battle party panel dims slightly
+  (not fully grey, just reduced brightness). The grey down-arrow icon
+  appears in their status icon row. Menu portrait gains a desaturated
+  tint. These are status-driven content changes, not global UI
+  desaturation.
 - **Act III exploration:** As the Pallor Wastes desaturate the world,
   party sprites remain in full color. The UI contrast (vivid bars and
   text against the greying world) reinforces the theme that the

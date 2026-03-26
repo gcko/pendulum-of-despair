@@ -54,11 +54,13 @@ Dark navy windows with thin blue-grey borders. The UI is invisible —
 the player focuses on the game world and characters, not the menus.
 
 - **Window background:** Dark navy (SNES palette index for near-black
-  blue; CSS reference: `#00003c`)
+  blue; CSS reference: `#00003c`). Solid fill — supersedes the
+  gradient-based spec in visual-style.md. This document is authoritative
+  for in-game menu and dialogue window styling.
 - **Window border:** Thin blue-grey (`#5566aa`), 2px, sharp pixel corners
 - **No per-location theming.** Windows and dialogue boxes are constant
-  across all biomes (per visual-style.md: represents player connection
-  to characters; Pallor static never touches dialogue).
+  across all biomes (visual-style.md provides thematic rationale: player
+  connection to characters; Pallor static never touches dialogue).
 
 ### 1.4 Color Palette
 
@@ -293,7 +295,10 @@ After winning a battle, a results window appears over the battle screen:
 
 Maren's party panel row includes a third gauge below her MP bar:
 a thin Weave Gauge bar (purple `#aa44ff` fill on dark background).
-This gauge charges during battle via Arcanum abilities. In the menu
+This gauge fills when any magic is cast in battle — +10 WG when
+any ally other than Maren casts a spell, +5 WG when Maren herself
+casts, +15 WG when any enemy casts (per abilities.md § Maren —
+Arcanum). Max 100 WG, starts at 0 each battle. In the menu
 Abilities screen, the current charge is shown (typically 0 outside
 battle). The Weave Gauge is narrower than HP/MP bars and does not
 appear for other characters.
@@ -465,7 +470,7 @@ portrait top-right.
 │                    │ EVA% 12 ──          │
 │                    │ MEVA% 8 ──          │
 ├────────────────────┴─────────────────────┤
-│ Fire element  Grants [haste icon]        │
+│ Fire element  Grants [Quickstep icon]    │
 └──────────────────────────────────────────┘
 ```
 
@@ -498,9 +503,10 @@ for that slot type.
 
 ### 5.6 Stat Comparison (Right)
 
-All 8 core stats + 2 derived stats in two columns:
-- Left: ATK, DEF, MAG, MDEF
-- Right: SPD, LCK, EVA%, MEVA%
+8 core stats + 3 derived stats, in a single vertical list. HP and
+MP appear only when the highlighted equipment modifies them:
+
+HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK, EVA%, MEVA%, CRIT%
 
 Each stat shows: label + current value + delta indicator:
 - Green up-arrow (`▲`) + new value for improvement
