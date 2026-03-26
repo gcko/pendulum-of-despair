@@ -772,9 +772,9 @@ Small window prompt: **Buy** | **Sell** | **Exit**. Hand cursor to select.
 │  ● Iron Helm        200 │ MAG  18 ──    │
 │  ● Chain Mail       300 │ MDEF 22 ──    │
 │  ● Power Ring       300 │ SPD  25 ──    │
-│  ● Potion        (x30)50│ LCK  14 ──    │
+│  ● Potion       (x30) 50│ LCK  14 ──    │
 │  ● Ether         (x8)200│              │
-│  ● Antidote     (x12)50 │              │
+│  ● Antidote    (x12)  50│              │
 ├──────────────────────────┴───────────────┤
 │                              Gold: 4,280 │
 └──────────────────────────────────────────┘
@@ -867,11 +867,11 @@ Game+) needs additional slots, this can be revisited then.
 ┌──────────────────────────────────────────┐
 │                  Save                    │
 ├──────────────────────────────────────────┤
-│ Valdris Castle Town    Time 12:34  G4,280│
+│ Valdris Castle Town   Time 12:34 Gold 4,280│
 │ [Ed] Edren 12 ██░ [Li] Lira 11 ███      │
 │ [To] Torren 11 █░ [Sa] Sable 12 ██░     │
 ├──────────────────────────────────────────┤
-│ Ember Vein B1          Time  5:12  G1,430│
+│ Ember Vein B1         Time  5:12 Gold 1,430│
 │ [Ed] Edren 8 ███ [Ca] Cael 8 ███        │
 │ [Li] Lira 7 ██░  [To] Torren 7 █░       │
 ├──────────────────────────────────────────┤
