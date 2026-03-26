@@ -35,8 +35,8 @@ greater challenge.
   equipment is affordable on the critical path. The remaining 30%
   rewards side content, not grinding.
 - **No frustration loops.** Auto-save prevents lost progress.
-  Generous save points. Flee always has a chance. Level-up
-  restores HP/MP.
+  Generous save points. Flee always has a chance in random
+  encounters (bosses disable flee). Level-up restores HP/MP.
 
 ---
 
@@ -70,9 +70,9 @@ Edren (primary physical attacker) kills in 1–2 hits. Torren, Maren,
 and Sable need 2–4 physical hits — or use magic/abilities instead.
 AoE spells clear groups efficiently regardless of physical ATK.
 This matches the "2–4 hits from primary attacker" target in
-[combat-formulas.md](combat-formulas.md) § Fight Duration Targets,
-where the primary attacker is Edren or Cael (highest ATK), not the
-party average.
+[combat-formulas.md](combat-formulas.md) § Fight Duration Targets.
+The primary attacker (Edren or Cael) trends toward 1–2 hits; other
+party members need 3–4, staying within the 2–4 range.
 
 ### 2.2 Boss Fight Duration
 
@@ -107,9 +107,10 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 `6,000 HP / (200 × 4 × 0.6) × 2.5s = ~31s base`
 
 Add phase transition (~20s scripted), healing pressure, and variance:
-**~1.5–2 minutes.** On the short end of the standard boss 3–5 minute
-target — the Vein Guardian is the first "real" boss and is intentionally
-on the easier side to teach boss mechanics.
+**~1.5–2 minutes.** The Vein Guardian is the game's first major boss
+and functions as a tutorial — its duration falls below the standard
+3–5 minute target intentionally. Later Act I bosses (Fenmother at
+~8,000 HP) hit the standard range.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -148,8 +149,8 @@ HP healing is effectively unlimited for prepared players:
 |------|-------------|------|-------------|-------------|
 | Potion | 100 | 50g | 0.5g/HP | Act I shops |
 | Hi-Potion | 500 | 300g | 0.6g/HP | Act II shops |
-| Ley Tonic | 300 (party) | 800g | 0.67g/HP | Act II shops |
-| X-Potion | 100% HP | 1,500g | Variable | Act III shops |
+| Ley Tonic | 300 (party) | 800g | 0.67g/HP | Act II shops (limited stock) |
+| X-Potion | 100% HP | 1,500g | Variable | Act III shops (limited) |
 
 A player spending 500g on Potions (10 Potions) has 1,000 HP of
 healing — more than the entire party's HP pool in early Act I. HP
@@ -294,7 +295,7 @@ The game auto-saves at these trigger points:
 Auto-save uses a dedicated slot separate from the 3 manual save
 slots. No UI indicator — the save is silent.
 
-**Relationship to Faint-and-Fast-Reload:** When the party wipes,
+**Relationship to Faint and Fast Reload:** When the party wipes,
 the instant reload system (per [events.md](events.md) § Faint and
 Fast Reload) loads the most recent save — whether manual or auto.
 Auto-save ensures that target is always close. There is no "Continue
