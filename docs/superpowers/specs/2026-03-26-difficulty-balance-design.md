@@ -74,6 +74,11 @@ feel fast, with the challenge coming from encounter rate, Despair
 status, and boss fights rather than individual trash mobs. Support
 characters (Torren, Maren) still need 2–4 physical hits or use magic.
 
+> **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
+> lists Act III enemy HP as 6,000–14,000, but the actual bestiary
+> (act-iii.md) has Act III regulars at 1,000–2,247 HP. The bestiary
+> is authoritative; the combat-formulas.md table needs reconciliation.
+
 ### 2.2 Boss Fight Duration
 
 Boss fights escalate in duration as the game progresses. Duration is
@@ -148,7 +153,7 @@ HP healing is effectively unlimited for prepared players:
 |------|-------------|------|-------------|-------------|
 | Potion | 100 | 50g | 0.5g/HP | Act I shops |
 | Hi-Potion | 500 | 300g | 0.6g/HP | Act II shops |
-| Ley Tonic | 300 (party) | 800g | 0.67g/HP | Act II shops |
+| Ley Tonic | 300 (party) | 800g | — (party-wide) | Act II shops (limited stock) |
 | X-Potion | 100% HP | 1,500g | Variable | Act III shops |
 
 A player spending 500g on Potions (10 Potions) has 1,000 HP of
@@ -233,7 +238,7 @@ push the player 1–3 levels above these targets.
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
 | Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
-| Dreamer's Fault | Post | 42–100 | Optional (50–100) |
+| Dreamer's Fault | Post | 70–150 | Optional (50–100) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference — NOT directly comparable to player level.
