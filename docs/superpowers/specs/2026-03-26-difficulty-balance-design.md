@@ -44,7 +44,7 @@ greater challenge.
 ### 2.1 Regular Enemies — Hits to Kill
 
 Regular enemies die in 2–4 physical hits from the primary attacker
-(per [combat-formulas.md](../story/combat-formulas.md) § Fight
+(per [combat-formulas.md](../../story/combat-formulas.md) § Fight
 Duration Targets). AoE magic clears groups efficiently. The ATK²/6
 formula scales quadratically, so well-equipped physical attackers
 trend toward the lower end (2 hits), while support characters need
@@ -52,8 +52,8 @@ trend toward the lower end (2 hits), while support characters need
 
 **Verification at key milestones** (approximate ATK values assume
 Edren's base growth + current tier weapon; see
-[progression.md](../story/progression.md) § Character Growth and
-[equipment.md](../story/equipment.md) § Weapons for exact values):
+[progression.md](../../story/progression.md) § Character Growth and
+[equipment.md](../../story/equipment.md) § Weapons for exact values):
 
 The table below shows Edren (highest ATK) alongside Torren (lowest
 physical ATK). The "2–4 hits from primary attacker" target in
@@ -93,7 +93,7 @@ measured in real-time minutes at Battle Speed 3 (default).
 | Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
 
-These targets align with [combat-formulas.md](../story/combat-formulas.md) §
+These targets align with [combat-formulas.md](../../story/combat-formulas.md) §
 Fight Duration Targets: regular enemies 2–4 hits, mini-bosses 30–60s,
 standard bosses 3–5 min, major bosses 5–8 min.
 
@@ -247,7 +247,7 @@ party at 60–70 fighting Cael (Lv 36/38) is the intended balance.
 
 ### 4.2 Catch-Up Mechanics
 
-Per [progression.md](../story/progression.md):
+Per [progression.md](../../story/progression.md):
 - **Party join level:** `party_average - 1` — new members are never
   far behind.
 - **Absent XP share:** 50% — reserve members stay close to the active
@@ -263,7 +263,7 @@ behind.
 
 ### 4.3 Equipment Progression Curve
 
-Per [equipment.md](../story/equipment.md):
+Per [equipment.md](../../story/equipment.md):
 
 | Tier | Act | ATK Range | Relative Power | New Tier Every |
 |------|-----|-----------|---------------|---------------|
@@ -298,7 +298,7 @@ vs Load" menu — the Faint and Fast Reload system (Section 5.5)
 handles wipe recovery with instant automatic reload.
 
 **Relationship to Faint and Fast Reload:** When the party wipes,
-the instant reload system (per [events.md](../story/events.md) §
+the instant reload system (per [events.md](../../story/events.md) §
 Faint and Fast Reload) loads the most recent save — whether manual
 or auto. Auto-save ensures that target is always close.
 
@@ -322,7 +322,7 @@ on the critical path.
 
 ### 5.3 Flee Reliability
 
-Per [combat-formulas.md](../story/combat-formulas.md):
+Per [combat-formulas.md](../../story/combat-formulas.md):
 - Base flee chance: `clamp(50 + (party_avg_SPD - enemy_avg_SPD) × 2, 10, 90)`
 - Minimum: 10% (always possible)
 - Maximum: 90% (never guaranteed without items)
@@ -345,7 +345,7 @@ Per [combat-formulas.md](../story/combat-formulas.md):
 
 ### 5.5 Party Wipe Recovery
 
-Per [events.md](../story/events.md) § Faint and Fast Reload:
+Per [events.md](../../story/events.md) § Faint and Fast Reload:
 - **No game over screen.** No menu, no prompt, no "Game Over" text.
 - Last Faint animation plays → fade to black (2s) → instant reload
   at the last save point (~4s total).
@@ -506,16 +506,16 @@ For each dungeon, verify:
 
 | System | Reference |
 |--------|-----------|
-| Damage formulas | [combat-formulas.md](../story/combat-formulas.md) § Physical Damage, § Magic Damage |
-| Stat growth | [progression.md](../story/progression.md) § Character Growth |
-| XP curve | [progression.md](../story/progression.md) § Two-Phase XP Curve |
-| Enemy stats | [bestiary/](../story/bestiary/) (act-i.md through act-iii.md) |
-| Boss stats | [bestiary/bosses.md](../story/bestiary/bosses.md) |
-| Equipment tiers | [equipment.md](../story/equipment.md) § Weapons |
-| Economy/gold | [economy.md](../story/economy.md) § Gold Pacing Targets |
-| Encounter rates | [combat-formulas.md](../story/combat-formulas.md) § Encounter System |
-| ATB timing | [combat-formulas.md](../story/combat-formulas.md) § ATB Gauge System |
-| Party-wipe rules | [events.md](../story/events.md) § Faint and Fast Reload |
-| Flee mechanics | [combat-formulas.md](../story/combat-formulas.md) § Flee |
-| Oasis services | [locations.md](../story/locations.md) § Pallor Wastes Oases |
-| Dreamer's Fault | [bestiary/optional.md](../story/bestiary/optional.md) |
+| Damage formulas | [combat-formulas.md](../../story/combat-formulas.md) § Physical Damage, § Magic Damage |
+| Stat growth | [progression.md](../../story/progression.md) § Character Growth |
+| XP curve | [progression.md](../../story/progression.md) § Two-Phase XP Curve |
+| Enemy stats | [bestiary/](../../story/bestiary/) (act-i.md through act-iii.md) |
+| Boss stats | [bestiary/bosses.md](../../story/bestiary/bosses.md) |
+| Equipment tiers | [equipment.md](../../story/equipment.md) § Weapons |
+| Economy/gold | [economy.md](../../story/economy.md) § Gold Pacing Targets |
+| Encounter rates | [combat-formulas.md](../../story/combat-formulas.md) § Encounter System |
+| ATB timing | [combat-formulas.md](../../story/combat-formulas.md) § ATB Gauge System |
+| Party-wipe rules | [events.md](../../story/events.md) § Faint and Fast Reload |
+| Flee mechanics | [combat-formulas.md](../../story/combat-formulas.md) § Flee |
+| Oasis services | [locations.md](../../story/locations.md) § Pallor Wastes Oases |
+| Dreamer's Fault | [bestiary/optional.md](../../story/bestiary/optional.md) |

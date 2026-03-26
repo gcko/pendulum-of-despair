@@ -30,7 +30,7 @@ values for quick reference:
 - **Text speeds:** Slow (30 cps), Normal (60 cps), Fast (120 cps),
   Instant. Confirm instantly completes current box; bouncing down-arrow
   when complete. Multi-page advances on confirm, no scrollback.
-- **Choice prompts:** 2-4 options, vertical layout, hand cursor. Yellow
+- **Choice prompts:** 2–4 options, vertical layout, hand cursor. Yellow
   selected / pale blue unselected. Cancel selects bottom option
   (typically "No").
 
@@ -54,7 +54,7 @@ the portrait emotion system used in later FF6 ports.
 
 | ID | Animation | Visual Description | Duration | Use Case |
 |----|-----------|--------------------|----------|----------|
-| `jump` | 1-2 vertical hops | Sprite lifts 4-8px, lands | 0.4s | Surprise, excitement, realization |
+| `jump` | 1–2 vertical hops | Sprite lifts 4–8px, lands | 0.4s | Surprise, excitement, realization |
 | `shake` | Rapid horizontal vibration | Sprite oscillates +/-2px | 0.5s | Anger, frustration, strain |
 | `turn_away` | Rotate to face away | Sprite flips to opposite direction | 0.3s | Shame, rejection, hiding emotion |
 | `head_down` | Slight downward shift | Sprite drops 2px, holds position | 0.4s | Sadness, defeat, resignation |
@@ -66,8 +66,8 @@ the portrait emotion system used in later FF6 ports.
 | `red_tint` | Full body flashes red | Sprite tints red, fades back | 0.5s | Embarrassment, intense rage |
 | `arms_up` | Arms raise overhead | Sprite frame swap, holds | 0.5s | Celebration, triumph, rallying |
 | `collapse` | Sprite drops to ground | Falls down (0.6s), holds at fallen position until sequence end or `clear` | 0.6s | Overwhelm, comedic shock |
-| `nod` | Small downward bob | Sprite dips 2px and returns, 1-2x | 0.4s | Agreement, determination |
-| `step_back` | Sprite retreats 8-16px | Quick backward move, holds | 0.3s | Fear, recoil, intimidation |
+| `nod` | Small downward bob | Sprite dips 2px and returns, 1–2x | 0.4s | Agreement, determination |
+| `step_back` | Sprite retreats 8–16px | Quick backward move, holds | 0.3s | Fear, recoil, intimidation |
 | `clear` | Reset to idle | Control command: resets the character to idle pose, canceling any held or looping animation | — | End a `cry` loop or reset a held position early |
 
 ### 2.2 Timing Rules
@@ -94,7 +94,7 @@ the portrait emotion system used in later FF6 ports.
 
 Animations are used **judiciously** — not every line gets one. The
 writing carries baseline emotion; animations punctuate key moments. A
-typical scene with 10 dialogue boxes might have 2-3 sprite animations.
+typical scene with 10 dialogue boxes might have 2–3 sprite animations.
 Overuse cheapens the effect.
 
 **Good usage:** Edren shakes with anger after Cael's betrayal reveal,
@@ -137,7 +137,7 @@ scene into a puppet show.
   top-to-bottom and serves the first entry whose condition is true
   (first-match-wins).
 - **No branching conversation flows.** NPCs deliver linear exchanges
-  with occasional choice prompts (2-4 options). Choices set flags or
+  with occasional choice prompts (2–4 options). Choices set flags or
   increment scores; they never open sub-menus or nested dialogue
   paths.
 
@@ -190,12 +190,12 @@ ordering. Moving an entry higher makes it win over entries below it.
   priority level.
 
 **Reunion order flags:** `reunion_order_1` through `reunion_order_4`
-(events.md flags 48-51) store character IDs (`edren`, `lira`,
+(events.md flags 48–51) store character IDs (`edren`, `lira`,
 `torren`, `maren`). String comparison against these flags enables
 reunion-order-dependent dialogue.
 
 **Score ranges:** `council_savanh_approval` (events.md flag 40) has
-range 0-3. Dialogue choices alone earn 0-2; consulting Grandmother
+range 0–3. Dialogue choices alone earn 0–2; consulting Grandmother
 Seyth before the council unlocks a bonus option that reaches 3.
 Scores are clamped to their documented range — the engine enforces
 `clamp(score, min, max)` after each increment. Score ranges are
@@ -216,7 +216,7 @@ Dialogue choices produce one or both of two consequence types:
    score variable.
    - Example: A diplomatic answer during Savanh's audience adds +2 to
      `council_savanh_approval` (events.md flag 40). The total score
-     (0-3) determines Savanh's support at the tribal council and
+     (0–3) determines Savanh's support at the tribal council and
      unlocks the Grandmother Seyth bonus dialogue path at score 3.
 
 **Explicit design constraints:**
@@ -237,7 +237,7 @@ Dialogue choices produce one or both of two consequence types:
 Party composition affects dialogue at two tiers, balancing narrative
 richness against script volume.
 
-#### Tier 1 — Key Story Scenes (~15-20 scenes)
+#### Tier 1 — Key Story Scenes (~15–20 scenes)
 
 Party composition changes specific lines during major story beats.
 Implemented as `party_has()` checks in the priority stack. Scenes
@@ -248,7 +248,7 @@ that receive party-aware treatment:
   Edren first vs. finding Lira first produces different emotional
   framing for each subsequent reunion.
 - **Cael's betrayal** (`cael_betrayal_complete`) — The
-  `cael_last_night_*` flags (44-47) change camera framing and
+  `cael_last_night_*` flags (44–47) change camera framing and
   emotional weight depending on which locations Cael visited.
 - **Thornmere Council at Ashgrove** — `party_has(torren)` changes
   Elder Savanh's demeanor (Torren is from Thornmere; his presence
@@ -271,7 +271,7 @@ that receive party-aware treatment:
 - **Maren's briefing** (`party_reassembled`) — Full party assembled.
   Dialogue adjusts for reunion order and relationship flags.
 
-#### Tier 2 — NPC Reactions (~2-3 per town, ~100-150 extra lines)
+#### Tier 2 — NPC Reactions (~2–3 per town, ~100–150 extra lines)
 
 Town NPCs occasionally notice who is in the party. Sprinkled
 lightly — not every NPC, not every party member. Enough to make the
@@ -293,17 +293,17 @@ reaction higher.
 
 **Distribution guidelines:**
 
-- ~2-3 party-aware NPC reactions per town
+- ~2–3 party-aware NPC reactions per town
 - Prioritize reactions that reinforce character identity (Torren
   recognized in Thornmere territory, Sable recognized in Bellhaven,
   Lira's Forgewright craft noticed in Carradan towns)
 - Each reaction is a single replacement line, not an additional
   exchange
-- Total Tier 2 estimate: ~100-150 additional script lines
+- Total Tier 2 estimate: ~100–150 additional script lines
 
-**Estimated script impact:** Tier 2 adds ~100-150 lines on top of
+**Estimated script impact:** Tier 2 adds ~100–150 lines on top of
 whatever Tier 1 scene variations require. Total script target remains
-5,000-8,000 lines per Gap 3.7 analysis.
+5,000–8,000 lines per Gap 3.7 analysis.
 
 > **Flag note:** Flag names in examples that already exist in
 > [events.md](events.md) use their canonical names there. The spec
@@ -330,7 +330,7 @@ a custom format, but the information per entry is fixed.
 |-------|----------|------|-------------|
 | `id` | Yes | string | Unique identifier, e.g., `aldis_act2_early` |
 | `speaker` | Yes | string | Character name shown in name tag. Empty string `""` hides the name tag entirely (used for narration). |
-| `lines` | Yes | string[] | Array of dialogue boxes (each 1-3 rendered lines of text). Multi-page dialogue = multiple entries in the array. Index N in this array is what `before_line_N`/`after_line_N` and `sfx.line` reference — "line" in those contexts means "dialogue box at index N," not a rendered text line within a box. |
+| `lines` | Yes | string[] | Array of dialogue boxes (each 1–3 rendered lines of text). Multi-page dialogue = multiple entries in the array. Index N in this array is what `before_line_N`/`after_line_N` and `sfx.line` reference — "line" in those contexts means "dialogue box at index N," not a rendered text line within a box. |
 | `condition` | No | expression | Flag expression for priority stack. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, and AND combinations (Section 3.3). Omit for default/fallback entries. |
 | `animations` | No | animation[] | Sprite animation triggers fired between dialogue boxes. Each trigger specifies `who`, `anim`, and `when` (see Animation Trigger Fields). |
 | `choice` | No | choice[] | Choice prompt displayed after the final line. Array of options, each with a label and consequence (see Choice Option Fields). |

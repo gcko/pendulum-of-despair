@@ -60,7 +60,7 @@ physical ATK). The "2–4 hits from primary attacker" target in
 combat-formulas.md refers to the strongest physical attacker (Edren
 or Cael), who should need 2–4 hits against at-level regular enemies.
 
-| Level | Edren ATK | Enemy | DEF | HP | Edren hits | Torren hits |
+| Level | Edren ATK (base + weapon) | Enemy | DEF | HP | Edren hits | Torren hits |
 |-------|-----------|-------|-----|-----|-----------|-------------|
 | 5 | ~26 | Wild Boar (5) | 9 | 112 | 2 | 4+ |
 | 12 | ~40 | Polluted Elemental (9) | 15 | 273 | 2 | 4+ |
@@ -78,7 +78,7 @@ fights rather than individual trash mobs. Support characters
 
 > **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
 > lists Act III enemy HP as 6,000–14,000, but the actual bestiary
-> (act-iii.md) has Act III regulars at 1,000–2,247 HP. The
+> (act-iii.md) has Act III regulars at 1,000–2,508 HP. The
 > combat-formulas.md table appears to be aspirational targets from
 > before the bestiary was fully populated. The bestiary is
 > authoritative for actual enemy stats; the combat-formulas.md table
@@ -120,7 +120,8 @@ Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
 3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
-18,000 HP) hit the standard range.
+18,000 HP) push into the major boss range, establishing the
+full-length fight format.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -128,8 +129,9 @@ At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 
 `80,000 / (800 × 4 × 0.50) × 1.5s = ~75s base`
 
-Add 2 phase transitions (~45s each), Despair management cycles,
-scripted dialogue, and healing overhead (~2× base): **~5–6 minutes.**
+Add healing overhead (~1.5× base = ~112s), 2 phase transitions
+(~30s each = ~60s), Despair management (~30s), and scripted
+dialogue pauses (~30s): **~5–5.5 minutes.**
 Within the 5–7 minute target. Per [combat-formulas.md](combat-formulas.md)
 § Fight Duration Targets: major bosses target 5–8 minutes.
 
@@ -167,8 +169,8 @@ healing — more than the entire party's HP pool in early Act I. HP
 items are cheap enough that running out is a preparation failure,
 not a design constraint.
 
-**Healing spells supplement items:** Mend (3 MP, ~50–100 HP at
-early levels), Leybalm (3 MP, similar), Breath of the Wilds (8 MP,
+**Healing spells supplement items:** Mend (3 MP, ~75–250 HP depending
+on caster MAG), Leybalm (3 MP, similar), Breath of the Wilds (8 MP,
 party heal). These conserve Potions but cost the real resource: MP.
 
 ### 3.2 MP — The Soft Constraint
@@ -264,8 +266,8 @@ Per [progression.md](progression.md):
   party.
 - **Level-up HP/MP restore:** Full heal on level-up provides periodic
   relief during dungeons.
-- **Ley Scar grinding zone:** 4 high-XP enemies available from the
-  Interlude onward for players who want to overlevel.
+- **Ley Scar grinding zone:** 4 high-XP enemies available from
+  Act III onward for players who want to overlevel.
 
 No catch-up mechanic is "free" — the player still needs to fight.
 But the systems prevent any character from falling irretrievably
@@ -335,7 +337,8 @@ Per [combat-formulas.md](combat-formulas.md):
 - Base flee chance: `clamp(50 + (party_avg_SPD - enemy_avg_SPD) × 2, 10, 90)`
 - Minimum: 10% (always possible)
 - Maximum: 90% (never guaranteed without items)
-- Smoke Bomb: 100% flee (100g consumable, non-boss, no rewards)
+- All successful flees forfeit rewards (gold, XP, drops)
+- Smoke Bomb: 100% flee (100g consumable, non-boss)
 - Smokeveil (Sable, 4 MP): 100% flee (non-boss)
 - Ward Talisman: ×0.5 encounter rate (1,500g accessory)
 - Infiltrator's Cloak: ×0.5 encounter rate (treasure, Interlude)
@@ -387,7 +390,8 @@ Per [events.md](events.md) § Faint and Fast Reload:
 - **Bosses:** 2 phases, require specific strategies (e.g., Forge
   Warden's heat shield requires magic to bypass).
 - **Resources:** Comfortable. Equipment costs rise but gold income
-  keeps pace (~91% affordability).
+  keeps pace (~91% affordability for engaged players including
+  sidequests; ~70% on critical path alone per economy.md).
 - **Party:** Splits during Act II create resource pressure —
   different party compositions force different strategies.
 - **Player learns:** Status management, party composition strategy,
@@ -440,8 +444,9 @@ Per [events.md](events.md) § Faint and Fast Reload:
 
 ### 7.1 Damage Sanity Checks
 
-For any new enemy or boss, verify these formulas produce values
-within the expected ranges:
+For any new enemy or boss, verify these simplified formulas (basic
+attack, no ability multiplier, no variance/crits/row modifiers)
+produce values within the expected ranges:
 
 **Physical damage dealt to enemy:**
 ```
@@ -483,6 +488,9 @@ duration_final = (duration_base × healing_overhead_mult) + phase_transitions
 Where:
 - `avg_action_interval` = average seconds between one party member's
   actions at Battle Speed 3 (~2.5s at level 1, ~1.0s at level 70)
+- `avg_party_damage` = average damage per damage-dealing action across
+  all party members (in HP; use the physical damage formula with
+  current-tier weapon ATK against the boss's DEF)
 - `damage_action_ratio` = fraction of party actions that deal damage
   (typically 0.55–0.65, lower for harder bosses requiring more healing)
 - `phase_transitions` = total seconds of scripted events/invulnerability
