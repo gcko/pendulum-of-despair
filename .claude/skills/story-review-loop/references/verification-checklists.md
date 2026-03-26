@@ -169,6 +169,26 @@ Each item is a single check. Grows from Copilot gap analysis.
   described in the Party Panel section (e.g., "horizontal bar, fills
   left-to-right").
 
+## Boss Roster & Pacing Verification (from Copilot gap analysis, PR #33)
+
+- When referencing a boss by name, act, or level in any doc, verify
+  against bestiary/bosses.md (the canonical boss roster). Check: exact
+  name, correct act assignment, correct bestiary level, correct HP.
+  Do not invent boss names or assume act assignments from dungeon names.
+- When a balance/pacing doc states numeric targets (hits-to-kill, boss
+  duration), verify they match any existing targets in combat-formulas.md
+  § Fight Duration Targets. Cross-doc pacing conflicts are invisible
+  to agents that only read one file at a time.
+- When a formula uses named variables, verify the definition specifies
+  units (seconds, multiplier, percentage). Ambiguous units cause math
+  errors in worked examples.
+- When citing item availability from items.md, preserve qualifiers like
+  "(limited stock)" or "(limited)". Stripping them implies unlimited
+  availability.
+- When a worked example concludes "within X–Y minute target," verify
+  that target actually exists in the boss duration table above. Do not
+  reference a target range that was removed or changed.
+
 ## Economy Rule Consistency (from Copilot gap analysis, PR #27)
 
 - When economy.md states a universal rule (e.g., "no vendor trash",
