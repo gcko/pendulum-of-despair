@@ -61,12 +61,12 @@ Other party members deal less physical damage and need more hits.
 | Level | Edren ATK | Enemy | DEF | HP | Edren hits | Torren hits |
 |-------|-----------|-------|-----|-----|-----------|-------------|
 | 5 | ~26 | Wild Boar (5) | 9 | 112 | 2 | 4+ |
-| 12 | ~40 | Bone Warden (4) | 10 | 105 | 1 | 2 |
-| 60 | ~120 | Pallor Boar (28) | 52 | 1,943 | 1 | 2 |
+| 12 | ~40 | Polluted Elemental (9) | 15 | 273 | 2 | 4+ |
+| 60 | ~120 | Pallor Boar (28) | 43 | 1,943 | 1 | 2 |
 
 Edren kills in 1–2 hits; Torren/Maren/Sable need 2–4 physical hits
-or use magic. This range produces the "2–4 hits from primary attacker"
-average in combat-formulas.md § Fight Duration Targets.
+or use magic. This matches the "2–4 hits from primary attacker" target
+in combat-formulas.md, where the primary attacker is Edren or Cael.
 
 ### 2.2 Boss Fight Duration
 
@@ -101,7 +101,9 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 `6,000 HP / (200 × 4 × 0.6) × 2.5s = ~31s base`
 
 Add phase transition (~20s scripted), healing pressure, and variance:
-**~1.5–2 minutes.** Within the 2–3 minute target for Act I story bosses.
+**~1.5–2 minutes.** On the short end of the standard boss 3–5 minute
+target — the Vein Guardian is intentionally easier to teach boss
+mechanics.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -447,7 +449,7 @@ For any boss, estimate fight duration:
 actions_per_second = party_size / avg_action_interval
 damage_per_second = actions_per_second × avg_party_damage × damage_action_ratio
 duration_base = total_boss_HP / damage_per_second
-duration_final = duration_base + phase_transitions + healing_overhead
+duration_final = (duration_base × healing_overhead_mult) + phase_transitions
 ```
 
 Where (ATB system has no discrete rounds — each party member acts
@@ -456,9 +458,10 @@ independently when their gauge fills):
   actions at Battle Speed 3 (~2.5s at level 1, ~1.0s at level 70)
 - `damage_action_ratio` = fraction of party actions that deal damage
   (typically 0.55–0.65, lower for harder bosses requiring more healing)
-- `phase_transitions` = seconds of scripted events/invulnerability
-  (typically 15–45s per transition)
-- `healing_overhead` = ~20–30% additional time for defensive turns
+- `phase_transitions` = total seconds of scripted events/invulnerability
+  (typically 15–45s per transition × number of transitions)
+- `healing_overhead_mult` = multiplier for non-damage time (typically
+  1.5–2.0×, accounting for healing, rebuffing, Despair management)
 
 If `duration_final` falls outside the target range for that boss
 type, adjust boss HP until it does.
