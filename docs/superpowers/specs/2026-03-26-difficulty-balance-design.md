@@ -55,8 +55,10 @@ Edren's base growth + current tier weapon; see
 [progression.md](../story/progression.md) § Character Growth and
 [equipment.md](../story/equipment.md) § Weapons for exact values):
 
-The table below shows Edren (highest ATK) as a best-case scenario.
-Other party members deal less physical damage and need more hits.
+The table below shows Edren (highest ATK) alongside Torren (lowest
+physical ATK). The "2–4 hits from primary attacker" target in
+combat-formulas.md refers to the strongest physical attacker (Edren
+or Cael), who should need 2–4 hits against at-level regular enemies.
 
 | Level | Edren ATK | Enemy | DEF | HP | Edren hits | Torren hits |
 |-------|-----------|-------|-----|-----|-----------|-------------|
@@ -64,9 +66,13 @@ Other party members deal less physical damage and need more hits.
 | 12 | ~40 | Polluted Elemental (9) | 15 | 273 | 2 | 4+ |
 | 60 | ~120 | Pallor Boar (28) | 43 | 1,943 | 1 | 2 |
 
-Edren kills in 1–2 hits; Torren/Maren/Sable need 2–4 physical hits
-or use magic. This matches the "2–4 hits from primary attacker" target
-in combat-formulas.md, where the primary attacker is Edren or Cael.
+In Acts I–II, Edren needs 2 hits against at-level enemies — matching
+the "2–4 hits from primary attacker" target in combat-formulas.md.
+By Act III, the quadratic ATK²/6 scaling causes Edren to one-shot
+most trash. This is intentional — late-game random encounters should
+feel fast, with the challenge coming from encounter rate, Despair
+status, and boss fights rather than individual trash mobs. Support
+characters (Torren, Maren) still need 2–4 physical hits or use magic.
 
 ### 2.2 Boss Fight Duration
 
