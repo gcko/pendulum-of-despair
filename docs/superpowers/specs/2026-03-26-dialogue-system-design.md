@@ -35,7 +35,7 @@ needed. Summary for cross-reference:
 - Typewriter effect: Slow (30 cps), Normal (60 cps), Fast (120 cps), Instant
 - Confirm instantly completes current box; bouncing down-arrow when complete
 - Multi-page: advance arrow pauses, confirm continues, no scrollback
-- Choice prompts: 2-4 options, vertical, hand cursor, yellow selected / pale blue unselected
+- Choice prompts: 2–4 options, vertical, hand cursor, yellow selected / pale blue unselected
 - Cancel selects bottom option (typically "No")
 - One exception: Cael's final Act IV dialogue — border flickers grey for 2 frames, then returns to canonical blue-grey
 - The 32x32 menu portraits use a single neutral expression per character. Emotion variants (deferred by ui-design.md Section 1.1) are not needed — the sprite emotion system (Section 2) handles all in-scene emotion.
@@ -52,7 +52,7 @@ emotion system used in later FF6 ports.
 
 | ID | Animation | Visual Description | Duration | Use Case |
 |----|-----------|-------------------|----------|----------|
-| `jump` | 1-2 vertical hops | Sprite lifts 4-8px, lands | 0.4s | Surprise, excitement, realization |
+| `jump` | 1–2 vertical hops | Sprite lifts 4–8px, lands | 0.4s | Surprise, excitement, realization |
 | `shake` | Rapid horizontal vibration | Sprite oscillates +/-2px | 0.5s | Anger, frustration, strain |
 | `turn_away` | Rotate to face away | Sprite flips to opposite direction | 0.3s | Shame, rejection, hiding emotion |
 | `head_down` | Slight downward shift | Sprite drops 2px, holds position | 0.4s | Sadness, defeat, resignation |
@@ -64,8 +64,8 @@ emotion system used in later FF6 ports.
 | `red_tint` | Full body flashes red | Sprite tints red, fades back | 0.5s | Embarrassment, intense rage |
 | `arms_up` | Arms raise overhead | Sprite frame swap, holds | 0.5s | Celebration, triumph, rallying |
 | `collapse` | Sprite drops to ground | Falls down, holds until cleared | 0.6s | Overwhelm, comedic shock |
-| `nod` | Small downward bob | Sprite dips 2px and returns, 1-2x | 0.4s | Agreement, determination |
-| `step_back` | Sprite retreats 8-16px | Quick backward move, holds | 0.3s | Fear, recoil, intimidation |
+| `nod` | Small downward bob | Sprite dips 2px and returns, 1–2x | 0.4s | Agreement, determination |
+| `step_back` | Sprite retreats 8–16px | Quick backward move, holds | 0.3s | Fear, recoil, intimidation |
 
 ### Timing Rules
 
@@ -79,7 +79,7 @@ emotion system used in later FF6 ports.
 
 Animations are used **judiciously** — not every line gets one. The writing
 carries baseline emotion; animations punctuate key moments. A typical scene
-with 10 dialogue boxes might have 2-3 sprite animations. Overuse cheapens
+with 10 dialogue boxes might have 2–3 sprite animations. Overuse cheapens
 the effect.
 
 **Good usage:** Edren shakes with anger after Cael's betrayal reveal, then
@@ -147,7 +147,7 @@ consequence is one of these two patterns.
 
 ### Party-Aware Dialogue
 
-**Tier 1 — Key Story Scenes (~15-20 scenes):**
+**Tier 1 — Key Story Scenes (~15–20 scenes):**
 
 Party composition changes specific lines during major story beats.
 Implemented as `party_has()` checks in the priority stack. Scenes that
@@ -161,7 +161,7 @@ get party-aware treatment:
 - Final confrontation (party composition affects Cael's dialogue)
 - Key dungeon entrances (character-specific reactions)
 
-**Tier 2 — NPC Reactions (~2-3 per town, ~100-150 extra lines total):**
+**Tier 2 — NPC Reactions (~2–3 per town, ~100–150 extra lines total):**
 
 Town NPCs occasionally notice who's in the party. Sprinkled lightly —
 not every NPC, not every party member. Enough to make the world feel
@@ -174,8 +174,8 @@ NPC: Valdris Merchant
   [default]            -> "Roads aren't safe with all these ley surges."
 ```
 
-**Estimated script impact:** ~100-150 additional lines for Tier 2, on top of
-whatever Tier 1 variations require. Total script target remains 5,000-8,000
+**Estimated script impact:** ~100–150 additional lines for Tier 2, on top of
+whatever Tier 1 variations require. Total script target remains 5,000–8,000
 lines per Gap 3.7 analysis.
 
 ---
@@ -192,7 +192,7 @@ format, but the information per entry is fixed.
 |-------|----------|------|-------------|
 | `id` | Yes | string | Unique identifier, e.g., `aldis_act2_early` |
 | `speaker` | Yes | string | Character name shown in name tag. Empty string for narration. |
-| `lines` | Yes | string[] | Array of text boxes (each 1-3 lines of text). Multi-page = multiple entries. |
+| `lines` | Yes | string[] | Array of text boxes (each 1–3 lines of text). Multi-page = multiple entries. |
 | `condition` | No | expression | Flag expression for priority stack. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, and AND combinations. Omit for default/fallback. |
 | `animations` | No | animation[] | Sprite animation triggers. Each: `who`, `anim`, `when`. |
 | `choice` | No | choice[] | Choice prompt: array of options with label + consequence. |
@@ -283,7 +283,7 @@ choice:
 ```
 
 Note: This is one question in the Savanh audience. The full scoring system
-(0-3, including the Grandmother Seyth bonus dialogue path) is defined in
+(0–3, including the Grandmother Seyth bonus dialogue path) is defined in
 events.md.
 
 **Reunion Order (String Comparison):**

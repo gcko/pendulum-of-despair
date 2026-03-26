@@ -12,7 +12,7 @@
 
 ## Chunk 1: Core Document & Cross-References
 
-### Task 1: Write Dialogue System Document — Sections 1-2
+### Task 1: Write Dialogue System Document — Sections 1–2
 
 Write the first half of `docs/story/dialogue-system.md`: overview, design philosophy, and the sprite emotion animation catalog.
 
@@ -20,7 +20,7 @@ Write the first half of `docs/story/dialogue-system.md`: overview, design philos
 - Create: `docs/story/dialogue-system.md`
 
 **Reference:**
-- Spec: `docs/superpowers/specs/2026-03-26-dialogue-system-design.md` (Sections 1-2)
+- Spec: `docs/superpowers/specs/2026-03-26-dialogue-system-design.md` (Sections 1–2)
 - Format reference: `docs/story/combat-formulas.md` (follow the same header/blockquote/related-docs style)
 - Cross-reference: `docs/story/ui-design.md` Section 12 (dialogue box specs)
 - Cross-reference: `docs/story/characters.md` (6 party members + 2 guests)
@@ -103,8 +103,8 @@ Cover the two patterns only:
 - [ ] **Step 4: Write Party-Aware Dialogue subsection**
 
 Cover both tiers:
-- Tier 1: Key story scenes (~15-20), list the specific scenes
-- Tier 2: NPC reactions (~2-3 per town, ~100-150 lines total), with worked example
+- Tier 1: Key story scenes (~15–20), list the specific scenes
+- Tier 2: NPC reactions (~2–3 per town, ~100–150 lines total), with worked example
 - Estimated script impact
 
 - [ ] **Step 5: Verify against events.md and fix flag names**
@@ -118,7 +118,7 @@ Cross-check all flag names in examples against events.md. The spec used shorthan
 For flags that don't exist in events.md, add a note in the document: "Flag names in examples are canonical where they match events.md. Flags marked with (*) are defined here and will be added to events.md during Gap 3.7 script work."
 
 Also verify:
-- `council_savanh_approval` score exists and has range 0-3
+- `council_savanh_approval` score exists and has range 0–3
 - `reunion_order_1` through `reunion_order_4` exist and store character IDs
 - Party member names match characters.md exactly
 
@@ -198,8 +198,8 @@ Resolve the deferred item in ui-design.md, update the gap analysis document, and
 Note: Line numbers are approximate. Search for section headers rather than relying on exact line numbers.
 
 **Reference:**
-- Gap 3.3 current status: `docs/analysis/game-design-gaps.md` lines 466-480
-- Progress tracking table: `docs/analysis/game-design-gaps.md` lines 592-613
+- Gap 3.3 current status: `docs/analysis/game-design-gaps.md` lines 466–480
+- Progress tracking table: `docs/analysis/game-design-gaps.md` lines 592–613
 
 - [ ] **Step 1: Update ui-design.md deferred item**
 
@@ -215,7 +215,7 @@ To:
 
 - [ ] **Step 2: Update Gap 3.3 in game-design-gaps.md**
 
-Update the Gap 3.3 section (lines 466-480):
+Update the Gap 3.3 section (lines 466–480):
 - Status: PARTIAL -> COMPLETE
 - Files: add `docs/story/dialogue-system.md` as primary file
 - Completed date: 2026-03-26

@@ -450,7 +450,7 @@ choice:
 ```
 
 This is one question in the Savanh audience. The full scoring system
-(0-3, including the Grandmother Seyth bonus dialogue path) is defined
+(0–3, including the Grandmother Seyth bonus dialogue path) is defined
 in events.md. Note: `savanh_audience_active` (*) is a scene-local
 flag for the Savanh audience sequence, pending addition to events.md
 during Gap 3.7 script work.

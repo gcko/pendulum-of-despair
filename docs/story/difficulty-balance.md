@@ -78,7 +78,7 @@ fights rather than individual trash mobs. Support characters
 
 > **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
 > lists Act III enemy HP as 6,000–14,000, but the actual bestiary
-> (act-iii.md) has Act III regulars at 1,000–2,508 HP. The
+> (act-iii.md) has Act III regulars at 1,000–2,784 HP. The
 > combat-formulas.md table appears to be aspirational targets from
 > before the bestiary was fully populated. The bestiary is
 > authoritative for actual enemy stats; the combat-formulas.md table
@@ -95,7 +95,7 @@ measured in real-time minutes at Battle Speed 3 (default).
 | Standard boss | I–II | 3–5 min | 4,000–15,000 | 30–50 party actions |
 | Major boss | Int–III | 5–8 min | 15,000–45,000 | 50–80 party actions |
 | Penultimate boss (Cael) | III | 5–7 min | 80,000 (two phases) | Emotional climax |
-| Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
+| Final boss (The Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
 
 These targets align with [combat-formulas.md](combat-formulas.md) §
@@ -120,8 +120,8 @@ Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
 3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
-18,000 HP) push into the major boss range, establishing the
-full-length fight format.
+18,000 HP) exceed the standard boss HP ceiling (15,000),
+establishing the full-length fight format.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -129,9 +129,9 @@ At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 
 `80,000 / (800 × 4 × 0.50) × 1.5s = ~75s base`
 
-Add healing overhead (~1.5× base = ~112s), 2 phase transitions
-(~30s each = ~60s), Despair management (~30s), and scripted
-dialogue pauses (~30s): **~5–5.5 minutes.**
+Add healing/Despair/rebuff overhead (~2× base = ~150s) and 2 phase
+transitions with scripted dialogue (~45s each = ~90s): **~5–6
+minutes.**
 Within the 5–7 minute target. Per [combat-formulas.md](combat-formulas.md)
 § Fight Duration Targets: major bosses target 5–8 minutes.
 
@@ -169,9 +169,10 @@ healing — more than the entire party's HP pool in early Act I. HP
 items are cheap enough that running out is a preparation failure,
 not a design constraint.
 
-**Healing spells supplement items:** Mend (3 MP, ~75–250 HP depending
-on caster MAG), Leybalm (3 MP, similar), Breath of the Wilds (8 MP,
-party heal). These conserve Potions but cost the real resource: MP.
+**Healing spells supplement items:** Mend (3 MP, ~125–230 HP at early
+levels depending on caster MAG), Leybalm (3 MP, similar), Breath of
+the Wilds (8 MP, party heal). These conserve Potions but cost the
+real resource: MP.
 
 ### 3.2 MP — The Soft Constraint
 
@@ -245,7 +246,7 @@ push the player 1–3 levels above these targets.
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
-| Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
+| Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–100) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
@@ -402,7 +403,7 @@ Per [events.md](events.md) § Faint and Fast Reload:
 
 - **Enemies:** Pallor Infection mechanic adds new danger. Stronger
   variants of familiar enemies. Compact/Valdris civil war enemies.
-- **Bosses:** Complex multi-phase fights. General Kole (30,000 HP)
+- **Bosses:** Complex multi-phase fights. General Vassar Kole (30,000 HP)
   is the difficulty spike. Requires full party coordination and
   mastery of each reunited member's abilities (Cael is no longer
   available — his absence is felt mechanically).
@@ -486,6 +487,9 @@ duration_final = (duration_base × healing_overhead_mult) + phase_transitions
 ```
 
 Where:
+- `party_size` = number of active party members for this fight (typically
+  4; may be fewer during Interlude party-rebuilding)
+- `total_boss_HP` = boss's total HP across all phases (in HP)
 - `avg_action_interval` = average seconds between one party member's
   actions at Battle Speed 3 (~2.5s at level 1, ~1.0s at level 70)
 - `avg_party_damage` = average damage per damage-dealing action across

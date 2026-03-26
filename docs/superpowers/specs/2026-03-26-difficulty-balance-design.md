@@ -76,7 +76,7 @@ characters (Torren, Maren) still need 2–4 physical hits or use magic.
 
 > **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
 > lists Act III enemy HP as 6,000–14,000, but the actual bestiary
-> (act-iii.md) has Act III regulars at 1,000–2,247 HP. The bestiary
+> (act-iii.md) has Act III regulars at 1,000–2,784 HP. The bestiary
 > is authoritative; the combat-formulas.md table needs reconciliation.
 
 ### 2.2 Boss Fight Duration
@@ -90,7 +90,7 @@ measured in real-time minutes at Battle Speed 3 (default).
 | Standard boss | I–II | 3–5 min | 4,000–15,000 | 30–50 party actions |
 | Major boss | Int–III | 5–8 min | 15,000–45,000 | 50–80 party actions |
 | Penultimate boss (Cael) | III | 5–7 min | 80,000 (two phases) | Emotional climax |
-| Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
+| Final boss (The Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
 
 These targets align with [combat-formulas.md](../../story/combat-formulas.md) §
@@ -161,9 +161,10 @@ healing — more than the entire party's HP pool in early Act I. HP
 items are cheap enough that running out is a preparation failure,
 not a design constraint.
 
-**Healing spells supplement items:** Mend (3 MP, ~50–100 HP at
-early levels), Leybalm (3 MP, similar), Breath of the Wilds (8 MP,
-party heal). These conserve Potions but cost the real resource: MP.
+**Healing spells supplement items:** Mend (3 MP, ~125–230 HP at early
+levels depending on caster MAG), Leybalm (3 MP, similar), Breath of
+the Wilds (8 MP, party heal). These conserve Potions but cost the
+real resource: MP.
 
 ### 3.2 MP — The Soft Constraint
 
@@ -237,7 +238,7 @@ push the player 1–3 levels above these targets.
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
-| Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
+| Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–100) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
@@ -254,8 +255,8 @@ Per [progression.md](../../story/progression.md):
   party.
 - **Level-up HP/MP restore:** Full heal on level-up provides periodic
   relief during dungeons.
-- **Ley Scar grinding zone:** 4 high-XP enemies available from the
-  Interlude onward for players who want to overlevel.
+- **Ley Scar grinding zone:** 4 high-XP enemies available from
+  Act III onward for players who want to overlevel.
 
 No catch-up mechanic is "free" — the player still needs to fight.
 But the systems prevent any character from falling irretrievably
@@ -389,7 +390,7 @@ Per [events.md](../../story/events.md) § Faint and Fast Reload:
 
 - **Enemies:** Pallor Infection mechanic adds new danger. Stronger
   variants of familiar enemies. Compact/Valdris civil war enemies.
-- **Bosses:** Complex multi-phase fights. General Kole (30,000 HP)
+- **Bosses:** Complex multi-phase fights. General Vassar Kole (30,000 HP)
   is the difficulty spike. Requires full party coordination and
   mastery of each reunited member's abilities (Cael is no longer
   available — his absence is felt mechanically).
