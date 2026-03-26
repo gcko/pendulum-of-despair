@@ -174,7 +174,7 @@ and commands share the bottom ~35%.
 └───────────────────────────┴──────────────┘
 ```
 
-- `▐█` / `▐░` = ATB gauge (far right of each character row)
+- `▐█` / `▐░` = ATB gauge, horizontal bar (far right of each character row; fills left-to-right)
 - `[icons]` = status effect icons above character name
 - `███░` = HP/MP bar (solid pixel fill)
 

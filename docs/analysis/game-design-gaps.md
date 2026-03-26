@@ -301,11 +301,11 @@ Now partially unblocks: 3.4 (Difficulty & Balance — still needs other Tier 2 g
   - [x] Sleep: gauge frozen until cured or damaged
   - [x] Confusion: auto-action on fill
   - [x] Berserk: auto-attack on fill
-- [ ] ATB visual representation (horizontal bar? vertical? segmented?) — deferred to Gap 2.3
+- [x] ATB visual representation — resolved in Gap 2.3: horizontal bar, gold fill, inline with party panel row, 2-frame flash when full
 - [x] Party size in battle (4? 3? variable?)
 
 **Blocking:** ~~Battle system implementation, status effect behavior~~
-Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
+All items resolved. ATB visual resolved in Gap 2.3 (UI Design).
 
 ---
 
@@ -326,7 +326,7 @@ Remaining: ATB visual representation deferred to Gap 2.3 (UI Design)
   - [x] Status effect indicators
   - [x] Battle message area
 - [x] Main menu structure and navigation:
-  - [x] Items, Equipment, Magic/Abilities, Status, Party, Config, Save
+  - [x] Items, Equipment, Magic/Abilities, Status, Formation, Config, Save
 - [x] Equipment screen with stat comparison
 - [x] Shop interface (buy/sell with equipped indicator)
 - [x] Dialogue/text box specifications:
@@ -565,4 +565,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-24 | 2.5 Row/Position System | MISSING → COMPLETE. Front/back rows (FF6 model), 50% physical modifier, free swap, back-row capable spears, player-only (no enemy rows), 6 default assignments. | — |
 | 2026-03-25 | 2.4 Encounter Rates | PARTIAL → COMPLETE. Danger counter model (FF6-derived), per-terrain increments (Monte Carlo-verified), act scaling, 3 formation types with terrain rates, 4-pack tables for all dungeons, flee formula, Ward/Lure Talisman + Infiltrator's Cloak, boss trigger types, safe corridor rule. | — |
 | 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING → COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | — |
-| 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 18 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
+| 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 14 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
