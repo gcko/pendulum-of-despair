@@ -479,12 +479,12 @@ Now complete.
 **Priority:** P2
 **Files:** `docs/story/difficulty-balance.md`
 **Depends On:** 1.1–1.6 (all Tier 1 gaps — all COMPLETE)
-**Completed:** 2026-03-26 — FF6 Accessible philosophy, one fixed difficulty. Regular enemies die in 1–2 hits, boss fights 2–8 minutes by act. HP abundant (Potions cheap), MP is soft constraint. Auto-save (invisible), Faint-and-Fast-Reload (no game over screen), generous save points. Per-act difficulty escalation (Act I learning → Act III gauntlet → optional post-game). Balance validation methodology with damage/duration/economy formulas.
+**Completed:** 2026-03-26 — FF6 Accessible philosophy, one fixed difficulty. Regular enemies die in 2–4 hits (per combat-formulas.md), boss fights 3–8 minutes by type. HP abundant (Potions cheap), MP is soft constraint. Auto-save (invisible), Faint-and-Fast-Reload (no game over screen), generous save points. Per-act difficulty escalation (Act I learning → Act III gauntlet → optional post-game). Balance validation methodology with damage/duration/economy formulas.
 
 **What's Needed:**
 - [x] Target difficulty philosophy (FF6 Accessible, one fixed difficulty, no toggles)
 - [x] Expected player level per area/boss (10 areas mapped with target levels and boss levels)
-- [x] Expected damage ranges (1–2 hit trash kills, 2–8 min boss fights with worked examples)
+- [x] Expected damage ranges (2–4 hit trash kills per combat-formulas.md, 3–8 min boss fights with worked examples)
 - [x] Healing resource pacing (HP abundant, MP soft constraint, dungeon supply budgets per act)
 - [x] Anti-frustration features (auto-save, Faint-and-Fast-Reload, flee formula, no missables)
 - [x] Balance testing methodology (damage sanity checks, boss duration formula, economy verification, encounter rate checks)
@@ -567,4 +567,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-25 | 2.4 Encounter Rates | PARTIAL → COMPLETE. Danger counter model (FF6-derived), per-terrain increments (Monte Carlo-verified), act scaling, 3 formation types with terrain rates, 4-pack tables for all dungeons, flee formula, Ward/Lure Talisman + Infiltrator's Cloak, boss trigger types, safe corridor rule. | — |
 | 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING → COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | — |
 | 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 14 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
-| 2026-03-26 | 3.4 Difficulty & Balance | MISSING → COMPLETE. FF6 Accessible, one fixed difficulty. 1–2 hit trash, 2–8 min bosses. HP abundant / MP constraint. Auto-save + Faint-and-Fast-Reload. Per-act escalation. Balance validation methodology (damage/duration/economy/encounter formulas). | — |
+| 2026-03-26 | 3.4 Difficulty & Balance | MISSING → COMPLETE. FF6 Accessible, one fixed difficulty. 2–4 hit trash (per combat-formulas.md), 3–8 min bosses. HP abundant / MP constraint. Auto-save + Faint-and-Fast-Reload. Per-act escalation. Balance validation methodology (damage/duration/economy/encounter formulas). | — |

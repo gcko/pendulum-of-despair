@@ -55,21 +55,18 @@ Edren's base growth + current tier weapon; see
 [progression.md](../story/progression.md) § Character Growth and
 [equipment.md](../story/equipment.md) § Weapons for exact values):
 
-| Level | ATK (Edren + weapon) | Enemy (Lv) | DEF | HP | Damage/hit | Hits |
-|-------|---------------------|------------|-----|-----|------------|------|
-| 5 (early Act I) | ~26 | Wild Boar (5) | 9 | 112 | ~104 | 2 |
-| 12 (end Act I) | ~40 | Bone Warden (4) | 10 | 105 | ~257 | 1 |
-| 20 (mid Act II) | ~60 | At-level (~20) | 25 | 200 | ~575 | 1 |
-| 35 (Interlude) | ~80 | At-level (~35) | 40 | 400 | ~1,027 | 1 |
-| 60 (Act III) | ~120 | Pallor Boar (28) | 52 | 1,943 | ~2,348 | 1 |
+The table below shows Edren (highest ATK) as a best-case scenario.
+Other party members deal less physical damage and need more hits.
 
-Physical attackers consistently one-shot trash. Mages and support
-characters deal less physical damage (2–3 hits) but compensate with
-AoE magic. This matches FF6 pacing exactly.
+| Level | Edren ATK | Enemy | DEF | HP | Edren hits | Torren hits |
+|-------|-----------|-------|-----|-----|-----------|-------------|
+| 5 | ~26 | Wild Boar (5) | 9 | 112 | 2 | 4+ |
+| 12 | ~40 | Bone Warden (4) | 10 | 105 | 1 | 2 |
+| 60 | ~120 | Pallor Boar (28) | 52 | 1,943 | 1 | 2 |
 
-**When enemies take 2+ hits:** Back attacks (enemy strikes first),
-Pallor Wastes (higher-tier enemies), dungeon deep floors. These
-create pacing variety without frustration.
+Edren kills in 1–2 hits; Torren/Maren/Sable need 2–4 physical hits
+or use magic. This range produces the "2–4 hits from primary attacker"
+average in combat-formulas.md § Fight Duration Targets.
 
 ### 2.2 Boss Fight Duration
 
@@ -78,15 +75,16 @@ measured in real-time minutes at Battle Speed 3 (default).
 
 | Boss Type | Act | Duration Target | HP Range | Notes |
 |-----------|-----|-----------------|----------|-------|
-| Mini-boss | I | 1–2 min | 1,000–2,000 | Tutorial fights |
-| Story boss | I | 2–3 min | 4,000–8,000 | First real challenges |
-| Story boss | II | 3–4 min | 8,000–15,000 | Multi-phase begins |
-| Story boss | Interlude | 3–5 min | 15,000–30,000 | Complex mechanics |
-| Story boss | III | 4–6 min | 25,000–40,000 | Pallor pressure |
-| Act-ending boss | I–III | 5–7 min | 12,000–45,000 | Climactic set pieces |
+| Mini-boss | I | 0.5–1 min | 1,000–2,000 | Tutorial fights |
+| Standard boss | I–II | 3–5 min | 4,000–15,000 | 30–50 party actions |
+| Major boss | Int–III | 5–8 min | 15,000–45,000 | 50–80 party actions |
 | Penultimate boss (Cael) | III | 5–7 min | 80,000 (two phases) | Emotional climax |
 | Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
+
+These targets align with [combat-formulas.md](../story/combat-formulas.md) §
+Fight Duration Targets: regular enemies 2–4 hits, mini-bosses 30–60s,
+standard bosses 3–5 min, major bosses 5–8 min.
 
 **Duration is governed by:**
 - Boss HP (primary lever)
@@ -223,17 +221,15 @@ push the player 1–3 levels above these targets.
 | Ley Line Depths | II | 18–22 | 22 (Ley Colossus) | 0–2 |
 | Ashmark Factory | II | 20–24 | 24 (Forge Warden) | 0–2 |
 | Bellhaven Tunnels | II | 22–26 | 26 (Tide Wraith) | 0–2 |
-| Interlude dungeons | Int | 25–50 | 28–35 (various) | 0–3 |
-| Pallor Wastes overworld | III | 50–60 | 32–36 (Grey Keeper, etc.) | — |
-| Convergence gauntlet | III | 60–70 | 36/38 (Cael), 40 (Incarnate) | — |
-| Dreamer's Fault | Post | 42–100 | 50–100 (optional) | Varies |
+| Interlude dungeons | Int | 25–50 | Various (28–35) |
+| Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
+| Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
+| Dreamer's Fault | Post | 42–100 | Optional (50–100) |
 
-**Note on boss levels vs player levels:** Boss "Lv" in the bestiary
-is a stat-scaling reference, not a direct comparison to player level.
-The party at level 60–70 is expected to fight Cael (Lv 36/38) and
-the Pallor Incarnate (Lv 40) — the level gap reflects that bosses
-have massively inflated stats (HP, multi-phase, AI scripts) compared
-to same-level regular enemies.
+**Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
+is a stat-scaling reference — NOT directly comparable to player level.
+Bosses have inflated HP, multi-phase mechanics, and AI scripts. A
+party at 60–70 fighting Cael (Lv 36/38) is the intended balance.
 
 ### 4.2 Catch-Up Mechanics
 
