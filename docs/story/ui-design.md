@@ -56,7 +56,7 @@ Dark navy windows with thin blue-grey borders. The UI is invisible —
 the player focuses on the game world and characters, not the menus.
 
 - **Window background:** Dark navy (SNES palette index for near-black
-  blue; CSS reference: `#00003c`)
+  blue; CSS reference: `#000040`)
 - **Window border:** Thin blue-grey (`#5566aa`), 2px, sharp pixel corners
 - **No per-location theming.** Windows and dialogue boxes are constant
   across all biomes. This document is the canonical source for window
@@ -85,7 +85,7 @@ the player focuses on the game world and characters, not the menus.
 | Damage numbers (healing) | Green | `#44ff44` |
 | Damage numbers (miss) | Grey | `#888888` |
 | Disabled/unavailable | Muted grey | `#666688` |
-| Window background | Dark navy | `#00003c` |
+| Window background | Dark navy | `#000040` |
 | Window border | Blue-grey | `#5566aa` |
 
 ### 1.5 Font Sizes (Pixel Grid)

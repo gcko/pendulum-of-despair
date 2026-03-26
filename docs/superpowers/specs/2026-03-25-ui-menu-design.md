@@ -56,7 +56,7 @@ Dark navy windows with thin blue-grey borders. The UI is invisible —
 the player focuses on the game world and characters, not the menus.
 
 - **Window background:** Dark navy (SNES palette index for near-black
-  blue; CSS reference: `#00003c`). Solid fill — supersedes the
+  blue; CSS reference: `#000040`). Solid fill — supersedes the
   gradient-based spec in visual-style.md. This document is authoritative
   for in-game menu and dialogue window styling.
 - **Window border:** Thin blue-grey (`#5566aa`), 2px, sharp pixel corners
@@ -84,7 +84,7 @@ the player focuses on the game world and characters, not the menus.
 | Damage numbers (healing) | Green | `#44ff44` |
 | Damage numbers (miss) | Grey | `#888888` |
 | Disabled/unavailable | Muted grey | `#666688` |
-| Window background | Dark navy | `#00003c` |
+| Window background | Dark navy | `#000040` |
 | Window border | Blue-grey | `#5566aa` |
 
 ### 1.5 Font Sizes (Pixel Grid)
@@ -1036,19 +1036,19 @@ canonical game design document.
 
 | System | Reference |
 |--------|-----------|
-| ATB fill rate formula | `combat-formulas.md` § ATB Gauge System |
-| Battle speed settings | `combat-formulas.md` § Battle Speed Config |
-| Active/Wait mode | `combat-formulas.md` § Active/Wait Mode |
-| Row system | `combat-formulas.md` § Row Modifier |
-| Status effects | `magic.md` § Status Effect Reference |
-| Equipment slots | `equipment.md` § Equipment Slots |
-| Ley Crystal system | `progression.md` § Ley Crystal System |
-| Character stats | `progression.md` § Character Growth |
-| Shop inventories | `economy.md` § Shop Inventories |
+| ATB fill rate formula | `docs/story/combat-formulas.md` § ATB Gauge System |
+| Battle speed settings | `docs/story/combat-formulas.md` § Battle Speed Config |
+| Active/Wait mode | `docs/story/combat-formulas.md` § Active/Wait Mode |
+| Row system | `docs/story/combat-formulas.md` § Row Modifier |
+| Status effects | `docs/story/magic.md` § Status Effect Reference |
+| Equipment slots | `docs/story/equipment.md` § Equipment Slots |
+| Ley Crystal system | `docs/story/progression.md` § Ley Crystal System |
+| Character stats | `docs/story/progression.md` § Character Growth |
+| Shop inventories | `docs/story/economy.md` § Shop Inventories |
 | Save data structure | `packages/shared/src/types/game.ts` |
-| Visual style / palette | `visual-style.md` |
-| Physical damage formula | `combat-formulas.md` § Physical Damage |
-| Magic damage formula | `combat-formulas.md` § Magic Damage |
+| Visual style / palette | `docs/story/visual-style.md` |
+| Physical damage formula | `docs/story/combat-formulas.md` § Physical Damage |
+| Magic damage formula | `docs/story/combat-formulas.md` § Magic Damage |
 
 ### 18.3 Deferred Items Resolved
 
