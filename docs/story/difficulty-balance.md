@@ -70,7 +70,7 @@ In Acts I–II, Edren needs 2 hits against at-level enemies — matching
 the "2–4 hits from primary attacker" target in
 [combat-formulas.md](combat-formulas.md) § Fight Duration Targets.
 By Act III, the quadratic ATK²/6 scaling causes Edren to one-shot
-most trash (Pallor Boar: 2,348 damage vs 1,943 HP). This is
+most trash (Pallor Boar: 2,357 damage vs 1,943 HP). This is
 intentional — late-game random encounters should feel fast, with
 the challenge coming from encounter rate, Despair status, and boss
 fights rather than individual trash mobs. Support characters
@@ -399,8 +399,9 @@ Per [events.md](events.md) § Faint and Fast Reload:
 - **Enemies:** Pallor Infection mechanic adds new danger. Stronger
   variants of familiar enemies. Compact/Valdris civil war enemies.
 - **Bosses:** Complex multi-phase fights. General Kole (30,000 HP)
-  is the difficulty spike. Requires understanding Cael's Rally
-  abilities and party coordination.
+  is the difficulty spike. Requires full party coordination and
+  mastery of each reunited member's abilities (Cael is no longer
+  available — his absence is felt mechanically).
 - **Resources:** Tighter. War-torn economy means some shops have
   limited stock. Equipment comes from exploration, not purchase.
 - **Party rebuilding:** Sable alone → gradually finding party

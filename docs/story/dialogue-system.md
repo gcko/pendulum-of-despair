@@ -78,7 +78,14 @@ the portrait emotion system used in later FF6 ports.
   reacts to Cael's betrayal — Edren shakes, Maren steps back, Lira
   shows a `bubble_exclaim`, all at once).
 - Looping animations (`cry`) persist across dialogue boxes until
-  explicitly cleared.
+  explicitly cleared via the special animation ID `clear` (e.g.,
+  `anim: clear` on the character resets them to idle).
+- **Hold vs reset rule:** Non-looping animations that "hold" (`step_back`,
+  `head_down`, `arms_up`, `collapse`) reset to the character's idle
+  pose when the dialogue sequence ends (the full NPC interaction or
+  cutscene, not between individual boxes). Subsequent animations on
+  the same character during the same sequence play at the held
+  position. Use `anim: clear` to reset a held animation early.
 - Animations are referenced by ID in the dialogue data format
   (Section 4).
 
@@ -99,8 +106,8 @@ scene into a puppet show.
 **Character-specific notes:**
 
 - **Edren** — favors `shake`, `nod`, restrained physicality. Rarely
-  `cry` (only the Interlude reunion, when he learns of Cael's full
-  descent).
+  `cry` (only the Interlude reunion, when he confronts the full
+  weight of Cael's fall).
 - **Cael** — `turn_away` is his signature. Used during the betrayal and
   any moment he hides his true feelings.
 - **Maren** — `bubble_ellipsis` when processing, `head_down` when
@@ -189,6 +196,9 @@ reunion-order-dependent dialogue.
 **Score ranges:** `council_savanh_approval` (events.md flag 40) has
 range 0-3. Dialogue choices alone earn 0-2; consulting Grandmother
 Seyth before the council unlocks a bonus option that reaches 3.
+Scores are clamped to their documented range — the engine enforces
+`clamp(score, min, max)` after each increment. Score ranges are
+defined in events.md alongside the flag definition.
 
 ### 3.4 Choice Consequences (Two Patterns Only)
 
@@ -391,7 +401,7 @@ id: thornmere_elder_council_torren
 speaker: Elder Savanh
 condition: act2_thornmere_council AND party_has(torren)
 lines:
-  - "Torren? Son of Brennan?"
+  - "Torren? Son of Haldric?"
   - "...You've your father's jaw. Speak, then."
 animations:
   - who: savanh, anim: bubble_exclaim, when: before_line_0

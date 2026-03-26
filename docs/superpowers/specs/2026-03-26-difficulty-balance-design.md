@@ -169,7 +169,7 @@ party heal). These conserve Potions but cost the real resource: MP.
 
 MP is the primary resource constraint across dungeons:
 
-| Item | MP Restored | Cost | Relative Value |
+| Item | MP Restored | Cost | GP/MP Ratio |
 |------|-------------|------|---------------|
 | Ether | 30 MP | 200g | 6.67g/MP |
 | Hi-Ether | 100 MP | 800g | 8.0g/MP |
@@ -232,11 +232,11 @@ push the player 1–3 levels above these targets.
 | Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
 | Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
-| Ashmark Factory | II | 20–24 | Forge Warden (24) |
+| Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
 | Interlude dungeons | Int | 25–50 | Various (28–35) |
-| Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
+| Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–100) |
 
@@ -390,8 +390,9 @@ Per [events.md](../story/events.md) § Faint and Fast Reload:
 - **Enemies:** Pallor Infection mechanic adds new danger. Stronger
   variants of familiar enemies. Compact/Valdris civil war enemies.
 - **Bosses:** Complex multi-phase fights. General Kole (30,000 HP)
-  is the difficulty spike. Requires understanding Cael's Rally
-  abilities and party coordination.
+  is the difficulty spike. Requires full party coordination and
+  mastery of each reunited member's abilities (Cael is no longer
+  available — his absence is felt mechanically).
 - **Resources:** Tighter. War-torn economy means some shops have
   limited stock. Equipment comes from exploration, not purchase.
 - **Party rebuilding:** Sable alone → gradually finding party

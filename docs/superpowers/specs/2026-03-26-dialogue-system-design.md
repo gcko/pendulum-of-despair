@@ -168,8 +168,8 @@ not every NPC, not every party member. Enough to make the world feel
 aware of the party without ballooning the script.
 
 ```
-NPC: Thornmere Villager
-  [party_has(torren)]  -> "Haven't seen a Thornmere boy in the capital in years."
+NPC: Valdris Merchant
+  [party_has(torren)]  -> "A Thornmere tribesman? Haven't seen one in the capital in years."
   [party_has(lira)]    -> "Is that a Forgewright's hammer? Compact-made, isn't it?"
   [default]            -> "Roads aren't safe with all these ley surges."
 ```
@@ -244,7 +244,7 @@ id: thornmere_elder_council_torren
 speaker: Elder Savanh
 condition: act2_thornmere_council AND party_has(torren)
 lines:
-  - "Torren? Son of Brennan?"
+  - "Torren? Son of Haldric?"
   - "...You've your father's jaw. Speak, then."
 animations:
   - who: savanh, anim: bubble_exclaim, when: before_line_0
