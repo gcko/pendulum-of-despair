@@ -1029,17 +1029,18 @@ canonical game design document.
 | System | Reference |
 |--------|-----------|
 | ATB fill rate formula | `combat-formulas.md` § ATB Gauge System |
-| Battle speed settings | `combat-formulas.md` § ATB Gauge System |
-| Active/Wait mode | `combat-formulas.md` § ATB Gauge System |
-| Row system | `combat-formulas.md` § Row System |
-| Status effects | `magic.md` § Status Effects |
-| Equipment slots | `equipment.md` § Equipment Slot System |
+| Battle speed settings | `combat-formulas.md` § Battle Speed Config |
+| Active/Wait mode | `combat-formulas.md` § Active/Wait Mode |
+| Row system | `combat-formulas.md` § Row Modifier |
+| Status effects | `magic.md` § Status Effect Reference |
+| Equipment slots | `equipment.md` § Equipment Slots |
 | Ley Crystal system | `progression.md` § Ley Crystal System |
-| Character stats | `progression.md` § Stat Growth |
+| Character stats | `progression.md` § Character Growth |
 | Shop inventories | `economy.md` § Shop Inventories |
 | Save data structure | `packages/shared/src/types/game.ts` |
 | Visual style / palette | `visual-style.md` |
-| Damage formulas | `combat-formulas.md` § Physical/Magical Damage |
+| Physical damage formula | `combat-formulas.md` § Physical Damage |
+| Magic damage formula | `combat-formulas.md` § Magic Damage |
 
 ### 18.3 Deferred Items Resolved
 
