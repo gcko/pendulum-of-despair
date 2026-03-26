@@ -61,7 +61,7 @@ Edren's base growth + current tier weapon; see
 | 12 (end Act I) | ~40 | Bone Warden (4) | 10 | 105 | ~257 | 1 |
 | 20 (mid Act II) | ~60 | At-level (~20) | 25 | 200 | ~575 | 1 |
 | 35 (Interlude) | ~80 | At-level (~35) | 40 | 400 | ~1,027 | 1 |
-| 60 (Act III) | ~120 | At-level (~60) | 70 | 700 | ~2,330 | 1 |
+| 60 (Act III) | ~120 | Pallor Boar (28) | 52 | 1,943 | ~2,348 | 1 |
 
 Well-equipped physical attackers kill in 1–2 hits. Support characters
 and mages deal less physical damage (3–4 hits) but compensate with
