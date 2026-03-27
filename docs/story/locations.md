@@ -1008,6 +1008,46 @@ The dry well in Aelhart's village square has a crack at the bottom that only bec
 
 ---
 
+### The Forgotten Forge (Secret Dungeon)
+
+**Faction:** Pre-civilization (Builder ruins)
+**Acts:** III (requires Dry Well F7 cleared + Archivist's Codex)
+**Type:** Secret dungeon (5 floors)
+
+Five floors beneath the Dry Well of Aelhart. An ancient ley-forging
+facility where pre-Pallor builders experimented with weaponized
+despair. The Grey Cleaver was their greatest failure — a weapon that
+absorbed despair instead of channeling ley energy. The Architect, the
+last master builder fused with forge equipment, guards the Anvil Vault
+on Floor 5.
+
+**Access:** Hidden builder's seal on Dry Well Floor 7. The Archivist's
+Codex (key item from the Archive of Ages quest) auto-activates when
+approaching the sealed ley door, opening the passage.
+
+**Key features:**
+- 5 floors of escalating Construct and Pallor enemies (Lv 32–36)
+- Ancient forge chamber (crafting location — equipment forging and
+  infusions available; see [crafting.md](crafting.md))
+- Two-stage boss: The Architect (Stage 1, 20,000 HP) → Grey Cleaver
+  Unbound (Stage 2, 25,000 HP) with **no break between stages**
+- Forge Schematic (STEAL from The Architect — **missable**; locked
+  out until NG+ if not stolen). Prerequisite for Arcanite Lance recipe.
+- Architect's Hammer drop (Lira weapon, ATK 52, Storm, +25% vs
+  Constructs)
+- Grey Cleaver drop (Torren weapon, cursed → purified over 100 Pallor
+  encounters; FF6 Cursed Shield homage)
+- Builder lore culmination: connects Ember Vein, Archive of Ages,
+  Ley Line Depths, and Dry Well narrative threads
+
+**Narrative purpose:** Reveals the origin of the Grey Cleaver and the
+builders' failed experiments with weaponized despair. The Grey Cleaver
+Unbound's Shield stance mechanic (Despair'd characters bypass the
+barrier) foreshadows the Convergence's thematic resolution: embracing
+despair rather than fighting it.
+
+---
+
 ### The Sunken Rig (Optional Dungeon)
 
 **Faction:** Carradan Compact
@@ -1175,6 +1215,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 26a | Frostcap Caverns | Dungeon | Torren's character dungeon, Frostpeak Crystal, Monastery Key |
 | 26b | Caldera Forge Depths | Dungeon | Lira's character dungeon (full access), Volcanic Ingot |
 | 26c | Dry Well of Aelhart | Dungeon (7 floors) | Optional; Edren's personal content (Floors 1–4 Interlude, 5–7 Act III) |
+| 26d | Forgotten Forge | Secret dungeon (5 floors) | Optional; accessed via Dry Well F7 (Archivist's Codex). Ancient forge; The Architect + Grey Cleaver Unbound. Arcanite Lance recipe, Grey Cleaver weapon. |
 | 27 | Archive of Ages | Dungeon | Find Maren, the truth revealed |
 
 ### Act III: The Convergence / Act IV: The Closing Door
