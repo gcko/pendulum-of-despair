@@ -59,10 +59,13 @@ Device crafting uses a five-step field menu:
 
 1. Open party menu, select Lira, choose "Forge Devices"
 2. View current loadout (5 slots with charges per type)
-3. Select an empty slot or replace an existing device type
+3. Select an empty slot or replace an existing device type.
+   **Replacing a slot discards remaining charges** (no refund).
+   A confirmation prompt warns the player before discarding.
 4. Choose recipe from unlocked list — material, AC, and gold costs
-   displayed
-5. Confirm — device appears in loadout, ready for battle use
+   displayed. Recipes the player cannot afford (insufficient AC,
+   materials, or gold) are greyed out.
+5. Confirm — device appears in loadout with 3 fresh charges
 
 ### Equipment Forging Flow (At Forge)
 
@@ -175,9 +178,9 @@ during the next combat encounters.
   on pre-crafting since the last rest). Battle device deployment draws
   from this pool during combat. AC is not auto-refilled between
   battles; only rest points restore the full 12.
-- **Arcanite Shards:** Restore AC when used as consumables (per
-  abilities.md: "Restored at inns, save points, and by certain items
-  (Arcanite Shards)"). Field-usable between battles.
+- **Arcanite Shards:** Restore **3 AC** when used as consumables (per
+  abilities.md). Field-usable between battles. One shard = 3 AC = enough
+  to craft one Advanced-tier or one Basic-tier + one Expert-tier device.
 
 Arcanite Shards serve a **dual purpose**: crafting material OR AC
 restorative. Using a shard to restore AC consumes it — that shard
@@ -219,7 +222,7 @@ and material — a strong hint without giving the exact outcome.
 | Resonance Staff | Any Maren Staff | Ley | Lira only | Lira senses ley resonance in the staff's grain |
 | Shadowfang | Any Sable Dagger | Void | NPC only | Tash mentions "void-touched steel" in passing |
 | Crucible Maul | Any Lira Hammer | Flame | Lira only | Lira muses about superheating her own tools |
-| Oathkeeper | Any Edren Sword | Spirit | NPC only | Cordwyn mentions spirit-bonded blades from the old wars |
+| Oathkeeper | Any Edren Sword | Spirit | NPC only | Ashmark veteran recalls spirit-bonded blades from the old wars |
 
 **Channel balance:** 2 Both, 3 NPC-only, 2 Lira-only. Players who
 skip NPC dialogue miss 3 synergies; players who rush through forges
@@ -247,6 +250,12 @@ transforms..."* The bonus effect is immediately active — no additional
 steps required. The Synergies tab updates to show the newly discovered
 entry.
 
+> **Penitent's Edge special mechanic:** The Grey Cleaver purification
+> synergy includes an encounter counter (50 Pallor encounters with
+> the synergy active, reduced from 100 without it). The counter is
+> visible in the equipment stats screen. See
+> [equipment.md](equipment.md) for full Grey Cleaver purification rules.
+
 ---
 
 ## 4. Malfunction & Calibration in Pallor Zones
@@ -262,9 +271,14 @@ probability:**
 
 | Malfunction Effect | Description |
 |--------------------|-------------|
-| Heal wrong target | The device heals a random enemy instead of its intended target |
-| Damage ally | The device deals its damage to a random party member |
+| Heal wrong target | Defensive/healing devices apply their effect to a random enemy instead |
+| Damage ally | Offensive devices deal **50% of their normal damage** to a random party member (capped to prevent instant kills) |
 | Fizzle | The device produces no effect; the activation is wasted |
+
+**Malfunction applicability:** Offensive devices can only roll "Damage
+ally" or "Fizzle" (not "Heal wrong target"). Defensive/healing devices
+can only roll "Heal wrong target" or "Fizzle" (not "Damage ally").
+Utility devices always Fizzle on malfunction.
 
 **Visual tell:** Arcanite crystals embedded in devices pulse with grey
 veins when operating in Pallor-corrupted zones. This visual cue
@@ -338,13 +352,15 @@ materials, forges, and schematics. Device recipes are detailed in
 | Act III (Forgotten Forge) | 1 — Arcanite Lance | — | Forgotten Forge (ancient forge) |
 | Post-Convergence | 1 — Emergency Beacon | — | All prior forges |
 
-### Resource Scarcity: Arcanite Ingots
+### Arcanite Ingots
 
-Only 3 Arcanite Ingots exist in the game (fixed placement per
-[items.md](items.md)). Four recipes require them (Arcanite Blade,
-Forgewright Maul, Arcanite Helm, Lira's Masterwork). The player must
-choose which 3 of 4 to forge — this is an intentional meaningful
-choice with no buyback. Remaining recipes become available in NG+.
+Arcanite Ingots are Tier 4 materials obtained from fixed placements
+(dungeon chests, quest rewards). Four recipes require them: Arcanite
+Blade (1), Forgewright Maul (1), Arcanite Helm (1), and Lira's
+Masterwork (1). Total available ingots across the game exceed the 4
+needed — the constraint is finding them, not choosing between recipes.
+See [items.md](items.md) for placement locations and
+[sidequests.md](sidequests.md) for quest-reward sources.
 
 ### Schematic Items
 
