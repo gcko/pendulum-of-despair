@@ -356,7 +356,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 ### Complete Material List
 
-> **69 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+> **72 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
 
 | Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
 |------|----------------|------|---------------|---------------------|
@@ -381,19 +381,21 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Vermin Fang | Beast | 2 | 45 | Basic weapon components |
 | Crawler Shell | Beast | 2 | 55 | Armor components |
 | Petrified Bark | Beast | 2 | 65 | Pallor-touched crafting |
-| **Construct Salvage (6)** | | | | |
+| **Construct Salvage (7)** | | | | |
 | Scrap Metal | Construct | 1 | 35 | Device components, basic forging |
 | Crystal Shard | Construct | 2 | 75 | Precision components, devices |
 | Drill Fragment | Construct | 2 | 60 | Weapon components |
 | Molten Gear | Construct | 2 | 70 | Flame-element forging |
 | Hound Gear | Construct | 2 | 65 | Mechanical components |
 | Stone Fragment | Construct | 2 | 55 | Earth-element crafting |
-| **Spirit/Elemental (5)** | | | | |
+| Salvaged Automaton Core | Construct (fixed chest, Corrund Sewers) | 2 | 85 | Forgewright device crafting — Lira-specific (no recipe yet — reserved for future content) |
+| **Spirit/Elemental (6)** | | | | |
 | Ether Wisp | Spirit | 1 | 40 | MP restoration, Ward Emitter |
 | Spirit Essence | Spirit | 2 | 100 | Spirit-element crafting, devices |
 | Spirit Dust | Undead/Spirit | 2 | 60 | Spirit-element basics |
 | Element Shard | Elemental | 1 | 40 | Elemental infusions, devices |
 | Elemental Core | Elemental | 2 | 100 | Advanced elemental devices |
+| Emberstone | Elemental/Fire (fixed chests: Ashmark Factory Cooling Tank + Black Forge B catwalk; 2 total) | 3 | 200 | Flame-element forging, advanced fire devices (no recipe yet — reserved for future content) |
 | **Pallor (5)** | | | | |
 | Pallor Sample | Pallor | 3 | 150 | Anti-Pallor consumables, Pallor Salve |
 | Grey Residue | Pallor | 2 | 100 | Void-element infusions |
@@ -432,12 +434,13 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Heartwood Splint | Dreamer's Fault (Green Age) | 4 | 550 | Age-specific recipes (TBD) |
 | Iron Cog | Dreamer's Fault (Iron Age) | 4 | 700 | Age-specific recipes (TBD) |
 | Tempered Plate | Dreamer's Fault (Iron Age) | 4 | 800 | Age-specific recipes (TBD) |
-| **Boss-Specific Materials (5)** | | | | |
+| **Boss-Specific Materials (6)** | | | | |
 | Dark Scale | Beast (Corrupted Spawn) | 2 | 65 | Pallor-element crafting |
 | Vein Shard | Boss steal (Vein Guardian) | 3 | 150 | Ley-element weapon components |
 | Ley Crystal Fragment | Boss steal (Ley Colossus, Ley Titan) | 3 | 200 | Ley-element forging |
 | Reinforced Drill Bit | Boss steal (The Ironbound) | 3 | 175 | Heavy weapon components |
 | Despair Shard | Boss steal (Grey Cleaver Unbound, 100%) | 3 | 200 | Pallor-element crafting; Grey Cleaver purification component |
+| Nest Mother's Core | Boss drop (Pallor Nest Mother, 100%) | 3 | 200 | Anti-Pallor weapon modifications — concentrated Pallor essence (no recipe yet — reserved for future content) |
 
 ### Sell Price Formula
 
