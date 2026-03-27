@@ -48,7 +48,7 @@ The primary tool for conveying emotion during dialogue. These are character
 sprite animations that fire between dialogue boxes, replacing the portrait
 emotion system used in later FF6 ports.
 
-### Animation Catalog (14 Animations)
+### Animation Catalog (14 Animations + 1 Control Command)
 
 | ID | Animation | Visual Description | Duration | Use Case |
 |----|-----------|-------------------|----------|----------|

@@ -115,7 +115,8 @@ Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
 3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
-18,000 HP) hit the standard range.
+18,000 HP) exceed the standard boss HP ceiling (15,000),
+establishing the full-length fight format.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions

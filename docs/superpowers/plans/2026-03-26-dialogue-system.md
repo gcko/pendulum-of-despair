@@ -48,7 +48,7 @@ The full 14-animation catalog table from the spec (Section 2). Include:
 
 - [ ] **Step 4: Verify cross-references**
 
-Check that every character name, flag name, and mechanic referenced in Sections 1-2 exists in the referenced docs. Specifically:
+Check that every character name, flag name, and mechanic referenced in Sections 1–2 exists in the referenced docs. Specifically:
 - Animation durations are reasonable for a 60fps SNES-style game
 - Character names match `characters.md` exactly
 
