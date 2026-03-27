@@ -76,6 +76,16 @@ Each item is a single check. Grows from Copilot gap analysis.
 - Multiplier notation must be consistent project-wide (use "+N%" not "Nx"
   when describing the same modifier in different locations)
 - Real-time timers must specify behavior during pause states (Wait mode)
+- When a note or summary claims universal scope ("all X match Y",
+  "every Z is from W"), verify no exceptions exist. If exceptions
+  exist, qualify the scope explicitly (e.g., "all X that exist in Y
+  match; M items are defined here and pending addition")
+- When a data format field name shares a word with a different concept
+  (e.g., `lines` array vs rendered text lines), all index references
+  must explicitly state they refer to the array element, not the
+  colloquial meaning. Notation used in one context (e.g., `[...]`
+  brackets in priority-stack pseudocode) must not leak into another
+  context (e.g., `condition:` field values) without clarification.
 
 ## Numeric Consistency (from Copilot gap analysis, PR #17-18)
 
@@ -201,3 +211,11 @@ Each item is a single check. Grows from Copilot gap analysis.
 - After find-and-replace operations in ASCII art sections (maps,
   diagrams), visually verify bracket alignment and spacing. Automated
   replacements can break fixed-width formatting.
+
+## Code Block Identifier Hygiene (from Copilot gap analysis, PR #34)
+
+- Documentation markers (footnote symbols, annotation characters like
+  `*`, `†`, `‡`) must not appear inside code block identifiers,
+  expressions, or values. Annotations belong in surrounding prose, not
+  inline in syntax examples. Code blocks should be copy-pasteable
+  without cleanup.

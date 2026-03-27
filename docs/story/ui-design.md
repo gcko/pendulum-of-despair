@@ -36,7 +36,7 @@ is pixel art by default:
 - **Portraits:** 32×32 pixel-art face portraits for menu screens. Art
   pipeline dependency — portraits must be created for all 6 party
   members + 2 guest NPCs (Cordwyn, Kerra). One neutral expression
-  each; emotion variants deferred to Gap 3.3 if needed.
+  each; emotion variants not needed — Gap 3.3 resolved this with the sprite emotion system (see [dialogue-system.md](dialogue-system.md) Section 2).
 
 ### 1.2 Modern Concessions
 

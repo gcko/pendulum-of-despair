@@ -465,17 +465,24 @@ Now complete.
 
 ### 3.3 Dialogue System Mechanics
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P2
-**Files:** `docs/story/npcs.md` (content exists, presentation missing)
+**Files:** `docs/story/dialogue-system.md`, `docs/story/npcs.md`
 **Depends On:** 2.3 (UI Design)
+**Completed:** 2026-03-26
 
 **What's Needed:**
-- [ ] Text box rendering specs (font, size, position, background)
-- [ ] Character portrait system (who gets portraits? Emotion variants?)
-- [ ] Text speed options and player control
-- [ ] Choice prompt mechanics and visual layout
-- [ ] NPC interaction model (talk once per visit? Repeatable? Changes on re-talk?)
+- [x] Text box rendering specs — confirmed in ui-design.md Section 12
+- [x] Character portrait system — resolved: no portraits in dialogue, sprite emotion system (14 animations), menu portraits use single neutral expression
+- [x] Text speed options and player control — confirmed in ui-design.md Section 12
+- [x] Choice prompt mechanics and visual layout — confirmed in ui-design.md Section 12
+- [x] NPC interaction model — priority stack (first-match-wins), flag-gated, party-aware (2 tiers)
+- [x] Sprite emotion animation catalog (14 animations with timing rules)
+- [x] Dialogue data format (entry fields, sub-fields, 8 worked examples)
+- [x] Party-aware dialogue rules (Tier 1 key scenes + Tier 2 NPC reactions)
+- [x] Flag condition system (binary, numeric, string comparison, party_has)
+
+**Blocking:** ~~Dialogue scripting, script authoring~~ Now unblocks: 3.7 (Full Dialogue Script)
 
 ---
 
@@ -611,3 +618,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-25 | 2.6 Pallor Wastes Oases | MISSING → COMPLETE. 3 Oases with ley ward stones, 12 NPCs, 3 sidequests, Oasis C fall event + Grey Keeper mini-boss, Keeper's Resolve accessory, Valdris Crest key item. | — |
 | 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 14 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
 | 2026-03-26 | 3.4 Difficulty & Balance | MISSING → COMPLETE. FF6 Accessible, one fixed difficulty. 2–4 hit trash (per combat-formulas.md), 3–8 min bosses. HP abundant / MP constraint. Auto-save + Faint-and-Fast-Reload. Per-act escalation. Balance validation methodology (damage/duration/economy/encounter formulas). | — |
+| 2026-03-26 | 3.3 Dialogue System Mechanics | PARTIAL → COMPLETE. SNES FF6 pure (no portraits). Sprite emotion system (14 animations), priority stack NPC resolution, party-aware dialogue (key scenes + NPC reactions), dialogue data format (7 entry fields, 8 worked examples). Unblocks 3.7. | — |

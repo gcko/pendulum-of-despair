@@ -44,7 +44,7 @@ greater challenge.
 ### 2.1 Regular Enemies — Hits to Kill
 
 Regular enemies die in 2–4 physical hits from the primary attacker
-(per [combat-formulas.md](../story/combat-formulas.md) § Fight
+(per [combat-formulas.md](../../story/combat-formulas.md) § Fight
 Duration Targets). AoE magic clears groups efficiently. The ATK²/6
 formula scales quadratically, so well-equipped physical attackers
 trend toward the lower end (2 hits), while support characters need
@@ -52,8 +52,8 @@ trend toward the lower end (2 hits), while support characters need
 
 **Verification at key milestones** (approximate ATK values assume
 Edren's base growth + current tier weapon; see
-[progression.md](../story/progression.md) § Character Growth and
-[equipment.md](../story/equipment.md) § Weapons for exact values):
+[progression.md](../../story/progression.md) § Character Growth and
+[equipment.md](../../story/equipment.md) § Weapons for exact values):
 
 The table below shows Edren (highest ATK) alongside Torren (lowest
 physical ATK). The "2–4 hits from primary attacker" target in
@@ -76,7 +76,7 @@ characters (Torren, Maren) still need 2–4 physical hits or use magic.
 
 > **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
 > lists Act III enemy HP as 6,000–14,000, but the actual bestiary
-> (act-iii.md) has Act III regulars at 1,000–2,247 HP. The bestiary
+> (act-iii.md) has Act III regulars at 1,000–2,784 HP. The bestiary
 > is authoritative; the combat-formulas.md table needs reconciliation.
 
 ### 2.2 Boss Fight Duration
@@ -90,10 +90,10 @@ measured in real-time minutes at Battle Speed 3 (default).
 | Standard boss | I–II | 3–5 min | 4,000–15,000 | 30–50 party actions |
 | Major boss | Int–III | 5–8 min | 15,000–45,000 | 50–80 party actions |
 | Penultimate boss (Cael) | III | 5–7 min | 80,000 (two phases) | Emotional climax |
-| Final boss (Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
+| Final boss (The Pallor Incarnate) | III | 5–8 min | 70,000 | True ending |
 | Superboss (optional) | Post-game | 8–12 min | 100,000+ | Victory lap |
 
-These targets align with [combat-formulas.md](../story/combat-formulas.md) §
+These targets align with [combat-formulas.md](../../story/combat-formulas.md) §
 Fight Duration Targets: regular enemies 2–4 hits, mini-bosses 30–60s,
 standard bosses 3–5 min, major bosses 5–8 min.
 
@@ -115,7 +115,8 @@ Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
 3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
-18,000 HP) hit the standard range.
+18,000 HP) exceed the standard boss HP ceiling (15,000),
+establishing the full-length fight format.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -123,8 +124,10 @@ At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 
 `80,000 / (800 × 4 × 0.50) × 1.5s = ~75s base`
 
-Add 2 phase transitions (~45s each), Despair management cycles,
-scripted dialogue, and healing overhead (~2× base): **~5–6 minutes.**
+Add healing/Despair/rebuff overhead (~2.8× base = ~210s — higher than
+typical due to Despair management and Cael's Rally counter forcing
+frequent rebuffs) and 2 phase transitions with scripted dialogue
+(~45s each = ~90s): **~5–5.5 minutes.**
 Within the 5–7 minute target.
 
 ### 2.3 Encounter Duration (Random Battles)
@@ -154,22 +157,23 @@ HP healing is effectively unlimited for prepared players:
 | Potion | 100 | 50g | 0.5g/HP | Act I shops |
 | Hi-Potion | 500 | 300g | 0.6g/HP | Act II shops |
 | Ley Tonic | 300 (party) | 800g | — (party-wide) | Act II shops (limited stock) |
-| X-Potion | 100% HP | 1,500g | Variable | Act III shops |
+| X-Potion | 100% HP | 1,500g | Variable | Act III shops (limited) |
 
 A player spending 500g on Potions (10 Potions) has 1,000 HP of
 healing — more than the entire party's HP pool in early Act I. HP
 items are cheap enough that running out is a preparation failure,
 not a design constraint.
 
-**Healing spells supplement items:** Mend (3 MP, ~50–100 HP at
-early levels), Leybalm (3 MP, similar), Breath of the Wilds (8 MP,
-party heal). These conserve Potions but cost the real resource: MP.
+**Healing spells supplement items:** Mend (3 MP, ~155–250 HP at early
+levels depending on caster MAG), Leybalm (3 MP, similar), Breath of
+the Wilds (8 MP, party heal). These conserve Potions but cost the
+real resource: MP.
 
 ### 3.2 MP — The Soft Constraint
 
 MP is the primary resource constraint across dungeons:
 
-| Item | MP Restored | Cost | Relative Value |
+| Item | MP Restored | Cost | GP/MP Ratio |
 |------|-------------|------|---------------|
 | Ether | 30 MP | 200g | 6.67g/MP |
 | Hi-Ether | 100 MP | 800g | 8.0g/MP |
@@ -232,13 +236,13 @@ push the player 1–3 levels above these targets.
 | Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
 | Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
-| Ashmark Factory | II | 20–24 | Forge Warden (24) |
+| Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
-| Interlude dungeons | Int | 25–50 | Various (28–35) |
-| Pallor Wastes overworld | III | 50–60 | Grey Keeper (32), etc. |
-| Convergence gauntlet | III | 60–70 | Cael (36/38), Incarnate (40) |
-| Dreamer's Fault | Post | 70–150 | Optional (50–100) |
+| Interlude dungeons | Int | 25–50 | Various (22–28) |
+| Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
+| Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
+| Dreamer's Fault | Post | 70–150 | Optional (50–86) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference — NOT directly comparable to player level.
@@ -247,15 +251,15 @@ party at 60–70 fighting Cael (Lv 36/38) is the intended balance.
 
 ### 4.2 Catch-Up Mechanics
 
-Per [progression.md](../story/progression.md):
+Per [progression.md](../../story/progression.md):
 - **Party join level:** `party_average - 1` — new members are never
   far behind.
 - **Absent XP share:** 50% — reserve members stay close to the active
   party.
 - **Level-up HP/MP restore:** Full heal on level-up provides periodic
   relief during dungeons.
-- **Ley Scar grinding zone:** 4 high-XP enemies available from the
-  Interlude onward for players who want to overlevel.
+- **Ley Scar grinding zone:** 4 high-XP enemies available from
+  Act III onward for players who want to overlevel.
 
 No catch-up mechanic is "free" — the player still needs to fight.
 But the systems prevent any character from falling irretrievably
@@ -263,7 +267,7 @@ behind.
 
 ### 4.3 Equipment Progression Curve
 
-Per [equipment.md](../story/equipment.md):
+Per [equipment.md](../../story/equipment.md):
 
 | Tier | Act | ATK Range | Relative Power | New Tier Every |
 |------|-----|-----------|---------------|---------------|
@@ -298,7 +302,7 @@ vs Load" menu — the Faint and Fast Reload system (Section 5.5)
 handles wipe recovery with instant automatic reload.
 
 **Relationship to Faint and Fast Reload:** When the party wipes,
-the instant reload system (per [events.md](../story/events.md) §
+the instant reload system (per [events.md](../../story/events.md) §
 Faint and Fast Reload) loads the most recent save — whether manual
 or auto. Auto-save ensures that target is always close.
 
@@ -322,7 +326,7 @@ on the critical path.
 
 ### 5.3 Flee Reliability
 
-Per [combat-formulas.md](../story/combat-formulas.md):
+Per [combat-formulas.md](../../story/combat-formulas.md):
 - Base flee chance: `clamp(50 + (party_avg_SPD - enemy_avg_SPD) × 2, 10, 90)`
 - Minimum: 10% (always possible)
 - Maximum: 90% (never guaranteed without items)
@@ -345,7 +349,7 @@ Per [combat-formulas.md](../story/combat-formulas.md):
 
 ### 5.5 Party Wipe Recovery
 
-Per [events.md](../story/events.md) § Faint and Fast Reload:
+Per [events.md](../../story/events.md) § Faint and Fast Reload:
 - **No game over screen.** No menu, no prompt, no "Game Over" text.
 - Last Faint animation plays → fade to black (2s) → instant reload
   at the last save point (~4s total).
@@ -389,9 +393,10 @@ Per [events.md](../story/events.md) § Faint and Fast Reload:
 
 - **Enemies:** Pallor Infection mechanic adds new danger. Stronger
   variants of familiar enemies. Compact/Valdris civil war enemies.
-- **Bosses:** Complex multi-phase fights. General Kole (30,000 HP)
-  is the difficulty spike. Requires understanding Cael's Rally
-  abilities and party coordination.
+- **Bosses:** Complex multi-phase fights. General Vassar Kole (30,000 HP)
+  is the difficulty spike. Requires full party coordination and
+  mastery of each reunited member's abilities (Cael is no longer
+  available — his absence is felt mechanically).
 - **Resources:** Tighter. War-torn economy means some shops have
   limited stock. Equipment comes from exploration, not purchase.
 - **Party rebuilding:** Sable alone → gradually finding party
@@ -505,16 +510,16 @@ For each dungeon, verify:
 
 | System | Reference |
 |--------|-----------|
-| Damage formulas | [combat-formulas.md](../story/combat-formulas.md) § Physical Damage, § Magic Damage |
-| Stat growth | [progression.md](../story/progression.md) § Character Growth |
-| XP curve | [progression.md](../story/progression.md) § Two-Phase XP Curve |
-| Enemy stats | [bestiary/](../story/bestiary/) (act-i.md through act-iii.md) |
-| Boss stats | [bestiary/bosses.md](../story/bestiary/bosses.md) |
-| Equipment tiers | [equipment.md](../story/equipment.md) § Weapons |
-| Economy/gold | [economy.md](../story/economy.md) § Gold Pacing Targets |
-| Encounter rates | [combat-formulas.md](../story/combat-formulas.md) § Encounter System |
-| ATB timing | [combat-formulas.md](../story/combat-formulas.md) § ATB Gauge System |
-| Party-wipe rules | [events.md](../story/events.md) § Faint and Fast Reload |
-| Flee mechanics | [combat-formulas.md](../story/combat-formulas.md) § Flee |
-| Oasis services | [locations.md](../story/locations.md) § Pallor Wastes Oases |
-| Dreamer's Fault | [bestiary/optional.md](../story/bestiary/optional.md) |
+| Damage formulas | [combat-formulas.md](../../story/combat-formulas.md) § Physical Damage, § Magic Damage |
+| Stat growth | [progression.md](../../story/progression.md) § Character Growth |
+| XP curve | [progression.md](../../story/progression.md) § Two-Phase XP Curve |
+| Enemy stats | [bestiary/](../../story/bestiary/) (act-i.md through act-iii.md) |
+| Boss stats | [bestiary/bosses.md](../../story/bestiary/bosses.md) |
+| Equipment tiers | [equipment.md](../../story/equipment.md) § Weapons |
+| Economy/gold | [economy.md](../../story/economy.md) § Gold Pacing Targets |
+| Encounter rates | [combat-formulas.md](../../story/combat-formulas.md) § Encounter System |
+| ATB timing | [combat-formulas.md](../../story/combat-formulas.md) § ATB Gauge System |
+| Party-wipe rules | [events.md](../../story/events.md) § Faint and Fast Reload |
+| Flee mechanics | [combat-formulas.md](../../story/combat-formulas.md) § Flee |
+| Oasis services | [locations.md](../../story/locations.md) § Pallor Wastes Oases |
+| Dreamer's Fault | [bestiary/optional.md](../../story/bestiary/optional.md) |
