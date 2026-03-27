@@ -36,7 +36,7 @@ glyph-based magic, stone guardians. Floor rotation mechanic.
 | Glyphscribe | Humanoid | 44 | 4,032 | 154 | 60 | 57 | 77 | 48 | 43 | 324 | 530 | Ancient Glyph (75%) | Carved Stone (25%) | — | — | — | — | Dreamer's Fault F1–4 |
 | Carved Watcher | Construct | 46 | 4,380 | 0 | 81 | 60 | 70 | 50 | 44 | 374 | 607 | Ancient Glyph (75%) | Carved Stone (25%) | — | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dreamer's Fault F1–4 |
 | Ember Remnant | Elemental | 48 | 3,414 | 168 | 96 | 44 | 73 | 52 | 46 | 433 | 696 | Ancient Glyph (75%) | Carved Stone (25%) | Frost | — | Flame | Petrify | Dreamer's Fault F1–4 |
-| *The First Scholar* | Boss | 50 | 40,000 | 175 | 132 | 84 | 136 | 81 | 57 | 10,000 | 15,000 | Ancient Manuscript (100%) | Scholar's Codex (100%) | Void (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F4 |
+| *The First Scholar* | Boss | 50 | 40,000 | 175 | 132 | 84 | 136 | 81 | 57 | 1,200 | 15,000 | Ancient Manuscript (100%) | Scholar's Codex (100%) | Void (150%) | Spirit (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F4 |
 
 **Design notes:**
 - First Age Sentinel is a stone guardian (Construct, Tank role). Geometric
@@ -75,7 +75,7 @@ Light/shadow visibility mechanic.
 | Facet Drone | Construct | 54 | 4,022 | 0 | 94 | 69 | 81 | 58 | 51 | 664 | 1,045 | Crystal Fragment (75%) | Prism Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dreamer's Fault F5–8 |
 | Prism Stalker | Beast | 56 | 4,561 | 196 | 111 | 51 | 84 | 60 | 52 | 764 | 1,194 | Crystal Fragment (75%) | Prism Shard (25%) | — | — | — | — | Dreamer's Fault F5–8 |
 | Resonance Shade | Spirit | 58 | 6,771 | 203 | 77 | 74 | 100 | 62 | 54 | 877 | 1,365 | Crystal Fragment (75%) | Prism Shard (25%) | Ley | — | — | Poison, Petrify | Dreamer's Fault F5–8 |
-| *The Crystal Queen* | Boss | 60 | 60,000 | 210 | 156 | 100 | 162 | 96 | 67 | 10,000 | 20,000 | Queen's Prism (100%) | Queen's Facet (100%) | Earth (150%) | Ley (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F8 |
+| *The Crystal Queen* | Boss | 60 | 60,000 | 210 | 156 | 100 | 162 | 96 | 67 | 420 | 20,000 | Queen's Prism (100%) | Queen's Facet (100%) | Earth (150%) | Ley (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F8 |
 
 **Design notes:**
 - Crystal Refractor is a prism creature (Elemental, Caster role). Reflects
@@ -116,7 +116,7 @@ symbiotic organisms. Shifting path mechanic.
 | Bough Knight | Humanoid | 64 | 8,160 | 224 | 110 | 81 | 95 | 68 | 59 | 1,314 | 2,025 | Living Bark (75%) | Heartwood Splint (25%) | — | — | — | — | Dreamer's Fault F9–12 |
 | Canopy Lurker | Beast | 66 | 6,229 | 231 | 129 | 60 | 98 | 70 | 60 | 1,495 | 2,304 | Living Bark (75%) | Heartwood Splint (25%) | — | — | — | — | Dreamer's Fault F9–12 |
 | Heartwood Spirit | Spirit | 70 | 9,680 | 245 | 92 | 89 | 119 | 74 | 64 | 2,881 | 4,455 | Living Bark (75%) | Heartwood Splint (25%) | Ley | — | — | Poison, Petrify | Dreamer's Fault F9–12 |
-| *The Rootking* | Boss | 72 | 80,000 | 252 | 184 | 118 | 190 | 114 | 78 | 10,000 | 25,000 | Living Root (100%) | Root Crown (100%) | Flame (150%) | Earth (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F12 |
+| *The Rootking* | Boss | 72 | 80,000 | 252 | 184 | 118 | 190 | 114 | 78 | 1,200 | 25,000 | Living Root (100%) | Root Crown (100%) | Flame (150%) | Earth (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F12 |
 
 **Design notes:**
 - Root Weaver is a living vine construct (Elemental, Tank role). Entangles
@@ -157,7 +157,7 @@ the machines outlived them. Gravity reversal mechanic.
 | Gear Wraith | Spirit | 78 | 11,907 | 273 | 101 | 98 | 132 | 82 | 70 | 3,030 | 4,828 | Iron Cog (75%) | Tempered Plate (25%) | Ley | — | — | Poison, Petrify | Dreamer's Fault F13–16 |
 | Pressure Golem | Construct | 80 | 12,500 | 0 | 136 | 101 | 118 | 84 | 72 | 3,357 | 5,419 | Iron Cog (75%) | Tempered Plate (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dreamer's Fault F13–16 |
 | Scrap Swarm | Construct | 84 | 9,335 | 0 | 142 | 105 | 123 | 88 | 75 | 4,059 | 6,766 | Iron Cog (75%) | Tempered Plate (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Dreamer's Fault F13–16 |
-| *The Iron Warden* | Boss | 86 | 100,000 | 301 | 217 | 140 | 226 | 135 | 91 | 10,000 | 30,000 | Warden's Blueprint (100%) | Warden's Core (100%) | Storm (150%) | Flame (50%), Frost (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F16 |
+| *The Iron Warden* | Boss | 86 | 100,000 | 301 | 217 | 140 | 226 | 135 | 91 | 6,000 | 30,000 | Warden's Blueprint (100%) | Warden's Core (100%) | Storm (150%) | Flame (50%), Frost (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Dreamer's Fault F16 |
 
 **Design notes:**
 - Iron Automaton is a mechanical soldier (Construct, Tank role). Heaviest

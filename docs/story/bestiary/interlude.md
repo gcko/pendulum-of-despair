@@ -100,8 +100,8 @@ Pallor Infection mechanic is introduced. 30% Pallor source encounters.
 | Tunnel Vermin | Beast | 22 | 1,155 | 0 | 43 | 31 | 36 | 26 | 25 | 37 | 69 | Beast Hide (75%) | Vermin Fang (25%) | — | — | — | — | Rail Tunnels (all sections) |
 | Pipe Wraith | Spirit | 20 | 980 | 70 | 30 | 29 | 39 | 26 | 24 | 32 | 60 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Rail Tunnels (Maintenance Shaft) |
 | Grey Mite Swarm | Pallor | 20 | 666 | 70 | 36 | 29 | 34 | 24 | 24 | 32 | 60 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Rail Tunnels (unique dense swarm) |
-| *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 63 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
-| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 5,000 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
+| *Corrupted Boring Engine* | Construct | 22 | 6,000 | 0 | 43 | 35 | 36 | 26 | 19 | 1,250 | 116 | Arcanite Core (75%) | Drill Fragment (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Rail Tunnels (West Tunnel, mini-boss) |
+| *The Ironbound* | Boss | 24 | 22,000 | 84 | 69 | 42 | 70 | 42 | 32 | 2,500 | 8,000 | Reinforced Drill Bit (100%) | Operator's Badge (100%) | Storm (150%), Void (125%) | Earth (50%), Flame (75%) | — | Death, Petrify, Stop, Sleep, Confusion | Rail Tunnels (deepest section) |
 
 ### Boss Notes — Rail Tunnels
 
@@ -158,7 +158,7 @@ revisited with full encounters. 40% Pallor source encounters.
 | Royal Wraith | Spirit | 24 | 1,344 | 84 | 35 | 33 | 44 | 30 | 27 | 73 | 133 | Ether Wisp (75%) | Royal Signet (25%) | Ley | — | — | Poison, Petrify | Valdris Catacombs (return visit, rare) |
 | Pallor Wisp | Pallor | 22 | 1,155 | 77 | 43 | 31 | 36 | 26 | 25 | 37 | 69 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Valdris Catacombs (infection source, 40%) |
 | Wailing Dead | Undead | 24 | 1,344 | 0 | 46 | 33 | 39 | 28 | 27 | 43 | 79 | — | Bone Dust (25%) | Spirit | — | — | Poison, Death | Valdris Catacombs (return visit) |
-| *The Undying Warden* | Boss | 25 | 8,000 | 87 | 72 | 45 | 73 | 43 | 33 | 2,000 | 3,500 | Catacomb Map (100%) | Warden's Binding (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Valdris Catacombs (Catacomb Heart, optional) |
+| *The Undying Warden* | Boss | 25 | 8,000 | 87 | 72 | 45 | 73 | 43 | 33 | 500 | 3,500 | Catacomb Map (100%) | Warden's Binding (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Valdris Catacombs (Catacomb Heart, optional) |
 
 ### Boss Notes — Valdris Crown Catacombs
 
@@ -184,7 +184,7 @@ has burrowed into the deepest junction. 45% Pallor source encounters.
 | Pallor Mite | Pallor | 22 | 785 | 77 | 38 | 31 | 36 | 26 | 25 | 22 | 40 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Caldera Undercity (boss spawn only — NOT Mite family) |
 | Grey Mite | Pallor | 22 | 785 | 77 | 38 | 31 | 36 | 26 | 25 | 9 | 17 | — | Grey Residue (25%) | Spirit | — | — | Despair, Death | Caldera Undercity (boss fight spawns) |
 | Pallor Nest | Pallor | 23 | 1,248 | 80 | 44 | 32 | 38 | 27 | 26 | 40 | 74 | Pallor Sample (75%) | Nest Fragment (25%) | Spirit | — | — | Despair, Death | Caldera Undercity (deeper tunnels, infection source) |
-| *Pallor Nest Mother* | Boss | 25 | 6,000 | 87 | 72 | 45 | 73 | 43 | 33 | 1,500 | 3,000 | Broodchamber Map (100%) | Nest Mother's Core (100%) | Flame, Spirit | Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Caldera Undercity (deepest junction, sidequest) |
+| *Pallor Nest Mother* | Boss | 25 | 6,000 | 87 | 72 | 45 | 73 | 43 | 33 | 87 | 3,000 | Broodchamber Map (100%) | Nest Mother's Core (100%) | Flame, Spirit | Frost | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Caldera Undercity (deepest junction, sidequest) |
 
 ### Boss Notes — Caldera Undercity
 
@@ -213,7 +213,7 @@ fallen. Kole channels the Pallor directly.
 | Elite Guard | Humanoid | 26 | 1,548 | 0 | 49 | 36 | 42 | 30 | 28 | 85 | 153 | Potion (75%) | Elite Insignia (25%) | — | — | — | — | Axis Tower (Floors 4–5, Kole's personal guard) |
 | Pallor Shade | Pallor | 26 | 1,548 | 91 | 37 | 36 | 48 | 33 | 28 | 127 | 229 | Ether Wisp (75%) | Spirit Essence (25%) | Spirit | Void | — | Despair, Death | Axis Tower (Floors 4–5, rare) |
 | Pallor Brigand | Pallor | 26 | 1,114 | 91 | 56 | 25 | 42 | 30 | 28 | 127 | 229 | Potion (75%) | Pallor Blade (25%) | Spirit | Void | — | Despair, Death | Axis Tower (rare, deserters consumed by despair) |
-| *General Vassar Kole* | Boss | 28 | 30,000 | 98 | 78 | 49 | 81 | 48 | 36 | 8,000 | 12,000 | Kole's Epaulettes (100%) | Map to the Convergence (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Ironmark Citadel Command Chamber (via Axis Tower Floor 5 tunnel) |
+| *General Vassar Kole* | Boss | 28 | 30,000 | 98 | 78 | 49 | 81 | 48 | 36 | 7,500 | 12,000 | Kole's Epaulettes (100%) | Map to the Convergence (100%) | — | — | — | Death, Petrify, Stop, Sleep, Confusion | Ironmark Citadel Command Chamber (via Axis Tower Floor 5 tunnel) |
 
 ### Scripted Set-Piece: "The Garrison Falls"
 

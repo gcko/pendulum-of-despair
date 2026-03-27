@@ -421,7 +421,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 
 **Hidden Treasures:**
 - Terrace Garden: Examine the withered tree in the Interlude. Lira identifies it as a ley-grafted specimen. Behind its roots: the Rootspark Pendant (accessory: +nature magic affinity).
-- Abandoned Forge Channel: 2 chests in dead-end branches. Contains Molten Core (crafting material) and 1,500 gold.
+- Abandoned Forge Channel: 2 chests in dead-end branches. Contains Molten Gear (crafting material) and 1,500 gold.
 - Kel's Bellows Station: If the player speaks to Kel three times across different visits, he gives them a Lucky Cog he found in the smelting waste. Accessory: +luck.
 - Central Smelting Complex rim: A narrow walkway along the pit edge (requires heat-resistant gear) leads to a chest with the Caldera Ember (unique fire-element weapon upgrade).
 

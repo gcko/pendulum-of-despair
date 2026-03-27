@@ -3591,7 +3591,7 @@ The Exposed Hull has two enemy types, both thematically tied to the coastal/harb
 - **Attacks:** Iron Slam (physical, high damage), Rust Cloud (area, inflicts DEF Down on all party members -- their equipment corrodes), Pallor Pulse (magic, Despair debuff).
 - **Behavior:** Slow-moving but hit hard. They don't chase far -- if the player retreats past the rust zone, they sink back into the hull.
 - **Visual:** When defeated, they collapse into a pile of rust flakes that the wind scatters. The hull plate where they stood is now clean metal -- they WERE the rust.
-- **Drop:** Rusted Iron (crafting material), Arcanite Shard (consumable, restores 50 MP).
+- **Drop:** Rusted Iron (crafting material), Arcanite Shard (crafting material; also restores 3 AC when consumed).
 
 ### Floor 1: Upper Deck (35x25)
 

@@ -76,8 +76,8 @@ Maren 61%). The revised rates shift the balance so weapons provide
 > **REBALANCE FLAG:** This ATK growth reduction affects all physical damage
 > calculations. The bestiary's 198 regular enemies and 29 bosses were
 > balanced against the original growth rates. Gap 3.4 (Difficulty & Balance
-> Framework) must verify that enemy HP values still produce 2-4 hit kills
-> for regulars and 3-5 minute boss fights. Until Gap 3.4 is completed,
+> Framework) must verify that enemy HP values still produce 2–4 hit kills
+> for regulars and 3–5 minute boss fights. Until Gap 3.4 is completed,
 > bestiary values are provisional.
 
 ### Damage Verification Examples
@@ -141,7 +141,7 @@ All weapon tables in the sections below use these columns:
 | Element | enum | —, Flame, Frost, Storm, Earth, Ley, Spirit, Void (per magic.md) |
 | Special | string | Passive effect or proc (if any) |
 | Price | int | Shop price in gold (— if not sold) |
-| Tier | int | 0-5 or Forged |
+| Tier | int | 0–5 or Forged |
 | Acquired | string | Where/how the weapon is obtained |
 
 ### Weapon ATK Progression by Tier
@@ -544,14 +544,22 @@ content. Not sold in any shop.
 
 ## Arcanite Forging
 
-Lira's unique crafting system. Arcanite Forging allows the party to
-create equipment from gathered materials at save points and camps.
+Lira's unique crafting system. Crafting locations follow a
+context-sensitive model:
+
+- **Devices:** craftable at save points, camps, and field menu
+- **Equipment forging and infusions:** require forge locations —
+  Ashmark, Caldera, Forgotten Forge, inn workbenches, Lira's workshop,
+  and Oasis B's jury-rigged forge workbench
+
+See [crafting.md](crafting.md) for the full interaction model.
+
 Forged equipment carries a visible **"Forged"** tag in the equipment
 menu, cannot be bought from shops, and can only be crafted by Lira.
 
 ### Forgeable Equipment
 
-Eight pieces total — five weapons and three armor. Each is listed in
+Nine pieces total — six weapons and three armor. Each is listed in
 its respective weapon/armor section above; this table collects them
 in one reference.
 
@@ -565,6 +573,7 @@ in one reference.
 | Arcanite Helm | Head | DEF 30, MDEF 22 | 1 Arcanite Ingot + 2 Drill Fragment | 400 | Interlude |
 | Pallor Ward Vest | Body (Light) | DEF 38, MDEF 25, Despair resist 50% | 3 Pallor Sample + 2 Grey Residue + 1 Spirit Essence | 500 | Act III |
 | Ley-Woven Cloak | Body (Robe) | DEF 20, MDEF 40, MP Regen 3%/turn | 2 Ether Wisp + 2 Elemental Core + 1 Ley Crystal Fragment | 500 | Act III |
+| Lira's Masterwork | Weapon (Lira) | ATK 90, +5 DEF, device uses +1 | 1 Grey Mist Essence + 1 Arcanite Ingot | 500 | Act III (Dael's Ledger quest) |
 
 ### Elemental Infusions
 
@@ -592,9 +601,13 @@ display an **(Infused: Element)** suffix in the equipment menu.
 
 Certain weapon + infusion combinations unlock a hidden synergy,
 transforming the weapon into a named variant with a bonus effect.
-There are no in-game hints until the synergy activates. When a synergy
-triggers, the notification reads: *"Lira senses a resonance between
-the [weapon] and the [element] infusion. The weapon transforms..."*
+Synergy discovery uses a layered hint system: NPC dialogue in forge
+cities provides oblique clues, and Lira reacts with unique lines when
+the player is at a forge with the right weapon and infusion materials.
+See [crafting.md](crafting.md) Section 3 for the full discovery
+distribution. When a synergy triggers, the notification reads:
+*"Lira senses a resonance between the [weapon] and the [element]
+infusion. The weapon transforms..."*
 
 | Base Weapon | Infusion | Synergy Name | Bonus Effect |
 |-------------|----------|--------------|--------------|
@@ -625,11 +638,11 @@ include type modifiers (Swords are the ×1.0 baseline).
 
 | Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
 |-----|-------------|-----------|-----------|-----------------|
-| Act I | Tier 0-1 (ATK 3-12) | Tier 0-1 (DEF 2-8) | Tier 0-1 (DEF 4-12) | Stat boosts (+5) |
-| Act II | Tier 2 (ATK 15-22) | Tier 2 (DEF 10-15) | Tier 2 (DEF 15-22) | Status immunity, Colossus Shard |
-| Interlude | Tier 3 (ATK 28-38) | Tier 3 (DEF 18-24) | Tier 3 (DEF 25-35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
-| Act III | Tier 4 (ATK 42-55) | Tier 4 (DEF 28-35) | Tier 4 (DEF 40-50) | Elemental resist, Despair Ward, Ley Amplifier |
-| Ultimate | Tier 5 (ATK 65-100) | Tier 5 (DEF 40-55) | Tier 5 (DEF 55-75) | Dreamer's Crest, Cael's Knight Crest |
+| Act I | Tier 0–1 (ATK 3–12) | Tier 0–1 (DEF 2–8) | Tier 0–1 (DEF 4–12) | Stat boosts (+5) |
+| Act II | Tier 2 (ATK 15–22) | Tier 2 (DEF 10–15) | Tier 2 (DEF 15–22) | Status immunity, Colossus Shard |
+| Interlude | Tier 3 (ATK 28–38) | Tier 3 (DEF 18–24) | Tier 3 (DEF 25–35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
+| Act III | Tier 4 (ATK 42–55) | Tier 4 (DEF 28–35) | Tier 4 (DEF 40–50) | Elemental resist, Despair Ward, Ley Amplifier |
+| Ultimate | Tier 5 (ATK 65–100) | Tier 5 (DEF 40–55) | Tier 5 (DEF 55–75) | Dreamer's Crest, Cael's Knight Crest |
 
 ---
 

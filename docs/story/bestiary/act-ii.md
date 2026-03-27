@@ -24,7 +24,7 @@ ley-infused creatures.
 | Ley Wisp | Elemental | 18 | 819 | 63 | 28 | 26 | 35 | 24 | 22 | 27 | 52 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Ley Line Depths F2–F3 |
 | Deep Serpent | Beast | 19 | 807 | 0 | 43 | 20 | 32 | 23 | 23 | 30 | 56 | Beast Hide (75%) | Serpent Fang (25%) | Frost | — | — | — | Ley Line Depths F2–F3 |
 | Crystal Sentry | Elemental | 20 | 1,078 | 70 | 40 | 33 | 34 | 24 | 19 | 32 | 60 | Element Shard (75%) | Elemental Core (25%) | Storm | — | Earth | Petrify | Ley Line Depths F2–F3 |
-| *Ley Colossus* | Elemental | 22 | 7,000 | 77 | 43 | 31 | 36 | 26 | 25 | 63 | 116 | Ley Crystal Fragment (75%) | Colossus Shard (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Petrify | Ley Line Depths F3 (mini-boss) |
+| *Ley Colossus* | Elemental | 22 | 7,000 | 77 | 43 | 31 | 36 | 26 | 25 | 150 | 116 | Ley Crystal Fragment (75%) | Colossus Shard (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Petrify | Ley Line Depths F3 (mini-boss) |
 
 ### Boss Notes — Ley Line Depths
 
@@ -47,7 +47,7 @@ and the first signs of the Pallor's reach.
 | Pipe Wraith | Spirit | 19 | 897 | 66 | 30 | 27 | 36 | 25 | 23 | 30 | 56 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Ashmark Factory Depths |
 | Overclocked Automata | Construct | 20 | 882 | 0 | 46 | 21 | 34 | 24 | 24 | 32 | 60 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Ashmark Factory Depths |
 | Pallor-Touched Worker | Humanoid | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 0 | 0 | Potion (75%) | — | — | — | — | — | Ashmark Factory Depths (non-lethal) |
-| *The Forge Warden* | Boss | 24 | 8,500 | 84 | 69 | 42 | 70 | 42 | 32 | 2,000 | 3,500 | Corrupted Tuning Fork (100%) | Drayce's Failsafe Core (100%) | Storm (150%), Spirit (125%) | Flame (50%), Earth (75%) | — | Death, Petrify, Stop, Sleep, Confusion, Poison | Ashmark Factory Depths (boss) |
+| *The Forge Warden* | Boss | 24 | 8,500 | 84 | 69 | 42 | 70 | 42 | 32 | 1,500 | 3,500 | Corrupted Tuning Fork (100%) | Drayce's Failsafe Core (100%) | Storm (150%), Spirit (125%) | Flame (50%), Earth (75%) | — | Death, Petrify, Stop, Sleep, Confusion, Poison | Ashmark Factory Depths (boss) |
 
 > **Pallor foreshadowing:** The Pallor-Touched Worker is the first
 > encounter where the party fights a human victim of the Pallor. At
@@ -104,7 +104,7 @@ begins.
 | Siege Ballista Crew | Humanoid | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Potion (75%) | Ballista Bolt (25%) | — | — | — | — | Valdris Siege (gauntlet W2) |
 | Compact Gyrocopter | Construct | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Valdris Siege (gauntlet W3) |
 | Downed Pilot | Humanoid | 18 | 819 | 0 | 36 | 26 | 31 | 22 | 22 | 16 | 30 | Potion (75%) | Pilot's Goggles (25%) | — | — | — | — | Valdris Siege (spawned by Gyrocopter) |
-| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 5,000 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
+| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 2,250 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
 
 ### Castle Defense Gauntlet
 

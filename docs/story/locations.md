@@ -787,6 +787,7 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 - Shop (see economy.md — Oasis B inventory)
 - Inn (75g per night)
 - Save Point
+- Forge workbench — jury-rigged from repurposed amplifier components; suitable for equipment forging and infusions (see [crafting.md](crafting.md))
 
 **NPCs:**
 - **Forgemaster Dellen** (Quartermaster) — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies
@@ -1173,7 +1174,7 @@ This table maps the intended player progression through locations, reflecting JR
 | 26 | Roothollow | Town | Find Torren, corruption spreading |
 | 26a | Frostcap Caverns | Dungeon | Torren's character dungeon, Frostpeak Crystal, Monastery Key |
 | 26b | Caldera Forge Depths | Dungeon | Lira's character dungeon (full access), Volcanic Ingot |
-| 26c | Dry Well of Aelhart | Dungeon (7 floors) | Optional; Edren's personal content (Floors 1-4 Interlude, 5-7 Act III) |
+| 26c | Dry Well of Aelhart | Dungeon (7 floors) | Optional; Edren's personal content (Floors 1–4 Interlude, 5–7 Act III) |
 | 27 | Archive of Ages | Dungeon | Find Maren, the truth revealed |
 
 ### Act III: The Convergence / Act IV: The Closing Door
@@ -1182,7 +1183,7 @@ This table maps the intended player progression through locations, reflecting JR
 |-------|----------|------|---------|
 | 28 | Ashgrove | Grove | Grey-touched, somber revisit |
 | 28a | Thornvein Passage | Dungeon | Optional shortcut; bypasses Pallor Wastes surface route |
-| 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2-5 via Thornvein; sealed door opens to Ley Confluence |
+| 28b | Ley Line Depths (rediscovered) | Dungeon | Floors 2–5 via Thornvein; sealed door opens to Ley Confluence |
 | 29a | Oasis A — Valdris Refugees | Oasis (overworld) | Shop, inn, save; The Last Banner sidequest |
 | 29b | Oasis B — Compact Refugees | Oasis (overworld) | Shop, inn, save; Amplifier Stabilization sidequest |
 | 29c | Oasis C — Thornmere Refugees | Oasis (overworld) | Shop, inn, save; The Cracking Stone sidequest; falls when the party first visits Oasis B |
