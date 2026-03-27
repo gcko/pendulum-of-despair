@@ -339,7 +339,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | **Drop rate** | 25% from rare enemies, boss steals, or rare field chests |
 | **Steal chance** | 75% from Pallor enemies; 10–25% from bosses |
 | **Sell range** | 150–500g |
-| **Role** | Rare materials for advanced devices and crafting. Pallor materials (Pallor Sample, Grey Residue) drop from regular Pallor enemies. Arcanite materials are boss/mini-boss exclusive. |
+| **Role** | Rare materials for advanced devices and crafting. Pallor Sample drops from regular Pallor enemies (Grey Residue is Tier 2, not Tier 3). Arcanite materials are boss/mini-boss exclusive. |
 
 **Tier 3 materials:** Arcanite Shard (200g), Arcanite Core (200g), Pallor Sample (150g), Pallor Shard (175g), Pallor Ward (200g), Royal Signet (200g), Roc Feather (180g), boss-specific drops, Dreamer's Fault (First/Crystal Age) materials (300–450g).
 
@@ -432,7 +432,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Heartwood Splint | Dreamer's Fault (Green Age) | 4 | 550 | Age-specific recipes (TBD) |
 | Iron Cog | Dreamer's Fault (Iron Age) | 4 | 700 | Age-specific recipes (TBD) |
 | Tempered Plate | Dreamer's Fault (Iron Age) | 4 | 800 | Age-specific recipes (TBD) |
-| **Boss-Specific Materials (4)** | | | | |
+| **Boss-Specific Materials (5)** | | | | |
 | Dark Scale | Beast (Corrupted Spawn) | 2 | 65 | Pallor-element crafting |
 | Vein Shard | Boss steal (Vein Guardian) | 3 | 150 | Ley-element weapon components |
 | Ley Crystal Fragment | Boss steal (Ley Colossus, Ley Titan) | 3 | 200 | Ley-element forging |

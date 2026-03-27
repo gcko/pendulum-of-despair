@@ -41,7 +41,7 @@ the player must travel to one of the named forge locations below.
 
 ### Forge Locations
 
-Equipment forging and infusions require a physical forge. Six locations
+Equipment forging and infusions require a physical forge. Seven locations
 provide forge access across the game:
 
 | Location | Region | Access Window | Notes |
