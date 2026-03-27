@@ -79,15 +79,23 @@ Equipment forging uses a five-step forge menu with three tabs:
    undiscovered slots show "???" with count
    (e.g., "3/7 Synergies Discovered")
 
+**Infusion removal:** Existing infusions can be removed for free at
+any save point (no forge required). Only *applying* a new infusion
+requires a forge. Per [equipment.md](equipment.md).
+
 ### Device Loadout Rules
 
 - **5 device type slots**, 3 charges per type — max 15 devices total
 - **Locked on dungeon entry** — loadout cannot be changed until
   reaching a save point inside the dungeon or exiting
+- **Freely changeable on the overworld** — between overworld encounters,
+  Lira can swap device types via the field menu at any time
 - **Reconfigure at save points** inside dungeons (re-craft with
   available materials and AC)
-- **Devices persist when Lira leaves party** — pre-crafted stock
-  remains usable by other party members as items
+- **Devices persist when Lira leaves party** — pre-crafted devices
+  remain in inventory and are usable by any party member through the
+  Items command in battle. Only *crafting new devices* requires Lira.
+  The "Forge Devices" menu is unavailable when Lira is absent.
 - **Empty slots** can be filled at save points if Lira has AC and
   materials
 
@@ -97,13 +105,13 @@ Equipment forging uses a five-step forge menu with three tabs:
 
 ### Pool Mechanics
 
-Per [abilities.md](abilities.md), Lira has a **flat 12 AC pool** that
-starts full each battle. AC serves two distinct systems:
+Lira has a **12 AC pool** (per [abilities.md](abilities.md): "Max 12 AC").
+AC is restored to full at inns, save points, and camps. AC serves two
+distinct systems:
 
 1. **Battle devices** ([abilities.md](abilities.md)): deployed in
-   combat (Shock Coil, Bulkhead, Arc Trap, Mending Engine, etc.) —
-   cost AC to deploy, persist on the battlefield for turns, 2-device
-   active limit
+   combat (Shock Coil, Bulkhead, Arc Trap, etc.) — cost AC to deploy,
+   persist on the battlefield for turns, 2-device active limit
 2. **Pre-crafted devices** ([items.md](items.md)): crafted at save
    points from materials + gold, carried as inventory items (5 types,
    3 charges each) — anyone can use in battle, no AC cost to use (AC
@@ -120,7 +128,7 @@ device in battle costs 0 AC — the charge was baked in during creation.
 | Basic (Act I) | 1 AC | Thermal Charge, Mending Engine, Flashbang |
 | Advanced (Act II) | 2 AC | Frost Bomb, Shock Coil, Barrier Node, Ward Emitter |
 | Expert (Interlude) | 2 AC | Gravity Anchor, Disruption Pulse |
-| Anti-Pallor (Act III) | 3 AC | Pallor Grenade, Pallor Salve, Arcanite Lance |
+| Act III | 3 AC | Pallor Grenade, Pallor Salve, Arcanite Lance |
 | Ultimate (Post-Convergence) | 4 AC | Emergency Beacon |
 
 ### AC Budget Examples
@@ -147,11 +155,16 @@ during the next combat encounters.
 
 Per [abilities.md](abilities.md):
 
-- **Rest points:** Fully restored at inns, save points, and camps
-- **Carry-over:** Unused AC carries over between rests
+- **Rest points:** Fully restored to 12 at inns, save points, and camps.
+  AC spent on pre-crafting at a save point reduces the pool until the
+  next rest — crafting 3 devices at 2 AC each leaves 6 AC for battle
+  device deployment until the next save point.
+- **Battle start:** Each battle begins with the current AC pool (not
+  auto-refilled). AC spent on crafting between battles is not recovered
+  until the next rest point.
 - **Arcanite Shards:** Restore AC when used as consumables (per
   abilities.md: "Restored at inns, save points, and by certain items
-  (Arcanite Shards)")
+  (Arcanite Shards)"). Field-usable between battles.
 
 Arcanite Shards serve a **dual purpose**: crafting material OR AC
 restorative. Using a shard to restore AC consumes it — that shard
@@ -173,7 +186,7 @@ discovery requires engaging with both.
 ### Discovery Channels
 
 **NPC Hints (forge-city NPCs):** Blacksmiths, scholars, and veterans
-in forge cities (Ashmark, Caldera, Ironmark) drop vague lore about
+in forge cities (Ashmark, Caldera, Oasis B) drop vague lore about
 legendary weapon transformations. These hints reference materials,
 elements, or weapon families without naming the exact recipe. The
 player must connect the dots.
@@ -305,7 +318,7 @@ materials, forges, and schematics. Device recipes are detailed in
 | Act II (Ashmark) | 4 — Frost Bomb, Shock Coil, Barrier Node, Ward Emitter | — | Ashmark full forge, Caldera forge |
 | Interlude | 2 — Gravity Anchor, Disruption Pulse | 3 — Arcanite Blade, Forgewright Maul, Arcanite Helm | Lira's hidden workshop, Rail Tunnels access |
 | Act III (Pallor Wastes) | 2 — Pallor Grenade, Pallor Salve | 5 — Resonance Rod, Shadowsteel Knife, Thornspear, Pallor Ward Vest, Ley-Woven Cloak | Oasis B jury-rigged forge |
-| Act III (Forgotten Forge) | — | Arcanite Lance | Forgotten Forge (ancient forge) |
+| Act III (Forgotten Forge) | 1 — Arcanite Lance | — | Forgotten Forge (ancient forge) |
 | Post-Convergence | 1 — Emergency Beacon | — | All prior forges |
 
 ### Schematic Items

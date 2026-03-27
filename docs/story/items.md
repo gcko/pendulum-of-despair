@@ -404,7 +404,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Bone Fragment | Undead | 1 | 30 | Weapon hardening, Flashbang |
 | Bone Dust | Undead | 2 | 50 | Spirit-element basics |
 | **Arcanite (4)** | | | | |
-| Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices |
+| Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices; also restores AC when consumed (see [crafting.md](crafting.md)) |
 | Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
 | Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
 | Pallor-Fused Capacitor | Ley-Warped Colossus (Ley Scar, rare steal) | 3 | 300 | Oasis B quest (Amplifier Stabilization) |

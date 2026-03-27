@@ -76,8 +76,8 @@ Maren 61%). The revised rates shift the balance so weapons provide
 > **REBALANCE FLAG:** This ATK growth reduction affects all physical damage
 > calculations. The bestiary's 198 regular enemies and 29 bosses were
 > balanced against the original growth rates. Gap 3.4 (Difficulty & Balance
-> Framework) must verify that enemy HP values still produce 2-4 hit kills
-> for regulars and 3-5 minute boss fights. Until Gap 3.4 is completed,
+> Framework) must verify that enemy HP values still produce 2–4 hit kills
+> for regulars and 3–5 minute boss fights. Until Gap 3.4 is completed,
 > bestiary values are provisional.
 
 ### Damage Verification Examples
@@ -141,7 +141,7 @@ All weapon tables in the sections below use these columns:
 | Element | enum | —, Flame, Frost, Storm, Earth, Ley, Spirit, Void (per magic.md) |
 | Special | string | Passive effect or proc (if any) |
 | Price | int | Shop price in gold (— if not sold) |
-| Tier | int | 0-5 or Forged |
+| Tier | int | 0–5 or Forged |
 | Acquired | string | Where/how the weapon is obtained |
 
 ### Weapon ATK Progression by Tier
@@ -637,11 +637,11 @@ include type modifiers (Swords are the ×1.0 baseline).
 
 | Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
 |-----|-------------|-----------|-----------|-----------------|
-| Act I | Tier 0-1 (ATK 3-12) | Tier 0-1 (DEF 2-8) | Tier 0-1 (DEF 4-12) | Stat boosts (+5) |
-| Act II | Tier 2 (ATK 15-22) | Tier 2 (DEF 10-15) | Tier 2 (DEF 15-22) | Status immunity, Colossus Shard |
-| Interlude | Tier 3 (ATK 28-38) | Tier 3 (DEF 18-24) | Tier 3 (DEF 25-35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
-| Act III | Tier 4 (ATK 42-55) | Tier 4 (DEF 28-35) | Tier 4 (DEF 40-50) | Elemental resist, Despair Ward, Ley Amplifier |
-| Ultimate | Tier 5 (ATK 65-100) | Tier 5 (DEF 40-55) | Tier 5 (DEF 55-75) | Dreamer's Crest, Cael's Knight Crest |
+| Act I | Tier 0–1 (ATK 3–12) | Tier 0–1 (DEF 2–8) | Tier 0–1 (DEF 4–12) | Stat boosts (+5) |
+| Act II | Tier 2 (ATK 15–22) | Tier 2 (DEF 10–15) | Tier 2 (DEF 15–22) | Status immunity, Colossus Shard |
+| Interlude | Tier 3 (ATK 28–38) | Tier 3 (DEF 18–24) | Tier 3 (DEF 25–35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
+| Act III | Tier 4 (ATK 42–55) | Tier 4 (DEF 28–35) | Tier 4 (DEF 40–50) | Elemental resist, Despair Ward, Ley Amplifier |
+| Ultimate | Tier 5 (ATK 65–100) | Tier 5 (DEF 40–55) | Tier 5 (DEF 55–75) | Dreamer's Crest, Cael's Knight Crest |
 
 ---
 

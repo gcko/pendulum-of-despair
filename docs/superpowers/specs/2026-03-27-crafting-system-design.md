@@ -36,7 +36,7 @@ rules into one reference.
 
 **Owns:**
 - Crafting interaction model (field menu vs forge locations)
-- AC pool rules (size, growth, restoration)
+- AC pool rules (size, restoration)
 - Device loadout rules (5 slots, locking, reconfiguration)
 - Recipe unlock progression timeline
 - Malfunction mechanics in Pallor zones
@@ -67,11 +67,9 @@ rules into one reference.
 | Equipment forging | Forge locations only | Yes | Materials + gold fee (400–500g) |
 | Elemental infusions | Forge locations only | Yes | Materials + gold fee (300–500g) |
 
-> **Design change:** equipment.md currently says forging happens "at
-> save points and camps." This spec restricts equipment forging and
-> infusions to named forge locations for narrative immersion.
-> equipment.md must be updated during implementation to reflect this
-> change. Device crafting remains available at save points/camps/field.
+> **Design change (applied):** equipment.md updated to restrict
+> equipment forging and infusions to named forge locations. Device
+> crafting remains available at save points/camps/field.
 
 ### Forge Locations
 
@@ -174,11 +172,8 @@ Per abilities.md:
 
 ## Section 4: Synergy Discovery System
 
-> **Design change:** equipment.md currently states "There are no in-game
-> hints until the synergy activates." This spec replaces that approach
-> with a layered hint system (NPC lore + Lira reactions) to improve
-> discoverability without removing the surprise of activation.
-> equipment.md must be updated during implementation to reflect this.
+> **Design change (applied):** equipment.md updated to replace "no
+> in-game hints" with layered hint system (NPC lore + Lira reactions).
 
 ### Two Discovery Channels
 
