@@ -388,14 +388,14 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Molten Gear | Construct | 2 | 70 | Flame-element forging |
 | Hound Gear | Construct | 2 | 65 | Mechanical components |
 | Stone Fragment | Construct | 2 | 55 | Earth-element crafting |
-| Salvaged Automaton Core | Construct (fixed chest, Corrund Sewers) | 2 | 85 | Forgewright device crafting (Lira-specific) |
+| Salvaged Automaton Core | Construct (fixed chest, Corrund Sewers) | 2 | 85 | Forgewright device crafting — Lira-specific (no recipe yet — reserved for future content) |
 | **Spirit/Elemental (6)** | | | | |
 | Ether Wisp | Spirit | 1 | 40 | MP restoration, Ward Emitter |
 | Spirit Essence | Spirit | 2 | 100 | Spirit-element crafting, devices |
 | Spirit Dust | Undead/Spirit | 2 | 60 | Spirit-element basics |
 | Element Shard | Elemental | 1 | 40 | Elemental infusions, devices |
 | Elemental Core | Elemental | 2 | 100 | Advanced elemental devices |
-| Emberstone | Elemental/Fire (fixed chest, Ashmark + Black Forge) | 3 | 200 | Flame-element forging, advanced fire devices |
+| Emberstone | Elemental/Fire (fixed chests: Ashmark Factory Cooling Tank + Black Forge B catwalk; 2 total) | 3 | 200 | Flame-element forging, advanced fire devices (no recipe yet — reserved for future content) |
 | **Pallor (5)** | | | | |
 | Pallor Sample | Pallor | 3 | 150 | Anti-Pallor consumables, Pallor Salve |
 | Grey Residue | Pallor | 2 | 100 | Void-element infusions |
@@ -440,7 +440,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Ley Crystal Fragment | Boss steal (Ley Colossus, Ley Titan) | 3 | 200 | Ley-element forging |
 | Reinforced Drill Bit | Boss steal (The Ironbound) | 3 | 175 | Heavy weapon components |
 | Despair Shard | Boss steal (Grey Cleaver Unbound, 100%) | 3 | 200 | Pallor-element crafting; Grey Cleaver purification component |
-| Nest Mother's Core | Boss drop (Pallor Nest Mother, 100%) | 3 | 200 | Anti-Pallor weapon modifications; concentrated Pallor essence |
+| Nest Mother's Core | Boss drop (Pallor Nest Mother, 100%) | 3 | 200 | Anti-Pallor weapon modifications — concentrated Pallor essence (no recipe yet — reserved for future content) |
 
 ### Sell Price Formula
 
