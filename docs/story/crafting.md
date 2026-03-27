@@ -128,7 +128,7 @@ device in battle costs 0 AC — the charge was baked in during creation.
 | Basic (Act I) | 1 AC | Thermal Charge, Mending Engine, Flashbang |
 | Advanced (Act II) | 2 AC | Frost Bomb, Shock Coil, Barrier Node, Ward Emitter |
 | Expert (Interlude) | 2 AC | Gravity Anchor, Disruption Pulse |
-| Act III | 3 AC | Pallor Grenade, Pallor Salve, Arcanite Lance |
+| Anti-Pallor (Act III) | 3 AC | Pallor Grenade, Pallor Salve, Arcanite Lance |
 | Ultimate (Post-Convergence) | 4 AC | Emergency Beacon |
 
 ### AC Budget Examples
