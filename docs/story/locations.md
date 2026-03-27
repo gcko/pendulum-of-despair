@@ -787,6 +787,7 @@ A ley ward bubble reinforced by jury-rigged Forgewright amplifiers — the Compa
 - Shop (see economy.md — Oasis B inventory)
 - Inn (75g per night)
 - Save Point
+- Forge workbench — jury-rigged from repurposed amplifier components; suitable for basic equipment forging and infusions (see [crafting.md](crafting.md))
 
 **NPCs:**
 - **Forgemaster Dellen** (Quartermaster) — Runs the shop with military efficiency; inventory skews toward Compact-forged gear and engineering supplies

@@ -177,21 +177,21 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 ### Recipes
 
-| Device | Category | Effect | Materials | Gold | Unlocked |
-|--------|----------|--------|-----------|------|----------|
-| Thermal Charge | Offensive | Flame AoE: 400 dmg | 2 Element Shard + 1 Scrap Metal | 100 | Act I (Lira joins) |
-| Frost Bomb | Offensive | Frost AoE: 400 dmg | 2 Element Shard + 1 Crystal Shard | 100 | Act II (Ashmark) |
-| Shock Coil | Offensive | Storm single: 600 dmg + Slow | 1 Elemental Core + 1 Scrap Metal | 200 | Act II (Ashmark) |
-| Pallor Grenade | Offensive | Spirit AoE: 500 dmg (2x vs Pallor) | 2 Pallor Sample + 1 Spirit Essence | 250 | Act III (Pallor Wastes) |
-| Barrier Node | Defensive | Party DEF +25%, 3 turns | 2 Scrap Metal + 1 Crystal Shard | 150 | Act II (Ashmark) |
-| Ward Emitter | Defensive | Party MDEF +25%, 3 turns | 2 Crystal Shard + 1 Ether Wisp | 150 | Act II (Ashmark) |
-| Mending Engine | Defensive | Heal 800 HP + cure Poison/Burn | 2 Beast Hide + 1 Spirit Essence | 150 | Act I (Lira joins) |
-| Flashbang | Utility | All enemies: 80% Blind, 2 turns | 1 Element Shard + 1 Bone Fragment | 100 | Act I (Lira joins) |
-| Gravity Anchor | Utility | All enemies: SPD -30%, 3 turns | 1 Scrap Metal + 1 Arcanite Shard | 300 | Interlude (Rail Tunnels) |
-| Disruption Pulse | Utility | Remove all enemy buffs | 1 Arcanite Shard + 1 Pallor Sample | 350 | Interlude (Rail Tunnels) |
-| Arcanite Lance | Advanced | Non-elem single: 1,500 dmg | 1 Arcanite Core + 1 Elemental Core | 500 | Act III (Forgotten Forge) |
-| Emergency Beacon | Advanced | Revive all fainted at 50% HP | 1 Arcanite Core + 2 Spirit Essence | 800 | Post-Convergence |
-| Pallor Salve | Consumable/Craft | Cure Despair (instant) | 2 Pallor Sample + 1 Spirit Essence | 200 | Act III (Pallor Wastes) |
+| Device | Category | Effect | Materials | Gold | AC Cost | Unlocked |
+|--------|----------|--------|-----------|------|---------|----------|
+| Thermal Charge | Offensive | Flame AoE: 400 dmg | 2 Element Shard + 1 Scrap Metal | 100 | 1 AC (Basic) | Act I (Lira joins) |
+| Frost Bomb | Offensive | Frost AoE: 400 dmg | 2 Element Shard + 1 Crystal Shard | 100 | 2 AC (Advanced) | Act II (Ashmark) |
+| Shock Coil | Offensive | Storm single: 600 dmg + Slow | 1 Elemental Core + 1 Scrap Metal | 200 | 2 AC (Advanced) | Act II (Ashmark) |
+| Pallor Grenade | Offensive | Spirit AoE: 500 dmg (2x vs Pallor) | 2 Pallor Sample + 1 Spirit Essence | 250 | 3 AC (Anti-Pallor) | Act III (Pallor Wastes) |
+| Barrier Node | Defensive | Party DEF +25%, 3 turns | 2 Scrap Metal + 1 Crystal Shard | 150 | 2 AC (Advanced) | Act II (Ashmark) |
+| Ward Emitter | Defensive | Party MDEF +25%, 3 turns | 2 Crystal Shard + 1 Ether Wisp | 150 | 2 AC (Advanced) | Act II (Ashmark) |
+| Mending Engine | Defensive | Heal 800 HP + cure Poison/Burn | 2 Beast Hide + 1 Spirit Essence | 150 | 1 AC (Basic) | Act I (Lira joins) |
+| Flashbang | Utility | All enemies: 80% Blind, 2 turns | 1 Element Shard + 1 Bone Fragment | 100 | 1 AC (Basic) | Act I (Lira joins) |
+| Gravity Anchor | Utility | All enemies: SPD -30%, 3 turns | 1 Scrap Metal + 1 Arcanite Shard | 300 | 2 AC (Expert) | Interlude (Rail Tunnels) |
+| Disruption Pulse | Utility | Remove all enemy buffs | 1 Arcanite Shard + 1 Pallor Sample | 350 | 2 AC (Expert) | Interlude (Rail Tunnels) |
+| Arcanite Lance | Advanced | Non-elem single: 1,500 dmg | 1 Arcanite Core + 1 Elemental Core | 500 | 3 AC (Anti-Pallor) | Act III (Forgotten Forge) |
+| Emergency Beacon | Advanced | Revive all fainted at 50% HP | 1 Arcanite Core + 2 Spirit Essence | 800 | 4 AC (Ultimate) | Post-Convergence |
+| Pallor Salve | Consumable/Craft | Cure Despair (instant) | 2 Pallor Sample + 1 Spirit Essence | 200 | 3 AC (Anti-Pallor) | Act III (Pallor Wastes) |
 
 ### Unlocking
 

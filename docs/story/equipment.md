@@ -544,8 +544,16 @@ content. Not sold in any shop.
 
 ## Arcanite Forging
 
-Lira's unique crafting system. Arcanite Forging allows the party to
-create equipment from gathered materials at save points and camps.
+Lira's unique crafting system. Crafting locations follow a
+context-sensitive model:
+
+- **Devices:** craftable at save points, camps, and field menu
+- **Equipment forging and infusions:** require forge locations —
+  Ashmark, Caldera, Forgotten Forge, inn workbenches, Lira's workshop,
+  and Oasis B's jury-rigged forge workbench
+
+See [crafting.md](crafting.md) for the full interaction model.
+
 Forged equipment carries a visible **"Forged"** tag in the equipment
 menu, cannot be bought from shops, and can only be crafted by Lira.
 
@@ -592,9 +600,13 @@ display an **(Infused: Element)** suffix in the equipment menu.
 
 Certain weapon + infusion combinations unlock a hidden synergy,
 transforming the weapon into a named variant with a bonus effect.
-There are no in-game hints until the synergy activates. When a synergy
-triggers, the notification reads: *"Lira senses a resonance between
-the [weapon] and the [element] infusion. The weapon transforms..."*
+Synergy discovery uses a layered hint system: NPC dialogue in forge
+cities provides oblique clues, and Lira reacts with unique lines when
+the player is at a forge with the right weapon and infusion materials.
+See [crafting.md](crafting.md) Section 3 for the full discovery
+distribution. When a synergy triggers, the notification reads:
+*"Lira senses a resonance between the [weapon] and the [element]
+infusion. The weapon transforms..."*
 
 | Base Weapon | Infusion | Synergy Name | Bonus Effect |
 |-------------|----------|--------------|--------------|
