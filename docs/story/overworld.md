@@ -229,9 +229,13 @@ gameplay cycle (no time-dependent NPCs, encounters, or mechanics).
 
 ### Per-Biome Atmospherics (Fixed)
 
-Each biome has a fixed atmospheric visual that defines its identity on
-the overworld. These do not cycle or change dynamically — they are the
-biome's permanent character.
+Each overworld-visible biome has a fixed atmospheric visual that defines
+its identity. These do not cycle or change dynamically — they are the
+biome's permanent character. Interior-only biomes (Underground/Cavern,
+Ancient Ruins, Ashlands) are not listed here — see
+[biomes.md](biomes.md) for their visual definitions. Sacred sites
+(Ashgrove, Stillwater Hollow) use their parent biome's atmosphere with
+zero encounter rate.
 
 | Biome | Atmospheric Effect |
 |-------|-------------------|
@@ -241,8 +245,7 @@ biome's permanent character.
 | Thornmere Wetlands | Constant fog (visibility 4--5 tiles), will-o'-wisps, flat diffused light |
 | Mountain / Alpine | Visible wind, blowing snow particles, whiteout conditions during storms |
 | Coastal / Harbor | Haze, salt spray, stronger wind |
-| Sunstone Ridge | Orange-red crystal glow, natural light from crystals |
-| Sacred Sites | Clear, calm, faint ley shimmer |
+| Ley Line Nexus (incl. Sunstone Ridge) | Orange-red crystal glow (amber variant), natural light from crystals |
 | Pallor Wastes | Grey ceiling, visual static at screen edges, muffled audio |
 
 All effects use sprite-based particle overlays and palette manipulation,
@@ -257,11 +260,11 @@ layer on top.
 
 | Trigger | Change | Areas Affected |
 |---------|--------|----------------|
-| Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
+| Act II tensions | Ley-lamps flicker (1 in 4 dim or dark), muted gold accents, lingering clouds | Valdris Crown (capital city) |
 | Interlude onset | Grey palette filter, muted colors globally | All biomes |
 | Interlude winter | Blowing snow added, whiteout conditions | Highcairn route, alpine areas |
 | Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of settlement replaced with water tiles) | Duskfen (Thornmere Wetlands) |
-| Pallor spread (Act III) | Progressive desaturation → monochrome | Fixed 10-mile radius from Convergence |
+| Pallor spread (Act III) | Progressive desaturation → monochrome | 10-mile radius from Convergence |
 | Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | Valdris, Carradan, Convergence meadow |
 
 Source: [dynamic-world.md](dynamic-world.md).
