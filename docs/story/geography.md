@@ -4,6 +4,10 @@ This document defines the physical terrain of the world of Pendulum of Despair: 
 
 Think of this as the fold-out map that came in the box of a 1994 SNES RPG. Every river has a name. Every mountain pass has a reason. Every coastline hides something worth finding.
 
+> **Related docs:** [overworld.md](overworld.md) (traversal mechanics) |
+> [biomes.md](biomes.md) | [locations.md](locations.md) |
+> [dynamic-world.md](dynamic-world.md)
+
 ---
 
 ## 1. Continental Map
@@ -143,9 +147,9 @@ Valdris occupies the northwest quadrant of the continent: a region of limestone 
 
 **Terrain Effects on Gameplay:**
 
-- **Highland paths:** Overworld movement speed reduced by 30% in mountain terrain. Random encounter rate unchanged but enemy types shift to highland beasts (ice wolves, stone elementals).
-- **Farmland:** Normal movement speed. Lowest encounter rate in the game -- the Aelhart Valley is genuinely safe in Act I.
-- **Old-growth forest:** Movement speed reduced by 15%. Encounter rate moderate. Visibility reduced -- enemies can ambush the party (back-attack chance increased).
+- **Highland paths:** Random encounter rate unchanged but enemy types shift to highland beasts (ice wolves, stone elementals).
+- **Farmland:** Lowest encounter rate in the game -- the Aelhart Valley is genuinely safe in Act I.
+- **Old-growth forest:** Encounter rate moderate. Visibility reduced -- enemies can ambush the party (back-attack chance increased).
 - **Winter access (Highcairn):** During the Interlude, the highland route to Highcairn is snowbound. Travel takes longer and encounters include cold-damage environmental hazards. The party must rest at waypoints or suffer attrition.
 
 ---
@@ -196,11 +200,11 @@ The Compact occupies the southeast: a region of river basins, quarried plains, a
 
 **Terrain Effects on Gameplay:**
 
-- **Quarried plains:** Normal movement speed. Encounter rate moderate -- Compact patrols, rogue Forgewright constructs, displaced wildlife. Dust storms occasionally reduce visibility (back-attack chance increased).
-- **Industrial urban:** Movement speed normal but navigation is channeled -- streets, bridges, and tunnels create a more linear path. Encounters are replaced by scripted events (guard patrols, factory hazards).
-- **Broken Hills:** Movement speed reduced by 20%. Moderate encounter rate (Mountains tier) -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
-- **Coastal:** Normal speed. Low encounter rate near cities. Sea routes between Bellhaven and Ashport allow fast travel after Act II (if unlocked).
-- **Caldera interior:** Movement speed reduced by 10% due to terrain (stairs, catwalks, narrow streets). Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
+- **Quarried plains:** Encounter rate moderate -- Compact patrols, rogue Forgewright constructs, displaced wildlife. Dust storms occasionally reduce visibility (back-attack chance increased).
+- **Industrial urban:** Navigation is channeled -- streets, bridges, and tunnels create a more linear path. Encounters are replaced by scripted events (guard patrols, factory hazards).
+- **Broken Hills:** Moderate encounter rate (Mountains tier) -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
+- **Coastal:** Low encounter rate near cities. Sea routes between Bellhaven and Ashport allow fast travel after Act II (if unlocked).
+- **Caldera interior:** Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
 
 ---
 
@@ -248,11 +252,11 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 
 **Terrain Effects on Gameplay:**
 
-- **Dense forest:** Movement speed reduced by 25%. Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (the player is turned back with a "you can't find your way" message).
-- **Marshland:** Movement speed reduced by 40%. Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
-- **Canopy level:** Normal movement speed on established bridges and platforms. Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
-- **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. Movement speed normal. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
-- **Sunstone Ridge:** Movement speed reduced by 15%. Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
+- **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (the player is turned back with a "you can't find your way" message).
+- **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
+- **Canopy level:** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
+- **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
+- **Sunstone Ridge:** Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
 
 ---
 
@@ -517,7 +521,7 @@ Coordinates are given as (x, y) where (0, 0) is the top-left (northwest) corner.
 
 - **Free scroll.** The camera follows the party and can scroll freely within the map boundaries. No fixed screens or room transitions on the overworld.
 - **Edge boundaries.** The camera stops at map edges -- ocean tiles fill the remaining viewport.
-- **Zoom levels.** Two: normal (1:1 tile view, 20x15 viewport) and zoomed-out (2:1, 40x30 viewport). Zoomed-out is useful for navigation but disables encounter triggers.
+- **Map screen.** The pause menu provides a full-continent map overview showing discovered locations and named routes. See [overworld.md](overworld.md) for map screen specification.
 - **Landmark pop-ups.** When the party enters a 3-tile radius of a named location, the location name appears at the top of the screen. Entering the location tile triggers the transition to the location's interior map.
 - **Region banners.** Crossing a region boundary triggers a brief text banner: "Entering the Thornmere Wilds," "Entering Carradan Compact Territory," etc.
 
@@ -669,7 +673,7 @@ The Archive's location -- deep in the Wilds, far from any settlement, accessible
 
 ### Distance Table (Approximate Travel Time on Foot)
 
-Travel times assume normal overworld movement speed. Terrain modifiers apply.
+Travel times assume normal overworld movement speed (uniform across all terrain per [overworld.md](overworld.md)). Distances are narrative approximations, not exact tile counts.
 
 | From | To | Distance (miles) | Travel Time | Terrain |
 |------|----|-----------------|-------------|---------|
