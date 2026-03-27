@@ -31,9 +31,9 @@
 
 | Crafting Type | Where | Requires Forge? | Cost |
 |---------------|-------|-----------------|------|
-| Device crafting | Field menu (anywhere outside battle) | No | AC + materials + gold |
+| Device crafting | Save points, camps, inns (field menu) | No | AC + materials + gold |
 | Equipment forging | Forge locations only | Yes | Materials + gold fee (400–500g) |
-| Elemental infusions | Forge locations only | Yes | Materials + gold fee (300–500g) |
+| Elemental infusions | Forge locations only | Yes | Materials + gold fee (300g basic / 500g advanced) |
 
 Device crafting is available from any save point, camp, or field menu.
 Equipment forging and elemental infusions require a physical forge —
@@ -88,14 +88,18 @@ requires a forge. Per [equipment.md](equipment.md).
 - **5 device type slots**, 3 charges per type — max 15 devices total
 - **Locked on dungeon entry** — loadout cannot be changed until
   reaching a save point inside the dungeon or exiting
-- **Freely changeable on the overworld** — between overworld encounters,
-  Lira can swap device types via the field menu at any time
+- **Changeable at overworld rest points** — Lira can swap device types
+  at any save point, camp, or inn on the overworld
 - **Reconfigure at save points** inside dungeons (re-craft with
   available materials and AC)
 - **Devices persist when Lira leaves party** — pre-crafted devices
   remain in inventory and are usable by any party member through the
   Items command in battle. Only *crafting new devices* requires Lira.
   The "Forge Devices" menu is unavailable when Lira is absent.
+- **Interlude device state:** When the Convergence scatters the party,
+  Sable retains whatever devices were in the loadout at the end of
+  Act II. These are her only devices until she reunites with Lira —
+  no shops sell devices and no other character can craft them.
 - **Empty slots** can be filled at save points if Lira has AC and
   materials
 
@@ -110,8 +114,10 @@ AC is restored to full at inns, save points, and camps. AC serves two
 distinct systems:
 
 1. **Battle devices** ([abilities.md](abilities.md)): deployed in
-   combat (Shock Coil, Bulkhead, Arc Trap, etc.) — cost AC to deploy,
-   persist on the battlefield for turns, 2-device active limit
+   combat — cost AC to deploy (Shock Coil 2, Bulkhead 3, Arc Trap 2,
+   Overcharge 3, Thornveil Barrier 3, Arcanite Colossus 8), persist
+   on the battlefield for turns, 2-device active limit. See
+   abilities.md for full battle device details.
 2. **Pre-crafted devices** ([items.md](items.md)): crafted at save
    points from materials + gold, carried as inventory items (5 types,
    3 charges each) — anyone can use in battle, no AC cost to use (AC
@@ -130,6 +136,13 @@ device in battle costs 0 AC — the charge was baked in during creation.
 | Expert (Interlude) | 2 AC | Gravity Anchor, Disruption Pulse |
 | Anti-Pallor (Act III) | 3 AC | Pallor Grenade, Pallor Salve, Arcanite Lance |
 | Ultimate (Post-Convergence) | 4 AC | Emergency Beacon |
+
+> **Pallor Salve dual nature:** Pallor Salve exists as both a shop
+> consumable (2,500g, stacks in Consumables tab) and a craftable device
+> (3 AC + materials + 200g, occupies a device loadout slot). The crafted
+> version is cheaper but competes with offensive devices for loadout
+> space. Players must decide: buy from shops for unlimited stacking, or
+> craft for AC efficiency.
 
 ### AC Budget Examples
 
@@ -185,8 +198,7 @@ discovery requires engaging with both.
 
 ### Discovery Channels
 
-**NPC Hints (forge-city NPCs):** Blacksmiths, scholars, and veterans
-in forge cities (Ashmark, Caldera, Oasis B) drop vague lore about
+**NPC Hints (forge-city NPCs):** NPCs in forge cities (Ashmark, Caldera, Oasis B) drop vague lore about
 legendary weapon transformations. These hints reference materials,
 elements, or weapon families without naming the exact recipe. The
 player must connect the dots.
@@ -285,10 +297,15 @@ Malfunction applies in any area classified as Pallor-corrupted:
 | Convergence dungeons | Act III–IV — all phases and anchor stations |
 | Corrupted Interlude sections | Rail Tunnels (Pallor nests), Axis Tower (Pallor-touched floors) |
 
-**Safe zones are exempt.** Town areas, inns, oases (ley ward stone
-settlements), and any location without active Pallor corruption do not
-trigger malfunction checks. The three Oases in the Pallor Wastes are
-safe — their ley ward stones suppress the corruption.
+**Corruption threshold:** Malfunction requires **Stage 2+** Pallor
+corruption (per [dynamic-world.md](dynamic-world.md)). Stage 1
+corruption (e.g., Ashmark and Caldera during the Interlude) causes
+visual glitches on Arcanite crystals but does not trigger mechanical
+malfunction. Forges in Stage 1 zones remain fully functional.
+
+**Safe zones are exempt.** Town interiors, inns, oases (ley ward stone
+settlements), and any location below Stage 2 corruption do not trigger
+malfunction checks.
 
 ### Narrative Rationale
 
@@ -320,6 +337,14 @@ materials, forges, and schematics. Device recipes are detailed in
 | Act III (Pallor Wastes) | 2 — Pallor Grenade, Pallor Salve | 5 — Resonance Rod, Shadowsteel Knife, Thornspear, Pallor Ward Vest, Ley-Woven Cloak | Oasis B jury-rigged forge |
 | Act III (Forgotten Forge) | 1 — Arcanite Lance | — | Forgotten Forge (ancient forge) |
 | Post-Convergence | 1 — Emergency Beacon | — | All prior forges |
+
+### Resource Scarcity: Arcanite Ingots
+
+Only 3 Arcanite Ingots exist in the game (fixed placement per
+[items.md](items.md)). Four recipes require them (Arcanite Blade,
+Forgewright Maul, Arcanite Helm, Lira's Masterwork). The player must
+choose which 3 of 4 to forge — this is an intentional meaningful
+choice with no buyback. Remaining recipes become available in NG+.
 
 ### Schematic Items
 

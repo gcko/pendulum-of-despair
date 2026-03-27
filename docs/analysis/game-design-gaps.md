@@ -508,7 +508,7 @@ Now complete.
 
 **Status:** COMPLETE
 **Priority:** P2
-**Files:** `docs/story/crafting.md` (primary), `docs/story/abilities.md`
+**Files:** `docs/story/crafting.md` (primary); modified: `docs/story/equipment.md`, `docs/story/items.md`, `docs/story/locations.md`
 **Depends On:** 1.4 (Items — COMPLETE), 1.5 (Equipment — COMPLETE)
 **Completed:** 2026-03-27
 
