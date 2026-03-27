@@ -5316,3 +5316,4 @@ Edren appears from the upper floor as a guest NPC (3000 HP). The Hollow focuses 
 | 18 | Valdris Siege Battlefield | II | 1 | 18–22 | 25–35 min | The Ashen Ram | Scripted battle sequence, add waves, allied NPC management |
 | 19 | Ley Nexus Hollow | Interlude | 1 | 20–24 | 20–30 min | The Ley Leech | Shifting ley lines, DPS check, Torren recovery |
 | 20 | Highcairn Monastery | Interlude | 2 | 20–24 | 25–35 min | The Pallor Hollow | Dynamic moveset mirror, guest NPC protection, Edren recovery |
+| 21 | Forgotten Forge | III | 5 | 32–36 | 60–80 min | The Architect (Stage 1), Grey Cleaver Unbound (Stage 2) | Ley Anvil destruction puzzle, stance-cycling boss, Despair-as-tool mechanic, secret entrance via Dry Well F7 |
