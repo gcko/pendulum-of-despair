@@ -46,11 +46,12 @@ provide forge access across the game:
 
 | Location | Region | Access Window | Notes |
 |----------|--------|---------------|-------|
-| Ashmark (Forge-Masters' Guild) | Carradan Compact | Act II onward | Full forge; Lira trained here |
-| Caldera (Forgewrights' Academy) | Carradan Compact | Act II onward | Erratic during Interlude (ley instability) |
+| Ashmark (Forge-Masters' Guild) | Carradan Compact | Act II onward | Full forge; Lira apprenticed here |
+| Caldera (Forgewrights' Academy) | Carradan Compact | Act II onward | Lira's alma mater; erratic during Interlude (ley instability) |
 | Forgotten Forge | Act III dungeon | Act III | Ancient forge; unlocks Arcanite Lance recipe (locations.md entry deferred — see issue pendulum-of-despair-9va) |
 | Inn workbenches | Any inn with a hearth | Act I onward | Basic forging only |
-| Lira's hidden workshop | Caldera undercity | Interlude | Safe room; full forge access |
+| Lira's workshop (Corrund) | Corrund, Consortium Quarter | Interlude | Story-critical; Sable finds Lira here |
+| Lira's workshop (Caldera) | Caldera undercity | Interlude | Safe room; full forge access |
 | Oasis B (jury-rigged forge) | Pallor Wastes | Act III | Compact refugee camp |
 
 ### Device Crafting Flow (Field Menu)
@@ -99,9 +100,9 @@ requires a forge. Per [equipment.md](equipment.md).
   remain in inventory and are usable by any party member through the
   Items command in battle. Only *crafting new devices* requires Lira.
   The "Forge Devices" menu is unavailable when Lira is absent.
-- **Interlude device state:** When the Convergence scatters the party,
-  Sable retains whatever devices were in the loadout at the end of
-  Act II. These are her only devices until she reunites with Lira —
+- **Interlude device state:** When the Interlude begins and the party
+  scatters after Cael's betrayal, Sable retains whatever devices were
+  in the loadout at the end of Act II. These are her only devices until she reunites with Lira —
   no shops sell devices and no other character can craft them.
 - **Empty slots** can be filled at save points if Lira has AC and
   materials
@@ -275,10 +276,17 @@ probability:**
 | Damage ally | Offensive devices deal **50% of their normal damage** to a random party member (capped to prevent instant kills) |
 | Fizzle | The device produces no effect; the activation is wasted |
 
-**Malfunction applicability:** Offensive devices can only roll "Damage
-ally" or "Fizzle" (not "Heal wrong target"). Defensive/healing devices
-can only roll "Heal wrong target" or "Fizzle" (not "Damage ally").
-Utility devices always Fizzle on malfunction.
+**Malfunction applicability by category** (per
+[items.md](items.md) Category column):
+
+| Category | Possible Malfunctions |
+|----------|----------------------|
+| Offensive | Damage ally or Fizzle |
+| Defensive | Heal wrong target or Fizzle |
+| Utility | Fizzle only |
+| Advanced (Arcanite Lance) | Damage ally or Fizzle (treated as Offensive) |
+| Advanced (Emergency Beacon) | Heal wrong target or Fizzle (treated as Defensive) |
+| Consumable/Craft (Pallor Salve) | Heal wrong target or Fizzle (treated as Defensive) |
 
 **Visual tell:** Arcanite crystals embedded in devices pulse with grey
 veins when operating in Pallor-corrupted zones. This visual cue
@@ -312,10 +320,12 @@ Malfunction applies in any area classified as Pallor-corrupted:
 | Corrupted Interlude sections | Rail Tunnels (Pallor nests), Axis Tower (Pallor-touched floors) |
 
 **Corruption threshold:** Malfunction requires **Stage 2+** Pallor
-corruption (per [dynamic-world.md](dynamic-world.md)). Stage 1
-corruption (e.g., Ashmark and Caldera during the Interlude) causes
-visual glitches on Arcanite crystals but does not trigger mechanical
-malfunction. Forges in Stage 1 zones remain fully functional.
+corruption (per [dynamic-world.md](dynamic-world.md)). Note: Ashmark
+edges reach Stage 2 by mid-Interlude (per
+[biomes.md](biomes.md)), so devices MAY malfunction when used in
+Ashmark's outer areas during late Interlude. Caldera remains Stage 1
+throughout. Forge interiors in both cities are treated as safe zones
+(enclosed spaces with ley ward protection).
 
 **Safe zones are exempt.** Town interiors, inns, oases (ley ward stone
 settlements), and any location below Stage 2 corruption do not trigger

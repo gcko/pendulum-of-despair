@@ -347,7 +347,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 | Property | Value |
 |----------|-------|
-| **Drop rate** | Fixed placement only (3 Arcanite Ingots in the entire game) |
+| **Drop rate** | Fixed placement only (Arcanite Ingots found in dungeon chests and quest rewards; see dungeons-world.md and sidequests.md for locations) |
 | **Steal chance** | N/A (not stealable) |
 | **Sell range** | 1,000g+ (some unsellable) |
 | **Role** | Endgame pinnacle materials. Arcanite Ingot fuels Lira's ultimate weapon/armor. Pallor Core and Grey Mist Essence are unsellable story-critical crafting components. |
@@ -406,7 +406,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | **Arcanite (4)** | | | | |
 | Arcanite Shard | Carradan | 3 | 200 | Advanced Forgewright devices; also restores AC when consumed (see [crafting.md](crafting.md)) |
 | Arcanite Core | Construct (mini-boss) | 3 | 200 | High-tier forging, Arcanite Lance |
-| Arcanite Ingot | Fixed locations (3 total) | 4 | 1,000 | Lira's ultimate weapon/armor |
+| Arcanite Ingot | Fixed locations (dungeon chests + quest rewards) | 4 | 1,000 | Forgeable equipment component |
 | Pallor-Fused Capacitor | Ley-Warped Colossus (Ley Scar, rare steal) | 3 | 300 | Oasis B quest (Amplifier Stabilization) |
 | **Humanoid/Flavor Drops (14)** | | | | |
 | Compact Insignia | Humanoid | 2 | 45 | Vendor trash (sell only) |
