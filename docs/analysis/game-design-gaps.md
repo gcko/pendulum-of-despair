@@ -506,17 +506,22 @@ Now complete.
 
 ### 3.5 Crafting System (Arcanite Forging)
 
-**Status:** SKELETAL
+**Status:** COMPLETE
 **Priority:** P2
-**Files:** `docs/story/abilities.md` (Forgewright ability referenced, no recipes)
-**Depends On:** 1.4 (Items), 1.5 (Equipment)
+**Files:** `docs/story/crafting.md` (primary), `docs/story/abilities.md`
+**Depends On:** 1.4 (Items — COMPLETE), 1.5 (Equipment — COMPLETE)
+**Completed:** 2026-03-27
 
 **What's Needed:**
-- [ ] Crafting recipe list (materials + result)
-- [ ] Material acquisition sources
-- [ ] Crafting UI/interaction model (at workbench? Menu? Lira-only?)
-- [ ] Crafted item tier progression
-- [ ] Integration with Lira's story arc (new recipes unlock with plot?)
+- [x] Crafting recipe list — already in equipment.md (8 recipes, 7 infusions) and items.md (13 devices); crafting.md references these
+- [x] Material acquisition sources — already in items.md drop tables and economy.md shops
+- [x] Crafting UI/interaction model — context-sensitive: devices in field menu, equipment/infusions at forge locations only
+- [x] Crafted item tier progression — 5 device tiers (Basic to Ultimate) with AC costs, equipment per act in recipe unlock table
+- [x] Integration with Lira's story arc — recipe unlocks track narrative milestones, schematic items gate progression
+- [x] Arcanite Charge system (flat 12 AC pool, dual-purpose with battle devices)
+- [x] Device loadout rules (5 slots, dungeon locking, save point reconfigure)
+- [x] Synergy discovery (NPC hints + Lira reactions, distributed across 7 synergies)
+- [x] Pallor malfunction mechanics (15%, Calibrate action, per abilities.md)
 
 ---
 
@@ -619,3 +624,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-25 | 2.3 UI & Menu Design | MISSING → COMPLETE. FF6 minimalist SNES pixel art UI. 14 screens designed: battle, main menu, item, equipment, magic, abilities, status, formation, config, shop, dialogue, save/load, Ley Crystal, exploration. 22 unified status icons. ATB visual (from 2.2) and dialogue specs (for 3.3) resolved. Unblocks 3.3. | — |
 | 2026-03-26 | 3.4 Difficulty & Balance | MISSING → COMPLETE. FF6 Accessible, one fixed difficulty. 2–4 hit trash (per combat-formulas.md), 3–8 min bosses. HP abundant / MP constraint. Auto-save + Faint-and-Fast-Reload. Per-act escalation. Balance validation methodology (damage/duration/economy/encounter formulas). | — |
 | 2026-03-26 | 3.3 Dialogue System Mechanics | PARTIAL → COMPLETE. SNES FF6 pure (no portraits). Sprite emotion system (14 animations), priority stack NPC resolution, party-aware dialogue (key scenes + NPC reactions), dialogue data format (7 entry fields, 8 worked examples). Unblocks 3.7. | — |
+| 2026-03-27 | 3.5 Crafting System | SKELETAL → COMPLETE. Context-sensitive crafting (devices in field, equipment at forges). Flat 12 AC pool, 5 device tiers, loadout locking. Synergy discovery (NPC hints + Lira reactions). Pallor malfunction (15%, Calibrate). Design changes applied to equipment.md, items.md, locations.md. | — |
