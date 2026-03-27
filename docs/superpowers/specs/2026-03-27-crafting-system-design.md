@@ -82,7 +82,9 @@ Equipment forging and infusions require a physical forge:
   Arcanite Lance recipe
 - **Inn workbenches** — basic forging at any inn with a hearth (Act I
   onward)
-- **Lira's hidden workshop** (Caldera undercity) — Interlude safe room
+- **Lira's workshop** (Corrund, Consortium Quarter) — Interlude;
+  story-critical (Sable finds Lira here)
+- **Lira's workshop** (Caldera undercity) — Interlude safe room
 - **Oasis B** (jury-rigged forge) — Act III
 
 ### Device Crafting Flow (Field Menu)

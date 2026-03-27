@@ -508,7 +508,7 @@ Now complete.
 
 **Status:** COMPLETE
 **Priority:** P2
-**Files:** `docs/story/crafting.md` (primary); modified: `docs/story/equipment.md`, `docs/story/items.md`, `docs/story/locations.md`
+**Files:** `docs/story/crafting.md` (primary); modified: `docs/story/equipment.md`, `docs/story/items.md`, `docs/story/locations.md`, `docs/story/economy.md`; bug fixes: `bestiary/act-ii.md`, `bestiary/act-iii.md`, `dungeons-world.md`, `dungeons-city.md`, `city-carradan.md`
 **Depends On:** 1.4 (Items — COMPLETE), 1.5 (Equipment — COMPLETE)
 **Completed:** 2026-03-27
 

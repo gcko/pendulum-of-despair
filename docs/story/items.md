@@ -350,13 +350,13 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | **Drop rate** | Fixed placement only (Arcanite Ingots found in dungeon chests and quest rewards; see dungeons-world.md and sidequests.md for locations) |
 | **Steal chance** | N/A (not stealable) |
 | **Sell range** | 1,000g+ (some unsellable) |
-| **Role** | Endgame pinnacle materials. Arcanite Ingot fuels Lira's ultimate weapon/armor. Pallor Core and Grey Mist Essence are unsellable story-critical crafting components. |
+| **Role** | Endgame pinnacle materials. Arcanite Ingots are used in forgeable equipment for multiple characters (Edren, Lira, shared helm). Pallor Core and Grey Mist Essence are unsellable story-critical crafting components. |
 
 **Tier 4 materials:** Arcanite Ingot (1,000g), Pallor Core (unsellable), Grey Mist Essence (unsellable), Dreamer's Fault (Green/Iron Age) materials (500–800g).
 
 ### Complete Material List
 
-> **68 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+> **69 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
 
 | Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
 |------|----------------|------|---------------|---------------------|

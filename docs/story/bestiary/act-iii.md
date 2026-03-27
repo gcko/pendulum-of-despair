@@ -174,7 +174,7 @@ Requires the Archivist's Codex (from Archive of Ages) to access.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 5,000 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
+| *Ley Titan* | Boss | 28 | 18,000 | 98 | 78 | 49 | 81 | 48 | 36 | 800 | 8,000 | Ley Crystal Fragment (100%) | Titan's Core (100%) | — | — | Flame, Frost, Storm, Earth, Ley, Spirit, Void | Death, Petrify, Stop, Sleep, Confusion | Ley Line Depths F5 (boss arena) |
 
 ### Boss Notes — Ley Line Depths
 

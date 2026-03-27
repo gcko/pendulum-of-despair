@@ -745,7 +745,7 @@ Already priced in `items.md` (100–800g per device + materials). See the Forgew
 - **Forging fees:** 400–500g per item (low gold cost)
 - **Real cost is materials:** An Arcanite Ingot sells for 1,000g; using it to forge a weapon is a 1,000g opportunity cost on top of the fee
 - **Total effective cost:** Gold fee + material sell value = ~1,500–2,500g — comparable to buying Tier 3 shop equivalents (3,500–5,000g), but forged items have superior stats
-- **9 forgeable items:** 6 weapons (one per character except Cael, plus Lira's Masterwork) + 3 armor pieces
+- **9 forgeable items:** 5 standard weapons (one per character except Cael) + Lira's Masterwork (her ultimate weapon) + 3 armor pieces
 - **No forged greatsword:** Intentional — Cael departs during the Interlude and returns briefly. His progression relies on shop/chest gear.
 
 ### Elemental Infusions
