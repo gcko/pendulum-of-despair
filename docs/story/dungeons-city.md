@@ -225,7 +225,7 @@ KEY:  ### = rough stone (older construction)   === = passage
 **Boss rewards:** Warden's Binding (accessory -- grants Auto-Protect and Auto-Shell at battle start, unique), Catacomb Map (key item -- reveals all secret passages in Valdris Crown on the minimap), 2000g.
 
 **Treasure:**
-- Ley Crystal Vein: Harvest 2x Ley Crystal Shard (crafting material -- used in Lira's advanced recipes)
+- Ley Crystal Vein: Harvest 2x Ley Crystal Fragment (crafting material — used in Lira's advanced recipes)
 - Ritual Chamber: Examining the pact-circle with Maren or Torren reveals the original Seven Tower binding ritual. Lore entry unlocked. If all seven candle positions are lit (requires 7x Ley-Lanterns or the Bioluminescent Lantern from Roothollow), a hidden compartment opens: the Pact-Keeper's Rod (weapon -- staff, MAG +24, "The first sorcerers spoke to the ley lines. The ley lines spoke back.")
 - Spirit Well: 1x Mana Tincture (the well is dry, but a residue of ley energy remains)
 
@@ -496,7 +496,7 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 
 **Treasure:**
 - Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
-- Forge Channel (hidden chest in a dead-end branch): Molten Core (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
+- Forge Channel (hidden chest in a dead-end branch): Molten Gear (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
 - Escape Tunnel entrance: Survival Pack (3x Standard Ration, 2x Healing Draught, 1x Smoke Capsule)
 
 ### Sidequest Boss: The Pallor Nest Mother (6000 HP)

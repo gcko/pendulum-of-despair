@@ -437,6 +437,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 | Vein Shard | Boss steal (Vein Guardian) | 3 | 150 | Ley-element weapon components |
 | Ley Crystal Fragment | Boss steal (Ley Colossus, Ley Titan) | 3 | 200 | Ley-element forging |
 | Reinforced Drill Bit | Boss steal (The Ironbound) | 3 | 175 | Heavy weapon components |
+| Despair Shard | Boss steal (Grey Cleaver Unbound, 100%) | 3 | 200 | Pallor-element crafting; Grey Cleaver purification component |
 
 ### Sell Price Formula
 

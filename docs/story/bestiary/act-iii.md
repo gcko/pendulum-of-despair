@@ -268,8 +268,8 @@ trapped in a machine.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| *The Architect (Stage 1)* | Boss | 34 | 20,000 | 0 | 93 | 58 | 95 | 57 | 42 | 5,000 | 8,000 | Forge Schematic (100%) | Architect's Hammer (100%) | Storm | — | — | Death, Petrify, Stop, Sleep, Confusion, Poison, Berserk, Despair | Forgotten Forge F5 (Anvil Vault) |
-| *Grey Cleaver Unbound (Stage 2)* | Boss | 36 | 25,000 | 126 | 97 | 62 | 100 | 60 | 43 | 5,000 | 8,000 | Despair Shard (100%) | Grey Cleaver (100%) | Spirit | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Forgotten Forge F5 (Anvil Vault) |
+| *The Architect (Stage 1)* | Boss | 34 | 20,000 | 0 | 93 | 58 | 95 | 57 | 42 | 4,000 | 8,000 | Forge Schematic (100%) | Architect's Hammer (100%) | Storm | — | — | Death, Petrify, Stop, Sleep, Confusion, Poison, Berserk, Despair | Forgotten Forge F5 (Anvil Vault) |
+| *Grey Cleaver Unbound (Stage 2)* | Boss | 36 | 25,000 | 126 | 97 | 62 | 100 | 60 | 43 | 280 | 8,000 | Despair Shard (100%) | Grey Cleaver (100%) | Spirit | — | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Forgotten Forge F5 (Anvil Vault) |
 
 ### Boss Notes — The Forgotten Forge
 

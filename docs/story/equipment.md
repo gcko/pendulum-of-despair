@@ -559,7 +559,7 @@ menu, cannot be bought from shops, and can only be crafted by Lira.
 
 ### Forgeable Equipment
 
-Eight pieces total — five weapons and three armor. Each is listed in
+Nine pieces total — six weapons and three armor. Each is listed in
 its respective weapon/armor section above; this table collects them
 in one reference.
 
@@ -573,6 +573,7 @@ in one reference.
 | Arcanite Helm | Head | DEF 30, MDEF 22 | 1 Arcanite Ingot + 2 Drill Fragment | 400 | Interlude |
 | Pallor Ward Vest | Body (Light) | DEF 38, MDEF 25, Despair resist 50% | 3 Pallor Sample + 2 Grey Residue + 1 Spirit Essence | 500 | Act III |
 | Ley-Woven Cloak | Body (Robe) | DEF 20, MDEF 40, MP Regen 3%/turn | 2 Ether Wisp + 2 Elemental Core + 1 Ley Crystal Fragment | 500 | Act III |
+| Lira's Masterwork | Weapon (Lira) | ATK 90, +5 DEF, device uses +1 | 1 Grey Mist Essence + 1 Arcanite Ingot | 500 | Act III (Dael's Ledger quest) |
 
 ### Elemental Infusions
 

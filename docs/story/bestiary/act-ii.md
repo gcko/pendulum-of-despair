@@ -104,7 +104,7 @@ begins.
 | Siege Ballista Crew | Humanoid | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Potion (75%) | Ballista Bolt (25%) | — | — | — | — | Valdris Siege (gauntlet W2) |
 | Compact Gyrocopter | Construct | 20 | 980 | 0 | 40 | 29 | 34 | 24 | 24 | 32 | 60 | Scrap Metal (75%) | Crystal Shard (25%) | Storm | — | — | Poison, Sleep, Confusion, Berserk, Despair | Valdris Siege (gauntlet W3) |
 | Downed Pilot | Humanoid | 18 | 819 | 0 | 36 | 26 | 31 | 22 | 22 | 16 | 30 | Potion (75%) | Pilot's Goggles (25%) | — | — | — | — | Valdris Siege (spawned by Gyrocopter) |
-| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 5,000 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
+| *The Ashen Ram* | Boss | 22 | 25,000 | 77 | 64 | 40 | 64 | 39 | 30 | 2,250 | 8,000 | Pallor-Laced Iron (100%) | Compact Battle Standard (100%) | Storm, Flame (Phase 3 core only) | Frost | Earth | Death, Petrify, Stop, Sleep, Confusion | Valdris Siege (boss) |
 
 ### Castle Defense Gauntlet
 
