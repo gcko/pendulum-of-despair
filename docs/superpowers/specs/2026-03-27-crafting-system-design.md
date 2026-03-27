@@ -123,8 +123,10 @@ Equipment forging and infusions require a physical forge:
 
 ### Pool Mechanics
 
-Per abilities.md, Lira has a **flat 12 AC pool** that starts full
-each battle. AC is used for two distinct systems:
+Lira has a **12 AC pool** (per abilities.md: "Max 12 AC"). Restored
+to full at rest points. Pre-crafting draws from this pool, reducing
+AC available for battle device deployment until the next rest. AC is
+used for two distinct systems:
 
 1. **Battle devices** (abilities.md): deployed in combat (Shock Coil,
    Bulkhead, Arc Trap, Mending Engine, etc.) — cost AC to deploy,

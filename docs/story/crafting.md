@@ -153,15 +153,15 @@ during the next combat encounters.
 
 ### AC Restoration
 
-Per [abilities.md](abilities.md):
-
 - **Rest points:** Fully restored to 12 at inns, save points, and camps.
   AC spent on pre-crafting at a save point reduces the pool until the
   next rest — crafting 3 devices at 2 AC each leaves 6 AC for battle
   device deployment until the next save point.
-- **Battle start:** Each battle begins with the current AC pool (not
-  auto-refilled). AC spent on crafting between battles is not recovered
-  until the next rest point.
+- **Battle start:** Per [abilities.md](abilities.md), "Starts each
+  battle at max" — this means the *current* max (12 minus any AC spent
+  on pre-crafting since the last rest). Battle device deployment draws
+  from this pool during combat. AC is not auto-refilled between
+  battles; only rest points restore the full 12.
 - **Arcanite Shards:** Restore AC when used as consumables (per
   abilities.md: "Restored at inns, save points, and by certain items
   (Arcanite Shards)"). Field-usable between battles.
