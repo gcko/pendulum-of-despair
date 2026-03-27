@@ -232,3 +232,67 @@ Summary format matches story-review-loop format but notes
 - **Local commits, single push.** Same as story-review-loop.
 - **Propagation sweep mandatory.** Same as story-review-loop.
 - **Read verification-checklists.md.** Agents B and C must read it.
+
+## The Expanding File Rule (CRITICAL)
+
+<HARD-GATE>
+**Never declare CLEAN without reading unexplored files.**
+
+On PR #35, 5 COPE rounds declared CLEAN. Then a single tear-apart
+pass reading previously-unexplored files (sidequests.md, npcs.md,
+dungeons-world.md, bestiary/) found 7 more issues including a
+CRITICAL data error (Arcanite Ingot count wrong by 7x).
+
+The problem: agents keep re-reading the same files they already
+verified. They develop confirmation bias. Copilot doesn't have this
+problem because it reads the ENTIRE codebase on every review.
+</HARD-GATE>
+
+### How It Works
+
+Each round must include at least ONE agent that reads files NO
+previous round has checked. Track which canonical files have been
+read across all rounds:
+
+**Round 1 agents typically check:** abilities.md, items.md,
+equipment.md, economy.md, locations.md, events.md, ui-design.md
+
+**Round 2+ agents must EXPAND to:** sidequests.md, npcs.md,
+characters.md, dungeons-world.md, dungeons-city.md, bestiary/,
+magic.md, dynamic-world.md, outline.md, geography.md
+
+**What to look for in unexplored files:**
+- Dungeon chest contents that contradict item count claims
+- Quest rewards that add items the doc says are scarce
+- NPC dialogue that doesn't match attributed hint sources
+- Boss stat tables with values that differ from bestiary/bosses.md
+- Character ability descriptions that contradict mechanic rules
+- Corruption/progression state changes that affect zone mechanics
+
+### Agent Instruction Template for Expanding Rounds
+
+Add this to ONE agent prompt per round (rotate which agent gets it):
+
+```
+EXPANDING FILE CHECK: Previous rounds have already verified
+[list files checked]. This round, you MUST read these files that
+NO previous agent has checked:
+- [list 3-4 unexplored files relevant to the PR's topic]
+
+For EACH unexplored file, find where it references or is
+referenced by the changed files. Check for contradictions,
+stale values, and missing cross-references.
+```
+
+### The "CLEAN" Verdict
+
+Do NOT declare CLEAN unless:
+1. All 3 agents report zero issues, AND
+2. At least one agent in this round read files not checked by
+   any previous round, AND
+3. The expanding file check found zero issues
+
+If conditions 1-2 are met but 3 is not (expanding check found
+issues), fix them and run another round. CLEAN means "we checked
+everywhere and found nothing," not "we checked the same files
+again and found nothing new."
