@@ -48,7 +48,7 @@ provide forge access across the game:
 |----------|--------|---------------|-------|
 | Ashmark (Forge-Masters' Guild) | Carradan Compact | Act II onward | Full forge; Lira trained here |
 | Caldera (Forgewrights' Academy) | Carradan Compact | Act II onward | Erratic during Interlude (ley instability) |
-| Forgotten Forge | Act III dungeon | Act III | Ancient forge; unlocks Arcanite Lance recipe (location entry pending in locations.md) |
+| Forgotten Forge | Act III dungeon | Act III | Ancient forge; unlocks Arcanite Lance recipe (locations.md entry deferred — see issue pendulum-of-despair-9va) |
 | Inn workbenches | Any inn with a hearth | Act I onward | Basic forging only |
 | Lira's hidden workshop | Caldera undercity | Interlude | Safe room; full forge access |
 | Oasis B (jury-rigged forge) | Pallor Wastes | Act III | Compact refugee camp |
