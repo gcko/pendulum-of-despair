@@ -78,7 +78,7 @@ fights rather than individual trash mobs. Support characters
 
 > **Note:** The "Regular Enemy HP by Act" table in
 > [combat-formulas.md](combat-formulas.md) was reconciled with the
-> bestiary in PR #35. Both tables now use actual bestiary values.
+> bestiary in PR #39. Both tables now use actual bestiary values.
 > The bestiary is authoritative for enemy stats.
 
 ### 2.2 Boss Fight Duration

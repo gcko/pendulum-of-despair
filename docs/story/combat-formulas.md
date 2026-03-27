@@ -428,9 +428,11 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 
 ### Boss HP Table
 
-Canonical boss roster from [bestiary/bosses.md](bestiary/bosses.md).
-All HP and act values verified against the bestiary. See bosses.md for
-full stat tables and AI scripts.
+Key bosses from [bestiary/bosses.md](bestiary/bosses.md) (20 of 30
+in the full roster). Omits Pallor Wastes trial bosses (4), Dreamer's
+Fault bosses (4), The Grey Keeper, and Pallor Echo. All listed HP
+and act values match bosses.md. See bosses.md for the complete
+roster, stat tables, and AI scripts.
 
 | Boss | Act | HP | Rationale |
 |------|-----|----|-----------|
@@ -452,7 +454,7 @@ full stat tables and AI scripts.
 | Wellspring Guardian | III | 28,000 | Dry Well boss. 3 phases. |
 | The Architect (Stage 1) | III | 20,000 | Forgotten Forge. |
 | Grey Cleaver Unbound (Stage 2) | III | 25,000 | Forgotten Forge (follows Architect). |
-| Cael, Knight of Despair | III | 45,000 + 35,000 | 2 phases. Uses party's tactics against them. |
+| Cael, Knight of Despair | III | Phase 1: 45,000; Phase 2: 35,000 | 2 phases. Uses party's tactics against them. |
 | The Pallor Incarnate | III | 70,000 | Final boss. FF6-scale. |
 
 **Final gauntlet total:** 45K + 35K + 70K = **150,000 HP**
@@ -473,7 +475,7 @@ authoritative for enemy stats.
 | Act II | 14–20 | 378–1,078 | 2–3 |
 | Interlude | 18–26 | 556–1,702 | 2–3 |
 | Act III (main) | 28–36 | 1,000–2,784 | 1–2 (Edren one-shots most) |
-| Act III (Ley Scar, optional) | 40–45 | 3,400–4,205 | 2–3 |
+| Act III (Ley Scar, optional) | 40–45 | 3,380–4,205 | 2–3 |
 | Post-game (Dreamer's Fault) | 42–100 | 3,414–19,220 | 2–4 |
 
 > **Note:** By Act III, the quadratic ATK² scaling causes the primary
