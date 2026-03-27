@@ -449,17 +449,23 @@ Now complete.
 
 ### 3.2 Overworld Traversal Mechanics
 
-**Status:** PARTIAL
+**Status:** COMPLETE
 **Priority:** P2
-**Files:** `docs/story/geography.md` (layout exists, mechanics missing)
+**Files:** `docs/story/overworld.md` (primary); modified: `docs/story/geography.md`
 **Depends On:** None
+**Completed:** 2026-03-27
 
 **What's Needed:**
-- [ ] Tile types with passability rules (grass, forest, mountain, water, road, desert)
-- [ ] Movement speed per terrain type
-- [ ] Terrain encounter rate modifiers
-- [ ] Transition between overworld and locations (fade? walk-in?)
-- [ ] Weather/time-of-day effects (if any)
+- [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional tiles deferred to Gap 3.1
+- [x] Movement speed per terrain type — resolved: uniform on-foot speed (no per-terrain modifiers), per SNES convention; 7 speed tiers removed from geography.md
+- [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 11 terrain zones); overworld.md references, does not duplicate
+- [x] Transition between overworld and locations — fade to black (overworld → location), seamless (within-location), FF6 battle transitions (Mode 7 zoom + mosaic + distinct boss)
+- [x] Weather/time-of-day effects — FF6 Plus: location-fixed atmospherics + 6 story-triggered overrides; no day/night gameplay cycle (biomes.md visual palette shifts are cosmetic only)
+- [x] Overworld presentation (Mode 7-style perspective, miniaturized sprites, HDMA horizon gradient)
+- [x] Map screen specification (menu-accessed, parchment style, first-visit location discovery)
+- [x] Design changes applied: geography.md speed modifiers removed, zoom mechanic removed
+
+**Blocking:** ~~Overworld implementation~~ Now unblocks: 3.1 (Transport & Vehicle System — vehicle-conditional tiles)
 
 ---
 
@@ -625,3 +631,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-26 | 3.4 Difficulty & Balance | MISSING → COMPLETE. FF6 Accessible, one fixed difficulty. 2–4 hit trash (per combat-formulas.md), 3–8 min bosses. HP abundant / MP constraint. Auto-save + Faint-and-Fast-Reload. Per-act escalation. Balance validation methodology (damage/duration/economy/encounter formulas). | — |
 | 2026-03-26 | 3.3 Dialogue System Mechanics | PARTIAL → COMPLETE. SNES FF6 pure (no portraits). Sprite emotion system (14 animations), priority stack NPC resolution, party-aware dialogue (key scenes + NPC reactions), dialogue data format (7 entry fields, 8 worked examples). Unblocks 3.7. | — |
 | 2026-03-27 | 3.5 Crafting System | SKELETAL → COMPLETE. Context-sensitive crafting (devices in field, equipment at forges). Flat 12 AC pool, 5 device tiers, loadout locking. Synergy discovery (NPC hints + Lira reactions). Pallor malfunction (15%, Calibrate). Design changes applied to equipment.md, items.md, locations.md. | — |
+| 2026-03-27 | 3.2 Overworld Traversal | PARTIAL → COMPLETE. FF6 Plus philosophy. Mode 7 presentation, 5 passability types (vehicle tiles deferred to 3.1), uniform on-foot speed, fade-to-black transitions, FF6 battle transitions (Mode 7 zoom + mosaic), location-fixed weather + 6 story overrides. Speed modifiers and zoom removed from geography.md. Unblocks 3.1. | — |
