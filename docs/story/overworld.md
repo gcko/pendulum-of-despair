@@ -141,3 +141,139 @@ Five tile categories govern overworld movement:
   environmental hazards (sinkholes, steam vents, rising water) are
   interior/dungeon features, not overworld tiles. The overworld is
   traversal and encounter space only.
+
+---
+
+## 3. Screen Transitions
+
+### Overworld → Location (Fade to Black)
+
+When the party enters a location, the overworld's miniaturized scale
+shifts to full-size interior maps via a fade transition:
+
+1. Party sprite walks onto an entry trigger tile
+2. Location name banner appears briefly (triggered at 3-tile approach
+   radius per [geography.md](geography.md) Section 5)
+3. Screen brightness ramps down (~0.5 seconds, 16 linear steps from
+   full to black)
+4. Interior map loads during the black screen
+5. Brightness ramps back up; party appears at the location entrance
+   at full-size scale
+
+### Within-Location (Seamless)
+
+Interior transitions use seamless movement to maintain spatial
+continuity:
+
+- Room-to-room and floor-to-floor transitions use edge-scrolling or
+  door-walk-through — the player walks off one edge and the new area
+  scrolls in
+- No fade unless loading a substantially different tileset (e.g.,
+  descending multiple dungeon floors at once)
+- Per the Chrono Trigger / Secret of Mana model for interior continuity
+
+### Battle Transitions
+
+Battle transitions are visual-only — they do not encode tactical
+information. Battle advantage (preemptive, normal, or back-attack) is
+revealed when the battle screen loads, not during the transition.
+
+- **Overworld encounters:** Mode 7 zoom-into-ground. The camera rapidly
+  scales into the terrain, screen flash, cut to the battle screen. Per
+  FF6's canonical overworld battle entry.
+- **Dungeon/interior encounters:** Mosaic pixelation. The screen
+  dissolves into progressively larger color blocks, then fades to
+  black and cuts to the battle screen. Per FF6's dungeon model.
+- **Boss encounters:** Distinct transition. Screen flash (brief white
+  frame), hold, then a slower, more dramatic version of the
+  context-appropriate transition (zoom on overworld, mosaic in
+  dungeons). Signals narrative weight without encoding tactical
+  information.
+- **Post-battle return:** Fade from black back to the field. Danger
+  counter resets to 0 (per [geography.md](geography.md) Section 5
+  encounter system).
+
+### Region Boundary Banners
+
+Crossing a biome border triggers a brief text overlay with no gameplay
+interruption:
+
+- **Text banner:** "Entering the Thornmere Wilds," "Entering Carradan
+  Compact Territory," etc. Appears over gameplay, fades after
+  ~2 seconds.
+- **Music crossfade:** 3-second transition — outgoing biome music fades
+  from 100% to 0% over 1.5 seconds, incoming biome music fades from
+  0% to 100% over 1.5 seconds. Crossfade begins at the transition's
+  midpoint tile. Per [biomes.md](biomes.md) Music Crossfades section.
+- **Pallor exception:** Music does not crossfade. It cuts to silence,
+  then the Pallor's drone fades in over 5 seconds. The silence between
+  is deliberate.
+- **Ley Line Nexus exception:** The nexus hum blends additively with
+  the surrounding biome's music rather than replacing it, creating a
+  layered soundtrack.
+
+---
+
+## 4. Weather & Atmospheric Effects (FF6 Plus)
+
+Location-fixed atmospheric visuals per biome, with story-triggered
+overrides at act boundaries. No dynamic weather cycling. No day/night
+gameplay cycle (no time-dependent NPCs, encounters, or mechanics).
+
+> **Visual time-of-day:** [biomes.md](biomes.md) Section 4 defines
+> cosmetic palette shifts for dawn/day/dusk/night per biome. These are
+> programmatic color adjustments (tint overlays, not separate tilesets)
+> that do not affect gameplay — no encounters, NPC availability, or
+> mechanical systems change with time of day. This document references
+> but does not own that visual system; biomes.md remains authoritative.
+
+### Per-Biome Atmospherics (Fixed)
+
+Each biome has a fixed atmospheric visual that defines its identity on
+the overworld. These do not cycle or change dynamically — they are the
+biome's permanent character.
+
+| Biome | Atmospheric Effect |
+|-------|-------------------|
+| Valdris Highlands | Gentle wind, drifting clouds, warm afternoon light |
+| Carradan Industrial | Permanent smog layer, amber-filtered light, steam rising from grating |
+| Thornmere Deep Forest | Spore/mote particles, no ground-level wind, canopy-filtered light |
+| Thornmere Wetlands | Constant fog (visibility 4--5 tiles), will-o'-wisps, flat diffused light |
+| Mountain / Alpine | Visible wind, blowing snow particles, whiteout conditions during storms |
+| Coastal / Harbor | Haze, salt spray, stronger wind |
+| Sunstone Ridge | Orange-red crystal glow, natural light from crystals |
+| Sacred Sites | Clear, calm, faint ley shimmer |
+| Pallor Wastes | Grey ceiling, visual static at screen edges, muffled audio |
+
+All effects use sprite-based particle overlays and palette manipulation,
+consistent with SNES rendering techniques. Source:
+[biomes.md](biomes.md).
+
+### Story-Triggered Overrides
+
+Story progression changes the overworld's atmospheric character at act
+boundaries. Overrides **replace** the base atmospheric — they do not
+layer on top.
+
+| Trigger | Change | Areas Affected |
+|---------|--------|----------------|
+| Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
+| Interlude onset | Grey palette filter, muted colors globally | All biomes |
+| Interlude winter | Blowing snow added, whiteout conditions | Highcairn route, alpine areas |
+| Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of settlement replaced with water tiles) | Duskfen (Thornmere Wetlands) |
+| Pallor spread (Act III) | Progressive desaturation → monochrome | Fixed 10-mile radius from Convergence |
+| Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | Valdris, Carradan, Convergence meadow |
+
+Source: [dynamic-world.md](dynamic-world.md).
+
+### Implementation Notes
+
+- Biome transition strips (3--5 tiles per [biomes.md](biomes.md)) swap
+  the particle/palette set at the midpoint — no two biome atmospherics
+  need to blend simultaneously
+- Palette manipulation for act progression uses color subtraction (SNES
+  technique: subtracting a constant from all pixel values produces
+  desaturation/darkening without per-tile palette swaps)
+- The Pallor Wastes override is the most extreme: it replaces all biome
+  visuals within its radius with the Stage 3 corruption tileset (per
+  [biomes.md](biomes.md) Pallor Corruption Overlay System)
