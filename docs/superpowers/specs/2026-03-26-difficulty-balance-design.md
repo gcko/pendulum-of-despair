@@ -238,10 +238,10 @@ push the player 1–3 levels above these targets.
 | Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
-| Interlude dungeons | Int | 25–50 | Various (28–35) |
+| Interlude dungeons | Int | 25–50 | Various (22–28) |
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
-| Dreamer's Fault | Post | 70–150 | Optional (50–100) |
+| Dreamer's Fault | Post | 70–150 | Optional (50–86) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference — NOT directly comparable to player level.

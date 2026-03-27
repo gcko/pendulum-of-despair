@@ -76,13 +76,15 @@ the challenge coming from encounter rate, Despair status, and boss
 fights rather than individual trash mobs. Support characters
 (Torren, Maren) still need 2–4 physical hits or use magic.
 
-> **Note:** The "Regular Enemy HP by Act" table in combat-formulas.md
-> lists Act III enemy HP as 6,000–14,000, but the actual bestiary
-> (act-iii.md) has Act III regulars at 1,000–2,784 HP. The
-> combat-formulas.md table appears to be aspirational targets from
-> before the bestiary was fully populated. The bestiary is
-> authoritative for actual enemy stats; the combat-formulas.md table
-> needs reconciliation in a future pass.
+> **Note:** The "Regular Enemy HP by Act" table in
+> [combat-formulas.md](combat-formulas.md) lists Act III enemy HP as
+> 6,000–14,000, but the actual bestiary
+> ([act-iii.md](bestiary/act-iii.md)) has Act III regulars at
+> 1,000–2,784 HP. The [combat-formulas.md](combat-formulas.md) table
+> appears to be aspirational targets from before the bestiary was
+> fully populated. The bestiary is authoritative for actual enemy
+> stats; the combat-formulas.md table needs reconciliation in a
+> future pass.
 
 ### 2.2 Boss Fight Duration
 
@@ -133,8 +135,7 @@ Add healing/Despair/rebuff overhead (~2.8× base = ~210s — higher than
 typical due to Despair management and Cael's Rally counter forcing
 frequent rebuffs) and 2 phase transitions with scripted dialogue
 (~45s each = ~90s): **~5–5.5 minutes.**
-Within the 5–7 minute target. Per [combat-formulas.md](combat-formulas.md)
-§ Fight Duration Targets: major bosses target 5–8 minutes.
+Within the penultimate boss 5–7 minute target (see table above).
 
 ### 2.3 Encounter Duration (Random Battles)
 
@@ -245,10 +246,10 @@ push the player 1–3 levels above these targets.
 | Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
 | Bellhaven Smuggler Tunnels | II | 16–20 | No boss (regular enemies only) |
-| Interlude dungeons | Int | 25–50 | Various (28–35) |
+| Interlude dungeons | Int | 25–50 | Various (22–28) |
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
-| Dreamer's Fault | Post | 70–150 | Optional (50–100) |
+| Dreamer's Fault | Post | 70–150 | Optional (50–86) |
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference used to compute enemy stats via growth
@@ -393,7 +394,7 @@ Per [events.md](events.md) § Faint and Fast Reload:
   Warden's heat shield requires magic to bypass).
 - **Resources:** Comfortable. Equipment costs rise but gold income
   keeps pace (~91% affordability for engaged players including
-  sidequests; ~70% on critical path alone per economy.md).
+  sidequests; ~76% on critical path alone per [economy.md](economy.md)).
 - **Party:** Splits during Act II create resource pressure —
   different party compositions force different strategies.
 - **Player learns:** Status management, party composition strategy,
@@ -500,8 +501,11 @@ Where:
   (typically 0.55–0.65, lower for harder bosses requiring more healing)
 - `phase_transitions` = total seconds of scripted events/invulnerability
   (typically 15–45s per transition × number of transitions)
-- `healing_overhead_mult` = multiplier for non-damage time (typically
-  1.5–2.0×, accounting for healing, rebuffing, Despair management)
+- `healing_overhead_mult` = multiplier for time lost to failed/blocked
+  actions, animation delays, and menu navigation (typically 1.5–2.0×).
+  Note: `damage_action_ratio` models the *decision* to heal vs attack;
+  `healing_overhead_mult` models the *execution* overhead (slower action
+  cadence during recovery phases). They are complementary, not redundant.
 
 If `duration_final` falls outside the target range for that boss
 type (see Section 2.2), adjust boss HP until it does.
