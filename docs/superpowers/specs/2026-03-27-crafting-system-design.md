@@ -63,7 +63,7 @@ rules into one reference.
 
 | Crafting Type | Where | Requires Forge? | Cost |
 |---------------|-------|-----------------|------|
-| Device crafting | Field menu (anywhere outside battle) | No | AC + materials + gold |
+| Device crafting | Save points, camps, inns (field menu) | No | AC + materials + gold |
 | Equipment forging | Forge locations only | Yes | Materials + gold fee (400–500g) |
 | Elemental infusions | Forge locations only | Yes | Materials + gold fee (300–500g) |
 
