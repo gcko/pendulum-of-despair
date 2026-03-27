@@ -426,40 +426,64 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 - Major bosses: 5–8 minutes (50–80 party actions)
 - Final gauntlet: 20–30 minutes total
 
-### Revised Boss HP Table
+### Boss HP Table
+
+Key bosses from [bestiary/bosses.md](bestiary/bosses.md) (20 of 30
+in the full roster). Omits Pallor Wastes trial bosses (4), Dreamer's
+Fault bosses (4), The Grey Keeper, and Pallor Echo. All listed HP
+and act values match bosses.md. See bosses.md for the complete
+roster, stat tables, and AI scripts.
 
 | Boss | Act | HP | Rationale |
 |------|-----|----|-----------|
+| Ember Drake | I | 1,500 | Mini-boss. First real threat. |
 | Vein Guardian | I | 6,000 | Tutorial boss. ~20 party actions. |
-| Corrupted Fenmother | II | 18,000 | Boss phase + 4 cleansing waves. Puzzle boss. |
-| The Ironbound | Interlude | 22,000 | Mid-game skill check. |
-| General Kole | Interlude | 30,000 | Pallor-enhanced commander. |
-| Archive Guardian | Interlude | 28,000 | Three phases, ~9,300 each. |
-| The Ashen Ram | II | 25,000 | Act II climax. Siege boss. |
-| The Ley Leech | Interlude | 24,000 | Ley nexus boss. |
-| The Grey Engine | Interlude | 22,000 | Stunnable (effective HP lower). |
-| The Forge Heart | II/Interlude | 35,000 | Caldera Forge Depths boss. |
-| The Frost Warden | Interlude/III | 38,000 | Elemental puzzle (Flame weakness). |
-| The Pallor Hollow | Interlude | 40,000 | Edren recovery sequence. |
-| Vaelith, the Ashen Shepherd | III | 50,000 | Winnable penultimate boss. Two phases. |
-| Cael Phase 1 | III | 45,000 | Uses party's tactics against them. |
-| Cael Phase 2 | III | 35,000 | Desperate. Pallor fully manifesting. |
-| Pallor Incarnate | III | 70,000 | Final boss. FF6-scale. |
+| Drowned Sentinel | I | 4,000 | Mini-boss. Construct puzzle. |
+| Corrupted Fenmother | I | 18,000 | Act I climax. 3 phases + cleansing waves. |
+| Ley Colossus | II | 7,000 | Mini-boss. Magic-immune puzzle. |
+| The Forge Warden | II | 8,500 | Ashmark boss. 2 phases. |
+| The Ashen Ram | II | 25,000 | Act II climax. Siege boss. 3 phases. |
+| Corrupted Boring Engine | Int | 6,000 | Mini-boss. Construct. |
+| The Ironbound | Int | 22,000 | Rail Tunnels boss. 2 phases. |
+| The Undying Warden | Int | 8,000 | Catacombs boss. 2 phases. |
+| Pallor Nest Mother | Int | 6,000 | Caldera boss. |
+| General Vassar Kole | Int | 30,000 | Interlude climax. 2 phases. |
+| Vaelith, the Ashen Shepherd | III | 50,000 | Penultimate boss. 2 phases + pre-fight. |
+| Ley Titan | III | 18,000 | Ley Line Depths boss. 3 phases. |
+| Archive Keeper | III | 3,000–12,000 | Knowledge puzzle (variable HP). |
+| Wellspring Guardian | III | 28,000 | Dry Well boss. 3 phases. |
+| The Architect (Stage 1) | III | 20,000 | Forgotten Forge. |
+| Grey Cleaver Unbound (Stage 2) | III | 25,000 | Forgotten Forge (follows Architect). |
+| Cael, Knight of Despair | III | Phase 1: 45,000; Phase 2: 35,000 | 2 phases. Uses party's tactics against them. |
+| The Pallor Incarnate | III | 70,000 | Final boss. FF6-scale. |
 
 **Final gauntlet total:** 45K + 35K + 70K = **150,000 HP**
 
-FF6 comparison: Dancing Mad gauntlet totals ~325,000 HP with a 9,999 damage cap. Our 150,000 HP with a 14,999 cap is proportionally similar — slightly tighter, respecting the emotional intensity of the Cael betrayal preceding the Pallor fight.
+FF6 comparison: Dancing Mad gauntlet totals ~325,000 HP with a 9,999
+damage cap. Our 150,000 HP with a 14,999 cap is proportionally
+similar — slightly tighter, respecting the emotional intensity of the
+Cael betrayal preceding the Pallor fight.
 
 ### Regular Enemy HP by Act
 
-| Act | Level Range | Enemy HP | Hits to Kill |
-|-----|------------|----------|-------------|
-| Tutorial (Ember Vein) | 1–5 | 80–200 | 2–4 |
-| Act I | 8–18 | 400–1,200 | 2–3 |
-| Act II | 20–35 | 1,200–4,000 | 2–3 |
-| Interlude | 35–50 | 3,000–7,000 | 2–3 |
-| Act III | 50–70 | 6,000–14,000 | 2–3 |
-| Post-game (Dreamer's Fault) | 70–150 | 12,000–50,000 | 2–4 |
+Actual ranges from the bestiary act files. The bestiary is
+authoritative for enemy stats.
+
+| Act | Level Range | Enemy HP | Hits to Kill (primary attacker) |
+|-----|------------|----------|--------------------------------|
+| Act I (Ember Vein + overworld) | 1–10 | 23–288 | 2–4 (low ATK early) |
+| Act II | 14–20 | 378–1,078 | 2–3 |
+| Interlude | 18–26 | 556–1,702 | 2–3 |
+| Act III (main) | 28–36 | 1,000–2,784 | 1–2 (Edren one-shots most) |
+| Act III (Ley Scar, optional) | 40–45 | 3,380–4,205 | 2–3 |
+| Post-game (Dreamer's Fault) | 42–100 | 3,414–19,220 | 2–4 |
+
+> **Note:** By Act III, the quadratic ATK² scaling causes the primary
+> physical attacker (Edren) to one-shot most regular enemies. This is
+> intentional — late-game random encounters should feel fast, with
+> challenge coming from encounter rate, Despair status, and boss fights.
+> Support characters (Torren, Maren) still need 2–3 hits or use magic.
+> See [difficulty-balance.md](difficulty-balance.md) for worked examples.
 
 ### Multi-Hit Rules
 
