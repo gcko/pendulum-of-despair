@@ -95,7 +95,10 @@ NPC-operated instant travel between Compact port cities. Modeled on
 FF6's Nikeah-South Figaro ferry and Secret of Mana's Cannon Travel
 Centers.
 
-- **Routes:** Bellhaven ↔ Ashport (one route)
+- **Routes:** Bellhaven ↔ Ashport (one route). The coast between these
+  ports is rocky and inhospitable — cliffs, sea stacks, and treacherous
+  tides (per [geography.md](geography.md)) — making the ferry the
+  only practical connection.
 - **Mechanic:** Talk to Ferryman NPC at dock → pay fare → fade to black
   → arrive at destination dock (standard fade transition per
   [overworld.md](overworld.md))
@@ -173,8 +176,10 @@ window maps to Act II's position in the story (~30--50% of the game).
   Caldera, Corrund--Kettleworks) are suspended due to ley line
   instability. Rail Conductor NPCs display: "Service suspended. The
   tunnels aren't safe." The Ashmark--Corrund tunnels become an on-foot
-  dungeon (per [dungeons-world.md](dungeons-world.md)). No fast-travel
-  via rail on any segment.
+  dungeon (per [dungeons-world.md](dungeons-world.md)) — rail carts
+  still exist inside the dungeon as traversal hazards with
+  unpredictable destinations, but the NPC-operated city-to-city
+  fast-travel service is suspended on all segments.
 - **Ley Stag:** Lost. Spirit animals flee as Pallor corruption spreads
   through the ley lines. The Stag dissolves during the Interlude
   transition cutscene — a visual moment where the party's ley bond
@@ -183,10 +188,12 @@ window maps to Act II's position in the story (~30--50% of the game).
   [dynamic-world.md](dynamic-world.md) — harbor economy collapsed,
   grey things washing ashore). Ferryman refuses: "The waters aren't
   safe. Something's in the strait." Ferry unavailable at both ports.
-- **Linewalk:** Still works. Maren's spell draws on her personal
-  connection to the ley lines, not physical infrastructure. This is
-  the player's sole fast-travel option during the Interlude. It
-  reinforces Maren's importance to the party.
+- **Linewalk:** Works once Maren is found and in the active party.
+  During the early Interlude while the party is scattered, Linewalk
+  is unavailable until Maren is recruited. After finding Maren, her
+  spell draws on her personal connection to the ley lines, not
+  physical infrastructure. Linewalk becomes the player's primary
+  fast-travel option, reinforcing Maren's importance to the party.
 
 **Narrative purpose:** The player felt powerful and mobile in Act II.
 The Interlude strips that away. Walking through corrupted territory —
