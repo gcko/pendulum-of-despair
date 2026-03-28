@@ -149,15 +149,15 @@ you've seen?"
 
 | Category | What It Tracks | Denominator Source |
 |----------|---------------|--------------------|
-| Bestiary | Unique enemies encountered (at least one battle) | bestiary/ (232 enemies per README.md: 25 Act I + 33 Act II + 52 Interlude + 68 Act III + 24 Optional + 30 Bosses) |
+| Bestiary | Unique enemies encountered (at least one battle) | bestiary/ (235 enemies per README.md: 25 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
 | Treasure | Chests opened across all dungeons and overworld | Implementation-defined per dungeon layouts |
 | Quests | Sidequests completed | sidequests.md total count |
 | Items | Unique items obtained at least once (consumables, equipment, key items, materials) | items.md + equipment.md total unique count |
 
 ### Display
 
-- Simple percentage per category with fraction: "Bestiary: 142/198
-  (72%)"
+- Simple percentage per category with fraction: "Bestiary: 142/235
+  (60%)"
 - No milestone rewards — the percentage is the reward
 - No pop-ups or notifications at 100%. The player checks when they
   want to.

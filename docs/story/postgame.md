@@ -71,19 +71,69 @@ remains healed, the player revisits memories of fights already won.
 | 2 | Echoes of Doubt | Act II + Interlude bosses | Act II--Interlude | ~30 min |
 | 3 | Shattered Resolve | Act III bosses (including Cael phases 1--3) | Act III | ~40 min |
 
-Boss roster per tier is drawn from
-[bestiary/bosses.md](bestiary/bosses.md). Exact boss lists are
-implementation-defined based on the boss compendium, but should
-include all mandatory story bosses in story order. Optional bosses
-(Dreamer's Fault echo bosses, The Lingering) are excluded.
+All mandatory story bosses in story order, drawn from
+[bestiary/bosses.md](bestiary/bosses.md). Optional bosses (Dreamer's
+Fault echo bosses, The Lingering) are excluded.
+
+#### Tier 1: Rising Shadows (Act I bosses)
+
+| # | Boss | Original Lv | Original HP | Notes |
+|---|------|-------------|-------------|-------|
+| 1 | Ember Drake | 8 | 1,500 | 1 phase |
+| 2 | Vein Guardian | 12 | 6,000 | 2 phases |
+| 3 | Drowned Sentinel | 10 | 4,000 | 1 phase |
+| 4 | Corrupted Fenmother | 12 | 18,000 | 3 phases |
+
+#### Tier 2: Echoes of Doubt (Act II + Interlude bosses)
+
+| # | Boss | Original Lv | Original HP | Notes |
+|---|------|-------------|-------------|-------|
+| 1 | Ley Colossus | 22 | 7,000 | 2 phases |
+| 2 | The Forge Warden | 24 | 8,500 | 2 phases |
+| 3 | The Ashen Ram | 22 | 25,000 | 3 phases |
+| 4 | Corrupted Boring Engine | 22 | 6,000 | 1 phase |
+| 5 | The Ironbound | 24 | 22,000 | 2 phases |
+| 6 | The Undying Warden | 25 | 8,000 | 2 phases |
+| 7 | Pallor Nest Mother | 25 | 6,000 | 1 phase |
+| 8 | General Vassar Kole | 28 | 30,000 | 2 phases |
+
+#### Tier 3: Shattered Resolve (Act III bosses)
+
+| # | Boss | Original Lv | Original HP | Notes |
+|---|------|-------------|-------------|-------|
+| 1 | The Crowned Hollow | 30 | 8,000 | 2 phases |
+| 2 | The Perfect Machine | 30 | 7,000 | 1 phase |
+| 3 | The Last Voice | 32 | 6,000 | 2 phases |
+| 4 | The Index | 32 | 7,000 | 1 phase |
+| 5 | The Grey Keeper | 32 | 15,000 | 2 phases |
+| 6 | Vaelith, the Ashen Shepherd | 34 | 50,000 | 2+pre phases |
+| 7 | Ley Titan | 28 | 18,000 | 3 phases |
+| 8 | Archive Keeper | 32 | 12,000 | Max HP (no knowledge puzzle) |
+| 9 | Wellspring Guardian | 36 | 28,000 | 3 phases |
+| 10 | The Architect → Grey Cleaver Unbound | 34/36 | Stage 1: 20,000; Stage 2: 25,000 | Continuous two-stage fight, no mid-fight restore |
+| 11 | Pallor Echo | 34 | 5,000 | 1 phase |
+| 12 | Cael, Knight of Despair | 36/38 | Phase 1: 45,000; Phase 2: 35,000 | Continuous two-phase fight, no mid-fight restore |
+| 13 | The Pallor Incarnate | 40 | 70,000 | 1 phase |
+
+**Special handling:**
+- **Archive Keeper:** Uses maximum HP (12,000) — the knowledge puzzle
+  does not apply in boss rush.
+- **The Architect → Grey Cleaver Unbound:** Treated as a single
+  continuous fight. No HP/MP/status restore between stages.
+- **Cael Phase 1 → Phase 2:** Treated as a single continuous fight.
+  No restore between phases.
+- **Excluded:** Vaelith (Siege) is a scripted-loss encounter.
+  Cael's Echo is non-combat. Siege gauntlet waves are excluded —
+  only the named boss is fought.
 
 ### Rules
 
 - Bosses fought in story order within each tier
-- **Full reset between fights** — HP/MP/AC restored to maximum, all
-  status ailments cleared, all buffs and debuffs removed, ATB gauges
-  reset to zero. Equipment and ability loadouts may be changed between
-  fights. The challenge is each individual fight, not attrition.
+- **Full reset between fights** — all KO'd members revived, HP/MP/AC
+  restored to maximum, all status ailments cleared, all buffs and
+  debuffs removed, ATB gauges reset to zero. Equipment and ability
+  loadouts may be changed between fights. The challenge is each
+  individual fight, not attrition.
 - **Original boss stats** — no scaling or boosting. Post-game
   characters are overpowered, which is the point. The victory lap
   is the fun. Phase transitions trigger normally — if damage skips
@@ -92,8 +142,10 @@ include all mandatory story bosses in story order. Optional bosses
 - **Player equipment allowed** — the player brings their own gear.
   This is intentional. Post-game equipment (Dreamer's Crest, The
   Pallor's Last) makes Tier 1 trivial — that is the victory lap.
-- Party composition chosen at start of each tier, locked for the
-  duration
+- Party composition: player selects 4 of 5 members at the start of
+  each tier (standard 4-member combat per
+  [combat-formulas.md](combat-formulas.md)). Locked for the tier's
+  duration — no swapping between fights.
 - **Standardized consumable set per tier** — no items from player
   inventory:
   - Tier 1: 10 Potions, 5 Ethers, 2 Phoenix Feathers
@@ -103,6 +155,10 @@ include all mandatory story bosses in story order. Optional bosses
 - Consumables are provided fresh at the start of each tier attempt.
   They are a total supply across all fights in the tier — not
   replenished between fights.
+- **Drops and steals disabled** — boss rush fights do not award
+  drops or allow steal/Filch. These are memories, not real encounters.
+  This prevents loot duplication of unique boss drops (Cael's Knight
+  Crest, etc.).
 - Flee disabled (as in normal boss fights)
 - **Save suppressed during boss rush** — the game creates a temporary
   auto-save on tier entry. Saving and loading are disabled until the
@@ -126,8 +182,8 @@ include all mandatory story bosses in story order. Optional bosses
 Memento accessories are meaningful but not best-in-slot — Dreamer's
 Crest (+30 all stats, obtained via Cael's Echo per
 [equipment.md](equipment.md)) and The Pallor's
-Last (from The Lingering per [sidequests.md](sidequests.md)) are both
-superior. The value is the inscription flavor text, not the stats.
+Last (+40 all stats, 25% damage reduction, from The Lingering per
+[sidequests.md](sidequests.md)) are both superior. The value is the inscription flavor text, not the stats.
 One-time rewards — clearing a tier again gives gold instead (Tier 1:
 1,000g, Tier 2: 2,500g, Tier 3: 5,000g).
 
@@ -143,7 +199,7 @@ you've seen?"
 
 | Category | What It Tracks | Denominator |
 |----------|---------------|-------------|
-| **Bestiary** | Unique enemies encountered (at least one battle) | 232 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 68 Act III + 24 Optional + 30 Bosses) |
+| **Bestiary** | Unique enemies encountered (at least one battle) | 235 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
 | **Treasure** | Chests opened across all dungeons and overworld | Total chest count (implementation-defined per dungeon layouts) |
 | **Quests** | Sidequests completed | Total sidequest count per [sidequests.md](sidequests.md) |
 | **Items** | Unique items obtained at least once (consumables, equipment, key items, materials) | Total unique item count across [items.md](items.md) and [equipment.md](equipment.md) |
@@ -159,11 +215,11 @@ you've seen?"
 
 ### Display
 
-- Simple percentage per category with fraction: "Bestiary: 142/232
+- Simple percentage per category with fraction: "Bestiary: 142/235
   (61%)"
 - No pop-ups or notifications at 100%. The player checks when they
   want to.
-- **Aggregate only** — no per-item checklists. The player sees "142/232"
+- **Aggregate only** — no per-item checklists. The player sees "142/235"
   but not which specific enemies are missing. Finding the last few is
   part of the completionist challenge.
 
@@ -201,7 +257,7 @@ Pendulum tavern:
 | Boss Rush (3 tiers) | Tavern (Sable) | postgame.md (this doc) | ~90 min total |
 | Completion Tracking | Tavern (Sable) | postgame.md (this doc) | Ongoing |
 | Epilogue NPC conversations | Tavern + world | [dynamic-world.md](dynamic-world.md) | ~30 min |
-| First Tree Seed scene | Convergence meadow | [dungeons-world.md](dungeons-world.md) (item), [dynamic-world.md](dynamic-world.md) (scene) | ~5 min |
+| First Tree Seed scene | Convergence meadow | [dungeons-world.md](dungeons-world.md) § 14e Ashgrove Undercroft (item), [dynamic-world.md](dynamic-world.md) (scene) | ~5 min |
 | Post-game leveling (71--150) | Everywhere (Dreamer's Fault optimal) | [progression.md](progression.md) | 20--40+ hours |
 | Cael's Echo crystal | Obtained at epilogue | [progression.md](progression.md) | Immediate |
 

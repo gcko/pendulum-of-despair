@@ -527,7 +527,7 @@ content. Not sold in any shop.
 | Queen's Facet | Reflects 25% magic damage passively | Crystal Queen | Post |
 | Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
 | Keeper's Resolve | +15% Despair resistance, +5 MDEF | The Grey Keeper drop (Oasis C) | III |
-| The Pallor's Last | Massive stat boosts, 25% all incoming damage reduction | The Lingering (super boss) | Post |
+| The Pallor's Last | +40 all stats, 25% all incoming damage reduction | The Lingering (super boss) | Post |
 | Dreamer's Mark | Immunity to all status effects | Dreamer's Fault Floor 20 completion | Post |
 | Dreamer's Crest | +30 all stats | Cael's Echo (non-combat) | Post |
 | Warrior's Memento | ATK +10 | Boss Rush Tier 1 | Post |
@@ -654,7 +654,7 @@ include type modifiers (Swords are the ×1.0 baseline).
 | Act II | Tier 2 (ATK 15–22) | Tier 2 (DEF 10–15) | Tier 2 (DEF 15–22) | Status immunity, Colossus Shard |
 | Interlude | Tier 3 (ATK 28–38) | Tier 3 (DEF 18–24) | Tier 3 (DEF 25–35) | Haste Bangle, Counter Ring, Kole's Epaulettes |
 | Act III | Tier 4 (ATK 42–55) | Tier 4 (DEF 28–35) | Tier 4 (DEF 40–50) | Elemental resist, Despair Ward, Ley Amplifier |
-| Ultimate | Tier 5 (ATK 65–100) | Tier 5 (DEF 40–55) | Tier 5 (DEF 55–75) | Dreamer's Crest, Cael's Knight Crest |
+| Ultimate | Tier 5 (ATK 65–100) | Tier 5 (DEF 40–55) | Tier 5 (DEF 55–75) | The Pallor's Last, Dreamer's Crest, Dreamer's Mark, Cael's Knight Crest |
 
 ---
 
@@ -679,17 +679,18 @@ have no gold price — they cost materials + a forging fee (300–500g).
 
 ### Boss Equipment Drops
 
-All 18 boss-dropped equipment pieces cross-referenced with the
-bestiary. Boss names match `docs/story/bestiary/bosses.md` exactly.
+All 20 boss-dropped and boss-gated equipment pieces cross-referenced
+with the bestiary. Boss names match `docs/story/bestiary/bosses.md`
+exactly.
 
 | Item | Slot | Boss | Act | Bestiary File |
 |------|------|------|-----|---------------|
 | Colossus Shard | Accessory | Ley Colossus | II | bosses.md |
-| Drayce's Failsafe Core | Accessory | Forge Warden | II | bosses.md |
-| Warden's Binding | Accessory | Undying Warden | Int | bosses.md |
-| Kole's Epaulettes | Armor (Heavy) | General Kole | Int | bosses.md |
-| Crown Shard | Accessory | Crowned Hollow | III | bosses.md |
-| Unfinished Ring | Accessory | Perfect Machine | III | bosses.md |
+| Drayce's Failsafe Core | Accessory | The Forge Warden | II | bosses.md |
+| Warden's Binding | Accessory | The Undying Warden | Int | bosses.md |
+| Kole's Epaulettes | Armor (Heavy) | General Vassar Kole | Int | bosses.md |
+| Crown Shard | Accessory | The Crowned Hollow | III | bosses.md |
+| Unfinished Ring | Accessory | The Perfect Machine | III | bosses.md |
 | Ashen Scholar's Tome | Accessory | Vaelith | III | bosses.md / act-iii.md |
 | Titan's Core | Accessory | Ley Titan | III | bosses.md |
 | Nexus Crest | Accessory | Wellspring Guardian | III | bosses.md |
@@ -697,8 +698,10 @@ bestiary. Boss names match `docs/story/bestiary/bosses.md` exactly.
 | Grey Cleaver | Weapon (Torren) | Grey Cleaver Unbound | III | bosses.md |
 | Cael's Knight Crest | Accessory | Cael Phase 1 | III | bosses.md |
 | Cael's Memory | Accessory | Pallor Echo | III | bosses.md |
-| Scholar's Codex | Accessory | First Scholar | Post | bosses.md |
-| Queen's Facet | Accessory | Crystal Queen | Post | bosses.md |
-| Root Crown | Armor (Head) | Rootking | Post | bosses.md |
-| Warden's Core | Accessory | Iron Warden | Post | bosses.md |
+| Scholar's Codex | Accessory | The First Scholar | Post | bosses.md |
+| Queen's Facet | Accessory | The Crystal Queen | Post | bosses.md |
+| Root Crown | Armor (Head) | The Rootking | Post | bosses.md |
+| Warden's Core | Accessory | The Iron Warden | Post | bosses.md |
 | Dreamer's Crest | Accessory | Cael's Echo (non-combat) | Post | optional.md |
+| The Pallor's Last | Accessory | The Lingering (super boss) | Post | bosses.md |
+| Dreamer's Mark | Accessory | Dreamer's Fault Floor 20 completion | Post | optional.md |

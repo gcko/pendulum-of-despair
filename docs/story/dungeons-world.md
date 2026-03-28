@@ -2599,12 +2599,31 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 | Enemy | Age | Description |
 |-------|-----|-------------|
-| First Age Sentinel | 1–4 | Stone guardian, geometric attacks |
-| Crystal Refractor | 5–8 | Prism creature, reflects spells |
-| Root Weaver | 9–12 | Living vine construct, entangle |
-| Iron Automaton | 13–16 | Mechanical soldier, heavy armor |
-| Void Walker | 17–20 | Featureless grey shape, drains all |
+| First Age Sentinel | 1–4 | Stone guardian, geometric attacks (Construct, Tank) |
+| Glyphscribe | 1–4 | Scholar-soldier, charges attack glyphs (Humanoid, Caster) |
+| Carved Watcher | 1–4 | Detaching stone face, tracks movement (Construct, Balanced) |
+| Ember Remnant | 1–4 | Dying flame, self-destructs on death (Elemental, Glass cannon) |
+| Crystal Refractor | 5–8 | Prism creature, reflects single-target spells (Elemental, Caster) |
+| Facet Drone | 5–8 | Crystalline automaton, splits when hit with magic (Construct, Swarm) |
+| Prism Stalker | 5–8 | Crystal predator, invisible in light (Beast, Glass cannon) |
+| Resonance Shade | 5–8 | Sound given form, inflicts Silence (Spirit, Caster) |
+| Root Weaver | 9–12 | Living vine construct, entangles (Elemental, Tank) |
+| Bough Knight | 9–12 | Armored wood warrior, shield and counter (Humanoid, Balanced) |
+| Canopy Lurker | 9–12 | Ambush predator, drops from ceiling (Beast, Glass cannon) |
+| Heartwood Spirit | 9–12 | Forest ghost, heals allies (Spirit, Caster) |
+| Iron Automaton | 13–16 | Mechanical soldier, heavy armor (Construct, Tank) |
+| Gear Wraith | 13–16 | Spectral mechanic, phases between states (Spirit, Balanced) |
+| Pressure Golem | 13–16 | Steam war machine, builds to AoE (Construct, Balanced) |
+| Scrap Swarm | 13–16 | Shrapnel cloud, hits entire party (Construct, Swarm) |
+| Pallor Drake | 17–20 | Nightmare drake, breath weapon (Pallor, Rare) |
+| Pallor Wolf | 17–20 | Pack hunter, coordinated Despair howl (Pallor, Rare) |
+| Pallor Lurker | 17–20 | Eyeless predator, highest non-boss SPD (Pallor, Rare) |
+| Pallor Regent | 17–20 | Despair king, summons Pallor Shades (Pallor, Rare) |
+| Void Walker | 17–20 | Featureless grey shape, drains all stats (Pallor, Dangerous) |
 | Echo Bosses (x4) | Every 4th floor | Unique, extremely powerful |
+
+All enemies have full stat blocks in
+[bestiary/optional.md](bestiary/optional.md).
 
 ### Encounter Rates & Formations
 
@@ -2614,26 +2633,38 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 
 | Floor(s) | Fmt | Enemies | Weight |
 |----------|-----|---------|--------|
-| 1–4 | 1 | 2x First Age Sentinel | 31.25% |
-| 1–4 | 2 | 3x First Age Sentinel | 31.25% |
-| 1–4 | 3 | 1x First Age Sentinel (tough solo) | 31.25% |
-| 1–4 | 4 | 4x First Age Sentinel (ancient garrison) | 6.25% |
-| 5–8 | 1 | 2x Crystal Refractor | 31.25% |
-| 5–8 | 2 | 1x Crystal Refractor + 2x First Age Sentinel | 31.25% |
-| 5–8 | 3 | 3x Crystal Refractor | 31.25% |
-| 5–8 | 4 | 2x Crystal Refractor + 2x First Age Sentinel (prism ambush) | 6.25% |
-| 9–12 | 1 | 2x Root Weaver + 1x Crystal Refractor | 31.25% |
-| 9–12 | 2 | 3x Root Weaver | 31.25% |
-| 9–12 | 3 | 1x Root Weaver + 2x Crystal Refractor | 31.25% |
-| 9–12 | 4 | 4x Root Weaver (entangle swarm) | 6.25% |
-| 13–16 | 1 | 2x Iron Automaton | 31.25% |
-| 13–16 | 2 | 1x Iron Automaton + 2x Root Weaver | 31.25% |
-| 13–16 | 3 | 3x Iron Automaton | 31.25% |
-| 13–16 | 4 | 2x Iron Automaton + 2x Root Weaver (mechanized advance) | 6.25% |
-| 17–20 | 1 | 2x Void Walker | 31.25% |
-| 17–20 | 2 | 1x Void Walker + 2x Iron Automaton | 31.25% |
-| 17–20 | 3 | 3x Void Walker | 31.25% |
-| 17–20 | 4 | 4x Void Walker (the abyss stares back) | 6.25% |
+| 1–4 | 1 | 2x First Age Sentinel | 25% |
+| 1–4 | 2 | 1x Glyphscribe + 2x Carved Watcher (glyph patrol) | 25% |
+| 1–4 | 3 | 2x Carved Watcher + 1x First Age Sentinel | 25% |
+| 1–4 | 4 | 1x Ember Remnant + 1x Glyphscribe (fire and runes) | 18.75% |
+| 1–4 | 5 | 2x Ember Remnant + 2x First Age Sentinel (ancient garrison) | 6.25% |
+| 5–8 | 1 | 2x Crystal Refractor + 1x Facet Drone | 25% |
+| 5–8 | 2 | 1x Prism Stalker + 2x Facet Drone (crystal ambush) | 25% |
+| 5–8 | 3 | 2x Resonance Shade + 1x Crystal Refractor | 25% |
+| 5–8 | 4 | 1x Prism Stalker + 1x Resonance Shade + 1x Crystal Refractor | 18.75% |
+| 5–8 | 5 | 3x Facet Drone + 1x Resonance Shade (swarm and silence) | 6.25% |
+| 9–12 | 1 | 2x Root Weaver + 1x Canopy Lurker | 25% |
+| 9–12 | 2 | 1x Bough Knight + 2x Heartwood Spirit (tank and healers) | 25% |
+| 9–12 | 3 | 2x Canopy Lurker + 1x Root Weaver (ambush swarm) | 25% |
+| 9–12 | 4 | 1x Bough Knight + 1x Root Weaver + 1x Heartwood Spirit | 18.75% |
+| 9–12 | 5 | 2x Heartwood Spirit + 2x Canopy Lurker (entangle and heal) | 6.25% |
+| 13–16 | 1 | 2x Iron Automaton + 1x Scrap Swarm | 25% |
+| 13–16 | 2 | 1x Pressure Golem + 2x Gear Wraith (steam and spectral) | 25% |
+| 13–16 | 3 | 1x Iron Automaton + 1x Gear Wraith + 1x Scrap Swarm | 25% |
+| 13–16 | 4 | 2x Pressure Golem + 1x Iron Automaton (artillery line) | 18.75% |
+| 13–16 | 5 | 3x Scrap Swarm + 1x Gear Wraith (mechanized chaos) | 6.25% |
+| 17–20 | 1 | 2x Pallor Wolf + 1x Pallor Drake (pack hunters) | 25% |
+| 17–20 | 2 | 1x Void Walker + 2x Pallor Lurker | 25% |
+| 17–20 | 3 | 2x Pallor Drake + 1x Pallor Lurker | 18.75% |
+| 17–20 | 4 | 1x Void Walker + 1x Pallor Wolf + 1x Pallor Drake | 18.75% |
+| 17–20 | 5 | 1x Pallor Regent + 2x Pallor Wolf (the regent's court) | 6.25% |
+| 17–20 | 6 | 2x Void Walker + 1x Pallor Regent (the abyss stares back) | 6.25% |
+
+> **Void formation override:** The Void uses 6 formations instead of
+> the standard 4 (per [combat-formulas.md](combat-formulas.md)
+> § Encounter System). The expanded table accommodates the rare Pallor
+> Regent while maintaining meaningful spawn rates for all 5 Void
+> enemy types. Ages 1--4 use the standard 4--5 formation structure.
 
 ### Treasure/Loot
 

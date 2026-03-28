@@ -4,7 +4,7 @@ Enemies encountered in post-game optional content: Dreamer's Fault
 (20-floor super dungeon). See [README.md](README.md) for type rules,
 stat formulas, and reward calculations.
 
-**Total:** 24 stat-block enemies across 5 ages + 1 non-combat encounter
+**Total:** 25 stat-block enemies across 5 ages + 1 non-combat encounter
 
 > **Level classification:** Floors 1–12 (Lv 42–70) fall within the
 > Post-game range (40–80). Floors 13–20 (Lv 74–100) fall within the
@@ -197,11 +197,11 @@ consumed from every age.
 > TBD pending Item Catalog design.
 
 > **Void deployment note:** Pallor Drake (projected Lv 50), Pallor
-> Wolf (projected Lv 45), and Pallor Lurker (projected Lv 46) appear
-> at Lv 90–96 — massively above their palette-families projections.
-> The Void amplifies Pallor entities. Stats are computed from the
-> Void deployment level. Threat level is preserved per the README
-> early deployment rule.
+> Wolf (projected Lv 45), Pallor Lurker (projected Lv 46), and Pallor
+> Regent (projected Lv 46) appear at Lv 90–96 — massively above their
+> palette-families projections. The Void amplifies Pallor entities.
+> Stats are computed from the Void deployment level. Threat level is
+> preserved per the README early deployment rule.
 
 > **Pallor type rules:** All Void enemies are Pallor type — Weak to
 > Spirit, Immune to Despair and Death. Pallor regen (2% max HP/turn)
@@ -215,6 +215,7 @@ consumed from every age.
 | Pallor Drake | Pallor | 90 | 15,680 | 315 | 152 | 113 | 132 | 94 | 80 | 7,768 | 13,797 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Pallor Wolf | Pallor | 92 | 16,359 | 322 | 155 | 115 | 134 | 96 | 81 | 8,331 | 15,163 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Pallor Lurker | Pallor | 96 | 17,760 | 336 | 161 | 120 | 140 | 100 | 84 | 9,421 | 18,075 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
+| Pallor Regent | Pallor | 94 | 17,052 | 329 | 138 | 117 | 153 | 98 | 75 | 8,883 | 16,593 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Void Walker | Pallor | 100 | 19,220 | 350 | 168 | 125 | 146 | 104 | 88 | 6,954 | 14,100 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Dreamer's Fault F17–20 |
 
 **Design notes:**
@@ -228,6 +229,16 @@ consumed from every age.
   senses hope. In the lightless Void, they are everywhere. Highest
   non-boss SPD in the game. Resist Void per palette-families Tier 4
   element shift.
+- Pallor Regent (Royal Wraith family Tier 3, Rare threat x1.5). A king
+  consumed by despair who commands shade armies. Caster-biased stats
+  (lower ATK, higher MAG, lowest SPD in the Void). Despair Decree
+  inflicts party-wide Despair + Silence. Undying Loyalty summons 2
+  Pallor Shades — summoned at the Regent's level (Lv 94) using base
+  stat curves: HP ~3,000 (low-HP adds), ATK ~80, DEF ~60. They
+  auto-attack (single physical hit per turn) and are targetable. Not
+  bestiary entries — they are summon effects, not standalone enemies.
+  Resist Void per palette-families Tier 3 element shift. The rarest
+  encounter in the Void — appears only in the 6.25% weight formations.
 - Void Walker (unique, Dangerous threat x1.0). The Dreamer's Fault
   signature enemy. Featureless grey shape. Drains HP, MP, ATK, and DEF
   simultaneously. The Pallor distilled. **Does NOT resist Void** — it
@@ -254,7 +265,7 @@ game). **TODO: finalize stat block in Gap 1.5 (Equipment).**
 
 ## Dreamer's Fault Summary
 
-- **Total:** 24 stat-block enemies + 1 non-combat encounter
+- **Total:** 25 stat-block enemies + 1 non-combat encounter
 - **Level range:** 42–100 (Post-game through Optional/Superboss)
 - **Type distribution:** Construct (30%), Pallor (20%), Spirit (15%),
   Elemental (15%), Humanoid (10%), Beast (10%), Boss (4 Echo Bosses)

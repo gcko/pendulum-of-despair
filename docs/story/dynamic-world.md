@@ -638,6 +638,50 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ---
 
+#### First Tree Seed Scene (Convergence Meadow)
+
+**Trigger:** Player uses the First Tree Seed (key item from
+[dungeons-world.md](dungeons-world.md) § 14e Ashgrove Undercroft) at
+the Convergence meadow. Requires `epilogue_complete`. The seed appears as
+a usable key item when the player examines the ground near Cael's
+memorial sword.
+
+**Presentation tier:** T2 (Playable, cinematic framing) per
+[events.md](events.md) § 2b. ~3 minutes. Non-interactive after
+initiation.
+
+**Scene:** All five surviving party members assemble automatically
+regardless of current active party composition (same as epilogue
+scenes — this is a narrative moment, not a gameplay moment).
+Torren kneels
+and places the seed in the scarred earth beside Cael's sword. Maren
+steps forward and channels ley energy — her hands glow with the same
+blue-amber light as the ley lines, guiding it into the soil. The
+ground pulses once.
+
+A small green shoot emerges. Thin, fragile, bending slightly in the
+wind. Not a tree — not yet. The beginning of one.
+
+**Character lines** (one each, brief):
+- **Torren:** "The spirits say it remembers. Every age that fell. Every
+  root that held."
+- **Maren:** "The ley lines are feeding it. Not much. Enough."
+- **Lira:** *(kneels, touches the shoot)* "It's warm."
+- **Sable:** "...Huh. Something actually grew."
+- **Edren:** *(silence, then)* "Good."
+
+The camera lingers on the shoot for 3 seconds. Overworld Act IV
+(Renewed) theme plays underneath. Scene ends. Control returns to the
+player.
+
+**Post-scene state:** The shoot is permanently visible at the
+Convergence meadow (cosmetic tile change). If the player revisits, the
+shoot is slightly taller each time (3 growth stages, purely visual, no
+gameplay effect). The First Tree Seed is consumed — removed from
+inventory after use.
+
+---
+
 #### The Dry Well of Aelhart (Secret)
 
 ##### Act I State

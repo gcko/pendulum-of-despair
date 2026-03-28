@@ -437,7 +437,12 @@ Per [events.md](events.md) § Faint and Fast Reload:
   Enemies far exceed main story difficulty. Unique mechanics per
   "age" (5 floors each). This is the "hard mode" for completionists.
 - **Superbosses:** Optional encounters harder than the final boss.
-  Rewards are cosmetic/bragging rights (per [postgame.md](postgame.md)).
+  The Lingering (3-phase, 415,000 total HP) is the hardest fight
+  in the game. Rewards are best-in-slot equipment, not cosmetic.
+- **Boss Rush:** 3-tier gauntlet replaying all mandatory story bosses
+  at original stats. Post-game characters are overpowered — this is
+  the victory lap. Consumables are standardized per tier; player
+  equipment allowed. See [postgame.md](postgame.md) for full roster.
 - **No difficulty toggle needed.** Players who want challenge seek
   it through optional content. The main story remains accessible.
 

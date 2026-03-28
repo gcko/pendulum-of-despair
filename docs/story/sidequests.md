@@ -672,7 +672,7 @@ The Convergence meadow is quiet. Wild magic drifts like fireflies. When the part
 
 **Defeat Dialogue:** The Lingering doesn't die with a scream or an explosion. It dims. The grey static frays at the edges. A sound emerges from it — not words, but the accumulated grief of every age, compressed into a single exhale. Then it is gone. The fireflies return. The meadow is quiet.
 
-**Rewards:** The Pallor's Last (accessory — the strongest single item in the game, granting massive stat boosts and an aura that reduces all incoming damage by 25%), the satisfaction of having silenced the very last echo of Despair.
+**Rewards:** The Pallor's Last (accessory — the strongest single item in the game, granting +40 all stats and an aura that reduces all incoming damage by 25% per [equipment.md](equipment.md)), the satisfaction of having silenced the very last echo of Despair. **One-time encounter — The Lingering does not respawn after defeat.**
 
 ---
 

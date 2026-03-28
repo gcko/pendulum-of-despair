@@ -540,6 +540,7 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
 | **Coastal** | Very low | 64 | ~40 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
+| **Convergence Meadow (Post-game)** | None | 0 | — | Replaces Pallor Wastes zone after `epilogue_complete`. Sacred memorial site — Cael's sword, First Tree Seed scene, The Lingering trigger. |
 | **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
 | **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |
 | **Urban interior** | None | 0 | — | Inside city/town boundaries |
