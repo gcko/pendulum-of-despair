@@ -102,3 +102,78 @@ Crest (+30 all stats from Dreamer's Fault floor 20) and The Pallor's
 Last (from The Lingering per [sidequests.md](sidequests.md)) are both
 superior. The value is the inscription flavor text, not the stats.
 One-time rewards — clearing a tier again gives gold instead.
+
+---
+
+## 3. Completion Tracking
+
+Four categories displayed at The Pendulum tavern. Accessible by
+talking to Sable behind the bar: "Want to see how much of the world
+you've seen?"
+
+### Categories
+
+| Category | What It Tracks | Denominator |
+|----------|---------------|-------------|
+| **Bestiary** | Unique enemies encountered (at least one battle) | 232 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 68 Act III + 24 Optional + 30 Bosses) |
+| **Treasure** | Chests opened across all dungeons and overworld | Total chest count (implementation-defined per dungeon layouts) |
+| **Quests** | Sidequests completed | Total sidequest count per [sidequests.md](sidequests.md) |
+| **Items** | Unique items obtained at least once (consumables, equipment, key items, materials) | Total unique item count across [items.md](items.md) and [equipment.md](equipment.md) |
+
+### Display
+
+- Simple percentage per category with fraction: "Bestiary: 142/232
+  (61%)"
+- No pop-ups or notifications at 100%. The player checks when they
+  want to.
+
+### Sable's Comments
+
+Sable has a comment based on overall completion:
+
+- **<50%:** "Plenty more out there."
+- **50--79%:** "You've seen a lot. But not everything."
+- **80--99%:** "Almost there. You're more thorough than I expected."
+- **100% (any single category):** "Huh. You actually found everything.
+  I'm impressed."
+- **100% (all four):** "...You really don't want to go home, do you?"
+  (delivered with a quiet smile)
+
+### No Rewards for Completion
+
+Per SNES philosophy — the game doesn't give you a trophy for 100%.
+The completionist's reward is knowing they did it, plus Sable's
+acknowledgment. Dreamer's Crest, The Pallor's Last, and The World's
+Memory are the post-game's tangible rewards. Completion tracking is
+informational, not incentivized.
+
+---
+
+## 4. Post-Game Content Summary
+
+Everything available after `epilogue_complete`, routed through The
+Pendulum tavern:
+
+| Content | Access Point | Source Doc | Estimated Hours |
+|---------|-------------|-----------|-----------------|
+| Dreamer's Fault (20 floors) | Tavern cellar | [dungeons-world.md](dungeons-world.md) | 3--5 hours |
+| The Lingering (super boss) | Convergence meadow (requires Dreamer's Fault completion) | [sidequests.md](sidequests.md) | ~30 min |
+| Boss Rush (3 tiers) | Tavern (Sable) | postgame.md (this doc) | ~90 min total |
+| Completion Tracking | Tavern (Sable) | postgame.md (this doc) | Ongoing |
+| Epilogue NPC conversations | Tavern + world | [dynamic-world.md](dynamic-world.md) | ~30 min |
+| First Tree Seed scene | Convergence meadow | [dungeons-world.md](dungeons-world.md) (item), [dynamic-world.md](dynamic-world.md) (scene) | ~5 min |
+| Post-game leveling (71--150) | Everywhere (Dreamer's Fault optimal) | [progression.md](progression.md) | 20--40+ hours |
+| Cael's Echo crystal | Obtained at epilogue | [progression.md](progression.md) | Immediate |
+
+**Total post-game: ~25--45+ hours** for a completionist. Comparable to
+FF6's World of Ruin optional content scope.
+
+### The Pendulum Tavern as Post-Game Hub
+
+All post-game content routes through The Pendulum tavern (per
+[dynamic-world.md](dynamic-world.md)):
+
+- **Sable:** Completion tracking, boss rush access, general dialogue
+- **Dreamer's Fault:** Cellar entrance
+- **Party members:** Epilogue conversations (all present except Cael)
+- **NPCs:** Characters the player helped throughout the game appear
