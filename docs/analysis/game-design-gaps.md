@@ -547,7 +547,7 @@ Now complete.
 - [x] New Game+ rules — resolved: No NG+. FF6 model. Cael's sacrifice, anti-cycle theme. New game starts fresh.
 - [x] Post-game content beyond Dreamer's Fault — Boss rush mode (3-tier gauntlet with Memento accessories), completion tracking (4 categories), First Tree Seed scene. Dreamer's Fault (20 floors) and The Lingering (super boss) already fully designed.
 - [x] Superboss encounters — The Lingering (sidequests.md, 3 phases, hardest fight) + Dreamer's Fault echo bosses (4 per dungeons-world.md). Already designed.
-- [x] Completion tracking — 4 categories: bestiary (232), treasure, quests, items. Displayed at Pendulum tavern via Sable. No milestone rewards.
+- [x] Completion tracking — 4 categories: bestiary (235), treasure, quests, items. Displayed at Pendulum tavern via Sable. No milestone rewards.
 
 ---
 

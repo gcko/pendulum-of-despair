@@ -156,8 +156,8 @@ you've seen?"
 
 ### Display
 
-- Simple percentage per category with fraction: "Bestiary: 142/198
-  (72%)"
+- Simple percentage per category with fraction: "Bestiary: 142/235
+  (60%)"
 - No milestone rewards — the percentage is the reward
 - No pop-ups or notifications at 100%. The player checks when they
   want to.
