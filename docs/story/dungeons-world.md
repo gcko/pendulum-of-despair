@@ -2121,7 +2121,7 @@ Cael descends from the machine to confront the party. He fights with his old kni
 **Boss: Cael, Knight of Despair (Phase 1)**
 - 45,000 HP.
 - Uses enhanced versions of party member abilities. Counters with moves that specifically target whoever attacked last.
-- At 75%: Despair Pulse (party-wide Despair debuff).
+- At 75%: Despair's Grip (party-wide DEF -20% for 3 turns — corrupted Hold the Line per [abilities.md](abilities.md)).
 - At 50%: Shadow Step -- disappears and reappears behind a random party member for a critical strike.
 - At 25%: "I'm doing this for you" -- brief invulnerability while delivering dialogue. The party cannot skip this. It hurts.
 - At 0%: Cael staggers but the Pallor surges through him. Phase 2 begins.
