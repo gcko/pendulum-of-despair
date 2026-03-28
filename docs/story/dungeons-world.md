@@ -4095,13 +4095,13 @@ E.......................................X
 
 ## 14. Caves and Grottos
 
-Small cave systems along travel routes. These are single-room or two-room areas with a few encounters and a treasure chest. They reward exploration without demanding commitment.
+Small cave systems along travel routes. These are single-room or two-room areas with a few encounters and a treasure chest. They reward exploration without demanding commitment. All rooms exceeding the 16x14 tile viewport (256x224 pixels per [visual-style.md](visual-style.md)) use scrolling camera that follows the party.
 
 ### 14a. Thornvein Grotto
 
 **Location:** Along the Wildwood Trail between Ironmouth and Roothollow.
 **Acts:** I
-**Size:** 20x15 tiles (multi-screen, camera follows party)
+**Size:** 20x15 tiles
 
 ```
 ####E##############
@@ -4137,7 +4137,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Location:** In the marshland near Duskfen, off the main path.
 **Acts:** II
-**Size:** 20x15 tiles (multi-screen, camera follows party)
+**Size:** 20x15 tiles
 
 ```
 ####E##############
@@ -4173,7 +4173,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Location:** Along the Highland Descent between Highcairn and Valdris Crown.
 **Acts:** Interlude
-**Size:** 20x15 tiles (multi-screen, camera follows party)
+**Size:** 20x15 tiles
 
 ```
 ####E##############

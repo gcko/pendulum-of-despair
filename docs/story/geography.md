@@ -538,7 +538,7 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Marshland** | High | 380 | ~16 | Duskfen system |
 | **Mountains** | Moderate | 252 | ~20 | Frostcap foothills, Broken Hills |
 | **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
-| **Coastal** | Low | 64 | ~40 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
+| **Coastal** | Very low | 64 | ~40 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
 | **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
 | **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |

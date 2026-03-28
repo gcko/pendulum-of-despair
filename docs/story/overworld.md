@@ -229,7 +229,8 @@ changes through music and palette shifts alone, not text overlays.
 - **Music crossfade:** 3-second transition — outgoing biome music fades
   from 100% to 0% over 1.5 seconds, incoming biome music fades from
   0% to 100% over 1.5 seconds. Crossfade begins at the transition's
-  midpoint tile. Per [biomes.md](biomes.md) Music Crossfades section.
+  midpoint tile. Per [biomes.md](biomes.md) Music Crossfades section
+  (a Plus Enhancement — SNES used hard cuts).
 - **Pallor exception:** Music does not crossfade. It cuts to silence,
   then the Pallor's drone fades in over 5 seconds. The silence between
   is deliberate.
