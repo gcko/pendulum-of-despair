@@ -432,7 +432,7 @@ Now complete.
 **Status:** MISSING
 **Priority:** P2
 **Files:** None yet
-**Depends On:** Overworld design
+**Depends On:** 3.2 Overworld Traversal Mechanics (COMPLETE) — `docs/story/overworld.md`
 
 **What's Needed:**
 - [ ] Decision: Does this game have an airship?

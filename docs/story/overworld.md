@@ -124,8 +124,8 @@ Five tile categories govern overworld movement:
 | **Passable** | Walk freely; encounters per terrain zone | Grass, road, plains, quarried plains, sand, coast |
 | **Impassable** | Cannot cross on foot | Mountains, deep water, cliff faces, dense rock |
 | **Entry trigger** | Fade to black, load interior map | Town icons, cave mouths, dungeon entrances |
-| **Conditional** | Requires story flag or party member to pass | Dense Thornmere (Torren required), winter Highcairn (Interlude blocked), Pallor Wastes (Act III only) |
-| **Event trigger** | Activates cutscene, save, or warp | Overworld save points, story trigger tiles, region boundary banners |
+| **Conditional** | Requires story flag or party member to pass; full stop + message | Dense Thornmere (Torren required), winter Highcairn (Interlude blocked), Pallor Wastes (Act III only), Aelhart border road (Act II--Interlude blocked) |
+| **Event trigger** | Activates cutscene, save, or warp | Overworld save points, story trigger tiles |
 
 ### Passability Rules
 
@@ -137,15 +137,19 @@ Five tile categories govern overworld movement:
   have 0 increment). Spells and equipment can modify encounter rate
   (Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5 per
   [equipment.md](equipment.md)).
-- **Conditional tile messages.** When the player attempts to enter a
-  conditional tile without meeting its requirement, a contextual
-  message appears:
+- **Conditional tile behavior.** Failing a conditional check produces
+  the same full stop as impassable tiles, plus a contextual message:
   - "The forest is too dense to navigate without a guide." — Torren
     absent in dense Thornmere
   - "The mountain pass is snowbound." — Highcairn route during
     Interlude
   - "A wall of grey static blocks the path." — Pallor Wastes before
     Act III
+  - "The road south is too dangerous." — Aelhart border road during
+    Act II--Interlude
+- **Region boundary banners** are not event triggers — they are
+  non-interrupting text overlays on passable tiles at biome borders.
+  See Section 3 (Region Boundary Banners) for timing rules.
 - **Vehicle-conditional tiles** (shallow water, rail tracks, airship
   landing zones) will be added as a sixth passability category when
   Gap 3.1 (Transport) is designed.
@@ -258,12 +262,12 @@ zero encounter rate.
 
 | Biome | Atmospheric Effect |
 |-------|-------------------|
-| Valdris Highlands | Gentle wind, drifting clouds, warm afternoon light |
-| Carradan Industrial | Permanent smog layer, amber-filtered light, steam rising from grating |
-| Thornmere Deep Forest | Spore/mote particles, no ground-level wind, canopy-filtered light |
-| Thornmere Wetlands | Constant fog (visibility 4--5 tiles), will-o'-wisps, flat diffused light |
+| Valdris Highlands | Gentle wind, drifting clouds casting moving shadows, warm afternoon light |
+| Carradan Industrial | Permanent smog layer, amber-filtered light (never truly bright) |
+| Thornmere Deep Forest | Spore/mote particles, no ground-level wind, bioluminescent light from below |
+| Thornmere Wetlands | Constant fog (visibility 4--5 tiles in places), will-o'-wisps, flat diffused light |
 | Mountain / Alpine | Visible wind, blowing snow particles, whiteout conditions during storms |
-| Coastal / Harbor | Haze, salt spray, stronger wind |
+| Coastal / Harbor | Haze, sea spray motes, stronger wind |
 | Ley Line Nexus | Faint ambient glow, constant mote particles drifting upward, energy shimmer; amber variant at Sunstone Ridge (orange-red crystal glow) |
 | Pallor Wastes | Grey ceiling, visual static at screen edges, muffled audio |
 
@@ -290,7 +294,7 @@ Source: [dynamic-world.md](dynamic-world.md).
 
 ### Implementation Notes
 
-- Biome transition strips (3--5 tiles per [biomes.md](biomes.md)) swap
+- Biome transition strips (3--5+ tiles per [biomes.md](biomes.md)) swap
   the particle/palette set at the midpoint — no two biome atmospherics
   need to blend simultaneously
 - Palette manipulation for act progression uses color subtraction (SNES
