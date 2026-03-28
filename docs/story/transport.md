@@ -88,8 +88,9 @@ ley energy, provided by the Thornmere tribes.
   "The Stag cannot navigate this terrain."
 - **Unlock trigger:** Requires `duskfen_alliance` flag + Torren in
   active party at Roothollow. Flag set: `stag_bonded` (per
-  [events.md](events.md)). If Torren is benched, Vessa hints to
-  bring him.
+  [events.md](events.md)). If Torren is benched, Vessa says: "The
+  forest spirits stir. They sense the Fenmother's passing. Bring
+  Torren — the spirits wish to honor the bond."
 - **Thematic note:** The Ley Stag creates a faction parallel — the
   Compact has rail infrastructure, the Wilds have the spirit-bonded
   Stag. Each faction's transport reflects its identity.
