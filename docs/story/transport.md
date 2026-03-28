@@ -36,8 +36,9 @@ Menu-driven instant travel between Compact cities via NPC interaction.
 - **Routes:** Corrund ↔ Ashmark ↔ Caldera, Corrund ↔ Kettleworks (per
   [city-carradan.md](city-carradan.md) Rail Network diagram)
 - **Mechanic:** Talk to Rail Conductor NPC at any terminal → select
-  destination from menu → pay fare → fade to black → arrive at
-  destination terminal
+  destination from menu (all cities on the network, not just directly
+  connected) → pay fare → fade to black → arrive at destination
+  terminal
 - **Speed:** Instant (menu-driven, no overworld traversal)
 - **Encounters:** None
 - **Cost:** 100g per trip

@@ -343,7 +343,8 @@ Per [combat-formulas.md](combat-formulas.md):
 - Ley Stag mount: 0 encounter increment while mounted (Act II onward
   per [transport.md](transport.md)); most powerful encounter avoidance
   in the game but restricted from dense Thornmere, water, mountains,
-  towns, and Pallor Wastes
+  towns, dungeons, and Pallor Wastes (Act III only, auto-dismount at
+  boundary per [transport.md](transport.md))
 - Boss fights: flee disabled entirely (no ambiguity)
 
 ### 5.4 No Missable Content

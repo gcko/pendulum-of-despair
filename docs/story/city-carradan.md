@@ -374,7 +374,7 @@ KEY:  ^^^ = caldera rim   *** = molten channel   ||| = heat vent
 | 29 | The Bellows (tavern) | Tavern | Undercity | Barkeep, resistance contacts | Cheap drinks, rumors | Underground watering hole |
 | 30 | Mira's Hidden Cartography Studio | Workspace | Undercity | Mira Thenn | Ley line maps (key items) | Side quest: classified report |
 | 31 | Escape Tunnel | Passage | Undercity | -- | -- | Emergency exit to overworld south |
-| 32 | Rail Station | Transit | Upper Rim | Conductor NPC | Fast travel (Corrund) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
+| 32 | Rail Station | Transit | Upper Rim | Conductor NPC | Fast travel (Ashmark, Corrund, Kettleworks) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
 
 ### Shop Inventories
 
@@ -535,7 +535,7 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 
 | # | Building | Type | Location | NPCs | Services | Notes |
 |---|----------|------|----------|-------|----------|-------|
-| 1 | Rail Station | Transit | North | Conductor | Fast travel | Erratic in Interlude |
+| 1 | Rail Station | Transit | North | Conductor NPC | Fast travel (Corrund, Caldera, Kettleworks) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
 | 2 | Founders' Hall | Museum | North | Curator NPC | Lore | Original Forgewright anvil; mechanical prayer wheels |
 | 3 | Prayer Wheel Garden | Shrine | North | Devotees | -- | Mechanical prayer wheels; some stopped in Interlude |
 | 4 | Forge-Masters' Guild HQ | Government | Central north | Guild officials | -- | Political center; controls employment and housing |
@@ -1469,7 +1469,7 @@ KEY:  [...] = building   === = rail line   ((( = glass dome
 | 11 | Engineer's Housing A-B | Housing | South | Engineers, families | -- | Better than factory housing; still modest |
 | 12 | Campus Canteen | Service | South | Cook | Meals (HP restore) | Decent food; engineers eat better than workers |
 | 13 | Campus Store | Commerce | South | Shopkeeper | Tools, parts, supplies | Research-grade equipment |
-| 14 | Rail Station | Transit | Entrance | Conductor NPC | Fast travel (Corrund) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
+| 14 | Rail Station | Transit | Entrance | Conductor NPC | Fast travel (Corrund, Ashmark, Caldera) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
 
 ### Shop Inventories
 
