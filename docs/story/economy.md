@@ -51,14 +51,17 @@ crafting materials, leveraging Sable's steals, or backtracking for missed
 treasure chests. This is the "means" economy — players have the means to get
 what they want, but not everything at once.
 
-**Three gold sinks:**
+**Four gold sinks:**
 
 1. **Equipment** (primary) — weapons, armor, and accessories are the largest
    expenses at each town. New towns introduce gear 1–2 tiers above the
    party's current level.
 2. **Consumables** (ongoing) — healing items, antidotes, and revives drain
    gold steadily across the mid-game.
-3. **Inns** (flavor) — cheap relative to equipment but reinforce the sense of
+3. **Transport** (Act II) — rail (100g per trip) and coastal ferry (200g per
+   crossing) per [transport.md](transport.md). Affordable but non-trivial
+   in early Act II; negligible by late Act II.
+4. **Inns** (flavor) — cheap relative to equipment but reinforce the sense of
    traveling through a living world.
 
 **Three gold sources:**
