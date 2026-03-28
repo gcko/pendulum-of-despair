@@ -37,6 +37,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Riposte** | Level 6 | 2 AP | Reaction. When Edren absorbs an attack in any stance, he counters with a physical strike dealing 1.5x normal damage. Can trigger once per enemy turn. |
 | **Aegis Veil** | Level 15 | 3 AP | Edren channels ley-line energy into a magical barrier on one ally, reducing magic damage by 40% for 3 turns. |
 | **Shatter Guard** | Level 22 | 5 AP | Edren breaks his stance explosively, dealing physical damage to all enemies equal to total damage absorbed since entering the stance (capped at 2x his max HP). Minimum damage: Edren's Attack x 1 (even if no damage was absorbed). Ends the current stance. |
+| **Steadfast Resolve** | Story: `trial_edren_complete` (Pallor Wastes trial) | 6 AP | Edren steels the party's resolve. Immediately cleanses all Despair and Silence from every ally, then grants +20% DEF and +20% MDEF to all allies for 3 turns. The cleanse fires before the buff — a Despaired ally is freed, then shielded. |
 | **Oathkeeper** | Story: Act IV (picks up Cael's sword) | 8 AP | Edren dual-wields his own sword and Cael's blade. For 3 turns, all Bulwark stances gain +50% absorption AND Riposte triggers automatically on every absorbed hit. While active, Edren's attack commands hit twice. |
 
 **Synergies:**
@@ -47,7 +48,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Story Integration:**
 - **Acts I-II:** Edren has Ironwall, Riposte, and Rampart. His kit reflects a disciplined knight protecting others.
 - **Interlude:** After Cael's betrayal, Edren loses access to Bulwark temporarily during the monastery sequence (he's paralyzed by guilt — mechanically represented as the command being greyed out). Sable's arrival restores it.
-- **Act III:** By this point, Edren has typically reached levels 15-22, unlocking Aegis Veil and Shatter Guard through standard leveling.
+- **Act III:** By this point, Edren has typically reached levels 15-22, unlocking Aegis Veil and Shatter Guard through standard leveling. Steadfast Resolve unlocks from his Pallor Wastes trial — the culmination of the theme established in Acts I-II (defending, not attacking). The party-wide Despair cleanse is invaluable in the Pallor Wastes and Convergence.
 - **Act IV:** Oathkeeper unlocks when Edren picks up Cael's fallen sword. This is the culmination of his arc — carrying the weight of loss and turning it into strength.
 
 ---
