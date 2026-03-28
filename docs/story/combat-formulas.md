@@ -26,16 +26,18 @@
 ```
 raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
 damage_after_variance = raw × variance
-final = clamp(floor(damage_after_variance × attacker_row_mod × defender_row_mod), 1, 14999)
+damage_after_rows = damage_after_variance × attacker_row_mod × defender_row_mod
+final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 ```
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
-- **row modifiers** are applied last (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
+- **row modifiers** are applied after variance (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
+- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). `reduction_product` is 1.0 if no reduction sources are active.
 
-**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after row modifiers are applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
+**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after damage reduction is applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
 
@@ -72,7 +74,8 @@ The row system uses 2 rows (Front and Back) for the player party. Enemies have n
 Row modifiers apply as the **last step** in the physical damage pipeline, after all other calculations (ATK², ability multiplier, DEF subtraction, variance). The input is the damage value produced by variance (step 7 in the resolution pipeline):
 
 ```
-final_physical_damage = floor(damage_after_variance × attacker_row_mod × defender_row_mod)
+damage_after_rows = damage_after_variance × attacker_row_mod × defender_row_mod
+final_physical_damage = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 ```
 
 When a party member attacks an enemy: `attacker_row_mod` = party member's row modifier, `defender_row_mod` = ×1.0 (enemies have no rows). When an enemy attacks a party member: `attacker_row_mod` = ×1.0 (enemies have no rows), `defender_row_mod` = party member's row modifier.
@@ -89,17 +92,127 @@ Items, Forgewright devices, and Ley Crystal invocations work at full effect from
 
 ---
 
+## Damage Reduction
+
+Percentage-based damage reduction from abilities, equipment, and
+effects. Applied as a **post-pipeline multiplicative step** after all
+other damage calculations (physical or magic). Inspired by FF6's
+Safe/Shell model.
+
+```
+reduction_product = (1 - r1) × (1 - r2) × ... for all active sources
+final_damage = clamp(floor(damage_after_rows × reduction_product), 1, 14999)   # physical
+final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999) # magic
+```
+
+- `damage_after_rows` is the physical pipeline output (after row
+  modifiers). `damage_after_element` is the magic pipeline output
+  (after element and variance).
+- **Multiple sources stack multiplicatively**, not additively.
+  Diminishing returns prevent invincibility.
+- **Floor of 1 always applies** — a character can never take 0 damage
+  from a damaging attack.
+
+### What Damage Reduction Does NOT Apply To
+
+- **Healing.** Reduction only applies to incoming damage, not incoming
+  healing. A character with Pallor's Last equipped receives full
+  healing from spells, items, and regeneration effects.
+- **Immunity (element_mod = 0.0×).** If the target is immune, damage
+  is 0 before reduction. The immunity result (0 damage, displayed as
+  "Immune") bypasses both reduction and the floor-of-1 clamp.
+- **Absorb (element_mod = -1.0×).** Absorbed damage heals the target.
+  The negative value bypasses reduction and the clamp — see the
+  [Elemental System](#elemental-system) § Absorb for details.
+- **Environmental/chip damage.** Step-based damage (e.g., ley pressure
+  zones per [dungeons-world.md](dungeons-world.md)), poison ticks, and
+  other non-pipeline damage sources are not subject to reduction.
+  These use fixed values that bypass the combat formula entirely.
+- **Fixed damage.** Attacks that deal a fixed amount (e.g., The
+  Lingering's Final Collapse: 9,999 fixed) bypass the pipeline and
+  are not reduced.
+- **Enemy damage.** Damage reduction is a player-side system. Enemies
+  do not have reduction sources — they use DEF/MDEF stat buffs
+  instead, which modify the stat before the formula (different
+  mechanic).
+
+### Damage Reduction Sources
+
+| Source | Reduction | Type | Scope | Duration | Mechanic |
+|--------|-----------|------|-------|----------|----------|
+| The Pallor's Last (accessory) | 25% | All | Equipped character | Permanent (while equipped) | Flat reduction |
+| Ironwall (Edren ability) | 50% (75% with Oathkeeper) | Physical only | Single guarded ally | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
+| Rampart (Edren ability) | 30% (45% with Oathkeeper) | All | All back-row allies | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
+| Aegis Veil (Edren ability) | 40% (20% via Resonance) | Magic only | Single ally (party-wide via Resonance) | 3 turns (2 turns via Resonance) | Flat reduction |
+| Bulkhead (Lira device) | 40% | Physical only | Single chosen ally | 3 turns | Flat reduction |
+| Deeproot Veil (Torren upgrade) | 15% | All | Single ally with Thornveil | 3 turns | Flat reduction |
+| Spiritward (Torren + Edren Dual Art) | 20% | All | All allies | 3 turns | Flat reduction |
+| Back row | 50% | Physical only | Positioned character | Positional | Row modifier — see note |
+
+> **Back row** is already applied as a row modifier in the physical
+> pipeline. It is NOT applied again as a damage reduction source.
+> Listed here for completeness — do not double-apply.
+
+> **Absorption vs flat reduction:** Ironwall and Rampart are
+> *absorption* abilities — the reduced damage is redirected to Edren,
+> not eliminated. The target takes `damage × (1 - absorption%)` and
+> Edren takes `damage × absorption%`. For the `reduction_product`
+> calculation, absorption sources reduce the target's incoming damage
+> identically to flat reduction. The difference is that Edren receives
+> the absorbed portion as damage to himself (subject to his own DEF
+> and any reduction on him). Oathkeeper (+50% absorption on Bulwark
+> stances) increases Ironwall to 75% and Rampart to 45%.
+
+### Stacking Examples
+
+**Pallor's Last + Deeproot Veil (all damage):**
+`(1 - 0.25) × (1 - 0.15) = 0.75 × 0.85 = 0.6375` → 36.25% total
+reduction (not 40%).
+
+**Ironwall + Bulkhead (physical, stacked on one ally):**
+`(1 - 0.50) × (1 - 0.40) = 0.50 × 0.60 = 0.30` → 70% total physical
+reduction. A 5,000 damage hit: ally takes 1,500, Edren takes 2,500
+(Ironwall absorption).
+
+**Ironwall + Bulkhead + Back Row + Pallor's Last (maximum physical):**
+Back row is a row modifier (already in pipeline), so damage reduction
+sources are: `(1 - 0.50) × (1 - 0.40) × (1 - 0.25) = 0.225` → 77.5%
+from reduction alone, on top of the back row ×0.5 already applied.
+Net: a 5,000 raw hit → 2,500 (back row) → 562 (reductions). The
+ally takes 562, Edren takes 1,250 (Ironwall absorption of the
+post-row value).
+
+**Spiritward + Pallor's Last (all damage, party-wide + single):**
+`(1 - 0.20) × (1 - 0.25) = 0.80 × 0.75 = 0.60` → 40% total
+reduction on the Pallor's Last wearer. Other allies get 20% from
+Spiritward alone.
+
+**Physical-only sources do not reduce magic damage.** A character with
+Ironwall + Bulkhead still takes full magic damage (only Pallor's Last,
+Deeproot Veil, Aegis Veil, Spiritward, and Rampart apply to magic
+where applicable).
+
+---
+
 ## Magic Damage
 
 ```
 raw = max(1, (MAG × spell_power) / 4 - target.MDEF)
-final = min(14999, raw × element_mod × variance)
+damage_after_element = raw × element_mod × variance
+
+if element_mod == 0.0:
+    final = 0                    # Immune — displayed as "Immune"
+elif element_mod < 0:
+    final = abs(damage_after_element)  # Absorb — heals target
+else:
+    final = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 ```
 
 - **MAG** includes all sources. Attunement (+30% MAG) modifies MAG before the formula.
 - **spell_power** is defined per spell in [magic.md](magic.md) (Tier 1: 12–20, Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
-- **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)).
+- **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)). Immunity (0.0×) and absorb (-1.0×) bypass both damage reduction and the floor-of-1 clamp — see the branches above.
 - **target.MDEF** includes equipment and debuff modifiers.
+- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
 
 **Why divisor 4?** Tuned to produce these milestone values (MAG values are natural, per [progression.md](progression.md) milestones):
 
@@ -274,7 +387,15 @@ Some weapons and abilities have elemental properties:
 - Lira's Overcharge: Storm element
 - Elemental weapons (defined in equipment, Gap 1.5)
 
-When a physical attack has an element, the elemental multiplier applies to the physical damage output. This gives Lira's engineering abilities real tactical value against elementally-weak enemies.
+When a physical attack has an element, the elemental multiplier
+applies after variance (between step 7 and step 8 in the resolution
+pipeline): `damage_after_element = damage_after_variance × element_mod`.
+Row modifiers and damage reduction then apply to `damage_after_element`
+instead of `damage_after_variance`. Immunity (0.0×) and absorb (-1.0×)
+use the same branching logic as the magic formula — 0.0× yields 0
+damage ("Immune"), -1.0× heals the target, bypassing reduction and the
+floor-of-1 clamp. Most physical attacks are non-elemental (element_mod
+= 1.0×) and skip this step entirely.
 
 ---
 
@@ -324,7 +445,8 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 6. **Apply combat interaction modifiers** (Frozen Shatter, Glintmark, etc.)
 7. **Apply variance** — `× random_int(240, 255) / 256`
 8. **Apply row modifiers** — `× attacker_row_mod × defender_row_mod` (see [Row Modifier](#row-modifier))
-9. **Floor and clamp** — `max(1, min(14999, floor(result)))`
+9. **Apply damage reduction** — `× reduction_product` (see [Damage Reduction](#damage-reduction)). Skip if no active sources (reduction_product = 1.0).
+10. **Floor and clamp** — `clamp(floor(result), 1, 14999)`
 
 ### Magic Damage Resolution
 
@@ -334,7 +456,8 @@ Defined per-boss in the bestiary (Gap 1.3). Standard patterns:
 4. **Apply combat interaction modifiers** (Conductive Water, etc.)
 5. **Apply buff modifiers** (Resonance, Glintmark)
 6. **Apply variance** — `× random_int(240, 255) / 256`
-7. **Floor and clamp** — `max(1, min(14999, floor(result)))` (floor of 1 bypassed if elemental modifier was 0.0× or -1.0×)
+7. **Apply damage reduction** — `× reduction_product` (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" sources apply. Skip if no active sources.
+8. **Floor and clamp** — `clamp(floor(result), 1, 14999)` (floor of 1 bypassed if elemental modifier was 0.0× or -1.0×)
 
 Magic damage spells use the same Hit Rate% and Evasion% checks as physical attacks (see [progression.md](progression.md)). Critical% rolls never apply to magic damage — spells cannot crit.
 
@@ -768,7 +891,7 @@ This document replaces the placeholder formulas that existed in [magic.md](magic
 
 | Old Formula (magic.md) | New Formula |
 |------------------------|-------------|
-| `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)` | `min(14999, max(1, (MAG × spell_power) / 4 - target.MDEF) × element_mod × variance)` |
+| `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)` | See § Magic Damage for full 3-branch formula (immunity → 0, absorb → heal, normal → `clamp(floor(... × reduction_product), 1, 14999)`) |
 | `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)` | `min(14999, (MAG × spell_power × 0.8) × variance)` |
 
 The `random(-3, 3)` and `random(0, 5)` placeholders are replaced by percentage-based variance (`random_int(240, 255) / 256`) that scales properly at all damage levels.
