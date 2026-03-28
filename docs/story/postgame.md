@@ -29,9 +29,10 @@
 PoD does not have a New Game+ mode. When the player completes the
 epilogue (`epilogue_complete` flag per [events.md](events.md)), the
 game saves a post-game state and returns to The Pendulum tavern.
-When the player regains control, Sable greets them with a scripted
-line: "You're back. There's still work to do, if you want it. The
-cellar's open, and I've been keeping track of a few things." This
+When the player regains control, Sable greets them with a one-time
+scripted line (gated by a `postgame_greeting_seen` flag): "You're
+back. There's still work to do, if you want it. The cellar's open,
+and I've been keeping track of a few things." This
 serves as the post-game signpost — pointing to Dreamer's Fault
 (cellar) and completion tracking (Sable). The player can then explore
 post-game content freely from this save.
@@ -156,6 +157,9 @@ you've seen?"
   (61%)"
 - No pop-ups or notifications at 100%. The player checks when they
   want to.
+- **Aggregate only** — no per-item checklists. The player sees "142/232"
+  but not which specific enemies are missing. Finding the last few is
+  part of the completionist challenge.
 
 ### Sable's Comments
 
