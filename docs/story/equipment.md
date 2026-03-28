@@ -528,6 +528,16 @@ content. Not sold in any shop.
 | Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
 | Keeper's Resolve | +15% Despair resistance, +5 MDEF | The Grey Keeper drop (Oasis C) | III |
 | Dreamer's Crest | +30 all stats (best accessory in game) | Cael's Echo (non-combat) | Post |
+| Warrior's Memento | ATK +10 | Boss Rush Tier 1 | Post |
+| Survivor's Memento | DEF +10, MDEF +10 | Boss Rush Tier 2 | Post |
+| Pendulum's Memento | All stats +5 | Boss Rush Tier 3 | Post |
+
+> **Memento accessories** are earned from the boss rush mode (per
+> [postgame.md](postgame.md)). They are meaningful but intentionally
+> weaker than Dreamer's Crest (+30 all) and The Pallor's Last (from
+> The Lingering). Their value is the inscription flavor text:
+> "Remember the first fight," "Remember the cost," "Remember
+> everything."
 
 ### Accessory Summary
 
