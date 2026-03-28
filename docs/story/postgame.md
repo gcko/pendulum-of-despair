@@ -60,7 +60,8 @@ items, bestiary, or flags from a previous playthrough.
 
 Accessible from The Pendulum tavern after `epilogue_complete`. Sable
 introduces it: "Some old friends left marks on us. Want to revisit
-them?"
+them?" The boss rush is a memorial, not a repetition — the world
+remains healed, the player revisits memories of fights already won.
 
 ### Three-Tier Gauntlet
 
@@ -79,8 +80,10 @@ include all mandatory story bosses in story order. Optional bosses
 ### Rules
 
 - Bosses fought in story order within each tier
-- **Full HP/MP/AC restore between fights** — the challenge is each
-  individual fight at post-game stats, not attrition
+- **Full reset between fights** — HP/MP/AC restored to maximum, all
+  status ailments cleared, all buffs and debuffs removed, ATB gauges
+  reset to zero. Equipment and ability loadouts may be changed between
+  fights. The challenge is each individual fight, not attrition.
 - **Original boss stats** — no scaling or boosting. Post-game
   characters are overpowered, which is the point. The victory lap
   is the fun. Phase transitions trigger normally — if damage skips
@@ -97,6 +100,9 @@ include all mandatory story bosses in story order. Optional bosses
   - Tier 2: 10 Hi-Potions, 8 Ethers, 3 Phoenix Feathers, 2 Remedies
   - Tier 3: 5 Megalixirs, 10 Hi-Potions, 10 Ethers, 5 Phoenix
     Feathers, 3 Remedies
+- Consumables are provided fresh at the start of each tier attempt.
+  They are a total supply across all fights in the tier — not
+  replenished between fights.
 - Flee disabled (as in normal boss fights)
 - **Save suppressed during boss rush** — the game creates a temporary
   auto-save on tier entry. Saving and loading are disabled until the
