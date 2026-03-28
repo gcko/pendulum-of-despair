@@ -1,7 +1,8 @@
 # Overworld Traversal Mechanics
 
 > Formalizes the mechanical layer of overworld traversal: presentation,
-> passability rules, screen transitions, and weather. The *content* —
+> passability rules, screen transitions, weather, structural tilemap
+> changes, and save points. The *content* —
 > biome definitions, encounter rates, named routes, location entries,
 > story-driven world changes — is already defined across
 > [geography.md](geography.md), [biomes.md](biomes.md),
@@ -77,7 +78,8 @@ convenience on a larger, more complex continent.
 - **Style:** Static illustrated map with parchment aesthetic,
   consistent with SNES-era game manual fold-out maps.
 - **Location discovery:** Locations appear on the map after first visit,
-  labeled with icons by type (town, dungeon, landmark).
+  labeled with icons by type (town, dungeon, landmark). Destroyed
+  or modified locations use variant icons (see Section 5).
   Undiscovered areas show terrain but no location labels — the
   geography is known, specific sites are not.
 - **Current position:** Blinking dot marker shows the party's current
@@ -295,7 +297,7 @@ layer on top.
 | Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
 | Interlude onset | Grey palette filter, muted colors globally | All biomes |
 | Interlude winter | Wind drops, oppressive silence, heavier frost patterns; Pallor manifestations blend with snow on Highland Descent route | Highcairn route, alpine areas |
-| Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of platforms replaced with water tiles) | Duskfen (Thornmere Wetlands) |
+| Duskfen water rise | Fog turns grey; structural tile changes in Section 5 | Duskfen (Thornmere Wetlands) |
 | Pallor spread (Act III) | Progressive desaturation → monochrome | 10-mile radius from Convergence |
 | Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | All outdoor areas (highlighted: Valdris, Carradan, Convergence meadow) |
 
@@ -315,3 +317,113 @@ Source: [dynamic-world.md](dynamic-world.md).
 - The Pallor Wastes override is the most extreme: it replaces all biome
   visuals within its radius with the Stage 3 corruption tileset (per
   [biomes.md](biomes.md) Pallor Corruption Overlay System)
+
+---
+
+## 5. Structural Overworld Changes
+
+The overworld tilemap is not static. Story progression causes structural
+modifications that alter terrain, passability, and connectivity. These
+go beyond the atmospheric/palette overrides in Section 4 — they replace
+tiles and change where the player can walk.
+
+Source: [dynamic-world.md](dynamic-world.md). The table below summarizes
+the changes; dynamic-world.md contains the full mechanical details.
+
+### Act-Based Tilemap Modifications
+
+| Change | Trigger | Old → New Tiles | Passability Impact |
+|--------|---------|-----------------|-------------------|
+| **Valdris Crown wall breach** | End of Act II (`carradan_assault_begins`) | Intact wall tiles → rubble, debris slope, fire damage | New accessible area through eastern wall; permanent passage |
+| **Millhaven crater** | Interlude (ley line eruption) | Complete town → crater scar, twisted metal, exposed ley lines | Town destroyed; overworld-visible crater, no interior map remains |
+| **Three ley fissures** | Interlude (`ley_line_rupture`) | Grass/forest → fissure tiles with ley energy glow | Severs Valdris Highroad, blocks Compact southern routes, marks Convergence Ring (Act III boundary). Narrow bridge tiles at specific crossing points |
+| **Thornmere canopy petrification** | Interlude (Pallor proximity) | Living canopy → grey stone, fallen rubble, sky-exposed ground | Some root passages blocked; new paths where petrified trees create bridges; biome shifts from enclosed to exposed |
+| **Rail tunnel collapse** | Interlude (`ley_line_rupture`) | Straight tunnel sections → rubble at 3 collapse points, branching maze | Direct Ashmark--Corrund route eliminated; new branching tunnels with boring engine hazards |
+| **Duskfen submersion** | Interlude (ley disruption) | Lower platform tiles → water tiles (~30% of settlement) | Lower platforms impassable; rope bridges cut; new makeshift plank bridges in different locations |
+| **Pallor Wastes formation** | Progressive during Interlude; fully formed by Act III | Biome tiles within 10-mile radius → Stage 3 corruption tileset (ley line clearings retain pre-corruption color as save points) | New encounter zone (increment 700). Before Act III: conditional passability block (see Section 2). After Act III onset: passable Wastes terrain |
+| **Epilogue healing** | Post-Convergence | Fissures close (dark scar tiles remain), rubble cleared, scaffolding appears, Convergence meadow replaces plateau | Routes reopen; locations show repair; Convergence becomes meadow with memorial |
+
+### Map Screen Updates
+
+The map screen (Section 1) reflects structural changes:
+
+- **Severed routes** show as broken dotted paths during Interlude/Act III
+- **Destroyed locations** (Millhaven) change icon from town to crater marker
+- **New crossing points** (fissure bridges) appear as route connections
+  when discovered
+- **Restored routes** (Epilogue) return to solid dotted paths
+
+### Passability Category Interaction
+
+Structural changes interact with the passability system (Section 2):
+
+- **Fissure tiles** are impassable except at designated bridge crossings
+  (entry trigger tiles at the bridges)
+- **Crater tiles** are impassable — Millhaven has no entry trigger after
+  destruction (overworld approach only, per
+  [dynamic-world.md](dynamic-world.md))
+- **Submersion tiles** (Duskfen water) are impassable on the overworld;
+  Duskfen's interior map handles the flooded navigation
+- **Petrified/rubble tiles** vary: some block old paths (impassable),
+  others create new paths (passable where fallen trees bridge gaps)
+- Most structural changes permanently replace tile passability states
+  via story flags (not conditional tiles). Exception: the Pallor
+  Wastes boundary uses conditional passability before Act III (see
+  Section 2) and becomes permanent Wastes terrain after Act III onset
+
+---
+
+## 6. Save Points
+
+### Overworld Save Points
+
+Save points are event trigger tiles that open the save/rest menu. On the
+overworld, they appear at two types of locations:
+
+- **Named rest sites.** Camps near dungeon entrances, inn exteriors,
+  and designated waypoints along major routes. These are fixed
+  locations that do not move across acts. They use the safe zone
+  encounter rate (0 increment — no encounters). Note: sacred sites
+  (Ashgrove, Stillwater Hollow) provide passive HP/MP recovery per
+  [geography.md](geography.md) but are not necessarily save points —
+  save point placement is an implementation decision.
+- **Ley line clearings (Pallor Wastes only).** In Act III, faint ley
+  line clearings where the ground still pulses with color serve as the
+  only save points in the Wastes. When the party rests at a clearing,
+  time-of-day snaps to its natural state and color briefly returns —
+  then grey resumes when they leave. Per
+  [dynamic-world.md](dynamic-world.md).
+
+### Visual Representation
+
+- **Standard save points:** A ley crystal marker — a small glowing
+  crystal embedded in the ground, visible on the miniaturized overworld
+  as a faint point of light. Consistent with ley crystal imagery used
+  throughout the game (Ley Crystal equipment slot, ley line network).
+- **Pallor Wastes clearings:** No crystal marker. The clearing itself
+  is the visual — a small patch of surviving color (grass green, earth
+  brown) amid the grey. The contrast is the indicator.
+- **Dungeon save points** use the same ley crystal visual at larger
+  scale on interior maps. The Ley Line Depths has unique variants
+  (crystals embedded in walls, the Nexus crystal with full-restore
+  properties per [dungeons-world.md](dungeons-world.md)).
+
+### Save Point Rules
+
+- **Rest mechanics.** Resting at a save point fully restores HP, MP,
+  and AC (Arcanite Charges per [crafting.md](crafting.md)). Inns
+  additionally clear all status ailments. This is the primary AC
+  restoration mechanic for pre-dungeon device crafting.
+- **Device reconfiguration.** Lira can re-craft devices at save points
+  with available materials and AC (per [crafting.md](crafting.md)).
+- **No encounters.** Save point tiles use the Sacred sites encounter
+  zone (0 increment). The immediate area around the save point is safe.
+- **Persistence across acts.** Named rest sites persist through all
+  acts. Pallor Wastes clearings exist only in Act III. If a save point
+  is in an area that becomes structurally modified (Section 5), it
+  remains accessible if the tile itself is not replaced.
+- **Linewalk interaction.** The Linewalk spell (per
+  [magic.md](magic.md)) teleports to previously visited *towns*, not
+  save points. Save points and Linewalk are separate systems — save
+  points provide rest/save, Linewalk provides fast travel to
+  settlements.

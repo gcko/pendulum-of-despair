@@ -464,6 +464,8 @@ Now complete.
 - [x] Overworld presentation (Mode 7-style perspective, miniaturized sprites, HDMA horizon gradient)
 - [x] Map screen specification (menu-accessed, parchment style, first-visit location discovery)
 - [x] Design changes applied: geography.md speed modifiers removed, zoom mechanic removed
+- [x] Structural overworld changes (8 act-based tilemap modifications, map screen updates, passability interaction rules)
+- [x] Save point specification (named rest sites, Pallor Wastes clearings, visual representation, rest/AC mechanics, Linewalk distinction)
 
 **Blocking:** ~~Overworld implementation~~ Now unblocks: 3.1 (Transport & Vehicle System — vehicle-conditional tiles)
 
