@@ -141,9 +141,9 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 | Source | Reduction | Type | Scope | Duration | Mechanic |
 |--------|-----------|------|-------|----------|----------|
 | The Pallor's Last (accessory) | 25% | All | Equipped character | Permanent (while equipped) | Flat reduction |
-| Ironwall (Edren ability) | 50% | Physical only | Single guarded ally | Stance (active while maintained) | Absorption — Edren takes the redirected 50%, not eliminated |
-| Rampart (Edren ability) | 30% | All | All back-row allies | Stance (active while maintained) | Absorption — Edren takes the redirected 30% |
-| Aegis Veil (Edren ability) | 40% | Magic only | Single ally | 3 turns | Flat reduction |
+| Ironwall (Edren ability) | 50% (75% with Oathkeeper) | Physical only | Single guarded ally | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
+| Rampart (Edren ability) | 30% (45% with Oathkeeper) | All | All back-row allies | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
+| Aegis Veil (Edren ability) | 40% (20% via Resonance) | Magic only | Single ally (party-wide via Resonance) | 3 turns (2 turns via Resonance) | Flat reduction |
 | Bulkhead (Lira device) | 40% | Physical only | Single chosen ally | 3 turns | Flat reduction |
 | Deeproot Veil (Torren upgrade) | 15% | All | Single ally with Thornveil | 3 turns | Flat reduction |
 | Spiritward (Torren + Edren Dual Art) | 20% | All | All allies | 3 turns | Flat reduction |
@@ -182,6 +182,11 @@ Net: a 5,000 raw hit → 2,500 (back row) → 562 (reductions). The
 ally takes 562, Edren takes 1,250 (Ironwall absorption of the
 post-row value).
 
+**Spiritward + Pallor's Last (all damage, party-wide + single):**
+`(1 - 0.20) × (1 - 0.25) = 0.80 × 0.75 = 0.60` → 40% total
+reduction on the Pallor's Last wearer. Other allies get 20% from
+Spiritward alone.
+
 **Physical-only sources do not reduce magic damage.** A character with
 Ironwall + Bulkhead still takes full magic damage (only Pallor's Last,
 Deeproot Veil, Aegis Veil, Spiritward, and Rampart apply to magic
@@ -194,14 +199,20 @@ where applicable).
 ```
 raw = max(1, (MAG × spell_power) / 4 - target.MDEF)
 damage_after_element = raw × element_mod × variance
-final = clamp(floor(damage_after_element × reduction_product), 1, 14999)
+
+if element_mod == 0.0:
+    final = 0                    # Immune — displayed as "Immune"
+elif element_mod < 0:
+    final = abs(damage_after_element)  # Absorb — heals target
+else:
+    final = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 ```
 
 - **MAG** includes all sources. Attunement (+30% MAG) modifies MAG before the formula.
 - **spell_power** is defined per spell in [magic.md](magic.md) (Tier 1: 12–20, Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
-- **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)).
+- **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)). Immunity (0.0×) and absorb (-1.0×) bypass both damage reduction and the floor-of-1 clamp — see the branches above.
 - **target.MDEF** includes equipment and debuff modifiers.
-- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
+- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
 
 **Why divisor 4?** Tuned to produce these milestone values (MAG values are natural, per [progression.md](progression.md) milestones):
 
