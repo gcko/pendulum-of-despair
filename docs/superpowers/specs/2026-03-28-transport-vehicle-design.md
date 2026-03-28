@@ -157,7 +157,7 @@ completeness.
 |-----------|-----|-------------------|---------------|
 | ~15% | Act I | On foot only | FF6 early game |
 | ~30% | Act II (first Compact city) | Rail fast-travel | FF4 hovercraft |
-| ~35% | Act II (Torren trust event) | Ley Stag mount | FF6 chocobo |
+| ~35% | Act II (Roothollow return + Thornmere milestone) | Ley Stag mount | FF6 chocobo |
 | ~40% | Act II (Bellhaven) | Coastal ferry | FF6 Nikeah ferry |
 | ~45% | Act II (Maren Lv 20) | Linewalk spell | Earthbound Teleport |
 | ~55% | Interlude | Transport collapse (see Section 4) | FF6 WoB→WoR |
@@ -183,7 +183,7 @@ overworld, encounter system, and terrain passability without shortcuts.
 
 All four systems unlock as the world opens:
 1. Rail (first Compact city visit)
-2. Ley Stag (Torren trust event, mid-Act II)
+2. Ley Stag (Roothollow return + Thornmere milestone, mid-Act II)
 3. Ferry (first Bellhaven visit)
 4. Linewalk (Maren Lv 20)
 

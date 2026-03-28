@@ -28,7 +28,7 @@ Write the first half of `docs/story/transport.md`: overview, vehicle types, and 
 - Cross-reference: `docs/story/geography.md` (sea routes, rail cart, Gael's Span bridge)
 - Cross-reference: `docs/story/overworld.md` (passability, speed tiers, encounter system)
 - Cross-reference: `docs/story/dynamic-world.md` (Interlude disruptions, Bellhaven state)
-- Cross-reference: `docs/story/characters.md` (Torren trust arc)
+- Cross-reference: `docs/story/characters.md` (Torren party membership + Stag bond)
 - SNES reference: `docs/references/overworld-traversal-mechanics.md` (Section 10)
 
 - [ ] **Step 1: Write the document header and overview**
@@ -275,7 +275,7 @@ Run verification pass on all changed files.
 - Rail routes match city-carradan.md network diagram exactly
 - Every terminal location named in transport.md exists in city-carradan.md
 - Bellhaven docks exist in locations.md
-- Torren trust event referenced in transport.md exists in events.md or characters.md
+- Torren joined flag + Thornmere milestone referenced in transport.md aligns with events.md and characters.md
 - Bridge crossing Gael's Span exists in geography.md
 - Linewalk details match magic.md exactly (spell #74, 12 MP, Maren Lv 20)
 - Interlude rail collapse details match dynamic-world.md
