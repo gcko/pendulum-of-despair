@@ -1084,8 +1084,9 @@ Torren from the party menu on the overworld. Same slot as Lira's
 
 ### 18.3 Character Field Abilities (Formalized)
 
-Each party member may have one overworld field ability accessed via the
-party menu under the Abilities screen (Section 7). Currently defined:
+Each party member may have one overworld field ability accessed by
+selecting the character from the party menu on the overworld.
+Currently defined:
 
 | Character | Ability | Source |
 |-----------|---------|--------|
