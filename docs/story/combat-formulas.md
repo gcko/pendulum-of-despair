@@ -387,7 +387,15 @@ Some weapons and abilities have elemental properties:
 - Lira's Overcharge: Storm element
 - Elemental weapons (defined in equipment, Gap 1.5)
 
-When a physical attack has an element, the elemental multiplier applies to the physical damage output. This gives Lira's engineering abilities real tactical value against elementally-weak enemies.
+When a physical attack has an element, the elemental multiplier
+applies after variance (between step 7 and step 8 in the resolution
+pipeline): `damage_after_element = damage_after_variance × element_mod`.
+Row modifiers and damage reduction then apply to `damage_after_element`
+instead of `damage_after_variance`. Immunity (0.0×) and absorb (-1.0×)
+use the same branching logic as the magic formula — 0.0× yields 0
+damage ("Immune"), -1.0× heals the target, bypassing reduction and the
+floor-of-1 clamp. Most physical attacks are non-elemental (element_mod
+= 1.0×) and skip this step entirely.
 
 ---
 
@@ -883,7 +891,7 @@ This document replaces the placeholder formulas that existed in [magic.md](magic
 
 | Old Formula (magic.md) | New Formula |
 |------------------------|-------------|
-| `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)` | `clamp(floor(max(1, (MAG × spell_power) / 4 - target.MDEF) × element_mod × variance × reduction_product), 1, 14999)` |
+| `magic_damage = max(1, (caster.mag * spell.power) - target.mdef) + random(-3, 3)` | See § Magic Damage for full 3-branch formula (immunity → 0, absorb → heal, normal → `clamp(floor(... × reduction_product), 1, 14999)`) |
 | `heal_amount = (caster.mag * spell.power * 0.8) + random(0, 5)` | `min(14999, (MAG × spell_power × 0.8) × variance)` |
 
 The `random(-3, 3)` and `random(0, 5)` placeholders are replaced by percentage-based variance (`random_int(240, 255) / 256`) that scales properly at all damage levels.
