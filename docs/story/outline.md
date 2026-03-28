@@ -101,7 +101,7 @@ Cael is tasked with studying the Pendulum alongside court scholars. The Pallor b
 
 ### The Diplomatic Mission
 
-Edren, Lira, and Torren are sent to the Thornmere tribes to broker an alliance against the Compact. The world opens up — the player explores the Wilds, discovers that the ley lines aren't just dimming but being drained *toward something*.
+Edren, Lira, Torren, and Maren are sent to the Thornmere tribes to broker an alliance against the Compact. Sable stays behind in Valdris Crown to keep watch on Cael. The world opens up — the player explores the Wilds, discovers that the ley lines aren't just dimming but being drained *toward something*.
 
 The diplomatic arc has three alliance steps before the Council:
 
