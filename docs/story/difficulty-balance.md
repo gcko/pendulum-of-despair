@@ -563,3 +563,4 @@ danger counter increments per terrain type.
 | Oasis services | [locations.md](locations.md) § Pallor Wastes Oases |
 | Overworld traversal | [overworld.md](overworld.md) § Passability & Movement |
 | Dreamer's Fault | [bestiary/optional.md](bestiary/optional.md) |
+| Post-game mechanics | [postgame.md](postgame.md) (boss rush, completion tracking, No NG+) |
