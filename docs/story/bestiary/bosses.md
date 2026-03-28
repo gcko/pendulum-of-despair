@@ -2576,7 +2576,7 @@ Scripted Events:
   At boss.hp_percent <= 75, Phase 1 (once):
     - dialogue: Cael: "Good. Don't hold back. I can feel the Pallor
       pulling. If you hesitate, it takes me faster."
-    - ability_unlock: Despair Pulse added to Cael's priority list
+    - ability_unlock: Despair's Grip added to Cael's priority list
 
   At boss.hp_percent <= 50, Phase 1 (once):
     - dialogue: Cael: "I'm doing this for you. All of it. The

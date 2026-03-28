@@ -78,11 +78,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Cael is the party's force multiplier. His Rally commands make every other character stronger. The player should grow to depend on him.
 - **The Betrayal:** When Cael leaves the party, the sudden absence of Rally buffs is felt mechanically. Fights become harder. This is intentional — the player should feel the loss.
 - **Act III Boss Fight (vs. Cael):** Cael uses corrupted versions of his Rallies against the party:
-  - *Hold the Line* becomes **Despair's Grip** — reduces all party members' Defense by 20%.
-  - *Press Forward* becomes **Hollow Advance** — boosts all enemies' Attack by 25%.
-  - *Second Wind* becomes **Draining Whisper** — enemies regenerate HP each turn.
+  - *Hold the Line* becomes **Despair's Grip** — reduces all party members' DEF by 20% for 3 turns.
+  - *Press Forward* becomes **Hollow Advance** — Cael gains +25% ATK for 3 turns (self-buff, not party).
+  - *Second Wind* becomes **Draining Whisper** — Cael regenerates 5% max HP per turn for 3 turns.
   - *Vanguard Strike* becomes **Marked for Sorrow** — one party member takes 1.5x damage from all sources for 2 turns.
-  - *Unbreakable* becomes **False Hope** — an enemy that would be defeated instead survives at 1 HP (once per phase).
+  - *Unbreakable* becomes **False Hope** — Cael survives at 1 HP once when his Phase 2 HP would reach 0.
 - The player recognizes these as twisted mirrors of abilities they once relied on. This is the mechanical expression of betrayal.
 
 ---
@@ -123,7 +123,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Interlude:** While searching for Cael in the Compact, Lira reverse-engineers Pallor-corrupted Forgewright tech. This unlocks Mending Engine and Overcharge — she's turning the enemy's tools against them.
 - **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters. Disrupt is available as a scripted action during the Phase 2 boss fight (defined in the next bullet).
 - **Act III (Pallor Trial):** Lira faces the Perfect Machine — a flawless automaton with Cael's face. Completing the trial unlocks her latent weapon forge ability (per `trial_lira_complete`). This is a prerequisite for the Vaelith fight.
-- **Act III (vs. Vaelith):** When the Vaelith fight begins, Lira automatically manifests **Cael's Edge** — a weapon forged from her connection to Cael. This shatters Vaelith's Pallor barrier (the fight cannot start without it, which is why `trial_lira_complete` is a prerequisite for `vaelith_defeated`). Cael's Edge is a permanent weapon: ATK equal to Lira's current weapon +20, Spirit element (effective against Pallor). It also grants **Sever Bond** (1 use, Vaelith fight only): deals Spirit damage equal to Lira's ATK × 3, ignoring Vaelith's DEF entirely. After the Vaelith fight, Cael's Edge remains as permanent equipment (replacing her current weapon if stronger) but Sever Bond is consumed.
+- **Act III (vs. Vaelith):** When the Vaelith fight begins, Lira automatically manifests **Cael's Edge** — a weapon forged from her connection to Cael. This shatters Vaelith's Pallor barrier (the fight cannot start without it, which is why `trial_lira_complete` is a prerequisite for `vaelith_defeated`). Cael's Edge is a permanent weapon: ATK equal to Lira's current weapon +20, Spirit element (effective against Pallor). It also grants **Sever Bond** (1 use, Vaelith fight only): a 3.0× ability multiplier physical attack with Spirit element that ignores Vaelith's DEF entirely (DEF treated as 0 in the damage formula). After the Vaelith fight, Cael's Edge remains as permanent equipment (replacing her current weapon if stronger) but Sever Bond is consumed.
 - **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. (Disrupt is a scripted battle action available only during the Phase 2 boss fight. It costs 2 AC, targets one of Cael's ley line anchors, and disables it for 3 turns. Each anchor disabled reduces the machine's power by 25%.) This is a unique interaction only she can perform.
 
 ---
@@ -150,7 +150,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
 | **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
 | **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. | N/A |
-| **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP (comparable to Dewfall party-wide) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
+| **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP each (same per-target potency as Dewfall) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
 
 **Synergies:**
 - Torren + Edren: Thornveil on Edren while he's in Ironwall stance means enemies take counter-damage from both Riposte and the thorn barrier.
