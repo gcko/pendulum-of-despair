@@ -1033,8 +1033,9 @@ approaching the sealed ley door, opening the passage.
   infusions available; see [crafting.md](crafting.md))
 - Two-stage boss: The Architect (Stage 1, 20,000 HP) → Grey Cleaver
   Unbound (Stage 2, 25,000 HP) with **no break between stages**
-- Forge Schematic (STEAL from The Architect — **missable**; locked
-  out until NG+ if not stolen). Prerequisite for Arcanite Lance recipe.
+- Forge Schematic (STEAL from The Architect — **missable**; permanently
+  locked out if not stolen, no NG+). Prerequisite for Arcanite Lance
+  recipe.
 - Architect's Hammer drop (Lira weapon, ATK 52, Storm, +25% vs
   Constructs)
 - Grey Cleaver drop (Torren weapon, cursed → purified over 100 Pallor

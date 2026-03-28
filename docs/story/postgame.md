@@ -208,6 +208,8 @@ All post-game content routes through The Pendulum tavern (per
 [dynamic-world.md](dynamic-world.md)):
 
 - **Sable:** Completion tracking, boss rush access, general dialogue
-- **Dreamer's Fault:** Cellar entrance
+- **Dreamer's Fault:** Cellar entrance. Re-enterable at any time after
+  first access. Enemies respawn on every entry. Echo bosses do not
+  respawn (one-time encounters). Treasure chests do not reset.
 - **Party members:** Epilogue conversations (all present except Cael)
 - **NPCs:** Characters the player helped throughout the game appear

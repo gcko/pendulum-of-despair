@@ -860,8 +860,8 @@ Main Menu → Save (at save points) or Title Screen → Load.
 ### 13.2 Layout
 
 Enhanced FF6: 3 save slots with full party info. Three slots is an
-intentional retro-fidelity decision matching FF6. If Gap 3.6 (New
-Game+) needs additional slots, this can be revisited then.
+intentional retro-fidelity decision matching FF6. No NG+ exists (per
+[postgame.md](postgame.md)), so no additional slots are needed.
 
 ```
 ┌──────────────────────────────────────────┐
@@ -1134,4 +1134,4 @@ only renders for characters that have one.
 - Sound effect design — audio pipeline.
 - Animation frame data — implementation detail.
 - Title screen / game over screen — separate design task.
-- Bestiary viewer / completion tracker — deferred to Gap 3.6.
+- Bestiary viewer / completion tracker — designed in [postgame.md](postgame.md) (Gap 3.6 COMPLETE). Displayed at The Pendulum tavern via Sable NPC dialogue.

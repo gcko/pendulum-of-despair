@@ -304,7 +304,7 @@ Every crafting material can be **sold for gold** at any shop OR **saved for Lira
 - **Sell:** Instant gold. Useful when you need consumables, equipment upgrades, or are flush with duplicate materials.
 - **Craft:** Transform materials into Forgewright devices (see [Recipes](#recipes) above). Devices cannot be bought, so materials are the only path to crafting power.
 - **No buyback:** Sold materials are gone. The game does not offer a buyback interface.
-- **Steal priority:** Many Tier 2–3 materials are steal-only from bosses. Missing a steal means missing a unique crafting opportunity until New Game+.
+- **Steal priority:** Many Tier 2–3 materials are steal-only from bosses. Missing a steal permanently locks out that crafting opportunity (there is no NG+ per [postgame.md](postgame.md)).
 
 ### Material Tiers
 
@@ -481,7 +481,7 @@ These items gate progression into specific dungeons or areas. They activate auto
 | Broodchamber Map | Pallor Nest Mother steal | Open map in Caldera | Reveals nest network |
 | Keeper's Index | Archive Keeper drop | Approach pictographic text | Completes Dry Well dictionary |
 
-> **Steal-only access items:** Catacomb Map and Broodchamber Map are only obtainable via stealing from their respective bosses. Missing these steals locks out optional content until New Game+.
+> **Steal-only access items:** Catacomb Map and Broodchamber Map are only obtainable via stealing from their respective bosses. Missing these steals permanently locks out optional content (there is no NG+ per [postgame.md](postgame.md)).
 
 ### Boss Mementos
 
@@ -509,7 +509,7 @@ Schematics are key items that unlock new Forgewright recipes when given to Lira.
 | Boring Engine Schematic | Rail Tunnels East Tunnel secret room (dungeons-world.md) | Advanced Forgewright weapon component |
 | Forge Schematic | The Architect (steal) | Arcanite Lance recipe prerequisite |
 
-> **Forge Schematic** is the only steal-only crafting schematic in the game. Missing it locks out the Arcanite Lance recipe until New Game+.
+> **Forge Schematic** is the only steal-only crafting schematic in the game. Missing it permanently locks out the Arcanite Lance recipe (there is no NG+ per [postgame.md](postgame.md)).
 
 ### Story Items
 
