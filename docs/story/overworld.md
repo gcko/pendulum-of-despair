@@ -67,28 +67,29 @@ overworld.
   grey desaturation). See [biomes.md](biomes.md) for per-biome palette
   definitions.
 
-### Map Screen (Menu-Accessed)
+### Map Screen (Menu-Accessed) — Plus Enhancement
 
 The pause menu provides a "Map" option that opens a full-continent
-overview, replacing the removed zoom mechanic with a dedicated
-navigation tool.
+overview. This is a "Plus" addition — FF6 had no separate map screen
+(the Mode 7 overworld was the map). PoD adds it for navigation
+convenience on a larger, more complex continent.
 
 - **Style:** Static illustrated map with parchment aesthetic,
-  consistent with SNES-era game manual fold-out maps
+  consistent with SNES-era game manual fold-out maps.
 - **Location discovery:** Locations appear on the map after first visit,
   labeled with icons by type (town, dungeon, landmark).
   Undiscovered areas show terrain but no location labels — the
-  geography is known, specific sites are not
+  geography is known, specific sites are not.
 - **Current position:** Blinking dot marker shows the party's current
-  overworld position
+  overworld position.
 - **Named routes:** Dotted paths displayed between connected discovered
-  locations (Valdris Highroad, Diplomatic Road, Wildwood Trail, etc.)
+  locations (Valdris Highroad, Diplomatic Road, Wildwood Trail, etc.).
 - **Non-interactive:** View-only. No cursor selection, no fast travel
   from the map screen. Spell-based teleportation (Linewalk per
   [magic.md](magic.md)) exists as a separate system. Vehicle-based
-  transport is deferred to Gap 3.1
+  transport is deferred to Gap 3.1 (Transport & Vehicle System).
 - **Availability:** From Act I onward. No discoverable map item
-  required — the party knows their homeland
+  required — the party knows their homeland.
 
 ---
 
@@ -103,10 +104,10 @@ Encounter Zones section), not walking speed. This follows the SNES convention wh
 speed variation came from vehicles, not terrain.
 
 - **Input:** 4-directional (D-pad cardinal directions). No diagonal
-  movement on the overworld — per SNES Mode 7 convention where diagonal
-  movement on a perspective-scaled tilemap creates visual artifacts.
-  Interior maps use 8-directional movement (standard for non-Mode 7
-  tiled maps).
+  movement on the overworld — a deliberate PoD simplification for the
+  Mode 7 perspective. (Note: FF6 allowed 8-directional on its Mode 7
+  overworld; PoD restricts to 4-directional for tighter grid-based
+  tile interaction.) Interior maps use 8-directional movement.
 - **Collision:** Full stop on impassable tiles. No wall-sliding. Per
   FF6 overworld behavior.
 - **Speed tiers:** On-foot is the only speed tier in this document.
@@ -156,7 +157,7 @@ Five tile categories govern overworld movement:
   See Section 3 (Region Boundary Banners) for timing rules.
 - **Vehicle-conditional tiles** (shallow water, rail tracks, airship
   landing zones) will be added as a sixth passability category when
-  Gap 3.1 (Transport) is designed.
+  Gap 3.1 (Transport & Vehicle System) is designed.
 - **No damage floors on the overworld.** Per SNES convention,
   environmental hazards (sinkholes, steam vents, rising water) are
   interior/dungeon features, not overworld tiles. The overworld is
@@ -214,12 +215,13 @@ section extends it with context-dependent variants.
   information.
 - **Post-battle return:** Reverse dissolve back to the field (per
   [ui-design.md](ui-design.md)). Danger counter resets to 0 (per
-  [combat-formulas.md](combat-formulas.md) encounter system).
+  [combat-formulas.md](combat-formulas.md) Encounter System).
 
-### Region Boundary Banners
+### Region Boundary Banners — Plus Enhancement
 
 Crossing a biome border triggers a brief text overlay with no gameplay
-interruption:
+interruption. This is a "Plus" addition — FF6 communicated region
+changes through music and palette shifts alone, not text overlays.
 
 - **Text banner:** "Entering the Thornmere Wilds," "Entering Carradan
   Compact Territory," etc. Appears over gameplay, fades after
@@ -261,7 +263,8 @@ here — see [biomes.md](biomes.md) for their visual definitions.
 Ashlands (including Ashgrove) appears on the overworld as a small
 transition zone (3-tile gradient per [biomes.md](biomes.md)); at the
 transition midpoint, visual atmospheric swaps to Ashlands effects
-(still air, drifting ash particles per biomes.md Ashlands section). Sacred sites
+(still air, player-disturbed ash particles per [biomes.md](biomes.md)
+Ashlands section). Sacred sites
 (Ashgrove, Stillwater Hollow) use their parent biome's atmosphere with
 zero encounter rate.
 
