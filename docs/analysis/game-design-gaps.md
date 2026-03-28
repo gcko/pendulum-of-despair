@@ -537,16 +537,17 @@ Now complete.
 
 ### 3.6 New Game+ & Post-Game
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P3
-**Files:** None yet
+**Files:** `docs/story/postgame.md` (primary); modified: `docs/story/equipment.md`, `docs/story/dynamic-world.md`, `docs/story/events.md`
 **Depends On:** Everything else
+**Completed:** 2026-03-28
 
 **What's Needed:**
-- [ ] New Game+ rules (what carries over? Level, items, bestiary?)
-- [ ] Post-game content beyond Dreamer's Fault
-- [ ] Superboss encounters (optional bosses harder than final boss)
-- [ ] Completion tracking (bestiary %, item %, quest %)
+- [x] New Game+ rules — resolved: No NG+. FF6 model. Cael's sacrifice, anti-cycle theme. New game starts fresh.
+- [x] Post-game content beyond Dreamer's Fault — Boss rush mode (3-tier gauntlet with Memento accessories), completion tracking (4 categories), First Tree Seed scene. Dreamer's Fault (20 floors) and The Lingering (super boss) already fully designed.
+- [x] Superboss encounters — The Lingering (sidequests.md, 3 phases, hardest fight) + Dreamer's Fault echo bosses (4 per dungeons-world.md). Already designed.
+- [x] Completion tracking — 4 categories: bestiary (232), treasure, quests, items. Displayed at Pendulum tavern via Sable. No milestone rewards.
 
 ---
 
@@ -637,3 +638,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-27 | 3.5 Crafting System | SKELETAL → COMPLETE. Context-sensitive crafting (devices in field, equipment at forges). Flat 12 AC pool, 5 device tiers, loadout locking. Synergy discovery (NPC hints + Lira reactions). Pallor malfunction (15%, Calibrate). Design changes applied to equipment.md, items.md, locations.md. | — |
 | 2026-03-27 | 3.2 Overworld Traversal | PARTIAL → COMPLETE. FF6 Plus philosophy. Mode 7 presentation, 5 passability types (vehicle tiles deferred to 3.1), uniform on-foot speed, fade-to-black transitions, FF6 battle transitions (Mode 7 zoom + mosaic), location-fixed weather + 6 story overrides. Speed modifiers and zoom removed from geography.md. Unblocks 3.1. | — |
 | 2026-03-28 | 3.1 Transport & Vehicle | MISSING → COMPLETE. "Grounded FF6" (no airship). Rail (100g, Compact cities), Ley Stag mount (2x speed, no encounters), Coastal ferry (200g, Bellhaven--Ashport), Linewalk (reference). Interlude transport collapse + Act III partial recovery. Bridge tiles at river crossings. Design changes to overworld.md, geography.md, city-carradan.md, economy.md. | — |
+| 2026-03-28 | 3.6 New Game+ & Post-Game | MISSING → COMPLETE. No NG+ (FF6 model, narrative integrity). Boss rush: 3-tier gauntlet with Memento accessories. Completion tracking: 4 categories (bestiary, treasure, quests, items) at Pendulum tavern. Post-game content summary (~25--45+ hours). Design changes to equipment.md, dynamic-world.md, events.md. **All mechanical game design gaps now closed.** | — |
