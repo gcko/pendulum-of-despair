@@ -210,7 +210,7 @@ The harbor is dominated by Forgewright-powered vessels — ironclad barges and s
 **Key features:**
 - The Stilts (harbor district — NPC hub, shopping, taverns)
   > See [economy.md](economy.md) for complete shop inventory and pricing.
-- Ferry dock (coastal ferry to Ashport, 200g per crossing per [transport.md](transport.md); Ferryman NPC at dock)
+- Ferry dock (Dockside berths — coastal ferry to Ashport, 200g per crossing per [transport.md](transport.md); Ferryman NPC)
 - Merchant Prince manor district (political intrigue, optional quest line)
 - Offshore rigs (referenced in NPC dialogue; one becomes an optional dungeon during Interlude)
 - Sable's childhood neighborhood (character backstory content — she grew up here before losing everything)
