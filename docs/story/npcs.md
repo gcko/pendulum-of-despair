@@ -869,6 +869,45 @@ She does not appear until the oasis_c_fallen flag triggers. When she arrives, sh
 
 ---
 
+### Rail Conductor
+
+**Location:** Rail terminals at Corrund (building #28), Ashmark (building #1), Caldera (building #32), Kettleworks (building #14) per [city-carradan.md](city-carradan.md)
+
+**Role:** Transport service NPC — provides rail fast-travel between Compact cities (100g per trip per [transport.md](transport.md))
+
+**Backstory:** A standard Compact transit worker. Not a named character — the same generic NPC type at each terminal, distinguished only by uniform and station. They represent the Compact's efficient infrastructure: functional, impersonal, reliable. The kind of person who keeps the trains running on time and doesn't ask questions about your cargo.
+
+**Dialogue hints:**
+- Act II (functional): *"Where to? Ashmark, Caldera, Kettleworks — 100 gold, any destination."*
+- Interlude (suspended): *"Service suspended. The tunnels aren't safe. Talk to the stationmaster if you need overland directions."*
+- Epilogue (repair): *"Months away from service, I'm afraid. The repair crews are doing their best."*
+
+**Story relevance:** Transport service (rail fast-travel interface)
+
+**Act presence:** Act II (all four terminals). Interlude (present but service suspended). Act III (present, still suspended). Epilogue (present, repair dialogue).
+
+---
+
+### Ferryman
+
+**Location:** Bellhaven Dockside district, Ashport harbor district per [locations.md](locations.md)
+
+**Role:** Transport service NPC — operates the coastal ferry between Bellhaven and Ashport (200g per crossing per [transport.md](transport.md))
+
+**Backstory:** A weathered Compact merchant sailor who runs a passenger ferry along the southern coast. Licensed by the Bellhaven merchant princes but operates independently. He knows the Sundering Sea currents better than anyone and has opinions about the offshore mining rigs. Practical, taciturn, charges fair rates for dangerous water.
+
+**Dialogue hints:**
+- Act II (functional): *"Bellhaven to Ashport, or the other way around. Two hundred gold. The current does half the work — I do the other half."*
+- Interlude (disrupted): *"The waters aren't safe. Something's in the strait. I'm not taking anyone out there until it passes."*
+- Act III (Ashport only): *"I moved to Ashport after Bellhaven fell apart. Same route, same rate. Board here."*
+- Epilogue (restored): *"Both ports running again. Things are getting back to normal — well, normal enough."*
+
+**Story relevance:** Transport service (coastal ferry interface)
+
+**Act presence:** Act II (both ports). Interlude (present at Bellhaven, refuses service). Act III (relocated to Ashport, one-direction boarding). Epilogue (both ports).
+
+---
+
 ## The Thornmere Wilds
 
 The vast, untamed heartland between the two factions. NPCs here are connected to the land, the spirits, and the old ways. Their stories track the Wilds' deterioration as the ley lines fail and the Pallor's corruption spreads.

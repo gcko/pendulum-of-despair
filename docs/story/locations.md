@@ -210,6 +210,7 @@ The harbor is dominated by Forgewright-powered vessels — ironclad barges and s
 **Key features:**
 - The Stilts (harbor district — NPC hub, shopping, taverns)
   > See [economy.md](economy.md) for complete shop inventory and pricing.
+- Ferry dock (Dockside berths — coastal ferry to Ashport, 200g per crossing per [transport.md](transport.md); Ferryman NPC)
 - Merchant Prince manor district (political intrigue, optional quest line)
 - Offshore rigs (referenced in NPC dialogue; one becomes an optional dungeon during Interlude)
 - Sable's childhood neighborhood (character backstory content — she grew up here before losing everything)
@@ -302,6 +303,7 @@ Ashport is where the Compact's meritocracy is most nakedly transactional. Holt V
 
 **Key features:**
 - Harbor district (NPC hub, Pell's docks, trade-focused shops)
+- Ferry dock (coastal ferry to Bellhaven, 200g per crossing per [transport.md](transport.md); Ferryman NPC relocates here in Act III)
 - Merchant quarter (Holt Varen's offices, Nara Voss's shop)
 - Arms testing ranges (atmospheric — the sound of Arcanite weapons discharge carries across the city)
 
