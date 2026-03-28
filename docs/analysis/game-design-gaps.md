@@ -429,21 +429,22 @@ Now complete.
 
 ### 3.1 Transport & Vehicle System
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P2
-**Files:** None yet
+**Files:** `docs/story/transport.md` (primary); modified: `docs/story/overworld.md`, `docs/story/geography.md`, `docs/story/city-carradan.md`, `docs/story/economy.md`
 **Depends On:** 3.2 Overworld Traversal Mechanics (COMPLETE) — `docs/story/overworld.md`
+**Completed:** 2026-03-28
 
 **What's Needed:**
-- [ ] Decision: Does this game have an airship?
-- [ ] Rail system mechanics (Compact rail network between cities):
-  - [ ] Which cities connected?
-  - [ ] Cost per trip? Free?
-  - [ ] Available when? (Functional Act II, erratic Interlude, restored Epilogue?)
-- [ ] Fast travel mechanics (return to visited locations?)
-- [ ] Mount/chocobo equivalent (if any)
-- [ ] Boat/ship travel (if any — water routes between Bellhaven, Ironmouth?)
-- [ ] Vehicle encounter rate modifiers
+- [x] Decision: Does this game have an airship? — No. "Grounded FF6" philosophy. Transport stays terrestrial + coastal.
+- [x] Rail system mechanics — Formalized: Corrund ↔ Ashmark ↔ Caldera, Corrund ↔ Kettleworks. 100g fare, Rail Conductor NPC, encounter-free instant travel. Interlude: service suspended (3 tunnel collapses). Act III: stays broken. Epilogue: repair in progress.
+- [x] Fast travel mechanics — Linewalk spell (Maren Lv 20, towns only per magic.md) + rail + ferry provide broad coverage once all systems active (~45% completion)
+- [x] Mount/chocobo equivalent — Ley Stag mount: spirit-bonded, 2x speed, no encounters, terrain restricted (no dense Thornmere/water/mountains/towns), mid-Act II unlock at Roothollow (requires `torren_joined` + Thornmere milestone TBD). Lost in Interlude, returns Act III (grey-tinged, Pallor Wastes restricted).
+- [x] Boat/ship travel — Coastal ferry (Bellhaven ↔ Ashport), NPC-operated, 200g per crossing, unlocked Act II. Disrupted in Interlude, restored at Ashport only in Act III.
+- [x] Vehicle encounter rate modifiers — Ley Stag suppresses encounters (0 increment, counter resets on dismount). All menu transport encounter-free.
+- [x] Transport progression timeline (Act I foot → Act II full → Interlude collapse → Act III partial → Epilogue restored)
+- [x] Bridge tiles (passable terrain over rivers at named crossing points)
+- [x] Design changes applied: overworld.md deferrals resolved, geography.md updated, city-carradan.md rail fare added, economy.md transport gold sink added
 
 ---
 
@@ -456,7 +457,7 @@ Now complete.
 **Completed:** 2026-03-27
 
 **What's Needed:**
-- [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional tiles deferred to Gap 3.1
+- [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional sixth category resolved as not needed (Gap 3.1: vehicles use existing passability)
 - [x] Movement speed per terrain type — resolved: uniform on-foot speed (no per-terrain modifiers), per SNES convention; 7 speed tiers removed from geography.md
 - [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 12 terrain zones); overworld.md references, does not duplicate
 - [x] Transition between overworld and locations — fade to black (overworld → location), seamless (within-location), FF6 battle transitions (Mode 7 zoom + mosaic + distinct boss)
@@ -468,7 +469,7 @@ Now complete.
 - [x] Save point specification (named rest sites, Pallor Wastes clearings, visual representation, rest/AC mechanics, Linewalk distinction)
 - [x] Implementation Notes appendix (Mode 7 parameters, movement speed target, z-ordering, input priority, transition durations, particle density)
 
-**Blocking:** ~~Overworld implementation~~ Now unblocks: 3.1 (Transport & Vehicle System — vehicle-conditional tiles)
+**Blocking:** ~~Overworld implementation~~ Unblocked 3.1 (Transport & Vehicle System — COMPLETE, resolved vehicle passability as no new category needed)
 
 ---
 
@@ -635,3 +636,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-26 | 3.3 Dialogue System Mechanics | PARTIAL → COMPLETE. SNES FF6 pure (no portraits). Sprite emotion system (14 animations), priority stack NPC resolution, party-aware dialogue (key scenes + NPC reactions), dialogue data format (7 entry fields, 8 worked examples). Unblocks 3.7. | — |
 | 2026-03-27 | 3.5 Crafting System | SKELETAL → COMPLETE. Context-sensitive crafting (devices in field, equipment at forges). Flat 12 AC pool, 5 device tiers, loadout locking. Synergy discovery (NPC hints + Lira reactions). Pallor malfunction (15%, Calibrate). Design changes applied to equipment.md, items.md, locations.md. | — |
 | 2026-03-27 | 3.2 Overworld Traversal | PARTIAL → COMPLETE. FF6 Plus philosophy. Mode 7 presentation, 5 passability types (vehicle tiles deferred to 3.1), uniform on-foot speed, fade-to-black transitions, FF6 battle transitions (Mode 7 zoom + mosaic), location-fixed weather + 6 story overrides. Speed modifiers and zoom removed from geography.md. Unblocks 3.1. | — |
+| 2026-03-28 | 3.1 Transport & Vehicle | MISSING → COMPLETE. "Grounded FF6" (no airship). Rail (100g, Compact cities), Ley Stag mount (2x speed, no encounters), Coastal ferry (200g, Bellhaven--Ashport), Linewalk (reference). Interlude transport collapse + Act III partial recovery. Bridge tiles at river crossings. Design changes to overworld.md, geography.md, city-carradan.md, economy.md. | — |

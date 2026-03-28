@@ -1548,7 +1548,7 @@ Every Carradan city with more than one district follows the same rule: streets w
 
 ### Rail Network
 
-Corrund, Ashmark, Caldera, and Kettleworks are connected by rail. In Act II, rail travel is a fast-travel mechanic between these cities. In the Interlude, rail is unreliable -- trains run on unpredictable schedules, forcing overworld travel. The rail connections:
+Corrund, Ashmark, Caldera, and Kettleworks are connected by rail. In Act II, rail travel is a fast-travel mechanic between these cities (100g per trip, talk to Rail Conductor NPC at any terminal). In the Interlude, rail service is suspended -- tunnels collapse, boring engines reactivate, forcing overworld travel. See [transport.md](transport.md) for full rail mechanics. The rail connections:
 
 ```
 Corrund ------- Ashmark ------- Caldera

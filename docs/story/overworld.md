@@ -30,7 +30,7 @@
 > [combat-formulas.md](combat-formulas.md) |
 > [difficulty-balance.md](difficulty-balance.md) |
 > [visual-style.md](visual-style.md) | [magic.md](magic.md) |
-> [equipment.md](equipment.md)
+> [equipment.md](equipment.md) | [transport.md](transport.md)
 >
 > **Cross-links:** [dungeons-world.md](dungeons-world.md) |
 > [dungeons-city.md](dungeons-city.md)
@@ -91,8 +91,8 @@ convenience on a larger, more complex continent.
   locations (Valdris Highroad, Diplomatic Road, Wildwood Trail, etc.).
 - **Non-interactive:** View-only. No cursor selection, no fast travel
   from the map screen. Spell-based teleportation (Linewalk per
-  [magic.md](magic.md)) exists as a separate system. Vehicle-based
-  transport is deferred to Gap 3.1 (Transport & Vehicle System).
+  [magic.md](magic.md)) and vehicle transport (rail, Ley Stag, ferry
+  per [transport.md](transport.md)) exist as separate systems.
 - **Availability:** From Act I onward. No discoverable map item
   required — the party knows their homeland.
 
@@ -115,11 +115,10 @@ speed variation came from vehicles, not terrain.
   tile interaction.) Interior maps use 8-directional movement.
 - **Collision:** Full stop on impassable tiles. No wall-sliding. Per
   FF6 overworld behavior.
-- **Speed tiers:** On-foot is the only speed tier in this document.
-  City-to-city rail fast-travel exists in Act II (per
-  [city-carradan.md](city-carradan.md)). Full vehicle/transport
-  mechanics (mounts, airship, route mechanics) are deferred to
-  Gap 3.1 (Transport & Vehicle System).
+- **Speed tiers:** On-foot is the only overworld speed tier in this
+  document. The Ley Stag mount provides 2x speed; rail and ferry are
+  menu-driven instant travel. No airship in PoD. See
+  [transport.md](transport.md) for all vehicle mechanics.
 
 ### Passability Categories
 
@@ -160,9 +159,11 @@ Five tile categories govern overworld movement:
 - **Region boundary banners** are not event triggers — they are
   non-interrupting text overlays on passable tiles at biome borders.
   See Section 3 (Region Boundary Banners) for timing rules.
-- **Vehicle-conditional tiles** (shallow water, rail tracks, airship
-  landing zones) will be added as a sixth passability category when
-  Gap 3.1 (Transport & Vehicle System) is designed.
+- **Vehicle passability.** PoD's transport systems are menu-driven
+  (rail, ferry) or use existing passability with restrictions (Ley
+  Stag per [transport.md](transport.md)). No sixth tile category
+  needed. Rivers are impassable except at bridge tiles (named crossing
+  points — see [transport.md](transport.md) Section 5).
 - **No damage floors on the overworld.** Per SNES convention,
   environmental hazards (sinkholes, steam vents, rising water) are
   interior/dungeon features, not overworld tiles. The overworld is
