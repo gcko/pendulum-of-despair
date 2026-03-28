@@ -2,6 +2,11 @@
 
 This document defines unique character abilities, combo techniques, the magic system framework, and ability progression for Pendulum of Despair.
 
+> **Overworld field abilities** (Lira's Forge Devices, Torren's Call
+> Stag, Maren's Linewalk) are defined in their respective system docs
+> and formalized in [ui-design.md](ui-design.md) Section 18.3. This
+> document covers combat abilities only.
+
 ---
 
 ## 1. Character Unique Commands

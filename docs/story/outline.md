@@ -101,7 +101,13 @@ Cael is tasked with studying the Pendulum alongside court scholars. The Pallor b
 
 ### The Diplomatic Mission
 
-Edren, Lira, and Torren are sent to the Thornmere tribes to broker an alliance against the Compact. The world opens up — the player explores the Wilds, meets the tribes, discovers that the ley lines aren't just dimming but being drained *toward something*.
+Edren, Lira, and Torren are sent to the Thornmere tribes to broker an alliance against the Compact. The world opens up — the player explores the Wilds, discovers that the ley lines aren't just dimming but being drained *toward something*.
+
+The diplomatic arc has three alliance steps before the Council:
+
+1. **Duskfen alliance.** The party travels to Duskfen and clears Fenmother's Hollow — a corrupted spirit guardian in the deep marsh. Spirit-speaker Caden's trust is earned. (`duskfen_alliance` flag)
+2. **Ley Stag bonding.** Returning to Roothollow after the Fenmother, spirit-speaker Vessa performs a brief ritual at the heartwood shrine. A ley-bonded stag joins the party as a mount — the Wilds' answer to the Compact's rail. (`stag_bonded` flag; see [transport.md](transport.md))
+3. **Canopy Reach alliance.** The party ascends to Canopy Reach and secures Wynne's support. A panoramic view from the canopy reveals the first visual hint of the Convergence — grey haze on the horizon. (`canopy_alliance` flag)
 
 In a frontier tavern near the edge of Compact-held territory, they find Vaelith already there — buying rounds, charming the locals, asking a barkeep about mining routes that were abandoned two generations ago. Vaelith greets the party as old acquaintances and pulls up a chair. The conversation is light, curious, almost pleasant. They ask Edren about the Valdris court. They ask Torren about the old spirit-lore of the ley lines. Then, almost as an afterthought, they turn to Lira and ask how Cael is sleeping lately. She tells them Cael did not make the journey. Vaelith nods, as if this confirms something, finishes their drink, and takes their leave. The question about Cael's sleep will seem like idle small talk until it doesn't.
 

@@ -1085,13 +1085,19 @@ Torren from the party menu on the overworld. Same slot as Lira's
 ### 18.3 Character Field Abilities (Formalized)
 
 Each party member may have one overworld field ability accessed via the
-party menu. Currently defined:
+party menu under the Abilities screen (Section 7). Currently defined:
 
 | Character | Ability | Source |
 |-----------|---------|--------|
 | Lira | Forge Devices | [crafting.md](crafting.md) |
 | Torren | Call Stag | [transport.md](transport.md) |
 | Maren | Linewalk | [magic.md](magic.md) |
+| Edren | — | No field ability |
+| Sable | — | No field ability |
+
+Characters without a field ability do not show a field ability option
+when selected from the party menu on the overworld — the menu slot
+only renders for characters that have one.
 
 ---
 
