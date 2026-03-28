@@ -233,9 +233,12 @@ consumed from every age.
   consumed by despair who commands shade armies. Caster-biased stats
   (lower ATK, higher MAG, lowest SPD in the Void). Despair Decree
   inflicts party-wide Despair + Silence. Undying Loyalty summons 2
-  Pallor Shades (low-HP adds that auto-attack). Resist Void per
-  palette-families Tier 3 element shift. The rarest encounter in the
-  Void — appears only in the 6.25% weight formations.
+  Pallor Shades — summoned at the Regent's level (Lv 94) using base
+  stat curves: HP ~3,000 (low-HP adds), ATK ~80, DEF ~60. They
+  auto-attack (single physical hit per turn) and are targetable. Not
+  bestiary entries — they are summon effects, not standalone enemies.
+  Resist Void per palette-families Tier 3 element shift. The rarest
+  encounter in the Void — appears only in the 6.25% weight formations.
 - Void Walker (unique, Dangerous threat x1.0). The Dreamer's Fault
   signature enemy. Featureless grey shape. Drains HP, MP, ATK, and DEF
   simultaneously. The Pallor distilled. **Does NOT resist Void** — it

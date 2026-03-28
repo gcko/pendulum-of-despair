@@ -2660,6 +2660,12 @@ All enemies have full stat blocks in
 | 17–20 | 5 | 1x Pallor Regent + 2x Pallor Wolf (the regent's court) | 6.25% |
 | 17–20 | 6 | 2x Void Walker + 1x Pallor Regent (the abyss stares back) | 6.25% |
 
+> **Void formation override:** The Void uses 6 formations instead of
+> the standard 4 (per [combat-formulas.md](combat-formulas.md)
+> § Encounter System). The expanded table accommodates the rare Pallor
+> Regent while maintaining meaningful spawn rates for all 5 Void
+> enemy types. Ages 1--4 use the standard 4--5 formation structure.
+
 ### Treasure/Loot
 
 - Each floor has 1-2 chests with escalating quality.

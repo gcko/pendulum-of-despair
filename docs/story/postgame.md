@@ -129,10 +129,11 @@ Fault echo bosses, The Lingering) are excluded.
 ### Rules
 
 - Bosses fought in story order within each tier
-- **Full reset between fights** — HP/MP/AC restored to maximum, all
-  status ailments cleared, all buffs and debuffs removed, ATB gauges
-  reset to zero. Equipment and ability loadouts may be changed between
-  fights. The challenge is each individual fight, not attrition.
+- **Full reset between fights** — all KO'd members revived, HP/MP/AC
+  restored to maximum, all status ailments cleared, all buffs and
+  debuffs removed, ATB gauges reset to zero. Equipment and ability
+  loadouts may be changed between fights. The challenge is each
+  individual fight, not attrition.
 - **Original boss stats** — no scaling or boosting. Post-game
   characters are overpowered, which is the point. The victory lap
   is the fun. Phase transitions trigger normally — if damage skips
@@ -141,8 +142,10 @@ Fault echo bosses, The Lingering) are excluded.
 - **Player equipment allowed** — the player brings their own gear.
   This is intentional. Post-game equipment (Dreamer's Crest, The
   Pallor's Last) makes Tier 1 trivial — that is the victory lap.
-- Party composition chosen at start of each tier, locked for the
-  duration
+- Party composition: player selects 4 of 5 members at the start of
+  each tier (standard 4-member combat per
+  [combat-formulas.md](combat-formulas.md)). Locked for the tier's
+  duration — no swapping between fights.
 - **Standardized consumable set per tier** — no items from player
   inventory:
   - Tier 1: 10 Potions, 5 Ethers, 2 Phoenix Feathers

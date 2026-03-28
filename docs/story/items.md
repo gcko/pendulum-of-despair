@@ -523,12 +523,13 @@ Items that advance or gate specific plot events. Unlike dungeon access items, th
 | Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
 | Caldera Employee Card | Sable pickpockets from Compact officer (Caldera) | 25% discount at all Caldera shops (net 112.5% of standard). See [economy.md](economy.md). |
 | Valdris Crest | Sir Aldric, Oasis A (The Last Banner quest) | Unlocks bonus dialogue in Edren's Pallor trial |
+| First Tree Seed | Dreamer's Fault chest (per [dungeons-world.md](dungeons-world.md)) | Used at the Convergence meadow post-game to trigger the planting scene (per [dynamic-world.md](dynamic-world.md)). Consumed on use. |
 
 > **Pallor-Laced Iron** and **Corrupted Tuning Fork** are steal-only story items. They unlock optional dialogue and lore scenes but are not required for main story progression.
 
 ### Equipment Cross-Reference
 
-The following **18 boss drops** are equipment pieces (weapons, armor, or accessories) rather than key items or materials. They are documented in full in the equipment catalog (Gap 1.5). Listed here for cross-reference to avoid duplication.
+The following **20 boss-dropped and boss-gated equipment pieces** are weapons, armor, or accessories rather than key items or materials. They are documented in full in [equipment.md](equipment.md). Listed here for cross-reference to avoid duplication.
 
 | Equipment Drop | Dropped By | Slot |
 |---------------|-----------|------|
@@ -550,6 +551,8 @@ The following **18 boss drops** are equipment pieces (weapons, armor, or accesso
 | Root Crown | Rootking | Armor |
 | Warden's Core | Iron Warden | Accessory |
 | Dreamer's Crest | Cael's Echo (non-combat) | Accessory |
+| The Pallor's Last | The Lingering (super boss) | Accessory |
+| Dreamer's Mark | Dreamer's Fault Floor 20 completion | Accessory |
 
 > **Equipment drops vs. boss mementos:** Equipment drops are usable gear with stats. Boss mementos are narrative-only key items. Some bosses drop both (e.g., Cael Phase 1 drops Cael's Knight Crest as equipment AND Cael's Pendant as a memento).
 
