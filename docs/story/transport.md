@@ -134,3 +134,148 @@ pattern where vehicles appeared between 30--60% of the game (40--60%
 for airships per the reference doc; ground vehicles as early as ~30%
 in FF4). All four transport systems are available before the Interlude
 strips them.
+
+---
+
+## 3. Transport State Per Act
+
+### Act I: On Foot
+
+No vehicles available. The party walks everywhere. The world is small
+(Valdris territory only) and walking is sufficient. The player learns
+the overworld, encounter system, and terrain passability without
+vehicle shortcuts.
+
+### Act II: Full Transport
+
+All four systems unlock as the world opens:
+1. Rail (first Compact city visit)
+2. Ley Stag (Torren trust event, mid-Act II)
+3. Ferry (first Bellhaven visit)
+4. Linewalk (Maren Lv 20)
+
+This is the "golden age" of mobility. The player can cross the
+continent quickly and freely. The SNES reference doc's 30--45% unlock
+window maps to Act II's position in the story (~30--50% of the game).
+
+### Interlude: Transport Collapse
+
+- **Rail:** Service suspended. Three tunnel collapse points, boring
+  engines reactivate (per [dynamic-world.md](dynamic-world.md);
+  dungeon layout in [dungeons-world.md](dungeons-world.md)). Rail
+  Conductor NPCs display: "Service suspended. The tunnels aren't
+  safe." The tunnels become a dungeon. No fast-travel via rail.
+- **Ley Stag:** Lost. Spirit animals flee as Pallor corruption spreads
+  through the ley lines. The Stag dissolves during the Interlude
+  transition cutscene — a visual moment where the party's ley bond
+  breaks. Cannot be summoned.
+- **Ferry:** Disrupted. Bellhaven disrupted (per
+  [dynamic-world.md](dynamic-world.md) — harbor economy collapsed,
+  grey things washing ashore). Ferryman refuses: "The waters aren't
+  safe. Something's in the strait." Ferry unavailable at both ports.
+- **Linewalk:** Still works. Maren's spell draws on her personal
+  connection to the ley lines, not physical infrastructure. This is
+  the player's sole fast-travel option during the Interlude. It
+  reinforces Maren's importance to the party.
+
+**Narrative purpose:** The player felt powerful and mobile in Act II.
+The Interlude strips that away. Walking through corrupted territory —
+slow, dangerous, encounter-heavy — communicates the world's
+transformation more effectively than any cutscene.
+
+### Act III: Partial Recovery
+
+- **Rail:** Remains broken. Tunnels still a dungeon. No fast-travel.
+- **Ley Stag:** Returns when Torren rejoins the party (Act III reunion
+  event). The Stag re-manifests with grey-tinged ley energy (visual
+  corruption) but is mechanically identical (2x speed, no encounters).
+  Cannot enter the Pallor Wastes 10-mile radius — "The Stag shies
+  away. The ley energy here is wrong."
+- **Ferry:** Restored at Ashport only. Ferryman relocates from
+  Bellhaven. Same route (Ashport ↔ Bellhaven) but only boardable from
+  Ashport until Bellhaven stabilizes.
+- **Linewalk:** Still works. No change.
+
+### Epilogue: Full Restoration
+
+- **Rail:** Repair crews working (visible scaffolding at terminals).
+  Not yet functional — NPC dialogue: "Months away from service." No
+  gameplay rail travel.
+- **Ley Stag:** Fully restored. Grey tint fades, ley energy bright
+  again. No Pallor restriction (Wastes are gone). Full 2x speed,
+  no encounters everywhere accessible.
+- **Ferry:** Both ports operational. Full service restored.
+- **Linewalk:** Still works.
+
+---
+
+## 4. Speed Tiers & Encounter Rules
+
+### Speed Tiers
+
+| Vehicle | Speed | Notes |
+|---------|-------|-------|
+| On foot | 1x (baseline, ~2 tiles/s per [overworld.md](overworld.md)) | Uniform across all terrain |
+| Ley Stag | 2x (~4 tiles/s) | No terrain variation — same 2x on all accessible tiles |
+| Rail / Ferry / Linewalk | Instant | Menu-driven, no overworld traversal |
+
+### Encounter Rules
+
+| Vehicle | Danger Counter | Encounters | On Dismount |
+|---------|---------------|------------|-------------|
+| On foot | Normal increment per terrain zone | Standard | N/A |
+| Ley Stag | 0 increment (suppressed) | None | Counter resets to 0 |
+| Rail / Ferry / Linewalk | N/A (no traversal) | None | N/A |
+
+On-foot encounter modifiers (Veilstep x0.25, Ward Talisman x0.5,
+etc. per [combat-formulas.md](combat-formulas.md) Encounter System)
+apply only to on-foot travel. The Ley Stag's ley aura suppresses
+encounters independently of equipment/spell modifiers.
+
+### Transport Costs
+
+| Transport | Gold Cost | Other Cost |
+|-----------|----------|------------|
+| On foot | Free | Time, encounters |
+| Ley Stag | Free | Terrain restrictions |
+| Rail | 100g per trip | Compact cities only |
+| Ferry | 200g per crossing | Two ports only |
+| Linewalk | Free (12 MP) | Maren in party, towns only |
+
+Gold costs create a soft economy interaction — early Act II when gold
+is tighter, the player weighs rail/ferry fees against walking. By late
+Act II with more gold, the costs are trivial. Per SNES convention
+where transport costs mattered briefly then became negligible.
+
+---
+
+## 5. Bridge Tiles
+
+Rivers are impassable terrain (on foot and by Stag) except at bridge
+tiles — named crossing points where passable tiles span the water.
+
+### Bridge Tile Rules
+
+- Bridge tiles are standard passable terrain. No special passability
+  category — they are passable tiles placed over water gaps.
+- Both on-foot and Ley Stag can cross bridges.
+- Bridge tiles use the encounter zone of their surrounding terrain
+  (typically Roads zone, increment 96 per
+  [geography.md](geography.md)).
+
+### Named Bridge Crossings
+
+Key bridge locations per [geography.md](geography.md):
+
+- **Gael's Span** — bridge-town over the upper Corrund River (Compact
+  border). The most prominent bridge in the game world.
+- **Valdris Crown bridges** — river crossings within and near the
+  capital city.
+- **Thornwatch area crossings** — any river crossings near the
+  Valdris-Wilds border (implementation-placed based on tilemap).
+- **Valdris-to-Duskfen route bridges** — crossings along the route
+  south from Valdris Crown toward the Wilds.
+
+Additional bridge placements are implementation decisions based on the
+overworld tilemap layout. Any road that crosses a river on the
+[geography.md](geography.md) map requires a bridge tile.
