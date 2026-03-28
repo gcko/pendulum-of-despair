@@ -4095,7 +4095,7 @@ E.......................................X
 
 ## 14. Caves and Grottos
 
-Small cave systems along travel routes. These are single-room or two-room areas with a few encounters and a treasure chest. They reward exploration without demanding commitment.
+Small cave systems along travel routes. These are single-room or two-room areas with a few encounters and a treasure chest. They reward exploration without demanding commitment. All rooms exceeding the 16x14 tile viewport (256x224 pixels per [visual-style.md](visual-style.md)) use scrolling camera that follows the party.
 
 ### 14a. Thornvein Grotto
 

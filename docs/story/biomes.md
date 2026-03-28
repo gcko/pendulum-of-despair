@@ -708,9 +708,9 @@ The overworld map uses gradual tile blending at biome borders, following the SNE
 | **Underground/Cavern -> Ancient Ruins** | Rough natural cave transitions to worked stone. The geometry becomes too perfect. | Irregular stone -> dressed stone -> smooth geometric blocks. Darkness -> inlay glow. A single threshold doorway often marks the exact border. |
 | **Any Biome -> Pallor Wastes** | Color drains. The transition described in detail in Section 5. | Original palette -> desaturated original -> grey-tinted -> monochrome grey. This is the game's most important transition. 5+ tile gradient, with static particles appearing at the midpoint. |
 
-### Music Crossfades
+### Music Crossfades — Plus Enhancement
 
-Each biome has a primary musical theme. Transitions use a 3-second crossfade:
+Each biome has a primary musical theme. Transitions use a 3-second crossfade. (Note: SNES SPC700 hardware could not play two music tracks simultaneously — crossfades are a "Plus" enhancement over the era's hard-cut transitions. The Pallor exception below is closer to authentic SNES behavior.)
 - The outgoing biome's music fades from 100% to 0% over 1.5 seconds
 - The incoming biome's music fades from 0% to 100% over 1.5 seconds
 - The crossfade begins when the player crosses the transition's midpoint tile

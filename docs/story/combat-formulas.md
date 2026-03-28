@@ -630,6 +630,7 @@ between encounters:
 |-----------|-----------|-----------|
 | Sacred sites / Urban / Boss corridors | 0 | None |
 | Farmland / Settled | 48 | ~48 |
+| Coastal | 64 | ~40 |
 | Roads | 96 | ~32 |
 | Forest (light) / Quarried plains | 148 | ~24 |
 | Standard dungeons | 120 | ~30 |

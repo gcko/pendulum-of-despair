@@ -133,7 +133,7 @@ Five tile categories govern overworld movement:
 - **Encounter zones.** Each passable tile belongs to an encounter zone
   that determines danger counter increment and formation tables. See
   [geography.md](geography.md) Encounter Zones section for the full
-  table (11 zone types; encounter-active zones range from Farmland at
+  table (12 zone types; encounter-active zones range from Farmland at
   48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
   have 0 increment). Spells and equipment can modify encounter rate
   (e.g., Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5
@@ -229,7 +229,8 @@ changes through music and palette shifts alone, not text overlays.
 - **Music crossfade:** 3-second transition — outgoing biome music fades
   from 100% to 0% over 1.5 seconds, incoming biome music fades from
   0% to 100% over 1.5 seconds. Crossfade begins at the transition's
-  midpoint tile. Per [biomes.md](biomes.md) Music Crossfades section.
+  midpoint tile. Per [biomes.md](biomes.md) Music Crossfades section
+  (a Plus Enhancement — SNES used hard cuts).
 - **Pallor exception:** Music does not crossfade. It cuts to silence,
   then the Pallor's drone fades in over 5 seconds. The silence between
   is deliberate.

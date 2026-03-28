@@ -366,7 +366,7 @@ Now unblocks: 3.3 (Dialogue System — text box specs defined). Also resolves AT
 - [x] Preemptive strike rate and modifiers (12.5% base, Preemptive Charm +25pp, Sable's Coin 100%)
 - [x] Back attack / ambush rate and modifiers (0–25% by terrain, Preemptive Charm eliminates)
 - [x] Boss trigger conditions (Zone, Interact, Cutscene, HP Threshold — 4 categories)
-- [x] Overworld encounter table per terrain type (10 overworld zone types + dungeon tiers, with danger counter increments)
+- [x] Overworld encounter table per terrain type (12 overworld zone types + dungeon tiers, with danger counter increments)
 
 **Blocking:** ~~Dungeon pacing, difficulty tuning~~
 Now partially unblocks: 3.4 (Difficulty & Balance)
@@ -458,7 +458,7 @@ Now complete.
 **What's Needed:**
 - [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional tiles deferred to Gap 3.1
 - [x] Movement speed per terrain type — resolved: uniform on-foot speed (no per-terrain modifiers), per SNES convention; 7 speed tiers removed from geography.md
-- [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 11 terrain zones); overworld.md references, does not duplicate
+- [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 12 terrain zones); overworld.md references, does not duplicate
 - [x] Transition between overworld and locations — fade to black (overworld → location), seamless (within-location), FF6 battle transitions (Mode 7 zoom + mosaic + distinct boss)
 - [x] Weather/time-of-day effects — FF6 Plus: location-fixed atmospherics + 6 story-triggered overrides; no day/night gameplay cycle (biomes.md visual palette shifts are cosmetic only)
 - [x] Overworld presentation (Mode 7-style perspective, miniaturized sprites, HDMA horizon gradient)
