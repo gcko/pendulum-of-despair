@@ -70,8 +70,8 @@ ley energy, provided by the Thornmere tribes.
   [geography.md](geography.md)). Dismounting resets the danger counter
   to 0 (clean start, no ambush on dismount).
 - **Terrain restrictions:** Cannot enter: dense Thornmere (canopy too
-  thick), water (rivers, ocean), mountains, towns (automatic dismount
-  at entry trigger tiles). Can enter: roads, farmland, plains, quarried
+  thick), water (rivers, ocean), mountains, towns and dungeons
+  (automatic dismount at entry trigger tiles). Can enter: roads, farmland, plains, quarried
   plains, light forest, coast, highlands, Sunstone Ridge, Ashlands
   transition tiles.
 - **Act III Pallor restriction:** Cannot be summoned inside the Pallor
@@ -132,7 +132,7 @@ here for completeness.
 |-----------|-----|-------------------|---------------|
 | ~15% | Act I | On foot only | FF6 early game |
 | ~30% | Act II (first Compact city) | Rail fast-travel (Compact cities) | FF4 hovercraft |
-| ~35% | Act II (Torren trust event) | Ley Stag mount (2x speed, no encounters) | FF6 chocobo |
+| ~35% | Act II (Roothollow return + Thornmere milestone) | Ley Stag mount (2x speed, no encounters) | FF6 chocobo |
 | ~40% | Act II (Bellhaven) | Coastal ferry (Bellhaven ↔ Ashport) | FF6 Nikeah ferry |
 | ~45% | Act II (Maren Lv 20) | Linewalk spell (town teleport) | Earthbound Teleport |
 | ~55% | Interlude | Transport collapse (see Section 3) | FF6 WoB→WoR |
@@ -160,7 +160,7 @@ vehicle shortcuts.
 
 All four systems unlock as the world opens:
 1. Rail (first Compact city visit)
-2. Ley Stag (Torren trust event, mid-Act II)
+2. Ley Stag (Roothollow return + Thornmere milestone, mid-Act II)
 3. Ferry (first Bellhaven visit)
 4. Linewalk (Maren Lv 20)
 

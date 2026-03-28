@@ -438,7 +438,7 @@ Now complete.
 **What's Needed:**
 - [x] Decision: Does this game have an airship? — No. "Grounded FF6" philosophy. Transport stays terrestrial + coastal.
 - [x] Rail system mechanics — Formalized: Corrund ↔ Ashmark ↔ Caldera, Corrund ↔ Kettleworks. 100g fare, Rail Conductor NPC, encounter-free instant travel. Interlude: service suspended (3 tunnel collapses). Act III: stays broken. Epilogue: repair in progress.
-- [x] Fast travel mechanics — Linewalk spell (Maren Lv 20, towns only per magic.md) + rail + ferry provide full coverage
+- [x] Fast travel mechanics — Linewalk spell (Maren Lv 20, towns only per magic.md) + rail + ferry provide broad coverage once all systems active (~45% completion)
 - [x] Mount/chocobo equivalent — Ley Stag mount: spirit-bonded, 2x speed, no encounters, terrain restricted (no dense Thornmere/water/mountains/towns), mid-Act II unlock at Roothollow (requires `torren_joined` + Thornmere milestone TBD). Lost in Interlude, returns Act III (grey-tinged, Pallor Wastes restricted).
 - [x] Boat/ship travel — Coastal ferry (Bellhaven ↔ Ashport), NPC-operated, 200g per crossing, unlocked Act II. Disrupted in Interlude, restored at Ashport only in Act III.
 - [x] Vehicle encounter rate modifiers — Ley Stag suppresses encounters (0 increment, counter resets on dismount). All menu transport encounter-free.
