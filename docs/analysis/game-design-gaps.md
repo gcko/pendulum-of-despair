@@ -457,7 +457,7 @@ Now complete.
 **Completed:** 2026-03-27
 
 **What's Needed:**
-- [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional tiles deferred to Gap 3.1
+- [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional sixth category resolved as not needed (Gap 3.1: vehicles use existing passability)
 - [x] Movement speed per terrain type — resolved: uniform on-foot speed (no per-terrain modifiers), per SNES convention; 7 speed tiers removed from geography.md
 - [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 12 terrain zones); overworld.md references, does not duplicate
 - [x] Transition between overworld and locations — fade to black (overworld → location), seamless (within-location), FF6 battle transitions (Mode 7 zoom + mosaic + distinct boss)
@@ -469,7 +469,7 @@ Now complete.
 - [x] Save point specification (named rest sites, Pallor Wastes clearings, visual representation, rest/AC mechanics, Linewalk distinction)
 - [x] Implementation Notes appendix (Mode 7 parameters, movement speed target, z-ordering, input priority, transition durations, particle density)
 
-**Blocking:** ~~Overworld implementation~~ Now unblocks: 3.1 (Transport & Vehicle System — vehicle-conditional tiles)
+**Blocking:** ~~Overworld implementation~~ Unblocked 3.1 (Transport & Vehicle System — COMPLETE, resolved vehicle passability as no new category needed)
 
 ---
 
