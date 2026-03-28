@@ -1433,8 +1433,8 @@ Scripted Events:
       shoot pushes through cracked stone."
     - boss.hp = 0 (defeat)
     - environmental: Green shoot appears in arena
-    - ability_unlock: Torren learns Rootsong (HP + MP healing,
-      draws from ley network)
+    - ability_unlock: Torren learns Rootsong (party-wide heal +
+      all spirit Favor +1, once per battle)
 
   At boss.hp <= 0 via damage (if Release not used):
     - dialogue: "The tree shatters. Stone fragments scatter across
@@ -1724,8 +1724,10 @@ Scripted Events:
       her grip. She slams them together. Light erupts -- not grey,
       not gold -- something between. A blade forms in her hand,
       forged from pure defiance."
-    - ability_unlock: Lira gains Pallor-Piercing weapon (deals full
-      damage to Vaelith; other party members deal 75% damage)
+    - ability_unlock: Lira manifests Cael's Edge (ATK 72, Spirit
+      element, per equipment.md). Grants Sever Bond: 1-use 3.0×
+      physical attack ignoring Vaelith's DEF. Cael's Edge deals
+      full damage to Vaelith; other party members deal 75% damage.
     - mode_switch: Invulnerable → Scholar
 
   At boss.hp <= 37,500 (once):
@@ -2619,7 +2621,10 @@ Scripted Events:
       protected allies now prolongs the enemy's suffering.
     - dialogue: "He should have fallen. The Pallor won't let him."
     - Note: This fires exactly once. The next killing blow ends
-      Phase 2 normally.
+      Phase 2 normally. If Draining Whisper is active, Cael
+      regenerates 5% max HP/turn (1,750 HP) after surviving —
+      the party must out-damage the regen to finish him. This
+      is intentional: the Pallor refuses to let go.
     - dialogue: "Something in his voice is still Cael. Buried under
       the grey, but there."
 
