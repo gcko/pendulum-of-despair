@@ -685,7 +685,7 @@ Travel times assume normal overworld movement speed (uniform across all terrain 
 | Roothollow | Duskfen | 30 | Full day | Forest and marsh |
 | Duskfen | Canopy Reach | 25 | Full day | Marsh to vertical forest |
 | Roothollow | Ashgrove | 20 | Half day | Forest trails |
-| Ashgrove | The Convergence | 15 | Half day (Act II) / 2 days (Act III, Wastes) | Clearing / Pallor Wastes |
+| Ashgrove | The Convergence | 15 | Half day (Act II) / 2 days (Act III -- frequent encounters, detours around corrupted terrain) | Clearing / Pallor Wastes |
 | Valdris Crown | Highcairn | 35 | Full day+ | Mountain switchbacks |
 | Corrund | Ashmark | 40 | Full day | Rail tunnel / quarried road |
 | Corrund | Bellhaven | 50 | Full day+ | River road / coastal |

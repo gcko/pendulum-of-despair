@@ -81,8 +81,10 @@ navigation tool.
   overworld position
 - **Named routes:** Dotted paths displayed between connected discovered
   locations (Valdris Highroad, Diplomatic Road, Wildwood Trail, etc.)
-- **Non-interactive:** View-only. No fast travel, no cursor selection.
-  Transport mechanics are deferred to Gap 3.1
+- **Non-interactive:** View-only. No cursor selection, no fast travel
+  from the map screen. Spell-based teleportation (Linewalk per
+  [magic.md](magic.md)) exists as a separate system. Vehicle-based
+  transport is deferred to Gap 3.1
 - **Availability:** From Act I onward. No discoverable map item
   required — the party knows their homeland
 
@@ -128,7 +130,9 @@ Five tile categories govern overworld movement:
   [geography.md](geography.md) Encounter Zones section for the full
   table (11 zone types; encounter-active zones range from Farmland at
   48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
-  have 0 increment).
+  have 0 increment). Spells and equipment can modify encounter rate
+  (Veilstep -75%, Ward Talisman x0.5 per [magic.md](magic.md) and
+  [equipment.md](equipment.md)).
 - **Conditional tile messages.** When the player attempts to enter a
   conditional tile without meeting its requirement, a contextual
   message appears:
@@ -188,8 +192,9 @@ section extends it with context-dependent variants.
   scales into the terrain, screen flash, cut to the battle screen. Per
   FF6's canonical overworld battle entry.
 - **Dungeon/interior encounters:** Mosaic pixelation. The screen
-  dissolves into progressively larger color blocks, then fades to
-  black and cuts to the battle screen. Per FF6's dungeon model.
+  dissolves into progressively larger color blocks until
+  unrecognizable, then cuts to the battle screen. Per FF6's dungeon
+  model and [ui-design.md](ui-design.md).
 - **Boss encounters:** Distinct transition. Screen flash (brief white
   frame), hold, then a slower, more dramatic version of the
   context-appropriate transition (zoom on overworld, mosaic in
