@@ -1058,7 +1058,44 @@ narrative:
 
 ---
 
-## 18. Cross-References
+## 18. Transport Interactions
+
+Transport services use existing UI patterns — no new screens required.
+See [transport.md](transport.md) for full transport mechanics.
+
+### 18.1 Rail/Ferry (NPC Dialogue)
+
+The Rail Conductor and Ferryman use the standard dialogue choice prompt
+(Section 12.4). Destinations listed vertically with fare inline:
+"Ashmark — 100g". Unaffordable destinations show the fare in grey text
+(per Section 11 shop pattern). Cancel = "Never mind" (rail) or "No"
+(ferry). Insufficient gold fallback: Rail Conductor says "Can't afford
+the fare? Overland's free, just slower." Ferryman says "Two hundred
+gold. Come back when you have it."
+
+### 18.2 Ley Stag (Character Field Menu)
+
+Torren's overworld field ability is "Call Stag" — accessed by selecting
+Torren from the party menu on the overworld. Same slot as Lira's
+"Forge Devices" and Maren's Linewalk. If mounted: option changes to
+"Dismiss Stag". Restricted terrain shows contextual message per
+[transport.md](transport.md). If `stag_lost`: option greyed out with
+"The bond is broken..."
+
+### 18.3 Character Field Abilities (Formalized)
+
+Each party member may have one overworld field ability accessed via the
+party menu. Currently defined:
+
+| Character | Ability | Source |
+|-----------|---------|--------|
+| Lira | Forge Devices | [crafting.md](crafting.md) |
+| Torren | Call Stag | [transport.md](transport.md) |
+| Maren | Linewalk | [magic.md](magic.md) |
+
+---
+
+## 19. Cross-References
 
 | System | Reference |
 |--------|-----------|
