@@ -204,7 +204,7 @@ The Compact occupies the southeast: a region of river basins, quarried plains, a
 - **Industrial urban:** Navigation is channeled -- streets, bridges, and tunnels create a more linear path. Encounters are replaced by scripted events (guard patrols, factory hazards).
 - **Broken Hills:** Moderate encounter rate (Mountains tier) -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
 - **Coastal:** Low encounter rate near cities. Sea routes between Bellhaven and Ashport exist as trade lanes (transport mechanics deferred to Gap 3.1 per [overworld.md](overworld.md)).
-- **Caldera interior:** Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
+- **Caldera interior (city location maps, not overworld):** Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
 
 ---
 
@@ -253,7 +253,7 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 **Terrain Effects on Gameplay:**
 
 - **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (conditional passability -- see [overworld.md](overworld.md)).
-- **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
+- **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards (interior/dungeon only per [overworld.md](overworld.md)): sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
 - **Canopy level:** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
 - **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
 - **Sunstone Ridge:** Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
@@ -673,7 +673,7 @@ The Archive's location -- deep in the Wilds, far from any settlement, accessible
 
 ### Distance Table (Approximate Travel Time on Foot)
 
-Travel times are **narrative estimates** reflecting in-world travel conditions (terrain difficulty, navigation complexity, hazard avoidance) — not gameplay tile traversal times. Overworld movement speed is uniform across all terrain (per [overworld.md](overworld.md)); these times describe the fiction, not the mechanic.
+Travel times are **narrative estimates** reflecting in-world travel conditions (terrain difficulty, navigation complexity, hazard avoidance) -- not gameplay tile traversal times. Overworld movement speed is uniform across all terrain (per [overworld.md](overworld.md)); these times describe the fiction, not the mechanic.
 
 | From | To | Distance (miles) | Travel Time | Terrain |
 |------|----|-----------------|-------------|---------|

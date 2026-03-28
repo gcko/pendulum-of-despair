@@ -124,7 +124,7 @@ Five tile categories govern overworld movement:
 | **Passable** | Walk freely; encounters per terrain zone | Grass, road, plains, quarried plains, sand, coast |
 | **Impassable** | Cannot cross on foot | Mountains, deep water, cliff faces, dense rock |
 | **Entry trigger** | Fade to black, load interior map | Town icons, cave mouths, dungeon entrances |
-| **Conditional** | Requires story flag or party member to pass; full stop + message | Dense Thornmere (Torren required), winter Highcairn (Interlude blocked), Pallor Wastes (Act III only), Aelhart border road (Act II--Interlude blocked) |
+| **Conditional** | Requires story flag or party member to pass; full stop + message | Dense Thornmere (Torren required), winter Highcairn (Interlude blocked), Pallor Wastes (Act III only), Aelhart border road (Act II--Interlude blocked), Canopy Reach (Interlude blocked) |
 | **Event trigger** | Activates cutscene, save, or warp | Overworld save points, story trigger tiles |
 
 ### Passability Rules
@@ -135,8 +135,10 @@ Five tile categories govern overworld movement:
   table (11 zone types; encounter-active zones range from Farmland at
   48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
   have 0 increment). Spells and equipment can modify encounter rate
-  (Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5 per
-  [equipment.md](equipment.md)).
+  (e.g., Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5
+  per [equipment.md](equipment.md)); see
+  [combat-formulas.md](combat-formulas.md) Encounter System for the
+  full modifier table and stacking rules.
 - **Conditional tile behavior.** Failing a conditional check produces
   the same full stop as impassable tiles, plus a contextual message:
   - "The forest is too dense to navigate without a guide." — Torren
@@ -147,6 +149,8 @@ Five tile categories govern overworld movement:
     Act III
   - "The road south is too dangerous." — Aelhart border road during
     Act II--Interlude
+  - "The path to the canopy is blocked. The trees here are stone.
+    The bridges are gone." — Canopy Reach during Interlude
 - **Region boundary banners** are not event triggers — they are
   non-interrupting text overlays on passable tiles at biome borders.
   See Section 3 (Region Boundary Banners) for timing rules.
@@ -255,8 +259,9 @@ biome's permanent character. Biomes that appear only as interior maps
 or location entries (Underground/Cavern, Ancient Ruins) are not listed
 here — see [biomes.md](biomes.md) for their visual definitions.
 Ashlands (including Ashgrove) appears on the overworld as a small
-transition zone but uses the Valdris-to-Ashlands gradient tiles; see
-[biomes.md](biomes.md) for the full Ashlands palette. Sacred sites
+transition zone (3-tile gradient per [biomes.md](biomes.md)); at the
+transition midpoint, visual atmospheric swaps to Ashlands effects
+(still air, drifting ash particles per biomes.md Ashlands section). Sacred sites
 (Ashgrove, Stillwater Hollow) use their parent biome's atmosphere with
 zero encounter rate.
 
@@ -296,8 +301,10 @@ Source: [dynamic-world.md](dynamic-world.md).
 
 - Biome transition strips (3--5 tiles per [biomes.md](biomes.md); Pallor
   transitions use 5+ tiles) swap
-  the particle/palette set at the midpoint — no two biome atmospherics
-  need to blend simultaneously
+  the particle/palette set at the midpoint — no two biome visual
+  atmospherics (particles, palette) need to blend simultaneously.
+  Audio crossfades are handled separately (see Region Boundary
+  Banners above; Ley Line Nexus uses additive audio blending)
 - Palette manipulation for act progression uses color subtraction (SNES
   technique: subtracting a constant from all pixel values produces
   desaturation/darkening without per-tile palette swaps)
