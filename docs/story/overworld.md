@@ -208,9 +208,9 @@ section extends it with context-dependent variants.
   context-appropriate transition (zoom on overworld, mosaic in
   dungeons). Signals narrative weight without encoding tactical
   information.
-- **Post-battle return:** Fade from black back to the field. Danger
-  counter resets to 0 (per [combat-formulas.md](combat-formulas.md)
-  encounter system).
+- **Post-battle return:** Reverse dissolve back to the field (per
+  [ui-design.md](ui-design.md)). Danger counter resets to 0 (per
+  [combat-formulas.md](combat-formulas.md) encounter system).
 
 ### Region Boundary Banners
 
@@ -294,7 +294,8 @@ Source: [dynamic-world.md](dynamic-world.md).
 
 ### Implementation Notes
 
-- Biome transition strips (3--5+ tiles per [biomes.md](biomes.md)) swap
+- Biome transition strips (3--5 tiles per [biomes.md](biomes.md); Pallor
+  transitions use 5+ tiles) swap
   the particle/palette set at the midpoint — no two biome atmospherics
   need to blend simultaneously
 - Palette manipulation for act progression uses color subtraction (SNES
