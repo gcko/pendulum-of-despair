@@ -27,7 +27,9 @@
 > [biomes.md](biomes.md) | [dynamic-world.md](dynamic-world.md) |
 > [locations.md](locations.md) | [ui-design.md](ui-design.md) |
 > [combat-formulas.md](combat-formulas.md) |
-> [difficulty-balance.md](difficulty-balance.md)
+> [difficulty-balance.md](difficulty-balance.md) |
+> [visual-style.md](visual-style.md) | [magic.md](magic.md) |
+> [equipment.md](equipment.md)
 >
 > **Cross-links:** [dungeons-world.md](dungeons-world.md) |
 > [dungeons-city.md](dungeons-city.md)
@@ -108,8 +110,10 @@ speed variation came from vehicles, not terrain.
 - **Collision:** Full stop on impassable tiles. No wall-sliding. Per
   FF6 overworld behavior.
 - **Speed tiers:** On-foot is the only speed tier in this document.
-  Vehicle speed tiers (chocobo equivalent, rail cart, airship) are
-  deferred to Gap 3.1 (Transport & Vehicle System).
+  City-to-city rail fast-travel exists in Act II (per
+  [city-carradan.md](city-carradan.md)). Full vehicle/transport
+  mechanics (mounts, airship, route mechanics) are deferred to
+  Gap 3.1 (Transport & Vehicle System).
 
 ### Passability Categories
 
@@ -117,7 +121,7 @@ Five tile categories govern overworld movement:
 
 | Category | Behavior | Examples |
 |----------|----------|---------|
-| **Passable** | Walk freely; encounters per terrain zone | Grass, road, plains, desert, sand, coast |
+| **Passable** | Walk freely; encounters per terrain zone | Grass, road, plains, quarried plains, sand, coast |
 | **Impassable** | Cannot cross on foot | Mountains, deep water, cliff faces, dense rock |
 | **Entry trigger** | Fade to black, load interior map | Town icons, cave mouths, dungeon entrances |
 | **Conditional** | Requires story flag or party member to pass | Dense Thornmere (Torren required), winter Highcairn (Interlude blocked), Pallor Wastes (Act III only) |
@@ -131,7 +135,7 @@ Five tile categories govern overworld movement:
   table (11 zone types; encounter-active zones range from Farmland at
   48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
   have 0 increment). Spells and equipment can modify encounter rate
-  (Veilstep -75%, Ward Talisman x0.5 per [magic.md](magic.md) and
+  (Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5 per
   [equipment.md](equipment.md)).
 - **Conditional tile messages.** When the player attempts to enter a
   conditional tile without meeting its requirement, a contextual
@@ -277,10 +281,10 @@ layer on top.
 |---------|--------|----------------|
 | Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
 | Interlude onset | Grey palette filter, muted colors globally | All biomes |
-| Interlude winter | Blowing snow added, whiteout conditions | Highcairn route, alpine areas |
-| Duskfen water rise | Fog turns grey, lower platforms submerged (settlement half-submerged; ~30% of platforms replaced with water tiles) | Duskfen (Thornmere Wetlands) |
+| Interlude winter | Wind drops, oppressive silence, heavier frost patterns; Pallor manifestations blend with snow on Highland Descent route | Highcairn route, alpine areas |
+| Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of platforms replaced with water tiles) | Duskfen (Thornmere Wetlands) |
 | Pallor spread (Act III) | Progressive desaturation → monochrome | 10-mile radius from Convergence |
-| Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | Valdris, Carradan, Convergence meadow |
+| Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | All outdoor areas (highlighted: Valdris, Carradan, Convergence meadow) |
 
 Source: [dynamic-world.md](dynamic-world.md).
 
