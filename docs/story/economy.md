@@ -891,7 +891,7 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 
 ### Post-Game (Dreamer's Fault, Level 45+)
 
-Gold becomes abundant. Tier 5 gear is non-purchasable (boss/quest only). The economy shifts from "can I afford this?" to "should I sell rare materials or save them for ultimate Forgewright recipes?" Gold surplus is intentional. Boss rush repeat clears provide repeatable gold income (1,000g / 2,500g / 5,000g per tier per [postgame.md](postgame.md)) — the only repeatable gold source in the game.
+Gold becomes abundant. Tier 5 gear is non-purchasable (boss/quest only). The economy shifts from "can I afford this?" to "should I sell rare materials or save them for ultimate Forgewright recipes?" Gold surplus is intentional. Boss rush repeat clears provide structured repeatable gold income (1,000g / 2,500g / 5,000g per tier per [postgame.md](postgame.md)). Dreamer's Fault enemy respawns (per [postgame.md](postgame.md)) also provide repeatable gold via drops.
 
 ---
 

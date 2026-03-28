@@ -187,10 +187,11 @@ window maps to Act II's position in the story (~30--50% of the game).
   still exist inside the dungeon as traversal hazards with
   unpredictable destinations, but the NPC-operated city-to-city
   fast-travel service is suspended on all segments.
-- **Ley Stag:** Lost. Spirit animals flee as Pallor corruption spreads
-  through the ley lines. The Stag dissolves during the Interlude
-  transition cutscene — a visual moment where the party's ley bond
-  breaks. Cannot be summoned.
+- **Ley Stag:** Lost (if `stag_bonded` was set). Spirit animals flee
+  as Pallor corruption spreads through the ley lines. The Stag
+  dissolves during the Interlude transition cutscene — a visual
+  moment where the party's ley bond breaks. Cannot be summoned. If
+  the Stag was never bonded, this step is skipped.
 - **Ferry:** Disrupted. Bellhaven disrupted (per
   [dynamic-world.md](dynamic-world.md) — harbor economy collapsed,
   grey things washing ashore). Ferryman refuses: "The waters aren't
@@ -211,10 +212,11 @@ transformation more effectively than any cutscene.
 
 - **Rail:** Remains broken. Tunnels still a dungeon. No fast-travel.
 - **Ley Stag:** Returns when Torren rejoins the party (Act III reunion
-  event). The Stag re-manifests with grey-tinged ley energy (visual
-  corruption) but is mechanically identical (2x speed, no encounters).
-  Cannot enter the Pallor Wastes 10-mile radius — "The Stag shies
-  away. The ley energy here is wrong."
+  event), provided `stag_bonded` was set in Act II. The Stag
+  re-manifests with grey-tinged ley energy (visual corruption) but is
+  mechanically identical (2x speed, no encounters). Cannot enter the
+  Pallor Wastes 10-mile radius — "The Stag shies away. The ley energy
+  here is wrong." If the Stag was never bonded, it remains unavailable.
 - **Ferry:** Restored at Ashport only. Ferryman relocates from
   Bellhaven. Same route (Ashport ↔ Bellhaven) but only boardable from
   Ashport until Bellhaven stabilizes.
@@ -225,9 +227,9 @@ transformation more effectively than any cutscene.
 - **Rail:** Repair crews working (visible scaffolding at terminals).
   Not yet functional — NPC dialogue: "Months away from service." No
   gameplay rail travel.
-- **Ley Stag:** Fully restored. Grey tint fades, ley energy bright
-  again. No Pallor restriction (Wastes are gone). Full 2x speed,
-  no encounters everywhere accessible.
+- **Ley Stag:** Fully restored (if bonded). Grey tint fades, ley
+  energy bright again. No Pallor restriction (Wastes are gone). Full
+  2x speed, no encounters everywhere accessible.
 - **Ferry:** Both ports operational. Full service restored.
 - **Linewalk:** Still works.
 
