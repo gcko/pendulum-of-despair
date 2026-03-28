@@ -145,8 +145,8 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 
 ### Damage Reduction Sources
 
-| Source | Reduction | Type | Scope | Duration | Mechanic |
-|--------|-----------|------|-------|----------|----------|
+| Source | Modifier | Type | Scope | Duration | Mechanic |
+|--------|----------|------|-------|----------|----------|
 | The Pallor's Last (accessory) | 25% | All | Equipped character | Permanent (while equipped) | Flat reduction |
 | Ironwall (Edren ability) | 50% (75% with Oathkeeper) | Physical only | Single guarded ally | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
 | Rampart (Edren ability) | 30% (45% with Oathkeeper) | All | All back-row allies | Stance (active while maintained) | Absorption — Edren takes the redirected portion |

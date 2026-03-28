@@ -1720,7 +1720,7 @@ E.............#####...............................
 ```
 
 **Trial 1 (B1): Edren's Trial**
-Edren faces the Crowned Hollow -- a towering armored figure wearing every crown of every leader who failed to stop the Pallor. It fights with his own moveset. The correct response: defend, not attack. Three consecutive Defends end the fight. Edren gains Steadfast Resolve (party-wide defensive buff that cleanses Pallor status effects).
+Edren faces the Crowned Hollow -- a towering armored figure wearing every crown of every leader who failed to stop the Pallor. It fights with his own moveset. The correct response: defend, not attack. Three consecutive Defends end the fight. Edren gains Steadfast Resolve (party-wide cleanse of Despair and Silence, then +20% DEF/MDEF for 3 turns per [abilities.md](abilities.md)).
 
 **Trial 2 (B2): Lira's Trial**
 Lira faces the Perfect Machine -- a flawless automaton with Cael's face that asks to be repaired. Each "repair" adds HP and triggers counterattacks. The correct response: use Forgewright's Dismantle command. Dialogue: "I cannot fix you. I could not fix him. That was never my job." Lira gains a latent ability (prerequisite for manifesting Cael's connection as weapon against Vaelith).
@@ -1872,7 +1872,7 @@ The Crowned Hollow becomes invulnerable and uses devastating attacks:
 
 **Resolution Mechanic (Cecil-type):** The ONLY way to end Phase 2 is for Edren to use the **Defend** command for 3 consecutive turns. Not attacking -- just enduring. Each Defend causes the Hollow to stagger and the ghostly soldiers to lower their weapons. Third Defend ends the fight.
 
-**Unlock:** **Steadfast Resolve** -- party-wide defensive buff that also cleanses Pallor status effects.
+**Unlock:** **Steadfast Resolve** -- party-wide cleanse of Despair and Silence, then +20% DEF/MDEF for 3 turns (per [abilities.md](abilities.md)).
 
 **Weakness:** Spirit (150%). **Resistance:** Physical (75%). **Drop:** Crown Shard (accessory -- leadership-themed buff).
 

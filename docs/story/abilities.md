@@ -419,6 +419,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | — | — | Breath of the Wilds (cross-train) | Act III campfire scene (story-triggered; available regardless of level once the Act III campfire event occurs) |
 | 15 | Aegis Veil | — | — |
 | 22 | Shatter Guard | — | — |
+| — | **[S] Steadfast Resolve** | — | Act III: Pallor Wastes trial (`trial_edren_complete`) |
 | — | **[S] Oathkeeper** | — | Act IV: Picks up Cael's sword |
 
 ### Cael (Rally) — Available Acts I-II Only
