@@ -673,7 +673,7 @@ The Archive's location -- deep in the Wilds, far from any settlement, accessible
 
 ### Distance Table (Approximate Travel Time on Foot)
 
-Travel times assume normal overworld movement speed (uniform across all terrain per [overworld.md](overworld.md)). Distances are narrative approximations, not exact tile counts.
+Travel times are **narrative estimates** reflecting in-world travel conditions (terrain difficulty, navigation complexity, hazard avoidance) — not gameplay tile traversal times. Overworld movement speed is uniform across all terrain (per [overworld.md](overworld.md)); these times describe the fiction, not the mechanic.
 
 | From | To | Distance (miles) | Travel Time | Terrain |
 |------|----|-----------------|-------------|---------|

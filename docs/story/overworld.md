@@ -266,7 +266,7 @@ zero encounter rate.
 | Carradan Industrial | Permanent smog layer, amber-filtered light (never truly bright) |
 | Thornmere Deep Forest | Spore/mote particles, no ground-level wind, bioluminescent light from below |
 | Thornmere Wetlands | Constant fog (visibility 4--5 tiles in places), will-o'-wisps, flat diffused light |
-| Mountain / Alpine | Visible wind, blowing snow particles, whiteout conditions during storms |
+| Mountain / Alpine | Constant visible wind, blowing snow particles, reduced visibility at higher elevations |
 | Coastal / Harbor | Haze, sea spray motes, stronger wind |
 | Ley Line Nexus | Faint ambient glow, constant mote particles drifting upward, energy shimmer; amber variant at Sunstone Ridge (orange-red crystal glow) |
 | Pallor Wastes | Grey ceiling, visual static at screen edges, muffled audio |
