@@ -149,7 +149,7 @@ you've seen?"
 
 | Category | What It Tracks | Denominator Source |
 |----------|---------------|--------------------|
-| Bestiary | Unique enemies encountered (at least one battle) | bestiary/ (232 enemies per README.md: 25 Act I + 33 Act II + 52 Interlude + 68 Act III + 24 Optional + 30 Bosses) |
+| Bestiary | Unique enemies encountered (at least one battle) | bestiary/ (235 enemies per README.md: 25 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
 | Treasure | Chests opened across all dungeons and overworld | Implementation-defined per dungeon layouts |
 | Quests | Sidequests completed | sidequests.md total count |
 | Items | Unique items obtained at least once (consumables, equipment, key items, materials) | items.md + equipment.md total unique count |

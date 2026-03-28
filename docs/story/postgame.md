@@ -199,7 +199,7 @@ you've seen?"
 
 | Category | What It Tracks | Denominator |
 |----------|---------------|-------------|
-| **Bestiary** | Unique enemies encountered (at least one battle) | 234 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 68 Act III + 25 Optional + 31 Bosses) |
+| **Bestiary** | Unique enemies encountered (at least one battle) | 235 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
 | **Treasure** | Chests opened across all dungeons and overworld | Total chest count (implementation-defined per dungeon layouts) |
 | **Quests** | Sidequests completed | Total sidequest count per [sidequests.md](sidequests.md) |
 | **Items** | Unique items obtained at least once (consumables, equipment, key items, materials) | Total unique item count across [items.md](items.md) and [equipment.md](equipment.md) |
@@ -215,11 +215,11 @@ you've seen?"
 
 ### Display
 
-- Simple percentage per category with fraction: "Bestiary: 142/234
+- Simple percentage per category with fraction: "Bestiary: 142/235
   (61%)"
 - No pop-ups or notifications at 100%. The player checks when they
   want to.
-- **Aggregate only** — no per-item checklists. The player sees "142/234"
+- **Aggregate only** — no per-item checklists. The player sees "142/235"
   but not which specific enemies are missing. Finding the last few is
   part of the completionist challenge.
 

@@ -215,7 +215,7 @@ consumed from every age.
 | Pallor Drake | Pallor | 90 | 15,680 | 315 | 152 | 113 | 132 | 94 | 80 | 7,768 | 13,797 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Pallor Wolf | Pallor | 92 | 16,359 | 322 | 155 | 115 | 134 | 96 | 81 | 8,331 | 15,163 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Pallor Lurker | Pallor | 96 | 17,760 | 336 | 161 | 120 | 140 | 100 | 84 | 9,421 | 18,075 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
-| Pallor Regent | Pallor | 94 | 17,052 | 329 | 138 | 117 | 153 | 98 | 75 | 8,899 | 16,570 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
+| Pallor Regent | Pallor | 94 | 17,052 | 329 | 138 | 117 | 153 | 98 | 75 | 8,883 | 16,593 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | Void | — | Despair, Death | Dreamer's Fault F17–20 |
 | Void Walker | Pallor | 100 | 19,220 | 350 | 168 | 125 | 146 | 104 | 88 | 6,954 | 14,100 | Pallor Sample (75%) | Grey Residue (25%) | Spirit | — | — | Despair, Death | Dreamer's Fault F17–20 |
 
 **Design notes:**

@@ -966,12 +966,12 @@ The Thornvein Passage is not hostile by nature. The roots test rather than threa
 **Acts:** Epilogue (post-game)
 **Type:** Secret location
 
-Accessible only after completing the main story, Sable's tavern sits at the crossroads where Valdris, the Compact, and the Wilds meet. It is a low, comfortable building with a swinging sign — a painted pendulum on a broken chain. Inside, every party member (except Cael) can be found, along with NPCs the player helped throughout the game. The tavern serves as a post-game hub where the player can trigger epilogue conversations, access a bestiary, replay boss fights at increased difficulty, and unlock a hidden side dungeon.
+Accessible only after completing the main story, Sable's tavern sits at the crossroads where Valdris, the Compact, and the Wilds meet. It is a low, comfortable building with a swinging sign — a painted pendulum on a broken chain. Inside, every party member (except Cael) can be found, along with NPCs the player helped throughout the game. The tavern serves as a post-game hub. See [postgame.md](postgame.md) for full post-game mechanics.
 
 **Key features:**
 - Post-game hub (epilogue conversations with all surviving party members)
-- Boss rush mode (replay any boss fight with enhanced difficulty)
-- Bestiary and archive (review all discovered lore and enemy data)
+- Boss rush mode (3-tier gauntlet replaying story bosses at original stats per [postgame.md](postgame.md))
+- Completion tracking (4 categories: bestiary, treasure, quests, items)
 - Entrance to the Dreamer's Fault (hidden dungeon)
 
 ---
