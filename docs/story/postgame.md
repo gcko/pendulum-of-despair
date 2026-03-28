@@ -31,7 +31,7 @@ epilogue (`epilogue_complete` flag per [events.md](events.md)), the
 game saves a post-game state and returns to The Pendulum tavern. The
 player can continue exploring post-game content from this save.
 Starting a new game always starts fresh — no carryover of levels,
-items, bestiary, or flags.
+items, bestiary, or flags from a previous playthrough.
 
 **Rationale:**
 - **Narrative integrity.** Cael's sacrifice is the emotional core.
@@ -61,8 +61,8 @@ them?"
 | Tier | Name | Bosses | Source Acts | Estimated Time |
 |------|------|--------|------------|----------------|
 | 1 | Rising Shadows | Act I bosses | Act I--II | ~20 min |
-| 2 | The Unraveling | Act II + Interlude bosses | Act II--Interlude | ~30 min |
-| 3 | The Grey March | Act III bosses (including Cael phases 1--3) | Act III | ~40 min |
+| 2 | Echoes of Doubt | Act II + Interlude bosses | Act II--Interlude | ~30 min |
+| 3 | Shattered Resolve | Act III bosses (including Cael phases 1--3) | Act III | ~40 min |
 
 Boss roster per tier is drawn from
 [bestiary/bosses.md](bestiary/bosses.md). Exact boss lists are
@@ -77,7 +77,12 @@ include all mandatory story bosses in story order. Optional bosses
   individual fight at post-game stats, not attrition
 - **Original boss stats** — no scaling or boosting. Post-game
   characters are overpowered, which is the point. The victory lap
-  is the fun.
+  is the fun. Phase transitions trigger normally — if damage skips
+  past an HP threshold, the phase transition fires immediately at
+  the start of the boss's next turn.
+- **Player equipment allowed** — the player brings their own gear.
+  This is intentional. Post-game equipment (Dreamer's Crest, The
+  Pallor's Last) makes Tier 1 trivial — that is the victory lap.
 - Party composition chosen at start of each tier, locked for the
   duration
 - **Standardized consumable set per tier** — no items from player
@@ -98,10 +103,12 @@ include all mandatory story bosses in story order. Optional bosses
 | 3 | Pendulum's Memento (accessory) | All stats +5 | "Remember everything" |
 
 Memento accessories are meaningful but not best-in-slot — Dreamer's
-Crest (+30 all stats from Dreamer's Fault floor 20) and The Pallor's
+Crest (+30 all stats, obtained via Cael's Echo per
+[equipment.md](equipment.md)) and The Pallor's
 Last (from The Lingering per [sidequests.md](sidequests.md)) are both
 superior. The value is the inscription flavor text, not the stats.
-One-time rewards — clearing a tier again gives gold instead.
+One-time rewards — clearing a tier again gives gold instead (Tier 1:
+1,000g, Tier 2: 2,500g, Tier 3: 5,000g).
 
 ---
 
