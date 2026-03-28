@@ -44,7 +44,7 @@ Follow the same style as overworld.md — blockquote intro with related docs, co
 
 Cover all four vehicle subsections from spec Section 2:
 - Compact Rail Network (routes, mechanic, speed, encounters, cost 100g, terminals, NPC, unlock trigger)
-- Ley Stag Mount (source, mechanic, speed 2x, encounters none, terrain restrictions, Act III Pallor restriction with message "The Stag shies away. The ley energy here is wrong.", summon restriction message "The Stag cannot navigate this terrain.", unlock trigger `torren_trust`)
+- Ley Stag Mount (source, mechanic, speed 2x, encounters none, terrain restrictions, Act III Pallor restriction with message "The Stag shies away. The ley energy here is wrong.", summon restriction message "The Stag cannot navigate this terrain.", unlock trigger `torren_joined` + Thornmere milestone TBD)
 - Coastal Ferry (routes, mechanic, speed, encounters, cost 200g, unlock trigger, NPC)
 - Linewalk Spell (reference only — per magic.md, 12 MP, Maren Lv 20, towns not save points)
 

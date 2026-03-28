@@ -121,8 +121,8 @@ ley energy, provided by the Thornmere tribes.
   The ley energy here is wrong."
 - **Summon restriction message:** When summoning in restricted terrain:
   "The Stag cannot navigate this terrain."
-- **Unlock trigger:** `torren_trust` story flag (mid-Act II event at
-  Roothollow)
+- **Unlock trigger:** Return to Roothollow mid-Act II with Torren
+  (requires `torren_joined` flag + Thornmere milestone TBD)
 
 ### Coastal Ferry
 

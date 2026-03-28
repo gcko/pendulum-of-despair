@@ -92,8 +92,9 @@ ley energy, provided by the Thornmere tribes.
 ### Coastal Ferry
 
 NPC-operated instant travel between Compact port cities. Modeled on
-FF6's Nikeah-South Figaro ferry and Secret of Mana's Cannon Travel
-Centers.
+FF6's Nikeah-South Figaro ferry (though FF6's ferry was free — PoD
+adds a fare for economy integration) and Secret of Mana's Cannon
+Travel Centers.
 
 - **Routes:** Bellhaven ↔ Ashport (one route). The coast between these
   ports is rocky and inhospitable — cliffs, sea stacks, and treacherous
