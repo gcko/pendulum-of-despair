@@ -660,9 +660,9 @@ If the player has completed the "What the Stars Said" quest, an additional line 
 ### The Lingering (Super Boss)
 
 **Access:** After completing the Dreamer's Fault, return to the Convergence meadow
-**Trigger:** Examine Cael's memorial sword after completing the Dreamer's Fault
+**Trigger:** Examine Cael's memorial sword
 
-The Convergence meadow is quiet. Wild magic drifts like fireflies. When the party examines Cael's sword after completing the Dreamer's Fault, the fireflies go still. The air turns heavy. A shape forms in the meadow — not the Pallor (the door is closed), but a residue. The Lingering is the last trace of the Pallor's presence in the physical world: a towering figure of grey static, smaller and weaker than the Act III incarnation, but faster, smarter, and desperate. It knows the door is closed. It knows it is dying. It fights with everything it has left.
+The Convergence meadow is quiet. Wild magic drifts like fireflies. When the party examines Cael's sword, the fireflies go still. The air turns heavy. A shape forms in the meadow — not the Pallor (the door is closed), but a residue. The Lingering is the last trace of the Pallor's presence in the physical world: a towering figure of grey static, smaller and weaker than the Act III incarnation, but faster, smarter, and desperate. It knows the door is closed. It knows it is dying. It fights with everything it has left.
 
 **The Lingering (Boss Fight):**
 - The hardest fight in the game. Three phases.

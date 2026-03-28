@@ -670,7 +670,8 @@ final_increment = floor(base_increment × act_scale × accessory_mod × location
 Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak
 provide the same effect (×0.5) and do not stack with each other (same
 accessory slot). Veilstep stacks with accessory modifiers (e.g.,
-Veilstep + Ward Talisman = ×0.125, nearly eliminating encounters).
+Veilstep + Ward Talisman = ×0.125 — dramatically reduces encounters
+in low-danger zones, still meaningful reduction in high-danger zones).
 
 ### Battle Formations
 
