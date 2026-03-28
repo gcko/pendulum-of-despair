@@ -42,6 +42,7 @@ via Monte Carlo simulation to match the target average steps.
 | Urban interior | None | 0 | — | Inside city/town boundaries |
 | Boss corridors | None | 0 | — | Antechamber before boss rooms |
 | Farmland / Settled | ~48 | 48 | ~48.5 | Aelhart Valley, Compact urban outskirts |
+| Coastal | ~40 | 64 | ~40.3 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
 | Roads | ~32 | 96 | ~32.2 | Valdris Highroad, Compact rail routes |
 | Forest (light) | ~24 | 148 | ~24.1 | Valdris border woods, Wilds edges |
 | Quarried plains | ~24 | 148 | ~24.1 | Compact industrial hinterland |

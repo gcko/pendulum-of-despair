@@ -551,4 +551,5 @@ danger counter increments per terrain type.
 | Party-wipe rules | [events.md](events.md) § Faint and Fast Reload |
 | Flee mechanics | [combat-formulas.md](combat-formulas.md) § Flee |
 | Oasis services | [locations.md](locations.md) § Pallor Wastes Oases |
+| Overworld traversal | [overworld.md](overworld.md) § Passability & Movement |
 | Dreamer's Fault | [bestiary/optional.md](bestiary/optional.md) |

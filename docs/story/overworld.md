@@ -77,11 +77,14 @@ convenience on a larger, more complex continent.
 
 - **Style:** Static illustrated map with parchment aesthetic,
   consistent with SNES-era game manual fold-out maps.
-- **Location discovery:** Locations appear on the map after first visit,
-  labeled with icons by type (town, dungeon, landmark). Destroyed
+- **Location discovery:** Locations appear on the map after first visit
+  (entering the location via fade-to-black, not merely approaching it).
+  Labeled with icons by type (town, dungeon, landmark). Destroyed
   or modified locations use variant icons (see Section 5).
   Undiscovered areas show terrain but no location labels — the
-  geography is known, specific sites are not.
+  geography is known, specific sites are not. The 3-tile approach
+  banner (Section 3) reveals the location name but does not trigger
+  map discovery.
 - **Current position:** Blinking dot marker shows the party's current
   overworld position.
 - **Named routes:** Dotted paths displayed between connected discovered
@@ -217,7 +220,10 @@ section extends it with context-dependent variants.
   information.
 - **Post-battle return:** Reverse dissolve back to the field (per
   [ui-design.md](ui-design.md)). Danger counter resets to 0 (per
-  [combat-formulas.md](combat-formulas.md) Encounter System).
+  [combat-formulas.md](combat-formulas.md) Encounter System). Boss
+  battles with post-battle cutscenes or location changes (room
+  destroyed, new area access) override the standard return — the
+  cutscene or location transition plays instead of the reverse dissolve.
 
 ### Region Boundary Banners — Plus Enhancement
 
@@ -227,7 +233,11 @@ changes through music and palette shifts alone, not text overlays.
 
 - **Text banner:** "Entering the Thornmere Wilds," "Entering Carradan
   Compact Territory," etc. Appears over gameplay, fades after
-  ~2 seconds.
+  ~2 seconds. If a fade-to-black (location entry) begins while a
+  banner is active, the fade immediately cancels the banner. Location
+  name banners and region banners do not stack — if a location name
+  banner triggers while a region banner is displaying, the region
+  banner is immediately cancelled and replaced.
 - **Music crossfade:** 3-second transition — outgoing biome music fades
   from 100% to 0% over 1.5 seconds, incoming biome music fades from
   0% to 100% over 1.5 seconds. Crossfade begins at the transition's
@@ -427,3 +437,65 @@ overworld, they appear at two types of locations:
   save points. Save points and Linewalk are separate systems — save
   points provide rest/save, Linewalk provides fast travel to
   settlements.
+
+---
+
+## Appendix: Implementation Notes
+
+Decisions deferred to the implementation phase. These require
+prototyping and tuning, not design specification.
+
+### Rendering
+
+- **Mode 7 perspective parameters** (viewing angle, horizon line
+  position, near/far scale factors) — tune during visual prototyping.
+  Reference: FF6's Mode 7 registers use affine transformation with
+  per-scanline scaling. Target: ground visible in the bottom ~70% of
+  the viewport, sky/horizon in the top ~30%.
+- **Movement speed value** — tune for feel. Target: ~2 tiles/second at
+  base resolution (comfortable walking pace on a 16x14 viewport). The
+  spec mandates uniform speed; the specific value is a tuning knob.
+- **Z-ordering** — suggested layer order (back to front): tilemap →
+  HDMA horizon gradient → location icons → party sprite → cloud/fog
+  layer (semi-transparent dithering — must not obscure party sprite)
+  → atmospheric particles → UI overlays (banners, map screen).
+- **Map wrapping** — hard edges, no wrapping. Camera stops at map
+  edges; ocean tiles fill the remaining viewport (per Section 1).
+  Unlike FF6, PoD's continent does not wrap.
+
+### Input & Collision
+
+- **Simultaneous directional input** — if two cardinal directions are
+  pressed simultaneously, use most-recently-pressed priority (standard
+  D-pad behavior).
+- **Conditional tile check timing** — on attempted movement (player
+  presses direction toward conditional tile; game checks flag; if
+  failed, full stop + message). Not proximity-based.
+- **Entry trigger activation** — automatic on step (walk onto the tile,
+  transition begins). No confirm button needed. Per FF6 convention.
+
+### Transitions
+
+- **Boss battle transition duration** — standard transition is ~0.5
+  seconds. Boss variant: ~1.0 seconds (2x standard). White flash
+  frame: 3 frames at 60fps.
+- **Map screen transition** — instant open/close (no fade or slide).
+  Per SNES menu convention.
+- **Region banner visual style** — same system as location name flash
+  per [ui-design.md](ui-design.md): pixel font, white text, dark navy
+  background inset tag.
+- **Story override transition** — atmospheric palette overrides
+  (Section 4) are instant at act boundary (triggered by story flag).
+  Structural tilemap changes (Section 5) use their own timing — some
+  are instant at flag (wall breach, fissures), others are progressive
+  across the Interlude (Pallor spread, canopy petrification).
+
+### Particles & Visual
+
+- **Particle density** — tune per biome during visual prototyping.
+  Starting targets: 8--12 particles on screen for light effects
+  (Valdris clouds, Thornmere spores), 20--30 for heavy effects
+  (Pallor static, alpine snow).
+- **Particle scrolling** — world-relative (scroll with camera), not
+  screen-fixed. Exception: Pallor Wastes edge static is screen-fixed
+  (a HUD-layer effect).

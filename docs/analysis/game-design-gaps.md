@@ -466,6 +466,7 @@ Now complete.
 - [x] Design changes applied: geography.md speed modifiers removed, zoom mechanic removed
 - [x] Structural overworld changes (8 act-based tilemap modifications, map screen updates, passability interaction rules)
 - [x] Save point specification (named rest sites, Pallor Wastes clearings, visual representation, rest/AC mechanics, Linewalk distinction)
+- [x] Implementation Notes appendix (Mode 7 parameters, movement speed target, z-ordering, input priority, transition durations, particle density)
 
 **Blocking:** ~~Overworld implementation~~ Now unblocks: 3.1 (Transport & Vehicle System — vehicle-conditional tiles)
 
