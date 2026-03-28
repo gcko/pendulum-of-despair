@@ -50,6 +50,10 @@ Menu-driven instant travel between Compact cities via NPC interaction.
   rail entry/exit points described in their maps.
 - **NPC:** Rail Conductor at each terminal provides the fast-travel
   dialogue interface
+- **First use:** During the Act II diplomatic mission, Sable directs
+  the party to the rail: "The rail terminal is faster. East side of
+  the canal district — talk to the conductor." First rail use is
+  story-motivated.
 
 ### Ley Stag Mount
 
@@ -57,9 +61,9 @@ Player-controlled overworld mount. A spirit-bonded stag infused with
 ley energy, provided by the Thornmere tribes.
 
 - **Source:** Gift from Thornmere spirit-speakers. Unlocked when the
-  party returns to Roothollow mid-Act II with Torren in the party
-  (after `torren_joined` and at least one Thornmere Wilds story
-  milestone). Brief bonding ritual cutscene.
+  party returns to Roothollow with Torren in the active party after
+  `duskfen_alliance` (Fenmother's Hollow cleared). Spirit-speaker
+  Vessa performs a brief bonding ritual at the heartwood shrine.
 - **Mechanic:** Summon from overworld party menu when outside.
   Miniaturized party sprite changes to mounted variant. Dismount at
   any time via menu. Automatic dismount at entry trigger tiles (walk
@@ -82,10 +86,11 @@ ley energy, provided by the Thornmere tribes.
   away. The ley energy here is wrong."
 - **Summon restriction:** When summoning in restricted terrain:
   "The Stag cannot navigate this terrain."
-- **Unlock trigger:** Return to Roothollow mid-Act II with Torren
-  (requires `torren_joined` flag + a Thornmere story milestone TBD;
-  the specific trigger event needs defining in
-  [events.md](events.md))
+- **Unlock trigger:** Requires `duskfen_alliance` flag + Torren in
+  active party at Roothollow. Flag set: `stag_bonded` (per
+  [events.md](events.md)). If Torren is benched, Vessa says: "The
+  forest spirits stir. They sense the Fenmother's passing. Bring
+  Torren — the spirits wish to honor the bond."
 - **Thematic note:** The Ley Stag creates a faction parallel — the
   Compact has rail infrastructure, the Wilds have the spirit-bonded
   Stag. Each faction's transport reflects its identity.
@@ -134,7 +139,7 @@ here for completeness.
 |-----------|-----|-------------------|---------------|
 | ~15% | Act I | On foot only | FF6 early game |
 | ~30% | Act II (first Compact city) | Rail fast-travel (Compact cities) | FF4 hovercraft |
-| ~35% | Act II (Roothollow return + Thornmere milestone) | Ley Stag mount (2x speed, no encounters) | FF6 chocobo |
+| ~35% | Act II (Roothollow, after Fenmother) | Ley Stag mount (2x speed, no encounters) | FF6 chocobo |
 | ~40% | Act II (Bellhaven) | Coastal ferry (Bellhaven ↔ Ashport) | FF6 Nikeah ferry |
 | ~45% | Act II (Maren Lv 20) | Linewalk spell (town teleport) | Earthbound Teleport |
 | ~55% | Interlude | Transport collapse (see Section 3) | FF6 WoB→WoR |
@@ -162,7 +167,7 @@ vehicle shortcuts.
 
 All four systems unlock as the world opens:
 1. Rail (first Compact city visit)
-2. Ley Stag (Roothollow return + Thornmere milestone, mid-Act II)
+2. Ley Stag (Roothollow after Fenmother, mid-Act II)
 3. Ferry (first Bellhaven visit)
 4. Linewalk (Maren Lv 20)
 

@@ -268,6 +268,7 @@ When Thornwatch falls during the Carradan assault in Act II, Halda's fate is unk
 
 **Dialogue hints:**
 - *"The crown sends me letters of concern. Heartfelt letters. Beautifully penned. I could paper my walls with royal concern."*
+- *"The Compact moves goods on iron tracks through the mountains. Fast, they say — if you trust Forgewright engineering."*
 - (Interlude) *"I lost the estate three weeks ago. Didn't even fight for it. What was I going to do — throw letters at them?"*
 
 **Story relevance:** Ties to world event
@@ -927,8 +928,10 @@ Vessa is cautious, protective of her tribe, and deeply suspicious of outsiders b
 **Dialogue hints:**
 - *"That thing you carry — the totems know it. They're shaking. Take it from my home before dawn, or I will put it in the river myself."*
 - *"You want the one who lives in the deep places. Maren. She'll understand what you've found. I understand enough to know it shouldn't be here."*
+- (After `torren_joined`) *"The great stags once carried the spirit-speakers between the groves. Few bond with them now."*
+- (After `duskfen_alliance`, Torren not in party) *"The forest spirits stir. They sense the Fenmother's passing. Bring Torren — the spirits wish to honor the bond."*
 
-**Story relevance:** Ties to main quest
+**Story relevance:** Ties to main quest, Ley Stag bonding ritual
 
 **Act presence:** Act I (Roothollow, warns about the Pendulum, directs party to Maren), Act II (supports the alliance during diplomatic mission, wary dialogue about the Pendulum's fate), Interlude (overseeing Roothollow's evacuation, weakened but resolute). Post-game: tending the heartwood shrine as the great tree heals.
 
