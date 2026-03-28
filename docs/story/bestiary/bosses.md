@@ -41,6 +41,7 @@
 | 28 | The Crystal Queen | Post | Dreamer's Fault F8 | 60 | 60,000 | Boss | 2 |
 | 29 | The Rootking | Post | Dreamer's Fault F12 | 72 | 80,000 | Boss | 2 |
 | 30 | The Iron Warden | Post | Dreamer's Fault F16 | 86 | 100,000 | Boss | 3 |
+| 31 | The Lingering | Post | Convergence Meadow | 95/100/105 | 100,000/140,000/175,000 | Boss | 3 |
 | * | Vaelith (Siege) | II | Valdris Siege | 150 | 999,999 | Boss | — |
 
 > **Notes:** Cael (#25) has two stat rows (Phase 1: Lv 36 / 45,000 HP;
@@ -48,8 +49,10 @@
 > based on a knowledge puzzle (3,000–12,000). The Architect (#22) and
 > Grey Cleaver Unbound (#23) are a two-stage fight with no break but are
 > separate bosses with different types, levels, and weaknesses.
-> Vaelith (Siege) is an unwinnable scripted-loss encounter, not counted
-> in the 30 combat bosses.
+> The Lingering (#31) has three phases (Lv 95/100/105, 100K/140K/175K
+> HP, total 415,000 HP) — the hardest fight in the game. Full HP/MP
+> restore between phases. Vaelith (Siege) is an unwinnable scripted-loss
+> encounter, not counted in the 31 combat bosses.
 
 ---
 
@@ -3638,6 +3641,233 @@ Scripted Events:
       reload). The party wakes in a safe location, establishing
       the Act III goal: find a way to pierce Vaelith's defenses.
 ```
+
+---
+
+### The Lingering (Super Boss)
+
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| *The Lingering (Phase 1)* | Boss | 95 | 100,000 | 500 | 240 | 154 | 250 | 148 | 100 | — | — | — | — | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
+| *The Lingering (Phase 2)* | Boss | 100 | 140,000 | 600 | 252 | 162 | 262 | 156 | 105 | — | — | — | — | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
+| *The Lingering (Phase 3)* | Boss | 105 | 175,000 | 700 | 264 | 170 | 283 | 163 | 110 | 5,000 | 30,000 | — | The Pallor's Last (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
+
+**Total HP across all phases: 415,000.** Full HP/MP restore between
+phases. The hardest fight in the game.
+
+**Access:** Requires `dreamers_fault_complete` flag (per
+[events.md](events.md)). Examine Cael's memorial sword at the
+Convergence meadow. Narrative setup in
+[sidequests.md](sidequests.md).
+
+**Modes:** Phase 1 has 2 (Memory, Awakened). Phase 2 has 2 (Grief,
+Fracture). Phase 3 has 2 (Release, Enraged).
+
+**AI Script:**
+
+```
+=== Super Boss Encounter: The Lingering ===
+
+Note: The Lingering is the last trace of the Pallor's presence in the
+      physical world. Wild magic drifts like fireflies. The grey static
+      that was the Pallor has condensed into one final manifestation —
+      not hostile, not peaceful, just lingering. It fights because it
+      has forgotten how to do anything else.
+
+      The fight has three phases with full HP/MP restore between them.
+      Each phase tests different party skills:
+        Phase 1 (Memory): Raw damage output and pattern recognition
+        Phase 2 (Grief): Adaptation and party-wide support
+        Phase 3 (Release): Burn-down under an enrage timer
+
+      The Lingering does not speak. It echoes. Fragments of voices
+      from every age it consumed drift through the battle — not
+      dialogue, atmosphere.
+
+PHASE 1: MEMORY (Lv 95, HP 100,000)
+  Note: The Lingering manifests as a shifting grey form that cycles
+        through echoes of civilizations it consumed. Each echo brings
+        a different attack pattern. The party must learn the pattern
+        cycle and respond correctly.
+
+  Mode: Memory (HP 100,000–50,001)
+    Note: Calm, cycling through echoes. Predictable 4-turn rotation.
+
+    Priority:
+      1. turn_counter % 4 == 1 → Stone Echo (party_wide, 800-900
+         physical damage; the form solidifies into ancient stone
+         architecture; "The stone remembers building.")
+      2. turn_counter % 4 == 2 → Crystal Echo (single_target highest
+         MAG, 1,000-1,200 Ley magic damage + Silence 50%; the form
+         refracts into prisms; "Light bends. The crystal age hums.")
+      3. turn_counter % 4 == 3 → Root Echo (party_wide, 600-700
+         Earth magic damage + Slow 40%; vines erupt from the ground;
+         "Growth without purpose. The green age chokes.")
+      4. turn_counter % 4 == 0 → Iron Echo (single_target lowest DEF,
+         1,200-1,400 physical damage x2 hits; mechanical arms extend;
+         "The machine does not forget its function.")
+      5. Default → Grey Pulse (party_wide, 500-600 Void magic damage;
+         "Static. The space between echoes.")
+
+    Counters:
+      On Spirit-element attack → Pallor Recoil (single_target
+        attacker, 400-500 Void damage; "It flinches. Spirit energy
+        burns the last thing that fears it.")
+
+  Mode: Awakened (HP 50,000–0)
+    Note: At 50% HP, the cycling stops. The Lingering becomes aware
+          of the party as threats, not echoes. Attack power increases.
+
+    Priority:
+      1. turn_counter % 5 == 0 → Accumulated Memory (party_wide,
+         1,200-1,400 Void magic damage; every echo fires at once;
+         "Every age. Every loss. All at once.")
+      2. turn_counter % 3 == 0 → Despair Residue (party_wide, inflicts
+         Despair 60%; grey static washes over the party; "The grief
+         of eight hundred years settles like dust.")
+      3. party_avg_hp > 60% → Focused Echo (single_target highest
+         threat, 1,500-1,700 physical damage; "It remembers YOU now.")
+      4. active_party_despair > 0 → Pallor Feed (self, heals 5,000 HP;
+         "Despair sustains it. Always has.")
+      5. Default → Grey Pulse (party_wide, 700-800 Void magic damage)
+
+    Counters: Same as Memory mode
+
+--- Phase Transition ---
+The Lingering collapses into grey static. The meadow is briefly
+quiet. Fireflies dim. Then it reconstitutes — smaller, denser,
+more focused. Full party HP/MP/status restore.
+
+PHASE 2: GRIEF (Lv 100, HP 140,000)
+  Note: The Lingering fractures into five smaller manifestations,
+        each targeting a different party member with attacks based
+        on that member's Pallor trial. The party must defeat their
+        own echoes while supporting allies.
+
+  Mode: Grief (HP 140,000–70,001)
+    Note: Five echoes orbit the central form. Each echo attacks the
+          party member whose trial it reflects. The central form
+          acts independently. Echoes have 5,000 HP each and respawn
+          after 3 turns if destroyed. Destroying all 5 simultaneously
+          stuns the central form for 2 turns (the intended strategy).
+
+    Echoes (5, each 5,000 HP, respawn in 3 turns):
+      - Crown Echo → targets Edren (physical, +ATK debuff)
+      - Forge Echo → targets Lira (fire magic, +Silence)
+      - Grove Echo → targets Torren (earth magic, +Slow)
+      - Mile Echo → targets Sable (physical x3 weak hits, +Poison)
+      - Stacks Echo → targets Maren (Void magic, +MP drain)
+
+    Priority (central form):
+      1. all_echoes_alive → Resonant Grief (party_wide, 1,000-1,200
+         Void magic damage; echoes amplify the central form;
+         "Five griefs become one wound.")
+      2. echoes_alive < 3 → Desperate Reform (self, respawns 2 dead
+         echoes at 5,000 HP; "It pulls itself together. Barely.")
+      3. turn_counter % 4 == 0 → Despair Wave (party_wide, inflicts
+         Despair 70% + ATK/MAG -15% for 3 turns; "Remember what you
+         lost. All of you.")
+      4. party_member_count < 4 → Isolate (single_target lowest HP,
+         1,800-2,000 Void magic damage; targets fallen members'
+         surviving allies; "One less voice.")
+      5. Default → Void Lash (single_target highest threat, 1,400-1,600
+         Void magic damage)
+
+  Mode: Fracture (HP 70,000–0)
+    Note: At 50%, echoes stop respawning. The central form absorbs
+          their energy permanently. Becomes faster and more erratic.
+
+    Priority:
+      1. turn_counter % 3 == 0 → Shattered Memory (party_wide,
+         1,500-1,800 Void + physical mixed damage; "The edges of
+         every age, broken together.")
+      2. party_avg_hp > 50% → Grief Spike (single_target random,
+         2,000-2,400 physical damage; a concentrated spear of grey
+         static; "One clean strike. The Pallor was always efficient.")
+      3. turn_counter % 5 == 0 → Mass Despair (party_wide, inflicts
+         Despair 80%; "It does not want to hurt you. It has forgotten
+         how not to.")
+      4. Default → Void Lash (single_target highest threat, 1,600-1,800
+         Void magic damage)
+
+    Counters:
+      On healing spell → Grief Echo (party_wide, 400-500 Void damage;
+        "Healing hurts it. A reminder of what it lost.")
+
+--- Phase Transition ---
+The Lingering collapses again. Longer pause. The fireflies go dark.
+When it reforms, it is translucent — barely there. Burning through
+its own existence. Full party HP/MP/status restore.
+
+PHASE 3: RELEASE (Lv 105, HP 175,000)
+  Note: The Lingering is unstable and desperate. Its attacks are
+        random and devastating, but it is consuming itself. An
+        enrage timer (20 turns) creates urgency — after turn 20,
+        it detonates for 9,999 damage to all (party wipe).
+
+  Mode: Release (HP 175,000–87,501)
+    Note: Unstable but coherent. Random targeting. High damage.
+          Enrage counter begins at turn 1.
+
+    Priority:
+      1. turn_counter == 20 → Final Collapse (party_wide, 9,999
+         fixed damage; "It could not hold. Neither can you." This
+         is the enrage — functionally a party wipe.)
+      2. turn_counter % 6 == 0 → Void Detonation (party_wide,
+         2,000-2,400 Void magic damage; the form destabilizes and
+         releases stored energy; "The Void exhales.")
+      3. turn_counter % 4 == 0 → Age Barrage (3x random_target,
+         1,200-1,500 physical damage each; rapid-fire echoes of
+         every age; "Stone. Crystal. Root. Iron. Grey.")
+      4. turn_counter % 3 == 0 → Despair Tide (party_wide, inflicts
+         Despair 90% + Silence 50%; "The wave comes. It always
+         comes.")
+      5. party_avg_hp < 40% → Mercy Lapse (self, skips turn;
+         "It hesitates. A fragment of what it was before Despair.")
+      6. Default → Void Storm (single_target random, 1,800-2,200
+         Void magic damage; "Random. Desperate. Uncontrolled.")
+
+  Mode: Enraged (HP 87,500–0)
+    Note: At 50%, the Lingering's form starts visibly dissolving.
+          Damage output increases. The enrage timer continues.
+
+    Priority:
+      1. turn_counter == 20 → Final Collapse (see above)
+      2. turn_counter % 3 == 0 → Void Detonation (party_wide,
+         2,500-3,000 Void magic damage; "Faster now. Less control.")
+      3. turn_counter % 2 == 0 → Annihilation Echo (single_target
+         highest HP, 2,500-3,000 physical + Void mixed damage;
+         "Everything it consumed. One strike.")
+      4. party_member_despair > 2 → Pallor Feast (self, heals
+         10,000 HP; "It feeds. The last meal.")
+      5. Default → Void Storm (single_target random, 2,200-2,600
+         Void magic damage; "The static screams.")
+
+    Counters:
+      On Spirit-element attack → no counter (it is too weak to
+        retaliate against its weakness)
+
+--- Defeat ---
+The Lingering does not die with a scream or an explosion. It dims.
+The grey static frays at the edges. A sound emerges — not words,
+but the accumulated grief of every age, compressed into a single
+exhale. Then it is gone. The fireflies return. The meadow is quiet.
+```
+
+**Design Note:** The Lingering is the hardest fight in the game,
+intended for parties at Lv 80--100+. The 20-turn enrage on Phase 3
+forces aggressive play — cautious attrition won't work. Phase 1 tests
+pattern recognition (the 4-turn echo cycle). Phase 2 tests party
+management (echo targeting + central form priority). Phase 3 tests
+pure DPS under pressure. Spirit-element attacks are the primary
+weakness across all phases. The Pallor Feed / Pallor Feast abilities
+punish players who allow Despair to linger — Despair immunity items
+(Wanderer's Gift, Null Crystal, Dreamer's Mark) are strongly
+recommended. Gold and Exp are awarded only on Phase 3 defeat.
+
+---
+
+### Vaelith, the Ashen Shepherd (Siege — Scripted Loss)
 
 **Design Note:** Vaelith (Siege) is a scripted loss designed to feel
 genuinely hopeless without feeling unfair. The player can take actions

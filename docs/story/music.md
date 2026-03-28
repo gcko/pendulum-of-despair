@@ -252,7 +252,7 @@ variants needed. Multi-visit towns show separate rows per act state.
 |----------|------|------|-------------|
 | Three Roads Inn | I-II | Neutral / Hopeful | Acoustic warmth. Neutral palette. Traveler's rest — the one place all factions mingle. Gentle, inviting. |
 | Maren's Refuge | Interlude | Mysterious / Ancient | Ancient palette. Maren's glass-tone motif as lead. Where the cycle's history is revealed. |
-| The Pendulum (tavern) | Epilogue | Hopeful | Sable's pizzicato motif as lead. Warm, acoustic, simple. Every character motif appears as a brief quote — patrons coming and going. Final piece of music in the game. |
+| The Pendulum (tavern) | Epilogue + Post-game | Hopeful | Sable's pizzicato motif as lead. Warm, acoustic, simple. Every character motif appears as a brief quote — patrons coming and going. Last new track introduced in the game. Plays every time the player is in the tavern (epilogue and all post-game visits) — it is the hub's location theme, not a one-time narrative cue. |
 
 ## Dungeon Themes
 
@@ -348,6 +348,24 @@ Vaelith has dissolved before this point and is absent.
 | Phase 1: Cael (physical) | Full orchestral + corrupted Cael motif | Cael's motif as lead, consumed by Pallor counterpoint. Tragic — you're fighting your friend. Boss battle intensity with an emotional core. |
 | Phase 2: Machine activation | Carradan at maximum | Mechanical urgency. Industrial palette pushed to extremes. Lira's motif fighting through — she's the key to this phase. |
 | Phase 3: Pallor incarnation | All palettes in conflict → resolution | All six party member motifs playing simultaneously in dissonance. As party holds, motifs gradually synchronize. Lira forges the weapon: her motif + Cael's clean motif harmonize. Victory = full orchestral resolution of all six motifs in unison — the only moment in the game where every character theme plays together in harmony. |
+
+### Boss Rush Mode (Post-Game)
+
+The boss rush (per [postgame.md](postgame.md)) reuses existing battle
+music. The nostalgia IS the point — hearing the same boss theme at
+post-game power that played during the original fight.
+
+| Element | Music Treatment |
+|---------|----------------|
+| Each boss fight | The original Boss Battle theme that played during that fight. Standard bosses use the full-orchestral Boss Battle theme. Vaelith uses the Vaelith Encounter progressive-takeover treatment. Cael and Pallor Incarnate use their Final Battle phase themes. |
+| Between fights | 2--3 seconds of silence (not true silence — ambient tavern hum underneath, since the boss rush is accessed from The Pendulum). Then the next fight's music begins. |
+| Tier completion | Victory Fanfare (same as normal boss victory). Tavern theme resumes after the reward screen. |
+| Tier forfeiture | Music stops. Fade to tavern theme. |
+
+**No new compositions required.** The boss rush reuses the existing
+Boss Battle, Vaelith Encounter, and Final Battle tracks.
+
+---
 
 ## Corruption Evolution System
 
