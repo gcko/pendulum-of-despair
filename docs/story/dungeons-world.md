@@ -4101,7 +4101,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Location:** Along the Wildwood Trail between Ironmouth and Roothollow.
 **Acts:** I
-**Size:** 20x15 tiles
+**Size:** 20x15 tiles (multi-screen, camera follows party)
 
 ```
 ####E##############
@@ -4137,7 +4137,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Location:** In the marshland near Duskfen, off the main path.
 **Acts:** II
-**Size:** 20x15 tiles
+**Size:** 20x15 tiles (multi-screen, camera follows party)
 
 ```
 ####E##############
@@ -4173,7 +4173,7 @@ Small cave systems along travel routes. These are single-room or two-room areas 
 
 **Location:** Along the Highland Descent between Highcairn and Valdris Crown.
 **Acts:** Interlude
-**Size:** 20x15 tiles
+**Size:** 20x15 tiles (multi-screen, camera follows party)
 
 ```
 ####E##############

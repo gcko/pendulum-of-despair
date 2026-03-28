@@ -147,7 +147,7 @@ Valdris occupies the northwest quadrant of the continent: a region of limestone 
 
 **Terrain Effects on Gameplay:**
 
-- **Highland paths:** Random encounter rate unchanged but enemy types shift to highland beasts (ice wolves, stone elementals).
+- **Highland paths:** Encounter rate uses Mountains zone (increment 252). Enemy types shift to highland beasts (ice wolves, stone elementals).
 - **Farmland:** Lowest encounter rate in the game -- the Aelhart Valley is genuinely safe in Act I.
 - **Old-growth forest:** Encounter rate moderate. Visibility reduced -- enemies can ambush the party (back-attack chance increased).
 - **Winter access (Highcairn):** During the Interlude, the overworld highland route to Highcairn is permanently snowbound (conditional passability block per [overworld.md](overworld.md)). Highcairn is instead accessed via an interior passage (dungeon-like) with cold-themed encounters and waypoint rest stops.
@@ -481,7 +481,7 @@ Coordinates are given as (x, y) where (0, 0) is the top-left (northwest) corner.
 | Region | Top-Left | Bottom-Right | Notes |
 |--------|----------|-------------|-------|
 | **Valdris Territory** | (10, 4) | (85, 32) | Includes Frostcap Peaks at northern edge |
-| **Thornmere Wilds** | (8, 28) | (100, 62) | Overlaps with Valdris/Compact borders |
+| **Thornmere Wilds** | (8, 28) | (100, 62) | Overlaps with Valdris/Compact borders; in overlap zones, the Thornmere region takes priority (encounter tables, banner display, atmospheric effects) |
 | **Carradan Compact** | (20, 55) | (115, 90) | Extends to southern coast |
 | **Ocean (west/Gulf of Sighs)** | (0, 0) | (12, 96) | Western coastline |
 | **Ocean (east/Sea of Echoes)** | (82, 0) | (128, 45) | Eastern coastline |
@@ -538,6 +538,7 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Marshland** | High | 380 | ~16 | Duskfen system |
 | **Mountains** | Moderate | 252 | ~20 | Frostcap foothills, Broken Hills |
 | **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
+| **Coastal** | Low | 64 | ~40 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
 | **Pallor Wastes (Act III)** | Very high | 700 | ~10 | 10-mile radius around Convergence |
 | **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |

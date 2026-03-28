@@ -458,7 +458,7 @@ Now complete.
 **What's Needed:**
 - [x] Tile types with passability rules — 5 categories (passable, impassable, entry trigger, conditional, event trigger); vehicle-conditional tiles deferred to Gap 3.1
 - [x] Movement speed per terrain type — resolved: uniform on-foot speed (no per-terrain modifiers), per SNES convention; 7 speed tiers removed from geography.md
-- [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 11 terrain zones); overworld.md references, does not duplicate
+- [x] Terrain encounter rate modifiers — already defined in geography.md Section 5 (danger counter increments per 12 terrain zones); overworld.md references, does not duplicate
 - [x] Transition between overworld and locations — fade to black (overworld → location), seamless (within-location), FF6 battle transitions (Mode 7 zoom + mosaic + distinct boss)
 - [x] Weather/time-of-day effects — FF6 Plus: location-fixed atmospherics + 6 story-triggered overrides; no day/night gameplay cycle (biomes.md visual palette shifts are cosmetic only)
 - [x] Overworld presentation (Mode 7-style perspective, miniaturized sprites, HDMA horizon gradient)

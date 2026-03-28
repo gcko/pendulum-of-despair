@@ -133,7 +133,7 @@ Five tile categories govern overworld movement:
 - **Encounter zones.** Each passable tile belongs to an encounter zone
   that determines danger counter increment and formation tables. See
   [geography.md](geography.md) Encounter Zones section for the full
-  table (11 zone types; encounter-active zones range from Farmland at
+  table (12 zone types; encounter-active zones range from Farmland at
   48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
   have 0 increment). Spells and equipment can modify encounter rate
   (e.g., Veilstep x0.25 per [magic.md](magic.md), Ward Talisman x0.5
