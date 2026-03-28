@@ -658,17 +658,19 @@ final_increment = floor(base_increment × act_scale × accessory_mod × location
 
 **Encounter rate modifiers:**
 
-| Source | Modifier | Scope |
-|--------|----------|-------|
-| Ward Talisman (accessory) | ×0.5 | All areas |
-| Infiltrator's Cloak (accessory) | ×0.5 | All areas |
-| Lure Talisman (accessory) | ×2.0 | All areas |
-| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels, Corrund Sewers |
-| Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only |
+| Source | Modifier | Scope | Duration |
+|--------|----------|-------|----------|
+| Ward Talisman (accessory) | ×0.5 | All areas | Permanent (while equipped) |
+| Infiltrator's Cloak (accessory) | ×0.5 | All areas | Permanent (while equipped) |
+| Lure Talisman (accessory) | ×2.0 | All areas | Permanent (while equipped) |
+| Veilstep (spell, Torren Lv 10) | ×0.25 | All areas | 120 seconds or 200 steps |
+| Tunnel Map (key item) | ×0.5 | Bellhaven Tunnels, Corrund Sewers | Permanent (while held) |
+| Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only | Quest-dependent |
 
 Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak
 provide the same effect (×0.5) and do not stack with each other (same
-accessory slot).
+accessory slot). Veilstep stacks with accessory modifiers (e.g.,
+Veilstep + Ward Talisman = ×0.125, nearly eliminating encounters).
 
 ### Battle Formations
 
