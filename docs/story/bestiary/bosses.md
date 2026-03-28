@@ -1579,9 +1579,9 @@ Scripted Events:
       seen. The catalogue was never meant to be read with compassion.
       It shatters. Fragments of pages drift down like snow."
     - boss.hp = 0 (defeat)
-    - ability_unlock: Maren learns Pallor Sight (see corruption
-      levels, reveal hidden weaknesses in Vaelith fight and
-      Convergence)
+    - ability_unlock: Maren learns Pallor Sight (reveals all enemy
+      weaknesses, HP, immunities; Pallor-type enemies also show
+      regen rates and phase thresholds)
 
   Turn 8+ (if no choice made, repeating every 3 turns):
     - dialogue: The Index: "Decide. The weight grows."
