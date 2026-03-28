@@ -2607,8 +2607,8 @@ This is representative. Each floor follows a similar compact layout with 2-3 enc
 | Facet Drone | 5–8 | Crystalline automaton, splits when hit with magic (Construct, Swarm) |
 | Prism Stalker | 5–8 | Crystal predator, invisible in light (Beast, Glass cannon) |
 | Resonance Shade | 5–8 | Sound given form, inflicts Silence (Spirit, Caster) |
-| Root Weaver | 9–12 | Living vine construct, entangles (Construct, Balanced) |
-| Bough Knight | 9–12 | Armored treant, heavy physical (Construct, Tank) |
+| Root Weaver | 9–12 | Living vine construct, entangles (Elemental, Tank) |
+| Bough Knight | 9–12 | Armored wood warrior, shield and counter (Humanoid, Balanced) |
 | Canopy Lurker | 9–12 | Ambush predator, drops from ceiling (Beast, Glass cannon) |
 | Heartwood Spirit | 9–12 | Forest ghost, heals allies (Spirit, Caster) |
 | Iron Automaton | 13–16 | Mechanical soldier, heavy armor (Construct, Tank) |

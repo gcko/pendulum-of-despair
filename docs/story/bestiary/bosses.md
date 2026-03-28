@@ -3650,7 +3650,7 @@ Scripted Events:
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *The Lingering (Phase 1)* | Boss | 95 | 100,000 | 500 | 240 | 154 | 250 | 148 | 100 | — | — | — | — | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
 | *The Lingering (Phase 2)* | Boss | 100 | 140,000 | 600 | 252 | 162 | 262 | 156 | 105 | — | — | — | — | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
-| *The Lingering (Phase 3)* | Boss | 105 | 175,000 | 700 | 264 | 170 | 283 | 163 | 110 | 5,000 | 30,000 | — | The Pallor's Last (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
+| *The Lingering (Phase 3)* | Boss | 105 | 175,000 | 700 | 264 | 170 | 275 | 163 | 110 | 5,000 | 30,000 | — | The Pallor's Last (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion, Despair | Convergence Meadow |
 
 **Total HP across all phases: 415,000.** Full HP/MP restore between
 phases. The hardest fight in the game.
@@ -3745,13 +3745,15 @@ PHASE 2: GRIEF (Lv 100, HP 140,000)
         own echoes while supporting allies.
 
   Mode: Grief (HP 140,000–70,001)
-    Note: Five echoes orbit the central form. Each echo attacks the
-          party member whose trial it reflects. The central form
-          acts independently. Echoes have 5,000 HP each and respawn
-          after 3 turns if destroyed. Destroying all 5 simultaneously
-          stuns the central form for 2 turns (the intended strategy).
+    Note: Echoes orbit the central form, one per active party member
+          (4 echoes, not 5 — the absent member's echo does not spawn).
+          Each echo attacks the party member whose trial it reflects.
+          The central form acts independently. Echoes have 5,000 HP
+          each and respawn after 3 turns if destroyed. Destroying all
+          active echoes simultaneously stuns the central form for 2
+          turns (the intended strategy).
 
-    Echoes (5, each 5,000 HP, respawn in 3 turns):
+    Echo pool (spawns only for active party members):
       - Crown Echo → targets Edren (physical, +ATK debuff)
       - Forge Echo → targets Lira (fire magic, +Silence)
       - Grove Echo → targets Torren (earth magic, +Slow)
@@ -3775,7 +3777,9 @@ PHASE 2: GRIEF (Lv 100, HP 140,000)
 
   Mode: Fracture (HP 70,000–0)
     Note: At 50%, echoes stop respawning. The central form absorbs
-          their energy permanently. Becomes faster and more erratic.
+          their remaining energy permanently. Becomes faster and more
+          erratic. The number of absorbed echoes equals the active
+          party size (always 4).
 
     Priority:
       1. turn_counter % 3 == 0 → Shattered Memory (party_wide,

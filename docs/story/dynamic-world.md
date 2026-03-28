@@ -650,7 +650,10 @@ memorial sword.
 [events.md](events.md) § 2b. ~3 minutes. Non-interactive after
 initiation.
 
-**Scene:** The party gathers at the Convergence meadow. Torren kneels
+**Scene:** All five surviving party members assemble automatically
+regardless of current active party composition (same as epilogue
+scenes — this is a narrative moment, not a gameplay moment).
+Torren kneels
 and places the seed in the scarred earth beside Cael's sword. Maren
 steps forward and channels ley energy — her hands glow with the same
 blue-amber light as the ley lines, guiding it into the soil. The

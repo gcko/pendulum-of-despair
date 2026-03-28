@@ -110,9 +110,9 @@ Fault echo bosses, The Lingering) are excluded.
 | 7 | Ley Titan | 28 | 18,000 | 3 phases |
 | 8 | Archive Keeper | 32 | 12,000 | Max HP (no knowledge puzzle) |
 | 9 | Wellspring Guardian | 36 | 28,000 | 3 phases |
-| 10 | The Architect → Grey Cleaver Unbound | 34/36 | 20,000 + 25,000 | Continuous two-stage fight, no mid-fight restore |
+| 10 | The Architect → Grey Cleaver Unbound | 34/36 | Stage 1: 20,000; Stage 2: 25,000 | Continuous two-stage fight, no mid-fight restore |
 | 11 | Pallor Echo | 34 | 5,000 | 1 phase |
-| 12 | Cael, Knight of Despair | 36/38 | 45,000 + 35,000 | Continuous two-phase fight, no mid-fight restore |
+| 12 | Cael, Knight of Despair | 36/38 | Phase 1: 45,000; Phase 2: 35,000 | Continuous two-phase fight, no mid-fight restore |
 | 13 | The Pallor Incarnate | 40 | 70,000 | 1 phase |
 
 **Special handling:**
@@ -212,7 +212,7 @@ you've seen?"
   (61%)"
 - No pop-ups or notifications at 100%. The player checks when they
   want to.
-- **Aggregate only** — no per-item checklists. The player sees "142/232"
+- **Aggregate only** — no per-item checklists. The player sees "142/234"
   but not which specific enemies are missing. Finding the last few is
   part of the completionist challenge.
 

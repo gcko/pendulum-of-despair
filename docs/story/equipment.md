@@ -686,11 +686,11 @@ exactly.
 | Item | Slot | Boss | Act | Bestiary File |
 |------|------|------|-----|---------------|
 | Colossus Shard | Accessory | Ley Colossus | II | bosses.md |
-| Drayce's Failsafe Core | Accessory | Forge Warden | II | bosses.md |
-| Warden's Binding | Accessory | Undying Warden | Int | bosses.md |
-| Kole's Epaulettes | Armor (Heavy) | General Kole | Int | bosses.md |
-| Crown Shard | Accessory | Crowned Hollow | III | bosses.md |
-| Unfinished Ring | Accessory | Perfect Machine | III | bosses.md |
+| Drayce's Failsafe Core | Accessory | The Forge Warden | II | bosses.md |
+| Warden's Binding | Accessory | The Undying Warden | Int | bosses.md |
+| Kole's Epaulettes | Armor (Heavy) | General Vassar Kole | Int | bosses.md |
+| Crown Shard | Accessory | The Crowned Hollow | III | bosses.md |
+| Unfinished Ring | Accessory | The Perfect Machine | III | bosses.md |
 | Ashen Scholar's Tome | Accessory | Vaelith | III | bosses.md / act-iii.md |
 | Titan's Core | Accessory | Ley Titan | III | bosses.md |
 | Nexus Crest | Accessory | Wellspring Guardian | III | bosses.md |
@@ -698,10 +698,10 @@ exactly.
 | Grey Cleaver | Weapon (Torren) | Grey Cleaver Unbound | III | bosses.md |
 | Cael's Knight Crest | Accessory | Cael Phase 1 | III | bosses.md |
 | Cael's Memory | Accessory | Pallor Echo | III | bosses.md |
-| Scholar's Codex | Accessory | First Scholar | Post | bosses.md |
-| Queen's Facet | Accessory | Crystal Queen | Post | bosses.md |
-| Root Crown | Armor (Head) | Rootking | Post | bosses.md |
-| Warden's Core | Accessory | Iron Warden | Post | bosses.md |
+| Scholar's Codex | Accessory | The First Scholar | Post | bosses.md |
+| Queen's Facet | Accessory | The Crystal Queen | Post | bosses.md |
+| Root Crown | Armor (Head) | The Rootking | Post | bosses.md |
+| Warden's Core | Accessory | The Iron Warden | Post | bosses.md |
 | Dreamer's Crest | Accessory | Cael's Echo (non-combat) | Post | optional.md |
 | The Pallor's Last | Accessory | The Lingering (super boss) | Post | bosses.md |
 | Dreamer's Mark | Accessory | Dreamer's Fault Floor 20 completion | Post | optional.md |
