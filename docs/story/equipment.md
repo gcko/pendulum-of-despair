@@ -527,7 +527,9 @@ content. Not sold in any shop.
 | Queen's Facet | Reflects 25% magic damage passively | Crystal Queen | Post |
 | Warden's Core | Counter-attack on physical hit | Iron Warden | Post |
 | Keeper's Resolve | +15% Despair resistance, +5 MDEF | The Grey Keeper drop (Oasis C) | III |
-| Dreamer's Crest | +30 all stats (best accessory in game) | Cael's Echo (non-combat) | Post |
+| The Pallor's Last | Massive stat boosts, 25% all incoming damage reduction | The Lingering (super boss) | Post |
+| Dreamer's Mark | Full Despair status immunity | Dreamer's Fault Floor 20 completion | Post |
+| Dreamer's Crest | +30 all stats | Cael's Echo (non-combat) | Post |
 | Warrior's Memento | ATK +10 | Boss Rush Tier 1 | Post |
 | Survivor's Memento | DEF +10, MDEF +10 | Boss Rush Tier 2 | Post |
 | Pendulum's Memento | All stats +5 | Boss Rush Tier 3 | Post |
