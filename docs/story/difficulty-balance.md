@@ -438,7 +438,9 @@ Per [events.md](events.md) § Faint and Fast Reload:
   "age" (5 floors each). This is the "hard mode" for completionists.
 - **Superbosses:** Optional encounters harder than the final boss.
   The Lingering (3-phase, 415,000 total HP) is the hardest fight
-  in the game. Rewards are best-in-slot equipment, not cosmetic.
+  in the game — genuinely challenging at Lv 80--100 (speed-clearers),
+  comfortable at Lv 120+ (thorough players who fight everything in
+  Dreamer's Fault). Rewards are best-in-slot equipment, not cosmetic.
 - **Boss Rush:** 3-tier gauntlet replaying all mandatory story bosses
   at original stats. Post-game characters are overpowered — this is
   the victory lap. Consumables are standardized per tier; player

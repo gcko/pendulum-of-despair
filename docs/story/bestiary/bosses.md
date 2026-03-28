@@ -3555,8 +3555,9 @@ Scripted Events:
       Iron Warden is the true final boss of Pendulum of Despair.
 ```
 
-**Design Note:** The Iron Warden is the hardest fight in the game and
-it earns that status through mechanical complexity, not stat inflation
+**Design Note:** The Iron Warden is the hardest fight in Dreamer's
+Fault and it earns that status through mechanical complexity, not stat
+inflation
 (though its stats are the highest of any boss). The Counter Defense
 system is the entire fight: physical attacks are countered, magic
 attacks generate an absorb shield. The intended rhythm — physical,
