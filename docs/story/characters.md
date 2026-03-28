@@ -100,6 +100,8 @@ Crystal system.
 
 **Arc:** Torren's arc is about endurance. During the Interlude, he nearly kills himself holding back the Pallor's corruption in the Wilds. The party's arrival reminds him he doesn't have to carry it alone. His Pallor trial in Act III — the spirits of the Wilds accusing him of failure — is overcome by accepting that protection doesn't mean preventing all harm.
 
+The Ley Stag bond is a tangible expression of Torren's trust arc. After the Fenmother's defeat, the spirit-speakers offer the party a ley-bonded stag — a gift of the forest to those who proved they would fight for it. When the Interlude shatters the ley lines, the Stag dissolves — and with it, a piece of Torren's connection to the Wilds. Its return in Act III, grey-tinged but faithful, mirrors Torren's own damaged-but-enduring resolve. See [transport.md](transport.md) for Stag mechanics.
+
 **Fate:** Survives. Returns to the spirit-speakers. The ley line nexus the party stabilized becomes the meeting ground for all three factions.
 
 ### Sable
