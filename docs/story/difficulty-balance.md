@@ -340,6 +340,10 @@ Per [combat-formulas.md](combat-formulas.md):
 - Smokeveil (Sable, 4 MP): 100% flee (non-boss)
 - Ward Talisman: ×0.5 encounter rate (1,500g accessory)
 - Infiltrator's Cloak: ×0.5 encounter rate (treasure, Interlude)
+- Ley Stag mount: 0 encounter increment while mounted (Act II onward
+  per [transport.md](transport.md)); most powerful encounter avoidance
+  in the game but restricted from dense Thornmere, water, mountains,
+  towns, and Pallor Wastes
 - Boss fights: flee disabled entirely (no ambiguity)
 
 ### 5.4 No Missable Content
@@ -516,6 +520,11 @@ For each new town/act transition:
    party with new gear without grinding.
 4. **Verify consumable budget:** enough gold left for dungeon
    supplies after equipment.
+5. **Verify transport budget (Act II):** rail (100g/trip) and ferry
+   (200g/crossing) per [transport.md](transport.md) should not compete
+   significantly with equipment spending. Estimate 15--25 rail trips
+   and 4--8 ferry crossings for an explorer player (~2,300--4,100g,
+   8--15% of Act II income).
 
 See [economy.md](economy.md) § Gold Pacing Targets for per-act
 income and expense targets.
