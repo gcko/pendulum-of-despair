@@ -51,12 +51,12 @@ overworld.
   Location icons (towns, dungeons, landmarks) are miniaturized
   representations — not to scale. Entering a location triggers scale
   shift to full-size interior maps.
-- **HDMA-style horizon gradient.** Terrain fades toward a sky color at
-  the top of the viewport, creating atmospheric perspective. The
-  gradient target color is derived from each biome's sky palette entry
-  in [biomes.md](biomes.md) (e.g., Valdris highland sky, Carradan
-  smog-filtered amber, Thornmere canopy-filtered green, Pallor
-  featureless grey).
+- **HDMA-style horizon gradient.** Terrain fades toward a sky/atmosphere
+  color at the top of the viewport, creating atmospheric perspective.
+  The gradient target color is derived from each biome's palette in
+  [biomes.md](biomes.md) — sky entries where available (e.g., Valdris
+  `#88C8E8` highland sky), or dominant atmosphere color for canopy-
+  covered biomes (e.g., Thornmere filtered light, Pallor grey).
 - **Fixed camera.** Character-centered scrolling. No player-controlled
   zoom or camera rotation. Camera stops at map edges — ocean tiles fill
   the remaining viewport.
@@ -74,7 +74,7 @@ navigation tool.
 - **Style:** Static illustrated map with parchment aesthetic,
   consistent with SNES-era game manual fold-out maps
 - **Location discovery:** Locations appear on the map after first visit,
-  labeled with icons by type (town, dungeon, landmark, forge).
+  labeled with icons by type (town, dungeon, landmark).
   Undiscovered areas show terrain but no location labels — the
   geography is known, specific sites are not
 - **Current position:** Blinking dot marker shows the party's current
@@ -126,8 +126,8 @@ Five tile categories govern overworld movement:
 - **Encounter zones.** Each passable tile belongs to an encounter zone
   that determines danger counter increment and formation tables. See
   [geography.md](geography.md) Encounter Zones section for the full
-  table (11 zone types; encounter-active zones range from Roads at 96
-  increment to Pallor Wastes at 700; Sacred sites and Urban interior
+  table (11 zone types; encounter-active zones range from Farmland at
+  48 increment to Pallor Wastes at 700; Sacred sites and Urban interior
   have 0 increment).
 - **Conditional tile messages.** When the player attempts to enter a
   conditional tile without meeting its requirement, a contextual
@@ -157,9 +157,9 @@ shifts to full-size interior maps via a fade transition:
 
 1. Party sprite walks onto an entry trigger tile
 2. Location name banner appears briefly (triggered at 3-tile approach
-   radius per [geography.md](geography.md) Section 5)
-3. Screen brightness ramps down (~0.5 seconds, 16 linear steps from
-   full to black)
+   radius per [geography.md](geography.md) Camera Behavior section)
+3. Screen brightness ramps down (~0.3 seconds per
+   [ui-design.md](ui-design.md))
 4. Interior map loads during the black screen
 5. Brightness ramps back up; party appears at the location entrance
    at full-size scale
@@ -181,6 +181,8 @@ continuity:
 Battle transitions are visual-only — they do not encode tactical
 information. Battle advantage (preemptive, normal, or back-attack) is
 revealed when the battle screen loads, not during the transition.
+[ui-design.md](ui-design.md) defines the base mosaic dissolve; this
+section extends it with context-dependent variants.
 
 - **Overworld encounters:** Mode 7 zoom-into-ground. The camera rapidly
   scales into the terrain, screen flash, cut to the battle screen. Per
@@ -268,10 +270,10 @@ layer on top.
 
 | Trigger | Change | Areas Affected |
 |---------|--------|----------------|
-| Act II tensions | Ley-lamps flicker (1 in 4 dim or dark), muted gold accents, lingering clouds | Valdris Crown (capital city) |
+| Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
 | Interlude onset | Grey palette filter, muted colors globally | All biomes |
 | Interlude winter | Blowing snow added, whiteout conditions | Highcairn route, alpine areas |
-| Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of settlement replaced with water tiles) | Duskfen (Thornmere Wetlands) |
+| Duskfen water rise | Fog turns grey, lower platforms submerged (settlement half-submerged; ~30% of platforms replaced with water tiles) | Duskfen (Thornmere Wetlands) |
 | Pallor spread (Act III) | Progressive desaturation → monochrome | 10-mile radius from Convergence |
 | Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | Valdris, Carradan, Convergence meadow |
 

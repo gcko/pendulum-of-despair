@@ -203,7 +203,7 @@ The Compact occupies the southeast: a region of river basins, quarried plains, a
 - **Quarried plains:** Encounter rate moderate -- Compact patrols, rogue Forgewright constructs, displaced wildlife. Dust storms occasionally reduce visibility (back-attack chance increased).
 - **Industrial urban:** Navigation is channeled -- streets, bridges, and tunnels create a more linear path. Encounters are replaced by scripted events (guard patrols, factory hazards).
 - **Broken Hills:** Moderate encounter rate (Mountains tier) -- border creatures, Compact scouts, Wilds spillover. Cave entrances offer shortcut opportunities but also ambush risk.
-- **Coastal:** Low encounter rate near cities. Sea routes between Bellhaven and Ashport allow fast travel after Act II (if unlocked).
+- **Coastal:** Low encounter rate near cities. Sea routes between Bellhaven and Ashport exist as trade lanes (transport mechanics deferred to Gap 3.1 per [overworld.md](overworld.md)).
 - **Caldera interior:** Environmental hazards (steam vents, hot floors) deal minor chip damage if the party moves through without pausing.
 
 ---
@@ -252,7 +252,7 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 
 **Terrain Effects on Gameplay:**
 
-- **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (the player is turned back with a "you can't find your way" message).
+- **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (conditional passability -- see [overworld.md](overworld.md)).
 - **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards: sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
 - **Canopy level:** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
 - **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
@@ -543,7 +543,7 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Ley Scar (Act III)** | Intense | 506 | ~14 | Optional grinding zone in Pallor Wastes |
 | **Urban interior** | None | 0 | — | Inside city/town boundaries |
 
-**Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart. The Wilds have no safe corridors -- there are no roads.
+**Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart (transport mechanics deferred to Gap 3.1 per [overworld.md](overworld.md)). The Wilds have no safe corridors -- there are no roads.
 
 **Act scaling:** Encounter rate increases per act transition:
 Act I ×1.0, Act II ×1.1, Interlude ×1.2, Act III ×1.1. The multiplier
