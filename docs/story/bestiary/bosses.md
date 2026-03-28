@@ -3864,9 +3864,17 @@ but the accumulated grief of every age, compressed into a single
 exhale. Then it is gone. The fireflies return. The meadow is quiet.
 ```
 
-**Design Note:** The Lingering is the hardest fight in the game,
-intended for parties at Lv 80--100+. The 20-turn enrage on Phase 3
-forces aggressive play — cautious attrition won't work. Phase 1 tests
+**Design Note:** The Lingering is the hardest fight in the game.
+Stat-tuned for Lv 95--105 (boss levels). Player experience varies by
+level: genuinely challenging at Lv 80--100 (speed-clearers who rush
+Dreamer's Fault), a comfortable victory at Lv 120+ (thorough players
+who fight everything). The XP pacing table
+([progression.md](progression.md)) maps F20 completion to ~Lv 140 —
+a thorough player will be significantly overleveled, and that is
+intentional. The reward is The Pallor's Last, not the challenge. Per
+FF6 philosophy: over-leveling is the player's earned advantage, not
+a design failure. The 20-turn enrage on Phase 3 forces aggressive
+play — cautious attrition won't work even at high levels. Phase 1 tests
 pattern recognition (the 4-turn echo cycle). Phase 2 tests party
 management (echo targeting + central form priority). Phase 3 tests
 pure DPS under pressure. Spirit-element attacks are the primary

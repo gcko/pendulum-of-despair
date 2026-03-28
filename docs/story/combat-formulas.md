@@ -26,16 +26,18 @@
 ```
 raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
 damage_after_variance = raw × variance
-final = clamp(floor(damage_after_variance × attacker_row_mod × defender_row_mod), 1, 14999)
+damage_after_rows = damage_after_variance × attacker_row_mod × defender_row_mod
+final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 ```
 
 - **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
 - **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
-- **row modifiers** are applied last (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
+- **row modifiers** are applied after variance (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
+- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). `reduction_product` is 1.0 if no reduction sources are active.
 
-**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after row modifiers are applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
+**Rounding rule:** All intermediate calculations use real-number arithmetic. The final damage value is floored (truncated to integer) after damage reduction is applied, just before clamping to [1, 14999]. No rounding occurs at intermediate steps — only the final result is truncated.
 
 **Why ATK²?** ATK ranges 1–255. Linear ATK minus DEF produces a maximum of ~175 damage at endgame — far too low. Squaring ATK gives a natural 200× damage range from level 1 to cap (18² = 324 vs 255² = 65,025), producing the 5,000–7,000 basic attack range at endgame that matches the FF6 physical damage feel.
 
@@ -89,17 +91,76 @@ Items, Forgewright devices, and Ley Crystal invocations work at full effect from
 
 ---
 
+## Damage Reduction
+
+Percentage-based damage reduction from abilities, equipment, and
+effects. Applied as a **post-pipeline multiplicative step** after all
+other damage calculations (physical or magic). Inspired by FF6's
+Safe/Shell model.
+
+```
+reduction_product = (1 - r1) × (1 - r2) × ... for all active sources
+final = clamp(floor(pre_reduction_damage × reduction_product), 1, 14999)
+```
+
+- **Pre-reduction damage** is the output of the physical pipeline
+  (after row modifiers) or the magic pipeline (after element and
+  variance). This is the last step before the damage is applied.
+- **Multiple sources stack multiplicatively**, not additively.
+  Diminishing returns prevent invincibility.
+- **Floor of 1 always applies** — a character can never take 0 damage
+  from a damaging attack.
+
+### Damage Reduction Sources
+
+| Source | Reduction | Type | Scope | Duration |
+|--------|-----------|------|-------|----------|
+| The Pallor's Last (accessory) | 25% | All | Equipped character | Permanent (while equipped) |
+| Ironwall (Edren ability) | 50% | Physical only | Single guarded ally | Stance (active while maintained) |
+| Bulkhead (Lira device) | 40% | Physical only | Single chosen ally | 3 turns |
+| Deeproot Veil (Torren upgrade) | 15% | All | Single ally with Thornveil | 3 turns |
+| Back row | 50% | Physical only | Positioned character | Positional |
+
+> **Back row** is already applied as a row modifier in the physical
+> pipeline. It is NOT applied again as a damage reduction source.
+> Listed here for completeness — do not double-apply.
+
+### Stacking Examples
+
+**Pallor's Last + Deeproot Veil (all damage):**
+`(1 - 0.25) × (1 - 0.15) = 0.75 × 0.85 = 0.6375` → 36.25% total
+reduction (not 40%).
+
+**Ironwall + Bulkhead (physical, stacked on one ally):**
+`(1 - 0.50) × (1 - 0.40) = 0.50 × 0.60 = 0.30` → 70% total physical
+reduction. A 5,000 damage hit becomes 1,500.
+
+**Ironwall + Bulkhead + Back Row + Pallor's Last (maximum physical):**
+Back row is a row modifier (already in pipeline), so damage reduction
+sources are: `(1 - 0.50) × (1 - 0.40) × (1 - 0.25) = 0.225` → 77.5%
+from reduction alone, on top of the back row ×0.5 already applied.
+Net: a 5,000 raw hit → 2,500 (back row) → 562 (reductions). The
+character takes 562 damage. Not zero — diminishing returns work.
+
+**Physical-only sources do not reduce magic damage.** A character with
+Ironwall + Bulkhead still takes full magic damage (only Pallor's Last
+and Deeproot Veil apply to magic).
+
+---
+
 ## Magic Damage
 
 ```
 raw = max(1, (MAG × spell_power) / 4 - target.MDEF)
-final = min(14999, raw × element_mod × variance)
+damage_after_element = raw × element_mod × variance
+final = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 ```
 
 - **MAG** includes all sources. Attunement (+30% MAG) modifies MAG before the formula.
 - **spell_power** is defined per spell in [magic.md](magic.md) (Tier 1: 12–20, Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
 - **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)).
 - **target.MDEF** includes equipment and debuff modifiers.
+- **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
 
 **Why divisor 4?** Tuned to produce these milestone values (MAG values are natural, per [progression.md](progression.md) milestones):
 
