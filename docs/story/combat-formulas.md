@@ -110,6 +110,13 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
   (after element and variance).
 - **Multiple sources stack multiplicatively**, not additively.
   Diminishing returns prevent invincibility.
+- **Amplification debuffs** (e.g., Marked for Sorrow: target takes
+  1.5× damage) enter the same product as negative reduction:
+  `(1 - (-0.50))` = 1.50. This means amplifiers and reductions
+  interact naturally — a character with Pallor's Last (0.75) under
+  Marked for Sorrow (1.50) has `reduction_product = 0.75 × 1.50 =
+  1.125`, taking 12.5% MORE damage (the amplifier partially
+  overcomes the reduction). No separate pipeline step needed.
 - **Floor of 1 always applies** — a character can never take 0 damage
   from a damaging attack.
 
@@ -138,8 +145,8 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 
 ### Damage Reduction Sources
 
-| Source | Reduction | Type | Scope | Duration | Mechanic |
-|--------|-----------|------|-------|----------|----------|
+| Source | Modifier | Type | Scope | Duration | Mechanic |
+|--------|----------|------|-------|----------|----------|
 | The Pallor's Last (accessory) | 25% | All | Equipped character | Permanent (while equipped) | Flat reduction |
 | Ironwall (Edren ability) | 50% (75% with Oathkeeper) | Physical only | Single guarded ally | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
 | Rampart (Edren ability) | 30% (45% with Oathkeeper) | All | All back-row allies | Stance (active while maintained) | Absorption — Edren takes the redirected portion |
@@ -148,6 +155,7 @@ final_damage = clamp(floor(damage_after_element × reduction_product), 1, 14999)
 | Deeproot Veil (Torren upgrade) | 15% | All | Single ally with Thornveil | 3 turns | Flat reduction |
 | Spiritward (Torren + Edren Dual Art) | 20% | All | All allies | 3 turns | Flat reduction |
 | Back row | 50% | Physical only | Positioned character | Positional | Row modifier — see note |
+| **Marked for Sorrow** (Cael boss, debuff) | **-50% (amplifies)** | All | Single party member | 2 turns | Amplification — enters product as 1.50 |
 
 > **Back row** is already applied as a row modifier in the physical
 > pipeline. It is NOT applied again as a damage reduction source.
@@ -186,6 +194,11 @@ post-row value).
 `(1 - 0.20) × (1 - 0.25) = 0.80 × 0.75 = 0.60` → 40% total
 reduction on the Pallor's Last wearer. Other allies get 20% from
 Spiritward alone.
+
+**Marked for Sorrow + Pallor's Last (amplifier vs reduction):**
+`(1 - (-0.50)) × (1 - 0.25) = 1.50 × 0.75 = 1.125` → net 12.5%
+damage INCREASE. The Pallor's Last partially counters the amplifier
+but doesn't fully negate it. A 5,000 hit becomes 5,625.
 
 **Physical-only sources do not reduce magic damage.** A character with
 Ironwall + Bulkhead still takes full magic damage (only Pallor's Last,
