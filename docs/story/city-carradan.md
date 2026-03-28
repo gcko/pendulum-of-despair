@@ -676,9 +676,9 @@ KEY:  ~~~ = ocean/tidal water   === = dock/pier   ### = walkway
    |                                                           |
    |  DOCKSIDE                                                 |
    |                                                           |
-   |  ===[Ironclad ]===[Barge    ]===[Submersible]===          |
-   |  ===[Berth A  ]===[Berth B  ]===[Dock       ]===          |
-   |  ===[         ]===[         ]===[           ]===          |
+   |  ===[Ironclad ]===[Barge    ]===[Submersible]===[Ferry  ]  |
+   |  ===[Berth A  ]===[Berth B  ]===[Dock       ]===[Dock   ]  |
+   |  ===[         ]===[         ]===[           ]===[       ]  |
    |                                                           |
    |  [Warehouse ][Warehouse ][Harbormaster's][Crane    ]      |
    |  [1         ][2         ][Office        ][Platform ]      |
@@ -721,6 +721,7 @@ KEY:  ~~~ = ocean/tidal water   === = dock/pier   ### = walkway
 | 26 | Warehouses 1-2 | Storage | Dockside | -- | -- | Trade goods; Warehouse 2 lootable in Interlude |
 | 27 | Harbormaster's Office | Government | Dockside | Harbormaster NPC | -- | Ship schedules, cargo manifests |
 | 28 | Breakwater / Lighthouse | Fortification | Harbor mouth | Garrison soldiers | -- | Act II set piece; lighthouse as landmark |
+| 29 | Ferry Dock | Transit | Dockside | Ferryman | Fast travel (Ashport) | 200g per crossing per [transport.md](transport.md); unavailable in Interlude |
 
 ### Shop Inventories
 
