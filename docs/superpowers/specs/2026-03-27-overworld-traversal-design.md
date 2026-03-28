@@ -85,8 +85,8 @@ The overworld uses a Mode 7-inspired perspective rendering.
 
 - Single tilemap rendered with perspective scaling: nearby tiles appear
   larger, distant tiles foreshorten toward a curved horizon
-- Party represented by lead character's miniaturized sprite (~16x16
-  pixels at base resolution, chibi scale)
+- Party represented by lead character's miniaturized sprite (8x12
+  pixels per visual-style.md)
 - Location icons are miniaturized representations (towns, dungeons,
   landmarks) — not to scale
 - HDMA-style horizon gradient: terrain fades toward a sky color at

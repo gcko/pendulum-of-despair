@@ -150,7 +150,7 @@ Valdris occupies the northwest quadrant of the continent: a region of limestone 
 - **Highland paths:** Random encounter rate unchanged but enemy types shift to highland beasts (ice wolves, stone elementals).
 - **Farmland:** Lowest encounter rate in the game -- the Aelhart Valley is genuinely safe in Act I.
 - **Old-growth forest:** Encounter rate moderate. Visibility reduced -- enemies can ambush the party (back-attack chance increased).
-- **Winter access (Highcairn):** During the Interlude, the highland route to Highcairn is snowbound. Travel takes longer and encounters include cold-damage environmental hazards. The party must rest at waypoints or suffer attrition.
+- **Winter access (Highcairn):** During the Interlude, the highland route to Highcairn is snowbound (conditional passability -- blocked until story flag). The route becomes an interior passage (dungeon-like) with cold-themed encounters and waypoint rest stops. See [overworld.md](overworld.md) for conditional passability rules.
 
 ---
 

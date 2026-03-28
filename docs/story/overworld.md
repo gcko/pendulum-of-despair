@@ -47,14 +47,16 @@ overworld.
   scaling: nearby tiles appear larger, distant tiles foreshorten toward
   a curved horizon. Per FF6's Mode 7 implementation.
 - **Miniaturized sprites.** Party represented by lead character's
-  miniaturized sprite (~16x16 pixels at base resolution, chibi scale).
+  miniaturized sprite (8x12 pixels per [visual-style.md](visual-style.md)).
   Location icons (towns, dungeons, landmarks) are miniaturized
   representations — not to scale. Entering a location triggers scale
   shift to full-size interior maps.
 - **HDMA-style horizon gradient.** Terrain fades toward a sky color at
   the top of the viewport, creating atmospheric perspective. The
-  gradient color shifts per biome (warm gold for Valdris, amber-grey
-  for Carradan, green-dark for Thornmere, flat grey for Pallor Wastes).
+  gradient target color is derived from each biome's sky palette entry
+  in [biomes.md](biomes.md) (e.g., Valdris highland sky, Carradan
+  smog-filtered amber, Thornmere canopy-filtered green, Pallor
+  featureless grey).
 - **Fixed camera.** Character-centered scrolling. No player-controlled
   zoom or camera rotation. Camera stops at map edges — ocean tiles fill
   the remaining viewport.
@@ -93,13 +95,14 @@ navigation tool.
 All passable overworld tiles share **uniform movement speed**. There are
 no per-terrain speed modifiers — terrain affects encounter groups and
 frequency (via the danger counter in [geography.md](geography.md)
-Section 5), not walking speed. This follows the SNES convention where
+Encounter Zones section), not walking speed. This follows the SNES convention where
 speed variation came from vehicles, not terrain.
 
 - **Input:** 4-directional (D-pad cardinal directions). No diagonal
   movement on the overworld — per SNES Mode 7 convention where diagonal
   movement on a perspective-scaled tilemap creates visual artifacts.
-  Interior maps may support 8-directional movement.
+  Interior maps use 8-directional movement (standard for non-Mode 7
+  tiled maps).
 - **Collision:** Full stop on impassable tiles. No wall-sliding. Per
   FF6 overworld behavior.
 - **Speed tiers:** On-foot is the only speed tier in this document.
@@ -122,9 +125,10 @@ Five tile categories govern overworld movement:
 
 - **Encounter zones.** Each passable tile belongs to an encounter zone
   that determines danger counter increment and formation tables. See
-  [geography.md](geography.md) Section 5 for the full encounter zone
-  table (11 zone types from Roads at 96 increment to Pallor Wastes
-  at 700).
+  [geography.md](geography.md) Encounter Zones section for the full
+  table (11 zone types; encounter-active zones range from Roads at 96
+  increment to Pallor Wastes at 700; Sacred sites and Urban interior
+  have 0 increment).
 - **Conditional tile messages.** When the player attempts to enter a
   conditional tile without meeting its requirement, a contextual
   message appears:
@@ -190,7 +194,7 @@ revealed when the battle screen loads, not during the transition.
   dungeons). Signals narrative weight without encoding tactical
   information.
 - **Post-battle return:** Fade from black back to the field. Danger
-  counter resets to 0 (per [geography.md](geography.md) Section 5
+  counter resets to 0 (per [combat-formulas.md](combat-formulas.md)
   encounter system).
 
 ### Region Boundary Banners
@@ -220,8 +224,9 @@ Location-fixed atmospheric visuals per biome, with story-triggered
 overrides at act boundaries. No dynamic weather cycling. No day/night
 gameplay cycle (no time-dependent NPCs, encounters, or mechanics).
 
-> **Visual time-of-day:** [biomes.md](biomes.md) Section 4 defines
-> cosmetic palette shifts for dawn/day/dusk/night per biome. These are
+> **Visual time-of-day:** [biomes.md](biomes.md) Time of Day Effects
+> section defines cosmetic palette shifts for dawn/day/dusk/night per
+> biome. These are
 > programmatic color adjustments (tint overlays, not separate tilesets)
 > that do not affect gameplay — no encounters, NPC availability, or
 > mechanical systems change with time of day. This document references
@@ -231,9 +236,12 @@ gameplay cycle (no time-dependent NPCs, encounters, or mechanics).
 
 Each overworld-visible biome has a fixed atmospheric visual that defines
 its identity. These do not cycle or change dynamically — they are the
-biome's permanent character. Interior-only biomes (Underground/Cavern,
-Ancient Ruins, Ashlands) are not listed here — see
-[biomes.md](biomes.md) for their visual definitions. Sacred sites
+biome's permanent character. Biomes that appear only as interior maps
+or location entries (Underground/Cavern, Ancient Ruins) are not listed
+here — see [biomes.md](biomes.md) for their visual definitions.
+Ashlands (including Ashgrove) appears on the overworld as a small
+transition zone but uses the Valdris-to-Ashlands gradient tiles; see
+[biomes.md](biomes.md) for the full Ashlands palette. Sacred sites
 (Ashgrove, Stillwater Hollow) use their parent biome's atmosphere with
 zero encounter rate.
 
@@ -245,7 +253,7 @@ zero encounter rate.
 | Thornmere Wetlands | Constant fog (visibility 4--5 tiles), will-o'-wisps, flat diffused light |
 | Mountain / Alpine | Visible wind, blowing snow particles, whiteout conditions during storms |
 | Coastal / Harbor | Haze, salt spray, stronger wind |
-| Ley Line Nexus (incl. Sunstone Ridge) | Orange-red crystal glow (amber variant), natural light from crystals |
+| Ley Line Nexus | Faint ambient glow, constant mote particles drifting upward, energy shimmer; amber variant at Sunstone Ridge (orange-red crystal glow) |
 | Pallor Wastes | Grey ceiling, visual static at screen edges, muffled audio |
 
 All effects use sprite-based particle overlays and palette manipulation,
