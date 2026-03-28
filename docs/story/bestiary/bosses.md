@@ -3658,7 +3658,9 @@ phases. The hardest fight in the game.
 **Access:** Requires `dreamers_fault_complete` flag (per
 [events.md](events.md)). Examine Cael's memorial sword at the
 Convergence meadow. Narrative setup in
-[sidequests.md](sidequests.md).
+[sidequests.md](sidequests.md). **One-time encounter — The Lingering
+does not respawn after defeat.** The Pallor's Last drop is a single
+obtainable item.
 
 **Modes:** Phase 1 has 2 (Memory, Awakened). Phase 2 has 2 (Grief,
 Fracture). Phase 3 has 2 (Release, Enraged).
@@ -3683,6 +3685,10 @@ Note: The Lingering is the last trace of the Pallor's presence in the
       The Lingering does not speak. It echoes. Fragments of voices
       from every age it consumed drift through the battle — not
       dialogue, atmosphere.
+
+      All Despair applications use the standard 4-turn duration
+      (per magic.md status table). Hit rates escalate across phases
+      (60% → 70% → 80% → 90%) but duration is constant.
 
 PHASE 1: MEMORY (Lv 95, HP 100,000)
   Note: The Lingering manifests as a shifting grey form that cycles

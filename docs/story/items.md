@@ -523,7 +523,7 @@ Items that advance or gate specific plot events. Unlike dungeon access items, th
 | Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
 | Caldera Employee Card | Sable pickpockets from Compact officer (Caldera) | 25% discount at all Caldera shops (net 112.5% of standard). See [economy.md](economy.md). |
 | Valdris Crest | Sir Aldric, Oasis A (The Last Banner quest) | Unlocks bonus dialogue in Edren's Pallor trial |
-| First Tree Seed | Dreamer's Fault chest (per [dungeons-world.md](dungeons-world.md)) | Used at the Convergence meadow post-game to trigger the planting scene (per [dynamic-world.md](dynamic-world.md)). Consumed on use. |
+| First Tree Seed | Ashgrove Undercroft chest (per [dungeons-world.md](dungeons-world.md) § 14e) | Used at the Convergence meadow post-game to trigger the planting scene (per [dynamic-world.md](dynamic-world.md)). Consumed on use. |
 
 > **Pallor-Laced Iron** and **Corrupted Tuning Fork** are steal-only story items. They unlock optional dialogue and lore scenes but are not required for main story progression.
 

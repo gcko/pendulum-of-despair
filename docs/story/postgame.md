@@ -155,6 +155,10 @@ Fault echo bosses, The Lingering) are excluded.
 - Consumables are provided fresh at the start of each tier attempt.
   They are a total supply across all fights in the tier — not
   replenished between fights.
+- **Drops and steals disabled** — boss rush fights do not award
+  drops or allow steal/Filch. These are memories, not real encounters.
+  This prevents loot duplication of unique boss drops (Cael's Knight
+  Crest, etc.).
 - Flee disabled (as in normal boss fights)
 - **Save suppressed during boss rush** — the game creates a temporary
   auto-save on tier entry. Saving and loading are disabled until the
@@ -253,7 +257,7 @@ Pendulum tavern:
 | Boss Rush (3 tiers) | Tavern (Sable) | postgame.md (this doc) | ~90 min total |
 | Completion Tracking | Tavern (Sable) | postgame.md (this doc) | Ongoing |
 | Epilogue NPC conversations | Tavern + world | [dynamic-world.md](dynamic-world.md) | ~30 min |
-| First Tree Seed scene | Convergence meadow | [dungeons-world.md](dungeons-world.md) (item), [dynamic-world.md](dynamic-world.md) (scene) | ~5 min |
+| First Tree Seed scene | Convergence meadow | [dungeons-world.md](dungeons-world.md) § 14e Ashgrove Undercroft (item), [dynamic-world.md](dynamic-world.md) (scene) | ~5 min |
 | Post-game leveling (71--150) | Everywhere (Dreamer's Fault optimal) | [progression.md](progression.md) | 20--40+ hours |
 | Cael's Echo crystal | Obtained at epilogue | [progression.md](progression.md) | Immediate |
 

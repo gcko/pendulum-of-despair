@@ -329,6 +329,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 37 | `cael_sacrifice` | Cael walks into the door. The Pendulum shatters. | The door closes. Grey light collapses. The Convergence transforms. Epilogue triggers. World state shifts to post-game. All locations begin their healing transition. | Cael (gone), all party members, all surviving NPCs |
 | 38 | `epilogue_complete` | Final scene at the Convergence meadow. Edren places Cael's sword. | Post-game opens. The Pendulum tavern accessible. Dreamer's Fault hidden dungeon accessible. Epilogue NPC conversations available. Boss rush mode unlocked. Completion tracking available. Cael's Echo crystal obtained. See [postgame.md](postgame.md) for full post-game content list. | All surviving NPCs |
 | 57 | `dreamers_fault_complete` | Player reaches Floor 20 of the Dreamer's Fault and completes the Cael's Echo conversation | The Lingering super boss unlocked at Convergence meadow (examine Cael's memorial sword). Dreamer's Mark accessory obtained. | Edren, Cael's Echo (non-combat) |
+| 58 | `postgame_greeting_seen` | Sable delivers the one-time post-game greeting at The Pendulum tavern (per [postgame.md](postgame.md)) | Binary. Prevents the greeting from repeating on subsequent tavern visits. | Sable |
 
 ---
 

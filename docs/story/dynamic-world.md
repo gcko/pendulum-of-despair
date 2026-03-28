@@ -641,8 +641,8 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 #### First Tree Seed Scene (Convergence Meadow)
 
 **Trigger:** Player uses the First Tree Seed (key item from
-[dungeons-world.md](dungeons-world.md) Dreamer's Fault chest) at the
-Convergence meadow. Requires `epilogue_complete`. The seed appears as
+[dungeons-world.md](dungeons-world.md) § 14e Ashgrove Undercroft) at
+the Convergence meadow. Requires `epilogue_complete`. The seed appears as
 a usable key item when the player examines the ground near Cael's
 memorial sword.
 
