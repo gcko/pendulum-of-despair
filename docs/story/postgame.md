@@ -28,8 +28,13 @@
 
 PoD does not have a New Game+ mode. When the player completes the
 epilogue (`epilogue_complete` flag per [events.md](events.md)), the
-game saves a post-game state and returns to The Pendulum tavern. The
-player can continue exploring post-game content from this save.
+game saves a post-game state and returns to The Pendulum tavern.
+When the player regains control, Sable greets them with a scripted
+line: "You're back. There's still work to do, if you want it. The
+cellar's open, and I've been keeping track of a few things." This
+serves as the post-game signpost — pointing to Dreamer's Fault
+(cellar) and completion tracking (Sable). The player can then explore
+post-game content freely from this save.
 Starting a new game always starts fresh — no carryover of levels,
 items, bestiary, or flags from a previous playthrough.
 
@@ -92,7 +97,16 @@ include all mandatory story bosses in story order. Optional bosses
   - Tier 3: 5 Megalixirs, 10 Hi-Potions, 10 Ethers, 5 Phoenix
     Feathers, 3 Remedies
 - Flee disabled (as in normal boss fights)
+- **Save suppressed during boss rush** — the game creates a temporary
+  auto-save on tier entry. Saving and loading are disabled until the
+  tier is completed or forfeited. This prevents save-scumming to
+  restore consumables.
 - Exiting mid-tier forfeits progress — must restart the tier
+- **Excluded from roster:** Scripted-loss encounters (Vaelith siege),
+  non-combat encounters (Cael's Echo). Multi-stage fights (e.g., The
+  Architect + Grey Cleaver Unbound) are treated as a single fight
+  with no mid-fight restore. Siege gauntlet waves are excluded —
+  only the boss itself is fought.
 
 ### Rewards
 
@@ -126,6 +140,15 @@ you've seen?"
 | **Treasure** | Chests opened across all dungeons and overworld | Total chest count (implementation-defined per dungeon layouts) |
 | **Quests** | Sidequests completed | Total sidequest count per [sidequests.md](sidequests.md) |
 | **Items** | Unique items obtained at least once (consumables, equipment, key items, materials) | Total unique item count across [items.md](items.md) and [equipment.md](equipment.md) |
+
+### Tracking Rules
+
+- All four categories use **permanent flags**. Once an enemy is
+  encountered, a chest is opened, a quest is completed, or an item
+  enters the player's inventory, it is permanently counted. Selling,
+  consuming, or discarding items does not reduce the Items count.
+- Bestiary counts any enemy the party has fought at least once
+  (including fled encounters — the enemy was encountered).
 
 ### Display
 
@@ -172,8 +195,12 @@ Pendulum tavern:
 | Post-game leveling (71--150) | Everywhere (Dreamer's Fault optimal) | [progression.md](progression.md) | 20--40+ hours |
 | Cael's Echo crystal | Obtained at epilogue | [progression.md](progression.md) | Immediate |
 
-**Total post-game: ~25--45+ hours** for a completionist. Comparable to
-FF6's World of Ruin optional content scope.
+**Unique designed content: ~6--8 hours** (Dreamer's Fault + The
+Lingering + Boss Rush + NPC conversations). **Completionist total
+including leveling to 150: ~25--45+ hours.** The bulk of the long tail
+is post-game progression (levels 71--150 per
+[progression.md](progression.md)), optimally done in the Dreamer's
+Fault.
 
 ### The Pendulum Tavern as Post-Game Hub
 
