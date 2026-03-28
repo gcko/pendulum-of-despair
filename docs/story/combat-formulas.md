@@ -640,7 +640,8 @@ between encounters:
 | Pallor Wastes | 700 | ~10 |
 
 See [geography.md](geography.md) for terrain zone definitions and
-examples.
+examples. See [overworld.md](overworld.md) § Passability & Movement
+for on-foot movement rules (uniform speed, no per-terrain modifiers).
 
 **Act scaling:** The base increment scales with story progression:
 
