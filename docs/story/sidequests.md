@@ -494,7 +494,7 @@ These scenes are triggered by visiting specific locations or speaking to specifi
 **Content:** Lira's old room at the Forgewrights' Academy has been cleared out — her name removed from the door, her workbench reassigned. But in a crack behind the wall panel, she finds something: a set of calibration tools she modified as a student, engraved with the Compact's motto and, underneath in her handwriting, "But at what cost?" She laughs — bitter, genuine. She tells the party about her first day at the academy: "I thought I was going to save the world. The machines were so beautiful. Clean energy, they said. Boundless potential. I believed it for three years. Then I went to Millhaven and saw what 'clean energy' looked like at the source." She pockets the tools. "I'll use these for the Bridgewrights. Better tools, better purpose."
 
 **Scene 2: The Castle Wall**
-**Trigger:** Visit the Valdris Crown castle walls at night during Act II with Lira in the party.
+**Trigger:** Visit the Valdris Crown castle walls during Act II with Lira in the party, after completing Scene 1.
 **Content:** This is a flashback-adjacent scene. Lira stands where she and Cael used to talk at night. She describes one evening: Cael tried to explain the constellations, and she tried to explain gear ratios, and neither of them understood the other, and it didn't matter. "He looked up and saw stories. I looked up and saw mechanics. We were both right. That's what I loved — that we could see the same sky differently and neither of us was wrong." She's quiet for a moment. "The Pallor doesn't work like that. The Pallor says there's only one way to see things, and it's the worst way. That's how I knew something was wrong with Cael. He stopped seeing anything but pain."
 
 **Scene 3: The Workshop**
@@ -660,9 +660,9 @@ If the player has completed the "What the Stars Said" quest, an additional line 
 ### The Lingering (Super Boss)
 
 **Access:** After completing the Dreamer's Fault, return to the Convergence meadow
-**Trigger:** Examine Cael's memorial sword at night
+**Trigger:** Examine Cael's memorial sword
 
-The Convergence meadow is quiet. Wild magic drifts like fireflies. But at night, if the party examines Cael's sword after completing the Dreamer's Fault, the fireflies go still. The air turns heavy. A shape forms in the meadow — not the Pallor (the door is closed), but a residue. The Lingering is the last trace of the Pallor's presence in the physical world: a towering figure of grey static, smaller and weaker than the Act III incarnation, but faster, smarter, and desperate. It knows the door is closed. It knows it is dying. It fights with everything it has left.
+The Convergence meadow is quiet. Wild magic drifts like fireflies. When the party examines Cael's sword, the fireflies go still. The air turns heavy. A shape forms in the meadow — not the Pallor (the door is closed), but a residue. The Lingering is the last trace of the Pallor's presence in the physical world: a towering figure of grey static, smaller and weaker than the Act III incarnation, but faster, smarter, and desperate. It knows the door is closed. It knows it is dying. It fights with everything it has left.
 
 **The Lingering (Boss Fight):**
 - The hardest fight in the game. Three phases.

@@ -254,7 +254,7 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 
 - **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (conditional passability -- see [overworld.md](overworld.md)).
 - **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards (interior/dungeon only per [overworld.md](overworld.md)): sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
-- **Canopy level:** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
+- **Canopy level (interior location maps, not overworld):** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
 - **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
 - **Sunstone Ridge:** Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
 
@@ -471,8 +471,8 @@ The overworld map is designed as a large, scrollable tilemap representing the en
 - **Tile size:** 16x16 pixels
 - **Map dimensions:** 128 tiles wide x 96 tiles tall
 - **Pixel dimensions:** 2048 x 1536 pixels
-- **Visible viewport:** 20 tiles wide x 15 tiles tall (320 x 240 logical pixels, scaled up to display resolution)
-- **Scale:** Each tile represents roughly 2.5 miles of terrain. The full map covers approximately 320 miles east-west and 240 miles north-south.
+- **Visible viewport:** 16 tiles wide x 14 tiles tall (256 x 224 pixels per [visual-style.md](visual-style.md), scaled up to display resolution)
+- **Scale:** Each tile represents roughly 2.5 miles of terrain. The full map covers approximately 320 miles east-west and 240 miles north-south (128 × 96 tiles).
 
 ### Region Boundaries (Tile Coordinates)
 

@@ -336,7 +336,7 @@ The game's color design follows one principle: **color is hope.**
 
 ### Map Style
 
-The overworld uses a zoomed-out tileset that reads like a painted relief map -- the kind that came folded in the box of a 1994 SNES RPG. Terrain is simplified to chunky color blocks with clear biome boundaries. Think FF6's Mode 7 overworld: the ground has a slight perspective tilt, terrain features are iconic rather than detailed, and the player character is an 8x12 pixel sprite moving across a world that feels vast.
+The overworld uses a miniaturized tileset that reads like a painted relief map -- the kind that came folded in the box of a 1994 SNES RPG. Terrain is simplified to chunky color blocks with clear biome boundaries. Think FF6's Mode 7 overworld: the ground has a slight perspective tilt, terrain features are iconic rather than detailed, and the player character is an 8x12 pixel sprite moving across a world that feels vast. See [overworld.md](overworld.md) for traversal mechanics.
 
 ### Overworld Tile Language
 
