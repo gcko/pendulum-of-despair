@@ -235,8 +235,9 @@ changes through music and palette shifts alone, not text overlays.
   Compact Territory," etc. Appears over gameplay, fades after
   ~2 seconds. If a fade-to-black (location entry) begins while a
   banner is active, the fade immediately cancels the banner. Location
-  name banners and region banners do not stack — location name takes
-  priority.
+  name banners and region banners do not stack — if a location name
+  banner triggers while a region banner is displaying, the region
+  banner is immediately cancelled and replaced.
 - **Music crossfade:** 3-second transition — outgoing biome music fades
   from 100% to 0% over 1.5 seconds, incoming biome music fades from
   0% to 100% over 1.5 seconds. Crossfade begins at the transition's
@@ -456,7 +457,8 @@ prototyping and tuning, not design specification.
   spec mandates uniform speed; the specific value is a tuning knob.
 - **Z-ordering** — suggested layer order (back to front): tilemap →
   HDMA horizon gradient → location icons → party sprite → cloud/fog
-  layer → atmospheric particles → UI overlays (banners, map screen).
+  layer (semi-transparent dithering — must not obscure party sprite)
+  → atmospheric particles → UI overlays (banners, map screen).
 - **Map wrapping** — hard edges, no wrapping. Camera stops at map
   edges; ocean tiles fill the remaining viewport (per Section 1).
   Unlike FF6, PoD's continent does not wrap.
@@ -482,8 +484,11 @@ prototyping and tuning, not design specification.
 - **Region banner visual style** — same system as location name flash
   per [ui-design.md](ui-design.md): pixel font, white text, dark navy
   background inset tag.
-- **Story override transition** — instant at act boundary (triggered by
-  story flag). No gradual cross-fade between atmospheric states.
+- **Story override transition** — atmospheric palette overrides
+  (Section 4) are instant at act boundary (triggered by story flag).
+  Structural tilemap changes (Section 5) use their own timing — some
+  are instant at flag (wall breach, fissures), others are progressive
+  across the Interlude (Pallor spread, canopy petrification).
 
 ### Particles & Visual
 
