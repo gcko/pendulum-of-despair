@@ -437,7 +437,7 @@ Per [events.md](events.md) § Faint and Fast Reload:
   Enemies far exceed main story difficulty. Unique mechanics per
   "age" (5 floors each). This is the "hard mode" for completionists.
 - **Superbosses:** Optional encounters harder than the final boss.
-  Rewards are cosmetic/bragging rights (per Gap 3.6 when designed).
+  Rewards are cosmetic/bragging rights (per [postgame.md](postgame.md)).
 - **No difficulty toggle needed.** Players who want challenge seek
   it through optional content. The main story remains accessible.
 

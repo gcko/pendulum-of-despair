@@ -676,27 +676,9 @@ The Convergence meadow is quiet. Wild magic drifts like fireflies. When the part
 
 ---
 
-### New Game Plus Considerations
-
-Upon completing the main story, the player is offered a New Game Plus mode with the following changes:
-
-**Carried Over:**
-- All equipment, accessories, and consumables
-- Bestiary completion progress
-- Ley Line Fragment collection progress
-- All passive abilities learned from side quests
-- Gold
-
-**Changed:**
-- Enemy levels scale to match the party (no overleveling trivializes encounters)
-- All NPC dialogue includes subtle additions — NPCs who were unaware of the Pallor in the first playthrough now have hints of unease, as if the world remembers what happened even though the timeline has reset
-- The Cael romance scenes in Acts I-II gain additional dialogue options: the player, knowing the outcome, can attempt to warn Cael. Every warning is deflected — the Pallor is already at work. These moments are designed to be devastating on a second playthrough, because the player knows and cannot change anything
-- A new optional scene unlocks during Act IV: if the player has completed all major side quests and carries both Cael's Training Sword and the Unfinished Letter, a unique farewell scene plays where Cael, in his final moments, acknowledges the party's full effort. He says: "You did everything right. You did everything you could. It was always going to end here. But you made sure I didn't walk through that door alone."
-
-**Not Carried Over:**
-- Story progression (the game restarts from Act I)
-- Key items tied to specific story triggers
-- Party member levels (they rejoin at their original levels, with equipment from the previous playthrough)
+> **Note:** PoD does not have a New Game+ mode. The game ends at the
+> epilogue; starting a new game always starts fresh. See
+> [postgame.md](postgame.md) for the full post-game design rationale.
 
 ---
 

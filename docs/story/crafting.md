@@ -384,6 +384,8 @@ exploration and cannot be purchased:
 
 > **Forge Schematic is missable.** It is the only steal-only crafting
 > schematic in the game. If Sable does not steal it during The
-> Architect boss fight, the Arcanite Lance recipe is locked out until
-> New Game+. The Architect's steal window exists only during Stage 1
-> — Stage 2 (Grey Cleaver Unbound) has a different steal table.
+> Architect boss fight, the Arcanite Lance recipe is permanently
+> locked out for that playthrough (there is no NG+ per
+> [postgame.md](postgame.md)). The Architect's steal window exists
+> only during Stage 1 — Stage 2 (Grey Cleaver Unbound) has a
+> different steal table.

@@ -625,7 +625,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 - **Map layout changes:** New construction. This building did not exist before.
 - **Visual state:** Valdris Highlands / Ashlands border palette. A low, comfortable building at the crossroads where all three factions meet. A swinging sign -- a painted pendulum on a broken chain.
 - **Accessible areas:** The full tavern interior. Post-game hub.
-- **Environmental details:** Every party member (except Cael) is here. NPCs the player helped throughout the game appear. Epilogue conversations. The boss rush mode. The bestiary. The entrance to the Dreamer's Fault. Sable behind the bar. "So nobody forgets what it cost."
+- **Environmental details:** Every party member (except Cael) is here. NPCs the player helped throughout the game appear. Epilogue conversations. Boss rush mode (3-tier gauntlet). Completion tracking (4 categories: bestiary, treasure, quests, items). The bestiary. The entrance to the Dreamer's Fault (cellar). Sable behind the bar. "So nobody forgets what it cost." See [postgame.md](postgame.md) for full post-game mechanics.
 
 ---
 
