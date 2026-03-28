@@ -1,7 +1,8 @@
 # Overworld Traversal Mechanics
 
 > Formalizes the mechanical layer of overworld traversal: presentation,
-> passability rules, screen transitions, and weather. The *content* —
+> passability rules, screen transitions, weather, structural tilemap
+> changes, and save points. The *content* —
 > biome definitions, encounter rates, named routes, location entries,
 > story-driven world changes — is already defined across
 > [geography.md](geography.md), [biomes.md](biomes.md),
@@ -77,7 +78,8 @@ convenience on a larger, more complex continent.
 - **Style:** Static illustrated map with parchment aesthetic,
   consistent with SNES-era game manual fold-out maps.
 - **Location discovery:** Locations appear on the map after first visit,
-  labeled with icons by type (town, dungeon, landmark).
+  labeled with icons by type (town, dungeon, landmark). Destroyed
+  or modified locations use variant icons (see Section 5).
   Undiscovered areas show terrain but no location labels — the
   geography is known, specific sites are not.
 - **Current position:** Blinking dot marker shows the party's current
@@ -295,7 +297,7 @@ layer on top.
 | Act II tensions | Ley-lamps flicker (1 in 4 dim), muted gold accents, lingering clouds | Valdris Crown (capital city) |
 | Interlude onset | Grey palette filter, muted colors globally | All biomes |
 | Interlude winter | Wind drops, oppressive silence, heavier frost patterns; Pallor manifestations blend with snow on Highland Descent route | Highcairn route, alpine areas |
-| Duskfen water rise | Fog turns grey, lower platforms submerged (~30% of platforms replaced with water tiles) | Duskfen (Thornmere Wetlands) |
+| Duskfen water rise | Fog turns grey; structural tile changes in Section 5 | Duskfen (Thornmere Wetlands) |
 | Pallor spread (Act III) | Progressive desaturation → monochrome | 10-mile radius from Convergence |
 | Epilogue recovery | Pale blue sky, spring greens, lighter palette, wildflowers, new construction scaffolding | All outdoor areas (highlighted: Valdris, Carradan, Convergence meadow) |
 
@@ -338,7 +340,7 @@ the changes; dynamic-world.md contains the full mechanical details.
 | **Thornmere canopy petrification** | Interlude (Pallor proximity) | Living canopy → grey stone, fallen rubble, sky-exposed ground | Some root passages blocked; new paths where petrified trees create bridges; biome shifts from enclosed to exposed |
 | **Rail tunnel collapse** | Interlude (`ley_line_rupture`) | Straight tunnel sections → rubble at 3 collapse points, branching maze | Direct Ashmark--Corrund route eliminated; new branching tunnels with boring engine hazards |
 | **Duskfen submersion** | Interlude (ley disruption) | Lower platform tiles → water tiles (~30% of settlement) | Lower platforms impassable; rope bridges cut; new makeshift plank bridges in different locations |
-| **Pallor Wastes formation** | Act III (`convergence_reached`) | All biome tiles within 10-mile radius → Stage 3 corruption tileset | New encounter zone (increment 700); conditional passability until Act III |
+| **Pallor Wastes formation** | Progressive during Interlude; fully formed by Act III | Biome tiles within 10-mile radius → Stage 3 corruption tileset (ley line clearings retain pre-corruption color as save points) | New encounter zone (increment 700). Before Act III: conditional passability block (see Section 2). After Act III onset: passable Wastes terrain |
 | **Epilogue healing** | Post-Convergence | Fissures close (dark scar tiles remain), rubble cleared, scaffolding appears, Convergence meadow replaces plateau | Routes reopen; locations show repair; Convergence becomes meadow with memorial |
 
 ### Map Screen Updates
@@ -364,8 +366,10 @@ Structural changes interact with the passability system (Section 2):
   Duskfen's interior map handles the flooded navigation
 - **Petrified/rubble tiles** vary: some block old paths (impassable),
   others create new paths (passable where fallen trees bridge gaps)
-- Structural changes do NOT create new conditional tiles — they
-  permanently replace tile passability states via story flags
+- Most structural changes permanently replace tile passability states
+  via story flags (not conditional tiles). Exception: the Pallor
+  Wastes boundary uses conditional passability before Act III (see
+  Section 2) and becomes permanent Wastes terrain after Act III onset
 
 ---
 
@@ -376,10 +380,13 @@ Structural changes interact with the passability system (Section 2):
 Save points are event trigger tiles that open the save/rest menu. On the
 overworld, they appear at two types of locations:
 
-- **Named rest sites.** Sacred sites (Ashgrove, Stillwater Hollow) and
-  camps near dungeon entrances. These are fixed locations that do not
-  move across acts. They use the Sacred sites encounter zone (0
-  increment — no encounters).
+- **Named rest sites.** Camps near dungeon entrances, inn exteriors,
+  and designated waypoints along major routes. These are fixed
+  locations that do not move across acts. They use the safe zone
+  encounter rate (0 increment — no encounters). Note: sacred sites
+  (Ashgrove, Stillwater Hollow) provide passive HP/MP recovery per
+  [geography.md](geography.md) but are not necessarily save points —
+  save point placement is an implementation decision.
 - **Ley line clearings (Pallor Wastes only).** In Act III, faint ley
   line clearings where the ground still pulses with color serve as the
   only save points in the Wastes. When the party rests at a clearing,
@@ -404,8 +411,9 @@ overworld, they appear at two types of locations:
 ### Save Point Rules
 
 - **Rest mechanics.** Resting at a save point fully restores HP, MP,
-  and AC (Arcanite Charges per [crafting.md](crafting.md)). This is
-  the primary AC restoration mechanic for pre-dungeon device crafting.
+  and AC (Arcanite Charges per [crafting.md](crafting.md)). Inns
+  additionally clear all status ailments. This is the primary AC
+  restoration mechanic for pre-dungeon device crafting.
 - **Device reconfiguration.** Lira can re-craft devices at save points
   with available materials and AC (per [crafting.md](crafting.md)).
 - **No encounters.** Save point tiles use the Sacred sites encounter
