@@ -55,8 +55,10 @@ Menu-driven instant travel between Compact cities via NPC interaction.
 Player-controlled overworld mount. A spirit-bonded stag infused with
 ley energy, provided by the Thornmere tribes.
 
-- **Source:** Gift from Thornmere spirit-speakers after Torren's trust
-  event at Roothollow. Brief bonding ritual cutscene.
+- **Source:** Gift from Thornmere spirit-speakers. Unlocked when the
+  party returns to Roothollow mid-Act II with Torren in the party
+  (after `torren_joined` and at least one Thornmere Wilds story
+  milestone). Brief bonding ritual cutscene.
 - **Mechanic:** Summon from overworld party menu when outside.
   Miniaturized party sprite changes to mounted variant. Dismount at
   any time via menu. Automatic dismount at entry trigger tiles (walk
@@ -73,12 +75,16 @@ ley energy, provided by the Thornmere tribes.
   plains, light forest, coast, highlands, Sunstone Ridge, Ashlands
   transition tiles.
 - **Act III Pallor restriction:** Cannot be summoned inside the Pallor
-  Wastes 10-mile radius. Conditional message: "The Stag shies away.
-  The ley energy here is wrong."
+  Wastes 10-mile radius. If the player is already mounted and
+  approaches the Wastes boundary, the Stag auto-dismounts at the edge
+  (same as town entry behavior). Conditional message: "The Stag shies
+  away. The ley energy here is wrong."
 - **Summon restriction:** When summoning in restricted terrain:
   "The Stag cannot navigate this terrain."
-- **Unlock trigger:** `torren_trust` story flag (mid-Act II event at
-  Roothollow)
+- **Unlock trigger:** Return to Roothollow mid-Act II with Torren
+  (requires `torren_joined` flag + a Thornmere story milestone TBD;
+  the specific trigger event needs defining in
+  [events.md](events.md))
 - **Thematic note:** The Ley Stag creates a faction parallel — the
   Compact has rail infrastructure, the Wilds have the spirit-bonded
   Stag. Each faction's transport reflects its identity.
@@ -91,7 +97,8 @@ Centers.
 
 - **Routes:** Bellhaven ↔ Ashport (one route)
 - **Mechanic:** Talk to Ferryman NPC at dock → pay fare → fade to black
-  with brief ship-on-water visual → arrive at destination dock
+  → arrive at destination dock (standard fade transition per
+  [overworld.md](overworld.md))
 - **Speed:** Instant (menu-driven)
 - **Encounters:** None
 - **Cost:** 200g per crossing (premium — sea travel is more expensive
@@ -160,11 +167,14 @@ window maps to Act II's position in the story (~30--50% of the game).
 
 ### Interlude: Transport Collapse
 
-- **Rail:** Service suspended. Three tunnel collapse points, boring
-  engines reactivate (per [dynamic-world.md](dynamic-world.md);
-  dungeon layout in [dungeons-world.md](dungeons-world.md)). Rail
-  Conductor NPCs display: "Service suspended. The tunnels aren't
-  safe." The tunnels become a dungeon. No fast-travel via rail.
+- **Rail:** All service suspended. The Ashmark--Corrund main tunnel
+  has three collapse points and reactivated boring engines (per
+  [dynamic-world.md](dynamic-world.md)). Other segments (Ashmark--
+  Caldera, Corrund--Kettleworks) are suspended due to ley line
+  instability. Rail Conductor NPCs display: "Service suspended. The
+  tunnels aren't safe." The Ashmark--Corrund tunnels become an on-foot
+  dungeon (per [dungeons-world.md](dungeons-world.md)). No fast-travel
+  via rail on any segment.
 - **Ley Stag:** Lost. Spirit animals flee as Pallor corruption spreads
   through the ley lines. The Stag dissolves during the Interlude
   transition cutscene — a visual moment where the party's ley bond
@@ -259,9 +269,9 @@ tiles — named crossing points where passable tiles span the water.
 - Bridge tiles are standard passable terrain. No special passability
   category — they are passable tiles placed over water gaps.
 - Both on-foot and Ley Stag can cross bridges.
-- Bridge tiles use the encounter zone of their surrounding terrain
-  (typically Roads zone, increment 96 per
-  [geography.md](geography.md)).
+- Bridge tiles use the encounter zone of the road or path they
+  connect. Bridges along named routes use the Roads zone (increment
+  96); bridges in wilderness areas use the surrounding terrain's zone.
 
 ### Named Bridge Crossings
 

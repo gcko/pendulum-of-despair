@@ -675,6 +675,13 @@ accessory slot). Veilstep stacks with accessory modifiers (e.g.,
 Veilstep + Ward Talisman = ×0.125 — dramatically reduces encounters
 in low-danger zones, still meaningful reduction in high-danger zones).
 
+**Vehicle suppression:** The Ley Stag mount (per
+[transport.md](transport.md)) sets the danger counter increment to 0
+while mounted, bypassing all terrain-based encounter rates and
+modifier stacking. Dismounting resets the counter to 0. This is
+independent of spell/equipment modifiers — the Stag's ley aura
+suppresses encounters entirely.
+
 ### Battle Formations
 
 Three formation types determine battle start conditions:
