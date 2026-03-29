@@ -24,10 +24,10 @@
 
 | File | Act | Layer | Scenes | Lines | Status |
 |------|-----|-------|--------|-------|--------|
-| [act-i.md](act-i.md) | Act I | 1 | 7 | 928 | **Complete** |
+| [act-i.md](act-i.md) | Act I | 1 | 7 | 929 | **Complete** |
 | [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 668 | **Complete** |
-| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 518 | **Complete** |
-| [interlude.md](interlude.md) | Interlude | 1 | 8 | 866 | **Complete** |
+| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 520 | **Complete** |
+| [interlude.md](interlude.md) | Interlude | 1 | 8 | 865 | **Complete** |
 | [act-iii.md](act-iii.md) | Act III | 1 | 9 | 732 | **Complete** |
 | [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 8 | 651 | **Complete** |
 | npc-ambient.md | All | 2 | — | — | Planned |
@@ -188,9 +188,9 @@ Flags most frequently used in dialogue branching. Full list:
 | Script File | Primary Sources |
 |-------------|----------------|
 | act-i.md | [outline.md](../outline.md) Act I, [events.md](../events.md) flags 1--6/39, [locations.md](../locations.md) § Aelhart/Ironmouth/Roothollow, [dungeons-world.md](../dungeons-world.md) § Ember Vein |
-| act-ii-part-1.md | [outline.md](../outline.md) Act II early, [events.md](../events.md) flags 7--14, [locations.md](../locations.md) § Duskfen/Canopy Reach/Ashgrove, [sidequests.md](../sidequests.md) |
-| act-ii-part-2.md | [outline.md](../outline.md) Act II late, [events.md](../events.md) flags 15--19/44--47, [locations.md](../locations.md) § Valdris Crown |
-| interlude.md | [outline.md](../outline.md) Interlude, [events.md](../events.md) flags 20--27/48--51, [locations.md](../locations.md) § all reunion locations |
+| act-ii-part-1.md | [outline.md](../outline.md) Act II early, [events.md](../events.md) flags 8--14/40--43/54, [locations.md](../locations.md) § Duskfen/Canopy Reach/Ashgrove, [sidequests.md](../sidequests.md) |
+| act-ii-part-2.md | [outline.md](../outline.md) Act II late, [events.md](../events.md) flags 7/15--19/44--47, [locations.md](../locations.md) § Valdris Crown |
+| interlude.md | [outline.md](../outline.md) Interlude, [events.md](../events.md) flags 20--27/48--51/55--56, [locations.md](../locations.md) § all reunion locations |
 | act-iii.md | [outline.md](../outline.md) Act III, [events.md](../events.md) flags 28--35/52--53, [dungeons-world.md](../dungeons-world.md) § Pallor Wastes |
 | act-iv-epilogue.md | [outline.md](../outline.md) Act IV + Epilogue, [events.md](../events.md) flags 36--38, [bestiary/bosses.md](../bestiary/bosses.md) § Cael |
 | npc-ambient.md | [npcs.md](../npcs.md), [locations.md](../locations.md), [events.md](../events.md) all flags |
