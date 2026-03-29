@@ -96,7 +96,7 @@ Now unblocks: 1.3 (Bestiary), 1.4 (Items), 2.5 (Row/Position)
   - [x] Physical evasion rate (SPD / 4, cap 50%)
   - [x] Magical evasion rate ((MDEF + SPD) / 8, cap 40%)
   - [x] Critical hit rate (LCK / 4, cap 50%)
-  - [ ] ATB gauge fill rate (deferred to Gap 2.2)
+  - [x] ATB gauge fill rate — resolved in Gap 2.2: `floor((SPD + 25) * battle_speed_factor * status_modifiers)`
 - [x] Stat caps (255 for core stats, 14999 HP, 1499 MP)
 - [x] Equipment stat bonus rules (additive, cannot exceed caps)
 - [x] Buff/debuff effect on stats (percentage-based, can temporarily exceed 255)
@@ -290,11 +290,11 @@ Now partially unblocks: 3.4 (Difficulty & Balance — still needs other Tier 2 g
 
 ### 2.2 ATB Gauge Mechanics
 
-**Status:** MOSTLY COMPLETE
+**Status:** COMPLETE
 **Priority:** P1
 **Files:** `docs/story/combat-formulas.md` (ATB Gauge System section)
 **Depends On:** 1.2 (Stat System for speed stat)
-**Completed:** 2026-03-21
+**Completed:** 2026-03-21 (formalized 2026-03-29)
 
 **What's Needed:**
 - [x] ATB gauge fill rate formula: `floor((SPD + 25) * battle_speed_factor * status_modifiers)` — see [combat-formulas.md](../story/combat-formulas.md)
@@ -641,3 +641,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-28 | 3.1 Transport & Vehicle | MISSING → COMPLETE. "Grounded FF6" (no airship). Rail (100g, Compact cities), Ley Stag mount (2x speed, no encounters), Coastal ferry (200g, Bellhaven--Ashport), Linewalk (reference). Interlude transport collapse + Act III partial recovery. Bridge tiles at river crossings. Design changes to overworld.md, geography.md, city-carradan.md, economy.md. | — |
 | 2026-03-28 | 3.6 New Game+ & Post-Game | MISSING → COMPLETE. No NG+ (FF6 model, narrative integrity). Boss rush: 3-tier gauntlet with Memento accessories. Completion tracking: 4 categories (bestiary, treasure, quests, items) at Pendulum tavern. Post-game content summary (~25--45+ hours). Design changes to equipment.md, dynamic-world.md, events.md. **All mechanical game design gaps now closed.** | — |
 | 2026-03-29 | 3.7 Full Dialogue Script | MISSING → PARTIAL. Layer 1 (narrative spine) complete: 44 scenes, 4,365 lines across 6 script files. Hybrid screenwriter format with metadata headers, [animation_id] notation, FF6 branching syntax. All party voices established. Council choice nodes, Cael's Last Night variants, reunion order branching all implemented. Layers 2-3 (NPC ambient, battle/system) planned. | — |
+| 2026-03-29 | 2.2 ATB Gauge Mechanics | MOSTLY COMPLETE → COMPLETE. All checklist items verified resolved: fill rate formula `floor((SPD+25)*factor*status)`, Active/Wait mode, battle speed 1-6, status interactions (Stop/Sleep/Confusion/Berserk), visual (Gap 2.3), 4-member party. ATB fill rate deferred item in Gap 1.2 also checked off. **18 of 19 gaps now COMPLETE.** | — |
