@@ -58,8 +58,39 @@ makes you face it.
 
 **MAREN** : Yes. You can't avoid them. The path goes through.
 
+*(They walk. A deer stands frozen at the trail's edge — mid-leap,
+turned to grey stone. Not dead. Preserved in the moment it gave
+up.)*
+
+*(Torren stops. Studies the deer.)*
+
+**TORREN** : It's still alive in there. Somewhere. Just... not
+enough to move.
+
+*(They keep walking. The next mile, a bird sits on a branch with
+its wings half-spread. Grey. Still. Its beak is open but no sound
+comes out.)*
+
+**SABLE** : Listen. No birds.
+
+**EDREN** : Since when?
+
+**SABLE** : Since the last ridge. Nothing singing. Nothing flying.
+Nothing.
+
 *(The party crosses the border into the Pallor Wastes. The sky
-goes flat grey. Point of no return. [SFX: pallor_ambience])*
+goes flat grey — the kind that doesn't change, doesn't move,
+just sits there like a weight on the world's chest. Point of no
+return. [SFX: pallor_ambience])*
+
+**MAREN** : Past here, the trials begin. The Pallor will test
+each of us. It finds what you fear most and makes you face it.
+
+**SABLE** : And? What if you can't face it?
+
+**MAREN** : Then you stay. Like the deer. Like the bird.
+
+*(No one speaks for a while after that.)*
 
 *(Flag `grey_march_begins` (28) set.)*
 
@@ -135,6 +166,26 @@ it.
 *(Edren learns **Steadfast Resolve.** Flag `trial_edren_complete`
 (29) set.)*
 
+### After Edren's Trial
+
+*(The barrier dissolves. Edren walks back to the group. His face
+is composed, but his hands are shaking.)*
+
+**LIRA** : Edren. What was it?
+
+*(Pause.)*
+
+**EDREN** : Every crown I've ever stood under. Every order I've
+given that ended in a funeral.
+
+**SABLE** : And?
+
+**EDREN** : I stood under them. That's all. That's what it
+wanted to know — whether I could.
+
+*(Torren [nod]. He understands. The others aren't sure they do,
+but they trust him enough to keep walking.)*
+
 ---
 
 ## Scene 30: Lira's Trial — The Unfinished Forge
@@ -185,6 +236,33 @@ shapeless metal.)*
 *(Lira learns the ability to forge from grief — the foundation of
 **Cael's Edge.** Flag `trial_lira_complete` (30) set.)*
 
+### After Lira's Trial
+
+*(Lira emerges. She doesn't speak immediately. Her eyes are dry
+but her breathing is controlled — the way someone breathes when
+they've decided not to break.)*
+
+**EDREN** : Lira?
+
+**LIRA** : It had his face. The Machine. It looked like Cael and
+it asked me to fix it.
+
+*(Sable [head_down].)*
+
+**SABLE** : What did you do?
+
+**LIRA** : I took it apart. Because that's what you do with
+something that can't be fixed. You learn from it and you build
+something else.
+
+*(She holds up her hands. Faint ley light lingers at her
+fingertips — something forged in the trial that wasn't there
+before.)*
+
+**MAREN** : That's new.
+
+**LIRA** : I know. I'll figure out what it means later.
+
 ---
 
 ## Scene 31: Torren's Trial — The Silent Grove
@@ -226,6 +304,25 @@ it stood.)*
 
 *(Torren learns **Rootsong.** Flag `trial_torren_complete` (31)
 set.)*
+
+### After Torren's Trial
+
+*(Torren emerges slowly. He looks older. But his step is steady
+in a way it hasn't been since the Interlude.)*
+
+**EDREN** : What did you see?
+
+**TORREN** : An old friend. Dying. Asking me to let go.
+
+*(He looks at his hands.)*
+
+**TORREN** : I spent my whole life trying to protect the old
+ways. The trial showed me that some of them need to end so new
+ones can begin. Imperfect protection. That's all anyone gets.
+
+**LIRA** : You sound almost peaceful.
+
+**TORREN** : Not peaceful. Settled. There's a difference.
 
 ---
 
@@ -275,6 +372,34 @@ her.)*
 *(Sable learns **Unbreakable Thread.** Flag `trial_sable_complete`
 (32) set.)*
 
+### After Sable's Trial
+
+*(Sable walks back to the group. She looks the same. That's the
+strange part — no visible change, no trembling, no transformation.
+She just looks like Sable.)*
+
+**EDREN** : What happened in there?
+
+**SABLE** : There was a door. Open. Warm. Safe. Everything I've
+ever wanted.
+
+**LIRA** : And?
+
+**SABLE** : I turned around and walked back.
+
+*(Beat.)*
+
+**TORREN** : That's it?
+
+**SABLE** : That's it. Turns out the hard part isn't fighting
+the monster. It's choosing the people over the exit.
+
+*(Maren [nod]. She understands something the others are still
+processing.)*
+
+**MAREN** : The Pallor doesn't always test your strength. Sometimes
+it tests whether you'll stay.
+
 ---
 
 ## Scene 33: Maren's Trial — The Restricted Stacks
@@ -320,6 +445,52 @@ understanding passes across her face before she fades.)*
 
 *(Maren learns **Pallor Sight.** Flag `trial_maren_complete` (33)
 set.)*
+
+### After Maren's Trial
+
+*(Maren emerges last. She adjusts her glasses. Smooths her robes.
+Then sits down on a rock as if her legs have simply stopped
+working.)*
+
+**SABLE** : Maren?
+
+**MAREN** : My younger self. Twenty years younger. Sharp.
+Certain. She asked me why I'd wasted my life.
+
+**EDREN** : What did you tell her?
+
+**MAREN** : That I spent those years learning how to see the
+truth. And that seeing the truth is the only weapon that matters
+against something that thrives on denial.
+
+*(She looks at the party. Really looks — with eyes that seem to
+track things the others can't see.)*
+
+**MAREN** : I can see the Pallor now. In everything. The way it
+moves, what it's afraid of. What it feeds on. I understand it.
+
+**TORREN** : Is that a good thing?
+
+**MAREN** : Ask me when this is over.
+
+### After All Five Trials
+
+*(The party stands together in the grey waste. Five trials behind
+them. The Convergence ahead. Each of them carries something new —
+not strength, but understanding.)*
+
+**EDREN** : We all made it through.
+
+**SABLE** : Barely.
+
+**LIRA** : No. Not barely. We made it through because the Pallor
+tested what we're afraid of, and none of us were afraid of the
+thing it expected.
+
+**MAREN** : The lesson. Each trial: the Pallor feeds on denial.
+Acceptance starves it. That's why we're still standing.
+
+**TORREN** : Then let's not waste what we learned.
 
 ---
 
@@ -428,8 +599,21 @@ because I was the first to understand it, and the first to
 realize that understanding changes nothing. Every cycle, someone
 reaches this point. Every cycle, they fail.
 
-*(They remove their spectacles. Fold them carefully. Set them on
-a stone.)*
+*(They sit down on the stone. Not a fighting stance. An exhausted
+one. For a long moment, they simply look at the party.)*
+
+**VAELITH** : I'm tired, you know. Eight hundred years. Eight
+hundred cycles of watching someone find the door, watching
+someone open it, watching the world grey out and fold.
+
+*(They stand. Slowly. Remove their spectacles. Fold them
+carefully. Set them on the stone beside where they sat.)*
+
+**VAELITH** : Every cycle, I think: this time they'll understand.
+This time someone will find a way that doesn't end in sacrifice.
+And every time, I watch them fail the same way I failed.
+
+*(They draw their weapon. Not with aggression — with resignation.)*
 
 **VAELITH** : Enough scholarship. Let me show you what eight
 centuries look like from the inside.

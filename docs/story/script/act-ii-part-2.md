@@ -230,6 +230,39 @@ blink once in the glass.)*
 *(He turns and walks away. Behind him, the Pendulum's needle
 shifts. Two degrees. Holds.)*
 
+### 17e. The Corridor — Between Visits
+
+*(Between locations, Cael walks the Keep's corridors alone. The
+ley-lamps flicker. His shadow falls wrong — too long, too still,
+as if something else is casting it alongside him.)*
+
+*(After visiting the first location:)*
+
+**CAEL** : *(internal)* One more. I can see one more before—
+
+*(He presses his palm against his temple. Breathes.)*
+
+*(After visiting the second location:)*
+
+**CAEL** : *(internal)* The whisper is louder tonight. Not words.
+A feeling. Like the floor is tilting and everyone else is standing
+straight but you know it's tilting.
+
+*(He passes a window. Moonlight. His reflection walks a half-step
+behind him.)*
+
+*(After visiting the third and final location:)*
+
+*(Cael stands in the corridor outside the vault. He has one visit
+left and no time. He places his hand on the wall. The stone is
+cold.)*
+
+**CAEL** : *(internal)* Enough. It's time.
+
+*(He walks toward the vault. The ley-lamps in the corridor go
+dark behind him, one by one, as if the light itself is giving
+up.)*
+
 ---
 
 ## Scene 18: The Betrayal
@@ -307,9 +340,23 @@ Something else looking back. The contact was already made.)*
 
 *(Lira steps forward.)*
 
+(If `cael_last_night_lira` set.)
+**LIRA** : Last night. In the workshop. You were saying goodbye.
+
+**CAEL** : I was trying not to.
+
 **LIRA** : Cael. Please. Stay.
 
 *(He does not turn around.)*
+
+**CAEL** : I love you. I loved you in the workshop and I loved
+you on the castle walls and I love you now. That's why I can't.
+
+(If `cael_last_night_lira` NOT set.)
+**LIRA** : Cael. Please. Stay.
+
+*(He does not turn around. He didn't visit her last night. He
+couldn't. That tells her everything.)*
 
 **CAEL** : I love you. That's why I can't.
 
@@ -398,12 +445,30 @@ wall and slides down. The guards are overwhelmed.)*
 
 **EDREN** : Your Majesty—
 
-*(Aldren's eyes find Edren.)*
+*(Aldren's eyes find whoever reaches him first.)*
 
+(If Edren reaches him first.)
+**KING ALDREN** : Edren. The crown... was always too heavy. You
+understand that now. Protect... what's left.
+
+(If Lira reaches him first.)
+**KING ALDREN** : The Forgewright... Maren was right. The ley
+lines... should have listened...
+
+(If Maren reaches him first.)
+**KING ALDREN** : Maren. I should have listened. When you told
+me... about the door...
+
+**MAREN** : I know, Your Majesty.
+
+**KING ALDREN** : Don't let it... open further...
+
+(Default — Edren and party arrive together.)
 **KING ALDREN** : Protect... what's left.
 
 *(He dies. No grand speech. No wisdom. Just a man who ran out of
-time.)*
+time. The crown sits on the floor where it fell, gold dulled with
+dust.)*
 
 *(Flag `king_aldren_dead` (17) set.)*
 

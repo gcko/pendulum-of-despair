@@ -174,6 +174,20 @@ weakness. Show me Valdris has a plan beyond "hope the ley lines
 stabilize." Show me at the council, and you'll have Canopy
 Reach's bows.
 
+*(Lira stares at the haze. Her face changes — the engineer
+calculating, not the woman hoping.)*
+
+**LIRA** : That's not weather. That's a resonance pattern. The
+ley lines are being pulled toward a single point.
+
+**MAREN** : The Convergence. Where all the major lines intersect.
+If something is drawing on them deliberately—
+
+**WYNNE** : Then we're all on a clock. And the clock is winning.
+
+*(The party descends from the observatory. The world looks
+different from up here. Smaller. More fragile.)*
+
 *(Flag `canopy_alliance` (10) set.)*
 
 ---
@@ -238,6 +252,17 @@ decides.)*
 watching the party approach. She does not stand.)*
 
 **SAVANH** : Sit. I have questions before I have answers.
+
+(If `party_has(maren)`.)
+*(Savanh's eyes settle on Maren.)*
+
+**SAVANH** : The exile. I heard you left the court rather than
+stop asking questions they didn't want answered.
+
+**MAREN** : Something like that.
+
+**SAVANH** : I respect that. Questions are more dangerous than
+swords in a place like Valdris.
 
 **SAVANH** : The Wilds have stayed alive by staying out of other
 people's wars. You're asking us to change that. Tell me why.
@@ -387,6 +412,45 @@ the haze stops growing, and we stay.
 *(Flag `council_result` (43) set. `tribal_alliance_complete` (11)
 set regardless of outcome.)*
 
+### 12f. After the Council
+
+*(The party walks from the council stones. The firelight fades
+behind them.)*
+
+(If `council_result` >= 2.)
+
+**LIRA** : Did we just... win something?
+
+**EDREN** : We have allies. Whether it's enough depends on what
+comes next.
+
+**TORREN** : Caden trusts us. That's not a small thing. He
+doesn't trust easily.
+
+**MAREN** : Three tribes committed to defending a kingdom that
+has never defended them. Remember that when this gets harder.
+
+(If `council_result` == 1.)
+
+**LIRA** : One out of three.
+
+**EDREN** : One is more than zero.
+
+**MAREN** : It won't be enough.
+
+**EDREN** : Then we make it enough.
+
+(If `council_result` == 0.)
+
+*(Silence. The walk back to the trail is quiet.)*
+
+**TORREN** : They chose what they chose. We can't force the Wilds
+to care about a kingdom they've never trusted.
+
+**EDREN** : I know. But I'd hoped—
+
+**LIRA** : Hope later. Plan now.
+
 ---
 
 ## Scene 13: The Tavern — Vaelith Returns
@@ -433,6 +497,35 @@ is he sleeping these days?
 
 **VAELITH** : No reason. Old ruins do strange things to
 sensitive minds. I've studied enough of them to know.
+
+(If `party_has(torren)`.)
+*(Vaelith turns to Torren. A different quality of attention —
+sharper, more careful.)*
+
+**VAELITH** : And the spirit-speaker. The ley lines must feel...
+thin to you. Like a song losing its harmony.
+
+*(Torren [bubble_question]. He says nothing. But his hand
+tightens on his staff.)*
+
+**TORREN** : You speak of ley lines like someone who's watched
+them die before.
+
+*(Vaelith's smile doesn't change. But something behind the eyes
+shifts.)*
+
+**VAELITH** : What an interesting observation.
+
+(If `party_has(maren)`.)
+*(Vaelith glances at Maren — the quickest assessment, then away.)*
+
+**VAELITH** : The scholar. You've been reading about cycles,
+haven't you? Historical patterns. Repeating phenomena. I admire
+the dedication, even if the conclusions are... premature.
+
+**MAREN** : How do you know what I've been reading?
+
+**VAELITH** : People talk. I listen. It's my one real talent.
 
 *(Vaelith finishes their drink. Stands. Bows.)*
 
@@ -538,7 +631,31 @@ Organized columns, heading for Valdris.
 
 **SABLE** : Soon. Maybe days.
 
-*(The warning lands. The triumph of the council fades.)*
+*(The warning lands. The room goes cold. The triumph of the
+council, the alliances, the careful diplomacy — it all thins
+like smoke.)*
+
+*(Edren sits down. Not in a chair. On the floor. Hands on his
+knees. The posture of a man recalculating everything.)*
+
+*(Torren [head_down]. Maren closes her eyes — she knew. She
+didn't want to be right.)*
+
+**LIRA** : The Pendulum. If Cael is compromised, and the
+Compact is moving—
+
+**EDREN** : Then we have tonight. Everyone get to your positions.
+Torren, the walls. Lira, the ley wards. Maren, the vault.
+Sable — stay close to Cael. If he moves, I want to know.
+
+**SABLE** : And if he doesn't listen?
+
+*(Edren looks at her.)*
+
+**EDREN** : He hasn't been listening for weeks. Just... be there.
+
+*(The party disperses. The Keep is quiet. Somewhere in the lower
+levels, a vault door hums.)*
 
 *(Flag `sable_warning_ignored` (12) set. The assault comes the
 next morning.)*

@@ -176,6 +176,23 @@ than the mine.)*
 
 **CAEL** : You hope.
 
+*(They move through the passage. Climbing. The geometric patterns
+on the walls thin, replaced by rough stone. The hum fades.)*
+
+**CAEL** : Edren. Those murals. The figures weren't holding the
+Pendulum up. They were holding something back.
+
+**EDREN** : I saw.
+
+**CAEL** : Despair. As a weapon. Or as a... state of being.
+Something those builders understood and we don't.
+
+**EDREN** : Let's make sure we don't have to understand it.
+Come on.
+
+*(They climb in silence. Behind them, the amber light dims. The
+mine goes dark.)*
+
 ---
 
 ## Scene 2: The Stranger at the Mine
@@ -232,20 +249,33 @@ around.
 **VAELITH** : Naturally. Safe journey, then. The trail west is
 clear — the soldiers are focused on the mine entrance.
 
+*(Vaelith pauses. Studies Cael — not Edren, not the satchel. Cael.
+A long, appraising look, as if recognizing something.)*
+
+**VAELITH** : Do take care of yourself, Cael. Old places do
+strange things to sensitive minds.
+
+*(Cael [step_back]. He didn't give his name.)*
+
+**CAEL** : How do you know my—
+
 *(Vaelith bows — a genuine, courteous bow — and walks back toward
-the darkness without haste. No threat made. No threat needed.)*
+the darkness without haste. No threat made. No threat needed.
+The question hangs unanswered.)*
 
 *(Edren and Cael watch until the grey cloak vanishes.)*
 
-**CAEL** : Who was that?
+**CAEL** : He knew my name. I didn't—
 
-**EDREN** : I don't know. And I don't like it.
+**EDREN** : I know. We didn't tell him.
 
-**CAEL** : He knew we'd come out this way.
+**CAEL** : And he knew the mine route. And that we'd come out
+this way. And he didn't try to take the Pendulum.
 
-**EDREN** : I know.
+**EDREN** : Which means either he doesn't want it, or he doesn't
+need to take it.
 
-*(They move on into the night.)*
+*(Neither option is comforting. They move on into the night.)*
 
 ---
 
@@ -364,9 +394,31 @@ Crown catching the sun.)*
 
 **CAEL** : I keep thinking about their faces.
 
-*(Edren says nothing. He walks. Behind them, Lira scans the
-treeline. Sable twists a coin between her fingers, watching
-everything.)*
+*(Edren says nothing. He walks.)*
+
+*(Behind them, Lira and Sable trail a few paces back. Lira scans
+the treeline — professional habit. Sable twists a coin between
+her fingers.)*
+
+**SABLE** : So. That thing in the satchel.
+
+**LIRA** : Don't ask.
+
+**SABLE** : I wasn't asking. I was observing. The commander's
+carrying it like it's made of glass, and your boyfriend hasn't
+stopped staring at it since we left.
+
+**LIRA** : He's not my — we just met.
+
+**SABLE** : Mhm. And I'm just a tourist.
+
+*(Lira doesn't respond. Sable pockets the coin.)*
+
+**SABLE** : For what it's worth — whatever that thing is, the
+Compact sent fifty soldiers to guard it. Fifty. They don't do
+that for mining equipment.
+
+**LIRA** : I know. That's why I came.
 
 *(The trail descends into deeper forest. The canopy closes
 overhead. A game title card appears:)*
@@ -394,13 +446,25 @@ party continues forward. The world opens ahead of them.
 
 *(Deep forest. Ancient trees so wide their roots form walls.
 Bioluminescent moss casts blue-green light on the undergrowth.
-The trail narrows to a path marked by carved wooden totems —
+The air is different here — thicker, warmer, alive in a way that
+Valdris air is not. Something breathes in these woods. Something
+old.)*
+
+*(The trail narrows to a path marked by carved wooden totems —
 faces worn smooth by weather, old script spiraling down their
-posts.)*
+posts. As the party passes the first totem, it vibrates. The
+second trembles visibly. The third shakes so hard its carvings
+blur.)*
+
+**SABLE** : Is that... normal?
+
+**LIRA** : No. That's a reaction. Something about what we're
+carrying is making them—
 
 *(A figure steps onto the trail ahead of them. Older, weathered
 hands, carrying a staff of living wood. He has been tracking them
-for some time. This is Torren.)*
+for some time. He heard the totems before he saw the party. This
+is Torren.)*
 
 **TORREN** : Stop there.
 
@@ -731,6 +795,31 @@ I'd like to compare my readings. The resonance patterns may
 correlate. I'll work with Cael — he has a mind for this kind of
 analysis.
 
+(If `party_has(lira)`.)
+*(Aldis notices Lira examining a ley resonance chart on the wall.)*
+
+**ALDIS** : You're the Forgewright defector. I read your conduit
+efficiency paper — the one the Consortium suppressed. Remarkably
+precise work. If you have time, I'd like to discuss your
+extraction rate projections.
+
+**LIRA** : You read that? It was classified.
+
+**ALDIS** : I'm a researcher. Finding classified documents is
+half the job.
+
+(If `party_has(maren)`.)
+*(Aldis looks up from his notes. Double-takes.)*
+
+**ALDIS** : Maren? You're... back?
+
+**MAREN** : Temporarily. Don't rearrange my study while I'm here.
+
+**ALDIS** : I reorganized it by subject three years ago. It's
+much more efficient now.
+
+**MAREN** : I'm sure it is.
+
 #### Dame Cordwyn (Knight's Barracks)
 
 <!-- Cross-ref: npcs.md § Dame Cordwyn -->
@@ -754,6 +843,26 @@ but he carries more than he lets on.
 
 **CORDWYN** : Keep an eye on him. That's not an order. It's a
 request.
+
+(If `party_has(torren)`.)
+*(Cordwyn eyes Torren. Professional assessment.)*
+
+**CORDWYN** : Spirit-speaker. You're a long way from the Wilds.
+
+**TORREN** : The Wilds follow where they're needed. So do I.
+
+**CORDWYN** : Good. I like people who don't need to be asked
+twice.
+
+(If `party_has(sable)`.)
+*(Cordwyn's jaw tightens slightly as Sable examines the weapons
+rack.)*
+
+**CORDWYN** : Touch nothing, thief.
+
+**SABLE** : I was admiring. There's a difference.
+
+**CORDWYN** : There isn't.
 
 #### Renn (Lower Ward Tavern)
 

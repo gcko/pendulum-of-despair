@@ -97,6 +97,15 @@ talents except being too stubborn to leave.
 
 **SABLE** : Guess that'll have to be enough.
 
+*(She reaches the street. A vendor at a half-collapsed stall
+sells bread at triple price. A woman stands in a doorway,
+staring at nothing. A ley-lamp on the corner flickers twice
+and goes dark.)*
+
+*(Sable walks past them all. She's not a hero. She's not a
+knight. She's the one who's still moving when everyone else
+has sat down. That has to count for something.)*
+
 ---
 
 ## Scene 22: Renn's Intelligence
@@ -288,10 +297,33 @@ hard. The grey frost is melting. The monks emerge from hiding.)*
 
 **SABLE** : Scattered. I'm collecting. You're first.
 
-(If Edren is NOT first reunion.)
-**SABLE** : Scattered. I found some of them.
+(If Edren is NOT first reunion and `lira_found` set.)
+**SABLE** : Scattered. Lira's with me. She infiltrated the
+Compact — found Cael's trail.
 
-*(She lists who she's already found.)*
+**EDREN** : She went back to the Compact? Alone?
+
+**SABLE** : She's not alone anymore. Neither are you.
+
+(If Edren is NOT first reunion and `torren_found` set.)
+**SABLE** : Torren's alive. The Wilds nearly killed him — he
+was holding back the corruption by himself. We stabilized the
+nexus.
+
+**EDREN** : The nexus held?
+
+**SABLE** : First clean ley energy since the rupture. The
+Pallor can be pushed back. That's what matters.
+
+(If Edren is NOT first reunion and `maren_found` set.)
+**SABLE** : I found Maren. She was in a ruin older than
+civilization. She found the pattern — the Pallor has done this
+before.
+
+**EDREN** : How many times?
+
+**SABLE** : Enough times that someone built a library to
+track it.
 
 **EDREN** : Then we keep moving. I wasted enough time sitting.
 

@@ -126,6 +126,15 @@ close. Don't stop. Please don't stop.
 
 **SABLE** : You heard him. Keep fighting.
 
+**EDREN** : We're not killing him. We're freeing him. Remember
+that.
+
+*(Torren [nod]. He drives his staff into the ground. Ley energy
+pulses — warm gold against the grey.)*
+
+**TORREN** : The spirits can feel him inside the grey. He's
+fighting it. We fight with him.
+
 ### 37d. False Hope
 
 *(When Cael would drop to 0 HP for the first time, Pallor energy
@@ -251,13 +260,33 @@ are at her sides. [head_down].)*
 *(Lira has not moved. She is looking at Cael. He is looking at
 her.)*
 
-**LIRA** : You knew. In the vault, the night before the siege.
-You already knew.
+(If `cael_last_night_lira` set.)
+**LIRA** : In the workshop. The night before. You asked me what
+the world looks like after. You already knew you wouldn't see it.
 
-**CAEL** : I knew enough. Not the door — not the details. But I
-knew I was the one the Pallor wanted, and I knew that meant I
-was the one who could end it. Everything else was just working
-out the how.
+**CAEL** : I wanted to hear you describe it. So I could carry
+that with me. Through the door.
+
+(If `cael_last_night_lira` NOT set.)
+**LIRA** : You didn't come to the workshop. The night before.
+You couldn't face me.
+
+**CAEL** : I couldn't face you and still do what I had to do.
+You would have seen it in my eyes and you would have stopped me.
+
+(If `cael_last_night_edren` set.)
+**LIRA** : Edren — he didn't know either. Did he? The training
+grounds. "Same time tomorrow."
+
+**CAEL** : I almost told him. The words were right there. But if
+I had said them, he would have locked me in the vault himself.
+
+(If `cael_last_night_maren` set.)
+**LIRA** : Maren knew. She didn't know what, but she knew
+something was wrong.
+
+**CAEL** : Maren always knows. That's her burden. Knowing things
+and not being able to stop them.
 
 **LIRA** : And you didn't tell me.
 
