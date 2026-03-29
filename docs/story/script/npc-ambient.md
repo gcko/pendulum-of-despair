@@ -112,6 +112,12 @@ feet to the left. He was right.
 **HARREN** : His face. I can't quite recall it. Polite. Grey coat.
 That's all I have. Isn't that strange?
 
+(If `cael_betrayal_complete` set.)
+**HARREN** : The boy who used to come in for sweet rolls — I heard
+what he did. Sat in his usual seat and had a drink the night before.
+I didn't notice anything wrong. I notice everything, and I didn't
+notice.
+
 (If `interlude_begins` set.)
 **HARREN** : Inn's full every night. Not with travelers. With
 people who have nowhere else to go.
@@ -124,6 +130,11 @@ I called one last month that lasted three minutes. Progress.
 (If `cael_nightmares_begin` set.)
 **ELARA** : The wind pact feels... thin. Like hearing someone
 breathe in the next room. Present, but distant.
+
+(If `cael_betrayal_complete` set.)
+**ELARA** : The pact broke. During the siege — I felt it snap,
+like a bowstring. The spirit screamed once, then silence. I've
+been calling every day since. Nothing.
 
 (If `interlude_begins` set.)
 **ELARA** : The spirit isn't dead. I can feel it. It just won't
@@ -144,11 +155,33 @@ Changed the signs. My deed meant nothing.
 it was the best of the season. I can't plant it here. This isn't
 my soil.
 
+(If `cael_betrayal_complete` set.)
+**OSRIC** : The knight who brought in that artifact — they say he
+took it and ran. I don't understand why people are surprised.
+Everyone runs eventually. I ran from Millhaven. At least I didn't
+pretend I was saving anyone.
+
+(If `interlude_begins` set.)
+**OSRIC** : I sat down yesterday. In the doorway. Just sat down.
+Couldn't think of a reason to stand up. Took an hour before I
+remembered the seed grain. That got me up. Barely.
+
+*(If spoken to again.)*
+
+**OSRIC** : The grey is in the refugee quarter now. Not the mist
+— the feeling. People stop talking mid-sentence. Stare at nothing.
+I watch the seed grain to remind myself things still grow.
+
 (If `epilogue_complete` set.)
 **OSRIC** : I planted it. The seed grain. In a pot on the
-windowsill. It's not a field, but it's growing.
+windowsill. It's not a field, but it's growing. Hanna would
+have laughed at me. A whole field's worth of hope in a clay pot.
 
 ### Lord Chancellor Haren (Council Chambers)
+
+**HAREN** : The king values your counsel, Edren. But value and
+action are separated by a council vote, and I cannot guarantee
+the count.
 
 (If `cael_betrayal_complete` set.)
 **HAREN** : The king valued your counsel, Edren. But the king
@@ -163,6 +196,11 @@ unopened. The rest — I suspect they never arrived at all.
 **ISEN** : I command six boats and twelve sailors. The Compact
 has forty gunships. If you're asking about naval strategy,
 recalibrate your expectations.
+
+(If `cael_betrayal_complete` set.)
+**ISEN** : The harbour's full of debris from the siege. I've got
+my crews clearing it, but we lost two boats to fire. Down to
+four. Four boats against whatever comes next.
 
 (If `interlude_begins` set.)
 **ISEN** : I stopped waiting for orders. The crown's dead, the
@@ -227,7 +265,7 @@ failed to see it coming. A good trainer sees the cracks.
 didn't come back from the siege. His is at the bottom. I carve
 it deeper than the others. He earned that.
 
-### Thessa (Temple of the Old Pact)
+### Thessa (Temple of the Old Pacts)
 
 **THESSA** : The pact stones are quiet today. That used to mean
 peace. Now I think it means the spirits are holding their breath.
@@ -250,7 +288,7 @@ folded, face wet with tears she hasn't wiped away.)*
 One note, sustained, clean. I sat and listened until it stopped.
 It lasted an hour.
 
-### Jorin Ashvale (Crown District, Minor Noble)
+### Jorin Ashvale (Eastern Border → Valdris Crown, Minor Noble)
 
 **JORIN** : The Ashvale estate is three generations of careful
 management. My grandfather bought the land. My father built the
@@ -372,7 +410,7 @@ Like a scholar who actually listens.
 
 *(Fourth exchange — deeper.)*
 
-**RENN** : Here's what bothers me. My contact in Corrund — Tash,
+**RENN** : Here's what bothers me. My contact in Caldera — Tash,
 you'll meet her — she described the same man. Same voice, same
 grey coat. But Tash met him six months before Harren did. The
 distances don't add up. Unless there are two of them. Or unless
@@ -812,6 +850,12 @@ been waiting a very long time.
 **HADLEY** : Room's clean. Ale's honest. I don't ask where
 you're from and you don't ask where the ale's from.
 
+(If `cael_betrayal_complete` set.)
+**HADLEY** : Riders came through last night. Valdris soldiers,
+heading south. Said the capital was hit. Said the king was dead.
+I poured them drinks and didn't charge. Some nights the ale
+should be free.
+
 (If `interlude_begins` set.)
 **HADLEY** : Valdris refugees in the east wing. Compact deserters
 in the west. They eat at the same tables. Nobody starts anything.
@@ -836,6 +880,17 @@ for business. People need things they didn't know they needed.
 
 **MARREK** : I've been on this road longer than most people have
 been alive. The road doesn't change. People do.
+
+(If `interlude_begins` set.)
+**MARREK** : Business is good. Isn't that strange? The world is
+ending and people still need rope, and candles, and salt. I have
+all three. Interesting times.
+
+*(If spoken to again.)*
+
+**MARREK** : You're wondering how I'm still here. Still stocked.
+Still smiling. I wonder that too, some nights. But the road needs
+a merchant, and here I am.
 
 (If `epilogue_complete` set.)
 *(Marrek sits at the crossroads. He raises a glass as the party

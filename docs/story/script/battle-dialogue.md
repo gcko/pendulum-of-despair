@@ -278,8 +278,8 @@ You should listen.
 
 **CAEL** : Sable. Still showing up. I always admired that.
 
-**CAEL** : Maren, you knew. In the study that night. You knew,
-and you didn't stop me. Thank you.
+**CAEL** : Maren. You called it a door. Back at the refuge. You
+were right about all of it. And you couldn't stop me anyway.
 
 *(At 50% HP — voice cracks:)*
 **CAEL** : I'm doing this for you. All of it. The machine, the
@@ -609,9 +609,10 @@ finally allowed to stand down.)*
 
 **IRON WARDEN** : Orders... fulfilled. Post... vacant.
 
-**LIRA** : It wasn't trying to kill us. It was trying to
-understand us. After all this time, it wanted to know if the
-people it was built to protect still existed. We were the answer.
+**LIRA** : Its core directive wasn't combat — it was identification.
+It scanned us the entire fight. Cross-referencing against a
+template its builders left. We matched. After all this time, we
+matched.
 
 #### Cael's Echo (Floor 20)
 <!-- Cross-ref: bestiary/optional.md § Cael's Echo -->
@@ -682,7 +683,7 @@ it settles, and the party is alone.)*
 
 **EDREN** : Get up. That's an order.
 
-**LIRA** : No — hold on. We'll get to you.
+**LIRA** : Don't move — you'll make the damage worse. Stabilize.
 
 **TORREN** : Stay with us. The spirits aren't done with you yet.
 
