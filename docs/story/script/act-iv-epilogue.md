@@ -648,4 +648,5 @@ but growing. A shoot reaches for the light beside a knight's
 sword, and the spirits remember.*
 
 *Dialogue script continues: [← Act III](act-iii.md) |
-[README](README.md) | NPC Ambient (planned) | Battle Dialogue (planned)*
+[README](README.md) | [NPC Ambient](npc-ambient.md) |
+[Battle Dialogue](battle-dialogue.md)*
