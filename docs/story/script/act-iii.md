@@ -483,9 +483,8 @@ not strength, but understanding.)*
 
 **SABLE** : Barely.
 
-**LIRA** : No. Not barely. We made it through because the Pallor
-tested what we're afraid of, and none of us were afraid of the
-thing it expected.
+**LIRA** : No. Not barely. The Pallor tested us at our weakest
+points, and our weakest points turned out to be load-bearing.
 
 **MAREN** : The lesson. Each trial: the Pallor feeds on denial.
 Acceptance starves it. That's why we're still standing.

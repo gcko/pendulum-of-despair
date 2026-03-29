@@ -248,7 +248,7 @@ something that wasn't your fault.
 **EDREN** : I can't—
 
 **SABLE** : You can. I know you can, because I'm here, and I'm
-nobody. I'm a thief from the Caldera undercity with no money, no
+nobody. I'm a thief from the Bellhaven stilts with no money, no
 titles, and no plan. And I'm still moving. So if I can do it, you
 damn well can.
 
