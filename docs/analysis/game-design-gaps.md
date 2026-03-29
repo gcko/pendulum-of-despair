@@ -564,8 +564,8 @@ Now complete.
   - [x] Act I scenes (Ember Vein tutorial through Valdris arrival — 7 scenes, act-i.md)
   - [x] Act II scenes (diplomacy, council, betrayal, siege — 12 scenes, act-ii-part-1.md + act-ii-part-2.md)
   - [x] Interlude scenes (Sable's journey, 4 reunions, Maren's truth — 8 scenes, interlude.md)
-  - [x] Act III scenes (march, 5 trials, campfire, Vaelith, approach — 12 scenes, act-iii.md)
-  - [x] Act IV + Epilogue (final battle, sacrifice, memorial, post-game — 6 scenes, act-iv-epilogue.md)
+  - [x] Act III scenes (march, 5 trials, campfire, Vaelith, approach — 9 scenes, act-iii.md)
+  - [x] Act IV + Epilogue (final battle, sacrifice, memorial, post-game — 8 scenes, act-iv-epilogue.md)
 - [ ] NPC dialogue for all towns/locations per npcs.md (Layer 2 — planned):
   - [ ] Townsfolk ambient dialogue (changes per act/event flag)
   - [ ] Shop/inn/service NPC lines

@@ -239,7 +239,7 @@ characterizations exactly.
 
 ## Section 5: Layer 1 Scene Inventory
 
-Layer 1 covers the narrative spine — 45 scripted scenes mapped to
+Layer 1 covers the narrative spine — 44 scripted scenes mapped to
 outline.md and events.md. Implementation produces these scenes across
 the six narrative script files.
 
@@ -282,7 +282,7 @@ the six narrative script files.
 26. Finding Maren — Archive of Ages, truth revealed
 27. Full party briefing — everyone assembled
 
-### Act III (12 scenes) -> act-iii.md
+### Act III (9 scenes) -> act-iii.md
 
 28. March to Convergence — Tier 2 walk-and-talk
 29. Edren's trial (Hall of Crowns) — pre-fight + completion
@@ -294,7 +294,7 @@ the six narrative script files.
 35. Vaelith boss — pre-fight + defeat (Tier 1)
 36. Convergence approach
 
-### Act IV + Epilogue (6 scenes) -> act-iv-epilogue.md
+### Act IV + Epilogue (8 scenes) -> act-iv-epilogue.md
 
 37. Cael three-phase boss — intro, mid-battle, defeat
 38. Cael's explanation — door mechanics
@@ -302,6 +302,8 @@ the six narrative script files.
 40. The Sacrifice — Cael enters door (Tier 1)
 41. Epilogue — world heals, character fates
 42. Memorial scene — sword in meadow (Tier 1)
+42b. Post-game tavern opening — Sable's greeting
+42c. First Tree Seed — all five members at Convergence meadow
 
 ---
 
