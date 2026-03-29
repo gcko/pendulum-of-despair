@@ -1433,8 +1433,8 @@ Scripted Events:
       shoot pushes through cracked stone."
     - boss.hp = 0 (defeat)
     - environmental: Green shoot appears in arena
-    - ability_unlock: Torren learns Rootsong (HP + MP healing,
-      draws from ley network)
+    - ability_unlock: Torren learns Rootsong (party-wide heal +
+      all spirit Favor +1, once per battle)
 
   At boss.hp <= 0 via damage (if Release not used):
     - dialogue: "The tree shatters. Stone fragments scatter across
@@ -1579,9 +1579,9 @@ Scripted Events:
       seen. The catalogue was never meant to be read with compassion.
       It shatters. Fragments of pages drift down like snow."
     - boss.hp = 0 (defeat)
-    - ability_unlock: Maren learns Pallor Sight (see corruption
-      levels, reveal hidden weaknesses in Vaelith fight and
-      Convergence)
+    - ability_unlock: Maren learns Pallor Sight (reveals all enemy
+      weaknesses, HP, immunities; Pallor-type enemies also show
+      regen rates and phase thresholds)
 
   Turn 8+ (if no choice made, repeating every 3 turns):
     - dialogue: The Index: "Decide. The weight grows."
@@ -1724,8 +1724,10 @@ Scripted Events:
       her grip. She slams them together. Light erupts -- not grey,
       not gold -- something between. A blade forms in her hand,
       forged from pure defiance."
-    - ability_unlock: Lira gains Pallor-Piercing weapon (deals full
-      damage to Vaelith; other party members deal 75% damage)
+    - ability_unlock: Lira manifests Cael's Edge (ATK 72, Spirit
+      element, per equipment.md). Grants Sever Bond: 1-use 3.0×
+      physical attack ignoring Vaelith's DEF. Cael's Edge deals
+      full damage to Vaelith; other party members deal 75% damage.
     - mode_switch: Invulnerable → Scholar
 
   At boss.hp <= 37,500 (once):
@@ -2509,13 +2511,17 @@ PHASE 1: Calculated (HP 45,000; Lv 36 stat row)
          physical damage, ignores 50% DEF; "You can't guard what you
          can't see.")
       3. boss.hp_percent <= 75 AND turn_counter % 4 == 0 →
-         Despair Pulse (party_wide, 300-400 magic damage + 30%
-         Despair chance; grey energy seeps from Cael's armor;
-         "I know how this feels. I'm sorry.")
-      4. turn_counter % 3 == 0 → Knight's Gambit (single_target
-         lowest HP, 450-550 physical damage; calculated strike
-         targeting the weakest; "Tactical. Efficient. Like he
-         taught you.")
+         Despair's Grip (party_wide, reduces all party members'
+         DEF by 20% for 3 turns; grey energy seeps from Cael's
+         armor; "I know how this feels. I'm sorry." Corrupted
+         mirror of Hold the Line — the defense he once gave now
+         taken away.)
+      4. turn_counter % 3 == 0 → Marked for Sorrow (single_target
+         lowest HP, target takes 1.5x damage from all sources for
+         2 turns; Cael designates the weakest, marking them for
+         suffering; "Tactical. Efficient. Like he taught you."
+         Corrupted mirror of Vanguard Strike — the focus that once
+         empowered now condemns.)
       5. Default → Disciplined Strike (single_target highest threat,
          300-400 physical damage; clean swordwork, no wasted motion)
 
@@ -2533,14 +2539,24 @@ PHASE 1: Calculated (HP 45,000; Lv 36 stat row)
 
   Mode: Pallor
     Priority:
-      1. turn_counter % 3 == 0 → Grey Tide (party_wide, 400-500
+      1. turn_counter == 1 (Phase 2 start) → Hollow Advance (self,
+         +25% ATK for 3 turns; Cael's body surges with grey power;
+         "The Pallor feeds him strength he never asked for."
+         Corrupted mirror of Press Forward — the attack boost he
+         once gave allies now fuels his own corruption.)
+      2. turn_counter % 4 == 0 → Draining Whisper (self, regenerates
+         5% max HP per turn for 3 turns; grey tendrils leech energy
+         from the ley lines; "He's healing. Not from skill — from
+         the Pallor itself." Corrupted mirror of Second Wind — the
+         regen that once sustained allies now sustains the enemy.)
+      3. turn_counter % 3 == 0 → Grey Tide (party_wide, 400-500
          magic damage + Despair status 50% chance; "The grey crashes
          over everything. There is no technique here. Just force.")
-      2. turn_counter % 2 == 0 → Pallor Rend (single_target highest
+      4. turn_counter % 2 == 0 → Pallor Rend (single_target highest
          threat, 600-700 physical damage, ignores 25% DEF; "The
          sword bites deeper than it should. The Pallor sharpens
          everything.")
-      3. Default → Corrupted Strike (single_target random, 350-450
+      5. Default → Corrupted Strike (single_target random, 350-450
          physical damage; wild, uncontrolled swings; "This is not
          how he fights. This is how the Pallor fights through him.")
 
@@ -2562,7 +2578,7 @@ Scripted Events:
   At boss.hp_percent <= 75, Phase 1 (once):
     - dialogue: Cael: "Good. Don't hold back. I can feel the Pallor
       pulling. If you hesitate, it takes me faster."
-    - ability_unlock: Despair Pulse added to Cael's priority list
+    - ability_unlock: Despair's Grip added to Cael's priority list
 
   At boss.hp_percent <= 50, Phase 1 (once):
     - dialogue: Cael: "I'm doing this for you. All of it. The
@@ -2597,6 +2613,18 @@ Scripted Events:
   At boss.hp_percent <= 50, Phase 2 (once):
     - dialogue: Cael (strained): "I can still hear you. I can still
       -- the machine is close. Don't stop. Please don't stop."
+
+  False Hope trigger, Phase 2 (once):
+    - When Cael's Phase 2 HP would reach 0, he survives at 1 HP
+      instead. The Pallor surges — grey light flares from his armor.
+      Corrupted mirror of Unbreakable — the survival that once
+      protected allies now prolongs the enemy's suffering.
+    - dialogue: "He should have fallen. The Pallor won't let him."
+    - Note: This fires exactly once. The next killing blow ends
+      Phase 2 normally. If Draining Whisper is active, Cael
+      regenerates 5% max HP/turn (1,750 HP) after surviving —
+      the party must out-damage the regen to finish him. This
+      is intentional: the Pallor refuses to let go.
     - dialogue: "Something in his voice is still Cael. Buried under
       the grey, but there."
 

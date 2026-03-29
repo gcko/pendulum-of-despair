@@ -265,6 +265,7 @@ theme reflecting Lira's engineering background.
 | Piston Driver | 52 | — | — | 15% Stun chance | 8,500 | 4 | Act III shop |
 | Architect's Hammer | 52 | — | Storm | +25% vs Constructs | — | 4 | The Architect boss drop |
 | Lira's Masterwork | 90 | +5 DEF | — | Forgewright device uses +1 | — | 5 | Crafted from Grey Mist Essence + Arcanite Ingot |
+| Cael's Edge | 72 | — | Spirit | Sever Bond: 1-use 3.0× physical attack ignoring DEF (Vaelith fight only) | — | 5 | `trial_lira_complete` (Pallor Wastes trial, manifests at Vaelith fight) |
 
 ---
 

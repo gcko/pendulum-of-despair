@@ -1776,13 +1776,13 @@ E.........#####..........#####..........#####.....
 ```
 
 **Trial 3 (B3): Torren's Trial**
-Torren faces the Last Voice -- an ancient Great Spirit cracked with grey stone, barely alive, asking to rest. The spirits of the Wilds accuse him of failing them. The correct response: use Spiritcall's Release command to let the Great Spirit die peacefully. A single green shoot appears. Torren gains Rootsong (healing ability restoring HP and MP, drawing from the ley network).
+Torren faces the Last Voice -- an ancient Great Spirit cracked with grey stone, barely alive, asking to rest. The spirits of the Wilds accuse him of failing them. The correct response: use Spiritcall's Release command to let the Great Spirit die peacefully. A single green shoot appears. Torren gains Rootsong (party-wide heal + all spirit Favor +1, once per battle per [abilities.md](abilities.md)).
 
 **Trial 4 (B4): Sable's Trial**
-Sable faces the Open Door -- a literal open door at the end of the alley leading to safety, warmth, and freedom. Shadows of Sable (copies using her Tricks moveset) urge her through. Not a combat encounter. The correct response: turn around and walk back into the alley, toward the party, toward danger. The door closes. The shadows vanish. Sable gains Unbreakable Thread (passive preventing forced removal from battle, counters Pallor Incarnate's Reality Tear).
+Sable faces the Open Door -- a literal open door at the end of the alley leading to safety, warmth, and freedom. Shadows of Sable (copies using her Tricks moveset) urge her through. Not a combat encounter. The correct response: turn around and walk back into the alley, toward the party, toward danger. The door closes. The shadows vanish. Sable gains Unbreakable Thread (passive: once per battle, any ally survives lethal damage at 1 HP per [abilities.md](abilities.md)).
 
 **Trial 5 (B5): Maren's Trial**
-Maren faces the Index -- a vast catalogue entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence).
+Maren faces the Index -- a vast catalogue entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (passive: reveals all enemy weaknesses, HP, and immunities from battle start per [abilities.md](abilities.md)).
 
 - `S` (bottom-right): Final save point before the Convergence.
 - *(near final save point)* A loose page in archaic script, placed deliberately on the save point's ley-line clearing -- the only spot with color in the grey waste. Torren and Maren together translate: "This cycle has a forgewright who loves the vessel. That is new. I wonder if it will matter." The handwriting has not changed across eight hundred years and six locations. The ink is fresh. The page was left here for the party to find. Maren's hands shake: "Every fragment. Every location. The same hand. Eight centuries of writing and the penmanship never aged." If the party has found all six fragments, Maren adds: "A scholar. A diplomat. Someone who walks everywhere and writes everything down. Someone who has been watching since before any of us were born."
@@ -1919,7 +1919,7 @@ Speaks clearly: "Let me go." Standard attacks deal reduced damage.
 
 **Resolution Mechanic:** Torren uses Spiritcall and selects **Release** (replaces "Call"). One Release ends the fight. The Great Spirit dies peacefully. Forest remains stone, but a single green shoot appears.
 
-**Unlock:** **Rootsong** -- healing ability restoring HP and MP, drawing from the ley network.
+**Unlock:** **Rootsong** -- party-wide heal + all spirit Favor +1, once per battle (per [abilities.md](abilities.md)).
 
 **Weakness:** Flame (150%). **Resistance:** Spirit (50%). **Drop:** Petrified Heartwood (crafting material).
 
@@ -1936,7 +1936,7 @@ A literal door at the end of the alley, standing open. Warm light, no enemies, f
 
 **Resolution Mechanic:** No combat. The player navigates Sable to **turn around and walk back** into the alley -- toward the party, toward danger. Walking through the door triggers a false ending (screen fades to black, then the player reappears at the Crooked Mile entrance; all enemies respawn and progress is lost). Walking back closes the door. Shadows vanish. Sable says nothing. She just walks back.
 
-**Unlock:** **Unbreakable Thread** -- passive preventing forced removal from battle (counters Pallor Incarnate's Reality Tear).
+**Unlock:** **Unbreakable Thread** -- passive: once per battle, any ally survives lethal damage at 1 HP (per [abilities.md](abilities.md)).
 
 ### Pallor Trial 5: The Restricted Stacks (Maren)
 
@@ -1957,7 +1957,7 @@ Neither option is correct.
 
 **Resolution Mechanic:** Select **Read One Entry** (third option, appears when examining the Index). Maren reads one person's entry and grieves for them individually. The Index shatters -- built on the premise that people are data, one person mourned breaks its logic.
 
-**Unlock:** **Pallor Sight** -- see corruption levels on enemies/objects, revealing hidden weaknesses during Vaelith fight and Convergence.
+**Unlock:** **Pallor Sight** -- passive: reveals all enemy weaknesses, HP, and immunities from battle start. Pallor-type enemies also show regen rates and hidden thresholds (per [abilities.md](abilities.md)).
 
 **Weakness:** Spirit (150%). **Resistance:** Void (50%). **Drop:** Archivist's Lens (accessory -- boosts Arcanum abilities).
 
@@ -2012,7 +2012,7 @@ Vaelith shifts to Pallor-fueled abilities. Form destabilizes -- cracks of grey l
 
 **Maren's Special Interaction:** If Maren has Pallor Sight (from her trial), critical hit rate doubled for all party members.
 
-**Sable's Special Interaction:** Unbreakable Thread prevents forced removal from battle. Sable cannot be targeted by Vaelith's Unraveling for removal effects.
+**Sable's Special Interaction:** Unbreakable Thread's once-per-battle survival trigger can save an ally targeted by Vaelith's lethal Unraveling attack. If Unraveling would kill an ally, the Thread fires and the ally survives at 1 HP.
 
 **Weakness:** Spirit (125%).
 **Resistance:** Void (50%), Frost (75%).
@@ -2121,7 +2121,7 @@ Cael descends from the machine to confront the party. He fights with his old kni
 **Boss: Cael, Knight of Despair (Phase 1)**
 - 45,000 HP.
 - Uses enhanced versions of party member abilities. Counters with moves that specifically target whoever attacked last.
-- At 75%: Despair Pulse (party-wide Despair debuff).
+- At 75%: Despair's Grip (party-wide DEF -20% for 3 turns — corrupted Hold the Line per [abilities.md](abilities.md)).
 - At 50%: Shadow Step -- disappears and reappears behind a random party member for a critical strike.
 - At 25%: "I'm doing this for you" -- brief invulnerability while delivering dialogue. The party cannot skip this. It hurts.
 - At 0%: Cael staggers but the Pallor surges through him. Phase 2 begins.

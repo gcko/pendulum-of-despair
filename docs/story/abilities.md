@@ -78,11 +78,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Cael is the party's force multiplier. His Rally commands make every other character stronger. The player should grow to depend on him.
 - **The Betrayal:** When Cael leaves the party, the sudden absence of Rally buffs is felt mechanically. Fights become harder. This is intentional — the player should feel the loss.
 - **Act III Boss Fight (vs. Cael):** Cael uses corrupted versions of his Rallies against the party:
-  - *Hold the Line* becomes **Despair's Grip** — reduces all party members' Defense by 20%.
-  - *Press Forward* becomes **Hollow Advance** — boosts all enemies' Attack by 25%.
-  - *Second Wind* becomes **Draining Whisper** — enemies regenerate HP each turn.
+  - *Hold the Line* becomes **Despair's Grip** — reduces all party members' DEF by 20% for 3 turns.
+  - *Press Forward* becomes **Hollow Advance** — Cael gains +25% ATK for 3 turns (self-buff, not party).
+  - *Second Wind* becomes **Draining Whisper** — Cael regenerates 5% max HP per turn for 3 turns.
   - *Vanguard Strike* becomes **Marked for Sorrow** — one party member takes 1.5x damage from all sources for 2 turns.
-  - *Unbreakable* becomes **False Hope** — an enemy that would be defeated instead survives at 1 HP (once per phase).
+  - *Unbreakable* becomes **False Hope** — Cael survives at 1 HP once when his Phase 2 HP would reach 0.
 - The player recognizes these as twisted mirrors of abilities they once relied on. This is the mechanical expression of betrayal.
 
 ---
@@ -122,6 +122,8 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Lira has access to Shock Coil, Bulkhead, and Arc Trap — practical, defensive tools reflecting her cautious defection from the Compact.
 - **Interlude:** While searching for Cael in the Compact, Lira reverse-engineers Pallor-corrupted Forgewright tech. This unlocks Mending Engine and Overcharge — she's turning the enemy's tools against them.
 - **Act III:** Arcanite Colossus unlocks after Lira commits to fighting Cael rather than saving him. The Colossus represents her accepting that Forgewright craft isn't inherently destructive — it's what you build with it that matters. Disrupt is available as a scripted action during the Phase 2 boss fight (defined in the next bullet).
+- **Act III (Pallor Trial):** Lira faces the Perfect Machine — a flawless automaton with Cael's face. Completing the trial unlocks her latent weapon forge ability (per `trial_lira_complete`). This is a prerequisite for the Vaelith fight.
+- **Act III (vs. Vaelith):** When the Vaelith fight begins, Lira automatically manifests **Cael's Edge** — a weapon forged from her connection to Cael. This shatters Vaelith's Pallor barrier (the fight cannot start without it, which is why `trial_lira_complete` is a prerequisite for `vaelith_defeated`). Cael's Edge is a permanent weapon: ATK 72, Spirit element (effective against Pallor, per [equipment.md](equipment.md)). It also grants **Sever Bond** (1 use, Vaelith fight only): a 3.0× ability multiplier physical attack with Spirit element that ignores Vaelith's DEF entirely (DEF treated as 0 in the damage formula). After the Vaelith fight, Cael's Edge remains as permanent equipment (replacing her current weapon if stronger) but Sever Bond is consumed.
 - **Act III Boss (vs. Cael):** Cael's machine at the Convergence uses corrupted Forgewright technology. Lira can spend a turn to **Disrupt** machine components during Phase 2, reducing the boss's abilities. (Disrupt is a scripted battle action available only during the Phase 2 boss fight. It costs 2 AC, targets one of Cael's ley line anchors, and disables it for 3 turns. Each anchor disabled reduces the machine's power by 25%.) This is a unique interaction only she can perform.
 
 ---
@@ -147,7 +149,8 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Ember Wing** (Flame Spirit) | Level 11 | 10 MP | Flame damage to all enemies. 40% chance to inflict Burn (Flame damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
 | **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
-| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. |
+| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. | N/A |
+| **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP each (same per-target potency as Dewfall) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
 
 **Synergies:**
 - Torren + Edren: Thornveil on Edren while he's in Ironwall stance means enemies take counter-damage from both Riposte and the thorn barrier.
@@ -157,7 +160,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Story Integration:**
 - **Acts I-II:** Torren has Thornveil, Dewfall, and Ember Wing. He's the party's flexible support — healing, damage, and protection in one command.
 - **Interlude:** Torren's self-sacrifice to hold back the corruption in the Wilds is reflected mechanically — when the party finds him, his max HP is permanently reduced by 15% (he burned his life force). However, he gains Stoneheart, Greyveil, and Convergence Chorus. The spirits he nearly died protecting now answer more readily.
-- **Act III (Pallor Trials):** During Torren's trial, the spirits turn hostile. The player fights corrupted versions of each spirit Torren has called. Defeating them without killing them (reducing to 1 HP rather than 0) preserves their Favor ratings. Killing them resets Favor to 0. This creates a meaningful combat puzzle during the trial.
+- **Act III (Pallor Trials):** During Torren's trial, the spirits turn hostile. The player fights corrupted versions of each spirit Torren has called. Defeating them without killing them (reducing to 1 HP rather than 0) preserves their Favor ratings. Killing them resets Favor to 0. This creates a meaningful combat puzzle during the trial. Completing the trial unlocks Rootsong — Torren's acceptance that imperfect protection is better than abandonment. The party-wide Favor boost reflects the spirits' renewed trust.
 - **Greyveil:** This spirit is unique — it represents the boundary between the living world and the Pallor. It's the most effective tool the party has against Pallor-type enemies, but it's also the spirit most vulnerable to corruption.
 
 **Pallor-zone action:** Purify (0 MP, reverses corrupted spirit effect to correct targets, prevents further corruption for remaining duration). Available only in Pallor-corrupted zones.
@@ -196,7 +199,15 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Sable has Filch, Smokescreen, and Shiv. She's scrappy and opportunistic — a street survivor who fights with what she finds.
 - **Interlude (Sable's Journey):** This is Sable's arc — she's the playable character during the Interlude. Misdirect and Ransack unlock during this sequence as she grows from a petty thief into the party's connective thread. Her abilities evolve from self-preservation into team support.
 - **Wild Card:** Unlocks after Sable reassembles the full party. Represents her growth — she's no longer just stealing to survive, she's using everything she has for the people she cares about. The scaling based on stolen goods reflects her philosophy: the more you give of yourself, the more powerful the result.
-- **Act III (Pallor Trial):** Sable's trial tells her she's insignificant. During this fight, all of Sable's Tricks have their cooldowns doubled and Filch has halved success rate — the Pallor is trying to make her feel useless. Overcoming the trial permanently removes the debuff and grants Wild Card a reduced cooldown (4 turns instead of 5).
+- **Act III (Pallor Trial):** Sable's trial tells her she's insignificant. During this fight, all of Sable's Tricks have their cooldowns doubled and Filch has halved success rate — the Pallor is trying to make her feel useless. Overcoming the trial permanently removes the debuff, grants Wild Card a reduced cooldown (4 turns instead of 5), and unlocks Unbreakable Thread.
+
+**Unbreakable Thread** (passive, unlocked from `trial_sable_complete`):
+Once per battle, when any ally would be reduced to 0 HP, they survive
+at 1 HP instead. Triggers automatically — Sable does not need to act.
+She just needs to be alive and in the active party. This mirrors Cael's
+Unbreakable Rally (lost when he left) but as a permanent passive rather
+than an MP-costed buff. The trial told her showing up is enough. Her
+presence proves it.
 
 ---
 
@@ -232,7 +243,16 @@ Each party member has one unique command in their battle menu alongside Fight, M
 - **Acts I-II:** Maren has Siphon and Resonance. She's the party's magical expert but holds back, reflecting her secretive nature. She knows more than she lets on.
 - **Interlude (Finding Maren):** In the ancient ruin, Maren discovers records of previous Pallor cycles and the meta-magic used to fight them. This unlocks Unweave, Ley Surge, and Mirrorsong — her full potential, held back until she was sure the knowledge wouldn't cause more harm.
 - **Annulment:** Unlocks alongside the revelation that the Pallor has tried this before. Represents Maren's ultimate conclusion — sometimes the only way forward is to clear the board entirely and start over. It's as much philosophy as it is combat technique.
-- **Act III (Pallor Trial):** Maren's trial pits her against her younger self, who casts spells Maren hasn't seen since her years at court. The Weave Gauge fills rapidly during this fight. Using Annulment during the trial triggers special dialogue: *"I didn't waste those years. I spent them learning how to do this."*
+- **Act III (Pallor Trial):** Maren's trial pits her against her younger self, who casts spells Maren hasn't seen since her years at court. The Weave Gauge fills rapidly during this fight. Using Annulment during the trial triggers special dialogue: *"I didn't waste those years. I spent them learning how to do this."* Completing the trial unlocks Pallor Sight.
+
+**Pallor Sight** (passive, unlocked from `trial_maren_complete`):
+All enemies in battle have their elemental weaknesses, HP values, and
+status immunities visible from battle start (normally hidden until
+discovered through experimentation). Additionally, Pallor-type enemies
+have their current HP regen rate displayed and any hidden phase
+thresholds revealed. Pure information — no combat power increase.
+Maren's knowledge IS the reward. She sees what others can't because
+she paid the price to learn.
 - **Act III Boss (vs. Cael, Phase 2):** Maren can use Unweave on the Pallor's corruption anchoring Cael, dealing bonus damage to the incarnation and briefly revealing the real Cael underneath.
 
 ---
@@ -447,6 +467,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 17 | **[S] Mending Engine** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | 22 | **[S] Overcharge** | — | Interlude: reverse-engineers Pallor tech in the Compact |
 | — | **[S] Arcanite Colossus** | — | Act III: commits to fighting Cael |
+| — | **[S] Cael's Edge** (weapon + Sever Bond) | — | Act III: Pallor Wastes trial (`trial_lira_complete`) |
 
 ### Torren (Spiritcall)
 
@@ -460,6 +481,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | — | — | Seal Tongue (cross-train) | Act III scene with Maren |
 | 20 | **[S] Greyveil (Twilight Spirit)** | — | Interlude: party finds Torren |
 | — | **[S] Convergence Chorus** | — | Interlude: ley line nexus stabilization |
+| — | **[S] Rootsong** | — | Act III: Pallor Wastes trial (`trial_torren_complete`) |
 
 *Note: Torren's Interlude unlocks represent the spirits' gratitude for his sacrifice. His max HP is permanently reduced by 15% after the Interlude — a meaningful trade.*
 
@@ -473,6 +495,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | 14 | **[S] Misdirect** | Interlude: Sable's journey (learned infiltrating the Compact) |
 | 19 | **[S] Ransack** | Interlude: Sable's journey (learned reuniting the party) |
 | — | **[S] Wild Card** | Interlude: full party reassembled |
+| — | **[S] Unbreakable Thread** (passive) | Act III: Pallor Wastes trial (`trial_sable_complete`) |
 
 ### Maren (Arcanum + Ley Line Magic)
 
@@ -492,6 +515,7 @@ Story-triggered unique-command abilities are marked with **[S]** in the tables b
 | — | — | — | Rekindling (cross-train) | Act III scene with Torren |
 | 34 | — | Convergence Flare | — | — |
 | — | **[S] Annulment** | — | — | Interlude: learns truth of Pallor's cycle |
+| — | **[S] Pallor Sight** (passive) | — | — | Act III: Pallor Wastes trial (`trial_maren_complete`) |
 
 ---
 
