@@ -603,8 +603,8 @@ someone reaches this point. Every cycle, they fail.
 *(They sit down on the stone. Not a fighting stance. An exhausted
 one. For a long moment, they simply look at the party.)*
 
-**VAELITH** : I'm tired, you know. Eight hundred years. Eight
-hundred cycles of watching someone find the door, watching
+**VAELITH** : I'm tired, you know. Eight hundred years. Every
+cycle, the same — watching someone find the door, watching
 someone open it, watching the world grey out and fold.
 
 *(They stand. Slowly. Remove their spectacles. Fold them

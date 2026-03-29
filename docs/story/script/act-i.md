@@ -603,16 +603,17 @@ There were dead miners — no wounds. Their faces were—
 
 *(She sets the lens down. Steps back.)*
 
-**MAREN** : This thing has no power. It's not a weapon, not a
-source, not a tool.
+**MAREN** : This thing has no power of its own. It's not a weapon,
+not a source, not a tool.
 
 **LIRA** : Then what is it?
 
 *(Maren [bubble_ellipsis]. A pause — she is choosing her words
 with care.)*
 
-**MAREN** : It's a door. And something on the other side knows
-you opened it.
+**MAREN** : It's a conduit. A focus point for something beyond it.
+Think of it as a handle on a door that's been sealed for a very
+long time. And something on the other side knows you touched it.
 
 *(Silence. The spirit creatures have withdrawn entirely. The
 Pendulum sits on the desk, small, brass, its needle still.)*

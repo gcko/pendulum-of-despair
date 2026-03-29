@@ -235,9 +235,8 @@ didn't see it.
 
 **EDREN** : I'm his commanding officer. His friend. I should have—
 
-**SABLE** : Should have what? Read his mind? Outthought an
-eight-hundred-year-old thing that's been breaking people since
-before the towers were built?
+**SABLE** : Should have what? Read his mind? Outthought something
+that's been breaking people since before the towers were built?
 
 *(Edren says nothing.)*
 

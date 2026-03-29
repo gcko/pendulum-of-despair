@@ -301,9 +301,9 @@ isn't a cage. It's a key. And I know how to use it.
 
 **CAEL** : It didn't promise anything. It showed me.
 
-**CAEL** : Every cycle for eleven thousand years, someone finds
-this thing, someone opens the door, and someone pays the price
-to close it.
+**CAEL** : Cycle after cycle, age after age — someone finds this
+thing, someone opens the door, and someone pays the price to
+close it.
 
 **CAEL** : Every time, the world forgets. Every time, it happens
 again.
