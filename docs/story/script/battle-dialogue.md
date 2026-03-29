@@ -689,8 +689,8 @@ it settles, and the party is alone.)*
 
 **SABLE** : Hey. HEY. You don't get to quit.
 
-**MAREN** : The vital signs are failing. We need a Phoenix Feather
-before the window closes.
+**MAREN** : The binding is unraveling. We need to revive them
+before the thread breaks entirely.
 
 ### Boss Phase Reactions
 

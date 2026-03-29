@@ -122,6 +122,11 @@ notice.
 **HARREN** : Inn's full every night. Not with travelers. With
 people who have nowhere else to go.
 
+(If `epilogue_complete` set.)
+**HARREN** : A traveler came through last week. Actual traveler —
+not a refugee. Asked for a room and a meal and paid in gold. I
+stood behind the counter and remembered what normal felt like.
+
 ### Elara Thane (Court Mage Tower)
 
 **ELARA** : My grandmother could call a storm lasting three days.
@@ -191,6 +196,11 @@ is dead and the counsel didn't save him.
 **HAREN** : I wrote seventeen letters last week. Three came back
 unopened. The rest — I suspect they never arrived at all.
 
+(If `epilogue_complete` set.)
+**HAREN** : The council convenes tomorrow. Five seats, not one
+throne. Edren suggested it. I never thought I'd prefer a table
+to a crown, but here we are.
+
 ### Captain Isen (Harbor Command)
 
 **ISEN** : I command six boats and twelve sailors. The Compact
@@ -205,6 +215,11 @@ four. Four boats against whatever comes next.
 (If `interlude_begins` set.)
 **ISEN** : I stopped waiting for orders. The crown's dead, the
 council's arguing. People needed boats. Simple enough.
+
+(If `epilogue_complete` set.)
+**ISEN** : Six boats now. Started with four after the siege,
+borrowed two from Bellhaven. First trade convoy left harbour
+yesterday. I counted the sails until they were out of sight.
 
 ### Mirren (Royal Library Archives)
 
@@ -233,6 +248,18 @@ needs what's in there, they'll have to ask. Politely.
 *(If spoken to again.)*
 
 **MIRREN** : The records go back further than anyone thinks.
+
+(If `epilogue_complete` set.)
+**MIRREN** : The stone tablets. I finished translating the last
+one. "The door opens when the world forgets to grieve. The door
+closes when one person remembers how." I've written it on the
+library wall. In paint. Nobody is going to forget this time.
+
+*(If spoken to again.)*
+
+**MIRREN** : Maren sent me her Archive notes. Thirteen volumes.
+I'm cataloguing them. Properly, this time. With the correct
+margin of error.
 There's a shelf in the back — stone tablets, not paper. Nobody
 reads the script. I've been teaching myself. Slowly. It says
 the same thing over and over: "the door opens when the world
@@ -364,7 +391,7 @@ kindest. That's why none of us saw it coming.
 *(Second exchange — the family.)*
 
 **CORDWYN** : His family died in a Compact border raid. Village
-called Ashfen. The raiders hit at dawn. Cael was at the academy.
+called Greyvale. The raiders hit at dawn. Cael was at the academy.
 I was the one they sent to tell him.
 
 *(Third exchange — the guilt.)*
@@ -445,10 +472,20 @@ through. A young man closed it. He didn't come back.
 **SEYTH** : You think this is new. It isn't. The world has fought
 this before. It just keeps forgetting.
 
+(If `cael_betrayal_complete` set.)
+**SEYTH** : Something broke last night. Not here — far away. But
+the old songs got louder. The ones we don't sing anymore. The
+ones about what happens when a door opens.
+
 (If `interlude_begins` set.)
 **SEYTH** : The forgetting has already started. People talk about
 the grey like it just appeared. It's been here before. We wrote
 songs about it. Then we forgot the songs.
+
+(If `epilogue_complete` set.)
+**SEYTH** : I wrote a new verse to the old song. First new verse
+in three generations. It goes: "A young man closed the door. He
+didn't come back. But the world remembered his name."
 
 ### Kael Thornwalker (Greywood Camp Patrol)
 
@@ -461,26 +498,62 @@ better than mine in most things.
 reaches. Grey-elk don't flee. Whatever scared them — I don't
 want to meet it.
 
+(If `cael_betrayal_complete` set.)
+**KAEL** : The grey-elk came back. But they're wrong — eyes flat,
+moving in circles. The forest is reacting to something. Something
+big, from the south.
+
 (If `interlude_begins` set.)
 **KAEL** : Three patrols didn't come back this week. I'm not
 sending a fourth. We hold the perimeter and wait for it to thin.
 It hasn't thinned yet.
+
+(If `epilogue_complete` set.)
+**KAEL** : All three patrols came home yesterday. First time in
+months. The perimeter is holding. The grey-elk are grazing again
+— real grazing, not the dead-eyed circling. I'm cautiously using
+the word "safe."
 
 ### Ashara (Sunstone Ridge, Ley Guardian)
 
 **ASHARA** : Stand here. Close your eyes. Feel it? The ground
 pulls southeast. The lines are draining toward something.
 
+(If `cael_betrayal_complete` set.)
+**ASHARA** : The pull doubled overnight. I had to re-anchor three
+ward stones before dawn. Whatever happened in Valdris, the ley
+lines felt it all the way out here.
+
 (If `interlude_begins` set.)
 **ASHARA** : I've redrawn the wards three times. Energy seeps
 through like water through cracked stone. Something is eating
 the world from underneath.
+
+(If `epilogue_complete` set.)
+**ASHARA** : Stand here. Close your eyes. Feel it? The pull is
+gone. The lines run clean. I wept when I felt it. Thirty years of
+watching them weaken, and today they're stronger than when I
+started.
 
 ### Dorin (Woodcarver)
 
 **DORIN** : Thirty years I've carved these totems. Never cracked
 one. Now they all crack. It's not the wood. Something in the
 world is breaking, and the wood knows it first.
+
+(If `cael_betrayal_complete` set.)
+**DORIN** : Three totems shattered last night. Same moment. Like
+something struck the ley lines all at once. I felt it in the
+chisel before I heard it in the wood.
+
+(If `interlude_begins` set.)
+**DORIN** : I can't carve anymore. The wood turns grey under my
+hands. Whatever I make, the grey eats it before the sap dries.
+
+(If `epilogue_complete` set.)
+**DORIN** : I carved a new totem this morning. First one in months
+that held. The wood is different — softer, younger — but it holds.
+The spirits are coming back to look at it. I think they approve.
 
 ### Wren (Savanh's Grandchild, 8 Years Old)
 
@@ -652,9 +725,20 @@ shift and a shorter life.
 laughter. Then you stop dreaming. Then you stop caring that you
 stopped.
 
+(If `cael_betrayal_complete` set.)
+**DAEL** : They conscripted half the district for the Valdris
+assault. The ones who came back don't talk about it. The ones who
+didn't come back — well. We don't talk about them either.
+
 (If `interlude_begins` set.)
 **DAEL** : Half the line is hollow-eyed. They do the work. They
 just don't care if it's done right anymore.
+
+(If `epilogue_complete` set.)
+**DAEL** : I tasted bread this morning. Real bread, not the grey
+paste they've been handing out. Tasted like salt and wheat and
+warmth. I stood at my station and cried. Nobody judged me. Half
+the line was crying too.
 
 ### Cira (Apprentice Forgewright, Caldera)
 
@@ -746,6 +830,12 @@ who built everything they took credit for.
 Pallor energy and a staff of hollow-eyed soldiers. My network is
 the only thing keeping the undercity fed. Turns out resistance is
 just logistics with worse funding.
+
+(If `epilogue_complete` set.)
+**SERA** : They offered me a seat on the new council. Me. A
+supervisor from the undercity. I said yes, on one condition — the
+next-of-kin letters stop. We build things that don't kill the
+people who build them.
 
 ### Forgemaster Elyn Drayce (Caldera, Guild Hall)
 
@@ -882,15 +972,15 @@ for business. People need things they didn't know they needed.
 been alive. The road doesn't change. People do.
 
 (If `interlude_begins` set.)
-**MARREK** : Business is good. Isn't that strange? The world is
+**MARREK** : Business is steady. Isn't that strange? The world is
 ending and people still need rope, and candles, and salt. I have
-all three. Interesting times.
+all three.
 
 *(If spoken to again.)*
 
 **MARREK** : You're wondering how I'm still here. Still stocked.
-Still smiling. I wonder that too, some nights. But the road needs
-a merchant, and here I am.
+I wonder that too, some nights. The road doesn't care about the
+grey. It just keeps going. So do I.
 
 (If `epilogue_complete` set.)
 *(Marrek sits at the crossroads. He raises a glass as the party
