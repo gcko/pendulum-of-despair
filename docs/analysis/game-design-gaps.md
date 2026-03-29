@@ -553,7 +553,7 @@ Now complete.
 
 ### 3.7 Full Dialogue Tree & Story Script
 
-**Status:** PARTIAL (Layer 1 complete — narrative spine, 4,365 lines across 6 script files)
+**Status:** COMPLETE
 **Priority:** P2
 **Files:** `docs/story/script/` — README.md, act-i.md, act-ii-part-1.md, act-ii-part-2.md, interlude.md, act-iii.md, act-iv-epilogue.md
 **Depends On:** 3.3 (Dialogue System Mechanics), Story & Narrative (outline.md, events.md), NPC Design (npcs.md), Characters (characters.md)
@@ -566,20 +566,20 @@ Now complete.
   - [x] Interlude scenes (Sable's journey, 4 reunions, Maren's truth — 8 scenes, interlude.md)
   - [x] Act III scenes (march, 5 trials, campfire, Vaelith, approach — 9 scenes, act-iii.md)
   - [x] Act IV + Epilogue (final battle, sacrifice, memorial, post-game — 8 scenes, act-iv-epilogue.md)
-- [ ] NPC dialogue for all towns/locations per npcs.md (Layer 2 — planned):
-  - [ ] Townsfolk ambient dialogue (changes per act/event flag)
-  - [ ] Shop/inn/service NPC lines
-  - [ ] Quest-giver dialogue trees (accept/decline/complete)
+- [x] NPC dialogue for all towns/locations per npcs.md (Layer 2 — npc-ambient.md):
+  - [x] Townsfolk ambient dialogue (changes per act/event flag — Valdris, Thornmere, Compact, Oases)
+  - [x] Shop/inn/service NPC lines (general store, inn, herbalist, forgewright, oasis vendor)
+  - [x] Quest-giver dialogue trees (Oasis quest-givers, Sir Aldric, Keeper Elara)
 - [x] Party banter and optional dialogue:
   - [x] CT-style party-dependent dialogue variations (reunion order, party_has checks)
   - [x] Character-specific reactions to key story moments
-  - [ ] Optional/examine text for environmental storytelling (Layer 2)
+  - [x] Optional/examine text for environmental storytelling (npc-ambient.md — barometer NPCs: Nella's flowers, Dorin's totems, Wren's stars)
 - [x] Dialogue branching for player choices:
   - [x] Choice points mapped to events.md flags (council audiences, Cael's Last Night)
   - [x] Branch outcomes and convergence points
   - [x] Faction reputation dialogue variations (council approval scores 40-43)
-- [ ] Battle dialogue — boss intros included in Layer 1; phase barks and callouts Layer 3
-- [ ] System text (tutorial prompts, item descriptions, menu help text) — Layer 3
+- [x] Battle dialogue (battle-dialogue.md): boss pre-fight intros, phase transition barks, defeat dialogue, party combat callouts (HP warnings, ally down, phase reactions, victory lines), Pallor Incarnate Hollow Voice per-character attacks
+- [x] System text (battle-dialogue.md): ATB tutorial, defend tutorial, status/element/critical notifications, save/load prompts, game over text, shop/transport prompts, row system tutorial, Ley Crystal tutorial, Arcanite Forging tutorial
 - [x] Script format specification:
   - [x] Text box line limits (3 lines per box per ui-design.md)
   - [x] Speaker tags, animation markers ([animation_id] notation), timing cues
@@ -642,3 +642,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-28 | 3.6 New Game+ & Post-Game | MISSING → COMPLETE. No NG+ (FF6 model, narrative integrity). Boss rush: 3-tier gauntlet with Memento accessories. Completion tracking: 4 categories (bestiary, treasure, quests, items) at Pendulum tavern. Post-game content summary (~25--45+ hours). Design changes to equipment.md, dynamic-world.md, events.md. **All mechanical game design gaps now closed.** | — |
 | 2026-03-29 | 3.7 Full Dialogue Script | MISSING → PARTIAL. Layer 1 (narrative spine) complete: 44 scenes, 4,365 lines across 6 script files. Hybrid screenwriter format with metadata headers, [animation_id] notation, FF6 branching syntax. All party voices established. Council choice nodes, Cael's Last Night variants, reunion order branching all implemented. Layers 2-3 (NPC ambient, battle/system) planned. | — |
 | 2026-03-29 | 2.2 ATB Gauge Mechanics | MOSTLY COMPLETE → COMPLETE. All checklist items verified resolved: fill rate formula `floor((SPD+25)*factor*status)`, Active/Wait mode, battle speed 1-6, status interactions (Stop/Sleep/Confusion/Berserk), visual (Gap 2.3), 4-member party. ATB fill rate deferred item in Gap 1.2 also checked off. **18 of 19 gaps now COMPLETE.** | — |
+| 2026-03-29 | 3.7 Full Dialogue Script | PARTIAL → COMPLETE. Layers 2-3 added: npc-ambient.md (446 lines — town NPCs by location with flag-dependent variants for all acts, shop/inn/service lines, Oasis NPCs) and battle-dialogue.md (426 lines — boss phase barks, party combat callouts, Pallor Incarnate Hollow Voice, system text, tutorials, save/load/game over prompts). Total script: 5,237 lines across 8 content files (5,456 including README). **All 19 gaps now COMPLETE. Game design documentation is finished.** | — |
