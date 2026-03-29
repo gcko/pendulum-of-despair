@@ -30,8 +30,8 @@
 | [interlude.md](interlude.md) | Interlude | 1 | 8 | 865 | **Complete** |
 | [act-iii.md](act-iii.md) | Act III | 1 | 9 | 732 | **Complete** |
 | [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 8 | 651 | **Complete** |
-| [npc-ambient.md](npc-ambient.md) | All | 2 | — | 446 | **Complete** |
-| [battle-dialogue.md](battle-dialogue.md) | All | 3 | — | 426 | **Complete** |
+| [npc-ambient.md](npc-ambient.md) | All | 2 | — | 945 | **Complete** |
+| [battle-dialogue.md](battle-dialogue.md) | All | 3 | — | 820 | **Complete** |
 
 **Layers:**
 - **Layer 1 (Narrative Spine):** Story cutscenes, party dialogue, boss
