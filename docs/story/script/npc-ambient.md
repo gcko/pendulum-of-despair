@@ -27,8 +27,8 @@ they can't pay.
 
 *(If spoken to again.)*
 
-**BREN** : My mother baked for the old king. Forty years of royal
-bread. She said the trick was never changing the recipe. "The
+**BREN** : My father baked for the old king. Thirty years of royal
+bread. He said the trick was never changing the recipe. "The
 people need to know some things stay the same."
 
 *(If spoken to a third time.)*
@@ -242,12 +242,10 @@ talk. He was willing to wait.
 **THESSA** : Spirit-speaker. The altar remembers your touch from
 last time. It's... warmer, I think. That doesn't usually happen.
 
-(If `interlude_begins` set.)
-**THESSA** : I hear them now. Not words. A sound — like something
-heavy being dragged across stone. The spirits aren't speaking.
-They're bracing.
-
 (If `epilogue_complete` set.)
+*(The temple has reopened. Thessa stands at the altar, hands
+folded, face wet with tears she hasn't wiped away.)*
+
 **THESSA** : The altar sang this morning. First time in a year.
 One note, sustained, clean. I sat and listened until it stopped.
 It lasted an hour.
@@ -426,9 +424,9 @@ reaches. Grey-elk don't flee. Whatever scared them — I don't
 want to meet it.
 
 (If `interlude_begins` set.)
-**KAEL** : I killed something yesterday. Grey, hollow, used to
-be a fox I think. It didn't fight back. Just looked at me while
-it died.
+**KAEL** : Three patrols didn't come back this week. I'm not
+sending a fourth. We hold the perimeter and wait for it to thin.
+It hasn't thinned yet.
 
 ### Ashara (Sunstone Ridge, Ley Guardian)
 
@@ -650,7 +648,7 @@ world.
 **MIRA** : My latest map shows broken threads. Not lines —
 threads. Like someone pulled a tapestry apart.
 
-### Holt Varen (Bellhaven, Weapons Merchant)
+### Holt Varen (Ashport, Weapons Merchant)
 
 **HOLT** : War is terrible. War is also extremely profitable.
 I didn't make the world this way — I just learned to read the
@@ -669,7 +667,7 @@ weave anywhere else.
 **NARA** : No silk anymore. The worms won't spin. Something
 about the ley lines. Selling wool now. Wool doesn't need magic.
 
-### Pell (Bellhaven Docks, Ex-Thornmere)
+### Pell (Ashport Harbor District, Ex-Thornmere)
 
 **PELL** : My mother was a spirit-speaker. Could hear the ley
 lines singing. I hear cranes and loading bells. Not the same.
@@ -748,10 +746,10 @@ right. I trained the wrong thing out of her.
 
 ### Jace Renn — The Science of Collapse
 
-*(First exchange — standard.)*
+*(First exchange — the data.)*
 
-**JACE** : My models predicted ley line collapse in twenty years.
-We achieved it in three. I underestimated human ambition.
+**JACE** : You want to understand the decline? I'll show you.
+Pull up a chair. This chart goes back fifty years.
 
 *(Second exchange — the paper.)*
 
@@ -779,9 +777,10 @@ when reality doesn't fit the model, the Compact changes reality.
 
 ### Mira Thenn — Mapping the End
 
-*(First exchange — standard.)*
+*(First exchange — the maps.)*
 
-**MIRA** : I've mapped every major ley line on the continent.
+**MIRA** : You want to see something that'll keep you up at night?
+Come look at these maps. I have three generations of them.
 
 *(Second exchange — the old maps.)*
 
@@ -892,7 +891,7 @@ spirit-work.
 
 *(If spoken to again.)*
 
-**THESSA** : Roothollow is grey now. But the recipes are here.
+**ELDER THESSA** : Roothollow is grey now. But the recipes are here.
 
 *(She taps her temple.)*
 

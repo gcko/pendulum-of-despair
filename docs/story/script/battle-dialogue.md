@@ -154,7 +154,7 @@ fragments into light.
 ---
 
 ### Act III — Vaelith, the Ashen Shepherd
-<!-- Cross-ref: bestiary/bosses.md § Vaelith the Ashen Shepherd -->
+<!-- Cross-ref: bestiary/bosses.md § Vaelith, the Ashen Shepherd -->
 
 *(Pre-fight and defeat covered in act-iii.md Scene 35.)*
 
@@ -268,7 +268,8 @@ I've been carrying since the night I took the Pendulum.
 
 *(Random barks — Phase 1:)*
 
-**CAEL** : Edren taught me that parry. I remember.
+**CAEL** : That parry. We learned it together. Under Marek. I
+remember.
 
 **CAEL** : Lira — your timing is better. You've been practicing.
 
@@ -355,7 +356,8 @@ remind the player this boss was their friend.)*
 Cael. Not again.
 
 (If Lira uses a healing ability on the party.)
-**LIRA** : Hold together. He's still in there. I can feel it.
+**LIRA** : The Pallor's grip is fluctuating. He's still in there.
+I can see it in the energy patterns.
 
 (If Torren uses Rootsong.)
 **TORREN** : The spirits remember him. They're singing for him.
@@ -580,7 +582,13 @@ civilization that ended millennia ago.)*
 **IRON WARDEN** : You fight with emotion. Inefficient. Effective.
 Confusing.
 
-*(Phase 2 — overclock:)*
+*(Mode 2 — Reinforced:)*
+**IRON WARDEN** : Damage threshold exceeded. Activating secondary
+plating. Reinforcing structural integrity.
+
+**IRON WARDEN** : You adapt. Noted. Counter-adapting.
+
+*(Mode 3 — Overclock:)*
 **IRON WARDEN** : Overclock initiated. Defence parameters:
 secondary. Mission priority: absolute.
 
@@ -606,7 +614,7 @@ understand us. After all this time, it wanted to know if the
 people it was built to protect still existed. We were the answer.
 
 #### Cael's Echo (Floor 20)
-<!-- Cross-ref: bestiary/bosses.md § Cael's Echo -->
+<!-- Cross-ref: bestiary/optional.md § Cael's Echo -->
 
 *(Non-combat encounter. Floor 20 — the deepest chamber of the
 Dreamer's Fault. The room is quiet. Grey light, but warm somehow.
@@ -680,7 +688,8 @@ it settles, and the party is alone.)*
 
 **SABLE** : Hey. HEY. You don't get to quit.
 
-**MAREN** : Phoenix Feather. Now. Don't argue.
+**MAREN** : The vital signs are failing. We need a Phoenix Feather
+before the window closes.
 
 ### Boss Phase Reactions
 
