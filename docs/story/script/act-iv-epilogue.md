@@ -21,7 +21,7 @@
 
 ## Scene 37: The Final Battle — Cael
 
-<!-- Scene: cael_boss_fight | Tier: 1 | Trigger: convergence_reached (flag 35) -->
+<!-- Scene: cael_boss_fight | Tier: 1+3 | Trigger: convergence_reached (flag 35) -->
 <!-- Location: Convergence Outer Ring | Party: all five (Edren, Lira, Torren, Sable, Maren) -->
 <!-- Variants: none -->
 <!-- Cross-ref: outline.md § Act III Final Battle, bestiary/bosses.md § Cael, Knight of Despair -->
@@ -424,7 +424,7 @@ horizon. No one moves.)*
 
 ## Scene 41: The World Heals
 
-<!-- Scene: epilogue_world | Tier: 2 | Trigger: cael_sacrifice (flag 37) -->
+<!-- Scene: epilogue_world | Tier: 1 | Trigger: cael_sacrifice (flag 37) -->
 <!-- Location: Montage — Valdris, Thornmere, Corrund, Convergence | Party: n/a (narrated) -->
 <!-- Variants: none -->
 <!-- Cross-ref: outline.md § Epilogue, dynamic-world.md § Epilogue State -->

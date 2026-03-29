@@ -588,7 +588,7 @@ touch. The same quiet words. The same deepening grey.)*
 <!-- Scene: sable_warning | Tier: 2 | Trigger: party returns to Valdris (flag 12) -->
 <!-- Location: Valdris Crown, Lower Ward → Keep | Party: reunited -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act II Sable's Warning, events.md flag 12 -->
+<!-- Cross-ref: outline.md § Sable's Warning, events.md flag 12 -->
 
 *(Valdris Crown. The party returns from the Wilds to find the
 city tenser — fewer ley-lamps lit, more soldiers on the walls,

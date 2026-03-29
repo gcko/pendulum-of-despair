@@ -559,7 +559,7 @@ that isn't dread. I'm tired of dread.
 <!-- Scene: maren_warning | Tier: 1+2 | Trigger: party reaches Maren's Refuge -->
 <!-- Location: Maren's Refuge, deep Thornmere Wilds | Party: Edren, Cael, Lira, Sable, Torren → adds Maren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act I The First Warning, locations.md § Maren's Refuge, npcs.md § Maren -->
+<!-- Cross-ref: outline.md § Act I The First Warning, locations.md § Maren's Refuge, characters.md § Maren -->
 
 ### 6a. Arrival
 
@@ -681,7 +681,7 @@ they did last time.
 <!-- Scene: arrival_at_valdris | Tier: 2+3 | Trigger: pendulum_to_capital (flag 6) -->
 <!-- Location: Valdris Crown | Party: Edren, Cael, Lira, Sable, Torren, Maren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act I Arrival, locations.md § Valdris Crown, npcs.md § King Aldren / Aldis / Cordwyn / Haren -->
+<!-- Cross-ref: outline.md § Act I-II Transition: The Road to Valdris, locations.md § Valdris Crown, npcs.md § King Aldren / Aldis / Cordwyn / Haren -->
 
 ### 7a. The Gates
 

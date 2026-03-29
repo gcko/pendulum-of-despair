@@ -566,7 +566,7 @@ the party leaves in silence. No flag set.)*
 
 ## Scene 35: Vaelith
 
-<!-- Scene: vaelith_boss | Tier: 1 | Trigger: vaelith_defeated (flag 34) -->
+<!-- Scene: vaelith_boss | Tier: 1+3 | Trigger: vaelith_defeated (flag 34) -->
 <!-- Location: Plateau's Edge, Pallor Wastes | Party: all five -->
 <!-- Variants: none -->
 <!-- Cross-ref: bestiary/bosses.md § Vaelith the Ashen Shepherd, abilities.md § Cael's Edge -->

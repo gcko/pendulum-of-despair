@@ -48,7 +48,7 @@ dark.)*
 
 ## Scene 17: Cael's Last Night
 
-<!-- Scene: cael_last_night | Tier: 2 | Trigger: night before the siege -->
+<!-- Scene: cael_last_night | Tier: 3 | Trigger: night before the siege -->
 <!-- Location: Valdris Crown (4 locations) | Party: Cael (player-controlled, solo) -->
 <!-- Variants: flags 44-47 set by which locations are visited (3 of 4) -->
 <!-- Cross-ref: outline.md § Act II Cael's Last Night, events.md flags 44-47 -->
