@@ -260,10 +260,6 @@ library wall. In paint. Nobody is going to forget this time.
 **MIRREN** : Maren sent me her Archive notes. Thirteen volumes.
 I'm cataloguing them. Properly, this time. With the correct
 margin of error.
-There's a shelf in the back — stone tablets, not paper. Nobody
-reads the script. I've been teaching myself. Slowly. It says
-the same thing over and over: "the door opens when the world
-forgets to grieve."
 
 ### Sergeant Marek (Knight's Barracks)
 
@@ -561,9 +557,20 @@ The spirits are coming back to look at it. I think they approve.
 hear what I hear. There's something else now. It talks underneath
 the singing.
 
+(If `cael_betrayal_complete` set.)
+**WREN** : The singing got quieter last night. And the other
+voice got louder. Like it was pushed. Like something far away
+broke and the sound came here.
+
 (If `interlude_begins` set.)
 **WREN** : The singing stopped. It's just the other voice now.
 It's not scary. That's the scary part.
+
+(If `epilogue_complete` set.)
+**WREN** : The stars are singing again. Different song. Sadder.
+But there are more voices now — not just the stars. The trees.
+The water. The ground. Everything is singing very quietly, like
+they're learning how to do it again.
 
 ### Rhona (Border Trader, Ashfen)
 
