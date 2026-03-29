@@ -22,16 +22,16 @@
 
 ## File Index
 
-| File | Act | Layer | Scenes | Est. Lines | Status |
-|------|-----|-------|--------|------------|--------|
-| [act-i.md](act-i.md) | Act I | 1 | 7 | 800--1,200 | In Progress |
-| [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 1,000--1,200 | Planned |
-| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 800--1,000 | Planned |
-| [interlude.md](interlude.md) | Interlude | 1 | 8 | 1,200--1,500 | Planned |
-| [act-iii.md](act-iii.md) | Act III | 1 | 12 | 1,200--1,500 | Planned |
-| [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 6 | 600--900 | Planned |
-| [npc-ambient.md](npc-ambient.md) | All | 2 | — | 800--1,200 | Planned |
-| [battle-dialogue.md](battle-dialogue.md) | All | 3 | — | 400--600 | Planned |
+| File | Act | Layer | Scenes | Lines | Status |
+|------|-----|-------|--------|-------|--------|
+| [act-i.md](act-i.md) | Act I | 1 | 7 | 819 | **Complete** |
+| [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 551 | **Complete** |
+| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 447 | **Complete** |
+| [interlude.md](interlude.md) | Interlude | 1 | 8 | 830 | **Complete** |
+| [act-iii.md](act-iii.md) | Act III | 1 | 12 | 547 | **Complete** |
+| [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 6 | 621 | **Complete** |
+| [npc-ambient.md](npc-ambient.md) | All | 2 | — | — | Planned |
+| [battle-dialogue.md](battle-dialogue.md) | All | 3 | — | — | Planned |
 
 **Layers:**
 - **Layer 1 (Narrative Spine):** Story cutscenes, party dialogue, boss
