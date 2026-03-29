@@ -6,7 +6,7 @@
 > enough. They overcome it through acceptance, not denial. Then
 > Vaelith. Then the long walk to the door.
 >
-> **Scenes:** 12 | **Layer:** 1 (Narrative Spine)
+> **Scenes:** 9 | **Layer:** 1 (Narrative Spine)
 >
 > **Navigation:** [← Interlude](interlude.md) |
 > [Act IV + Epilogue →](act-iv-epilogue.md) | [README](README.md)
@@ -594,10 +594,11 @@ first.
 **EDREN** : Step aside, Vaelith.
 
 **VAELITH** : I cannot. Not out of loyalty to the Pallor — I
-stopped caring about the Pallor's agenda centuries ago. But
-because I was the first to understand it, and the first to
-realize that understanding changes nothing. Every cycle, someone
-reaches this point. Every cycle, they fail.
+stopped caring about the Pallor's agenda centuries ago.
+
+**VAELITH** : But I was the first to understand it. And the first
+to realize that understanding changes nothing. Every cycle,
+someone reaches this point. Every cycle, they fail.
 
 *(They sit down on the stone. Not a fighting stance. An exhausted
 one. For a long moment, they simply look at the party.)*

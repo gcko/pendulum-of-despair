@@ -56,9 +56,10 @@ you think you've found—
 
 **CAEL** : I know what it's doing. I've known since the siege.
 It whispers, Maren. It tells you things about the people you
-love — things that aren't true, but feel true. And the worst
-part is that it doesn't need to lie. It just needs you to stop
-hoping.
+love — things that aren't true, but feel true.
+
+**CAEL** : And the worst part is that it doesn't need to lie.
+It just needs you to stop hoping.
 
 *(He draws his sword. [SFX: sword_draw])*
 
@@ -647,4 +648,4 @@ but growing. A shoot reaches for the light beside a knight's
 sword, and the spirits remember.*
 
 *Dialogue script continues: [← Act III](act-iii.md) |
-[NPC Ambient →](npc-ambient.md) | [Battle Dialogue →](battle-dialogue.md)*
+[README](README.md) | NPC Ambient (planned) | Battle Dialogue (planned)*

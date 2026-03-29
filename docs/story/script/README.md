@@ -26,8 +26,8 @@
 |------|-----|-------|--------|-------|--------|
 | [act-i.md](act-i.md) | Act I | 1 | 7 | 928 | **Complete** |
 | [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 668 | **Complete** |
-| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 512 | **Complete** |
-| [interlude.md](interlude.md) | Interlude | 1 | 8 | 862 | **Complete** |
+| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 518 | **Complete** |
+| [interlude.md](interlude.md) | Interlude | 1 | 8 | 866 | **Complete** |
 | [act-iii.md](act-iii.md) | Act III | 1 | 9 | 731 | **Complete** |
 | [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 8 | 650 | **Complete** |
 | npc-ambient.md | All | 2 | — | — | Planned |
