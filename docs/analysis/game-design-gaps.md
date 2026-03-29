@@ -553,36 +553,37 @@ Now complete.
 
 ### 3.7 Full Dialogue Tree & Story Script
 
-**Status:** MISSING
+**Status:** PARTIAL (Layer 1 complete — narrative spine, 4,365 lines across 6 script files)
 **Priority:** P2
-**Files:** None yet — target `docs/story/script/`
+**Files:** `docs/story/script/` — README.md, act-i.md, act-ii-part-1.md, act-ii-part-2.md, interlude.md, act-iii.md, act-iv-epilogue.md
 **Depends On:** 3.3 (Dialogue System Mechanics), Story & Narrative (outline.md, events.md), NPC Design (npcs.md), Characters (characters.md)
 **Reference:** `docs/references/scripts/` — complete game scripts for FF4, FF6, Chrono Trigger, and Secret of Mana. See index.md in each subdirectory.
 
 **What's Needed:**
-- [ ] Complete scene-by-scene dialogue script covering all story events in events.md:
-  - [ ] Act I scenes (Naxos opening through Ember Vein)
-  - [ ] Act II scenes (diplomatic missions, faction cities)
-  - [ ] Interlude scenes (Convergence, world collapse)
-  - [ ] Act III scenes (Pallor Wastes, final dungeon, ending)
-- [ ] NPC dialogue for all towns/locations per npcs.md:
+- [x] Complete scene-by-scene dialogue script covering all story events in events.md:
+  - [x] Act I scenes (Ember Vein tutorial through Valdris arrival — 7 scenes, act-i.md)
+  - [x] Act II scenes (diplomacy, council, betrayal, siege — 12 scenes, act-ii-part-1.md + act-ii-part-2.md)
+  - [x] Interlude scenes (Sable's journey, 4 reunions, Maren's truth — 8 scenes, interlude.md)
+  - [x] Act III scenes (march, 5 trials, campfire, Vaelith, approach — 9 scenes, act-iii.md)
+  - [x] Act IV + Epilogue (final battle, sacrifice, memorial, post-game — 8 scenes, act-iv-epilogue.md)
+- [ ] NPC dialogue for all towns/locations per npcs.md (Layer 2 — planned):
   - [ ] Townsfolk ambient dialogue (changes per act/event flag)
   - [ ] Shop/inn/service NPC lines
   - [ ] Quest-giver dialogue trees (accept/decline/complete)
-- [ ] Party banter and optional dialogue:
-  - [ ] CT-style party-dependent dialogue variations (who's in the active party changes lines)
-  - [ ] Character-specific reactions to key story moments
-  - [ ] Optional/examine text for environmental storytelling
-- [ ] Dialogue branching for player choices:
-  - [ ] Choice points mapped to events.md flags
-  - [ ] Branch outcomes and convergence points
-  - [ ] Faction reputation dialogue variations
-- [ ] Battle dialogue (boss intros, phase transitions, victory/defeat)
-- [ ] System text (tutorial prompts, item descriptions, menu help text)
-- [ ] Script format specification:
-  - [ ] Text box line limits (characters per line, lines per box — per ui-design.md)
-  - [ ] Speaker tags, emotion markers, timing cues
-  - [ ] Localization-ready structure
+- [x] Party banter and optional dialogue:
+  - [x] CT-style party-dependent dialogue variations (reunion order, party_has checks)
+  - [x] Character-specific reactions to key story moments
+  - [ ] Optional/examine text for environmental storytelling (Layer 2)
+- [x] Dialogue branching for player choices:
+  - [x] Choice points mapped to events.md flags (council audiences, Cael's Last Night)
+  - [x] Branch outcomes and convergence points
+  - [x] Faction reputation dialogue variations (council approval scores 40-43)
+- [ ] Battle dialogue — boss intros included in Layer 1; phase barks and callouts Layer 3
+- [ ] System text (tutorial prompts, item descriptions, menu help text) — Layer 3
+- [x] Script format specification:
+  - [x] Text box line limits (3 lines per box per ui-design.md)
+  - [x] Speaker tags, animation markers ([animation_id] notation), timing cues
+  - [x] HTML comment metadata headers for implementation parsing
 
 **Blocking:** Full game implementation, voice acting (if any), text rendering system, localization
 
@@ -639,3 +640,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-27 | 3.2 Overworld Traversal | PARTIAL → COMPLETE. FF6 Plus philosophy. Mode 7 presentation, 5 passability types (vehicle tiles deferred to 3.1), uniform on-foot speed, fade-to-black transitions, FF6 battle transitions (Mode 7 zoom + mosaic), location-fixed weather + 6 story overrides. Speed modifiers and zoom removed from geography.md. Unblocks 3.1. | — |
 | 2026-03-28 | 3.1 Transport & Vehicle | MISSING → COMPLETE. "Grounded FF6" (no airship). Rail (100g, Compact cities), Ley Stag mount (2x speed, no encounters), Coastal ferry (200g, Bellhaven--Ashport), Linewalk (reference). Interlude transport collapse + Act III partial recovery. Bridge tiles at river crossings. Design changes to overworld.md, geography.md, city-carradan.md, economy.md. | — |
 | 2026-03-28 | 3.6 New Game+ & Post-Game | MISSING → COMPLETE. No NG+ (FF6 model, narrative integrity). Boss rush: 3-tier gauntlet with Memento accessories. Completion tracking: 4 categories (bestiary, treasure, quests, items) at Pendulum tavern. Post-game content summary (~25--45+ hours). Design changes to equipment.md, dynamic-world.md, events.md. **All mechanical game design gaps now closed.** | — |
+| 2026-03-29 | 3.7 Full Dialogue Script | MISSING → PARTIAL. Layer 1 (narrative spine) complete: 44 scenes, 4,365 lines across 6 script files. Hybrid screenwriter format with metadata headers, [animation_id] notation, FF6 branching syntax. All party voices established. Council choice nodes, Cael's Last Night variants, reunion order branching all implemented. Layers 2-3 (NPC ambient, battle/system) planned. | — |
