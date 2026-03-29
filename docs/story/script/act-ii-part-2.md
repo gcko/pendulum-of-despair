@@ -12,7 +12,7 @@
 > [Interlude →](interlude.md) | [README](README.md)
 >
 > **Related docs:** [outline.md](../outline.md) Act II late |
-> [events.md](../events.md) flags 15--19, 44--47 |
+> [events.md](../events.md) flags 7, 15--19, 44--47 |
 > [characters.md](../characters.md) § Cael |
 > [bestiary/bosses.md](../bestiary/bosses.md) § Ashen Ram / Vaelith |
 > [npcs.md](../npcs.md) § King Aldren / Cordwyn / Vaelith
@@ -430,6 +430,8 @@ its vents. Behind it, Compact infantry advance in formation.)*
 
 *(The Ram breaches the eastern wall. Stone explodes inward.
 The Lower Ward is exposed. [SFX: wall_breach])*
+
+*(Flag `ashen_ram_defeated` (16) set.)*
 
 ### 19c. King Aldren's Death
 

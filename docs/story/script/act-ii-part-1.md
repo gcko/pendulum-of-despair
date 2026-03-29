@@ -13,7 +13,7 @@
 > [Act II Part 2 →](act-ii-part-2.md) | [README](README.md)
 >
 > **Related docs:** [outline.md](../outline.md) Act II |
-> [events.md](../events.md) flags 7--14, 40--43, 54 |
+> [events.md](../events.md) flags 8--14, 40--43, 54 |
 > [locations.md](../locations.md) |
 > [npcs.md](../npcs.md) |
 > [sidequests.md](../sidequests.md) § Ley Stag

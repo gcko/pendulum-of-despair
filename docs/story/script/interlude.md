@@ -13,7 +13,7 @@
 > [Act III →](act-iii.md) | [README](README.md)
 >
 > **Related docs:** [outline.md](../outline.md) Interlude |
-> [events.md](../events.md) flags 20--27, 48--51 |
+> [events.md](../events.md) flags 20--27, 48--51, 55--56 |
 > [characters.md](../characters.md) |
 > [npcs.md](../npcs.md) |
 > [locations.md](../locations.md) |
