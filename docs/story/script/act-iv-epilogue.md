@@ -6,7 +6,7 @@
 > an acceptance. Act IV is three scenes of farewell. The Epilogue is
 > what remains when the grief settles into something you can carry.
 >
-> **Scenes:** 6 | **Layer:** 1 (Narrative Spine)
+> **Scenes:** 8 | **Layer:** 1 (Narrative Spine)
 >
 > **Navigation:** [← Act III](act-iii.md) | [README](README.md)
 >
@@ -24,7 +24,7 @@
 <!-- Scene: cael_boss_fight | Tier: 1 | Trigger: convergence_reached (flag 35) -->
 <!-- Location: Convergence Outer Ring | Party: all five (Edren, Lira, Torren, Sable, Maren) -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act III Final Battle, bestiary/bosses.md § Cael Knight of Despair -->
+<!-- Cross-ref: outline.md § Act III Final Battle, bestiary/bosses.md § Cael, Knight of Despair -->
 
 ### 37a. Phase 1 — The Knight
 

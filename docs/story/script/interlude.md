@@ -285,6 +285,8 @@ doorway. Stares at Sable.)*
 
 **EDREN** : Stay behind me.
 
+<!-- Cross-ref: dungeons-world.md § Highcairn Monastery (Pallor encounter) -->
+
 *(Battle: Pallor Manifestation. After victory, the frost recedes.
 The monastery stabilizes.)*
 
@@ -594,6 +596,8 @@ nearest the nexus are glass-still. Not dead. Emptied.)*
 sever its connection before Torren can let go.
 
 **SABLE** : Then we sever it.
+
+<!-- Cross-ref: dungeons-world.md § Roothollow Ley Nexus (Ley Leech) -->
 
 *(Boss fight: Ley Leech. The fight occurs around Torren, who
 cannot move. Protecting him is implicit.)*

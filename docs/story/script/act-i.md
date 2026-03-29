@@ -788,7 +788,7 @@ decline for three years now. Twelve percent capacity loss in the
 last year alone. I presented these findings to the court. They
 asked me if I was certain about the margin of error.
 
-*(He gestures to stacks of careful notes.)*
+*(She gestures to stacks of careful notes.)*
 
 **ALDIS** : If your artifact is related to the ley line failures,
 I'd like to compare my readings. The resonance patterns may
@@ -809,7 +809,7 @@ extraction rate projections.
 half the job.
 
 (If `party_has(maren)`.)
-*(Aldis looks up from his notes. Double-takes.)*
+*(Aldis looks up from her notes. Double-takes.)*
 
 **ALDIS** : Maren? You're... back?
 
@@ -864,7 +864,7 @@ rack.)*
 
 **CORDWYN** : There isn't.
 
-#### Renn (Lower Ward Tavern)
+#### Renn (The Anchor and Oar, Lower Ward)
 
 <!-- Cross-ref: npcs.md § Renn -->
 

@@ -331,7 +331,7 @@ ones can begin. Imperfect protection. That's all anyone gets.
 <!-- Scene: trial_sable | Tier: 1+3 | Trigger: fourth trial clearing -->
 <!-- Location: Pallor Wastes, The Crooked Mile | Party: Sable faces trial solo -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § The Open Door, abilities.md § Unbreakable Thread -->
+<!-- Cross-ref: dungeons-world.md § Pallor Wastes Trial 4 (non-combat), abilities.md § Unbreakable Thread -->
 
 *(A clearing that becomes a twisting alleyway — Caldera
 architecture, familiar to Sable. Dark. Narrow. Walls that

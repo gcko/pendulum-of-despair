@@ -24,14 +24,14 @@
 
 | File | Act | Layer | Scenes | Lines | Status |
 |------|-----|-------|--------|-------|--------|
-| [act-i.md](act-i.md) | Act I | 1 | 7 | 819 | **Complete** |
-| [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 551 | **Complete** |
-| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 447 | **Complete** |
-| [interlude.md](interlude.md) | Interlude | 1 | 8 | 830 | **Complete** |
-| [act-iii.md](act-iii.md) | Act III | 1 | 12 | 547 | **Complete** |
-| [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 6 | 621 | **Complete** |
-| [npc-ambient.md](npc-ambient.md) | All | 2 | — | — | Planned |
-| [battle-dialogue.md](battle-dialogue.md) | All | 3 | — | — | Planned |
+| [act-i.md](act-i.md) | Act I | 1 | 7 | 928 | **Complete** |
+| [act-ii-part-1.md](act-ii-part-1.md) | Act II (diplomacy) | 1 | 8 | 668 | **Complete** |
+| [act-ii-part-2.md](act-ii-part-2.md) | Act II (betrayal) | 1 | 4 | 512 | **Complete** |
+| [interlude.md](interlude.md) | Interlude | 1 | 8 | 862 | **Complete** |
+| [act-iii.md](act-iii.md) | Act III | 1 | 9 | 731 | **Complete** |
+| [act-iv-epilogue.md](act-iv-epilogue.md) | Act IV + Epilogue | 1 | 8 | 650 | **Complete** |
+| npc-ambient.md | All | 2 | — | — | Planned |
+| battle-dialogue.md | All | 3 | — | — | Planned |
 
 **Layers:**
 - **Layer 1 (Narrative Spine):** Story cutscenes, party dialogue, boss
@@ -56,6 +56,12 @@ Every scene opens with a Markdown heading and HTML comment metadata:
 <!-- Variants: flag-dependent variations -->
 <!-- Cross-ref: relevant_doc.md § Section Name -->
 ```
+
+**Tier values:** `1` = full cutscene, `2` = walk-and-talk,
+`3` = playable, `4` = micro-cutscene. Composite tiers: `1+2` =
+cutscene with walk-and-talk elements; `1+3` = cutscene with
+playable section; `2+3` = walk-and-talk with playable section;
+`1 → 3` = transitions from cutscene to playable during scene.
 
 ### Dialogue Lines
 
@@ -168,7 +174,8 @@ Flags most frequently used in dialogue branching. Full list:
 | 34 | `vaelith_defeated` | III | Pre-final approach |
 | 37 | `cael_sacrifice` | IV | Epilogue state |
 | 38 | `epilogue_complete` | Epi. | Post-game dialogue |
-| 40--43 | `council_*_approval` | II | Tribal support variations |
+| 40--42 | `council_*_approval` | II | Tribal leader approval scores |
+| 43 | `council_result` | II | Aggregated tribal support (0--3) |
 | 44--47 | `cael_last_night_*` | II | Betrayal scene framing |
 | 48--51 | `reunion_order_*` | Int. | Reunion dialogue variants |
 | 52 | `campfire_complete` | III | Optional group moment |

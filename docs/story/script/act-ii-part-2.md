@@ -299,15 +299,21 @@ isn't a cage. It's a key. And I know how to use it.
 
 **MAREN** : The Pallor is using you. Whatever it promised—
 
-**CAEL** : It didn't promise anything. It showed me. Every cycle
-for eleven thousand years, someone finds this thing, someone
-opens the door, and someone pays the price to close it. Every
-time, the world forgets. Every time, it happens again.
+**CAEL** : It didn't promise anything. It showed me.
+
+**CAEL** : Every cycle for eleven thousand years, someone finds
+this thing, someone opens the door, and someone pays the price
+to close it.
+
+**CAEL** : Every time, the world forgets. Every time, it happens
+again.
 
 *(He steps back.)*
 
 **CAEL** : I'm going to break the cycle. Not close the door —
-destroy it. The machine at the Convergence can channel enough
+destroy it.
+
+**CAEL** : The machine at the Convergence can channel enough
 Pallor energy to shatter the connection permanently. No more
 door. No more cycles. No more cost.
 
