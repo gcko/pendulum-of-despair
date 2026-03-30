@@ -855,7 +855,9 @@ Small window prompt: **Buy** | **Sell** | **Exit**. Hand cursor to select.
 
 ### 13.1 Access
 
-Main Menu → Save (at save points) or Title Screen → Load.
+Main Menu → Save (at save points) or Title Screen → Load. At save points,
+interaction opens a 3-option menu (Rest / Rest & Save / Save) before the
+save screen. See Section 13.7.
 
 ### 13.2 Layout
 
@@ -899,19 +901,41 @@ Cursor on slot → confirm → "Overwrite?" if populated (Yes/No) →
 brief save animation (pixel-art sparkle effect) → "Saved." message →
 return to menu.
 
+**Copy:** Select source slot → select destination → "Overwrite?" if
+populated → copy complete.
+
+**Delete:** Select slot → "Delete this save?" → slot cleared.
+
 ### 13.6 Load Screen
 
-- Identical layout, title reads "Load."
-- Empty slots not selectable (cursor skips).
-- Confirm on populated slot loads with brief fade transition.
+- **Title:** "Load"
+- **Auto-save slot (top):** Blue accent (#88aaff), labeled "AUTO" with left
+  border highlight (3px solid #88aaff). Auto-save slot displays most recent
+  auto-save data if available.
+- **Divider:** Horizontal line separating auto-save from manual slots.
+- **Manual slots (below):** 3 slots with same layout as Save screen.
+- **Selection:** Empty slots not selectable (cursor skips). Confirm on
+  populated slot loads with brief fade transition.
 
 ### 13.7 Save Points
 
 - Visually distinct pixel-art sprite in the game world (glowing crystal,
   2-frame shimmer animation).
-- Walking onto one: glow intensifies, opens save screen directly.
+- Walking onto one: glow intensifies, opens a 3-option menu:
+  - **Rest:** Opens sub-menu of rest items (Sleeping Bag / Tent / Pavilion).
+    If no items available, default to free 25% MP recovery.
+  - **Rest & Save:** Perform rest first, then open the save screen.
+  - **Save:** Open the save screen directly.
 - Also accessible from Main Menu → Save, but only on a save point;
   otherwise greyed out — just not selectable.
+
+### 13.8 Auto-Save Slot Rules
+
+- **Dedicated slot:** Separate from the 3 manual save slots.
+- **Manual operations:** Cannot be manually overwritten, copied to, or deleted.
+- **Visibility:** Appears only on Load screen (not visible on Save screen).
+- **Promotion:** Can be copied FROM to a manual slot, promoting an auto-save
+  to a permanent manual save.
 
 ---
 
