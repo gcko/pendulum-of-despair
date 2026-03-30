@@ -114,7 +114,9 @@ requires a forge. Per [equipment.md](equipment.md).
 ### Pool Mechanics
 
 Lira has a **12 AC pool** (per [abilities.md](abilities.md): "Max 12 AC").
-AC is restored to full at inns, save points, and camps. AC serves two
+AC is restored at save points via rest items — Sleeping Bag (25%),
+Tent (50%), Pavilion (100%) — and fully at inns. Without a rest item,
+AC is not restored (see [save-system.md](save-system.md)). AC serves two
 distinct systems:
 
 1. **Battle devices** ([abilities.md](abilities.md)): deployed in
