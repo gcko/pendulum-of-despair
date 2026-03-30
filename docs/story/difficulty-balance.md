@@ -364,8 +364,11 @@ Per [events.md](events.md) § Faint and Fast Reload:
 - **No game over screen.** No menu, no prompt, no "Game Over" text.
 - Last Faint animation plays → fade to black (2s) → instant reload
   at the last save point (~4s total).
-- XP, levels, gold, and boss-cutscene-seen flags are **preserved**
-  across the wipe (applied on top of the save file).
+- XP, gold, and boss-cutscene-seen flags are **preserved** across
+  the wipe. Levels are derived from accumulated XP at reload time
+  (level-ups trigger with full HP/MP restore). The merged state is
+  written back to the save file for durability across sessions. See
+  [save-system.md](save-system.md) § Faint-and-Fast-Reload.
 - HP/MP set to 100% on reload.
 - Boss pre-battle cutscenes auto-skip on retry (flag persists).
 - The auto-save system (Section 5.1) ensures the reload target is
