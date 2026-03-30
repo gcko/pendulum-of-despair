@@ -94,8 +94,11 @@ Each party member has one unique command in their battle menu alongside Fight, M
 **Mechanic:** Lira builds and deploys **devices** in combat. She carries a pool of **Arcanite Charges (AC)** that fuel device construction. Devices are temporary constructs that persist on the battlefield for a set number of turns or until destroyed. Lira can have up to 2 devices active simultaneously. Deploying a third destroys the oldest one. **Exception:** devices deployed via dual tech combos do not count toward this limit (they are fused directly onto the target rather than placed on the field).
 
 **Resource: Arcanite Charges (AC)**
-- Max 12 AC. Starts each battle at max.
-- Restored at inns, save points, and by certain items (Arcanite Shards).
+- Max 12 AC. Starts each battle at current AC pool (12 minus any AC
+  spent on pre-crafting since the last rest; see [crafting.md](crafting.md)).
+- Restored when resting at save points via rest items (Sleeping Bag 25%,
+  Tent 50%, Pavilion 100%), fully at inns, and by Arcanite Shards (+3 AC
+  each). See [save-system.md](save-system.md).
 - Lira can spend a turn to Salvage a deployed device, recovering half its AC cost (rounded down).
 
 **Sub-Abilities:**

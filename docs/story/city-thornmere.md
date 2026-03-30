@@ -137,7 +137,7 @@ Roothollow is the player's introduction to the Wilds and must immediately establ
 | Herbalist Alcove | 8x6 | Healing hut / potion shop | Herbalist NPC | Natural remedies: root-salves (potion), spirit-moss compress (hi-potion), heartwood tea (status cure). |
 | Trader's Nook | 6x6 | Trade goods | Trader NPC | Barter-based. Accepts spirit tokens and Valdris gil at poor rates. Unique: root-woven charms, heartwood pendants. |
 | Hunter's Lean-to | 6x4 | Weapon cache (exterior) | Hunter NPC | Bows, spears, root-hardened daggers. No metal weapons. Nature-crafted only. |
-| Guest Hollow | 8x6 | Inn (rest among the roots) | -- | Hammocks woven from root-silk. Bioluminescent moss nightlights. Full HP/MP restore. |
+| Guest Hollow | 8x6 | Inn (rest among the roots) | -- | Hammocks woven from root-silk. Bioluminescent moss nightlights. Full HP/MP/AC restore, clears ailments. |
 | Elder's Alcove | 6x6 | Governance / lore | Elder NPC | Root-woven scrolls, tribal records. Optional dialogue reveals Roothollow's founding story. |
 | Central Hub | 10x10 | NPC gathering, navigation | Various | Open chamber where root passages converge. Totems at each exit glow to mark passages. |
 | Herb Garden (exterior) | 8x6 | Atmospheric, gather point | Herbalist | Cultivated patches between roots. Glowing plants, spirit-touched flowers. |
@@ -291,7 +291,7 @@ Duskfen is built on nothing solid. Every structure sits on platforms of woven re
 | Spirit-Binding Workshop | 10x8 | Unique crafting shop | Workshop Keeper | The largest platform. Spirit-binding is performed here -- temporarily housing willing spirits in objects. Unique shop: spirit-bound accessories with temporary buffs. |
 | Healer's Stilts | 6x6 | Healing hut | Healer NPC | A raised hut on extra-tall stilts. The healer uses marsh herbs and spirit-salves. Sells: marsh-remedy (potion), wisp-balm (status cure), deepwater tonic (MP restore). |
 | Trader's Raft | 6x6 | Trade goods | Trader NPC | A floating barge moored to a piling. The trader deals in marsh goods: eel-leather, wisp-glass, fenwood. Accepts spirit tokens and barter. |
-| Guest Platform | 6x6 | Rest / save point (inn equivalent) | -- | Reed mats and hammocks slung between pilings. The sound of water lapping beneath. Full HP/MP restore. A spirit-totem at the platform's center serves as the save point -- its will-o'-wisp glow is amber-gold (matching the universal save point visual). |
+| Guest Platform | 6x6 | Rest / save point (inn equivalent) | -- | Reed mats and hammocks slung between pilings. The sound of water lapping beneath. Full HP/MP/AC restore, clears ailments. A spirit-totem at the platform's center serves as the save point -- its will-o'-wisp glow is amber-gold (matching the universal save point visual). |
 | Fisher's Platform | 6x6 | Atmospheric, gathering | Fisher NPCs | Nets, traps, and the day's catch. Fish here are strange -- pale, eyeless, bioluminescent. The fishers are matter-of-fact about it. |
 | Watch Post | 6x4 | Perimeter lookout | Tavin (visits) | Elevated platform at the settlement's edge. A crude telescope made from reed tubes and polished fenwood. Tavin uses it to watch the Compact border. |
 | Elder's Reed Hut | 6x6 | Governance, lore | Elder NPC | A reed-walled hut with a low ceiling. Tribal records carved on fenwood tablets. The elder is old and speaks rarely, deferring to Caden on spiritual matters. |
@@ -560,7 +560,7 @@ Canopy Reach is two hundred feet above the forest floor, built entirely in the u
 | Canopy Hub | 10x8 | Central navigation | Various | Mid | The main platform. Carved from a massive branch junction. All Mid-Canopy bridges connect here. Spirit-totem at center. |
 | Scout Quarters | 8x6 | Weapon shop | Scout Leader | Mid | Archery-focused equipment. Bows, quivers, vine-rope, sling-stones. The Canopy Tribe's scouts train here. |
 | Branch Hall | 8x8 | Open gathering space | -- | Mid | An open-air platform with woven vine railings. Used for tribal meetings and meals. Wind chimes made from carved wood hang from branches above. |
-| Nest Hammocks | 8x6 | Inn (rest among the branches) | -- | Mid | Hammocks woven from vine and leaf, slung between branches. The wind rocks them. Full HP/MP restore. |
+| Nest Hammocks | 8x6 | Inn (rest among the branches) | -- | Mid | Hammocks woven from vine and leaf, slung between branches. The wind rocks them. Full HP/MP/AC restore, clears ailments. |
 | Healer's Perch | 6x6 | Healing hut | Healer NPC | Mid | A small platform with a leaf-thatch roof. Canopy herbs, wind-dried medicinals. |
 | Trader's Branch | 6x6 | Trade goods | Trader NPC | Mid | A platform built around a branch. Goods are displayed in woven baskets hanging from hooks. |
 | Weaver Platform | 6x6 | Crafting, atmospheric | Weaver NPC | Mid | Where the tribe's vine-weavers work -- making rope, bridges, baskets, clothing. |
@@ -691,7 +691,7 @@ Greywood Camp is the political heart of the Thornmere Wilds. Unlike the organic 
 | Trader's Longhouse | 8x6 | Trade goods | Trader NPC | The camp's trading center. Inter-tribal goods, weapons, supplies. Accepts all Thornmere currencies. |
 | Ranger Post | 6x6 | Patrol hub, side quest | Kael Thornwalker | Kael's operational base. Maps on a central table. "Missing Patrol" side quest triggers here. |
 | Lookout Tower | 4x8 | Perimeter, atmosphere | Scout NPC | A wooden tower mounted on a greywood trunk. View over the camp and surrounding forest. |
-| Guest Tents | 8x6 | Inn (rest) | -- | Hide tents with bedrolls and a small fire. Full HP/MP restore. The player's base during Act II. |
+| Guest Tents | 8x6 | Inn (rest) | -- | Hide tents with bedrolls and a small fire. Full HP/MP/AC restore, clears ailments. The player's base during Act II. |
 | Children's Area | 8x6 | Environmental storytelling | Wren | Where the camp's children play and learn. Wren is here, afraid of the dark for the first time. |
 | Family Tents (x4) | 6x4 each | Residential, NPC conversations | Various | Family dwellings. Each has a small fire, hanging spirit-wards, and personal touches. NPC conversations vary by act. |
 | Orun's Tent | 6x4 | NPC, flavor | Orun | The young warrior's tent. Weapons on display, training dummy outside. His eagerness is palpable. |

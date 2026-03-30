@@ -134,8 +134,10 @@ crafting materials and from the Caldera inflation system.
 
 Inns restore all party members to full HP, MP, and AC, clear all status
 ailments, and advance the in-game clock.
-They are always available when the party is in town, regardless of story
-progress.
+They are available in all towns during Acts I--II. During the Interlude,
+some inns become shelters and are unavailable or charge double (see
+[dynamic-world.md](dynamic-world.md)). Post-game, inns return to standard
+pricing.
 
 | Town | Act | Inn Cost | Notes |
 |------|-----|----------|-------|

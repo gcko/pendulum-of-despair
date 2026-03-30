@@ -268,6 +268,12 @@ of whether the player rests. The save point location itself enables
 this — no rest item required. See [crafting.md](crafting.md) for device
 loadout rules.
 
+### Exception: Ley Line Wellspring
+
+The Wellspring Nexus save point in Ley Line Depths F3 grants free full
+restore without a rest item (unique save point, only location with this
+property). See [dungeons-world.md](dungeons-world.md).
+
 ---
 
 ## 5. Slot Management
