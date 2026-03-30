@@ -651,7 +651,8 @@ and tempo. The script files use `[SFX: sound_id]` notation for key moments.
 
 ### 4.3 Save System Design
 
-**Status:** PARTIAL
+**Status:** COMPLETE
+**Completed:** 2026-03-30
 **Priority:** P1 — needed for persistence implementation
 **Files:** `docs/story/ui-design.md` (save screen layout), target `docs/story/save-system.md`
 **Depends On:** 2.3 (UI Design), 3.6 (Post-Game — for post-game save state)
@@ -662,18 +663,18 @@ overworld.md. Boss rush save suppression in postgame.md. Script tutorial text
 for save system in battle-dialogue.md.
 
 **What's Needed:**
-- [ ] Save data structure specification:
-  - [ ] Character data: stats, level, XP, HP/MP current, equipment, ability loadout
-  - [ ] Inventory: items, equipment, materials, key items with quantities
-  - [ ] Progression: event flags (58+), quest states, bestiary entries, treasure flags
-  - [ ] Party: formation, row assignments, active/reserve
-  - [ ] World state: current location, play time, gold, act indicator
-  - [ ] Completion tracking: bestiary count, treasure count, quest count, item count
-- [ ] Save slot specification (count, copy/delete behavior, display format)
-- [ ] Auto-save rules (when it triggers, where it saves, relationship to manual saves)
-- [ ] Post-game save state (what state is preserved after epilogue_complete, can final boss be re-fought)
-- [ ] Storage implementation contract (localStorage vs IndexedDB vs server-side, size budget)
-- [ ] Save migration strategy (how saves survive code updates)
+- [x] Save data structure specification:
+  - [x] Character data: stats, level, XP, HP/MP current, equipment, ability loadout
+  - [x] Inventory: items, equipment, materials, key items with quantities
+  - [x] Progression: event flags (58+), quest states, bestiary entries, treasure flags
+  - [x] Party: formation, row assignments, active/reserve
+  - [x] World state: current location, play time, gold, act indicator
+  - [x] Completion tracking: bestiary count, treasure count, quest count, item count
+- [x] Save slot specification (count, copy/delete behavior, display format)
+- [x] Auto-save rules (when it triggers, where it saves, relationship to manual saves)
+- [x] Post-game save state (what state is preserved after epilogue_complete, can final boss be re-fought)
+- [x] Storage implementation contract (localStorage vs IndexedDB vs server-side, size budget)
+- [x] Save migration strategy (how saves survive code updates)
 
 **Blocking:** Persistence layer implementation, server save API
 
@@ -842,3 +843,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-29 | 2.2 ATB Gauge Mechanics | MOSTLY COMPLETE → COMPLETE. All checklist items verified resolved: fill rate formula `floor((SPD+25)*factor*status)`, Active/Wait mode, battle speed 1-6, status interactions (Stop/Sleep/Confusion/Berserk), visual (Gap 2.3), 4-member party. ATB fill rate deferred item in Gap 1.2 also checked off. **18 of 19 gaps now COMPLETE.** | — |
 | 2026-03-29 | 3.7 Full Dialogue Script | PARTIAL → COMPLETE. Layers 2-3 added: npc-ambient.md (944 lines — town NPCs by location with flag-dependent variants, Q&A lore dialogue trees, sub-stories, shop/service lines, Oasis NPCs) and battle-dialogue.md (829 lines — boss phase barks with character, party combat callouts, Cael per-party-member dialogue, Vaelith full pre-fight/combat personality, Pallor Incarnate doubled Hollow Voice, Dreamer's Fault echo bosses, system text, tutorials). Total script: 6,138 lines across 8 content files (6,357 including README). **All 19 mechanical game design gaps now COMPLETE.** | — |
 | 2026-03-30 | Tier 4 Audit | Game development bible methodology audit. Compared documentation against 24 industry-standard categories. 15 COVERED, 3 PARTIAL, 3 MISSING. Added 6 new Tier 4 gaps: 4.1 Core GDD Overview (MISSING), 4.2 SFX & Audio Implementation (PARTIAL), 4.3 Save System Design (PARTIAL), 4.4 Accessibility Design (MISSING), 4.5 Localization Readiness (MISSING), 4.6 Technical Implementation Guide (MISSING). Tiers 1--3 (mechanical game design) remain fully COMPLETE. | — |
+| 2026-03-30 | 4.3 Save System Design | PARTIAL → COMPLETE. Save data schema (9 groups), 3-option save point menu (Rest/Rest & Save/Save with tiered rest items), 3 manual + 1 auto slot, Faint-and-Fast-Reload with durable XP/gold write-back, post-epilogue save state, versioned migration chain. Cross-doc updates to ui-design.md, overworld.md, items.md, crafting.md, economy.md, difficulty-balance.md, events.md. | — |
