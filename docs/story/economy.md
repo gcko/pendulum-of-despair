@@ -163,9 +163,9 @@ alternative to inns. They are single-use and consumed on activation.
 
 | Item | Buy | Sell | Effect | First Available |
 |------|-----|------|--------|-----------------|
-| Sleeping Bag | 250g | 125g | Restore 25% HP/MP to all party (save point only) | Act I |
-| Tent | 500g | 250g | Restore 50% HP/MP to all party (save point only) | Act I |
-| Pavilion | 1,200g | 600g | Restore 100% HP/MP to all party (save point only) | Act II |
+| Sleeping Bag | 250g | 125g | Restore 25% HP/MP/AC to all party, clear ailments (save point only) | Act I |
+| Tent | 500g | 250g | Restore 50% HP/MP/AC to all party, clear ailments (save point only) | Act I |
+| Pavilion | 1,200g | 600g | Restore 100% HP/MP/AC to all party, clear ailments (save point only) | Act II |
 
 **Stack limit:** 99 for all rest items. Unlike standard HP/MP recovery items
 (which stack to 199 per [items.md](items.md)), rest items are capped lower due
