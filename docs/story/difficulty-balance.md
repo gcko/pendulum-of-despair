@@ -314,6 +314,8 @@ vs Load" menu — the reload is instant and automatic.
 **What auto-save does NOT do:**
 - Does not save mid-dungeon-floor (prevents save-scumming chests)
 - Does not save during boss fights
+- Does not save during boss rush tiers (save suppressed; see
+  [save-system.md](save-system.md) § Boss Rush Save Suppression)
 - Does not overwrite manual saves
 
 ### 5.2 Save Point Density

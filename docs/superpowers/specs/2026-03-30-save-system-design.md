@@ -249,7 +249,8 @@ Save points (ley crystal markers, campgrounds, inn exteriors) present a
 
 ### Inns
 
-Town inns are a paid service (varies by town, 50g–300g per economy.md). They
+Town inns are a paid service (varies by town, Free at Aelhart to 450g at
+Caldera; see economy.md for full price list). They
 provide full HP/MP/AC restore and clear all status ailments — effectively
 a Pavilion for gold. Inns also present the 3-option menu but with the
 inn's paid rest replacing the item sub-menu.
@@ -496,15 +497,6 @@ compression needed.
 
 ## Appendix A: Cross-Doc Updates Required
 
-This spec introduces design decisions that supersede or extend existing
-docs. The following updates are needed during implementation:
-
-| Doc | Section | Change |
-|-----|---------|--------|
-| `ui-design.md` | Section 13 (Save/Load) | Replace "opens save screen directly" with 3-option save point menu (Rest / Rest & Save / Save). Add auto-save slot to Load screen. Add Copy/Delete operations to Save screen. |
-| `overworld.md` | Section 6 (Save Points) | Update "Resting at a save point fully restores HP, MP, and AC" to reflect tiered rest items (25%/50%/100%) and free fallback (25% MP only). Update "Inns additionally clear all status ailments" — rest items also clear ailments. |
-| `items.md` | Rest items table | Add AC restore percentages to Sleeping Bag/Tent/Pavilion descriptions. Add "clears status ailments" to effects. |
-| `crafting.md` | AC recovery | Update "AC is restored to full at inns, save points, and camps" to reflect tiered restoration via rest items. |
-| `economy.md` | Rest items | Add AC restore percentages to rest item descriptions. |
-| `difficulty-balance.md` | Section 5.1 | Align "XP, levels, gold" phrasing — levels are derived from XP at reload, not independently persisted. |
-| `events.md` | Section 2c | Align Faint-and-Fast-Reload description with this spec's Section 7 (XP persists, levels derived at reload). |
+All cross-doc updates have been applied. Additional files updated
+beyond the original list: `battle-dialogue.md` (save point text,
+party wipe section), `items.md` (Ley Crystal invocation phrasing).

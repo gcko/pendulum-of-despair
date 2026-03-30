@@ -1031,7 +1031,7 @@ overlay, no compass. Player uses the pause menu for all information.
 ### 15.6 Save Points
 
 - Glowing pixel-art crystal sprite, 2-frame shimmer idle animation.
-- Walking onto it: glow intensifies, opens save screen directly.
+- Walking onto it: glow intensifies, opens 3-option menu (see Section 13.7).
 
 ---
 

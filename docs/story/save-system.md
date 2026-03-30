@@ -253,11 +253,13 @@ Save points (ley crystal markers, campgrounds, inn exteriors) present a
 
 ### Inns
 
-Town inns are a paid service (varies by town, 50g–300g per
-[economy.md](economy.md)). They provide full HP/MP/AC restore and clear
-all status ailments — effectively a Pavilion for gold. Inns also present
-the 3-option menu but with the inn's paid rest replacing the item
-sub-menu.
+Town inns are a paid service (varies by town, Free at Aelhart to 450g at
+Caldera; see [economy.md](economy.md) for full price list). They provide
+full HP/MP/AC restore and clear all status ailments — effectively a
+Pavilion for gold. At an inn, selecting "Rest" or "Rest & Save" shows a
+single confirmation prompt ("Rest for Xg?") instead of the rest item
+sub-menu. The player's own rest items are not offered as an alternative
+at inns — the inn's paid rest is the only option.
 
 ### Device Reconfiguration
 
@@ -282,7 +284,7 @@ sees a slot they cannot write to.
 
 Each slot displays:
 - Location name, playtime (HH:MM), gold
-- 4 active party members: walking sprite, name, level, HP bar
+- Active party members (1–4): walking sprite, name, level, HP bar
 - Empty slots show centered "Empty" text in muted grey
 
 **Operations:**
@@ -347,7 +349,7 @@ not count), the game reloads from the most recent save.
 4. Merge death-persistent values (see below)
 5. Process any level-ups from accumulated XP (full HP/MP restore on
    level-up)
-6. Set HP/MP to 100% of max
+6. Set HP/MP to 100% of max; clear all status ailments
 7. Write merged state back to the same save slot on disk
 8. Resume at save point (~4s total from wipe to gameplay)
 

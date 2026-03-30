@@ -767,18 +767,20 @@ before the thread breaks entirely.
 
 ### Save System
 
-- *(Save point contact:)* Save screen opens directly.
+- *(Save point contact:)* 3-option menu appears: Rest / Rest & Save / Save.
+- *(Rest sub-menu:)* Shows available rest items (Sleeping Bag / Tent / Pavilion). If none available: "No rest items. Recover 25% MP."
 - *(Overwrite prompt:)* "Overwrite existing save?"
 - *(Save complete:)* "Saved."
 - *(Empty slot:)* "— Empty —"
 - *(Load screen:)* "Select a save file."
+- *(Copy prompt:)* "Copy to which slot?"
+- *(Delete prompt:)* "Delete this save?"
 
-### Game Over
+### Party Wipe (Faint-and-Fast-Reload)
 
 - *(All party members KO:)* "The world grows quiet."
-- *(Continue prompt:)* "Continue from last save?"
-- *(Yes:)* Returns to title screen → load.
-- *(No:)* Returns to title screen.
+- *(No prompt, no menu.)* Fade to black (2s) → instant reload at last
+  save point. XP and gold preserved across wipe.
 
 ### Tutorial Prompts (First Encounters)
 

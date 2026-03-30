@@ -132,7 +132,8 @@ crafting materials and from the Caldera inflation system.
 
 ## Inn Costs
 
-Inns restore all party members to full HP and MP and advance the in-game clock.
+Inns restore all party members to full HP, MP, and AC, clear all status
+ailments, and advance the in-game clock.
 They are always available when the party is in town, regardless of story
 progress.
 
@@ -158,8 +159,10 @@ progress.
 
 ## Rest Item Progression
 
-Rest items restore HP and MP at save points, functioning as the dungeon
-alternative to inns. They are single-use and consumed on activation.
+Rest items restore HP, MP, and AC at save points, clear status ailments,
+and function as the dungeon alternative to inns. They are single-use and
+consumed on activation. Without a rest item, a free fallback restores
+25% MP only (no HP, no AC, no status clear).
 
 | Item | Buy | Sell | Effect | First Available |
 |------|-----|------|--------|-----------------|

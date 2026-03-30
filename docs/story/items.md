@@ -222,7 +222,7 @@ Forgewright devices are central to Lira's identity as an engineer and inventor. 
 ### Core Mechanic
 
 - Each equipped Ley Crystal grants **1 invocation** in the Magic menu.
-- Invocations have **limited uses per rest cycle** — restored at inns, Sleeping Bags, Tents, Pavilions, and save points.
+- Invocations have **limited uses per rest cycle** — restored when resting at save points via rest items (Sleeping Bag, Tent, Pavilion) or at inns.
 - Power **scales with crystal level** (Lv 1–5; see [progression.md](progression.md) for leveling details).
 - Inspired by FF6's Esper summon system: powerful per-rest abilities that complement the standard spell list.
 - Invocations **cannot be used** during Ley Crystal Suppression (see [Axis Tower Suppression](#axis-tower-suppression) below).
