@@ -180,8 +180,8 @@ calculating, not the woman hoping.)*
 **LIRA** : That's not weather. That's a resonance pattern. The
 ley lines are being pulled toward a single point.
 
-**MAREN** : The Convergence. Where all the major lines intersect.
-If something is drawing on them deliberately—
+**MAREN** : If something is drawing on the entire network toward
+a single point deliberately—
 
 **WYNNE** : Then we're all on a clock. And the clock is winning.
 
@@ -216,7 +216,8 @@ and the stag knows it.
 *(The stag lowers its head. Torren places his hand on its brow.
 Ley light flows between them — a bond, visible and warm.)*
 
-**LIRA** : It's beautiful.
+**LIRA** : The resonance is perfectly clean. I've never seen a
+bond that stable.
 
 **TORREN** : It's a responsibility. The stag isn't a tool. It's
 the forest's answer to a question we haven't finished asking.
@@ -493,7 +494,8 @@ is he sleeping these days?
 
 *(Lira [bubble_question]. The question is casual. Too casual.)*
 
-**LIRA** : Fine. Why?
+**LIRA** : I wouldn't know. I've been in the Wilds, not Valdris.
+Why do you ask?
 
 **VAELITH** : No reason. Old ruins do strange things to
 sensitive minds. I've studied enough of them to know.
@@ -525,7 +527,8 @@ the dedication, even if the conclusions are... premature.
 
 **MAREN** : How do you know what I've been reading?
 
-**VAELITH** : People talk. I listen. It's my one real talent.
+**VAELITH** : I pay attention. To everything. It's a habit I've
+never been able to break.
 
 *(Vaelith finishes their drink. Stands. Bows.)*
 
@@ -595,7 +598,7 @@ city tenser — fewer ley-lamps lit, more soldiers on the walls,
 a nervousness in the market vendors' voices. Sable meets them
 at the inner gate.)*
 
-**SABLE** : We need to talk. Not here.
+**SABLE** : Don't react. Follow me. We have a problem.
 
 *(She leads them to a quiet alcove in the Keep. Checks both
 directions. Lowers her voice.)*

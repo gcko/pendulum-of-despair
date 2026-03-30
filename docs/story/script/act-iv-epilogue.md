@@ -24,7 +24,7 @@
 <!-- Scene: cael_boss_fight | Tier: 1+3 | Trigger: convergence_reached (flag 35) -->
 <!-- Location: Convergence Outer Ring | Party: all five (Edren, Lira, Torren, Sable, Maren) -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act III Final Battle, bestiary/bosses.md § Cael, Knight of Despair -->
+<!-- Cross-ref: outline.md § Act IV The Closing Door, bestiary/bosses.md § Cael, Knight of Despair -->
 
 ### 37a. Phase 1 — The Knight
 
@@ -77,8 +77,8 @@ in his armor. He catches himself.)*
 
 *(Scripted event: Despair's Grip. [SFX: pallor_surge])*
 
-**CAEL** : You're stronger than I expected. Good. You'll need
-to be.
+**CAEL** : You feel that? The weight? That's not me. That's what
+I've been carrying since the night I took the Pendulum.
 
 *(At 50% HP. His voice changes — the discipline cracks.)*
 
@@ -147,7 +147,7 @@ flares. He survives at 1 HP. [SFX: pallor_surge])*
 the aggression — something recognizable. Still fighting. Still
 Cael.)*
 
-**TORREN** : One more push. For him.
+**EDREN** : One more push. For him. Not against him. For him.
 
 *(The next killing blow ends Phase 2.)*
 
@@ -648,4 +648,5 @@ but growing. A shoot reaches for the light beside a knight's
 sword, and the spirits remember.*
 
 *Dialogue script continues: [← Act III](act-iii.md) |
-[README](README.md) | NPC Ambient (planned) | Battle Dialogue (planned)*
+[README](README.md) | [NPC Ambient](npc-ambient.md) |
+[Battle Dialogue](battle-dialogue.md)*
