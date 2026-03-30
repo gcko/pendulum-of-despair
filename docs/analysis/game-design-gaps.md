@@ -2,7 +2,7 @@
 
 > **Living document.** Updated by the `story-designer` skill as gaps are
 > addressed. Status fields reflect the current state of each design area.
-> Last full audit: 2026-03-19.
+> Last full audit: 2026-03-30 (game bible methodology audit).
 
 ## How to Read This Document
 
@@ -589,6 +589,204 @@ Now complete.
 
 ---
 
+## Tier 4: Implementation Readiness
+
+These gaps were identified in a game development bible methodology audit
+(2026-03-30). Tiers 1--3 covered mechanical game design. Tier 4 covers
+the documentation a development team needs to translate game design into
+a shippable product: platform specs, accessibility, audio implementation,
+persistence, localization, and technical architecture.
+
+### 4.1 Core Game Design Document (GDD Overview)
+
+**Status:** MISSING
+**Priority:** P2 — needed for team onboarding and stakeholder communication
+**Files:** None yet — target `docs/story/gdd-overview.md`
+**Depends On:** None (all content exists, just needs consolidation)
+
+**What exists:** Game pillars, thematic core, and core loop are distributed
+across outline.md, world.md, characters.md, CLAUDE.md, and AGENTS.md.
+All mechanical systems are fully designed. No single entry-point document.
+
+**What's Needed:**
+- [ ] Unified 2--3 page game overview (elevator pitch, genre, pillars, target audience)
+- [ ] Target audience definition (age range, genre familiarity, comparable titles)
+- [ ] Platform specification (browser versions, input devices, resolution, frame rate target)
+- [ ] Core gameplay loop diagram (explore → fight → progress → story → explore)
+- [ ] Session structure (expected play session length, save-and-quit patterns)
+- [ ] Scope summary (act count, estimated play time, content volume metrics)
+- [ ] Document index linking to all design docs by category
+
+**Blocking:** Team onboarding, stakeholder pitches, scope planning
+
+---
+
+### 4.2 Sound Effects & Audio Implementation
+
+**Status:** PARTIAL
+**Priority:** P2 — needed for audio asset creation and engine integration
+**Files:** `docs/story/music.md` (music is thorough), target additions to music.md or new `docs/story/audio.md`
+**Depends On:** 2.3 (UI Design — for menu/UI SFX), 1.1 (Combat — for battle SFX)
+
+**What exists:** music.md is comprehensive — faction palettes, character leitmotifs,
+Pallor corruption rules, track-by-track specifications with instruments, mood,
+and tempo. The script files use `[SFX: sound_id]` notation for key moments.
+
+**What's Needed:**
+- [ ] Master SFX catalog organized by context:
+  - [ ] Combat SFX: hit (physical/magic), miss, critical, guard, heal, status apply/remove, death, flee, victory fanfare, level-up
+  - [ ] UI SFX: cursor move, confirm, cancel, menu open/close, equip, error buzz, save confirm
+  - [ ] Exploration SFX: door open, chest open, save point chime, encounter trigger, ley crystal obtain
+  - [ ] Environmental SFX: referenced in script `[SFX: ley_surge]`, `[SFX: pallor_surge]`, `[SFX: alarm_bells]`, etc. — full list needed
+- [ ] Environmental ambient audio per biome/location type (forest ambience, factory hum, wind across Pallor Wastes, water in Duskfen, silence in grey zones)
+- [ ] Audio implementation rules:
+  - [ ] Music crossfade behavior between zones (duration, curve)
+  - [ ] Priority stack when multiple sources compete (battle > zone, fanfare > battle, cutscene > all)
+  - [ ] Pallor corruption audio rules (how music degrades in grey zones — extends music.md's existing corruption framework)
+  - [ ] Channel count budget (how many simultaneous sounds)
+
+**Blocking:** Audio asset creation, sound engine implementation
+
+---
+
+### 4.3 Save System Design
+
+**Status:** PARTIAL
+**Priority:** P1 — needed for persistence implementation
+**Files:** `docs/story/ui-design.md` (save screen layout), target `docs/story/save-system.md`
+**Depends On:** 2.3 (UI Design), 3.6 (Post-Game — for post-game save state)
+
+**What exists:** UI save/load screen designed in ui-design.md. Auto-save and
+Faint-and-Fast-Reload in difficulty-balance.md. Save points placed in
+overworld.md. Boss rush save suppression in postgame.md. Script tutorial text
+for save system in battle-dialogue.md.
+
+**What's Needed:**
+- [ ] Save data structure specification:
+  - [ ] Character data: stats, level, XP, HP/MP current, equipment, ability loadout
+  - [ ] Inventory: items, equipment, materials, key items with quantities
+  - [ ] Progression: event flags (58+), quest states, bestiary entries, treasure flags
+  - [ ] Party: formation, row assignments, active/reserve
+  - [ ] World state: current location, play time, gold, act indicator
+  - [ ] Completion tracking: bestiary count, treasure count, quest count, item count
+- [ ] Save slot specification (count, copy/delete behavior, display format)
+- [ ] Auto-save rules (when it triggers, where it saves, relationship to manual saves)
+- [ ] Post-game save state (what state is preserved after epilogue_complete, can final boss be re-fought)
+- [ ] Storage implementation contract (localStorage vs IndexedDB vs server-side, size budget)
+- [ ] Save migration strategy (how saves survive code updates)
+
+**Blocking:** Persistence layer implementation, server save API
+
+---
+
+### 4.4 Accessibility Design
+
+**Status:** MISSING
+**Priority:** P1 — affects player reach and compliance
+**Files:** None yet — target `docs/story/accessibility.md`
+**Depends On:** 2.3 (UI Design), 2.2 (ATB — for timing accommodations), 3.4 (Difficulty)
+
+**What's Needed:**
+- [ ] Input accessibility:
+  - [ ] Key rebinding specification
+  - [ ] Gamepad support (button mapping, analog stick for menus)
+  - [ ] One-handed play feasibility analysis for ATB combat
+- [ ] Visual accessibility:
+  - [ ] Color-blind mode specification — CRITICAL: the game's emotional arc depends on color desaturation (warm → grey → new palette). Color-blind players may miss this entirely. Need alternative visual cues (pattern overlays, particle effects, UI indicators)
+  - [ ] High-contrast mode for text and UI elements
+  - [ ] Screen shake / flash intensity options
+- [ ] Text accessibility:
+  - [ ] Text size scaling options (SNES pixel font at native resolution may be too small on modern displays)
+  - [ ] Text speed options (instant, fast, normal, slow)
+- [ ] Cognitive accessibility:
+  - [ ] ATB Wait mode as default recommendation for accessibility
+  - [ ] Battle speed floor (can speed 1 be slow enough for motor-impaired players?)
+  - [ ] Optional turn-by-turn mode (fully paused, no time pressure — design decision needed)
+- [ ] Motion sensitivity:
+  - [ ] Option to reduce/disable Mode 7 rotation effects
+  - [ ] Option to reduce/disable battle transition mosaic effects
+  - [ ] Screen shake toggle
+- [ ] Subtitle / closed caption support for SFX-dependent gameplay cues
+
+**Blocking:** Compliance with accessibility guidelines, broader player reach
+
+---
+
+### 4.5 Localization Readiness
+
+**Status:** MISSING
+**Priority:** P3 — not needed for English release, but architecture decisions now save work later
+**Files:** None yet — target `docs/story/localization.md`
+**Depends On:** 3.3 (Dialogue System — string format), 3.7 (Script — string volume), 2.3 (UI — text box constraints)
+
+**What's Needed:**
+- [ ] String externalization plan:
+  - [ ] How dialogue, item names, menu labels, system messages, and NPC text are stored for translation
+  - [ ] String ID conventions (mapping script scene IDs to string keys)
+  - [ ] Separation of translatable text from markup/metadata
+- [ ] Text box constraint analysis per language:
+  - [ ] English baseline: 3 lines, ~45 chars/line per ui-design.md
+  - [ ] Expansion factors: German/French +30%, Spanish +20%, Japanese fixed-width
+  - [ ] Overflow strategy (smaller font? more text boxes? abbreviation rules?)
+- [ ] Font/character set requirements:
+  - [ ] Latin extended (accented characters for European languages)
+  - [ ] CJK support feasibility (requires different font system)
+  - [ ] Right-to-left script support feasibility (Arabic, Hebrew)
+- [ ] Cultural adaptation notes:
+  - [ ] Content that may need regional adjustment (naming conventions, humor, references)
+  - [ ] FF6/CT localization precedents as reference models
+- [ ] Localization pipeline specification:
+  - [ ] File format for translator handoff (XLIFF, CSV, custom)
+  - [ ] Context notes for translators (who speaks, emotional tone, text box constraints)
+  - [ ] Validation tooling (automated check that translations fit text boxes)
+
+**Blocking:** Multi-language support, international release
+
+---
+
+### 4.6 Technical Implementation Guide
+
+**Status:** MISSING
+**Priority:** P1 — needed for development team to begin coding
+**Files:** None yet — target `docs/plans/technical-architecture.md`
+**Depends On:** All Tier 1--3 gaps (provides the content to implement)
+
+**What's Needed:**
+- [ ] Data format specifications:
+  - [ ] Enemy stat tables → JSON schema (mapping bestiary tables to runtime data)
+  - [ ] Item/equipment catalogs → JSON schema
+  - [ ] Dialogue trees → JSON schema (extending dialogue-system.md's 7-field format)
+  - [ ] Encounter tables → JSON schema (mapping dungeons-world.md formation tables)
+  - [ ] Shop inventories → JSON schema (mapping economy.md shop lists)
+  - [ ] Event flags → enum/constant definitions
+- [ ] Game state machine architecture:
+  - [ ] Top-level states: title, exploration, combat, menu, cutscene, dialogue, save/load
+  - [ ] Transition rules between states (what triggers each transition)
+  - [ ] Phaser 3 scene mapping (which Phaser scene handles which game state)
+- [ ] Asset pipeline specification:
+  - [ ] Tileset format and naming conventions (per visual-style.md 16×16 tiles)
+  - [ ] Sprite sheet structure (character sprites, enemy sprites, UI elements)
+  - [ ] Animation frame data format
+  - [ ] Audio asset format (OGG/MP3, sample rates, naming)
+- [ ] Entity/component architecture:
+  - [ ] How game entities (player, NPCs, enemies, chests, triggers) are represented
+  - [ ] Component types: position, sprite, combat stats, dialogue, inventory, AI
+  - [ ] Relationship to Phaser 3 game objects
+- [ ] Server API contract:
+  - [ ] Auth endpoints (registration, login, session management)
+  - [ ] Save/load endpoints (create, read, update, delete saves)
+  - [ ] Request/response formats
+  - [ ] Error handling conventions
+- [ ] Performance budgets:
+  - [ ] Maximum entities per scene
+  - [ ] Target frame rate (30fps? 60fps?)
+  - [ ] Audio channel limit
+  - [ ] Memory budget per scene type (overworld, dungeon, battle, menu)
+
+**Blocking:** All code implementation, asset creation pipeline, server development
+
+---
+
 ## Already Strong (No Gaps)
 
 These areas are complete or mostly complete and don't need new design
@@ -642,4 +840,5 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-28 | 3.6 New Game+ & Post-Game | MISSING → COMPLETE. No NG+ (FF6 model, narrative integrity). Boss rush: 3-tier gauntlet with Memento accessories. Completion tracking: 4 categories (bestiary, treasure, quests, items) at Pendulum tavern. Post-game content summary (~25--45+ hours). Design changes to equipment.md, dynamic-world.md, events.md. **All mechanical game design gaps now closed.** | — |
 | 2026-03-29 | 3.7 Full Dialogue Script | MISSING → PARTIAL. Layer 1 (narrative spine) complete: 44 scenes, 4,365 lines across 6 script files. Hybrid screenwriter format with metadata headers, [animation_id] notation, FF6 branching syntax. All party voices established. Council choice nodes, Cael's Last Night variants, reunion order branching all implemented. Layers 2-3 (NPC ambient, battle/system) planned. | — |
 | 2026-03-29 | 2.2 ATB Gauge Mechanics | MOSTLY COMPLETE → COMPLETE. All checklist items verified resolved: fill rate formula `floor((SPD+25)*factor*status)`, Active/Wait mode, battle speed 1-6, status interactions (Stop/Sleep/Confusion/Berserk), visual (Gap 2.3), 4-member party. ATB fill rate deferred item in Gap 1.2 also checked off. **18 of 19 gaps now COMPLETE.** | — |
-| 2026-03-29 | 3.7 Full Dialogue Script | PARTIAL → COMPLETE. Layers 2-3 added: npc-ambient.md (944 lines — town NPCs by location with flag-dependent variants, Q&A lore dialogue trees, sub-stories, shop/service lines, Oasis NPCs) and battle-dialogue.md (829 lines — boss phase barks with character, party combat callouts, Cael per-party-member dialogue, Vaelith full pre-fight/combat personality, Pallor Incarnate doubled Hollow Voice, Dreamer's Fault echo bosses, system text, tutorials). Total script: 6,138 lines across 8 content files (6,357 including README). **All 19 gaps now COMPLETE. Game design documentation is finished.** | — |
+| 2026-03-29 | 3.7 Full Dialogue Script | PARTIAL → COMPLETE. Layers 2-3 added: npc-ambient.md (944 lines — town NPCs by location with flag-dependent variants, Q&A lore dialogue trees, sub-stories, shop/service lines, Oasis NPCs) and battle-dialogue.md (829 lines — boss phase barks with character, party combat callouts, Cael per-party-member dialogue, Vaelith full pre-fight/combat personality, Pallor Incarnate doubled Hollow Voice, Dreamer's Fault echo bosses, system text, tutorials). Total script: 6,138 lines across 8 content files (6,357 including README). **All 19 mechanical game design gaps now COMPLETE.** | — |
+| 2026-03-30 | Tier 4 Audit | Game development bible methodology audit. Compared documentation against 24 industry-standard categories. 15 COVERED, 3 PARTIAL, 3 MISSING. Added 6 new Tier 4 gaps: 4.1 Core GDD Overview (MISSING), 4.2 SFX & Audio Implementation (PARTIAL), 4.3 Save System Design (PARTIAL), 4.4 Accessibility Design (MISSING), 4.5 Localization Readiness (MISSING), 4.6 Technical Implementation Guide (MISSING). Tiers 1--3 (mechanical game design) remain fully COMPLETE. | — |
