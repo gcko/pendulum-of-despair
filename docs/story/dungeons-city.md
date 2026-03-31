@@ -350,7 +350,7 @@ KEY:  ### = brick/iron wall   === = conduit pipe (glowing blue)
 **Treasure:**
 - Supply Cache B: Compact Military Intelligence Documents (key item -- reveals patrol routes, used in "The Commissar's Confession" side quest), 1,200 gold
 - Old Foreman's Office hidden compartment: Ironmark Tunnel Map (key item -- required to navigate the Ironmark passage without getting lost; without it, the tunnel has random dead ends that loop back), 1x Arcanite Torch
-- Resistance Waypoint: Free rest (bedrolls restore HP/MP), resistance graffiti reads "WE REMEMBER WHAT WE WERE"
+- Resistance Waypoint: Bedroll rest (restore 50% HP/MP to all party, once per visit; not a save point, no AC restore), resistance graffiti reads "WE REMEMBER WHAT WE WERE"
 - Resistance Waypoint (wall): A beautiful tapestry hanging on the brick wall, donated by "a kind traveler" according to the resistance fighters who cannot remember exactly when it appeared. Depicts a pastoral scene -- rolling hills, a village, figures at rest. Fine grey thread embroidery, exquisite craftsmanship. If examined after the Doma moment cutscene (flag: vaelith_doma_moment), the party notices the pastoral figures have grey eyes. Sable: "Those eyes. I have seen those eyes." Maren: "The thread is grey. Not dyed grey -- the material itself. I do not know what fiber this is." The tapestry cannot be removed without destroying it. The resistance fighters consider it good luck.
 - Abandoned Service Bay: Salvaged Automaton Core (crafting material -- used in Lira's Forgewright recipes)
 

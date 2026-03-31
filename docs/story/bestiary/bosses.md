@@ -1498,8 +1498,8 @@ Mode: Catalogue
       status (persists after battle, cannot be cured until
       Convergence). The Index is consumed. Fight ends.
     - Destroy: Maren destroys the Index. Instant defeat -- the
-      Index detonates (party_wide 9,999 damage, lethal). Game Over.
-      On reload, the fight restarts from the beginning.
+      Index detonates (party_wide 9,999 damage, lethal). Party wipe.
+      On Faint-and-Fast-Reload, the fight restarts from the beginning.
     - Neither option is "correct." Both are traps representing
       Maren's fundamental flaw: she believes knowledge must be
       either possessed or eliminated.
@@ -1532,7 +1532,7 @@ Scripted Events:
     - Note: The Index takes damage normally (7,000 HP, Spirit
       weakness 150%), but reducing it to 0 HP through attacks
       triggers the same detonation as "Destroy" (party_wide
-      9,999 damage, Game Over). The Index cannot be beaten
+      9,999 damage, party wipe). The Index cannot be beaten
       through conventional combat.
 
   On Maren uses "Absorb" (once):
@@ -1552,9 +1552,9 @@ Scripted Events:
     - cutscene: "Maren raises her hand. The Index ignites. For one
       moment, every page burns at once -- a bonfire of memory. Then
       the detonation. White light. Nothing."
-    - party_wide: 9,999 damage (lethal, Game Over)
-    - Note: This is an intentional Game Over. On reload, the fight
-      restarts. The player is meant to realize Destroy is not
+    - party_wide: 9,999 damage (lethal, party wipe)
+    - Note: This is an intentional party wipe. On Faint-and-Fast-Reload,
+      the fight restarts. The player is meant to realize Destroy is not
       the answer.
 
   On Examine/Inspect/Scan the Index (any party member, once):
@@ -3633,8 +3633,8 @@ Note: This is NOT a real combat encounter. Vaelith appears during the
       All party attacks deal 0-1 damage (Vaelith's DEF/MDEF are
       astronomically high relative to party stats at this point).
       Vaelith is immune to every status effect in the game. No gold,
-      exp, items, or drops are awarded. The Game Over screen after
-      this fight leads to a cutscene, not a reload prompt.
+      exp, items, or drops are awarded. This is a narrative defeat —
+      the party wipe leads to a cutscene, not a Faint-and-Fast-Reload.
 
   Priority:
     1. turn_counter == 1 → Grey Lecture (party_wide, 400-500 magic
@@ -3666,8 +3666,8 @@ Scripted Events:
   Turn 5+ (party wipe):
     - cutscene: "Vaelith closes the Ashen Archive. The grey washes
       over everything. The party falls. The siege is lost."
-    - Note: This triggers a narrative cutscene (not a Game Over
-      reload). The party wakes in a safe location, establishing
+    - Note: This triggers a narrative cutscene (not a
+      Faint-and-Fast-Reload). The party wakes in a safe location, establishing
       the Act III goal: find a way to pierce Vaelith's defenses.
 ```
 

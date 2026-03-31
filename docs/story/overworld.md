@@ -421,10 +421,14 @@ overworld, they appear at two types of locations:
 
 ### Save Point Rules
 
-- **Rest mechanics.** Resting at a save point fully restores HP, MP,
-  and AC (Arcanite Charges per [crafting.md](crafting.md)). Inns
-  additionally clear all status ailments. This is the primary AC
-  restoration mechanic for pre-dungeon device crafting.
+- **Rest mechanics.** Save points present a 3-option menu: Rest,
+  Rest & Save, Save (see [save-system.md](save-system.md)). Resting
+  consumes a rest item — Sleeping Bag (25% HP/MP/AC), Tent (50%),
+  or Pavilion (100%) — and clears all status ailments. Without a
+  rest item, a free fallback restores 25% MP only (no HP, no AC, no
+  status clear). Inns provide full restore for gold (varies by town,
+  see [economy.md](economy.md)). AC restoration via rest items is the
+  primary recovery mechanic for pre-dungeon device crafting.
 - **Device reconfiguration.** Lira can re-craft devices at save points
   with available materials and AC (per [crafting.md](crafting.md)).
 - **No encounters.** Save point tiles use the Sacred sites encounter

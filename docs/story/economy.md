@@ -132,9 +132,12 @@ crafting materials and from the Caldera inflation system.
 
 ## Inn Costs
 
-Inns restore all party members to full HP and MP and advance the in-game clock.
-They are always available when the party is in town, regardless of story
-progress.
+Inns restore all party members to full HP, MP, and AC, clear all status
+ailments, and advance the in-game clock.
+They are available in all towns during Acts I--II. During the Interlude,
+some inns become shelters and are unavailable or charge double (see
+[dynamic-world.md](dynamic-world.md)). Post-game, inns return to standard
+pricing.
 
 | Town | Act | Inn Cost | Notes |
 |------|-----|----------|-------|
@@ -142,30 +145,32 @@ progress.
 | Highcairn | I | 50g | Monastery hospitality — minimal charge |
 | Valdris Crown | I–II | 150g | Capital city, mid-range inn |
 | Corrund | II | 100g | Canal district, modest lodging |
-| Caldera | II | 300g (450g without Employee Card) | Inflated by Compact exploitation; see [Caldera Inflation](#caldera-inflation) |
+| Caldera | II | 225g (300g without Employee Card) | Inflated by Compact exploitation; see [Caldera Inflation](#caldera-inflation) |
 | Ashmark | II | 100g | Harbor district, basic |
 | Bellhaven | II | 150g | Coastal trade city, tourist markup |
 | Thornmere | II | 100g | Isolated but welcoming |
 | Ironmark | Interlude | 75g | War-torn; discounted from desperation |
 | Act III Oases | III | 50–100g | Refugee camps, scraping by |
 
-> **Caldera note:** Caldera's standard inn rate would be ~200g (comparable to
-> Valdris/Bellhaven). At 150% markup, the inflated price is **300g**. With the
-> Caldera Employee Card (25% off 300g), the party pays **225g** — still above
-> the ~200g standard rate, consistent with the 112.5% net rule.
+> **Caldera note:** Caldera's standard inn rate would be ~200g. At 150%
+> markup, the posted price is **300g**. With the Caldera Employee Card
+> (25% off), the party pays **225g** — still above the ~200g standard
+> rate, consistent with the 112.5% net rule used across all Caldera shops.
 
 ---
 
 ## Rest Item Progression
 
-Rest items restore HP and MP at save points, functioning as the dungeon
-alternative to inns. They are single-use and consumed on activation.
+Rest items restore HP, MP, and AC at save points, clear status ailments,
+and function as the dungeon alternative to inns. They are single-use and
+consumed on activation. Without a rest item, a free fallback restores
+25% MP only (no HP, no AC, no status clear).
 
 | Item | Buy | Sell | Effect | First Available |
 |------|-----|------|--------|-----------------|
-| Sleeping Bag | 250g | 125g | Restore 25% HP/MP to all party (save point only) | Act I |
-| Tent | 500g | 250g | Restore 50% HP/MP to all party (save point only) | Act I |
-| Pavilion | 1,200g | 600g | Restore 100% HP/MP to all party (save point only) | Act II |
+| Sleeping Bag | 250g | 125g | Restore 25% HP/MP/AC to all party, clear ailments (save point only) | Act I |
+| Tent | 500g | 250g | Restore 50% HP/MP/AC to all party, clear ailments (save point only) | Act I |
+| Pavilion | 1,200g | 600g | Restore 100% HP/MP/AC to all party, clear ailments (save point only) | Act II |
 
 **Stack limit:** 99 for all rest items. Unlike standard HP/MP recovery items
 (which stack to 199 per [items.md](items.md)), rest items are capped lower due

@@ -255,7 +255,7 @@ The Wilds form a broad central band across the continent, roughly 60-80 miles wi
 - **Dense forest:** Highest encounter rate on the continent. Enemy ambush chance elevated. Visibility severely limited -- the minimap shows only a small radius. Navigation without Torren in the party is impossible in certain areas (conditional passability -- see [overworld.md](overworld.md)).
 - **Marshland:** Encounter rate high but enemies are specialized (water creatures, marsh-born spirits). Environmental hazards (interior/dungeon only per [overworld.md](overworld.md)): sinkholes that drop the party into subterranean encounters, rising water that blocks retreat paths.
 - **Canopy level (interior location maps, not overworld):** Falling is a risk -- missed jumps or broken bridges drop the party to the forest floor (taking damage and potentially triggering an encounter). Wind gusts on exposed platforms can push party members.
-- **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. These are rest points. Ambient ley energy provides passive HP/MP recovery while standing still.
+- **Sacred sites (Ashgrove, Stillwater Hollow):** No random encounters. Ambient ley energy provides passive HP/MP recovery (2% per second while standing still; no AC restore, no ailment clear). Not save points — see [save-system.md](save-system.md).
 - **Sunstone Ridge:** Low encounter rate -- the ley energy deters most creatures. The crystals provide natural light, making this the only Wilds terrain where visibility is good. Ley-born creatures appear here as rare encounters with high-value drops.
 
 ---

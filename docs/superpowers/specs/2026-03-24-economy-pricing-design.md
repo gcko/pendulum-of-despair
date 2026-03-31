@@ -110,7 +110,7 @@ FF6, and CT had no banking systems.
 | Highcairn | I | 50g | Monastery hospitality, minimal charge |
 | Valdris Crown | I–II | 150g | Capital city, mid-range inn |
 | Corrund | II | 100g | Canal district, modest lodging |
-| Caldera | II | 300g (450g at company rate) | Inflated by Compact exploitation |
+| Caldera | II | 225g (300g without Employee Card) | Inflated by Compact exploitation |
 | Ashmark | II | 100g | Harbor district, basic |
 | Bellhaven | II | 150g | Coastal trade city, tourist markup |
 | Thornmere | II | 100g | Isolated but welcoming |

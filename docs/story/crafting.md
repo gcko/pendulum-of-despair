@@ -114,7 +114,9 @@ requires a forge. Per [equipment.md](equipment.md).
 ### Pool Mechanics
 
 Lira has a **12 AC pool** (per [abilities.md](abilities.md): "Max 12 AC").
-AC is restored to full at inns, save points, and camps. AC serves two
+AC is restored at save points via rest items — Sleeping Bag (25%),
+Tent (50%), Pavilion (100%) — and fully at inns. Without a rest item,
+AC is not restored (see [save-system.md](save-system.md)). AC serves two
 distinct systems:
 
 1. **Battle devices** ([abilities.md](abilities.md)): deployed in
@@ -150,7 +152,7 @@ device in battle costs 0 AC — the charge was baked in during creation.
 
 ### AC Budget Examples
 
-With 12 AC restored at each rest point, Lira can pre-craft different
+With 12 AC restored (via Pavilion or inn), Lira can pre-craft different
 loadout combinations. Three worked examples:
 
 **Example 1 — Balanced loadout (11 AC spent, 1 spare):**
@@ -170,10 +172,13 @@ during the next combat encounters.
 
 ### AC Restoration
 
-- **Rest points:** Fully restored to 12 at inns, save points, and camps.
-  AC spent on pre-crafting at a save point reduces the pool until the
-  next rest — crafting 3 devices at 2 AC each leaves 6 AC for battle
-  device deployment until the next save point.
+- **Rest points:** Restored via rest items at save points — Sleeping Bag
+  (25%, 3 AC), Tent (50%, 6 AC), Pavilion (100%, 12 AC) — and fully to
+  12 at inns. Without a rest item, AC is not restored (see
+  [save-system.md](save-system.md)). AC spent on pre-crafting at a save
+  point reduces the pool until the next rest — crafting 3 devices at 2
+  AC each leaves 6 AC for battle device deployment until the next save
+  point.
 - **Battle start:** Per [abilities.md](abilities.md), "Starts each
   battle at max" — this means the *current* max (12 minus any AC spent
   on pre-crafting since the last rest). Battle device deployment draws

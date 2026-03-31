@@ -391,7 +391,8 @@ standing, the wipe still triggers):
    to silence.
 2. **Fade to Black (2s):** Black screen. No text, no menu, no "Game Over."
 3. **Instant Reload:** Fade in at last save point. Save file is loaded, then
-   persistent values (XP, levels, gold, boss cutscene skip flags) are applied on top.
+   persistent values (XP, gold, boss cutscene skip flags) are applied on top.
+   Levels are derived from accumulated XP (level-ups trigger with full HP/MP restore).
    HP and MP are set to 100% of the resulting max. Save point marker glows
    briefly. Ambient music resumes. ~4 seconds total.
 
@@ -414,9 +415,13 @@ the save file (see table below). Everything else comes from the save.
 
 | Category | Rule | Rationale |
 |----------|------|-----------|
-| XP and level-ups | Kept (includes spells/abilities learned from those level-ups) | Prevents grinding punishment; standard JRPG convention (FF4/FF6) |
+| XP | Kept. Levels are derived from accumulated XP at reload — if XP crosses a level threshold, the level-up happens during reload with full HP/MP restore. Spells/abilities unlocked by the new level become available. | Prevents grinding punishment; enables incremental progress through repeated boss attempts (FF6 raft sequence model). See [save-system.md](save-system.md). |
 | Gold/currency | Kept (all gold, including battle rewards and sale proceeds earned since last save) | Prevents soft-lock: player could spend all gold on consumables, lose the fight, and respawn with no resources to recover. Note: since inventory resets but gold persists, a player could theoretically sell items, wipe, and keep the gold while the items return. This is accepted -- gold alone has limited exploitability (shops are sparse, items have low resale value), and the alternative (resetting gold) risks soft-locks. Matches FF4/FF6 behavior. |
 | Boss cutscene skip flags | Kept (`boss_cutscene_seen_<boss_id>`) | Prevents re-watching the same cutscene on retry; see Rules above |
+
+**Durability:** The merged state (accumulated XP/gold/flags) is written
+back to the save file after reload. If the player quits after dying,
+their accumulated progress persists across sessions.
 
 **What Resets to Last Save:**
 

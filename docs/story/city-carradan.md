@@ -148,7 +148,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 | 28 | Rail Terminal | Transit | Canal District | Rail Conductor | Fast travel (Ashmark, Caldera, Kettleworks) | 100g per trip per [transport.md](transport.md); erratic in Interlude |
 | 29 | Rail Yard | Utility | Canal District | -- | -- | Environmental detail; derailed carts in Interlude |
 | 30 | Tenement Stacks A-E | Housing | Undercroft | Various worker NPCs | -- | 5 buildings, each multi-floor; fading victims |
-| 31 | Soup Kitchen | Service | Undercroft | Cook NPC | Free HP restore | Charity run by a former worker |
+| 31 | Soup Kitchen | Service | Undercroft | Cook NPC | Restore 25% HP to all party (once per visit; no AC) | Charity run by a former worker |
 | 32 | Tash's Black Market | Underground shop | Undercroft | Tash | Forged papers, contraband, intel | Sable's primary contact |
 | 33 | Rat & Ratchet | Tavern | Undercroft | Barkeep, informants | Rumors, cheap drinks | Low-class tavern; resistance contacts |
 | 34 | Fenced Lot | Underground shop | Undercroft | Fence NPC | Sell stolen goods, buy cheap gear | Black market overflow |
