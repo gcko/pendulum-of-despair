@@ -464,7 +464,7 @@ Standard JRPG music cues for non-narrative game systems.
 | Save Point | 3-5s | Gentle harp arpeggio with ley-hum fade. Thornmere palette — save points are ley-crystal formations. | Warmth and safety. Brief comfort before continuing. |
 | Inn / Rest | 8-10s | Soft acoustic passage. Neutral palette. Resolves on a warm major chord as HP/MP restore. | Plays over the rest animation. |
 | Shop | Loop (short) | Light arrangement of the current town's theme. Same palette, reduced to lead + rhythm only. More casual, transactional. | Not a unique track — a processing rule applied to the town theme. |
-| Game Over / Reload | 4s | The fast-reload sequence from [events.md](events.md) section 2c. Last Faint animation, fade to black, instant reload. Music stops on Faint (not true silence — ambient sound continues during the 2s fade to black), then save point jingle on reload. | No "Game Over" screen or unique game-over theme. |
+| Party Wipe / Reload | 4s | The Faint-and-Fast-Reload sequence from [events.md](events.md) section 2c. Last Faint animation, fade to black, instant reload. Music stops on Faint (not true silence — ambient sound continues during the 2s fade to black), then save point jingle on reload. | No "Game Over" screen or unique game-over theme. |
 | Menu Screen | None | No unique menu music. The current location/overworld theme continues playing underneath the menu UI. | Maintains immersion. No jarring music switch when pausing. |
 
 ## Composable Framework for New Content
