@@ -213,6 +213,8 @@ Organized by category. Every file lives in `docs/story/` unless noted.
 - [overworld.md](overworld.md) -- traversal, Mode 7, save points
 - [transport.md](transport.md) -- rail, ferry, Ley Stag mount
 - [city-valdris.md](city-valdris.md), [city-carradan.md](city-carradan.md), [city-thornmere.md](city-thornmere.md) -- city layouts
+- [interiors.md](interiors.md) -- interior room layouts, NPC placement
+- [building-palette.md](building-palette.md) -- building templates, tile conventions
 
 **Items & Economy:**
 - [items.md](items.md) -- consumables, materials, key items
@@ -233,6 +235,11 @@ Organized by category. Every file lives in `docs/story/` unless noted.
 - [dynamic-world.md](dynamic-world.md) -- act-based world state changes
 - [sidequests.md](sidequests.md) -- sidequest catalog
 - [postgame.md](postgame.md) -- post-game content, boss rush, completion tracking
+
+**Audits:**
+- [continuity-audit.md](continuity-audit.md) -- cross-doc continuity verification
+- [layout-audit.md](layout-audit.md) -- save point and layout coverage audit
+- [worldbuilding-audit.md](worldbuilding-audit.md) -- worldbuilding consistency audit
 
 **Analysis:**
 - `docs/analysis/game-design-gaps.md` -- gap tracker (25 gaps, all complete)
