@@ -25,7 +25,7 @@
 punchy, synthesized. No orchestral swells or realistic foley. Each SFX
 under 2 seconds except jingles (2-8s per music.md).
 
-### 1.1 Combat SFX (18)
+### 1.1 Combat SFX (19)
 
 | ID | Trigger | Notes |
 |----|---------|-------|
@@ -47,6 +47,7 @@ under 2 seconds except jingles (2-8s per music.md).
 | `level_up` | Level gained | Maps to music.md jingle (2-3s) |
 | `battle_onset_boss` | Boss encounter begins | Heavy, dramatic hit — plays after transition, before dialogue |
 | `battle_onset_superboss` | Superboss encounter begins | Elevated variant — longer, more ominous (The Lingering, echo bosses) |
+| `phase_change` | Boss enters new phase | Ominous shift — low rumble + high chime. Priority 2 (Battle jingles). |
 
 #### Enemy Type KO Sound Mapping
 
@@ -77,7 +78,7 @@ to 4 KO sounds. Boss type uses whichever fits the boss's primary nature.
 | `error_buzz` | Invalid action (greyed option, can't equip) | Short buzz / denied |
 | `save_confirm` | Save completed | Positive chime (distinct from `confirm`) |
 
-### 1.3 Exploration SFX (9)
+### 1.3 Exploration SFX (8)
 
 | ID | Trigger | Notes |
 |----|---------|-------|
@@ -89,7 +90,6 @@ to 4 KO sounds. Boss type uses whichever fits the boss's primary nature.
 | `item_pickup` | Field item collected | Maps to music.md Item Acquisition jingle (1-2s) |
 | `rest_complete` | Rest at save point finished | Restored tone (warm, resolved) |
 | `quest_complete` | Sidequest completed | Triumphant short jingle (distinct from victory fanfare) |
-| `phase_change` | Boss enters new phase | Ominous shift — low rumble + high chime |
 
 ### 1.4 Environmental / Narrative SFX (~16)
 
@@ -113,6 +113,32 @@ All `[SFX:]` IDs referenced in script files.
 | `pendulum_shatter` | Pendulum artifact shatters | Act IV |
 | `title_reveal` | Title card + credits roll | Acts I, IV |
 | `drums_war` | Siege / battle onset | Act II |
+
+---
+
+### 1.5 SFX Reuse for Unlisted Events
+
+The ~51 SFX catalog covers core interactions. Many gameplay events reuse
+generic SFX rather than having dedicated sounds:
+
+- **Combat interactions** (Frozen Shatter, Smoke Ignition, Conductive
+  Water per [combat-formulas.md](combat-formulas.md)): use `hit_magic`
+  or `critical` with the interaction's visual effect providing the
+  distinct feedback
+- **Character abilities** (Lira's device deploy, Maren's Weave Gauge,
+  Torren's Spirit Favor, Sable's Filch): use `status_apply` for
+  positive effects, `confirm` for successful actions, `error_buzz`
+  for failures
+- **Magic traditions** (Ley Line resonance, Arcanite mechanical,
+  Spirit Communion natural per [abilities.md](abilities.md)): use
+  `hit_magic` for all traditions. The visual effects and animation
+  distinguish tradition, not the SFX.
+- **Combo abilities** (dual techs): use `critical` as the activation
+  cue — the amplified sound signals a special moment
+
+If future implementation reveals that a reused SFX feels inadequate for
+a specific event, a dedicated SFX can be added to the catalog. The ID
+naming convention (`category_name`) supports expansion.
 
 ---
 
@@ -150,13 +176,27 @@ dungeons and interiors.
 | Overworld | 100% | 30-40% (subtle texture) |
 | Towns | 100% | 20-30% (crowd murmur) |
 | Dungeons / Interiors | 50-60% | 80-100% (environment is the star) |
-| Pallor Wastes | 0% (drone only) | 40% (muffled, lifeless) |
+| Narrative dungeons | 100% | 30-40% (music-dominant, see below) |
+| Pallor Wastes | 0% | 40% (Pallor drone plays on ambient channels) |
 | Battle | 100% | 0% (ambient cuts) |
 | Cutscene | Per scene direction | Per scene direction |
 
 All percentages are relative to the player's Music Volume and SFX
 Volume config settings (see [save-system.md](save-system.md) and
 [accessibility.md](accessibility.md) Section 7), not absolute values.
+
+**Narrative dungeon exception:** Some dungeons have musically intense
+scores that should not be suppressed. These use overworld-style mixing
+(100% music / 30-40% ambient): Valdris Siege Battlefield, The
+Convergence, Axis Tower Interior. The music IS the atmosphere in these
+locations. All other dungeons use the standard 50-60% / 80-100% split.
+
+**Pallor drone channel:** The Pallor drone plays on ambient channels,
+not music channels. In the Pallor Wastes, music is silent (0%) and
+the drone is part of the ambient biome loop. This avoids channel
+conflicts with music.md's Corruption Evolution System, which describes
+how the *music* degrades — at Stage 3 (Full Corruption), the music is
+gone and only the ambient drone remains.
 
 ### 2.3 Corruption Stage Effects on Ambient
 

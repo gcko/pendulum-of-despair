@@ -231,6 +231,7 @@ README files in subdirectories serve as navigation indexes.
 - [visual-style.md](visual-style.md) -- art direction, palettes, Pallor corruption
 - [ui-design.md](ui-design.md) -- battle screen, menus, save/load UI
 - [music.md](music.md) -- score, leitmotifs, corruption audio
+- [audio.md](audio.md) -- SFX catalog, ambient audio, mixing, channel budget
 - [dialogue-system.md](dialogue-system.md) -- text box mechanics, sprite emotions
 - [biomes.md](biomes.md) -- terrain palettes, environmental rules
 

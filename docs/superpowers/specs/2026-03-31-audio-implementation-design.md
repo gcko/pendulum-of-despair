@@ -22,7 +22,7 @@ no channel starvation).
 
 ## 1. Master SFX Catalog
 
-~51 SFX IDs organized by context. All SFX should be SNES-inspired:
+~51 SFX IDs organized by context (19 combat, 8 UI, 8 exploration, ~16 environmental). All SFX should be SNES-inspired:
 short, punchy, synthesized. No orchestral swells or realistic foley.
 Each SFX under 2 seconds (except jingles at 2-8s per music.md).
 
