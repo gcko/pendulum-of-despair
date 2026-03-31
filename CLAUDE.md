@@ -13,12 +13,10 @@ For detailed documentation beyond AGENTS.md essentials:
 
 ## Development Environment
 
-Always use `pnpm` as the package manager for this project. When running commands in your terminal:
-- Use `pnpm run <script>` for npm scripts
-- Use `pnpm exec <binary>` for executables (instead of `npx`)
-- Do not use `npm`, `yarn`, or standalone `npx` commands
+This project uses `pnpm` for commitlint and husky tooling only. Game development will use Godot Engine (not yet initialized).
 
-**Node.js version:** This project requires Node.js >= 24.0.0 (uses built-in `node:sqlite`).
+- Use `pnpm install` to set up git hooks (commitlint + husky)
+- Do not use `npm`, `yarn`, or standalone `npx` commands
 
 ## Git & PRs
 
@@ -28,46 +26,13 @@ Always use `pnpm` as the package manager for this project. When running commands
 - When merging or rebasing branches, always check for and resolve merge conflicts before proceeding. Run `git status` after merge/rebase to confirm clean state.
 - **PR Template is mandatory.** Every PR must use `.github/pull_request_template.md`. With `gh pr create`, the template auto-populates — fill in all sections.
 
-## Testing
-
-Run tests from the workspace root:
-```bash
-pnpm test              # Run all tests (server + client)
-pnpm test -- --watch   # Watch mode
-```
-
-Or target a specific package:
-```bash
-pnpm --filter @pendulum/server test    # Server tests only
-pnpm --filter @pendulum/client test    # Client tests only
-```
-
-The server uses `node:sqlite` with `:memory:` for test isolation — no external database needed.
-
-## Linting & Type Checking
-
-This project uses strict TypeScript for linting (no ESLint/Biome yet). Run type checks before committing:
-```bash
-pnpm lint              # TypeScript type-check across all packages
-```
-
 ## Pre-Commit Hook Behavior
 
-The pre-commit hook runs TypeScript type-check + related tests (via `vitest related`) when there are staged TypeScript/JavaScript files. Only test files whose import chain touches staged files are executed, not the full suite. Treat this as a safety net — you should still run `pnpm lint && pnpm test` from the workspace root before committing. If the hook fails, fix the issue, `git add`, then create a new commit (never `--amend` after a hook failure).
+The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) will be added when the Godot project is initialized.
 
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`). bd integration is embedded in these user hooks.
 
 **Recovery:** `pnpm install` reinstalls husky and verifies `core.hooksPath`.
-
-## Monorepo Structure
-
-| Package | Purpose |
-|---------|---------|
-| `packages/shared` | `@pendulum/shared` — Shared types and constants |
-| `packages/server` | `@pendulum/server` — Express REST API with auth + save system |
-| `packages/client` | `@pendulum/client` — Phaser 3 game client with Vite |
-
-Build order matters: `shared` must be built before `server` or `client` (handled by `predev:*` and `pretest` scripts).
 
 ## PR Review Workflow
 
@@ -79,7 +44,7 @@ When addressing PR review comments, after fixing code and pushing, always reply 
 
 **Mandatory steps:**
 1. File issues for remaining work
-2. Run quality gates (tests, linters, builds)
+2. Run quality gates (when applicable)
 3. Update issue status
 4. Push to remote:
    ```bash

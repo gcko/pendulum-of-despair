@@ -1,42 +1,40 @@
 # Pendulum of Despair
 
-> *Echoes of a Forgotten Age* — A browser-based JRPG inspired by the golden age of 16-bit RPGs (Final Fantasy IV/VI, Chrono Trigger, Secret of Mana).
+> *Echoes of a Forgotten Age* -- A JRPG inspired by the golden age of 16-bit RPGs (Final Fantasy IV/VI, Chrono Trigger, Secret of Mana).
 
 ---
 
-## Architecture
+## Overview
 
-TypeScript monorepo managed with pnpm workspaces.
+Pendulum of Despair is a single-player JRPG built with **Godot Engine**. The game features ATB combat, a 6-character party, Ley Crystal progression, Arcanite Forging crafting, and a branching narrative across 4 acts plus epilogue and post-game content.
+
+**Status:** Game design is complete (25 design gaps closed across 4 tiers). Engine implementation has not yet begun.
+
+---
+
+## Repository Structure
 
 ```
 pendulum-of-despair/
-├── packages/
-│   ├── shared/        # @pendulum/shared — shared types & constants
-│   │   └── src/
-│   │       ├── index.ts
-│   │       └── types/         # Domain types (combat, inventory, save, etc.)
-│   │
-│   ├── server/        # @pendulum/server — Express REST API
-│   │   └── src/
-│   │       ├── index.ts       # Server entry point
-│   │       ├── app.ts         # Express app setup, CORS, rate-limiting
-│   │       ├── db/            # SQLite schema (node:sqlite built-in)
-│   │       ├── routes/        # Auth & save endpoints
-│   │       ├── middleware/     # JWT verification
-│   │       └── __tests__/     # Vitest integration tests
-│   │
-│   └── client/        # @pendulum/client — Phaser 3 browser game (Vite)
-│       └── src/
-│           ├── main.ts        # Phaser game config & scene list
-│           ├── scenes/        # Boot, Title, WorldMap, Battle, Dialogue
-│           ├── systems/       # Combat, inventory, save/load
-│           └── data/          # JSON data (characters, enemies, items, etc.)
-│
-├── tsconfig.base.json         # Shared TypeScript config (strict, no any)
-├── vitest.config.ts           # Vitest root config
-├── pnpm-workspace.yaml
-└── package.json               # Root scripts & workspace orchestration
+├── docs/
+│   ├── story/              # Canonical game design documents (35+ files)
+│   │   ├── save-system.md  # Save/load, rest, death recovery
+│   │   ├── combat-formulas.md
+│   │   ├── bestiary/       # Enemy stat tables by act
+│   │   ├── script/         # Full dialogue script (6,300+ lines)
+│   │   └── ...
+│   ├── analysis/           # Gap analysis and audit docs
+│   ├── references/         # SNES-era reference data (FF4/FF6/CT/SoM)
+│   ├── plans/              # Architecture decisions
+│   └── superpowers/        # Design specs and implementation plans
+├── .beads/                 # Issue tracking database (bd)
+├── .github/                # CI workflows (Claude review, SAST)
+├── .husky/                 # Git hooks (conventional commits, branch protection)
+├── package.json            # Commitlint + Husky tooling only
+└── commitlint.config.ts    # Conventional commit rules
 ```
+
+> **Note:** The Godot project structure (`project.godot`, scenes, scripts, assets) will be created in a future issue. This repo currently contains only game design documentation and project tooling.
 
 ---
 
@@ -44,99 +42,62 @@ pendulum-of-despair/
 
 ### Prerequisites
 
-- **Node.js >= 24.0.0** (uses the built-in `node:sqlite` module). A `.naverc` is included.
-- **pnpm** — enabled via corepack: `corepack enable`
+- **pnpm** -- for commitlint/husky tooling: `corepack enable`
+- **Godot Engine 4.x** -- for game development (when project is initialized)
 
-### Install & Run
+### Setup
 
 ```bash
-pnpm install          # Install all workspace dependencies
-pnpm build            # Build all packages (required before first run)
-
-pnpm dev:server       # Start the API server (http://localhost:3000)
-pnpm dev:client       # Start the Vite dev server for the client
-
-pnpm test             # Run the full test suite (Vitest)
-pnpm lint             # TypeScript type-check (strict mode, no any)
+pnpm install    # Install commitlint + husky (git hooks)
 ```
 
-> **Note:** `dev:server`, `dev:client`, and `test` automatically build `@pendulum/shared` first via `pre*` scripts. You can also run `pnpm build` once after install to build everything.
-
 ---
 
-## API Reference
+## Game Design Documents
 
-| Method | Endpoint                | Auth? | Description                        |
-|--------|-------------------------|-------|------------------------------------|
-| POST   | `/api/auth/register`    | No    | Create account, receive JWT        |
-| POST   | `/api/auth/login`       | No    | Login, receive JWT                 |
-| GET    | `/api/save`             | Yes   | List all save slot summaries       |
-| GET    | `/api/save/:slot`       | Yes   | Load full save data (slot 1-3)     |
-| PUT    | `/api/save/:slot`       | Yes   | Write/overwrite save data          |
-| GET    | `/api/health`           | No    | Health check                       |
+All mechanical game design is complete and lives in `docs/story/`. Key documents:
 
----
+| Document | Content |
+|----------|---------|
+| `combat-formulas.md` | Damage, hit/miss, critical, ATB gauge, encounter rates |
+| `characters.md` | 6 party members, stat growth, Ley Crystal system |
+| `bestiary/` | 198 enemies + 30 bosses with full AI scripts |
+| `items.md` | 32 consumables, 13 devices, 67 materials, 23 key items |
+| `equipment.md` | 56 weapons, 49 armor, 38 accessories |
+| `economy.md` | Shop inventories, inn prices, gold pacing |
+| `save-system.md` | Save slots, auto-save, rest items, death recovery |
+| `script/` | Full dialogue script (8 files, 6,300+ lines) |
+| `ui-design.md` | Battle screen, menus, dialogue, save/load UI |
+| `difficulty-balance.md` | FF6 Accessible philosophy, balance methodology |
 
-## Game Systems
-
-### ATB Battle (FF6-inspired)
-- Each combatant has a speed-based ATB gauge (0-1000)
-- Player input is requested when a party member's gauge fills
-- Enemies act automatically via configurable AI patterns (`basic_attack`, `aggressive`, `defensive`, `magic_focus`, `pattern`)
-- Damage formulas account for STR/DEF (physical) and MAG/MDEF (magical), elemental resistances/weaknesses, critical hits, and variance
-
-### Save System
-- Three save slots per user
-- Auto-save on map entry and after battles
-- Manual save at save points (in-game objects)
-- Save data: party state, inventory, GP, world flags, current map/position, playtime
-
-### Character Progression
-- Level-based stat growth with per-character growth rates (inspired by FF6)
-- EXP split equally among living party members
-- Stat increases on level-up include randomized variance for replayability
+See `docs/analysis/game-design-gaps.md` for the full gap tracker.
 
 ---
 
 ## Design Inspirations
 
-| Feature                      | Inspired by      |
-|------------------------------|------------------|
-| ATB gauge combat             | Final Fantasy VI |
-| Character-driven story setup | Final Fantasy IV |
-| Dark dialogue box UI         | Final Fantasy VI |
-| Tile-based overworld         | Chrono Trigger   |
-| Random encounters on tiles   | Final Fantasy VI |
-| Steal mechanic               | Final Fantasy VI |
-| Runic ability                | Final Fantasy VI |
+| Feature | Inspired by |
+|---------|-------------|
+| ATB gauge combat | Final Fantasy VI |
+| Character-driven narrative | Final Fantasy IV |
+| Ley Crystal system | FF6 Espers + Chrono Trigger |
+| Arcanite Forging | Secret of Mana (Watts blacksmith) |
+| Dark pixel UI | Final Fantasy VI |
+| Tile-based overworld | Chrono Trigger |
+| Party-aware dialogue | Chrono Trigger |
 
 ---
 
-## Tech Stack
+## Contributing
 
-- **Language:** TypeScript (strict mode, no `any`)
-- **Testing:** Vitest
-- **Server:** Express + SQLite (`node:sqlite`)
-- **Client:** Phaser 3 + Vite
-- **Monorepo:** pnpm workspaces with project references
+This project uses **conventional commits** enforced by commitlint:
 
----
+```
+feat(scope): add new feature
+fix(scope): fix a bug
+docs(scope): documentation changes
+```
 
-## Roadmap
+All commits require a PR targeting `main`. Direct commits to main are blocked by a pre-commit hook.
 
-- [x] Project scaffold & renderer (Phaser 3)
-- [x] Tilemap rendering + player movement
-- [x] ATB battle system
-- [x] Character stats, levelling, abilities
-- [x] Inventory & equipment system
-- [x] Enemy AI & encounter system
-- [x] Dialogue system with typewriter effect
-- [x] User auth & save/load (backend)
-- [x] TypeScript monorepo refactor (pnpm workspaces, Vitest, strict types)
-- [ ] Town interiors & NPC conversations
-- [ ] Dungeon maps with hazards
-- [ ] Full ability/magic menu in battle
-- [ ] Equipment management screen
-- [ ] Title/pause menu screens
-- [ ] Music & SFX (Web Audio API)
-- [ ] Pixel art sprites & tilesets
+Issue tracking uses **bd** (beads): `bd ready` to find available work, `bd show <id>` for details.
