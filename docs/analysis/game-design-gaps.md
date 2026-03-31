@@ -750,42 +750,43 @@ for save system in battle-dialogue.md.
 
 ### 4.6 Technical Implementation Guide
 
-**Status:** MISSING
+**Status:** COMPLETE
 **Priority:** P1 — needed for development team to begin coding
-**Files:** None yet — target `docs/plans/technical-architecture.md`
+**Files:** `docs/plans/technical-architecture.md`
+**Completed:** 2026-03-31
 **Depends On:** All Tier 1--3 gaps (provides the content to implement)
 
 **What's Needed:**
-- [ ] Data format specifications:
-  - [ ] Enemy stat tables → JSON schema (mapping bestiary tables to runtime data)
-  - [ ] Item/equipment catalogs → JSON schema
-  - [ ] Dialogue trees → JSON schema (extending dialogue-system.md's 7-field format)
-  - [ ] Encounter tables → JSON schema (mapping dungeons-world.md formation tables)
-  - [ ] Shop inventories → JSON schema (mapping economy.md shop lists)
-  - [ ] Event flags → enum/constant definitions
-- [ ] Game state machine architecture:
-  - [ ] Top-level states: title, exploration, combat, menu, cutscene, dialogue, save/load
-  - [ ] Transition rules between states (what triggers each transition)
-  - [ ] Engine scene mapping (which engine scene/state handles which game state)
-- [ ] Asset pipeline specification:
-  - [ ] Tileset format and naming conventions (per visual-style.md 16×16 tiles)
-  - [ ] Sprite sheet structure (character sprites, enemy sprites, UI elements)
-  - [ ] Animation frame data format
-  - [ ] Audio asset format (OGG/MP3, sample rates, naming)
-- [ ] Entity/component architecture:
-  - [ ] How game entities (player, NPCs, enemies, chests, triggers) are represented
-  - [ ] Component types: position, sprite, combat stats, dialogue, inventory, AI
-  - [ ] Relationship to engine scene tree / game objects
-- [ ] Server API contract:
-  - [ ] Auth endpoints (registration, login, session management)
-  - [ ] Save/load endpoints (create, read, update, delete saves)
-  - [ ] Request/response formats
-  - [ ] Error handling conventions
-- [ ] Performance budgets:
-  - [ ] Maximum entities per scene
-  - [ ] Target frame rate (30fps? 60fps?)
-  - [ ] Audio channel limit
-  - [ ] Memory budget per scene type (overworld, dungeon, battle, menu)
+- [x] Data format specifications:
+  - [x] Enemy stat tables → JSON schema (mapping bestiary tables to runtime data)
+  - [x] Item/equipment catalogs → JSON schema
+  - [x] Dialogue trees → JSON schema (extending dialogue-system.md's 7-field format)
+  - [x] Encounter tables → JSON schema (mapping dungeons-world.md formation tables)
+  - [x] Shop inventories → JSON schema (mapping economy.md shop lists)
+  - [x] Event flags → enum/constant definitions
+- [x] Game state machine architecture:
+  - [x] Top-level states: title, exploration, combat, menu, cutscene, dialogue, save/load
+  - [x] Transition rules between states (what triggers each transition)
+  - [x] Godot scene mapping (which Godot scene/state handles which game state)
+- [x] Asset pipeline specification:
+  - [x] Tileset format and naming conventions (per visual-style.md 16×16 tiles)
+  - [x] Sprite sheet structure (character sprites, enemy sprites, UI elements)
+  - [x] Animation frame data format
+  - [x] Audio asset format (OGG/MP3, sample rates, naming)
+- [x] Entity/component architecture:
+  - [x] How game entities (player, NPCs, enemies, chests, triggers) are represented
+  - [x] Component types: position, sprite, combat stats, dialogue, inventory, AI
+  - [x] Godot scene tree and Node2D hierarchy
+- [x] Persistence interface (local file save/load via Godot FileAccess, replaces server API):
+  - [x] Local save file format and location (user:// path)
+  - [x] Serialization/deserialization of game state
+  - [x] Save slot management (3 manual + 1 auto slot)
+  - [x] Error handling conventions
+- [x] Performance budgets:
+  - [x] Maximum entities per scene (64 entities)
+  - [x] Target frame rate (60fps)
+  - [x] Audio channel limit (24 channels)
+  - [x] Memory budget per scene type (overworld, dungeon, battle, menu)
 
 **Blocking:** All code implementation, asset creation pipeline, server development
 
@@ -850,3 +851,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-31 | 4.4 Accessibility Design | MISSING → COMPLETE. Base resolution 320×180 (replaces 256×224), clean integer scaling. Color-blind support (Deutan-Protan/Tritan modes + always-on corruption cues). Patience Mode (zero time pressure ATB). Full keyboard rebinding. Reduce Motion (master toggle + granular controls). SFX captions. High-Res Text toggle. Cross-doc updates to ui-design.md, save-system.md, combat-formulas.md, difficulty-balance.md, visual-style.md, overworld.md, battle-dialogue.md. | — |
 | 2026-03-31 | 4.1 Core GDD Overview | MISSING → COMPLETE. 3-page entry-point document: elevator pitch, design pillars, target audience (13+, SNES JRPG fans), act structure, party members, core loop, combat/progression/systems summaries, content volume metrics (204 enemies, 31 bosses, 33 consumables, 56 weapons, 42 accessories, ~6,300 script lines), playtime estimates (25-35h critical, 45-80h+ completionist), session structure, platform/accessibility summary, complete document index. | — |
 | 2026-03-31 | 4.2 Sound Effects & Audio | PARTIAL → COMPLETE. Master SFX catalog (~51 IDs: 18 combat with 5 KO variants + 2 boss onset, 8 UI, 9 exploration, ~16 environmental/narrative from scripts). 12 ambient biome loops with context-dependent mixing model (overworld music-dominant, dungeon ambient-dominant, Pallor drone-only). 24-channel budget (8 music/12 SFX/4 ambient), 8-tier priority stack, crossfade rules, SFX overlap limits, narrative silence rules, OGG Vorbis asset format. | — |
+| 2026-03-31 | 4.6 Technical Implementation Guide | MISSING → COMPLETE. Godot 4.6+ / GDScript architecture: project setup (directory structure, 5 autoload singletons, 320x180 viewport), JSON data schemas (8 types: enemies, items, equipment, shops, dialogue, encounters, flags, characters), state machine (3 core + 4 overlay states, transition rules, data passing), entity architecture (6 Godot-native .tscn prefabs), asset pipeline (16x16 tiles, sprite sheets, OGG audio, pixel art import), persistence interface (user:// local saves, SaveManager, auto-save, Faint-and-Fast-Reload, 17 config settings), performance budgets (60fps, 64 entities, 24 audio channels, memory per scene type). **All 25 Tier 1-4 gaps now COMPLETE.** | — |
