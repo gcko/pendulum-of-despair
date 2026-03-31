@@ -68,6 +68,12 @@ overworld.
   grey desaturation). See [biomes.md](biomes.md) for per-biome palette
   definitions.
 
+**Reduce Motion alternative:** When "Reduce Motion" is enabled in Config,
+Mode 7 intensity is set to minimum (level 1 of 6) — the overworld still
+uses perspective view but with flattened foreshortening. The Mode 7
+zoom-into-ground encounter transition is replaced with a 0.5s fade to
+black. See [accessibility.md](accessibility.md) Section 5.
+
 ### Map Screen (Menu-Accessed) — Plus Enhancement
 
 The pause menu provides a "Map" option that opens a full-continent
