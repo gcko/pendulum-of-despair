@@ -27,7 +27,7 @@ Reference palette: Carradan Industrial biome (see `biomes.md` Section 2). Brick 
 
 ### City Overview
 
-**Size:** Large city -- approximately 240x196 tiles (15 screens at 16x14 each)
+**Size:** Large city -- approximately 240x196 tiles (roughly 12 screens at 20x11 each)
 **Screens:** 15 explorable areas across 4 vertical tiers
 **Layout:** Corrund is built vertically along the Corrund River delta. Iron bridges span canals at three elevations. The Axis Tower at the city center pierces the smog layer. Below the bridges lies the Undercroft -- stacked tenements in perpetual shadow. Above, merchant halls with glass facades catch the amber light. The city is bisected by the main canal, with industrial districts to the east and commercial/government districts to the west.
 **Entry/exit points:** South Gate (overworld, road from Ashmark), North Canal Gate (river barges from Gael's Span direction), East Rail Terminal (rail from Ashmark/Caldera), West Docks (canal barges). During Interlude: Undercroft sewer entrance (Sable's infiltration route).

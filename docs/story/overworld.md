@@ -464,7 +464,7 @@ prototyping and tuning, not design specification.
   per-scanline scaling. Target: ground visible in the bottom ~70% of
   the viewport, sky/horizon in the top ~30%.
 - **Movement speed value** — tune for feel. Target: ~2 tiles/second at
-  base resolution (comfortable walking pace on a 16x14 viewport). The
+  base resolution (comfortable walking pace on a 20x11 viewport). The
   spec mandates uniform speed; the specific value is a tuning knob.
 - **Z-ordering** — suggested layer order (back to front): tilemap →
   HDMA horizon gradient → location icons → party sprite → cloud/fog
