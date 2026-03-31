@@ -377,6 +377,18 @@ Per [events.md](events.md) § Faint and Fast Reload:
   always close — typically the dungeon floor entrance or pre-boss
   save point.
 
+### 5.6 Patience Mode
+
+An accessibility option that eliminates all time pressure from ATB
+combat. Forces Wait mode + slowest speed + pauses gauges during ALL
+player decisions (including top-level command menu). See
+[accessibility.md](accessibility.md) and
+[combat-formulas.md](combat-formulas.md) for full rules.
+
+This is the accessibility floor for motor-impaired players. Combined
+with Battle Speed 6 and Wait mode, no time-sensitive decision is ever
+required.
+
 ---
 
 ## 6. Difficulty Escalation by Act
