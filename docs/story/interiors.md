@@ -589,7 +589,7 @@ Changes:
 - The "Old Pacts" refers to original agreements between Valdris and the ley spirits
 ```
 
-**Priest:** Before altar, facing south. Unnamed. Provides blessing (free HP restore, once per visit).
+**Priest:** Before altar, facing south. Unnamed. Provides blessing (restore 25% HP to all party OR cure one status ailment — player chooses; once per visit).
 **Worshippers:** 1-2 on pews. Dialogue reflects act mood.
 
 ---

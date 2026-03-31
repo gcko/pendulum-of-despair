@@ -274,6 +274,24 @@ The Wellspring Nexus save point in the Dry Well of Aelhart F7 grants
 free full restore without a rest item (unique save point, only location
 with this property). See [dungeons-world.md](dungeons-world.md).
 
+### Minor Recovery Sources
+
+These are small flavor mechanics outside the save point / inn system.
+They do not interact with save slots or auto-save. None restore AC or
+clear status ailments (those require rest items or inns).
+
+| Source | Location(s) | Effect | Limits |
+|--------|-------------|--------|--------|
+| Altar blessing | Temples / chapels (per [building-palette.md](building-palette.md)) | Restore 25% HP to all party OR cure one status ailment (player chooses) | Once per visit |
+| Soup Kitchen | Carradan Undercroft (per [city-carradan.md](city-carradan.md)) | Restore 25% HP to all party | Once per visit |
+| Resistance Waypoint | Ironmark Tunnels (per [dungeons-city.md](dungeons-city.md)) | Restore 50% HP/MP to all party (bedroll rest) | Once per visit; not a save point |
+| Sacred Sites | Ashgrove, Stillwater Hollow (per [geography.md](geography.md)) | Passive 2% HP/MP per second while standing still (overworld only) | No encounters while at site; no AC restore |
+
+**Design rationale:** These are comfort mechanics for players exploring
+without rest items, not substitutes for the rest system. The numbers are
+small enough that they don't undermine rest item value but large enough
+to feel helpful. The once-per-visit limit prevents farming.
+
 ---
 
 ## 5. Slot Management
