@@ -471,7 +471,7 @@ The overworld map is designed as a large, scrollable tilemap representing the en
 - **Tile size:** 16x16 pixels
 - **Map dimensions:** 128 tiles wide x 96 tiles tall
 - **Pixel dimensions:** 2048 x 1536 pixels
-- **Visible viewport:** 16 tiles wide x 14 tiles tall (256 x 224 pixels per [visual-style.md](visual-style.md), scaled up to display resolution)
+- **Visible viewport:** 20 tiles wide x 11 tiles tall (320 x 180 pixels per [visual-style.md](visual-style.md), integer-scaled to display resolution)
 - **Scale:** Each tile represents roughly 2.5 miles of terrain. The full map covers approximately 320 miles east-west and 240 miles north-south (128 × 96 tiles).
 
 ### Region Boundaries (Tile Coordinates)

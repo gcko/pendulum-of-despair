@@ -75,8 +75,8 @@ the FF6 model — config is system-level.
 - SFX volume (0–10)
 
 **Visual Settings**
-- Screen shake toggle
-- Mode 7 rotation intensity
+- Screen Shake (On / Off)
+- Mode 7 Intensity (1-6)
 
 **Accessibility Settings** — See [accessibility.md](accessibility.md) for details
 - Patience Mode (On / Off)

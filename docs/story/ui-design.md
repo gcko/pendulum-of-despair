@@ -746,7 +746,7 @@ FF6 config screen: label/value pairs in a single scrollable list.
 | Music Volume | 0–10 | 8 | Pixel bar: 10 small squares, filled = level. |
 | SFX Volume | 0–10 | 8 | Same pixel bar visualization. |
 | Screen Shake | On / Off | On | Toggles camera rumble in battles and scripted events. |
-| Mode 7 Intensity | 1–6 | 6 | Controls zoom/rotation intensity on exploration transitions (1 = subtle, 6 = full effect). |
+| Mode 7 Intensity | 1–6 | 6 | Controls overworld perspective foreshortening (1 = flat, 6 = full perspective). See [overworld.md](overworld.md). |
 | Window Color | R 0–31, G 0–31, B 0–31 | R 0, G 0, B 8 | FF6-style RGB sliders to tint window background. 5-bit values map to 8-bit via `value × 8`. |
 | Key Config | — | — | Opens a sub-screen for keyboard rebinding of all battle and menu commands. |
 
@@ -757,13 +757,13 @@ FF6 config screen: label/value pairs in a single scrollable list.
 
 | Setting | Values | Default | Notes |
 |---------|--------|---------|-------|
-| Patience Mode | On / Off | Off | Slows down all time-dependent systems (battle gauges, text scrolling, transitions) by 30–50%, giving players more time to react and process information. |
-| Color-Blind Mode | Off / Deutan-Protan / Tritan | Off | Applies a color-blind filter to the entire game (world colors, UI chrome, and damage numbers). Selecting a color-blind mode shows a live preview panel with a sample HP bar, 4–5 status icons, and a mini Pallor corruption preview. |
-| High-Res Text | On / Off | Off | Renders UI text on a separate native-resolution canvas layer. Useful for accessibility on small displays or for players who prefer crisper text. See [accessibility.md](accessibility.md). |
-| Reduce Motion | On / Off | Off | Disables all non-essential animations (particle effects, sprite idle-bob, location name flash fade, cursor pulse). Combat still animates (attack swings, damage numbers). |
-| Flash Intensity | Off / Reduced / Full | Full | Off: disables screen flashes entirely. Reduced: flashes rendered as 0.2s fade-to-white instead of bright-white spike. Full: default bright-white damage/heal/status flashes. |
-| Transition Style | Classic / Simple | Classic | Classic: full mosaic dissolves and Mode 7 zoom transitions. Simple: all mosaic dissolve and Mode 7 zoom transitions replaced with 0.5s fade to black; boss flash-then-transition replaced with fade. See note below. |
-| SFX Captions | On / Off | Off | Renders text labels for major sound effects during cutscenes and battles (e.g., "[Thunder]", "[Critical Hit]", "[Boss Roar]"). Does not caption dialogue. |
+| Patience Mode | On / Off | Off | Forces ATB Wait mode + Battle Speed 6 + pauses all gauges during top-level command selection. Zero time pressure during any player decision. See [accessibility.md](accessibility.md) Section 3. |
+| Color-Blind Mode | Off / Deutan-Protan / Tritan | Off | Swaps specific color pairs on HP bars, status icons, and poison color. Does NOT change UI chrome or world colors. Live preview panel shows sample HP bar, status icons, and Pallor corruption preview. See [accessibility.md](accessibility.md) Section 2. |
+| High-Res Text | On / Off | Off | Renders UI text on a separate native-resolution canvas layer for crisper text at high resolutions. See [accessibility.md](accessibility.md) Section 1. |
+| Reduce Motion | On / Off | Off | Disables screen flashes, simplifies battle transitions (mosaic to fade), sets Mode 7 to minimum, disables screen shake, slows status icon cycling. Sets all granular motion controls to safe values. See [accessibility.md](accessibility.md) Section 5. |
+| Flash Intensity | Off / Reduced / Full | Full | Off: disables screen flashes entirely. Reduced: dims flashes to 50% opacity. Full: default behavior. |
+| Transition Style | Classic / Simple | Classic | Classic: mosaic dissolve and Mode 7 zoom. Simple: 0.5s fade to black for all transitions including boss. |
+| SFX Captions | On / Off | Off | Brief text labels (2-3s) in lower corner for gameplay sounds: [Save Point], [Encounter], [Level Up], [Victory], [Item], [Quest Complete], [Phase Change], [Alert]. See [accessibility.md](accessibility.md) Section 6. |
 
 ---
 

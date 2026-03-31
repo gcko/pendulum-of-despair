@@ -1,6 +1,6 @@
 # Valdris Faction City Designs
 
-Detailed tile-level layouts for every Valdris settlement. Each city is designed for 16x16 tile grids on a 256x224 viewport (16 tiles wide, 14 tiles tall per screen). Maps use the Valdris Highlands biome palette unless otherwise noted. Architecture is pale limestone, arched doorways, peaked slate roofs, timber framing, and ley-lamp posts.
+Detailed tile-level layouts for every Valdris settlement. Each city is designed for 16x16 tile grids on a 320x180 viewport (20 tiles wide, 11 tiles tall per screen). Maps use the Valdris Highlands biome palette unless otherwise noted. Architecture is pale limestone, arched doorways, peaked slate roofs, timber framing, and ley-lamp posts.
 
 Cross-references: `locations.md` (narrative), `npcs.md` (characters), `biomes.md` (palettes), `visual-style.md` (art direction), `dynamic-world.md` (act transitions).
 

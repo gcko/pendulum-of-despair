@@ -685,7 +685,7 @@ for save system in battle-dialogue.md.
 **Status:** COMPLETE
 **Completed:** 2026-03-31
 **Priority:** P1 — affects player reach and compliance
-**Files:** None yet — target `docs/story/accessibility.md`
+**Files:** `docs/story/accessibility.md`
 **Depends On:** 2.3 (UI Design), 2.2 (ATB — for timing accommodations), 3.4 (Difficulty)
 
 **What's Needed:**
@@ -707,7 +707,7 @@ for save system in battle-dialogue.md.
 - [x] Motion sensitivity:
   - [x] Reduce Motion toggle (master switch disables Mode 7 rotation, battle transition mosaic, screen shake)
   - [x] Granular controls per effect type (option to keep some animations while disabling others)
-  - [x] Screen shake intensity slider (0–100%)
+  - [x] Screen shake toggle (On / Off)
 - [x] Subtitle / closed caption support for SFX-dependent gameplay cues (SFX captions in battle and key events)
 
 **Blocking:** Compliance with accessibility guidelines, broader player reach

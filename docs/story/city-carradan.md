@@ -1,6 +1,6 @@
 # Carradan Compact -- City Layouts
 
-Detailed tile-level layouts for every Carradan Compact settlement. Each city is designed for 16x16 pixel tiles on a 256x224 viewport (16x14 tiles visible per screen). Carradan cities share an industrial visual vocabulary -- brick, iron, brass, forge-glow, smog -- but each has a distinct identity shaped by its economic function and position within the Compact's hierarchy.
+Detailed tile-level layouts for every Carradan Compact settlement. Each city is designed for 16x16 pixel tiles on a 320x180 viewport (20x11 tiles visible per screen). Carradan cities share an industrial visual vocabulary -- brick, iron, brass, forge-glow, smog -- but each has a distinct identity shaped by its economic function and position within the Compact's hierarchy.
 
 Design philosophy: Carradan cities are **oppressive but functional**. The wealth gap is visible in the architecture. Streets widen as you move toward the center of power. Buildings get taller, cleaner, more ornamented. Near factories and extraction sites, housing is cramped, identical, and soot-stained. The player should feel the class structure before any NPC explains it.
 

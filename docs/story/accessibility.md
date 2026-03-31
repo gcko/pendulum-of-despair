@@ -348,8 +348,8 @@ changes these values.
 | Text Speed | Slow / Normal / Fast / Instant | Normal |
 | Battle Cursor | Reset / Memory | Reset |
 | Sound | Stereo / Mono | Stereo |
-| Music Volume | 0-100 | 100 |
-| SFX Volume | 0-100 | 100 |
+| Music Volume | 0-10 | 8 |
+| SFX Volume | 0-10 | 8 |
 | Window Color | RGB | (default navy) |
 | Screen Shake | On / Off | On |
 | Mode 7 Intensity | 1-6 | 6 |
