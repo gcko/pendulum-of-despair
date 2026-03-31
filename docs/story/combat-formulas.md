@@ -682,6 +682,22 @@ Player-configurable (1-6, default 3). Default matches FF6.
 
 Both settings in Config menu. Defaults: Active mode, Battle Speed 3 — matching FF6.
 
+### Patience Mode (Accessibility)
+
+An accessibility option (see [accessibility.md](accessibility.md)) that
+eliminates all time pressure from combat. When enabled:
+
+- ATB Mode forced to Wait
+- Battle Speed forced to 6 (slowest)
+- Top-level command menu (Attack/Magic/Ability/Item/Defend/Flee) also
+  pauses all ATB gauges — this extends Wait mode, which only pauses
+  during sub-menus (Magic, Item, Ability lists, target selection)
+- Real-time status timers (Stop countdown, buff durations) pause during
+  any player decision point
+
+The ATB system still determines turn order. Patience Mode removes time
+pressure without changing combat mechanics.
+
 ### ATB Pacing at Key Milestones (Battle Speed 3)
 
 | Scenario | SPD | Fill Rate | Seconds/Turn |
