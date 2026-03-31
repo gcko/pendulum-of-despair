@@ -336,7 +336,7 @@ not count), the game reloads from the most recent save.
 4. Merge death-persistent values (see below)
 5. Process any level-ups from accumulated XP (full HP/MP restore on
    level-up)
-6. Set HP/MP to 100% of max
+6. Set HP/MP to 100% of max; clear all status ailments
 7. Write merged state back to the same save slot on disk
 8. Resume at save point (~4s total from wipe to gameplay)
 

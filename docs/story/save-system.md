@@ -291,14 +291,17 @@ alongside HP/MP/AC restore requires rest items or inns.
 
 **"Once per visit"** resets when the player leaves the building or
 location and re-enters. Leaving a room within the same building does
-not reset it. Sacred Sites reset when the player leaves the zone tile.
+not reset it. Sacred Sites reset when the player steps off the site's
+overworld location entry (the named map tile).
 
 **Altar and font share one blessing.** Temples have both a priest
-(altar) and a stone font ([interiors.md](interiors.md)). These are two
-physical objects for the same mechanic — using either consumes the
-single once-per-visit blessing. The font is the status-cure option; the
-priest is the HP-restore option. Interacting with one greys out the
-other until the next visit.
+(altar) and a stone font ([interiors.md](interiors.md)). The priest
+offers the full choice: restore 25% HP OR cure all ailments. The font
+offers only the ailment-cure option (a shortcut for players who know
+what they want). Using either consumes the single once-per-visit
+blessing — interacting with one greys out the other until the next
+visit. At Highcairn Monastery, Father Aldous serves the priest role
+(offering the blessing at the hearth rather than an altar).
 
 **Design rationale:** These are comfort mechanics for players exploring
 without rest items, not substitutes for the rest system. The numbers are
