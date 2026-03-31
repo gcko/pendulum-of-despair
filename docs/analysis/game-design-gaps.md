@@ -624,9 +624,10 @@ All mechanical systems are fully designed. No single entry-point document.
 
 ### 4.2 Sound Effects & Audio Implementation
 
-**Status:** PARTIAL
+**Status:** COMPLETE
+**Completed:** 2026-03-31
 **Priority:** P2 — needed for audio asset creation and engine integration
-**Files:** `docs/story/music.md` (music is thorough), target additions to music.md or new `docs/story/audio.md`
+**Files:** `docs/story/music.md` (music is thorough), `docs/story/audio.md`
 **Depends On:** 2.3 (UI Design — for menu/UI SFX), 1.1 (Combat — for battle SFX)
 
 **What exists:** music.md is comprehensive — faction palettes, character leitmotifs,
@@ -634,17 +635,17 @@ Pallor corruption rules, track-by-track specifications with instruments, mood,
 and tempo. The script files use `[SFX: sound_id]` notation for key moments.
 
 **What's Needed:**
-- [ ] Master SFX catalog organized by context:
-  - [ ] Combat SFX: hit (physical/magic), miss, critical, guard, heal, status apply/remove, death, flee, victory fanfare, level-up
-  - [ ] UI SFX: cursor move, confirm, cancel, menu open/close, equip, error buzz, save confirm
-  - [ ] Exploration SFX: door open, chest open, save point chime, encounter trigger, ley crystal obtain
-  - [ ] Environmental SFX: referenced in script `[SFX: ley_surge]`, `[SFX: pallor_surge]`, `[SFX: alarm_bells]`, etc. — full list needed
-- [ ] Environmental ambient audio per biome/location type (forest ambience, factory hum, wind across Pallor Wastes, water in Duskfen, silence in grey zones)
-- [ ] Audio implementation rules:
-  - [ ] Music crossfade behavior between zones (duration, curve)
-  - [ ] Priority stack when multiple sources compete (battle > zone, fanfare > battle, cutscene > all)
-  - [ ] Pallor corruption audio rules (how music degrades in grey zones — extends music.md's existing corruption framework)
-  - [ ] Channel count budget (how many simultaneous sounds)
+- [x] Master SFX catalog organized by context:
+  - [x] Combat SFX: hit (physical/magic), miss, critical, guard, heal, status apply/remove, death, flee, victory fanfare, level-up
+  - [x] UI SFX: cursor move, confirm, cancel, menu open/close, equip, error buzz, save confirm
+  - [x] Exploration SFX: door open, chest open, save point chime, encounter trigger, ley crystal obtain
+  - [x] Environmental SFX: referenced in script `[SFX: ley_surge]`, `[SFX: pallor_surge]`, `[SFX: alarm_bells]`, etc. — full list needed
+- [x] Environmental ambient audio per biome/location type (forest ambience, factory hum, wind across Pallor Wastes, water in Duskfen, silence in grey zones)
+- [x] Audio implementation rules:
+  - [x] Music crossfade behavior between zones (duration, curve)
+  - [x] Priority stack when multiple sources compete (battle > zone, fanfare > battle, cutscene > all)
+  - [x] Pallor corruption audio rules (how music degrades in grey zones — extends music.md's existing corruption framework)
+  - [x] Channel count budget (how many simultaneous sounds)
 
 **Blocking:** Audio asset creation, sound engine implementation
 
@@ -848,3 +849,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-30 | 4.3 Save System Design | PARTIAL → COMPLETE. Save data schema (9 groups), 3-option save point menu (Rest/Rest & Save/Save with tiered rest items), 3 manual + 1 auto slot, Faint-and-Fast-Reload with durable XP/gold write-back, post-epilogue save state, versioned migration chain. Cross-doc updates to ui-design.md, overworld.md, items.md, crafting.md, economy.md, difficulty-balance.md, events.md. | — |
 | 2026-03-31 | 4.4 Accessibility Design | MISSING → COMPLETE. Base resolution 320×180 (replaces 256×224), clean integer scaling. Color-blind support (Deutan-Protan/Tritan modes + always-on corruption cues). Patience Mode (zero time pressure ATB). Full keyboard rebinding. Reduce Motion (master toggle + granular controls). SFX captions. High-Res Text toggle. Cross-doc updates to ui-design.md, save-system.md, combat-formulas.md, difficulty-balance.md, visual-style.md, overworld.md, battle-dialogue.md. | — |
 | 2026-03-31 | 4.1 Core GDD Overview | MISSING → COMPLETE. 3-page entry-point document: elevator pitch, design pillars, target audience (13+, SNES JRPG fans), act structure, party members, core loop, combat/progression/systems summaries, content volume metrics (204 enemies, 31 bosses, 33 consumables, 56 weapons, 42 accessories, ~6,300 script lines), playtime estimates (25-35h critical, 45-80h+ completionist), session structure, platform/accessibility summary, complete document index. | — |
+| 2026-03-31 | 4.2 Sound Effects & Audio | PARTIAL → COMPLETE. Master SFX catalog (~51 IDs: 18 combat with 5 KO variants + 2 boss onset, 8 UI, 9 exploration, ~16 environmental/narrative from scripts). 12 ambient biome loops with context-dependent mixing model (overworld music-dominant, dungeon ambient-dominant, Pallor drone-only). 24-channel budget (8 music/12 SFX/4 ambient), 8-tier priority stack, crossfade rules, SFX overlap limits, narrative silence rules, OGG Vorbis asset format. | — |
