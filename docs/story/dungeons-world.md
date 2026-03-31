@@ -1839,7 +1839,7 @@ Treasure is deliberately sparse. The Wastes strip away resources; they do not gi
 
 ### Environmental Hazards
 
-- **Cumulative Despair:** Pallor corruption zones (`%`) apply stacking Despair. Each stack reduces all stats by 2%. Stacks persist until the next save point rest. Maximum 10 stacks (20% reduction). Forces the player to manage routes through corruption.
+- **Cumulative Despair:** Pallor corruption zones (`%`) apply stacking Despair. Each stack reduces all stats by 2%. Stacks clear at any save point interaction (including the free 25% MP fallback — no rest item required). Maximum 10 stacks (20% reduction). Forces the player to manage routes between save points through corruption.
 - **Muffled sound:** The game's music fades to near-silence. Only footsteps and combat sounds remain. This is not a bug; it is the Pallor.
 - **Greyscale shift:** The color palette desaturates 10% per section. By Section 4, the screen is nearly monochrome. Only ley-line save points retain color.
 - **No retreat:** Once entered, the party cannot return to the overworld. Commitment is absolute.

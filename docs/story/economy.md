@@ -145,17 +145,17 @@ pricing.
 | Highcairn | I | 50g | Monastery hospitality — minimal charge |
 | Valdris Crown | I–II | 150g | Capital city, mid-range inn |
 | Corrund | II | 100g | Canal district, modest lodging |
-| Caldera | II | 300g (450g without Employee Card) | Inflated by Compact exploitation; see [Caldera Inflation](#caldera-inflation) |
+| Caldera | II | 225g (300g without Employee Card) | Inflated by Compact exploitation; see [Caldera Inflation](#caldera-inflation) |
 | Ashmark | II | 100g | Harbor district, basic |
 | Bellhaven | II | 150g | Coastal trade city, tourist markup |
 | Thornmere | II | 100g | Isolated but welcoming |
 | Ironmark | Interlude | 75g | War-torn; discounted from desperation |
 | Act III Oases | III | 50–100g | Refugee camps, scraping by |
 
-> **Caldera note:** Caldera's standard inn rate would be ~200g (comparable to
-> Valdris/Bellhaven). At 150% markup, the inflated price is **300g**. With the
-> Caldera Employee Card (25% off 300g), the party pays **225g** — still above
-> the ~200g standard rate, consistent with the 112.5% net rule.
+> **Caldera note:** Caldera's standard inn rate would be ~200g. At 150%
+> markup, the posted price is **300g**. With the Caldera Employee Card
+> (25% off), the party pays **225g** — still above the ~200g standard
+> rate, consistent with the 112.5% net rule used across all Caldera shops.
 
 ---
 

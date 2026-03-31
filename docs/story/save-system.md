@@ -253,7 +253,7 @@ Save points (ley crystal markers, campgrounds, inn exteriors) present a
 
 ### Inns
 
-Town inns are a paid service (varies by town, Free at Aelhart to 450g at
+Town inns are a paid service (varies by town, Free at Aelhart to 300g at
 Caldera; see [economy.md](economy.md) for full price list). They provide
 full HP/MP/AC restore and clear all status ailments — effectively a
 Pavilion for gold. At an inn, selecting "Rest" or "Rest & Save" shows a
