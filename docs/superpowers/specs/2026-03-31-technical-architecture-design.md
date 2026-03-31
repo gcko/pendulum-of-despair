@@ -147,30 +147,22 @@ to all JSON files — game data and save files alike.
       "id": "ley_vermin",
       "name": "Ley Vermin",
       "type": "beast",
-      "level": 2,
-      "hp": 45,
+      "level": 1,
+      "hp": 23,
       "mp": 0,
-      "atk": 12,
-      "def": 8,
-      "mag": 5,
-      "mdef": 6,
-      "spd": 10,
-      "lck": 3,
-      "gold": 15,
-      "exp": 8,
-      "weaknesses": ["flame"],
+      "atk": 8,
+      "def": 6,
+      "mag": 7,
+      "mdef": 5,
+      "spd": 8,
+      "gold": 1,
+      "exp": 4,
+      "weaknesses": [],
       "resistances": [],
-      "immunities": [],
       "absorb": [],
-      "status_vulnerabilities": ["poison", "blind"],
-      "drops": {
-        "common": { "item_id": "beast_fang", "rate": 30 },
-        "rare": { "item_id": "potion", "rate": 5 }
-      },
-      "steal": {
-        "common": { "item_id": "beast_fang", "rate": 50 },
-        "rare": null
-      },
+      "status_immunities": [],
+      "steal": { "item_id": "beast_hide", "rate": 75 },
+      "drop": { "item_id": "sharp_fang", "rate": 25 },
       "ko_sound": "ko_beast"
     }
   ]
@@ -213,21 +205,20 @@ to all JSON files — game data and save files alike.
 {
   "weapons": [
     {
-      "id": "bronze_sword",
-      "name": "Bronze Sword",
+      "id": "training_sword",
+      "name": "Training Sword",
       "type": "sword",
       "tier": 0,
       "equippable_by": ["edren"],
-      "atk": 12,
+      "atk": 4,
       "def": 0,
       "mag": 0,
       "mdef": 0,
       "spd": 0,
-      "lck": 0,
       "element": null,
       "special": null,
-      "buy_price": 100,
-      "sell_price": 50
+      "buy_price": null,
+      "sell_price": null
     }
   ]
 }
@@ -245,7 +236,7 @@ to all JSON files — game data and save files alike.
   "type": "general",
   "inventory": [
     { "item_id": "potion", "available_act": 1 },
-    { "item_id": "hi_potion", "available_act": 2 },
+    { "item_id": "hi_potion", "available_act": 1 },
     { "item_id": "antidote", "available_act": 1 }
   ],
   "restock_events": ["diplomatic_mission_start"]
@@ -262,27 +253,35 @@ to all JSON files — game data and save files alike.
   "scene_id": "act1_ember_vein_intro",
   "entries": [
     {
+      "id": "ember_vein_001",
       "speaker": "edren",
-      "text": "Something is wrong down here.",
-      "animation": "look_around",
-      "conditions": [],
-      "choices": null,
-      "next": "entry_002"
+      "lines": ["Something is wrong down here.", "The miners... they look frozen."],
+      "condition": null,
+      "animations": [
+        { "who": "edren", "anim": "look_around", "when": "before_line_0" }
+      ],
+      "choice": null,
+      "sfx": [
+        { "line": 1, "id": "ley_surge" }
+      ]
     },
     {
-      "speaker": "maren",
-      "text": "The ley energy is... quiet. That should not be possible.",
-      "animation": "concern",
-      "conditions": [{ "flag": "maren_in_party", "value": true }],
-      "choices": null,
-      "next": "entry_003"
+      "id": "ember_vein_002",
+      "speaker": "cael",
+      "lines": ["I can feel something pulling at the ley lines. Like a knot tightening."],
+      "condition": "party_has(cael)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
     }
   ]
 }
 ```
 
-Extends dialogue-system.md's 7-field format with `conditions` for
-flag-gated party-aware dialogue.
+Uses dialogue-system.md Section 4.1's canonical 7-field entry format
+(id, speaker, lines, condition, animations, choice, sfx). The
+`condition` field supports flag expressions and `party_has()` checks
+for party-aware dialogue.
 
 ### 2.6 Encounter Data
 
@@ -294,34 +293,106 @@ flag-gated party-aware dialogue.
   "dungeon_id": "ember_vein",
   "floors": [
     {
-      "floor": 1,
-      "danger_increment": 3,
+      "floor": "1-2",
+      "danger_increment": 120,
       "groups": [
         {
-          "enemies": ["ley_vermin", "ley_vermin", "tomb_mite"],
+          "enemies": ["ley_vermin", "ley_vermin", "unstable_crystal"],
           "weight": 31.25
         },
         {
-          "enemies": ["ley_vermin", "tomb_mite", "tomb_mite"],
+          "enemies": ["ley_vermin", "ley_vermin", "ley_vermin"],
           "weight": 31.25
         },
         {
-          "enemies": ["bone_warden"],
+          "enemies": ["unstable_crystal", "unstable_crystal"],
           "weight": 31.25
         },
         {
-          "enemies": ["ley_vermin", "ley_vermin", "ley_vermin", "tomb_mite"],
+          "enemies": ["ley_vermin", "ley_vermin", "ley_vermin", "ley_vermin", "unstable_crystal"],
           "weight": 6.25
         }
       ],
-      "back_attack_rate": 10,
+      "back_attack_rate": 12.5,
       "preemptive_rate": 12.5
     }
   ]
 }
 ```
 
-### 2.7 Event Flags
+### 2.7 Spell Data
+
+**Source:** magic.md
+**File:** `res://data/spells/{tradition}.json`
+
+```json
+{
+  "spells": [
+    {
+      "id": "ember_lance",
+      "name": "Ember Lance",
+      "tradition": "ley_line",
+      "element": "flame",
+      "category": "offensive",
+      "tier": 1,
+      "power": 14,
+      "mp_cost": 4,
+      "target": "single_enemy",
+      "learned_by": [
+        { "character": "maren", "level": 1 },
+        { "character": "lira", "level": 5 },
+        { "character": "cael", "level": 1 }
+      ]
+    }
+  ]
+}
+```
+
+### 2.8 Crafting Data
+
+**Source:** crafting.md
+**Files:** `res://data/crafting/devices.json`, `recipes.json`
+
+**Device definitions** (pre-crafted field devices):
+
+```json
+{
+  "devices": [
+    {
+      "id": "thermal_charge",
+      "name": "Thermal Charge",
+      "tier": "basic",
+      "ac_cost": 1,
+      "category": "offensive",
+      "effect": "Deals Flame damage to single enemy",
+      "charges": 3,
+      "unlock_phase": "act_1"
+    }
+  ]
+}
+```
+
+**Forging recipes** (equipment forging at forge locations):
+
+```json
+{
+  "recipes": [
+    {
+      "id": "arcanite_blade",
+      "name": "Arcanite Blade",
+      "result_item": "arcanite_blade",
+      "materials": [
+        { "item_id": "arcanite_ingot", "quantity": 1 }
+      ],
+      "gold_fee": 500,
+      "forge_location": ["ashmark", "caldera", "lira_workshop"],
+      "unlock_phase": "interlude"
+    }
+  ]
+}
+```
+
+### 2.9 Event Flags
 
 **Source:** events.md (58 numbered flags + parameterized boss_cutscene_seen_*)
 **File:** `res://scripts/autoload/event_flags.gd`
@@ -343,10 +414,10 @@ func has_flag(flag_name: String) -> bool:
     return flags.has(flag_name)
 ```
 
-Flags are serialized as part of save data (world.eventFlags in
+Flags are serialized as part of save data (`world.event_flags` in
 save-system.md Section 3.6).
 
-### 2.8 Character Data
+### 2.10 Character Data
 
 **Source:** characters.md, progression.md
 **File:** `res://data/characters/{character_id}.json`
@@ -459,7 +530,13 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
         CoreState.BATTLE:
             get_tree().change_scene_to_file("res://scenes/core/battle.tscn")
 
-func push_overlay(state: OverlayState) -> void:
+func push_overlay(state: OverlayState) -> bool:
+    # Reject if overlay already active (except cutscene overriding dialogue)
+    if current_overlay != OverlayState.NONE:
+        if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
+            pop_overlay()  # Cutscene takes priority over dialogue
+        else:
+            return false
     # Add overlay scene on top, pause core underneath
     get_tree().paused = true
     current_overlay = state
@@ -468,6 +545,7 @@ func push_overlay(state: OverlayState) -> void:
     scene.process_mode = Node.PROCESS_MODE_ALWAYS
     get_tree().root.add_child(scene)
     overlay_node = scene
+    return true
 
 func pop_overlay() -> void:
     # Remove overlay, unpause core
