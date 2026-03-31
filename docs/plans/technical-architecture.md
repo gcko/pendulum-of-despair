@@ -157,14 +157,12 @@ data and save files alike.
       "mag": 5,
       "mdef": 6,
       "spd": 10,
-      "lck": 3,
       "gold": 15,
       "exp": 8,
       "weaknesses": ["flame"],
       "resistances": [],
-      "immunities": [],
       "absorb": [],
-      "status_vulnerabilities": ["poison", "blind"],
+      "status_immunities": [],
       "drops": {
         "common": { "item_id": "beast_fang", "rate": 30 },
         "rare": { "item_id": "potion", "rate": 5 }
@@ -360,16 +358,16 @@ Flags are serialized as part of save data (`world.event_flags` in
   "name": "Edren",
   "role": "knight_commander",
   "base_stats": {
-    "hp": 200, "mp": 30,
-    "atk": 15, "def": 12,
-    "mag": 8, "mdef": 10,
-    "spd": 9, "lck": 6
+    "hp": 95, "mp": 15,
+    "atk": 18, "def": 16,
+    "mag": 6, "mdef": 8,
+    "spd": 10, "lck": 8
   },
   "growth": {
-    "hp": 45, "mp": 5,
-    "atk": 3, "def": 3,
-    "mag": 1, "mdef": 2,
-    "spd": 1, "lck": 1
+    "hp": 85, "mp": 3,
+    "atk": 1.8, "def": 1.6,
+    "mag": 0.5, "mdef": 0.7,
+    "spd": 0.8, "lck": 0.6
   },
   "default_row": "front",
   "weapon_type": "sword",
@@ -462,7 +460,13 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
         CoreState.BATTLE:
             get_tree().change_scene_to_file("res://scenes/core/battle.tscn")
 
-func push_overlay(state: OverlayState) -> void:
+func push_overlay(state: OverlayState) -> bool:
+    # Reject if overlay already active (except cutscene overriding dialogue)
+    if current_overlay != OverlayState.NONE:
+        if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
+            pop_overlay()  # Cutscene takes priority over dialogue
+        else:
+            return false
     # Add overlay scene on top, pause core underneath
     get_tree().paused = true
     current_overlay = state
@@ -471,6 +475,7 @@ func push_overlay(state: OverlayState) -> void:
     scene.process_mode = Node.PROCESS_MODE_ALWAYS
     get_tree().root.add_child(scene)
     overlay_node = scene
+    return true
 
 func pop_overlay() -> void:
     # Remove overlay, unpause core
@@ -517,7 +522,7 @@ NPC (Area2D)
     -> flag-gated dialogue (checks EventFlags)
 ```
 
-**Enemy** (runtime only — instantiated in battle scene):
+**Enemy** (`scenes/entities/enemy.tscn` — instantiated at runtime by battle scene):
 ```
 Enemy (Node2D)
 ├── Sprite2D (enemy sprite)
@@ -588,7 +593,7 @@ cycle, 15-20 fps battle animations).
 
 ### 5.3 Audio Assets
 
-Per [audio.md](../story/audio.md) Section 3.6 — 24 channels total
+Per [audio.md](../story/audio.md) Section 3.1 — 24 channels total
 (8 music / 12 SFX / 4 ambient):
 
 | Type | Format | Sample Rate | Bit Depth | Naming |
