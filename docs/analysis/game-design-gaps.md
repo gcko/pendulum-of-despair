@@ -599,9 +599,10 @@ persistence, localization, and technical architecture.
 
 ### 4.1 Core Game Design Document (GDD Overview)
 
-**Status:** MISSING
+**Status:** COMPLETE
+**Completed:** 2026-03-31
 **Priority:** P2 — needed for team onboarding and stakeholder communication
-**Files:** None yet — target `docs/story/gdd-overview.md`
+**Files:** `docs/story/gdd-overview.md`
 **Depends On:** None (all content exists, just needs consolidation)
 
 **What exists:** Game pillars, thematic core, and core loop are distributed
@@ -609,13 +610,13 @@ across outline.md, world.md, characters.md, CLAUDE.md, and AGENTS.md.
 All mechanical systems are fully designed. No single entry-point document.
 
 **What's Needed:**
-- [ ] Unified 2--3 page game overview (elevator pitch, genre, pillars, target audience)
-- [ ] Target audience definition (age range, genre familiarity, comparable titles)
-- [ ] Platform specification (target OS versions, input devices, resolution, frame rate target)
-- [ ] Core gameplay loop diagram (explore → fight → progress → story → explore)
-- [ ] Session structure (expected play session length, save-and-quit patterns)
-- [ ] Scope summary (act count, estimated play time, content volume metrics)
-- [ ] Document index linking to all design docs by category
+- [x] Unified 2--3 page game overview (elevator pitch, genre, pillars, target audience)
+- [x] Target audience definition (age range, genre familiarity, comparable titles)
+- [x] Platform specification (target OS versions, input devices, resolution, frame rate target)
+- [x] Core gameplay loop diagram (explore → fight → progress → story → explore)
+- [x] Session structure (expected play session length, save-and-quit patterns)
+- [x] Scope summary (act count, estimated play time, content volume metrics)
+- [x] Document index linking to all design docs by category
 
 **Blocking:** Team onboarding, stakeholder pitches, scope planning
 
@@ -846,3 +847,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-30 | Tier 4 Audit | Game development bible methodology audit. Compared documentation against 24 industry-standard categories. 15 COVERED, 3 PARTIAL, 3 MISSING. Added 6 new Tier 4 gaps: 4.1 Core GDD Overview (MISSING), 4.2 SFX & Audio Implementation (PARTIAL), 4.3 Save System Design (PARTIAL), 4.4 Accessibility Design (MISSING), 4.5 Localization Readiness (MISSING), 4.6 Technical Implementation Guide (MISSING). Tiers 1--3 (mechanical game design) remain fully COMPLETE. | — |
 | 2026-03-30 | 4.3 Save System Design | PARTIAL → COMPLETE. Save data schema (9 groups), 3-option save point menu (Rest/Rest & Save/Save with tiered rest items), 3 manual + 1 auto slot, Faint-and-Fast-Reload with durable XP/gold write-back, post-epilogue save state, versioned migration chain. Cross-doc updates to ui-design.md, overworld.md, items.md, crafting.md, economy.md, difficulty-balance.md, events.md. | — |
 | 2026-03-31 | 4.4 Accessibility Design | MISSING → COMPLETE. Base resolution 320×180 (replaces 256×224), clean integer scaling. Color-blind support (Deutan-Protan/Tritan modes + always-on corruption cues). Patience Mode (zero time pressure ATB). Full keyboard rebinding. Reduce Motion (master toggle + granular controls). SFX captions. High-Res Text toggle. Cross-doc updates to ui-design.md, save-system.md, combat-formulas.md, difficulty-balance.md, visual-style.md, overworld.md, battle-dialogue.md. | — |
+| 2026-03-31 | 4.1 Core GDD Overview | MISSING → COMPLETE. 3-page entry-point document: elevator pitch, design pillars, target audience (13+, SNES JRPG fans), act structure, party members, core loop, combat/progression/systems summaries, content volume metrics (204 enemies, 31 bosses, 33 consumables, 56 weapons, 42 accessories, ~6,300 script lines), playtime estimates (25-35h critical, 45-80h+ completionist), session structure, platform/accessibility summary, complete document index. | — |
