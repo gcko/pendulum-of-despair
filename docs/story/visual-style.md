@@ -465,6 +465,33 @@ The overworld is the player's macro-level emotional barometer. The same map is u
 
 **Palette shift:** Any biome can become the Pallor Wastes through the three-stage corruption overlay (see `biomes.md` Section 5). The transition is a 5-tile gradient where original palette tiles progressively desaturate, then replace with grey monochrome. Static particles appear at the gradient's midpoint. Music cuts to silence, then the Pallor drone fades in. This transition should make the player physically uncomfortable.
 
+### Corruption Visual Enhancements (Always On)
+
+These cues supplement desaturation and are active for all players
+(not gated by a setting). They make corruption tangible, not just grey.
+
+- **Texture overlay:** Corrupted areas gain subtle grain/static that
+  intensifies with corruption level. Dungeon grey zones get visible
+  crack patterns on tiles.
+- **Particle type shift:** Healthy areas have warm ambient particles
+  (dust motes, fireflies, heat shimmer). Corrupted areas replace these
+  with cold particles (grey ash, static sparks, drifting fragments).
+- **HP bar shape cue:** Below 25% max HP, the bar gains a segmented /
+  cracked appearance in addition to the green-to-red color shift.
+
+See [accessibility.md](accessibility.md) Section 2 for color-blind
+mode palette swaps.
+
+### Color-Blind Mode Palettes
+
+Two color-blind modes are available in Config:
+- **Deutan-Protan:** red/green pairs swap to blue/orange (HP bar,
+  status icons, Poison color)
+- **Tritan:** blue/yellow pairs shift to green/magenta
+
+See [accessibility.md](accessibility.md) Section 2 for full palette
+swap tables and what does NOT change.
+
 ---
 
 ### Spiritual Sites (Deeproot Shrine, Ashgrove, Stillwater Hollow)
