@@ -611,7 +611,7 @@ All mechanical systems are fully designed. No single entry-point document.
 **What's Needed:**
 - [ ] Unified 2--3 page game overview (elevator pitch, genre, pillars, target audience)
 - [ ] Target audience definition (age range, genre familiarity, comparable titles)
-- [ ] Platform specification (browser versions, input devices, resolution, frame rate target)
+- [ ] Platform specification (target OS versions, input devices, resolution, frame rate target)
 - [ ] Core gameplay loop diagram (explore → fight → progress → story → explore)
 - [ ] Session structure (expected play session length, save-and-quit patterns)
 - [ ] Scope summary (act count, estimated play time, content volume metrics)
@@ -673,10 +673,10 @@ for save system in battle-dialogue.md.
 - [x] Save slot specification (count, copy/delete behavior, display format)
 - [x] Auto-save rules (when it triggers, where it saves, relationship to manual saves)
 - [x] Post-game save state (what state is preserved after epilogue_complete, can final boss be re-fought)
-- [x] Storage implementation contract (localStorage vs IndexedDB vs server-side, size budget)
+- [x] Storage implementation contract (local file system, size budget)
 - [x] Save migration strategy (how saves survive code updates)
 
-**Blocking:** Persistence layer implementation, server save API
+**Blocking:** Persistence layer implementation
 
 ---
 
@@ -763,7 +763,7 @@ for save system in battle-dialogue.md.
 - [ ] Game state machine architecture:
   - [ ] Top-level states: title, exploration, combat, menu, cutscene, dialogue, save/load
   - [ ] Transition rules between states (what triggers each transition)
-  - [ ] Phaser 3 scene mapping (which Phaser scene handles which game state)
+  - [ ] Engine scene mapping (which engine scene/state handles which game state)
 - [ ] Asset pipeline specification:
   - [ ] Tileset format and naming conventions (per visual-style.md 16×16 tiles)
   - [ ] Sprite sheet structure (character sprites, enemy sprites, UI elements)
@@ -772,7 +772,7 @@ for save system in battle-dialogue.md.
 - [ ] Entity/component architecture:
   - [ ] How game entities (player, NPCs, enemies, chests, triggers) are represented
   - [ ] Component types: position, sprite, combat stats, dialogue, inventory, AI
-  - [ ] Relationship to Phaser 3 game objects
+  - [ ] Relationship to engine scene tree / game objects
 - [ ] Server API contract:
   - [ ] Auth endpoints (registration, login, session management)
   - [ ] Save/load endpoints (create, read, update, delete saves)

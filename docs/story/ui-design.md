@@ -17,7 +17,7 @@ The UI is built as if running on SNES hardware. Every visual element
 is pixel art by default:
 
 - **Rendering:** Game viewport is 256×224 (SNES native) scaled using
-  the largest integer factor that fits the browser window (3× = 768×672
+  the largest integer factor that fits the game window (3× = 768×672
   is the typical fit). Nearest-neighbor interpolation, no bilinear
   filtering. Letterbox with black bars if the window exceeds the scaled
   area. All UI elements designed on the native pixel grid.
@@ -40,7 +40,7 @@ is pixel art by default:
 
 ### 1.2 Modern Concessions
 
-Only invoked for legibility at browser resolution:
+Only invoked for legibility at target display resolution:
 
 - Text at very small sizes may use sub-pixel rendering to stay readable.
 - Damage numbers may use slight scaling for visibility.
