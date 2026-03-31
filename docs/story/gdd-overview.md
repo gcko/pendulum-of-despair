@@ -77,7 +77,7 @@ There is no New Game+.
 | I | Discovery | Ember Vein tutorial, Pendulum found, journey to Valdris capital. Party assembles. |
 | II | Diplomacy | Three-faction council, diplomatic missions. Cael's nightmares worsen. Betrayal -- Cael steals the Pendulum. |
 | Interlude | Unraveling | World breaks. Sable alone, reuniting party one by one. Ley lines rupture. |
-| III | March | Five character-defining trials. March on the Convergence. Campfire scene. |
+| III | The Convergence | Five character-defining trials. March on the Convergence. Campfire scene. |
 | IV | Reckoning | Final dungeon. Cael's sacrifice closes the Pallor's door. Memorial. |
 | Epilogue | After | New world. Survivors rebuild. Post-game content unlocks. |
 
@@ -178,6 +178,7 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 
 - **Resolution:** 320x180 native, integer-scaled to display (6x at
   1080p, 12x at 4K). Nearest-neighbor, pixel-perfect.
+- **Frame rate target:** 60 fps
 - **Engine:** Godot Engine 4.x
 - **Input:** Keyboard (fully rebindable) + gamepad (standard mapping)
 - **Accessibility:** Color-blind modes (Deutan-Protan, Tritan),
@@ -188,6 +189,10 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 ### Document Index
 
 Organized by category. Every file lives in `docs/story/` unless noted.
+README files in subdirectories serve as navigation indexes.
+
+**Overview:**
+- [README.md](README.md) -- story documentation index
 
 **Narrative:**
 - [outline.md](outline.md) -- story outline, act structure, themes
