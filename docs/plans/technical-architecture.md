@@ -67,6 +67,8 @@ res://
 │   ├── shops/                 # Per-town shop inventories
 │   ├── dialogue/              # NPC and scene dialogue trees
 │   ├── encounters/            # Per-dungeon encounter tables
+│   ├── spells/                # Per-tradition spell definitions
+│   ├── crafting/              # Device definitions, forging recipes
 │   ├── characters/            # Party member base stats, growth
 │   └── config/                # Default settings, constants
 ├── assets/                    # Art and audio assets
@@ -333,7 +335,7 @@ expressions and `party_has()` checks for party-aware dialogue.
     {
       "id": "ember_lance",
       "name": "Ember Lance",
-      "tradition": "ley_line",
+      "tradition": "forgewright",
       "element": "flame",
       "category": "offensive",
       "tier": 1,
@@ -366,7 +368,7 @@ expressions and `party_has()` checks for party-aware dialogue.
       "tier": "basic",
       "ac_cost": 1,
       "category": "offensive",
-      "effect": "Deals Flame damage to single enemy",
+      "effect": "Flame AoE: 400 dmg",
       "charges": 3,
       "unlock_phase": "act_1"
     }
@@ -384,7 +386,8 @@ expressions and `party_has()` checks for party-aware dialogue.
       "name": "Arcanite Blade",
       "result_item": "arcanite_blade",
       "materials": [
-        { "item_id": "arcanite_ingot", "quantity": 1 }
+        { "item_id": "arcanite_ingot", "quantity": 1 },
+        { "item_id": "crystal_shard", "quantity": 3 }
       ],
       "gold_fee": 500,
       "forge_location": ["ashmark", "caldera", "lira_workshop"],
@@ -393,6 +396,26 @@ expressions and `party_has()` checks for party-aware dialogue.
   ]
 }
 ```
+
+### Future Data Format Sections
+
+The following game systems need JSON schemas but are deferred to
+implementation time (the design docs are complete, but the data
+structures are complex enough to warrant separate design work):
+
+- **Ability data** — 6 unique command systems per
+  [abilities.md](../story/abilities.md) (Bulwark, Rally, Forgewright,
+  Spiritcall, Tricks, Arcanum) with sub-abilities, costs, and effects
+- **Boss AI scripts** — conditional priority lists, mode/stance
+  systems, phase transitions, counter tables per
+  [bestiary/bosses.md](../story/bestiary/bosses.md) (31 bosses)
+
+**Note on steal schema:** The enemy JSON uses a single `steal` field
+(one item + rate) matching the bestiary's single-column format.
+[abilities.md](../story/abilities.md) describes Sable's Filch as
+having "common and rare steal" — if a two-tier steal system is
+implemented, the enemy JSON should be extended with `steal_common` and
+`steal_rare` fields.
 
 ### 2.9 Event Flags
 

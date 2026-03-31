@@ -66,6 +66,8 @@ res://
 │   ├── shops/                 # Per-town shop inventories
 │   ├── dialogue/              # NPC and scene dialogue trees
 │   ├── encounters/            # Per-dungeon encounter tables
+│   ├── spells/                # Per-tradition spell definitions
+│   ├── crafting/              # Device definitions, forging recipes
 │   ├── characters/            # Party member base stats, growth
 │   └── config/                # Default settings, constants
 ├── assets/                    # Art and audio assets
@@ -331,7 +333,7 @@ for party-aware dialogue.
     {
       "id": "ember_lance",
       "name": "Ember Lance",
-      "tradition": "ley_line",
+      "tradition": "forgewright",
       "element": "flame",
       "category": "offensive",
       "tier": 1,
@@ -364,7 +366,7 @@ for party-aware dialogue.
       "tier": "basic",
       "ac_cost": 1,
       "category": "offensive",
-      "effect": "Deals Flame damage to single enemy",
+      "effect": "Flame AoE: 400 dmg",
       "charges": 3,
       "unlock_phase": "act_1"
     }
@@ -382,7 +384,8 @@ for party-aware dialogue.
       "name": "Arcanite Blade",
       "result_item": "arcanite_blade",
       "materials": [
-        { "item_id": "arcanite_ingot", "quantity": 1 }
+        { "item_id": "arcanite_ingot", "quantity": 1 },
+        { "item_id": "crystal_shard", "quantity": 3 }
       ],
       "gold_fee": 500,
       "forge_location": ["ashmark", "caldera", "lira_workshop"],
@@ -428,16 +431,16 @@ save-system.md Section 3.6).
   "name": "Edren",
   "role": "knight_commander",
   "base_stats": {
-    "hp": 200, "mp": 30,
-    "atk": 15, "def": 12,
-    "mag": 8, "mdef": 10,
-    "spd": 9, "lck": 6
+    "hp": 95, "mp": 15,
+    "atk": 18, "def": 16,
+    "mag": 6, "mdef": 8,
+    "spd": 10, "lck": 8
   },
   "growth": {
-    "hp": 45, "mp": 5,
-    "atk": 3, "def": 3,
-    "mag": 1, "mdef": 2,
-    "spd": 1, "lck": 1
+    "hp": 85, "mp": 3,
+    "atk": 1.8, "def": 1.6,
+    "mag": 0.5, "mdef": 0.7,
+    "spd": 0.8, "lck": 0.6
   },
   "default_row": "front",
   "weapon_type": "sword",
