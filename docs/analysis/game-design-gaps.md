@@ -682,32 +682,33 @@ for save system in battle-dialogue.md.
 
 ### 4.4 Accessibility Design
 
-**Status:** MISSING
+**Status:** COMPLETE
+**Completed:** 2026-03-31
 **Priority:** P1 — affects player reach and compliance
 **Files:** None yet — target `docs/story/accessibility.md`
 **Depends On:** 2.3 (UI Design), 2.2 (ATB — for timing accommodations), 3.4 (Difficulty)
 
 **What's Needed:**
-- [ ] Input accessibility:
-  - [ ] Key rebinding specification
-  - [ ] Gamepad support (button mapping, analog stick for menus)
-  - [ ] One-handed play feasibility analysis for ATB combat
-- [ ] Visual accessibility:
-  - [ ] Color-blind mode specification — CRITICAL: the game's emotional arc depends on color desaturation (warm → grey → new palette). Color-blind players may miss this entirely. Need alternative visual cues (pattern overlays, particle effects, UI indicators)
-  - [ ] High-contrast mode for text and UI elements
-  - [ ] Screen shake / flash intensity options
-- [ ] Text accessibility:
-  - [ ] Text size scaling options (SNES pixel font at native resolution may be too small on modern displays)
-  - [ ] Text speed options (instant, fast, normal, slow)
-- [ ] Cognitive accessibility:
-  - [ ] ATB Wait mode as default recommendation for accessibility
-  - [ ] Battle speed floor (can speed 1 be slow enough for motor-impaired players?)
-  - [ ] Optional turn-by-turn mode (fully paused, no time pressure — design decision needed)
-- [ ] Motion sensitivity:
-  - [ ] Option to reduce/disable Mode 7 rotation effects
-  - [ ] Option to reduce/disable battle transition mosaic effects
-  - [ ] Screen shake toggle
-- [ ] Subtitle / closed caption support for SFX-dependent gameplay cues
+- [x] Input accessibility:
+  - [x] Full keyboard rebinding (all actions configurable)
+  - [x] Gamepad support (button mapping, analog stick for menus)
+  - [x] One-handed play feasibility (ATB combat supports single-stick or button-mashing patterns)
+- [x] Visual accessibility:
+  - [x] Color-blind mode specification (Deutan-Protan/Tritan modes + always-on corruption texture/particle cues for visual distinction beyond color)
+  - [x] High-Res Text toggle (native-resolution text layer) + always-on corruption texture/particle cues for visual distinction
+  - [x] Screen shake / flash intensity options (Reduce Motion toggle controls all effects)
+- [x] Text accessibility:
+  - [x] Addressed by 320×180 base resolution (clean integer scaling at all standard resolutions) + High-Res Text toggle for accessibility
+  - [x] Text speed options (instant, fast, normal, slow)
+- [x] Cognitive accessibility:
+  - [x] ATB Wait mode as default recommendation for accessibility
+  - [x] Battle speed floor (speed 1 ≈ 2.5× slower than speed 6, adequate for motor-impaired players)
+  - [x] Patience Mode (pauses all gauges during any player decision, preserving ATB turn order)
+- [x] Motion sensitivity:
+  - [x] Reduce Motion toggle (master switch disables Mode 7 rotation, battle transition mosaic, screen shake)
+  - [x] Granular controls per effect type (option to keep some animations while disabling others)
+  - [x] Screen shake intensity slider (0–100%)
+- [x] Subtitle / closed caption support for SFX-dependent gameplay cues (SFX captions in battle and key events)
 
 **Blocking:** Compliance with accessibility guidelines, broader player reach
 
@@ -844,3 +845,4 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | 2026-03-29 | 3.7 Full Dialogue Script | PARTIAL → COMPLETE. Layers 2-3 added: npc-ambient.md (944 lines — town NPCs by location with flag-dependent variants, Q&A lore dialogue trees, sub-stories, shop/service lines, Oasis NPCs) and battle-dialogue.md (829 lines — boss phase barks with character, party combat callouts, Cael per-party-member dialogue, Vaelith full pre-fight/combat personality, Pallor Incarnate doubled Hollow Voice, Dreamer's Fault echo bosses, system text, tutorials). Total script: 6,138 lines across 8 content files (6,357 including README). **All 19 mechanical game design gaps now COMPLETE.** | — |
 | 2026-03-30 | Tier 4 Audit | Game development bible methodology audit. Compared documentation against 24 industry-standard categories. 15 COVERED, 3 PARTIAL, 3 MISSING. Added 6 new Tier 4 gaps: 4.1 Core GDD Overview (MISSING), 4.2 SFX & Audio Implementation (PARTIAL), 4.3 Save System Design (PARTIAL), 4.4 Accessibility Design (MISSING), 4.5 Localization Readiness (MISSING), 4.6 Technical Implementation Guide (MISSING). Tiers 1--3 (mechanical game design) remain fully COMPLETE. | — |
 | 2026-03-30 | 4.3 Save System Design | PARTIAL → COMPLETE. Save data schema (9 groups), 3-option save point menu (Rest/Rest & Save/Save with tiered rest items), 3 manual + 1 auto slot, Faint-and-Fast-Reload with durable XP/gold write-back, post-epilogue save state, versioned migration chain. Cross-doc updates to ui-design.md, overworld.md, items.md, crafting.md, economy.md, difficulty-balance.md, events.md. | — |
+| 2026-03-31 | 4.4 Accessibility Design | MISSING → COMPLETE. Base resolution 320×180 (replaces 256×224), clean integer scaling. Color-blind support (Deutan-Protan/Tritan modes + always-on corruption cues). Patience Mode (zero time pressure ATB). Full keyboard rebinding. Reduce Motion (master toggle + granular controls). SFX captions. High-Res Text toggle. Cross-doc updates to ui-design.md, save-system.md, combat-formulas.md, difficulty-balance.md, visual-style.md, overworld.md, battle-dialogue.md. | — |
