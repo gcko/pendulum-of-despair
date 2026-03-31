@@ -27,7 +27,7 @@ This document is the art director's bible for the visual identity of Pendulum of
 - **Tile size:** 16x16 pixels. All terrain, architecture, and environmental tiles are built on this grid.
 - **Palette constraint:** 256 colors per scene maximum. Each tileset uses a sub-palette of 16-32 colors. Biome palettes (defined in `biomes.md`) provide the 8-12 dominant tones; individual tiles add accent colors within the 256-color budget.
 - **Dithering:** Used for gradients and transparency effects. No smooth alpha blending. Two-color dithering patterns for shadows, fog, and water reflections.
-- **Resolution:** The game viewport targets 256x224 pixels (SNES native), scaled to the browser window. All art is authored at native resolution.
+- **Resolution:** The game viewport targets 320x180 pixels (16:9 pixel art standard), integer-scaled to the game window. Clean integer scaling at 720p (4x), 1080p (6x), 1440p (8x), 4K (12x). All art is authored at native resolution. See [accessibility.md](accessibility.md) Section 1.
 
 ### Character Sprites
 
@@ -464,6 +464,33 @@ The overworld is the player's macro-level emotional barometer. The same map is u
 - At the Convergence: floating plateau tiles, crumbling edges, energy geyser vents. Cael's machine (hybrid Forgewright scaffolding and ritual geometry) at the center. The palette is entirely grey except for the party's sprites and their attacks.
 
 **Palette shift:** Any biome can become the Pallor Wastes through the three-stage corruption overlay (see `biomes.md` Section 5). The transition is a 5-tile gradient where original palette tiles progressively desaturate, then replace with grey monochrome. Static particles appear at the gradient's midpoint. Music cuts to silence, then the Pallor drone fades in. This transition should make the player physically uncomfortable.
+
+### Corruption Visual Enhancements (Always On)
+
+These cues supplement desaturation and are active for all players
+(not gated by a setting). They make corruption tangible, not just grey.
+
+- **Texture overlay:** Corrupted areas gain subtle grain/static that
+  intensifies with corruption level. Dungeon grey zones get visible
+  crack patterns on tiles.
+- **Particle type shift:** Healthy areas have warm ambient particles
+  (dust motes, fireflies, heat shimmer). Corrupted areas replace these
+  with cold particles (grey ash, static sparks, drifting fragments).
+- **HP bar shape cue:** Below 25% max HP, the bar gains a segmented /
+  cracked appearance in addition to the green-to-red color shift.
+
+See [accessibility.md](accessibility.md) Section 2 for color-blind
+mode palette swaps.
+
+### Color-Blind Mode Palettes
+
+Two color-blind modes are available in Config:
+- **Deutan-Protan:** red/green pairs swap to blue/orange (HP bar,
+  status icons, Poison color)
+- **Tritan:** blue/yellow pairs shift to green/magenta
+
+See [accessibility.md](accessibility.md) Section 2 for full palette
+swap tables and what does NOT change.
 
 ---
 

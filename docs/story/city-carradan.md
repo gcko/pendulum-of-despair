@@ -1,6 +1,6 @@
 # Carradan Compact -- City Layouts
 
-Detailed tile-level layouts for every Carradan Compact settlement. Each city is designed for 16x16 pixel tiles on a 256x224 viewport (16x14 tiles visible per screen). Carradan cities share an industrial visual vocabulary -- brick, iron, brass, forge-glow, smog -- but each has a distinct identity shaped by its economic function and position within the Compact's hierarchy.
+Detailed tile-level layouts for every Carradan Compact settlement. Each city is designed for 16x16 pixel tiles on a 320x180 viewport (20x11 tiles visible per screen). Carradan cities share an industrial visual vocabulary -- brick, iron, brass, forge-glow, smog -- but each has a distinct identity shaped by its economic function and position within the Compact's hierarchy.
 
 Design philosophy: Carradan cities are **oppressive but functional**. The wealth gap is visible in the architecture. Streets widen as you move toward the center of power. Buildings get taller, cleaner, more ornamented. Near factories and extraction sites, housing is cramped, identical, and soot-stained. The player should feel the class structure before any NPC explains it.
 
@@ -27,7 +27,7 @@ Reference palette: Carradan Industrial biome (see `biomes.md` Section 2). Brick 
 
 ### City Overview
 
-**Size:** Large city -- approximately 240x196 tiles (15 screens at 16x14 each)
+**Size:** Large city -- approximately 240x196 tiles (roughly 12 screens at 20x11 each)
 **Screens:** 15 explorable areas across 4 vertical tiers
 **Layout:** Corrund is built vertically along the Corrund River delta. Iron bridges span canals at three elevations. The Axis Tower at the city center pierces the smog layer. Below the bridges lies the Undercroft -- stacked tenements in perpetual shadow. Above, merchant halls with glass facades catch the amber light. The city is bisected by the main canal, with industrial districts to the east and commercial/government districts to the west.
 **Entry/exit points:** South Gate (overworld, road from Ashmark), North Canal Gate (river barges from Gael's Span direction), East Rail Terminal (rail from Ashmark/Caldera), West Docks (canal barges). During Interlude: Undercroft sewer entrance (Sable's infiltration route).

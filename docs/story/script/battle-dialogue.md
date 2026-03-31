@@ -824,6 +824,22 @@ create equipment. Experiment with combinations."
 - *(Ferry:)* "Bellhaven — Ashport: 200g"
 - *(Unaffordable destination:)* Fare in grey text.
 
+### SFX Captions (Accessibility)
+
+When SFX Captions are enabled in Config, these text labels appear
+briefly (2-3s) in the lower corner of the screen:
+
+- [Save Point] — when near a save crystal
+- [Encounter] — when the encounter trigger fires
+- [Level Up] — on level gain
+- [Victory] — battle end
+- [Item] — item obtained from chest or pickup
+- [Quest Complete] — sidequest completed
+- [Phase Change] — boss enters new phase
+- [Alert] — alarm or environmental warning
+
+See [accessibility.md](../accessibility.md) Section 6.
+
 ---
 
 *The battle speaks through its voices — bosses who believe in

@@ -62,12 +62,30 @@ the FF6 model — config is system-level.
 
 ### Config Fields
 
+**Battle & Display Settings**
 - Battle speed (1–6)
 - ATB mode (Active / Wait)
 - Text speed (Instant / Fast / Normal / Slow)
-- Sound volume (Music / SFX)
-- Screen shake toggle
-- Mode 7 rotation intensity
+- Battle Cursor (Reset / Memory)
+- Window Color (RGB sliders, 0–31 each)
+
+**Audio Settings**
+- Sound (Stereo / Mono)
+- Music volume (0–10)
+- SFX volume (0–10)
+
+**Visual Settings**
+- Screen Shake (On / Off)
+- Mode 7 Intensity (1-6)
+
+**Accessibility Settings** — See [accessibility.md](accessibility.md) for details
+- Patience Mode (On / Off)
+- Color-Blind Mode (Off / Deutan-Protan / Tritan)
+- High-Res Text (On / Off)
+- Reduce Motion (On / Off)
+- Flash Intensity (Off / Reduced / Full)
+- Transition Style (Classic / Simple)
+- SFX Captions (On / Off)
 
 The config file persists alongside saves but is not part of any save
 slot.
