@@ -21,7 +21,7 @@ export default {
     "scope-enum": [
       2,
       "always",
-      ["client", "server", "shared", "ci", "deps"],
+      ["engine", "story", "assets", "ci", "deps"],
     ],
   },
 };

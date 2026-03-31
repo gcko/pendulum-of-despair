@@ -4,9 +4,9 @@ Instructions for AI coding agents working with this repository.
 
 ## Project Overview
 
-Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). Built as a TypeScript pnpm workspace monorepo with Phaser 3 (client), Express 5 (server), and shared types.
+Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game will be built with **Godot Engine** as a locally-run desktop application.
 
-**Architecture:** Game client (Phaser 3 + Vite) + API server (Express + node:sqlite) + shared types package.
+**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot project has not yet been initialized — this repo currently contains game design documentation and project tooling only.
 
 ---
 
@@ -16,17 +16,13 @@ Pendulum of Despair is a browser-based JRPG inspired by 16-bit golden age RPGs (
 - Bypass pre-commit hooks (never use `--no-verify`)
 - Commit sensitive data (`.env`, credentials, API keys)
 - Use interactive git commands (`git rebase -i`, `git add -i`)
-- Ignore test failures (tests must pass cleanly)
-- Use `npm`, `yarn`, or `npx` (use `pnpm` exclusively)
-- **Do NOT run `git push` in pr-review-response without completing Step 6b (story-review-loop).** This is a structural rule, not a suggestion. The only authorized push point in pr-review-response is the PUSH-GATE inside Step 6b. This rule exists because the agent repeatedly skipped the mandatory post-fix review on PR #20, directly causing 25+ additional Copilot review comments across 3 rounds. See `.claude/skills/pr-review-response/SKILL.md` Step 6b for the full gate.
+- Use `npm`, `yarn`, or `npx` (use `pnpm` for tooling)
+- **Do NOT run `git push` in pr-review-response without completing Step 6b (story-review-loop).** This is a structural rule, not a suggestion. The only authorized push point in pr-review-response is the PUSH-GATE inside Step 6b. See `.claude/skills/pr-review-response/SKILL.md` Step 6b for the full gate.
 
 ### Always:
-- Use `pnpm` for all package management
-- Rely on pre-commit hooks for staged TS/JS files; run `pnpm lint && pnpm test` manually for wide-ranging changes or when hooks are unavailable
-- Build shared package before testing: `pnpm run build:shared`
-- Use strict TypeScript — no `any` types
+- Use `pnpm` for commitlint/husky tooling
 - **Run story-review-loop after fixing PR review comments.** When `/pr-review-response` fixes valid Copilot comments (any file edit, not just replies), `/story-review-loop <PR#> 1` MUST run before pushing. This is non-negotiable and enforced by the PUSH-GATE in the skill.
-- **Read the FULL skill file, not the system-reminder version.** The system-reminder version of `/pr-review-response` is INCOMPLETE — it omits Steps 6 (gap analysis) and 6b (story-review-loop) entirely. You MUST read `.claude/skills/pr-review-response/SKILL.md` before executing the skill. This rule exists because the agent repeatedly followed the incomplete system-reminder version on PR #22, skipping mandatory gap analysis and story-review-loop steps.
+- **Read the FULL skill file, not the system-reminder version.** The system-reminder version of `/pr-review-response` is INCOMPLETE — it omits Steps 6 (gap analysis) and 6b (story-review-loop) entirely. You MUST read `.claude/skills/pr-review-response/SKILL.md` before executing the skill.
 
 ### pr-review-response PUSH-GATE (mandatory)
 
@@ -51,15 +47,9 @@ authorized push point in the entire pr-review-response workflow.
 
 | Task | Command |
 |------|---------|
-| **Install deps** | `pnpm install` |
-| **Build all** | `pnpm build` |
-| **Build shared** | `pnpm run build:shared` |
-| **Dev server** | `pnpm run dev:server` |
-| **Dev client** | `pnpm run dev:client` |
-| **Test all** | `pnpm test` |
-| **Test server** | `pnpm --filter @pendulum/server test` |
-| **Test client** | `pnpm --filter @pendulum/client test` |
-| **Type check** | `pnpm lint` |
+| **Install tooling** | `pnpm install` |
+
+> **Note:** Game-specific commands (build, test, run) will be added when the Godot project is initialized.
 
 ---
 
@@ -67,35 +57,31 @@ authorized push point in the entire pr-review-response workflow.
 
 | Directory | Purpose |
 |-----------|---------|
-| `packages/shared/` | `@pendulum/shared` — Types & constants |
-| `packages/server/` | `@pendulum/server` — Express REST API |
-| `packages/client/` | `@pendulum/client` — Phaser 3 game client |
+| `docs/story/` | Canonical game design documents (35+ files) |
+| `docs/story/bestiary/` | Enemy stat tables, type rules, families |
+| `docs/story/script/` | Full dialogue script (8 files, 6,300+ lines) |
+| `docs/analysis/` | Gap analysis and audit docs |
+| `docs/references/` | SNES-era reference data (FF4/FF6/CT/SoM) |
 | `docs/plans/` | Architecture decisions and plans |
-| `docs/story/bestiary/` | Enemy bestiary — stat tables, type rules, families |
+| `docs/superpowers/` | Design specs and implementation plans |
+| `.beads/` | Issue tracking database (bd) |
+| `.husky/` | Git hooks (conventional commits, branch protection) |
 
 ## Where to Add Code
 
+> **Pending:** The Godot project structure will be defined in a future issue. When initialized, this table will be updated with scene, script, and asset locations.
+
 | Change Type | Location |
 |-------------|----------|
-| API endpoint | `packages/server/src/routes/` |
-| Database logic | `packages/server/src/db/` |
-| Auth middleware | `packages/server/src/middleware/` |
-| Shared types | `packages/shared/src/types/` |
-| Game scenes | `packages/client/src/scenes/` |
-| Game systems | `packages/client/src/systems/` |
-| Game data (JSON) | `packages/client/src/data/` |
+| Game design docs | `docs/story/` |
 | Enemy data | `docs/story/bestiary/` |
+| Dialogue script | `docs/story/script/` |
 
 ---
 
 ## Development Workflow
 
-**Before committing:** Run quality checks. Never skip pre-commit hooks.
-
-```bash
-pnpm lint              # TypeScript type-check across all packages
-pnpm test              # Run all tests
-```
+**Before committing:** The pre-commit hook enforces branch protection (no direct commits to main) and runs beads flush. Commitlint enforces conventional commit format.
 
 ### Git Hooks Architecture
 
@@ -106,7 +92,7 @@ pnpm test              # Run all tests
 - bd integration lives in the user hooks.
 - Recovery: `pnpm install` (reinstalls husky).
 
-**Quality checks (pre-commit):** TypeScript type-check, `vitest related` (affected tests only).
+**Quality checks (pre-commit):** Branch protection, beads flush. Godot-specific checks (GDScript lint, tests) will be added when the project is initialized.
 
 **Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
 
@@ -121,14 +107,14 @@ If hooks fail: read error, fix issue, `git add <files>`, commit again.
 All commits must follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). This is enforced by a `commit-msg` hook via commitlint.
 
 ```bash
-git commit -m "feat(client): add combat scene with ATB system"
+git commit -m "docs(story): add combat formulas"
 ```
 
 **Format:** `<type>(<scope>): <description>`
 
 **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `perf`, `revert`, `ci`
 
-**Scopes:** `client`, `server`, `shared`, `ci`, `deps`
+**Scopes:** `engine`, `story`, `assets`, `ci`, `deps`
 
 **Branches:** `feature/`, `fix/`, `chore/` — main requires PRs.
 
@@ -140,17 +126,15 @@ git commit -m "feat(client): add combat scene with ATB system"
 
 | Problem | Fix |
 |---------|-----|
-| Build fails | `pnpm run build:shared` first (shared must be built before server/client) |
-| node:sqlite not found | Upgrade to Node.js >= 24.0.0 |
-| Type errors in server/client | Rebuild shared: `pnpm run build:shared` |
-| Port conflicts | Free 3000 (API) and 8080 (Client dev) |
+| Hooks not running | `pnpm install` (reinstalls husky) |
+| Commitlint rejects message | Check format: `type(scope): description` |
 | Cross-branch work | Use `git worktree add ../name branch` |
 
 ---
 
 ## Additional Resources
 
-- **[CLAUDE.md](./CLAUDE.md)** - Claude-specific deep dives, architecture, and troubleshooting
+- **[CLAUDE.md](./CLAUDE.md)** - Claude-specific extensions and session workflow
 
 ## Quick Reference (bd)
 
@@ -263,15 +247,13 @@ bd automatically syncs with git:
 
 ### Important Rules
 
-- ✅ Use bd for ALL task tracking
-- ✅ Always use `--json` flag for programmatic use
-- ✅ Link discovered work with `discovered-from` dependencies
-- ✅ Check `bd ready` before asking "what should I work on?"
-- ❌ Do NOT create markdown TODO lists
-- ❌ Do NOT use external issue trackers
-- ❌ Do NOT duplicate tracking systems
-
-For more details, see README.md and docs/QUICKSTART.md.
+- Use bd for ALL task tracking
+- Always use `--json` flag for programmatic use
+- Link discovered work with `discovered-from` dependencies
+- Check `bd ready` before asking "what should I work on?"
+- Do NOT create markdown TODO lists
+- Do NOT use external issue trackers
+- Do NOT duplicate tracking systems
 
 ## Landing the Plane (Session Completion)
 
