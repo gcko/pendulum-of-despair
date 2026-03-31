@@ -318,7 +318,7 @@ Legend (additions):
 - Timber columns (`|`) support the ceiling. The beams above are blackened by smoke. The stone floor has grooves worn by feet.
 - Prayer alcoves (`P`) are recessed into the side walls -- small niches where monks kneel alone. In the Interlude, prayer stones in these alcoves show grey frost.
 - Weapon racks (`W`) hang beside prayer alcoves near the entrance. Swords next to meditation beads. The Vigil fights and prays.
-- A stone font (`s`) near the entrance holds blessed water. Interaction: free status cure, once per visit.
+- A stone font (`s`) near the entrance holds blessed water. Interaction: cure all status ailments (once per visit; shares blessing with altar — using one greys out the other).
 - Father Aldous (`@`) stands before the hearth, tending it. His dialogue changes across acts but his position never does.
 
 **Edren's position (Interlude):** Edren (`E`) sits on the middle bench, facing the hearth. Not at the end of a bench -- in the middle, taking up space he has no right to. He is not praying. He is not sleeping. He is sitting. The player must speak to him to trigger the Pallor Hollow boss fight. After the fight, he stands.
@@ -580,7 +580,7 @@ Base Template 8 (reference):       Valdris Applied:
 Changes:
 - OO = ley-line altar (warm gold glow, the primary save point)
 - * = save point marker (integrated into altar)
-- s = stone font (holy water, free status cure once per visit)
+- s = stone font (holy water, cure all status ailments; shares blessing with altar once per visit)
 - cc = stone bench pews (heavier than standard wooden pews)
 - L = ley-lamp brackets (warm gold, brighter than residential)
 - Stained glass window: above altar (wall tile) -- Seven Towers motif
@@ -589,7 +589,7 @@ Changes:
 - The "Old Pacts" refers to original agreements between Valdris and the ley spirits
 ```
 
-**Priest:** Before altar, facing south. Unnamed. Provides blessing (restore 25% HP to all party OR cure one status ailment — player chooses; once per visit).
+**Priest:** Before altar, facing south. Unnamed. Provides blessing (restore 25% HP to all party OR cure all status ailments — player chooses one; once per visit). Font and altar share one blessing per visit.
 **Worshippers:** 1-2 on pews. Dialogue reflects act mood.
 
 ---

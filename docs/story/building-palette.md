@@ -314,7 +314,7 @@ All dimensions are in 16x16 pixel tiles. A "12x10 room" is 12 tiles wide by 10 t
 - Optional healer NPC: near font or side alcove
 
 **Interaction points:**
-- Altar: prayer/blessing (restore 25% HP to all party OR cure one status ailment — player chooses; once per visit; no AC restore)
+- Altar: prayer/blessing (restore 25% HP to all party OR cure all status ailments — player chooses one; once per visit; no AC restore. Font and altar share one blessing per visit)
 - Healer NPC: cure status effects, remove curses (paid service)
 - Sacred texts: readable lore about ley lines, faction beliefs, the Pendulum cycle
 - Offering box: donate gold for minor stat buff

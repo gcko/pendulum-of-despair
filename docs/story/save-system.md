@@ -277,20 +277,33 @@ with this property). See [dungeons-world.md](dungeons-world.md).
 ### Minor Recovery Sources
 
 These are small flavor mechanics outside the save point / inn system.
-They do not interact with save slots or auto-save. None restore AC or
-clear status ailments (those require rest items or inns).
+They do not interact with save slots or auto-save. None restore AC.
+Only the altar blessing can address status ailments (all ailments, as
+an alternative to HP restore — not both). Full ailment clearing
+alongside HP/MP/AC restore requires rest items or inns.
 
 | Source | Location(s) | Effect | Limits |
 |--------|-------------|--------|--------|
-| Altar blessing | Temples / chapels (per [building-palette.md](building-palette.md)) | Restore 25% HP to all party OR cure one status ailment (player chooses) | Once per visit |
-| Soup Kitchen | Carradan Undercroft (per [city-carradan.md](city-carradan.md)) | Restore 25% HP to all party | Once per visit |
-| Resistance Waypoint | Ironmark Tunnels (per [dungeons-city.md](dungeons-city.md)) | Restore 50% HP/MP to all party (bedroll rest) | Once per visit; not a save point |
-| Sacred Sites | Ashgrove, Stillwater Hollow (per [geography.md](geography.md)) | Passive 2% HP/MP per second while standing still (overworld only) | No encounters while at site; no AC restore |
+| Altar blessing | Temples / chapels (per [building-palette.md](building-palette.md)) | Restore 25% HP to all party OR cure all status ailments (player chooses one) | Once per visit; no AC |
+| Soup Kitchen | Carradan Undercroft (per [city-carradan.md](city-carradan.md)) | Restore 25% HP to all party | Once per visit; no AC, no ailment clear |
+| Resistance Waypoint | Ironmark Tunnels (per [dungeons-city.md](dungeons-city.md)) | Restore 50% HP/MP to all party (bedroll rest) | Once per visit; not a save point; no AC, no ailment clear |
+| Sacred Sites | Ashgrove, Stillwater Hollow (per [geography.md](geography.md)) | Passive 2% HP/MP per second while standing still (overworld only) | No encounters while at site; no AC, no ailment clear |
+
+**"Once per visit"** resets when the player leaves the building or
+location and re-enters. Leaving a room within the same building does
+not reset it. Sacred Sites reset when the player leaves the zone tile.
+
+**Altar and font share one blessing.** Temples have both a priest
+(altar) and a stone font ([interiors.md](interiors.md)). These are two
+physical objects for the same mechanic — using either consumes the
+single once-per-visit blessing. The font is the status-cure option; the
+priest is the HP-restore option. Interacting with one greys out the
+other until the next visit.
 
 **Design rationale:** These are comfort mechanics for players exploring
 without rest items, not substitutes for the rest system. The numbers are
 small enough that they don't undermine rest item value but large enough
-to feel helpful. The once-per-visit limit prevents farming.
+to feel helpful.
 
 ---
 
