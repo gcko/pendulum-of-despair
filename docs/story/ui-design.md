@@ -16,13 +16,15 @@
 The UI is built as if running on SNES hardware. Every visual element
 is pixel art by default:
 
-- **Rendering:** Game viewport is 256×224 (SNES native) scaled using
-  the largest integer factor that fits the game window (3× = 768×672
-  is the typical fit). Nearest-neighbor interpolation, no bilinear
+- **Rendering:** Game viewport is 320×180 (16:9 pixel art standard) scaled using
+  the largest integer factor that fits the game window (6× = 1920×1080
+  at 1080p). Clean integer scaling at 720p (4×), 1080p (6×), 1440p (8×), 4K (12×). Nearest-neighbor interpolation, no bilinear
   filtering. Letterbox with black bars if the window exceeds the scaled
   area. All UI elements designed on the native pixel grid.
 - **Borders:** 2px pixel-art window borders, no anti-aliasing, sharp
   corners (no border-radius). Consistent across all screens.
+- **Tile viewport:** 20×11 complete tile rows + 4px partial row at the top or bottom edge (scrolling headroom).
+- **High-Res Text:** An optional 'High-Res Text' accessibility setting renders UI text on a separate native-resolution canvas layer. See [accessibility.md](accessibility.md).
 - **Font:** Pixel bitmap font (Press Start 2P or custom pixel font),
   rendered at native pixel sizes, no sub-pixel smoothing.
 - **Icons:** Hand-pixeled 8×8 or 16×16 sprites for status effects,
@@ -743,10 +745,25 @@ FF6 config screen: label/value pairs in a single scrollable list.
 | Sound | Stereo / Mono | Stereo | |
 | Music Volume | 0–10 | 8 | Pixel bar: 10 small squares, filled = level. |
 | SFX Volume | 0–10 | 8 | Same pixel bar visualization. |
+| Screen Shake | On / Off | On | Toggles camera rumble in battles and scripted events. |
+| Mode 7 Intensity | 1–6 | 6 | Controls zoom/rotation intensity on exploration transitions (1 = subtle, 6 = full effect). |
 | Window Color | R 0–31, G 0–31, B 0–31 | R 0, G 0, B 8 | FF6-style RGB sliders to tint window background. 5-bit values map to 8-bit via `value × 8`. |
+| Key Config | — | — | Opens a sub-screen for keyboard rebinding of all battle and menu commands. |
 
 - Window Color preview box updates in real-time as player adjusts sliders.
 - Hand cursor on active setting. Left/right adjusts value.
+
+#### 10.3a Accessibility Settings
+
+| Setting | Values | Default | Notes |
+|---------|--------|---------|-------|
+| Patience Mode | On / Off | Off | Slows down all time-dependent systems (battle gauges, text scrolling, transitions) by 30–50%, giving players more time to react and process information. |
+| Color-Blind Mode | Off / Deutan-Protan / Tritan | Off | Applies a color-blind filter to the entire game (world colors, UI chrome, and damage numbers). Selecting a color-blind mode shows a live preview panel with a sample HP bar, 4–5 status icons, and a mini Pallor corruption preview. |
+| High-Res Text | On / Off | Off | Renders UI text on a separate native-resolution canvas layer. Useful for accessibility on small displays or for players who prefer crisper text. See [accessibility.md](accessibility.md). |
+| Reduce Motion | On / Off | Off | Disables all non-essential animations (particle effects, sprite idle-bob, location name flash fade, cursor pulse). Combat still animates (attack swings, damage numbers). |
+| Flash Intensity | Off / Reduced / Full | Full | Off: disables screen flashes entirely. Reduced: flashes rendered as 0.2s fade-to-white instead of bright-white spike. Full: default bright-white damage/heal/status flashes. |
+| Transition Style | Classic / Simple | Classic | Classic: full mosaic dissolves and Mode 7 zoom transitions. Simple: all mosaic dissolve and Mode 7 zoom transitions replaced with 0.5s fade to black; boss flash-then-transition replaced with fade. See note below. |
+| SFX Captions | On / Off | Off | Renders text labels for major sound effects during cutscenes and battles (e.g., "[Thunder]", "[Critical Hit]", "[Boss Roar]"). Does not caption dialogue. |
 
 ---
 
@@ -1027,6 +1044,8 @@ overlay, no compass. Player uses the pause menu for all information.
 | Battle encounter | FF6-style mosaic dissolve (progressive pixelation: screen tiles double in size over 0.5s until unrecognizable, then cut to battle screen) |
 | Battle end | Reverse dissolve back to exploration |
 | Menu open/close | Instant (1 frame, no animation) |
+
+**Transition Style Note:** When Transition Style is set to Simple (see Config § 10.3a), all mosaic dissolve and Mode 7 zoom transitions are replaced with a 0.5s fade to black. Boss flash-then-transition is also replaced with fade. See [accessibility.md](accessibility.md).
 
 ### 15.6 Save Points
 
