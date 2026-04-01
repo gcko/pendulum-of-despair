@@ -1,4 +1,3 @@
-class_name EventFlagsClass
 extends Node
 ## Global event flag state management.
 ## Autoloaded as EventFlags.

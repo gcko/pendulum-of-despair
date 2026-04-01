@@ -1,4 +1,3 @@
-class_name DataManagerClass
 extends Node
 ## JSON game data loader and cache.
 ## Autoloaded as DataManager.

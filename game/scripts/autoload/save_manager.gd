@@ -1,4 +1,3 @@
-class_name SaveManagerClass
 extends Node
 ## Save/load system, auto-save, migration, and Faint-and-Fast-Reload.
 ## Autoloaded as SaveManager.
@@ -74,8 +73,13 @@ func load_game(slot: int) -> Dictionary:
 		push_error("SaveManager: Corrupted save at %s" % path)
 		return {"error": "corrupted"}
 
+	if not json.data is Dictionary:
+		push_error("SaveManager: Save data is not a Dictionary at %s" % path)
+		return {"error": "invalid"}
 	var data: Dictionary = json.data
 	data = _migrate(data)
+	if data.has("error"):
+		return data
 
 	if not _validate(data):
 		push_error("SaveManager: Invalid save data at %s" % path)
@@ -125,11 +129,23 @@ func faint_and_fast_reload() -> void:
 	_full_restore(data)
 
 	# 6. Write merged state back to the SAME save slot for durability
-	save_game(slot)
+	_write_data_to_slot(slot, data)
 
 	# 7. Apply and transition
 	_apply_save_data(data)
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION)
+
+
+## Write a pre-built data dictionary directly to a slot file.
+func _write_data_to_slot(slot: int, data: Dictionary) -> bool:
+	var path: String = _slot_path(slot)
+	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	if not file:
+		push_error("SaveManager: Failed to write to %s" % path)
+		return false
+	file.store_string(JSON.stringify(data, "\t"))
+	file.close()
+	return true
 
 
 ## Run migration chain from save version to current version.
@@ -140,8 +156,8 @@ func _migrate(data: Dictionary) -> Dictionary:
 	while version < CURRENT_SAVE_VERSION:
 		if not _migration_steps.has(version):
 			push_error("SaveManager: Missing migration step for version %d" % version)
-			assert(false, "Missing save migration step")
-			break
+			data["error"] = "missing_migration"
+			return data
 		data = _migration_steps[version].call(data)
 		version += 1
 	data["meta"]["version"] = CURRENT_SAVE_VERSION

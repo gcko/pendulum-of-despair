@@ -1,4 +1,3 @@
-class_name GameManagerClass
 extends Node
 ## Game state machine, scene transitions, and pause management.
 ## Autoloaded as GameManager.
@@ -47,14 +46,14 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 	if current_overlay != OverlayState.NONE:
 		pop_overlay()
 
-	transition_data = data
-	current_core = new_state
-	core_state_changed.emit(new_state)
-
 	var scene_path: String = CORE_SCENES[new_state]
 	if not ResourceLoader.exists(scene_path):
 		push_error("GameManager: Scene not found: %s" % scene_path)
 		return
+
+	transition_data = data
+	current_core = new_state
+	core_state_changed.emit(new_state)
 	get_tree().change_scene_to_file(scene_path)
 
 
@@ -62,6 +61,10 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 ## Returns false if an overlay is already active (rejected).
 ## Exception: CUTSCENE can force-close DIALOGUE.
 func push_overlay(state: OverlayState) -> bool:
+	if not OVERLAY_SCENES.has(state):
+		push_error("GameManager: Invalid overlay state: %s" % state)
+		return false
+
 	if current_overlay != OverlayState.NONE:
 		if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
 			pop_overlay()  # Cutscene takes priority over dialogue
@@ -78,8 +81,13 @@ func push_overlay(state: OverlayState) -> bool:
 		current_overlay = OverlayState.NONE
 		get_tree().paused = false
 		return false
-	var packed: PackedScene = load(scene_path)
-	var scene: Node = packed.instantiate()
+	var resource: Resource = load(scene_path)
+	if not resource is PackedScene:
+		push_error("GameManager: Failed to load overlay: %s" % scene_path)
+		current_overlay = OverlayState.NONE
+		get_tree().paused = false
+		return false
+	var scene: Node = (resource as PackedScene).instantiate()
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(scene)
 	overlay_node = scene

@@ -1,4 +1,3 @@
-class_name AudioManagerClass
 extends Node
 ## Audio system: music, SFX, and ambient management.
 ## Autoloaded as AudioManager.

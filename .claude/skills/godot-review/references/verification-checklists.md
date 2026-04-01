@@ -61,6 +61,13 @@ Reference for all review agents. Check every applicable item.
 - [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
 - [ ] `print()` debug statements gated behind `OS.is_debug_build()` or use `print_debug()` — never bare `print()` in autoload methods called frequently
 - [ ] Migration/upgrade functions fail explicitly on missing steps rather than silently skipping
+- [ ] `save_game()` or similar write methods must use the ACTUAL data being written, not rebuild from scratch (FFR merged data bug)
+- [ ] JSON parse result (`json.data`) must be type-checked before typed assignment (`is Dictionary`)
+- [ ] Migration/upgrade error paths must NOT set the version to current — return error instead
+- [ ] State/signal emission must happen AFTER validation, not before (observers see invalid state)
+- [ ] Enum parameters must be validated against the lookup table (OverlayState.NONE has no scene)
+- [ ] `load()` result must be type-checked (`is PackedScene`) before calling `.instantiate()`
+- [ ] Autoload scripts should NOT use `class_name` — access via autoload name, not class name
 
 ### Documentation Accuracy
 - [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state
