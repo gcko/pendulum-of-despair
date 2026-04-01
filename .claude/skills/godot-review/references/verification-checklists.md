@@ -59,6 +59,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] `assert(false)` NOT used as the sole error handler — asserts are disabled in release builds. Use `push_error()` + `get_tree().quit(1)` for truly fatal errors.
 - [ ] Stub/placeholder methods that return empty data (`{}`, `[]`, `0`) don't cause downstream failures (e.g., save_game writing empty dict that fails validation on load)
 - [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
+- [ ] Docstrings and specs for stubbed methods describe behavior as "when implemented" or "stubbed" — not as if currently functional
 - [ ] `print()` debug statements gated behind `OS.is_debug_build()` or use `print_debug()` — never bare `print()` in autoload methods called frequently
 - [ ] Migration/upgrade functions fail explicitly on missing steps rather than silently skipping
 - [ ] `save_game()` or similar write methods must use the ACTUAL data being written, not rebuild from scratch (FFR merged data bug)

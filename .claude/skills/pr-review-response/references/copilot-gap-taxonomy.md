@@ -427,3 +427,20 @@ items across 4 Copilot rounds.
 **Outcome:** 3 new checklist items added to Defensive Coding, 3 new
 items to common-issues.md Cat 11. Pre-Copilot catch rate: 0% (0/4).
 Cumulative from PR #105: 31 new checklist items across 5 rounds.
+
+### PR #105 Round 6 (2026-04-02) — 2 Copilot comments, 1 new gap
+
+**Patterns:**
+- Documentation Accuracy / stub completeness claims: 2 comments
+  - FFR docstring describes behavior (XP merge, level-ups, HP restore)
+    as current when all steps are stubbed (pass)
+  - Spec bullet claims "XP/gold merge, level-up processing" without
+    noting these are stubbed
+
+**New pattern:** Stub implementation completeness — docstrings and
+spec bullets for methods with stub internals must qualify behavior
+as "when implemented" or "stubbed", not present-tense active.
+
+**Outcome:** 1 new checklist item added to Defensive Coding (stub
+docstring accuracy). Pre-Copilot catch rate: 0% (0/2). Cumulative
+from PR #105: 32 new checklist items across 6 Copilot rounds.
