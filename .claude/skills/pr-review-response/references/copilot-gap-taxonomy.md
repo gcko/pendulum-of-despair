@@ -401,3 +401,29 @@ verification-checklists.md (2 Defensive Coding, 1 Documentation
 Accuracy). 3 new items added to common-issues.md. Pre-Copilot
 catch rate: 0% (0/4). Cumulative from PR #105: 28 new checklist
 items across 4 Copilot rounds.
+
+### PR #105 Round 5 (2026-04-01) — 4 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Fix-introduced regression: 1 comment
+  - Our Round 4 fix moved transition_data AFTER change_scene_to_file;
+    Copilot correctly identified new scene _ready() sees stale data.
+    Fix: set before swap, revert on failure.
+- Defensive Coding / unchecked error returns: 2 comments
+  - make_dir_recursive_absolute return ignored in _ready()
+  - _write_data_to_slot return ignored in faint_and_fast_reload
+- Defensive Coding / GDScript falsy semantics: 1 comment
+  - load_crafting `if data` false for empty arrays/dicts — need
+    explicit `!= null` check
+
+**New patterns identified:**
+1. Fix-introduced regression — fixing ordering of state + deferred
+   action created worse bug. Must consider deferred execution semantics.
+2. Generalized error return checking — not just scene transitions;
+   all functions returning Error/bool status need checks.
+3. GDScript falsy vs null — `if data` fails for empty containers.
+   Must use explicit `!= null` when checking for null returns.
+
+**Outcome:** 3 new checklist items added to Defensive Coding, 3 new
+items to common-issues.md Cat 11. Pre-Copilot catch rate: 0% (0/4).
+Cumulative from PR #105: 31 new checklist items across 5 rounds.

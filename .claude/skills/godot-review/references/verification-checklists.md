@@ -71,6 +71,9 @@ Reference for all review agents. Check every applicable item.
 - [ ] Nested dictionary access validates each level's type (`data["a"]["b"]` requires `data["a"] is Dictionary` check)
 - [ ] Scene transition return values checked (`change_scene_to_file()` returns `Error` — verify `OK` before mutating state)
 - [ ] When signal-before-validation is deferred as design choice, verify error/revert paths emit compensating signals
+- [ ] All functions returning `Error` or `bool` status must have return values checked — not just scene transitions (DirAccess, FileAccess, write helpers)
+- [ ] State set before deferred calls (e.g., `change_scene_to_file`) must be REVERTED on failure, not omitted — new scene `_ready()` reads state immediately
+- [ ] GDScript falsy checks (`if data`) fail for empty `[]`/`{}`/`0` — use explicit `!= null` when checking for null returns
 
 ### Documentation Accuracy
 - [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state

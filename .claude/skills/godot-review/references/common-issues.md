@@ -94,6 +94,9 @@ Runtime safety issues that cause crashes or silent failures.
 - Bare print() in frequently-called autoload methods (log flooding)
 - Scene transition return value (change_scene_to_file) not checked before state mutation
 - Signal emitted before validation with no compensating signal on error/revert path
+- Functions returning Error/bool status with return value ignored (DirAccess, FileAccess, write helpers)
+- Fix-introduced regression: moving state assignment after deferred call breaks _ready() readers
+- GDScript falsy check (`if data`) false for empty arrays/dicts — use `!= null` for null checks
 
 ### 12. Documentation Accuracy
 Context files and specs don't match current project state.
