@@ -51,6 +51,21 @@ Reference for all review agents. Check every applicable item.
 - [ ] No monolithic scripts (>300 lines = consider splitting)
 - [ ] No direct singleton state mutation from deep children (signal up instead)
 
+### Defensive Coding (from Copilot gap analysis, PR #105)
+- [ ] Dictionary key access guarded before write (`data.get()` or `has()` before `data["key"] = value`)
+- [ ] `load()` / `preload()` results checked for null before calling `.instantiate()`
+- [ ] `ResourceLoader.exists(path)` checked before `change_scene_to_file(path)` or `load(path)`
+- [ ] Public API parameters validated for range (e.g., slot 0-3, not arbitrary int)
+- [ ] `assert(false)` NOT used as the sole error handler — asserts are disabled in release builds. Use `push_error()` + `get_tree().quit(1)` for truly fatal errors.
+- [ ] Stub/placeholder methods that return empty data (`{}`, `[]`, `0`) don't cause downstream failures (e.g., save_game writing empty dict that fails validation on load)
+- [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
+- [ ] `print()` debug statements gated behind `OS.is_debug_build()` or use `print_debug()` — never bare `print()` in autoload methods called frequently
+- [ ] Migration/upgrade functions fail explicitly on missing steps rather than silently skipping
+
+### Documentation Accuracy
+- [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state
+- [ ] If `run/main_scene` is empty, don't claim the game can be "run" — say "open in editor"
+
 ---
 
 ## 2. Scene Architecture

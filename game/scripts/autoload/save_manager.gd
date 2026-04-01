@@ -29,6 +29,9 @@ func _ready() -> void:
 
 ## Save game state to a slot (1-3 for manual, 0 for auto-save).
 func save_game(slot: int) -> bool:
+	if slot < 0 or slot > 3:
+		push_error("SaveManager: Invalid slot %d (valid: 0-3)" % slot)
+		return false
 	var data: Dictionary = _build_save_data()
 	data["meta"] = {
 		"version": CURRENT_SAVE_VERSION,
@@ -47,9 +50,14 @@ func save_game(slot: int) -> bool:
 	return true
 
 
-## Load game state from a slot. Returns empty dict on failure.
-## Automatically runs migration if save version is behind current.
+## Load game state from a slot. Returns the parsed save Dictionary on
+## success. On failure, returns either an empty Dictionary (slot doesn't
+## exist) or a Dictionary with an "error" key ("cannot_open", "corrupted",
+## "invalid", "invalid_slot"). Check with data.is_empty() or data.has("error").
 func load_game(slot: int) -> Dictionary:
+	if slot < 0 or slot > 3:
+		push_error("SaveManager: Invalid slot %d (valid: 0-3)" % slot)
+		return {"error": "invalid_slot"}
 	var path: String = _slot_path(slot)
 	if not FileAccess.file_exists(path):
 		return {}
@@ -126,10 +134,15 @@ func faint_and_fast_reload() -> void:
 
 ## Run migration chain from save version to current version.
 func _migrate(data: Dictionary) -> Dictionary:
-	var version: int = data.get("meta", {}).get("version", 0)
+	if not data.has("meta") or not data["meta"] is Dictionary:
+		data["meta"] = {"version": 0}
+	var version: int = data["meta"].get("version", 0)
 	while version < CURRENT_SAVE_VERSION:
-		if _migration_steps.has(version):
-			data = _migration_steps[version].call(data)
+		if not _migration_steps.has(version):
+			push_error("SaveManager: Missing migration step for version %d" % version)
+			assert(false, "Missing save migration step")
+			break
+		data = _migration_steps[version].call(data)
 		version += 1
 	data["meta"]["version"] = CURRENT_SAVE_VERSION
 	return data
@@ -137,6 +150,8 @@ func _migrate(data: Dictionary) -> Dictionary:
 
 ## Validate that all required top-level keys exist.
 func _validate(data: Dictionary) -> bool:
+	# TODO: Add type checking (meta is Dictionary, party is Array, etc.)
+	# Currently only checks key existence, not value types.
 	var required: Array[String] = [
 		"meta", "party", "formation", "inventory",
 		"crafting", "ley_crystals", "world", "quests", "completion"
@@ -179,7 +194,17 @@ func _load_most_recent_save() -> Dictionary:
 
 func _build_save_data() -> Dictionary:
 	# TODO: Gather state from GameManager, EventFlags, party, inventory
-	return {}
+	push_warning("SaveManager: _build_save_data() returning stub data")
+	return {
+		"party": [],
+		"formation": {"active": [], "reserve": [], "guests": []},
+		"inventory": {"consumables": [], "equipment": [], "materials": [], "key_items": []},
+		"crafting": {"arcanite_charges": 12, "device_loadout": [null, null, null, null, null], "discovered_synergies": [], "unlocked_recipes": []},
+		"ley_crystals": {"collected": []},
+		"world": {"event_flags": {}, "act": "1", "current_location": "", "current_position": {"x": 0, "y": 0}, "gold": 0},
+		"quests": {"active": [], "completed": []},
+		"completion": {"bestiary": [], "treasures": [], "items_found": []},
+	}
 
 func _get_playtime() -> int:
 	# TODO: Track cumulative play time
@@ -208,9 +233,6 @@ func _process_level_ups(_data: Dictionary) -> void:
 
 func _full_restore(_data: Dictionary) -> void:
 	pass  # TODO: Set HP/MP to 100% max, clear all status ailments
-
-func _write_save(_data: Dictionary) -> void:
-	pass  # TODO: Determine which slot the data came from and overwrite
 
 func _apply_save_data(_data: Dictionary) -> void:
 	pass  # TODO: Restore game state from loaded save data

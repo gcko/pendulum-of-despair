@@ -81,6 +81,23 @@ Implementation doesn't match the game design documents.
 - Save behavior doesn't match save-system.md
 - Values don't match bestiary/items/equipment source tables
 
+### 11. Defensive Coding (from Copilot gap analysis, PR #105)
+Runtime safety issues that cause crashes or silent failures.
+- Dictionary key access without checking key exists first
+- load()/preload() result not checked for null before instantiate()
+- Scene path not verified with ResourceLoader.exists() before change_scene
+- Public API parameters not validated for range (out-of-bounds slot numbers)
+- assert(false) used as only error handler (disabled in release builds)
+- Stub methods return invalid data that breaks downstream consumers
+- Docstrings don't match actual return behavior (inconsistent API contract)
+- Migration functions silently skip missing steps instead of failing
+- Bare print() in frequently-called autoload methods (log flooding)
+
+### 12. Documentation Accuracy
+Context files don't match current project state.
+- CLI commands in AGENTS.md/CLAUDE.md that can't work yet (no main scene)
+- Claims about runnability when project is editor-open-only
+
 ---
 
 ## Severity Levels

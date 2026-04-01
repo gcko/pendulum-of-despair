@@ -60,13 +60,15 @@ func play_music(track_id: String, _crossfade_duration: float = CROSSFADE_BIOME) 
 		return
 	# TODO: Implement crossfade with AudioStreamPlayer nodes
 	_current_music = track_id
-	print("AudioManager: play_music(%s)" % track_id)
+	if OS.is_debug_build():
+		print("AudioManager: play_music(%s)" % track_id)
 
 
 ## Play a sound effect.
 func play_sfx(sfx_id: String, _priority: Priority = Priority.UI_SFX) -> void:
 	# TODO: Implement with AudioStreamPlayer pool, priority check, max instances
-	print("AudioManager: play_sfx(%s)" % sfx_id)
+	if OS.is_debug_build():
+		print("AudioManager: play_sfx(%s)" % sfx_id)
 
 
 ## Play an ambient loop with crossfade.
@@ -75,7 +77,8 @@ func play_ambient(ambient_id: String, _crossfade_duration: float = CROSSFADE_BIO
 		return
 	# TODO: Implement crossfade with AudioStreamPlayer nodes
 	_current_ambient = ambient_id
-	print("AudioManager: play_ambient(%s)" % ambient_id)
+	if OS.is_debug_build():
+		print("AudioManager: play_ambient(%s)" % ambient_id)
 
 
 ## Stop all audio (for narrative silence moments).
@@ -83,13 +86,15 @@ func silence_all() -> void:
 	_current_music = ""
 	_current_ambient = ""
 	# TODO: Fade all AudioStreamPlayers to 0
-	print("AudioManager: silence_all()")
+	if OS.is_debug_build():
+		print("AudioManager: silence_all()")
 
 
 ## Set mixing context (changes music/ambient volume ratio).
 func set_mix_context(context: String) -> void:
 	# TODO: Apply volume ratios from MIX_* constants
-	print("AudioManager: set_mix_context(%s)" % context)
+	if OS.is_debug_build():
+		print("AudioManager: set_mix_context(%s)" % context)
 
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
@@ -97,7 +102,8 @@ func enter_battle(battle_track: String) -> void:
 	_current_ambient = ""
 	_current_music = battle_track
 	# TODO: Hard cut music, silence ambient
-	print("AudioManager: enter_battle(%s)" % battle_track)
+	if OS.is_debug_build():
+		print("AudioManager: enter_battle(%s)" % battle_track)
 
 
 ## Fade back to exploration music + ambient after battle.
@@ -105,4 +111,5 @@ func exit_battle(music_track: String, ambient_track: String) -> void:
 	_current_music = music_track
 	_current_ambient = ambient_track
 	# TODO: Crossfade over CROSSFADE_BATTLE_EXIT duration
-	print("AudioManager: exit_battle(%s, %s)" % [music_track, ambient_track])
+	if OS.is_debug_build():
+		print("AudioManager: exit_battle(%s, %s)" % [music_track, ambient_track])

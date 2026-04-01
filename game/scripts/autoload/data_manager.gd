@@ -21,13 +21,13 @@ func load_json(path: String) -> Variant:
 
 	if not FileAccess.file_exists(path):
 		push_error("DataManager: File not found: %s" % path)
-		assert(false, "DataManager: Missing game data file: %s" % path)
+		get_tree().quit(1)
 		return null
 
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if not file:
 		push_error("DataManager: Cannot open: %s" % path)
-		assert(false, "DataManager: Cannot open game data file: %s" % path)
+		get_tree().quit(1)
 		return null
 
 	var json: JSON = JSON.new()
@@ -38,7 +38,7 @@ func load_json(path: String) -> Variant:
 		push_error("DataManager: Malformed JSON at %s line %d: %s" % [
 			path, json.get_error_line(), json.get_error_message()
 		])
-		assert(false, "DataManager: Malformed game data: %s" % path)
+		get_tree().quit(1)
 		return null
 
 	_cache[path] = json.data

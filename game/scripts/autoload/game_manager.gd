@@ -35,7 +35,7 @@ var current_overlay: OverlayState = OverlayState.NONE
 var overlay_node: Node = null
 
 ## Data passed between state transitions.
-## The receiving scene reads this in _ready() then clears it.
+## Overwritten on each change_core_state call. Receiving scene reads in _ready().
 ## Keys vary by transition — see technical-architecture.md Section 3.3.
 var transition_data: Dictionary = {}
 
@@ -52,6 +52,9 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 	core_state_changed.emit(new_state)
 
 	var scene_path: String = CORE_SCENES[new_state]
+	if not ResourceLoader.exists(scene_path):
+		push_error("GameManager: Scene not found: %s" % scene_path)
+		return
 	get_tree().change_scene_to_file(scene_path)
 
 
@@ -70,7 +73,13 @@ func push_overlay(state: OverlayState) -> bool:
 	overlay_state_changed.emit(state)
 
 	var scene_path: String = OVERLAY_SCENES[state]
-	var scene: Node = load(scene_path).instantiate()
+	if not ResourceLoader.exists(scene_path):
+		push_error("GameManager: Overlay scene not found: %s" % scene_path)
+		current_overlay = OverlayState.NONE
+		get_tree().paused = false
+		return false
+	var packed: PackedScene = load(scene_path)
+	var scene: Node = packed.instantiate()
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(scene)
 	overlay_node = scene

@@ -48,8 +48,7 @@ authorized push point in the entire pr-review-response workflow.
 | Task | Command |
 |------|---------|
 | **Install tooling** | `pnpm install` |
-| **Open Godot project** | Open `game/` directory in Godot 4.6+ editor |
-| **Run game** | Godot editor → Play (F5) or `godot --path game/` |
+| **Open in editor** | Open `game/` directory in Godot 4.6+ editor (no main scene yet — editor only, not runnable) |
 
 ---
 
