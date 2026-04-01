@@ -1,6 +1,6 @@
 # Game Design Document -- Pendulum of Despair
 
-> **Version:** 1.0 | **Status:** All 25 design gaps complete
+> **Version:** 1.0 | **Status:** 24 of 25 design gaps complete (4.5 Localization deferred)
 >
 > This document is the entry point to the game's design. Page 1 is the
 > pitch. Pages 2--3 are the developer reference. Every number is
@@ -247,5 +247,8 @@ README files in subdirectories serve as navigation indexes.
 - [layout-audit.md](layout-audit.md) -- save point and layout coverage audit
 - [worldbuilding-audit.md](worldbuilding-audit.md) -- worldbuilding consistency audit
 
+**Technical:**
+- [technical-architecture.md](../plans/technical-architecture.md) -- Godot 4.6 project setup, data formats, state machine, entities, assets, persistence, performance
+
 **Analysis:**
-- `docs/analysis/game-design-gaps.md` -- gap tracker (25 gaps, all complete)
+- `docs/analysis/game-design-gaps.md` -- gap tracker (25 gaps, 24 complete, 4.5 Localization deferred)
