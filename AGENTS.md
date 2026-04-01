@@ -48,8 +48,8 @@ authorized push point in the entire pr-review-response workflow.
 | Task | Command |
 |------|---------|
 | **Install tooling** | `pnpm install` |
-
-> **Note:** Game-specific commands (build, test, run) will be added when the Godot project is initialized.
+| **Open Godot project** | Open `game/` directory in Godot 4.6+ editor |
+| **Run game** | Godot editor → Play (F5) or `godot --path game/` |
 
 ---
 
@@ -57,22 +57,31 @@ authorized push point in the entire pr-review-response workflow.
 
 | Directory | Purpose |
 |-----------|---------|
+| `game/` | **Godot 4.6 project root** (open this in the editor) |
+| `game/scripts/autoload/` | 5 autoload singletons (GameManager, DataManager, etc.) |
+| `game/scenes/` | Scene files (.tscn) — core, overlay, entities, maps |
+| `game/data/` | JSON game data (enemies, items, equipment, shops, etc.) |
+| `game/assets/` | Art and audio assets (sprites, tilesets, music, SFX) |
 | `docs/story/` | Canonical game design documents (35+ files) |
 | `docs/story/bestiary/` | Enemy stat tables, type rules, families |
 | `docs/story/script/` | Full dialogue script (8 files, 6,300+ lines) |
 | `docs/analysis/` | Gap analysis and audit docs |
-| `docs/references/` | SNES-era reference data (FF4/FF6/CT/SoM) |
-| `docs/plans/` | Architecture decisions and plans |
+| `docs/references/` | Reference data (SNES, audio, graphics) |
+| `docs/plans/` | Architecture decisions and implementation plans |
 | `docs/superpowers/` | Design specs and implementation plans |
 | `.beads/` | Issue tracking database (bd) |
 | `.husky/` | Git hooks (conventional commits, branch protection) |
 
 ## Where to Add Code
 
-> **Pending:** The Godot project structure will be defined in a future issue. When initialized, this table will be updated with scene, script, and asset locations.
-
 | Change Type | Location |
 |-------------|----------|
+| GDScript game logic | `game/scripts/` |
+| Autoload singletons | `game/scripts/autoload/` |
+| Scene files (.tscn) | `game/scenes/` |
+| JSON game data | `game/data/` |
+| Sprites and tilesets | `game/assets/sprites/`, `game/assets/tilesets/` |
+| Audio (music/SFX/ambient) | `game/assets/music/`, `game/assets/sfx/`, `game/assets/ambient/` |
 | Game design docs | `docs/story/` |
 | Enemy data | `docs/story/bestiary/` |
 | Dialogue script | `docs/story/script/` |

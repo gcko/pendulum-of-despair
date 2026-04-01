@@ -13,10 +13,21 @@ For detailed documentation beyond AGENTS.md essentials:
 
 ## Development Environment
 
-This project uses `pnpm` for commitlint and husky tooling only. Game development will use Godot Engine (not yet initialized).
+This project uses `pnpm` for commitlint and husky tooling only.
 
 - Use `pnpm install` to set up git hooks (commitlint + husky)
 - Do not use `npm`, `yarn`, or standalone `npx` commands
+
+## Godot Project
+
+The Godot 4.6 project lives in `game/`. Open `game/` as the project
+directory in the Godot editor.
+
+- **Resolution:** 320x180 native, integer-scaled
+- **Language:** GDScript only
+- **Autoloads:** GameManager, DataManager, AudioManager, SaveManager, EventFlags
+- **Game data:** JSON files in `game/data/`
+- **Architecture reference:** `docs/plans/technical-architecture.md`
 
 ## Git & PRs
 

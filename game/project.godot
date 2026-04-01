@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; but it is readable and editable as a plain text file.
+
+[application]
+
+config/name="Pendulum of Despair"
+run/main_scene=""
+config/features=PackedStringArray("4.6")
+
+[autoload]
+
+GameManager="*res://scripts/autoload/game_manager.gd"
+DataManager="*res://scripts/autoload/data_manager.gd"
+AudioManager="*res://scripts/autoload/audio_manager.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
+EventFlags="*res://scripts/autoload/event_flags.gd"
+
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=180
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode=1
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0.125, 1)
+
+[physics]
+
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
