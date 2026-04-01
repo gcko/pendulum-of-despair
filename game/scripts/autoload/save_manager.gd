@@ -91,7 +91,8 @@ func load_game(slot: int) -> Dictionary:
 ## Silent auto-save to the dedicated auto-save slot.
 ## Triggers: dungeon floor entry, boss zone, town entry, quest complete.
 func auto_save() -> void:
-	save_game(0)
+	if not save_game(0):
+		push_warning("SaveManager: Auto-save failed")
 
 
 ## Faint-and-Fast-Reload: party wipe recovery.
@@ -162,7 +163,12 @@ func _migrate(data: Dictionary) -> Dictionary:
 			push_error("SaveManager: Missing migration step for version %d" % version)
 			data["error"] = "missing_migration"
 			return data
-		data = _migration_steps[version].call(data)
+		var migrated: Variant = _migration_steps[version].call(data)
+		if not migrated is Dictionary:
+			push_error("SaveManager: Migration step %d returned non-Dictionary" % version)
+			data["error"] = "migration_failed"
+			return data
+		data = migrated
 		version += 1
 	data["meta"]["version"] = CURRENT_SAVE_VERSION
 	return data

@@ -46,6 +46,9 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 	if current_overlay != OverlayState.NONE:
 		pop_overlay()
 
+	if not CORE_SCENES.has(new_state):
+		push_error("GameManager: Unknown core state: %s" % new_state)
+		return
 	var scene_path: String = CORE_SCENES[new_state]
 	if not ResourceLoader.exists(scene_path):
 		push_error("GameManager: Scene not found: %s" % scene_path)
