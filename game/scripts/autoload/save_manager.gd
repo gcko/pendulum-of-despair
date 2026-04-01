@@ -16,7 +16,7 @@ const CONFIG_PATH: String = "user://config.json"
 ## Migration functions: version N -> version N+1.
 ## Add entries as the schema evolves.
 var _migration_steps: Dictionary = {
-	# 0: _migrate_v0_to_v1,  # Example: uncomment when v2 is needed
+	# Example: when bumping to version 2, add: 1: _migrate_v1_to_v2
 }
 
 

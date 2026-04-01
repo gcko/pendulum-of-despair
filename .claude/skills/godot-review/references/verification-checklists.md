@@ -107,7 +107,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Viewport size is 320x180
 - [ ] Stretch mode is "viewport"
 - [ ] Stretch aspect is "keep"
-- [ ] Scale mode is integer (1)
+- [ ] Scale mode is `"integer"` (Godot 4.x string format in project.godot)
 - [ ] Default texture filter is Nearest (0)
 
 ### Snap to Pixel
