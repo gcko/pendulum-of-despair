@@ -5,7 +5,7 @@ checklists.
 
 ---
 
-## 10 Issue Categories
+## 12 Issue Categories
 
 ### 1. Type Safety
 Missing or incorrect static typing. Catches errors at parse time

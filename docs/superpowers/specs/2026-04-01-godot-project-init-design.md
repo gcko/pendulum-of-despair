@@ -1,6 +1,6 @@
 # Godot Project Initialization Design
 
-> **Status:** Spec complete, pending implementation
+> **Status:** Implemented (PR #105)
 > **Date:** 2026-04-01
 
 ## Overview
@@ -19,7 +19,7 @@ in `docs/plans/technical-architecture.md`.
 
 `game/project.godot` with:
 - Viewport: 320x180, window override 1920x1080
-- Stretch mode: viewport, aspect: keep, scale_mode: 1 (integer)
+- Stretch mode: viewport, aspect: keep, scale_mode: "integer"
 - Rendering: nearest-neighbor filter, snap 2D to pixel
 - 5 autoload singletons registered
 - Application name: "Pendulum of Despair"

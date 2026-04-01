@@ -119,7 +119,11 @@ func faint_and_fast_reload() -> void:
 
 	# 3. Merge death-persistent values
 	_merge_xp(data, preserved_xp)
-	data["world"]["gold"] = preserved_gold
+	if data.get("world") is Dictionary:
+		data["world"]["gold"] = preserved_gold
+	else:
+		push_error("SaveManager: FFR save data missing valid 'world' Dictionary")
+		return
 	_merge_flags(data, preserved_flags)
 
 	# 4. Process level-ups from accumulated XP
@@ -164,10 +168,10 @@ func _migrate(data: Dictionary) -> Dictionary:
 	return data
 
 
-## Validate that all required top-level keys exist.
+## Validate that all required top-level keys exist and critical keys
+## have correct types (meta and world must be Dictionaries since
+## FFR and load logic index into them).
 func _validate(data: Dictionary) -> bool:
-	# TODO: Add type checking (meta is Dictionary, party is Array, etc.)
-	# Currently only checks key existence, not value types.
 	var required: Array[String] = [
 		"meta", "party", "formation", "inventory",
 		"crafting", "ley_crystals", "world", "quests", "completion"
@@ -175,6 +179,11 @@ func _validate(data: Dictionary) -> bool:
 	for key: String in required:
 		if not data.has(key):
 			return false
+	# Type-check keys that downstream code indexes into
+	if not data["meta"] is Dictionary:
+		return false
+	if not data["world"] is Dictionary:
+		return false
 	return true
 
 
@@ -196,7 +205,8 @@ func _load_most_recent_save() -> Dictionary:
 		var data: Dictionary = load_game(slot)
 		if data.is_empty() or data.has("error"):
 			continue
-		var saved_at: String = data.get("meta", {}).get("saved_at", "")
+		var meta: Variant = data.get("meta", {})
+		var saved_at: String = meta.get("saved_at", "") if meta is Dictionary else ""
 		if saved_at > most_recent_time:
 			most_recent_time = saved_at
 			most_recent_data = data
