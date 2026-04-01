@@ -54,11 +54,11 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 		push_error("GameManager: Scene not found: %s" % scene_path)
 		return
 
-	transition_data = data
 	var err: Error = get_tree().change_scene_to_file(scene_path)
 	if err != OK:
 		push_error("GameManager: Failed to change scene to %s (error %d)" % [scene_path, err])
 		return
+	transition_data = data
 	current_core = new_state
 	core_state_changed.emit(new_state)
 

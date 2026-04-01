@@ -39,7 +39,7 @@ directory in the Godot editor.
 
 ## Pre-Commit Hook Behavior
 
-The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) will be added when the Godot project is initialized.
+The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) have not yet been added to the pre-commit hook.
 
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`). bd integration is embedded in these user hooks.
 

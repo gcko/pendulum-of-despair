@@ -6,7 +6,7 @@ Instructions for AI coding agents working with this repository.
 
 Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game will be built with **Godot Engine** as a locally-run desktop application.
 
-**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot project has not yet been initialized — this repo currently contains game design documentation and project tooling only.
+**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot 4.6 project is initialized in `game/` with directory structure, viewport settings, and 5 autoload singletons (PR #105). No scenes (.tscn) exist yet — editor opens cleanly but the game cannot be run.
 
 ---
 
@@ -100,7 +100,7 @@ authorized push point in the entire pr-review-response workflow.
 - bd integration lives in the user hooks.
 - Recovery: `pnpm install` (reinstalls husky).
 
-**Quality checks (pre-commit):** Branch protection, beads flush. Godot-specific checks (GDScript lint, tests) will be added when the project is initialized.
+**Quality checks (pre-commit):** Branch protection, beads flush. Godot-specific checks (GDScript lint, tests) have not yet been added to the pre-commit hook.
 
 **Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
 
