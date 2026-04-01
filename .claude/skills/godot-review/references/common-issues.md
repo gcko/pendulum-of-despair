@@ -92,6 +92,8 @@ Runtime safety issues that cause crashes or silent failures.
 - Docstrings don't match actual return behavior (inconsistent API contract)
 - Migration functions silently skip missing steps instead of failing
 - Bare print() in frequently-called autoload methods (log flooding)
+- Scene transition return value (change_scene_to_file) not checked before state mutation
+- Signal emitted before validation with no compensating signal on error/revert path
 
 ### 12. Documentation Accuracy
 Context files and specs don't match current project state.
@@ -100,6 +102,7 @@ Context files and specs don't match current project state.
 - Spec status fields stale after implementation
 - Spec notation doesn't match actual Godot project settings format
 - Review reference doc headings/counts inconsistent with content
+- Code comments in migration/versioning logic don't match actual constants
 
 ---
 

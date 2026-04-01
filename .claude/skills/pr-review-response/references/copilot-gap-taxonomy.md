@@ -367,3 +367,37 @@ verification-checklists.md (1 Defensive Coding, 3 Documentation
 Accuracy). 3 new items added to common-issues.md Category 12.
 Pre-Copilot catch rate: 33% (3/9). Cumulative from PR #105: 25 new
 checklist items across 3 Copilot rounds.
+
+### PR #105 Round 4 (2026-04-01) — 4 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Defensive Coding / signal-before-validation with broken revert: 1 comment
+  - push_overlay() emitted overlay_state_changed before load; error
+    paths reverted current_overlay but did NOT emit compensating signal
+  - Our review loop flagged signal timing but deferred as "design
+    choice" — Copilot correctly identified the revert path was also wrong
+- Defensive Coding / unchecked scene transition return: 1 comment
+  - change_scene_to_file() returns Error but was ignored; state
+    and signal emitted before knowing if scene swap succeeded
+- Documentation Accuracy / misleading code comment: 1 comment
+  - Migration example said "uncomment when v2 needed" but showed
+    a v0->v1 step when CURRENT_SAVE_VERSION is already 1
+- Documentation Accuracy / checklist setting format stale: 1 comment
+  - Verification checklist said "Scale mode is integer (1)" but
+    Godot 4.x uses string `"integer"` in project.godot
+
+**New patterns identified:**
+1. Scene transition return value checking — ResourceLoader.exists()
+   pre-check is necessary but not sufficient; the actual swap can
+   still fail
+2. Code comment accuracy for versioning — non-docstring comments
+   that describe migration schemes must match actual constants
+3. Deferred finding with broken error path — when deferring a
+   signal-timing finding as "design choice", must verify error/revert
+   paths also emit compensating signals
+
+**Outcome:** 3 new checklist items added to godot-review
+verification-checklists.md (2 Defensive Coding, 1 Documentation
+Accuracy). 3 new items added to common-issues.md. Pre-Copilot
+catch rate: 0% (0/4). Cumulative from PR #105: 28 new checklist
+items across 4 Copilot rounds.
