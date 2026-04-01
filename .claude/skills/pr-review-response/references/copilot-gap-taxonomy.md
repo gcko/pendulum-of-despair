@@ -338,3 +338,32 @@ Round 1 found 7 additional issues (all fixed).
 **Outcome:** 1 new checklist item added to "Ambiguity Prevention":
 terminology overload in data formats + notation consistency across
 contexts. Both comments fixed with inline clarifications.
+
+### PR #105 Round 3 (2026-04-01) — 9 Copilot comments, 4 new gaps
+
+**Top patterns:**
+- Defensive Coding / nested type safety: 2 comments
+  - FFR `data["world"]["gold"]` without checking `world` is Dictionary
+  - `_load_most_recent_save` `meta.get()` on potentially non-Dictionary
+- Documentation Accuracy / spec drift: 3 comments
+  - Spec status still says "pending implementation" after PR implements it
+  - Spec says `scale_mode: 1 (integer)` but project.godot says `"integer"`
+  - common-issues.md heading says "10 categories" but 12 exist (x2)
+- Naming & Style / class_name on autoloads: 3 comments
+  - DataManager, AudioManager, EventFlags class_name alignment
+  - Already fixed in Round 2 commit — replies missed
+
+**New patterns identified:**
+1. Spec status field drift — spec documents not updated when implemented
+2. Meta-document internal consistency — review reference docs with
+   counts/headings that drift after additions
+3. Nested dictionary type safety — chained `[]` access needs each
+   level validated, not just top-level key existence
+4. Spec-to-project-setting alignment — spec notation vs actual Godot
+   project.godot string format
+
+**Outcome:** 4 new checklist items added to godot-review
+verification-checklists.md (1 Defensive Coding, 3 Documentation
+Accuracy). 3 new items added to common-issues.md Category 12.
+Pre-Copilot catch rate: 33% (3/9). Cumulative from PR #105: 25 new
+checklist items across 3 Copilot rounds.

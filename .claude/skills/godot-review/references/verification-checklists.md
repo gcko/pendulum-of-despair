@@ -68,10 +68,14 @@ Reference for all review agents. Check every applicable item.
 - [ ] Enum parameters must be validated against the lookup table (OverlayState.NONE has no scene)
 - [ ] `load()` result must be type-checked (`is PackedScene`) before calling `.instantiate()`
 - [ ] Autoload scripts should NOT use `class_name` — access via autoload name, not class name
+- [ ] Nested dictionary access validates each level's type (`data["a"]["b"]` requires `data["a"] is Dictionary` check)
 
 ### Documentation Accuracy
 - [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state
 - [ ] If `run/main_scene` is empty, don't claim the game can be "run" — say "open in editor"
+- [ ] Spec status fields updated when spec is implemented (e.g., "pending" -> "Implemented (PR #N)")
+- [ ] Spec setting descriptions match actual project.godot values and format
+- [ ] Review reference doc headings/counts match actual content (e.g., "10 categories" vs actual 12)
 
 ---
 

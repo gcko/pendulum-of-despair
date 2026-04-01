@@ -94,9 +94,12 @@ Runtime safety issues that cause crashes or silent failures.
 - Bare print() in frequently-called autoload methods (log flooding)
 
 ### 12. Documentation Accuracy
-Context files don't match current project state.
+Context files and specs don't match current project state.
 - CLI commands in AGENTS.md/CLAUDE.md that can't work yet (no main scene)
 - Claims about runnability when project is editor-open-only
+- Spec status fields stale after implementation
+- Spec notation doesn't match actual Godot project settings format
+- Review reference doc headings/counts inconsistent with content
 
 ---
 
