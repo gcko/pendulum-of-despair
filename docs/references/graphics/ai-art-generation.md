@@ -9,7 +9,8 @@
 **For a SNES-style JRPG targeting authentic 16-bit pixel art:**
 
 - **Best AI pixel art tool:** PixelLab ($12/mo) — purpose-built for
-  pixel art, respects grid constraints, generates directional variants
+  pixel art, respects grid constraints, generates directional variants.
+  **Has MCP integration for Claude Code** — see Section 5 below.
 - **Best for concept art:** Midjourney or Stable Diffusion for
   character/enemy design exploration, then hand-redraw in Aseprite
 - **Best AI-assisted workflow:** Scenario + Retro Diffusion models for
@@ -17,6 +18,12 @@
 - **Honest assessment:** AI is a concepting and reference tool in 2026.
   Production pixel art for a game with SNES constraints still requires
   significant human work.
+
+> **Developer integration:** PixelLab offers an MCP server that Claude
+> Code can call directly during development sessions — generate sprites,
+> animations, and tilesets without leaving the terminal. See
+> [Section 5: MCP Integration](#5-mcp-integration-claude-code) for
+> setup instructions.
 
 ---
 
@@ -186,3 +193,118 @@ Sources:
 - [Best AI Pixel Art Tools 2026](https://www.sprite-ai.art/blog/best-pixel-art-generators-2026)
 - [Best AI Pixel Art Tools Tested](https://theaisurf.com/best-ai-pixel-art-tools/)
 - [PixelLab Review](https://www.jonathanyu.xyz/2025/12/31/pixellab-review-the-best-ai-tool-for-2d-pixel-art-games/)
+
+---
+
+## 5. MCP Integration (Claude Code)
+
+These tools have APIs that can be called directly from Claude Code
+during development sessions, enabling AI-assisted sprite generation
+without leaving the terminal.
+
+### PixelLab MCP Server (Recommended)
+
+PixelLab provides an official [MCP (Model Context Protocol) server](https://github.com/pixellab-code/pixellab-mcp)
+designed for AI coding assistants. Once configured, Claude Code gains
+direct access to PixelLab's generation tools as callable functions.
+
+**Setup:**
+
+```bash
+# One-command installation for Claude Code
+claude mcp add pixellab https://api.pixellab.ai/mcp -t http \
+  -H "Authorization: Bearer YOUR_PIXELLAB_API_TOKEN"
+```
+
+Replace `YOUR_PIXELLAB_API_TOKEN` with your API token from your
+[PixelLab account](https://www.pixellab.ai/). Requires an active
+subscription ($12+/mo).
+
+**Interactive setup guide:** https://www.pixellab.ai/vibe-coding
+(includes one-click configuration for 15+ AI coding tools)
+
+**Available MCP tools once configured:**
+
+| Tool | What It Does |
+|------|-------------|
+| `create_character` | Generate pixel art character with 4 or 8 directional views from text description |
+| `animate_character` | Add walk, run, idle, attack animations to an existing character |
+| `create_tileset` | Generate Wang tilesets for seamless terrain transitions |
+| `generate_image_pixflux` | Create characters, items, environments from text prompts (medium-large images) |
+| `generate_image_bitforge` | Use a reference image to generate assets matching a specific art style |
+| `inpaint` | Edit specific regions of an existing sprite |
+| `rotate` | Generate rotated views of an existing sprite |
+
+**Example workflow with Claude Code:**
+
+```
+User: "Generate a 16x24 sprite for Edren — knight in pale limestone
+       armor, short brown hair, serious expression, SNES FF6 style"
+
+Claude: [calls pixellab create_character with description]
+        → receives character sprite with 4 directional views
+        → saves to assets/sprites/sprite_edren_*.png
+
+User: "Now animate walk cycles for all 4 directions"
+
+Claude: [calls pixellab animate_character with walk animation]
+        → receives animated walk cycle sprite sheet
+        → saves to assets/sprites/sprite_edren_walk.png
+```
+
+**How this maps to our game design docs:**
+- Character descriptions from `docs/story/characters.md` feed the prompts
+- Palette constraints from `docs/story/visual-style.md` inform style parameters
+- Sprite sizes from `docs/plans/technical-architecture.md` Section 5.2 (16x24 character, 32x32 battle)
+- Enemy descriptions from `docs/story/bestiary/` feed enemy sprite generation
+- Biome palettes from `docs/story/biomes.md` feed tileset generation
+
+### Scenario API (Alternative)
+
+[Scenario](https://www.scenario.com/features/API) offers a REST API
+with Python/JS SDKs and webhooks. More enterprise-focused. Could be
+wrapped in a custom MCP server if needed, but no official MCP
+integration exists. Retro Diffusion models are available through
+the API.
+
+**SDK:** `pip install scenario` / npm package available
+**Docs:** https://docs.scenario.com
+
+### Stable Diffusion (Self-Hosted via ComfyUI)
+
+For a fully local, free pipeline:
+
+- [pixel-sprite-lab](https://github.com/steven2711/pixel-sprite-lab) —
+  open-source sprite sheet generator using ComfyUI
+- [Pixel Art LoRAs](https://civitai.com/models/22/pixel-art-sprite-diffusion) —
+  community-trained models for pixel art
+- [ComfyUI Pixel Art Guide](https://www.kokutech.com/blog/gamedev/tips/art/pixel-art-generation-with-comfyui) —
+  setup guide for palette-locked workflows
+
+Requires local GPU (NVIDIA recommended), ComfyUI installation, and
+model downloads. No subscription cost. Could be called via CLI from
+Claude Code with a custom script.
+
+**Reported performance:** 22 minutes per character with 99.3%
+frame-to-frame palette consistency using palette-locked workflows.
+
+### Integration Comparison
+
+| Tool | Integration | Cost | Setup Effort | Quality |
+|------|------------|------|-------------|---------|
+| **PixelLab MCP** | Native Claude Code MCP | $12+/mo | 1 command | Best for pixel art |
+| Scenario API | REST API (custom MCP possible) | $$$ (enterprise) | Moderate | Good with Retro Diffusion |
+| ComfyUI (local) | CLI scripts | Free (needs GPU) | High (install ComfyUI + models) | Good with LoRAs |
+
+**Recommendation:** Start with PixelLab MCP. One command to set up,
+purpose-built for pixel art game sprites, and Claude Code can call it
+directly during development sessions.
+
+Sources:
+- [PixelLab MCP GitHub](https://github.com/pixellab-code/pixellab-mcp)
+- [PixelLab Vibe Coding Setup](https://www.pixellab.ai/mcp)
+- [PixelLab API Docs](https://www.pixellab.ai/pixellab-api)
+- [PixelLab Python SDK](https://github.com/pixellab-code/pixellab-python)
+- [Scenario API](https://www.scenario.com/features/API)
+- [pixel-sprite-lab (ComfyUI)](https://github.com/steven2711/pixel-sprite-lab)
+- [ComfyUI Pixel Art Guide](https://www.kokutech.com/blog/gamedev/tips/art/pixel-art-generation-with-comfyui)

@@ -9,7 +9,7 @@ tilesets, and animations for Pendulum of Despair. Researched April 2026.
 |------|---------|
 | [sprite-libraries.md](sprite-libraries.md) | Free/low-cost sprite and tileset packs (OpenGameArt, Kenney, itch.io JRPG packs) |
 | [creation-tools.md](creation-tools.md) | Pixel art editors (Aseprite, Pyxel Edit), VFX tools, tilemap editors, animation approach (frame-by-frame, SNES frame counts) |
-| [ai-art-generation.md](ai-art-generation.md) | AI pixel art generation (PixelLab, Retro Diffusion, Scenario), concept art workflow, limitations and honest assessment |
+| [ai-art-generation.md](ai-art-generation.md) | AI pixel art generation (PixelLab, Retro Diffusion, Scenario), concept art workflow, limitations, **MCP integration for Claude Code** |
 
 ## Quick Start
 
@@ -22,6 +22,11 @@ built-in TileMap editor.
 
 **Want AI-assisted?** Read [ai-art-generation.md](ai-art-generation.md)
 for the PixelLab + Aseprite hybrid workflow.
+
+**Want Claude Code to generate sprites directly?** PixelLab has an MCP
+server — one command to set up, then Claude Code can generate characters,
+animations, and tilesets during dev sessions. See
+[ai-art-generation.md Section 5](ai-art-generation.md#5-mcp-integration-claude-code).
 
 ## Related Game Design Docs
 
