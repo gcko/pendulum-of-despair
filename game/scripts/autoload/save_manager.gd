@@ -98,9 +98,10 @@ func auto_save() -> void:
 
 
 ## Faint-and-Fast-Reload: party wipe recovery.
-## Preserves XP, gold, and boss_cutscene_seen flags across death.
-## Levels are derived from accumulated XP. HP/MP set to 100%.
-## Merged state is written back to save file for durability.
+## Control flow is wired; merge/restore steps are stubbed (pass).
+## When implemented: preserves XP, gold, boss_cutscene_seen flags
+## across death, processes level-ups, restores HP/MP to 100%,
+## writes merged state back to save file for durability.
 func faint_and_fast_reload() -> void:
 	# 1. Capture death-persistent values from current game state
 	var preserved_xp: Dictionary = _capture_party_xp()

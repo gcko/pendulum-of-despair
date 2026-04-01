@@ -47,7 +47,7 @@ From technical-architecture.md Section 6.3:
 - save_game(slot) with JSON write
 - load_game(slot) with JSON parse, migration, validation
 - auto_save()
-- faint_and_fast_reload() with XP/gold merge, level-up processing
+- faint_and_fast_reload() control flow wired; XP/gold merge and level-up processing stubbed for later implementation
 - _migrate(), _validate(), _slot_path() helpers
 
 ### event_flags.gd
