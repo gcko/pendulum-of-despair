@@ -1,3 +1,5 @@
+class_name AudioManagerClass
+extends Node
 ## Audio system: music, SFX, and ambient management.
 ## Autoloaded as AudioManager.
 ##
@@ -8,8 +10,6 @@
 ## NOTE: Full implementation requires AudioStreamPlayer nodes which
 ## need to be set up in a scene. This script provides the interface
 ## and constants. Wire up AudioStreamPlayers when scenes are built.
-class_name AudioManagerClass
-extends Node
 
 ## Channel budget constants (per audio.md Section 3.1).
 const MUSIC_CHANNELS: int = 8

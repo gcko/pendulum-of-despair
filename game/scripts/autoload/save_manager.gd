@@ -1,10 +1,10 @@
+class_name SaveManagerClass
+extends Node
 ## Save/load system, auto-save, migration, and Faint-and-Fast-Reload.
 ## Autoloaded as SaveManager.
 ##
 ## Save files are JSON in user://saves/. Global config is separate.
 ## See docs/plans/technical-architecture.md Section 6.
-class_name SaveManagerClass
-extends Node
 
 ## Increment this when the save schema changes. Migration chain runs
 ## automatically on load for older versions.
@@ -59,7 +59,7 @@ func load_game(slot: int) -> Dictionary:
 		return {"error": "cannot_open"}
 
 	var json: JSON = JSON.new()
-	var result: int = json.parse(file.get_as_text())
+	var result: Error = json.parse(file.get_as_text())
 	file.close()
 
 	if result != OK:
@@ -93,10 +93,17 @@ func faint_and_fast_reload() -> void:
 	var preserved_flags: Dictionary = _capture_boss_cutscene_flags()
 
 	# 2. Load most recent save (manual or auto, whichever is newer)
-	var data: Dictionary = _load_most_recent_save()
-	if data.is_empty():
+	# TODO: Steps 1-2 from save-system.md Section 7: Faint animation (2s)
+	# + fade to black (2s) should be handled by the battle scene before
+	# calling this method. Total animation: ~4s.
+	var result: Dictionary = _load_most_recent_save()
+	if result.is_empty():
 		push_error("SaveManager: No save found for Faint-and-Fast-Reload")
+		# TODO: Fallback for pre-first-save (Ember Vein): reload dungeon entrance
 		return
+
+	var slot: int = result["slot"]
+	var data: Dictionary = result["data"]
 
 	# 3. Merge death-persistent values
 	_merge_xp(data, preserved_xp)
@@ -109,8 +116,8 @@ func faint_and_fast_reload() -> void:
 	# 5. Set HP/MP to 100% of max, clear ailments
 	_full_restore(data)
 
-	# 6. Write merged state back to save file
-	_write_save(data)
+	# 6. Write merged state back to the SAME save slot for durability
+	save_game(slot)
 
 	# 7. Apply and transition
 	_apply_save_data(data)
@@ -130,11 +137,11 @@ func _migrate(data: Dictionary) -> Dictionary:
 
 ## Validate that all required top-level keys exist.
 func _validate(data: Dictionary) -> bool:
-	var required: Array = [
+	var required: Array[String] = [
 		"meta", "party", "formation", "inventory",
 		"crafting", "ley_crystals", "world", "quests", "completion"
 	]
-	for key in required:
+	for key: String in required:
 		if not data.has(key):
 			return false
 	return true
@@ -148,19 +155,24 @@ func _slot_path(slot: int) -> String:
 
 
 ## Load the most recent save file (manual or auto, by timestamp).
+## Returns {slot: int, data: Dictionary} or empty dict on failure.
 func _load_most_recent_save() -> Dictionary:
-	var most_recent: Dictionary = {}
+	var most_recent_data: Dictionary = {}
+	var most_recent_slot: int = -1
 	var most_recent_time: String = ""
 
-	for slot in [0, 1, 2, 3]:
+	for slot: int in [0, 1, 2, 3]:
 		var data: Dictionary = load_game(slot)
 		if data.is_empty() or data.has("error"):
 			continue
 		var saved_at: String = data.get("meta", {}).get("saved_at", "")
 		if saved_at > most_recent_time:
 			most_recent_time = saved_at
-			most_recent = data
-	return most_recent
+			most_recent_data = data
+			most_recent_slot = slot
+	if most_recent_slot < 0:
+		return {}
+	return {"slot": most_recent_slot, "data": most_recent_data}
 
 
 # --- Placeholder methods (implement when game systems exist) ---

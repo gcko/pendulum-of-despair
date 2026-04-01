@@ -1,3 +1,5 @@
+class_name DataManagerClass
+extends Node
 ## JSON game data loader and cache.
 ## Autoloaded as DataManager.
 ##
@@ -5,8 +7,6 @@
 ## Game data is build-time content (not user-editable), so malformed
 ## JSON triggers a fatal error with file path in the console.
 ## See docs/plans/technical-architecture.md Section 2.
-class_name DataManagerClass
-extends Node
 
 ## Cache of loaded JSON data. Keys are file paths, values are parsed dicts/arrays.
 var _cache: Dictionary = {}
@@ -31,7 +31,7 @@ func load_json(path: String) -> Variant:
 		return null
 
 	var json: JSON = JSON.new()
-	var result: int = json.parse(file.get_as_text())
+	var result: Error = json.parse(file.get_as_text())
 	file.close()
 
 	if result != OK:
@@ -99,6 +99,20 @@ func load_spells(tradition: String) -> Array:
 	if data is Dictionary and data.has("spells"):
 		return data["spells"]
 	return []
+
+
+## Load dialogue data for a scene.
+func load_dialogue(scene_id: String) -> Dictionary:
+	var data: Variant = load_json("res://data/dialogue/%s.json" % scene_id)
+	if data is Dictionary:
+		return data
+	return {}
+
+
+## Load crafting data (devices or recipes).
+func load_crafting(crafting_type: String) -> Variant:
+	var data: Variant = load_json("res://data/crafting/%s.json" % crafting_type)
+	return data if data else {}
 
 
 ## Clear the cache (useful for testing or hot-reload).
