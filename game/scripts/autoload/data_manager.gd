@@ -111,7 +111,7 @@ func load_dialogue(scene_id: String) -> Dictionary:
 ## Load crafting data (devices or recipes).
 func load_crafting(crafting_type: String) -> Variant:
 	var data: Variant = load_json("res://data/crafting/%s.json" % crafting_type)
-	return data if data else {}
+	return data if data != null else {}
 
 
 ## Clear the cache (useful for testing or hot-reload).

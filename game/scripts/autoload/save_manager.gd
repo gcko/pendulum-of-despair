@@ -23,7 +23,9 @@ var _migration_steps: Dictionary = {
 func _ready() -> void:
 	# Ensure save directory exists
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
-		DirAccess.make_dir_recursive_absolute(SAVE_DIR)
+		var dir_err: Error = DirAccess.make_dir_recursive_absolute(SAVE_DIR)
+		if dir_err != OK:
+			push_error("SaveManager: Failed to create save directory %s (error %d)" % [SAVE_DIR, dir_err])
 
 
 ## Save game state to a slot (1-3 for manual, 0 for auto-save).
@@ -134,7 +136,8 @@ func faint_and_fast_reload() -> void:
 	_full_restore(data)
 
 	# 6. Write merged state back to the SAME save slot for durability
-	_write_data_to_slot(slot, data)
+	if not _write_data_to_slot(slot, data):
+		push_warning("SaveManager: FFR write-back to slot %d failed — merged state not durable" % slot)
 
 	# 7. Apply and transition
 	_apply_save_data(data)
