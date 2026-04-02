@@ -1,0 +1,28 @@
+{
+	"id": "lira",
+	"name": "Lira",
+	"role": "engineer",
+	"base_stats": {
+		"hp": 68,
+		"mp": 30,
+		"atk": 14,
+		"def": 12,
+		"mag": 14,
+		"mdef": 12,
+		"spd": 11,
+		"lck": 10
+	},
+	"growth": {
+		"hp": 55,
+		"mp": 6,
+		"atk": 1.2,
+		"def": 1.0,
+		"mag": 1.3,
+		"mdef": 1.0,
+		"spd": 0.9,
+		"lck": 0.8
+	},
+	"default_row": "front",
+	"weapon_type": "hammer",
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+}

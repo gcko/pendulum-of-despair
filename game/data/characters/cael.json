@@ -1,0 +1,28 @@
+{
+	"id": "cael",
+	"name": "Cael",
+	"role": "commander",
+	"base_stats": {
+		"hp": 78,
+		"mp": 25,
+		"atk": 15,
+		"def": 13,
+		"mag": 10,
+		"mdef": 10,
+		"spd": 12,
+		"lck": 9
+	},
+	"growth": {
+		"hp": 65,
+		"mp": 5,
+		"atk": 1.5,
+		"def": 1.2,
+		"mag": 0.8,
+		"mdef": 0.9,
+		"spd": 1.0,
+		"lck": 0.7
+	},
+	"default_row": "front",
+	"weapon_type": "greatsword",
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+}

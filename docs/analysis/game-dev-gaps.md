@@ -84,7 +84,8 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.1 Character Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-02
 **Priority:** P0 — blocks entity prefabs, battle system, menus
 **Estimated Size:** S (6 JSON files)
 **Output:** `game/data/characters/{edren,cael,maren,sable,lira,torren}.json`
@@ -93,14 +94,14 @@ transformation that can be validated line-by-line against source docs.
 **Depends On:** None (foundational)
 
 **What's Needed:**
-- [ ] Per-character JSON file following Section 2.10 schema
-- [ ] Base stats at level 1 (HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK)
-- [ ] Growth rates per stat from progression.md growth tables
-- [ ] Default row assignment from characters.md
-- [ ] Weapon type and equipment slot list
-- [ ] Ability learn schedule from abilities.md (level → ability_id)
-- [ ] Spell learn schedule from magic.md (level → spell_id)
-- [ ] Verify all values against progression.md tables (adversarial check)
+- [x] Per-character JSON file following Section 2.10 schema
+- [x] Base stats at level 1 (HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK)
+- [x] Growth rates per stat from progression.md growth tables
+- [x] Default row assignment from characters.md
+- [x] Weapon type and equipment slot list
+- [ ] Ability learn schedule from abilities.md (level -> ability_id) — deferred to Gap 1.5 (lives in spell/ability JSONs via `learned_by` field per tech-arch Section 2.7)
+- [ ] Spell learn schedule from magic.md (level -> spell_id) — deferred to Gap 1.5
+- [x] Verify all values against progression.md tables (adversarial check)
 
 **Blocking:** Entity prefabs (need stats to display), battle system (need growth curves), menus (need character data for status/equipment screens)
 
@@ -828,6 +829,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 |------|-----|--------|--------|
 | 2026-04-02 | Initial audit | All implementation gaps cataloged (30 gaps across 4 tiers) | — |
 | 2026-04-02 | Self-review + Copilot review | Fixed gap count (27→30), recommended path, priority/size/dep errors, missing source docs, markdown syntax | — |
+| 2026-04-02 | 1.1 Character Data | NOT STARTED → COMPLETE. 6 JSON files (edren, cael, lira, torren, sable, maren). All values verified against progression.md and characters.md. Milestone formula spot-checked. Ability/spell learn schedules deferred to Gap 1.5 (lives in spell JSONs). Unblocks: 2.1, 3.3, 3.4. | — |
 
 ---
 
@@ -835,11 +837,11 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 | Tier | Gaps | Status | Description |
 |------|------|--------|-------------|
-| 1: Data Foundation | 9 | 0/9 complete | JSON data from design docs |
+| 1: Data Foundation | 9 | 1/9 complete | JSON data from design docs |
 | 2: Entity Prefabs | 4 | 0/4 complete | .tscn prefabs with GDScript |
 | 3: Core Systems | 8 | 0/8 complete | Scenes and game systems |
 | 4: Content & Integration | 9 | 0/9 complete | Maps, content, polish |
-| **Total** | **30** | **0/30** | |
+| **Total** | **30** | **1/30** | |
 
 **Note on gap numbering:** This document uses D-prefixed IDs (D1.1, D1.2...)
 when disambiguation from `game-design-gaps.md` is needed. Within this
