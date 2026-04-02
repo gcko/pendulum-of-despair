@@ -6,7 +6,7 @@ Instructions for AI coding agents working with this repository.
 
 Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game will be built with **Godot Engine** as a locally-run desktop application.
 
-**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot project has not yet been initialized — this repo currently contains game design documentation and project tooling only.
+**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot 4.6 project is initialized in `game/` with directory structure, viewport settings, and 5 autoload singletons (PR #105). No scenes (.tscn) exist yet — editor opens cleanly but the game cannot be run.
 
 ---
 
@@ -48,8 +48,7 @@ authorized push point in the entire pr-review-response workflow.
 | Task | Command |
 |------|---------|
 | **Install tooling** | `pnpm install` |
-
-> **Note:** Game-specific commands (build, test, run) will be added when the Godot project is initialized.
+| **Open in editor** | Open `game/` directory in Godot 4.6+ editor (no main scene yet — editor only, not runnable) |
 
 ---
 
@@ -57,22 +56,31 @@ authorized push point in the entire pr-review-response workflow.
 
 | Directory | Purpose |
 |-----------|---------|
+| `game/` | **Godot 4.6 project root** (open this in the editor) |
+| `game/scripts/autoload/` | 5 autoload singletons (GameManager, DataManager, etc.) |
+| `game/scenes/` | Scene files (.tscn) — core, overlay, entities, maps |
+| `game/data/` | JSON game data (enemies, items, equipment, shops, etc.) |
+| `game/assets/` | Art and audio assets (sprites, tilesets, music, SFX) |
 | `docs/story/` | Canonical game design documents (35+ files) |
 | `docs/story/bestiary/` | Enemy stat tables, type rules, families |
 | `docs/story/script/` | Full dialogue script (8 files, 6,300+ lines) |
 | `docs/analysis/` | Gap analysis and audit docs |
-| `docs/references/` | SNES-era reference data (FF4/FF6/CT/SoM) |
-| `docs/plans/` | Architecture decisions and plans |
+| `docs/references/` | Reference data (SNES, audio, graphics) |
+| `docs/plans/` | Architecture decisions and implementation plans |
 | `docs/superpowers/` | Design specs and implementation plans |
 | `.beads/` | Issue tracking database (bd) |
 | `.husky/` | Git hooks (conventional commits, branch protection) |
 
 ## Where to Add Code
 
-> **Pending:** The Godot project structure will be defined in a future issue. When initialized, this table will be updated with scene, script, and asset locations.
-
 | Change Type | Location |
 |-------------|----------|
+| GDScript game logic | `game/scripts/` |
+| Autoload singletons | `game/scripts/autoload/` |
+| Scene files (.tscn) | `game/scenes/` |
+| JSON game data | `game/data/` |
+| Sprites and tilesets | `game/assets/sprites/`, `game/assets/tilesets/` |
+| Audio (music/SFX/ambient) | `game/assets/music/`, `game/assets/sfx/`, `game/assets/ambient/` |
 | Game design docs | `docs/story/` |
 | Enemy data | `docs/story/bestiary/` |
 | Dialogue script | `docs/story/script/` |
@@ -92,7 +100,7 @@ authorized push point in the entire pr-review-response workflow.
 - bd integration lives in the user hooks.
 - Recovery: `pnpm install` (reinstalls husky).
 
-**Quality checks (pre-commit):** Branch protection, beads flush. Godot-specific checks (GDScript lint, tests) will be added when the project is initialized.
+**Quality checks (pre-commit):** Branch protection, beads flush. Godot-specific checks (GDScript lint, tests) have not yet been added to the pre-commit hook.
 
 **Commit message validation (commit-msg):** commitlint enforces Conventional Commits format. Non-conforming messages are rejected.
 

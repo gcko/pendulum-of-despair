@@ -6,6 +6,7 @@ node_modules/
 *.import
 export_presets.cfg
 *.translation
+game/export/
 
 # OS
 .DS_Store

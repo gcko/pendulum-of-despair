@@ -338,3 +338,121 @@ Round 1 found 7 additional issues (all fixed).
 **Outcome:** 1 new checklist item added to "Ambiguity Prevention":
 terminology overload in data formats + notation consistency across
 contexts. Both comments fixed with inline clarifications.
+
+### PR #105 Round 3 (2026-04-01) — 9 Copilot comments, 4 new gaps
+
+**Top patterns:**
+- Defensive Coding / nested type safety: 2 comments
+  - FFR `data["world"]["gold"]` without checking `world` is Dictionary
+  - `_load_most_recent_save` `meta.get()` on potentially non-Dictionary
+- Documentation Accuracy / spec drift: 3 comments
+  - Spec status still says "pending implementation" after PR implements it
+  - Spec says `scale_mode: 1 (integer)` but project.godot says `"integer"`
+  - common-issues.md heading says "10 categories" but 12 exist (x2)
+- Naming & Style / class_name on autoloads: 3 comments
+  - DataManager, AudioManager, EventFlags class_name alignment
+  - Already fixed in Round 2 commit — replies missed
+
+**New patterns identified:**
+1. Spec status field drift — spec documents not updated when implemented
+2. Meta-document internal consistency — review reference docs with
+   counts/headings that drift after additions
+3. Nested dictionary type safety — chained `[]` access needs each
+   level validated, not just top-level key existence
+4. Spec-to-project-setting alignment — spec notation vs actual Godot
+   project.godot string format
+
+**Outcome:** 4 new checklist items added to godot-review
+verification-checklists.md (1 Defensive Coding, 3 Documentation
+Accuracy). 3 new items added to common-issues.md Category 12.
+Pre-Copilot catch rate: 33% (3/9). Cumulative from PR #105: 25 new
+checklist items across 3 Copilot rounds.
+
+### PR #105 Round 4 (2026-04-01) — 4 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Defensive Coding / signal-before-validation with broken revert: 1 comment
+  - push_overlay() emitted overlay_state_changed before load; error
+    paths reverted current_overlay but did NOT emit compensating signal
+  - Our review loop flagged signal timing but deferred as "design
+    choice" — Copilot correctly identified the revert path was also wrong
+- Defensive Coding / unchecked scene transition return: 1 comment
+  - change_scene_to_file() returns Error but was ignored; state
+    and signal emitted before knowing if scene swap succeeded
+- Documentation Accuracy / misleading code comment: 1 comment
+  - Migration example said "uncomment when v2 needed" but showed
+    a v0->v1 step when CURRENT_SAVE_VERSION is already 1
+- Documentation Accuracy / checklist setting format stale: 1 comment
+  - Verification checklist said "Scale mode is integer (1)" but
+    Godot 4.x uses string `"integer"` in project.godot
+
+**New patterns identified:**
+1. Scene transition return value checking — ResourceLoader.exists()
+   pre-check is necessary but not sufficient; the actual swap can
+   still fail
+2. Code comment accuracy for versioning — non-docstring comments
+   that describe migration schemes must match actual constants
+3. Deferred finding with broken error path — when deferring a
+   signal-timing finding as "design choice", must verify error/revert
+   paths also emit compensating signals
+
+**Outcome:** 3 new checklist items added to godot-review
+verification-checklists.md (2 Defensive Coding, 1 Documentation
+Accuracy). 3 new items added to common-issues.md. Pre-Copilot
+catch rate: 0% (0/4). Cumulative from PR #105: 28 new checklist
+items across 4 Copilot rounds.
+
+### PR #105 Round 5 (2026-04-01) — 4 Copilot comments, 3 new gaps
+
+**Top patterns:**
+- Fix-introduced regression: 1 comment
+  - Our Round 4 fix moved transition_data AFTER change_scene_to_file;
+    Copilot correctly identified new scene _ready() sees stale data.
+    Fix: set before swap, revert on failure.
+- Defensive Coding / unchecked error returns: 2 comments
+  - make_dir_recursive_absolute return ignored in _ready()
+  - _write_data_to_slot return ignored in faint_and_fast_reload
+- Defensive Coding / GDScript falsy semantics: 1 comment
+  - load_crafting `if data` false for empty arrays/dicts — need
+    explicit `!= null` check
+
+**New patterns identified:**
+1. Fix-introduced regression — fixing ordering of state + deferred
+   action created worse bug. Must consider deferred execution semantics.
+2. Generalized error return checking — not just scene transitions;
+   all functions returning Error/bool status need checks.
+3. GDScript falsy vs null — `if data` fails for empty containers.
+   Must use explicit `!= null` when checking for null returns.
+
+**Outcome:** 3 new checklist items added to Defensive Coding, 3 new
+items to common-issues.md Cat 11. Pre-Copilot catch rate: 0% (0/4).
+Cumulative from PR #105: 31 new checklist items across 5 rounds.
+
+### PR #105 Round 6 (2026-04-02) — 2 Copilot comments, 1 new gap
+
+**Patterns:**
+- Documentation Accuracy / stub completeness claims: 2 comments
+  - FFR docstring describes behavior (XP merge, level-ups, HP restore)
+    as current when all steps are stubbed (pass)
+  - Spec bullet claims "XP/gold merge, level-up processing" without
+    noting these are stubbed
+
+**New pattern:** Stub implementation completeness — docstrings and
+spec bullets for methods with stub internals must qualify behavior
+as "when implemented" or "stubbed", not present-tense active.
+
+**Outcome:** 1 new checklist item added to Defensive Coding (stub
+docstring accuracy). Pre-Copilot catch rate: 0% (0/2). Cumulative
+from PR #105: 32 new checklist items across 6 Copilot rounds.
+
+### PR #105 Round 7 (2026-04-02) — 2 Copilot comments, 0 gaps (both false positives)
+
+**Patterns:**
+- False positive: `*` prefix in project.godot autoload entries
+  claimed to mean "load as scene" — actually means "enabled"
+- False positive: `DirAccess._absolute()` methods claimed to
+  require OS paths — actually handles `user://` virtual paths
+
+**Outcome:** No new checklist items. First round where all Copilot
+comments were false positives. Cumulative from PR #105: 32 checklist
+items across 7 rounds. Comments converging toward zero real issues.

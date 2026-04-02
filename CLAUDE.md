@@ -13,10 +13,21 @@ For detailed documentation beyond AGENTS.md essentials:
 
 ## Development Environment
 
-This project uses `pnpm` for commitlint and husky tooling only. Game development will use Godot Engine (not yet initialized).
+This project uses `pnpm` for commitlint and husky tooling only.
 
 - Use `pnpm install` to set up git hooks (commitlint + husky)
 - Do not use `npm`, `yarn`, or standalone `npx` commands
+
+## Godot Project
+
+The Godot 4.6 project lives in `game/`. Open `game/` as the project
+directory in the Godot editor.
+
+- **Resolution:** 320x180 native, integer-scaled
+- **Language:** GDScript only
+- **Autoloads:** GameManager, DataManager, AudioManager, SaveManager, EventFlags
+- **Game data:** JSON files in `game/data/`
+- **Architecture reference:** `docs/plans/technical-architecture.md`
 
 ## Git & PRs
 
@@ -28,7 +39,7 @@ This project uses `pnpm` for commitlint and husky tooling only. Game development
 
 ## Pre-Commit Hook Behavior
 
-The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) will be added when the Godot project is initialized.
+The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) have not yet been added to the pre-commit hook.
 
 **Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`). bd integration is embedded in these user hooks.
 

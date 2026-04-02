@@ -117,7 +117,7 @@ window/size/window_width_override = 1920
 window/size/window_height_override = 1080
 window/stretch/mode = "viewport"
 window/stretch/aspect = "keep"
-window/stretch/scale_mode = 1  # 1 = integer scaling
+window/stretch/scale_mode="integer"
 
 [rendering]
 textures/canvas_textures/default_texture_filter = 0  # Nearest
