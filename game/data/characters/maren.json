@@ -1,0 +1,28 @@
+{
+	"id": "maren",
+	"name": "Maren",
+	"role": "archmage",
+	"base_stats": {
+		"hp": 50,
+		"mp": 55,
+		"atk": 6,
+		"def": 6,
+		"mag": 22,
+		"mdef": 18,
+		"spd": 8,
+		"lck": 5
+	},
+	"growth": {
+		"hp": 40,
+		"mp": 10,
+		"atk": 0.5,
+		"def": 0.5,
+		"mag": 1.8,
+		"mdef": 1.5,
+		"spd": 0.6,
+		"lck": 0.4
+	},
+	"default_row": "back",
+	"weapon_type": "staff",
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+}

@@ -1,0 +1,28 @@
+{
+	"id": "sable",
+	"name": "Sable",
+	"role": "thief",
+	"base_stats": {
+		"hp": 58,
+		"mp": 20,
+		"atk": 13,
+		"def": 8,
+		"mag": 8,
+		"mdef": 10,
+		"spd": 18,
+		"lck": 16
+	},
+	"growth": {
+		"hp": 45,
+		"mp": 4,
+		"atk": 1.4,
+		"def": 0.6,
+		"mag": 0.6,
+		"mdef": 0.8,
+		"spd": 1.6,
+		"lck": 1.5
+	},
+	"default_row": "front",
+	"weapon_type": "dagger",
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+}

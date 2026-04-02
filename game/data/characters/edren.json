@@ -1,0 +1,28 @@
+{
+	"id": "edren",
+	"name": "Edren",
+	"role": "knight_commander",
+	"base_stats": {
+		"hp": 95,
+		"mp": 15,
+		"atk": 18,
+		"def": 16,
+		"mag": 6,
+		"mdef": 8,
+		"spd": 10,
+		"lck": 8
+	},
+	"growth": {
+		"hp": 85,
+		"mp": 3,
+		"atk": 1.8,
+		"def": 1.6,
+		"mag": 0.5,
+		"mdef": 0.7,
+		"spd": 0.8,
+		"lck": 0.6
+	},
+	"default_row": "front",
+	"weapon_type": "sword",
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+}
