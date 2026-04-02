@@ -18,7 +18,7 @@ Each implementation area has:
 - **Source Docs:** Canonical design documents this implementation derives from
 - **Blocking:** What cannot be built until this gap is closed
 - **Depends On:** Other gaps that must be resolved first
-- **Estimated Size:** S (1-2 files), M (3-8 files), L (10+ files)
+- **Estimated Size:** S (1-2 files), M (3-8 files), L (10+ files), XL (20+ files, multi-system)
 
 When a gap is closed, the `game-designer` skill updates the status and
 adds a "Completed" date + commit reference.
@@ -41,15 +41,16 @@ in these docs.**
 
 | Category | Source Documents |
 |----------|----------------|
-| Combat mechanics | `combat-formulas.md` (933 lines) |
+| Game overview | `gdd-overview.md` (254), `outline.md` (371), `world.md` (79) |
+| Combat mechanics | `combat-formulas.md` (933) |
 | Character stats/growth | `progression.md` (446), `characters.md` (220) |
 | Abilities & magic | `abilities.md` (552), `magic.md` (1,463) |
-| Enemy data | `bestiary/` (7,362 lines across 11 files) |
+| Enemy data | `bestiary/` (9 files) |
 | Items & equipment | `items.md` (602), `equipment.md` (708) |
 | Economy & shops | `economy.md` (953) |
 | Crafting | `crafting.md` (396) |
 | Encounters | `dungeons-world.md` (5,350), `dungeons-city.md` (1,489), `combat-formulas.md` |
-| Dialogue | `dialogue-system.md` (525), `script/` (6,437 lines across 9 files) |
+| Dialogue | `dialogue-system.md` (525), `script/` (9 files) |
 | UI & menus | `ui-design.md` (1,180) |
 | Save/load | `save-system.md` (567) |
 | Audio | `audio.md` (309), `music.md` (528) |
@@ -66,6 +67,12 @@ in these docs.**
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
 | Architecture | `docs/plans/technical-architecture.md` (943) |
+
+**Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
+in `game-design-gaps.md` (magic.md, abilities.md, npcs.md, sidequests.md,
+events.md). Implementation gaps that depend on these may encounter
+missing data — use `/story-designer` to fill design gaps before
+implementing.
 
 ---
 
@@ -103,7 +110,7 @@ transformation that can be validated line-by-line against source docs.
 
 **Status:** NOT STARTED
 **Priority:** P0 — blocks battle system, encounters, economy testing
-**Estimated Size:** M (6 JSON files)
+**Estimated Size:** L (~198 enemies × 19 columns + boss AI scripts across 6 JSON files)
 **Output:** `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional,bosses}.json`
 **Source Docs:** `bestiary/act-i.md` through `bestiary/optional.md`, `bestiary/bosses.md`, `bestiary/README.md` (type rules, scaling), `bestiary/palette-families.md`
 **Architecture Ref:** `technical-architecture.md` Section 2.1
@@ -118,6 +125,7 @@ transformation that can be validated line-by-line against source docs.
 - [ ] Boss data file with AI scripts (phase triggers, ability sets, conditions)
 - [ ] Verify every enemy name, stat, and drop against bestiary source files
 - [ ] Verify boss phase HP thresholds against bosses.md
+- [ ] Decision: single steal field (current schema) vs two-tier steal (common/rare per abilities.md Filch description) — resolve before implementation
 
 **Blocking:** Battle system (needs enemy data), encounter tables (reference enemy IDs), economy testing (gold/XP values)
 
@@ -249,7 +257,7 @@ transformation that can be validated line-by-line against source docs.
 ### 1.8 Dialogue Data (JSON)
 
 **Status:** NOT STARTED
-**Priority:** P1 — blocks narrative scenes, NPC interactions
+**Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
 **Estimated Size:** L (50+ JSON files)
 **Output:** `game/data/dialogue/{scene_id}.json`
 **Source Docs:** `script/` (6,437 lines across 9 files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
@@ -426,7 +434,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Priority:** P0 — blocks all overworld/town/dungeon gameplay
 **Estimated Size:** L (1 .tscn + multiple .gd + map loading system)
 **Output:** `game/scenes/core/exploration.tscn`, `game/scripts/core/exploration.gd`, map loader scripts
-**Source Docs:** `overworld.md` (movement, transitions, weather), `combat-formulas.md` (danger counter, encounter trigger), `geography.md` (terrain types), `technical-architecture.md` Section 3
+**Source Docs:** `overworld.md` (movement, transitions, weather), `combat-formulas.md` (danger counter, encounter trigger), `geography.md` (terrain types), `save-system.md` (auto-save triggers), `technical-architecture.md` Section 3
 **Depends On:** 2.1 (PlayerCharacter), 2.2 (NPC), 2.4 (Interactables), 1.6 (Encounter Tables)
 
 **What's Needed:**
@@ -461,7 +469,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [ ] Active vs Wait mode (gauge pauses during menu in Wait mode)
 - [ ] Battle speed 1-6 scale
 - [ ] Turn order resolution when multiple gauges fill simultaneously
-- [ ] Physical damage: `ATK² / 6 - DEF` with variance `random_int(240,255)/256`
+- [ ] Physical damage: `(ATK * ATK) / 6 - DEF` with variance `random_int(240,255)/256`
 - [ ] Magical damage: `MAG × power / 4 - MDEF` with element multiplier
 - [ ] Healing: `MAG × power × 0.8`
 - [ ] Critical hit: `LCK/4` rate (cap 50%), 2× damage
@@ -490,7 +498,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Estimated Size:** L (1 .tscn + 10+ .gd files for sub-screens)
 **Output:** `game/scenes/overlay/menu.tscn`, `game/scripts/ui/` (menu screens)
 **Source Docs:** `ui-design.md` (all 14 screen designs — 1,180 lines)
-**Depends On:** 1.1 (Character Data), 1.3 (Items & Equipment), 1.5 (Spells & Abilities)
+**Depends On:** 1.1 (Character Data), 1.3 (Items & Equipment), 1.4 (Shop Data — for buy/sell screens), 1.5 (Spells & Abilities)
 
 **What's Needed:**
 - [ ] 9-command main menu: Items, Equipment, Magic, Abilities, Status, Formation, Ley Crystals, Config, Save (only at save points)
@@ -642,7 +650,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 **Priority:** P0 — first town proof
 **Estimated Size:** L (tilemap, NPC placements, shop integration)
 **Output:** `game/scenes/maps/towns/valdris_crown.tscn`
-**Source Docs:** `city-valdris.md` (layout, districts, NPCs), `economy.md` (Valdris shops), `npcs.md` (Valdris NPCs), `script/act-i.md` (Valdris arrival scenes)
+**Source Docs:** `city-valdris.md` (layout, districts, NPCs), `interiors.md` (interior map layouts), `economy.md` (Valdris shops), `npcs.md` (Valdris NPCs), `script/act-i.md` (Valdris arrival scenes)
 **Depends On:** 3.2 (Exploration), 3.4 (Menu — for shops), 3.5 (Dialogue), 2.2 (NPC), 2.4 (SavePoint), 1.4 (Shop Data)
 
 **What's Needed:**
@@ -782,7 +790,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 **What's Needed:**
 - [ ] Character sprites: 6 party members × 4 directions × walk/idle (16x24)
-- [ ] Battle sprites: 6 party members + 6 guests × battle poses (32x32)
+- [ ] Battle sprites: 6 party members + 2 guests (Cordwyn, Kerra) × battle poses (32x32)
 - [ ] Enemy sprites: ~198 enemies (32x32 to 64x64) — palette families share base sprites
 - [ ] NPC sprites per npcs.md catalog
 - [ ] Tilesets per biome from biomes.md and visual-style.md (16x16 tiles)
@@ -818,7 +826,8 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 | Date | Gap | Change | Commit |
 |------|-----|--------|--------|
-| 2026-04-02 | Initial audit | All implementation gaps cataloged (27 gaps across 4 tiers) | — |
+| 2026-04-02 | Initial audit | All implementation gaps cataloged (30 gaps across 4 tiers) | — |
+| 2026-04-02 | Self-review + Copilot review | Fixed gap count (27→30), recommended path, priority/size/dep errors, missing source docs, markdown syntax | — |
 
 ---
 
@@ -830,8 +839,24 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2: Entity Prefabs | 4 | 0/4 complete | .tscn prefabs with GDScript |
 | 3: Core Systems | 8 | 0/8 complete | Scenes and game systems |
 | 4: Content & Integration | 9 | 0/9 complete | Maps, content, polish |
-| **Total** | **27** | **0/27** | |
+| **Total** | **30** | **0/30** | |
 
-**Recommended starting path:** 1.1 → 1.2 → 1.3 → 2.1 → 2.3 → 3.1 → 3.3 → 3.2 → 4.1
+**Note on gap numbering:** This document uses D-prefixed IDs (D1.1, D1.2...)
+when disambiguation from `game-design-gaps.md` is needed. Within this
+document, plain numbers (1.1, 1.2) are used for readability. The two
+documents have DIFFERENT numbering: D1.1 (Character Data JSON) is not
+the same as game-design-gaps 1.1 (Damage & Combat Formulas).
 
-This path builds toward the first playable vertical slice (Ember Vein dungeon) as fast as possible, proving every layer of the stack works end-to-end before committing to bulk content.
+**Recommended starting path (full dependency chain to vertical slice):**
+
+```
+1.1 (Characters) → 1.2 (Enemies) → 1.3 (Items/Equip) →
+1.5 (Spells/Abilities) → 1.6 (Encounters) → 1.8 (Dialogue) →
+2.1 (PlayerChar) → 2.2 (NPC) → 2.3 (Enemy) → 2.4 (Interactables) →
+3.1 (Title) → 3.3 (Battle) → 3.2 (Exploration) → 3.5 (Dialogue) →
+4.1 (Ember Vein)
+```
+
+This path includes every prerequisite for the first playable vertical
+slice (Ember Vein dungeon). Earlier gaps can be parallelized where
+dependencies allow (e.g., 1.1/1.2/1.3 have no interdependencies).

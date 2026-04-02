@@ -46,9 +46,11 @@ of careful work. The game-designer skill does not:
 - Add features not documented in the design docs
 - Approximate when exact values are available
 
-If a design doc says `ATK² / 6 - DEF`, the code implements exactly
-`ATK² / 6 - DEF`. If `economy.md` says Potion costs 50g, the JSON
-says `"buy_price": 50`. No rounding, no "close enough."
+If a design doc says physical damage is `ATK² / 6 - DEF`, the code
+implements the mathematically equivalent `atk * atk / 6 - def` (not
+an approximation, not a "simplified" version). If `economy.md` says
+Potion costs 50g, the JSON says `"buy_price": 50`. No rounding, no
+"close enough."
 
 When a design doc is ambiguous or has a gap, **stop and ask the user**
 rather than making assumptions. Use the `story-designer` skill to fill
@@ -122,7 +124,7 @@ Use the `superpowers:brainstorming` skill to design the approach:
 **Implementation-specific questions to always consider:**
 - What's the minimal testable output? (Can we see something in Godot?)
 - What placeholder assets are needed? (Colored rectangles, silence .ogg)
-- Does this touch existing autoload singletons? (Careful — hardened by 7 Copilot rounds)
+- Does this touch existing autoload singletons? (Careful — they have defensive coding from PR #105 review)
 - What data does this system load, and is that data JSON created yet?
 - How does this integrate with GameManager state machine?
 
@@ -191,8 +193,8 @@ This is NOT optional.
 
 Run `/godot-review` (single pass, no PR number) on the local changes
 before creating a PR. This catches GDScript quality issues, naming
-violations, and checklist items from the 32-item defensive coding
-checklist built during PR #105.
+violations, and checklist items from the defensive coding checklist at
+`.claude/skills/godot-review/references/verification-checklists.md`.
 
 Fix any issues found. If the review triggers code changes, re-run
 Step 5 verification on the changed files.
