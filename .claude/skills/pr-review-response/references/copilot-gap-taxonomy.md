@@ -444,3 +444,15 @@ as "when implemented" or "stubbed", not present-tense active.
 **Outcome:** 1 new checklist item added to Defensive Coding (stub
 docstring accuracy). Pre-Copilot catch rate: 0% (0/2). Cumulative
 from PR #105: 32 new checklist items across 6 Copilot rounds.
+
+### PR #105 Round 7 (2026-04-02) — 2 Copilot comments, 0 gaps (both false positives)
+
+**Patterns:**
+- False positive: `*` prefix in project.godot autoload entries
+  claimed to mean "load as scene" — actually means "enabled"
+- False positive: `DirAccess._absolute()` methods claimed to
+  require OS paths — actually handles `user://` virtual paths
+
+**Outcome:** No new checklist items. First round where all Copilot
+comments were false positives. Cumulative from PR #105: 32 checklist
+items across 7 rounds. Comments converging toward zero real issues.
