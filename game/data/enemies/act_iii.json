@@ -833,7 +833,7 @@
 			"locations": [
 				"pallor_wastes_trial_2"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_construct"
 		},
 		{
 			"id": "the_last_voice",
@@ -1486,7 +1486,7 @@
 			"locations": [
 				"dry_well_f5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_construct"
 		},
 		{
 			"id": "wellspring_guardian",
@@ -1529,7 +1529,7 @@
 			"locations": [
 				"dry_well_f7"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_construct"
 		},
 		{
 			"id": "forge_sentinel",
@@ -1802,7 +1802,7 @@
 			"locations": [
 				"forgotten_forge_f5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_construct"
 		},
 		{
 			"id": "grey_cleaver_unbound",
@@ -2170,7 +2170,7 @@
 			"id": "pallor_echo",
 			"name": "Pallor Echo",
 			"type": "boss",
-			"threat": "boss",
+			"threat": "dangerous",
 			"is_boss": false,
 			"is_mini_boss": true,
 			"phases": 1,
@@ -3052,9 +3052,9 @@
 			"name": "The Grey Keeper",
 			"type": "boss",
 			"threat": "boss",
-			"is_boss": false,
-			"is_mini_boss": true,
-			"phases": 1,
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 2,
 			"level": 32,
 			"hp": 15000,
 			"mp": 200,

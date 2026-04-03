@@ -64,10 +64,7 @@
 				"storm"
 			],
 			"resistances": [
-				{
-					"element": "flame",
-					"multiplier": 0.5
-				}
+				"flame"
 			],
 			"absorb": [],
 			"status_immunities": [
@@ -170,10 +167,7 @@
 				"flame"
 			],
 			"resistances": [
-				{
-					"element": "frost",
-					"multiplier": 0.5
-				}
+				"frost"
 			],
 			"absorb": [],
 			"status_immunities": [
@@ -349,10 +343,7 @@
 				"flame"
 			],
 			"resistances": [
-				{
-					"element": "frost",
-					"multiplier": 0.5
-				}
+				"frost"
 			],
 			"absorb": [
 				"earth"
@@ -430,7 +421,7 @@
 				"rate": 25
 			},
 			"locations": [
-				"rail_tunnels"
+				"rail_tunnels_west_tunnel"
 			],
 			"ko_sound": "ko_construct",
 			"is_boss": false,
@@ -542,7 +533,7 @@
 				"rate": 100
 			},
 			"locations": [
-				"valdris_catacombs"
+				"valdris_catacombs_catacomb_heart"
 			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
@@ -573,10 +564,7 @@
 				"spirit"
 			],
 			"resistances": [
-				{
-					"element": "frost",
-					"multiplier": 0.5
-				}
+				"frost"
 			],
 			"absorb": [],
 			"status_immunities": [
@@ -599,7 +587,7 @@
 				"rate": 100
 			},
 			"locations": [
-				"caldera_undercity"
+				"caldera_undercity_deepest_junction"
 			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
@@ -645,7 +633,7 @@
 				"rate": 100
 			},
 			"locations": [
-				"ironmark_citadel"
+				"ironmark_citadel_command_chamber"
 			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
@@ -1273,10 +1261,7 @@
 				"spirit"
 			],
 			"resistances": [
-				{
-					"element": "void",
-					"multiplier": 0.5
-				}
+				"void"
 			],
 			"absorb": [],
 			"status_immunities": [
@@ -1429,7 +1414,7 @@
 				"rate": 100
 			},
 			"locations": [
-				"convergence_central"
+				"convergence_central_platform"
 			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
@@ -1714,7 +1699,7 @@
 			"scripted_loss": true,
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 0,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": null
 		},

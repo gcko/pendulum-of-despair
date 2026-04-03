@@ -18,13 +18,33 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "ancient_glyph", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "ancient_glyph",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "carved_stone", "rate": 25 },
-			"locations": ["dreamers_fault_f1", "dreamers_fault_f2", "dreamers_fault_f3", "dreamers_fault_f4"],
+			"drop": {
+				"item_id": "carved_stone",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f1",
+				"dreamers_fault_f2",
+				"dreamers_fault_f3",
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -47,11 +67,25 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "ancient_glyph", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "ancient_glyph",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "carved_stone", "rate": 25 },
-			"locations": ["dreamers_fault_f1", "dreamers_fault_f2", "dreamers_fault_f3", "dreamers_fault_f4"],
+			"drop": {
+				"item_id": "carved_stone",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f1",
+				"dreamers_fault_f2",
+				"dreamers_fault_f3",
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -72,13 +106,33 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "ancient_glyph", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "ancient_glyph",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "carved_stone", "rate": 25 },
-			"locations": ["dreamers_fault_f1", "dreamers_fault_f2", "dreamers_fault_f3", "dreamers_fault_f4"],
+			"drop": {
+				"item_id": "carved_stone",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f1",
+				"dreamers_fault_f2",
+				"dreamers_fault_f3",
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -96,16 +150,36 @@
 			"spd": 46,
 			"gold": 433,
 			"exp": 696,
-			"weaknesses": ["frost"],
+			"weaknesses": [
+				"frost"
+			],
 			"resistances": [],
-			"absorb": ["flame"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"flame"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ancient_glyph", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "ancient_glyph",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "carved_stone", "rate": 25 },
-			"locations": ["dreamers_fault_f1", "dreamers_fault_f2", "dreamers_fault_f3", "dreamers_fault_f4"],
+			"drop": {
+				"item_id": "carved_stone",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f1",
+				"dreamers_fault_f2",
+				"dreamers_fault_f3",
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -125,16 +199,40 @@
 			"spd": 57,
 			"gold": 1200,
 			"exp": 15000,
-			"weaknesses": [{ "element": "void", "multiplier": 1.5 }],
-			"resistances": [{ "element": "spirit", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "void",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "spirit",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "ancient_manuscript", "rate": 100 }
+				"rare": {
+					"item_id": "ancient_manuscript",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "scholars_codex", "rate": 100 },
-			"locations": ["dreamers_fault_f4"],
+			"drop": {
+				"item_id": "scholars_codex",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_boss"
 		},
 		{
@@ -152,16 +250,36 @@
 			"spd": 49,
 			"gold": 576,
 			"exp": 913,
-			"weaknesses": ["earth"],
+			"weaknesses": [
+				"earth"
+			],
 			"resistances": [],
-			"absorb": ["ley"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"ley"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "crystal_fragment", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "crystal_fragment",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "prism_shard", "rate": 25 },
-			"locations": ["dreamers_fault_f5", "dreamers_fault_f6", "dreamers_fault_f7", "dreamers_fault_f8"],
+			"drop": {
+				"item_id": "prism_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f5",
+				"dreamers_fault_f6",
+				"dreamers_fault_f7",
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -179,16 +297,38 @@
 			"spd": 51,
 			"gold": 664,
 			"exp": 1045,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "crystal_fragment", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "crystal_fragment",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "prism_shard", "rate": 25 },
-			"locations": ["dreamers_fault_f5", "dreamers_fault_f6", "dreamers_fault_f7", "dreamers_fault_f8"],
+			"drop": {
+				"item_id": "prism_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f5",
+				"dreamers_fault_f6",
+				"dreamers_fault_f7",
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -211,11 +351,25 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "crystal_fragment", "rate": 75 },
-				"rare": { "item_id": "prism_shard", "rate": 25 }
+				"common": {
+					"item_id": "crystal_fragment",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "prism_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "prism_shard", "rate": 25 },
-			"locations": ["dreamers_fault_f5", "dreamers_fault_f6", "dreamers_fault_f7", "dreamers_fault_f8"],
+			"drop": {
+				"item_id": "prism_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f5",
+				"dreamers_fault_f6",
+				"dreamers_fault_f7",
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
@@ -233,16 +387,35 @@
 			"spd": 54,
 			"gold": 877,
 			"exp": 1365,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "crystal_fragment", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "crystal_fragment",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "prism_shard", "rate": 25 },
-			"locations": ["dreamers_fault_f5", "dreamers_fault_f6", "dreamers_fault_f7", "dreamers_fault_f8"],
+			"drop": {
+				"item_id": "prism_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f5",
+				"dreamers_fault_f6",
+				"dreamers_fault_f7",
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -262,16 +435,40 @@
 			"spd": 67,
 			"gold": 420,
 			"exp": 20000,
-			"weaknesses": [{ "element": "earth", "multiplier": 1.5 }],
-			"resistances": [{ "element": "ley", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "earth",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "ley",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "queens_prism", "rate": 100 }
+				"rare": {
+					"item_id": "queens_prism",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "queens_facet", "rate": 100 },
-			"locations": ["dreamers_fault_f8"],
+			"drop": {
+				"item_id": "queens_facet",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_boss"
 		},
 		{
@@ -289,16 +486,36 @@
 			"spd": 44,
 			"gold": 1151,
 			"exp": 1777,
-			"weaknesses": ["flame"],
+			"weaknesses": [
+				"flame"
+			],
 			"resistances": [],
-			"absorb": ["earth"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"earth"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "living_bark", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "living_bark",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "heartwood_splint", "rate": 25 },
-			"locations": ["dreamers_fault_f9", "dreamers_fault_f10", "dreamers_fault_f11", "dreamers_fault_f12"],
+			"drop": {
+				"item_id": "heartwood_splint",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f9",
+				"dreamers_fault_f10",
+				"dreamers_fault_f11",
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -321,11 +538,25 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "living_bark", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "living_bark",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "heartwood_splint", "rate": 25 },
-			"locations": ["dreamers_fault_f9", "dreamers_fault_f10", "dreamers_fault_f11", "dreamers_fault_f12"],
+			"drop": {
+				"item_id": "heartwood_splint",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f9",
+				"dreamers_fault_f10",
+				"dreamers_fault_f11",
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -348,11 +579,25 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "living_bark", "rate": 75 },
-				"rare": { "item_id": "heartwood_splint", "rate": 25 }
+				"common": {
+					"item_id": "living_bark",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "heartwood_splint",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "heartwood_splint", "rate": 25 },
-			"locations": ["dreamers_fault_f9", "dreamers_fault_f10", "dreamers_fault_f11", "dreamers_fault_f12"],
+			"drop": {
+				"item_id": "heartwood_splint",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f9",
+				"dreamers_fault_f10",
+				"dreamers_fault_f11",
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
@@ -370,16 +615,35 @@
 			"spd": 64,
 			"gold": 2881,
 			"exp": 4455,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "living_bark", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "living_bark",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "heartwood_splint", "rate": 25 },
-			"locations": ["dreamers_fault_f9", "dreamers_fault_f10", "dreamers_fault_f11", "dreamers_fault_f12"],
+			"drop": {
+				"item_id": "heartwood_splint",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f9",
+				"dreamers_fault_f10",
+				"dreamers_fault_f11",
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -399,16 +663,40 @@
 			"spd": 78,
 			"gold": 1200,
 			"exp": 25000,
-			"weaknesses": [{ "element": "flame", "multiplier": 1.5 }],
-			"resistances": [{ "element": "earth", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "flame",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "earth",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "living_root", "rate": 100 }
+				"rare": {
+					"item_id": "living_root",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "root_crown", "rate": 100 },
-			"locations": ["dreamers_fault_f12"],
+			"drop": {
+				"item_id": "root_crown",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_boss"
 		},
 		{
@@ -426,16 +714,38 @@
 			"spd": 52,
 			"gold": 2433,
 			"exp": 3803,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "iron_cog", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "iron_cog",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "tempered_plate", "rate": 25 },
-			"locations": ["dreamers_fault_f13", "dreamers_fault_f14", "dreamers_fault_f15", "dreamers_fault_f16"],
+			"drop": {
+				"item_id": "tempered_plate",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f13",
+				"dreamers_fault_f14",
+				"dreamers_fault_f15",
+				"dreamers_fault_f16"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -453,16 +763,35 @@
 			"spd": 70,
 			"gold": 3030,
 			"exp": 4828,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "iron_cog", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "iron_cog",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "tempered_plate", "rate": 25 },
-			"locations": ["dreamers_fault_f13", "dreamers_fault_f14", "dreamers_fault_f15", "dreamers_fault_f16"],
+			"drop": {
+				"item_id": "tempered_plate",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f13",
+				"dreamers_fault_f14",
+				"dreamers_fault_f15",
+				"dreamers_fault_f16"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -480,16 +809,38 @@
 			"spd": 72,
 			"gold": 3357,
 			"exp": 5419,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "iron_cog", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "iron_cog",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "tempered_plate", "rate": 25 },
-			"locations": ["dreamers_fault_f13", "dreamers_fault_f14", "dreamers_fault_f15", "dreamers_fault_f16"],
+			"drop": {
+				"item_id": "tempered_plate",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f13",
+				"dreamers_fault_f14",
+				"dreamers_fault_f15",
+				"dreamers_fault_f16"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -507,16 +858,38 @@
 			"spd": 75,
 			"gold": 4059,
 			"exp": 6766,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "iron_cog", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "iron_cog",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "tempered_plate", "rate": 25 },
-			"locations": ["dreamers_fault_f13", "dreamers_fault_f14", "dreamers_fault_f15", "dreamers_fault_f16"],
+			"drop": {
+				"item_id": "tempered_plate",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f13",
+				"dreamers_fault_f14",
+				"dreamers_fault_f15",
+				"dreamers_fault_f16"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -536,17 +909,45 @@
 			"spd": 91,
 			"gold": 6000,
 			"exp": 30000,
-			"weaknesses": [{ "element": "storm", "multiplier": 1.5 }],
-			"resistances": [{ "element": "flame", "multiplier": 0.5 }, { "element": "frost", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.5
+				},
+				{
+					"element": "frost",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "wardens_blueprint", "rate": 100 }
+				"rare": {
+					"item_id": "wardens_blueprint",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "wardens_core", "rate": 100 },
-			"locations": ["dreamers_fault_f16"],
-			"ko_sound": "ko_boss"
+			"drop": {
+				"item_id": "wardens_core",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f16"
+			],
+			"ko_sound": "ko_construct"
 		},
 		{
 			"id": "pallor_drake_void",
@@ -563,16 +964,37 @@
 			"spd": 80,
 			"gold": 7768,
 			"exp": 13797,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["dreamers_fault_f17", "dreamers_fault_f18", "dreamers_fault_f19", "dreamers_fault_f20"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f17",
+				"dreamers_fault_f18",
+				"dreamers_fault_f19",
+				"dreamers_fault_f20"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -590,16 +1012,37 @@
 			"spd": 81,
 			"gold": 8331,
 			"exp": 15163,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["dreamers_fault_f17", "dreamers_fault_f18", "dreamers_fault_f19", "dreamers_fault_f20"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f17",
+				"dreamers_fault_f18",
+				"dreamers_fault_f19",
+				"dreamers_fault_f20"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -617,16 +1060,37 @@
 			"spd": 84,
 			"gold": 9421,
 			"exp": 18075,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["dreamers_fault_f17", "dreamers_fault_f18", "dreamers_fault_f19", "dreamers_fault_f20"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f17",
+				"dreamers_fault_f18",
+				"dreamers_fault_f19",
+				"dreamers_fault_f20"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -644,16 +1108,37 @@
 			"spd": 75,
 			"gold": 8883,
 			"exp": 16593,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["dreamers_fault_f17", "dreamers_fault_f18", "dreamers_fault_f19", "dreamers_fault_f20"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f17",
+				"dreamers_fault_f18",
+				"dreamers_fault_f19",
+				"dreamers_fault_f20"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -671,16 +1156,35 @@
 			"spd": 88,
 			"gold": 6954,
 			"exp": 14100,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["dreamers_fault_f17", "dreamers_fault_f18", "dreamers_fault_f19", "dreamers_fault_f20"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"dreamers_fault_f17",
+				"dreamers_fault_f18",
+				"dreamers_fault_f19",
+				"dreamers_fault_f20"
+			],
 			"ko_sound": "ko_pallor"
 		}
 	]

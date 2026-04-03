@@ -433,7 +433,7 @@
 			"locations": [
 				"rail_tunnels"
 			],
-			"ko_sound": "ko_boss",
+			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2
