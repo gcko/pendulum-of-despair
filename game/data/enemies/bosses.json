@@ -1050,7 +1050,7 @@
 			"id": "archive_keeper",
 			"name": "Archive Keeper",
 			"type": "boss",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 32,
 			"hp": 3000,
 			"hp_max_variable": 12000,
@@ -1087,8 +1087,8 @@
 				"dry_well_f5"
 			],
 			"ko_sound": "ko_construct",
-			"is_boss": true,
-			"is_mini_boss": false,
+			"is_boss": false,
+			"is_mini_boss": true,
 			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": null
@@ -1855,6 +1855,61 @@
 				0.5
 			],
 			"boss_group": "the_lingering"
+		},
+		{
+			"id": "ley_abomination",
+			"name": "Ley Abomination",
+			"type": "boss",
+			"threat": "dangerous",
+			"is_boss": false,
+			"is_mini_boss": true,
+			"phases": 1,
+			"level": 48,
+			"hp": 18000,
+			"mp": 168,
+			"atk": 126,
+			"def": 80,
+			"mag": 131,
+			"mdef": 78,
+			"spd": 55,
+			"gold": 654,
+			"exp": 1050,
+			"weaknesses": [
+				"void"
+			],
+			"resistances": [
+				"flame",
+				"frost",
+				"storm"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": {
+					"item_id": "arcanite_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "arcanite_shard",
+				"rate": 100
+			},
+			"locations": [
+				"ley_scar"
+			],
+			"ko_sound": "ko_boss",
+			"phase_hp_thresholds": [],
+			"boss_group": null
 		}
 	]
 }
