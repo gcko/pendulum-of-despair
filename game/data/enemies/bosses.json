@@ -1863,7 +1863,7 @@
 			"threat": "dangerous",
 			"is_boss": false,
 			"is_mini_boss": true,
-			"phases": 1,
+			"phases": 2,
 			"level": 48,
 			"hp": 18000,
 			"mp": 168,
