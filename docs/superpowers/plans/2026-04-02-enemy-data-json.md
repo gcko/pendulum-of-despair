@@ -50,9 +50,9 @@
 10. For bosses (Ember Drake mini-boss, Vein Guardian, Drowned Sentinel mini-boss, Corrupted Fenmother): include inline with `is_boss`/`is_mini_boss` fields
 
 **Threat assignments for Act I:**
-- Trivial: Ley Vermin, Tomb Mite, Plains Hare, Restless Dead (escape only, Lv 20 version is different)
-- Low: Restless Dead (Lv 3), Unstable Crystal, Mine Shade, Bone Warden, Ember Wisp, Marsh Serpent, Bog Leech, Drowned Bones, Thornback Beetle, Road Bandit, Forest Sprite, Wayward Wolf
-- Standard: Swamp Lurker, Ley Jellyfish, Polluted Elemental, Corrupted Spawn, Wild Boar
+- Trivial: Ley Vermin, Tomb Mite, Plains Hare, Restless Dead (Lv 3, Dead family Tier 1)
+- Low: Unstable Crystal, Mine Shade, Bone Warden, Ember Wisp, Marsh Serpent, Bog Leech, Drowned Bones, Thornback Beetle, Road Bandit, Forest Sprite
+- Standard: Swamp Lurker, Ley Jellyfish, Polluted Elemental, Corrupted Spawn, Wild Boar, Wayward Wolf
 - Dangerous: The Flickering (unique), Ember Drake (mini-boss)
 - Boss: Vein Guardian, Corrupted Fenmother
 - Note: Drowned Sentinel is a Construct mini-boss → dangerous threat

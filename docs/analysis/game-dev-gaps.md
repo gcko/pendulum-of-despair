@@ -120,7 +120,7 @@ transformation that can be validated line-by-line against source docs.
 
 **What's Needed:**
 - [x] Per-act JSON file following Section 2.1 schema (extended — see spec)
-- [x] All ~198 regular enemies with 19-column stat sheets
+- [x] All ~204 regular enemies with 19-column stat sheets
 - [x] Elemental profiles (weaknesses, resistances, immunities, absorb)
 - [x] Status effect vulnerability lists
 - [x] Drop tables (common item, rare item, steal item with rates)

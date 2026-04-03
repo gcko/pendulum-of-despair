@@ -780,7 +780,8 @@
 			"locations": [
 				"pallor_wastes_trial_1"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "the_perfect_machine",
@@ -833,7 +834,8 @@
 			"locations": [
 				"pallor_wastes_trial_2"
 			],
-			"ko_sound": "ko_construct"
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
 		},
 		{
 			"id": "the_last_voice",
@@ -886,7 +888,8 @@
 			"locations": [
 				"pallor_wastes_trial_3"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "the_index",
@@ -939,7 +942,8 @@
 			"locations": [
 				"pallor_wastes_trial_5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "vaelith_the_ashen_shepherd",
@@ -997,7 +1001,8 @@
 			"locations": [
 				"pallor_wastes_section_5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "vaelith_siege",
@@ -1037,7 +1042,8 @@
 			"locations": [
 				"valdris_siege"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "ley_construct",
@@ -1217,7 +1223,8 @@
 			"locations": [
 				"ley_line_depths_f5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "crystal_warden_deep",
@@ -1529,7 +1536,8 @@
 			"locations": [
 				"dry_well_f7"
 			],
-			"ko_sound": "ko_construct"
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
 		},
 		{
 			"id": "forge_sentinel",
@@ -1802,7 +1810,8 @@
 			"locations": [
 				"forgotten_forge_f5"
 			],
-			"ko_sound": "ko_construct"
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
 		},
 		{
 			"id": "grey_cleaver_unbound",
@@ -1848,7 +1857,8 @@
 			"locations": [
 				"forgotten_forge_f5"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "pallor_soldier_convergence",
@@ -2257,7 +2267,8 @@
 			"locations": [
 				"convergence_outer_ring"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "cael_knight_of_despair_phase_2",
@@ -2292,7 +2303,8 @@
 			"locations": [
 				"convergence_outer_ring"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "the_pallor_incarnate",
@@ -2336,7 +2348,8 @@
 			"locations": [
 				"convergence_central_platform"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "thunder_drake",

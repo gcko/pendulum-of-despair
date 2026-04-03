@@ -7,7 +7,7 @@
 
 ## Problem
 
-The game has ~198 regular enemies and ~32 bosses defined across 9 bestiary markdown files in `docs/story/bestiary/`. These need to be converted to runtime JSON data files in `game/data/enemies/` for DataManager to load. No enemy JSON data currently exists.
+The game has ~204 regular enemies and ~36 boss entries defined across 9 bestiary markdown files in `docs/story/bestiary/`. These need to be converted to runtime JSON data files in `game/data/enemies/` for DataManager to load. No enemy JSON data currently exists.
 
 ## Decision: Two-Tier Steal
 

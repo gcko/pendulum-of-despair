@@ -233,7 +233,8 @@
 			"locations": [
 				"dreamers_fault_f4"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "crystal_refractor",
@@ -469,7 +470,8 @@
 			"locations": [
 				"dreamers_fault_f8"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "root_weaver",
@@ -697,7 +699,8 @@
 			"locations": [
 				"dreamers_fault_f12"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "iron_automaton",
@@ -947,7 +950,8 @@
 			"locations": [
 				"dreamers_fault_f16"
 			],
-			"ko_sound": "ko_construct"
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
 		},
 		{
 			"id": "pallor_drake_void",

@@ -432,7 +432,8 @@
 			"locations": [
 				"ember_vein_f4"
 			],
-			"ko_sound": "ko_construct"
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
 		},
 		{
 			"id": "marsh_serpent",
@@ -819,7 +820,8 @@
 			"locations": [
 				"fenmothers_hollow_f3"
 			],
-			"ko_sound": "ko_boss"
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
 		},
 		{
 			"id": "plains_hare",
