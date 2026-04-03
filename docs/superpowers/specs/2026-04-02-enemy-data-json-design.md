@@ -64,7 +64,7 @@ Extends tech-arch Section 2.1 with the following changes:
 
 | Field | Type | Source | Notes |
 |-------|------|--------|-------|
-| `id` | string | Derived from name (snake_case) | Unique across all files |
+| `id` | string | Derived from name (snake_case) | Unique across act files; bosses intentionally share IDs between act files and bosses.json (same enemy, separate load paths) |
 | `name` | string | Bestiary "Name" column | Exact match |
 | `type` | string | Bestiary "Type" column | Lowercase: beast, undead, construct, spirit, humanoid, pallor, elemental, boss |
 | `threat` | string | palette-families.md / act summary | trivial, low, standard, dangerous, rare, boss. See README.md Threat Multiplier table |
@@ -202,7 +202,7 @@ Parallel agent transcription: 6 agents dispatched simultaneously, one per JSON f
 - [ ] Every threat level matches palette-families.md / act summaries
 - [ ] Boss HP values match bestiary/bosses.md
 - [ ] Boss phase counts match bosses.md quick reference
-- [ ] All enemy IDs are unique across all files
+- [ ] All non-boss enemy IDs are unique across act files; boss ID duplication is allowed only between act files and bosses.json for the same boss stat row
 - [ ] All item_ids use snake_case
 - [ ] All location IDs follow derivation rules consistently
 - [ ] No invented values — everything traces to a source doc

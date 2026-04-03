@@ -1748,9 +1748,7 @@
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [
-				0.5
-			],
+			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
 		{
@@ -1798,9 +1796,7 @@
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [
-				0.5
-			],
+			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
 		{
@@ -1851,9 +1847,7 @@
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [
-				0.5
-			],
+			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
 		{
