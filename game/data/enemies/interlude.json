@@ -15,16 +15,36 @@
 			"spd": 22,
 			"gold": 16,
 			"exp": 30,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["rail_tunnels_hub", "rail_tunnels_east"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels_hub",
+				"rail_tunnels_east"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -42,16 +62,32 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "spirit_essence", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -69,16 +105,32 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "nest_fragment", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "nest_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -96,13 +148,23 @@
 			"spd": 22,
 			"gold": 6,
 			"exp": 13,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -120,16 +182,34 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["frost"],
+			"weaknesses": [
+				"frost"
+			],
 			"resistances": [],
-			"absorb": ["flame"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"flame"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "element_shard", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "elemental_core", "rate": 25 },
-			"locations": ["rail_tunnels_hub", "rail_tunnels_west"],
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels_hub",
+				"rail_tunnels_west"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -152,15 +232,26 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "vermin_fang", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "vermin_fang",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "vermin_fang", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "vermin_fang",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
-			"id": "pipe_wraith",
+			"id": "pipe_wraith_rail_tunnels",
 			"name": "Pipe Wraith",
 			"type": "spirit",
 			"threat": "standard",
@@ -174,16 +265,32 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "spirit_essence", "rate": 25 },
-			"locations": ["rail_tunnels_maintenance_shaft"],
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels_maintenance_shaft"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -201,13 +308,23 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -225,16 +342,35 @@
 			"spd": 19,
 			"gold": 1250,
 			"exp": 116,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "arcanite_core", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "arcanite_core",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "drill_fragment", "rate": 25 },
-			"locations": ["rail_tunnels_west_tunnel"],
+			"drop": {
+				"item_id": "drill_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels_west_tunnel"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": false,
 			"is_mini_boss": true,
@@ -256,21 +392,47 @@
 			"gold": 2500,
 			"exp": 8000,
 			"weaknesses": [
-				{ "element": "storm", "multiplier": 1.5 },
-				{ "element": "void", "multiplier": 1.25 }
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				},
+				{
+					"element": "void",
+					"multiplier": 1.25
+				}
 			],
 			"resistances": [
-				{ "element": "earth", "multiplier": 0.5 },
-				{ "element": "flame", "multiplier": 0.75 }
+				{
+					"element": "earth",
+					"multiplier": 0.5
+				},
+				{
+					"element": "flame",
+					"multiplier": 0.75
+				}
 			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "reinforced_drill_bit", "rate": 100 }
+				"rare": {
+					"item_id": "reinforced_drill_bit",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "operators_badge", "rate": 100 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "operators_badge",
+				"rate": 100
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -291,16 +453,33 @@
 			"spd": 23,
 			"gold": 30,
 			"exp": 56,
-			"weaknesses": ["frost"],
+			"weaknesses": [
+				"frost"
+			],
 			"resistances": [],
-			"absorb": ["flame"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"flame"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "element_shard", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "elemental_core", "rate": 25 },
-			"locations": ["corrund_undercity"],
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -318,16 +497,35 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["corrund_undercity_sewer_junction"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity_sewer_junction"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -350,11 +548,22 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "rat_tail", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "rat_tail",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "rat_tail", "rate": 25 },
-			"locations": ["corrund_undercity"],
+			"drop": {
+				"item_id": "rat_tail",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
@@ -372,20 +581,36 @@
 			"spd": 18,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["corrund_undercity"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
-			"id": "sewer_leech",
+			"id": "sewer_leech_corrund",
 			"name": "Sewer Leech",
 			"type": "beast",
 			"threat": "low",
@@ -404,11 +629,22 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "leech_ichor", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "leech_ichor",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "leech_ichor", "rate": 25 },
-			"locations": ["corrund_undercity_canals"],
+			"drop": {
+				"item_id": "leech_ichor",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity_canals"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
@@ -426,17 +662,27 @@
 			"spd": 24,
 			"gold": 32,
 			"exp": 60,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["corrund_undercity"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"corrund_undercity"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
-			"id": "restless_dead",
+			"id": "restless_dead_catacombs",
 			"name": "Restless Dead",
 			"type": "undead",
 			"threat": "standard",
@@ -450,13 +696,23 @@
 			"spd": 24,
 			"gold": 8,
 			"exp": 15,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "death"],
+			"status_immunities": [
+				"poison",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "bone_dust", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "bone_dust",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_undead"
 		},
 		{
@@ -474,16 +730,32 @@
 			"spd": 25,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "spirit_essence", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -501,20 +773,36 @@
 			"spd": 19,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "death"],
+			"status_immunities": [
+				"poison",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "ancient_glyph", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ancient_glyph",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "warden_shield", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "warden_shield",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_undead"
 		},
 		{
-			"id": "tomb_mite",
+			"id": "tomb_mite_catacombs",
 			"name": "Tomb Mite",
 			"type": "beast",
 			"threat": "standard",
@@ -533,15 +821,26 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "mite_husk", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "mite_husk",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "mite_husk", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "mite_husk",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
-			"id": "drowned_sentinel",
+			"id": "drowned_sentinel_catacombs",
 			"name": "Drowned Sentinel",
 			"type": "construct",
 			"threat": "standard",
@@ -555,16 +854,35 @@
 			"spd": 25,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -582,16 +900,35 @@
 			"spd": 20,
 			"gold": 40,
 			"exp": 74,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "stone_fragment", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "stone_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -609,16 +946,32 @@
 			"spd": 27,
 			"gold": 73,
 			"exp": 133,
-			"weaknesses": ["ley"],
+			"weaknesses": [
+				"ley"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "petrify"],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "ley_crystal_fragment", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "royal_signet", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "royal_signet",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_spirit"
 		},
 		{
@@ -636,13 +989,23 @@
 			"spd": 25,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -660,13 +1023,23 @@
 			"spd": 27,
 			"gold": 43,
 			"exp": 79,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "death"],
+			"status_immunities": [
+				"poison",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "bone_dust", "rate": 25 },
-			"locations": ["valdris_catacombs"],
+			"drop": {
+				"item_id": "bone_dust",
+				"rate": 25
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_undead"
 		},
 		{
@@ -687,13 +1060,27 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "catacomb_map", "rate": 100 }
+				"rare": {
+					"item_id": "catacomb_map",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "wardens_binding", "rate": 100 },
-			"locations": ["valdris_catacombs_catacomb_heart"],
+			"drop": {
+				"item_id": "wardens_binding",
+				"rate": 100
+			},
+			"locations": [
+				"valdris_catacombs_catacomb_heart"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -714,16 +1101,33 @@
 			"spd": 25,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["frost"],
+			"weaknesses": [
+				"frost"
+			],
 			"resistances": [],
-			"absorb": ["flame"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"flame"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "element_shard", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "elemental_core", "rate": 25 },
-			"locations": ["caldera_undercity_upper_tunnels"],
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity_upper_tunnels"
+			],
 			"ko_sound": "ko_elemental"
 		},
 		{
@@ -741,16 +1145,35 @@
 			"spd": 26,
 			"gold": 40,
 			"exp": 74,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "molten_gear", "rate": 25 },
-			"locations": ["caldera_undercity_forge_channels"],
+			"drop": {
+				"item_id": "molten_gear",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity_forge_channels"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -768,16 +1191,32 @@
 			"spd": 19,
 			"gold": 37,
 			"exp": 69,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["caldera_undercity"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -800,11 +1239,22 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "crawler_shell", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "crawler_shell",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crawler_shell", "rate": 25 },
-			"locations": ["caldera_undercity_deeper_tunnels"],
+			"drop": {
+				"item_id": "crawler_shell",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity_deeper_tunnels"
+			],
 			"ko_sound": "ko_beast"
 		},
 		{
@@ -822,13 +1272,23 @@
 			"spd": 25,
 			"gold": 22,
 			"exp": 40,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["caldera_undercity"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -846,13 +1306,23 @@
 			"spd": 25,
 			"gold": 9,
 			"exp": 17,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["caldera_undercity"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -870,16 +1340,32 @@
 			"spd": 26,
 			"gold": 40,
 			"exp": 74,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "pallor_sample", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "nest_fragment", "rate": 25 },
-			"locations": ["caldera_undercity_deeper_tunnels"],
+			"drop": {
+				"item_id": "nest_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"caldera_undercity_deeper_tunnels"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -897,16 +1383,36 @@
 			"spd": 33,
 			"gold": 87,
 			"exp": 3000,
-			"weaknesses": ["flame", "spirit"],
-			"resistances": ["frost"],
+			"weaknesses": [
+				"flame",
+				"spirit"
+			],
+			"resistances": [
+				"frost"
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "broodchamber_map", "rate": 100 }
+				"rare": {
+					"item_id": "broodchamber_map",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "nest_mothers_core", "rate": 100 },
-			"locations": ["caldera_undercity_deepest_junction"],
+			"drop": {
+				"item_id": "nest_mothers_core",
+				"rate": 100
+			},
+			"locations": [
+				"caldera_undercity_deepest_junction"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -932,11 +1438,24 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "compact_insignia", "rate": 25 },
-			"locations": ["axis_tower_f1", "axis_tower_f2", "axis_tower_f3"],
+			"drop": {
+				"item_id": "compact_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f1",
+				"axis_tower_f2",
+				"axis_tower_f3"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -954,16 +1473,36 @@
 			"spd": 27,
 			"gold": 43,
 			"exp": 79,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["axis_tower_f2", "axis_tower_f3"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f2",
+				"axis_tower_f3"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -981,16 +1520,36 @@
 			"spd": 26,
 			"gold": 40,
 			"exp": 74,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "hound_gear", "rate": 25 },
-			"locations": ["axis_tower_f1", "axis_tower_f2"],
+			"drop": {
+				"item_id": "hound_gear",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f1",
+				"axis_tower_f2"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
@@ -1008,16 +1567,36 @@
 			"spd": 28,
 			"gold": 85,
 			"exp": 153,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "pallor_insignia", "rate": 25 },
-			"locations": ["axis_tower_f4", "axis_tower_f5", "ironmark_tunnel"],
+			"drop": {
+				"item_id": "pallor_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f4",
+				"axis_tower_f5",
+				"ironmark_tunnel"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1035,17 +1614,27 @@
 			"spd": 27,
 			"gold": 43,
 			"exp": 79,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["axis_tower"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
-			"id": "compact_gyrocopter",
+			"id": "compact_gyrocopter_axis_tower",
 			"name": "Compact Gyrocopter",
 			"type": "construct",
 			"threat": "standard",
@@ -1059,20 +1648,39 @@
 			"spd": 27,
 			"gold": 43,
 			"exp": 79,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["axis_tower"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower"
+			],
 			"ko_sound": "ko_construct"
 		},
 		{
-			"id": "downed_pilot",
+			"id": "downed_pilot_axis_tower",
 			"name": "Downed Pilot",
 			"type": "humanoid",
 			"threat": "low",
@@ -1091,11 +1699,22 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "pilots_goggles", "rate": 25 },
-			"locations": ["axis_tower"],
+			"drop": {
+				"item_id": "pilots_goggles",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -1118,11 +1737,23 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "elite_insignia", "rate": 25 },
-			"locations": ["axis_tower_f4", "axis_tower_f5"],
+			"drop": {
+				"item_id": "elite_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f4",
+				"axis_tower_f5"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -1140,16 +1771,35 @@
 			"spd": 28,
 			"gold": 127,
 			"exp": 229,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "spirit_essence", "rate": 25 },
-			"locations": ["axis_tower_f4", "axis_tower_f5"],
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower_f4",
+				"axis_tower_f5"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1167,16 +1817,34 @@
 			"spd": 28,
 			"gold": 127,
 			"exp": 229,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "pallor_blade", "rate": 25 },
-			"locations": ["axis_tower"],
+			"drop": {
+				"item_id": "pallor_blade",
+				"rate": 25
+			},
+			"locations": [
+				"axis_tower"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1197,13 +1865,27 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": {
 				"common": null,
-				"rare": { "item_id": "koles_epaulettes", "rate": 100 }
+				"rare": {
+					"item_id": "koles_epaulettes",
+					"rate": 100
+				}
 			},
-			"drop": { "item_id": "map_to_the_convergence", "rate": 100 },
-			"locations": ["ironmark_citadel_command_chamber"],
+			"drop": {
+				"item_id": "map_to_the_convergence",
+				"rate": 100
+			},
+			"locations": [
+				"ironmark_citadel_command_chamber"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -1229,11 +1911,23 @@
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "potion", "rate": 75 },
-				"rare": { "item_id": "gold_pouch", "rate": 25 }
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "compact_insignia", "rate": 25 },
-			"locations": ["ironmark_citadel_cell_block", "ironmark_citadel_guard_station"],
+			"drop": {
+				"item_id": "compact_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel_cell_block",
+				"ironmark_citadel_guard_station"
+			],
 			"ko_sound": "ko_humanoid"
 		},
 		{
@@ -1251,13 +1945,23 @@
 			"spd": 28,
 			"gold": 51,
 			"exp": 91,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["ironmark_citadel"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1275,13 +1979,25 @@
 			"spd": 21,
 			"gold": 85,
 			"exp": 153,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "pallor_ward", "rate": 25 },
-			"locations": ["ironmark_citadel_inner_ring"],
+			"drop": {
+				"item_id": "pallor_ward",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel_inner_ring"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1299,16 +2015,34 @@
 			"spd": 28,
 			"gold": 127,
 			"exp": 229,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "ether_wisp", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "spirit_essence", "rate": 25 },
-			"locations": ["ironmark_citadel"],
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1326,13 +2060,23 @@
 			"spd": 27,
 			"gold": 10,
 			"exp": 19,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "grey_residue", "rate": 25 },
-			"locations": ["ironmark_citadel"],
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1350,13 +2094,25 @@
 			"spd": 28,
 			"gold": 85,
 			"exp": 153,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": null,
-			"drop": { "item_id": "bone_dust", "rate": 25 },
-			"locations": ["ironmark_citadel_inner_ring"],
+			"drop": {
+				"item_id": "bone_dust",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel_inner_ring"
+			],
 			"ko_sound": "ko_pallor"
 		},
 		{
@@ -1374,16 +2130,34 @@
 			"spd": 28,
 			"gold": 127,
 			"exp": 229,
-			"weaknesses": ["spirit"],
-			"resistances": ["void"],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death"],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
 			"steal": {
-				"common": { "item_id": "beast_hide", "rate": 75 },
-				"rare": { "item_id": "pallor_shard", "rate": 25 }
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "wolf_pelt", "rate": 25 },
-			"locations": ["ironmark_citadel_outer_ring"],
+			"drop": {
+				"item_id": "wolf_pelt",
+				"rate": 25
+			},
+			"locations": [
+				"ironmark_citadel_outer_ring"
+			],
 			"ko_sound": "ko_pallor"
 		}
 	]

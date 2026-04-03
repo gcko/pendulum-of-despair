@@ -1,10 +1,10 @@
 {
-	"bosses": [
+	"enemies": [
 		{
 			"id": "ember_drake",
 			"name": "Ember Drake",
 			"type": "beast",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 8,
 			"hp": 1500,
 			"mp": 0,
@@ -15,16 +15,29 @@
 			"spd": 14,
 			"gold": 50,
 			"exp": 44,
-			"weaknesses": ["frost"],
+			"weaknesses": [
+				"frost"
+			],
 			"resistances": [],
 			"absorb": [],
 			"status_immunities": [],
 			"steal": {
-				"common": { "item_id": "drake_scale", "rate": 75 },
-				"rare": { "item_id": "sharp_fang", "rate": 25 }
+				"common": {
+					"item_id": "drake_scale",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "drake_fang",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "drake_fang", "rate": 100 },
-			"locations": ["ember_vein_f2"],
+			"drop": {
+				"item_id": "drake_fang",
+				"rate": 100
+			},
+			"locations": [
+				"ember_vein_f2"
+			],
 			"ko_sound": "ko_beast",
 			"is_boss": false,
 			"is_mini_boss": true,
@@ -47,25 +60,51 @@
 			"spd": 20,
 			"gold": 50,
 			"exp": 800,
-			"weaknesses": ["storm"],
-			"resistances": [{ "element": "flame", "multiplier": 0.5 }],
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "vein_shard", "rate": 100 } },
-			"drop": { "item_id": "vein_guardians_core", "rate": 100 },
-			"locations": ["ember_vein_f4"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "vein_shard",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "vein_guardians_core",
+				"rate": 100
+			},
+			"locations": [
+				"ember_vein_f4"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
 			"id": "drowned_sentinel",
 			"name": "Drowned Sentinel",
 			"type": "construct",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 10,
 			"hp": 4000,
 			"mp": 0,
@@ -76,16 +115,35 @@
 			"spd": 14,
 			"gold": 250,
 			"exp": 50,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "scrap_metal", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "crystal_shard", "rate": 25 },
-			"locations": ["fenmothers_hollow_f2"],
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"fenmothers_hollow_f2"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": false,
 			"is_mini_boss": true,
@@ -108,25 +166,52 @@
 			"spd": 20,
 			"gold": 150,
 			"exp": 2500,
-			"weaknesses": ["flame"],
-			"resistances": [{ "element": "frost", "multiplier": 0.5 }],
+			"weaknesses": [
+				"flame"
+			],
+			"resistances": [
+				{
+					"element": "frost",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "fenmothers_tear", "rate": 100 } },
-			"drop": { "item_id": "fenmothers_blessing", "rate": 100 },
-			"locations": ["fenmothers_hollow_f3"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "fenmothers_tear",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "fenmothers_blessing",
+				"rate": 100
+			},
+			"locations": [
+				"fenmothers_hollow_f3"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.5, 0.0],
+			"phase_hp_thresholds": [
+				0.5,
+				0.0
+			],
 			"boss_group": null
 		},
 		{
 			"id": "ley_colossus",
 			"name": "Ley Colossus",
 			"type": "elemental",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 22,
 			"hp": 7000,
 			"mp": 77,
@@ -139,19 +224,42 @@
 			"exp": 116,
 			"weaknesses": [],
 			"resistances": [],
-			"absorb": ["flame", "frost", "storm", "earth", "ley", "spirit", "void"],
-			"status_immunities": ["petrify"],
+			"absorb": [
+				"flame",
+				"frost",
+				"storm",
+				"earth",
+				"ley",
+				"spirit",
+				"void"
+			],
+			"status_immunities": [
+				"petrify"
+			],
 			"steal": {
-				"common": { "item_id": "ley_crystal_fragment", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "colossus_shard", "rate": 100 },
-			"locations": ["ley_line_depths_f3"],
+			"drop": {
+				"item_id": "colossus_shard",
+				"rate": 100
+			},
+			"locations": [
+				"ley_line_depths_f3"
+			],
 			"ko_sound": "ko_elemental",
 			"is_boss": false,
 			"is_mini_boss": true,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -169,18 +277,56 @@
 			"spd": 32,
 			"gold": 1500,
 			"exp": 3500,
-			"weaknesses": [{ "element": "storm", "multiplier": 1.5 }, { "element": "spirit", "multiplier": 1.25 }],
-			"resistances": [{ "element": "flame", "multiplier": 0.5 }, { "element": "earth", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				},
+				{
+					"element": "spirit",
+					"multiplier": 1.25
+				}
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.5
+				},
+				{
+					"element": "earth",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "poison"],
-			"steal": { "common": null, "rare": { "item_id": "corrupted_tuning_fork", "rate": 100 } },
-			"drop": { "item_id": "drayces_failsafe_core", "rate": 100 },
-			"locations": ["ashmark_factory_depths"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"poison"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "corrupted_tuning_fork",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "drayces_failsafe_core",
+				"rate": 100
+			},
+			"locations": [
+				"ashmark_factory_depths"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -198,25 +344,55 @@
 			"spd": 30,
 			"gold": 2250,
 			"exp": 8000,
-			"weaknesses": ["storm", "flame"],
-			"resistances": [{ "element": "frost", "multiplier": 0.5 }],
-			"absorb": ["earth"],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "pallor_laced_iron", "rate": 100 } },
-			"drop": { "item_id": "compact_battle_standard", "rate": 100 },
-			"locations": ["valdris_siege"],
+			"weaknesses": [
+				"storm",
+				"flame"
+			],
+			"resistances": [
+				{
+					"element": "frost",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [
+				"earth"
+			],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "pallor_laced_iron",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "compact_battle_standard",
+				"rate": 100
+			},
+			"locations": [
+				"valdris_siege"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.6, 0.3],
+			"phase_hp_thresholds": [
+				0.6,
+				0.3
+			],
 			"boss_group": null
 		},
 		{
 			"id": "corrupted_boring_engine",
 			"name": "Corrupted Boring Engine",
 			"type": "construct",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 22,
 			"hp": 6000,
 			"mp": 0,
@@ -227,16 +403,35 @@
 			"spd": 19,
 			"gold": 1250,
 			"exp": 116,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["poison", "sleep", "confusion", "berserk", "despair"],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
 			"steal": {
-				"common": { "item_id": "arcanite_core", "rate": 75 },
-				"rare": { "item_id": "elemental_core", "rate": 25 }
+				"common": {
+					"item_id": "arcanite_core",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
 			},
-			"drop": { "item_id": "drill_fragment", "rate": 25 },
-			"locations": ["rail_tunnels"],
+			"drop": {
+				"item_id": "drill_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": false,
 			"is_mini_boss": true,
@@ -259,18 +454,55 @@
 			"spd": 32,
 			"gold": 2500,
 			"exp": 8000,
-			"weaknesses": [{ "element": "storm", "multiplier": 1.5 }, { "element": "void", "multiplier": 1.25 }],
-			"resistances": [{ "element": "earth", "multiplier": 0.5 }, { "element": "flame", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				},
+				{
+					"element": "void",
+					"multiplier": 1.25
+				}
+			],
+			"resistances": [
+				{
+					"element": "earth",
+					"multiplier": 0.5
+				},
+				{
+					"element": "flame",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "reinforced_drill_bit", "rate": 100 } },
-			"drop": { "item_id": "operators_badge", "rate": 100 },
-			"locations": ["rail_tunnels"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "reinforced_drill_bit",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "operators_badge",
+				"rate": 100
+			},
+			"locations": [
+				"rail_tunnels"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -291,15 +523,34 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "catacomb_map", "rate": 100 } },
-			"drop": { "item_id": "wardens_binding", "rate": 100 },
-			"locations": ["valdris_catacombs"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "catacomb_map",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "wardens_binding",
+				"rate": 100
+			},
+			"locations": [
+				"valdris_catacombs"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -317,13 +568,39 @@
 			"spd": 33,
 			"gold": 87,
 			"exp": 3000,
-			"weaknesses": ["flame", "spirit"],
-			"resistances": [{ "element": "frost", "multiplier": 0.5 }],
+			"weaknesses": [
+				"flame",
+				"spirit"
+			],
+			"resistances": [
+				{
+					"element": "frost",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "broodchamber_map", "rate": 100 } },
-			"drop": { "item_id": "nest_mothers_core", "rate": 100 },
-			"locations": ["caldera_undercity"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "broodchamber_map",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "nest_mothers_core",
+				"rate": 100
+			},
+			"locations": [
+				"caldera_undercity"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -349,15 +626,34 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "koles_epaulettes", "rate": 100 } },
-			"drop": { "item_id": "map_to_the_convergence", "rate": 100 },
-			"locations": ["ironmark_citadel"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "koles_epaulettes",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "map_to_the_convergence",
+				"rate": 100
+			},
+			"locations": [
+				"ironmark_citadel"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -375,18 +671,47 @@
 			"spd": 38,
 			"gold": 400,
 			"exp": 4000,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.5 }],
-			"resistances": [{ "element": "physical", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "physical",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "crown_fragment", "rate": 100 } },
-			"drop": { "item_id": "crown_shard", "rate": 100 },
-			"locations": ["pallor_wastes_trial_1"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "crown_fragment",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "crown_shard",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_1"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.25],
+			"phase_hp_thresholds": [
+				0.25
+			],
 			"boss_group": null
 		},
 		{
@@ -404,13 +729,40 @@
 			"spd": 38,
 			"gold": 2000,
 			"exp": 4000,
-			"weaknesses": [{ "element": "void", "multiplier": 1.5 }],
-			"resistances": [{ "element": "flame", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "void",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "caels_gear", "rate": 100 } },
-			"drop": { "item_id": "unfinished_ring", "rate": 100 },
-			"locations": ["pallor_wastes_trial_2"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "caels_gear",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "unfinished_ring",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_2"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -433,18 +785,47 @@
 			"spd": 39,
 			"gold": 400,
 			"exp": 4000,
-			"weaknesses": [{ "element": "flame", "multiplier": 1.5 }],
-			"resistances": [{ "element": "spirit", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "flame",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "spirit",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "petrified_seed", "rate": 100 } },
-			"drop": { "item_id": "petrified_heartwood", "rate": 100 },
-			"locations": ["pallor_wastes_trial_3"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "petrified_seed",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "petrified_heartwood",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_3"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.25],
+			"phase_hp_thresholds": [
+				0.25
+			],
 			"boss_group": null
 		},
 		{
@@ -462,13 +843,40 @@
 			"spd": 39,
 			"gold": 2000,
 			"exp": 4000,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.5 }],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "lost_page", "rate": 100 } },
-			"drop": { "item_id": "archivists_lens", "rate": 100 },
-			"locations": ["pallor_wastes_trial_5"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "lost_page",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "archivists_lens",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_5"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -491,18 +899,43 @@
 			"spd": 45,
 			"gold": 0,
 			"exp": 800,
-			"weaknesses": ["spirit"],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["despair", "death", "petrify", "stop"],
-			"steal": { "common": null, "rare": { "item_id": "spirit_essence", "rate": 100 } },
-			"drop": { "item_id": "keepers_resolve", "rate": 100 },
-			"locations": ["oasis_c"],
+			"status_immunities": [
+				"despair",
+				"death",
+				"petrify",
+				"stop"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "spirit_essence",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "keepers_resolve",
+				"rate": 100
+			},
+			"locations": [
+				"oasis_c"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -520,18 +953,52 @@
 			"spd": 42,
 			"gold": 1200,
 			"exp": 15000,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.25 }],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }, { "element": "frost", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.25
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				},
+				{
+					"element": "frost",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "vaeliths_quill", "rate": 100 } },
-			"drop": { "item_id": "ashen_scholars_tome", "rate": 100 },
-			"locations": ["pallor_wastes_section_5"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "vaeliths_quill",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "ashen_scholars_tome",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_section_5"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -551,16 +1018,44 @@
 			"exp": 8000,
 			"weaknesses": [],
 			"resistances": [],
-			"absorb": ["flame", "frost", "storm", "earth", "ley", "spirit", "void"],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "ley_crystal_fragment", "rate": 100 } },
-			"drop": { "item_id": "titans_core", "rate": 100 },
-			"locations": ["ley_line_depths_f5"],
+			"absorb": [
+				"flame",
+				"frost",
+				"storm",
+				"earth",
+				"ley",
+				"spirit",
+				"void"
+			],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "titans_core",
+				"rate": 100
+			},
+			"locations": [
+				"ley_line_depths_f5"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.6, 0.3],
+			"phase_hp_thresholds": [
+				0.6,
+				0.3
+			],
 			"boss_group": null
 		},
 		{
@@ -582,10 +1077,27 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "ancient_tablet", "rate": 100 } },
-			"drop": { "item_id": "keepers_index", "rate": 100 },
-			"locations": ["dry_well_f5"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "ancient_tablet",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "keepers_index",
+				"rate": 100
+			},
+			"locations": [
+				"dry_well_f5"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -611,15 +1123,35 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "builders_crest", "rate": 100 } },
-			"drop": { "item_id": "nexus_crest", "rate": 100 },
-			"locations": ["dry_well_f7"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "builders_crest",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "nexus_crest",
+				"rate": 100
+			},
+			"locations": [
+				"dry_well_f7"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.6, 0.3],
+			"phase_hp_thresholds": [
+				0.6,
+				0.3
+			],
 			"boss_group": null
 		},
 		{
@@ -637,13 +1169,35 @@
 			"spd": 42,
 			"gold": 4000,
 			"exp": 8000,
-			"weaknesses": ["storm"],
+			"weaknesses": [
+				"storm"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "poison", "berserk", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "forge_schematic", "rate": 100 } },
-			"drop": { "item_id": "architects_hammer", "rate": 100 },
-			"locations": ["forgotten_forge_f5"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"poison",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "forge_schematic",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "architects_hammer",
+				"rate": 100
+			},
+			"locations": [
+				"forgotten_forge_f5"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -666,13 +1220,33 @@
 			"spd": 43,
 			"gold": 280,
 			"exp": 8000,
-			"weaknesses": ["spirit"],
+			"weaknesses": [
+				"spirit"
+			],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "despair_shard", "rate": 100 } },
-			"drop": { "item_id": "grey_cleaver", "rate": 100 },
-			"locations": ["forgotten_forge_f5"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "despair_shard",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "grey_cleaver",
+				"rate": 100
+			},
+			"locations": [
+				"forgotten_forge_f5"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -684,7 +1258,7 @@
 			"id": "pallor_echo",
 			"name": "Pallor Echo",
 			"type": "boss",
-			"threat": "boss",
+			"threat": "dangerous",
 			"level": 34,
 			"hp": 5000,
 			"mp": 119,
@@ -695,13 +1269,38 @@
 			"spd": 42,
 			"gold": 140,
 			"exp": 4000,
-			"weaknesses": ["spirit"],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "grey_echo_shard", "rate": 100 } },
-			"drop": { "item_id": "caels_memory", "rate": 100 },
-			"locations": ["convergence_phase_4"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "grey_echo_shard",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_memory",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_phase_4"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": false,
 			"is_mini_boss": true,
@@ -727,10 +1326,27 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "caels_knight_crest", "rate": 100 } },
-			"drop": { "item_id": "caels_pendant", "rate": 100 },
-			"locations": ["convergence_outer_ring"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "caels_knight_crest",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_pendant",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_outer_ring"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -756,10 +1372,18 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
 			"steal": null,
 			"drop": null,
-			"locations": ["convergence_outer_ring"],
+			"locations": [
+				"convergence_outer_ring"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -785,10 +1409,28 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
-			"steal": { "common": null, "rare": { "item_id": "pallor_core", "rate": 100 } },
-			"drop": { "item_id": "caels_sword", "rate": 100 },
-			"locations": ["convergence_central"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "pallor_core",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_sword",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_central"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
@@ -811,18 +1453,47 @@
 			"spd": 57,
 			"gold": 1200,
 			"exp": 15000,
-			"weaknesses": [{ "element": "void", "multiplier": 1.5 }],
-			"resistances": [{ "element": "spirit", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "void",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "spirit",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "ancient_manuscript", "rate": 100 } },
-			"drop": { "item_id": "scholars_codex", "rate": 100 },
-			"locations": ["dreamers_fault_f4"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "ancient_manuscript",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "scholars_codex",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f4"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -840,18 +1511,47 @@
 			"spd": 67,
 			"gold": 420,
 			"exp": 20000,
-			"weaknesses": [{ "element": "earth", "multiplier": 1.5 }],
-			"resistances": [{ "element": "ley", "multiplier": 0.75 }],
+			"weaknesses": [
+				{
+					"element": "earth",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "ley",
+					"multiplier": 0.75
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "queens_prism", "rate": 100 } },
-			"drop": { "item_id": "queens_facet", "rate": 100 },
-			"locations": ["dreamers_fault_f8"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "queens_prism",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "queens_facet",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f8"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -869,18 +1569,47 @@
 			"spd": 78,
 			"gold": 1200,
 			"exp": 25000,
-			"weaknesses": [{ "element": "flame", "multiplier": 1.5 }],
-			"resistances": [{ "element": "earth", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "flame",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "earth",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "living_root", "rate": 100 } },
-			"drop": { "item_id": "root_crown", "rate": 100 },
-			"locations": ["dreamers_fault_f12"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "living_root",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "root_crown",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f12"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 2,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": null
 		},
 		{
@@ -898,18 +1627,52 @@
 			"spd": 91,
 			"gold": 6000,
 			"exp": 30000,
-			"weaknesses": [{ "element": "storm", "multiplier": 1.5 }],
-			"resistances": [{ "element": "flame", "multiplier": 0.5 }, { "element": "frost", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.5
+				},
+				{
+					"element": "frost",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion"],
-			"steal": { "common": null, "rare": { "item_id": "wardens_blueprint", "rate": 100 } },
-			"drop": { "item_id": "wardens_core", "rate": 100 },
-			"locations": ["dreamers_fault_f16"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "wardens_blueprint",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "wardens_core",
+				"rate": 100
+			},
+			"locations": [
+				"dreamers_fault_f16"
+			],
 			"ko_sound": "ko_construct",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.5, 0.25],
+			"phase_hp_thresholds": [
+				0.5,
+				0.25
+			],
 			"boss_group": null
 		},
 		{
@@ -930,10 +1693,23 @@
 			"weaknesses": [],
 			"resistances": [],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair", "poison", "silence", "slow", "berserk"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair",
+				"poison",
+				"silence",
+				"slow",
+				"berserk"
+			],
 			"steal": null,
 			"drop": null,
-			"locations": ["valdris_siege"],
+			"locations": [
+				"valdris_siege"
+			],
 			"ko_sound": "ko_boss",
 			"scripted_loss": true,
 			"is_boss": true,
@@ -957,18 +1733,39 @@
 			"spd": 100,
 			"gold": 0,
 			"exp": 0,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.5 }],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
 			"steal": null,
 			"drop": null,
-			"locations": ["convergence_meadow"],
+			"locations": [
+				"convergence_meadow"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": "the_lingering"
 		},
 		{
@@ -986,18 +1783,39 @@
 			"spd": 105,
 			"gold": 0,
 			"exp": 0,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.5 }],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
 			"steal": null,
 			"drop": null,
-			"locations": ["convergence_meadow"],
+			"locations": [
+				"convergence_meadow"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": "the_lingering"
 		},
 		{
@@ -1015,18 +1833,42 @@
 			"spd": 110,
 			"gold": 5000,
 			"exp": 30000,
-			"weaknesses": [{ "element": "spirit", "multiplier": 1.5 }],
-			"resistances": [{ "element": "void", "multiplier": 0.5 }],
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
 			"absorb": [],
-			"status_immunities": ["death", "petrify", "stop", "sleep", "confusion", "despair"],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
 			"steal": null,
-			"drop": { "item_id": "the_pallors_last", "rate": 100 },
-			"locations": ["convergence_meadow"],
+			"drop": {
+				"item_id": "the_pallors_last",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_meadow"
+			],
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
 			"phases": 3,
-			"phase_hp_thresholds": [0.5],
+			"phase_hp_thresholds": [
+				0.5
+			],
 			"boss_group": "the_lingering"
 		}
 	]
