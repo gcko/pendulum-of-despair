@@ -1335,7 +1335,7 @@
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 2,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": "cael_knight_of_despair"
 		},
@@ -1372,7 +1372,7 @@
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 2,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": "cael_knight_of_despair"
 		},
@@ -1747,7 +1747,7 @@
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 3,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
@@ -1795,7 +1795,7 @@
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 3,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
@@ -1846,7 +1846,7 @@
 			"ko_sound": "ko_boss",
 			"is_boss": true,
 			"is_mini_boss": false,
-			"phases": 3,
+			"phases": 1,
 			"phase_hp_thresholds": [],
 			"boss_group": "the_lingering"
 		},
@@ -1857,7 +1857,7 @@
 			"threat": "dangerous",
 			"is_boss": false,
 			"is_mini_boss": true,
-			"phases": 2,
+			"phases": 1,
 			"level": 48,
 			"hp": 18000,
 			"mp": 168,
