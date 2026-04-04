@@ -1,0 +1,14 @@
+{
+  "shop": {
+    "shop_id": "corrund_black_market",
+    "town": "corrund",
+    "type": "black_market",
+    "markup": 1.0,
+    "inventory": [
+      {"item_id": "trick_blade", "buy_price": 1500, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "clarity_band", "buy_price": 800, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "soft_stone", "buy_price": 200, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "remedy", "buy_price": 800, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}

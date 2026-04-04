@@ -8,7 +8,7 @@
 
 ## Problem
 
-Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 3 traditions + void), and character ability data (~42 abilities + 12 combos) need to be converted from design docs to runtime JSON. These are independent gaps combined for efficiency — different source docs, different output directories, no cross-dependencies.
+Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 3 traditions + void), and character ability data (~44 abilities + 12 combos) need to be converted from design docs to runtime JSON. These are independent gaps combined for efficiency — different source docs, different output directories, no cross-dependencies.
 
 ## Scope
 
@@ -204,11 +204,11 @@ Total: 4 spell files in `game/data/spells/`. ~89 spells total.
 | `cael.json` | Cael | Rally | 5 |
 | `maren.json` | Maren | Arcanum | 7 |
 | `sable.json` | Sable | Tricks | 7 |
-| `lira.json` | Lira | Forgewright | 9 |
-| `torren.json` | Torren | Spiritcall | 7 |
+| `lira.json` | Lira | Forgewright | 10 |
+| `torren.json` | Torren | Spiritcall | 8 |
 | `combos.json` | All | Dual-Tech | 12 |
 
-Total: 7 ability files in `game/data/abilities/`. 42 abilities + 12 combos.
+Total: 7 ability files in `game/data/abilities/`. 44 abilities + 12 combos.
 
 ### Schema — Character Abilities
 
@@ -309,7 +309,7 @@ This matches the gap 1.2 pattern where boss AI scripts were captured as phase me
 |----------|-------|---------|
 | Shops (1.4) | 23 | ~23 shops (variable items per shop) |
 | Spells (1.5) | 4 | ~89 spells |
-| Abilities (1.5) | 6 | ~42 abilities |
+| Abilities (1.5) | 6 | ~44 abilities |
 | Combos (1.5) | 1 | 12 combos |
 | **Total** | **34** | — |
 

@@ -1,0 +1,16 @@
+{
+  "shop": {
+    "shop_id": "caldera_company_store",
+    "town": "caldera",
+    "type": "company_store",
+    "markup": 1.5,
+    "inventory": [
+      {"item_id": "hi_potion", "buy_price": 450, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "hi_ether", "buy_price": 1200, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "phoenix_feather", "buy_price": 750, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "remedy", "buy_price": 1200, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "tent", "buy_price": 750, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "pavilion", "buy_price": 1800, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}

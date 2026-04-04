@@ -1,0 +1,15 @@
+{
+  "shop": {
+    "shop_id": "caldera_company_armorer",
+    "town": "caldera",
+    "type": "company_armorer",
+    "markup": 1.5,
+    "inventory": [
+      {"item_id": "compact_saber", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "ironbound_greatsword", "buy_price": 2250, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "forge_hammer", "buy_price": 3300, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "forgewright_visor", "buy_price": 1500, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "compact_plate", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "shop": {
+    "shop_id": "bellhaven_armorer",
+    "town": "bellhaven",
+    "type": "armorer",
+    "markup": 1.0,
+    "inventory": [
+      {"item_id": "trick_blade", "buy_price": 1500, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "thornwood_pike", "buy_price": 1800, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "runic_focus", "buy_price": 1800, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "forge_hammer", "buy_price": 2200, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "compact_plate", "buy_price": 2000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "compact_uniform", "buy_price": 1800, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}

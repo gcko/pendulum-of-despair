@@ -1,0 +1,13 @@
+{
+  "shop": {
+    "shop_id": "caldera_black_market",
+    "town": "caldera",
+    "type": "black_market",
+    "markup": 1.0,
+    "inventory": [
+      {"item_id": "berserk_collar", "buy_price": 2000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "counter_ring", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "stone_guard", "buy_price": 1500, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}

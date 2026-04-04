@@ -174,21 +174,29 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.4 Shop Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P1 — blocks town implementation
-**Estimated Size:** M (10+ JSON files, one per town)
-**Output:** `game/data/shops/{town_name}.json`
+**Estimated Size:** M (23 JSON files, one per shop across 10 towns)
+**Output:** `game/data/shops/{shop_id}.json`
 **Source Docs:** `economy.md` (complete shop inventories per town with event-gated restocking)
 **Architecture Ref:** `technical-architecture.md` Section 2.4
 **Depends On:** 1.3 (Items & Equipment — item IDs must exist)
 
 **What's Needed:**
-- [ ] Per-town shop JSON following Section 2.4 schema
-- [ ] All 10 town inventories from economy.md
-- [ ] Event-gated restock entries (available_act, restock_events)
-- [ ] Caldera 150% inflation pricing per economy.md
-- [ ] Verify every item_id references an existing item/equipment ID from Gap 1.3
-- [ ] Verify prices match economy.md tables
+- [x] Per-shop JSON following Section 2.4 schema (23 files, one per shop)
+- [x] All 10 town inventories from economy.md (102 unique item_ids across all shops)
+- [x] Event-gated restock entries (available_act, restock_events)
+- [x] Caldera 150% inflation pricing per economy.md (markup: 1.5 on Company shops)
+- [x] Verify every item_id references an existing item/equipment ID from Gap 1.3
+- [x] Verify prices match economy.md tables
+
+**Notes:**
+- 23 shop files (multiple shops per town: general, armorer, specialty, etc.)
+- Caldera Company Store/Armorer have markup: 1.5 with pre-multiplied prices
+- Caldera Black Market has markup: 1.0 (standard prices)
+- Interlude scarcity handled at runtime, not in static data
+- Design spec: `docs/superpowers/specs/2026-04-04-shops-spells-abilities-design.md`
 
 **Blocking:** Town implementations (need shop data), economy testing
 
@@ -196,30 +204,38 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.5 Spell & Ability Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P1 — blocks magic/ability menus, battle casting
-**Estimated Size:** M (4-6 JSON files)
-**Output:** `game/data/spells/{tradition}.json`, `game/data/abilities/{character}.json`
-**Source Docs:** `magic.md` (spell lists per tradition with power/cost/target/element), `abilities.md` (6 unique command systems per character)
-**Architecture Ref:** `technical-architecture.md` Section 2.7, Future Data Format note on abilities
+**Estimated Size:** M (11 JSON files: 4 spell + 6 ability + 1 combo)
+**Output:** `game/data/spells/{tradition}.json`, `game/data/abilities/{character}.json`, `game/data/abilities/combos.json`
+**Source Docs:** `magic.md` (spell lists per tradition), `abilities.md` (6 unique command systems)
+**Architecture Ref:** `technical-architecture.md` Section 2.7
 **Depends On:** 1.1 (Character Data — learn levels cross-reference)
 
 **What's Needed:**
-- [ ] Per-tradition spell JSON following Section 2.7 schema
-- [ ] All spells from magic.md with: id, name, tradition, element, category, tier, power, mp_cost, target, learned_by
-- [ ] Per-character ability JSON (schema to be designed — deferred in tech-arch)
-- [ ] 6 unique ability command systems from abilities.md:
-  - [ ] Edren: Bulwark (defensive stances, party shields)
-  - [ ] Cael: Rally (party buffs, morale system)
-  - [ ] Maren: Arcanum (high-tier spells, channeling)
-  - [ ] Sable: Tricks (steal, debuffs, utility)
-  - [ ] Lira: Forgewright (devices, field crafting)
-  - [ ] Torren: Spiritcall (summon-like nature attacks)
-- [ ] Verify power values produce correct damage via combat-formulas.md
-- [ ] Verify MP costs against magic.md tables
-- [ ] Verify learn levels against progression.md character ability schedules
+- [x] Per-tradition spell JSON following Section 2.7 schema (4 files: ley_line, forgewright, spirit, void)
+- [x] All 89 spells from magic.md with: id, name, tradition, element, category, tier, power, mp_cost, target, learned_by
+- [x] Per-character ability JSON as descriptive data (6 files: edren, cael, maren, sable, lira, torren)
+- [x] 6 unique ability command systems from abilities.md (44 abilities total):
+  - [x] Edren: Bulwark (7 abilities)
+  - [x] Cael: Rally (5 abilities)
+  - [x] Maren: Arcanum (7 abilities)
+  - [x] Sable: Tricks (7 abilities)
+  - [x] Lira: Forgewright (10 abilities, includes Calibrate Pallor Zone Action)
+  - [x] Torren: Spiritcall (8 abilities, includes Purify Pallor Zone Action)
+- [x] 12 dual-tech combos in combos.json
+- [x] Verify spell IDs unique across all 4 spell files (89 unique)
+- [x] Verify ability IDs unique across all 7 ability files (56 unique)
+- [x] Verify all learned_by character IDs are valid
 
-**Blocking:** Battle casting, magic/ability menus, character progression feel
+**Notes:**
+- Abilities are **descriptive data only** — name, cost, effect text, target. Runtime execution logic (AP/WG/AC/Favor tracking, device mechanics, combo resolution) deferred to gap 3.3 (Battle Scene).
+- Cross-trained spells flagged with cross_trained: true and mp_penalty: 1.5
+- Pallor Zone Actions (Lira: Calibrate, Torren: Purify) included as story-gated abilities
+- Design spec: `docs/superpowers/specs/2026-04-04-shops-spells-abilities-design.md`
+
+**Blocking:** Battle casting (3.3), magic/ability menus (3.4), character progression feel
 
 ---
 

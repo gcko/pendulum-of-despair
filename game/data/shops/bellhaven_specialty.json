@@ -1,0 +1,15 @@
+{
+  "shop": {
+    "shop_id": "bellhaven_specialty",
+    "town": "bellhaven",
+    "type": "specialty",
+    "markup": 1.0,
+    "inventory": [
+      {"item_id": "flame_ring", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "frost_amulet", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "storm_pendant", "buy_price": 3000, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "haste_bangle", "buy_price": 2500, "available_act": 2, "stock_limit": null, "restock_event": null},
+      {"item_id": "life_pendant", "buy_price": 800, "available_act": 2, "stock_limit": null, "restock_event": null}
+    ]
+  }
+}
