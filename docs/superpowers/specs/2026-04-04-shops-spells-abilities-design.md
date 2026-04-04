@@ -166,7 +166,7 @@ Total: 4 spell files in `game/data/spells/`. ~89 spells total.
 |-------|------|-------|
 | `id` | string | snake_case, unique across all spell files |
 | `name` | string | Exact name from magic.md |
-| `tradition` | string | `ley_line`, `forgewright`, `spirit`, `void` |
+| `tradition` | string | `ley_line`, `forgewright`, `spirit`, `void`, `streetwise` (Sable-only spells: Smokeveil, Glintmark) |
 | `element` | string/null | `flame`, `frost`, `storm`, `earth`, `ley`, `spirit`, `void`, `non_elemental`, or null for non-elemental buffs/utility |
 | `category` | string | `offensive`, `healing`, `status`, `buff`, `debuff`, `utility`, `special` |
 | `tier` | int | 1 (Basic), 2 (Mid), 3 (High), 4 (Ultimate) |

@@ -127,8 +127,8 @@ RULES:
 - `hit_rate` = base % for status spells. null for guaranteed.
 - `duration` = turns for buffs/debuffs. null for instant.
 - `learned_by` = array of {character, level} or {character, event} objects
-- `cross_trained` = true if learned from another tradition. false otherwise.
-- `mp_penalty` = 1.5 for cross-trained spells. null otherwise.
+- `cross_trained` = false at spell level (always). Cross-training is per-learner: add `cross_trained: true` and `mp_penalty: 1.5` to the learned_by entry for cross-trained characters.
+- `mp_penalty` = null at spell level (always). See cross_trained above.
 - Cael's party spells go in ley_line.json (he learns Ley Line tradition spells)
 - Ley Crystal invocations from items.md are NOT spells — they're item effects (gap 1.7)
 
