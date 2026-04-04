@@ -4,7 +4,7 @@
   "act": "act_ii",
   "floors": [
     {
-      "floor_id": "1",
+      "floor_id": "1-2",
       "terrain_type": "low_visibility",
       "danger_tier": 2,
       "danger_increment": 120,
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "floor_id": "2-3",
+      "floor_id": "3-4",
       "terrain_type": "low_visibility",
       "danger_tier": 3,
       "danger_increment": 252,
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "floor_id": "4-5",
+      "floor_id": "5",
       "terrain_type": "low_visibility",
       "danger_tier": 4,
       "danger_increment": 506,

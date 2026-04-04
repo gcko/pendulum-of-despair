@@ -5,12 +5,12 @@
   "floors": [
     {
       "floor_id": "1-2",
-      "terrain_type": "open",
+      "terrain_type": "low_visibility",
       "danger_tier": 2,
       "danger_increment": 120,
       "formation_rates": {
-        "normal": 75.0,
-        "back_attack": 12.5,
+        "normal": 68.75,
+        "back_attack": 18.75,
         "preemptive": 12.5
       },
       "groups": [
@@ -22,12 +22,12 @@
     },
     {
       "floor_id": "3",
-      "terrain_type": "open",
+      "terrain_type": "low_visibility",
       "danger_tier": 2,
       "danger_increment": 120,
       "formation_rates": {
-        "normal": 75.0,
-        "back_attack": 12.5,
+        "normal": 68.75,
+        "back_attack": 18.75,
         "preemptive": 12.5
       },
       "groups": [

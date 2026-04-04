@@ -21,7 +21,7 @@
       ]
     },
     {
-      "floor_id": "2-3",
+      "floor_id": "3",
       "terrain_type": "low_visibility",
       "danger_tier": 3,
       "danger_increment": 252,
