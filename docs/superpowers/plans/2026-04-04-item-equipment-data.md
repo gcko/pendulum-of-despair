@@ -17,11 +17,11 @@
 | Action | File |
 |--------|------|
 | Create | `game/data/items/consumables.json` (33 items) |
-| Create | `game/data/items/materials.json` (72 materials) |
+| Create | `game/data/items/materials.json` (87 materials) |
 | Create | `game/data/items/key_items.json` (26 key items) |
 | Create | `game/data/equipment/weapons.json` (58 weapons) |
 | Create | `game/data/equipment/armor.json` (49 armor) |
-| Create | `game/data/equipment/accessories.json` (42 accessories) |
+| Create | `game/data/equipment/accessories.json` (47 accessories) |
 | Modify | `docs/analysis/game-dev-gaps.md` (update gap 1.3 status) |
 
 ---

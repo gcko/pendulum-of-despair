@@ -144,7 +144,7 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P0 — blocks shops, inventory, battle items, equipment screens
-**Estimated Size:** M (6 JSON files, 299 total entries)
+**Estimated Size:** M (6 JSON files, 300 total entries)
 **Output:** `game/data/items/{consumables,materials,key_items}.json`, `game/data/equipment/{weapons,armor,accessories}.json`
 **Source Docs:** `items.md` (consumables, materials, key items), `equipment.md` (weapons, armor, accessories, forging)
 **Architecture Ref:** `technical-architecture.md` Sections 2.2, 2.3 (extended with bonus_stats object)
@@ -152,7 +152,7 @@ transformation that can be validated line-by-line against source docs.
 
 **What's Needed:**
 - [x] Consumables JSON: 33 consumables with effects, prices, targets, usability flags, status cure mappings
-- [x] Materials JSON: 86 materials (72 from items.md table + 14 boss-specific steals/drops cross-referenced from gap 1.2)
+- [x] Materials JSON: 87 materials (72 from items.md table + 14 boss-specific steals/drops + grey_mist_essence)
 - [x] Key items JSON: 26 key items (9 dungeon access + 8 boss mementos + 2 schematics + 7 story items)
 - [x] Weapons JSON: 58 weapons with stats, equippable_by, tier, element, special, bonus_stats
 - [x] Armor JSON: 49 armor pieces (20 head + 29 body) with stats, tier, armor_class

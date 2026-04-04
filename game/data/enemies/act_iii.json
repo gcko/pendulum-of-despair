@@ -1756,7 +1756,7 @@
 				}
 			},
 			"drop": {
-				"item_id": "forge_hammer",
+				"item_id": "forge_hammer_head",
 				"rate": 25
 			},
 			"locations": [

@@ -493,8 +493,9 @@
 			"sell_price": 200,
 			"sellable": true,
 			"stack_limit": 99,
-			"description": "A shard of rare arcanite mineral. Can also restore AC when consumed.",
-			"crafting_use": "Advanced Forgewright devices; also restores AC when consumed (see crafting.md)"
+			"description": "A shard of rare arcanite mineral. Used in advanced forging and device crafting. Can also be consumed to restore AC (see crafting.md).",
+			"crafting_use": "Advanced Forgewright devices; also restores AC when consumed (see crafting.md)",
+			"ac_restorable": true
 		},
 		{
 			"id": "arcanite_core",
@@ -665,7 +666,7 @@
 			"crafting_use": "Speed-boosting crafting"
 		},
 		{
-			"id": "forge_hammer",
+			"id": "forge_hammer_head",
 			"name": "Forge Hammer",
 			"category": "material",
 			"tier": 2,
@@ -673,7 +674,7 @@
 			"sell_price": 60,
 			"sellable": true,
 			"stack_limit": 99,
-			"description": "A sturdy hammer from a Pallor-touched forge worker.",
+			"description": "A heavy hammer head dropped by Pallor smiths. Used in weapon components.",
 			"crafting_use": "Weapon components"
 		},
 		{
@@ -1042,6 +1043,18 @@
 			"stack_limit": 99,
 			"description": "A battered shield pried from an undead warden.",
 			"crafting_use": "Shield components"
+		},
+		{
+			"id": "grey_mist_essence",
+			"name": "Grey Mist Essence",
+			"category": "material",
+			"tier": 4,
+			"source_category": "boss_specific",
+			"sell_price": null,
+			"sellable": false,
+			"stack_limit": 99,
+			"description": "A condensed essence of the Grey itself. Unsellable. Required for Lira's Masterwork.",
+			"crafting_use": "Story-critical crafting component (Lira's Masterwork)"
 		}
 	]
 }

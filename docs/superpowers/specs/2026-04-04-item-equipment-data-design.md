@@ -8,11 +8,11 @@
 
 ## Problem
 
-The game has 280 items and equipment pieces defined across items.md and equipment.md. These need to be converted to 6 runtime JSON files in `game/data/items/` and `game/data/equipment/` for DataManager to load. No item or equipment JSON data currently exists.
+The game has 300 items and equipment pieces defined across items.md and equipment.md. These need to be converted to 6 runtime JSON files in `game/data/items/` and `game/data/equipment/` for DataManager to load. No item or equipment JSON data currently exists.
 
 ## Scope
 
-**Included:** Consumables (33), materials (72), key items (26), weapons (58), armor (49), accessories (42). Total: 280.
+**Included:** Consumables (33), materials (87), key items (26), weapons (58), armor (49), accessories (47). Total: 300.
 
 **Excluded (deferred):**
 - Lira's Forgewright devices → gap 1.7 (Crafting & Device Data)
@@ -24,11 +24,11 @@ The game has 280 items and equipment pieces defined across items.md and equipmen
 | File | Top-Level Key | Source | Count |
 |------|---------------|--------|-------|
 | `game/data/items/consumables.json` | `"items"` | items.md | 33 |
-| `game/data/items/materials.json` | `"items"` | items.md | 72 |
+| `game/data/items/materials.json` | `"items"` | items.md | 87 |
 | `game/data/items/key_items.json` | `"items"` | items.md | 26 |
 | `game/data/equipment/weapons.json` | `"weapons"` | equipment.md | 58 |
 | `game/data/equipment/armor.json` | `"armor"` | equipment.md | 49 |
-| `game/data/equipment/accessories.json` | `"accessories"` | equipment.md | 42 |
+| `game/data/equipment/accessories.json` | `"accessories"` | equipment.md | 47 |
 
 **Top-level keys match DataManager methods:**
 - `load_items(category)` expects `"items"` key
@@ -416,7 +416,7 @@ The same `bonus_stats` pattern applies to armor and accessories.
 
 1. **Item IDs unique across all 3 item files** (consumables, materials, key_items)
 2. **Equipment IDs unique across all 3 equipment files** (weapons, armor, accessories)
-3. **Enemy steal/drop IDs from gap 1.2 must exist** in materials.json or consumables.json — run cross-reference check
+3. **Enemy steal/drop IDs from gap 1.2 must exist** in any of the 6 item/equipment files (consumables, materials, key_items, weapons, armor, accessories) — enemy drops can reference equipment IDs too (e.g., grey_cleaver_tainted, architects_hammer)
 4. **buy_price values match economy.md** where listed
 5. **sell_price = floor(buy_price / 2)** for consumables and equipment; materials use their listed sell_price from items.md
 6. **equippable_by matches characters.md** weapon/armor type assignments
