@@ -72,17 +72,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "first_tree_seed_007",
-      "speaker": "",
-      "lines": [
-        "[README](README.md) | [NPC Ambient](npc-ambient.md) |\n[Battle Dialogue](battle-dialogue.md)*"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
     }
   ]
 }

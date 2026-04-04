@@ -320,6 +320,10 @@ def segment_entries(raw_text):
         if re.match(r'^\s*\*Continue:', line) or re.match(r'^\s*\*Dialogue script continues', line):
             i += 1
             continue
+        # Skip markdown navigation link blocks (e.g., [README](README.md) | [NPC Ambient]...)
+        if re.match(r'^\s*\[.+?\]\(.+?\.md\)', line):
+            i += 1
+            continue
         # Skip pure italic markdown links: *[text](file.md)*
         if re.match(r'^\s*\*\[.+?\]\(.+?\)\*\s*$', line):
             i += 1
