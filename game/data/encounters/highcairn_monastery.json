@@ -1,0 +1,15 @@
+{
+  "dungeon_id": "highcairn_monastery",
+  "name": "Highcairn Monastery",
+  "act": "interlude",
+  "floors": [],
+  "bosses": [
+    {
+      "enemy_id": "the_undying_warden",
+      "name": "The Pallor Hollow",
+      "floor": "inner_sanctum",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
+  ]
+}

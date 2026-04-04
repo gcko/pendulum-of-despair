@@ -1,0 +1,611 @@
+{
+  "dungeon_id": "overworld",
+  "name": "Overworld",
+  "zones": [
+    {
+      "zone_id": "valdris_highlands",
+      "name": "Valdris Highlands",
+      "terrain_type": "open",
+      "act": "act_i",
+      "danger_tier": 2,
+      "danger_increment": 148,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "wayward_wolf",
+            "wayward_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "thornback_beetle",
+            "thornback_beetle",
+            "ley_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "wayward_wolf",
+            "wayward_wolf",
+            "ley_vermin",
+            "ley_vermin"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "aelhart_valley",
+      "name": "Aelhart Valley",
+      "terrain_type": "open",
+      "act": "act_i",
+      "danger_tier": 1,
+      "danger_increment": 48,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "plains_hare",
+            "plains_hare"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "wild_boar",
+            "plains_hare"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "forest_sprite",
+            "forest_sprite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "wild_boar",
+            "wild_boar",
+            "plains_hare"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "compact_industrial",
+      "name": "Compact Industrial",
+      "terrain_type": "open",
+      "act": "act_ii",
+      "danger_tier": 2,
+      "danger_increment": 148,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "iron_beetle",
+            "iron_beetle",
+            "tunnel_mite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "highwayman",
+            "highwayman"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "iron_beetle",
+            "highwayman",
+            "tunnel_mite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "highwayman",
+            "highwayman",
+            "iron_beetle",
+            "iron_beetle"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "ley_scarred_plains",
+      "name": "Ley-Scarred Plains",
+      "terrain_type": "open",
+      "act": "act_i",
+      "danger_tier": 2,
+      "danger_increment": 148,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin",
+            "unstable_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "thornback_beetle",
+            "thornback_beetle",
+            "ley_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "unstable_crystal",
+            "unstable_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin",
+            "unstable_crystal",
+            "unstable_crystal"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "bellhaven_coast",
+      "name": "Bellhaven Coast",
+      "terrain_type": "open",
+      "act": "act_ii",
+      "danger_tier": 1,
+      "danger_increment": 64,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "coastal_crab",
+            "coastal_crab"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "sea_crawler",
+            "coastal_crab"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "coastal_crab",
+            "coastal_crab",
+            "coastal_crab"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "sea_crawler",
+            "sea_crawler",
+            "coastal_crab"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "ashport_coast",
+      "name": "Ashport Coast",
+      "terrain_type": "open",
+      "act": "act_ii",
+      "danger_tier": 1,
+      "danger_increment": 64,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "coastal_crab",
+            "coastal_crab",
+            "road_viper"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "iron_beetle",
+            "iron_beetle"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "coastal_crab",
+            "iron_beetle",
+            "road_viper"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "coastal_crab",
+            "coastal_crab",
+            "iron_beetle",
+            "road_viper"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "deep_thornmere",
+      "name": "Deep Thornmere",
+      "terrain_type": "low_visibility",
+      "act": "act_ii",
+      "danger_tier": 3,
+      "danger_increment": 380,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "thornwood_treant",
+            "thornwood_treant"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "dire_wolf",
+            "dire_wolf",
+            "razorback"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "thornwood_treant",
+            "dire_wolf",
+            "meadow_sprite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "thornwood_treant",
+            "thornwood_treant",
+            "dire_wolf",
+            "dire_wolf"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "wilds_edge",
+      "name": "Wilds Edge",
+      "terrain_type": "low_visibility",
+      "act": "act_ii",
+      "danger_tier": 2,
+      "danger_increment": 148,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "razorback",
+            "razorback"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "dire_wolf",
+            "dire_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "razorback",
+            "dire_wolf",
+            "tunnel_mite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "dire_wolf",
+            "dire_wolf",
+            "razorback",
+            "razorback"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "duskfen_marshland",
+      "name": "Duskfen Marshland",
+      "terrain_type": "low_visibility",
+      "act": "act_ii",
+      "danger_tier": 3,
+      "danger_increment": 380,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "bog_leech"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "bog_leech",
+            "bog_leech",
+            "bog_leech"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "swamp_lurker",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "swamp_lurker",
+            "swamp_lurker",
+            "marsh_serpent",
+            "bog_leech"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "frostcap_foothills",
+      "name": "Frostcap Foothills",
+      "terrain_type": "open",
+      "act": "act_iii",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "shadow_wolf",
+            "shadow_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_boar",
+            "pallor_boar",
+            "pallor_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "mountain_hawk",
+            "mountain_hawk",
+            "shadow_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "shadow_wolf",
+            "shadow_wolf",
+            "pallor_boar",
+            "pallor_vermin"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "pallor_wastes_approach",
+      "name": "Pallor Wastes Approach",
+      "terrain_type": "pallor_wastes",
+      "act": "act_iii",
+      "danger_tier": 5,
+      "danger_increment": 700,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_revenant_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_crawler",
+            "pallor_crawler",
+            "pallor_wraith"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld",
+            "pallor_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_revenant_overworld",
+            "pallor_wraith",
+            "pallor_crawler",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "zone_id": "roads",
+      "name": "Roads",
+      "terrain_type": "roads",
+      "act": "all",
+      "danger_tier": 1,
+      "danger_increment": 96,
+      "formation_rates": {
+        "normal": 87.5,
+        "back_attack": 0.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "road_bandit",
+            "road_bandit"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "road_viper",
+            "road_viper"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "road_bandit",
+            "road_viper",
+            "plains_hare"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "road_bandit",
+            "road_bandit",
+            "road_viper",
+            "road_viper"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": []
+}

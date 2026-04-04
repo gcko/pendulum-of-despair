@@ -1,0 +1,64 @@
+{
+  "dungeon_id": "caldera_undercity",
+  "name": "Caldera Undercity",
+  "act": "interlude",
+  "floors": [
+    {
+      "floor_id": "1-4",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "heat_sprite",
+            "heat_sprite",
+            "corrupted_forge_construct"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "heat_sprite",
+            "heat_sprite",
+            "heat_sprite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "corrupted_forge_construct",
+            "corrupted_forge_construct"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "corrupted_forge_construct",
+            "corrupted_forge_construct",
+            "heat_sprite"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "pallor_nest_mother",
+      "name": "Pallor Nest Mother",
+      "floor": "4",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
+  ]
+}

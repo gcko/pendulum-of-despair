@@ -1,0 +1,143 @@
+{
+  "dungeon_id": "pallor_wastes",
+  "name": "Pallor Wastes",
+  "act": "act_iii",
+  "floors": [
+    {
+      "floor_id": "1-2",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 5,
+      "danger_increment": 700,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "despair_cloud"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "petrified_beast",
+            "hollow_walker",
+            "hollow_walker"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "despair_cloud",
+            "despair_cloud",
+            "grief_shade"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "grief_shade",
+            "hollow_walker",
+            "hollow_walker",
+            "despair_cloud"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "3-4",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 5,
+      "danger_increment": 700,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_knight",
+            "pallor_knight",
+            "hollow_walker"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_knight",
+            "despair_cloud",
+            "despair_cloud"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "grief_shade",
+            "petrified_beast",
+            "hollow_walker"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_knight",
+            "pallor_knight",
+            "grief_shade"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "the_crowned_hollow",
+      "name": "The Crowned Hollow",
+      "floor": "trial_1",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    },
+    {
+      "enemy_id": "the_perfect_machine",
+      "name": "The Perfect Machine",
+      "floor": "trial_2",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    },
+    {
+      "enemy_id": "the_last_voice",
+      "name": "The Last Voice",
+      "floor": "trial_3",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    },
+    {
+      "enemy_id": "the_index",
+      "name": "The Index",
+      "floor": "trial_5",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    },
+    {
+      "enemy_id": "vaelith_the_ashen_shepherd",
+      "name": "Vaelith, the Ashen Shepherd",
+      "floor": "5",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
+  ]
+}

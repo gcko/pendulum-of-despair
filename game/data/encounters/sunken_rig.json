@@ -1,0 +1,175 @@
+{
+  "dungeon_id": "sunken_rig",
+  "name": "Sunken Rig",
+  "act": "interlude",
+  "floors": [
+    {
+      "floor_id": "exposed_hull",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_crystal",
+            "pallor_vermin",
+            "pallor_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "void_crystal",
+            "void_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "upper_deck",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_crawler",
+            "pallor_crawler",
+            "pallor_crawler",
+            "despair_cloud"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "pallor_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "despair_cloud",
+            "pallor_crawler",
+            "pallor_crawler",
+            "pallor_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "despair_cloud"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "engine_room",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "despair_cloud"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "hollow_walker"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "hollow_walker",
+            "despair_cloud",
+            "despair_cloud"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "hollow_walker",
+            "hollow_walker",
+            "hollow_walker",
+            "despair_cloud",
+            "despair_cloud"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "pallor_treant",
+      "name": "Pallor Amalgam",
+      "floor": "engine_room",
+      "trigger": "zone",
+      "is_mini_boss": true
+    },
+    {
+      "enemy_id": "the_grey_keeper",
+      "name": "The Grey Engine",
+      "floor": "engine_room",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
+  ]
+}

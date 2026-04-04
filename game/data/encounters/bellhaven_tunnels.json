@@ -1,0 +1,57 @@
+{
+  "dungeon_id": "bellhaven_tunnels",
+  "name": "Bellhaven Smuggler Tunnels",
+  "act": "act_ii",
+  "floors": [
+    {
+      "floor_id": "1-3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "sea_crawler",
+            "sea_crawler",
+            "tide_wraith"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "sea_crawler",
+            "sea_crawler",
+            "sea_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "smuggler_thug",
+            "sea_crawler",
+            "sea_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "smuggler_thug",
+            "smuggler_thug",
+            "tide_wraith"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": []
+}

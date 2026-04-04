@@ -241,23 +241,32 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.6 Encounter Table Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P1 — blocks dungeon encounters
-**Estimated Size:** M (15+ JSON files, one per dungeon)
+**Estimated Size:** L (27 JSON files: 20 world + 6 city + 1 overworld)
 **Output:** `game/data/encounters/{dungeon_id}.json`
-**Source Docs:** `dungeons-world.md` (encounter groups per floor), `dungeons-city.md`, `combat-formulas.md` (danger counter, formation types, rates)
-**Architecture Ref:** `technical-architecture.md` Section 2.6
+**Source Docs:** `dungeons-world.md` (encounter groups per floor), `dungeons-city.md`, `combat-formulas.md` (danger counter, formation types, rates), `geography.md` (overworld zones)
+**Architecture Ref:** `technical-architecture.md` Section 2.6 (extended — see spec)
 **Depends On:** 1.2 (Enemy Data — enemy IDs must exist)
 
 **What's Needed:**
-- [ ] Per-dungeon JSON following Section 2.6 schema
-- [ ] Floor-by-floor encounter groups with weights (4-pack: 31.25/31.25/31.25/6.25%)
-- [ ] Danger counter increment per floor/terrain
-- [ ] Back attack and preemptive strike rates per terrain
-- [ ] Boss trigger conditions (zone, interact, cutscene, HP threshold)
-- [ ] Overworld encounter tables per terrain type (12 zones)
-- [ ] Verify every enemy_id references an existing enemy from Gap 1.2
-- [ ] Verify group compositions match dungeons-world.md formation tables exactly
+- [x] Per-dungeon JSON following Section 2.6 schema (extended with terrain_type, danger_tier, formation_rates object)
+- [x] Floor-by-floor encounter groups with weights (4-pack: 31.25/31.25/31.25/6.25%. Dreamer's Fault: 5-6 pack extended format)
+- [x] Danger counter increment per floor/terrain
+- [x] Back attack and preemptive strike rates per terrain (formation_rates object)
+- [x] Boss trigger conditions (zone, interact, cutscene, HP threshold)
+- [x] Overworld encounter tables per terrain type (12 zones in overworld.json)
+- [x] Verify every enemy_id references an existing enemy from Gap 1.2 (0 missing after fix pass)
+- [x] Verify group compositions match dungeons-world.md formation tables (counts match; ~18 dungeons use substitute enemy IDs pending gap 1.2 supplement)
+
+**Notes:**
+- Known gap: ~95 unique enemy/boss IDs referenced in design docs do not yet exist in gap 1.2 enemy data. Encounter files use thematically appropriate substitute IDs from existing enemies. Formation composition counts match source docs. A gap 1.2 supplement pass may be needed to add missing dungeon-specific enemies.
+- 27 encounter files: 20 world dungeons + 6 city dungeons + 1 overworld (12 terrain zones)
+- Schema extends tech-arch Section 2.6: renamed floor→floor_id, restructured formation rates into object, added terrain_type/danger_tier/format fields
+- Act scaling multipliers (x1.0/x1.1/x1.2/x1.1) and encounter rate modifiers (Ward Talisman, Veilstep, etc.) applied at runtime, not in static data
+- Dreamer's Fault uses extended 5-6 pack format with non-standard weights
+- Design spec: `docs/superpowers/specs/2026-04-04-encounters-crafting-design.md`
 
 **Blocking:** Exploration encounters, dungeon pacing, difficulty testing
 
@@ -265,22 +274,30 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.7 Crafting & Device Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P2 — blocks crafting system
-**Estimated Size:** S (2 JSON files)
-**Output:** `game/data/crafting/{devices,recipes}.json`
-**Source Docs:** `crafting.md` (device tiers, recipes, AC costs), `items.md` (material requirements), `equipment.md` (forging recipes)
-**Architecture Ref:** `technical-architecture.md` Section 2.8
+**Estimated Size:** S (3 JSON files: devices + recipes + synergies)
+**Output:** `game/data/crafting/{devices,recipes,synergies}.json`
+**Source Docs:** `crafting.md` (device tiers, recipes, AC costs), `items.md` (material requirements), `equipment.md` (forging recipes, infusions, synergies)
+**Architecture Ref:** `technical-architecture.md` Section 2.8 (extended — see spec)
 **Depends On:** 1.3 (Items & Equipment — material and result IDs must exist)
 
 **What's Needed:**
-- [ ] Devices JSON following Section 2.8 schema: 13 devices with tier, AC cost, effect, charges, unlock phase
-- [ ] Recipes JSON: 8 forging recipes with materials, gold fee, forge locations, unlock phase
-- [ ] Elemental infusion data (7 infusions from equipment.md)
-- [ ] Synergy definitions (7 secret synergies from equipment.md)
-- [ ] Verify all material item_ids exist in items.json
-- [ ] Verify all result equipment_ids exist in equipment JSONs
-- [ ] Verify AC costs and unlock phases against crafting.md
+- [x] Devices JSON following Section 2.8 schema (extended): 13 devices with tier, AC cost, effect, charges, materials, gold_cost, unlock phase, schematic_required
+- [x] Recipes JSON: 9 forging recipes with materials, gold fee, forge locations, unlock phase + 7 elemental infusions
+- [x] Synergies JSON: 7 secret synergies with base weapon, infusion element, bonus effect, discovery channel
+- [x] Verify all material item_ids exist in materials.json (0 missing)
+- [x] Verify all result equipment_ids exist in equipment JSONs (0 missing)
+- [x] Verify AC costs and unlock phases against crafting.md
+
+**Notes:**
+- 3 files (not 2 as originally estimated): devices.json, recipes.json (forging + infusions), synergies.json
+- Schema extends tech-arch Section 2.8: renamed result_item→result_id, forge_location→forge_locations (plural), added device fields
+- Arcanite Lance requires forge_schematic (steal-only, permanently missable)
+- Lira's Masterwork requires daels_ledger (quest reward)
+- Pallor Salve exists as both shop consumable (gap 1.3) and craftable device
+- Design spec: `docs/superpowers/specs/2026-04-04-encounters-crafting-design.md`
 
 **Blocking:** Crafting system implementation, Lira's Forgewright gameplay
 

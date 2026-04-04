@@ -1,0 +1,64 @@
+{
+  "dungeon_id": "ironmark_citadel",
+  "name": "Ironmark Citadel Dungeons",
+  "act": "interlude",
+  "floors": [
+    {
+      "floor_id": "1-3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_touched_soldier",
+            "pallor_touched_soldier"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_touched_soldier",
+            "pallor_wisp_ironmark",
+            "pallor_wisp_ironmark"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_wisp_ironmark",
+            "pallor_wisp_ironmark",
+            "pallor_wisp_ironmark"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_touched_soldier",
+            "pallor_touched_soldier",
+            "pallor_wisp_ironmark"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "general_vassar_kole",
+      "name": "General Vassar Kole",
+      "floor": "3",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
+  ]
+}

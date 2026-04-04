@@ -1,0 +1,375 @@
+{
+  "forging_recipes": [
+    {
+      "id": "arcanite_blade",
+      "name": "Arcanite Blade",
+      "result_id": "arcanite_blade",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "arcanite_ingot",
+          "quantity": 1
+        },
+        {
+          "item_id": "crystal_shard",
+          "quantity": 3
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "lira_workshop_corrund",
+        "lira_workshop_caldera"
+      ],
+      "unlock_phase": "interlude",
+      "schematic_required": null,
+      "description": "An Arcanite-infused blade forged for Edren."
+    },
+    {
+      "id": "forgewright_maul",
+      "name": "Forgewright Maul",
+      "result_id": "forgewright_maul",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "arcanite_ingot",
+          "quantity": 1
+        },
+        {
+          "item_id": "scrap_metal",
+          "quantity": 2
+        },
+        {
+          "item_id": "drill_fragment",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "lira_workshop_corrund",
+        "lira_workshop_caldera"
+      ],
+      "unlock_phase": "interlude",
+      "schematic_required": null,
+      "description": "A master-crafted maul that embodies Lira's forging expertise."
+    },
+    {
+      "id": "arcanite_helm",
+      "name": "Arcanite Helm",
+      "result_id": "arcanite_helm",
+      "result_type": "armor",
+      "materials": [
+        {
+          "item_id": "arcanite_ingot",
+          "quantity": 1
+        },
+        {
+          "item_id": "drill_fragment",
+          "quantity": 2
+        }
+      ],
+      "gold_fee": 400,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "lira_workshop_corrund",
+        "lira_workshop_caldera"
+      ],
+      "unlock_phase": "interlude",
+      "schematic_required": null,
+      "description": "A helm forged from rare arcanite ore."
+    },
+    {
+      "id": "thornspear",
+      "name": "Thornspear",
+      "result_id": "thornspear",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "spirit_essence",
+          "quantity": 3
+        },
+        {
+          "item_id": "petrified_bark",
+          "quantity": 2
+        }
+      ],
+      "gold_fee": 400,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "oasis_b",
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": null,
+      "description": "A spear forged from Thornmere wood and tempered steel."
+    },
+    {
+      "id": "shadowsteel_knife",
+      "name": "Shadowsteel Knife",
+      "result_id": "shadowsteel_knife",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "pallor_sample",
+          "quantity": 2
+        },
+        {
+          "item_id": "arcanite_shard",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 400,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "oasis_b",
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": null,
+      "description": "A knife forged from shadowsteel, nearly invisible in dim light."
+    },
+    {
+      "id": "resonance_rod",
+      "name": "Resonance Rod",
+      "result_id": "resonance_rod",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "elemental_core",
+          "quantity": 2
+        },
+        {
+          "item_id": "ley_crystal_fragment",
+          "quantity": 2
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "oasis_b",
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": null,
+      "description": "A rod that hums in resonance with the wielder's magical frequency."
+    },
+    {
+      "id": "pallor_ward_vest",
+      "name": "Pallor Ward Vest",
+      "result_id": "pallor_ward_vest",
+      "result_type": "armor",
+      "materials": [
+        {
+          "item_id": "pallor_sample",
+          "quantity": 3
+        },
+        {
+          "item_id": "grey_residue",
+          "quantity": 2
+        },
+        {
+          "item_id": "spirit_essence",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "oasis_b",
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": null,
+      "description": "A vest forged to ward off the pallor's despair."
+    },
+    {
+      "id": "ley_woven_cloak",
+      "name": "Ley-Woven Cloak",
+      "result_id": "ley_woven_cloak",
+      "result_type": "armor",
+      "materials": [
+        {
+          "item_id": "ether_wisp",
+          "quantity": 2
+        },
+        {
+          "item_id": "elemental_core",
+          "quantity": 2
+        },
+        {
+          "item_id": "ley_crystal_fragment",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "oasis_b",
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": null,
+      "description": "A cloak woven with ley threads that slowly restores magical energy."
+    },
+    {
+      "id": "liras_masterwork",
+      "name": "Lira's Masterwork",
+      "result_id": "liras_masterwork",
+      "result_type": "weapon",
+      "materials": [
+        {
+          "item_id": "grey_mist_essence",
+          "quantity": 1
+        },
+        {
+          "item_id": "arcanite_ingot",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "forge_locations": [
+        "forgotten_forge"
+      ],
+      "unlock_phase": "act_iii",
+      "schematic_required": "daels_ledger",
+      "description": "Lira's ultimate creation, a hammer that defines the art of the forge."
+    }
+  ],
+  "infusions": [
+    {
+      "id": "flame_infusion",
+      "name": "Flame Infusion",
+      "element": "flame",
+      "tier": "basic",
+      "materials": [
+        {
+          "item_id": "element_shard",
+          "quantity": 2
+        },
+        {
+          "item_id": "molten_gear",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 300,
+      "description": "Permanently imbue a weapon with flame element."
+    },
+    {
+      "id": "frost_infusion",
+      "name": "Frost Infusion",
+      "element": "frost",
+      "tier": "basic",
+      "materials": [
+        {
+          "item_id": "element_shard",
+          "quantity": 2
+        },
+        {
+          "item_id": "crystal_shard",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 300,
+      "description": "Permanently imbue a weapon with frost element."
+    },
+    {
+      "id": "storm_infusion",
+      "name": "Storm Infusion",
+      "element": "storm",
+      "tier": "basic",
+      "materials": [
+        {
+          "item_id": "element_shard",
+          "quantity": 2
+        },
+        {
+          "item_id": "scrap_metal",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 300,
+      "description": "Permanently imbue a weapon with storm element."
+    },
+    {
+      "id": "earth_infusion",
+      "name": "Earth Infusion",
+      "element": "earth",
+      "tier": "basic",
+      "materials": [
+        {
+          "item_id": "element_shard",
+          "quantity": 2
+        },
+        {
+          "item_id": "stone_fragment",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 300,
+      "description": "Permanently imbue a weapon with earth element."
+    },
+    {
+      "id": "ley_infusion",
+      "name": "Ley Infusion",
+      "element": "ley",
+      "tier": "advanced",
+      "materials": [
+        {
+          "item_id": "elemental_core",
+          "quantity": 2
+        },
+        {
+          "item_id": "ley_crystal_fragment",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "description": "Permanently imbue a weapon with ley element."
+    },
+    {
+      "id": "spirit_infusion",
+      "name": "Spirit Infusion",
+      "element": "spirit",
+      "tier": "advanced",
+      "materials": [
+        {
+          "item_id": "spirit_essence",
+          "quantity": 2
+        },
+        {
+          "item_id": "ether_wisp",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "description": "Permanently imbue a weapon with spirit element."
+    },
+    {
+      "id": "void_infusion",
+      "name": "Void Infusion",
+      "element": "void",
+      "tier": "advanced",
+      "materials": [
+        {
+          "item_id": "pallor_sample",
+          "quantity": 2
+        },
+        {
+          "item_id": "grey_residue",
+          "quantity": 1
+        }
+      ],
+      "gold_fee": 500,
+      "description": "Permanently imbue a weapon with void element."
+    }
+  ]
+}

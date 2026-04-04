@@ -1,0 +1,162 @@
+{
+  "dungeon_id": "valdris_catacombs",
+  "name": "Valdris Crown Catacombs",
+  "act": "interlude",
+  "floors": [
+    {
+      "floor_id": "1",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "crypt_shade",
+            "crypt_shade",
+            "bone_warden"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "tomb_mite_catacombs",
+            "tomb_mite_catacombs",
+            "tomb_mite_catacombs",
+            "crypt_shade"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "bone_warden",
+            "tomb_mite_catacombs",
+            "tomb_mite_catacombs"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "drowned_sentinel_catacombs",
+            "drowned_sentinel_catacombs",
+            "crypt_shade"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "2",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "tomb_guardian",
+            "tomb_guardian"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "royal_wraith",
+            "royal_wraith"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "tomb_guardian",
+            "royal_wraith",
+            "pallor_wisp_valdris_catacombs"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "royal_wraith",
+            "pallor_wisp_valdris_catacombs",
+            "pallor_wisp_valdris_catacombs"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "wailing_dead",
+            "wailing_dead",
+            "crypt_shade"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "royal_wraith",
+            "wailing_dead"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "tomb_guardian",
+            "wailing_dead",
+            "pallor_wisp_valdris_catacombs"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "wailing_dead",
+            "wailing_dead",
+            "royal_wraith",
+            "pallor_wisp_valdris_catacombs"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "the_undying_warden",
+      "name": "The Undying Warden",
+      "floor": "3",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
+  ]
+}

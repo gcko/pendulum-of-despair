@@ -1,0 +1,289 @@
+{
+  "dungeon_id": "mountain_passes",
+  "name": "Mountain Passes",
+  "act": "act_i",
+  "floors": [
+    {
+      "floor_id": "wilds_gate_pass",
+      "terrain_type": "open",
+      "danger_tier": 1,
+      "danger_increment": 48,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "wayward_wolf",
+            "wayward_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "road_bandit",
+            "wayward_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "wild_boar",
+            "wild_boar"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "road_bandit",
+            "road_bandit",
+            "wayward_wolf"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "frostcap_descent_trail",
+      "terrain_type": "open",
+      "danger_tier": 1,
+      "danger_increment": 48,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_crystal",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "void_crystal",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "frostcap_descent_cave_room1",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld",
+            "void_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_revenant_overworld",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "frostcap_descent_cave_room2",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_treant"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_wisp",
+            "void_wisp",
+            "void_wisp",
+            "void_wisp",
+            "void_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_treant",
+            "void_wisp",
+            "void_wisp",
+            "void_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_treant",
+            "pallor_treant"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "frostcap_descent_cave_room3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_revenant_overworld",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "petrified_beast"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "dread_warden"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "dread_warden",
+            "petrified_beast",
+            "pallor_wolf_overworld",
+            "pallor_wolf_overworld"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "broken_hills_crossing",
+      "terrain_type": "open",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "marauder_captain",
+            "marauder_captain",
+            "blight_leech"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "unfinished_construct",
+            "marauder_captain"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "thunder_drake",
+            "thunder_drake"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "unfinished_construct",
+            "unfinished_construct"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": []
+}

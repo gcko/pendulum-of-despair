@@ -1,0 +1,121 @@
+{
+  "dungeon_id": "fenmothers_hollow",
+  "name": "Fenmother's Hollow",
+  "act": "act_i",
+  "floors": [
+    {
+      "floor_id": "1-2",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "drowned_bones"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "drowned_bones",
+            "drowned_bones"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "drowned_bones",
+            "marsh_serpent",
+            "marsh_serpent",
+            "marsh_serpent"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
+      "floor_id": "3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "ley_jellyfish",
+            "ley_jellyfish",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "polluted_elemental",
+            "marsh_serpent",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "ley_jellyfish"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "polluted_elemental",
+            "ley_jellyfish",
+            "ley_jellyfish"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "drowned_sentinel",
+      "name": "Drowned Sentinel",
+      "floor": "2",
+      "trigger": "zone",
+      "is_mini_boss": true
+    },
+    {
+      "enemy_id": "corrupted_fenmother",
+      "name": "Corrupted Fenmother",
+      "floor": "3",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
+  ]
+}

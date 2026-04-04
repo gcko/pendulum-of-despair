@@ -208,6 +208,16 @@
 			"recipe_unlocked": "arcanite_lance"
 		},
 		{
+			"id": "daels_ledger",
+			"name": "Dael's Ledger",
+			"category": "key_item",
+			"subcategory": "crafting_schematic",
+			"description": "Dael Corran's personal records documenting the extraction timeline and worker casualties.",
+			"auto_use": false,
+			"acquired_from": "Ashmark Factory Depths post-boss (The Fading Shifts quest)",
+			"recipe_unlocked": "liras_masterwork"
+		},
+		{
 			"id": "fenmothers_blessing",
 			"name": "Fenmother's Blessing",
 			"category": "key_item",
