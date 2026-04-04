@@ -258,9 +258,10 @@ transformation that can be validated line-by-line against source docs.
 - [x] Boss trigger conditions (zone, interact, cutscene, HP threshold)
 - [x] Overworld encounter tables per terrain type (12 zones in overworld.json)
 - [x] Verify every enemy_id references an existing enemy from Gap 1.2 (0 missing after fix pass)
-- [x] Verify group compositions match dungeons-world.md formation tables exactly
+- [x] Verify group compositions match dungeons-world.md formation tables (counts match; ~18 dungeons use substitute enemy IDs pending gap 1.2 supplement)
 
 **Notes:**
+- Known gap: ~95 unique enemy/boss IDs referenced in design docs do not yet exist in gap 1.2 enemy data. Encounter files use thematically appropriate substitute IDs from existing enemies. Formation composition counts match source docs. A gap 1.2 supplement pass may be needed to add missing dungeon-specific enemies.
 - 27 encounter files: 20 world dungeons + 6 city dungeons + 1 overworld (12 terrain zones)
 - Schema extends tech-arch Section 2.6: renamed floor→floor_id, restructured formation rates into object, added terrain_type/danger_tier/format fields
 - Act scaling multipliers (x1.0/x1.1/x1.2/x1.1) and encounter rate modifiers (Ward Talisman, Veilstep, etc.) applied at runtime, not in static data

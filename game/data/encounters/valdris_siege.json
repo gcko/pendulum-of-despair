@@ -1,9 +1,15 @@
 {
   "dungeon_id": "valdris_siege",
   "name": "Valdris Siege Battlefield",
-  "act": "interlude",
+  "act": "act_ii",
   "floors": [],
   "bosses": [
-    {"enemy_id": "the_ashen_ram", "name": "The Ashen Ram", "floor": "walls", "trigger": "cutscene", "is_mini_boss": false}
+    {
+      "enemy_id": "the_ashen_ram",
+      "name": "The Ashen Ram",
+      "floor": "walls",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
   ]
 }

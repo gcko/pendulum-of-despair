@@ -185,7 +185,7 @@ The overworld file reuses `dungeon_id` as a generic area identifier (consistent 
 |-------|------|-------|
 | `dungeon_id` | string | snake_case, matches filename without .json |
 | `name` | string | Human-readable dungeon name |
-| `act` | string | `act_i`, `act_ii`, `interlude`, `act_iii`, `post_game`. Note: `post_game` (encounter context) and `post_convergence` (crafting unlock phase) are distinct — post_convergence is late Act III/IV, post_game is after main story |
+| `act` | string | `act_i`, `act_ii`, `interlude`, `act_iii`, `post_game`, `all`. Use `all` only for overworld zones available across every act. Note: `post_game` (encounter context) and `post_convergence` (crafting unlock phase) are distinct — post_convergence is late Act III/IV, post_game is after main story |
 | `floors` | array | One entry per floor-group (floors with same encounter pool) |
 
 ### Field Definitions — Floor Entry

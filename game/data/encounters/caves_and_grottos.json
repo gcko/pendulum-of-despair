@@ -14,10 +14,42 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["pallor_vermin", "pallor_vermin", "pallor_vermin"], "weight": 31.25},
-        {"format": 2, "enemies": ["void_crystal", "void_crystal"], "weight": 31.25},
-        {"format": 3, "enemies": ["pallor_vermin", "pallor_vermin", "void_crystal"], "weight": 31.25},
-        {"format": 4, "enemies": ["pallor_vermin", "pallor_vermin", "pallor_vermin", "pallor_vermin"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_crystal",
+            "void_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_vermin",
+            "pallor_vermin",
+            "void_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin",
+            "pallor_vermin"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -31,10 +63,43 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["marsh_serpent", "marsh_serpent", "blight_leech"], "weight": 31.25},
-        {"format": 2, "enemies": ["marsh_serpent", "marsh_serpent", "marsh_serpent"], "weight": 31.25},
-        {"format": 3, "enemies": ["blight_leech", "blight_leech"], "weight": 31.25},
-        {"format": 4, "enemies": ["marsh_serpent", "marsh_serpent", "marsh_serpent", "blight_leech", "blight_leech"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "blight_leech"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "blight_leech",
+            "blight_leech"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "marsh_serpent",
+            "blight_leech",
+            "blight_leech"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -48,10 +113,40 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["pallor_boar", "pallor_boar"], "weight": 31.25},
-        {"format": 2, "enemies": ["pallor_boar", "pallor_boar", "pallor_boar"], "weight": 31.25},
-        {"format": 3, "enemies": ["pallor_boar"], "weight": 31.25},
-        {"format": 4, "enemies": ["pallor_boar", "pallor_boar", "pallor_boar", "pallor_boar"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_boar",
+            "pallor_boar"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_boar",
+            "pallor_boar",
+            "pallor_boar"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_boar"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_boar",
+            "pallor_boar",
+            "pallor_boar",
+            "pallor_boar"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -65,10 +160,39 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["forge_phantom", "forge_phantom"], "weight": 31.25},
-        {"format": 2, "enemies": ["unfinished_construct", "forge_phantom"], "weight": 31.25},
-        {"format": 3, "enemies": ["unfinished_construct", "unfinished_construct"], "weight": 31.25},
-        {"format": 4, "enemies": ["forge_phantom", "forge_phantom", "unfinished_construct"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "forge_phantom",
+            "forge_phantom"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "unfinished_construct",
+            "forge_phantom"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "unfinished_construct",
+            "unfinished_construct"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "forge_phantom",
+            "forge_phantom",
+            "unfinished_construct"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -82,14 +206,49 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["slag_elemental", "slag_elemental"], "weight": 31.25},
-        {"format": 2, "enemies": ["stone_spirit", "slag_elemental"], "weight": 31.25},
-        {"format": 3, "enemies": ["stone_spirit", "stone_spirit"], "weight": 31.25},
-        {"format": 4, "enemies": ["slag_elemental", "slag_elemental", "stone_spirit"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "slag_elemental",
+            "slag_elemental"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "stone_spirit",
+            "slag_elemental"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "stone_spirit",
+            "stone_spirit"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "slag_elemental",
+            "slag_elemental",
+            "stone_spirit"
+          ],
+          "weight": 6.25
+        }
       ]
     }
   ],
   "bosses": [
-    {"enemy_id": "the_grey_keeper", "name": "The Grey Stag", "floor": "highland_clearing", "trigger": "cutscene", "is_mini_boss": false}
+    {
+      "enemy_id": "the_grey_keeper",
+      "name": "The Grey Stag",
+      "floor": "highland_clearing",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
   ]
 }

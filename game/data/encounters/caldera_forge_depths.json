@@ -14,10 +14,43 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["forge_roach", "forge_roach", "forge_roach", "forge_roach"], "weight": 31.25},
-        {"format": 2, "enemies": ["pipe_wraith", "overclocked_automata"], "weight": 31.25},
-        {"format": 3, "enemies": ["forge_roach", "forge_roach", "overclocked_automata"], "weight": 31.25},
-        {"format": 4, "enemies": ["overclocked_automata", "pipe_wraith", "cave_vermin", "cave_vermin"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "forge_roach",
+            "forge_roach",
+            "forge_roach",
+            "forge_roach"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pipe_wraith",
+            "overclocked_automata"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "forge_roach",
+            "forge_roach",
+            "overclocked_automata"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "overclocked_automata",
+            "pipe_wraith",
+            "cave_vermin",
+            "cave_vermin"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -31,10 +64,40 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["cave_crawler", "cave_crawler", "forge_phantom"], "weight": 31.25},
-        {"format": 2, "enemies": ["ley_wisp"], "weight": 31.25},
-        {"format": 3, "enemies": ["forge_phantom", "cave_crawler", "cave_crawler"], "weight": 31.25},
-        {"format": 4, "enemies": ["forge_phantom", "forge_phantom", "ley_wisp"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "cave_crawler",
+            "cave_crawler",
+            "forge_phantom"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "ley_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "forge_phantom",
+            "cave_crawler",
+            "cave_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "forge_phantom",
+            "forge_phantom",
+            "ley_wisp"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -48,10 +111,41 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["heat_sprite", "heat_sprite", "grey_mite_caldera"], "weight": 31.25},
-        {"format": 2, "enemies": ["grey_crawler", "heat_sprite", "heat_sprite"], "weight": 31.25},
-        {"format": 3, "enemies": ["grey_mite_caldera", "grey_mite_caldera"], "weight": 31.25},
-        {"format": 4, "enemies": ["grey_mite_caldera", "grey_crawler", "heat_sprite"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "heat_sprite",
+            "heat_sprite",
+            "grey_mite_caldera"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "grey_crawler",
+            "heat_sprite",
+            "heat_sprite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "grey_mite_caldera",
+            "grey_mite_caldera"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "grey_mite_caldera",
+            "grey_crawler",
+            "heat_sprite"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -65,15 +159,60 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["pallor_seep_caldera", "pallor_touched_worker", "pallor_touched_worker"], "weight": 31.25},
-        {"format": 2, "enemies": ["pallor_seep_caldera", "pallor_seep_caldera"], "weight": 31.25},
-        {"format": 3, "enemies": ["pallor_touched_worker", "pallor_touched_worker", "pallor_mite", "pallor_mite", "pallor_mite"], "weight": 31.25},
-        {"format": 4, "enemies": ["pallor_seep_caldera", "pallor_seep_caldera", "pallor_touched_worker"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_seep_caldera",
+            "pallor_touched_worker",
+            "pallor_touched_worker"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_seep_caldera",
+            "pallor_seep_caldera"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_touched_worker",
+            "pallor_touched_worker",
+            "pallor_mite",
+            "pallor_mite",
+            "pallor_mite"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_seep_caldera",
+            "pallor_seep_caldera",
+            "pallor_touched_worker"
+          ],
+          "weight": 6.25
+        }
       ]
     }
   ],
   "bosses": [
-    {"enemy_id": "corrupted_forge_construct", "name": "Slag Golem", "floor": "2", "trigger": "zone", "is_mini_boss": true},
-    {"enemy_id": "pallor_nest_mother", "name": "The Forge Heart", "floor": "4", "trigger": "zone", "is_mini_boss": false}
+    {
+      "enemy_id": "corrupted_forge_construct",
+      "name": "Slag Golem",
+      "floor": "2",
+      "trigger": "zone",
+      "is_mini_boss": true
+    },
+    {
+      "enemy_id": "pallor_nest_mother",
+      "name": "The Forge Heart",
+      "floor": "4",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
   ]
 }

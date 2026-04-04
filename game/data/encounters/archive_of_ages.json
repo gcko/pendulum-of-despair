@@ -14,10 +14,41 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["pictograph_wisp", "pictograph_wisp", "extraction_drone"], "weight": 31.25},
-        {"format": 2, "enemies": ["extraction_drone", "extraction_drone"], "weight": 31.25},
-        {"format": 3, "enemies": ["pictograph_wisp", "pictograph_wisp", "pictograph_wisp"], "weight": 31.25},
-        {"format": 4, "enemies": ["crystal_sentry", "pictograph_wisp", "pictograph_wisp"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "pictograph_wisp",
+            "pictograph_wisp",
+            "extraction_drone"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "extraction_drone",
+            "extraction_drone"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pictograph_wisp",
+            "pictograph_wisp",
+            "pictograph_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "crystal_sentry",
+            "pictograph_wisp",
+            "pictograph_wisp"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -31,14 +62,49 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["ley_wisp", "pictograph_wisp"], "weight": 31.25},
-        {"format": 2, "enemies": ["ley_wisp", "ley_wisp"], "weight": 31.25},
-        {"format": 3, "enemies": ["crystal_sentry", "extraction_drone"], "weight": 31.25},
-        {"format": 4, "enemies": ["ley_wisp", "ley_wisp", "crystal_sentry"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "ley_wisp",
+            "pictograph_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "ley_wisp",
+            "ley_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "crystal_sentry",
+            "extraction_drone"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "ley_wisp",
+            "ley_wisp",
+            "crystal_sentry"
+          ],
+          "weight": 6.25
+        }
       ]
     }
   ],
   "bosses": [
-    {"enemy_id": "ley_colossus", "name": "Archive Guardian", "floor": "3", "trigger": "zone", "is_mini_boss": false}
+    {
+      "enemy_id": "ley_colossus",
+      "name": "Archive Guardian",
+      "floor": "3",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
   ]
 }

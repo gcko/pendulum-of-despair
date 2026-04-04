@@ -1,41 +1,58 @@
 {
-	"dungeon_id": "corrund_sewers",
-	"name": "Corrund Undercity / Sewers",
-	"act": "act_ii",
-	"floors": [
-		{
-			"floor_id": "1-3",
-			"terrain_type": "low_visibility",
-			"danger_tier": 2,
-			"danger_increment": 120,
-			"formation_rates": {
-				"normal": 68.75,
-				"back_attack": 18.75,
-				"preemptive": 12.5
-			},
-			"groups": [
-				{
-					"format": 1,
-					"enemies": ["forge_smoke_creature", "forge_smoke_creature", "sewer_rat"],
-					"weight": 31.25
-				},
-				{
-					"format": 2,
-					"enemies": ["service_automata", "sewer_rat", "sewer_rat"],
-					"weight": 31.25
-				},
-				{
-					"format": 3,
-					"enemies": ["service_automata", "service_automata", "forge_smoke_creature"],
-					"weight": 31.25
-				},
-				{
-					"format": 4,
-					"enemies": ["forge_smoke_creature", "service_automata", "sewer_rat", "sewer_rat"],
-					"weight": 6.25
-				}
-			]
-		}
-	],
-	"bosses": []
+  "dungeon_id": "corrund_sewers",
+  "name": "Corrund Undercity / Sewers",
+  "act": "act_ii",
+  "floors": [
+    {
+      "floor_id": "1-3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "forge_smoke_creature",
+            "forge_smoke_creature",
+            "sewer_rat"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "service_automata",
+            "sewer_rat",
+            "sewer_rat"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "service_automata",
+            "service_automata",
+            "forge_smoke_creature"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "forge_smoke_creature",
+            "service_automata",
+            "sewer_rat",
+            "sewer_rat"
+          ],
+          "weight": 6.25
+        }
+      ]
+    }
+  ],
+  "bosses": []
 }

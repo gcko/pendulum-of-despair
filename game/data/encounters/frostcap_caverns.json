@@ -14,10 +14,40 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["hollow_knight", "pallor_crawler", "pallor_crawler"], "weight": 31.25},
-        {"format": 2, "enemies": ["void_moth"], "weight": 31.25},
-        {"format": 3, "enemies": ["pallor_crawler", "pallor_crawler", "hollow_knight"], "weight": 31.25},
-        {"format": 4, "enemies": ["hollow_knight", "hollow_knight", "void_moth"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "hollow_knight",
+            "pallor_crawler",
+            "pallor_crawler"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "void_moth"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_crawler",
+            "pallor_crawler",
+            "hollow_knight"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "hollow_knight",
+            "hollow_knight",
+            "void_moth"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -31,10 +61,42 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["shadow_wolf", "shadow_wolf", "storm_wraith"], "weight": 31.25},
-        {"format": 2, "enemies": ["pallor_wraith", "shadow_wolf", "shadow_wolf"], "weight": 31.25},
-        {"format": 3, "enemies": ["storm_wraith", "storm_wraith"], "weight": 31.25},
-        {"format": 4, "enemies": ["pallor_wraith", "storm_wraith", "storm_wraith", "shadow_wolf"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "shadow_wolf",
+            "shadow_wolf",
+            "storm_wraith"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "pallor_wraith",
+            "shadow_wolf",
+            "shadow_wolf"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "storm_wraith",
+            "storm_wraith"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "pallor_wraith",
+            "storm_wraith",
+            "storm_wraith",
+            "shadow_wolf"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -48,15 +110,59 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["pallor_knight", "pallor_knight", "void_wisp"], "weight": 31.25},
-        {"format": 2, "enemies": ["dread_warden", "pallor_knight"], "weight": 31.25},
-        {"format": 3, "enemies": ["pallor_knight", "pallor_knight", "dread_warden"], "weight": 31.25},
-        {"format": 4, "enemies": ["dread_warden", "pallor_knight", "pallor_knight", "void_wisp"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "pallor_knight",
+            "pallor_knight",
+            "void_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "dread_warden",
+            "pallor_knight"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "pallor_knight",
+            "pallor_knight",
+            "dread_warden"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "dread_warden",
+            "pallor_knight",
+            "pallor_knight",
+            "void_wisp"
+          ],
+          "weight": 6.25
+        }
       ]
     }
   ],
   "bosses": [
-    {"enemy_id": "thunder_drake", "name": "Ice Wyvern", "floor": "2", "trigger": "zone", "is_mini_boss": true},
-    {"enemy_id": "the_grey_keeper", "name": "The Frost Warden", "floor": "3", "trigger": "cutscene", "is_mini_boss": false}
+    {
+      "enemy_id": "thunder_drake",
+      "name": "Ice Wyvern",
+      "floor": "2",
+      "trigger": "zone",
+      "is_mini_boss": true
+    },
+    {
+      "enemy_id": "the_grey_keeper",
+      "name": "The Frost Warden",
+      "floor": "3",
+      "trigger": "cutscene",
+      "is_mini_boss": false
+    }
   ]
 }

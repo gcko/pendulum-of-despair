@@ -14,10 +14,43 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["ley_vermin", "ley_vermin", "unstable_crystal"], "weight": 31.25},
-        {"format": 2, "enemies": ["ley_vermin", "ley_vermin", "ley_vermin"], "weight": 31.25},
-        {"format": 3, "enemies": ["unstable_crystal", "unstable_crystal"], "weight": 31.25},
-        {"format": 4, "enemies": ["ley_vermin", "ley_vermin", "ley_vermin", "ley_vermin", "unstable_crystal"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin",
+            "unstable_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "unstable_crystal",
+            "unstable_crystal"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin",
+            "unstable_crystal"
+          ],
+          "weight": 6.25
+        }
       ]
     },
     {
@@ -31,15 +64,60 @@
         "preemptive": 12.5
       },
       "groups": [
-        {"format": 1, "enemies": ["mine_shade", "mine_shade", "ember_wisp"], "weight": 31.25},
-        {"format": 2, "enemies": ["unstable_crystal", "ember_wisp", "ember_wisp"], "weight": 31.25},
-        {"format": 3, "enemies": ["unstable_crystal", "unstable_crystal", "mine_shade"], "weight": 31.25},
-        {"format": 4, "enemies": ["mine_shade", "mine_shade", "ember_wisp", "ember_wisp"], "weight": 6.25}
+        {
+          "format": 1,
+          "enemies": [
+            "mine_shade",
+            "mine_shade",
+            "ember_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "unstable_crystal",
+            "ember_wisp",
+            "ember_wisp"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "unstable_crystal",
+            "unstable_crystal",
+            "mine_shade"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "mine_shade",
+            "mine_shade",
+            "ember_wisp",
+            "ember_wisp"
+          ],
+          "weight": 6.25
+        }
       ]
     }
   ],
   "bosses": [
-    {"enemy_id": "ember_drake", "name": "Ember Drake", "floor": "2", "trigger": "zone", "is_mini_boss": true},
-    {"enemy_id": "vein_guardian", "name": "Vein Guardian", "floor": "4", "trigger": "zone", "is_mini_boss": false}
+    {
+      "enemy_id": "ember_drake",
+      "name": "Ember Drake",
+      "floor": "2",
+      "trigger": "zone",
+      "is_mini_boss": true
+    },
+    {
+      "enemy_id": "vein_guardian",
+      "name": "Vein Guardian",
+      "floor": "4",
+      "trigger": "zone",
+      "is_mini_boss": false
+    }
   ]
 }

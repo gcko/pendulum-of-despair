@@ -1,81 +1,81 @@
 {
-	"synergies": [
-		{
-			"id": "penitents_edge",
-			"name": "Penitent's Edge",
-			"base_weapon_id": "grey_cleaver_tainted",
-			"base_weapon_class": null,
-			"infusion_element": "spirit",
-			"result_element": "spirit",
-			"bonus_effect": "Purification counter: 50 encounters (was 100)",
-			"discovery_channel": "both",
-			"description": "The Grey Cleaver awakens to its true nature through spirit infusion."
-		},
-		{
-			"id": "stormforge_hammer",
-			"name": "Stormforge Hammer",
-			"base_weapon_id": "architects_hammer",
-			"base_weapon_class": null,
-			"infusion_element": "storm",
-			"result_element": "storm",
-			"bonus_effect": "+25% damage vs Construct-type",
-			"discovery_channel": "both",
-			"description": "Storm energy overcharges the Architect's design, devastating constructs."
-		},
-		{
-			"id": "rootbound_lance",
-			"name": "Rootbound Lance",
-			"base_weapon_id": null,
-			"base_weapon_class": "torren_spear",
-			"infusion_element": "earth",
-			"result_element": "earth",
-			"bonus_effect": "20% chance to inflict Slow on physical hit",
-			"discovery_channel": "npc_only",
-			"description": "Earth energy channels through the spear, entangling targets with root growth."
-		},
-		{
-			"id": "resonance_staff",
-			"name": "Resonance Staff",
-			"base_weapon_id": null,
-			"base_weapon_class": "maren_staff",
-			"infusion_element": "ley",
-			"result_element": "ley",
-			"bonus_effect": "MP cost of all spells -15%",
-			"discovery_channel": "lira_only",
-			"description": "Ley energy harmonizes with the staff's arcane conductivity."
-		},
-		{
-			"id": "shadowfang",
-			"name": "Shadowfang",
-			"base_weapon_id": null,
-			"base_weapon_class": "sable_dagger",
-			"infusion_element": "void",
-			"result_element": "void",
-			"bonus_effect": "Steal rate +25%, successful steals 15% Despair chance",
-			"discovery_channel": "npc_only",
-			"description": "Void energy coats the dagger's edge, slicing through material and morale."
-		},
-		{
-			"id": "crucible_maul",
-			"name": "Crucible Maul",
-			"base_weapon_id": null,
-			"base_weapon_class": "lira_hammer",
-			"infusion_element": "flame",
-			"result_element": "flame",
-			"bonus_effect": "Forgewright device gold cost -50%",
-			"discovery_channel": "lira_only",
-			"description": "Flame energy superheats the hammer, halving device forging costs."
-		},
-		{
-			"id": "oathkeeper",
-			"name": "Oathkeeper",
-			"base_weapon_id": null,
-			"base_weapon_class": "edren_sword",
-			"infusion_element": "spirit",
-			"result_element": "spirit",
-			"bonus_effect": "+15% damage when any ally has Faint status",
-			"discovery_channel": "npc_only",
-			"description": "Spirit energy responds to Edren's protective instincts when allies fall."
-		}
-	]
+  "synergies": [
+    {
+      "id": "penitents_edge",
+      "name": "Penitent's Edge",
+      "base_weapon_id": "grey_cleaver_tainted",
+      "base_weapon_class": null,
+      "infusion_element": "spirit",
+      "result_element": "spirit",
+      "bonus_effect": "Purification counter: 50 encounters (was 100)",
+      "discovery_channel": "both",
+      "description": "The Grey Cleaver awakens to its true nature through spirit infusion."
+    },
+    {
+      "id": "stormforge_hammer",
+      "name": "Stormforge Hammer",
+      "base_weapon_id": "architects_hammer",
+      "base_weapon_class": null,
+      "infusion_element": "storm",
+      "result_element": "storm",
+      "bonus_effect": "+25% damage vs Construct-type",
+      "discovery_channel": "both",
+      "description": "Storm energy overcharges the Architect's design, devastating constructs."
+    },
+    {
+      "id": "rootbound_lance",
+      "name": "Rootbound Lance",
+      "base_weapon_id": null,
+      "base_weapon_class": "torren_spear",
+      "infusion_element": "earth",
+      "result_element": "earth",
+      "bonus_effect": "20% chance to inflict Slow on physical hit",
+      "discovery_channel": "npc_only",
+      "description": "Earth energy channels through the spear, entangling targets with root growth."
+    },
+    {
+      "id": "resonance_staff",
+      "name": "Resonance Staff",
+      "base_weapon_id": null,
+      "base_weapon_class": "maren_staff",
+      "infusion_element": "ley",
+      "result_element": "ley",
+      "bonus_effect": "MP cost of all spells -15%",
+      "discovery_channel": "lira_only",
+      "description": "Ley energy harmonizes with the staff's arcane conductivity."
+    },
+    {
+      "id": "shadowfang",
+      "name": "Shadowfang",
+      "base_weapon_id": null,
+      "base_weapon_class": "sable_dagger",
+      "infusion_element": "void",
+      "result_element": "void",
+      "bonus_effect": "Steal rate +25%, successful steals 15% Despair chance",
+      "discovery_channel": "npc_only",
+      "description": "Void energy coats the dagger's edge, slicing through material and morale."
+    },
+    {
+      "id": "crucible_maul",
+      "name": "Crucible Maul",
+      "base_weapon_id": null,
+      "base_weapon_class": "lira_hammer",
+      "infusion_element": "flame",
+      "result_element": "flame",
+      "bonus_effect": "Forgewright device gold cost -50%",
+      "discovery_channel": "lira_only",
+      "description": "Flame energy superheats the hammer, halving device forging costs."
+    },
+    {
+      "id": "oathkeeper",
+      "name": "Oathkeeper",
+      "base_weapon_id": null,
+      "base_weapon_class": "edren_sword",
+      "infusion_element": "spirit",
+      "result_element": "spirit",
+      "bonus_effect": "+15% damage when any ally has Faint status",
+      "discovery_channel": "npc_only",
+      "description": "Spirit energy responds to Edren's protective instincts when allies fall."
+    }
+  ]
 }

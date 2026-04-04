@@ -164,13 +164,13 @@ ACT III + OPTIONAL + POST-GAME DUNGEONS (13 files) — with explicit act values:
 1. dry_well — act: act_iii, 7 floors, 3 floor-groups, Tier 2→3→4 escalation
 2. pallor_wastes — act: act_iii, terrain_type: pallor_wastes
 3. convergence — act: act_iii, multi-phase, Tier 3→4
-4. sunken_rig — act: act_iii, Tier 3
+4. sunken_rig — act: interlude, Tier 3
 5. windshear_peak — act: act_iii
 6. mountain_passes — act: act_iii
 7. caves_and_grottos — act: act_iii
 8. frostcap_caverns — act: act_iii
 9. thornvein_passage — act: act_iii
-10. valdris_siege — act: interlude, scripted battles
+10. valdris_siege — act: act_ii, scripted battles
 11. ley_nexus_hollow — act: post_game, boss arena
 12. highcairn_monastery — act: interlude (spans Interlude-III)
 13. dreamers_fault — act: post_game, 20 floors, EXTENDED format (5-6 packs)
