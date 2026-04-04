@@ -306,6 +306,7 @@ For each accessory:
 - [ ] **Step 1:** Verify item counts: consumables=33, materials=87, key_items=26, weapons=58, armor=49, accessories=47
 - [ ] **Step 2:** Verify all IDs unique within item files (consumables + materials + key_items)
 - [ ] **Step 3:** Verify all IDs unique within equipment files (weapons + armor + accessories)
+- [ ] **Step 3b:** Verify all IDs globally unique across ALL 6 files (items + equipment — single shared item_id namespace for enemy/shop references)
 - [ ] **Step 4:** Verify every entry has ALL required schema fields (no missing fields)
 - [ ] **Step 5:** Verify all sell_price values follow the correct formula
 - [ ] **Step 6:** Verify all equippable_by arrays match the spec rules
