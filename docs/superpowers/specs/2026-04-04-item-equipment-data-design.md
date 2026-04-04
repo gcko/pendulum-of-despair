@@ -169,6 +169,7 @@ The game has 300 items and equipment pieces defined across items.md and equipmen
 - Grey Mist Essence: `"sellable": false, "sell_price": null` (unsellable story-critical)
 - Drake Fang: `"battle_usable": true, "battle_effect": "fixed_damage", "battle_value": 500, "battle_target": "single_enemy"` — dual-purpose material with direct battle-use fields (material + battle consumable per items.md). Stacks in Materials tab; using in battle consumes one from material stack.
 - Arcanite Shard: `"ac_restorable": true` — dual-purpose material (crafting + consumable AC restoration per crafting.md). Consumed from material stack when used for AC restoration at save points.
+- Gold Pouch: `"auto_sell": true, "sell_price": null, "gold_value_by_act": {"act_i": 150, "act_ii": 350, "interlude": 500, "act_iii": 800}` — special humanoid rare steal that awards gold directly on acquisition. `sell_price` is null because the value is determined by `gold_value_by_act` at runtime; `auto_sell` indicates the item is converted to gold immediately, never entering the player's inventory.
 
 ### Total: 87 materials
 

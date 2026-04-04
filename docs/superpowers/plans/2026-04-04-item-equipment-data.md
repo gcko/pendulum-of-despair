@@ -276,7 +276,7 @@ For each accessory:
 - status_immunity: 6
 - elemental_resistance: 4
 - combat_mechanic: 9
-- boss_drop: 15
+- boss_drop: 20
 
 - [ ] **Step 1:** Read equipment.md accessory tables and spec
 - [ ] **Step 2:** Create `game/data/equipment/accessories.json` with all 47 accessories

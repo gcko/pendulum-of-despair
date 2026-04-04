@@ -875,10 +875,10 @@
 			"category": "material",
 			"tier": 2,
 			"source_category": "humanoid",
-			"sell_price": 150,
+			"sell_price": null,
 			"sellable": true,
 			"stack_limit": 99,
-			"description": "A pouch of coins stolen from a humanoid enemy. Value scales with act.",
+			"description": "A pouch of coins stolen from a humanoid enemy. Gold value scales by act. Cannot be kept — auto-sold on acquisition.",
 			"crafting_use": "Vendor trash (sell only)",
 			"auto_sell": true,
 			"gold_value_by_act": {
