@@ -1851,7 +1851,7 @@
 				}
 			},
 			"drop": {
-				"item_id": "grey_cleaver",
+				"item_id": "grey_cleaver_tainted",
 				"rate": 100
 			},
 			"locations": [
