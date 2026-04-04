@@ -5,9 +5,7 @@ Reads docs/story/script/*.md and outputs game/data/dialogue/*.json.
 Run: python3 tools/dialogue_parser.py
 """
 import json
-import os
 import re
-import sys
 from pathlib import Path
 
 # Project root (one level up from tools/)
@@ -344,6 +342,13 @@ def segment_entries(raw_text):
             elements.append({"type": "choice", "text": '\n'.join(choice_lines)})
             continue
 
+        # "If spoken to again/third time" pattern — MUST be checked before
+        # generic stage direction, since both match ^\s*\*\(
+        if re.match(r'^\s*\*\(If spoken to', line):
+            elements.append({"type": "repeat_marker", "text": line.strip()})
+            i += 1
+            continue
+
         # Stage direction: *(text)*
         if re.match(r'^\s*\*\(', line):
             direction_text = line
@@ -380,12 +385,6 @@ def segment_entries(raw_text):
         # Condition-like lines: (If player chose option N.)
         if re.match(r'^\s*\(If\s+player\s+', line):
             elements.append({"type": "meta_condition", "text": line.strip()})
-            i += 1
-            continue
-
-        # "If spoken to again/third time" pattern
-        if re.match(r'^\s*\*\(If spoken to', line):
-            elements.append({"type": "repeat_marker", "text": line.strip()})
             i += 1
             continue
 
@@ -520,6 +519,7 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
     """Convert segmented elements into dialogue entries."""
     entries = []
     pending_condition = None
+    parent_flag_condition = None  # Tracks the current flag block for NPC ambient
     pending_animations = []
     pending_sfx = []
     pending_direction_before = True  # Track if direction is before next speaker
@@ -530,6 +530,8 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
 
         if elem["type"] == "condition":
             pending_condition = elem["text"]
+            # Update parent flag condition — new flag block replaces the old one
+            parent_flag_condition = elem["text"]
             i += 1
             continue
 
@@ -548,12 +550,14 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
                 else:
                     # Fallback: slugify the whole condition
                     pending_condition = slugify(raw)
+            parent_flag_condition = pending_condition
             i += 1
             continue
 
         if elem["type"] == "repeat_marker":
-            # "*(If spoken to again.)*" — treat as a condition marker for NPC stacks
-            pending_condition = "spoken_to_again"
+            # "*(If spoken to again.)*" inherits the parent flag condition.
+            # It means "same condition block, repeat visit" — NOT a new condition.
+            pending_condition = parent_flag_condition
             i += 1
             continue
 
@@ -605,7 +609,13 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
                     "sfx": None,
                 }
                 entries.append(entry)
-                pending_condition = None
+                # For NPC layer, persist the parent flag condition so all
+                # entries within a flag block inherit it. For other layers,
+                # conditions apply only to the immediately following entry.
+                if layer == "npc":
+                    pending_condition = parent_flag_condition
+                else:
+                    pending_condition = None
             i += 1
             continue
 
@@ -647,7 +657,13 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
                 pending_sfx = []
 
             entries.append(entry)
-            pending_condition = None
+            # For NPC layer, persist the parent flag condition so all
+            # entries within a flag block inherit it. For other layers,
+            # conditions apply only to the immediately following entry.
+            if layer == "npc":
+                pending_condition = parent_flag_condition
+            else:
+                pending_condition = None
             i += 1
             continue
 
@@ -1216,8 +1232,19 @@ if __name__ == "__main__":
     print("=" * 60)
     print()
 
+    # Reset global mutable state
+    all_entry_ids.clear()
+    all_warnings.clear()
+    stats.clear()
+    stats.update({"files": 0, "entries": 0, "warnings": 0, "layer1": 0, "layer2": 0, "layer3": 0})
+
     # Ensure output directory exists
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Clean output directory to prevent stale files from previous runs
+    for old_file in OUTPUT_DIR.glob("*.json"):
+        old_file.unlink()
+
 
     # Layer 1: Narrative
     print("[Layer 1] Narrative Spine")

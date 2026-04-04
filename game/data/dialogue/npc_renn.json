@@ -62,7 +62,7 @@
       "lines": [
         "But I'll tell you this for free. The grey isn't random.\nIt follows the ley lines. Wherever the lines are weakest, the\ngrey is thickest. If someone could map one, they could predict\nthe other."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null

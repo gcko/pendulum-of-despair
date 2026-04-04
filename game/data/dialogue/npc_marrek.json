@@ -40,7 +40,7 @@
       "lines": [
         "You're wondering how I'm still here. Still stocked.\nI wonder that too, some nights. The road doesn't care about the\ngrey. It just keeps going. So do I."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null

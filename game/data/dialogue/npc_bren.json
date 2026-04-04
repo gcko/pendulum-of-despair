@@ -51,7 +51,7 @@
       "lines": [
         "That knight. Cael. He used to buy sweet rolls from me\non his way to the library. Every week. Tipped double. I keep\nlooking for him at the counter."
       ],
-      "condition": null,
+      "condition": "cael_betrayal_complete",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -73,7 +73,7 @@
       "lines": [
         "Heard the Compact's foundries are cold. Even their\nmachines need ley energy, and the lines are broken. We're all\neating the same bread now — Valdris, Compact, doesn't matter.\nHunger doesn't care about borders."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null

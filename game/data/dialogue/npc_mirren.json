@@ -51,7 +51,7 @@
       "lines": [
         "The records go back further than anyone thinks."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -73,7 +73,7 @@
       "lines": [
         "Maren sent me her Archive notes. Thirteen volumes.\nI'm cataloguing them. Properly, this time. With the correct\nmargin of error."
       ],
-      "condition": null,
+      "condition": "epilogue_complete",
       "animations": null,
       "choice": null,
       "sfx": null

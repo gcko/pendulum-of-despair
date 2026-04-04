@@ -51,7 +51,7 @@
       "lines": [
         "The grey is in the refugee quarter now. Not the mist\n— the feeling. People stop talking mid-sentence. Stare at nothing.\nI watch the seed grain to remind myself things still grow."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null

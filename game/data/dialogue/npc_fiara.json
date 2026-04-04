@@ -51,7 +51,7 @@
       "lines": [
         "I tried to warn people before the rupture. Stood in\nthe market square and told everyone the lines were dying. They\nthrew vegetables. The spirit-speakers believed me. Nobody else\ndid."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -73,7 +73,7 @@
       "lines": [
         "The singer came back. Different tune. Sadder, but\nstronger. I think the ley lines are mourning and growing at the\nsame time. That's what healing sounds like, I think."
       ],
-      "condition": null,
+      "condition": "epilogue_complete",
       "animations": null,
       "choice": null,
       "sfx": null

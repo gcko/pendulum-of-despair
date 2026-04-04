@@ -40,7 +40,7 @@
       "lines": [
         "Somebody has to keep the doors open. Might as well\nbe me."
       ],
-      "condition": null,
+      "condition": "interlude_begins",
       "animations": null,
       "choice": null,
       "sfx": null

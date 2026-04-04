@@ -40,7 +40,7 @@
       "lines": [
         "I carve his name into the training post every morning.\nNot because I forgive him. Because I refuse to forget that I\nfailed to see it coming. A good trainer sees the cracks."
       ],
-      "condition": null,
+      "condition": "cael_betrayal_complete",
       "animations": null,
       "choice": null,
       "sfx": null

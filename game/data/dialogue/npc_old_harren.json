@@ -29,7 +29,7 @@
       "lines": [
         "His face. I can't quite recall it. Polite. Grey coat.\nThat's all I have. Isn't that strange?"
       ],
-      "condition": null,
+      "condition": "vaelith_tavern_encounter",
       "animations": null,
       "choice": null,
       "sfx": null
