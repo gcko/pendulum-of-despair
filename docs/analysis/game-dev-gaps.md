@@ -109,24 +109,31 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.2 Enemy Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-02
 **Priority:** P0 — blocks battle system, encounters, economy testing
-**Estimated Size:** L (~198 enemies × 19 columns + boss AI scripts across 6 JSON files)
+**Estimated Size:** L (~204 enemies + 35 boss entries across 6 JSON files)
 **Output:** `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional,bosses}.json`
 **Source Docs:** `bestiary/act-i.md` through `bestiary/optional.md`, `bestiary/bosses.md`, `bestiary/README.md` (type rules, scaling), `bestiary/palette-families.md`
-**Architecture Ref:** `technical-architecture.md` Section 2.1
+**Architecture Ref:** `technical-architecture.md` Section 2.1 (extended with two-tier steal, threat field, locations array)
 **Depends On:** None (foundational)
 
 **What's Needed:**
-- [ ] Per-act JSON file following Section 2.1 schema
-- [ ] All ~198 regular enemies with 19-column stat sheets
-- [ ] Elemental profiles (weaknesses, resistances, immunities, absorb)
-- [ ] Status effect vulnerability lists
-- [ ] Drop tables (common item, rare item, steal item with rates)
-- [ ] Boss data file with AI scripts (phase triggers, ability sets, conditions)
-- [ ] Verify every enemy name, stat, and drop against bestiary source files
-- [ ] Verify boss phase HP thresholds against bosses.md
-- [ ] Decision: single steal field (current schema) vs two-tier steal (common/rare per abilities.md Filch description) — resolve before implementation
+- [x] Per-act JSON file following Section 2.1 schema (extended — see spec)
+- [x] All ~204 regular enemies with 19-column stat sheets
+- [x] Elemental profiles (weaknesses, resistances, immunities, absorb)
+- [x] Status effect vulnerability lists
+- [x] Drop tables (common item, rare item, steal item with rates)
+- [x] Boss data file with phase triggers and metadata (35 entries; AI scripts deferred to GDScript implementation)
+- [x] Verify every enemy name, stat, and drop against bestiary source files
+- [x] Verify boss phase HP thresholds against bosses.md
+- [x] Decision: two-tier steal (common/rare) per abilities.md Filch description and economy.md — RESOLVED, implemented as `steal: { common, rare }` nested object
+
+**Notes:**
+- Schema extends tech-arch Section 2.1: added `threat` field (reward validation), `locations` array, two-tier `steal` object. Tech-arch should be updated to match.
+- Boss AI scripts are NOT in JSON — those are runtime behavior for future GDScript implementation.
+- Design spec: `docs/superpowers/specs/2026-04-02-enemy-data-json-design.md`
+- Enemies reappearing at different levels across acts have location-suffixed IDs (e.g., `pallor_wisp_rail_tunnels`, `pallor_drake_void`)
 
 **Blocking:** Battle system (needs enemy data), encounter tables (reference enemy IDs), economy testing (gold/XP values)
 

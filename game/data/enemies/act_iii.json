@@ -1,0 +1,3114 @@
+{
+	"enemies": [
+		{
+			"id": "pallor_boar",
+			"name": "Pallor Boar",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 28,
+			"hp": 1943,
+			"mp": 98,
+			"atk": 52,
+			"def": 43,
+			"mag": 45,
+			"mdef": 32,
+			"spd": 24,
+			"gold": 148,
+			"exp": 264,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_ashen_approach",
+				"pallor_wastes_outer_clearings"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "shadow_wolf",
+			"name": "Shadow Wolf",
+			"type": "beast",
+			"threat": "dangerous",
+			"level": 28,
+			"hp": 1272,
+			"mp": 98,
+			"atk": 59,
+			"def": 29,
+			"mag": 45,
+			"mdef": 32,
+			"spd": 30,
+			"gold": 99,
+			"exp": 176,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "wolf_pelt",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "wolf_pelt",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_ashen_approach"
+			],
+			"ko_sound": "ko_beast"
+		},
+		{
+			"id": "pallor_vermin",
+			"name": "Pallor Vermin",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 1360,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "wraith_shade",
+			"name": "Wraith Shade",
+			"type": "spirit",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_outer_clearings"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "hollow_walker",
+			"name": "Hollow Walker",
+			"type": "pallor",
+			"threat": "low",
+			"level": 28,
+			"hp": 1767,
+			"mp": 98,
+			"atk": 52,
+			"def": 38,
+			"mag": 45,
+			"mdef": 32,
+			"spd": 30,
+			"gold": 59,
+			"exp": 105,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes",
+				"convergence"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "despair_cloud",
+			"name": "Despair Cloud",
+			"type": "pallor",
+			"threat": "low",
+			"level": 28,
+			"hp": 1767,
+			"mp": 98,
+			"atk": 40,
+			"def": 38,
+			"mag": 51,
+			"mdef": 32,
+			"spd": 30,
+			"gold": 34,
+			"exp": 61,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": null,
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes",
+				"convergence"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "petrified_beast",
+			"name": "Petrified Beast",
+			"type": "pallor",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2200,
+			"mp": 105,
+			"atk": 56,
+			"def": 47,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 24,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_ashen_approach",
+				"pallor_wastes_grey_march"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "dread_warden",
+			"name": "Dread Warden",
+			"type": "undead",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2200,
+			"mp": 105,
+			"atk": 56,
+			"def": 47,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 24,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"frost",
+				"storm"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "bone_dust",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ancient_glyph",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "bone_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_outer_clearings"
+			],
+			"ko_sound": "ko_undead"
+		},
+		{
+			"id": "pallor_knight",
+			"name": "Pallor Knight",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 32,
+			"hp": 2247,
+			"mp": 112,
+			"atk": 59,
+			"def": 43,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 133,
+			"exp": 232,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "pallor_shard",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_grey_march",
+				"pallor_wastes_trial_clearings",
+				"convergence"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "grief_shade",
+			"name": "Grief Shade",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 32,
+			"hp": 2247,
+			"mp": 112,
+			"atk": 45,
+			"def": 43,
+			"mag": 57,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 133,
+			"exp": 232,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_trial_clearings",
+				"convergence"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "void_wisp",
+			"name": "Void Wisp",
+			"type": "elemental",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [
+				"void"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_inner_clearings"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "pallor_treant",
+			"name": "Pallor Treant",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 30,
+			"hp": 2200,
+			"mp": 105,
+			"atk": 56,
+			"def": 47,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 24,
+			"gold": 172,
+			"exp": 303,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "petrified_bark",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_inner_sections"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "marauder_captain",
+			"name": "Marauder Captain",
+			"type": "humanoid",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "bandits_coin",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_inner_clearings"
+			],
+			"ko_sound": "ko_humanoid"
+		},
+		{
+			"id": "hollow_knight",
+			"name": "Hollow Knight",
+			"type": "pallor",
+			"threat": "standard",
+			"level": 30,
+			"hp": 1000,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": null,
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_trial_1"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "unfinished_construct",
+			"name": "Unfinished Construct",
+			"type": "construct",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2000,
+			"mp": 0,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 40,
+			"exp": 70,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_trial_2"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "stone_spirit",
+			"name": "Stone Spirit",
+			"type": "spirit",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_trial_3"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "archived",
+			"name": "Archived",
+			"type": "pallor",
+			"threat": "standard",
+			"level": 32,
+			"hp": 2247,
+			"mp": 112,
+			"atk": 59,
+			"def": 43,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 80,
+			"exp": 139,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"pallor_wastes_trial_5"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "the_crowned_hollow",
+			"name": "The Crowned Hollow",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 2,
+			"level": 30,
+			"hp": 8000,
+			"mp": 105,
+			"atk": 84,
+			"def": 53,
+			"mag": 86,
+			"mdef": 51,
+			"spd": 38,
+			"gold": 400,
+			"exp": 4000,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "physical",
+					"multiplier": 0.75
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "crown_fragment",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "crown_shard",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_1"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "the_perfect_machine",
+			"name": "The Perfect Machine",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"level": 30,
+			"hp": 7000,
+			"mp": 105,
+			"atk": 84,
+			"def": 53,
+			"mag": 86,
+			"mdef": 51,
+			"spd": 38,
+			"gold": 2000,
+			"exp": 4000,
+			"weaknesses": [
+				{
+					"element": "void",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "flame",
+					"multiplier": 0.75
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "caels_gear",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "unfinished_ring",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_2"
+			],
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
+		},
+		{
+			"id": "the_last_voice",
+			"name": "The Last Voice",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 2,
+			"level": 32,
+			"hp": 6000,
+			"mp": 112,
+			"atk": 88,
+			"def": 55,
+			"mag": 90,
+			"mdef": 54,
+			"spd": 39,
+			"gold": 400,
+			"exp": 4000,
+			"weaknesses": [
+				{
+					"element": "flame",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "spirit",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "petrified_seed",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "petrified_heartwood",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_3"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "the_index",
+			"name": "The Index",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"level": 32,
+			"hp": 7000,
+			"mp": 112,
+			"atk": 88,
+			"def": 55,
+			"mag": 90,
+			"mdef": 54,
+			"spd": 39,
+			"gold": 2000,
+			"exp": 4000,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "lost_page",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "archivists_lens",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_trial_5"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "vaelith_the_ashen_shepherd",
+			"name": "Vaelith, the Ashen Shepherd",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 2,
+			"level": 34,
+			"hp": 50000,
+			"mp": 119,
+			"atk": 93,
+			"def": 58,
+			"mag": 95,
+			"mdef": 57,
+			"spd": 42,
+			"gold": 1200,
+			"exp": 15000,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.25
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				},
+				{
+					"element": "frost",
+					"multiplier": 0.75
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "vaeliths_quill",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "ashen_scholars_tome",
+				"rate": 100
+			},
+			"locations": [
+				"pallor_wastes_section_5"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "vaelith_siege",
+			"name": "Vaelith (Siege)",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"scripted_loss": true,
+			"phases": 1,
+			"level": 150,
+			"hp": 999999,
+			"mp": 525,
+			"atk": 372,
+			"def": 240,
+			"mag": 388,
+			"mdef": 231,
+			"spd": 153,
+			"gold": 0,
+			"exp": 0,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair",
+				"poison",
+				"silence",
+				"slow",
+				"berserk"
+			],
+			"steal": null,
+			"drop": null,
+			"locations": [
+				"valdris_siege"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "ley_construct",
+			"name": "Ley Construct",
+			"type": "construct",
+			"threat": "standard",
+			"level": 26,
+			"hp": 1548,
+			"mp": 0,
+			"atk": 49,
+			"def": 36,
+			"mag": 42,
+			"mdef": 30,
+			"spd": 28,
+			"gold": 51,
+			"exp": 92,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"ley_line_depths_f5"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "vein_stalker",
+			"name": "Vein Stalker",
+			"type": "humanoid",
+			"threat": "dangerous",
+			"level": 28,
+			"hp": 1272,
+			"mp": 98,
+			"atk": 59,
+			"def": 29,
+			"mag": 45,
+			"mdef": 32,
+			"spd": 30,
+			"gold": 148,
+			"exp": 264,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "ley_residue",
+				"rate": 25
+			},
+			"locations": [
+				"ley_line_depths_f4",
+				"ley_line_depths_f5"
+			],
+			"ko_sound": "ko_humanoid"
+		},
+		{
+			"id": "confluence_elemental",
+			"name": "Confluence Elemental",
+			"type": "elemental",
+			"threat": "standard",
+			"level": 28,
+			"hp": 1767,
+			"mp": 98,
+			"atk": 40,
+			"def": 38,
+			"mag": 51,
+			"mdef": 32,
+			"spd": 30,
+			"gold": 59,
+			"exp": 105,
+			"weaknesses": [
+				"cycle"
+			],
+			"resistances": [],
+			"absorb": [
+				"cycle"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"ley_line_depths_f5"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "ley_titan",
+			"name": "Ley Titan",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 3,
+			"level": 28,
+			"hp": 18000,
+			"mp": 98,
+			"atk": 78,
+			"def": 49,
+			"mag": 81,
+			"mdef": 48,
+			"spd": 36,
+			"gold": 800,
+			"exp": 8000,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [
+				"flame",
+				"frost",
+				"storm",
+				"earth",
+				"ley",
+				"spirit",
+				"void"
+			],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "titans_core",
+				"rate": 100
+			},
+			"locations": [
+				"ley_line_depths_f5"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "crystal_warden_deep",
+			"name": "Crystal Warden (Deep)",
+			"type": "construct",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2200,
+			"mp": 0,
+			"atk": 56,
+			"def": 47,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 24,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dry_well_f5",
+				"dry_well_f6"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "pictograph_wisp",
+			"name": "Pictograph Wisp",
+			"type": "elemental",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [
+				"ley"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"dry_well_f5"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "ley_warped_construct",
+			"name": "Ley-Warped Construct",
+			"type": "construct",
+			"threat": "standard",
+			"level": 32,
+			"hp": 2247,
+			"mp": 0,
+			"atk": 59,
+			"def": 43,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 80,
+			"exp": 139,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dry_well_f6"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "warp_sentinel",
+			"name": "Warp Sentinel",
+			"type": "construct",
+			"threat": "standard",
+			"level": 32,
+			"hp": 2247,
+			"mp": 0,
+			"atk": 59,
+			"def": 43,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 80,
+			"exp": 139,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"dry_well_f6"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "ley_born_echo",
+			"name": "Ley-Born Echo",
+			"type": "spirit",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 47,
+			"def": 45,
+			"mag": 60,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"dry_well_f7"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "archive_keeper",
+			"name": "Archive Keeper",
+			"type": "boss",
+			"threat": "dangerous",
+			"is_boss": false,
+			"is_mini_boss": true,
+			"phases": 1,
+			"level": 32,
+			"hp": 3000,
+			"hp_max_variable": 12000,
+			"mp": 112,
+			"atk": 88,
+			"def": 55,
+			"mag": 90,
+			"mdef": 54,
+			"spd": 39,
+			"gold": 2000,
+			"exp": 3000,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "ancient_tablet",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "keepers_index",
+				"rate": 100
+			},
+			"locations": [
+				"dry_well_f5"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "wellspring_guardian",
+			"name": "Wellspring Guardian",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 3,
+			"level": 36,
+			"hp": 28000,
+			"mp": 126,
+			"atk": 97,
+			"def": 62,
+			"mag": 100,
+			"mdef": 60,
+			"spd": 43,
+			"gold": 4000,
+			"exp": 12000,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "builders_crest",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "nexus_crest",
+				"rate": 100
+			},
+			"locations": [
+				"dry_well_f7"
+			],
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
+		},
+		{
+			"id": "forge_sentinel",
+			"name": "Forge Sentinel",
+			"type": "construct",
+			"threat": "standard",
+			"level": 32,
+			"hp": 2471,
+			"mp": 0,
+			"atk": 59,
+			"def": 49,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 25,
+			"gold": 80,
+			"exp": 139,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"forgotten_forge_f1",
+				"forgotten_forge_f2"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "tempered_construct",
+			"name": "Tempered Construct",
+			"type": "construct",
+			"threat": "standard",
+			"level": 34,
+			"hp": 2508,
+			"mp": 0,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"forgotten_forge_f1",
+				"forgotten_forge_f2"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "slag_elemental",
+			"name": "Slag Elemental",
+			"type": "elemental",
+			"threat": "standard",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 47,
+			"def": 45,
+			"mag": 60,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"frost"
+			],
+			"resistances": [],
+			"absorb": [
+				"flame"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"forgotten_forge_f3"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "grief_residue",
+			"name": "Grief Residue",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 47,
+			"def": 45,
+			"mag": 60,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"forgotten_forge_f3",
+				"forgotten_forge_f4"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "hollow_smith",
+			"name": "Hollow Smith",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "forge_hammer",
+				"rate": 25
+			},
+			"locations": [
+				"forgotten_forge_f4"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "the_architect",
+			"name": "The Architect (Stage 1)",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"level": 34,
+			"hp": 20000,
+			"mp": 0,
+			"atk": 93,
+			"def": 58,
+			"mag": 95,
+			"mdef": 57,
+			"spd": 42,
+			"gold": 4000,
+			"exp": 8000,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"poison",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "forge_schematic",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "architects_hammer",
+				"rate": 100
+			},
+			"locations": [
+				"forgotten_forge_f5"
+			],
+			"ko_sound": "ko_construct",
+			"is_mini_boss": false
+		},
+		{
+			"id": "grey_cleaver_unbound",
+			"name": "Grey Cleaver Unbound (Stage 2)",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"level": 36,
+			"hp": 25000,
+			"mp": 126,
+			"atk": 97,
+			"def": 62,
+			"mag": 100,
+			"mdef": 60,
+			"spd": 43,
+			"gold": 280,
+			"exp": 8000,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "despair_shard",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "grey_cleaver",
+				"rate": 100
+			},
+			"locations": [
+				"forgotten_forge_f5"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "pallor_soldier_convergence",
+			"name": "Pallor Soldier",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 155,
+			"exp": 266,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "pallor_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_outer_ring",
+				"convergence_anchor_a"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_drake_convergence",
+			"name": "Pallor Drake",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 36,
+			"hp": 2784,
+			"mp": 126,
+			"atk": 65,
+			"def": 48,
+			"mag": 56,
+			"mdef": 40,
+			"spd": 36,
+			"gold": 269,
+			"exp": 459,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "drake_scale",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_outer_ring"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "ley_construct_anchored",
+			"name": "Ley Construct (Anchored)",
+			"type": "construct",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 0,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_anchor_a"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "forgewright_automaton",
+			"name": "Forgewright Automaton",
+			"type": "construct",
+			"threat": "standard",
+			"level": 34,
+			"hp": 2758,
+			"mp": 0,
+			"atk": 62,
+			"def": 51,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 27,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_anchor_b"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "corrupted_spirit",
+			"name": "Corrupted Spirit",
+			"type": "spirit",
+			"threat": "standard",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 47,
+			"def": 45,
+			"mag": 60,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 93,
+			"exp": 160,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_anchor_c"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "ashen_serpent",
+			"name": "Ashen Serpent",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 1805,
+			"mp": 119,
+			"atk": 71,
+			"def": 35,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 155,
+			"exp": 266,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "serpent_fang",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_outer_ring"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_lurker_convergence",
+			"name": "Pallor Lurker",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 36,
+			"hp": 2784,
+			"mp": 126,
+			"atk": 65,
+			"def": 48,
+			"mag": 56,
+			"mdef": 40,
+			"spd": 36,
+			"gold": 268,
+			"exp": 459,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "grey_residue",
+				"rate": 25
+			},
+			"locations": [
+				"convergence_outer_ring"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_echo",
+			"name": "Pallor Echo",
+			"type": "boss",
+			"threat": "dangerous",
+			"is_boss": false,
+			"is_mini_boss": true,
+			"phases": 1,
+			"level": 34,
+			"hp": 5000,
+			"mp": 119,
+			"atk": 93,
+			"def": 58,
+			"mag": 95,
+			"mdef": 57,
+			"spd": 42,
+			"gold": 140,
+			"exp": 4000,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "grey_echo_shard",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_memory",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_phase_4"
+			],
+			"ko_sound": "ko_boss"
+		},
+		{
+			"id": "cael_knight_of_despair_phase_1",
+			"name": "Cael, Knight of Despair (Phase 1)",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"boss_group": "cael_knight_of_despair",
+			"level": 36,
+			"hp": 45000,
+			"mp": 126,
+			"atk": 97,
+			"def": 62,
+			"mag": 100,
+			"mdef": 60,
+			"spd": 43,
+			"gold": 12000,
+			"exp": 15000,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "caels_knight_crest",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_pendant",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_outer_ring"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "cael_knight_of_despair_phase_2",
+			"name": "Cael, Knight of Despair (Phase 2)",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"boss_group": "cael_knight_of_despair",
+			"level": 38,
+			"hp": 35000,
+			"mp": 133,
+			"atk": 102,
+			"def": 65,
+			"mag": 106,
+			"mdef": 63,
+			"spd": 45,
+			"gold": 0,
+			"exp": 0,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": null,
+			"drop": null,
+			"locations": [
+				"convergence_outer_ring"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "the_pallor_incarnate",
+			"name": "The Pallor Incarnate",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"phases": 1,
+			"level": 40,
+			"hp": 70000,
+			"mp": 140,
+			"atk": 108,
+			"def": 68,
+			"mag": 111,
+			"mdef": 66,
+			"spd": 48,
+			"gold": 420,
+			"exp": 0,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "pallor_core",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "caels_sword",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_central_platform"
+			],
+			"ko_sound": "ko_boss",
+			"is_mini_boss": false
+		},
+		{
+			"id": "thunder_drake",
+			"name": "Thunder Drake",
+			"type": "beast",
+			"threat": "rare",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [
+				"storm"
+			],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "drake_scale",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "drake_scale",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_mountain",
+				"overworld_highland"
+			],
+			"ko_sound": "ko_beast"
+		},
+		{
+			"id": "deserter_captain",
+			"name": "Deserter Captain",
+			"type": "humanoid",
+			"threat": "standard",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 56,
+			"def": 41,
+			"mag": 48,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 69,
+			"exp": 121,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "potion",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "gold_pouch",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "compact_insignia",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_roads",
+				"overworld_ruins"
+			],
+			"ko_sound": "ko_humanoid"
+		},
+		{
+			"id": "blight_leech",
+			"name": "Blight Leech",
+			"type": "beast",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"flame"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "leech_ichor",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "leech_ichor",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_swamp",
+				"overworld_coast"
+			],
+			"ko_sound": "ko_beast"
+		},
+		{
+			"id": "void_moth",
+			"name": "Void Moth",
+			"type": "elemental",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"ley"
+			],
+			"resistances": [],
+			"absorb": [
+				"void"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_forest",
+				"overworld_grassland"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "storm_wraith",
+			"name": "Storm Wraith",
+			"type": "spirit",
+			"threat": "dangerous",
+			"level": 30,
+			"hp": 2000,
+			"mp": 105,
+			"atk": 43,
+			"def": 41,
+			"mag": 55,
+			"mdef": 34,
+			"spd": 32,
+			"gold": 115,
+			"exp": 202,
+			"weaknesses": [
+				"earth"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "ley_crystal_fragment",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_highland",
+				"overworld_ruins"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "roc",
+			"name": "Roc",
+			"type": "beast",
+			"threat": "rare",
+			"level": 32,
+			"hp": 2247,
+			"mp": 112,
+			"atk": 59,
+			"def": 43,
+			"mag": 50,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 200,
+			"exp": 348,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "roc_feather",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "roc_feather",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_mountain"
+			],
+			"ko_sound": "ko_beast"
+		},
+		{
+			"id": "pallor_revenant_overworld",
+			"name": "Pallor Revenant",
+			"type": "pallor",
+			"threat": "dangerous",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 155,
+			"exp": 266,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "bone_dust",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_wolf_overworld",
+			"name": "Pallor Wolf",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 34,
+			"hp": 1805,
+			"mp": 119,
+			"atk": 71,
+			"def": 35,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 232,
+			"exp": 399,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "beast_hide",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "wolf_pelt",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_crawler",
+			"name": "Pallor Crawler",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 232,
+			"exp": 399,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crawler_shell",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_wraith",
+			"name": "Pallor Wraith",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 47,
+			"def": 45,
+			"mag": 60,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 232,
+			"exp": 400,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "pallor_roc",
+			"name": "Pallor Roc",
+			"type": "pallor",
+			"threat": "rare",
+			"level": 34,
+			"hp": 2508,
+			"mp": 119,
+			"atk": 62,
+			"def": 45,
+			"mag": 53,
+			"mdef": 38,
+			"spd": 35,
+			"gold": 232,
+			"exp": 400,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"void"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death"
+			],
+			"steal": {
+				"common": {
+					"item_id": "pallor_sample",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_shard",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "roc_feather",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_pallor"
+		},
+		{
+			"id": "void_crystal",
+			"name": "Void Crystal",
+			"type": "elemental",
+			"threat": "dangerous",
+			"level": 32,
+			"hp": 2247,
+			"mp": 112,
+			"atk": 45,
+			"def": 43,
+			"mag": 57,
+			"mdef": 36,
+			"spd": 33,
+			"gold": 133,
+			"exp": 232,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [],
+			"absorb": [
+				"void"
+			],
+			"status_immunities": [
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "elemental_core",
+				"rate": 25
+			},
+			"locations": [
+				"overworld_grey_zones"
+			],
+			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "ley_warped_drake",
+			"name": "Ley-Warped Drake",
+			"type": "beast",
+			"threat": "dangerous",
+			"level": 40,
+			"hp": 3380,
+			"mp": 140,
+			"atk": 82,
+			"def": 53,
+			"mag": 62,
+			"mdef": 44,
+			"spd": 40,
+			"gold": 241,
+			"exp": 500,
+			"weaknesses": [
+				"frost"
+			],
+			"resistances": [
+				"flame"
+			],
+			"absorb": [],
+			"status_immunities": [],
+			"steal": {
+				"common": {
+					"item_id": "element_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "drake_scale",
+				"rate": 75
+			},
+			"locations": [
+				"ley_scar"
+			],
+			"ko_sound": "ko_beast"
+		},
+		{
+			"id": "ley_warped_wraith",
+			"name": "Ley-Warped Wraith",
+			"type": "spirit",
+			"threat": "dangerous",
+			"level": 42,
+			"hp": 3699,
+			"mp": 147,
+			"atk": 57,
+			"def": 55,
+			"mag": 73,
+			"mdef": 46,
+			"spd": 41,
+			"gold": 279,
+			"exp": 575,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				"ley"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"petrify"
+			],
+			"steal": {
+				"common": {
+					"item_id": "ether_wisp",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "spirit_essence",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "spirit_essence",
+				"rate": 75
+			},
+			"locations": [
+				"ley_scar"
+			],
+			"ko_sound": "ko_spirit"
+		},
+		{
+			"id": "ley_warped_colossus",
+			"name": "Ley-Warped Colossus",
+			"type": "construct",
+			"threat": "dangerous",
+			"level": 45,
+			"hp": 4205,
+			"mp": 0,
+			"atk": 80,
+			"def": 67,
+			"mag": 69,
+			"mdef": 49,
+			"spd": 34,
+			"gold": 348,
+			"exp": 700,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [
+				"earth"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "scrap_metal",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "pallor_fused_capacitor",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "crystal_shard",
+				"rate": 75
+			},
+			"locations": [
+				"ley_scar"
+			],
+			"ko_sound": "ko_construct"
+		},
+		{
+			"id": "ley_abomination",
+			"name": "Ley Abomination",
+			"type": "boss",
+			"threat": "dangerous",
+			"is_boss": false,
+			"is_mini_boss": true,
+			"phases": 1,
+			"level": 48,
+			"hp": 18000,
+			"mp": 168,
+			"atk": 126,
+			"def": 80,
+			"mag": 131,
+			"mdef": 78,
+			"spd": 55,
+			"gold": 654,
+			"exp": 1050,
+			"weaknesses": [
+				"void"
+			],
+			"resistances": [
+				"flame",
+				"frost",
+				"storm"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": {
+					"item_id": "arcanite_shard",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "arcanite_shard",
+				"rate": 100
+			},
+			"locations": [
+				"ley_scar"
+			],
+			"ko_sound": "ko_boss"
+		},
+		{
+			"id": "the_grey_keeper",
+			"name": "The Grey Keeper",
+			"type": "boss",
+			"threat": "boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 2,
+			"level": 32,
+			"hp": 15000,
+			"mp": 200,
+			"atk": 78,
+			"def": 65,
+			"mag": 85,
+			"mdef": 70,
+			"spd": 45,
+			"gold": 0,
+			"exp": 800,
+			"weaknesses": [
+				"spirit"
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"despair",
+				"death",
+				"petrify",
+				"stop"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "spirit_essence",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "keepers_resolve",
+				"rate": 100
+			},
+			"locations": [
+				"oasis_c"
+			],
+			"ko_sound": "ko_boss"
+		}
+	]
+}
