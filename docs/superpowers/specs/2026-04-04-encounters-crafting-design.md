@@ -501,7 +501,7 @@ Total: 3 crafting files in `game/data/crafting/`.
 
 | # | ID | Name | Base Weapon | Infusion | Bonus | Channel |
 |---|---|------|-------------|----------|-------|---------|
-| 1 | `penitents_edge` | Penitent's Edge | `grey_cleaver_tainted` (specific) | spirit | Purification counter: 50 encounters | both |
+| 1 | `penitents_edge` | Penitent's Edge | `grey_cleaver_tainted` (specific) | spirit | Purification counter: 50 Pallor encounters | both |
 | 2 | `stormforge_hammer` | Stormforge Hammer | `architects_hammer` (specific) | storm | +25% damage vs Construct-type | both |
 | 3 | `rootbound_lance` | Rootbound Lance | `torren_spear` (class) | earth | 20% Slow on physical hit | npc_only |
 | 4 | `resonance_staff` | Resonance Staff | `maren_staff` (class) | ley | MP cost -15% all spells | lira_only |
