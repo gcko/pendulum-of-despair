@@ -318,6 +318,15 @@ def segment_entries(raw_text):
             i += 1
             continue
 
+        # BUG 1 FIX: Skip script navigation markers (e.g., *Continue: [link](file)*)
+        if re.match(r'^\s*\*Continue:', line) or re.match(r'^\s*\*Dialogue script continues', line):
+            i += 1
+            continue
+        # Skip pure italic markdown links: *[text](file.md)*
+        if re.match(r'^\s*\*\[.+?\]\(.+?\)\*\s*$', line):
+            i += 1
+            continue
+
         # Skip cross-ref comments that span multiple lines
         if '<!--' in line and '-->' not in line:
             while i < len(lines) and '-->' not in lines[i]:
@@ -346,10 +355,25 @@ def segment_entries(raw_text):
             i += 1
             continue
 
-        # Condition line: (If `flag` set.)
-        condition_match = re.match(r'^\s*\(If\s+[`\']([^`\']+)[`\'](?:\s+set)?\.?\)\s*$', line)
+        # Condition line: (If `flag` set.) or (If `flag` NOT set.)
+        condition_match = re.match(r'^\s*\(If\s+[`\']([^`\']+)[`\']\s*(NOT\s+)?(?:set)?\.?\)\s*$', line)
         if condition_match:
-            elements.append({"type": "condition", "text": condition_match.group(1)})
+            flag = condition_match.group(1)
+            negated = condition_match.group(2) is not None
+            cond_text = f"not {flag}" if negated else flag
+            elements.append({"type": "condition", "text": cond_text})
+            i += 1
+            continue
+
+        # Condition line with numeric comparison: (If `var` >= 2.) etc.
+        score_cond_match = re.match(
+            r'^\s*\(If\s+`([^`]+)`\s*(>=|<=|==|!=|>|<)\s*(\d+)\.\)\s*$', line
+        )
+        if score_cond_match:
+            var_name = score_cond_match.group(1)
+            operator = score_cond_match.group(2)
+            value = score_cond_match.group(3)
+            elements.append({"type": "condition", "text": f"{var_name} {operator} {value}"})
             i += 1
             continue
 
@@ -510,8 +534,20 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
             continue
 
         if elem["type"] == "meta_condition":
-            # "(If player chose option N.)" — treat as a condition
-            pending_condition = elem["text"]
+            # BUG 2 FIX: Translate meta-conditions to flag-based strings
+            raw = elem["text"]
+            # "(If player chose option N.)" → "choice_N_selected"
+            opt_match = re.search(r'chose\s+option\s+(\d+)', raw)
+            if opt_match:
+                pending_condition = f"choice_{opt_match.group(1)}_selected"
+            else:
+                # "(If player consulted X ...)" → "consulted_x_slug"
+                consult_match = re.search(r'consulted\s+(.+?)(?:\s+before|\s*[.)]\s*$)', raw)
+                if consult_match:
+                    pending_condition = "consulted_" + slugify(consult_match.group(1))
+                else:
+                    # Fallback: slugify the whole condition
+                    pending_condition = slugify(raw)
             i += 1
             continue
 
@@ -625,6 +661,74 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
 
         i += 1
 
+    # Post-processing pass: catch score-comparison conditions embedded in dialogue lines.
+    # These appear as lines like "(If `council_result` >= 2.)" that were not on their
+    # own line and thus got absorbed into a speaker's text or narration.
+    _score_cond_re = re.compile(r'\(If\s+`([^`]+)`\s*(>=|<=|==|!=|>|<)\s*(\d+)\.\)')
+    _flag_cond_re = re.compile(r'\(If\s+`([^`]+)`\s*(NOT\s+)?(?:set)?\.?\)')
+    cleaned_entries = []
+    for entry in entries:
+        new_lines = []
+        extracted_condition = None
+        for line_text in entry["lines"]:
+            # Check if the entire line is a score condition
+            score_m = _score_cond_re.fullmatch(line_text.strip())
+            if score_m:
+                extracted_condition = f"{score_m.group(1)} {score_m.group(2)} {score_m.group(3)}"
+                continue
+            # Check if the entire line is a flag condition
+            flag_m = _flag_cond_re.fullmatch(line_text.strip())
+            if flag_m:
+                flag = flag_m.group(1)
+                negated = flag_m.group(2) is not None
+                extracted_condition = f"not {flag}" if negated else flag
+                continue
+            # Check for inline condition at start/end of line and strip it
+            cleaned = _score_cond_re.sub('', line_text).strip()
+            cleaned = _flag_cond_re.sub('', cleaned).strip()
+            if cleaned:
+                new_lines.append(cleaned)
+            elif line_text.strip():
+                # Line was entirely a condition pattern — extract it
+                score_m2 = _score_cond_re.search(line_text)
+                if score_m2:
+                    extracted_condition = f"{score_m2.group(1)} {score_m2.group(2)} {score_m2.group(3)}"
+                else:
+                    flag_m2 = _flag_cond_re.search(line_text)
+                    if flag_m2:
+                        flag = flag_m2.group(1)
+                        negated = flag_m2.group(2) is not None
+                        extracted_condition = f"not {flag}" if negated else flag
+        if extracted_condition:
+            # Apply the extracted condition to the NEXT entry (or current if it has no condition)
+            if new_lines:
+                # Condition was mixed into this entry's lines — keep the cleaned lines
+                entry["lines"] = new_lines
+                # The condition applies to the next entry; stash it
+                cleaned_entries.append(entry)
+                # Create a synthetic condition carrier for the next entry
+                cleaned_entries.append({"_pending_condition": extracted_condition})
+            else:
+                # All lines were the condition — this entry IS the condition for the next one
+                cleaned_entries.append({"_pending_condition": extracted_condition})
+        else:
+            if new_lines:
+                entry["lines"] = new_lines
+            cleaned_entries.append(entry)
+
+    # Rebuild entries applying any pending conditions
+    final_entries = []
+    pending_cond_from_post = None
+    for item in cleaned_entries:
+        if "_pending_condition" in item:
+            pending_cond_from_post = item["_pending_condition"]
+            continue
+        if pending_cond_from_post and not item.get("condition"):
+            item["condition"] = pending_cond_from_post
+        pending_cond_from_post = None
+        final_entries.append(item)
+    entries = final_entries
+
     # Apply any remaining pending animations/sfx to last entry
     if (pending_animations or pending_sfx) and entries:
         last_entry = entries[-1]
@@ -660,6 +764,10 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
 def assign_ids(entries, scene_id):
     """Assign unique IDs to entries: {scene_id}_{NNN}."""
     global all_entry_ids
+    # BUG 5 FIX: Clear any stale IDs from a prior pass with the same scene_id
+    # (e.g., NPC appearing twice in the ambient file — second write overwrites first)
+    prefix = f"{scene_id}_"
+    all_entry_ids = {eid for eid in all_entry_ids if not eid.startswith(prefix)}
     counter = 1
     for entry in entries:
         entry_id = f"{scene_id}_{counter:03d}"
@@ -896,6 +1004,9 @@ def validate_all():
                 # Skip meta-conditions (player choice references, etc.)
                 if condition.startswith("(If player") or condition.startswith("If player"):
                     pass
+                # Skip numeric comparison conditions (e.g., "council_result >= 2")
+                elif re.match(r'^[a-z_]+\s*(>=|<=|==|!=|>|<)\s*\d+$', condition):
+                    pass
                 else:
                     # Extract actual flag names — handle party_has(X) as a
                     # known function, not a flag
@@ -925,8 +1036,9 @@ def validate_all():
 
             # Check choices
             if choice:
-                if len(choice) < 2 or len(choice) > 4:
-                    choice_issues.append(f"{eid}: {len(choice)} options (need 2-4)")
+                # BUG 4 FIX: Single-option choices are valid (bonus/conditional)
+                if len(choice) < 1 or len(choice) > 4:
+                    choice_issues.append(f"{eid}: {len(choice)} options (need 1-4)")
 
     # Build report
     report_lines.append("## Summary\n")

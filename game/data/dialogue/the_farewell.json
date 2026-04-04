@@ -120,28 +120,17 @@
     },
     {
       "id": "the_farewell_010",
-      "speaker": "",
+      "speaker": "lira",
       "lines": [
-        "(If `cael_last_night_lira` NOT set.)"
+        "You didn't come to the workshop. The night before.\nYou couldn't face me."
       ],
-      "condition": null,
+      "condition": "not cael_last_night_lira",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "the_farewell_011",
-      "speaker": "lira",
-      "lines": [
-        "You didn't come to the workshop. The night before.\nYou couldn't face me."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "the_farewell_012",
       "speaker": "cael",
       "lines": [
         "I couldn't face you and still do what I had to do.\nYou would have seen it in my eyes and you would have stopped me."
@@ -152,7 +141,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_013",
+      "id": "the_farewell_012",
       "speaker": "lira",
       "lines": [
         "Edren — he didn't know either. Did he? The training\ngrounds. \"Same time tomorrow.\""
@@ -163,7 +152,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_014",
+      "id": "the_farewell_013",
       "speaker": "cael",
       "lines": [
         "I almost told him. The words were right there. But if\nI had said them, he would have locked me in the vault himself."
@@ -174,7 +163,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_015",
+      "id": "the_farewell_014",
       "speaker": "lira",
       "lines": [
         "Maren knew. She didn't know what, but she knew\nsomething was wrong."
@@ -185,7 +174,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_016",
+      "id": "the_farewell_015",
       "speaker": "cael",
       "lines": [
         "Maren always knows. That's her burden. Knowing things\nand not being able to stop them."
@@ -196,7 +185,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_017",
+      "id": "the_farewell_016",
       "speaker": "lira",
       "lines": [
         "And you didn't tell me."
@@ -207,7 +196,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_018",
+      "id": "the_farewell_017",
       "speaker": "cael",
       "lines": [
         "If I had told you, you would have found a way to\nstop me. And then the door stays open."
@@ -218,7 +207,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_019",
+      "id": "the_farewell_018",
       "speaker": "lira",
       "lines": [
         "Edren."
@@ -229,7 +218,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_020",
+      "id": "the_farewell_019",
       "speaker": "lira",
       "lines": [
         "Let him go."
@@ -240,7 +229,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_021",
+      "id": "the_farewell_020",
       "speaker": "lira",
       "lines": [
         "I know what this costs. I know exactly what this\ncosts. And I'm telling you — let him go. Because the alternative\nis that the door stays open, and everything he went through was\nfor nothing."
@@ -257,7 +246,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_022",
+      "id": "the_farewell_021",
       "speaker": "edren",
       "lines": [
         "I should have seen it. All of it. The nightmares,\nthe isolation. I should have—"
@@ -268,7 +257,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_023",
+      "id": "the_farewell_022",
       "speaker": "cael",
       "lines": [
         "You couldn't have. That was the point. The Pallor\ndoesn't break you where people can see it. It breaks you where\nyou're alone."
@@ -279,7 +268,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_024",
+      "id": "the_farewell_023",
       "speaker": "cael",
       "lines": [
         "This isn't your fault, Edren. None of it."
@@ -290,7 +279,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_025",
+      "id": "the_farewell_024",
       "speaker": "edren",
       "lines": [
         "I'm sorry."
@@ -301,7 +290,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_026",
+      "id": "the_farewell_025",
       "speaker": "cael",
       "lines": [
         "I know."
@@ -317,7 +306,7 @@
       ]
     },
     {
-      "id": "the_farewell_027",
+      "id": "the_farewell_026",
       "speaker": "cael",
       "lines": [
         "Torren. Keep the spirits talking. They remember more\nthan anyone gives them credit for."
@@ -328,7 +317,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_028",
+      "id": "the_farewell_027",
       "speaker": "cael",
       "lines": [
         "Sable. You showed up. Every time, you showed up. Don't\nstop doing that."
@@ -345,7 +334,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_029",
+      "id": "the_farewell_028",
       "speaker": "sable",
       "lines": [
         "Yeah, well. Someone has to."
@@ -362,7 +351,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_030",
+      "id": "the_farewell_029",
       "speaker": "cael",
       "lines": [
         "Maren. Write it down. All of it. So the next time the\ndoor cracks, the world doesn't have to learn this lesson again."
@@ -373,7 +362,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_031",
+      "id": "the_farewell_030",
       "speaker": "maren",
       "lines": [
         "I will."
@@ -390,7 +379,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_032",
+      "id": "the_farewell_031",
       "speaker": "cael",
       "lines": [
         "Build something. Not for me. Something that works\nwith the ley lines instead of draining them. You always knew\nthe craft could be better. Make it better."
@@ -401,7 +390,7 @@
       "sfx": null
     },
     {
-      "id": "the_farewell_033",
+      "id": "the_farewell_032",
       "speaker": "lira",
       "lines": [
         "Go."

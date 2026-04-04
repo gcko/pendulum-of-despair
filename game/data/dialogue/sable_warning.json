@@ -188,17 +188,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "sable_warning_017",
-      "speaker": "",
-      "lines": [
-        "*Continue: [Act II Part 2 — The Betrayal](act-ii-part-2.md)*"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
     }
   ]
 }

@@ -201,28 +201,17 @@
     },
     {
       "id": "cael_betrayal_018",
-      "speaker": "",
+      "speaker": "lira",
       "lines": [
-        "(If `cael_last_night_lira` NOT set.)"
+        "Cael. Please. Stay."
       ],
-      "condition": null,
+      "condition": "not cael_last_night_lira",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "cael_betrayal_019",
-      "speaker": "lira",
-      "lines": [
-        "Cael. Please. Stay."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "cael_betrayal_020",
       "speaker": "cael",
       "lines": [
         "I love you. That's why I can't."

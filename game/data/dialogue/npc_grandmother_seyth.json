@@ -2,7 +2,7 @@
   "scene_id": "npc_grandmother_seyth",
   "entries": [
     {
-      "id": "npc_grandmother_seyth_006",
+      "id": "npc_grandmother_seyth_001",
       "speaker": "seyth",
       "lines": [
         "My grandmother told me a story about a time the\nworld forgot how to laugh."
@@ -13,7 +13,7 @@
       "sfx": null
     },
     {
-      "id": "npc_grandmother_seyth_007",
+      "id": "npc_grandmother_seyth_002",
       "speaker": "seyth",
       "lines": [
         "Every grandmother told the story differently. Mine\nsaid it was a young man who closed the door. My mother's mother\nsaid it was a woman. The details change. The cost doesn't."
@@ -24,7 +24,7 @@
       "sfx": null
     },
     {
-      "id": "npc_grandmother_seyth_008",
+      "id": "npc_grandmother_seyth_003",
       "speaker": "seyth",
       "lines": [
         "Someone has been through the old grove. Picked herbs\nI did not think still grew. Left the roots intact — very careful.\nBut the grove felt quieter after. As if something had been\nremoved that wasn't a plant."
@@ -35,7 +35,7 @@
       "sfx": null
     },
     {
-      "id": "npc_grandmother_seyth_009",
+      "id": "npc_grandmother_seyth_004",
       "speaker": "seyth",
       "lines": [
         "You want to know the truth? Here it is. The Pallor\ndoesn't come because the world is broken. The world breaks\nbecause people stop mending it. The Pallor is just what fills\nthe space where care used to be."
@@ -46,7 +46,7 @@
       "sfx": null
     },
     {
-      "id": "npc_grandmother_seyth_010",
+      "id": "npc_grandmother_seyth_005",
       "speaker": "seyth",
       "lines": [
         "You can't fight grief with swords. Grief isn't an\nenemy. It's a weight. You carry it or you sit down. The ones\nwho sat down are the ones the grey took."

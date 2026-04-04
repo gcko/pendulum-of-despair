@@ -2,7 +2,7 @@
   "scene_id": "npc_jace_renn",
   "entries": [
     {
-      "id": "npc_jace_renn_003",
+      "id": "npc_jace_renn_001",
       "speaker": "jace",
       "lines": [
         "You want to understand the decline? I'll show you.\nPull up a chair. This chart goes back fifty years."
@@ -13,7 +13,7 @@
       "sfx": null
     },
     {
-      "id": "npc_jace_renn_004",
+      "id": "npc_jace_renn_002",
       "speaker": "jace",
       "lines": [
         "I published a paper. \"Projected Ley Network Failure\nUnder Current Extraction Rates.\" The Consortium's response was\nefficient: they discredited the methodology, reassigned my\nstudents, and moved my office to a basement. The data didn't\nchange. Just the people allowed to read it."
@@ -24,7 +24,7 @@
       "sfx": null
     },
     {
-      "id": "npc_jace_renn_005",
+      "id": "npc_jace_renn_003",
       "speaker": "jace",
       "lines": [
         "Lira was the only student who came to the basement.\nShe read the paper. Asked three questions. Left. Two weeks later,\nshe defected. I'd like to think my data helped. More likely she'd\nalready decided and just needed the numbers to prove she wasn't\ncrazy."
@@ -35,7 +35,7 @@
       "sfx": null
     },
     {
-      "id": "npc_jace_renn_006",
+      "id": "npc_jace_renn_004",
       "speaker": "jace",
       "lines": [
         "The Compact isn't evil. That's the hard part. They\ngenuinely believe extraction drives progress. They see the ley\nlines as a resource, like ore or timber. The idea that a resource\ncan be alive — that it can suffer — doesn't fit their model. And\nwhen reality doesn't fit the model, the Compact changes reality."

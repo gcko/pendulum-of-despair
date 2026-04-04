@@ -2,7 +2,7 @@
   "scene_id": "npc_mira_thenn",
   "entries": [
     {
-      "id": "npc_mira_thenn_003",
+      "id": "npc_mira_thenn_001",
       "speaker": "mira",
       "lines": [
         "You want to see something that'll keep you up at night?\nCome look at these maps. I have three generations of them."
@@ -13,7 +13,7 @@
       "sfx": null
     },
     {
-      "id": "npc_mira_thenn_004",
+      "id": "npc_mira_thenn_002",
       "speaker": "mira",
       "lines": [
         "I have maps from fifty years ago. The lines were thick,\ninterconnected, humming with energy. My grandmother's maps show\nthem even thicker. Each generation's map is a little thinner. We\ncalled it \"natural variation.\" It wasn't natural."
@@ -24,7 +24,7 @@
       "sfx": null
     },
     {
-      "id": "npc_mira_thenn_005",
+      "id": "npc_mira_thenn_003",
       "speaker": "mira",
       "lines": [
         "Every major ley line converges at a single point\nsoutheast of the Wilds. I marked it on my map years ago. Didn't\nthink much of it — just a geographical feature. Then the grey\nappeared. Right there. Exactly on my mark."
@@ -35,7 +35,7 @@
       "sfx": null
     },
     {
-      "id": "npc_mira_thenn_006",
+      "id": "npc_mira_thenn_004",
       "speaker": "mira",
       "lines": [
         "Here's what keeps me awake. The convergence point\nisn't recent. The old maps show it too. Every map, every era —\nthe lines have always met at that spot. Whatever is there has\nbeen waiting a very long time."

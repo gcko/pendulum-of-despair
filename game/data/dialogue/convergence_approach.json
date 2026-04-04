@@ -33,17 +33,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "convergence_approach_004",
-      "speaker": "",
-      "lines": [
-        "*Continue: [Act IV + Epilogue — The Closing Door](act-iv-epilogue.md)*"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
     }
   ]
 }

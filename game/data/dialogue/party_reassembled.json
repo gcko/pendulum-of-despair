@@ -165,17 +165,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "party_reassembled_015",
-      "speaker": "",
-      "lines": [
-        "*Continue: [Act III — The Convergence](act-iii.md)*"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
     }
   ]
 }

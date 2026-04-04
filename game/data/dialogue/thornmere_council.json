@@ -81,7 +81,7 @@
       "lines": [
         "The Wilds have never needed Valdris. But you're right\n— the Wilds need the ley lines, and the ley lines don't care\nabout borders."
       ],
-      "condition": "(If player chose option 1.)",
+      "condition": "choice_1_selected",
       "animations": [
         {
           "who": "savanh",
@@ -98,7 +98,7 @@
       "lines": [
         "Don't threaten me with the Compact. But... you're not\nwrong that they would come."
       ],
-      "condition": "(If player chose option 2.)",
+      "condition": "choice_2_selected",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -109,7 +109,7 @@
       "lines": [
         "At least you're honest about what you want. That's\nworth something. Not much, but something."
       ],
-      "condition": "(If player chose option 3.)",
+      "condition": "choice_3_selected",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -120,7 +120,7 @@
       "lines": [
         "You spoke with Seyth. She told you about the grey\ntimes."
       ],
-      "condition": "(If player consulted Grandmother Seyth before this meeting.)",
+      "condition": "consulted_grandmother_seyth",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -201,7 +201,7 @@
       "lines": [
         "Torren trusts you. That's rare from him. You'll have\nDuskfen's voice at the council."
       ],
-      "condition": "(If player chose option 1.)",
+      "condition": "choice_1_selected",
       "animations": [
         {
           "who": "torren",
@@ -218,7 +218,7 @@
       "lines": [
         "Then you've learned nothing from the Fenmother's Hollow."
       ],
-      "condition": "(If player chose option 3.)",
+      "condition": "choice_3_selected",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -259,7 +259,7 @@
       "lines": [
         "Specifics. Finally. You're the first person from\nValdris who's told me something I can act on."
       ],
-      "condition": "(If player chose option 1.)",
+      "condition": "choice_1_selected",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -299,11 +299,11 @@
     },
     {
       "id": "thornmere_council_021",
-      "speaker": "",
+      "speaker": "savanh",
       "lines": [
-        "(If `council_savanh_approval` >= 2.)"
+        "Greywood stands with Valdris. Not for Valdris — for\nthe ley lines that sustain us all."
       ],
-      "condition": null,
+      "condition": "council_savanh_approval >= 2",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -312,147 +312,70 @@
       "id": "thornmere_council_022",
       "speaker": "savanh",
       "lines": [
-        "Greywood stands with Valdris. Not for Valdris — for\nthe ley lines that sustain us all."
+        "Greywood will not commit. The risk is too great for\npromises alone."
       ],
-      "condition": null,
+      "condition": "council_savanh_approval < 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_023",
-      "speaker": "",
+      "speaker": "caden",
       "lines": [
-        "(If `council_savanh_approval` < 2.)"
+        "Duskfen stands. The spirits have spoken. We follow."
       ],
-      "condition": null,
+      "condition": "council_caden_approval >= 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_024",
-      "speaker": "savanh",
+      "speaker": "caden",
       "lines": [
-        "Greywood will not commit. The risk is too great for\npromises alone."
+        "Duskfen cannot commit. We barely survived the\nFenmother's illness. We have nothing left to give."
       ],
-      "condition": null,
+      "condition": "council_caden_approval < 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_025",
-      "speaker": "",
+      "speaker": "wynne",
       "lines": [
-        "(If `council_caden_approval` >= 2.)"
+        "Canopy Reach commits its archers and scouts. Show me\nthe haze stops growing, and we stay."
       ],
-      "condition": null,
+      "condition": "council_wynne_approval >= 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_026",
-      "speaker": "caden",
+      "speaker": "wynne",
       "lines": [
-        "Duskfen stands. The spirits have spoken. We follow."
+        "Canopy Reach will watch. That's all I can promise."
       ],
-      "condition": null,
+      "condition": "council_wynne_approval < 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_027",
-      "speaker": "",
+      "speaker": "lira",
       "lines": [
-        "(If `council_caden_approval` < 2.)"
+        "Did we just... win something?"
       ],
-      "condition": null,
+      "condition": "council_result >= 2",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "thornmere_council_028",
-      "speaker": "caden",
-      "lines": [
-        "Duskfen cannot commit. We barely survived the\nFenmother's illness. We have nothing left to give."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_029",
-      "speaker": "",
-      "lines": [
-        "(If `council_wynne_approval` >= 2.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_030",
-      "speaker": "wynne",
-      "lines": [
-        "Canopy Reach commits its archers and scouts. Show me\nthe haze stops growing, and we stay."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_031",
-      "speaker": "",
-      "lines": [
-        "(If `council_wynne_approval` < 2.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_032",
-      "speaker": "wynne",
-      "lines": [
-        "Canopy Reach will watch. That's all I can promise."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_033",
-      "speaker": "",
-      "lines": [
-        "(If `council_result` >= 2.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_034",
-      "speaker": "lira",
-      "lines": [
-        "Did we just... win something?"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_035",
       "speaker": "edren",
       "lines": [
         "We have allies. Whether it's enough depends on what\ncomes next."
@@ -463,7 +386,7 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_036",
+      "id": "thornmere_council_029",
       "speaker": "torren",
       "lines": [
         "Caden trusts us. That's not a small thing. He\ndoesn't trust easily."
@@ -474,7 +397,7 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_037",
+      "id": "thornmere_council_030",
       "speaker": "maren",
       "lines": [
         "Three tribes committed to defending a kingdom that\nhas never defended them. Remember that when this gets harder."
@@ -485,29 +408,18 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_038",
-      "speaker": "",
-      "lines": [
-        "(If `council_result` == 1.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_039",
+      "id": "thornmere_council_031",
       "speaker": "lira",
       "lines": [
         "One out of three."
       ],
-      "condition": null,
+      "condition": "council_result == 1",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
-      "id": "thornmere_council_040",
+      "id": "thornmere_council_032",
       "speaker": "edren",
       "lines": [
         "One is more than zero."
@@ -518,7 +430,7 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_041",
+      "id": "thornmere_council_033",
       "speaker": "maren",
       "lines": [
         "It won't be enough."
@@ -529,7 +441,7 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_042",
+      "id": "thornmere_council_034",
       "speaker": "edren",
       "lines": [
         "Then we make it enough."
@@ -540,29 +452,18 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_043",
-      "speaker": "",
-      "lines": [
-        "(If `council_result` == 0.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "thornmere_council_044",
+      "id": "thornmere_council_035",
       "speaker": "torren",
       "lines": [
         "They chose what they chose. We can't force the Wilds\nto care about a kingdom they've never trusted."
       ],
-      "condition": null,
+      "condition": "council_result == 0",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
-      "id": "thornmere_council_045",
+      "id": "thornmere_council_036",
       "speaker": "edren",
       "lines": [
         "I know. But I'd hoped—"
@@ -573,7 +474,7 @@
       "sfx": null
     },
     {
-      "id": "thornmere_council_046",
+      "id": "thornmere_council_037",
       "speaker": "lira",
       "lines": [
         "Hope later. Plan now."

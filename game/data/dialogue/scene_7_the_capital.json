@@ -523,17 +523,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "scene_7_the_capital_048",
-      "speaker": "",
-      "lines": [
-        "*Continue: [Act II Part 1 — The Fraying](act-ii-part-1.md)*"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
     }
   ]
 }
