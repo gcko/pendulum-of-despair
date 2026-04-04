@@ -5,7 +5,8 @@
       "id": "npc_sera_linn_001",
       "speaker": "sera",
       "lines": [
-        "I'm not a rebel. I'm a supervisor who got tired of\nwriting next-of-kin letters. There's a difference."
+        "I'm not a rebel. I'm a supervisor who got tired of",
+        "writing next-of-kin letters. There's a difference."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,10 @@
       "id": "npc_sera_linn_002",
       "speaker": "sera",
       "lines": [
-        "Seventeen workers in my section died last year.\nOfficially: \"ley exposure incidents.\" Unofficially: the extraction\nrate is killing them and the Consortium knows it. They did the\nmath. Replacing workers is cheaper than slowing production."
+        "Seventeen workers in my section died last year.",
+        "Officially: \"ley exposure incidents.\" Unofficially: the extraction",
+        "rate is killing them and the Consortium knows it. They did the",
+        "math. Replacing workers is cheaper than slowing production."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +31,9 @@
       "id": "npc_sera_linn_003",
       "speaker": "sera",
       "lines": [
-        "You want my help? Fine. But when this is over, you\nremember us. Not the generals. Not the forgemasters. Us. The ones\nwho built everything they took credit for."
+        "You want my help? Fine. But when this is over, you",
+        "remember us. Not the generals. Not the forgemasters. Us. The ones",
+        "who built everything they took credit for."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +44,10 @@
       "id": "npc_sera_linn_004",
       "speaker": "sera",
       "lines": [
-        "The Consortium's gone. Kole's running things with\nPallor energy and a staff of hollow-eyed soldiers. My network is\nthe only thing keeping the undercity fed. Turns out resistance is\njust logistics with worse funding."
+        "The Consortium's gone. Kole's running things with",
+        "Pallor energy and a staff of hollow-eyed soldiers. My network is",
+        "the only thing keeping the undercity fed. Turns out resistance is",
+        "just logistics with worse funding."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -49,7 +58,10 @@
       "id": "npc_sera_linn_005",
       "speaker": "sera",
       "lines": [
-        "They offered me a seat on the new council. Me. A\nsupervisor from the undercity. I said yes, on one condition — the\nnext-of-kin letters stop. We build things that don't kill the\npeople who build them."
+        "They offered me a seat on the new council. Me. A",
+        "supervisor from the undercity. I said yes, on one condition — the",
+        "next-of-kin letters stop. We build things that don't kill the",
+        "people who build them."
       ],
       "condition": "epilogue_complete",
       "animations": null,

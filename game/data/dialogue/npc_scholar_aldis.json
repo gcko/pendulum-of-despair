@@ -5,7 +5,9 @@
       "id": "npc_scholar_aldis_001",
       "speaker": "aldis",
       "lines": [
-        "The ley lines beneath the capital have lost twelve\npercent capacity in the past year alone. I presented these\nfindings to the court. They asked about margin of error."
+        "The ley lines beneath the capital have lost twelve",
+        "percent capacity in the past year alone. I presented these",
+        "findings to the court. They asked about margin of error."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,9 @@
       "id": "npc_scholar_aldis_002",
       "speaker": "aldis",
       "lines": [
-        "It's not just dimming. The lines are being pulled.\nSomething is drawing on the network — not extracting like the\nCompact, but redirecting. Like a river being diverted underground."
+        "It's not just dimming. The lines are being pulled.",
+        "Something is drawing on the network — not extracting like the",
+        "Compact, but redirecting. Like a river being diverted underground."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +31,10 @@
       "id": "npc_scholar_aldis_003",
       "speaker": "aldis",
       "lines": [
-        "I've been comparing our readings with the old surveys.\nThe Valdris archive has ley measurements going back two hundred\nyears. The decline isn't linear. It accelerated three years ago.\nSomething changed."
+        "I've been comparing our readings with the old surveys.",
+        "The Valdris archive has ley measurements going back two hundred",
+        "years. The decline isn't linear. It accelerated three years ago.",
+        "Something changed."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +45,10 @@
       "id": "npc_scholar_aldis_004",
       "speaker": "aldis",
       "lines": [
-        "Three years ago is when the Ironmouth miners first\nbroke into the deeper tunnels. The ones that aren't mines at all.\nCoincidence? I wrote a paper arguing it wasn't. The court\nsuggested I was \"overinterpreting limited data.\""
+        "Three years ago is when the Ironmouth miners first",
+        "broke into the deeper tunnels. The ones that aren't mines at all.",
+        "Coincidence? I wrote a paper arguing it wasn't. The court",
+        "suggested I was \"overinterpreting limited data.\""
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +59,10 @@
       "id": "npc_scholar_aldis_005",
       "speaker": "aldis",
       "lines": [
-        "A door. That's what Maren called it. If she's right —\nand I suspect she is — then my data tells a story I didn't want\nto read. The ley lines aren't being drained. They're being opened.\nLike veins before surgery."
+        "A door. That's what Maren called it. If she's right —",
+        "and I suspect she is — then my data tells a story I didn't want",
+        "to read. The ley lines aren't being drained. They're being opened.",
+        "Like veins before surgery."
       ],
       "condition": "maren_warning",
       "animations": null,

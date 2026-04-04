@@ -5,7 +5,8 @@
       "id": "renn_gathering_001",
       "speaker": "renn",
       "lines": [
-        "Sable. You look like you've been sleeping on rooftops\nagain."
+        "Sable. You look like you've been sleeping on rooftops",
+        "again."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +28,9 @@
       "id": "renn_gathering_003",
       "speaker": "renn",
       "lines": [
-        "Half my regulars are dead or gone. The other half drink\ntwice as much. Business has never been worse and never been\nbetter."
+        "Half my regulars are dead or gone. The other half drink",
+        "twice as much. Business has never been worse and never been",
+        "better."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +52,8 @@
       "id": "renn_gathering_005",
       "speaker": "sable",
       "lines": [
-        "I need to find them. All of them. Edren, Lira, Torren,\nMaren."
+        "I need to find them. All of them. Edren, Lira, Torren,",
+        "Maren."
       ],
       "condition": null,
       "animations": null,
@@ -60,7 +64,8 @@
       "id": "renn_gathering_006",
       "speaker": "renn",
       "lines": [
-        "That's four people scattered across a continent that's\nfalling apart. Even for you, that's ambitious."
+        "That's four people scattered across a continent that's",
+        "falling apart. Even for you, that's ambitious."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +87,9 @@
       "id": "renn_gathering_008",
       "speaker": "renn",
       "lines": [
-        "Edren's at Highcairn. The monastery in the highlands.\nCordwyn got word from a rider three days ago — he's alive but\nhe's not talking."
+        "Edren's at Highcairn. The monastery in the highlands.",
+        "Cordwyn got word from a rider three days ago — he's alive but",
+        "he's not talking."
       ],
       "condition": null,
       "animations": null,
@@ -104,7 +111,9 @@
       "id": "renn_gathering_010",
       "speaker": "renn",
       "lines": [
-        "Lira went back to the Compact. Infiltrated under a\nfalse name. Last I heard, she was in Corrund chasing something\nthrough the Consortium's archives. That was two weeks ago."
+        "Lira went back to the Compact. Infiltrated under a",
+        "false name. Last I heard, she was in Corrund chasing something",
+        "through the Consortium's archives. That was two weeks ago."
       ],
       "condition": null,
       "animations": null,
@@ -126,7 +135,8 @@
       "id": "renn_gathering_012",
       "speaker": "renn",
       "lines": [
-        "Back in the Wilds. The spirit-speakers are saying the\nwhole forest is dying. Torren's trying to hold it together."
+        "Back in the Wilds. The spirit-speakers are saying the",
+        "whole forest is dying. Torren's trying to hold it together."
       ],
       "condition": null,
       "animations": null,
@@ -148,7 +158,9 @@
       "id": "renn_gathering_014",
       "speaker": "renn",
       "lines": [
-        "Gone. Left a note at Cordwyn's office: \"I've gone to\nfind what came before the Pendulum.\" Nobody knows where that\nmeans."
+        "Gone. Left a note at Cordwyn's office: \"I've gone to",
+        "find what came before the Pendulum.\" Nobody knows where that",
+        "means."
       ],
       "condition": null,
       "animations": null,
@@ -159,7 +171,8 @@
       "id": "renn_gathering_015",
       "speaker": "renn",
       "lines": [
-        "Start with whoever you can reach. Come back when you\nhave news. I'll keep my ears open."
+        "Start with whoever you can reach. Come back when you",
+        "have news. I'll keep my ears open."
       ],
       "condition": null,
       "animations": null,

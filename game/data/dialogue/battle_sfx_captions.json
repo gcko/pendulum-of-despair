@@ -5,7 +5,8 @@
       "id": "battle_sfx_captions_001",
       "speaker": "",
       "lines": [
-        "When SFX Captions are enabled in Config, these text labels appear\nbriefly (2-3s) in the lower corner of the screen:"
+        "When SFX Captions are enabled in Config, these text labels appear",
+        "briefly (2-3s) in the lower corner of the screen:"
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,14 @@
       "id": "battle_sfx_captions_002",
       "speaker": "",
       "lines": [
-        "- [Save Point] — when near a save crystal\n- [Encounter] — when the encounter trigger fires\n- [Level Up] — on level gain\n- [Victory] — battle end\n- [Item] — item obtained from chest or pickup\n- [Quest Complete] — sidequest completed\n- [Phase Change] — boss enters new phase\n- [Alert] — alarm or environmental warning"
+        "- [Save Point] — when near a save crystal",
+        "- [Encounter] — when the encounter trigger fires",
+        "- [Level Up] — on level gain",
+        "- [Victory] — battle end",
+        "- [Item] — item obtained from chest or pickup",
+        "- [Quest Complete] — sidequest completed",
+        "- [Phase Change] — boss enters new phase",
+        "- [Alert] — alarm or environmental warning"
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +46,10 @@
       "id": "battle_sfx_captions_004",
       "speaker": "",
       "lines": [
-        "*The battle speaks through its voices — bosses who believe in\nwhat they're doing, a party that refuses to stop, and a world\nthat communicates through status notifications and the quiet\nrhythm of \"Saved.\"*"
+        "*The battle speaks through its voices — bosses who believe in",
+        "what they're doing, a party that refuses to stop, and a world",
+        "that communicates through status notifications and the quiet",
+        "rhythm of \"Saved.\"*"
       ],
       "condition": null,
       "animations": null,

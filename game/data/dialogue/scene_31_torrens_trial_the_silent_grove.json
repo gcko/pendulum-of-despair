@@ -5,7 +5,9 @@
       "id": "scene_31_torrens_trial_the_silent_grove_001",
       "speaker": "last_voice",
       "lines": [
-        "You let us die. The old ways, the harmonics,\nthe songs between root and sky — you were supposed to protect\nthem. And you failed."
+        "You let us die. The old ways, the harmonics,",
+        "the songs between root and sky — you were supposed to protect",
+        "them. And you failed."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,8 @@
       "id": "scene_31_torrens_trial_the_silent_grove_003",
       "speaker": "torren",
       "lines": [
-        "I couldn't save everything. I know that now. But\nwhat I could save, I saved."
+        "I couldn't save everything. I know that now. But",
+        "what I could save, I saved."
       ],
       "condition": null,
       "animations": null,
@@ -60,7 +63,9 @@
       "id": "scene_31_torrens_trial_the_silent_grove_006",
       "speaker": "torren",
       "lines": [
-        "I spent my whole life trying to protect the old\nways. The trial showed me that some of them need to end so new\nones can begin. Imperfect protection. That's all anyone gets."
+        "I spent my whole life trying to protect the old",
+        "ways. The trial showed me that some of them need to end so new",
+        "ones can begin. Imperfect protection. That's all anyone gets."
       ],
       "condition": null,
       "animations": null,

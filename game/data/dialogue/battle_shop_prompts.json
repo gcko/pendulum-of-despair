@@ -5,7 +5,9 @@
       "id": "battle_shop_prompts_001",
       "speaker": "",
       "lines": [
-        "- *(Buy:)* \"Buy | Sell | Exit\"\n- *(Unaffordable:)* Item name in grey text.\n- *(Equipped indicator:)* \"[E]\" next to equipped items."
+        "- *(Buy:)* \"Buy | Sell | Exit\"",
+        "- *(Unaffordable:)* Item name in grey text.",
+        "- *(Equipped indicator:)* \"[E]\" next to equipped items."
       ],
       "condition": null,
       "animations": null,

@@ -5,7 +5,8 @@
       "id": "npc_elara_thane_001",
       "speaker": "elara",
       "lines": [
-        "My grandmother could call a storm lasting three days.\nI called one last month that lasted three minutes. Progress."
+        "My grandmother could call a storm lasting three days.",
+        "I called one last month that lasted three minutes. Progress."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "npc_elara_thane_002",
       "speaker": "elara",
       "lines": [
-        "The wind pact feels... thin. Like hearing someone\nbreathe in the next room. Present, but distant."
+        "The wind pact feels... thin. Like hearing someone",
+        "breathe in the next room. Present, but distant."
       ],
       "condition": "cael_nightmares_begin",
       "animations": null,
@@ -27,7 +29,9 @@
       "id": "npc_elara_thane_003",
       "speaker": "elara",
       "lines": [
-        "The pact broke. During the siege — I felt it snap,\nlike a bowstring. The spirit screamed once, then silence. I've\nbeen calling every day since. Nothing."
+        "The pact broke. During the siege — I felt it snap,",
+        "like a bowstring. The spirit screamed once, then silence. I've",
+        "been calling every day since. Nothing."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -38,7 +42,8 @@
       "id": "npc_elara_thane_004",
       "speaker": "elara",
       "lines": [
-        "The spirit isn't dead. I can feel it. It just won't\nspeak. Maybe it's afraid too."
+        "The spirit isn't dead. I can feel it. It just won't",
+        "speak. Maybe it's afraid too."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -49,7 +54,8 @@
       "id": "npc_elara_thane_005",
       "speaker": "elara",
       "lines": [
-        "She spoke. This morning. One word. Just my name.\nI cried for an hour."
+        "She spoke. This morning. One word. Just my name.",
+        "I cried for an hour."
       ],
       "condition": "epilogue_complete",
       "animations": null,

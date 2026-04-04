@@ -5,7 +5,10 @@
       "id": "diplomatic_mission_001",
       "speaker": "king_aldren",
       "lines": [
-        "The ley lines are failing faster than Aldis\nprojected. The Compact has taken two more border towns. And now\nwe have an artifact in our vaults that my court mage tells me is\na door to something that feeds on despair."
+        "The ley lines are failing faster than Aldis",
+        "projected. The Compact has taken two more border towns. And now",
+        "we have an artifact in our vaults that my court mage tells me is",
+        "a door to something that feeds on despair."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +19,9 @@
       "id": "diplomatic_mission_002",
       "speaker": "king_aldren",
       "lines": [
-        "We need allies. The Thornmere tribes have never\ncommitted to a formal alliance with Valdris, but if the ley lines\nthreaten their forests, they may listen."
+        "We need allies. The Thornmere tribes have never",
+        "committed to a formal alliance with Valdris, but if the ley lines",
+        "threaten their forests, they may listen."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +43,9 @@
       "id": "diplomatic_mission_004",
       "speaker": "torren",
       "lines": [
-        "They'll negotiate with me. I'm one of them. But\nI'll need the rest of you — Valdris needs to show up in person,\nnot through messengers."
+        "They'll negotiate with me. I'm one of them. But",
+        "I'll need the rest of you — Valdris needs to show up in person,",
+        "not through messengers."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +56,8 @@
       "id": "diplomatic_mission_005",
       "speaker": "king_aldren",
       "lines": [
-        "Then go. Sable — I'd like you to stay. Keep an\neye on things here. Particularly on Cael's research."
+        "Then go. Sable — I'd like you to stay. Keep an",
+        "eye on things here. Particularly on Cael's research."
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +79,8 @@
       "id": "diplomatic_mission_007",
       "speaker": "king_aldren",
       "lines": [
-        "He's been working long hours. Aldis says his\nquestions are... unusual. Make sure he eats. Make sure he sleeps."
+        "He's been working long hours. Aldis says his",
+        "questions are... unusual. Make sure he eats. Make sure he sleeps."
       ],
       "condition": null,
       "animations": null,

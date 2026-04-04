@@ -5,7 +5,8 @@
       "id": "npc_nella_001",
       "speaker": "nella",
       "lines": [
-        "Starbloom today — only grows where ley lines run\nshallow. My grandmother said they're good luck."
+        "Starbloom today — only grows where ley lines run",
+        "shallow. My grandmother said they're good luck."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "npc_nella_002",
       "speaker": "nella",
       "lines": [
-        "The starblooms wilted overnight. All of them. I've\nnever seen that before."
+        "The starblooms wilted overnight. All of them. I've",
+        "never seen that before."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -27,7 +29,9 @@
       "id": "npc_nella_003",
       "speaker": "nella",
       "lines": [
-        "I dry them now. Press flat, tie with string. People\nbuy anyway. I think they just want to remember what colour\nlooked like."
+        "I dry them now. Press flat, tie with string. People",
+        "buy anyway. I think they just want to remember what colour",
+        "looked like."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -38,7 +42,8 @@
       "id": "npc_nella_004",
       "speaker": "nella",
       "lines": [
-        "Look. Fresh starblooms. The first ones in months.\nThe petals are smaller, but they're real. They're growing again."
+        "Look. Fresh starblooms. The first ones in months.",
+        "The petals are smaller, but they're real. They're growing again."
       ],
       "condition": "epilogue_complete",
       "animations": null,

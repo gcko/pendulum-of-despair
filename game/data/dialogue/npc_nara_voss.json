@@ -5,7 +5,8 @@
       "id": "npc_nara_voss_001",
       "speaker": "nara",
       "lines": [
-        "Ashport silk — best on the continent. Can't get this\nweave anywhere else."
+        "Ashport silk — best on the continent. Can't get this",
+        "weave anywhere else."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "npc_nara_voss_002",
       "speaker": "nara",
       "lines": [
-        "No silk anymore. The worms won't spin. Something\nabout the ley lines. Selling wool now. Wool doesn't need magic."
+        "No silk anymore. The worms won't spin. Something",
+        "about the ley lines. Selling wool now. Wool doesn't need magic."
       ],
       "condition": "interlude_begins",
       "animations": null,

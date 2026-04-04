@@ -5,7 +5,8 @@
       "id": "npc_rhona_001",
       "speaker": "rhona",
       "lines": [
-        "Valdris coin, Compact gold — I take both. Information?\nThat costs more, but I take that in favours."
+        "Valdris coin, Compact gold — I take both. Information?",
+        "That costs more, but I take that in favours."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,9 @@
       "id": "npc_rhona_002",
       "speaker": "rhona",
       "lines": [
-        "Fish float belly-up and they're not rotting. Just\nfloating there, perfectly still. My kids won't go near the water\nanymore."
+        "Fish float belly-up and they're not rotting. Just",
+        "floating there, perfectly still. My kids won't go near the water",
+        "anymore."
       ],
       "condition": "interlude_begins",
       "animations": null,

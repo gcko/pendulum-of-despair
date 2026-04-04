@@ -5,7 +5,9 @@
       "id": "npc_captain_isen_001",
       "speaker": "isen",
       "lines": [
-        "I command six boats and twelve sailors. The Compact\nhas forty gunships. If you're asking about naval strategy,\nrecalibrate your expectations."
+        "I command six boats and twelve sailors. The Compact",
+        "has forty gunships. If you're asking about naval strategy,",
+        "recalibrate your expectations."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,9 @@
       "id": "npc_captain_isen_002",
       "speaker": "isen",
       "lines": [
-        "The harbour's full of debris from the siege. I've got\nmy crews clearing it, but we lost two boats to fire. Down to\nfour. Four boats against whatever comes next."
+        "The harbour's full of debris from the siege. I've got",
+        "my crews clearing it, but we lost two boats to fire. Down to",
+        "four. Four boats against whatever comes next."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -27,7 +31,8 @@
       "id": "npc_captain_isen_003",
       "speaker": "isen",
       "lines": [
-        "I stopped waiting for orders. The crown's dead, the\ncouncil's arguing. People needed boats. Simple enough."
+        "I stopped waiting for orders. The crown's dead, the",
+        "council's arguing. People needed boats. Simple enough."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -38,7 +43,9 @@
       "id": "npc_captain_isen_004",
       "speaker": "isen",
       "lines": [
-        "Six boats now. Started with four after the siege,\nborrowed two from Bellhaven. First trade convoy left harbour\nyesterday. I counted the sails until they were out of sight."
+        "Six boats now. Started with four after the siege,",
+        "borrowed two from Bellhaven. First trade convoy left harbour",
+        "yesterday. I counted the sails until they were out of sight."
       ],
       "condition": "epilogue_complete",
       "animations": null,

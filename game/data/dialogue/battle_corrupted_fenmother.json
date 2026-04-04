@@ -5,7 +5,8 @@
       "id": "battle_corrupted_fenmother_001",
       "speaker": "",
       "lines": [
-        "The water surges. Something vast stirs beneath the surface —\ntendrils of grey-green light reaching for the walls."
+        "The water surges. Something vast stirs beneath the surface —",
+        "tendrils of grey-green light reaching for the walls."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "battle_corrupted_fenmother_002",
       "speaker": "",
       "lines": [
-        "The Fenmother shrieks — corruption pulses through the chamber.\nThe water rises."
+        "The Fenmother shrieks — corruption pulses through the chamber.",
+        "The water rises."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,8 @@
       "id": "battle_corrupted_fenmother_003",
       "speaker": "",
       "lines": [
-        "The corruption recedes from her eyes. For a moment, the spirit\nunderneath is visible — ancient, tired, asking for help."
+        "The corruption recedes from her eyes. For a moment, the spirit",
+        "underneath is visible — ancient, tired, asking for help."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +41,9 @@
       "id": "battle_corrupted_fenmother_004",
       "speaker": "",
       "lines": [
-        "The grey drains from the water. The Fenmother's form settles,\ntranslucent and calm. She sinks beneath the surface. The hollow\ngoes quiet."
+        "The grey drains from the water. The Fenmother's form settles,",
+        "translucent and calm. She sinks beneath the surface. The hollow",
+        "goes quiet."
       ],
       "condition": null,
       "animations": null,

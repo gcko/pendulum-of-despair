@@ -16,7 +16,9 @@
       "id": "scene_29_edrens_trial_the_hall_of_crowns_002",
       "speaker": "crowned_hollow",
       "lines": [
-        "Every command you gave. Every life spent\nunder your orders. Every soldier who trusted your judgment and\ndied for it."
+        "Every command you gave. Every life spent",
+        "under your orders. Every soldier who trusted your judgment and",
+        "died for it."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,8 @@
       "id": "scene_29_edrens_trial_the_hall_of_crowns_003",
       "speaker": "crowned_hollow",
       "lines": [
-        "You led them. You failed them. What do\nyou have left?"
+        "You led them. You failed them. What do",
+        "you have left?"
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +74,8 @@
       "id": "scene_29_edrens_trial_the_hall_of_crowns_007",
       "speaker": "edren",
       "lines": [
-        "The weight doesn't go away. But you can stand under\nit."
+        "The weight doesn't go away. But you can stand under",
+        "it."
       ],
       "condition": null,
       "animations": null,
@@ -93,7 +97,8 @@
       "id": "scene_29_edrens_trial_the_hall_of_crowns_009",
       "speaker": "edren",
       "lines": [
-        "Every crown I've ever stood under. Every order I've\ngiven that ended in a funeral."
+        "Every crown I've ever stood under. Every order I've",
+        "given that ended in a funeral."
       ],
       "condition": null,
       "animations": null,
@@ -115,7 +120,8 @@
       "id": "scene_29_edrens_trial_the_hall_of_crowns_011",
       "speaker": "edren",
       "lines": [
-        "I stood under them. That's all. That's what it\nwanted to know — whether I could."
+        "I stood under them. That's all. That's what it",
+        "wanted to know — whether I could."
       ],
       "condition": null,
       "animations": [

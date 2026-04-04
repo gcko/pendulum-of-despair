@@ -827,12 +827,29 @@ def assign_ids(entries, scene_id):
 # STAGE 6: JSON Writer
 # ─────────────────────────────────────────────────────────────
 
+def split_lines_on_newlines(lines):
+    """Split any lines element containing embedded newlines into separate elements.
+
+    Per dialogue-system.md Section 4.1, each element in "lines" should be
+    ONE text box. Multi-paragraph text must be split into separate elements.
+    """
+    result = []
+    for line in lines:
+        parts = line.split('\n')
+        for part in parts:
+            stripped = part.strip()
+            if stripped:
+                result.append(stripped)
+    return result if result else [""]
+
+
 def clean_entry(entry):
     """Ensure all 7 fields present, clean up internal tracking."""
+    raw_lines = entry["lines"] if entry["lines"] else [""]
     return {
         "id": entry["id"],
         "speaker": entry["speaker"],
-        "lines": entry["lines"] if entry["lines"] else [""],
+        "lines": split_lines_on_newlines(raw_lines),
         "condition": entry.get("condition"),
         "animations": entry.get("animations") if entry.get("animations") else None,
         "choice": entry.get("choice") if entry.get("choice") else None,

@@ -5,7 +5,8 @@
       "id": "npc_marrek_001",
       "speaker": "marrek",
       "lines": [
-        "Interesting times. I find interesting times are good\nfor business. People need things they didn't know they needed."
+        "Interesting times. I find interesting times are good",
+        "for business. People need things they didn't know they needed."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "npc_marrek_002",
       "speaker": "marrek",
       "lines": [
-        "I've been on this road longer than most people have\nbeen alive. The road doesn't change. People do."
+        "I've been on this road longer than most people have",
+        "been alive. The road doesn't change. People do."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,9 @@
       "id": "npc_marrek_003",
       "speaker": "marrek",
       "lines": [
-        "Business is steady. Isn't that strange? The world is\nending and people still need rope, and candles, and salt. I have\nall three."
+        "Business is steady. Isn't that strange? The world is",
+        "ending and people still need rope, and candles, and salt. I have",
+        "all three."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -38,7 +42,9 @@
       "id": "npc_marrek_004",
       "speaker": "marrek",
       "lines": [
-        "You're wondering how I'm still here. Still stocked.\nI wonder that too, some nights. The road doesn't care about the\ngrey. It just keeps going. So do I."
+        "You're wondering how I'm still here. Still stocked.",
+        "I wonder that too, some nights. The road doesn't care about the",
+        "grey. It just keeps going. So do I."
       ],
       "condition": "interlude_begins",
       "animations": null,

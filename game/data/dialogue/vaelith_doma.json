@@ -16,7 +16,8 @@
       "id": "vaelith_doma_002",
       "speaker": "villager",
       "lines": [
-        "My husband. The ley surge took our farm. He just...\nstopped. Sat down one morning and didn't stand up again."
+        "My husband. The ley surge took our farm. He just...",
+        "stopped. Sat down one morning and didn't stand up again."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +28,8 @@
       "id": "vaelith_doma_003",
       "speaker": "vaelith",
       "lines": [
-        "I understand. Grief like that doesn't ask permission.\nIt just arrives."
+        "I understand. Grief like that doesn't ask permission.",
+        "It just arrives."
       ],
       "condition": null,
       "animations": null,

@@ -5,7 +5,8 @@
       "id": "vaelith_tavern_001",
       "speaker": "vaelith",
       "lines": [
-        "What a pleasant surprise. I didn't expect to see\nyou again so soon."
+        "What a pleasant surprise. I didn't expect to see",
+        "you again so soon."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +28,8 @@
       "id": "vaelith_tavern_003",
       "speaker": "vaelith",
       "lines": [
-        "I'm flattered you remember. Please, sit. The house\nale is dreadful, but the company is much improved."
+        "I'm flattered you remember. Please, sit. The house",
+        "ale is dreadful, but the company is much improved."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +40,9 @@
       "id": "vaelith_tavern_004",
       "speaker": "vaelith",
       "lines": [
-        "I hear you've been busy. Tribal alliances, spirit\nrituals, an audience with three leaders at once. Impressive work\nfor a kingdom on its heels."
+        "I hear you've been busy. Tribal alliances, spirit",
+        "rituals, an audience with three leaders at once. Impressive work",
+        "for a kingdom on its heels."
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +75,8 @@
       "id": "vaelith_tavern_007",
       "speaker": "vaelith",
       "lines": [
-        "Your friend with the heavy eyes. Cael, was it? How\nis he sleeping these days?"
+        "Your friend with the heavy eyes. Cael, was it? How",
+        "is he sleeping these days?"
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +87,8 @@
       "id": "vaelith_tavern_008",
       "speaker": "lira",
       "lines": [
-        "I wouldn't know. I've been in the Wilds, not Valdris.\nWhy do you ask?"
+        "I wouldn't know. I've been in the Wilds, not Valdris.",
+        "Why do you ask?"
       ],
       "condition": null,
       "animations": [
@@ -99,7 +105,8 @@
       "id": "vaelith_tavern_009",
       "speaker": "vaelith",
       "lines": [
-        "No reason. Old ruins do strange things to\nsensitive minds. I've studied enough of them to know."
+        "No reason. Old ruins do strange things to",
+        "sensitive minds. I've studied enough of them to know."
       ],
       "condition": null,
       "animations": null,
@@ -110,7 +117,8 @@
       "id": "vaelith_tavern_010",
       "speaker": "vaelith",
       "lines": [
-        "And the spirit-speaker. The ley lines must feel...\nthin to you. Like a song losing its harmony."
+        "And the spirit-speaker. The ley lines must feel...",
+        "thin to you. Like a song losing its harmony."
       ],
       "condition": "party_has(torren)",
       "animations": null,
@@ -121,7 +129,8 @@
       "id": "vaelith_tavern_011",
       "speaker": "torren",
       "lines": [
-        "You speak of ley lines like someone who's watched\nthem die before."
+        "You speak of ley lines like someone who's watched",
+        "them die before."
       ],
       "condition": null,
       "animations": [
@@ -149,7 +158,9 @@
       "id": "vaelith_tavern_013",
       "speaker": "vaelith",
       "lines": [
-        "The scholar. You've been reading about cycles,\nhaven't you? Historical patterns. Repeating phenomena. I admire\nthe dedication, even if the conclusions are... premature."
+        "The scholar. You've been reading about cycles,",
+        "haven't you? Historical patterns. Repeating phenomena. I admire",
+        "the dedication, even if the conclusions are... premature."
       ],
       "condition": "party_has(maren)",
       "animations": null,
@@ -171,7 +182,8 @@
       "id": "vaelith_tavern_015",
       "speaker": "vaelith",
       "lines": [
-        "I pay attention. To everything. It's a habit I've\nnever been able to break."
+        "I pay attention. To everything. It's a habit I've",
+        "never been able to break."
       ],
       "condition": null,
       "animations": null,
@@ -182,7 +194,8 @@
       "id": "vaelith_tavern_016",
       "speaker": "vaelith",
       "lines": [
-        "Safe travels to Valdris. I do hope the king\nappreciates what you've done. Good allies are hard to find."
+        "Safe travels to Valdris. I do hope the king",
+        "appreciates what you've done. Good allies are hard to find."
       ],
       "condition": null,
       "animations": null,

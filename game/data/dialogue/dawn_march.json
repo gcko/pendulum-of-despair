@@ -5,7 +5,8 @@
       "id": "dawn_march_001",
       "speaker": "cael",
       "lines": [
-        "Those miners. They just stopped. No fight, no wounds.\nThey gave up."
+        "Those miners. They just stopped. No fight, no wounds.",
+        "They gave up."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +83,9 @@
       "id": "dawn_march_008",
       "speaker": "sable",
       "lines": [
-        "I wasn't asking. I was observing. The commander's\ncarrying it like it's made of glass, and your boyfriend hasn't\nstopped staring at it since we left."
+        "I wasn't asking. I was observing. The commander's",
+        "carrying it like it's made of glass, and your boyfriend hasn't",
+        "stopped staring at it since we left."
       ],
       "condition": null,
       "animations": null,
@@ -115,7 +118,9 @@
       "id": "dawn_march_011",
       "speaker": "sable",
       "lines": [
-        "For what it's worth — whatever that thing is, the\nCompact sent fifty soldiers to guard it. Fifty. They don't do\nthat for mining equipment."
+        "For what it's worth — whatever that thing is, the",
+        "Compact sent fifty soldiers to guard it. Fifty. They don't do",
+        "that for mining equipment."
       ],
       "condition": null,
       "animations": null,

@@ -16,7 +16,9 @@
       "id": "the_farewell_002",
       "speaker": "edren",
       "lines": [
-        "There has to be another way. Maren — your research,\nthe Archive, the cycles. There has to be a precedent where the\ndoor closed without—"
+        "There has to be another way. Maren — your research,",
+        "the Archive, the cycles. There has to be a precedent where the",
+        "door closed without—"
       ],
       "condition": null,
       "animations": [
@@ -44,7 +46,9 @@
       "id": "the_farewell_004",
       "speaker": "maren",
       "lines": [
-        "Every cycle, someone carries the Pallor through the\ndoor. Every cycle, they stay. That's how it closes. There is no\nalternative in eleven thousand years of record."
+        "Every cycle, someone carries the Pallor through the",
+        "door. Every cycle, they stay. That's how it closes. There is no",
+        "alternative in eleven thousand years of record."
       ],
       "condition": null,
       "animations": [
@@ -100,7 +104,8 @@
       "id": "the_farewell_008",
       "speaker": "lira",
       "lines": [
-        "In the workshop. The night before. You asked me what\nthe world looks like after. You already knew you wouldn't see it."
+        "In the workshop. The night before. You asked me what",
+        "the world looks like after. You already knew you wouldn't see it."
       ],
       "condition": "cael_last_night_lira",
       "animations": null,
@@ -111,7 +116,8 @@
       "id": "the_farewell_009",
       "speaker": "cael",
       "lines": [
-        "I wanted to hear you describe it. So I could carry\nthat with me. Through the door."
+        "I wanted to hear you describe it. So I could carry",
+        "that with me. Through the door."
       ],
       "condition": null,
       "animations": null,
@@ -122,7 +128,8 @@
       "id": "the_farewell_010",
       "speaker": "lira",
       "lines": [
-        "You didn't come to the workshop. The night before.\nYou couldn't face me."
+        "You didn't come to the workshop. The night before.",
+        "You couldn't face me."
       ],
       "condition": "cael_last_night_lira_not_set",
       "animations": null,
@@ -133,7 +140,8 @@
       "id": "the_farewell_011",
       "speaker": "cael",
       "lines": [
-        "I couldn't face you and still do what I had to do.\nYou would have seen it in my eyes and you would have stopped me."
+        "I couldn't face you and still do what I had to do.",
+        "You would have seen it in my eyes and you would have stopped me."
       ],
       "condition": null,
       "animations": null,
@@ -144,7 +152,8 @@
       "id": "the_farewell_012",
       "speaker": "lira",
       "lines": [
-        "Edren — he didn't know either. Did he? The training\ngrounds. \"Same time tomorrow.\""
+        "Edren — he didn't know either. Did he? The training",
+        "grounds. \"Same time tomorrow.\""
       ],
       "condition": "cael_last_night_edren",
       "animations": null,
@@ -155,7 +164,8 @@
       "id": "the_farewell_013",
       "speaker": "cael",
       "lines": [
-        "I almost told him. The words were right there. But if\nI had said them, he would have locked me in the vault himself."
+        "I almost told him. The words were right there. But if",
+        "I had said them, he would have locked me in the vault himself."
       ],
       "condition": null,
       "animations": null,
@@ -166,7 +176,8 @@
       "id": "the_farewell_014",
       "speaker": "lira",
       "lines": [
-        "Maren knew. She didn't know what, but she knew\nsomething was wrong."
+        "Maren knew. She didn't know what, but she knew",
+        "something was wrong."
       ],
       "condition": "cael_last_night_maren",
       "animations": null,
@@ -177,7 +188,8 @@
       "id": "the_farewell_015",
       "speaker": "cael",
       "lines": [
-        "Maren always knows. That's her burden. Knowing things\nand not being able to stop them."
+        "Maren always knows. That's her burden. Knowing things",
+        "and not being able to stop them."
       ],
       "condition": null,
       "animations": null,
@@ -199,7 +211,8 @@
       "id": "the_farewell_017",
       "speaker": "cael",
       "lines": [
-        "If I had told you, you would have found a way to\nstop me. And then the door stays open."
+        "If I had told you, you would have found a way to",
+        "stop me. And then the door stays open."
       ],
       "condition": null,
       "animations": null,
@@ -232,7 +245,10 @@
       "id": "the_farewell_020",
       "speaker": "lira",
       "lines": [
-        "I know what this costs. I know exactly what this\ncosts. And I'm telling you — let him go. Because the alternative\nis that the door stays open, and everything he went through was\nfor nothing."
+        "I know what this costs. I know exactly what this",
+        "costs. And I'm telling you — let him go. Because the alternative",
+        "is that the door stays open, and everything he went through was",
+        "for nothing."
       ],
       "condition": null,
       "animations": [
@@ -249,7 +265,8 @@
       "id": "the_farewell_021",
       "speaker": "edren",
       "lines": [
-        "I should have seen it. All of it. The nightmares,\nthe isolation. I should have—"
+        "I should have seen it. All of it. The nightmares,",
+        "the isolation. I should have—"
       ],
       "condition": null,
       "animations": null,
@@ -260,7 +277,9 @@
       "id": "the_farewell_022",
       "speaker": "cael",
       "lines": [
-        "You couldn't have. That was the point. The Pallor\ndoesn't break you where people can see it. It breaks you where\nyou're alone."
+        "You couldn't have. That was the point. The Pallor",
+        "doesn't break you where people can see it. It breaks you where",
+        "you're alone."
       ],
       "condition": null,
       "animations": null,
@@ -309,7 +328,8 @@
       "id": "the_farewell_026",
       "speaker": "cael",
       "lines": [
-        "Torren. Keep the spirits talking. They remember more\nthan anyone gives them credit for."
+        "Torren. Keep the spirits talking. They remember more",
+        "than anyone gives them credit for."
       ],
       "condition": null,
       "animations": null,
@@ -320,7 +340,8 @@
       "id": "the_farewell_027",
       "speaker": "cael",
       "lines": [
-        "Sable. You showed up. Every time, you showed up. Don't\nstop doing that."
+        "Sable. You showed up. Every time, you showed up. Don't",
+        "stop doing that."
       ],
       "condition": null,
       "animations": [
@@ -354,7 +375,8 @@
       "id": "the_farewell_029",
       "speaker": "cael",
       "lines": [
-        "Maren. Write it down. All of it. So the next time the\ndoor cracks, the world doesn't have to learn this lesson again."
+        "Maren. Write it down. All of it. So the next time the",
+        "door cracks, the world doesn't have to learn this lesson again."
       ],
       "condition": null,
       "animations": null,
@@ -382,7 +404,9 @@
       "id": "the_farewell_031",
       "speaker": "cael",
       "lines": [
-        "Build something. Not for me. Something that works\nwith the ley lines instead of draining them. You always knew\nthe craft could be better. Make it better."
+        "Build something. Not for me. Something that works",
+        "with the ley lines instead of draining them. You always knew",
+        "the craft could be better. Make it better."
       ],
       "condition": null,
       "animations": null,

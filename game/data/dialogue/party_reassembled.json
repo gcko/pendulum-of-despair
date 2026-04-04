@@ -5,7 +5,10 @@
       "id": "party_reassembled_001",
       "speaker": "maren",
       "lines": [
-        "The Pendulum is a door. Cael opened it from this\nside when he took the artifact. The Pallor — the Grey, the\nWeight, whatever name you give it — is on the other side, and\nit's been pushing through since the siege."
+        "The Pendulum is a door. Cael opened it from this",
+        "side when he took the artifact. The Pallor — the Grey, the",
+        "Weight, whatever name you give it — is on the other side, and",
+        "it's been pushing through since the siege."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +19,9 @@
       "id": "party_reassembled_002",
       "speaker": "maren",
       "lines": [
-        "The door closes from the inside. Someone who carries\nthe Pallor's mark has to choose to shut it. And they don't come\nback."
+        "The door closes from the inside. Someone who carries",
+        "the Pallor's mark has to choose to shut it. And they don't come",
+        "back."
       ],
       "condition": null,
       "animations": null,
@@ -60,7 +65,10 @@
       "id": "party_reassembled_006",
       "speaker": "maren",
       "lines": [
-        "The Convergence. He's building something there — a\nmachine. I don't know what it does, but the Pallor energy is\nconcentrating on that point. If we're going to reach him, it\nhas to be now."
+        "The Convergence. He's building something there — a",
+        "machine. I don't know what it does, but the Pallor energy is",
+        "concentrating on that point. If we're going to reach him, it",
+        "has to be now."
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +79,8 @@
       "id": "party_reassembled_007",
       "speaker": "torren",
       "lines": [
-        "The spirits won't go near the Convergence. They say\nit sounds like the end of a sentence that never started."
+        "The spirits won't go near the Convergence. They say",
+        "it sounds like the end of a sentence that never started."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +91,8 @@
       "id": "party_reassembled_008",
       "speaker": "sable",
       "lines": [
-        "So we walk into the grey, fight through whatever's\nwaiting, find Cael, and... what? Ask him to close the door?"
+        "So we walk into the grey, fight through whatever's",
+        "waiting, find Cael, and... what? Ask him to close the door?"
       ],
       "condition": null,
       "animations": null,
@@ -93,7 +103,8 @@
       "id": "party_reassembled_009",
       "speaker": "maren",
       "lines": [
-        "We give him the choice. The Pallor took his choice\naway. We give it back."
+        "We give him the choice. The Pallor took his choice",
+        "away. We give it back."
       ],
       "condition": null,
       "animations": null,
@@ -126,7 +137,8 @@
       "id": "party_reassembled_012",
       "speaker": "edren",
       "lines": [
-        "We go to the Convergence. We bring Cael back to\nhimself. Whatever comes after that — we face it together."
+        "We go to the Convergence. We bring Cael back to",
+        "himself. Whatever comes after that — we face it together."
       ],
       "condition": null,
       "animations": null,
@@ -159,7 +171,9 @@
       "id": "party_reassembled_014",
       "speaker": "",
       "lines": [
-        "*The party is whole again. The truth is known. The Convergence\nwaits. And somewhere at its center, Cael is building something\nthat will either save the world or end it.*"
+        "*The party is whole again. The truth is known. The Convergence",
+        "waits. And somewhere at its center, Cael is building something",
+        "that will either save the world or end it.*"
       ],
       "condition": null,
       "animations": null,

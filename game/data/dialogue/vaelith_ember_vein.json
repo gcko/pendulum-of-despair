@@ -16,7 +16,8 @@
       "id": "vaelith_ember_vein_002",
       "speaker": "vaelith",
       "lines": [
-        "Please. If I wanted to stop you, I wouldn't have\nwaited up here in the cold."
+        "Please. If I wanted to stop you, I wouldn't have",
+        "waited up here in the cold."
       ],
       "condition": null,
       "animations": [
@@ -33,7 +34,9 @@
       "id": "vaelith_ember_vein_003",
       "speaker": "vaelith",
       "lines": [
-        "My name is Vaelith. I study old places — ruins,\nmostly. I've been watching this mine for some time. The Compact's\nexcavation was... ambitious, if graceless."
+        "My name is Vaelith. I study old places — ruins,",
+        "mostly. I've been watching this mine for some time. The Compact's",
+        "excavation was... ambitious, if graceless."
       ],
       "condition": null,
       "animations": null,
@@ -77,7 +80,8 @@
       "id": "vaelith_ember_vein_007",
       "speaker": "vaelith",
       "lines": [
-        "Of course. I wouldn't trust a stranger on a cliff\nat night either."
+        "Of course. I wouldn't trust a stranger on a cliff",
+        "at night either."
       ],
       "condition": null,
       "animations": [
@@ -94,7 +98,8 @@
       "id": "vaelith_ember_vein_008",
       "speaker": "vaelith",
       "lines": [
-        "What a fragile little thing it is to build hope\naround."
+        "What a fragile little thing it is to build hope",
+        "around."
       ],
       "condition": null,
       "animations": null,
@@ -116,7 +121,8 @@
       "id": "vaelith_ember_vein_010",
       "speaker": "vaelith",
       "lines": [
-        "Naturally. Safe journey, then. The trail west is\nclear — the soldiers are focused on the mine entrance."
+        "Naturally. Safe journey, then. The trail west is",
+        "clear — the soldiers are focused on the mine entrance."
       ],
       "condition": null,
       "animations": null,
@@ -127,7 +133,8 @@
       "id": "vaelith_ember_vein_011",
       "speaker": "vaelith",
       "lines": [
-        "Do take care of yourself, Cael. Old places do\nstrange things to sensitive minds."
+        "Do take care of yourself, Cael. Old places do",
+        "strange things to sensitive minds."
       ],
       "condition": null,
       "animations": null,
@@ -177,7 +184,8 @@
       "id": "vaelith_ember_vein_015",
       "speaker": "cael",
       "lines": [
-        "And he knew the mine route. And that we'd come out\nthis way. And he didn't try to take the Pendulum."
+        "And he knew the mine route. And that we'd come out",
+        "this way. And he didn't try to take the Pendulum."
       ],
       "condition": null,
       "animations": null,
@@ -188,7 +196,8 @@
       "id": "vaelith_ember_vein_016",
       "speaker": "edren",
       "lines": [
-        "Which means either he doesn't want it, or he doesn't\nneed to take it."
+        "Which means either he doesn't want it, or he doesn't",
+        "need to take it."
       ],
       "condition": null,
       "animations": null,

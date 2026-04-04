@@ -27,7 +27,8 @@
       "id": "duskfen_alliance_003",
       "speaker": "caden",
       "lines": [
-        "The Fenmother is sick. The hollow is poisoned. Our\nbinding rituals fail. We don't have time for politics."
+        "The Fenmother is sick. The hollow is poisoned. Our",
+        "binding rituals fail. We don't have time for politics."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +39,8 @@
       "id": "duskfen_alliance_004",
       "speaker": "edren",
       "lines": [
-        "We're not here for politics. We're here because the\nley lines are dying, and that affects all of us."
+        "We're not here for politics. We're here because the",
+        "ley lines are dying, and that affects all of us."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +51,10 @@
       "id": "duskfen_alliance_005",
       "speaker": "caden",
       "lines": [
-        "The ley lines? The Fenmother is screaming. The water\ntastes of metal. My predecessor walked into the marsh three months\nago and never came back. Don't talk to me about ley lines. Talk\nto me about the thing that's killing my home."
+        "The ley lines? The Fenmother is screaming. The water",
+        "tastes of metal. My predecessor walked into the marsh three months",
+        "ago and never came back. Don't talk to me about ley lines. Talk",
+        "to me about the thing that's killing my home."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +87,8 @@
       "id": "duskfen_alliance_008",
       "speaker": "caden",
       "lines": [
-        "The spirit-speakers at Roothollow will want to hear\nof this. Return to Vessa when you can."
+        "The spirit-speakers at Roothollow will want to hear",
+        "of this. Return to Vessa when you can."
       ],
       "condition": null,
       "animations": null,
@@ -104,7 +110,9 @@
       "id": "duskfen_alliance_010",
       "speaker": "caden",
       "lines": [
-        "The Fenmother was poisoned by what's seeping through\nthe ley lines. If you can cleanse this, you understand what we're\nfacing. I'll speak for Duskfen at the council."
+        "The Fenmother was poisoned by what's seeping through",
+        "the ley lines. If you can cleanse this, you understand what we're",
+        "facing. I'll speak for Duskfen at the council."
       ],
       "condition": null,
       "animations": null,

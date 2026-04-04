@@ -5,7 +5,9 @@
       "id": "npc_sergeant_marek_001",
       "speaker": "marek",
       "lines": [
-        "Edren was disciplined. Cael was talented. You know\nwhich one I'd rather train? The disciplined one. Talent doesn't\nhold a shield wall."
+        "Edren was disciplined. Cael was talented. You know",
+        "which one I'd rather train? The disciplined one. Talent doesn't",
+        "hold a shield wall."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,9 @@
       "id": "npc_sergeant_marek_002",
       "speaker": "marek",
       "lines": [
-        "I trained both of them. Edren — steady, never\ncomplained, practiced until his hands bled. Cael — everything\ncame easy. Too easy. That worried me even then."
+        "I trained both of them. Edren — steady, never",
+        "complained, practiced until his hands bled. Cael — everything",
+        "came easy. Too easy. That worried me even then."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +31,8 @@
       "id": "npc_sergeant_marek_003",
       "speaker": "marek",
       "lines": [
-        "Don't ask me about him. Ask me about your guard\nstance. It's sloppy."
+        "Don't ask me about him. Ask me about your guard",
+        "stance. It's sloppy."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -38,7 +43,9 @@
       "id": "npc_sergeant_marek_004",
       "speaker": "marek",
       "lines": [
-        "I carve his name into the training post every morning.\nNot because I forgive him. Because I refuse to forget that I\nfailed to see it coming. A good trainer sees the cracks."
+        "I carve his name into the training post every morning.",
+        "Not because I forgive him. Because I refuse to forget that I",
+        "failed to see it coming. A good trainer sees the cracks."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -49,7 +56,9 @@
       "id": "npc_sergeant_marek_005",
       "speaker": "marek",
       "lines": [
-        "There are fourteen names on the post now. Soldiers who\ndidn't come back from the siege. His is at the bottom. I carve\nit deeper than the others. He earned that."
+        "There are fourteen names on the post now. Soldiers who",
+        "didn't come back from the siege. His is at the bottom. I carve",
+        "it deeper than the others. He earned that."
       ],
       "condition": "epilogue_complete",
       "animations": null,

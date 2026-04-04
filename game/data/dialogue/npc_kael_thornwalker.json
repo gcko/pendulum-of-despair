@@ -5,7 +5,8 @@
       "id": "npc_kael_thornwalker_001",
       "speaker": "kael",
       "lines": [
-        "My uncle trusts you. I don't. But his judgment is\nbetter than mine in most things."
+        "My uncle trusts you. I don't. But his judgment is",
+        "better than mine in most things."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,9 @@
       "id": "npc_kael_thornwalker_002",
       "speaker": "kael",
       "lines": [
-        "Something drove the grey-elk out of the northern\nreaches. Grey-elk don't flee. Whatever scared them — I don't\nwant to meet it."
+        "Something drove the grey-elk out of the northern",
+        "reaches. Grey-elk don't flee. Whatever scared them — I don't",
+        "want to meet it."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +30,9 @@
       "id": "npc_kael_thornwalker_003",
       "speaker": "kael",
       "lines": [
-        "The grey-elk came back. But they're wrong — eyes flat,\nmoving in circles. The forest is reacting to something. Something\nbig, from the south."
+        "The grey-elk came back. But they're wrong — eyes flat,",
+        "moving in circles. The forest is reacting to something. Something",
+        "big, from the south."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -38,7 +43,9 @@
       "id": "npc_kael_thornwalker_004",
       "speaker": "kael",
       "lines": [
-        "Three patrols didn't come back this week. I'm not\nsending a fourth. We hold the perimeter and wait for it to thin.\nIt hasn't thinned yet."
+        "Three patrols didn't come back this week. I'm not",
+        "sending a fourth. We hold the perimeter and wait for it to thin.",
+        "It hasn't thinned yet."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -49,7 +56,10 @@
       "id": "npc_kael_thornwalker_005",
       "speaker": "kael",
       "lines": [
-        "All three patrols came home yesterday. First time in\nmonths. The perimeter is holding. The grey-elk are grazing again\n— real grazing, not the dead-eyed circling. I'm cautiously using\nthe word \"safe.\""
+        "All three patrols came home yesterday. First time in",
+        "months. The perimeter is holding. The grey-elk are grazing again",
+        "— real grazing, not the dead-eyed circling. I'm cautiously using",
+        "the word \"safe.\""
       ],
       "condition": "epilogue_complete",
       "animations": null,

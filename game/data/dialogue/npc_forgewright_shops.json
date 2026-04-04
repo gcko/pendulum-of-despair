@@ -5,7 +5,8 @@
       "id": "npc_forgewright_shops_001",
       "speaker": "forgewright",
       "lines": [
-        "Arcanite-grade equipment. Precision-machined.\nDon't ask where the materials come from."
+        "Arcanite-grade equipment. Precision-machined.",
+        "Don't ask where the materials come from."
       ],
       "condition": null,
       "animations": null,

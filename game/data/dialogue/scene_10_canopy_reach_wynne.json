@@ -5,7 +5,8 @@
       "id": "scene_10_canopy_reach_wynne_001",
       "speaker": "wynne",
       "lines": [
-        "Valdris sends a knight and a spirit-speaker to ask\nfor our bows. That's new. Usually they send a letter."
+        "Valdris sends a knight and a spirit-speaker to ask",
+        "for our bows. That's new. Usually they send a letter."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +28,8 @@
       "id": "scene_10_canopy_reach_wynne_003",
       "speaker": "wynne",
       "lines": [
-        "No. They aren't. Come up to the observatory. I want\nto show you something."
+        "No. They aren't. Come up to the observatory. I want",
+        "to show you something."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +40,9 @@
       "id": "scene_10_canopy_reach_wynne_004",
       "speaker": "wynne",
       "lines": [
-        "I've watched that haze grow for six months. It sits\nwhere the ley lines meet. I don't need your scholars to tell me\nwhat that means."
+        "I've watched that haze grow for six months. It sits",
+        "where the ley lines meet. I don't need your scholars to tell me",
+        "what that means."
       ],
       "condition": null,
       "animations": null,
@@ -60,7 +64,9 @@
       "id": "scene_10_canopy_reach_wynne_006",
       "speaker": "wynne",
       "lines": [
-        "The wind-spirits are agitated. They feel something\nbelow the canopy that they won't name. When spirits refuse to\nname a thing, you should be afraid."
+        "The wind-spirits are agitated. They feel something",
+        "below the canopy that they won't name. When spirits refuse to",
+        "name a thing, you should be afraid."
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +77,10 @@
       "id": "scene_10_canopy_reach_wynne_007",
       "speaker": "wynne",
       "lines": [
-        "You want an alliance. Fine. But I don't ally with\nweakness. Show me Valdris has a plan beyond \"hope the ley lines\nstabilize.\" Show me at the council, and you'll have Canopy\nReach's bows."
+        "You want an alliance. Fine. But I don't ally with",
+        "weakness. Show me Valdris has a plan beyond \"hope the ley lines",
+        "stabilize.\" Show me at the council, and you'll have Canopy",
+        "Reach's bows."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +91,8 @@
       "id": "scene_10_canopy_reach_wynne_008",
       "speaker": "lira",
       "lines": [
-        "That's not weather. That's a resonance pattern. The\nley lines are being pulled toward a single point."
+        "That's not weather. That's a resonance pattern. The",
+        "ley lines are being pulled toward a single point."
       ],
       "condition": null,
       "animations": null,
@@ -93,7 +103,8 @@
       "id": "scene_10_canopy_reach_wynne_009",
       "speaker": "maren",
       "lines": [
-        "If something is drawing on the entire network toward\na single point deliberately—"
+        "If something is drawing on the entire network toward",
+        "a single point deliberately—"
       ],
       "condition": null,
       "animations": null,

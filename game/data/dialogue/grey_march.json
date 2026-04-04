@@ -27,7 +27,8 @@
       "id": "grey_march_003",
       "speaker": "maren",
       "lines": [
-        "The Convergence draws the Pallor to it like a drain.\nEverything alive pulls away. What's left is... this."
+        "The Convergence draws the Pallor to it like a drain.",
+        "Everything alive pulls away. What's left is... this."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +50,9 @@
       "id": "grey_march_005",
       "speaker": "maren",
       "lines": [
-        "Two days through the Wastes. There are trial clearings\nalong the route — places where the Pallor concentrates. Ancient.\nOlder than the Archive."
+        "Two days through the Wastes. There are trial clearings",
+        "along the route — places where the Pallor concentrates. Ancient.",
+        "Older than the Archive."
       ],
       "condition": null,
       "animations": null,
@@ -71,7 +74,10 @@
       "id": "grey_march_007",
       "speaker": "maren",
       "lines": [
-        "The Archivist mentioned them. In previous cycles,\nanyone approaching the Convergence had to pass through them. The\nPallor tests you. It finds the thing you're most afraid of and\nmakes you face it."
+        "The Archivist mentioned them. In previous cycles,",
+        "anyone approaching the Convergence had to pass through them. The",
+        "Pallor tests you. It finds the thing you're most afraid of and",
+        "makes you face it."
       ],
       "condition": null,
       "animations": null,
@@ -104,7 +110,8 @@
       "id": "grey_march_010",
       "speaker": "torren",
       "lines": [
-        "It's still alive in there. Somewhere. Just... not\nenough to move."
+        "It's still alive in there. Somewhere. Just... not",
+        "enough to move."
       ],
       "condition": null,
       "animations": null,
@@ -137,7 +144,8 @@
       "id": "grey_march_013",
       "speaker": "sable",
       "lines": [
-        "Since the last ridge. Nothing singing. Nothing flying.\nNothing."
+        "Since the last ridge. Nothing singing. Nothing flying.",
+        "Nothing."
       ],
       "condition": null,
       "animations": null,
@@ -148,7 +156,8 @@
       "id": "grey_march_014",
       "speaker": "maren",
       "lines": [
-        "Past here, the trials begin. The Pallor will test\neach of us. It finds what you fear most and makes you face it."
+        "Past here, the trials begin. The Pallor will test",
+        "each of us. It finds what you fear most and makes you face it."
       ],
       "condition": null,
       "animations": null,

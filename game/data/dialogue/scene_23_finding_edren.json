@@ -38,7 +38,9 @@
       "id": "scene_23_finding_edren_004",
       "speaker": "aldous",
       "lines": [
-        "I was a knight once. Then I was a coward. Then I was\na monk. Now I'm just a man who makes bread and prays. The order\nmatters less than you think."
+        "I was a knight once. Then I was a coward. Then I was",
+        "a monk. Now I'm just a man who makes bread and prays. The order",
+        "matters less than you think."
       ],
       "condition": null,
       "animations": null,
@@ -82,7 +84,9 @@
       "id": "scene_23_finding_edren_008",
       "speaker": "edren",
       "lines": [
-        "I didn't see it. Months of it — the nightmares, the\nisolation, the way he stopped looking people in the eye — and I\ndidn't see it."
+        "I didn't see it. Months of it — the nightmares, the",
+        "isolation, the way he stopped looking people in the eye — and I",
+        "didn't see it."
       ],
       "condition": null,
       "animations": null,
@@ -115,7 +119,8 @@
       "id": "scene_23_finding_edren_011",
       "speaker": "sable",
       "lines": [
-        "Should have what? Read his mind? Outthought something\nthat's been breaking people since before the towers were built?"
+        "Should have what? Read his mind? Outthought something",
+        "that's been breaking people since before the towers were built?"
       ],
       "condition": null,
       "animations": null,
@@ -126,7 +131,10 @@
       "id": "scene_23_finding_edren_012",
       "speaker": "sable",
       "lines": [
-        "Edren. The world is falling apart. The Wilds are\ndying. The Compact is eating itself. Valdris doesn't have a king\nanymore. And you're sitting in a monastery feeling sorry about\nsomething that wasn't your fault."
+        "Edren. The world is falling apart. The Wilds are",
+        "dying. The Compact is eating itself. Valdris doesn't have a king",
+        "anymore. And you're sitting in a monastery feeling sorry about",
+        "something that wasn't your fault."
       ],
       "condition": null,
       "animations": null,
@@ -148,7 +156,10 @@
       "id": "scene_23_finding_edren_014",
       "speaker": "sable",
       "lines": [
-        "You can. I know you can, because I'm here, and I'm\nnobody. I'm a thief from the Bellhaven stilts with no money, no\ntitles, and no plan. And I'm still moving. So if I can do it, you\ndamn well can."
+        "You can. I know you can, because I'm here, and I'm",
+        "nobody. I'm a thief from the Bellhaven stilts with no money, no",
+        "titles, and no plan. And I'm still moving. So if I can do it, you",
+        "damn well can."
       ],
       "condition": null,
       "animations": null,
@@ -159,7 +170,9 @@
       "id": "scene_23_finding_edren_015",
       "speaker": "aldous",
       "lines": [
-        "She's right, you know. You came here to hide, son.\nThat's allowed. But this place isn't for hiding. It's for\nremembering what you're hiding from."
+        "She's right, you know. You came here to hide, son.",
+        "That's allowed. But this place isn't for hiding. It's for",
+        "remembering what you're hiding from."
       ],
       "condition": null,
       "animations": null,
@@ -236,7 +249,8 @@
       "id": "scene_23_finding_edren_021",
       "speaker": "sable",
       "lines": [
-        "Scattered. Lira's with me. She infiltrated the\nCompact — found Cael's trail."
+        "Scattered. Lira's with me. She infiltrated the",
+        "Compact — found Cael's trail."
       ],
       "condition": "edren_is_not_first_reunion_and_lirafound_set",
       "animations": null,
@@ -269,7 +283,9 @@
       "id": "scene_23_finding_edren_024",
       "speaker": "sable",
       "lines": [
-        "Torren's alive. The Wilds nearly killed him — he\nwas holding back the corruption by himself. We stabilized the\nnexus."
+        "Torren's alive. The Wilds nearly killed him — he",
+        "was holding back the corruption by himself. We stabilized the",
+        "nexus."
       ],
       "condition": "edren_is_not_first_reunion_and_torrenfound_set",
       "animations": null,
@@ -291,7 +307,8 @@
       "id": "scene_23_finding_edren_026",
       "speaker": "sable",
       "lines": [
-        "First clean ley energy since the rupture. The\nPallor can be pushed back. That's what matters."
+        "First clean ley energy since the rupture. The",
+        "Pallor can be pushed back. That's what matters."
       ],
       "condition": null,
       "animations": null,
@@ -302,7 +319,9 @@
       "id": "scene_23_finding_edren_027",
       "speaker": "sable",
       "lines": [
-        "I found Maren. She was in a ruin older than\ncivilization. She found the pattern — the Pallor has done this\nbefore."
+        "I found Maren. She was in a ruin older than",
+        "civilization. She found the pattern — the Pallor has done this",
+        "before."
       ],
       "condition": "edren_is_not_first_reunion_and_marenfound_set",
       "animations": null,
@@ -324,7 +343,8 @@
       "id": "scene_23_finding_edren_029",
       "speaker": "sable",
       "lines": [
-        "Enough times that someone built a library to\ntrack it."
+        "Enough times that someone built a library to",
+        "track it."
       ],
       "condition": null,
       "animations": null,
@@ -346,7 +366,8 @@
       "id": "scene_23_finding_edren_031",
       "speaker": "aldous",
       "lines": [
-        "Go well, knight. And next time you visit, bring\nsomething to drink. The wine here is terrible."
+        "Go well, knight. And next time you visit, bring",
+        "something to drink. The wine here is terrible."
       ],
       "condition": null,
       "animations": null,

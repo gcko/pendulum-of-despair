@@ -5,7 +5,9 @@
       "id": "npc_mirren_001",
       "speaker": "mirren",
       "lines": [
-        "The original text mentions three previous \"Doors.\"\nMaren's copy was damaged — only knows about two. I wonder if she\nknows she's missing one."
+        "The original text mentions three previous \"Doors.\"",
+        "Maren's copy was damaged — only knows about two. I wonder if she",
+        "knows she's missing one."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,9 @@
       "id": "npc_mirren_002",
       "speaker": "mirren",
       "lines": [
-        "Maren took my best source text. Didn't ask. Didn't\nsign for it. Just took it and vanished into the Wilds. That was\nseven years ago. I'm still filing the complaint."
+        "Maren took my best source text. Didn't ask. Didn't",
+        "sign for it. Just took it and vanished into the Wilds. That was",
+        "seven years ago. I'm still filing the complaint."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +31,11 @@
       "id": "npc_mirren_003",
       "speaker": "mirren",
       "lines": [
-        "The third Door. I've read the account. It was in a\nkingdom east of here — a name nobody uses anymore. Their scholar\ntried to study it, same as Maren. She disappeared into the grey\nand no one wrote down what happened next. History eats its own\nfootnotes."
+        "The third Door. I've read the account. It was in a",
+        "kingdom east of here — a name nobody uses anymore. Their scholar",
+        "tried to study it, same as Maren. She disappeared into the grey",
+        "and no one wrote down what happened next. History eats its own",
+        "footnotes."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +46,8 @@
       "id": "npc_mirren_004",
       "speaker": "mirren",
       "lines": [
-        "I locked the Restricted Section myself. If anyone\nneeds what's in there, they'll have to ask. Politely."
+        "I locked the Restricted Section myself. If anyone",
+        "needs what's in there, they'll have to ask. Politely."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -60,7 +69,10 @@
       "id": "npc_mirren_006",
       "speaker": "mirren",
       "lines": [
-        "The stone tablets. I finished translating the last\none. \"The door opens when the world forgets to grieve. The door\ncloses when one person remembers how.\" I've written it on the\nlibrary wall. In paint. Nobody is going to forget this time."
+        "The stone tablets. I finished translating the last",
+        "one. \"The door opens when the world forgets to grieve. The door",
+        "closes when one person remembers how.\" I've written it on the",
+        "library wall. In paint. Nobody is going to forget this time."
       ],
       "condition": "epilogue_complete",
       "animations": null,
@@ -71,7 +83,9 @@
       "id": "npc_mirren_007",
       "speaker": "mirren",
       "lines": [
-        "Maren sent me her Archive notes. Thirteen volumes.\nI'm cataloguing them. Properly, this time. With the correct\nmargin of error."
+        "Maren sent me her Archive notes. Thirteen volumes.",
+        "I'm cataloguing them. Properly, this time. With the correct",
+        "margin of error."
       ],
       "condition": "epilogue_complete",
       "animations": null,

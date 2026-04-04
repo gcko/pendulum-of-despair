@@ -5,7 +5,8 @@
       "id": "battle_vein_guardian_001",
       "speaker": "",
       "lines": [
-        "The Guardian's crystal core fractures. It draws inward,\ncondensing. The glow intensifies."
+        "The Guardian's crystal core fractures. It draws inward,",
+        "condensing. The glow intensifies."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "battle_vein_guardian_002",
       "speaker": "",
       "lines": [
-        "The construct shatters. Crystal fragments scatter across the\nchamber floor. The passage behind it clears."
+        "The construct shatters. Crystal fragments scatter across the",
+        "chamber floor. The passage behind it clears."
       ],
       "condition": null,
       "animations": null,

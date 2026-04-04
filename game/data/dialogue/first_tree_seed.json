@@ -5,7 +5,8 @@
       "id": "first_tree_seed_001",
       "speaker": "torren",
       "lines": [
-        "The spirits say it remembers. Every age that fell.\nEvery root that held."
+        "The spirits say it remembers. Every age that fell.",
+        "Every root that held."
       ],
       "condition": null,
       "animations": null,
@@ -66,7 +67,9 @@
       "id": "first_tree_seed_006",
       "speaker": "",
       "lines": [
-        "*The story is complete. The door is closed. The world is scarred\nbut growing. A shoot reaches for the light beside a knight's\nsword, and the spirits remember.*"
+        "*The story is complete. The door is closed. The world is scarred",
+        "but growing. A shoot reaches for the light beside a knight's",
+        "sword, and the spirits remember.*"
       ],
       "condition": null,
       "animations": null,

@@ -5,7 +5,9 @@
       "id": "battle_the_index_001",
       "speaker": "index",
       "lines": [
-        "All of it. Every name. Every scream. Every moment\nbefore the end. Take it all. Or end it all. There is no third\nchoice."
+        "All of it. Every name. Every scream. Every moment",
+        "before the end. Take it all. Or end it all. There is no third",
+        "choice."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,8 @@
       "id": "battle_the_index_002",
       "speaker": "",
       "lines": [
-        "The library stops collapsing. The pages settle. The Index\nfragments into light."
+        "The library stops collapsing. The pages settle. The Index",
+        "fragments into light."
       ],
       "condition": null,
       "animations": null,

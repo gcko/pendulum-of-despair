@@ -43,7 +43,8 @@
       "id": "cael_betrayal_004",
       "speaker": "cael",
       "lines": [
-        "I'm ending this. The Pendulum isn't a weapon and it\nisn't a cage. It's a key. And I know how to use it."
+        "I'm ending this. The Pendulum isn't a weapon and it",
+        "isn't a cage. It's a key. And I know how to use it."
       ],
       "condition": null,
       "animations": null,
@@ -76,7 +77,9 @@
       "id": "cael_betrayal_007",
       "speaker": "cael",
       "lines": [
-        "Cycle after cycle, age after age — someone finds this\nthing, someone opens the door, and someone pays the price to\nclose it."
+        "Cycle after cycle, age after age — someone finds this",
+        "thing, someone opens the door, and someone pays the price to",
+        "close it."
       ],
       "condition": null,
       "animations": null,
@@ -87,7 +90,8 @@
       "id": "cael_betrayal_008",
       "speaker": "cael",
       "lines": [
-        "Every time, the world forgets. Every time, it happens\nagain."
+        "Every time, the world forgets. Every time, it happens",
+        "again."
       ],
       "condition": null,
       "animations": null,
@@ -98,7 +102,8 @@
       "id": "cael_betrayal_009",
       "speaker": "cael",
       "lines": [
-        "I'm going to break the cycle. Not close the door —\ndestroy it."
+        "I'm going to break the cycle. Not close the door —",
+        "destroy it."
       ],
       "condition": null,
       "animations": null,
@@ -109,7 +114,9 @@
       "id": "cael_betrayal_010",
       "speaker": "cael",
       "lines": [
-        "The machine at the Convergence can channel enough\nPallor energy to shatter the connection permanently. No more\ndoor. No more cycles. No more cost."
+        "The machine at the Convergence can channel enough",
+        "Pallor energy to shatter the connection permanently. No more",
+        "door. No more cycles. No more cost."
       ],
       "condition": null,
       "animations": null,
@@ -120,7 +127,8 @@
       "id": "cael_betrayal_011",
       "speaker": "edren",
       "lines": [
-        "You don't know that. You're listening to something\nthat wants you to believe—"
+        "You don't know that. You're listening to something",
+        "that wants you to believe—"
       ],
       "condition": null,
       "animations": null,
@@ -131,7 +139,8 @@
       "id": "cael_betrayal_012",
       "speaker": "cael",
       "lines": [
-        "I'm listening to the only thing that's telling me the\ntruth. The rest of you are too afraid to hear it."
+        "I'm listening to the only thing that's telling me the",
+        "truth. The rest of you are too afraid to hear it."
       ],
       "condition": null,
       "animations": null,
@@ -192,7 +201,8 @@
       "id": "cael_betrayal_017",
       "speaker": "cael",
       "lines": [
-        "I love you. I loved you in the workshop and I loved\nyou on the castle walls and I love you now. That's why I can't."
+        "I love you. I loved you in the workshop and I loved",
+        "you on the castle walls and I love you now. That's why I can't."
       ],
       "condition": null,
       "animations": null,

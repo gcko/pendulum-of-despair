@@ -5,7 +5,8 @@
       "id": "npc_herbalists_001",
       "speaker": "herbalist",
       "lines": [
-        "Spirit-brewed remedies. Won't find these in any\nCompact shop."
+        "Spirit-brewed remedies. Won't find these in any",
+        "Compact shop."
       ],
       "condition": null,
       "animations": null,

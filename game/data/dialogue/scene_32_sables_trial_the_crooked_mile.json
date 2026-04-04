@@ -5,7 +5,8 @@
       "id": "scene_32_sables_trial_the_crooked_mile_001",
       "speaker": "shadow",
       "lines": [
-        "You always leave. Every time. When it gets hard,\nwhen it gets real — you leave."
+        "You always leave. Every time. When it gets hard,",
+        "when it gets real — you leave."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "scene_32_sables_trial_the_crooked_mile_002",
       "speaker": "shadow",
       "lines": [
-        "You're not a knight. Not a mage. Not a speaker.\nWhat are you?"
+        "You're not a knight. Not a mage. Not a speaker.",
+        "What are you?"
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +51,8 @@
       "id": "scene_32_sables_trial_the_crooked_mile_005",
       "speaker": "sable",
       "lines": [
-        "There was a door. Open. Warm. Safe. Everything I've\never wanted."
+        "There was a door. Open. Warm. Safe. Everything I've",
+        "ever wanted."
       ],
       "condition": null,
       "animations": null,
@@ -93,7 +96,8 @@
       "id": "scene_32_sables_trial_the_crooked_mile_009",
       "speaker": "sable",
       "lines": [
-        "That's it. Turns out the hard part isn't fighting\nthe monster. It's choosing the people over the exit."
+        "That's it. Turns out the hard part isn't fighting",
+        "the monster. It's choosing the people over the exit."
       ],
       "condition": null,
       "animations": null,
@@ -104,7 +108,8 @@
       "id": "scene_32_sables_trial_the_crooked_mile_010",
       "speaker": "maren",
       "lines": [
-        "The Pallor doesn't always test your strength. Sometimes\nit tests whether you'll stay."
+        "The Pallor doesn't always test your strength. Sometimes",
+        "it tests whether you'll stay."
       ],
       "condition": null,
       "animations": [

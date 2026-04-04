@@ -5,7 +5,9 @@
       "id": "scene_19_the_siege_of_valdris_001",
       "speaker": "cordwyn",
       "lines": [
-        "They've been mobilizing for weeks. The betrayal\nwasn't a signal — it was a distraction. While we watched Cael\nrun, they marched."
+        "They've been mobilizing for weeks. The betrayal",
+        "wasn't a signal — it was a distraction. While we watched Cael",
+        "run, they marched."
       ],
       "condition": null,
       "animations": null,
@@ -32,7 +34,8 @@
       "id": "scene_19_the_siege_of_valdris_003",
       "speaker": "cordwyn",
       "lines": [
-        "The Ram hits the eastern wall within the hour.\nWe need everyone on the battlements."
+        "The Ram hits the eastern wall within the hour.",
+        "We need everyone on the battlements."
       ],
       "condition": null,
       "animations": null,
@@ -70,7 +73,8 @@
       "id": "scene_19_the_siege_of_valdris_006",
       "speaker": "king_aldren",
       "lines": [
-        "I was a poor king. I know that. But I will not\nbe a poor man."
+        "I was a poor king. I know that. But I will not",
+        "be a poor man."
       ],
       "condition": null,
       "animations": null,
@@ -92,7 +96,8 @@
       "id": "scene_19_the_siege_of_valdris_008",
       "speaker": "king_aldren",
       "lines": [
-        "Edren. The crown... was always too heavy. You\nunderstand that now. Protect... what's left."
+        "Edren. The crown... was always too heavy. You",
+        "understand that now. Protect... what's left."
       ],
       "condition": "edren_reaches_him_first",
       "animations": null,
@@ -103,7 +108,8 @@
       "id": "scene_19_the_siege_of_valdris_009",
       "speaker": "king_aldren",
       "lines": [
-        "The Forgewright... Maren was right. The ley\nlines... should have listened..."
+        "The Forgewright... Maren was right. The ley",
+        "lines... should have listened..."
       ],
       "condition": "lira_reaches_him_first",
       "animations": null,
@@ -114,7 +120,8 @@
       "id": "scene_19_the_siege_of_valdris_010",
       "speaker": "king_aldren",
       "lines": [
-        "Maren. I should have listened. When you told\nme... about the door..."
+        "Maren. I should have listened. When you told",
+        "me... about the door..."
       ],
       "condition": "maren_reaches_him_first",
       "animations": null,
@@ -158,7 +165,8 @@
       "id": "scene_19_the_siege_of_valdris_014",
       "speaker": "vaelith",
       "lines": [
-        "You are doing wonderfully. Truly. I have not been\nthis entertained in centuries."
+        "You are doing wonderfully. Truly. I have not been",
+        "this entertained in centuries."
       ],
       "condition": null,
       "animations": null,
@@ -169,7 +177,8 @@
       "id": "scene_19_the_siege_of_valdris_015",
       "speaker": "vaelith",
       "lines": [
-        "Rest now. You'll need your strength. The real work\nhasn't started yet."
+        "Rest now. You'll need your strength. The real work",
+        "hasn't started yet."
       ],
       "condition": null,
       "animations": null,
@@ -185,7 +194,10 @@
       "id": "scene_19_the_siege_of_valdris_016",
       "speaker": "",
       "lines": [
-        "*Everything the party built — every alliance, every trust, every\nplan — burns. The king is dead. The friend is gone. The artifact\nis in the hands of something that wears a familiar face. And the\nPendulum, wherever it is now, is closer to the door than ever.*"
+        "*Everything the party built — every alliance, every trust, every",
+        "plan — burns. The king is dead. The friend is gone. The artifact",
+        "is in the hands of something that wears a familiar face. And the",
+        "Pendulum, wherever it is now, is closer to the door than ever.*"
       ],
       "condition": null,
       "animations": null,

@@ -16,7 +16,10 @@
       "id": "npc_old_harren_002",
       "speaker": "harren",
       "lines": [
-        "Had a strange guest last month. Very polite. Tipped\nwell. Asked about old mines. Funny thing — he knew details about\nthis inn I never told anyone. Said the original hearth was three\nfeet to the left. He was right."
+        "Had a strange guest last month. Very polite. Tipped",
+        "well. Asked about old mines. Funny thing — he knew details about",
+        "this inn I never told anyone. Said the original hearth was three",
+        "feet to the left. He was right."
       ],
       "condition": "vaelith_tavern_encounter",
       "animations": null,
@@ -27,7 +30,8 @@
       "id": "npc_old_harren_003",
       "speaker": "harren",
       "lines": [
-        "His face. I can't quite recall it. Polite. Grey coat.\nThat's all I have. Isn't that strange?"
+        "His face. I can't quite recall it. Polite. Grey coat.",
+        "That's all I have. Isn't that strange?"
       ],
       "condition": "vaelith_tavern_encounter",
       "animations": null,
@@ -38,7 +42,10 @@
       "id": "npc_old_harren_004",
       "speaker": "harren",
       "lines": [
-        "The boy who used to come in for sweet rolls — I heard\nwhat he did. Sat in his usual seat and had a drink the night before.\nI didn't notice anything wrong. I notice everything, and I didn't\nnotice."
+        "The boy who used to come in for sweet rolls — I heard",
+        "what he did. Sat in his usual seat and had a drink the night before.",
+        "I didn't notice anything wrong. I notice everything, and I didn't",
+        "notice."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -49,7 +56,8 @@
       "id": "npc_old_harren_005",
       "speaker": "harren",
       "lines": [
-        "Inn's full every night. Not with travelers. With\npeople who have nowhere else to go."
+        "Inn's full every night. Not with travelers. With",
+        "people who have nowhere else to go."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -60,7 +68,9 @@
       "id": "npc_old_harren_006",
       "speaker": "harren",
       "lines": [
-        "A traveler came through last week. Actual traveler —\nnot a refugee. Asked for a room and a meal and paid in gold. I\nstood behind the counter and remembered what normal felt like."
+        "A traveler came through last week. Actual traveler —",
+        "not a refugee. Asked for a room and a meal and paid in gold. I",
+        "stood behind the counter and remembered what normal felt like."
       ],
       "condition": "epilogue_complete",
       "animations": null,

@@ -5,7 +5,9 @@
       "id": "npc_lord_chancellor_haren_001",
       "speaker": "haren",
       "lines": [
-        "The king values your counsel, Edren. But value and\naction are separated by a council vote, and I cannot guarantee\nthe count."
+        "The king values your counsel, Edren. But value and",
+        "action are separated by a council vote, and I cannot guarantee",
+        "the count."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +18,8 @@
       "id": "npc_lord_chancellor_haren_002",
       "speaker": "haren",
       "lines": [
-        "The king valued your counsel, Edren. But the king\nis dead and the counsel didn't save him."
+        "The king valued your counsel, Edren. But the king",
+        "is dead and the counsel didn't save him."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -27,7 +30,8 @@
       "id": "npc_lord_chancellor_haren_003",
       "speaker": "haren",
       "lines": [
-        "I wrote seventeen letters last week. Three came back\nunopened. The rest — I suspect they never arrived at all."
+        "I wrote seventeen letters last week. Three came back",
+        "unopened. The rest — I suspect they never arrived at all."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -38,7 +42,9 @@
       "id": "npc_lord_chancellor_haren_004",
       "speaker": "haren",
       "lines": [
-        "The council convenes tomorrow. Five seats, not one\nthrone. Edren suggested it. I never thought I'd prefer a table\nto a crown, but here we are."
+        "The council convenes tomorrow. Five seats, not one",
+        "throne. Edren suggested it. I never thought I'd prefer a table",
+        "to a crown, but here we are."
       ],
       "condition": "epilogue_complete",
       "animations": null,

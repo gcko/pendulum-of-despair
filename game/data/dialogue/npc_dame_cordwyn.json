@@ -5,7 +5,8 @@
       "id": "npc_dame_cordwyn_001",
       "speaker": "cordwyn",
       "lines": [
-        "Cael was the best of us. Not the strongest — the\nkindest. That's why none of us saw it coming."
+        "Cael was the best of us. Not the strongest — the",
+        "kindest. That's why none of us saw it coming."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,9 @@
       "id": "npc_dame_cordwyn_002",
       "speaker": "cordwyn",
       "lines": [
-        "His family died in a Compact border raid. Village\ncalled Greyvale. The raiders hit at dawn. Cael was at the academy.\nI was the one they sent to tell him."
+        "His family died in a Compact border raid. Village",
+        "called Greyvale. The raiders hit at dawn. Cael was at the academy.",
+        "I was the one they sent to tell him."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +30,10 @@
       "id": "npc_dame_cordwyn_003",
       "speaker": "cordwyn",
       "lines": [
-        "I told him his family was dead while I was still\nwearing my riding gloves. I didn't even take them off. Didn't\nsit down. Didn't say anything human. Just delivered the report\nand left."
+        "I told him his family was dead while I was still",
+        "wearing my riding gloves. I didn't even take them off. Didn't",
+        "sit down. Didn't say anything human. Just delivered the report",
+        "and left."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +44,10 @@
       "id": "npc_dame_cordwyn_004",
       "speaker": "cordwyn",
       "lines": [
-        "I keep thinking — if I'd taken off my gloves. If\nI'd sat down. If I'd said something beyond the formal notification.\nWould it have mattered? Probably not. But I'll never know. And\nthat's what haunts me."
+        "I keep thinking — if I'd taken off my gloves. If",
+        "I'd sat down. If I'd said something beyond the formal notification.",
+        "Would it have mattered? Probably not. But I'll never know. And",
+        "that's what haunts me."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +58,9 @@
       "id": "npc_dame_cordwyn_005",
       "speaker": "cordwyn",
       "lines": [
-        "He didn't break overnight. He broke three years\nago in a dormitory hallway, and I handed him the news like a\ndispatch report. Everything since has been aftershock."
+        "He didn't break overnight. He broke three years",
+        "ago in a dormitory hallway, and I handed him the news like a",
+        "dispatch report. Everything since has been aftershock."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,

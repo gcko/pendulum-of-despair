@@ -5,7 +5,8 @@
       "id": "npc_dael_corran_001",
       "speaker": "dael",
       "lines": [
-        "They call it meritocracy. Merit gets you a longer\nshift and a shorter life."
+        "They call it meritocracy. Merit gets you a longer",
+        "shift and a shorter life."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,9 @@
       "id": "npc_dael_corran_002",
       "speaker": "dael",
       "lines": [
-        "Starts with the small things. Taste goes first. Then\nlaughter. Then you stop dreaming. Then you stop caring that you\nstopped."
+        "Starts with the small things. Taste goes first. Then",
+        "laughter. Then you stop dreaming. Then you stop caring that you",
+        "stopped."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +30,9 @@
       "id": "npc_dael_corran_003",
       "speaker": "dael",
       "lines": [
-        "They conscripted half the district for the Valdris\nassault. The ones who came back don't talk about it. The ones who\ndidn't come back — well. We don't talk about them either."
+        "They conscripted half the district for the Valdris",
+        "assault. The ones who came back don't talk about it. The ones who",
+        "didn't come back — well. We don't talk about them either."
       ],
       "condition": "cael_betrayal_complete",
       "animations": null,
@@ -38,7 +43,8 @@
       "id": "npc_dael_corran_004",
       "speaker": "dael",
       "lines": [
-        "Half the line is hollow-eyed. They do the work. They\njust don't care if it's done right anymore."
+        "Half the line is hollow-eyed. They do the work. They",
+        "just don't care if it's done right anymore."
       ],
       "condition": "interlude_begins",
       "animations": null,
@@ -49,7 +55,10 @@
       "id": "npc_dael_corran_005",
       "speaker": "dael",
       "lines": [
-        "I tasted bread this morning. Real bread, not the grey\npaste they've been handing out. Tasted like salt and wheat and\nwarmth. I stood at my station and cried. Nobody judged me. Half\nthe line was crying too."
+        "I tasted bread this morning. Real bread, not the grey",
+        "paste they've been handing out. Tasted like salt and wheat and",
+        "warmth. I stood at my station and cried. Nobody judged me. Half",
+        "the line was crying too."
       ],
       "condition": "epilogue_complete",
       "animations": null,

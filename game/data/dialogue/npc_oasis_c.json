@@ -5,7 +5,9 @@
       "id": "npc_oasis_c_001",
       "speaker": "elder_thessa",
       "lines": [
-        "Despair Wards. Won't find them anywhere else.\nCompact tried to forge equivalents — failed. Can't industrialize\nspirit-work."
+        "Despair Wards. Won't find them anywhere else.",
+        "Compact tried to forge equivalents — failed. Can't industrialize",
+        "spirit-work."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,9 @@
       "id": "npc_oasis_c_003",
       "speaker": "keeper_elara",
       "lines": [
-        "The stone is cracking. I can hold it — but\nnot forever. There's a ley fissure nearby. If you could bring\nwater from it..."
+        "The stone is cracking. I can hold it — but",
+        "not forever. There's a ley fissure nearby. If you could bring",
+        "water from it..."
       ],
       "condition": null,
       "animations": null,

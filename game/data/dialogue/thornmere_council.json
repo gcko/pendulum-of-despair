@@ -16,7 +16,8 @@
       "id": "thornmere_council_002",
       "speaker": "savanh",
       "lines": [
-        "The exile. I heard you left the court rather than\nstop asking questions they didn't want answered."
+        "The exile. I heard you left the court rather than",
+        "stop asking questions they didn't want answered."
       ],
       "condition": "party_has(maren)",
       "animations": null,
@@ -38,7 +39,8 @@
       "id": "thornmere_council_004",
       "speaker": "savanh",
       "lines": [
-        "I respect that. Questions are more dangerous than\nswords in a place like Valdris."
+        "I respect that. Questions are more dangerous than",
+        "swords in a place like Valdris."
       ],
       "condition": null,
       "animations": null,
@@ -49,7 +51,8 @@
       "id": "thornmere_council_005",
       "speaker": "savanh",
       "lines": [
-        "The Wilds have stayed alive by staying out of other\npeople's wars. You're asking us to change that. Tell me why."
+        "The Wilds have stayed alive by staying out of other",
+        "people's wars. You're asking us to change that. Tell me why."
       ],
       "condition": null,
       "animations": null,
@@ -79,7 +82,9 @@
       "id": "thornmere_council_006",
       "speaker": "savanh",
       "lines": [
-        "The Wilds have never needed Valdris. But you're right\n— the Wilds need the ley lines, and the ley lines don't care\nabout borders."
+        "The Wilds have never needed Valdris. But you're right",
+        "— the Wilds need the ley lines, and the ley lines don't care",
+        "about borders."
       ],
       "condition": "choice_1_selected",
       "animations": [
@@ -96,7 +101,8 @@
       "id": "thornmere_council_007",
       "speaker": "savanh",
       "lines": [
-        "Don't threaten me with the Compact. But... you're not\nwrong that they would come."
+        "Don't threaten me with the Compact. But... you're not",
+        "wrong that they would come."
       ],
       "condition": "choice_2_selected",
       "animations": null,
@@ -107,7 +113,8 @@
       "id": "thornmere_council_008",
       "speaker": "savanh",
       "lines": [
-        "At least you're honest about what you want. That's\nworth something. Not much, but something."
+        "At least you're honest about what you want. That's",
+        "worth something. Not much, but something."
       ],
       "condition": "choice_3_selected",
       "animations": null,
@@ -118,7 +125,8 @@
       "id": "thornmere_council_009",
       "speaker": "savanh",
       "lines": [
-        "You spoke with Seyth. She told you about the grey\ntimes."
+        "You spoke with Seyth. She told you about the grey",
+        "times."
       ],
       "condition": "consulted_grandmother_seyth",
       "animations": null,
@@ -129,7 +137,8 @@
       "id": "thornmere_council_010",
       "speaker": "edren",
       "lines": [
-        "She said the world has faced this before. A door opens.\nSomeone closes it. The cost is always the same."
+        "She said the world has faced this before. A door opens.",
+        "Someone closes it. The cost is always the same."
       ],
       "condition": null,
       "animations": null,
@@ -140,7 +149,9 @@
       "id": "thornmere_council_011",
       "speaker": "savanh",
       "lines": [
-        "My grandmother told Seyth that story. And her\ngrandmother told her. We don't speak of it often. It's not a story\nthat ends well."
+        "My grandmother told Seyth that story. And her",
+        "grandmother told her. We don't speak of it often. It's not a story",
+        "that ends well."
       ],
       "condition": null,
       "animations": null,
@@ -158,7 +169,8 @@
       "id": "thornmere_council_012",
       "speaker": "caden",
       "lines": [
-        "You cleansed the Fenmother. Duskfen owes you. But\nalliance is more than debt."
+        "You cleansed the Fenmother. Duskfen owes you. But",
+        "alliance is more than debt."
       ],
       "condition": null,
       "animations": null,
@@ -169,7 +181,9 @@
       "id": "thornmere_council_013",
       "speaker": "caden",
       "lines": [
-        "The spirits know what the Pendulum is. They've been\nscreaming about it since it came into the Wilds. The question is\nwhether Valdris is ready to listen."
+        "The spirits know what the Pendulum is. They've been",
+        "screaming about it since it came into the Wilds. The question is",
+        "whether Valdris is ready to listen."
       ],
       "condition": null,
       "animations": null,
@@ -199,7 +213,8 @@
       "id": "thornmere_council_014",
       "speaker": "caden",
       "lines": [
-        "Torren trusts you. That's rare from him. You'll have\nDuskfen's voice at the council."
+        "Torren trusts you. That's rare from him. You'll have",
+        "Duskfen's voice at the council."
       ],
       "condition": "choice_1_selected",
       "animations": [
@@ -227,7 +242,8 @@
       "id": "thornmere_council_016",
       "speaker": "wynne",
       "lines": [
-        "I showed you the haze. You know what's coming. So\ntell me — what's the plan?"
+        "I showed you the haze. You know what's coming. So",
+        "tell me — what's the plan?"
       ],
       "condition": null,
       "animations": null,
@@ -257,7 +273,8 @@
       "id": "thornmere_council_017",
       "speaker": "wynne",
       "lines": [
-        "Specifics. Finally. You're the first person from\nValdris who's told me something I can act on."
+        "Specifics. Finally. You're the first person from",
+        "Valdris who's told me something I can act on."
       ],
       "condition": "choice_1_selected",
       "animations": null,
@@ -268,7 +285,9 @@
       "id": "thornmere_council_018",
       "speaker": "wynne",
       "lines": [
-        "Your Forgewright — Lira. Her people damaged the ley\nlines. But she understands the systems better than anyone. If she\ncan help reinforce the wards, Canopy Reach will commit."
+        "Your Forgewright — Lira. Her people damaged the ley",
+        "lines. But she understands the systems better than anyone. If she",
+        "can help reinforce the wards, Canopy Reach will commit."
       ],
       "condition": "party_has(lira)",
       "animations": null,
@@ -279,7 +298,9 @@
       "id": "thornmere_council_019",
       "speaker": "lira",
       "lines": [
-        "I can. The extraction damage is reversible with the\nright alignment. It's slower than what the Compact does, but it\ndoesn't break anything."
+        "I can. The extraction damage is reversible with the",
+        "right alignment. It's slower than what the Compact does, but it",
+        "doesn't break anything."
       ],
       "condition": null,
       "animations": null,
@@ -290,7 +311,8 @@
       "id": "thornmere_council_020",
       "speaker": "savanh",
       "lines": [
-        "We've heard the arguments. Now we decide. Each\nleader speaks for their people."
+        "We've heard the arguments. Now we decide. Each",
+        "leader speaks for their people."
       ],
       "condition": null,
       "animations": null,
@@ -301,7 +323,8 @@
       "id": "thornmere_council_021",
       "speaker": "savanh",
       "lines": [
-        "Greywood stands with Valdris. Not for Valdris — for\nthe ley lines that sustain us all."
+        "Greywood stands with Valdris. Not for Valdris — for",
+        "the ley lines that sustain us all."
       ],
       "condition": "council_savanh_approval >= 2",
       "animations": null,
@@ -312,7 +335,8 @@
       "id": "thornmere_council_022",
       "speaker": "savanh",
       "lines": [
-        "Greywood will not commit. The risk is too great for\npromises alone."
+        "Greywood will not commit. The risk is too great for",
+        "promises alone."
       ],
       "condition": "council_savanh_approval < 2",
       "animations": null,
@@ -334,7 +358,8 @@
       "id": "thornmere_council_024",
       "speaker": "caden",
       "lines": [
-        "Duskfen cannot commit. We barely survived the\nFenmother's illness. We have nothing left to give."
+        "Duskfen cannot commit. We barely survived the",
+        "Fenmother's illness. We have nothing left to give."
       ],
       "condition": "council_caden_approval < 2",
       "animations": null,
@@ -345,7 +370,8 @@
       "id": "thornmere_council_025",
       "speaker": "wynne",
       "lines": [
-        "Canopy Reach commits its archers and scouts. Show me\nthe haze stops growing, and we stay."
+        "Canopy Reach commits its archers and scouts. Show me",
+        "the haze stops growing, and we stay."
       ],
       "condition": "council_wynne_approval >= 2",
       "animations": null,
@@ -378,7 +404,8 @@
       "id": "thornmere_council_028",
       "speaker": "edren",
       "lines": [
-        "We have allies. Whether it's enough depends on what\ncomes next."
+        "We have allies. Whether it's enough depends on what",
+        "comes next."
       ],
       "condition": null,
       "animations": null,
@@ -389,7 +416,8 @@
       "id": "thornmere_council_029",
       "speaker": "torren",
       "lines": [
-        "Caden trusts us. That's not a small thing. He\ndoesn't trust easily."
+        "Caden trusts us. That's not a small thing. He",
+        "doesn't trust easily."
       ],
       "condition": null,
       "animations": null,
@@ -400,7 +428,8 @@
       "id": "thornmere_council_030",
       "speaker": "maren",
       "lines": [
-        "Three tribes committed to defending a kingdom that\nhas never defended them. Remember that when this gets harder."
+        "Three tribes committed to defending a kingdom that",
+        "has never defended them. Remember that when this gets harder."
       ],
       "condition": null,
       "animations": null,
@@ -455,7 +484,8 @@
       "id": "thornmere_council_035",
       "speaker": "torren",
       "lines": [
-        "They chose what they chose. We can't force the Wilds\nto care about a kingdom they've never trusted."
+        "They chose what they chose. We can't force the Wilds",
+        "to care about a kingdom they've never trusted."
       ],
       "condition": "council_result == 0",
       "animations": null,

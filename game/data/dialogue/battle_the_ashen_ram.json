@@ -27,7 +27,8 @@
       "id": "battle_the_ashen_ram_003",
       "speaker": "cordwyn",
       "lines": [
-        "It's breached the outer wall! Get in close —\nthe armour's thinner at the joints!"
+        "It's breached the outer wall! Get in close —",
+        "the armour's thinner at the joints!"
       ],
       "condition": null,
       "animations": null,

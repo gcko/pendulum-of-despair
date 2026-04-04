@@ -5,7 +5,8 @@
       "id": "npc_oasis_b_001",
       "speaker": "dellen",
       "lines": [
-        "Ashmark Foundry District, sixteen years. Now my\nsupply chain is \"whatever someone drags in from the Wastes.\""
+        "Ashmark Foundry District, sixteen years. Now my",
+        "supply chain is \"whatever someone drags in from the Wastes.\""
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,8 @@
       "id": "npc_oasis_b_002",
       "speaker": "dellen",
       "lines": [
-        "I don't do credit. Can't afford to trust anyone's\ntomorrow."
+        "I don't do credit. Can't afford to trust anyone's",
+        "tomorrow."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +29,9 @@
       "id": "npc_oasis_b_003",
       "speaker": "tomas",
       "lines": [
-        "I was at Oasis A a month ago. Ward light was steady.\nWhen I left three days back, it was flickering. Ward stones\ndon't flicker."
+        "I was at Oasis A a month ago. Ward light was steady.",
+        "When I left three days back, it was flickering. Ward stones",
+        "don't flicker."
       ],
       "condition": null,
       "animations": null,
@@ -38,7 +42,8 @@
       "id": "npc_oasis_b_004",
       "speaker": "senna",
       "lines": [
-        "The stone cracked. Three days ago. The keeper held\non longer than anyone thought possible."
+        "The stone cracked. Three days ago. The keeper held",
+        "on longer than anyone thought possible."
       ],
       "condition": "oasis_c_fallen",
       "animations": null,

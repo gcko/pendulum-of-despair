@@ -5,7 +5,8 @@
       "id": "npc_cira_001",
       "speaker": "cira",
       "lines": [
-        "Lira left me a note. Three words: \"Read the reports.\"\nI read them. I wish I hadn't."
+        "Lira left me a note. Three words: \"Read the reports.\"",
+        "I read them. I wish I hadn't."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +17,9 @@
       "id": "npc_cira_002",
       "speaker": "cira",
       "lines": [
-        "I stayed because I thought I could change things from\nthe inside. That's what people say when they're too afraid to\nleave."
+        "I stayed because I thought I could change things from",
+        "the inside. That's what people say when they're too afraid to",
+        "leave."
       ],
       "condition": "interlude_begins",
       "animations": null,
