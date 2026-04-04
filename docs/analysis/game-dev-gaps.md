@@ -141,24 +141,32 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.3 Item & Equipment Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P0 — blocks shops, inventory, battle items, equipment screens
-**Estimated Size:** M (6 JSON files)
+**Estimated Size:** M (6 JSON files, 300 total entries)
 **Output:** `game/data/items/{consumables,materials,key_items}.json`, `game/data/equipment/{weapons,armor,accessories}.json`
 **Source Docs:** `items.md` (consumables, materials, key items), `equipment.md` (weapons, armor, accessories, forging)
-**Architecture Ref:** `technical-architecture.md` Sections 2.2, 2.3
+**Architecture Ref:** `technical-architecture.md` Sections 2.2, 2.3 (extended with bonus_stats object)
 **Depends On:** None (foundational)
 
 **What's Needed:**
-- [ ] Consumables JSON: 32 consumables with effects, prices, targets, usability flags
-- [ ] Materials JSON: 67 materials with sources and stack limits
-- [ ] Key items JSON: 23 key items with descriptions and quest links
-- [ ] Weapons JSON: 56 weapons with stats, equippable_by, tier, element, special
-- [ ] Armor JSON: 49 armor pieces (head/body) with stats, tier
-- [ ] Accessories JSON: 38 accessories with special properties
-- [ ] Verify every price against economy.md
-- [ ] Verify every equippable_by against characters.md weapon/armor types
-- [ ] Verify elemental weapons against equipment.md infusion table
+- [x] Consumables JSON: 33 consumables with effects, prices, targets, usability flags, status cure mappings
+- [x] Materials JSON: 87 materials (72 from items.md table + 14 boss-specific steals/drops + grey_mist_essence)
+- [x] Key items JSON: 26 key items (9 dungeon access + 8 boss mementos + 2 schematics + 7 story items)
+- [x] Weapons JSON: 58 weapons with stats, equippable_by, tier, element, special, bonus_stats
+- [x] Armor JSON: 49 armor pieces (20 head + 29 body) with stats, tier, armor_class
+- [x] Accessories JSON: 47 accessories (8 stat + 6 status immunity + 4 elemental + 9 combat + 20 boss drop)
+- [x] Verify every price against economy.md / items.md / equipment.md
+- [x] Verify every equippable_by against characters.md weapon/armor types
+- [x] Cross-reference: all 121 enemy steal/drop item_ids from gap 1.2 exist in item/equipment files
+
+**Notes:**
+- Uses bonus_stats object (sparse) instead of tech-arch flat stat fields. Tech-arch should be updated to match.
+- Drake Fang is dual-purpose (material + battle consumable) with battle_usable fields on the material entry.
+- Elemental body armor classified as armor_class: "light" per equipment.md ("Light armor with elemental resistance").
+- Forgewright devices deferred to gap 1.7, Ley Crystal invocations to gap 1.5.
+- Design spec: `docs/superpowers/specs/2026-04-04-item-equipment-data-design.md`
 
 **Blocking:** Shop system (needs prices), inventory (needs item catalog), battle (needs usable items), equipment screen (needs stat data)
 

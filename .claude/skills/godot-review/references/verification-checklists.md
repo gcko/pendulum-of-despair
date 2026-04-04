@@ -149,6 +149,13 @@ Reference for all review agents. Check every applicable item.
 - [ ] No trailing commas (invalid JSON)
 - [ ] Proper array/object nesting
 
+### JSON Data Gap Work (from Copilot gap analysis, PRs #108 + #109)
+- [ ] **HARD GATE: After ANY data count change, run programmatic scan of ALL spec/plan/gap/PR docs for stale counts BEFORE committing.** No commit until scan returns zero stale references. Check: scope totals, file structure tables, section totals, subcategory breakdowns, plan task instructions, plan validation steps, PR description.
+- [ ] **Cross-file ID uniqueness:** Run programmatic sweep across ALL item + equipment + enemy data files. IDs must be globally unique (single shared `item_id` namespace). Within-file checks are insufficient.
+- [ ] **source_category verification:** Every material's `source_category` must match the items.md section header AND the source type annotation (e.g., "Beast (rare)" means `beast`, not `humanoid`, even if listed in the Humanoid/Flavor section).
+- [ ] **Non-standard schema field documentation:** Every field in JSON data that isn't in the base schema (e.g., `auto_sell`, `ac_restorable`, `battle_usable`, `gold_value_by_act`, `boss_group`, `phase_hp_thresholds`) must be documented in the spec's Special Cases section before commit.
+- [ ] **Full-doc re-read after fixing drift:** After fixing one instance of documentation drift (stale count, wrong category, etc.), re-read the ENTIRE spec and plan for any other instance of the same error type. Don't just fix the specific line — Copilot will find the others you missed.
+
 ### Save System
 - [ ] Save files write to `user://saves/` (not `res://`)
 - [ ] Global config separate from save slots (`user://config.json`)

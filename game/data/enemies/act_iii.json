@@ -1756,7 +1756,7 @@
 				}
 			},
 			"drop": {
-				"item_id": "forge_hammer",
+				"item_id": "forge_hammer_head",
 				"rate": 25
 			},
 			"locations": [
@@ -1851,7 +1851,7 @@
 				}
 			},
 			"drop": {
-				"item_id": "grey_cleaver",
+				"item_id": "grey_cleaver_tainted",
 				"rate": 100
 			},
 			"locations": [
