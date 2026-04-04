@@ -50,7 +50,7 @@ For each item:
 10. `description`: brief in-game text based on effect
 11. `target`: `single_ally` for single-target heals/cures/revives, `all_allies` for party-wide, `single_enemy` for none (consumables don't target enemies), `self` for stat capsules
 12. `usable_in_battle`: true for most. false for rest items (Sleeping Bag, Tent, Pavilion), Waystone, stat capsules
-13. `usable_in_field`: true for healing, cures, rest items, stat capsules, Waystone. false for Smoke Bomb, Sable's Coin
+13. `usable_in_field`: true for healing, cures, rest items, stat capsules, Waystone, Sable's Coin (field use: guarantees preemptive next battle). false for Smoke Bomb
 14. `availability`: from items.md Availability column
 
 **Conditional fields:**
@@ -80,7 +80,7 @@ For each item:
 - Read: `docs/story/items.md` (lines 298–460 for Complete Material List)
 - Read: `docs/superpowers/specs/2026-04-04-item-equipment-data-design.md`
 
-**Agent instructions:** Create all 72 materials from items.md Complete Material List table.
+**Agent instructions:** Create all 87 materials from items.md Complete Material List table.
 
 For each material:
 1. `id`: snake_case of name
@@ -114,8 +114,8 @@ For each material:
 - Boss-Specific Materials: 6
 
 - [ ] **Step 1:** Read items.md material sections and spec
-- [ ] **Step 2:** Create `game/data/items/materials.json` with all 72 materials
-- [ ] **Step 3:** Self-verify: count (must be 72), all IDs unique, all sell prices match items.md, Drake Fang has battle fields
+- [ ] **Step 2:** Create `game/data/items/materials.json` with all 87 materials
+- [ ] **Step 3:** Self-verify: count (must be 87), all IDs unique, all sell prices match items.md, Drake Fang has battle fields
 
 ---
 
@@ -249,7 +249,7 @@ For each armor piece:
 - Read: `docs/story/equipment.md` (lines 439–555 for all accessory tables)
 - Read: `docs/superpowers/specs/2026-04-04-item-equipment-data-design.md`
 
-**Agent instructions:** Create all 42 accessories from equipment.md.
+**Agent instructions:** Create all 47 accessories from equipment.md.
 
 For each accessory:
 1. `id`: snake_case of name
@@ -279,8 +279,8 @@ For each accessory:
 - boss_drop: 15
 
 - [ ] **Step 1:** Read equipment.md accessory tables and spec
-- [ ] **Step 2:** Create `game/data/equipment/accessories.json` with all 42 accessories
-- [ ] **Step 3:** Self-verify: count (must be 42), all IDs unique, equippable_by exceptions correct, all prices match
+- [ ] **Step 2:** Create `game/data/equipment/accessories.json` with all 47 accessories
+- [ ] **Step 3:** Self-verify: count (must be 47), all IDs unique, equippable_by exceptions correct, all prices match
 
 ---
 

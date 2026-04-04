@@ -167,11 +167,12 @@ The game has 300 items and equipment pieces defined across items.md and equipmen
 
 - Pallor Core: `"sellable": false, "sell_price": null` (unsellable story-critical)
 - Grey Mist Essence: `"sellable": false, "sell_price": null` (unsellable story-critical)
-- Drake Fang: `"battle_usable": true, "battle_effect": "fixed_damage", "battle_value": 500, "battle_target": "single_enemy"` — the only dual-purpose item in the game (material + battle consumable per items.md). Stacks in Materials tab; using in battle consumes one from material stack.
+- Drake Fang: `"battle_usable": true, "battle_effect": "fixed_damage", "battle_value": 500, "battle_target": "single_enemy"` — dual-purpose material with direct battle-use fields (material + battle consumable per items.md). Stacks in Materials tab; using in battle consumes one from material stack.
+- Arcanite Shard: `"ac_restorable": true` — dual-purpose material (crafting + consumable AC restoration per crafting.md). Consumed from material stack when used for AC restoration at save points.
 
-### Total: 72 materials
+### Total: 87 materials
 
-20 beast parts + 7 construct salvage + 6 spirit/elemental + 5 pallor + 2 undead + 4 arcanite + 14 humanoid/flavor + 8 Dreamer's Fault + 6 boss-specific = 72
+72 from items.md Complete Material List (20 beast + 7 construct + 6 spirit/elemental + 5 pallor + 2 undead + 4 arcanite + 14 humanoid + 8 Dreamer's Fault + 6 boss-specific) + 15 additional (14 boss steal/drop cross-references from gap 1.2 + grey_mist_essence)
 
 ---
 
@@ -406,9 +407,9 @@ The same `bonus_stats` pattern applies to armor and accessories.
 | `status_immunity` | subcategory = `status_immunity` | Status effect ID made immune, e.g., `"poison"` |
 | `element_resist` | subcategory = `elemental_resistance` | Element halved, e.g., `"flame"` |
 
-### Total: 42 accessories
+### Total: 47 accessories
 
-8 stat boost + 6 status immunity + 4 elemental resistance + 9 combat mechanic + 15 boss drop/unique = 42
+8 stat boost + 6 status immunity + 4 elemental resistance + 9 combat mechanic + 20 boss drop/unique = 47
 
 ---
 
@@ -443,7 +444,7 @@ The same `bonus_stats` pattern applies to armor and accessories.
 - [ ] Every elemental weapon matches equipment.md
 - [ ] All item IDs unique across consumables + materials + key_items
 - [ ] All equipment IDs unique across weapons + armor + accessories
-- [ ] Enemy steal/drop item_ids from gap 1.2 exist in materials or consumables
+- [ ] Enemy steal/drop item_ids from gap 1.2 exist in one of this gap's 6 datasets (consumables, materials, key_items, weapons, armor, or accessories)
 - [ ] All entries have ALL required schema fields (no missing fields)
 - [ ] Top-level keys match DataManager (items, weapons, armor, accessories)
 - [ ] No invented values — everything traces to a source doc
