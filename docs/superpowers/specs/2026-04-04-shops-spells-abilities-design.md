@@ -177,8 +177,10 @@ Total: 4 spell files in `game/data/spells/`. ~89 spells total.
 | `duration` | int/null | Turn duration for buffs/debuffs. null for instant effects |
 | `description` | string | Effect description from magic.md |
 | `learned_by` | array | `[{"character": "maren", "level": 1}]` or `[{"character": "torren", "event": "spirit_communion"}]` |
-| `cross_trained` | bool | true if learned via cross-training from another tradition |
-| `mp_penalty` | float/null | 1.5 for cross-trained spells (+50% MP cost). null otherwise |
+| `cross_trained` | bool | false at spell level. Cross-training is per-learner — see learned_by entries |
+| `mp_penalty` | float/null | null at spell level. Per-learner cross-training adds `cross_trained: true` and `mp_penalty: 1.5` to the learned_by entry |
+
+**Cross-training note:** The `cross_trained` and `mp_penalty` fields exist at the spell level for schema consistency (always false/null) but the ACTUAL cross-training data lives in the `learned_by` array entries. A learned_by entry with `"cross_trained": true, "mp_penalty": 1.5` means that specific character learns the spell via cross-training with +50% MP cost. Native learners omit these fields.
 
 ### Spell Categories
 
