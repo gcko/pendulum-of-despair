@@ -25,7 +25,7 @@ Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 3 tr
 
 **Excluded:**
 - Forgewright device recipes → gap 1.7 (Crafting & Device Data)
-- Ley Crystal invocations → included in spell files (they're in magic.md)
+- Ley Crystal invocations → deferred to gap 1.7 (they are item-based active abilities tied to equipped crystals, not tradition spells; documented in items.md not magic.md spell tables)
 - Runtime ability execution schemas → gap 3.3 (Battle Scene)
 
 ---
@@ -125,9 +125,9 @@ Not modeled in static shop data. Handled at runtime by GameManager checking act/
 
 | File | Tradition | Content |
 |------|-----------|---------|
-| `ley_line.json` | Ley Line (Valdris) | Maren + Edren + Cael spells |
-| `forgewright.json` | Forgewright (Carradan) | Lira spells |
-| `spirit.json` | Spirit (Thornmere) | Torren spells |
+| `ley_line.json` | Ley Line (Valdris) | Frost, Storm, Ley, Non-elemental spells (primary: Maren, Edren, Cael; also learned by others) |
+| `forgewright.json` | Forgewright (Carradan) | Flame spells (primary: Lira; also learned by Maren, Cael via tradition sharing) |
+| `spirit.json` | Spirit (Thornmere) | Earth, Spirit spells + healing (primary: Torren; also learned by Maren, Edren via cross-training) |
 | `void.json` | Void/Corrupted | Enemy-only + party post-game void spells |
 
 Total: 4 spell files in `game/data/spells/`. ~89 spells total.

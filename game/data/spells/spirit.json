@@ -164,7 +164,6 @@
 			"learned_by": [
 				{
 					"character": "torren",
-					"level": 32,
 					"event": "act_iii_spirit_communion"
 				}
 			],
@@ -209,7 +208,6 @@
 			"learned_by": [
 				{
 					"character": "torren",
-					"level": 40,
 					"event": "pallor_trial"
 				}
 			],
@@ -592,8 +590,7 @@
 				},
 				{
 					"character": "sable",
-					"level": 12,
-					"event": "story_event"
+					"level": 12
 				}
 			],
 			"cross_trained": false,
@@ -801,8 +798,7 @@
 				},
 				{
 					"character": "sable",
-					"level": 8,
-					"event": "story_event"
+					"level": 8
 				},
 				{
 					"character": "lira",

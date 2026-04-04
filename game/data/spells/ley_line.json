@@ -356,7 +356,6 @@
 			"learned_by": [
 				{
 					"character": "maren",
-					"level": 45,
 					"event": "ancient_ruins_convergence_text"
 				}
 			],
@@ -483,8 +482,7 @@
 				},
 				{
 					"character": "sable",
-					"level": 18,
-					"event": "story_event"
+					"level": 18
 				}
 			],
 			"cross_trained": false,
@@ -1000,8 +998,7 @@
 			"learned_by": [
 				{
 					"character": "sable",
-					"level": 5,
-					"event": "story_event"
+					"level": 5
 				}
 			],
 			"cross_trained": false,
