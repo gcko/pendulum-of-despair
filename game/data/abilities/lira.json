@@ -116,7 +116,7 @@
 			"effect": "Device. Persists 3 turns. Creates an Arcanite thorn barrier dealing counter-damage equal to 15% of the shielded ally's Defense to attackers. Counts toward 2-device limit.",
 			"row_restriction": null,
 			"story_gated": true,
-			"story_event": "act_iii_torren_cross_train",
+			"story_event": "act_iii_cross_train_torren",
 			"description": "Deploy a spirit-infused thorn barrier that damages attackers."
 		},
 		{
