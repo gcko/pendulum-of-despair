@@ -9,7 +9,7 @@
 			"cost": "0 MP / 0 CD",
 			"cost_type": "mp_cd",
 			"cost_value": 0,
-			"cooldown": 0,
+			"cooldown": null,
 			"target": "single_enemy",
 			"effect": "Steal an item from one enemy. Success rate based on Sable's Speed vs. enemy Speed. Each enemy has a common and rare steal.",
 			"row_restriction": "front",
