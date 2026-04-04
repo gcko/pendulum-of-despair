@@ -51,6 +51,12 @@ JSON data file errors and design doc mismatches.
 - Wrong JSON key naming (camelCase instead of snake_case)
 - Missing required fields in data schemas
 - Save schema missing required groups
+- Cross-file ID collision (same item_id in multiple JSON files)
+- source_category misclassification (item listed in wrong section of source doc)
+- Stale counts in spec/plan/gap tracker after data additions (mirror staleness — #1 failure mode in PRs #108/#109)
+- Non-standard schema fields undocumented in spec (auto_sell, ac_restorable, gold_value_by_act, etc.)
+- Dual-purpose items missing runtime-use fields (battle_usable, ac_restorable)
+- Global ID uniqueness not verified across all item+equipment files (single shared namespace)
 
 ### 7. State Machine
 GameManager state machine violations.
