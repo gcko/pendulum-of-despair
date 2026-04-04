@@ -115,7 +115,7 @@ Not modeled in static shop data. Handled at runtime by GameManager checking act/
 
 ### DataManager Compatibility
 
-`DataManager.load_shop(town)` at line 80 of data_manager.gd returns a Dictionary. The method signature is `load_shop(town: String) -> Dictionary`. It loads `res://data/shops/{town}.json`. Since we have multiple shops per town, the file naming uses `{town}_{type}` format, and the calling code would use `load_shop("valdris_crown_general")` (the full shop_id as the parameter).
+`DataManager.load_shop(shop_id)` at line 80 of data_manager.gd returns a Dictionary. The method signature is `load_shop(shop_id: String) -> Dictionary`. It loads `res://data/shops/{shop_id}.json`. Shop IDs use `{town}_{type}` format when a town has multiple shops (e.g., `valdris_crown_general`, `valdris_crown_armorer`), or just the location name for single-shop locations (e.g., `oasis_a`). Note: the actual data_manager.gd parameter is currently named `town` — it should be renamed to `shop_id` in a future code update.
 
 ---
 
