@@ -303,7 +303,7 @@ For each accessory:
 
 ### Task 8: Programmatic validation sweep
 
-- [ ] **Step 1:** Verify item counts: consumables=33, materials=72, key_items=26, weapons=58, armor=49, accessories=42
+- [ ] **Step 1:** Verify item counts: consumables=33, materials=87, key_items=26, weapons=58, armor=49, accessories=47
 - [ ] **Step 2:** Verify all IDs unique within item files (consumables + materials + key_items)
 - [ ] **Step 3:** Verify all IDs unique within equipment files (weapons + armor + accessories)
 - [ ] **Step 4:** Verify every entry has ALL required schema fields (no missing fields)
