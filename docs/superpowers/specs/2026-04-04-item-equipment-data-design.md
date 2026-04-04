@@ -173,7 +173,7 @@ The game has 300 items and equipment pieces defined across items.md and equipmen
 
 ### Total: 87 materials
 
-72 from items.md Complete Material List (20 beast + 7 construct + 6 spirit/elemental + 5 pallor + 2 undead + 4 arcanite + 14 humanoid + 8 Dreamer's Fault + 6 boss-specific) + 15 additional (14 boss steal/drop cross-references from gap 1.2 + grey_mist_essence)
+Final per-category distribution: beast (21) + construct (7) + spirit_elemental (6) + pallor (7) + undead (3) + arcanite (4) + humanoid (12) + dreamers_fault (8) + boss_specific (19) = 87. Base 72 from items.md Complete Material List plus 15 additions (14 boss steal/drop cross-references from gap 1.2 + grey_mist_essence). The additions shifted counts: beast +1 (roc_feather reclassified), pallor +2 (forge_hammer_head, pallor_blade reclassified), undead +1 (warden_shield), humanoid -2 (reclassified to pallor/beast), boss_specific +13 (boss steals + grey_mist_essence + pallor_core).
 
 ---
 
@@ -423,7 +423,7 @@ The same `bonus_stats` pattern applies to armor and accessories.
 5. **sell_price = floor(buy_price / 2)** for consumables and equipment; materials use their listed sell_price from items.md
 6. **equippable_by matches characters.md** weapon/armor type assignments
 7. **All IDs use snake_case** — consistent with gap 1.2 convention
-8. **Every entry has ALL schema fields** — no missing fields, use explicit null for inapplicable values
+8. **Every entry has ALL required schema fields** — required fields (listed in Field Definitions tables) must always be present. Conditional fields (listed in Additional Conditional Fields sections) are sparse: present only when applicable, omitted otherwise. This avoids null-padding every entry with fields from other subcategories.
 9. **Top-level keys match DataManager** — `"items"` for item files, type name for equipment files
 
 ## Lessons Learned from Gap 1.2 (Mandatory)

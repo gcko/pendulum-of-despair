@@ -103,15 +103,15 @@ For each material:
 ```
 
 **Material categories (from items.md section headers):**
-- Beast Parts: 20
-- Construct Salvage: 7
+- Beast: 21 (20 base + roc_feather reclassified from humanoid)
+- Construct: 7
 - Spirit/Elemental: 6
-- Pallor: 5
-- Undead: 2
+- Pallor: 7 (5 base + forge_hammer_head, pallor_blade reclassified from humanoid)
+- Undead: 3 (2 base + warden_shield)
 - Arcanite: 4
-- Humanoid/Flavor Drops: 14
-- Dreamer's Fault Materials: 8
-- Boss-Specific Materials: 6
+- Humanoid: 12 (14 base - 2 reclassified to pallor/beast)
+- Dreamer's Fault: 8
+- Boss-Specific: 19 (6 base + 13 boss steals/drops from gap 1.2 cross-refs)
 
 - [ ] **Step 1:** Read items.md material sections and spec
 - [ ] **Step 2:** Create `game/data/items/materials.json` with all 87 materials
