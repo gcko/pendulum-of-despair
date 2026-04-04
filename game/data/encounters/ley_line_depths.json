@@ -1,0 +1,62 @@
+{
+  "dungeon_id": "ley_line_depths",
+  "name": "Ley Line Depths",
+  "act": "act_ii",
+  "floors": [
+    {
+      "floor_id": "1",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["extraction_drone", "extraction_drone", "cave_crawler"], "weight": 31.25},
+        {"format": 2, "enemies": ["cave_crawler", "cave_crawler", "cave_crawler"], "weight": 31.25},
+        {"format": 3, "enemies": ["extraction_drone", "extraction_drone"], "weight": 31.25},
+        {"format": 4, "enemies": ["cave_crawler", "cave_crawler", "cave_crawler", "cave_crawler"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "2-3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["ley_wisp", "ley_wisp", "deep_serpent"], "weight": 31.25},
+        {"format": 2, "enemies": ["cave_crawler", "ley_wisp", "ley_wisp"], "weight": 31.25},
+        {"format": 3, "enemies": ["deep_serpent", "deep_serpent", "crystal_sentry"], "weight": 31.25},
+        {"format": 4, "enemies": ["prism_moth", "prism_moth", "crystal_sentry", "deep_serpent"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "4-5",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["ley_construct", "ley_construct", "vein_stalker"], "weight": 31.25},
+        {"format": 2, "enemies": ["confluence_elemental", "ley_construct"], "weight": 31.25},
+        {"format": 3, "enemies": ["vein_stalker", "vein_stalker"], "weight": 31.25},
+        {"format": 4, "enemies": ["confluence_elemental", "ley_construct", "ley_construct"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "ley_colossus", "name": "Ley Colossus", "floor": "3", "trigger": "zone", "is_mini_boss": true},
+    {"enemy_id": "ley_titan", "name": "Ley Titan", "floor": "5", "trigger": "zone", "is_mini_boss": false}
+  ]
+}

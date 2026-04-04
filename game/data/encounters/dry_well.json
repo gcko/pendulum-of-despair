@@ -1,0 +1,98 @@
+{
+  "dungeon_id": "dry_well",
+  "name": "Dry Well of Aelhart",
+  "act": "act_iii",
+  "floors": [
+    {
+      "floor_id": "1",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["wraith_shade", "wraith_shade"], "weight": 31.25},
+        {"format": 2, "enemies": ["wraith_shade", "wraith_shade", "wraith_shade"], "weight": 31.25},
+        {"format": 3, "enemies": ["wraith_shade"], "weight": 31.25},
+        {"format": 4, "enemies": ["wraith_shade", "wraith_shade", "wraith_shade", "wraith_shade"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "2-3",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["vein_stalker", "vein_stalker", "pallor_vermin"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_vermin", "pallor_vermin", "pallor_vermin"], "weight": 31.25},
+        {"format": 3, "enemies": ["confluence_elemental", "vein_stalker", "vein_stalker"], "weight": 31.25},
+        {"format": 4, "enemies": ["confluence_elemental", "confluence_elemental", "pallor_vermin", "pallor_vermin"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "4",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["crystal_warden_deep", "crystal_warden_deep", "grief_shade"], "weight": 31.25},
+        {"format": 2, "enemies": ["grief_shade", "grief_shade"], "weight": 31.25},
+        {"format": 3, "enemies": ["crystal_warden_deep", "grief_shade", "grief_shade"], "weight": 31.25},
+        {"format": 4, "enemies": ["crystal_warden_deep", "crystal_warden_deep", "crystal_warden_deep"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "5-6",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["crystal_warden_deep", "crystal_warden_deep", "pictograph_wisp"], "weight": 31.25},
+        {"format": 2, "enemies": ["ley_warped_construct", "ley_warped_construct", "warp_sentinel"], "weight": 31.25},
+        {"format": 3, "enemies": ["crystal_warden_deep", "ley_warped_construct", "ley_warped_construct"], "weight": 31.25},
+        {"format": 4, "enemies": ["warp_sentinel", "warp_sentinel", "crystal_warden_deep"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "7",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["ley_born_echo", "ley_born_echo"], "weight": 31.25},
+        {"format": 2, "enemies": ["ley_born_echo", "ley_born_echo", "ley_born_echo"], "weight": 31.25},
+        {"format": 3, "enemies": ["ley_born_echo"], "weight": 31.25},
+        {"format": 4, "enemies": ["ley_born_echo", "ley_born_echo", "ley_born_echo", "ley_born_echo"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "ley_titan", "name": "Pipe Warden", "floor": "3", "trigger": "zone", "is_mini_boss": true},
+    {"enemy_id": "dread_warden", "name": "Hearthstone Warden", "floor": "4", "trigger": "zone", "is_mini_boss": true},
+    {"enemy_id": "archive_keeper", "name": "Archive Keeper", "floor": "5", "trigger": "zone", "is_mini_boss": true},
+    {"enemy_id": "wellspring_guardian", "name": "Wellspring Guardian", "floor": "7", "trigger": "zone", "is_mini_boss": false}
+  ]
+}

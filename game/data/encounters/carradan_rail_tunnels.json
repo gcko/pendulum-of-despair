@@ -1,0 +1,45 @@
+{
+  "dungeon_id": "carradan_rail_tunnels",
+  "name": "Carradan Rail Tunnels",
+  "act": "act_ii",
+  "floors": [
+    {
+      "floor_id": "hub_east",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["forge_phantom", "forge_phantom", "rail_sentry"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_nest_rail_tunnels", "grey_mite_rail_tunnels", "grey_mite_rail_tunnels"], "weight": 31.25},
+        {"format": 3, "enemies": ["steam_elemental", "forge_phantom"], "weight": 31.25},
+        {"format": 4, "enemies": ["rail_sentry", "rail_sentry", "steam_elemental"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "west_maintenance",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["forge_phantom", "forge_phantom", "pallor_nest_rail_tunnels"], "weight": 31.25},
+        {"format": 2, "enemies": ["pipe_wraith", "grey_mite_rail_tunnels", "grey_mite_rail_tunnels"], "weight": 31.25},
+        {"format": 3, "enemies": ["steam_elemental", "pipe_wraith"], "weight": 31.25},
+        {"format": 4, "enemies": ["pipe_wraith", "pipe_wraith", "pallor_nest_rail_tunnels"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "corrupted_boring_engine", "name": "Corrupted Boring Engine", "floor": "west", "trigger": "zone", "is_mini_boss": true},
+    {"enemy_id": "the_ironbound", "name": "The Ironbound", "floor": "deep", "trigger": "zone", "is_mini_boss": false}
+  ]
+}

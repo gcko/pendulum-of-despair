@@ -1,0 +1,97 @@
+{
+  "dungeon_id": "convergence",
+  "name": "The Convergence",
+  "act": "act_iii",
+  "floors": [
+    {
+      "floor_id": "outer_ring",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["pallor_soldier", "pallor_soldier"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_soldier", "ley_construct"], "weight": 31.25},
+        {"format": 3, "enemies": ["pallor_soldier", "pallor_soldier", "forgewright_automaton"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_soldier", "pallor_soldier", "pallor_soldier", "ley_construct"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "anchor_a",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["ley_construct", "ley_construct"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_soldier", "ley_construct"], "weight": 31.25},
+        {"format": 3, "enemies": ["ley_construct", "ley_construct", "ley_construct"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_soldier", "pallor_soldier", "ley_construct", "ley_construct"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "anchor_b",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["forgewright_automaton", "forgewright_automaton"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_soldier", "forgewright_automaton"], "weight": 31.25},
+        {"format": 3, "enemies": ["forgewright_automaton", "forgewright_automaton", "forgewright_automaton"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_soldier", "pallor_soldier", "forgewright_automaton", "forgewright_automaton"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "anchor_c",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["corrupted_spirit", "corrupted_spirit"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_soldier", "corrupted_spirit"], "weight": 31.25},
+        {"format": 3, "enemies": ["corrupted_spirit", "corrupted_spirit", "corrupted_spirit"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_soldier", "pallor_soldier", "corrupted_spirit", "corrupted_spirit"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "phase_4",
+      "terrain_type": "pallor_wastes",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 62.5,
+        "back_attack": 25.0,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["hollow_walker", "hollow_walker", "hollow_walker"], "weight": 31.25},
+        {"format": 2, "enemies": ["despair_cloud", "despair_cloud", "pallor_knight"], "weight": 31.25},
+        {"format": 3, "enemies": ["grief_shade", "grief_shade", "hollow_walker"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_knight", "pallor_knight", "grief_shade"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "cael_knight_of_despair_phase_1", "name": "Cael, Knight of Despair", "floor": "outer_ring", "trigger": "cutscene", "is_mini_boss": false},
+    {"enemy_id": "the_pallor_incarnate", "name": "The Pallor Incarnate", "floor": "central_platform", "trigger": "cutscene", "is_mini_boss": false},
+    {"enemy_id": "pallor_echo", "name": "Pallor Echo", "floor": "the_door", "trigger": "cutscene", "is_mini_boss": true}
+  ]
+}

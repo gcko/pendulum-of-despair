@@ -1,0 +1,9 @@
+{
+  "dungeon_id": "windshear_peak",
+  "name": "Windshear Peak",
+  "act": "act_iii",
+  "floors": [],
+  "bosses": [
+    {"enemy_id": "roc", "name": "The Howling Gale", "floor": "summit", "trigger": "cutscene", "is_mini_boss": false}
+  ]
+}

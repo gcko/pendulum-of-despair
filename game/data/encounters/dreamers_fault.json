@@ -1,0 +1,105 @@
+{
+  "dungeon_id": "dreamers_fault",
+  "name": "Dreamer's Fault",
+  "act": "post_game",
+  "floors": [
+    {
+      "floor_id": "1-4",
+      "terrain_type": "low_visibility",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["first_age_sentinel", "first_age_sentinel"], "weight": 25.0},
+        {"format": 2, "enemies": ["glyphscribe", "carved_watcher", "carved_watcher"], "weight": 25.0},
+        {"format": 3, "enemies": ["carved_watcher", "carved_watcher", "first_age_sentinel"], "weight": 25.0},
+        {"format": 4, "enemies": ["ember_remnant", "glyphscribe"], "weight": 18.75},
+        {"format": 5, "enemies": ["ember_remnant", "ember_remnant", "first_age_sentinel", "first_age_sentinel"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "5-8",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["crystal_refractor", "crystal_refractor", "facet_drone"], "weight": 25.0},
+        {"format": 2, "enemies": ["prism_stalker", "facet_drone", "facet_drone"], "weight": 25.0},
+        {"format": 3, "enemies": ["resonance_shade", "resonance_shade", "crystal_refractor"], "weight": 25.0},
+        {"format": 4, "enemies": ["prism_stalker", "resonance_shade", "crystal_refractor"], "weight": 18.75},
+        {"format": 5, "enemies": ["facet_drone", "facet_drone", "facet_drone", "resonance_shade"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "9-12",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["root_weaver", "root_weaver", "canopy_lurker"], "weight": 25.0},
+        {"format": 2, "enemies": ["bough_knight", "heartwood_spirit", "heartwood_spirit"], "weight": 25.0},
+        {"format": 3, "enemies": ["canopy_lurker", "canopy_lurker", "root_weaver"], "weight": 25.0},
+        {"format": 4, "enemies": ["bough_knight", "root_weaver", "heartwood_spirit"], "weight": 18.75},
+        {"format": 5, "enemies": ["heartwood_spirit", "heartwood_spirit", "canopy_lurker", "canopy_lurker"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "13-16",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["iron_automaton", "iron_automaton", "scrap_swarm"], "weight": 25.0},
+        {"format": 2, "enemies": ["pressure_golem", "gear_wraith", "gear_wraith"], "weight": 25.0},
+        {"format": 3, "enemies": ["iron_automaton", "gear_wraith", "scrap_swarm"], "weight": 25.0},
+        {"format": 4, "enemies": ["pressure_golem", "pressure_golem", "iron_automaton"], "weight": 18.75},
+        {"format": 5, "enemies": ["scrap_swarm", "scrap_swarm", "scrap_swarm", "gear_wraith"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "17-20",
+      "terrain_type": "low_visibility",
+      "danger_tier": 4,
+      "danger_increment": 506,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["pallor_wolf", "pallor_wolf", "pallor_drake_void"], "weight": 25.0},
+        {"format": 2, "enemies": ["void_walker", "pallor_lurker_void", "pallor_lurker_void"], "weight": 25.0},
+        {"format": 3, "enemies": ["pallor_drake_void", "pallor_drake_void", "pallor_lurker_void"], "weight": 18.75},
+        {"format": 4, "enemies": ["void_walker", "pallor_wolf", "pallor_drake_void"], "weight": 18.75},
+        {"format": 5, "enemies": ["pallor_regent_void", "pallor_wolf", "pallor_wolf"], "weight": 6.25},
+        {"format": 6, "enemies": ["void_walker", "void_walker", "pallor_regent_void"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "the_first_scholar", "name": "The First Scholar", "floor": "4", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "the_crystal_queen", "name": "The Crystal Queen", "floor": "8", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "the_rootking", "name": "The Rootking", "floor": "12", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "the_iron_warden", "name": "The Iron Warden", "floor": "16", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "pallor_echo", "name": "Cael's Echo", "floor": "20", "trigger": "interact", "is_mini_boss": false}
+  ]
+}

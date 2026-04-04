@@ -1,0 +1,61 @@
+{
+  "dungeon_id": "axis_tower",
+  "name": "Axis Tower Interior",
+  "act": "interlude",
+  "floors": [
+    {
+      "floor_id": "1-2",
+      "terrain_type": "open",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["compact_officer", "compact_officer", "arcanite_hound"], "weight": 31.25},
+        {"format": 2, "enemies": ["arcanite_hound", "arcanite_hound"], "weight": 31.25},
+        {"format": 3, "enemies": ["compact_officer", "compact_officer", "forgewright_sentry"], "weight": 31.25},
+        {"format": 4, "enemies": ["compact_officer", "compact_officer", "compact_officer", "arcanite_hound"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "3",
+      "terrain_type": "open",
+      "danger_tier": 2,
+      "danger_increment": 120,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["compact_officer", "compact_officer", "forgewright_sentry"], "weight": 31.25},
+        {"format": 2, "enemies": ["compact_officer", "compact_officer", "compact_officer"], "weight": 31.25},
+        {"format": 3, "enemies": ["compact_officer", "forgewright_sentry", "arcanite_hound"], "weight": 31.25},
+        {"format": 4, "enemies": ["forgewright_sentry", "forgewright_sentry", "compact_officer", "compact_officer"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "4-5",
+      "terrain_type": "open",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["pallor_soldier", "pallor_soldier"], "weight": 31.25},
+        {"format": 2, "enemies": ["pallor_soldier", "compact_officer", "compact_officer"], "weight": 31.25},
+        {"format": 3, "enemies": ["pallor_soldier", "pallor_soldier", "pallor_soldier"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_soldier", "pallor_soldier", "pallor_soldier"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "general_vassar_kole", "name": "General Kole", "floor": "ironmark_command", "trigger": "cutscene", "is_mini_boss": false}
+  ]
+}

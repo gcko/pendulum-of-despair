@@ -1,0 +1,44 @@
+{
+  "dungeon_id": "thornvein_passage",
+  "name": "Thornvein Passage",
+  "act": "act_iii",
+  "floors": [
+    {
+      "floor_id": "1",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["pallor_treant", "pallor_treant", "pallor_treant", "pallor_vermin"], "weight": 31.25},
+        {"format": 2, "enemies": ["wraith_shade", "wraith_shade", "pallor_vermin", "pallor_vermin"], "weight": 31.25},
+        {"format": 3, "enemies": ["pallor_treant", "pallor_treant", "pallor_treant", "wraith_shade"], "weight": 31.25},
+        {"format": 4, "enemies": ["pallor_vermin", "pallor_vermin", "pallor_vermin", "pallor_vermin", "wraith_shade", "wraith_shade"], "weight": 6.25}
+      ]
+    },
+    {
+      "floor_id": "2",
+      "terrain_type": "low_visibility",
+      "danger_tier": 3,
+      "danger_increment": 252,
+      "formation_rates": {
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
+      },
+      "groups": [
+        {"format": 1, "enemies": ["hollow_knight", "void_moth", "void_moth"], "weight": 31.25},
+        {"format": 2, "enemies": ["void_moth"], "weight": 31.25},
+        {"format": 3, "enemies": ["despair_cloud", "void_moth"], "weight": 31.25},
+        {"format": 4, "enemies": ["despair_cloud", "hollow_knight"], "weight": 6.25}
+      ]
+    }
+  ],
+  "bosses": [
+    {"enemy_id": "roc", "name": "Root Horror", "floor": "1", "trigger": "zone", "is_mini_boss": true}
+  ]
+}

@@ -1,0 +1,238 @@
+{
+	"devices": [
+		{
+			"id": "thermal_charge",
+			"name": "Thermal Charge",
+			"tier": "basic",
+			"ac_cost": 1,
+			"category": "offensive",
+			"element": "flame",
+			"effect": "Flame AoE: 400 dmg",
+			"charges": 3,
+			"materials": [
+				{"item_id": "element_shard", "quantity": 2},
+				{"item_id": "scrap_metal", "quantity": 1}
+			],
+			"gold_cost": 100,
+			"unlock_phase": "act_i",
+			"schematic_required": null,
+			"description": "A volatile charge that detonates in a burst of flame."
+		},
+		{
+			"id": "mending_engine",
+			"name": "Mending Engine",
+			"tier": "basic",
+			"ac_cost": 1,
+			"category": "defensive",
+			"element": null,
+			"effect": "Heal 800 HP + cure Poison/Burn",
+			"charges": 3,
+			"materials": [
+				{"item_id": "beast_hide", "quantity": 2},
+				{"item_id": "spirit_essence", "quantity": 1}
+			],
+			"gold_cost": 150,
+			"unlock_phase": "act_i",
+			"schematic_required": null,
+			"description": "A compact healing engine that mends wounds and purges toxins."
+		},
+		{
+			"id": "flashbang",
+			"name": "Flashbang",
+			"tier": "basic",
+			"ac_cost": 1,
+			"category": "utility",
+			"element": null,
+			"effect": "All enemies: 80% Blind, 2 turns",
+			"charges": 3,
+			"materials": [
+				{"item_id": "element_shard", "quantity": 1},
+				{"item_id": "bone_fragment", "quantity": 1}
+			],
+			"gold_cost": 100,
+			"unlock_phase": "act_i",
+			"schematic_required": null,
+			"description": "A blinding flash device that disorients all enemies."
+		},
+		{
+			"id": "frost_bomb",
+			"name": "Frost Bomb",
+			"tier": "advanced",
+			"ac_cost": 2,
+			"category": "offensive",
+			"element": "frost",
+			"effect": "Frost AoE: 400 dmg",
+			"charges": 3,
+			"materials": [
+				{"item_id": "element_shard", "quantity": 2},
+				{"item_id": "crystal_shard", "quantity": 1}
+			],
+			"gold_cost": 100,
+			"unlock_phase": "act_ii",
+			"schematic_required": null,
+			"description": "A freezing charge that blankets the area in frost."
+		},
+		{
+			"id": "shock_coil",
+			"name": "Shock Coil",
+			"tier": "advanced",
+			"ac_cost": 2,
+			"category": "offensive",
+			"element": "storm",
+			"effect": "Storm single: 600 dmg + Slow",
+			"charges": 3,
+			"materials": [
+				{"item_id": "elemental_core", "quantity": 1},
+				{"item_id": "scrap_metal", "quantity": 1}
+			],
+			"gold_cost": 200,
+			"unlock_phase": "act_ii",
+			"schematic_required": null,
+			"description": "An electrified coil that delivers a devastating storm shock."
+		},
+		{
+			"id": "barrier_node",
+			"name": "Barrier Node",
+			"tier": "advanced",
+			"ac_cost": 2,
+			"category": "defensive",
+			"element": null,
+			"effect": "Party DEF +25%, 3 turns",
+			"charges": 3,
+			"materials": [
+				{"item_id": "scrap_metal", "quantity": 2},
+				{"item_id": "crystal_shard", "quantity": 1}
+			],
+			"gold_cost": 150,
+			"unlock_phase": "act_ii",
+			"schematic_required": null,
+			"description": "A defensive node that projects a physical barrier around the party."
+		},
+		{
+			"id": "ward_emitter",
+			"name": "Ward Emitter",
+			"tier": "advanced",
+			"ac_cost": 2,
+			"category": "defensive",
+			"element": null,
+			"effect": "Party MDEF +25%, 3 turns",
+			"charges": 3,
+			"materials": [
+				{"item_id": "crystal_shard", "quantity": 2},
+				{"item_id": "ether_wisp", "quantity": 1}
+			],
+			"gold_cost": 150,
+			"unlock_phase": "act_ii",
+			"schematic_required": null,
+			"description": "An arcane emitter that shields the party from magical attacks."
+		},
+		{
+			"id": "gravity_anchor",
+			"name": "Gravity Anchor",
+			"tier": "expert",
+			"ac_cost": 2,
+			"category": "utility",
+			"element": null,
+			"effect": "All enemies: SPD -30%, 3 turns",
+			"charges": 3,
+			"materials": [
+				{"item_id": "scrap_metal", "quantity": 1},
+				{"item_id": "arcanite_shard", "quantity": 1}
+			],
+			"gold_cost": 300,
+			"unlock_phase": "interlude",
+			"schematic_required": null,
+			"description": "A gravity-warping device that slows all enemies to a crawl."
+		},
+		{
+			"id": "disruption_pulse",
+			"name": "Disruption Pulse",
+			"tier": "expert",
+			"ac_cost": 2,
+			"category": "utility",
+			"element": null,
+			"effect": "Remove all enemy buffs",
+			"charges": 3,
+			"materials": [
+				{"item_id": "arcanite_shard", "quantity": 1},
+				{"item_id": "pallor_sample", "quantity": 1}
+			],
+			"gold_cost": 350,
+			"unlock_phase": "interlude",
+			"schematic_required": null,
+			"description": "An arcanite pulse that strips all beneficial effects from enemies."
+		},
+		{
+			"id": "pallor_grenade",
+			"name": "Pallor Grenade",
+			"tier": "anti_pallor",
+			"ac_cost": 3,
+			"category": "offensive",
+			"element": "spirit",
+			"effect": "Spirit AoE: 500 dmg (2x vs Pallor)",
+			"charges": 3,
+			"materials": [
+				{"item_id": "pallor_sample", "quantity": 2},
+				{"item_id": "spirit_essence", "quantity": 1}
+			],
+			"gold_cost": 250,
+			"unlock_phase": "act_iii",
+			"schematic_required": null,
+			"description": "A spirit-charged grenade that devastates Pallor-tainted foes."
+		},
+		{
+			"id": "pallor_salve",
+			"name": "Pallor Salve",
+			"tier": "anti_pallor",
+			"ac_cost": 3,
+			"category": "consumable_craft",
+			"element": null,
+			"effect": "Cure Despair (instant)",
+			"charges": 3,
+			"materials": [
+				{"item_id": "pallor_sample", "quantity": 2},
+				{"item_id": "spirit_essence", "quantity": 1}
+			],
+			"gold_cost": 200,
+			"unlock_phase": "act_iii",
+			"schematic_required": null,
+			"description": "A crafted salve that instantly cures the Despair status."
+		},
+		{
+			"id": "arcanite_lance",
+			"name": "Arcanite Lance",
+			"tier": "anti_pallor",
+			"ac_cost": 3,
+			"category": "advanced",
+			"element": "non_elemental",
+			"effect": "Non-elem single: 1,500 dmg",
+			"charges": 3,
+			"materials": [
+				{"item_id": "arcanite_core", "quantity": 1},
+				{"item_id": "elemental_core", "quantity": 1}
+			],
+			"gold_cost": 500,
+			"unlock_phase": "act_iii",
+			"schematic_required": "forge_schematic",
+			"description": "A devastating arcanite-powered lance that pierces any defense."
+		},
+		{
+			"id": "emergency_beacon",
+			"name": "Emergency Beacon",
+			"tier": "ultimate",
+			"ac_cost": 4,
+			"category": "advanced",
+			"element": null,
+			"effect": "Revive all fainted at 50% HP",
+			"charges": 3,
+			"materials": [
+				{"item_id": "arcanite_core", "quantity": 1},
+				{"item_id": "spirit_essence", "quantity": 2}
+			],
+			"gold_cost": 800,
+			"unlock_phase": "post_convergence",
+			"schematic_required": null,
+			"description": "A last-resort beacon that revives all fallen party members."
+		}
+	]
+}
