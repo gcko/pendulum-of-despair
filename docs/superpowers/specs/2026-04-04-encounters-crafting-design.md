@@ -65,15 +65,15 @@ Dungeon encounter tables (~26 dungeons + 1 overworld file), pre-crafted device d
 | 8 | `archive_of_ages.json` | Archive of Ages | II-III | 3 |
 | 9 | `dreamers_fault.json` | Dreamer's Fault | Post-game | 20 (4-5 floor-groups) |
 | 10 | `dry_well.json` | Dry Well of Aelhart | III+ | 7 (3 floor-groups) |
-| 11 | `sunken_rig.json` | Sunken Rig | III+ | 3 |
+| 11 | `sunken_rig.json` | Sunken Rig | Interlude | 3 |
 | 12 | `windshear_peak.json` | Windshear Peak | III+ | 1 |
 | 13 | `mountain_passes.json` | Mountain Passes | III+ | Variable |
 | 14 | `caves_and_grottos.json` | Caves and Grottos | III+ | Variable |
 | 15 | `caldera_forge_depths.json` | Caldera Forge Depths | II+ | 4 (2 floor-groups) |
 | 16 | `frostcap_caverns.json` | Frostcap Caverns | III+ | 3 |
 | 17 | `thornvein_passage.json` | Thornvein Passage | III+ | 2 |
-| 18 | `valdris_siege.json` | Valdris Siege Battlefield | Interlude | 1 (scripted) |
-| 19 | `ley_nexus_hollow.json` | Ley Nexus Hollow | Post-game | 1 (boss arena) |
+| 18 | `valdris_siege.json` | Valdris Siege Battlefield | II | 1 (scripted) |
+| 19 | `ley_nexus_hollow.json` | Ley Nexus Hollow | Interlude | 1 (boss arena) |
 | 20 | `highcairn_monastery.json` | Highcairn Monastery | Interlude-III | 2 |
 | 21 | `valdris_catacombs.json` | Valdris Crown Catacombs | Interlude+ | 3 |
 | 22 | `corrund_sewers.json` | Corrund Undercity / Sewers | II | 3 |

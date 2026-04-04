@@ -158,7 +158,7 @@ SPECIAL CASES:
 - `convergence` — multi-phase with area-groups (Outer Ring, Anchor Stations, Central Platform). Tier 3 → Tier 4
 - `dreamers_fault` — 20 floors with EXTENDED format (5-6 packs per floor-group, non-standard weights: 25/25/25/18.75/6.25 or 25/25/18.75/18.75/6.25/6.25)
 - `valdris_siege` — scripted battle sequence. May have minimal/no random encounter groups. Include bosses array.
-- `ley_nexus_hollow` — post-game boss arena. May be Tier 0 with only bosses array.
+- `ley_nexus_hollow` — interlude boss arena. May be Tier 0 with only bosses array.
 
 ACT III + OPTIONAL + POST-GAME DUNGEONS (13 files) — with explicit act values:
 1. dry_well — act: act_iii, 7 floors, 3 floor-groups, Tier 2→3→4 escalation
@@ -171,7 +171,7 @@ ACT III + OPTIONAL + POST-GAME DUNGEONS (13 files) — with explicit act values:
 8. frostcap_caverns — act: act_iii
 9. thornvein_passage — act: act_iii
 10. valdris_siege — act: act_ii, scripted battles
-11. ley_nexus_hollow — act: post_game, boss arena
+11. ley_nexus_hollow — act: interlude, boss arena
 12. highcairn_monastery — act: interlude (spans Interlude-III)
 13. dreamers_fault — act: post_game, 20 floors, EXTENDED format (5-6 packs)
 
