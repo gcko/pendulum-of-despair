@@ -231,7 +231,7 @@ transformation that can be validated line-by-line against source docs.
 
 **Notes:**
 - Abilities are **descriptive data only** — name, cost, effect text, target. Runtime execution logic (AP/WG/AC/Favor tracking, device mechanics, combo resolution) deferred to gap 3.3 (Battle Scene).
-- Cross-trained spells flagged with cross_trained: true and mp_penalty: 1.5
+- Cross-trained spells flagged per-learner in learned_by entries (cross_trained: true, mp_penalty: 1.5 on the specific character entry, not at spell level)
 - Pallor Zone Actions (Lira: Calibrate, Torren: Purify) included as story-gated abilities
 - Design spec: `docs/superpowers/specs/2026-04-04-shops-spells-abilities-design.md`
 

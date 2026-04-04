@@ -116,7 +116,7 @@ SHOP LIST (23 files):
 ```
 
 RULES:
-- Every spell MUST have ALL 14 fields. Use null for inapplicable.
+- Every spell MUST have ALL 15 fields. Use null for inapplicable.
 - `id` = snake_case of spell name, unique across ALL 5 files
 - `tradition` = ley_line, forgewright, spirit, void, or streetwise
 - `element` = flame, frost, storm, earth, ley, spirit, void, non_elemental, or null
@@ -177,7 +177,7 @@ FILE ASSIGNMENTS:
 ```
 
 RULES:
-- Every ability MUST have ALL 14 fields. Use null for inapplicable.
+- Every ability MUST have ALL 15 fields. Use null for inapplicable.
 - `id` = snake_case of ability name, unique across ALL 6 files
 - `character` = edren, cael, maren, sable, lira, torren
 - `command` = bulwark, rally, arcanum, tricks, forgewright, spiritcall
@@ -216,7 +216,7 @@ CHARACTER ABILITY COUNTS:
       "id": "shield_oath",
       "name": "Shield Oath",
       "characters": ["edren", "cael"],
-      "cost": "Edren: 3 AP, Cael: 10 MP",
+      "cost": "Edren: 7 MP, Cael: 7 MP",
       "effect": "Synergized buffs: Edren DEF/MDEF +25%, Cael ATK/SPD +25%, both 4 turns.",
       "availability": "Acts I-II only (lost after Cael's betrayal)",
       "description": "A coordinated defensive-offensive stance."
