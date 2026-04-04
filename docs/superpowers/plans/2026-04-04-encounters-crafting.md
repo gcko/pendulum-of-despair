@@ -166,8 +166,8 @@ ACT III + OPTIONAL + POST-GAME DUNGEONS (13 files) — with explicit act values:
 3. convergence — act: act_iii, multi-phase, Tier 3→4
 4. sunken_rig — act: interlude, Tier 3
 5. windshear_peak — act: act_iii
-6. mountain_passes — act: act_iii
-7. caves_and_grottos — act: act_iii
+6. mountain_passes — act: act_i
+7. caves_and_grottos — act: act_i
 8. frostcap_caverns — act: act_iii
 9. thornvein_passage — act: act_iii
 10. valdris_siege — act: act_ii, scripted battles

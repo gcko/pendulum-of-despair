@@ -67,8 +67,8 @@ Dungeon encounter tables (~26 dungeons + 1 overworld file), pre-crafted device d
 | 10 | `dry_well.json` | Dry Well of Aelhart | III+ | 7 (3 floor-groups) |
 | 11 | `sunken_rig.json` | Sunken Rig | Interlude | 3 |
 | 12 | `windshear_peak.json` | Windshear Peak | III+ | 1 |
-| 13 | `mountain_passes.json` | Mountain Passes | III+ | Variable |
-| 14 | `caves_and_grottos.json` | Caves and Grottos | III+ | Variable |
+| 13 | `mountain_passes.json` | Mountain Passes | I+ | Variable |
+| 14 | `caves_and_grottos.json` | Caves and Grottos | I+ | Variable |
 | 15 | `caldera_forge_depths.json` | Caldera Forge Depths | II+ | 4 (2 floor-groups) |
 | 16 | `frostcap_caverns.json` | Frostcap Caverns | III+ | 3 |
 | 17 | `thornvein_passage.json` | Thornvein Passage | III+ | 2 |

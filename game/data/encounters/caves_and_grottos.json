@@ -1,7 +1,7 @@
 {
   "dungeon_id": "caves_and_grottos",
   "name": "Caves and Grottos",
-  "act": "act_iii",
+  "act": "act_i",
   "floors": [
     {
       "floor_id": "thornvein_grotto",
@@ -17,36 +17,36 @@
         {
           "format": 1,
           "enemies": [
-            "pallor_vermin",
-            "pallor_vermin",
-            "pallor_vermin"
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin"
           ],
           "weight": 31.25
         },
         {
           "format": 2,
           "enemies": [
-            "void_crystal",
-            "void_crystal"
+            "unstable_crystal",
+            "unstable_crystal"
           ],
           "weight": 31.25
         },
         {
           "format": 3,
           "enemies": [
-            "pallor_vermin",
-            "pallor_vermin",
-            "void_crystal"
+            "ley_vermin",
+            "ley_vermin",
+            "unstable_crystal"
           ],
           "weight": 31.25
         },
         {
           "format": 4,
           "enemies": [
-            "pallor_vermin",
-            "pallor_vermin",
-            "pallor_vermin",
-            "pallor_vermin"
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin",
+            "ley_vermin"
           ],
           "weight": 6.25
         }

@@ -1,7 +1,7 @@
 {
   "dungeon_id": "mountain_passes",
   "name": "Mountain Passes",
-  "act": "act_iii",
+  "act": "act_i",
   "floors": [
     {
       "floor_id": "wilds_gate_pass",
@@ -17,33 +17,33 @@
         {
           "format": 1,
           "enemies": [
-            "shadow_wolf",
-            "shadow_wolf"
+            "wayward_wolf",
+            "wayward_wolf"
           ],
           "weight": 31.25
         },
         {
           "format": 2,
           "enemies": [
-            "deserter_captain",
-            "shadow_wolf"
+            "road_bandit",
+            "wayward_wolf"
           ],
           "weight": 31.25
         },
         {
           "format": 3,
           "enemies": [
-            "pallor_boar",
-            "pallor_boar"
+            "wild_boar",
+            "wild_boar"
           ],
           "weight": 31.25
         },
         {
           "format": 4,
           "enemies": [
-            "deserter_captain",
-            "deserter_captain",
-            "shadow_wolf"
+            "road_bandit",
+            "road_bandit",
+            "wayward_wolf"
           ],
           "weight": 6.25
         }
