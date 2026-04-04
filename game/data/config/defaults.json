@@ -1,0 +1,23 @@
+{
+  "battle_speed": 3,
+  "atb_mode": "active",
+  "text_speed": "normal",
+  "battle_cursor": "reset",
+  "window_color": {
+    "r": 0,
+    "g": 0,
+    "b": 8
+  },
+  "sound_mode": "stereo",
+  "music_volume": 8,
+  "sfx_volume": 8,
+  "screen_shake": true,
+  "mode7_intensity": 6,
+  "patience_mode": false,
+  "color_blind_mode": "off",
+  "high_res_text": false,
+  "reduce_motion": false,
+  "flash_intensity": "full",
+  "transition_style": "classic",
+  "sfx_captions": false
+}

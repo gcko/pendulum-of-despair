@@ -332,7 +332,8 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.9 Config Defaults (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P2 — blocks settings/config screen
 **Estimated Size:** S (1 JSON file)
 **Output:** `game/data/config/defaults.json`
@@ -341,11 +342,16 @@ transformation that can be validated line-by-line against source docs.
 **Depends On:** None
 
 **What's Needed:**
-- [ ] All 17 config settings with default values from accessibility.md
-- [ ] Battle speed (default 3), ATB mode (active), text speed (normal)
-- [ ] Accessibility defaults: patience_mode (false), color_blind_mode (off), high_res_text (false), reduce_motion (false)
-- [ ] Audio defaults: music_volume (8), sfx_volume (8), sound_mode (stereo)
-- [ ] Verify defaults match accessibility.md Section 7 table exactly
+- [x] All 17 config settings with default values from accessibility.md
+- [x] Battle speed (default 3), ATB mode (active), text speed (normal)
+- [x] Accessibility defaults: patience_mode (false), color_blind_mode (off), high_res_text (false), reduce_motion (false)
+- [x] Audio defaults: music_volume (8), sfx_volume (8), sound_mode (stereo)
+- [x] Verify defaults match accessibility.md Section 7 table exactly
+
+**Notes:**
+- Config stored separately from save data per save-system.md
+- Runtime behavior (patience_mode overrides, reduce_motion cascades) deferred to gap 3.4
+- window_color uses RGB object {r, g, b} with 0-31 range per accessibility.md
 
 **Blocking:** Config screen, settings persistence
 
