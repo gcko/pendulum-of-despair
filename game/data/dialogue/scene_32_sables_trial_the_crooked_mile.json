@@ -1,0 +1,121 @@
+{
+  "scene_id": "scene_32_sables_trial_the_crooked_mile",
+  "entries": [
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_001",
+      "speaker": "shadow",
+      "lines": [
+        "You always leave. Every time. When it gets hard,\nwhen it gets real — you leave."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_002",
+      "speaker": "shadow",
+      "lines": [
+        "You're not a knight. Not a mage. Not a speaker.\nWhat are you?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_003",
+      "speaker": "shadow",
+      "lines": [
+        "Nobody. You're nobody, and everyone knows it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_004",
+      "speaker": "edren",
+      "lines": [
+        "What happened in there?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_005",
+      "speaker": "sable",
+      "lines": [
+        "There was a door. Open. Warm. Safe. Everything I've\never wanted."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_006",
+      "speaker": "lira",
+      "lines": [
+        "And?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_007",
+      "speaker": "sable",
+      "lines": [
+        "I turned around and walked back."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_008",
+      "speaker": "torren",
+      "lines": [
+        "That's it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_009",
+      "speaker": "sable",
+      "lines": [
+        "That's it. Turns out the hard part isn't fighting\nthe monster. It's choosing the people over the exit."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_32_sables_trial_the_crooked_mile_010",
+      "speaker": "maren",
+      "lines": [
+        "The Pallor doesn't always test your strength. Sometimes\nit tests whether you'll stay."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

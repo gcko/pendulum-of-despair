@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_escape",
+  "entries": [
+    {
+      "id": "battle_escape_001",
+      "speaker": "",
+      "lines": [
+        "- *(Success:)* \"Escaped!\"\n- *(Failure:)* \"Can't escape!\"\n- *(Boss:)* Flee option greyed out. *(Not selectable.)*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

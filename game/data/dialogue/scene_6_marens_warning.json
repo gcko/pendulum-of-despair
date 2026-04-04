@@ -1,0 +1,259 @@
+{
+  "scene_id": "scene_6_marens_warning",
+  "entries": [
+    {
+      "id": "scene_6_marens_warning_001",
+      "speaker": "maren",
+      "lines": [
+        "Torren sent word through the spirits. Faster than\nwalking, though less polite."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_002",
+      "speaker": "maren",
+      "lines": [
+        "Show me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_003",
+      "speaker": "maren",
+      "lines": [
+        "Where did you find it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_004",
+      "speaker": "edren",
+      "lines": [
+        "Beneath an Ironmouth mine. A pre-civilization ruin.\nThere were dead miners — no wounds. Their faces were—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_005",
+      "speaker": "maren",
+      "lines": [
+        "Frozen in despair. Yes. I've read about this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_006",
+      "speaker": "maren",
+      "lines": [
+        "This thing has no power of its own. It's not a weapon,\nnot a source, not a tool."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_007",
+      "speaker": "lira",
+      "lines": [
+        "Then what is it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_008",
+      "speaker": "maren",
+      "lines": [
+        "It's a conduit. A focus point for something beyond it.\nThink of it as a handle on a door that's been sealed for a very\nlong time. And something on the other side knows you touched it."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "bubble_ellipsis",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_009",
+      "speaker": "cael",
+      "lines": [
+        "A door to what?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_010",
+      "speaker": "maren",
+      "lines": [
+        "I don't know everything. I know this: the miners\ndidn't die from the Pendulum. They died from what's behind it.\nDespair so deep it replaces the will to live. They sat down and\nthe world emptied out of them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_011",
+      "speaker": "torren",
+      "lines": [
+        "The spirits call it the Grey. Old word. Older than\nthe tribes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_012",
+      "speaker": "maren",
+      "lines": [
+        "Different names in different ages. The Pallor. The\nGrey. The Weight. It doesn't matter what you call it. It's been\non the other side of that door for a very long time, and now it\nknows someone touched the handle."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_013",
+      "speaker": "edren",
+      "lines": [
+        "Can it be destroyed?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_014",
+      "speaker": "maren",
+      "lines": [
+        "I don't know. I know it can't be left here. The ley\nline beneath this cottage is already dimming — I can feel it\nresponding to the Pendulum's presence. Wherever you take it, the\nworld around it will start to fade."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_015",
+      "speaker": "lira",
+      "lines": [
+        "Then we take it to people who can study it properly.\nValdris has resources — containment, ley researchers, the court\nmages."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_016",
+      "speaker": "maren",
+      "lines": [
+        "The court mages will want to use it. The king will\nwant it as leverage against the Compact. And the thing behind\nthe door will let them think they're in control right up until\nthey aren't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_017",
+      "speaker": "sable",
+      "lines": [
+        "So we can't leave it, can't destroy it, and can't\ngive it to anyone. Wonderful."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_018",
+      "speaker": "maren",
+      "lines": [
+        "We can take it to people who understand the danger.\nAnd I can be one of those people."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_019",
+      "speaker": "maren",
+      "lines": [
+        "I left the court because they wouldn't listen. Maybe\nnow they'll have to."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_020",
+      "speaker": "torren",
+      "lines": [
+        "You're coming with us?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_021",
+      "speaker": "maren",
+      "lines": [
+        "I've spent years studying this in isolation. If that\ndoor is opening, isolation isn't enough anymore."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_6_marens_warning_022",
+      "speaker": "maren",
+      "lines": [
+        "To Valdris, then. And pray they listen better than\nthey did last time."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

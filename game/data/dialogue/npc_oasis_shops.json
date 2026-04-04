@@ -1,0 +1,27 @@
+{
+  "scene_id": "npc_oasis_shops",
+  "entries": [
+    {
+      "id": "npc_oasis_shops_001",
+      "speaker": "oasis_vendor",
+      "lines": [
+        "Prices are what they are. Everything here was\ncarried through the Wastes on someone's back."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_oasis_shops_002",
+      "speaker": "",
+      "lines": [
+        "*The world speaks through its people. Listen to Nella's flowers,\nDorin's totems, and Wren's stars — they'll tell you what's\ncoming before anyone else does.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

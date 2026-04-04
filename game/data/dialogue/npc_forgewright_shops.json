@@ -1,0 +1,16 @@
+{
+  "scene_id": "npc_forgewright_shops",
+  "entries": [
+    {
+      "id": "npc_forgewright_shops_001",
+      "speaker": "forgewright",
+      "lines": [
+        "Arcanite-grade equipment. Precision-machined.\nDon't ask where the materials come from."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

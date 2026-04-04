@@ -1,0 +1,539 @@
+{
+  "scene_id": "scene_7_the_capital",
+  "entries": [
+    {
+      "id": "scene_7_the_capital_001",
+      "speaker": "gate_guard",
+      "lines": [
+        "Commander Edren. You've been expected. The king\nreceived word from Thornwatch."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_002",
+      "speaker": "edren",
+      "lines": [
+        "Commander Halda sent ahead?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_003",
+      "speaker": "gate_guard",
+      "lines": [
+        "A rider, two days ago. The king's been asking\nfor you since."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_004",
+      "speaker": "gate_guard",
+      "lines": [
+        "Your... company will need to register at the\ninner gate."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_005",
+      "speaker": "sable",
+      "lines": [
+        "Of course. I love registering."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_006",
+      "speaker": "king_aldren",
+      "lines": [
+        "Edren. You look like you've walked through a\nwar."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_007",
+      "speaker": "edren",
+      "lines": [
+        "Nearly, Your Majesty. We found something in an\nIronmouth mine that the Compact was excavating. A pre-civilization\nartifact."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_008",
+      "speaker": "king_aldren",
+      "lines": [
+        "This is what Halda's rider described? It\ndoesn't look like much."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_009",
+      "speaker": "maren",
+      "lines": [
+        "It isn't much. That's the danger, Your Majesty. It's\na conduit — a focal point for something beyond it. The miners who\nfound it are dead. Not from violence. From despair."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_010",
+      "speaker": "haren",
+      "lines": [
+        "Maren. You've been away from court for some time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_011",
+      "speaker": "maren",
+      "lines": [
+        "Not by choice, Chancellor. I left because my warnings\nwere ignored. I'm here because this time, ignoring them will cost\nmore than my career."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_012",
+      "speaker": "king_aldren",
+      "lines": [
+        "Every morning I ask the court mages for a\nreport on the ley lines. Every morning, the number is lower.\nI've stopped asking what it means."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_013",
+      "speaker": "king_aldren",
+      "lines": [
+        "You brought this to me for safekeeping. I\nwonder if you understand — there is nothing safe left in Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_014",
+      "speaker": "edren",
+      "lines": [
+        "Safer here than in Compact hands."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_015",
+      "speaker": "king_aldren",
+      "lines": [
+        "Perhaps. Maren — I want your assessment in\nwriting by morning. Cael, you studied ley resonance at the\nacademy. I'm assigning you to work with Maren on this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_016",
+      "speaker": "cael",
+      "lines": [
+        "Of course, Your Majesty."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_017",
+      "speaker": "king_aldren",
+      "lines": [
+        "The rest of you — welcome to Valdris. Such as\nit is. Find quarters in the Keep and rest. I expect we'll need\nyou soon."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_018",
+      "speaker": "aldis",
+      "lines": [
+        "Commander Edren. I've been cataloguing the ley line\ndecline for three years now. Twelve percent capacity loss in the\nlast year alone. I presented these findings to the court. They\nasked me if I was certain about the margin of error."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_019",
+      "speaker": "aldis",
+      "lines": [
+        "If your artifact is related to the ley line failures,\nI'd like to compare my readings. The resonance patterns may\ncorrelate. I'll work with Cael — he has a mind for this kind of\nanalysis."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_020",
+      "speaker": "aldis",
+      "lines": [
+        "You're the Forgewright defector. I read your conduit\nefficiency paper — the one the Consortium suppressed. Remarkably\nprecise work. If you have time, I'd like to discuss your\nextraction rate projections."
+      ],
+      "condition": "party_has(lira)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_021",
+      "speaker": "lira",
+      "lines": [
+        "You read that? It was classified."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_022",
+      "speaker": "aldis",
+      "lines": [
+        "I'm a researcher. Finding classified documents is\nhalf the job."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_023",
+      "speaker": "aldis",
+      "lines": [
+        "Maren? You're... back?"
+      ],
+      "condition": "party_has(maren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_024",
+      "speaker": "maren",
+      "lines": [
+        "Temporarily. Don't rearrange my study while I'm here."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_025",
+      "speaker": "aldis",
+      "lines": [
+        "I reorganized it by subject three years ago. It's\nmuch more efficient now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_026",
+      "speaker": "maren",
+      "lines": [
+        "I'm sure it is."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_027",
+      "speaker": "cordwyn",
+      "lines": [
+        "Edren. Good to see you in one piece."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_028",
+      "speaker": "cordwyn",
+      "lines": [
+        "Heard you pulled something out of an old mine that\nhas the whole court whispering. The Chancellor's already trying\nto figure out how to use it as a bargaining chip with the\nCompact."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_029",
+      "speaker": "edren",
+      "lines": [
+        "It's not a weapon."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_030",
+      "speaker": "cordwyn",
+      "lines": [
+        "Everything's a weapon to a politician. Just make\nsure Cael doesn't lose himself in that research. He's brilliant,\nbut he carries more than he lets on."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_031",
+      "speaker": "cordwyn",
+      "lines": [
+        "Keep an eye on him. That's not an order. It's a\nrequest."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_032",
+      "speaker": "cordwyn",
+      "lines": [
+        "Spirit-speaker. You're a long way from the Wilds."
+      ],
+      "condition": "party_has(torren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_033",
+      "speaker": "torren",
+      "lines": [
+        "The Wilds follow where they're needed. So do I."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_034",
+      "speaker": "cordwyn",
+      "lines": [
+        "Good. I like people who don't need to be asked\ntwice."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_035",
+      "speaker": "cordwyn",
+      "lines": [
+        "Touch nothing, thief."
+      ],
+      "condition": "party_has(sable)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_036",
+      "speaker": "sable",
+      "lines": [
+        "I was admiring. There's a difference."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_037",
+      "speaker": "cordwyn",
+      "lines": [
+        "There isn't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_038",
+      "speaker": "renn",
+      "lines": [
+        "Sable. You're supposed to be dead in a ditch\nsomewhere."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_039",
+      "speaker": "sable",
+      "lines": [
+        "I get that a lot."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_040",
+      "speaker": "renn",
+      "lines": [
+        "Sit down. You look like you've been running from\nsomething expensive."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_041",
+      "speaker": "sable",
+      "lines": [
+        "Running toward something, actually. I need\ninformation."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_042",
+      "speaker": "renn",
+      "lines": [
+        "I don't sell secrets, love. I sell certainty. You\nwant to know something for sure? That costs extra."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_043",
+      "speaker": "sable",
+      "lines": [
+        "What do you know about the Compact's mining\noperations in the southern Wilds?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_044",
+      "speaker": "renn",
+      "lines": [
+        "I know they found something they weren't expecting.\nI know three courier birds went to Corrund in one day. And I\nknow the price of Forgewright steel just dropped, which means\nthe generals are spending money on something other than weapons."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_045",
+      "speaker": "renn",
+      "lines": [
+        "Whatever you've gotten yourself into, Sable — it's\nbigger than a mine."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_046",
+      "speaker": "sable",
+      "lines": [
+        "Yeah. I'm starting to figure that out."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_047",
+      "speaker": "",
+      "lines": [
+        "*Act I complete. The party is assembled, the artifact is in the\nworst possible hands, and the stranger on the cliff is already\nforgotten.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7_the_capital_048",
+      "speaker": "",
+      "lines": [
+        "*Continue: [Act II Part 1 — The Fraying](act-ii-part-1.md)*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

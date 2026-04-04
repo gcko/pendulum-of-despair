@@ -1,0 +1,38 @@
+{
+  "scene_id": "battle_general_vassar_kole",
+  "entries": [
+    {
+      "id": "battle_general_vassar_kole_001",
+      "speaker": "",
+      "lines": [
+        "One crystal shatters. The Despair Aura flickers."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_general_vassar_kole_002",
+      "speaker": "kole",
+      "lines": [
+        "Impressive. Most impressive. You've broken one."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_general_vassar_kole_003",
+      "speaker": "",
+      "lines": [
+        "The second crystal explodes. The grey aura dissipates. Kole\nfalls to his knees. The Pallor energy drains from the room.\nSoldiers collapse — some wake confused. Some don't wake."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

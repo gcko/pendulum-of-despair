@@ -1,0 +1,49 @@
+{
+  "scene_id": "npc_dorin",
+  "entries": [
+    {
+      "id": "npc_dorin_001",
+      "speaker": "dorin",
+      "lines": [
+        "Thirty years I've carved these totems. Never cracked\none. Now they all crack. It's not the wood. Something in the\nworld is breaking, and the wood knows it first."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_dorin_002",
+      "speaker": "dorin",
+      "lines": [
+        "Three totems shattered last night. Same moment. Like\nsomething struck the ley lines all at once. I felt it in the\nchisel before I heard it in the wood."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_dorin_003",
+      "speaker": "dorin",
+      "lines": [
+        "I can't carve anymore. The wood turns grey under my\nhands. Whatever I make, the grey eats it before the sap dries."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_dorin_004",
+      "speaker": "dorin",
+      "lines": [
+        "I carved a new totem this morning. First one in months\nthat held. The wood is different — softer, younger — but it holds.\nThe spirits are coming back to look at it. I think they approve."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

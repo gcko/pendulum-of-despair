@@ -1,0 +1,204 @@
+{
+  "scene_id": "sable_warning",
+  "entries": [
+    {
+      "id": "sable_warning_001",
+      "speaker": "sable",
+      "lines": [
+        "Don't react. Follow me. We have a problem."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_002",
+      "speaker": "sable",
+      "lines": [
+        "Something's wrong with Cael. He's not sleeping. He's\nbarely eating. He spends every night in the vault with the\nPendulum. And when he does come out, he asks questions."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_003",
+      "speaker": "edren",
+      "lines": [
+        "What kind of questions?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_004",
+      "speaker": "sable",
+      "lines": [
+        "He asked Aldis about historical cases of grief being\n\"cured.\" That's not academic. He asked Maren's old notes about\nthe Pallor's previous offers — what it promised, what it wanted."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_005",
+      "speaker": "maren",
+      "lines": [
+        "He shouldn't have access to those notes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_006",
+      "speaker": "sable",
+      "lines": [
+        "He doesn't. He broke the ward on your study. Aldis\nfound the breach but didn't report it — she thought it was a\nresearch emergency."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_007",
+      "speaker": "sable",
+      "lines": [
+        "I tried to talk to him. He said he was fine. He said\nit three times. People who are fine don't say it three times."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "sable",
+          "anim": "sweat_drop",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_008",
+      "speaker": "lira",
+      "lines": [
+        "I'll talk to him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_009",
+      "speaker": "sable",
+      "lines": [
+        "It's worse than that. Renn heard something from her\ncontacts — the Compact is moving troops. Not border probes.\nOrganized columns, heading for Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_010",
+      "speaker": "edren",
+      "lines": [
+        "When?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_011",
+      "speaker": "sable",
+      "lines": [
+        "Soon. Maybe days."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_012",
+      "speaker": "lira",
+      "lines": [
+        "The Pendulum. If Cael is compromised, and the\nCompact is moving—"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "head_down",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_013",
+      "speaker": "edren",
+      "lines": [
+        "Then we have tonight. Everyone get to your positions.\nTorren, the walls. Lira, the ley wards. Maren, the vault.\nSable — stay close to Cael. If he moves, I want to know."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_014",
+      "speaker": "sable",
+      "lines": [
+        "And if he doesn't listen?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_015",
+      "speaker": "edren",
+      "lines": [
+        "He hasn't been listening for weeks. Just... be there."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_016",
+      "speaker": "",
+      "lines": [
+        "*The alliances are secured. The warning is given. Tomorrow,\neverything breaks.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_warning_017",
+      "speaker": "",
+      "lines": [
+        "*Continue: [Act II Part 2 — The Betrayal](act-ii-part-2.md)*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

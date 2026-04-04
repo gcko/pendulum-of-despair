@@ -1,0 +1,121 @@
+{
+  "scene_id": "scene_30_liras_trial_the_unfinished_forge",
+  "entries": [
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_001",
+      "speaker": "perfect_machine",
+      "lines": [
+        "Lira. You can fix this. You fix everything."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_002",
+      "speaker": "perfect_machine",
+      "lines": [
+        "Almost. Try again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_003",
+      "speaker": "lira",
+      "lines": [
+        "I cannot fix you. I could not fix him. That was never\nmy job."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_004",
+      "speaker": "lira",
+      "lines": [
+        "Goodbye."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_005",
+      "speaker": "edren",
+      "lines": [
+        "Lira?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_006",
+      "speaker": "lira",
+      "lines": [
+        "It had his face. The Machine. It looked like Cael and\nit asked me to fix it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_007",
+      "speaker": "sable",
+      "lines": [
+        "What did you do?"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "sable",
+          "anim": "head_down",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_008",
+      "speaker": "lira",
+      "lines": [
+        "I took it apart. Because that's what you do with\nsomething that can't be fixed. You learn from it and you build\nsomething else."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_009",
+      "speaker": "maren",
+      "lines": [
+        "That's new."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_30_liras_trial_the_unfinished_forge_010",
+      "speaker": "lira",
+      "lines": [
+        "I know. I'll figure out what it means later."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

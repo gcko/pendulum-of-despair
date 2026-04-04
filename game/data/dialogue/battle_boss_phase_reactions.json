@@ -1,0 +1,60 @@
+{
+  "scene_id": "battle_boss_phase_reactions",
+  "entries": [
+    {
+      "id": "battle_boss_phase_reactions_001",
+      "speaker": "edren",
+      "lines": [
+        "It's changing. Stay sharp."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_boss_phase_reactions_002",
+      "speaker": "lira",
+      "lines": [
+        "New pattern. Watch the tells."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_boss_phase_reactions_003",
+      "speaker": "torren",
+      "lines": [
+        "The energy shifted. Careful."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_boss_phase_reactions_004",
+      "speaker": "sable",
+      "lines": [
+        "Oh, that's not good."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_boss_phase_reactions_005",
+      "speaker": "maren",
+      "lines": [
+        "Adaptation. It's learning from us."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

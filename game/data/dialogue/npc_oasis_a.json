@@ -1,0 +1,49 @@
+{
+  "scene_id": "npc_oasis_a",
+  "entries": [
+    {
+      "id": "npc_oasis_a_001",
+      "speaker": "nessa",
+      "lines": [
+        "You remember my shop in the Crown District? Gone.\nAll grey. But I saved what matters — the inventory ledger. Old\nhabits."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_oasis_a_002",
+      "speaker": "nessa",
+      "lines": [
+        "Stock's thin. Everything here was carried on someone's\nback through the Wastes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_oasis_a_003",
+      "speaker": "tev",
+      "lines": [
+        "Mama says the light is keeping us safe. But I can see\nit getting smaller."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_oasis_a_004",
+      "speaker": "sir_aldric",
+      "lines": [
+        "Our banner is out there. Third Company, Second\nRegiment. They didn't make it, but the standard doesn't have to\ndie with them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

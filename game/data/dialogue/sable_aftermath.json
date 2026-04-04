@@ -1,0 +1,49 @@
+{
+  "scene_id": "sable_aftermath",
+  "entries": [
+    {
+      "id": "sable_aftermath_001",
+      "speaker": "sable",
+      "lines": [
+        "Right. So. Everything's terrible. Just... establishing\nthat baseline."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_aftermath_002",
+      "speaker": "sable",
+      "lines": [
+        "Edren's gone. Lira's gone. Torren's back in the\nWilds. Maren left a note and vanished. Cael is... Cael."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_aftermath_003",
+      "speaker": "sable",
+      "lines": [
+        "And I'm still here. The thief with no particular\ntalents except being too stubborn to leave."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "sable_aftermath_004",
+      "speaker": "sable",
+      "lines": [
+        "Guess that'll have to be enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

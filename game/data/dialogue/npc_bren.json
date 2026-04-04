@@ -1,0 +1,93 @@
+{
+  "scene_id": "npc_bren",
+  "entries": [
+    {
+      "id": "npc_bren_001",
+      "speaker": "bren",
+      "lines": [
+        "Used to sell out by noon. Now I'm carrying loaves\nhome at sunset. Not because people don't want bread — because\nthey can't pay."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_002",
+      "speaker": "bren",
+      "lines": [
+        "My father baked for the old king. Thirty years of royal\nbread. He said the trick was never changing the recipe. \"The\npeople need to know some things stay the same.\""
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_003",
+      "speaker": "bren",
+      "lines": [
+        "There's a family in the Lower Ward — three children,\nno father since the border raids. I leave a loaf on their step\nevery morning. Don't tell anyone. I have a reputation."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_004",
+      "speaker": "bren",
+      "lines": [
+        "The ovens still work. That's something. Half the\nley-lamps on this street are dead, but flour doesn't need magic."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_005",
+      "speaker": "bren",
+      "lines": [
+        "That knight. Cael. He used to buy sweet rolls from me\non his way to the library. Every week. Tipped double. I keep\nlooking for him at the counter."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_006",
+      "speaker": "bren",
+      "lines": [
+        "Market's half empty. I still bake though. What else\nwould I do?"
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_007",
+      "speaker": "bren",
+      "lines": [
+        "Heard the Compact's foundries are cold. Even their\nmachines need ley energy, and the lines are broken. We're all\neating the same bread now — Valdris, Compact, doesn't matter.\nHunger doesn't care about borders."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_bren_008",
+      "speaker": "bren",
+      "lines": [
+        "Smoke's rising from the chimney again. First time the\nwhole street's smelled like bread in months. I made sweet rolls\nthis morning. First batch since... since Cael."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

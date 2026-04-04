@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_save_system",
+  "entries": [
+    {
+      "id": "battle_save_system_001",
+      "speaker": "",
+      "lines": [
+        "- *(Save point contact:)* 3-option menu appears: Rest / Rest & Save / Save.\n- *(Rest sub-menu:)* Shows available rest items (Sleeping Bag / Tent / Pavilion). If none available: \"No rest items. Recover 25% MP.\"\n- *(Overwrite prompt:)* \"Overwrite existing save?\"\n- *(Save complete:)* \"Saved.\"\n- *(Empty slot:)* \"— Empty —\"\n- *(Load screen:)* \"Select a save file.\"\n- *(Copy prompt:)* \"Copy to which slot?\"\n- *(Delete prompt:)* \"Delete this save?\""
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

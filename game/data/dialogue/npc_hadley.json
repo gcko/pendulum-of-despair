@@ -1,0 +1,60 @@
+{
+  "scene_id": "npc_hadley",
+  "entries": [
+    {
+      "id": "npc_hadley_001",
+      "speaker": "hadley",
+      "lines": [
+        "Room's clean. Ale's honest. I don't ask where\nyou're from and you don't ask where the ale's from."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_hadley_002",
+      "speaker": "hadley",
+      "lines": [
+        "Riders came through last night. Valdris soldiers,\nheading south. Said the capital was hit. Said the king was dead.\nI poured them drinks and didn't charge. Some nights the ale\nshould be free."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_hadley_003",
+      "speaker": "hadley",
+      "lines": [
+        "Valdris refugees in the east wing. Compact deserters\nin the west. They eat at the same tables. Nobody starts anything.\nNot in my inn."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_hadley_004",
+      "speaker": "hadley",
+      "lines": [
+        "Somebody has to keep the doors open. Might as well\nbe me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_hadley_005",
+      "speaker": "hadley",
+      "lines": [
+        "Sable came by. Said she wanted to take over. Rename\nthe place. I told her the bar's hers if she promises to keep the\nale honest. She promised."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

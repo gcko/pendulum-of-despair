@@ -1,0 +1,186 @@
+{
+  "scene_id": "grey_march",
+  "entries": [
+    {
+      "id": "grey_march_001",
+      "speaker": "torren",
+      "lines": [
+        "The spirits stop here. They won't go further."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_002",
+      "speaker": "sable",
+      "lines": [
+        "Smart spirits."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_003",
+      "speaker": "maren",
+      "lines": [
+        "The Convergence draws the Pallor to it like a drain.\nEverything alive pulls away. What's left is... this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_004",
+      "speaker": "edren",
+      "lines": [
+        "How far?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_005",
+      "speaker": "maren",
+      "lines": [
+        "Two days through the Wastes. There are trial clearings\nalong the route — places where the Pallor concentrates. Ancient.\nOlder than the Archive."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_006",
+      "speaker": "lira",
+      "lines": [
+        "Trial clearings?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_007",
+      "speaker": "maren",
+      "lines": [
+        "The Archivist mentioned them. In previous cycles,\nanyone approaching the Convergence had to pass through them. The\nPallor tests you. It finds the thing you're most afraid of and\nmakes you face it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_008",
+      "speaker": "sable",
+      "lines": [
+        "Wonderful. Any other cheerful news?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_009",
+      "speaker": "maren",
+      "lines": [
+        "Yes. You can't avoid them. The path goes through."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_010",
+      "speaker": "torren",
+      "lines": [
+        "It's still alive in there. Somewhere. Just... not\nenough to move."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_011",
+      "speaker": "sable",
+      "lines": [
+        "Listen. No birds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_012",
+      "speaker": "edren",
+      "lines": [
+        "Since when?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_013",
+      "speaker": "sable",
+      "lines": [
+        "Since the last ridge. Nothing singing. Nothing flying.\nNothing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_014",
+      "speaker": "maren",
+      "lines": [
+        "Past here, the trials begin. The Pallor will test\neach of us. It finds what you fear most and makes you face it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_ambience"
+        }
+      ]
+    },
+    {
+      "id": "grey_march_015",
+      "speaker": "sable",
+      "lines": [
+        "And? What if you can't face it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "grey_march_016",
+      "speaker": "maren",
+      "lines": [
+        "Then you stay. Like the deer. Like the bird."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

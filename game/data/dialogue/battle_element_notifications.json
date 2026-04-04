@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_element_notifications",
+  "entries": [
+    {
+      "id": "battle_element_notifications_001",
+      "speaker": "",
+      "lines": [
+        "- \"Weakness!\" *(1.5x damage, yellow flash)*\n- \"Resist!\" *(0.5x damage, blue flash)*\n- \"Immune!\" *(0 damage, grey flash)*\n- \"Absorb!\" *(heals target, green flash)*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

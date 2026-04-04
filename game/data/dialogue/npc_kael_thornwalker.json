@@ -1,0 +1,60 @@
+{
+  "scene_id": "npc_kael_thornwalker",
+  "entries": [
+    {
+      "id": "npc_kael_thornwalker_001",
+      "speaker": "kael",
+      "lines": [
+        "My uncle trusts you. I don't. But his judgment is\nbetter than mine in most things."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_kael_thornwalker_002",
+      "speaker": "kael",
+      "lines": [
+        "Something drove the grey-elk out of the northern\nreaches. Grey-elk don't flee. Whatever scared them — I don't\nwant to meet it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_kael_thornwalker_003",
+      "speaker": "kael",
+      "lines": [
+        "The grey-elk came back. But they're wrong — eyes flat,\nmoving in circles. The forest is reacting to something. Something\nbig, from the south."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_kael_thornwalker_004",
+      "speaker": "kael",
+      "lines": [
+        "Three patrols didn't come back this week. I'm not\nsending a fourth. We hold the perimeter and wait for it to thin.\nIt hasn't thinned yet."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_kael_thornwalker_005",
+      "speaker": "kael",
+      "lines": [
+        "All three patrols came home yesterday. First time in\nmonths. The perimeter is holding. The grey-elk are grazing again\n— real grazing, not the dead-eyed circling. I'm cautiously using\nthe word \"safe.\""
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

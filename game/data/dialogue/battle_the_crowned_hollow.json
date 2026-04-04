@@ -1,0 +1,49 @@
+{
+  "scene_id": "battle_the_crowned_hollow",
+  "entries": [
+    {
+      "id": "battle_the_crowned_hollow_001",
+      "speaker": "",
+      "lines": [
+        "Every command you gave. Every name they carried."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_crowned_hollow_002",
+      "speaker": "",
+      "lines": [
+        "The weight presses down. Edren's knees buckle — but hold."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_crowned_hollow_003",
+      "speaker": "",
+      "lines": [
+        "The crown's fire dims. The Hollow falters."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_crowned_hollow_004",
+      "speaker": "",
+      "lines": [
+        "You stayed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

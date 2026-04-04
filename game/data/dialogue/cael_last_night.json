@@ -1,0 +1,436 @@
+{
+  "scene_id": "cael_last_night",
+  "entries": [
+    {
+      "id": "cael_last_night_001",
+      "speaker": "cael",
+      "lines": [
+        "You're still up."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_002",
+      "speaker": "lira",
+      "lines": [
+        "This alignment won't set itself. Ley resonance\nfrequencies are off by point-three. If I don't recalibrate\nbefore the energy cycles—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_003",
+      "speaker": "lira",
+      "lines": [
+        "You look terrible."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_004",
+      "speaker": "cael",
+      "lines": [
+        "I'm fine."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_005",
+      "speaker": "lira",
+      "lines": [
+        "You've said that three times this week. What is it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_006",
+      "speaker": "cael",
+      "lines": [
+        "Do you ever think about what happens after?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_007",
+      "speaker": "lira",
+      "lines": [
+        "After what?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_008",
+      "speaker": "cael",
+      "lines": [
+        "After all of this. The Pendulum, the ley lines, the\npolitics. After it's done. What does the world look like?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_009",
+      "speaker": "lira",
+      "lines": [
+        "Better. The ley lines stabilize. The Forgewright craft\nevolves instead of extracting. People build things that work with\nthe world instead of against it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_010",
+      "speaker": "cael",
+      "lines": [
+        "And us?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_011",
+      "speaker": "lira",
+      "lines": [
+        "We figure it out. Same as everyone else."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_012",
+      "speaker": "cael",
+      "lines": [
+        "Yeah. We figure it out."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "turn_away",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_013",
+      "speaker": "edren",
+      "lines": [
+        "Cael. Can't sleep?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_014",
+      "speaker": "cael",
+      "lines": [
+        "Something like that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_015",
+      "speaker": "edren",
+      "lines": [
+        "Grab a practice blade. It helps."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_016",
+      "speaker": "edren",
+      "lines": [
+        "You've been spending too much time in that vault."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_017",
+      "speaker": "cael",
+      "lines": [
+        "Someone has to study it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_018",
+      "speaker": "edren",
+      "lines": [
+        "Aldis can study it. You should rest."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_019",
+      "speaker": "cael",
+      "lines": [
+        "Aldis doesn't hear it the way I do."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_020",
+      "speaker": "edren",
+      "lines": [
+        "Hear what?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_021",
+      "speaker": "cael",
+      "lines": [
+        "Nothing. Just... the resonance patterns. They're\nlouder at night."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "head_down",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_022",
+      "speaker": "edren",
+      "lines": [
+        "Same time tomorrow?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_023",
+      "speaker": "cael",
+      "lines": [
+        "...Same time tomorrow."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_024",
+      "speaker": "maren",
+      "lines": [
+        "Cael. It's late for a social call."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_025",
+      "speaker": "cael",
+      "lines": [
+        "I had questions. About your research on the Pallor's\nprevious cycles."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_026",
+      "speaker": "maren",
+      "lines": [
+        "What kind of questions?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_027",
+      "speaker": "cael",
+      "lines": [
+        "How long can someone hear the Pallor before it becomes\nimpossible to refuse?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_028",
+      "speaker": "maren",
+      "lines": [
+        "That depends on the individual. Weeks. Months.\nSome resist for years. Why?"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "bubble_ellipsis",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_029",
+      "speaker": "cael",
+      "lines": [
+        "Academic interest. And — can the Pallor reshape reality,\nor only perception?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_030",
+      "speaker": "maren",
+      "lines": [
+        "Perception. It doesn't change what's real. It changes\nwhat you're able to care about. The world stays the same. You\njust stop seeing a reason to fight for it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_031",
+      "speaker": "cael",
+      "lines": [
+        "And what if the Pendulum doesn't empower the Pallor,\nbut actually contains it? What if someone could use the connection\nto — redirect it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_032",
+      "speaker": "maren",
+      "lines": [
+        "Those are not academic questions, Cael."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_033",
+      "speaker": "cael",
+      "lines": [
+        "Maren. I'm trying to understand what we're dealing\nwith. That's all."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_034",
+      "speaker": "maren",
+      "lines": [
+        "The Pallor doesn't make deals. It doesn't negotiate.\nIt offers what you want most, and the price is always the same —\nyou stop fighting. Whatever you're thinking, stop thinking it."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "nod",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_035",
+      "speaker": "cael",
+      "lines": [
+        "*(internal)* One more. I can see one more before—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_036",
+      "speaker": "cael",
+      "lines": [
+        "*(internal)* The whisper is louder tonight. Not words.\nA feeling. Like the floor is tilting and everyone else is standing\nstraight but you know it's tilting."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_last_night_037",
+      "speaker": "cael",
+      "lines": [
+        "*(internal)* Enough. It's time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

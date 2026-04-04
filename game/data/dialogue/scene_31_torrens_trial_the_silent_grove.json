@@ -1,0 +1,93 @@
+{
+  "scene_id": "scene_31_torrens_trial_the_silent_grove",
+  "entries": [
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_001",
+      "speaker": "last_voice",
+      "lines": [
+        "You let us die. The old ways, the harmonics,\nthe songs between root and sky — you were supposed to protect\nthem. And you failed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_002",
+      "speaker": "last_voice",
+      "lines": [
+        "Let me go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_003",
+      "speaker": "torren",
+      "lines": [
+        "I couldn't save everything. I know that now. But\nwhat I could save, I saved."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_004",
+      "speaker": "edren",
+      "lines": [
+        "What did you see?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_005",
+      "speaker": "torren",
+      "lines": [
+        "An old friend. Dying. Asking me to let go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_006",
+      "speaker": "torren",
+      "lines": [
+        "I spent my whole life trying to protect the old\nways. The trial showed me that some of them need to end so new\nones can begin. Imperfect protection. That's all anyone gets."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_007",
+      "speaker": "lira",
+      "lines": [
+        "You sound almost peaceful."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_31_torrens_trial_the_silent_grove_008",
+      "speaker": "torren",
+      "lines": [
+        "Not peaceful. Settled. There's a difference."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

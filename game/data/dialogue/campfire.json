@@ -1,0 +1,115 @@
+{
+  "scene_id": "campfire",
+  "entries": [
+    {
+      "id": "campfire_001",
+      "speaker": "torren",
+      "lines": [
+        "The spirits went quiet an hour ago. Not silent —\nquiet. Like they're holding their breath."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_002",
+      "speaker": "torren",
+      "lines": [
+        "Whatever's waiting at the Convergence, it's been\nwaiting a long time. Longer than the spirits. Longer than the\nstones. It's patient."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_003",
+      "speaker": "lira",
+      "lines": [
+        "I've been thinking about something I never finished\nbuilding. A housing design — ley-integrated, self-sustaining. I\nhad the schematics done before the siege."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_004",
+      "speaker": "lira",
+      "lines": [
+        "If we make it back, I'm going to build it. For real\nthis time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_005",
+      "speaker": "sable",
+      "lines": [
+        "You know what's funny? I spent my whole life avoiding\nsituations exactly like this. Dark places, impossible odds, no\nexit plan."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_006",
+      "speaker": "sable",
+      "lines": [
+        "Turns out I'm better at this than the other stuff."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_007",
+      "speaker": "maren",
+      "lines": [
+        "I've seen this story before. In the old texts. Every\nage has had a group like us. People who walked toward the\nConvergence knowing what it cost."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_008",
+      "speaker": "maren",
+      "lines": [
+        "This time might be different."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "campfire_009",
+      "speaker": "edren",
+      "lines": [
+        "We're here. We're together. That still means\nsomething."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "after_line_0"
+        },
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

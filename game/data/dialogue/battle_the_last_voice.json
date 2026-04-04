@@ -1,0 +1,38 @@
+{
+  "scene_id": "battle_the_last_voice",
+  "entries": [
+    {
+      "id": "battle_the_last_voice_001",
+      "speaker": "last_voice",
+      "lines": [
+        "Let me go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_last_voice_002",
+      "speaker": "last_voice",
+      "lines": [
+        "Please. I have been here so long."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_last_voice_003",
+      "speaker": "",
+      "lines": [
+        "The voice fades. The stone cracks, then settles. A single green\nshoot appears where the spirit stood."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

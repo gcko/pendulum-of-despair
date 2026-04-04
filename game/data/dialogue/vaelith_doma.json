@@ -1,0 +1,38 @@
+{
+  "scene_id": "vaelith_doma",
+  "entries": [
+    {
+      "id": "vaelith_doma_001",
+      "speaker": "vaelith",
+      "lines": [
+        "You've been carrying this a long time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_doma_002",
+      "speaker": "villager",
+      "lines": [
+        "My husband. The ley surge took our farm. He just...\nstopped. Sat down one morning and didn't stand up again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_doma_003",
+      "speaker": "vaelith",
+      "lines": [
+        "I understand. Grief like that doesn't ask permission.\nIt just arrives."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

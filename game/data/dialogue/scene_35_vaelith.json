@@ -1,0 +1,197 @@
+{
+  "scene_id": "scene_35_vaelith",
+  "entries": [
+    {
+      "id": "scene_35_vaelith_001",
+      "speaker": "vaelith",
+      "lines": [
+        "You made it. I expected you would. You have a\nresilience I find... unusual."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_002",
+      "speaker": "vaelith",
+      "lines": [
+        "The ley network is still alive. It should not be\nalive this late in a cycle. In eight hundred years, the network\nhas always failed before anyone reached this point. You are the\nfirst."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_003",
+      "speaker": "edren",
+      "lines": [
+        "Step aside, Vaelith."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_004",
+      "speaker": "vaelith",
+      "lines": [
+        "I cannot. Not out of loyalty to the Pallor — I\nstopped caring about the Pallor's agenda centuries ago."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_005",
+      "speaker": "vaelith",
+      "lines": [
+        "But I was the first to understand it. And the first\nto realize that understanding changes nothing. Every cycle,\nsomeone reaches this point. Every cycle, they fail."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_006",
+      "speaker": "vaelith",
+      "lines": [
+        "I'm tired, you know. Eight hundred years. Every\ncycle, the same — watching someone find the door, watching\nsomeone open it, watching the world grey out and fold."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_007",
+      "speaker": "vaelith",
+      "lines": [
+        "Every cycle, I think: this time they'll understand.\nThis time someone will find a way that doesn't end in sacrifice.\nAnd every time, I watch them fail the same way I failed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_008",
+      "speaker": "vaelith",
+      "lines": [
+        "Enough scholarship. Let me show you what eight\ncenturies look like from the inside."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_009",
+      "speaker": "vaelith",
+      "lines": [
+        "Your form is excellent, Edren. Cael taught you the\nhigh guard, I assume. He was always precise."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_010",
+      "speaker": "vaelith",
+      "lines": [
+        "Torren, you favour your left side when tired. The\nspirits could have told you that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_011",
+      "speaker": "vaelith",
+      "lines": [
+        "Lira — how does it feel to defend a kingdom that\nnever deserved your loyalty?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "weapon_forge"
+        }
+      ]
+    },
+    {
+      "id": "scene_35_vaelith_012",
+      "speaker": "vaelith",
+      "lines": [
+        "You are the first to draw blood in eight centuries."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_013",
+      "speaker": "vaelith",
+      "lines": [
+        "I was the first to understand the Pallor. I was\nthe first to name it. And I was the first to realize naming it\nchanges nothing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_014",
+      "speaker": "vaelith",
+      "lines": [
+        "You will reach the Convergence. You will face what\nI faced. And you will make the same choice I did."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_015",
+      "speaker": "vaelith",
+      "lines": [
+        "Everyone does."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_016",
+      "speaker": "vaelith",
+      "lines": [
+        "Eight hundred years. Every cycle, the same. And\nyou... you actually changed something."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_35_vaelith_017",
+      "speaker": "vaelith",
+      "lines": [
+        "Something changed in this cycle. And I do not fully\nunderstand what."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

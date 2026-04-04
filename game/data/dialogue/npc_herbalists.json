@@ -1,0 +1,16 @@
+{
+  "scene_id": "npc_herbalists",
+  "entries": [
+    {
+      "id": "npc_herbalists_001",
+      "speaker": "herbalist",
+      "lines": [
+        "Spirit-brewed remedies. Won't find these in any\nCompact shop."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

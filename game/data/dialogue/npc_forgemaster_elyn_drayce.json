@@ -1,0 +1,60 @@
+{
+  "scene_id": "npc_forgemaster_elyn_drayce",
+  "entries": [
+    {
+      "id": "npc_forgemaster_elyn_drayce_001",
+      "speaker": "drayce",
+      "lines": [
+        "Lira was my best student. Conscience of a poet. I\nshould have trained the conscience out of her."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_forgemaster_elyn_drayce_002",
+      "speaker": "drayce",
+      "lines": [
+        "Don't tell me the forges are unsustainable. I know\nthey're unsustainable. Find me an alternative that feeds four\nmillion people and I'll shut them down tomorrow."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_forgemaster_elyn_drayce_003",
+      "speaker": "drayce",
+      "lines": [
+        "The first extraction plant was built forty years\nago. I was there. A junior engineer, fresh from the academy. The\nley energy poured into the conduits like liquid gold. We thought\nwe'd solved everything. Nobody asked what happens when the gold\nruns out."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_forgemaster_elyn_drayce_004",
+      "speaker": "drayce",
+      "lines": [
+        "The forges are cold. Every one. Can't extract from\nruptured ley lines. Kole offered to power them with Pallor\nenergy. I said no. He powered three without asking. The workers\nat those forges don't speak anymore. They just work."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_forgemaster_elyn_drayce_005",
+      "speaker": "drayce",
+      "lines": [
+        "Lira sent me schematics. New conduit design — works\nwith the ley lines instead of against them. Slower. Less output.\nBut the lines are healing where we've installed them. She was\nright. I trained the wrong thing out of her."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

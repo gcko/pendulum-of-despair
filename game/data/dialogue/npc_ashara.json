@@ -1,0 +1,49 @@
+{
+  "scene_id": "npc_ashara",
+  "entries": [
+    {
+      "id": "npc_ashara_001",
+      "speaker": "ashara",
+      "lines": [
+        "Stand here. Close your eyes. Feel it? The ground\npulls southeast. The lines are draining toward something."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_ashara_002",
+      "speaker": "ashara",
+      "lines": [
+        "The pull doubled overnight. I had to re-anchor three\nward stones before dawn. Whatever happened in Valdris, the ley\nlines felt it all the way out here."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_ashara_003",
+      "speaker": "ashara",
+      "lines": [
+        "I've redrawn the wards three times. Energy seeps\nthrough like water through cracked stone. Something is eating\nthe world from underneath."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_ashara_004",
+      "speaker": "ashara",
+      "lines": [
+        "Stand here. Close your eyes. Feel it? The pull is\ngone. The lines run clean. I wept when I felt it. Thirty years of\nwatching them weaken, and today they're stronger than when I\nstarted."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

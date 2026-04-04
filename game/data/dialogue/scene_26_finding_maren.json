@@ -1,0 +1,209 @@
+{
+  "scene_id": "scene_26_finding_maren",
+  "entries": [
+    {
+      "id": "scene_26_finding_maren_001",
+      "speaker": "brenn",
+      "lines": [
+        "Maren was the brilliant one. I was the other one. You\nknow — every generation has a Maren and a Brenn. Nobody remembers\nthe Brenn."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_002",
+      "speaker": "sable",
+      "lines": [
+        "She came through here?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_003",
+      "speaker": "brenn",
+      "lines": [
+        "Two weeks ago. Left a message. Sealed, warded, very\ndramatic. Typical Maren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_004",
+      "speaker": "brenn",
+      "lines": [
+        "I didn't read it, if that's what you're wondering.\nShe'd know if I had."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_005",
+      "speaker": "brenn",
+      "lines": [
+        "There's a tracker who can guide you the rest of the\nway. Riven. Runs alone in the deep places. Tell him Brenn sent\nyou. He'll pretend he doesn't know me, but he'll help."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_006",
+      "speaker": "riven",
+      "lines": [
+        "I know who you're looking for. I know where she went.\nThe question is whether I lead you there or let you get lost and\ndie."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_007",
+      "speaker": "sable",
+      "lines": [
+        "Brenn sent us."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_008",
+      "speaker": "riven",
+      "lines": [
+        "Brenn is a fool who lives in a lean-to and talks to\nmushrooms. But he's a correct fool. This way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_009",
+      "speaker": "archivist",
+      "lines": [
+        "You are the sixth group to reach this chamber in\neleven thousand years. The previous five asked the same question.\nThe answer has not changed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_010",
+      "speaker": "sable",
+      "lines": [
+        "Friendly place."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_011",
+      "speaker": "maren",
+      "lines": [
+        "It's not friendly. It's accurate. There's a\ndifference."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_012",
+      "speaker": "maren",
+      "lines": [
+        "I found it. The pattern. The Pallor has been doing\nthis for ages — literally. Every cycle, a door opens. Every\ncycle, someone is marked as its host. And every cycle, someone\nhas to close the door from the inside."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "edren",
+          "anim": "step_back",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_013",
+      "speaker": "sable",
+      "lines": [
+        "From the inside."
+      ],
+      "condition": "lira_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_014",
+      "speaker": "maren",
+      "lines": [
+        "The hinge only turns one way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_015",
+      "speaker": "maren",
+      "lines": [
+        "Ask it. Go ahead."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_016",
+      "speaker": "archivist",
+      "lines": [
+        "The door closes from the inside. The one who\ncloses it does not return. This is not a curse. It is a\nmechanical fact."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_017",
+      "speaker": "maren",
+      "lines": [
+        "Every previous cycle, the knowledge was lost. The\nnext age started from nothing. That's why it keeps happening —\nnobody remembers how it ended."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_26_finding_maren_018",
+      "speaker": "maren",
+      "lines": [
+        "Not this time. I'm going to make sure the world\nremembers."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

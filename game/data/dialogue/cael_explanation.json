@@ -1,0 +1,49 @@
+{
+  "scene_id": "cael_explanation",
+  "entries": [
+    {
+      "id": "cael_explanation_001",
+      "speaker": "cael",
+      "lines": [
+        "It's open."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_explanation_002",
+      "speaker": "cael",
+      "lines": [
+        "The door. I can see it from here. Destroying the\nPendulum won't close it. Killing the incarnation won't close it.\nI tried — I built the machine to force it shut from this side."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_explanation_003",
+      "speaker": "cael",
+      "lines": [
+        "It doesn't work that way. The door closes from the\ninside. Someone has to walk through, and pull it shut behind\nthem."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_explanation_004",
+      "speaker": "cael",
+      "lines": [
+        "And they don't come back."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

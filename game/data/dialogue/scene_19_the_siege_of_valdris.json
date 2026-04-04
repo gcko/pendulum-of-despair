@@ -1,0 +1,273 @@
+{
+  "scene_id": "scene_19_the_siege_of_valdris",
+  "entries": [
+    {
+      "id": "scene_19_the_siege_of_valdris_001",
+      "speaker": "cordwyn",
+      "lines": [
+        "They've been mobilizing for weeks. The betrayal\nwasn't a signal — it was a distraction. While we watched Cael\nrun, they marched."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "drums_war"
+        }
+      ]
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_002",
+      "speaker": "edren",
+      "lines": [
+        "How long do we have?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_003",
+      "speaker": "cordwyn",
+      "lines": [
+        "The Ram hits the eastern wall within the hour.\nWe need everyone on the battlements."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_004",
+      "speaker": "",
+      "lines": [
+        "(If `council_result` >= 2.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_005",
+      "speaker": "caden",
+      "lines": [
+        "We came. The spirits said to hurry."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_006",
+      "speaker": "",
+      "lines": [
+        "(If `council_result` == 0.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_007",
+      "speaker": "cordwyn",
+      "lines": [
+        "We hold with what we have."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "wall_breach"
+        }
+      ]
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_008",
+      "speaker": "king_aldren",
+      "lines": [
+        "I was a poor king. I know that. But I will not\nbe a poor man."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_009",
+      "speaker": "edren",
+      "lines": [
+        "Your Majesty—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_010",
+      "speaker": "",
+      "lines": [
+        "(If Edren reaches him first.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_011",
+      "speaker": "king_aldren",
+      "lines": [
+        "Edren. The crown... was always too heavy. You\nunderstand that now. Protect... what's left."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_012",
+      "speaker": "",
+      "lines": [
+        "(If Lira reaches him first.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_013",
+      "speaker": "king_aldren",
+      "lines": [
+        "The Forgewright... Maren was right. The ley\nlines... should have listened..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_014",
+      "speaker": "",
+      "lines": [
+        "(If Maren reaches him first.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_015",
+      "speaker": "king_aldren",
+      "lines": [
+        "Maren. I should have listened. When you told\nme... about the door..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_016",
+      "speaker": "maren",
+      "lines": [
+        "I know, Your Majesty."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_017",
+      "speaker": "king_aldren",
+      "lines": [
+        "Don't let it... open further..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_018",
+      "speaker": "",
+      "lines": [
+        "(Default — Edren and party arrive together.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_019",
+      "speaker": "king_aldren",
+      "lines": [
+        "Protect... what's left."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_020",
+      "speaker": "vaelith",
+      "lines": [
+        "You are doing wonderfully. Truly. I have not been\nthis entertained in centuries."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_021",
+      "speaker": "vaelith",
+      "lines": [
+        "Rest now. You'll need your strength. The real work\nhasn't started yet."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_surge"
+        }
+      ]
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_022",
+      "speaker": "",
+      "lines": [
+        "*Everything the party built — every alliance, every trust, every\nplan — burns. The king is dead. The friend is gone. The artifact\nis in the hands of something that wears a familiar face. And the\nPendulum, wherever it is now, is closer to the door than ever.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_19_the_siege_of_valdris_023",
+      "speaker": "",
+      "lines": [
+        "*Continue: [Interlude — The Unraveling](interlude.md)*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

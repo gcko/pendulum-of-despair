@@ -1,0 +1,49 @@
+{
+  "scene_id": "npc_wren",
+  "entries": [
+    {
+      "id": "npc_wren_001",
+      "speaker": "wren",
+      "lines": [
+        "Grandmother says the stars still sing. But she can't\nhear what I hear. There's something else now. It talks underneath\nthe singing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wren_002",
+      "speaker": "wren",
+      "lines": [
+        "The singing got quieter last night. And the other\nvoice got louder. Like it was pushed. Like something far away\nbroke and the sound came here."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wren_003",
+      "speaker": "wren",
+      "lines": [
+        "The singing stopped. It's just the other voice now.\nIt's not scary. That's the scary part."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wren_004",
+      "speaker": "wren",
+      "lines": [
+        "The stars are singing again. Different song. Sadder.\nBut there are more voices now — not just the stars. The trees.\nThe water. The ground. Everything is singing very quietly, like\nthey're learning how to do it again."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

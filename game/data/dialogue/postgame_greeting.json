@@ -1,0 +1,148 @@
+{
+  "scene_id": "postgame_greeting",
+  "entries": [
+    {
+      "id": "postgame_greeting_001",
+      "speaker": "sable",
+      "lines": [
+        "You're back. There's still work to do, if you want\nit. The cellar's open, and I've been keeping track of a few\nthings."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_002",
+      "speaker": "edren",
+      "lines": [
+        "I keep his sword sharpened. It doesn't need to be\nsharp for anything. But he'd have wanted it sharp."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_003",
+      "speaker": "edren",
+      "lines": [
+        "The council's talking about rebuilding the eastern\nwall. I told them to build it wider this time. Room for refugees\nif it ever comes to that again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_004",
+      "speaker": "lira",
+      "lines": [
+        "I've been designing a new conduit system. Works with\nthe ley lines instead of against them. It's slower. Less\nefficient. But it doesn't break anything."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_005",
+      "speaker": "lira",
+      "lines": [
+        "He would have loved this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_006",
+      "speaker": "lira",
+      "lines": [
+        "The Bridgewrights already have twelve members. Three\nfrom the Compact, if you can believe it. Turns out some of them\nalways knew the extraction was wrong. They just needed someone\nto build the alternative."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_007",
+      "speaker": "torren",
+      "lines": [
+        "The spirits are quiet. Not silent — quiet. The way\na forest is quiet after a storm passes. They're listening to\nthe world come back."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_008",
+      "speaker": "torren",
+      "lines": [
+        "Vessa sent word. The great tree at Roothollow is\nputting out new growth for the first time in thirty years. She\nsays it's because the ley lines are running clean again. I think\nit's because the tree decided it was safe to try."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_009",
+      "speaker": "maren",
+      "lines": [
+        "I've been writing. Everything. The cycles, the Pallor,\nthe Archive — all of it. When the next crack appears, and it\nwill, the world will have instructions."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_010",
+      "speaker": "maren",
+      "lines": [
+        "The Archivist sent me copies of records from seven\nprevious cycles. Each one thought they were the first. Each one\nstarted from nothing. Not this time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_011",
+      "speaker": "sable",
+      "lines": [
+        "People keep asking me why I named it The Pendulum."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_012",
+      "speaker": "sable",
+      "lines": [
+        "So nobody forgets what it cost."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "postgame_greeting_013",
+      "speaker": "sable",
+      "lines": [
+        "The cellar's open if you're feeling brave. And I've\nbeen keeping track of how much of the world you've seen — ask\nme any time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

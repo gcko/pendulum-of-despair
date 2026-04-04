@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_status_effect_notifications",
+  "entries": [
+    {
+      "id": "battle_status_effect_notifications_001",
+      "speaker": "",
+      "lines": [
+        "- \"[Character] is Poisoned!\"\n- \"[Character] is Silenced!\"\n- \"[Character] is Frozen!\"\n- \"[Character] fell Asleep!\"\n- \"[Character] is Confused!\"\n- \"[Character] is Blinded!\"\n- \"[Character] is Slowed!\"\n- \"[Character] is Burning!\"\n- \"[Character] is afflicted with Despair!\"\n- \"[Character] is Berserk!\"\n- \"[Character] is Stopped!\"\n- \"[Character] is Grounded!\"\n- \"Poison wears off.\"\n- \"Silence wears off.\"\n- \"[Character] woke up!\"\n- \"[Status] was cured!\""
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

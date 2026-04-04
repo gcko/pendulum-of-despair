@@ -1,0 +1,252 @@
+{
+  "scene_id": "cael_betrayal",
+  "entries": [
+    {
+      "id": "cael_betrayal_001",
+      "speaker": "edren",
+      "lines": [
+        "Cael. Put it down."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "alarm_bells"
+        }
+      ]
+    },
+    {
+      "id": "cael_betrayal_002",
+      "speaker": "cael",
+      "lines": [
+        "I can't do that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_003",
+      "speaker": "lira",
+      "lines": [
+        "What are you doing?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_004",
+      "speaker": "cael",
+      "lines": [
+        "I'm ending this. The Pendulum isn't a weapon and it\nisn't a cage. It's a key. And I know how to use it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_005",
+      "speaker": "maren",
+      "lines": [
+        "The Pallor is using you. Whatever it promised—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_006",
+      "speaker": "cael",
+      "lines": [
+        "It didn't promise anything. It showed me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_007",
+      "speaker": "cael",
+      "lines": [
+        "Cycle after cycle, age after age — someone finds this\nthing, someone opens the door, and someone pays the price to\nclose it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_008",
+      "speaker": "cael",
+      "lines": [
+        "Every time, the world forgets. Every time, it happens\nagain."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_009",
+      "speaker": "cael",
+      "lines": [
+        "I'm going to break the cycle. Not close the door —\ndestroy it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_010",
+      "speaker": "cael",
+      "lines": [
+        "The machine at the Convergence can channel enough\nPallor energy to shatter the connection permanently. No more\ndoor. No more cycles. No more cost."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_011",
+      "speaker": "edren",
+      "lines": [
+        "You don't know that. You're listening to something\nthat wants you to believe—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_012",
+      "speaker": "cael",
+      "lines": [
+        "I'm listening to the only thing that's telling me the\ntruth. The rest of you are too afraid to hear it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_013",
+      "speaker": "cael",
+      "lines": [
+        "I'm doing this for you. For everyone."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "turn_away",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_014",
+      "speaker": "lira",
+      "lines": [
+        "Last night. In the workshop. You were saying goodbye."
+      ],
+      "condition": "cael_last_night_lira",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_015",
+      "speaker": "cael",
+      "lines": [
+        "I was trying not to."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_016",
+      "speaker": "lira",
+      "lines": [
+        "Cael. Please. Stay."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_017",
+      "speaker": "cael",
+      "lines": [
+        "I love you. I loved you in the workshop and I loved\nyou on the castle walls and I love you now. That's why I can't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_018",
+      "speaker": "",
+      "lines": [
+        "(If `cael_last_night_lira` NOT set.)"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_019",
+      "speaker": "lira",
+      "lines": [
+        "Cael. Please. Stay."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "cael_betrayal_020",
+      "speaker": "cael",
+      "lines": [
+        "I love you. That's why I can't."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "sable",
+          "anim": "head_down",
+          "when": "after_line_0"
+        },
+        {
+          "who": "torren",
+          "anim": "step_back",
+          "when": "after_line_0"
+        },
+        {
+          "who": "maren",
+          "anim": "bubble_ellipsis",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

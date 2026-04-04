@@ -1,0 +1,60 @@
+{
+  "scene_id": "battle_victory_lines",
+  "entries": [
+    {
+      "id": "battle_victory_lines_001",
+      "speaker": "edren",
+      "lines": [
+        "Secure the area. Check for wounded."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_victory_lines_002",
+      "speaker": "lira",
+      "lines": [
+        "It's done. Let's move."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_victory_lines_003",
+      "speaker": "torren",
+      "lines": [
+        "The spirits are quieter now. That's a good sign."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_victory_lines_004",
+      "speaker": "sable",
+      "lines": [
+        "Can we not do that again? Ever?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_victory_lines_005",
+      "speaker": "maren",
+      "lines": [
+        "Fascinating. Terrible, but fascinating."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

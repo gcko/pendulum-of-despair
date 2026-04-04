@@ -1,0 +1,60 @@
+{
+  "scene_id": "npc_marrek",
+  "entries": [
+    {
+      "id": "npc_marrek_001",
+      "speaker": "marrek",
+      "lines": [
+        "Interesting times. I find interesting times are good\nfor business. People need things they didn't know they needed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_marrek_002",
+      "speaker": "marrek",
+      "lines": [
+        "I've been on this road longer than most people have\nbeen alive. The road doesn't change. People do."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_marrek_003",
+      "speaker": "marrek",
+      "lines": [
+        "Business is steady. Isn't that strange? The world is\nending and people still need rope, and candles, and salt. I have\nall three."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_marrek_004",
+      "speaker": "marrek",
+      "lines": [
+        "You're wondering how I'm still here. Still stocked.\nI wonder that too, some nights. The road doesn't care about the\ngrey. It just keeps going. So do I."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_marrek_005",
+      "speaker": "marrek",
+      "lines": [
+        "To the road. And to everyone who walked it."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

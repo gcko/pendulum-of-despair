@@ -305,26 +305,36 @@ transformation that can be validated line-by-line against source docs.
 
 ### 1.8 Dialogue Data (JSON)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-04
 **Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
-**Estimated Size:** L (50+ JSON files)
-**Output:** `game/data/dialogue/{scene_id}.json`
-**Source Docs:** `script/` (6,437 lines across 9 files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
+**Estimated Size:** L (109 JSON files, 1045 entries)
+**Output:** `game/data/dialogue/{scene_id}.json`, `game/data/dialogue/npc_{npc_id}.json`, `game/data/dialogue/battle_{context_id}.json`
+**Source Docs:** `script/` (6,531 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
 **Architecture Ref:** `technical-architecture.md` Section 2.5
 **Depends On:** None (foundational, but dialogue overlay in Tier 3 needed to display)
 
 **What's Needed:**
-- [ ] Per-scene dialogue JSON following Section 2.5 schema (7-field entries)
-- [ ] All 44 narrative scenes from script/ Layer 1
-- [ ] NPC ambient dialogue from npc-ambient.md Layer 2
-- [ ] Battle dialogue from battle-dialogue.md Layer 3
-- [ ] System text (tutorials, prompts, notifications) from battle-dialogue.md
-- [ ] Condition expressions (flag checks, party_has) per dialogue-system.md
-- [ ] Animation markers ([animation_id]) mapped to sprite animation IDs
-- [ ] SFX markers mapped to audio.md SFX catalog IDs
-- [ ] Choice nodes with branch targets matching events.md flag names
-- [ ] Verify every speaker tag matches a valid character/NPC ID
-- [ ] Verify every flag name matches events.md flag list
+- [x] Per-scene dialogue JSON following Section 2.5 schema (7-field entries)
+- [x] 40 narrative scenes from script/ Layer 1 (688 entries)
+- [x] NPC ambient dialogue from npc-ambient.md Layer 2 (43 files, 177 entries)
+- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 180 entries)
+- [x] System text (tutorials, prompts, notifications) from battle-dialogue.md
+- [x] Condition expressions (flag checks, party_has) per dialogue-system.md (98 conditional entries)
+- [x] Animation markers mapped to sprite animation IDs (45 animations captured)
+- [x] SFX markers mapped to audio.md SFX catalog IDs (17 SFX captured)
+- [x] Choice nodes with branch targets (4 choice blocks)
+- [x] Verify every speaker tag matches a valid character/NPC ID
+- [x] Verify every flag name matches events.md flag list
+
+**Notes:**
+- Built via Python parser (`tools/dialogue_parser.py`) that reads 8 script files
+- Parser uses heuristic timing for animation/SFX `when` fields
+- Validation report at `tools/dialogue_validation_report.md` flags low-confidence items
+- 109 total files (40 narrative + 43 NPC + 26 battle) with 1045 entries
+- All entry IDs globally unique, all 7 fields present, 2-space indent
+- Iterative improvement: subsequent passes can refine timing heuristics
+- Design spec: `docs/superpowers/specs/2026-04-04-dialogue-data-design.md`
 
 **Blocking:** All narrative content, NPC interactions, story progression
 

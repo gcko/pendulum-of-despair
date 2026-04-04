@@ -1,0 +1,175 @@
+{
+  "scene_id": "ironmouth_escape",
+  "entries": [
+    {
+      "id": "ironmouth_escape_001",
+      "speaker": "lira",
+      "lines": [
+        "Stop. Don't move."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_002",
+      "speaker": "lira",
+      "lines": [
+        "Patrol passes in forty seconds. You came from the\nmine?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_003",
+      "speaker": "edren",
+      "lines": [
+        "Who are you?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_004",
+      "speaker": "lira",
+      "lines": [
+        "Someone who's been tracking what the Compact pulled\nout of that ruin for three months. My name is Lira. I'm a\nForgewright — or I was, until I read the wrong documents."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_005",
+      "speaker": "cael",
+      "lines": [
+        "You defected."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_006",
+      "speaker": "lira",
+      "lines": [
+        "I found references to something called \"Project\nPendulum\" in a classified engineering report. The Compact doesn't\nclassify engineering reports. That was enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_007",
+      "speaker": "lira",
+      "lines": [
+        "Now. This way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_008",
+      "speaker": "edren",
+      "lines": [
+        "We're cut off."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_009",
+      "speaker": "sable",
+      "lines": [
+        "Sorry, gentlemen. Inventory check. Very official.\nCome back tomorrow."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_010",
+      "speaker": "sable",
+      "lines": [
+        "Friends of yours, or am I interrupting something\nprivate?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_011",
+      "speaker": "edren",
+      "lines": [
+        "We're leaving. Now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_012",
+      "speaker": "sable",
+      "lines": [
+        "Perfect. I was just leaving too. I was definitely\nnot in the middle of relieving the quartermaster's office of\nanything valuable."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_013",
+      "speaker": "sable",
+      "lines": [
+        "I'm Sable. And unless one of you has a boat, we're\nall going through the Wilds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_014",
+      "speaker": "lira",
+      "lines": [
+        "She's right. The forest is the only way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_escape_015",
+      "speaker": "edren",
+      "lines": [
+        "Then we move. Stay together."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "alarm_bells"
+        }
+      ]
+    }
+  ]
+}

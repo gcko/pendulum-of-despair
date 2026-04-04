@@ -1,0 +1,27 @@
+{
+  "scene_id": "npc_holt_varen",
+  "entries": [
+    {
+      "id": "npc_holt_varen_001",
+      "speaker": "holt",
+      "lines": [
+        "War is terrible. War is also extremely profitable.\nI didn't make the world this way — I just learned to read the\nledger."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_holt_varen_002",
+      "speaker": "holt",
+      "lines": [
+        "Exports down ninety percent. Machines won't forge\nright. Pivoted to salvage. Good margin in salvage."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

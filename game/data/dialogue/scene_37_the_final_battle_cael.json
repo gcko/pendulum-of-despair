@@ -1,0 +1,301 @@
+{
+  "scene_id": "scene_37_the_final_battle_cael",
+  "entries": [
+    {
+      "id": "scene_37_the_final_battle_cael_001",
+      "speaker": "cael",
+      "lines": [
+        "You came. I knew you would. I hoped you wouldn't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_002",
+      "speaker": "edren",
+      "lines": [
+        "Cael. Step away from the machine."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_003",
+      "speaker": "cael",
+      "lines": [
+        "I can't do that. I wish I could explain it in a way\nthat would make you understand, but there isn't time. The\nmachine is almost ready."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_004",
+      "speaker": "lira",
+      "lines": [
+        "Ready for what?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_005",
+      "speaker": "cael",
+      "lines": [
+        "To end it. All of it. The Pallor, the cycles, the\ndoor — everything. I found a way. But I have to be inside when\nit breaks."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_006",
+      "speaker": "maren",
+      "lines": [
+        "Cael, the Pallor is using you. Whatever solution\nyou think you've found—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_007",
+      "speaker": "cael",
+      "lines": [
+        "I know what it's doing. I've known since the siege.\nIt whispers, Maren. It tells you things about the people you\nlove — things that aren't true, but feel true."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_008",
+      "speaker": "cael",
+      "lines": [
+        "And the worst part is that it doesn't need to lie.\nIt just needs you to stop hoping."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_009",
+      "speaker": "cael",
+      "lines": [
+        "I haven't stopped. But I can't explain that with\nwords. So I'll have to show you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "sword_draw"
+        }
+      ]
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_010",
+      "speaker": "cael",
+      "lines": [
+        "You feel that? The weight? That's not me. That's what\nI've been carrying since the night I took the Pendulum."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_surge"
+        }
+      ]
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_011",
+      "speaker": "cael",
+      "lines": [
+        "I'm doing this for you. All of it. The machine, the\nConvergence — I found a way to end the cycle. But I need to be\ninside it when it breaks."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "lira",
+          "anim": "shake",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_012",
+      "speaker": "cael",
+      "lines": [
+        "I'm doing this for you. Remember that. When it's\nover, when you see what I've become — remember I chose this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_transform"
+        }
+      ]
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_013",
+      "speaker": "edren",
+      "lines": [
+        "That's not him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_014",
+      "speaker": "maren",
+      "lines": [
+        "It is. The Pallor doesn't replace — it amplifies\nwhat's already there. His rage, his grief. It's all Cael. Just\nthe parts he kept buried."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_015",
+      "speaker": "cael",
+      "lines": [
+        "I can still hear you. I can still — the machine is\nclose. Don't stop. Please don't stop."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_016",
+      "speaker": "sable",
+      "lines": [
+        "You heard him. Keep fighting."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "lira",
+          "anim": "cry",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_017",
+      "speaker": "edren",
+      "lines": [
+        "We're not killing him. We're freeing him. Remember\nthat."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_018",
+      "speaker": "torren",
+      "lines": [
+        "The spirits can feel him inside the grey. He's\nfighting it. We fight with him."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_019",
+      "speaker": "maren",
+      "lines": [
+        "He should have fallen. The Pallor won't let him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_surge"
+        }
+      ]
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_020",
+      "speaker": "edren",
+      "lines": [
+        "One more push. For him. Not against him. For him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_021",
+      "speaker": "lira",
+      "lines": [
+        "Cael? Cael!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "machine_activate"
+        }
+      ]
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_022",
+      "speaker": "maren",
+      "lines": [
+        "The machine is pulling it through. The Pallor —\nit's incarnating."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_37_the_final_battle_cael_023",
+      "speaker": "edren",
+      "lines": [
+        "Then we stop it here."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

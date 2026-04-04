@@ -1,0 +1,253 @@
+{
+  "scene_id": "scene_25_finding_torren",
+  "entries": [
+    {
+      "id": "scene_25_finding_torren_001",
+      "speaker": "caden",
+      "lines": [
+        "The ground is screaming. Can you not hear it? It has\nbeen screaming for days."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_002",
+      "speaker": "sable",
+      "lines": [
+        "We're looking for Torren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_003",
+      "speaker": "caden",
+      "lines": [
+        "At the nexus. He's been there since the rupture.\nPerforming a binding ritual. Pouring himself into the ward stones\nto slow the corruption."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_004",
+      "speaker": "edren",
+      "lines": [
+        "How long can he sustain that?"
+      ],
+      "condition": "edren_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_005",
+      "speaker": "caden",
+      "lines": [
+        "He can't. He's dying. But the alternative is losing\nthe nexus, and if that goes, the entire Wilds go with it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_006",
+      "speaker": "yara",
+      "lines": [
+        "You came. I told Torren someone would come. He said\nthe totems would have shaken if anyone was going to help."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_007",
+      "speaker": "sable",
+      "lines": [
+        "The totems are wrong."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_008",
+      "speaker": "yara",
+      "lines": [
+        "I know. I can't sleep. The ley lines used to sing\nin harmonics. Three voices, overlapping. Now there's only one\nvoice, and it's not singing. It's just... exhaling. Over and\nover."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_009",
+      "speaker": "yara",
+      "lines": [
+        "He's been at the nexus for eleven days. He stopped\neating on day three. I bring water. He doesn't always drink it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_010",
+      "speaker": "sable",
+      "lines": [
+        "Torren. Torren!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_011",
+      "speaker": "edren",
+      "lines": [
+        "He's holding it back by himself. If he lets go—"
+      ],
+      "condition": "edren_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_012",
+      "speaker": "lira",
+      "lines": [
+        "The Leech is anchored to the ley line. We have to\nsever its connection before Torren can let go."
+      ],
+      "condition": "lira_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_013",
+      "speaker": "sable",
+      "lines": [
+        "Then we sever it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_014",
+      "speaker": "torren",
+      "lines": [
+        "...Sable?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_015",
+      "speaker": "sable",
+      "lines": [
+        "Yeah. Me. The useless one."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_016",
+      "speaker": "torren",
+      "lines": [
+        "You are many things. Useless is not one of them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_017",
+      "speaker": "torren",
+      "lines": [
+        "The nexus held. I felt it shift. Whatever you did—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_018",
+      "speaker": "sable",
+      "lines": [
+        "We killed the thing eating it. Pretty straightforward."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_019",
+      "speaker": "torren",
+      "lines": [
+        "This is the first sign. The Pallor can be pushed back."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_020",
+      "speaker": "torren",
+      "lines": [
+        "You came back."
+      ],
+      "condition": "stag_bonded",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_021",
+      "speaker": "yara",
+      "lines": [
+        "I can hear it again. The harmonics. Faint, but there."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_25_finding_torren_022",
+      "speaker": "yara",
+      "lines": [
+        "Thank you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
