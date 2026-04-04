@@ -344,22 +344,11 @@
     },
     {
       "id": "scene_24_finding_lira_032",
-      "speaker": "",
-      "lines": [
-        "(If Edren NOT found.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "scene_24_finding_lira_033",
       "speaker": "sable",
       "lines": [
         "Neither are we. Come on. More people to find."
       ],
-      "condition": null,
+      "condition": "edren_not_found",
       "animations": null,
       "choice": null,
       "sfx": null

@@ -5,7 +5,84 @@
       "id": "battle_save_system_001",
       "speaker": "",
       "lines": [
-        "- *(Save point contact:)* 3-option menu appears: Rest / Rest & Save / Save.\n- *(Rest sub-menu:)* Shows available rest items (Sleeping Bag / Tent / Pavilion). If none available: \"No rest items. Recover 25% MP.\"\n- *(Overwrite prompt:)* \"Overwrite existing save?\"\n- *(Save complete:)* \"Saved.\"\n- *(Empty slot:)* \"— Empty —\"\n- *(Load screen:)* \"Select a save file.\"\n- *(Copy prompt:)* \"Copy to which slot?\"\n- *(Delete prompt:)* \"Delete this save?\""
+        "Rest / Rest & Save / Save"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_002",
+      "speaker": "",
+      "lines": [
+        "No rest items. Recover 25% MP."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_003",
+      "speaker": "",
+      "lines": [
+        "Overwrite existing save?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_004",
+      "speaker": "",
+      "lines": [
+        "Saved."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_005",
+      "speaker": "",
+      "lines": [
+        "— Empty —"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_006",
+      "speaker": "",
+      "lines": [
+        "Select a save file."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_007",
+      "speaker": "",
+      "lines": [
+        "Copy to which slot?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_008",
+      "speaker": "",
+      "lines": [
+        "Delete this save?"
       ],
       "condition": null,
       "animations": null,

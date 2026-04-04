@@ -256,94 +256,50 @@
     },
     {
       "id": "battle_act_iii_iv_cael_knight_of_despair_024",
-      "speaker": "",
+      "speaker": "edren",
       "lines": [
-        "(If Edren uses Steadfast Resolve during the fight.)"
+        "I learned this at the monastery. I'm not leaving you,\nCael. Not again."
       ],
-      "condition": null,
+      "condition": "edren_uses_steadfast_resolve_during_the_fight",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "battle_act_iii_iv_cael_knight_of_despair_025",
-      "speaker": "edren",
+      "speaker": "lira",
       "lines": [
-        "I learned this at the monastery. I'm not leaving you,\nCael. Not again."
+        "The Pallor's grip is fluctuating. He's still in there.\nI can see it in the energy patterns."
       ],
-      "condition": null,
+      "condition": "lira_uses_a_healing_ability_on_the_party",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "battle_act_iii_iv_cael_knight_of_despair_026",
-      "speaker": "",
+      "speaker": "torren",
       "lines": [
-        "(If Lira uses a healing ability on the party.)"
+        "The spirits remember him. They're singing for him.\nNot against him."
       ],
-      "condition": null,
+      "condition": "torren_uses_rootsong",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "battle_act_iii_iv_cael_knight_of_despair_027",
-      "speaker": "lira",
+      "speaker": "sable",
       "lines": [
-        "The Pallor's grip is fluctuating. He's still in there.\nI can see it in the energy patterns."
+        "This is the worst fight I've ever been in. And I've\nbeen in a lot of fights."
       ],
-      "condition": null,
+      "condition": "sable_is_in_the_party",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "battle_act_iii_iv_cael_knight_of_despair_028",
-      "speaker": "",
-      "lines": [
-        "(If Torren uses Rootsong.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_029",
-      "speaker": "torren",
-      "lines": [
-        "The spirits remember him. They're singing for him.\nNot against him."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_030",
-      "speaker": "",
-      "lines": [
-        "(If Sable is in the party.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_031",
-      "speaker": "sable",
-      "lines": [
-        "This is the worst fight I've ever been in. And I've\nbeen in a lot of fights."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_032",
       "speaker": "sable",
       "lines": [
         "He said please. Cael never says please. He's still\nin there."
@@ -354,23 +310,12 @@
       "sfx": null
     },
     {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_033",
-      "speaker": "",
-      "lines": [
-        "(If Maren uses Pallor Sight.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "battle_act_iii_iv_cael_knight_of_despair_034",
+      "id": "battle_act_iii_iv_cael_knight_of_despair_029",
       "speaker": "maren",
       "lines": [
         "I can see the Pallor's grip. It's wrapped around his\nheart. But there's a gap. He's holding it open. For us."
       ],
-      "condition": null,
+      "condition": "maren_uses_pallor_sight",
       "animations": null,
       "choice": null,
       "sfx": null

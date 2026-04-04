@@ -369,7 +369,7 @@ def segment_entries(raw_text):
         if condition_match:
             flag = condition_match.group(1)
             negated = condition_match.group(2) is not None
-            cond_text = f"not {flag}" if negated else flag
+            cond_text = f"{flag}_not_set" if negated else flag
             elements.append({"type": "condition", "text": cond_text})
             i += 1
             continue
@@ -383,6 +383,29 @@ def segment_entries(raw_text):
             operator = score_cond_match.group(2)
             value = score_cond_match.group(3)
             elements.append({"type": "condition", "text": f"{var_name} {operator} {value}"})
+            i += 1
+            continue
+
+        # Branch annotation: (If CHARACTER verb phrase.) → slugified condition
+        branch_annot_match = re.match(
+            r'^\s*\((?:If\s+)?(.+?)\s*\.?\)\s*$', line
+        )
+        if branch_annot_match and re.match(r'^\s*\(If\s+[A-Z]', line) and not re.match(r'^\s*\(If\s+`', line) and not re.match(r'^\s*\(If\s+player\s+', line):
+            # e.g., "(If Edren reaches him first.)" → "edren_reaches_first"
+            # "(Default — Edren and party arrive together.)" handled below
+            inner = branch_annot_match.group(1).strip()
+            # Strip leading "If "
+            inner = re.sub(r'^If\s+', '', inner)
+            cond_slug = slugify(inner)
+            if cond_slug:
+                elements.append({"type": "condition", "text": cond_slug})
+                i += 1
+                continue
+
+        # Default branch annotation: (Default — description)
+        default_annot_match = re.match(r'^\s*\(Default\b', line)
+        if default_annot_match:
+            elements.append({"type": "condition", "text": "default_arrival"})
             i += 1
             continue
 
@@ -701,7 +724,7 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
             if flag_m:
                 flag = flag_m.group(1)
                 negated = flag_m.group(2) is not None
-                extracted_condition = f"not {flag}" if negated else flag
+                extracted_condition = f"{flag}_not_set" if negated else flag
                 continue
             # Check for inline condition at start/end of line and strip it
             cleaned = _score_cond_re.sub('', line_text).strip()
@@ -718,7 +741,7 @@ def build_entries_from_elements(elements, scene_id, layer="narrative"):
                     if flag_m2:
                         flag = flag_m2.group(1)
                         negated = flag_m2.group(2) is not None
-                        extracted_condition = f"not {flag}" if negated else flag
+                        extracted_condition = f"{flag}_not_set" if negated else flag
         if extracted_condition:
             # Apply the extracted condition to the NEXT entry (or current if it has no condition)
             if new_lines:
@@ -1031,12 +1054,14 @@ def validate_all():
                     # Extract actual flag names — handle party_has(X) as a
                     # known function, not a flag
                     cond_clean = re.sub(r'party_has\([^)]+\)', '', condition)
-                    flag_names = re.findall(r'[a-z][a-z_]+', cond_clean)
+                    flag_names = re.findall(r'[a-z][a-z0-9_]+', cond_clean)
                     skip_words = {
                         "set", "if", "player", "chose", "option",
                         "consulted", "grandmother", "seyth", "before",
                         "this", "meeting", "spoken", "to", "again",
                         "a", "third", "time", "has", "party",
+                        # Boolean/comparison operators
+                        "not", "and", "or", "not_set",
                     }
                     for fn in flag_names:
                         if fn not in valid_flags and fn not in skip_words:
@@ -1121,7 +1146,7 @@ def validate_all():
             report_lines.append(f"- {w}")
         report_lines.append("")
 
-    if not unknown_speakers and not unknown_flags and not unknown_anims and not duplicate_ids and not empty_lines:
+    if not unknown_speakers and not unknown_flags and not unknown_anims and not unknown_sfx and not duplicate_ids and not empty_lines and not choice_issues:
         report_lines.append("No critical issues found.\n")
 
     report_path = PROJECT_ROOT / "tools" / "dialogue_validation_report.md"
@@ -1136,7 +1161,9 @@ def validate_all():
         "unknown_speakers": len(unknown_speakers),
         "unknown_flags": len(unknown_flags),
         "unknown_anims": len(unknown_anims),
+        "unknown_sfx": len(unknown_sfx),
         "duplicate_ids": len(duplicate_ids),
+        "choice_issues": len(choice_issues),
     }
 
 
@@ -1230,6 +1257,96 @@ def process_battle_file():
     return len(scenes), total_entries
 
 
+def postprocess_system_text_files():
+    """Post-process battle system text files that need manual splitting.
+
+    The source markdown has bullet-list blobs that the parser treats as single
+    narration entries. These need to be split into individual entries for the
+    game runtime.
+    """
+    # battle_save_system: split markdown blob into individual system messages
+    save_sys_path = OUTPUT_DIR / "battle_save_system.json"
+    if save_sys_path.exists():
+        save_messages = [
+            "Rest / Rest & Save / Save",
+            "No rest items. Recover 25% MP.",
+            "Overwrite existing save?",
+            "Saved.",
+            "\u2014 Empty \u2014",
+            "Select a save file.",
+            "Copy to which slot?",
+            "Delete this save?",
+        ]
+        entries = []
+        for idx, msg in enumerate(save_messages, 1):
+            entries.append({
+                "id": f"battle_save_system_{idx:03d}",
+                "speaker": "",
+                "lines": [msg],
+                "condition": None,
+                "animations": None,
+                "choice": None,
+                "sfx": None,
+            })
+        data = {"scene_id": "battle_save_system", "entries": entries}
+        save_sys_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_status_effect_notifications: split into individual notifications
+    status_path = OUTPUT_DIR / "battle_status_effect_notifications.json"
+    if status_path.exists():
+        notifications = [
+            "[Character] is Poisoned!",
+            "[Character] is Silenced!",
+            "[Character] is Frozen!",
+            "[Character] fell Asleep!",
+            "[Character] is Confused!",
+            "[Character] is Blinded!",
+            "[Character] is Slowed!",
+            "[Character] is Burning!",
+            "[Character] is afflicted with Despair!",
+            "[Character] is Berserk!",
+            "[Character] is Stopped!",
+            "[Character] is Grounded!",
+            "Poison wears off.",
+            "Silence wears off.",
+            "[Character] woke up!",
+            "[Status] was cured!",
+        ]
+        entries = []
+        for idx, msg in enumerate(notifications, 1):
+            entries.append({
+                "id": f"battle_status_effect_notifications_{idx:03d}",
+                "speaker": "",
+                "lines": [msg],
+                "condition": None,
+                "animations": None,
+                "choice": None,
+                "sfx": None,
+            })
+        data = {"scene_id": "battle_status_effect_notifications", "entries": entries}
+        status_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_sfx_captions: ensure contiguous IDs (remove gaps)
+    sfx_path = OUTPUT_DIR / "battle_sfx_captions.json"
+    if sfx_path.exists():
+        try:
+            data = json.loads(sfx_path.read_text(encoding="utf-8"))
+            for idx, entry in enumerate(data.get("entries", []), 1):
+                entry["id"] = f"battle_sfx_captions_{idx:03d}"
+            sfx_path.write_text(
+                json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
+
+
 if __name__ == "__main__":
     print("=" * 60)
     print("Dialogue Parser — Pendulum of Despair")
@@ -1264,6 +1381,11 @@ if __name__ == "__main__":
     print("[Layer 3] Battle Dialogue")
     n_battles, n_battle_entries = process_battle_file()
     print(f"  → {n_battles} contexts, {n_battle_entries} entries\n")
+
+    # Post-process system text files (split blobs, fix IDs)
+    print("[Post-process] Fixing system text files...")
+    postprocess_system_text_files()
+    print("  → Done\n")
 
     # Validation
     print("[Validation] Cross-referencing all output...")

@@ -234,28 +234,17 @@
     },
     {
       "id": "scene_23_finding_edren_021",
-      "speaker": "",
+      "speaker": "sable",
       "lines": [
-        "(If Edren is NOT first reunion and `lira_found` set.)"
+        "Scattered. Lira's with me. She infiltrated the\nCompact — found Cael's trail."
       ],
-      "condition": null,
+      "condition": "edren_is_not_first_reunion_and_lirafound_set",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
       "id": "scene_23_finding_edren_022",
-      "speaker": "sable",
-      "lines": [
-        "Scattered. Lira's with me. She infiltrated the\nCompact — found Cael's trail."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "scene_23_finding_edren_023",
       "speaker": "edren",
       "lines": [
         "She went back to the Compact? Alone?"
@@ -266,7 +255,7 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_024",
+      "id": "scene_23_finding_edren_023",
       "speaker": "sable",
       "lines": [
         "She's not alone anymore. Neither are you."
@@ -277,29 +266,18 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_025",
-      "speaker": "",
-      "lines": [
-        "(If Edren is NOT first reunion and `torren_found` set.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "scene_23_finding_edren_026",
+      "id": "scene_23_finding_edren_024",
       "speaker": "sable",
       "lines": [
         "Torren's alive. The Wilds nearly killed him — he\nwas holding back the corruption by himself. We stabilized the\nnexus."
       ],
-      "condition": null,
+      "condition": "edren_is_not_first_reunion_and_torrenfound_set",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_027",
+      "id": "scene_23_finding_edren_025",
       "speaker": "edren",
       "lines": [
         "The nexus held?"
@@ -310,7 +288,7 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_028",
+      "id": "scene_23_finding_edren_026",
       "speaker": "sable",
       "lines": [
         "First clean ley energy since the rupture. The\nPallor can be pushed back. That's what matters."
@@ -321,29 +299,18 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_029",
-      "speaker": "",
-      "lines": [
-        "(If Edren is NOT first reunion and `maren_found` set.)"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "scene_23_finding_edren_030",
+      "id": "scene_23_finding_edren_027",
       "speaker": "sable",
       "lines": [
         "I found Maren. She was in a ruin older than\ncivilization. She found the pattern — the Pallor has done this\nbefore."
       ],
-      "condition": null,
+      "condition": "edren_is_not_first_reunion_and_marenfound_set",
       "animations": null,
       "choice": null,
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_031",
+      "id": "scene_23_finding_edren_028",
       "speaker": "edren",
       "lines": [
         "How many times?"
@@ -354,7 +321,7 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_032",
+      "id": "scene_23_finding_edren_029",
       "speaker": "sable",
       "lines": [
         "Enough times that someone built a library to\ntrack it."
@@ -365,7 +332,7 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_033",
+      "id": "scene_23_finding_edren_030",
       "speaker": "edren",
       "lines": [
         "Then we keep moving. I wasted enough time sitting."
@@ -376,7 +343,7 @@
       "sfx": null
     },
     {
-      "id": "scene_23_finding_edren_034",
+      "id": "scene_23_finding_edren_031",
       "speaker": "aldous",
       "lines": [
         "Go well, knight. And next time you visit, bring\nsomething to drink. The wine here is terrible."

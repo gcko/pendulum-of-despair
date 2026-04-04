@@ -124,7 +124,7 @@
       "lines": [
         "You didn't come to the workshop. The night before.\nYou couldn't face me."
       ],
-      "condition": "not cael_last_night_lira",
+      "condition": "cael_last_night_lira_not_set",
       "animations": null,
       "choice": null,
       "sfx": null

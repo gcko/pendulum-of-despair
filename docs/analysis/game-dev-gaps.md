@@ -325,7 +325,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] SFX markers mapped to audio.md SFX catalog IDs (17 SFX captured)
 - [x] Choice nodes with branch targets (4 choice blocks)
 - [x] Verify every speaker tag matches a valid character/NPC ID
-- [x] Verify every flag name matches events.md flag list
+- [x] Verify flag names (validated against events.md; choice_N_selected and branch conditions are parser-generated placeholders pending runtime implementation)
 
 **Notes:**
 - Built via Python parser (`tools/dialogue_parser.py`) that reads 8 script files

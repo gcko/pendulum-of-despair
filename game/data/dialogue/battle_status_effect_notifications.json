@@ -5,7 +5,172 @@
       "id": "battle_status_effect_notifications_001",
       "speaker": "",
       "lines": [
-        "- \"[Character] is Poisoned!\"\n- \"[Character] is Silenced!\"\n- \"[Character] is Frozen!\"\n- \"[Character] fell Asleep!\"\n- \"[Character] is Confused!\"\n- \"[Character] is Blinded!\"\n- \"[Character] is Slowed!\"\n- \"[Character] is Burning!\"\n- \"[Character] is afflicted with Despair!\"\n- \"[Character] is Berserk!\"\n- \"[Character] is Stopped!\"\n- \"[Character] is Grounded!\"\n- \"Poison wears off.\"\n- \"Silence wears off.\"\n- \"[Character] woke up!\"\n- \"[Status] was cured!\""
+        "[Character] is Poisoned!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_002",
+      "speaker": "",
+      "lines": [
+        "[Character] is Silenced!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_003",
+      "speaker": "",
+      "lines": [
+        "[Character] is Frozen!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_004",
+      "speaker": "",
+      "lines": [
+        "[Character] fell Asleep!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_005",
+      "speaker": "",
+      "lines": [
+        "[Character] is Confused!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_006",
+      "speaker": "",
+      "lines": [
+        "[Character] is Blinded!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_007",
+      "speaker": "",
+      "lines": [
+        "[Character] is Slowed!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_008",
+      "speaker": "",
+      "lines": [
+        "[Character] is Burning!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_009",
+      "speaker": "",
+      "lines": [
+        "[Character] is afflicted with Despair!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_010",
+      "speaker": "",
+      "lines": [
+        "[Character] is Berserk!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_011",
+      "speaker": "",
+      "lines": [
+        "[Character] is Stopped!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_012",
+      "speaker": "",
+      "lines": [
+        "[Character] is Grounded!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_013",
+      "speaker": "",
+      "lines": [
+        "Poison wears off."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_014",
+      "speaker": "",
+      "lines": [
+        "Silence wears off."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_015",
+      "speaker": "",
+      "lines": [
+        "[Character] woke up!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_016",
+      "speaker": "",
+      "lines": [
+        "[Status] was cured!"
       ],
       "condition": null,
       "animations": null,
