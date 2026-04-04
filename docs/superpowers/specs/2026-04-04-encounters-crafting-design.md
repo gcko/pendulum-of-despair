@@ -194,7 +194,7 @@ The overworld file reuses `dungeon_id` as a generic area identifier (consistent 
 |-------|------|-------|
 | `floor_id` | string | Floor range: `"1-2"`, `"3"`, section name: `"hub_east"`, etc. |
 | `terrain_type` | string | `roads`, `open`, `low_visibility`, `pallor_wastes` — determines formation rates |
-| `danger_tier` | int | 0-5 per combat-formulas.md (0=safe, 2=standard, 3=deep, 4=ley_scar, 5=pallor) |
+| `danger_tier` | int | Derived enum introduced by this spec, based on zone-type/danger mappings in combat-formulas.md: 0=safe, 1=settled/coastal/roads, 2=standard dungeon/forest, 3=deep dungeon/mountains, 4=ley_scar, 5=pallor_wastes |
 | `danger_increment` | int | Steps-to-encounter increment: 0, 48, 64, 96, 120, 148, 252, 380, 506, 700 |
 | `formation_rates` | object | `{normal, back_attack, preemptive}` — must sum to 100 |
 | `groups` | array | 4 encounter formations (standard) or 5-6 (Dreamer's Fault) |
