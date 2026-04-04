@@ -1,27 +1,129 @@
 {
-  "shop": {
-    "shop_id": "valdris_crown_armorer",
-    "town": "valdris_crown",
-    "type": "armorer",
-    "markup": 1.0,
-    "inventory": [
-      {"item_id": "valdris_blade", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "knights_edge", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "ley_wand", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "stiletto", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "iron_mallet", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "iron_lance", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "iron_helm", "buy_price": 200, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "travelers_hood", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "ember_circlet", "buy_price": 350, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "chain_mail", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "iron_plate", "buy_price": 400, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "silk_robe", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "reinforced_vest", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "commanders_blade", "buy_price": 400, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"},
-      {"item_id": "glyph_staff", "buy_price": 500, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"},
-      {"item_id": "pickpockets_blade", "buy_price": 400, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"},
-      {"item_id": "pipe_hammer", "buy_price": 500, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"}
-    ]
-  }
+	"shop": {
+		"shop_id": "valdris_crown_armorer",
+		"town": "valdris_crown",
+		"type": "armorer",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "valdris_blade",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "knights_edge",
+				"buy_price": 500,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_wand",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "stiletto",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "iron_mallet",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "iron_lance",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "iron_helm",
+				"buy_price": 200,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "travelers_hood",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ember_circlet",
+				"buy_price": 350,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "chain_mail",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "iron_plate",
+				"buy_price": 400,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "silk_robe",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "reinforced_vest",
+				"buy_price": 500,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "commanders_blade",
+				"buy_price": 400,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			},
+			{
+				"item_id": "glyph_staff",
+				"buy_price": 500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			},
+			{
+				"item_id": "pickpockets_blade",
+				"buy_price": 400,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			},
+			{
+				"item_id": "pipe_hammer",
+				"buy_price": 500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			}
+		]
+	}
 }

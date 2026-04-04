@@ -1,112 +1,148 @@
 {
-  "combos": [
-    {
-      "id": "shield_oath",
-      "name": "Shield Oath",
-      "characters": ["edren", "cael"],
-      "cost": "Edren: 7 MP, Cael: 7 MP",
-      "effect": "Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3.",
-      "availability": "Acts I-II only (lost after Cael's betrayal)",
-      "description": "A coordinated defensive-offensive stance between commander and knight."
-    },
-    {
-      "id": "shattered_vanguard",
-      "name": "Shattered Vanguard",
-      "characters": ["edren", "sable"],
-      "cost": "Edren: 6 MP, Sable: 4 MP",
-      "effect": "Sable uses Misdirect on all enemies (forcing them toward Edren), and Edren immediately uses Shatter Guard at +50% damage. Requires Edren to be in a stance with stored damage.",
-      "availability": "After Sable learns Misdirect (Interlude)",
-      "description": "Sable funnels enemies toward Edren's explosive counterattack."
-    },
-    {
-      "id": "forged_rampart",
-      "name": "Forged Rampart",
-      "characters": ["edren", "lira"],
-      "cost": "Edren: 6 MP, Lira: 6 MP",
-      "effect": "Lira deploys a Bulkhead on Edren that lasts 5 turns instead of 3 and also reflects 20% of absorbed damage back at attackers. Does not count toward Lira's device limit.",
-      "availability": "After Lira learns Bulkhead (Level 7)",
-      "description": "Lira fuses Arcanite plating onto Edren's shield for enhanced protection."
-    },
-    {
-      "id": "thornfire",
-      "name": "Thornfire",
-      "characters": ["torren", "lira"],
-      "cost": "Torren: 8 MP, Lira: 8 MP",
-      "effect": "Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, 20 Flame + 20 Storm each checked independently against target's elemental resistance) with guaranteed Burn and a 30% chance of Stop.",
-      "availability": "After Torren learns Ember Wing (Level 11)",
-      "description": "The Flame Spirit screams through a Shock Coil, doubling in size and splitting into blazing arcs."
-    },
-    {
-      "id": "spiritward",
-      "name": "Spiritward",
-      "characters": ["torren", "edren"],
-      "cost": "Torren: 8 MP, Edren: 6 MP",
-      "effect": "Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction.",
-      "availability": "After Torren learns Stoneheart (Interlude)",
-      "description": "The Earth Spirit settles into Edren's shield, granting the whole party bedrock-solid protection."
-    },
-    {
-      "id": "weave_theft",
-      "name": "Weave Theft",
-      "characters": ["maren", "sable"],
-      "cost": "Maren: 6 MP, Sable: 4 MP",
-      "effect": "Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff.",
-      "availability": "After Sable joins the party",
-      "description": "Sable steals what the enemy has; Maren repurposes it for the party."
-    },
-    {
-      "id": "ley_torrent",
-      "name": "Ley Torrent",
-      "characters": ["maren", "torren"],
-      "cost": "Maren: 10 MP, Torren: 8 MP",
-      "effect": "Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren.",
-      "availability": "After both Maren and Torren are in the party",
-      "description": "Raw ley-line energy speaks through two people at once."
-    },
-    {
-      "id": "ambush_protocol",
-      "name": "Ambush Protocol",
-      "characters": ["sable", "lira"],
-      "cost": "Sable: 4 MP, Lira: 4 MP",
-      "effect": "Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage, and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1).",
-      "availability": "After Sable learns Misdirect (Interlude) and Lira learns Arc Trap (Level 12)",
-      "description": "Sable rigs a stolen proximity mine and lures an enemy into it."
-    },
-    {
-      "id": "promise_of_dawn",
-      "name": "Promise of Dawn",
-      "characters": ["lira", "cael"],
-      "cost": "Lira: 8 MP, Cael: 8 MP",
-      "effect": "Cael rallies Lira with a personal command. Lira's next two device deployments cost 0 AC and have double duration. Cael is unable to act for 1 turn afterward (the emotional cost of the bond).",
-      "availability": "Acts I-II only (lost after Cael's betrayal)",
-      "description": "Cael's belief in Lira empowers her craft beyond its limits."
-    },
-    {
-      "id": "arcane_convergence",
-      "name": "Arcane Convergence",
-      "characters": ["maren", "lira"],
-      "cost": "Maren: 8 MP, Lira: 6 MP",
-      "effect": "Maren weaves raw ley-line magic into Lira's deployed devices. All active devices trigger their effects immediately (out of turn) and gain +1 turn of duration. Generates 20 WG for Maren.",
-      "availability": "After both Maren and Lira are in the party",
-      "description": "Old magic and new craft fuse in six seconds flat."
-    },
-    {
-      "id": "twilight_raid",
-      "name": "Twilight Raid",
-      "characters": ["sable", "torren"],
-      "cost": "Sable: 4 MP, Torren: 8 MP",
-      "effect": "Torren's Greyveil spirit cloaks Sable in shadow. Sable attacks all enemies for physical damage equal to (Sable's Attack + Torren's Magic) x 1.5, spirit-typed (effective against Pallor enemies), and steals from each target with 100% success rate.",
-      "availability": "After Torren learns Greyveil (Interlude)",
-      "description": "Sable vanishes into the spirit's shadow, striking and stealing from every enemy."
-    },
-    {
-      "id": "caels_echo",
-      "name": "Cael's Echo",
-      "characters": ["edren", "lira"],
-      "cost": "Edren: 10 MP, Lira: 10 MP",
-      "effect": "Edren and Lira combine their memories of Cael. Edren strikes with both swords (his and Cael's) while Lira overcharges the strikes with Arcanite energy. Deals physical + Storm damage to a single target (combined Attack x 3). Afterward, both characters are healed for 25% max HP.",
-      "availability": "Act IV only (after Cael's departure, requires Oathkeeper)",
-      "description": "The sword remembers. The lightning remembers. For one moment, he's with them again."
-    }
-  ]
+	"combos": [
+		{
+			"id": "shield_oath",
+			"name": "Shield Oath",
+			"characters": [
+				"edren",
+				"cael"
+			],
+			"cost": "Edren: 7 MP, Cael: 7 MP",
+			"effect": "Edren enters Ironwall stance on Cael, and Cael activates Press Forward on Edren simultaneously. Both buffs last 4 turns instead of 3.",
+			"availability": "Acts I-II only (lost after Cael's betrayal)",
+			"description": "A coordinated defensive-offensive stance between commander and knight."
+		},
+		{
+			"id": "shattered_vanguard",
+			"name": "Shattered Vanguard",
+			"characters": [
+				"edren",
+				"sable"
+			],
+			"cost": "Edren: 6 MP, Sable: 4 MP",
+			"effect": "Sable uses Misdirect on all enemies (forcing them toward Edren), and Edren immediately uses Shatter Guard at +50% damage. Requires Edren to be in a stance with stored damage.",
+			"availability": "After Sable learns Misdirect (Interlude)",
+			"description": "Sable funnels enemies toward Edren's explosive counterattack."
+		},
+		{
+			"id": "forged_rampart",
+			"name": "Forged Rampart",
+			"characters": [
+				"edren",
+				"lira"
+			],
+			"cost": "Edren: 6 MP, Lira: 6 MP",
+			"effect": "Lira deploys a Bulkhead on Edren that lasts 5 turns instead of 3 and also reflects 20% of absorbed damage back at attackers. Does not count toward Lira's device limit.",
+			"availability": "After Lira learns Bulkhead (Level 7)",
+			"description": "Lira fuses Arcanite plating onto Edren's shield for enhanced protection."
+		},
+		{
+			"id": "thornfire",
+			"name": "Thornfire",
+			"characters": [
+				"torren",
+				"lira"
+			],
+			"cost": "Torren: 8 MP, Lira: 8 MP",
+			"effect": "Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, 20 Flame + 20 Storm each checked independently against target's elemental resistance) with guaranteed Burn and a 30% chance of Stop.",
+			"availability": "After Torren learns Ember Wing (Level 11)",
+			"description": "The Flame Spirit screams through a Shock Coil, doubling in size and splitting into blazing arcs."
+		},
+		{
+			"id": "spiritward",
+			"name": "Spiritward",
+			"characters": [
+				"torren",
+				"edren"
+			],
+			"cost": "Torren: 8 MP, Edren: 6 MP",
+			"effect": "Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction.",
+			"availability": "After Torren learns Stoneheart (Interlude)",
+			"description": "The Earth Spirit settles into Edren's shield, granting the whole party bedrock-solid protection."
+		},
+		{
+			"id": "weave_theft",
+			"name": "Weave Theft",
+			"characters": [
+				"maren",
+				"sable"
+			],
+			"cost": "Maren: 6 MP, Sable: 4 MP",
+			"effect": "Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff.",
+			"availability": "After Sable joins the party",
+			"description": "Sable steals what the enemy has; Maren repurposes it for the party."
+		},
+		{
+			"id": "ley_torrent",
+			"name": "Ley Torrent",
+			"characters": [
+				"maren",
+				"torren"
+			],
+			"cost": "Maren: 10 MP, Torren: 8 MP",
+			"effect": "Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren.",
+			"availability": "After both Maren and Torren are in the party",
+			"description": "Raw ley-line energy speaks through two people at once."
+		},
+		{
+			"id": "ambush_protocol",
+			"name": "Ambush Protocol",
+			"characters": [
+				"sable",
+				"lira"
+			],
+			"cost": "Sable: 4 MP, Lira: 4 MP",
+			"effect": "Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage, and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1).",
+			"availability": "After Sable learns Misdirect (Interlude) and Lira learns Arc Trap (Level 12)",
+			"description": "Sable rigs a stolen proximity mine and lures an enemy into it."
+		},
+		{
+			"id": "promise_of_dawn",
+			"name": "Promise of Dawn",
+			"characters": [
+				"lira",
+				"cael"
+			],
+			"cost": "Lira: 8 MP, Cael: 8 MP",
+			"effect": "Cael rallies Lira with a personal command. Lira's next two device deployments cost 0 AC and have double duration. Cael is unable to act for 1 turn afterward (the emotional cost of the bond).",
+			"availability": "Acts I-II only (lost after Cael's betrayal)",
+			"description": "Cael's belief in Lira empowers her craft beyond its limits."
+		},
+		{
+			"id": "arcane_convergence",
+			"name": "Arcane Convergence",
+			"characters": [
+				"maren",
+				"lira"
+			],
+			"cost": "Maren: 8 MP, Lira: 6 MP",
+			"effect": "Maren weaves raw ley-line magic into Lira's deployed devices. All active devices trigger their effects immediately (out of turn) and gain +1 turn of duration. Generates 20 WG for Maren.",
+			"availability": "After both Maren and Lira are in the party",
+			"description": "Old magic and new craft fuse in six seconds flat."
+		},
+		{
+			"id": "twilight_raid",
+			"name": "Twilight Raid",
+			"characters": [
+				"sable",
+				"torren"
+			],
+			"cost": "Sable: 4 MP, Torren: 8 MP",
+			"effect": "Torren's Greyveil spirit cloaks Sable in shadow. Sable attacks all enemies for physical damage equal to (Sable's Attack + Torren's Magic) x 1.5, spirit-typed (effective against Pallor enemies), and steals from each target with 100% success rate.",
+			"availability": "After Torren learns Greyveil (Interlude)",
+			"description": "Sable vanishes into the spirit's shadow, striking and stealing from every enemy."
+		},
+		{
+			"id": "caels_echo",
+			"name": "Cael's Echo",
+			"characters": [
+				"edren",
+				"lira"
+			],
+			"cost": "Edren: 10 MP, Lira: 10 MP",
+			"effect": "Edren and Lira combine their memories of Cael. Edren strikes with both swords (his and Cael's) while Lira overcharges the strikes with Arcanite energy. Deals physical + Storm damage to a single target (combined Attack x 3). Afterward, both characters are healed for 25% max HP.",
+			"availability": "Act IV only (after Cael's departure, requires Oathkeeper)",
+			"description": "The sword remembers. The lightning remembers. For one moment, he's with them again."
+		}
+	]
 }

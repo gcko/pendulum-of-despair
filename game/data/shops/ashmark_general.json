@@ -1,17 +1,59 @@
 {
-  "shop": {
-    "shop_id": "ashmark_general",
-    "town": "ashmark",
-    "type": "general",
-    "markup": 1.0,
-    "inventory": [
-      {"item_id": "hi_potion", "buy_price": 300, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "ether", "buy_price": 200, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "antidote", "buy_price": 50, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "echo_drop", "buy_price": 75, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "phoenix_feather", "buy_price": 500, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "sleeping_bag", "buy_price": 250, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "tent", "buy_price": 500, "available_act": 2, "stock_limit": null, "restock_event": null}
-    ]
-  }
+	"shop": {
+		"shop_id": "ashmark_general",
+		"town": "ashmark",
+		"type": "general",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "hi_potion",
+				"buy_price": 300,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ether",
+				"buy_price": 200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "antidote",
+				"buy_price": 50,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "echo_drop",
+				"buy_price": 75,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "phoenix_feather",
+				"buy_price": 500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "sleeping_bag",
+				"buy_price": 250,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "tent",
+				"buy_price": 500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
 }

@@ -1,25 +1,115 @@
 {
-  "shop": {
-    "shop_id": "valdris_crown_general",
-    "town": "valdris_crown",
-    "type": "general",
-    "markup": 1.0,
-    "inventory": [
-      {"item_id": "potion", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "hi_potion", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "ether", "buy_price": 200, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "antidote", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "alarm_clock", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "echo_drop", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "eye_drops", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "phoenix_feather", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "sleeping_bag", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "smoke_bomb", "buy_price": 100, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "waystone", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-      {"item_id": "hi_ether", "buy_price": 800, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"},
-      {"item_id": "smelling_salts", "buy_price": 75, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"},
-      {"item_id": "chronos_dust", "buy_price": 150, "available_act": 2, "stock_limit": null, "restock_event": "diplomatic_mission_begins"}
-    ]
-  }
+	"shop": {
+		"shop_id": "valdris_crown_general",
+		"town": "valdris_crown",
+		"type": "general",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "potion",
+				"buy_price": 50,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "hi_potion",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ether",
+				"buy_price": 200,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "antidote",
+				"buy_price": 50,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "alarm_clock",
+				"buy_price": 75,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "echo_drop",
+				"buy_price": 75,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "eye_drops",
+				"buy_price": 50,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "phoenix_feather",
+				"buy_price": 500,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "sleeping_bag",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "tent",
+				"buy_price": 500,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "smoke_bomb",
+				"buy_price": 100,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "waystone",
+				"buy_price": 300,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "hi_ether",
+				"buy_price": 800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			},
+			{
+				"item_id": "smelling_salts",
+				"buy_price": 75,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			},
+			{
+				"item_id": "chronos_dust",
+				"buy_price": 150,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "diplomatic_mission_begins"
+			}
+		]
+	}
 }

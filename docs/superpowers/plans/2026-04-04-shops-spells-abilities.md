@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Convert shop inventories, spell data, and character ability data from design docs into ~34 runtime JSON files.
+**Goal:** Convert shop inventories, spell data, and character ability data from design docs into 35 runtime JSON files.
 
 **Architecture:** Parallel agents transcribe files from economy.md (shops), magic.md (spells), and abilities.md (abilities). Cross-reference sweep validates all item_ids against gap 1.3 and character IDs against gap 1.1. Mandatory stale-count scan before commit (lesson from PR #109).
 
@@ -21,6 +21,7 @@
 | Create | `game/data/spells/forgewright.json` | 1.5 |
 | Create | `game/data/spells/spirit.json` | 1.5 |
 | Create | `game/data/spells/void.json` | 1.5 |
+| Create | `game/data/spells/streetwise.json` | 1.5 |
 | Create | `game/data/abilities/edren.json` | 1.5 |
 | Create | `game/data/abilities/cael.json` | 1.5 |
 | Create | `game/data/abilities/maren.json` | 1.5 |

@@ -1,13 +1,31 @@
 {
-  "shop": {
-    "shop_id": "thornmere_craftsman",
-    "town": "thornmere",
-    "type": "craftsman",
-    "markup": 1.0,
-    "inventory": [
-      {"item_id": "wyrmbone_lance", "buy_price": 4500, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "warding_crown", "buy_price": 2800, "available_act": 2, "stock_limit": null, "restock_event": null},
-      {"item_id": "despair_ward", "buy_price": 5000, "available_act": 2, "stock_limit": null, "restock_event": null}
-    ]
-  }
+	"shop": {
+		"shop_id": "thornmere_craftsman",
+		"town": "thornmere",
+		"type": "craftsman",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "wyrmbone_lance",
+				"buy_price": 4500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "warding_crown",
+				"buy_price": 2800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "despair_ward",
+				"buy_price": 5000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
 }

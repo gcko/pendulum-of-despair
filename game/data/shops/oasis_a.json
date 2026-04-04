@@ -1,18 +1,66 @@
 {
-  "shop": {
-    "shop_id": "oasis_a",
-    "town": "oasis_a",
-    "type": "mixed",
-    "markup": 1.0,
-    "inventory": [
-      {"item_id": "x_potion", "buy_price": 1500, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "pavilion", "buy_price": 1200, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "phoenix_pinion", "buy_price": 3000, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "pallor_salve", "buy_price": 2500, "available_act": 3, "stock_limit": 3, "restock_event": null},
-      {"item_id": "ley_forged_longsword", "buy_price": 8000, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "ley_lance", "buy_price": 7500, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "genji_helm", "buy_price": 5500, "available_act": 3, "stock_limit": null, "restock_event": null},
-      {"item_id": "genji_armor", "buy_price": 7000, "available_act": 3, "stock_limit": null, "restock_event": null}
-    ]
-  }
+	"shop": {
+		"shop_id": "oasis_a",
+		"town": "oasis_a",
+		"type": "mixed",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "x_potion",
+				"buy_price": 1500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pavilion",
+				"buy_price": 1200,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "phoenix_pinion",
+				"buy_price": 3000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_salve",
+				"buy_price": 2500,
+				"available_act": 3,
+				"stock_limit": 3,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_forged_longsword",
+				"buy_price": 8000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_lance",
+				"buy_price": 7500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "genji_helm",
+				"buy_price": 5500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "genji_armor",
+				"buy_price": 7000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
 }

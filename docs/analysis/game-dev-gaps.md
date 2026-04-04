@@ -214,7 +214,7 @@ transformation that can be validated line-by-line against source docs.
 **Depends On:** 1.1 (Character Data — learn levels cross-reference)
 
 **What's Needed:**
-- [x] Per-tradition spell JSON following Section 2.7 schema (4 files: ley_line, forgewright, spirit, void)
+- [x] Per-tradition spell JSON following Section 2.7 schema (5 files: ley_line, forgewright, spirit, void, streetwise)
 - [x] All 89 spells from magic.md with: id, name, tradition, element, category, tier, power, mp_cost, target, learned_by
 - [x] Per-character ability JSON as descriptive data (6 files: edren, cael, maren, sable, lira, torren)
 - [x] 6 unique ability command systems from abilities.md (44 abilities total):

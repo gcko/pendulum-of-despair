@@ -1,124 +1,160 @@
 {
-  "spells": [
-    {
-      "id": "ember_lance",
-      "name": "Ember Lance",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "offensive",
-      "tier": 1,
-      "power": 14,
-      "mp_cost": 4,
-      "target": "single_enemy",
-      "hit_rate": null,
-      "duration": null,
-      "description": "A focused bolt of fire.",
-      "learned_by": [
-        { "character": "maren", "level": 1 },
-        { "character": "lira", "level": 5 },
-        { "character": "cael", "level": 1 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    },
-    {
-      "id": "kindlepyre",
-      "name": "Kindlepyre",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "offensive",
-      "tier": 2,
-      "power": 32,
-      "mp_cost": 14,
-      "target": "single_enemy",
-      "hit_rate": null,
-      "duration": null,
-      "description": "A concentrated blast of fire.",
-      "learned_by": [
-        { "character": "maren", "level": 14 },
-        { "character": "lira", "level": 18 },
-        { "character": "cael", "level": 14 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    },
-    {
-      "id": "crucible_wrath",
-      "name": "Crucible Wrath",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "offensive",
-      "tier": 3,
-      "power": 58,
-      "mp_cost": 32,
-      "target": "single_enemy",
-      "hit_rate": null,
-      "duration": null,
-      "description": "Devastating concentrated fire.",
-      "learned_by": [
-        { "character": "maren", "level": 30 },
-        { "character": "lira", "level": 35 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    },
-    {
-      "id": "scorch_sweep",
-      "name": "Scorch Sweep",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "offensive",
-      "tier": 2,
-      "power": 24,
-      "mp_cost": 22,
-      "target": "all_enemies",
-      "hit_rate": null,
-      "duration": null,
-      "description": "A wave of heat rolls across the battlefield. AoE fire damage.",
-      "learned_by": [
-        { "character": "maren", "level": 18 },
-        { "character": "lira", "level": 22 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    },
-    {
-      "id": "worldfire",
-      "name": "Worldfire",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "offensive",
-      "tier": 4,
-      "power": 95,
-      "mp_cost": 75,
-      "target": "all_enemies",
-      "hit_rate": null,
-      "duration": null,
-      "description": "Apocalyptic fire damage to all enemies.",
-      "learned_by": [
-        { "character": "maren", "level": 42 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    },
-    {
-      "id": "forgeshield",
-      "name": "Forgeshield",
-      "tradition": "forgewright",
-      "element": "flame",
-      "category": "utility",
-      "tier": 2,
-      "power": null,
-      "mp_cost": 12,
-      "target": "single_ally",
-      "hit_rate": null,
-      "duration": null,
-      "description": "Absorbs the next instance of magical damage directed at the target (up to 150 + caster MAG). Then shatters.",
-      "learned_by": [
-        { "character": "lira", "level": 14 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
-    }
-  ]
+	"spells": [
+		{
+			"id": "ember_lance",
+			"name": "Ember Lance",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "offensive",
+			"tier": 1,
+			"power": 14,
+			"mp_cost": 4,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A focused bolt of fire.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 1
+				},
+				{
+					"character": "lira",
+					"level": 5
+				},
+				{
+					"character": "cael",
+					"level": 1
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "kindlepyre",
+			"name": "Kindlepyre",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "offensive",
+			"tier": 2,
+			"power": 32,
+			"mp_cost": 14,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A concentrated blast of fire.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 14
+				},
+				{
+					"character": "lira",
+					"level": 18
+				},
+				{
+					"character": "cael",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "crucible_wrath",
+			"name": "Crucible Wrath",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "offensive",
+			"tier": 3,
+			"power": 58,
+			"mp_cost": 32,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Devastating concentrated fire.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 30
+				},
+				{
+					"character": "lira",
+					"level": 35
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "scorch_sweep",
+			"name": "Scorch Sweep",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "offensive",
+			"tier": 2,
+			"power": 24,
+			"mp_cost": 22,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A wave of heat rolls across the battlefield. AoE fire damage.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 18
+				},
+				{
+					"character": "lira",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "worldfire",
+			"name": "Worldfire",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "offensive",
+			"tier": 4,
+			"power": 95,
+			"mp_cost": 75,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Apocalyptic fire damage to all enemies.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 42
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "forgeshield",
+			"name": "Forgeshield",
+			"tradition": "forgewright",
+			"element": "flame",
+			"category": "utility",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 12,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Absorbs the next instance of magical damage directed at the target (up to 150 + caster MAG). Then shatters.",
+			"learned_by": [
+				{
+					"character": "lira",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		}
+	]
 }
