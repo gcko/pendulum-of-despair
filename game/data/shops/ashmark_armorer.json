@@ -1,0 +1,66 @@
+{
+	"shop": {
+		"shop_id": "ashmark_armorer",
+		"town": "ashmark",
+		"type": "armorer",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "compact_saber",
+				"buy_price": 2000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "twilight_edge",
+				"buy_price": 2500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "runic_focus",
+				"buy_price": 1800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "compact_officers_helm",
+				"buy_price": 1200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "compact_uniform",
+				"buy_price": 1800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "thornwood_pike",
+				"buy_price": 1800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "ashmark_liberation"
+			},
+			{
+				"item_id": "whisper_edge",
+				"buy_price": 4500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "ashmark_liberation"
+			},
+			{
+				"item_id": "preemptive_charm",
+				"buy_price": 2000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": "ashmark_liberation"
+			}
+		]
+	}
+}

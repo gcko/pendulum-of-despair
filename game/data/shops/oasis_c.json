@@ -1,0 +1,66 @@
+{
+	"shop": {
+		"shop_id": "oasis_c",
+		"town": "oasis_c",
+		"type": "mixed",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "x_potion",
+				"buy_price": 1500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "x_ether",
+				"buy_price": 2000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_salve",
+				"buy_price": 2500,
+				"available_act": 3,
+				"stock_limit": 2,
+				"restock_event": null
+			},
+			{
+				"item_id": "despair_ward",
+				"buy_price": 5000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "twilight_fang",
+				"buy_price": 8000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_pike",
+				"buy_price": 9500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_crown",
+				"buy_price": 6500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_thread_mail",
+				"buy_price": 8000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
+}

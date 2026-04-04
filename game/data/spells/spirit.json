@@ -1,0 +1,834 @@
+{
+	"spells": [
+		{
+			"id": "tremor_spike",
+			"name": "Tremor Spike",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "offensive",
+			"tier": 1,
+			"power": 14,
+			"mp_cost": 4,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A pillar of stone erupts beneath the target.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 1
+				},
+				{
+					"character": "maren",
+					"level": 5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "rootgrip",
+			"name": "Rootgrip",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "offensive",
+			"tier": 2,
+			"power": 30,
+			"mp_cost": 14,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Crushing roots and stone.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 12
+				},
+				{
+					"character": "maren",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "landshatter",
+			"name": "Landshatter",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "offensive",
+			"tier": 3,
+			"power": 60,
+			"mp_cost": 34,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "The earth itself strikes.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 30
+				},
+				{
+					"character": "maren",
+					"level": 34
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "quake_stride",
+			"name": "Quake Stride",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "offensive",
+			"tier": 2,
+			"power": 24,
+			"mp_cost": 22,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "AoE earth damage. Does not affect floating enemies.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 16
+				},
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "thornlash",
+			"name": "Thornlash",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "offensive",
+			"tier": 1,
+			"power": 13,
+			"mp_cost": 4,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A whip of living vine and thorn.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 1
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "spiritfang",
+			"name": "Spiritfang",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "offensive",
+			"tier": 2,
+			"power": 33,
+			"mp_cost": 15,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A spirit-beast strikes the target.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "ancestors_fury",
+			"name": "Ancestor's Fury",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "offensive",
+			"tier": 3,
+			"power": 62,
+			"mp_cost": 36,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "The collected wrath of generations of spirit-speakers.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"event": "act_iii_spirit_communion"
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "wilds_chorus",
+			"name": "Wilds Chorus",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "offensive",
+			"tier": 2,
+			"power": 25,
+			"mp_cost": 23,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "AoE spirit damage.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "requiem_of_thorns",
+			"name": "Requiem of Thorns",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "offensive",
+			"tier": 4,
+			"power": 90,
+			"mp_cost": 70,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Devastating spirit-element AoE.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"event": "pallor_trial"
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "mend",
+			"name": "Mend",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 1,
+			"power": 12,
+			"mp_cost": 3,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores minor HP.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 1
+				},
+				{
+					"character": "maren",
+					"level": 3
+				},
+				{
+					"character": "edren",
+					"level": 5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "deepmend",
+			"name": "Deepmend",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 2,
+			"power": 30,
+			"mp_cost": 10,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores moderate HP.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 12
+				},
+				{
+					"character": "maren",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "resurgence",
+			"name": "Resurgence",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 3,
+			"power": 55,
+			"mp_cost": 28,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores heavy HP.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 26
+				},
+				{
+					"character": "maren",
+					"level": 30
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "breath_of_the_wilds",
+			"name": "Breath of the Wilds",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 1,
+			"power": 8,
+			"mp_cost": 8,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores minor HP to entire party.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 6
+				},
+				{
+					"character": "maren",
+					"level": 10
+				},
+				{
+					"character": "edren",
+					"event": "act_iii_campfire",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "sanctuary",
+			"name": "Sanctuary",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 2,
+			"power": 22,
+			"mp_cost": 18,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores moderate HP to entire party.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 18
+				},
+				{
+					"character": "maren",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "lifetide",
+			"name": "Lifetide",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 3,
+			"power": 45,
+			"mp_cost": 42,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores heavy HP to entire party.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 32
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "kindle_breath",
+			"name": "Kindle Breath",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 4,
+			"description": "Grants regeneration: restores 5% max HP per turn for 4 turns.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 4
+				},
+				{
+					"character": "maren",
+					"level": 8
+				},
+				{
+					"character": "edren",
+					"event": "act_iii_campfire",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "rekindling",
+			"name": "Rekindling",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 16,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": 4,
+			"description": "Grants regeneration: restores 5% max HP per turn for 4 turns to entire party.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 20
+				},
+				{
+					"character": "maren",
+					"event": "act_iii_cross_train_torren",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "spirit_recall",
+			"name": "Spirit Recall",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 20,
+			"target": "fainted_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Revives a fallen ally at 25% of max HP.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 14
+				},
+				{
+					"character": "maren",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "cleansing_draught",
+			"name": "Cleansing Draught",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "healing",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 5,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Removes one negative status effect (Poison, Burn, Sleep, Confusion, Silence, Blind).",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 3
+				},
+				{
+					"character": "maren",
+					"level": 5
+				},
+				{
+					"character": "edren",
+					"level": 8
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "vilethorn",
+			"name": "Vilethorn",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 5,
+			"target": "single_enemy",
+			"hit_rate": 75,
+			"duration": null,
+			"description": "75% chance to inflict Poison. Poisoned targets lose 8% max HP per turn.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 3
+				},
+				{
+					"character": "maren",
+					"level": 8
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "slumber_mote",
+			"name": "Slumber Mote",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_enemy",
+			"hit_rate": 70,
+			"duration": null,
+			"description": "70% chance to inflict Sleep. Target cannot act; wakes on receiving damage.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 5
+				},
+				{
+					"character": "maren",
+					"level": 6
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "leaden_step",
+			"name": "Leaden Step",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 5,
+			"target": "single_enemy",
+			"hit_rate": 75,
+			"duration": null,
+			"description": "75% chance to inflict Slow. Target's ATB gauge fills at 50% speed.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 6
+				},
+				{
+					"character": "maren",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "murk_veil",
+			"name": "Murk Veil",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 4,
+			"target": "single_enemy",
+			"hit_rate": 75,
+			"duration": null,
+			"description": "75% chance to inflict Blind. Target's physical attack accuracy reduced by 50%.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 4
+				},
+				{
+					"character": "sable",
+					"level": 12
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "miasma",
+			"name": "Miasma",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 12,
+			"target": "all_enemies",
+			"hit_rate": 60,
+			"duration": null,
+			"description": "60% chance to inflict Poison on each target.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "eventide",
+			"name": "Eventide",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "all_enemies",
+			"hit_rate": 55,
+			"duration": null,
+			"description": "55% chance to inflict Sleep on each target.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "bogsink",
+			"name": "Bogsink",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 12,
+			"target": "all_enemies",
+			"hit_rate": 60,
+			"duration": null,
+			"description": "60% chance to inflict Slow on each target.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 15
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "ironhide",
+			"name": "Ironhide",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "buff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 5,
+			"description": "Increases physical defense by 40% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "edren",
+					"level": 5
+				},
+				{
+					"character": "torren",
+					"level": 8
+				},
+				{
+					"character": "maren",
+					"level": 10
+				},
+				{
+					"character": "lira",
+					"event": "ironhaven_foundry_schematic"
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "bulwark_line",
+			"name": "Bulwark Line",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "buff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 16,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": 4,
+			"description": "Increases physical defense by 25% for 4 turns (entire party).",
+			"learned_by": [
+				{
+					"character": "edren",
+					"level": 18
+				},
+				{
+					"character": "torren",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "last_breath",
+			"name": "Last Breath",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "buff",
+			"tier": 3,
+			"power": null,
+			"mp_cost": 35,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Grants auto-revive. If the target is Fainted, they automatically revive with 30% HP once. Lasts until triggered or battle ends.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 28
+				},
+				{
+					"character": "maren",
+					"level": 32
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "crumble",
+			"name": "Crumble",
+			"tradition": "spirit",
+			"element": "earth",
+			"category": "debuff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 12,
+			"target": "single_enemy",
+			"hit_rate": 70,
+			"duration": 5,
+			"description": "Reduces target's elemental resistance by one tier for the target's dominant element. Lasts 5 turns.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 16
+				},
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "spiritsight",
+			"name": "Spiritsight",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "utility",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 3,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Reveals target's HP, MP, elemental weaknesses, resistances, and steal-able items.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 1
+				},
+				{
+					"character": "maren",
+					"level": 4
+				},
+				{
+					"character": "sable",
+					"level": 8
+				},
+				{
+					"character": "lira",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "veilstep",
+			"name": "Veilstep",
+			"tradition": "spirit",
+			"element": "spirit",
+			"category": "utility",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 10,
+			"target": "self",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Reduces random encounter rate by 75% for 120 seconds or 200 steps.",
+			"learned_by": [
+				{
+					"character": "torren",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		}
+	]
+}

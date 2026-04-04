@@ -1,0 +1,964 @@
+{
+	"spells": [
+		{
+			"id": "rime_shard",
+			"name": "Rime Shard",
+			"tradition": "ley_line",
+			"element": "frost",
+			"category": "offensive",
+			"tier": 1,
+			"power": 14,
+			"mp_cost": 4,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A spike of ice.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 1
+				},
+				{
+					"character": "edren",
+					"level": 8
+				},
+				{
+					"character": "cael",
+					"level": 3
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "hoarfall",
+			"name": "Hoarfall",
+			"tradition": "ley_line",
+			"element": "frost",
+			"category": "offensive",
+			"tier": 2,
+			"power": 32,
+			"mp_cost": 14,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A heavy blast of freezing cold.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 14
+				},
+				{
+					"character": "cael",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "glacial_tomb",
+			"name": "Glacial Tomb",
+			"tradition": "ley_line",
+			"element": "frost",
+			"category": "offensive",
+			"tier": 3,
+			"power": 58,
+			"mp_cost": 32,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Encases the target in killing cold.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 30
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "whiteout",
+			"name": "Whiteout",
+			"tradition": "ley_line",
+			"element": "frost",
+			"category": "offensive",
+			"tier": 2,
+			"power": 24,
+			"mp_cost": 22,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "AoE frost damage.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "arc_snap",
+			"name": "Arc Snap",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "offensive",
+			"tier": 1,
+			"power": 16,
+			"mp_cost": 5,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A bolt of lightning. Slightly higher power than other Tier 1 spells, balanced by slightly higher cost.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 3
+				},
+				{
+					"character": "cael",
+					"level": 5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "galeforce",
+			"name": "Galeforce",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "offensive",
+			"tier": 2,
+			"power": 34,
+			"mp_cost": 15,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A concentrated blast of wind and lightning.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 16
+				},
+				{
+					"character": "cael",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "tempest_reign",
+			"name": "Tempest Reign",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "offensive",
+			"tier": 3,
+			"power": 62,
+			"mp_cost": 35,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A devastating storm concentrated on one point.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 32
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "squall_line",
+			"name": "Squall Line",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "offensive",
+			"tier": 2,
+			"power": 26,
+			"mp_cost": 24,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "AoE storm damage.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "linebolt",
+			"name": "Linebolt",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "offensive",
+			"tier": 1,
+			"power": 15,
+			"mp_cost": 5,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A bolt of raw ley energy.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 1
+				},
+				{
+					"character": "cael",
+					"level": 1
+				},
+				{
+					"character": "edren",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "ley_cascade",
+			"name": "Ley Cascade",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "offensive",
+			"tier": 2,
+			"power": 35,
+			"mp_cost": 16,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "A torrent of channeled ley energy.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 15
+				},
+				{
+					"character": "cael",
+					"level": 17
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "convergence_flare",
+			"name": "Convergence Flare",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "offensive",
+			"tier": 3,
+			"power": 65,
+			"mp_cost": 38,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "The full force of ley line energy focused on one point.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 34
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "ley_storm",
+			"name": "Ley Storm",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "offensive",
+			"tier": 2,
+			"power": 27,
+			"mp_cost": 25,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "AoE ley energy.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "fracture",
+			"name": "Fracture",
+			"tradition": "ley_line",
+			"element": "non_elemental",
+			"category": "offensive",
+			"tier": 2,
+			"power": 36,
+			"mp_cost": 18,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Raw concussive force. Cannot be resisted elementally.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "unraveling_bolt",
+			"name": "Unraveling Bolt",
+			"tradition": "ley_line",
+			"element": "non_elemental",
+			"category": "offensive",
+			"tier": 3,
+			"power": 68,
+			"mp_cost": 40,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Immense non-elemental damage.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 36
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "ley_ruin",
+			"name": "Ley Ruin",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "offensive",
+			"tier": 4,
+			"power": 100,
+			"mp_cost": 80,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "The most powerful ley spell. Massive ley damage to all enemies.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"event": "ancient_ruins_convergence_text"
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "leybalm",
+			"name": "Leybalm",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "healing",
+			"tier": 1,
+			"power": 12,
+			"mp_cost": 3,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Restores minor HP using ley energy.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 1
+				},
+				{
+					"character": "edren",
+					"level": 3
+				},
+				{
+					"character": "cael",
+					"level": 1
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "purge",
+			"name": "Purge",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "healing",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Removes all negative status effects from one ally (including Petrify and Slow) except Stop and Despair.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 16
+				},
+				{
+					"character": "torren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "leydraught",
+			"name": "Leydraught",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "healing",
+			"tier": 3,
+			"power": null,
+			"mp_cost": 0,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Costs 15% of caster's max HP. Restores 20% of target's max MP.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 24
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "second_dawn",
+			"name": "Second Dawn",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "healing",
+			"tier": 3,
+			"power": null,
+			"mp_cost": 40,
+			"target": "fainted_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Revives a fallen ally at 75% of max HP.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 28
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "befuddle",
+			"name": "Befuddle",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 7,
+			"target": "single_enemy",
+			"hit_rate": 65,
+			"duration": null,
+			"description": "65% chance to inflict Confusion. Target attacks random allies or enemies.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 8
+				},
+				{
+					"character": "sable",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "seal_tongue",
+			"name": "Seal Tongue",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "status",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_enemy",
+			"hit_rate": 70,
+			"duration": null,
+			"description": "70% chance to inflict Silence. Target cannot cast spells.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 6
+				},
+				{
+					"character": "edren",
+					"level": 12
+				},
+				{
+					"character": "lira",
+					"event": "act_iii_cross_train_maren",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				},
+				{
+					"character": "torren",
+					"event": "act_iii_cross_train_maren",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "grey_gaze",
+			"name": "Grey Gaze",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 18,
+			"target": "single_enemy",
+			"hit_rate": 50,
+			"duration": null,
+			"description": "50% chance to inflict Petrify. Target is removed from combat until cured.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "stillwatch",
+			"name": "Stillwatch",
+			"tradition": "ley_line",
+			"element": "frost",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 16,
+			"target": "single_enemy",
+			"hit_rate": 55,
+			"duration": null,
+			"description": "55% chance to inflict Stop. Target's ATB gauge is frozen for 3 seconds of active battle time.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "flashblind",
+			"name": "Flashblind",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "status",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 13,
+			"target": "all_enemies",
+			"hit_rate": 60,
+			"duration": null,
+			"description": "60% chance to inflict Blind on each target.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "wardglass",
+			"name": "Wardglass",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "buff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 5,
+			"description": "Increases magic defense by 40% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 4
+				},
+				{
+					"character": "edren",
+					"level": 8
+				},
+				{
+					"character": "cael",
+					"level": 6
+				},
+				{
+					"character": "lira",
+					"event": "ashmark_archives_schematic"
+				},
+				{
+					"character": "torren",
+					"event": "act_iii_cross_train_maren",
+					"cross_trained": true,
+					"mp_penalty": 1.5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "quickstep",
+			"name": "Quickstep",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "buff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 5,
+			"description": "Increases ATB fill speed by 50% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 12
+				},
+				{
+					"character": "cael",
+					"level": 14
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "leymirror",
+			"name": "Leymirror",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "buff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 18,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Grants Reflect status. The next 3 spells targeting this ally are bounced back at the caster. Does not reflect healing.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "rallying_cry",
+			"name": "Rallying Cry",
+			"tradition": "ley_line",
+			"element": "non_elemental",
+			"category": "buff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 8,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 5,
+			"description": "Increases physical attack by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "edren",
+					"level": 6
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "attunement",
+			"name": "Attunement",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "buff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "single_ally",
+			"hit_rate": null,
+			"duration": 5,
+			"description": "Increases magic attack by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 14
+				},
+				{
+					"character": "cael",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "leyward",
+			"name": "Leyward",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "buff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 16,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": 4,
+			"description": "Increases magic defense by 25% for 4 turns (entire party).",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 18
+				},
+				{
+					"character": "edren",
+					"level": 22
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "sunder",
+			"name": "Sunder",
+			"tradition": "ley_line",
+			"element": "non_elemental",
+			"category": "debuff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 7,
+			"target": "single_enemy",
+			"hit_rate": 80,
+			"duration": 5,
+			"description": "Reduces physical defense by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "edren",
+					"level": 10
+				},
+				{
+					"character": "maren",
+					"level": 12
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "fray",
+			"name": "Fray",
+			"tradition": "ley_line",
+			"element": "non_elemental",
+			"category": "debuff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 7,
+			"target": "single_enemy",
+			"hit_rate": 80,
+			"duration": 5,
+			"description": "Reduces magic defense by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "drag_tide",
+			"name": "Drag Tide",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "debuff",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 6,
+			"target": "single_enemy",
+			"hit_rate": 75,
+			"duration": 5,
+			"description": "Reduces ATB fill speed by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 8
+				},
+				{
+					"character": "torren",
+					"level": 10
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "dispersion",
+			"name": "Dispersion",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "debuff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Removes all positive status effects (buffs) from the target.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 18
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "dampening_field",
+			"name": "Dampening Field",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "debuff",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 14,
+			"target": "single_enemy",
+			"hit_rate": 75,
+			"duration": 5,
+			"description": "Reduces magic attack by 30% for 5 turns.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 16
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "mass_dispersion",
+			"name": "Mass Dispersion",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "debuff",
+			"tier": 3,
+			"power": null,
+			"mp_cost": 30,
+			"target": "all_enemies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Removes all positive status effects (buffs) from all enemies.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 30
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "waymark",
+			"name": "Waymark",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "utility",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 5,
+			"target": "self",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Instantly teleport the party to the entrance of the current dungeon. Cannot be used in boss rooms.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 8
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "linewalk",
+			"name": "Linewalk",
+			"tradition": "ley_line",
+			"element": "ley",
+			"category": "utility",
+			"tier": 2,
+			"power": null,
+			"mp_cost": 12,
+			"target": "self",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Instantly teleport to any previously visited town. Opens a selection menu.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 20
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "drift",
+			"name": "Drift",
+			"tradition": "ley_line",
+			"element": "storm",
+			"category": "utility",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 8,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Grants Float status to entire party. Immune to Earth-element spells and ground-based attacks. Lasts until end of battle.",
+			"learned_by": [
+				{
+					"character": "maren",
+					"level": 12
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		}
+	]
+}

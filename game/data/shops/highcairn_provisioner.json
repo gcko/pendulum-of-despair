@@ -1,0 +1,38 @@
+{
+	"shop": {
+		"shop_id": "highcairn_provisioner",
+		"town": "highcairn",
+		"type": "provisioner",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "potion",
+				"buy_price": 50,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "antidote",
+				"buy_price": 50,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "sleeping_bag",
+				"buy_price": 250,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "echo_drop",
+				"buy_price": 75,
+				"available_act": 1,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
+}

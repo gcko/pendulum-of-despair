@@ -1,0 +1,66 @@
+{
+	"shop": {
+		"shop_id": "oasis_b",
+		"town": "oasis_b",
+		"type": "mixed",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "x_ether",
+				"buy_price": 2000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pavilion",
+				"buy_price": 1200,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_salve",
+				"buy_price": 2500,
+				"available_act": 3,
+				"stock_limit": 2,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_bane_charm",
+				"buy_price": 3500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "piston_driver",
+				"buy_price": 8500,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_conduit",
+				"buy_price": 7000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "spiritguard_helm",
+				"buy_price": 5000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "forgeheart_plate",
+				"buy_price": 8000,
+				"available_act": 3,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
+}

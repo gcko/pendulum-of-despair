@@ -1,0 +1,66 @@
+{
+	"shop": {
+		"shop_id": "ironmark_scavenger",
+		"town": "ironmark",
+		"type": "scavenger",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "crystal_sword",
+				"buy_price": 4000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "dusk_reaver",
+				"buy_price": 5000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "arcane_conduit",
+				"buy_price": 3500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "arcanite_maul",
+				"buy_price": 5000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "crystal_helm",
+				"buy_price": 2500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "pallor_veil",
+				"buy_price": 3000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "crystal_vest",
+				"buy_price": 3500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "arcanite_plate",
+				"buy_price": 4500,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
+}

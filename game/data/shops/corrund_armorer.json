@@ -1,0 +1,80 @@
+{
+	"shop": {
+		"shop_id": "corrund_armorer",
+		"town": "corrund",
+		"type": "armorer",
+		"markup": 1.0,
+		"inventory": [
+			{
+				"item_id": "mythril_sword",
+				"buy_price": 1200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "mythril_staff",
+				"buy_price": 1000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "mythril_dagger",
+				"buy_price": 1000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "mythril_spear",
+				"buy_price": 1000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "compact_sledge",
+				"buy_price": 1200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "mythril_helm",
+				"buy_price": 800,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "scholars_cap",
+				"buy_price": 900,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "mythril_vest",
+				"buy_price": 1200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "steel_plate",
+				"buy_price": 1000,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			},
+			{
+				"item_id": "ley_vestment",
+				"buy_price": 1200,
+				"available_act": 2,
+				"stock_limit": null,
+				"restock_event": null
+			}
+		]
+	}
+}
