@@ -1,7 +1,7 @@
 {
   "dungeon_id": "ley_nexus_hollow",
   "name": "Ley Nexus Hollow",
-  "act": "post_game",
+  "act": "interlude",
   "floors": [],
   "bosses": [
     {"enemy_id": "ley_abomination", "name": "The Ley Leech", "floor": "nexus_chamber", "trigger": "cutscene", "is_mini_boss": false}

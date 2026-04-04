@@ -274,7 +274,7 @@ Standard dungeons use exactly 4 encounter groups per floor:
 
 ### DataManager Compatibility
 
-`DataManager.load_encounters(dungeon_id)` — not yet implemented. Will load `res://data/encounters/{dungeon_id}.json`. Returns a Dictionary.
+`DataManager.load_encounters(dungeon_id)` at line 88 of `data_manager.gd` returns a Dictionary. The method loads `res://data/encounters/{dungeon_id}.json`. Similarly, `load_crafting(crafting_type)` at line 112 loads `res://data/crafting/{crafting_type}.json`.
 
 ### Overworld Zone List
 

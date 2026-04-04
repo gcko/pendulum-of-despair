@@ -64,8 +64,8 @@
     }
   ],
   "bosses": [
-    {"enemy_id": "the_first_scholar", "name": "The First Scholar", "floor": "5", "trigger": "zone", "is_mini_boss": false},
-    {"enemy_id": "the_crystal_queen", "name": "The Crystal Queen", "floor": "10", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "the_first_scholar", "name": "The First Scholar", "floor": "4", "trigger": "zone", "is_mini_boss": false},
+    {"enemy_id": "the_crystal_queen", "name": "The Crystal Queen", "floor": "8", "trigger": "zone", "is_mini_boss": false},
     {"enemy_id": "the_rootking", "name": "The Rootking", "floor": "12", "trigger": "zone", "is_mini_boss": false},
     {"enemy_id": "the_iron_warden", "name": "The Iron Warden", "floor": "16", "trigger": "zone", "is_mini_boss": false},
     {"enemy_id": "pallor_echo", "name": "Cael's Echo", "floor": "20", "trigger": "interact", "is_mini_boss": false}
