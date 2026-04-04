@@ -89,7 +89,7 @@ SHOP LIST (23 files):
 ### Task 2: Transcribe spell tradition files
 
 **Files:**
-- Create: `game/data/spells/ley_line.json`, `forgewright.json`, `spirit.json`, `void.json`
+- Create: `game/data/spells/ley_line.json`, `forgewright.json`, `spirit.json`, `void.json`, `streetwise.json`
 - Read: `docs/story/magic.md` (full file — all spell tables)
 - Read: `docs/superpowers/specs/2026-04-04-shops-spells-abilities-design.md`
 

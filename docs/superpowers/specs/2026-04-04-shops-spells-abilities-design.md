@@ -8,7 +8,7 @@
 
 ## Problem
 
-Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 3 traditions + void), and character ability data (~44 abilities + 12 combos) need to be converted from design docs to runtime JSON. These are independent gaps combined for efficiency — different source docs, different output directories, no cross-dependencies.
+Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 5 tradition files: ley_line, forgewright, spirit, void, streetwise), and character ability data (~44 abilities + 12 combos) need to be converted from design docs to runtime JSON. These are independent gaps combined for efficiency — different source docs, different output directories, no cross-dependencies.
 
 ## Scope
 
