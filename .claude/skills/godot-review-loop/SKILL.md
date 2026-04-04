@@ -240,3 +240,9 @@ Generated with [Claude Code](https://claude.ai/code)
   `gdlint game/scripts/path/to/file.gd`
 - **Test if GUT/gdUnit4 available.** If a test framework is installed,
   run related tests: `godot --headless --path game/ -s addons/gut/gut_cmdln.gd`
+- **ALWAYS paginate gh API calls.** Use `--paginate` on ALL `gh api`
+  calls that return lists (comments, reviews, files). Default page size
+  is 30 — PRs with many Copilot comments WILL exceed this. Without
+  `--paginate`, page 2+ comments are silently missed. Pattern:
+  `gh api repos/OWNER/REPO/pulls/N/comments --paginate --jq '...'`
+  This has caused repeated failures on PRs #108, #109, #110.
