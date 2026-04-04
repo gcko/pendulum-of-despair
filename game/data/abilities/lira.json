@@ -143,7 +143,7 @@
 			"command": "forgewright",
 			"level_learned": null,
 			"cost": "0 AC",
-			"cost_type": "none",
+			"cost_type": "ac",
 			"cost_value": 0,
 			"cooldown": null,
 			"target": "single_enemy",

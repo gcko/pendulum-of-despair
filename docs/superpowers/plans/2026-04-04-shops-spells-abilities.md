@@ -92,7 +92,7 @@ SHOP LIST (23 files):
 - Read: `docs/story/magic.md` (full file — all spell tables)
 - Read: `docs/superpowers/specs/2026-04-04-shops-spells-abilities-design.md`
 
-**Agent instructions:** Read magic.md and create ALL 4 spell tradition files. Each spell has these fields:
+**Agent instructions:** Read magic.md and create ALL 5 spell files (4 traditions + streetwise). Each spell has these fields:
 
 ```json
 {
@@ -116,8 +116,8 @@ SHOP LIST (23 files):
 
 RULES:
 - Every spell MUST have ALL 14 fields. Use null for inapplicable.
-- `id` = snake_case of spell name, unique across ALL 4 files
-- `tradition` = ley_line, forgewright, spirit, or void
+- `id` = snake_case of spell name, unique across ALL 5 files
+- `tradition` = ley_line, forgewright, spirit, void, or streetwise
 - `element` = flame, frost, storm, earth, ley, spirit, void, non_elemental, or null
 - `category` = offensive, healing, status, buff, debuff, utility, special
 - `tier` = 1-4
@@ -139,7 +139,7 @@ FILE ASSIGNMENTS:
 - void.json: Enemy-only void spells + post-game party void spells (Hollow Mend, Pendulum's Echo)
 
 - [ ] **Step 1:** Read magic.md spell tables and spec
-- [ ] **Step 2:** Create all 4 spell JSON files
+- [ ] **Step 2:** Create all 5 spell JSON files
 - [ ] **Step 3:** Self-verify: all spell IDs unique across files, all 14 fields present, power/mp_cost match magic.md, learned_by character IDs valid
 
 ---
@@ -243,7 +243,7 @@ CHARACTER ABILITY COUNTS:
 
 - [ ] **Step 1:** Extract all character IDs from spell learned_by arrays and ability character fields
 - [ ] **Step 2:** Verify all are valid: edren, cael, maren, sable, lira, torren
-- [ ] **Step 3:** Verify all spell IDs unique across 4 spell files
+- [ ] **Step 3:** Verify all spell IDs unique across 5 spell files
 - [ ] **Step 4:** Verify all ability IDs unique across 7 ability files (6 characters + combos)
 
 ### Task 7: HARD GATE — Programmatic stale-count scan

@@ -18,7 +18,7 @@ Shop inventories (~23 shops across 10 towns), spell data (~89 spells across 3 tr
 - Cross-references gap 1.3 item/equipment IDs
 
 **Gap 1.5 — Spell & Ability Data:**
-- 4 spell JSON files (one per tradition)
+- 5 spell JSON files (one per tradition + streetwise)
 - 7 ability JSON files (one per character + combos)
 - Source: magic.md (spells), abilities.md (abilities)
 - **Descriptive data only** — ability entries capture name, cost, effect text, target. Runtime execution logic (AP tracking, WG accumulation, Spirit Favor, device mechanics) deferred to gap 3.3 (Battle Scene). Same pattern as boss AI scripts in gap 1.2.
@@ -129,8 +129,9 @@ Not modeled in static shop data. Handled at runtime by GameManager checking act/
 | `forgewright.json` | Forgewright (Carradan) | Flame spells (primary: Lira; also learned by Maren, Cael via tradition sharing) |
 | `spirit.json` | Spirit (Thornmere) | Earth, Spirit spells + healing (primary: Torren; also learned by Maren, Edren via cross-training) |
 | `void.json` | Void/Corrupted | Enemy-only + party post-game void spells |
+| `streetwise.json` | Streetwise (Sable) | Sable-exclusive non-tradition spells (Smokeveil, Glintmark) |
 
-Total: 4 spell files in `game/data/spells/`. ~89 spells total.
+Total: 5 spell files in `game/data/spells/`. ~89 spells total (39 ley_line + 6 forgewright + 32 spirit + 10 void + 2 streetwise).
 
 ### Schema
 
@@ -297,7 +298,7 @@ This matches the gap 1.2 pattern where boss AI scripts were captured as phase me
 
 1. **Shop item_ids must exist** in gap 1.3 item/equipment files (all 6)
 2. **Shop buy_prices must match** economy.md (with Caldera ×1.5 applied)
-3. **Spell IDs unique** across all 4 spell files
+3. **Spell IDs unique** across all 5 spell files
 4. **Ability IDs unique** across all 7 ability files (6 characters + combos)
 5. **Spell learned_by character IDs** must be valid: edren, cael, maren, sable, lira, torren
 6. **Ability character IDs** must match gap 1.1 character data
@@ -310,10 +311,10 @@ This matches the gap 1.2 pattern where boss AI scripts were captured as phase me
 | Category | Files | Entries |
 |----------|-------|---------|
 | Shops (1.4) | 23 | ~23 shops (variable items per shop) |
-| Spells (1.5) | 4 | ~89 spells |
+| Spells (1.5) | 5 | ~89 spells |
 | Abilities (1.5) | 6 | ~44 abilities |
 | Combos (1.5) | 1 | 12 combos |
-| **Total** | **34** | — |
+| **Total** | **35** | — |
 
 ## Verification Checklist
 

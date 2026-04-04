@@ -1,0 +1,48 @@
+{
+	"spells": [
+		{
+			"id": "smokeveil",
+			"name": "Smokeveil",
+			"tradition": "streetwise",
+			"element": "non_elemental",
+			"category": "utility",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 4,
+			"target": "all_allies",
+			"hit_rate": null,
+			"duration": null,
+			"description": "Guarantees escape from non-boss encounters. Immediately ends the battle with no rewards.",
+			"learned_by": [
+				{
+					"character": "sable",
+					"level": 1
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		},
+		{
+			"id": "glintmark",
+			"name": "Glintmark",
+			"tradition": "streetwise",
+			"element": "non_elemental",
+			"category": "utility",
+			"tier": 1,
+			"power": null,
+			"mp_cost": 3,
+			"target": "single_enemy",
+			"hit_rate": null,
+			"duration": 3,
+			"description": "Marks a target. Marked targets take 10% more damage from all sources for 3 turns. Also reveals hidden/steal-able items.",
+			"learned_by": [
+				{
+					"character": "sable",
+					"level": 5
+				}
+			],
+			"cross_trained": false,
+			"mp_penalty": null
+		}
+	]
+}

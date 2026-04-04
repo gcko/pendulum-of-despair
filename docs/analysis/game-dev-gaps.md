@@ -186,7 +186,7 @@ transformation that can be validated line-by-line against source docs.
 **What's Needed:**
 - [x] Per-shop JSON following Section 2.4 schema (23 files, one per shop)
 - [x] All 10 town inventories from economy.md (102 unique item_ids across all shops)
-- [x] Event-gated restock entries (available_act, restock_events)
+- [x] Event-gated restock entries (available_act, restock_event)
 - [x] Caldera 150% inflation pricing per economy.md (markup: 1.5 on Company shops)
 - [x] Verify every item_id references an existing item/equipment ID from Gap 1.3
 - [x] Verify prices match economy.md tables
@@ -207,7 +207,7 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P1 — blocks magic/ability menus, battle casting
-**Estimated Size:** M (11 JSON files: 4 spell + 6 ability + 1 combo)
+**Estimated Size:** M (12 JSON files: 5 spell + 6 ability + 1 combo)
 **Output:** `game/data/spells/{tradition}.json`, `game/data/abilities/{character}.json`, `game/data/abilities/combos.json`
 **Source Docs:** `magic.md` (spell lists per tradition), `abilities.md` (6 unique command systems)
 **Architecture Ref:** `technical-architecture.md` Section 2.7
@@ -225,7 +225,7 @@ transformation that can be validated line-by-line against source docs.
   - [x] Lira: Forgewright (10 abilities, includes Calibrate Pallor Zone Action)
   - [x] Torren: Spiritcall (8 abilities, includes Purify Pallor Zone Action)
 - [x] 12 dual-tech combos in combos.json
-- [x] Verify spell IDs unique across all 4 spell files (89 unique)
+- [x] Verify spell IDs unique across all 5 spell files (89 unique)
 - [x] Verify ability IDs unique across all 7 ability files (56 unique)
 - [x] Verify all learned_by character IDs are valid
 
