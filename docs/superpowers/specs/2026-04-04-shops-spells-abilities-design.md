@@ -268,14 +268,16 @@ Total: 7 ability files in `game/data/abilities/`. 44 abilities + 12 combos.
       "id": "shield_oath",
       "name": "Shield Oath",
       "characters": ["edren", "cael"],
-      "cost": "Edren: 3 AP, Cael: 10 MP",
-      "effect": "Synergized buffs: Edren DEF/MDEF +25%, Cael ATK/SPD +25%, both 4 turns.",
+      "cost": "Edren: 7 MP, Cael: 7 MP",
+      "effect": "Synergized buffs: Edren enters Ironwall on Cael, Cael activates Press Forward on Edren. Both 4 turns.",
       "availability": "Acts I-II only (lost after Cael's betrayal)",
       "description": "A coordinated defensive-offensive stance between commander and knight."
     }
   ]
 }
 ```
+
+**Combo cost convention:** abilities.md uses MP universally for all combo costs, regardless of each character's unique resource type (AP, AC, WG). This is the canonical representation — combos draw from a shared MP pool that all characters have in addition to their unique resource. The `cost` string matches abilities.md exactly. Runtime combo resolution (how AP/AC/WG interact with combo costs) is deferred to gap 3.3.
 
 ### Design Decision: Descriptive Data Only
 

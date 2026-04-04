@@ -141,7 +141,7 @@ FILE ASSIGNMENTS:
 
 - [ ] **Step 1:** Read magic.md spell tables and spec
 - [ ] **Step 2:** Create all 5 spell JSON files
-- [ ] **Step 3:** Self-verify: all spell IDs unique across files, all 14 fields present, power/mp_cost match magic.md, learned_by character IDs valid
+- [ ] **Step 3:** Self-verify: all spell IDs unique across files, all 15 fields present, power/mp_cost match magic.md, learned_by character IDs valid
 
 ---
 
@@ -199,7 +199,7 @@ CHARACTER ABILITY COUNTS:
 
 - [ ] **Step 1:** Read abilities.md and spec
 - [ ] **Step 2:** Create all 6 character ability JSON files
-- [ ] **Step 3:** Self-verify: all ability IDs unique, all 14 fields present, costs match abilities.md, row_restriction on correct Sable abilities
+- [ ] **Step 3:** Self-verify: all ability IDs unique, all 15 fields present, costs match abilities.md, row_restriction on correct Sable abilities
 
 ### Task 4: Transcribe combo file
 
