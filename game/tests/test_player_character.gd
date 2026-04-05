@@ -10,7 +10,7 @@ const PLAYER_SCENE: PackedScene = preload(
 )
 
 
-func _create_player() -> CharacterBody2D:
+func _create_player() -> Node:
 	var player: Node = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)
 	return player
