@@ -34,27 +34,6 @@ var _current_interactable: Node2D = null
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 
-## Initialize the character with data from DataManager.
-## Call after adding to the scene tree.
-func initialize(p_character_id: String) -> void:
-	character_id = p_character_id
-	character_data = DataManager.load_character(character_id)
-	if character_data.is_empty():
-		push_error("PlayerCharacter: Failed to load data for '%s'" % character_id)
-		return
-	_load_placeholder_sprite()
-
-
-## Get the character's base stats dictionary.
-func get_stats() -> Dictionary:
-	return character_data.get("base_stats", {})
-
-
-## Get the current facing direction as a unit vector.
-func get_facing_direction() -> Vector2:
-	return facing_direction
-
-
 func _physics_process(_delta: float) -> void:
 	var direction: Vector2 = _get_input_direction()
 
@@ -75,6 +54,27 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and _current_interactable != null:
 		interaction_requested.emit(_current_interactable)
 		get_viewport().set_input_as_handled()
+
+
+## Initialize the character with data from DataManager.
+## Call after adding to the scene tree.
+func initialize(p_character_id: String) -> void:
+	character_id = p_character_id
+	character_data = DataManager.load_character(character_id)
+	if character_data.is_empty():
+		push_error("PlayerCharacter: Failed to load data for '%s'" % character_id)
+		return
+	_load_placeholder_sprite()
+
+
+## Get the character's base stats dictionary.
+func get_stats() -> Dictionary:
+	return character_data.get("base_stats", {})
+
+
+## Get the current facing direction as a unit vector.
+func get_facing_direction() -> Vector2:
+	return facing_direction
 
 
 ## Read 4-directional input. No diagonal — vertical takes priority.
