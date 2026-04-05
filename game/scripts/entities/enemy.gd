@@ -183,6 +183,8 @@ func remove_status(status_name: String) -> void:
 
 
 ## Tick all status durations down by 1. Removes expired statuses.
+## Call at END of turn so duration=1 means "lasts 1 full turn."
+## Calling at turn start would make duration=1 expire immediately (0 turns).
 func tick_statuses() -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
 		active_statuses[i]["remaining_turns"] -= 1
