@@ -10,14 +10,14 @@ const PLAYER_SCENE: PackedScene = preload(
 )
 
 
-func _create_player() -> Node:
-	var player: Node = PLAYER_SCENE.instantiate()
+func _create_player():
+	var player = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)
 	return player
 
 
 func test_initialize_loads_character_data() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	player.initialize("edren")
 	assert_eq(player.character_id, "edren", "character_id should be set")
 	assert_false(
@@ -27,13 +27,13 @@ func test_initialize_loads_character_data() -> void:
 
 
 func test_initialize_sets_character_id() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	player.initialize("maren")
 	assert_eq(player.character_id, "maren", "character_id should be maren")
 
 
 func test_get_stats_returns_base_stats() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	player.initialize("edren")
 	var stats: Dictionary = player.get_stats()
 	assert_has(stats, "hp", "stats should have hp")
@@ -44,13 +44,13 @@ func test_get_stats_returns_base_stats() -> void:
 
 
 func test_get_stats_empty_before_init() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	var stats: Dictionary = player.get_stats()
 	assert_true(stats.is_empty(), "stats should be empty before init")
 
 
 func test_default_facing_direction() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	assert_eq(
 		player.facing_direction, Vector2.DOWN,
 		"Default facing should be DOWN"
@@ -58,7 +58,7 @@ func test_default_facing_direction() -> void:
 
 
 func test_pixel_snapping() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	player.position = Vector2(10.5, 20.7)
 	# Simulate one physics frame
 	player._physics_process(0.016)
@@ -69,6 +69,6 @@ func test_pixel_snapping() -> void:
 
 
 func test_get_facing_direction_returns_vector() -> void:
-	var player: Node = _create_player()
+	var player = _create_player()
 	var dir: Vector2 = player.get_facing_direction()
 	assert_eq(dir, Vector2.DOWN, "Should return facing direction")

@@ -91,6 +91,8 @@ func _get_input_direction() -> Vector2:
 
 
 func _play_walk_animation(direction: Vector2) -> void:
+	if _anim_player == null:
+		return
 	var anim_name: String = "idle"
 	if direction == Vector2.UP:
 		anim_name = "walk_north"
@@ -106,6 +108,8 @@ func _play_walk_animation(direction: Vector2) -> void:
 
 
 func _play_idle_animation() -> void:
+	if _anim_player == null:
+		return
 	if _anim_player.current_animation != "idle":
 		_anim_player.play("idle")
 

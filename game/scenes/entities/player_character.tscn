@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://placeholder_player"]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/entities/player_character.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/characters/placeholder_edren.png" id="2_sprite"]
