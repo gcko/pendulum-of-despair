@@ -467,20 +467,29 @@ GDScript loads data from Tier 1 JSON via DataManager.
 
 ### 2.4 Interactable Prefabs (Chest, Trigger, SavePoint)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-05
 **Priority:** P1 — blocks dungeon/town furnishing
-**Estimated Size:** M (3 .tscn + 3 .gd)
+**Estimated Size:** M (3 .tscn + 3 .gd + 3 sprites + 1 test)
 **Output:** `game/scenes/entities/{treasure_chest,trigger_zone,save_point}.tscn`, matching .gd scripts
-**Source Docs:** `save-system.md` (save point 3-option menu), `events.md` (flag-based triggers), `items.md` (chest contents), `overworld.md` (save point specification), `technical-architecture.md` Section 4.2
+**Source Docs:** `save-system.md` (save point), `events.md` (flag triggers), `items.md` (chest contents), `overworld.md` (save points), `technical-architecture.md` Section 4.2
 **Depends On:** 1.3 (Items — chest contents reference item IDs)
 
 **What's Needed:**
-- [ ] TreasureChest: Area2D, closed/open sprite frames, chest_id for save tracking, flag check, give item on interact
-- [ ] TriggerZone: Area2D, event_flag condition, body_entered signal, flag setting on trigger
-- [ ] SavePoint: Area2D, ley crystal 2-frame shimmer animation, proximity SFX (save_point_chime), push SAVE_LOAD overlay on interact
-- [ ] All three: snap to pixel, emit signals (call down, signal up)
-- [ ] Verify chest contents against items.md and economy.md treasure chest formula
-- [ ] Verify trigger flags against events.md flag list
+- [x] TreasureChest: Area2D, closed/open sprites, chest_id tracking, EventFlags persistence, chest_opened signal
+- [x] TriggerZone: Area2D, condition flag check, one-time body_entered fire, triggered signal
+- [x] SavePoint: Area2D, shimmer animation, save_point_activated + save_point_entered signals
+- [x] All three: collision layer 3 (bitmask 4), signal-only responses, process_mode INHERIT
+- [x] ~~Verify chest contents~~ → deferred (chest contents are map-placement data, not prefab concern)
+- [x] ~~Verify trigger flags~~ → deferred (flag names validated at map-placement time in gap 3.2)
+
+**Notes:**
+- Signal-only design: prefabs emit events, exploration scene handles overlays/inventory/audio
+- TreasureChest: interact() checks/sets EventFlags, swaps sprite, emits chest_opened(id, item_id)
+- TriggerZone: auto-fires on body_entered (not explicit interaction), one-time with EventFlags
+- SavePoint: interact() emits save_point_activated, body_entered emits save_point_entered (proximity)
+- 10 GUT tests in test_interactables.gd, all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-05-interactable-prefabs-design.md`
 
 **Blocking:** Dungeon maps (need chests, triggers, save points), story progression (trigger zones drive events)
 

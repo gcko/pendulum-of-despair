@@ -1,0 +1,36 @@
+extends Area2D
+## Save point (ley crystal) that emits signals for proximity and interaction.
+##
+## Does not directly push overlays or play audio — exploration scene
+## handles those via signal listeners ("call down, signal up").
+##
+## Usage: instance save_point.tscn, call initialize("ember_vein_f1").
+
+## Emitted when the player interacts with the save point.
+signal save_point_activated(save_point_id: String)
+
+## Emitted when the player enters proximity (for SFX by exploration scene).
+signal save_point_entered(save_point_id: String)
+
+## Unique identifier for this save point location.
+var save_point_id: String = ""
+
+## Child node references.
+@onready var _sprite: Sprite2D = $Sprite2D
+@onready var _anim_player: AnimationPlayer = $AnimationPlayer
+
+
+## Initialize the save point with a location ID. Starts shimmer animation.
+func initialize(p_save_point_id: String) -> void:
+	save_point_id = p_save_point_id
+	if _anim_player != null and _anim_player.has_animation("shimmer"):
+		_anim_player.play("shimmer")
+
+
+## Called by exploration scene when player interacts.
+func interact() -> void:
+	save_point_activated.emit(save_point_id)
+
+
+func _on_body_entered(_body: Node2D) -> void:
+	save_point_entered.emit(save_point_id)
