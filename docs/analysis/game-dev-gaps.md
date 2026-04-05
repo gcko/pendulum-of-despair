@@ -375,23 +375,33 @@ GDScript loads data from Tier 1 JSON via DataManager.
 
 ### 2.1 PlayerCharacter Prefab
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-05
 **Priority:** P0 — blocks exploration, battle display
-**Estimated Size:** M (1 .tscn + 1 .gd + placeholder sprites)
+**Estimated Size:** M (1 .tscn + 1 .gd + 6 placeholder sprites + 1 test)
 **Output:** `game/scenes/entities/player_character.tscn`, `game/scripts/entities/player_character.gd`
-**Source Docs:** `visual-style.md` (16x24 character sprites), `characters.md` (movement), `technical-architecture.md` Section 4.2
+**Source Docs:** `visual-style.md` (16x24 character sprites), `characters.md` (movement), `overworld.md` (4-dir movement), `technical-architecture.md` Section 4.2
 **Depends On:** 1.1 (Character Data — loads stats from JSON)
 
 **What's Needed:**
-- [ ] CharacterBody2D scene tree per tech-arch Section 4.2
-- [ ] Sprite2D with placeholder 16x24 sprite (colored rectangle per character)
-- [ ] CollisionShape2D for movement collision
-- [ ] AnimationPlayer with walk cycle (4-direction, 2-frame minimum)
-- [ ] GDScript: load character data from DataManager
-- [ ] GDScript: handle 4-direction movement input
-- [ ] GDScript: emit interaction signal (for NPC/chest/save point proximity)
-- [ ] Snap to pixel grid (no sub-pixel positions)
-- [ ] Process mode handling (pause when overlay active)
+- [x] CharacterBody2D scene tree per tech-arch Section 4.2
+- [x] Sprite2D with placeholder 16x24 sprite (colored rectangle per character)
+- [x] CollisionShape2D for movement collision (12x12 RectangleShape2D)
+- [x] AnimationPlayer with stub animations (idle, walk_north/south/east/west)
+- [x] GDScript: load character data from DataManager
+- [x] GDScript: handle 4-direction movement input (no diagonal, pixel snapped)
+- [x] GDScript: emit interaction signal via Area2D proximity detection
+- [x] Snap to pixel grid (position.round() every frame)
+- [x] Process mode INHERIT (pauses when GameManager sets tree paused)
+
+**Notes:**
+- 6 placeholder sprites: 16x24 colored rectangles (edren=blue, cael=red, maren=purple, sable=grey, lira=orange, torren=green)
+- InteractionArea (Area2D) detects collision layer 3 (interactables)
+- Movement: 80 px/sec, vertical priority when both axes pressed
+- AnimationPlayer has stub animations — real 4-frame walk cycles added when art assets are created
+- All code passes gdlint, GUT tests in test_player_character.gd
+- First .tscn scene and GDScript entity in the project
+- Design spec: `docs/superpowers/specs/2026-04-05-player-character-prefab-design.md`
 
 **Blocking:** Exploration scene (needs player entity), battle scene (needs party display)
 
