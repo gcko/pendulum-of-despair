@@ -247,6 +247,21 @@ Reference for all review agents. Check every applicable item.
 - [ ] Methods that accept indices validate bounds before access
 - [ ] Enum parameters validated against known values (not just any string)
 - [ ] Resource paths validated with `ResourceLoader.exists()` before `load()`
+- [ ] **Every public method guards against uninitialized state** (check if initialize() was called — ID fields empty, data dicts empty)
+- [ ] **Every initialize() validates its inputs** (empty strings, null values) with push_error + return
+- [ ] **Every interact/action method returns early if entity not ready** (not just checking "is_opened" but also "was I configured?")
+
+### Test Branch Coverage
+- [ ] **Every `if` branch in the code has a corresponding test** (not just happy path)
+- [ ] **Every signal emission path has a signal-watching test**
+- [ ] **Every early-return guard has a test proving it blocks** (uninitialized, already-fired, immune)
+- [ ] Tests use constructed data to exercise specific branches (not relying on JSON that may lack the needed values)
+
+### Mirror Staleness Prevention (MANDATORY after every code change)
+- [ ] After changing ANY value: `grep -r "old_value" docs/` and fix every hit
+- [ ] After adding/removing tests: remove hardcoded test counts from docs (use descriptive text)
+- [ ] After changing method behavior: update spec's method description
+- [ ] After changing scene config: update spec's collision/config tables
 
 ### Default State Safety
 - [ ] Boolean state vars (`is_alive`, `is_ready`, etc.) default to the SAFE state (false/inactive), not the active state
