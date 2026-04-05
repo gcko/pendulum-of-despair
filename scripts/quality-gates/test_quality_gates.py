@@ -8,7 +8,6 @@ import json
 import os
 import tempfile
 import unittest
-from pathlib import Path
 from unittest.mock import patch
 
 # Import the modules under test
@@ -67,6 +66,22 @@ class TestCheckIdUniqueness(unittest.TestCase):
         )
         self.assertEqual(errors, [])
 
+    def test_detects_cross_file_duplicates(self):
+        """Verify shared existing_ids catches duplicates across files."""
+        f1 = self._write_json("a.json", {
+            "items": [{"id": "potion"}, {"id": "ether"}]
+        })
+        f2 = self._write_json("b.json", {
+            "items": [{"id": "potion"}]  # duplicate of f1
+        })
+        shared_ids: dict[str, str] = {}
+        errors = check_id_uniqueness.check_ids(f1, ["items"], "item", shared_ids)
+        self.assertEqual(errors, [])
+        errors = check_id_uniqueness.check_ids(f2, ["items"], "item", shared_ids)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("DUPLICATE", errors[0])
+        self.assertIn("potion", errors[0])
+
     def test_dialogue_ids_no_duplicates(self):
         """Verify check_dialogue_ids works with actual project data."""
         # This test runs against real data if available
@@ -104,18 +119,18 @@ class TestCheckStaleCounts(unittest.TestCase):
 
     def test_detects_stale_count(self):
         """Verify detection of mismatched counts."""
-        # Simulate a count mismatch
         counts = {"encounter_files": 99}  # wrong count
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".md", delete=False
         ) as f:
             f.write("There are 27 encounter files in the project.\n")
             f.flush()
-            # Patch the gap file path
-            errors = check_stale_counts.check_gap_tracker(counts)
-            # This won't detect because it reads the real file
-            # Just verify the function runs without error
-            self.assertIsInstance(errors, list)
+            errors = check_stale_counts.check_gap_tracker(counts, f.name)
+        os.unlink(f.name)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("STALE COUNT", errors[0])
+        self.assertIn("27", errors[0])
+        self.assertIn("99", errors[0])
 
 
 class TestCheckSceneRefs(unittest.TestCase):

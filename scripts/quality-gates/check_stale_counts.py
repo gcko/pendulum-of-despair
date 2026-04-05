@@ -43,10 +43,16 @@ def count_actual_data() -> dict[str, int]:
     return counts
 
 
-def check_gap_tracker(counts: dict[str, int]) -> list[str]:
-    """Check gap tracker for stale count claims."""
+def check_gap_tracker(
+    counts: dict[str, int],
+    gap_file: str = "docs/analysis/game-dev-gaps.md",
+) -> list[str]:
+    """Check gap tracker for stale count claims.
+
+    Args:
+        gap_file: Path to the gap tracker markdown file.
+    """
     errors: list[str] = []
-    gap_file: str = "docs/analysis/game-dev-gaps.md"
 
     try:
         with open(gap_file) as f:
@@ -54,21 +60,25 @@ def check_gap_tracker(counts: dict[str, int]) -> list[str]:
     except FileNotFoundError:
         return []
 
-    checks: list[tuple[str, int, int]] = [
-        (r"27 encounter file", 27, counts.get("encounter_files", 0)),
-        (r"23 shop file", 23, counts.get("shop_files", 0)),
-        (r"13 device", 13, counts.get("devices", 0)),
-        (r"7 synerg", 7, counts.get("synergies", 0)),
-        (r"9 forging", 9, counts.get("forging_recipes", 0)),
-        (r"7 infusion", 7, counts.get("infusions", 0)),
+    # Each tuple: (regex with capture group for claimed count, count key, label)
+    checks: list[tuple[str, str, str]] = [
+        (r"(\d+)\s+encounter file", "encounter_files", "encounter files"),
+        (r"(\d+)\s+shop file", "shop_files", "shop files"),
+        (r"(\d+)\s+device", "devices", "devices"),
+        (r"(\d+)\s+synerg", "synergies", "synergies"),
+        (r"(\d+)\s+forging", "forging_recipes", "forging recipes"),
+        (r"(\d+)\s+(?:elemental\s+)?infusion", "infusions", "infusions"),
     ]
 
-    for pattern, expected, actual in checks:
-        if re.search(pattern, content, re.IGNORECASE):
-            if expected != actual:
+    for pattern, count_key, label in checks:
+        m = re.search(pattern, content, re.IGNORECASE)
+        if m:
+            claimed = int(m.group(1))
+            actual = counts.get(count_key, 0)
+            if claimed != actual:
                 errors.append(
                     f"STALE COUNT in {gap_file}: "
-                    f"claims {expected}, actual {actual} ({pattern})"
+                    f"claims {claimed} {label}, actual {actual}"
                 )
 
     return errors

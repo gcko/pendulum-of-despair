@@ -10,13 +10,22 @@ Exit code 0 = pass, 1 = duplicates found.
 import json
 import glob
 import sys
-from pathlib import Path
 
 
-def check_ids(pattern: str, key_path: list[str], namespace: str) -> list[str]:
-    """Check ID uniqueness across files matching pattern."""
+def check_ids(
+    pattern: str,
+    key_path: list[str],
+    namespace: str,
+    existing_ids: dict[str, str] | None = None,
+) -> list[str]:
+    """Check ID uniqueness across files matching pattern.
+
+    Args:
+        existing_ids: Shared dict of already-seen IDs to their source file.
+            Enables cross-file duplicate detection across multiple calls.
+    """
     errors: list[str] = []
-    all_ids: dict[str, str] = {}
+    all_ids: dict[str, str] = existing_ids if existing_ids is not None else {}
 
     for f in sorted(glob.glob(pattern)):
         try:
@@ -62,6 +71,8 @@ def check_enemy_ids() -> list[str]:
         except (json.JSONDecodeError, FileNotFoundError):
             continue
 
+        if not data:
+            continue
         key = list(data.keys())[0]
         for entry in data.get(key, []):
             eid: str = entry.get("id", "")
@@ -108,34 +119,38 @@ def main() -> int:
     """Run all ID uniqueness checks. Returns 0 on pass, 1 on failure."""
     all_errors: list[str] = []
 
-    # Item namespaces
+    # Item namespaces — shared dict catches cross-file duplicates
+    item_ids: dict[str, str] = {}
     all_errors.extend(check_ids(
-        "game/data/items/consumables.json", ["items"], "item"
+        "game/data/items/consumables.json", ["items"], "item", item_ids
     ))
     all_errors.extend(check_ids(
-        "game/data/items/materials.json", ["items"], "item"
+        "game/data/items/materials.json", ["items"], "item", item_ids
     ))
     all_errors.extend(check_ids(
-        "game/data/items/key_items.json", ["items"], "item"
-    ))
-
-    # Equipment namespaces
-    all_errors.extend(check_ids(
-        "game/data/equipment/weapons.json", ["weapons"], "equipment"
-    ))
-    all_errors.extend(check_ids(
-        "game/data/equipment/armor.json", ["armor"], "equipment"
-    ))
-    all_errors.extend(check_ids(
-        "game/data/equipment/accessories.json", ["accessories"], "equipment"
+        "game/data/items/key_items.json", ["items"], "item", item_ids
     ))
 
-    # Crafting
+    # Equipment namespaces — shared dict catches cross-file duplicates
+    equip_ids: dict[str, str] = {}
     all_errors.extend(check_ids(
-        "game/data/crafting/devices.json", ["devices"], "crafting"
+        "game/data/equipment/weapons.json", ["weapons"], "equipment", equip_ids
     ))
     all_errors.extend(check_ids(
-        "game/data/crafting/synergies.json", ["synergies"], "crafting"
+        "game/data/equipment/armor.json", ["armor"], "equipment", equip_ids
+    ))
+    all_errors.extend(check_ids(
+        "game/data/equipment/accessories.json", ["accessories"], "equipment",
+        equip_ids
+    ))
+
+    # Crafting — shared dict catches cross-file duplicates
+    craft_ids: dict[str, str] = {}
+    all_errors.extend(check_ids(
+        "game/data/crafting/devices.json", ["devices"], "crafting", craft_ids
+    ))
+    all_errors.extend(check_ids(
+        "game/data/crafting/synergies.json", ["synergies"], "crafting", craft_ids
     ))
 
     # Enemies and dialogue
