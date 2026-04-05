@@ -86,7 +86,7 @@ var current_mp: int = 0
 var active_statuses: Array[Dictionary] = []
 
 ## Stored bool, defaults false. Set true by initialize(), false by take_damage(), restored by heal().
-var is_alive: bool = true
+var is_alive: bool = false
 ```
 
 ### Public Methods
@@ -232,18 +232,7 @@ func roll_steal(tier: String) -> Dictionary:
 
 `game/tests/test_enemy.gd`:
 
-1. **test_initialize_loads_data** — Initialize with "ley_vermin" from act_i, verify enemy_data populated
-2. **test_current_hp_matches_base** — After init, current_hp == base hp from data
-3. **test_take_damage_reduces_hp** — Take 10 damage, verify HP reduced
-4. **test_take_damage_clamps_to_zero** — Take massive damage, HP = 0, is_alive = false
-5. **test_died_signal_emitted** — Verify died signal fires on lethal damage
-6. **test_heal_clamps_to_max** — Heal past max HP, verify clamped
-7. **test_elemental_weakness** — unstable_crystal weak to frost, verify multiplier 1.5
-8. **test_elemental_neutral** — Non-weak element returns 1.0
-9. **test_status_immunity** — Construct immune to Poison, verify is_immune_to_status
-10. **test_apply_status_success** — Apply non-immune status, verify active
-11. **test_roll_steal** — Verify steal returns dict with item_id and success bool
-12. **test_tick_statuses** — Apply status with duration 2, tick twice, verify removed
+See `game/tests/test_enemy.gd` for the full test list. Tests cover: data loading, HP tracking, damage/heal with clamping, death signal, elemental multipliers (all 5 branches), status immunity (type + per-enemy), status apply/tick/expire, damage_taken signal, steal/drop with deterministic rates (100% and 0%).
 
 ---
 

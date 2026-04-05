@@ -446,8 +446,8 @@ GDScript loads data from Tier 1 JSON via DataManager.
 - [x] AnimationPlayer with idle, hit_reaction, death stub animations
 - [x] GDScript: load enemy data from DataManager by enemy ID
 - [x] GDScript: runtime HP/MP/status tracking
-- [ ] GDScript: weighted-random AI for regular enemies → deferred to gap 3.3 (Battle Scene)
-- [ ] GDScript: scripted AI for bosses → deferred to gap 3.3 (Battle Scene)
+- [x] ~~GDScript: weighted-random AI~~ → deferred to gap 3.3 (Battle Scene)
+- [x] ~~GDScript: scripted AI for bosses~~ → deferred to gap 3.3 (Battle Scene)
 - [x] GDScript: elemental profile checks (weakness/resistance/immune/absorb with correct multipliers)
 - [x] GDScript: status effect vulnerability checks (per-enemy + type default immunities)
 - [x] GDScript: drop/steal resolution (common, rare rates)

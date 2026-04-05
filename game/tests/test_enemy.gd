@@ -203,3 +203,11 @@ func test_roll_drop_guaranteed_success() -> void:
 	var result: Dictionary = enemy.roll_drop()
 	assert_true(result.get("success"), "100% rate should always succeed")
 	assert_eq(result.get("item_id"), "gold_coin", "Should return item_id")
+
+
+func test_roll_drop_guaranteed_fail() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {"drop": {"item_id": "gold_coin", "rate": 0}}
+	var result: Dictionary = enemy.roll_drop()
+	assert_false(result.get("success"), "0% rate should always fail")
+	assert_eq(result.get("item_id"), "", "Failed drop should return empty")
