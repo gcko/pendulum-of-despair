@@ -20,7 +20,7 @@ const TOTAL_CHANNELS: int = 24
 const MAX_SAME_SFX: int = 2
 
 ## Crossfade durations in seconds (per audio.md Section 3.3).
-const CROSSFADE_BIOME: float = 3.0       # 1.5s out + 1.5s in
+const CROSSFADE_BIOME: float = 3.0  # 1.5s out + 1.5s in
 const CROSSFADE_TOWN: float = 1.0
 const CROSSFADE_BATTLE_EXIT: float = 1.0
 const CROSSFADE_PALLOR_MUSIC: float = 5.0

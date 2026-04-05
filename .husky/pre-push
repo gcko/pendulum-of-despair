@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
-# Delegate to bd for issue tracking before push
+set -euo pipefail
+
+# --- Beads (bd) pre-push hook ---
 if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
     BD_GIT_HOOK=1 bd hooks run pre-push "$@" || true
 fi
+
+GATE_DIR="scripts/quality-gates"
+
+# === QUALITY GATE D: Cross-file ID uniqueness scan ===
+echo "=== Pre-push: Cross-file ID uniqueness ==="
+python3 "$GATE_DIR/check_id_uniqueness.py"
+
+# === QUALITY GATE E: Stale-count scan ===
+echo "=== Pre-push: Stale-count scan ==="
+python3 "$GATE_DIR/check_stale_counts.py"
+
+# === QUALITY GATE F: Scene file reference validation ===
+echo "=== Pre-push: Scene reference validation ==="
+python3 "$GATE_DIR/check_scene_refs.py"
+
+echo "=== All pre-push quality gates passed ==="

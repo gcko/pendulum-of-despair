@@ -8,14 +8,11 @@ extends CharacterBody2D
 ##
 ## Usage: instance player_character.tscn, call initialize("edren").
 
-
 ## Emitted when the player presses interact and an interactable is nearby.
 signal interaction_requested(interactable: Node2D)
 
-
 ## Movement speed in pixels per second.
 const MOVE_SPEED: float = 80.0
-
 
 ## Character ID loaded from DataManager.
 var character_id: String = ""
@@ -115,13 +112,9 @@ func _play_idle_animation() -> void:
 
 
 func _load_placeholder_sprite() -> void:
-	var sprite_path: String = (
-		"res://assets/sprites/characters/placeholder_%s.png" % character_id
-	)
+	var sprite_path: String = "res://assets/sprites/characters/placeholder_%s.png" % character_id
 	if not ResourceLoader.exists(sprite_path):
-		push_error(
-			"PlayerCharacter: Placeholder sprite not found: %s" % sprite_path
-		)
+		push_error("PlayerCharacter: Placeholder sprite not found: %s" % sprite_path)
 		return
 	var texture: Texture2D = load(sprite_path)
 	# @onready vars may not be resolved if initialize() is called before _ready.

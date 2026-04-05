@@ -34,9 +34,12 @@ func load_json(path: String) -> Variant:
 	file.close()
 
 	if result != OK:
-		push_error("DataManager: Malformed JSON at %s line %d: %s" % [
-			path, json.get_error_line(), json.get_error_message()
-		])
+		push_error(
+			(
+				"DataManager: Malformed JSON at %s line %d: %s"
+				% [path, json.get_error_line(), json.get_error_message()]
+			)
+		)
 		get_tree().quit(1)
 		return null
 
