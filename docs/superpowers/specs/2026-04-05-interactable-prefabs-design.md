@@ -8,7 +8,7 @@
 
 ## Problem
 
-The exploration scene needs three interactable entity types for dungeon/town content: treasure chests (item rewards), trigger zones (story/boss gates), and save points (rest/save access). All three follow the same pattern: Area2D on collision layer 3, detected by PlayerCharacter's InteractionArea.
+The exploration scene needs three interactable entity types for dungeon/town content: treasure chests (item rewards), trigger zones (story/boss gates), and save points (rest/save access). TreasureChest and SavePoint are detected by PlayerCharacter's InteractionArea; TriggerZone auto-fires on body_entered without requiring interaction.
 
 ## Scope
 
@@ -30,11 +30,17 @@ The exploration scene needs three interactable entity types for dungeon/town con
 All three interactables:
 - Root node: `Area2D`
 - `collision_layer = 4` (layer 3 in Godot's 1-indexed UI, bitmask value 4)
-- `collision_mask = 0` (don't detect anything themselves)
-- `monitorable = true` (so PlayerCharacter's InteractionArea can detect them)
 - `process_mode = INHERIT` (pause when overlays active)
 - `initialize()` method called after instantiation
 - Emit signals — don't directly trigger overlays or modify inventory
+
+### Per-Prefab Collision Config
+
+| Prefab | collision_mask | monitorable | monitoring | Notes |
+|--------|---------------|-------------|------------|-------|
+| TreasureChest | `0` | `true` | `false` | Detected by InteractionArea |
+| TriggerZone | `2` (player body layer) | `false` | `true` | Auto-fires on body_entered |
+| SavePoint | `2` (player body layer) | `true` | `true` | Detected by InteractionArea + emits proximity signal on body_entered |
 
 ---
 
@@ -197,7 +203,8 @@ Exploration scene listens to this for proximity SFX. The save point itself doesn
 ### Animation
 
 - `shimmer`: 2-frame loop, 1.0s total (0.5s per frame)
-- Plays automatically via AnimationPlayer autoplay
+- Started by `initialize()` when called (not autoplay)
+- Shimmer animation is a stub — real tracks added when art assets exist.
 
 ---
 
@@ -219,13 +226,13 @@ Location: `game/assets/sprites/interactables/`
 
 **TreasureChest:**
 1. test_chest_initialize — verify chest_id and item_id set
-2. test_chest_opens_on_interact — verify is_opened, signal emitted
+2. test_chest_interact_opens — verify is_opened, signal emitted
 3. test_chest_already_opened_blocks — interact on opened chest does nothing
-4. test_chest_opened_signal_has_ids — verify signal carries chest_id and item_id
+4. test_chest_signal_carries_ids — verify signal carries chest_id and item_id
 
 **TriggerZone:**
 5. test_trigger_initialize — verify trigger_id and condition_flag set
-6. test_trigger_fires_on_body_enter — simulate body enter, verify signal
+6. test_trigger_fires_signal — simulate body enter, verify signal
 7. test_trigger_one_time_fire — second entry doesn't re-fire
 8. test_trigger_condition_blocks — unmet condition prevents firing
 

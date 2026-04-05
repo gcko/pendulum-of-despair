@@ -16,7 +16,6 @@ signal save_point_entered(save_point_id: String)
 var save_point_id: String = ""
 
 ## Child node references.
-@onready var _sprite: Sprite2D = $Sprite2D
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 

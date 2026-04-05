@@ -81,6 +81,17 @@ func test_trigger_one_time_fire() -> void:
 	assert_signal_not_emitted(trigger, "triggered", "second entry should not re-fire")
 
 
+func test_trigger_condition_blocks() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	trigger.initialize("cond_trigger", "key_needed")
+	watch_signals(trigger)
+	# Do NOT set the flag — condition should block firing
+	trigger._on_body_entered(Node2D.new())
+	assert_signal_not_emitted(trigger, "triggered", "unmet condition should block firing")
+	assert_false(trigger.has_fired, "should not be marked as fired")
+
+
 # --- SavePoint tests ---
 
 
