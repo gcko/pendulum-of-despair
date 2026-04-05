@@ -5,9 +5,8 @@
       "id": "battle_escape_001",
       "speaker": "",
       "lines": [
-        "- *(Success:)* \"Escaped!\"",
-        "- *(Failure:)* \"Can't escape!\"",
-        "- *(Boss:)* Flee option greyed out. *(Not selectable.)*"
+        "Escaped!",
+        "Can't escape!"
       ],
       "condition": null,
       "animations": null,

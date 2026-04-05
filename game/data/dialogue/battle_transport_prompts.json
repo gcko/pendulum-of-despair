@@ -5,9 +5,8 @@
       "id": "battle_transport_prompts_001",
       "speaker": "",
       "lines": [
-        "- *(Rail:)* \"[Destination] — [Cost]g\"",
-        "- *(Ferry:)* \"Bellhaven — Ashport: 200g\"",
-        "- *(Unaffordable destination:)* Fare in grey text."
+        "[Destination] — [Cost]g",
+        "Bellhaven — Ashport: 200g"
       ],
       "condition": null,
       "animations": null,

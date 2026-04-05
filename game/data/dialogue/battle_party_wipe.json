@@ -5,9 +5,7 @@
       "id": "battle_party_wipe_001",
       "speaker": "",
       "lines": [
-        "- *(All party members KO:)* \"The world grows quiet.\"",
-        "- *(No prompt, no menu.)* Fade to black (2s) → instant reload at last",
-        "save point. XP and gold preserved across wipe."
+        "The world grows quiet."
       ],
       "condition": null,
       "animations": null,

@@ -995,7 +995,7 @@ def load_valid_flags():
     flags = set()
     if EVENTS_FILE.exists():
         text = EVENTS_FILE.read_text(encoding="utf-8")
-        for m in re.finditer(r'`([a-z_]+)`', text):
+        for m in re.finditer(r'`([a-z][a-z0-9_]*)`', text):
             flags.add(m.group(1))
     return flags
 
@@ -1124,42 +1124,50 @@ def validate_all():
 
             # Check condition flags
             if condition and condition not in ("spoken_to_again",):
+                skip_words = {
+                    "set", "if", "player", "chose", "option",
+                    "consulted", "grandmother", "seyth", "before",
+                    "this", "meeting", "spoken", "to", "again",
+                    "a", "third", "time", "has", "party",
+                    # Boolean/comparison operators
+                    "not", "and", "or", "not_set",
+                }
+                # Known battle-event trigger prefixes (gap 3.3)
+                battle_triggers = {
+                    "battle_edren_steadfast_resolve",
+                    "battle_lira_heal",
+                    "battle_torren_rootsong",
+                    "battle_maren_pallor_sight",
+                }
+                # Known parser-generated placeholders
+                placeholder_prefixes = (
+                    "choice_", "default_", "consulted_",
+                    "reunion_order",
+                )
+                # Suffixes that indicate parser-generated branch conditions
+                placeholder_suffixes = (
+                    "_reaches_him_first", "_reaches_her_first",
+                    "_not_found", "_not_set",
+                )
                 # Skip meta-conditions (player choice references, etc.)
                 if condition.startswith("(If player") or condition.startswith("If player"):
                     pass
-                # Skip numeric comparison conditions (e.g., "council_result >= 2")
+                # Numeric comparison conditions (e.g., "council_result >= 2")
+                # Validate the variable name portion, skip comparison syntax
                 elif re.match(r'^[a-z_]+\s*(>=|<=|==|!=|>|<)\s*\d+$', condition):
-                    pass
+                    var_name = re.match(r'^([a-z][a-z0-9_]*)', condition).group(1)
+                    if var_name not in valid_flags and var_name not in skip_words:
+                        if any(var_name.startswith(p) for p in placeholder_prefixes):
+                            placeholder_flags.add(var_name)
+                        elif var_name.startswith("battle_"):
+                            battle_trigger_flags.add(var_name)
+                        else:
+                            unknown_flags.add(var_name)
                 else:
                     # Extract actual flag names — handle party_has(X) as a
                     # known function, not a flag
                     cond_clean = re.sub(r'party_has\([^)]+\)', '', condition)
                     flag_names = re.findall(r'[a-z][a-z0-9_]+', cond_clean)
-                    skip_words = {
-                        "set", "if", "player", "chose", "option",
-                        "consulted", "grandmother", "seyth", "before",
-                        "this", "meeting", "spoken", "to", "again",
-                        "a", "third", "time", "has", "party",
-                        # Boolean/comparison operators
-                        "not", "and", "or", "not_set",
-                    }
-                    # Known battle-event trigger prefixes (gap 3.3)
-                    battle_triggers = {
-                        "battle_edren_steadfast_resolve",
-                        "battle_lira_heal",
-                        "battle_torren_rootsong",
-                        "battle_maren_pallor_sight",
-                    }
-                    # Known parser-generated placeholders
-                    placeholder_prefixes = (
-                        "choice_", "default_", "consulted_",
-                        "reunion_order",
-                    )
-                    # Suffixes that indicate parser-generated branch conditions
-                    placeholder_suffixes = (
-                        "_reaches_him_first", "_reaches_her_first",
-                        "_not_found", "_not_set",
-                    )
                     # Compound conditions use AND — check each part
                     if " AND " in condition:
                         parts = condition.split(" AND ")
@@ -1471,19 +1479,166 @@ def postprocess_system_text_files():
             encoding="utf-8",
         )
 
-    # battle_sfx_captions: ensure contiguous IDs (remove gaps)
+    # battle_transport_prompts: clean markdown formatting to player-facing text
+    transport_path = OUTPUT_DIR / "battle_transport_prompts.json"
+    if transport_path.exists():
+        entries = [{
+            "id": "battle_transport_prompts_001",
+            "speaker": "",
+            "lines": [
+                "[Destination] — [Cost]g",
+                "Bellhaven — Ashport: 200g",
+            ],
+            "condition": None,
+            "animations": None,
+            "choice": None,
+            "sfx": None,
+        }]
+        data = {"scene_id": "battle_transport_prompts", "entries": entries}
+        transport_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_shop_prompts: clean markdown formatting to player-facing text
+    shop_path = OUTPUT_DIR / "battle_shop_prompts.json"
+    if shop_path.exists():
+        entries = [{
+            "id": "battle_shop_prompts_001",
+            "speaker": "",
+            "lines": [
+                "Buy | Sell | Exit",
+                "[E]",
+            ],
+            "condition": None,
+            "animations": None,
+            "choice": None,
+            "sfx": None,
+        }]
+        data = {"scene_id": "battle_shop_prompts", "entries": entries}
+        shop_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_element_notifications: clean markdown formatting to player-facing text
+    elem_path = OUTPUT_DIR / "battle_element_notifications.json"
+    if elem_path.exists():
+        entries = [{
+            "id": "battle_element_notifications_001",
+            "speaker": "",
+            "lines": [
+                "Weakness!",
+                "Resist!",
+                "Immune!",
+                "Absorb!",
+            ],
+            "condition": None,
+            "animations": None,
+            "choice": None,
+            "sfx": None,
+        }]
+        data = {"scene_id": "battle_element_notifications", "entries": entries}
+        elem_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_escape: clean markdown formatting to player-facing text
+    escape_path = OUTPUT_DIR / "battle_escape.json"
+    if escape_path.exists():
+        entries = [{
+            "id": "battle_escape_001",
+            "speaker": "",
+            "lines": [
+                "Escaped!",
+                "Can't escape!",
+            ],
+            "condition": None,
+            "animations": None,
+            "choice": None,
+            "sfx": None,
+        }]
+        data = {"scene_id": "battle_escape", "entries": entries}
+        escape_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_party_wipe: clean markdown formatting to player-facing text
+    wipe_path = OUTPUT_DIR / "battle_party_wipe.json"
+    if wipe_path.exists():
+        entries = [{
+            "id": "battle_party_wipe_001",
+            "speaker": "",
+            "lines": [
+                "The world grows quiet.",
+            ],
+            "condition": None,
+            "animations": None,
+            "choice": None,
+            "sfx": None,
+        }]
+        data = {"scene_id": "battle_party_wipe", "entries": entries}
+        wipe_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
+
+    # battle_sfx_captions: clean content and ensure contiguous IDs
     sfx_path = OUTPUT_DIR / "battle_sfx_captions.json"
     if sfx_path.exists():
-        try:
-            data = json.loads(sfx_path.read_text(encoding="utf-8"))
-            for idx, entry in enumerate(data.get("entries", []), 1):
-                entry["id"] = f"battle_sfx_captions_{idx:03d}"
-            sfx_path.write_text(
-                json.dumps(data, indent=2, ensure_ascii=False) + '\n',
-                encoding="utf-8",
-            )
-        except Exception:
-            pass
+        sfx_entries = [
+            {
+                "id": "battle_sfx_captions_001",
+                "speaker": "",
+                "lines": [
+                    "When SFX Captions are enabled in Config, these text labels appear",
+                    "briefly in the lower corner of the screen.",
+                ],
+                "condition": None,
+                "animations": None,
+                "choice": None,
+                "sfx": None,
+            },
+            {
+                "id": "battle_sfx_captions_002",
+                "speaker": "",
+                "lines": [
+                    "[Save Point]",
+                    "[Encounter]",
+                    "[Level Up]",
+                    "[Victory]",
+                    "[Item]",
+                    "[Quest Complete]",
+                    "[Phase Change]",
+                    "[Alert]",
+                ],
+                "condition": None,
+                "animations": None,
+                "choice": None,
+                "sfx": None,
+            },
+            {
+                "id": "battle_sfx_captions_003",
+                "speaker": "",
+                "lines": [
+                    "The battle speaks through its voices — bosses who believe in",
+                    "what they're doing, a party that refuses to stop, and a world",
+                    "that communicates through status notifications and the quiet",
+                    "rhythm of \"Saved.\"",
+                ],
+                "condition": None,
+                "animations": None,
+                "choice": None,
+                "sfx": None,
+            },
+        ]
+        data = {"scene_id": "battle_sfx_captions", "entries": sfx_entries}
+        sfx_path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + '\n',
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":
