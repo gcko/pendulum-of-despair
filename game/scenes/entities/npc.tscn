@@ -1,0 +1,106 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://scripts/entities/npc.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs/placeholder_npc.png" id="2_sprite"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(12, 12)
+
+[sub_resource type="Animation" id="Anim_idle"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+
+[sub_resource type="Animation" id="Anim_jump"]
+resource_name = "jump"
+length = 0.4
+
+[sub_resource type="Animation" id="Anim_shake"]
+resource_name = "shake"
+length = 0.5
+
+[sub_resource type="Animation" id="Anim_turn_away"]
+resource_name = "turn_away"
+length = 0.3
+
+[sub_resource type="Animation" id="Anim_head_down"]
+resource_name = "head_down"
+length = 0.4
+
+[sub_resource type="Animation" id="Anim_bubble_exclaim"]
+resource_name = "bubble_exclaim"
+length = 1.0
+
+[sub_resource type="Animation" id="Anim_bubble_ellipsis"]
+resource_name = "bubble_ellipsis"
+length = 1.5
+
+[sub_resource type="Animation" id="Anim_bubble_question"]
+resource_name = "bubble_question"
+length = 1.0
+
+[sub_resource type="Animation" id="Anim_sweat_drop"]
+resource_name = "sweat_drop"
+length = 0.8
+
+[sub_resource type="Animation" id="Anim_cry"]
+resource_name = "cry"
+length = 1.0
+loop_mode = 1
+
+[sub_resource type="Animation" id="Anim_red_tint"]
+resource_name = "red_tint"
+length = 0.5
+
+[sub_resource type="Animation" id="Anim_arms_up"]
+resource_name = "arms_up"
+length = 0.5
+
+[sub_resource type="Animation" id="Anim_collapse"]
+resource_name = "collapse"
+length = 0.6
+
+[sub_resource type="Animation" id="Anim_nod"]
+resource_name = "nod"
+length = 0.4
+
+[sub_resource type="Animation" id="Anim_step_back"]
+resource_name = "step_back"
+length = 0.3
+
+[sub_resource type="AnimationLibrary" id="AnimLib_main"]
+_data = {
+"arms_up": SubResource("Anim_arms_up"),
+"bubble_ellipsis": SubResource("Anim_bubble_ellipsis"),
+"bubble_exclaim": SubResource("Anim_bubble_exclaim"),
+"bubble_question": SubResource("Anim_bubble_question"),
+"collapse": SubResource("Anim_collapse"),
+"cry": SubResource("Anim_cry"),
+"head_down": SubResource("Anim_head_down"),
+"idle": SubResource("Anim_idle"),
+"jump": SubResource("Anim_jump"),
+"nod": SubResource("Anim_nod"),
+"red_tint": SubResource("Anim_red_tint"),
+"shake": SubResource("Anim_shake"),
+"step_back": SubResource("Anim_step_back"),
+"sweat_drop": SubResource("Anim_sweat_drop"),
+"turn_away": SubResource("Anim_turn_away")
+}
+
+[node name="NPC" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+monitorable = true
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimLib_main")
+}
