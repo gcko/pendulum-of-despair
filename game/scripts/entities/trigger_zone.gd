@@ -31,6 +31,8 @@ func initialize(p_trigger_id: String, p_condition_flag: String = "") -> void:
 
 
 func _on_body_entered(_body: Node2D) -> void:
+	if trigger_id == "":
+		return
 	if has_fired:
 		return
 	if condition_flag != "" and not EventFlags.get_flag(condition_flag):

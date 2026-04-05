@@ -488,7 +488,7 @@ GDScript loads data from Tier 1 JSON via DataManager.
 - TreasureChest: interact() checks/sets EventFlags, swaps sprite, emits chest_opened(id, item_id)
 - TriggerZone: auto-fires on body_entered (not explicit interaction), one-time with EventFlags
 - SavePoint: interact() emits save_point_activated, body_entered emits save_point_entered (proximity)
-- 10 GUT tests in test_interactables.gd, all code passes gdlint + gdformat
+- GUT tests in test_interactables.gd, all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-05-interactable-prefabs-design.md`
 
 **Blocking:** Dungeon maps (need chests, triggers, save points), story progression (trigger zones drive events)

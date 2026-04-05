@@ -37,6 +37,8 @@ func initialize(p_chest_id: String, p_item_id: String) -> void:
 
 ## Called by exploration scene when player interacts.
 func interact() -> void:
+	if chest_id == "":
+		return
 	if is_opened:
 		return
 	is_opened = true

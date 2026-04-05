@@ -25,8 +25,11 @@ func initialize(p_save_point_id: String) -> void:
 		push_error("SavePoint: empty save_point_id")
 		return
 	save_point_id = p_save_point_id
-	if _anim_player != null and _anim_player.has_animation("shimmer"):
-		_anim_player.play("shimmer")
+	var anim: AnimationPlayer = (
+		_anim_player if _anim_player != null else get_node_or_null("AnimationPlayer")
+	)
+	if anim != null and anim.has_animation("shimmer"):
+		anim.play("shimmer")
 
 
 ## Called by exploration scene when player interacts.
