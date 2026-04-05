@@ -1,10 +1,13 @@
 extends GutTest
-## Smoke tests for JSON data loading.
+## Smoke tests for JSON data file existence.
 ##
-## Verifies that all Tier 1 data files exist and parse as valid JSON
-## with expected top-level structure. Does NOT validate individual
-## values — those are checked by the adversarial verification pass
-## during gap implementation.
+## Verifies that all Tier 1 data files exist on disk.
+## Does NOT validate JSON parsing or individual values — those
+## are checked by the adversarial verification pass during gap
+## implementation.
+##
+## Uses FileAccess.file_exists() because JSON files are loaded
+## via FileAccess/JSON (DataManager.load_json), not ResourceLoader.
 
 
 func test_character_files_exist() -> void:
@@ -14,7 +17,7 @@ func test_character_files_exist() -> void:
 	for char_id: String in characters:
 		var path: String = "res://data/characters/%s.json" % char_id
 		assert_true(
-			ResourceLoader.exists(path),
+			FileAccess.file_exists(path),
 			"Character file should exist: %s" % path
 		)
 
@@ -26,7 +29,7 @@ func test_enemy_files_exist() -> void:
 	for act: String in acts:
 		var path: String = "res://data/enemies/%s.json" % act
 		assert_true(
-			ResourceLoader.exists(path),
+			FileAccess.file_exists(path),
 			"Enemy file should exist: %s" % path
 		)
 
@@ -34,7 +37,7 @@ func test_enemy_files_exist() -> void:
 func test_config_defaults_exist() -> void:
 	var path: String = "res://data/config/defaults.json"
 	assert_true(
-		ResourceLoader.exists(path),
+		FileAccess.file_exists(path),
 		"Config defaults should exist"
 	)
 
@@ -44,7 +47,7 @@ func test_crafting_files_exist() -> void:
 	for fname: String in files:
 		var path: String = "res://data/crafting/%s.json" % fname
 		assert_true(
-			ResourceLoader.exists(path),
+			FileAccess.file_exists(path),
 			"Crafting file should exist: %s" % path
 		)
 
@@ -54,7 +57,7 @@ func test_item_files_exist() -> void:
 	for fname: String in files:
 		var path: String = "res://data/items/%s.json" % fname
 		assert_true(
-			ResourceLoader.exists(path),
+			FileAccess.file_exists(path),
 			"Item file should exist: %s" % path
 		)
 
@@ -64,6 +67,6 @@ func test_equipment_files_exist() -> void:
 	for fname: String in files:
 		var path: String = "res://data/equipment/%s.json" % fname
 		assert_true(
-			ResourceLoader.exists(path),
+			FileAccess.file_exists(path),
 			"Equipment file should exist: %s" % path
 		)

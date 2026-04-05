@@ -114,12 +114,17 @@ func _load_placeholder_sprite() -> void:
 	var sprite_path: String = (
 		"res://assets/sprites/characters/placeholder_%s.png" % character_id
 	)
-	if ResourceLoader.exists(sprite_path):
-		_sprite.texture = load(sprite_path)
-	else:
+	if not ResourceLoader.exists(sprite_path):
 		push_error(
 			"PlayerCharacter: Placeholder sprite not found: %s" % sprite_path
 		)
+		return
+	var texture: Texture2D = load(sprite_path)
+	# @onready vars may not be resolved if initialize() is called before _ready.
+	# Fall back to get_node() if _sprite is null.
+	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
+	if sprite != null:
+		sprite.texture = texture
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
