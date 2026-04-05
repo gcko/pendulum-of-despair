@@ -1,0 +1,93 @@
+{
+  "scene_id": "battle_save_system",
+  "entries": [
+    {
+      "id": "battle_save_system_001",
+      "speaker": "",
+      "lines": [
+        "Rest / Rest & Save / Save"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_002",
+      "speaker": "",
+      "lines": [
+        "No rest items. Recover 25% MP."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_003",
+      "speaker": "",
+      "lines": [
+        "Overwrite existing save?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_004",
+      "speaker": "",
+      "lines": [
+        "Saved."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_005",
+      "speaker": "",
+      "lines": [
+        "— Empty —"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_006",
+      "speaker": "",
+      "lines": [
+        "Select a save file."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_007",
+      "speaker": "",
+      "lines": [
+        "Copy to which slot?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_save_system_008",
+      "speaker": "",
+      "lines": [
+        "Delete this save?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

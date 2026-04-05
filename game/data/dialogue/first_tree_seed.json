@@ -1,0 +1,80 @@
+{
+  "scene_id": "first_tree_seed",
+  "entries": [
+    {
+      "id": "first_tree_seed_001",
+      "speaker": "torren",
+      "lines": [
+        "The spirits say it remembers. Every age that fell.",
+        "Every root that held."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "first_tree_seed_002",
+      "speaker": "maren",
+      "lines": [
+        "The ley lines are feeding it. Not much. Enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "first_tree_seed_003",
+      "speaker": "lira",
+      "lines": [
+        "It's warm."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "first_tree_seed_004",
+      "speaker": "sable",
+      "lines": [
+        "Huh. Something actually grew."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "sable",
+          "anim": "bubble_ellipsis",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "first_tree_seed_005",
+      "speaker": "edren",
+      "lines": [
+        "Good."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "first_tree_seed_006",
+      "speaker": "",
+      "lines": [
+        "*The story is complete. The door is closed. The world is scarred",
+        "but growing. A shoot reaches for the light beside a knight's",
+        "sword, and the spirits remember.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

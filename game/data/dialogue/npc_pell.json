@@ -1,0 +1,44 @@
+{
+  "scene_id": "npc_pell",
+  "entries": [
+    {
+      "id": "npc_pell_001",
+      "speaker": "pell",
+      "lines": [
+        "My mother was a spirit-speaker. Could hear the ley",
+        "lines singing. I hear cranes and loading bells. Not the same."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_pell_002",
+      "speaker": "pell",
+      "lines": [
+        "Left the Wilds when I was twelve. My mother said the",
+        "spirits told her I'd find my path at the sea. Thirty years of",
+        "dock work later, I think the spirits were being literal."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_pell_003",
+      "speaker": "pell",
+      "lines": [
+        "Sometimes at night, if the harbour's quiet, I can",
+        "almost hear it. The singing. My mother said it never stops — we",
+        "just forget how to listen. I think she was right about a lot of",
+        "things."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

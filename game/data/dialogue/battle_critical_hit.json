@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_critical_hit",
+  "entries": [
+    {
+      "id": "battle_critical_hit_001",
+      "speaker": "",
+      "lines": [
+        "Critical!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

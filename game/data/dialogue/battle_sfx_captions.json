@@ -1,0 +1,49 @@
+{
+  "scene_id": "battle_sfx_captions",
+  "entries": [
+    {
+      "id": "battle_sfx_captions_001",
+      "speaker": "",
+      "lines": [
+        "When SFX Captions are enabled in Config, these text labels appear",
+        "briefly in the lower corner of the screen."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_sfx_captions_002",
+      "speaker": "",
+      "lines": [
+        "[Save Point]",
+        "[Encounter]",
+        "[Level Up]",
+        "[Victory]",
+        "[Item]",
+        "[Quest Complete]",
+        "[Phase Change]",
+        "[Alert]"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_sfx_captions_003",
+      "speaker": "",
+      "lines": [
+        "The battle speaks through its voices — bosses who believe in",
+        "what they're doing, a party that refuses to stop, and a world",
+        "that communicates through status notifications and the quiet",
+        "rhythm of \"Saved.\""
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

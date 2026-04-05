@@ -1,0 +1,123 @@
+{
+  "scene_id": "duskfen_alliance",
+  "entries": [
+    {
+      "id": "duskfen_alliance_001",
+      "speaker": "caden",
+      "lines": [
+        "Torren. You bring outsiders to Duskfen."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_002",
+      "speaker": "torren",
+      "lines": [
+        "I bring people who need help. And who can offer it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_003",
+      "speaker": "caden",
+      "lines": [
+        "The Fenmother is sick. The hollow is poisoned. Our",
+        "binding rituals fail. We don't have time for politics."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_004",
+      "speaker": "edren",
+      "lines": [
+        "We're not here for politics. We're here because the",
+        "ley lines are dying, and that affects all of us."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_005",
+      "speaker": "caden",
+      "lines": [
+        "The ley lines? The Fenmother is screaming. The water",
+        "tastes of metal. My predecessor walked into the marsh three months",
+        "ago and never came back. Don't talk to me about ley lines. Talk",
+        "to me about the thing that's killing my home."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_006",
+      "speaker": "lira",
+      "lines": [
+        "Show us."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_007",
+      "speaker": "caden",
+      "lines": [
+        "You cleansed her. Not killed — cleansed. That matters."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_008",
+      "speaker": "caden",
+      "lines": [
+        "The spirit-speakers at Roothollow will want to hear",
+        "of this. Return to Vessa when you can."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_009",
+      "speaker": "edren",
+      "lines": [
+        "Will Duskfen support an alliance?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "duskfen_alliance_010",
+      "speaker": "caden",
+      "lines": [
+        "The Fenmother was poisoned by what's seeping through",
+        "the ley lines. If you can cleanse this, you understand what we're",
+        "facing. I'll speak for Duskfen at the council."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

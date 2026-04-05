@@ -1,0 +1,518 @@
+{
+  "scene_id": "thornmere_council",
+  "entries": [
+    {
+      "id": "thornmere_council_001",
+      "speaker": "savanh",
+      "lines": [
+        "Sit. I have questions before I have answers."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_002",
+      "speaker": "savanh",
+      "lines": [
+        "The exile. I heard you left the court rather than",
+        "stop asking questions they didn't want answered."
+      ],
+      "condition": "party_has(maren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_003",
+      "speaker": "maren",
+      "lines": [
+        "Something like that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_004",
+      "speaker": "savanh",
+      "lines": [
+        "I respect that. Questions are more dangerous than",
+        "swords in a place like Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_005",
+      "speaker": "savanh",
+      "lines": [
+        "The Wilds have stayed alive by staying out of other",
+        "people's wars. You're asking us to change that. Tell me why."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": [
+        {
+          "label": "The ley lines affect everyone. Neutrality requires a stable world.",
+          "score_name": "council_savanh_approval",
+          "score_delta": 2,
+          "flag_set": null
+        },
+        {
+          "label": "Valdris and the Wilds share a border. If we fall, the Compact comes for you next.",
+          "score_name": "council_savanh_approval",
+          "score_delta": 1,
+          "flag_set": null
+        },
+        {
+          "label": "We need your warriors. Valdris can't hold alone.",
+          "score_name": "council_savanh_approval",
+          "score_delta": 0,
+          "flag_set": null
+        }
+      ],
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_006",
+      "speaker": "savanh",
+      "lines": [
+        "The Wilds have never needed Valdris. But you're right",
+        "— the Wilds need the ley lines, and the ley lines don't care",
+        "about borders."
+      ],
+      "condition": "choice_1_selected",
+      "animations": [
+        {
+          "who": "savanh",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_007",
+      "speaker": "savanh",
+      "lines": [
+        "Don't threaten me with the Compact. But... you're not",
+        "wrong that they would come."
+      ],
+      "condition": "choice_2_selected",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_008",
+      "speaker": "savanh",
+      "lines": [
+        "At least you're honest about what you want. That's",
+        "worth something. Not much, but something."
+      ],
+      "condition": "choice_3_selected",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_009",
+      "speaker": "savanh",
+      "lines": [
+        "You spoke with Seyth. She told you about the grey",
+        "times."
+      ],
+      "condition": "consulted_grandmother_seyth",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_010",
+      "speaker": "edren",
+      "lines": [
+        "She said the world has faced this before. A door opens.",
+        "Someone closes it. The cost is always the same."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_011",
+      "speaker": "savanh",
+      "lines": [
+        "My grandmother told Seyth that story. And her",
+        "grandmother told her. We don't speak of it often. It's not a story",
+        "that ends well."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": [
+        {
+          "label": "This time doesn't have to end the same way.",
+          "score_name": "council_savanh_approval",
+          "score_delta": 1,
+          "flag_set": null
+        }
+      ],
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_012",
+      "speaker": "caden",
+      "lines": [
+        "You cleansed the Fenmother. Duskfen owes you. But",
+        "alliance is more than debt."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_013",
+      "speaker": "caden",
+      "lines": [
+        "The spirits know what the Pendulum is. They've been",
+        "screaming about it since it came into the Wilds. The question is",
+        "whether Valdris is ready to listen."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": [
+        {
+          "label": "We're listening. That's why Torren is here.",
+          "score_name": "council_caden_approval",
+          "score_delta": 2,
+          "flag_set": null
+        },
+        {
+          "label": "We need spiritual guidance as much as warriors.",
+          "score_name": "council_caden_approval",
+          "score_delta": 1,
+          "flag_set": null
+        },
+        {
+          "label": "The spirits can scream all they want. We need soldiers.",
+          "score_name": "council_caden_approval",
+          "score_delta": 0,
+          "flag_set": null
+        }
+      ],
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_014",
+      "speaker": "caden",
+      "lines": [
+        "Torren trusts you. That's rare from him. You'll have",
+        "Duskfen's voice at the council."
+      ],
+      "condition": "choice_1_selected",
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_015",
+      "speaker": "caden",
+      "lines": [
+        "Then you've learned nothing from the Fenmother's Hollow."
+      ],
+      "condition": "choice_3_selected",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_016",
+      "speaker": "wynne",
+      "lines": [
+        "I showed you the haze. You know what's coming. So",
+        "tell me — what's the plan?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": [
+        {
+          "label": "Contain the Pendulum, reinforce the ley wards, prepare for a siege.",
+          "score_name": "council_wynne_approval",
+          "score_delta": 2,
+          "flag_set": null
+        },
+        {
+          "label": "We don't have a full plan yet. But we have people willing to fight.",
+          "score_name": "council_wynne_approval",
+          "score_delta": 1,
+          "flag_set": null
+        },
+        {
+          "label": "The plan is to survive. Plans can come after.",
+          "score_name": "council_wynne_approval",
+          "score_delta": 0,
+          "flag_set": null
+        }
+      ],
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_017",
+      "speaker": "wynne",
+      "lines": [
+        "Specifics. Finally. You're the first person from",
+        "Valdris who's told me something I can act on."
+      ],
+      "condition": "choice_1_selected",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_018",
+      "speaker": "wynne",
+      "lines": [
+        "Your Forgewright — Lira. Her people damaged the ley",
+        "lines. But she understands the systems better than anyone. If she",
+        "can help reinforce the wards, Canopy Reach will commit."
+      ],
+      "condition": "party_has(lira)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_019",
+      "speaker": "lira",
+      "lines": [
+        "I can. The extraction damage is reversible with the",
+        "right alignment. It's slower than what the Compact does, but it",
+        "doesn't break anything."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_020",
+      "speaker": "savanh",
+      "lines": [
+        "We've heard the arguments. Now we decide. Each",
+        "leader speaks for their people."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_021",
+      "speaker": "savanh",
+      "lines": [
+        "Greywood stands with Valdris. Not for Valdris — for",
+        "the ley lines that sustain us all."
+      ],
+      "condition": "council_savanh_approval >= 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_022",
+      "speaker": "savanh",
+      "lines": [
+        "Greywood will not commit. The risk is too great for",
+        "promises alone."
+      ],
+      "condition": "council_savanh_approval < 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_023",
+      "speaker": "caden",
+      "lines": [
+        "Duskfen stands. The spirits have spoken. We follow."
+      ],
+      "condition": "council_caden_approval >= 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_024",
+      "speaker": "caden",
+      "lines": [
+        "Duskfen cannot commit. We barely survived the",
+        "Fenmother's illness. We have nothing left to give."
+      ],
+      "condition": "council_caden_approval < 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_025",
+      "speaker": "wynne",
+      "lines": [
+        "Canopy Reach commits its archers and scouts. Show me",
+        "the haze stops growing, and we stay."
+      ],
+      "condition": "council_wynne_approval >= 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_026",
+      "speaker": "wynne",
+      "lines": [
+        "Canopy Reach will watch. That's all I can promise."
+      ],
+      "condition": "council_wynne_approval < 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_027",
+      "speaker": "lira",
+      "lines": [
+        "Did we just... win something?"
+      ],
+      "condition": "council_result >= 2",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_028",
+      "speaker": "edren",
+      "lines": [
+        "We have allies. Whether it's enough depends on what",
+        "comes next."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_029",
+      "speaker": "torren",
+      "lines": [
+        "Caden trusts us. That's not a small thing. He",
+        "doesn't trust easily."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_030",
+      "speaker": "maren",
+      "lines": [
+        "Three tribes committed to defending a kingdom that",
+        "has never defended them. Remember that when this gets harder."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_031",
+      "speaker": "lira",
+      "lines": [
+        "One out of three."
+      ],
+      "condition": "council_result == 1",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_032",
+      "speaker": "edren",
+      "lines": [
+        "One is more than zero."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_033",
+      "speaker": "maren",
+      "lines": [
+        "It won't be enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_034",
+      "speaker": "edren",
+      "lines": [
+        "Then we make it enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_035",
+      "speaker": "torren",
+      "lines": [
+        "They chose what they chose. We can't force the Wilds",
+        "to care about a kingdom they've never trusted."
+      ],
+      "condition": "council_result == 0",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_036",
+      "speaker": "edren",
+      "lines": [
+        "I know. But I'd hoped—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "thornmere_council_037",
+      "speaker": "lira",
+      "lines": [
+        "Hope later. Plan now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "scene_id": "battle_the_ashen_ram",
+  "entries": [
+    {
+      "id": "battle_the_ashen_ram_001",
+      "speaker": "cordwyn",
+      "lines": [
+        "Here it comes — the Ashen Ram. Hold the gate!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_ashen_ram_002",
+      "speaker": "",
+      "lines": [
+        "The Ram crashes into the wall. Stone cracks. The ground splits."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_ashen_ram_003",
+      "speaker": "cordwyn",
+      "lines": [
+        "It's breached the outer wall! Get in close —",
+        "the armour's thinner at the joints!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_ashen_ram_004",
+      "speaker": "",
+      "lines": [
+        "The hull splits open. Inside, a pulsing core of grey energy."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_ashen_ram_005",
+      "speaker": "cordwyn",
+      "lines": [
+        "There — that's its heart! Hit it with everything!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_ashen_ram_006",
+      "speaker": "cordwyn",
+      "lines": [
+        "The Ram is down. Valdris stands. For now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

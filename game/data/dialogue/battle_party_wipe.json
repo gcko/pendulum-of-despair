@@ -1,0 +1,16 @@
+{
+  "scene_id": "battle_party_wipe",
+  "entries": [
+    {
+      "id": "battle_party_wipe_001",
+      "speaker": "",
+      "lines": [
+        "The world grows quiet."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

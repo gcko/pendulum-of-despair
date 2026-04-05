@@ -1,0 +1,52 @@
+{
+  "scene_id": "npc_wynn",
+  "entries": [
+    {
+      "id": "npc_wynn_001",
+      "speaker": "wynn",
+      "lines": [
+        "Another group of refugees from the eastern border.",
+        "Third one this week. Running out of room on the ledger."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wynn_002",
+      "speaker": "wynn",
+      "lines": [
+        "Gate's still standing. Can't say that about much else."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wynn_003",
+      "speaker": "wynn",
+      "lines": [
+        "Gate's open but there's nowhere to go. People come in.",
+        "Nobody leaves."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_wynn_004",
+      "speaker": "wynn",
+      "lines": [
+        "First caravan out since the rupture. Twelve wagons.",
+        "I counted twice to make sure I wasn't dreaming."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

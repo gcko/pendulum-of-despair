@@ -1,0 +1,40 @@
+{
+  "scene_id": "convergence_approach",
+  "entries": [
+    {
+      "id": "convergence_approach_001",
+      "speaker": "lira",
+      "lines": [
+        "There he is."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "convergence_approach_002",
+      "speaker": "edren",
+      "lines": [
+        "Together."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "convergence_approach_003",
+      "speaker": "",
+      "lines": [
+        "*The trials are done. Vaelith is released. The Convergence is",
+        "ahead. There are no more words between the party — only the walk,",
+        "and whatever waits at the end of it.*"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

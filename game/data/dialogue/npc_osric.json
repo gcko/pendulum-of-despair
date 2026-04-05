@@ -1,0 +1,83 @@
+{
+  "scene_id": "npc_osric",
+  "entries": [
+    {
+      "id": "npc_osric_001",
+      "speaker": "osric",
+      "lines": [
+        "They didn't burn Millhaven. They just moved in.",
+        "Changed the signs. My deed meant nothing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_osric_002",
+      "speaker": "osric",
+      "lines": [
+        "I still have the seed grain. Hanna picked it — said",
+        "it was the best of the season. I can't plant it here. This isn't",
+        "my soil."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_osric_003",
+      "speaker": "osric",
+      "lines": [
+        "The knight who brought in that artifact — they say he",
+        "took it and ran. I don't understand why people are surprised.",
+        "Everyone runs eventually. I ran from Millhaven. At least I didn't",
+        "pretend I was saving anyone."
+      ],
+      "condition": "cael_betrayal_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_osric_004",
+      "speaker": "osric",
+      "lines": [
+        "I sat down yesterday. In the doorway. Just sat down.",
+        "Couldn't think of a reason to stand up. Took an hour before I",
+        "remembered the seed grain. That got me up. Barely."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_osric_005",
+      "speaker": "osric",
+      "lines": [
+        "The grey is in the refugee quarter now. Not the mist",
+        "— the feeling. People stop talking mid-sentence. Stare at nothing.",
+        "I watch the seed grain to remind myself things still grow."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_osric_006",
+      "speaker": "osric",
+      "lines": [
+        "I planted it. The seed grain. In a pot on the",
+        "windowsill. It's not a field, but it's growing. Hanna would",
+        "have laughed at me. A whole field's worth of hope in a clay pot."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

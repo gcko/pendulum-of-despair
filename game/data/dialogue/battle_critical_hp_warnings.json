@@ -1,0 +1,60 @@
+{
+  "scene_id": "battle_critical_hp_warnings",
+  "entries": [
+    {
+      "id": "battle_critical_hp_warnings_001",
+      "speaker": "edren",
+      "lines": [
+        "I can hold. Keep fighting."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_critical_hp_warnings_002",
+      "speaker": "lira",
+      "lines": [
+        "Systems failing. Need a moment."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_critical_hp_warnings_003",
+      "speaker": "torren",
+      "lines": [
+        "The spirits are close. Not yet."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_critical_hp_warnings_004",
+      "speaker": "sable",
+      "lines": [
+        "That... stung. I'm fine. Mostly."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_critical_hp_warnings_005",
+      "speaker": "maren",
+      "lines": [
+        "My wards are failing. Be quick."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

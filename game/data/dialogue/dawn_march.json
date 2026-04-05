@@ -1,0 +1,142 @@
+{
+  "scene_id": "dawn_march",
+  "entries": [
+    {
+      "id": "dawn_march_001",
+      "speaker": "cael",
+      "lines": [
+        "Those miners. They just stopped. No fight, no wounds.",
+        "They gave up."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_002",
+      "speaker": "edren",
+      "lines": [
+        "We'll let the court decide what it is."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_003",
+      "speaker": "cael",
+      "lines": [
+        "And the stranger? You're not concerned?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_004",
+      "speaker": "edren",
+      "lines": [
+        "I'm concerned about all of it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_005",
+      "speaker": "cael",
+      "lines": [
+        "I keep thinking about their faces."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_006",
+      "speaker": "sable",
+      "lines": [
+        "So. That thing in the satchel."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_007",
+      "speaker": "lira",
+      "lines": [
+        "Don't ask."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_008",
+      "speaker": "sable",
+      "lines": [
+        "I wasn't asking. I was observing. The commander's",
+        "carrying it like it's made of glass, and your boyfriend hasn't",
+        "stopped staring at it since we left."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_009",
+      "speaker": "lira",
+      "lines": [
+        "He's not my — we just met."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_010",
+      "speaker": "sable",
+      "lines": [
+        "Mhm. And I'm just a tourist."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_011",
+      "speaker": "sable",
+      "lines": [
+        "For what it's worth — whatever that thing is, the",
+        "Compact sent fifty soldiers to guard it. Fifty. They don't do",
+        "that for mining equipment."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "dawn_march_012",
+      "speaker": "lira",
+      "lines": [
+        "I know. That's why I came."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

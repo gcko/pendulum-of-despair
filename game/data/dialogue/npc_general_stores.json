@@ -1,0 +1,17 @@
+{
+  "scene_id": "npc_general_stores",
+  "entries": [
+    {
+      "id": "npc_general_stores_001",
+      "speaker": "shopkeeper",
+      "lines": [
+        "What'll it be? Potions, antidotes, survival",
+        "goods."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

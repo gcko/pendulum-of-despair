@@ -1,0 +1,86 @@
+{
+  "scene_id": "npc_renn",
+  "entries": [
+    {
+      "id": "npc_renn_001",
+      "speaker": "renn",
+      "lines": [
+        "I don't sell secrets, love. I sell certainty. You want",
+        "to know something for sure? That costs extra."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_renn_002",
+      "speaker": "renn",
+      "lines": [
+        "I have contacts in every district. The docks, the",
+        "court, the Lower Ward, even a few in the Compact. Information",
+        "flows like water — it finds the cracks."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_renn_003",
+      "speaker": "renn",
+      "lines": [
+        "That stranger people talk about — the polite one in",
+        "grey. I've been asking around. Nobody can agree on what he looks",
+        "like. Everyone remembers the voice. Warm, educated, interested.",
+        "Like a scholar who actually listens."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_renn_004",
+      "speaker": "renn",
+      "lines": [
+        "Here's what bothers me. My contact in Caldera — Tash,",
+        "you'll meet her — she described the same man. Same voice, same",
+        "grey coat. But Tash met him six months before Harren did. The",
+        "distances don't add up. Unless there are two of them. Or unless",
+        "he doesn't travel the way people do."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_renn_005",
+      "speaker": "renn",
+      "lines": [
+        "Half my contacts are gone. Dead, fled, or just...",
+        "stopped responding. The ones who are left charge triple. Fear",
+        "is expensive."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_renn_006",
+      "speaker": "renn",
+      "lines": [
+        "But I'll tell you this for free. The grey isn't random.",
+        "It follows the ley lines. Wherever the lines are weakest, the",
+        "grey is thickest. If someone could map one, they could predict",
+        "the other."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

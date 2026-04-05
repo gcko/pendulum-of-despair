@@ -1,0 +1,30 @@
+{
+  "scene_id": "npc_cira",
+  "entries": [
+    {
+      "id": "npc_cira_001",
+      "speaker": "cira",
+      "lines": [
+        "Lira left me a note. Three words: \"Read the reports.\"",
+        "I read them. I wish I hadn't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_cira_002",
+      "speaker": "cira",
+      "lines": [
+        "I stayed because I thought I could change things from",
+        "the inside. That's what people say when they're too afraid to",
+        "leave."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

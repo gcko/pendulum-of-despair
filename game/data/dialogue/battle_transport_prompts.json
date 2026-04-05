@@ -1,0 +1,17 @@
+{
+  "scene_id": "battle_transport_prompts",
+  "entries": [
+    {
+      "id": "battle_transport_prompts_001",
+      "speaker": "",
+      "lines": [
+        "[Destination] — [Cost]g",
+        "Bellhaven — Ashport: 200g"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

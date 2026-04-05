@@ -1,0 +1,71 @@
+{
+  "scene_id": "npc_yara",
+  "entries": [
+    {
+      "id": "npc_yara_001",
+      "speaker": "yara",
+      "lines": [
+        "The ley lines used to sing in harmonics. Three voices,",
+        "overlapping. Now there's only one voice."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_yara_002",
+      "speaker": "yara",
+      "lines": [
+        "Torren says I'm the most gifted speaker he's trained.",
+        "He says it like it's a compliment. It's not. The more you hear,",
+        "the more you can't stop hearing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_yara_003",
+      "speaker": "yara",
+      "lines": [
+        "I dream the ley lines. Not the sound — the shape. They",
+        "look like roots, underground, connecting everything. In the dream,",
+        "the roots are turning grey from the edges inward. When I wake up,",
+        "I can still feel them dying."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_yara_004",
+      "speaker": "yara",
+      "lines": [
+        "Can I ask you something? When you fight those grey",
+        "things — the Pallor creatures — do they make a sound? Because I",
+        "hear them even when they're not there. A low exhale. Like the",
+        "world breathing out and not breathing back in."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_yara_005",
+      "speaker": "yara",
+      "lines": [
+        "I can hear three voices again. It's not the same",
+        "harmonics — one voice is different. New. But there are three.",
+        "I slept through the night for the first time in months."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

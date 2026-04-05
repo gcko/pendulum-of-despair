@@ -1,0 +1,16 @@
+{
+  "scene_id": "npc_inns",
+  "entries": [
+    {
+      "id": "npc_inns_001",
+      "speaker": "innkeeper",
+      "lines": [
+        "Rest costs [amount]g. You'll wake up fresh."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -1,0 +1,384 @@
+{
+  "scene_id": "scene_24_finding_lira",
+  "entries": [
+    {
+      "id": "scene_24_finding_lira_001",
+      "speaker": "tash",
+      "lines": [
+        "Sable. You still owe me for that Ashport job."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_002",
+      "speaker": "sable",
+      "lines": [
+        "I owe a lot of people. You're near the top of a very",
+        "long list."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_003",
+      "speaker": "tash",
+      "lines": [
+        "Your engineer friend is in the upper city. Hidden",
+        "workshop off the tertiary canal. She's been there two weeks, nose",
+        "buried in stolen documents. Doesn't eat much."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_004",
+      "speaker": "sable",
+      "lines": [
+        "That sounds like Lira."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_005",
+      "speaker": "tash",
+      "lines": [
+        "I got you papers. Forged Compact engineering credentials.",
+        "Good enough for checkpoints, not good enough for a thorough search.",
+        "Don't get thoroughly searched."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_006",
+      "speaker": "lira",
+      "lines": [
+        "Close the door. I'm close."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_007",
+      "speaker": "sable",
+      "lines": [
+        "Close to what?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_008",
+      "speaker": "lira",
+      "lines": [
+        "Sable. You found me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_009",
+      "speaker": "sable",
+      "lines": [
+        "I found everyone. That's my thing now, apparently.",
+        "Finding people who don't want to be found."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_010",
+      "speaker": "lira",
+      "lines": [
+        "I want to be found. I just didn't want to stop working",
+        "long enough to be findable."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_011",
+      "speaker": "lira",
+      "lines": [
+        "Cael's trail. He's not hiding — he went straight to",
+        "the Convergence. The Compact has surveillance records. Three",
+        "separate patrols spotted him crossing the Wastes. He's building",
+        "something at the center of it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_012",
+      "speaker": "edren",
+      "lines": [
+        "How long ago?"
+      ],
+      "condition": "edren_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_013",
+      "speaker": "lira",
+      "lines": [
+        "Weeks. He's had time."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_014",
+      "speaker": "torren",
+      "lines": [
+        "The spirits won't go near the Convergence. Whatever",
+        "he's building, it's drawing the Pallor to it."
+      ],
+      "condition": "torren_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_015",
+      "speaker": "lira",
+      "lines": [
+        "There's a problem. The map to the Convergence — the",
+        "detailed route, the passes through the Wastes — it's locked in",
+        "Ironmark Citadel. Kole has it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_016",
+      "speaker": "sable",
+      "lines": [
+        "Kole. The general?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_017",
+      "speaker": "lira",
+      "lines": [
+        "The general who decided that if the ley lines won't",
+        "cooperate, Pallor energy makes a fine substitute. He's running",
+        "the Citadel on it. His soldiers are... different now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_018",
+      "speaker": "brant",
+      "lines": [
+        "I didn't open that gate for you. I opened it for me.",
+        "There's a difference. Don't thank me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_019",
+      "speaker": "sable",
+      "lines": [
+        "Wasn't planning on it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_020",
+      "speaker": "brant",
+      "lines": [
+        "Kole's on the command level. The soldiers between you",
+        "and him — they're not soldiers anymore. They follow orders because",
+        "the Pallor energy strips out everything that would make them",
+        "question."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_021",
+      "speaker": "brant",
+      "lines": [
+        "I'll be here when it's done. Or I won't. Either way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_022",
+      "speaker": "veld",
+      "lines": [
+        "He said it was a choice. It was. I chose no. Then I",
+        "learned what \"no\" costs in the new Compact."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_023",
+      "speaker": "veld",
+      "lines": [
+        "There were thirty of us who refused. I count sixteen",
+        "now. The others didn't die. They just stopped being themselves."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_024",
+      "speaker": "sable",
+      "lines": [
+        "We're taking down Kole. What can you tell us?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_025",
+      "speaker": "veld",
+      "lines": [
+        "His command chamber is on the top level. The Pallor",
+        "energy flows from a conduit he installed — shut that down and his",
+        "hold on the soldiers breaks. The map you want is in the war room,",
+        "one floor below."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_026",
+      "speaker": "kole",
+      "lines": [
+        "You think I was corrupted? I was clarified. The ley",
+        "lines failed. The Consortium failed. The treaties, the alliances,",
+        "the careful politics — all of it failed. The only thing that",
+        "doesn't fail is certainty. And the Pallor is very, very certain."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_027",
+      "speaker": "lira",
+      "lines": [
+        "Certainty isn't the same as truth."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_028",
+      "speaker": "kole",
+      "lines": [
+        "No. It's better. Truth changes. Certainty endures."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_029",
+      "speaker": "lira",
+      "lines": [
+        "This is it. The route to Cael."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_030",
+      "speaker": "lira",
+      "lines": [
+        "He went alone. Through all of this. Alone."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_031",
+      "speaker": "edren",
+      "lines": [
+        "He's not alone anymore."
+      ],
+      "condition": "edren_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_24_finding_lira_032",
+      "speaker": "sable",
+      "lines": [
+        "Neither are we. Come on. More people to find."
+      ],
+      "condition": "edren_not_found",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

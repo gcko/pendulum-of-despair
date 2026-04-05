@@ -1,0 +1,29 @@
+{
+  "scene_id": "npc_nara_voss",
+  "entries": [
+    {
+      "id": "npc_nara_voss_001",
+      "speaker": "nara",
+      "lines": [
+        "Ashport silk — best on the continent. Can't get this",
+        "weave anywhere else."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_nara_voss_002",
+      "speaker": "nara",
+      "lines": [
+        "No silk anymore. The worms won't spin. Something",
+        "about the ley lines. Selling wool now. Wool doesn't need magic."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

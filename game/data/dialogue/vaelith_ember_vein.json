@@ -1,0 +1,208 @@
+{
+  "scene_id": "vaelith_ember_vein",
+  "entries": [
+    {
+      "id": "vaelith_ember_vein_001",
+      "speaker": "vaelith",
+      "lines": [
+        "Ah. You made it out. I was beginning to wonder."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_002",
+      "speaker": "vaelith",
+      "lines": [
+        "Please. If I wanted to stop you, I wouldn't have",
+        "waited up here in the cold."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "edren",
+          "anim": "bubble_exclaim",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_003",
+      "speaker": "vaelith",
+      "lines": [
+        "My name is Vaelith. I study old places — ruins,",
+        "mostly. I've been watching this mine for some time. The Compact's",
+        "excavation was... ambitious, if graceless."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_004",
+      "speaker": "edren",
+      "lines": [
+        "What do you want?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_005",
+      "speaker": "vaelith",
+      "lines": [
+        "May I see what you found?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_006",
+      "speaker": "edren",
+      "lines": [
+        "No."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_007",
+      "speaker": "vaelith",
+      "lines": [
+        "Of course. I wouldn't trust a stranger on a cliff",
+        "at night either."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "vaelith",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_008",
+      "speaker": "vaelith",
+      "lines": [
+        "What a fragile little thing it is to build hope",
+        "around."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_009",
+      "speaker": "edren",
+      "lines": [
+        "We're taking it to Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_010",
+      "speaker": "vaelith",
+      "lines": [
+        "Naturally. Safe journey, then. The trail west is",
+        "clear — the soldiers are focused on the mine entrance."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_011",
+      "speaker": "vaelith",
+      "lines": [
+        "Do take care of yourself, Cael. Old places do",
+        "strange things to sensitive minds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_012",
+      "speaker": "cael",
+      "lines": [
+        "How do you know my—"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "step_back",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_013",
+      "speaker": "cael",
+      "lines": [
+        "He knew my name. I didn't—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_014",
+      "speaker": "edren",
+      "lines": [
+        "I know. We didn't tell him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_015",
+      "speaker": "cael",
+      "lines": [
+        "And he knew the mine route. And that we'd come out",
+        "this way. And he didn't try to take the Pendulum."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "vaelith_ember_vein_016",
+      "speaker": "edren",
+      "lines": [
+        "Which means either he doesn't want it, or he doesn't",
+        "need to take it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

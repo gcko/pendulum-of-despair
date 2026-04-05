@@ -1,0 +1,19 @@
+{
+  "scene_id": "battle_battle_results",
+  "entries": [
+    {
+      "id": "battle_battle_results_001",
+      "speaker": "",
+      "lines": [
+        "[Character] gained [X] EXP.",
+        "Found [X] Gold.",
+        "[Character] reached Level [X]!",
+        "Obtained [Item Name]."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

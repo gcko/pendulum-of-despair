@@ -1,0 +1,138 @@
+{
+  "scene_id": "scene_29_edrens_trial_the_hall_of_crowns",
+  "entries": [
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_001",
+      "speaker": "maren",
+      "lines": [
+        "It's chosen him. The trial is his alone."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_002",
+      "speaker": "crowned_hollow",
+      "lines": [
+        "Every command you gave. Every life spent",
+        "under your orders. Every soldier who trusted your judgment and",
+        "died for it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_003",
+      "speaker": "crowned_hollow",
+      "lines": [
+        "You led them. You failed them. What do",
+        "you have left?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_004",
+      "speaker": "crowned_hollow",
+      "lines": [
+        "...You stayed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_005",
+      "speaker": "sable",
+      "lines": [
+        "Edren! Are you—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_006",
+      "speaker": "edren",
+      "lines": [
+        "I'm here."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_007",
+      "speaker": "edren",
+      "lines": [
+        "The weight doesn't go away. But you can stand under",
+        "it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_008",
+      "speaker": "lira",
+      "lines": [
+        "Edren. What was it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_009",
+      "speaker": "edren",
+      "lines": [
+        "Every crown I've ever stood under. Every order I've",
+        "given that ended in a funeral."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_010",
+      "speaker": "sable",
+      "lines": [
+        "And?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_29_edrens_trial_the_hall_of_crowns_011",
+      "speaker": "edren",
+      "lines": [
+        "I stood under them. That's all. That's what it",
+        "wanted to know — whether I could."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

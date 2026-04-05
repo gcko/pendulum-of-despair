@@ -1,0 +1,71 @@
+{
+  "scene_id": "npc_grandmother_seyth",
+  "entries": [
+    {
+      "id": "npc_grandmother_seyth_001",
+      "speaker": "seyth",
+      "lines": [
+        "My grandmother told me a story about a time the",
+        "world forgot how to laugh."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_grandmother_seyth_002",
+      "speaker": "seyth",
+      "lines": [
+        "Every grandmother told the story differently. Mine",
+        "said it was a young man who closed the door. My mother's mother",
+        "said it was a woman. The details change. The cost doesn't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_grandmother_seyth_003",
+      "speaker": "seyth",
+      "lines": [
+        "Someone has been through the old grove. Picked herbs",
+        "I did not think still grew. Left the roots intact — very careful.",
+        "But the grove felt quieter after. As if something had been",
+        "removed that wasn't a plant."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_grandmother_seyth_004",
+      "speaker": "seyth",
+      "lines": [
+        "You want to know the truth? Here it is. The Pallor",
+        "doesn't come because the world is broken. The world breaks",
+        "because people stop mending it. The Pallor is just what fills",
+        "the space where care used to be."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_grandmother_seyth_005",
+      "speaker": "seyth",
+      "lines": [
+        "You can't fight grief with swords. Grief isn't an",
+        "enemy. It's a weight. You carry it or you sit down. The ones",
+        "who sat down are the ones the grey took."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

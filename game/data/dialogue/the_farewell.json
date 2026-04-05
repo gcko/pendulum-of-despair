@@ -1,0 +1,428 @@
+{
+  "scene_id": "the_farewell",
+  "entries": [
+    {
+      "id": "the_farewell_001",
+      "speaker": "edren",
+      "lines": [
+        "No."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_002",
+      "speaker": "edren",
+      "lines": [
+        "There has to be another way. Maren — your research,",
+        "the Archive, the cycles. There has to be a precedent where the",
+        "door closed without—"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "edren",
+          "anim": "shake",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_003",
+      "speaker": "maren",
+      "lines": [
+        "There isn't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_004",
+      "speaker": "maren",
+      "lines": [
+        "Every cycle, someone carries the Pallor through the",
+        "door. Every cycle, they stay. That's how it closes. There is no",
+        "alternative in eleven thousand years of record."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "head_down",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_005",
+      "speaker": "edren",
+      "lines": [
+        "Then we find a twelfth way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_006",
+      "speaker": "torren",
+      "lines": [
+        "Edren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_007",
+      "speaker": "torren",
+      "lines": [
+        "He's already decided."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "",
+          "anim": "head_down",
+          "when": "after_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_008",
+      "speaker": "lira",
+      "lines": [
+        "In the workshop. The night before. You asked me what",
+        "the world looks like after. You already knew you wouldn't see it."
+      ],
+      "condition": "cael_last_night_lira",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_009",
+      "speaker": "cael",
+      "lines": [
+        "I wanted to hear you describe it. So I could carry",
+        "that with me. Through the door."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_010",
+      "speaker": "lira",
+      "lines": [
+        "You didn't come to the workshop. The night before.",
+        "You couldn't face me."
+      ],
+      "condition": "cael_last_night_lira_not_set",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_011",
+      "speaker": "cael",
+      "lines": [
+        "I couldn't face you and still do what I had to do.",
+        "You would have seen it in my eyes and you would have stopped me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_012",
+      "speaker": "lira",
+      "lines": [
+        "Edren — he didn't know either. Did he? The training",
+        "grounds. \"Same time tomorrow.\""
+      ],
+      "condition": "cael_last_night_edren",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_013",
+      "speaker": "cael",
+      "lines": [
+        "I almost told him. The words were right there. But if",
+        "I had said them, he would have locked me in the vault himself."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_014",
+      "speaker": "lira",
+      "lines": [
+        "Maren knew. She didn't know what, but she knew",
+        "something was wrong."
+      ],
+      "condition": "cael_last_night_maren",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_015",
+      "speaker": "cael",
+      "lines": [
+        "Maren always knows. That's her burden. Knowing things",
+        "and not being able to stop them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_016",
+      "speaker": "lira",
+      "lines": [
+        "And you didn't tell me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_017",
+      "speaker": "cael",
+      "lines": [
+        "If I had told you, you would have found a way to",
+        "stop me. And then the door stays open."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_018",
+      "speaker": "lira",
+      "lines": [
+        "Edren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_019",
+      "speaker": "lira",
+      "lines": [
+        "Let him go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_020",
+      "speaker": "lira",
+      "lines": [
+        "I know what this costs. I know exactly what this",
+        "costs. And I'm telling you — let him go. Because the alternative",
+        "is that the door stays open, and everything he went through was",
+        "for nothing."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "edren",
+          "anim": "step_back",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_021",
+      "speaker": "edren",
+      "lines": [
+        "I should have seen it. All of it. The nightmares,",
+        "the isolation. I should have—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_022",
+      "speaker": "cael",
+      "lines": [
+        "You couldn't have. That was the point. The Pallor",
+        "doesn't break you where people can see it. It breaks you where",
+        "you're alone."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_023",
+      "speaker": "cael",
+      "lines": [
+        "This isn't your fault, Edren. None of it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_024",
+      "speaker": "edren",
+      "lines": [
+        "I'm sorry."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_025",
+      "speaker": "cael",
+      "lines": [
+        "I know."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "wind_quiet"
+        }
+      ]
+    },
+    {
+      "id": "the_farewell_026",
+      "speaker": "cael",
+      "lines": [
+        "Torren. Keep the spirits talking. They remember more",
+        "than anyone gives them credit for."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_027",
+      "speaker": "cael",
+      "lines": [
+        "Sable. You showed up. Every time, you showed up. Don't",
+        "stop doing that."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_028",
+      "speaker": "sable",
+      "lines": [
+        "Yeah, well. Someone has to."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "sable",
+          "anim": "sweat_drop",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_029",
+      "speaker": "cael",
+      "lines": [
+        "Maren. Write it down. All of it. So the next time the",
+        "door cracks, the world doesn't have to learn this lesson again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_030",
+      "speaker": "maren",
+      "lines": [
+        "I will."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "maren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_031",
+      "speaker": "cael",
+      "lines": [
+        "Build something. Not for me. Something that works",
+        "with the ley lines instead of draining them. You always knew",
+        "the craft could be better. Make it better."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "the_farewell_032",
+      "speaker": "lira",
+      "lines": [
+        "Go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

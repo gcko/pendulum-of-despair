@@ -1,0 +1,718 @@
+{
+  "scene_id": "battle_act_iii_iv_the_pallor_incarnate",
+  "entries": [
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_001",
+      "speaker": "",
+      "lines": [
+        "You failed me. You saw it coming and you looked away. That's",
+        "not loyalty, Edren. That's cowardice."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_002",
+      "speaker": "",
+      "lines": [
+        "I asked you to protect what's left. You can't even protect",
+        "yourself."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_003",
+      "speaker": "",
+      "lines": [
+        "He's already gone. You're fighting a memory. The Cael you loved",
+        "died in a vault in Valdris. This is just his body saying goodbye."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_004",
+      "speaker": "",
+      "lines": [
+        "You broke things your whole life. Called it progress. Called it",
+        "love. It was always destruction."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_005",
+      "speaker": "",
+      "lines": [
+        "The spirits are silent. They chose silence. They chose it over",
+        "you, Torren. You bore them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_006",
+      "speaker": "",
+      "lines": [
+        "You left us. You said you'd come back, and you left."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_007",
+      "speaker": "",
+      "lines": [
+        "Nobody is coming. Nobody was ever coming. You showed up because",
+        "you had nowhere else to go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_008",
+      "speaker": "",
+      "lines": [
+        "You were always the expendable one. The one nobody would miss."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_009",
+      "speaker": "",
+      "lines": [
+        "You knew. You always knew. Decades of study, and you couldn't",
+        "stop a single friend from walking through a door."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_010",
+      "speaker": "",
+      "lines": [
+        "The sixth group. The same question. The same answer. You changed",
+        "nothing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_011",
+      "speaker": "",
+      "lines": [
+        "The sky splits. Grey static tears across the horizon. The",
+        "Convergence machine shudders."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_012",
+      "speaker": "",
+      "lines": [
+        "The platform is breaking apart. The grey eats at the edges.",
+        "There is less world to stand on."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_013",
+      "speaker": "lira",
+      "lines": [
+        "The platform — it's collapsing. We're running out of",
+        "ground."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_014",
+      "speaker": "maren",
+      "lines": [
+        "The Pallor is consuming the arena itself. We have to",
+        "finish this before there's nothing left to stand on."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_015",
+      "speaker": "cael",
+      "lines": [
+        "The machine is working. I can feel it pushing back.",
+        "Keep going. I can hold it a little longer."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_016",
+      "speaker": "lira",
+      "lines": [
+        "Cael? Cael!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_017",
+      "speaker": "edren",
+      "lines": [
+        "He's holding the machine open. Giving us time.",
+        "Don't waste it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_018",
+      "speaker": "",
+      "lines": [
+        "The Pallor Incarnate shudders. Cracks of light — real light,",
+        "warm light — split its formless body. Not grey. Gold."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_019",
+      "speaker": "torren",
+      "lines": [
+        "The ley lines. They're pushing back."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_020",
+      "speaker": "sable",
+      "lines": [
+        "Hit it. NOW."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_021",
+      "speaker": "",
+      "lines": [
+        "The Incarnate does not scream. It does not rage. It simply",
+        "stops — the way a held breath releases. The grey drains inward,",
+        "collapses to a point of light, and vanishes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_022",
+      "speaker": "",
+      "lines": [
+        "Silence. The sky is lighter. Not blue — not yet. But lighter."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_023",
+      "speaker": "maren",
+      "lines": [
+        "It's not destroyed. It's diminished. Pushed back",
+        "far enough that the world can breathe again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_024",
+      "speaker": "edren",
+      "lines": [
+        "And Cael?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_025",
+      "speaker": "first_scholar",
+      "lines": [
+        "You've come to read what I've written.",
+        "Everyone does. Nobody finishes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_026",
+      "speaker": "first_scholar",
+      "lines": [
+        "Every word is a name. Every name is a life.",
+        "Do you know how many names fit on a page? More than you'd think.",
+        "Fewer than there were."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_027",
+      "speaker": "",
+      "lines": [
+        "The Scholar closes the book. Sets down the pen. And looks up —",
+        "for the first time in an age."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_028",
+      "speaker": "first_scholar",
+      "lines": [
+        "Finally. Someone who doesn't want to read.",
+        "Someone who just wants it to stop."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_029",
+      "speaker": "maren",
+      "lines": [
+        "She was like me. Recording everything so the world",
+        "would remember. The difference is she never stopped writing long",
+        "enough to live."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_030",
+      "speaker": "crystal_queen",
+      "lines": [
+        "We were four. Then two. Then one. Now...",
+        "less than one. But the throne holds. The throne always holds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_031",
+      "speaker": "crystal_queen",
+      "lines": [
+        "Each of us chose a direction. North. South.",
+        "East. West. We were supposed to meet in the middle. We never",
+        "did."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_032",
+      "speaker": "crystal_queen",
+      "lines": [
+        "The throne... was not worth... the sitting."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_033",
+      "speaker": "torren",
+      "lines": [
+        "She tried to protect everything at once. All four",
+        "directions. All four elements. Nobody told her that protecting",
+        "everything means holding nothing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_034",
+      "speaker": "rootking",
+      "lines": [
+        "Grew... to survive. Survived... to protect.",
+        "Protected... until the roots forgot what sunlight was."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_035",
+      "speaker": "rootking",
+      "lines": [
+        "Deeper. Always deeper. That was the answer. Grow",
+        "down. Hide from the grey. The grey followed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_036",
+      "speaker": "rootking",
+      "lines": [
+        "Do you know what a root does when it finds stone?",
+        "It grows through it. Slowly. Centuries. The stone breaks first.",
+        "The root always wins. Until now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_037",
+      "speaker": "maren",
+      "lines": [
+        "There — that root. It's the anchor. The whole body",
+        "regenerates from it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_038",
+      "speaker": "torren",
+      "lines": [
+        "It's been growing for a thousand years. All that",
+        "time, alone in the dark, trying to reach sunlight it forgot",
+        "existed."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_039",
+      "speaker": "",
+      "lines": [
+        "The Rootking exhales its last. Wood settling. Silence. A single",
+        "seed drops from the canopy where the ancient wood stood."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_040",
+      "speaker": "rootking",
+      "lines": [
+        "...sun...light..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_041",
+      "speaker": "iron_warden",
+      "lines": [
+        "Intrusion detected. Protocol: eliminate."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_042",
+      "speaker": "iron_warden",
+      "lines": [
+        "Orders do not expire. Duty does not fade."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_043",
+      "speaker": "iron_warden",
+      "lines": [
+        "Tactical analysis: rotate target priority."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_044",
+      "speaker": "iron_warden",
+      "lines": [
+        "You fight with emotion. Inefficient. Effective.",
+        "Confusing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_045",
+      "speaker": "iron_warden",
+      "lines": [
+        "Damage threshold exceeded. Activating secondary",
+        "plating. Reinforcing structural integrity."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_046",
+      "speaker": "iron_warden",
+      "lines": [
+        "You adapt. Noted. Counter-adapting."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_047",
+      "speaker": "iron_warden",
+      "lines": [
+        "Overclock initiated. Defence parameters:",
+        "secondary. Mission priority: absolute."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_048",
+      "speaker": "iron_warden",
+      "lines": [
+        "Functionality: compromised. Determination:",
+        "absolute."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_049",
+      "speaker": "iron_warden",
+      "lines": [
+        "The builders gave me one directive. Protect",
+        "this floor. They did not specify from what. Or for how long."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_050",
+      "speaker": "iron_warden",
+      "lines": [
+        "You are... adequate. More than adequate."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_051",
+      "speaker": "iron_warden",
+      "lines": [
+        "Orders... fulfilled. Post... vacant."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_052",
+      "speaker": "lira",
+      "lines": [
+        "Its core directive wasn't combat — it was identification.",
+        "It scanned us the entire fight. Cross-referencing against a",
+        "template its builders left. We matched. After all this time, we",
+        "matched."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_053",
+      "speaker": "caels_echo",
+      "lines": [
+        "You made it this far. Of course you did."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_054",
+      "speaker": "caels_echo",
+      "lines": [
+        "Edren. You're still sharpening my sword. I can",
+        "feel it. You don't have to. But... thank you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_055",
+      "speaker": "caels_echo",
+      "lines": [
+        "Lira. The Bridgewrights. I heard about them.",
+        "Even from here. You built something better. That's all I ever",
+        "wanted."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_056",
+      "speaker": "caels_echo",
+      "lines": [
+        "Torren. The spirits are louder on this side.",
+        "They say hello. They say the new growth is strong."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_057",
+      "speaker": "caels_echo",
+      "lines": [
+        "Sable. The Pendulum. You named it The Pendulum."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_058",
+      "speaker": "caels_echo",
+      "lines": [
+        "So nobody forgets. Yeah. I know."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_059",
+      "speaker": "caels_echo",
+      "lines": [
+        "It's heavy. Heavier than I thought. But the",
+        "door is closed. The grey is quieter now. Not gone — I don't",
+        "think it ever goes. But quieter."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_the_pallor_incarnate_060",
+      "speaker": "caels_echo",
+      "lines": [
+        "Go home. Live. That's all the door ever asked",
+        "for."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

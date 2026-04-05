@@ -1,0 +1,55 @@
+{
+  "scene_id": "npc_thessa",
+  "entries": [
+    {
+      "id": "npc_thessa_001",
+      "speaker": "thessa",
+      "lines": [
+        "The pact stones are quiet today. That used to mean",
+        "peace. Now I think it means the spirits are holding their breath."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_thessa_002",
+      "speaker": "thessa",
+      "lines": [
+        "Your friend Torren — he understood. He put his hand",
+        "on the altar and just listened. Most people want the spirits to",
+        "talk. He was willing to wait."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_thessa_003",
+      "speaker": "thessa",
+      "lines": [
+        "Spirit-speaker. The altar remembers your touch from",
+        "last time. It's... warmer, I think. That doesn't usually happen."
+      ],
+      "condition": "party_has(torren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_thessa_004",
+      "speaker": "thessa",
+      "lines": [
+        "The altar sang this morning. First time in a year.",
+        "One note, sustained, clean. I sat and listened until it stopped.",
+        "It lasted an hour."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

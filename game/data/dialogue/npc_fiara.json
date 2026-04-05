@@ -1,0 +1,95 @@
+{
+  "scene_id": "npc_fiara",
+  "entries": [
+    {
+      "id": "npc_fiara_001",
+      "speaker": "fiara",
+      "lines": [
+        "You're standing on a ley line. Step left — there.",
+        "Better. It doesn't like being stepped on."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_002",
+      "speaker": "fiara",
+      "lines": [
+        "People think I'm mad. The spirit-speakers tolerate",
+        "me because I can feel things they can't. The difference between",
+        "a gift and a curse is whether anyone believes you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_003",
+      "speaker": "fiara",
+      "lines": [
+        "The ley lines have a sound. Most people can't hear it.",
+        "I've heard it since I was four years old. It sounds like humming.",
+        "Like someone singing very far away. Lately, the singer sounds",
+        "tired."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_004",
+      "speaker": "fiara",
+      "lines": [
+        "I can see it now. The grey. It's under everything,",
+        "like mould under paint. Getting thicker."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_005",
+      "speaker": "fiara",
+      "lines": [
+        "I tried to warn people before the rupture. Stood in",
+        "the market square and told everyone the lines were dying. They",
+        "threw vegetables. The spirit-speakers believed me. Nobody else",
+        "did."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_006",
+      "speaker": "fiara",
+      "lines": [
+        "The grey is thinning. Not gone — I don't think it",
+        "ever goes. But the ley lines are louder than it is again."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_fiara_007",
+      "speaker": "fiara",
+      "lines": [
+        "The singer came back. Different tune. Sadder, but",
+        "stronger. I think the ley lines are mourning and growing at the",
+        "same time. That's what healing sounds like, I think."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

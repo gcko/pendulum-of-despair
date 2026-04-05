@@ -1,0 +1,17 @@
+{
+  "scene_id": "battle_shop_prompts",
+  "entries": [
+    {
+      "id": "battle_shop_prompts_001",
+      "speaker": "",
+      "lines": [
+        "Buy | Sell | Exit",
+        "[E]"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

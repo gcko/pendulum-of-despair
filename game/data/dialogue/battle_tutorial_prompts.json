@@ -1,0 +1,89 @@
+{
+  "scene_id": "battle_tutorial_prompts",
+  "entries": [
+    {
+      "id": "battle_tutorial_prompts_001",
+      "speaker": "",
+      "lines": [
+        "The gauge fills over time. When it's full, you can act. Speed",
+        "determines how fast it fills."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_002",
+      "speaker": "",
+      "lines": [
+        "Defending halves incoming damage and fills your gauge faster.",
+        "Time your defence against heavy attacks."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_003",
+      "speaker": "",
+      "lines": [
+        "Status effects persist after battle ends. Use Remedies or visit",
+        "an inn to cure them."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_004",
+      "speaker": "",
+      "lines": [
+        "Enemies have elemental weaknesses. Exploit them for bonus",
+        "damage."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_005",
+      "speaker": "",
+      "lines": [
+        "Front row characters deal and receive full physical damage.",
+        "Back row reduces both by half. Switch rows freely."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_006",
+      "speaker": "",
+      "lines": [
+        "Ley Crystals grant permanent stat bonuses or new abilities.",
+        "Choose carefully — each crystal can only be used once."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_tutorial_prompts_007",
+      "speaker": "",
+      "lines": [
+        "Forgewright devices use Arcanite Charges. Craft at forges to",
+        "create equipment. Experiment with combinations."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

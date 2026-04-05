@@ -1,0 +1,274 @@
+{
+  "scene_id": "torren_encounter",
+  "entries": [
+    {
+      "id": "torren_encounter_001",
+      "speaker": "sable",
+      "lines": [
+        "Is that... normal?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_002",
+      "speaker": "lira",
+      "lines": [
+        "No. That's a reaction. Something about what we're",
+        "carrying is making them—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_003",
+      "speaker": "torren",
+      "lines": [
+        "Stop there."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_004",
+      "speaker": "torren",
+      "lines": [
+        "You're carrying something that doesn't belong in",
+        "these woods."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_005",
+      "speaker": "edren",
+      "lines": [
+        "We're passing through. We mean no—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_006",
+      "speaker": "torren",
+      "lines": [
+        "I know what you mean. I also know what you're",
+        "carrying. The totems told me before you crossed the ridge."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_007",
+      "speaker": "sable",
+      "lines": [
+        "The... totems told you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_008",
+      "speaker": "torren",
+      "lines": [
+        "They shake when that thing gets close. They've been",
+        "shaking since dawn."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_009",
+      "speaker": "torren",
+      "lines": [
+        "My name is Torren. I speak for the spirits of these",
+        "woods — what's left of them. Where are you taking it?"
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_010",
+      "speaker": "edren",
+      "lines": [
+        "Valdris. We're reporting to the crown."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_011",
+      "speaker": "torren",
+      "lines": [
+        "The crown doesn't know what this is. Neither do you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_012",
+      "speaker": "lira",
+      "lines": [
+        "And you do?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_013",
+      "speaker": "torren",
+      "lines": [
+        "No. But I know someone who might. A woman lives",
+        "deep in the forest. Maren. She was a court mage before she was",
+        "an exile. If anyone understands what you've found, it's her."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_014",
+      "speaker": "cael",
+      "lines": [
+        "Why would an exile help us?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_015",
+      "speaker": "torren",
+      "lines": [
+        "Because she chose exile to study things like this.",
+        "Come. I'll take you to her. But we stop at Roothollow first —",
+        "my people deserve to know what's passing through their land."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_016",
+      "speaker": "vessa",
+      "lines": [
+        "Torren. I felt you coming. I felt what they carry."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_017",
+      "speaker": "vessa",
+      "lines": [
+        "That thing you carry — the totems know it. They're",
+        "shaking. Take it from my home before dawn, or I will put it in",
+        "the river myself."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_018",
+      "speaker": "edren",
+      "lines": [
+        "We don't intend to stay. Torren says there's someone",
+        "who can—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_019",
+      "speaker": "vessa",
+      "lines": [
+        "Maren. Yes. She'll understand what you've found. I",
+        "understand enough to know it shouldn't be here."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_020",
+      "speaker": "vessa",
+      "lines": [
+        "Go with them. Make sure that thing reaches someone",
+        "who can contain it — not use it. Not study it. Contain it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_021",
+      "speaker": "torren",
+      "lines": [
+        "I will."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "torren",
+          "anim": "nod",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "torren_encounter_022",
+      "speaker": "vessa",
+      "lines": [
+        "And Torren — when you come back, bring me something",
+        "that isn't dread. I'm tired of dread."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

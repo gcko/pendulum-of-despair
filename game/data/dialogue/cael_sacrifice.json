@@ -1,0 +1,25 @@
+{
+  "scene_id": "cael_sacrifice",
+  "entries": [
+    {
+      "id": "cael_sacrifice_001",
+      "speaker": "cael",
+      "lines": [
+        "It's heavy."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "pallor_surge_final"
+        },
+        {
+          "line": 0,
+          "id": "pendulum_shatter"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "scene_id": "battle_act_iii_iv_cael_knight_of_despair",
+  "entries": [
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_001",
+      "speaker": "cael",
+      "lines": [
+        "Good. Don't hold back. I need you strong enough for",
+        "what comes after."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_002",
+      "speaker": "cael",
+      "lines": [
+        "You feel that? The weight? That's not me. That's what",
+        "I've been carrying since the night I took the Pendulum."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_003",
+      "speaker": "cael",
+      "lines": [
+        "That parry. We learned it together. Under Marek. I",
+        "remember."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_004",
+      "speaker": "cael",
+      "lines": [
+        "Lira — your timing is better. You've been practicing."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_005",
+      "speaker": "cael",
+      "lines": [
+        "Torren, the spirits are screaming at you to run.",
+        "You should listen."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_006",
+      "speaker": "cael",
+      "lines": [
+        "Sable. Still showing up. I always admired that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_007",
+      "speaker": "cael",
+      "lines": [
+        "Maren. You called it a door. Back at the refuge. You",
+        "were right about all of it. And you couldn't stop me anyway."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_008",
+      "speaker": "cael",
+      "lines": [
+        "I'm doing this for you. All of it. The machine, the",
+        "Convergence — I found a way to end the cycle."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_009",
+      "speaker": "cael",
+      "lines": [
+        "Remember the cost. Someone has to."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_010",
+      "speaker": "cael",
+      "lines": [
+        "I'm doing this for you. Remember that. When it's over,",
+        "when you see what I've become — remember I chose this."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_011",
+      "speaker": "",
+      "lines": [
+        "His movements are wrong. Too fast. Too sharp. The sword screams",
+        "when it swings — not metal on air, but something beneath the",
+        "metal, howling."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_012",
+      "speaker": "",
+      "lines": [
+        "The grey speaks through him. Not words — feelings given shape."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_013",
+      "speaker": "cael",
+      "lines": [
+        "...stop... fighting... let it..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_014",
+      "speaker": "cael",
+      "lines": [
+        "The machine... close... so close..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_015",
+      "speaker": "",
+      "lines": [
+        "The Pallor forces Cael's body forward. His feet leave grooves in",
+        "the stone."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_016",
+      "speaker": "",
+      "lines": [
+        "Grey mist seeps from Cael's armour. The air tastes of metal and",
+        "old grief."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_017",
+      "speaker": "cael",
+      "lines": [
+        "I can still hear you. I can still — the machine is",
+        "close. Don't stop. Please don't stop."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_018",
+      "speaker": "cael",
+      "lines": [
+        "...sorry... can't... control..."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_019",
+      "speaker": "",
+      "lines": [
+        "He should have fallen. The Pallor energy flares — grey light",
+        "pours from every crack in his armour. He stands. Not because he",
+        "wants to. Because the Pallor won't let go."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_020",
+      "speaker": "maren",
+      "lines": [
+        "He should have fallen. The Pallor won't let him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_021",
+      "speaker": "edren",
+      "lines": [
+        "One more push. For him. Not against him. For him."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_022",
+      "speaker": "",
+      "lines": [
+        "Cael falls. Not dramatically. He crumples — the way a man does",
+        "when he has nothing left. The sword clatters on stone. His hands",
+        "open. His eyes close."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_023",
+      "speaker": "",
+      "lines": [
+        "And then the machine wakes up."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_024",
+      "speaker": "edren",
+      "lines": [
+        "I learned this at the monastery. I'm not leaving you,",
+        "Cael. Not again."
+      ],
+      "condition": "battle_edren_steadfast_resolve",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_025",
+      "speaker": "lira",
+      "lines": [
+        "The Pallor's grip is fluctuating. He's still in there.",
+        "I can see it in the energy patterns."
+      ],
+      "condition": "battle_lira_heal",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_026",
+      "speaker": "torren",
+      "lines": [
+        "The spirits remember him. They're singing for him.",
+        "Not against him."
+      ],
+      "condition": "battle_torren_rootsong",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_027",
+      "speaker": "sable",
+      "lines": [
+        "This is the worst fight I've ever been in. And I've",
+        "been in a lot of fights."
+      ],
+      "condition": "party_has(sable)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_028",
+      "speaker": "sable",
+      "lines": [
+        "He said please. Cael never says please. He's still",
+        "in there."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_act_iii_iv_cael_knight_of_despair_029",
+      "speaker": "maren",
+      "lines": [
+        "I can see the Pallor's grip. It's wrapped around his",
+        "heart. But there's a gap. He's holding it open. For us."
+      ],
+      "condition": "battle_maren_pallor_sight",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

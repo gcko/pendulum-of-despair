@@ -1,0 +1,61 @@
+{
+  "scene_id": "battle_ally_down_reactions",
+  "entries": [
+    {
+      "id": "battle_ally_down_reactions_001",
+      "speaker": "edren",
+      "lines": [
+        "Get up. That's an order."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_ally_down_reactions_002",
+      "speaker": "lira",
+      "lines": [
+        "Don't move — you'll make the damage worse. Stabilize."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_ally_down_reactions_003",
+      "speaker": "torren",
+      "lines": [
+        "Stay with us. The spirits aren't done with you yet."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_ally_down_reactions_004",
+      "speaker": "sable",
+      "lines": [
+        "Hey. HEY. You don't get to quit."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_ally_down_reactions_005",
+      "speaker": "maren",
+      "lines": [
+        "The binding is unraveling. We need to revive them",
+        "before the thread breaks entirely."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

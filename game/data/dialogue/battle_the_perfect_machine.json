@@ -1,0 +1,50 @@
+{
+  "scene_id": "battle_the_perfect_machine",
+  "entries": [
+    {
+      "id": "battle_the_perfect_machine_001",
+      "speaker": "machine",
+      "lines": [
+        "Lira. You came back. I am almost finished. I just",
+        "need your hands."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_perfect_machine_002",
+      "speaker": "machine",
+      "lines": [
+        "Almost. Try again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_perfect_machine_003",
+      "speaker": "machine",
+      "lines": [
+        "It hurts. But it will be worth it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_the_perfect_machine_004",
+      "speaker": "machine",
+      "lines": [
+        "...that hurts. But I understand."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

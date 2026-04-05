@@ -1,0 +1,67 @@
+{
+  "scene_id": "npc_orun",
+  "entries": [
+    {
+      "id": "npc_orun_001",
+      "speaker": "orun",
+      "lines": [
+        "You've fought Compact soldiers? Real ones? With",
+        "Arcanite weapons? Tell me everything."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_orun_002",
+      "speaker": "orun",
+      "lines": [
+        "I want to be a patrol leader like my cousin Kael. He",
+        "says I'm too eager. I say he's too careful. We're both right."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_orun_003",
+      "speaker": "orun",
+      "lines": [
+        "I killed something yesterday. Grey, hollow, used to be",
+        "a fox I think. It didn't fight back. Just looked at me while it",
+        "died. I haven't slept since."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_orun_004",
+      "speaker": "orun",
+      "lines": [
+        "Kael told me killing doesn't get easier. He lied. It",
+        "got easier. That's worse."
+      ],
+      "condition": "interlude_begins",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_orun_005",
+      "speaker": "orun",
+      "lines": [
+        "I saw a fox today. A real one. Orange and quick and",
+        "alive. It ran when it saw me. I was so happy I sat down and",
+        "cried."
+      ],
+      "condition": "epilogue_complete",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

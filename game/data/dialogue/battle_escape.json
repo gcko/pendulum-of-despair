@@ -1,0 +1,17 @@
+{
+  "scene_id": "battle_escape",
+  "entries": [
+    {
+      "id": "battle_escape_001",
+      "speaker": "",
+      "lines": [
+        "Escaped!",
+        "Can't escape!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
