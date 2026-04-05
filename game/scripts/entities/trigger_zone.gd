@@ -21,6 +21,9 @@ var has_fired: bool = false
 
 ## Initialize the trigger with an ID and optional condition flag.
 func initialize(p_trigger_id: String, p_condition_flag: String = "") -> void:
+	if p_trigger_id == "":
+		push_error("TriggerZone: empty trigger_id")
+		return
 	trigger_id = p_trigger_id
 	condition_flag = p_condition_flag
 	var fired_flag: String = "trigger_%s_fired" % trigger_id

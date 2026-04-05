@@ -22,6 +22,9 @@ var save_point_id: String = ""
 
 ## Initialize the save point with a location ID. Starts shimmer animation.
 func initialize(p_save_point_id: String) -> void:
+	if p_save_point_id == "":
+		push_error("SavePoint: empty save_point_id")
+		return
 	save_point_id = p_save_point_id
 	if _anim_player != null and _anim_player.has_animation("shimmer"):
 		_anim_player.play("shimmer")
@@ -29,8 +32,12 @@ func initialize(p_save_point_id: String) -> void:
 
 ## Called by exploration scene when player interacts.
 func interact() -> void:
+	if save_point_id == "":
+		return
 	save_point_activated.emit(save_point_id)
 
 
 func _on_body_entered(_body: Node2D) -> void:
+	if save_point_id == "":
+		return
 	save_point_entered.emit(save_point_id)
