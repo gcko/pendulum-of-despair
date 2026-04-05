@@ -147,10 +147,32 @@ naming preference. Fix if trivial.
 ...
 ```
 
+## Dual-Pass Review (MANDATORY)
+
+Every review MUST include BOTH a mechanical pass and a narrative pass.
+This is non-negotiable. Narrative-only review consistently misses what
+Copilot catches (PRs #114-117 proved this).
+
+**Mechanical pass** — for every public method in every changed .gd file:
+1. What if called before `initialize()`? (guard empty ID/data)
+2. What if input is empty, negative, null? (validate + push_error)
+3. What if called twice? (guard double-fire/double-open)
+4. Does every `if` branch have a test?
+5. Does every signal emission have a watching test?
+6. After code changes: grep docs for stale mirrors
+
+**Narrative pass** — for every changed file:
+1. Does the entity do what the design doc says?
+2. Signal flow: "call down, signal up" respected?
+3. Scene tree matches tech-arch?
+4. Collision layers correct?
+5. Spec matches implementation?
+
 ## Rules
 
 - **Read the verification checklists.** Before running passes, read
   `.claude/skills/godot-review/references/verification-checklists.md`.
+- **Dual-pass mandatory.** Both mechanical AND narrative. No exceptions.
 - **Check every changed file.** Don't skip `.json` data or `.tscn` scene files.
 - **Cross-reference design docs.** Every numeric value should trace back
   to a canonical source in `docs/story/`.

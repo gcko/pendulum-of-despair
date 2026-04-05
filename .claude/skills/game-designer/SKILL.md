@@ -157,6 +157,19 @@ mentally walk through: what calls this, what reads this state, what
 happens if this is deferred/async. (Learned the hard way in PR #105
 Round 5.)
 
+**Dual-pass self-review before commit (MANDATORY):**
+Before committing ANY .gd file, do BOTH passes on every public method:
+
+*Mechanical pass:* What if called before initialize()? What if input is
+empty/negative/null? What if called twice? Does every if-branch have a
+test? Does every signal emission have a watching test?
+
+*Narrative pass:* Does this match the design doc? Is the signal flow
+correct? Does the spec match what I just wrote?
+
+*Mirror check:* `grep -r "old_value" docs/` after every change. Fix
+every stale reference immediately — don't defer.
+
 ### 5. Verify (Adversarial Audit Against Design Docs)
 
 After implementation, verify every output against canonical docs.
