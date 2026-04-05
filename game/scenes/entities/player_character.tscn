@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://placeholder_player"]
+[gd_scene load_steps=10 format=3 uid="uid://placeholder_player"]
 
 [ext_resource type="Script" path="res://scripts/entities/player_character.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/characters/placeholder_edren.png" id="2_sprite"]
@@ -14,9 +14,33 @@ resource_name = "idle"
 length = 2.0
 loop_mode = 1
 
+[sub_resource type="Animation" id="Animation_walk_north"]
+resource_name = "walk_north"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_walk_south"]
+resource_name = "walk_south"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_walk_east"]
+resource_name = "walk_east"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_walk_west"]
+resource_name = "walk_west"
+length = 0.4
+loop_mode = 1
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {
-"idle": SubResource("Animation_idle")
+"idle": SubResource("Animation_idle"),
+"walk_north": SubResource("Animation_walk_north"),
+"walk_south": SubResource("Animation_walk_south"),
+"walk_east": SubResource("Animation_walk_east"),
+"walk_west": SubResource("Animation_walk_west")
 }
 
 [node name="PlayerCharacter" type="CharacterBody2D"]

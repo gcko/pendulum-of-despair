@@ -26,8 +26,8 @@ var character_data: Dictionary = {}
 ## Current facing direction for animation selection.
 var facing_direction: Vector2 = Vector2.DOWN
 
-## Tracked interactable in proximity (set by Area2D signals).
-var _nearest_interactable: Node2D = null
+## Last interactable that entered the Area2D (not necessarily nearest).
+var _current_interactable: Node2D = null
 
 ## Reference to child nodes (cached in _ready).
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -72,8 +72,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and _nearest_interactable != null:
-		interaction_requested.emit(_nearest_interactable)
+	if event.is_action_pressed("ui_accept") and _current_interactable != null:
+		interaction_requested.emit(_current_interactable)
 		get_viewport().set_input_as_handled()
 
 
@@ -123,9 +123,9 @@ func _load_placeholder_sprite() -> void:
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
-	_nearest_interactable = body
+	_current_interactable = body
 
 
 func _on_interaction_area_body_exited(body: Node2D) -> void:
-	if _nearest_interactable == body:
-		_nearest_interactable = null
+	if _current_interactable == body:
+		_current_interactable = null
