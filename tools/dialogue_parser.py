@@ -895,7 +895,7 @@ def normalize_condition(condition):
     if compound_match:
         char = compound_match.group(1)
         other = compound_match.group(2)
-        return f"reunion_order != {char} AND {other}_found"
+        return f"{char}_not_first_reunion AND {other}_found"
 
     return condition
 
@@ -1142,12 +1142,11 @@ def validate_all():
                 # Known parser-generated placeholders
                 placeholder_prefixes = (
                     "choice_", "default_", "consulted_",
-                    "reunion_order",
                 )
                 # Suffixes that indicate parser-generated branch conditions
                 placeholder_suffixes = (
                     "_reaches_him_first", "_reaches_her_first",
-                    "_not_found", "_not_set",
+                    "_not_found", "_not_set", "_not_first_reunion",
                 )
                 # Skip meta-conditions (player choice references, etc.)
                 if condition.startswith("(If player") or condition.startswith("If player"):

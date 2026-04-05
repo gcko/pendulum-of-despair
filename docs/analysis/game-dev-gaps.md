@@ -318,7 +318,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Per-scene dialogue JSON following Section 2.5 schema (7-field entries)
 - [x] 40 narrative scenes from script/ Layer 1 (661 entries)
 - [x] NPC ambient dialogue from npc-ambient.md Layer 2 (43 files, 177 entries)
-- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 197 entries)
+- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 196 entries)
 - [x] System text (tutorials, prompts, notifications) from battle-dialogue.md
 - [x] Condition expressions (flag checks, party_has) per dialogue-system.md (98 conditional entries)
 - [x] Animation markers mapped to sprite animation IDs (45 animations captured)
@@ -331,7 +331,7 @@ transformation that can be validated line-by-line against source docs.
 - Built via Python parser (`tools/dialogue_parser.py`) that reads 8 script files
 - Parser uses heuristic timing for animation/SFX `when` fields
 - Validation report at `tools/dialogue_validation_report.md` flags low-confidence items
-- 109 total files (40 narrative + 43 NPC + 26 battle) with 1035 entries
+- 109 total files (40 narrative + 43 NPC + 26 battle) with 1034 entries
 - All entry IDs globally unique, all 7 fields present, 2-space indent
 - Iterative improvement: subsequent passes can refine timing heuristics
 - Design spec: `docs/superpowers/specs/2026-04-04-dialogue-data-design.md`
