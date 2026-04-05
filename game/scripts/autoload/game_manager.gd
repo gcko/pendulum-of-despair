@@ -8,9 +8,6 @@ extends Node
 signal core_state_changed(new_state: CoreState)
 signal overlay_state_changed(new_state: OverlayState)
 
-enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE }
-
 ## Scene file paths for core states.
 const CORE_SCENES: Dictionary = {
 	CoreState.TITLE: "res://scenes/core/title.tscn",
@@ -25,6 +22,9 @@ const OVERLAY_SCENES: Dictionary = {
 	OverlayState.SAVE_LOAD: "res://scenes/overlay/save_load.tscn",
 	OverlayState.CUTSCENE: "res://scenes/overlay/cutscene.tscn",
 }
+
+enum CoreState { TITLE, EXPLORATION, BATTLE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE }
 
 ## Current active states.
 var current_core: CoreState = CoreState.TITLE

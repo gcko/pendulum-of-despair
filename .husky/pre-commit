@@ -18,7 +18,16 @@ if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
     git diff --quiet .beads/ 2>/dev/null || git add .beads/ 2>/dev/null || true
 fi
 
-# --- Godot quality checks (placeholder) ---
-# TODO: Add GDScript linting (gdtoolkit) and test runner when Godot
-# project is initialized. For now, only commitlint (commit-msg hook)
-# enforces quality.
+# --- GDScript linting (gdtoolkit) ---
+# Lint only staged .gd files to keep pre-commit fast.
+if command -v gdlint >/dev/null 2>&1; then
+    STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+    if [ -n "$STAGED_GD" ]; then
+        echo "Running gdlint on staged .gd files..."
+        echo "$STAGED_GD" | xargs gdlint
+        echo "gdlint passed."
+    fi
+fi
+
+# Note: GUT tests require headless Godot which is too slow for
+# pre-commit. Run tests via: godot --headless --path game/ -s addons/gut/gut_cmdln.gd

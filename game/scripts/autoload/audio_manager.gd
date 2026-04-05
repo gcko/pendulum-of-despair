@@ -16,19 +16,6 @@ const SFX_CHANNELS: int = 12
 const AMBIENT_CHANNELS: int = 4
 const TOTAL_CHANNELS: int = 24
 
-## Audio priority levels (per audio.md Section 3.2).
-## Higher number = higher priority.
-enum Priority {
-	AMBIENT = 0,
-	MUSIC = 1,
-	EXPLORATION_SFX = 2,
-	UI_SFX = 3,
-	BATTLE_SFX = 4,
-	BOSS_ONSET = 5,
-	BATTLE_JINGLE = 6,
-	CUTSCENE_SFX = 7,
-}
-
 ## Max simultaneous instances of the same SFX ID (per audio.md Section 3.4).
 const MAX_SAME_SFX: int = 2
 
@@ -47,6 +34,19 @@ const MIX_DUNGEON: Dictionary = {"music": 0.55, "ambient": 0.9}
 const MIX_NARRATIVE_DUNGEON: Dictionary = {"music": 1.0, "ambient": 0.35}
 const MIX_PALLOR: Dictionary = {"music": 0.0, "ambient": 0.4}
 const MIX_BATTLE: Dictionary = {"music": 1.0, "ambient": 0.0}
+
+## Audio priority levels (per audio.md Section 3.2).
+## Higher number = higher priority.
+enum Priority {
+	AMBIENT = 0,
+	MUSIC = 1,
+	EXPLORATION_SFX = 2,
+	UI_SFX = 3,
+	BATTLE_SFX = 4,
+	BOSS_ONSET = 5,
+	BATTLE_JINGLE = 6,
+	CUTSCENE_SFX = 7,
+}
 
 ## Currently active tracks (for crossfade management).
 var _current_music: String = ""
