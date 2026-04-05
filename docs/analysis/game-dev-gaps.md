@@ -409,22 +409,32 @@ GDScript loads data from Tier 1 JSON via DataManager.
 
 ### 2.2 NPC Prefab
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-05
 **Priority:** P1 — blocks town interactions
-**Estimated Size:** S (1 .tscn + 1 .gd)
+**Estimated Size:** S (1 .tscn + 1 .gd + 1 sprite + 1 test)
 **Output:** `game/scenes/entities/npc.tscn`, `game/scripts/entities/npc.gd`
-**Source Docs:** `dialogue-system.md` (NPC interaction model, priority stack), `npcs.md` (NPC list), `technical-architecture.md` Section 4.2
+**Source Docs:** `dialogue-system.md` (NPC interaction model, priority stack, 14 emotions), `npcs.md` (NPC list), `technical-architecture.md` Section 4.2
 **Depends On:** 1.8 (Dialogue Data — loads dialogue from JSON)
 
 **What's Needed:**
-- [ ] Area2D scene tree per tech-arch Section 4.2
-- [ ] Sprite2D with placeholder 16x24 NPC sprite
-- [ ] CollisionShape2D for interaction zone
-- [ ] AnimationPlayer with idle + 14 sprite emotion animations from dialogue-system.md
-- [ ] GDScript: load dialogue from DataManager by NPC ID
-- [ ] GDScript: on interact, call GameManager.push_overlay(DIALOGUE) with dialogue data
-- [ ] GDScript: flag-gated dialogue (check EventFlags, use priority stack from dialogue-system.md)
-- [ ] GDScript: party-aware dialogue (Tier 1 key scenes + Tier 2 NPC reactions)
+- [x] Area2D scene tree per tech-arch Section 4.2 (layer 3, monitorable)
+- [x] Sprite2D with placeholder 16x24 NPC sprite
+- [x] CollisionShape2D for interaction zone (12x12 RectangleShape2D)
+- [x] AnimationPlayer with idle + 14 sprite emotion animation stubs
+- [x] GDScript: load dialogue from DataManager by NPC ID
+- [x] ~~GDScript: on interact, call GameManager.push_overlay(DIALOGUE)~~ → signal-only: emits npc_interacted(npc_id, dialogue_data)
+- [x] GDScript: flag-gated dialogue (priority stack with condition evaluator)
+- [x] ~~GDScript: party-aware dialogue~~ → party_has() stubbed, returns false until GameManager.party exists
+
+**Notes:**
+- Signal-only design: NPC emits npc_interacted, exploration scene handles overlay push
+- Priority stack: first-match-wins, walks entries top-to-bottom
+- Condition evaluator: binary flags, numeric comparisons (>=, <, ==), AND combos, party_has (stubbed)
+- 15 stub animations (idle + 14 emotions per dialogue-system.md Section 2.1)
+- GUT tests in test_npc.gd, all code passes gdlint + gdformat
+- **This completes ALL Tier 2 Entity Prefabs (4/4). Exploration scene (3.2) is fully unblocked.**
+- Design spec: `docs/superpowers/specs/2026-04-05-npc-prefab-design.md`
 
 **Blocking:** Town scenes (need NPCs), story progression (flag-gated dialogue)
 
