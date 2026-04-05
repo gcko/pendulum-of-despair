@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/entities/enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/placeholder_enemy.png" id="2_sprite"]
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_hit_reaction"]
+resource_name = "hit_reaction"
+length = 0.3
+
+[sub_resource type="Animation" id="Animation_death"]
+resource_name = "death"
+length = 0.5
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
+_data = {
+"death": SubResource("Animation_death"),
+"hit_reaction": SubResource("Animation_hit_reaction"),
+"idle": SubResource("Animation_idle")
+}
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sprite")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_main")
+}
