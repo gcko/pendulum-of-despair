@@ -18,16 +18,58 @@ if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
     git diff --quiet .beads/ 2>/dev/null || git add .beads/ 2>/dev/null || true
 fi
 
-# --- GDScript linting (gdtoolkit) ---
-# Lint only staged .gd files to keep pre-commit fast.
+# === QUALITY GATE A: GDScript linting (gdtoolkit) ===
+# Lint only staged .gd files (excludes addons/).
 if command -v gdlint >/dev/null 2>&1; then
     STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
     if [ -n "$STAGED_GD" ]; then
-        echo "Running gdlint on staged .gd files..."
+        echo "=== Pre-commit: gdlint ==="
         echo "$STAGED_GD" | xargs gdlint
         echo "gdlint passed."
     fi
 fi
 
-# Note: GUT tests require headless Godot which is too slow for
-# pre-commit. Run tests via: godot --headless --path game/ -s addons/gut/gut_cmdln.gd
+# === QUALITY GATE B: JSON validation ===
+# Verify all staged .json files are valid JSON (excludes addons/).
+STAGED_JSON=$(git diff --cached --name-only --diff-filter=ACM -- '*.json' | grep -v 'addons/' || true)
+if [ -n "$STAGED_JSON" ]; then
+    echo "=== Pre-commit: JSON validation ==="
+    FAIL=0
+    for f in $STAGED_JSON; do
+        if [ -f "$f" ]; then
+            if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" 2>/dev/null; then
+                echo "INVALID JSON: $f"
+                FAIL=1
+            fi
+        fi
+    done
+    if [ "$FAIL" -eq 1 ]; then
+        echo "JSON validation FAILED. Fix invalid files before committing."
+        exit 1
+    fi
+    echo "JSON validation passed."
+fi
+
+# === QUALITY GATE C: gdformat check (formatting) ===
+# Verify staged .gd files match gdformat output (excludes addons/).
+# Only checks — does not auto-fix. Run `gdformat file.gd` to fix.
+if command -v gdformat >/dev/null 2>&1; then
+    STAGED_GD=$(git diff --cached --name-only --diff-filter=ACM -- '*.gd' | grep -v 'addons/' || true)
+    if [ -n "$STAGED_GD" ]; then
+        echo "=== Pre-commit: gdformat check ==="
+        FAIL=0
+        for f in $STAGED_GD; do
+            if [ -f "$f" ]; then
+                if ! gdformat --check "$f" 2>/dev/null; then
+                    echo "FORMAT MISMATCH: $f (run: gdformat $f)"
+                    FAIL=1
+                fi
+            fi
+        done
+        if [ "$FAIL" -eq 1 ]; then
+            echo "gdformat check FAILED. Run gdformat on flagged files."
+            exit 1
+        fi
+        echo "gdformat passed."
+    fi
+fi

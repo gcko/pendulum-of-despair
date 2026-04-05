@@ -16,7 +16,7 @@ const CONFIG_PATH: String = "user://config.json"
 ## Migration functions: version N -> version N+1.
 ## Add entries as the schema evolves.
 var _migration_steps: Dictionary = {
-	# Example: when bumping to version 2, add: 1: _migrate_v1_to_v2
+# Example: when bumping to version 2, add: 1: _migrate_v1_to_v2
 }
 
 
@@ -25,7 +25,9 @@ func _ready() -> void:
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
 		var dir_err: Error = DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 		if dir_err != OK:
-			push_error("SaveManager: Failed to create save directory %s (error %d)" % [SAVE_DIR, dir_err])
+			push_error(
+				"SaveManager: Failed to create save directory %s (error %d)" % [SAVE_DIR, dir_err]
+			)
 
 
 ## Save game state to a slot (1-3 for manual, 0 for auto-save).
@@ -138,7 +140,9 @@ func faint_and_fast_reload() -> void:
 
 	# 6. Write merged state back to the SAME save slot for durability
 	if not _write_data_to_slot(slot, data):
-		push_warning("SaveManager: FFR write-back to slot %d failed — merged state not durable" % slot)
+		push_warning(
+			"SaveManager: FFR write-back to slot %d failed — merged state not durable" % slot
+		)
 
 	# 7. Apply and transition
 	_apply_save_data(data)
@@ -183,8 +187,15 @@ func _migrate(data: Dictionary) -> Dictionary:
 ## FFR and load logic index into them).
 func _validate(data: Dictionary) -> bool:
 	var required: Array[String] = [
-		"meta", "party", "formation", "inventory",
-		"crafting", "ley_crystals", "world", "quests", "completion"
+		"meta",
+		"party",
+		"formation",
+		"inventory",
+		"crafting",
+		"ley_crystals",
+		"world",
+		"quests",
+		"completion"
 	]
 	for key: String in required:
 		if not data.has(key):
@@ -228,6 +239,7 @@ func _load_most_recent_save() -> Dictionary:
 
 # --- Placeholder methods (implement when game systems exist) ---
 
+
 func _build_save_data() -> Dictionary:
 	# TODO: Gather state from GameManager, EventFlags, party, inventory
 	push_warning("SaveManager: _build_save_data() returning stub data")
@@ -235,45 +247,62 @@ func _build_save_data() -> Dictionary:
 		"party": [],
 		"formation": {"active": [], "reserve": [], "guests": []},
 		"inventory": {"consumables": [], "equipment": [], "materials": [], "key_items": []},
-		"crafting": {
+		"crafting":
+		{
 			"arcanite_charges": 12,
 			"device_loadout": [{}, {}, {}, {}, {}],
 			"discovered_synergies": [],
 			"unlocked_recipes": [],
 		},
 		"ley_crystals": {"collected": []},
-		"world": {"event_flags": {}, "act": "1", "current_location": "", "current_position": {"x": 0, "y": 0}, "gold": 0},
+		"world":
+		{
+			"event_flags": {},
+			"act": "1",
+			"current_location": "",
+			"current_position": {"x": 0, "y": 0},
+			"gold": 0
+		},
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}
+
 
 func _get_playtime() -> int:
 	# TODO: Track cumulative play time
 	return 0
 
+
 func _capture_party_xp() -> Dictionary:
 	# TODO: Read XP per character from party state
 	return {}
+
 
 func _capture_gold() -> int:
 	# TODO: Read gold from world state
 	return 0
 
+
 func _capture_boss_cutscene_flags() -> Dictionary:
 	# TODO: Filter EventFlags for boss_cutscene_seen_* keys
 	return {}
 
+
 func _merge_xp(_data: Dictionary, _preserved_xp: Dictionary) -> void:
 	pass  # TODO: Overwrite party XP in save data with preserved values
+
 
 func _merge_flags(_data: Dictionary, _preserved_flags: Dictionary) -> void:
 	pass  # TODO: Merge boss_cutscene_seen flags into save data
 
+
 func _process_level_ups(_data: Dictionary) -> void:
 	pass  # TODO: Check XP thresholds, increment levels, update stats
 
+
 func _full_restore(_data: Dictionary) -> void:
 	pass  # TODO: Set HP/MP to 100% max, clear all status ailments
+
 
 func _apply_save_data(_data: Dictionary) -> void:
 	pass  # TODO: Restore game state from loaded save data

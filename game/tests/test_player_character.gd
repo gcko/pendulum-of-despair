@@ -4,10 +4,7 @@ extends GutTest
 ## Verifies data loading, stat access, facing direction defaults,
 ## and pixel snapping behavior.
 
-
-const PLAYER_SCENE: PackedScene = preload(
-	"res://scenes/entities/player_character.tscn"
-)
+const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 
 
 func _create_player():
@@ -20,10 +17,7 @@ func test_initialize_loads_character_data() -> void:
 	var player = _create_player()
 	player.initialize("edren")
 	assert_eq(player.character_id, "edren", "character_id should be set")
-	assert_false(
-		player.character_data.is_empty(),
-		"character_data should be loaded"
-	)
+	assert_false(player.character_data.is_empty(), "character_data should be loaded")
 
 
 func test_initialize_sets_character_id() -> void:
@@ -51,10 +45,7 @@ func test_get_stats_empty_before_init() -> void:
 
 func test_default_facing_direction() -> void:
 	var player = _create_player()
-	assert_eq(
-		player.facing_direction, Vector2.DOWN,
-		"Default facing should be DOWN"
-	)
+	assert_eq(player.facing_direction, Vector2.DOWN, "Default facing should be DOWN")
 
 
 func test_pixel_snapping() -> void:
@@ -62,10 +53,7 @@ func test_pixel_snapping() -> void:
 	player.position = Vector2(10.5, 20.7)
 	# Simulate one physics frame
 	player._physics_process(0.016)
-	assert_eq(
-		player.position, Vector2(11, 21),
-		"Position should snap to nearest integer"
-	)
+	assert_eq(player.position, Vector2(11, 21), "Position should snap to nearest integer")
 
 
 func test_get_facing_direction_returns_vector() -> void:

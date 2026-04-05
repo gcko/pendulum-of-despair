@@ -1,5 +1,182 @@
 #!/usr/bin/env bash
-# Delegate to bd for issue tracking before push
+set -euo pipefail
+
+# --- Beads (bd) pre-push hook ---
 if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
     BD_GIT_HOOK=1 bd hooks run pre-push "$@" || true
 fi
+
+# === QUALITY GATE D: Cross-file ID uniqueness scan ===
+# Verify no duplicate IDs across game data JSON files.
+echo "=== Pre-push: Cross-file ID uniqueness ==="
+python3 - << 'PYEOF'
+import json, glob, sys
+
+errors = []
+
+def check_ids(pattern, key_path, namespace):
+    """Check ID uniqueness across files in a namespace."""
+    all_ids = {}
+    for f in sorted(glob.glob(pattern)):
+        try:
+            data = json.load(open(f))
+        except (json.JSONDecodeError, FileNotFoundError):
+            continue
+        items = data
+        for k in key_path:
+            if isinstance(items, dict) and k in items:
+                items = items[k]
+            else:
+                items = []
+                break
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if isinstance(item, dict) and "id" in item:
+                item_id = item["id"]
+                if item_id in all_ids:
+                    errors.append(
+                        f"DUPLICATE {namespace} ID '{item_id}': "
+                        f"{all_ids[item_id]} and {f}"
+                    )
+                else:
+                    all_ids[item_id] = f
+
+check_ids("game/data/items/consumables.json", ["items"], "item")
+check_ids("game/data/items/materials.json", ["items"], "item")
+check_ids("game/data/items/key_items.json", ["items"], "item")
+check_ids("game/data/equipment/weapons.json", ["weapons"], "equipment")
+check_ids("game/data/equipment/armor.json", ["armor"], "equipment")
+check_ids("game/data/equipment/accessories.json", ["accessories"], "equipment")
+check_ids("game/data/crafting/devices.json", ["devices"], "crafting")
+check_ids("game/data/crafting/synergies.json", ["synergies"], "crafting")
+
+# Enemy IDs (bosses intentionally duplicated)
+enemy_ids = {}
+for f in sorted(glob.glob("game/data/enemies/*.json")):
+    try:
+        data = json.load(open(f))
+    except (json.JSONDecodeError, FileNotFoundError):
+        continue
+    key = list(data.keys())[0]
+    for entry in data.get(key, []):
+        eid = entry.get("id", "")
+        if "bosses" in f:
+            continue
+        if eid in enemy_ids and "bosses" not in enemy_ids[eid]:
+            errors.append(
+                f"DUPLICATE enemy ID '{eid}': {enemy_ids[eid]} and {f}"
+            )
+        else:
+            enemy_ids[eid] = f
+
+# Dialogue entry IDs
+dialogue_ids = {}
+for f in sorted(glob.glob("game/data/dialogue/*.json")):
+    try:
+        data = json.load(open(f))
+    except (json.JSONDecodeError, FileNotFoundError):
+        continue
+    for entry in data.get("entries", []):
+        did = entry.get("id", "")
+        if did in dialogue_ids:
+            errors.append(
+                f"DUPLICATE dialogue ID '{did}': "
+                f"{dialogue_ids[did]} and {f}"
+            )
+        else:
+            dialogue_ids[did] = f
+
+if errors:
+    print("Cross-file ID uniqueness FAILED:")
+    for e in errors:
+        print(f"  {e}")
+    sys.exit(1)
+else:
+    print("Cross-file ID uniqueness passed.")
+PYEOF
+
+# === QUALITY GATE E: Stale-count scan ===
+echo "=== Pre-push: Stale-count scan ==="
+python3 - << 'PYEOF'
+import json, glob, re, sys
+
+counts = {}
+counts["encounter_files"] = len(glob.glob("game/data/encounters/*.json"))
+counts["dialogue_files"] = len(glob.glob("game/data/dialogue/*.json"))
+counts["shop_files"] = len(glob.glob("game/data/shops/*.json"))
+
+for name, pattern, key in [
+    ("devices", "game/data/crafting/devices.json", "devices"),
+    ("synergies", "game/data/crafting/synergies.json", "synergies"),
+]:
+    try:
+        data = json.load(open(pattern))
+        counts[name] = len(data.get(key, []))
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+try:
+    data = json.load(open("game/data/crafting/recipes.json"))
+    counts["forging_recipes"] = len(data.get("forging_recipes", []))
+    counts["infusions"] = len(data.get("infusions", []))
+except (FileNotFoundError, json.JSONDecodeError):
+    pass
+
+errors = []
+gap_file = "docs/analysis/game-dev-gaps.md"
+try:
+    with open(gap_file) as f:
+        content = f.read()
+    checks = [
+        (r"27 encounter file", 27, counts.get("encounter_files", 0)),
+        (r"23 shop file", 23, counts.get("shop_files", 0)),
+        (r"13 device", 13, counts.get("devices", 0)),
+        (r"7 synerg", 7, counts.get("synergies", 0)),
+        (r"9 forging", 9, counts.get("forging_recipes", 0)),
+        (r"7 infusion", 7, counts.get("infusions", 0)),
+    ]
+    for pattern, expected, actual in checks:
+        if re.search(pattern, content, re.IGNORECASE):
+            if expected != actual:
+                errors.append(
+                    f"STALE COUNT in {gap_file}: "
+                    f"claims {expected}, actual {actual} ({pattern})"
+                )
+except FileNotFoundError:
+    pass
+
+if errors:
+    print("Stale-count scan FAILED:")
+    for e in errors:
+        print(f"  {e}")
+    sys.exit(1)
+else:
+    print("Stale-count scan passed.")
+PYEOF
+
+# === QUALITY GATE F: Scene file reference validation ===
+echo "=== Pre-push: Scene reference validation ==="
+python3 - << 'PYEOF'
+import re, glob, os, sys
+
+errors = []
+for tscn in glob.glob("game/scenes/**/*.tscn", recursive=True):
+    with open(tscn) as f:
+        content = f.read()
+    for match in re.finditer(r'path="(res://[^"]+)"', content):
+        res_path = match.group(1)
+        file_path = "game/" + res_path.replace("res://", "")
+        if not os.path.exists(file_path):
+            errors.append(f"{tscn}: missing resource {res_path}")
+
+if errors:
+    print("Scene reference validation FAILED:")
+    for e in errors:
+        print(f"  {e}")
+    sys.exit(1)
+else:
+    print("Scene reference validation passed.")
+PYEOF
+
+echo "=== All pre-push quality gates passed ==="
