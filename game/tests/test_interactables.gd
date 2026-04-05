@@ -5,6 +5,11 @@ const CHEST_SCENE: PackedScene = preload("res://scenes/entities/treasure_chest.t
 const TRIGGER_SCENE: PackedScene = preload("res://scenes/entities/trigger_zone.tscn")
 const SAVE_SCENE: PackedScene = preload("res://scenes/entities/save_point.tscn")
 
+
+func after_each() -> void:
+	EventFlags.clear_all()
+
+
 # --- TreasureChest tests ---
 
 
@@ -62,7 +67,6 @@ func test_chest_pre_opened_via_flags() -> void:
 	EventFlags.set_flag("chest_preopen_test_opened", true)
 	chest.initialize("preopen_test", "potion")
 	assert_true(chest.is_opened, "chest should start opened if flag was set")
-	EventFlags.set_flag("chest_preopen_test_opened", false)
 
 
 # --- TriggerZone tests ---
@@ -77,12 +81,20 @@ func test_trigger_initialize() -> void:
 	assert_false(trigger.has_fired, "should not have fired yet")
 
 
+func test_trigger_body_entered_connected() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	assert_true(
+		trigger.is_connected("body_entered", Callable(trigger, "_on_body_entered")),
+		"body_entered should be connected in scene",
+	)
+
+
 func test_trigger_fires_signal() -> void:
 	var trigger = TRIGGER_SCENE.instantiate()
 	add_child_autofree(trigger)
 	trigger.initialize("test_trigger", "")
 	watch_signals(trigger)
-	# Simulate body entering by calling the handler directly
 	trigger._on_body_entered(Node2D.new())
 	assert_signal_emitted(trigger, "triggered", "should emit triggered")
 	assert_true(trigger.has_fired, "should be marked as fired")
@@ -116,7 +128,6 @@ func test_trigger_condition_met_fires() -> void:
 	watch_signals(trigger)
 	trigger._on_body_entered(Node2D.new())
 	assert_signal_emitted(trigger, "triggered", "met condition should allow firing")
-	EventFlags.set_flag("key_found", false)
 
 
 func test_trigger_before_init_blocked() -> void:
@@ -128,6 +139,15 @@ func test_trigger_before_init_blocked() -> void:
 
 
 # --- SavePoint tests ---
+
+
+func test_save_point_body_entered_connected() -> void:
+	var sp = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	assert_true(
+		sp.is_connected("body_entered", Callable(sp, "_on_body_entered")),
+		"body_entered should be connected in scene",
+	)
 
 
 func test_save_point_initialize() -> void:

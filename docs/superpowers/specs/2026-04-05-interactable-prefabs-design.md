@@ -222,19 +222,7 @@ Location: `game/assets/sprites/interactables/`
 
 ## Tests
 
-`game/tests/test_interactables.gd`:
-
-**TreasureChest:**
-1. test_chest_initialize — verify chest_id and item_id set
-2. test_chest_interact_opens — verify is_opened, signal emitted
-3. test_chest_already_opened_blocks — interact on opened chest does nothing
-4. test_chest_signal_carries_ids — verify signal carries chest_id and item_id
-
-**TriggerZone:**
-5. test_trigger_initialize — verify trigger_id and condition_flag set
-6. test_trigger_fires_signal — simulate body enter, verify signal
-7. test_trigger_one_time_fire — second entry doesn't re-fire
-8. test_trigger_condition_blocks — unmet condition prevents firing
+See `game/tests/test_interactables.gd` for the full test suite. Tests cover: initialization, interaction signals, already-opened blocking, signal payload verification, condition blocking/passing, one-time fire, uninitialized guards, pre-opened chest via EventFlags, scene signal wiring verification, and after_each cleanup via EventFlags.clear_all().
 
 **SavePoint:**
 9. test_save_point_initialize — verify save_point_id set
