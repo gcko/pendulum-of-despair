@@ -31,3 +31,5 @@ docs/references/menus/
 
 # Superpowers brainstorm sessions
 .superpowers/
+__pycache__/
+tools/__pycache__/

@@ -235,7 +235,12 @@ func _build_save_data() -> Dictionary:
 		"party": [],
 		"formation": {"active": [], "reserve": [], "guests": []},
 		"inventory": {"consumables": [], "equipment": [], "materials": [], "key_items": []},
-		"crafting": {"arcanite_charges": 12, "device_loadout": [{}, {}, {}, {}, {}], "discovered_synergies": [], "unlocked_recipes": []},
+		"crafting": {
+			"arcanite_charges": 12,
+			"device_loadout": [{}, {}, {}, {}, {}],
+			"discovered_synergies": [],
+			"unlocked_recipes": [],
+		},
 		"ley_crystals": {"collected": []},
 		"world": {"event_flags": {}, "act": "1", "current_location": "", "current_position": {"x": 0, "y": 0}, "gold": 0},
 		"quests": {"active": [], "completed": []},
