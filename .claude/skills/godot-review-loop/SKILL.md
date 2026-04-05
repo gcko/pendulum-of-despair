@@ -222,6 +222,30 @@ Summary format:
 Generated with [Claude Code](https://claude.ai/code)
 ```
 
+## Dual-Pass Review (MANDATORY)
+
+Every review round MUST include BOTH passes. Narrative-only review
+misses what Copilot catches. Mechanical-only review misses design
+intent. Both are required.
+
+### Mechanical Pass (what Copilot does)
+
+For EVERY public method in EVERY changed .gd file, ask:
+1. What if this is called before `initialize()`? (empty ID, null data)
+2. What if the input is empty string, negative number, or null?
+3. What if this is called twice? (double-fire, double-open)
+4. Does every `if` branch have a test?
+5. Does every signal emission have a test that watches for it?
+6. After any code change: `grep -r "old_value" docs/` for stale mirrors
+
+### Narrative Pass (what the design review does)
+
+1. Does this entity do what the design doc says?
+2. Does the signal flow follow "call down, signal up"?
+3. Does the scene tree match technical-architecture.md?
+4. Are collision layers correct for the interaction system?
+5. Does the spec accurately describe the implementation?
+
 ## Rules
 
 - **3 agents per round.** Always dispatch all 3. Each covers different
@@ -229,6 +253,8 @@ Generated with [Claude Code](https://claude.ai/code)
 - **Parallel dispatch.** Launch all 3 simultaneously.
 - **Be paranoid.** Previous COPE rounds found fabricated values in
   JSON examples. Verify everything against source docs.
+- **Dual-pass mandatory.** Every agent must do BOTH mechanical and
+  narrative review. No skipping the mechanical pass.
 - **Local commits, single push.** Same as story-review-loop.
 - **Propagation sweep mandatory.** GDScript changes can break callers,
   signal connections, and scene references.
