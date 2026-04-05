@@ -24,8 +24,8 @@ var is_opened: bool = false
 
 ## Initialize the chest with an ID and item. Checks EventFlags for prior open.
 func initialize(p_chest_id: String, p_item_id: String) -> void:
-	if p_chest_id == "":
-		push_error("TreasureChest: empty chest_id")
+	if p_chest_id == "" or p_item_id == "":
+		push_error("TreasureChest: empty chest_id or item_id")
 		return
 	chest_id = p_chest_id
 	item_id = p_item_id

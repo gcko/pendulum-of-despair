@@ -48,6 +48,23 @@ func test_chest_signal_carries_ids() -> void:
 	assert_eq(params[1], "rare_item", "signal should carry item_id")
 
 
+func test_chest_interact_before_init_blocked() -> void:
+	var chest = CHEST_SCENE.instantiate()
+	add_child_autofree(chest)
+	watch_signals(chest)
+	chest.interact()
+	assert_signal_not_emitted(chest, "chest_opened", "interact before init should not emit")
+
+
+func test_chest_pre_opened_via_flags() -> void:
+	var chest = CHEST_SCENE.instantiate()
+	add_child_autofree(chest)
+	EventFlags.set_flag("chest_preopen_test_opened", true)
+	chest.initialize("preopen_test", "potion")
+	assert_true(chest.is_opened, "chest should start opened if flag was set")
+	EventFlags.set_flag("chest_preopen_test_opened", false)
+
+
 # --- TriggerZone tests ---
 
 
@@ -86,10 +103,28 @@ func test_trigger_condition_blocks() -> void:
 	add_child_autofree(trigger)
 	trigger.initialize("cond_trigger", "key_needed")
 	watch_signals(trigger)
-	# Do NOT set the flag — condition should block firing
 	trigger._on_body_entered(Node2D.new())
 	assert_signal_not_emitted(trigger, "triggered", "unmet condition should block firing")
 	assert_false(trigger.has_fired, "should not be marked as fired")
+
+
+func test_trigger_condition_met_fires() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	EventFlags.set_flag("key_found", true)
+	trigger.initialize("cond_met_trigger", "key_found")
+	watch_signals(trigger)
+	trigger._on_body_entered(Node2D.new())
+	assert_signal_emitted(trigger, "triggered", "met condition should allow firing")
+	EventFlags.set_flag("key_found", false)
+
+
+func test_trigger_before_init_blocked() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	watch_signals(trigger)
+	trigger._on_body_entered(Node2D.new())
+	assert_signal_not_emitted(trigger, "triggered", "body enter before init should not fire")
 
 
 # --- SavePoint tests ---
@@ -118,3 +153,19 @@ func test_save_point_entered_signal() -> void:
 	watch_signals(sp)
 	sp._on_body_entered(Node2D.new())
 	assert_signal_emitted(sp, "save_point_entered", "should emit save_point_entered")
+
+
+func test_save_point_interact_before_init_blocked() -> void:
+	var sp = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	watch_signals(sp)
+	sp.interact()
+	assert_signal_not_emitted(sp, "save_point_activated", "interact before init should not emit")
+
+
+func test_save_point_body_before_init_blocked() -> void:
+	var sp = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	watch_signals(sp)
+	sp._on_body_entered(Node2D.new())
+	assert_signal_not_emitted(sp, "save_point_entered", "body enter before init should not emit")

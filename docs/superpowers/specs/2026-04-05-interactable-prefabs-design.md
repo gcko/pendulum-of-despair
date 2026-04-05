@@ -121,7 +121,7 @@ signal triggered(trigger_id: String)
 ### Methods
 
 ```gdscript
-func initialize(p_trigger_id: String, p_condition_flag: String) -> void
+func initialize(p_trigger_id: String, p_condition_flag: String = "") -> void
 ```
 
 Stores config. Checks if already fired via EventFlags.
