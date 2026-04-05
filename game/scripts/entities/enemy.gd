@@ -115,10 +115,7 @@ func is_weak_to(element: String) -> bool:
 
 ## Check if the enemy is resistant to an element.
 func is_resistant_to(element: String) -> bool:
-	var resistances: Array = enemy_data.get("resistances", [])
-	if resistances is Array:
-		return element in resistances
-	return false
+	return element in enemy_data.get("resistances", [])
 
 
 ## Check if the enemy is immune to an element.

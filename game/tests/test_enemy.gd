@@ -80,15 +80,13 @@ func test_heal_clamps_to_max() -> void:
 
 func test_element_weakness() -> void:
 	var enemy = _create_enemy()
-	enemy.initialize("ley_vermin", "act_i")
-	var weaknesses: Array = enemy.enemy_data.get("weaknesses", [])
-	if weaknesses.size() > 0:
-		var weak_element: String = weaknesses[0]
-		assert_eq(
-			enemy.get_element_multiplier(weak_element),
-			1.5,
-			"Weakness should return 1.5x",
-		)
+	# unstable_crystal has weaknesses: ["frost"]
+	enemy.initialize("unstable_crystal", "act_i")
+	assert_eq(
+		enemy.get_element_multiplier("frost"),
+		1.5,
+		"Weakness to frost should return 1.5x",
+	)
 
 
 func test_element_neutral() -> void:
@@ -129,10 +127,20 @@ func test_apply_status_immune() -> void:
 func test_tick_statuses_removes_expired() -> void:
 	var enemy = _create_enemy()
 	enemy.initialize("ley_vermin", "act_i")
-	enemy.apply_status("slow", 1)
+	enemy.apply_status("slow", 2)
 	assert_true(enemy.has_status("slow"), "slow should be active")
 	enemy.tick_statuses()
-	assert_false(enemy.has_status("slow"), "slow should expire after tick")
+	assert_true(enemy.has_status("slow"), "slow should survive first tick")
+	enemy.tick_statuses()
+	assert_false(enemy.has_status("slow"), "slow should expire after second tick")
+
+
+func test_damage_taken_signal_emitted() -> void:
+	var enemy = _create_enemy()
+	enemy.initialize("ley_vermin", "act_i")
+	watch_signals(enemy)
+	enemy.take_damage(10)
+	assert_signal_emitted(enemy, "damage_taken", "damage_taken signal should fire")
 
 
 func test_roll_steal_returns_dict() -> void:
