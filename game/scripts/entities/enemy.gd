@@ -64,7 +64,15 @@ var is_alive: bool = true
 
 
 ## Initialize the enemy with data from DataManager.
+## Safe to call multiple times — resets all state before loading.
 func initialize(p_enemy_id: String, p_act: String) -> void:
+	# Reset all state before loading new data.
+	enemy_data = {}
+	current_hp = 0
+	current_mp = 0
+	active_statuses.clear()
+	is_alive = false
+
 	enemy_id = p_enemy_id
 	enemy_act = p_act
 	var enemies: Array = DataManager.load_enemies(p_act)
@@ -190,8 +198,10 @@ func has_status(status_name: String) -> bool:
 	return false
 
 
-## Apply damage. Clamps HP to 0. Emits damage_taken and died signals.
+## Apply damage. Clamps HP to 0. Emits damage_taken and died (once) signals.
 func take_damage(amount: int) -> void:
+	if not is_alive:
+		return
 	current_hp = max(0, current_hp - amount)
 	damage_taken.emit(amount)
 	if current_hp <= 0:
@@ -199,11 +209,13 @@ func take_damage(amount: int) -> void:
 		died.emit()
 
 
-## Apply healing. Clamps HP to max base HP. Emits healed signal.
+## Apply healing. Clamps HP to max base HP. Restores is_alive. Emits healed signal.
 func heal(amount: int) -> void:
 	var max_hp: int = enemy_data.get("hp", 0)
 	var old_hp: int = current_hp
 	current_hp = min(max_hp, current_hp + amount)
+	if current_hp > 0:
+		is_alive = true
 	var actual_heal: int = current_hp - old_hp
 	if actual_heal > 0:
 		healed.emit(actual_heal)
@@ -242,6 +254,6 @@ func _load_placeholder_sprite() -> void:
 		push_error("Enemy: Placeholder sprite not found: %s" % sprite_path)
 		return
 	var texture: Texture2D = load(sprite_path)
-	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
+	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
