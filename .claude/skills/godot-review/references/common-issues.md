@@ -113,6 +113,23 @@ Context files and specs don't match current project state.
 - Review reference doc headings/counts inconsistent with content
 - Code comments in migration/versioning logic don't match actual constants
 
+### 13. Input Validation & Edge Cases (from PRs #114-116)
+Methods accept inputs that reverse intended behavior.
+- `take_damage(negative)` heals instead of damaging (clamp amount >= 0)
+- `heal(negative)` damages instead of healing (clamp amount >= 0)
+- Boolean state (`is_alive`) defaults to active before initialization
+- Getters return plausible-looking defaults on uninitialized entities (return empty instead)
+- `get_node()` in fallback paths crashes if node missing (use `get_node_or_null()`)
+- Tests use enemies with empty arrays for the feature being tested (no-op test, false confidence)
+
+### 14. Mirror Staleness (from PRs #109-116)
+Values changed in one place but not propagated to all mirrors.
+- Entry counts in gap tracker, spec, plan, and PR description all must match
+- Act values in JSON data must match spec file structure tables AND plan lists
+- Test descriptions in spec must match actual test implementation
+- Variable/method names changed in code must be updated in spec
+- Hardcoded counts in docs become stale — prefer descriptive text or derive from data
+
 ---
 
 ## Severity Levels

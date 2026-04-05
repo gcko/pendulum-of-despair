@@ -432,24 +432,34 @@ GDScript loads data from Tier 1 JSON via DataManager.
 
 ### 2.3 Enemy Prefab (Battle)
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-05
 **Priority:** P0 — blocks battle system
-**Estimated Size:** S (1 .tscn + 1 .gd)
+**Estimated Size:** S (1 .tscn + 1 .gd + 1 placeholder sprite + 1 test)
 **Output:** `game/scenes/entities/enemy.tscn`, `game/scripts/entities/enemy.gd`
-**Source Docs:** `bestiary/README.md` (AI behavior: weighted random for regulars, scripted for bosses), `combat-formulas.md` (damage, hit/miss), `technical-architecture.md` Section 4.2
+**Source Docs:** `bestiary/README.md` (type rules, stat template), `combat-formulas.md` (elemental multipliers), `technical-architecture.md` Section 4.2
 **Depends On:** 1.2 (Enemy Data — loads stats from JSON)
 
 **What's Needed:**
-- [ ] Node2D scene tree per tech-arch Section 4.2
-- [ ] Sprite2D for enemy battle sprite (placeholder colored rectangles, 32x32 to 64x64)
-- [ ] AnimationPlayer with idle, hit reaction, death animations
-- [ ] GDScript: load enemy data from DataManager by enemy ID
-- [ ] GDScript: runtime HP/MP/status tracking
-- [ ] GDScript: weighted-random AI for regular enemies (per bestiary README)
-- [ ] GDScript: scripted AI for bosses (conditional priority lists, phase transitions per bosses.md)
-- [ ] GDScript: elemental profile checks (weakness/resistance/immune/absorb)
-- [ ] GDScript: status effect vulnerability checks
-- [ ] GDScript: drop/steal resolution (common, rare rates)
+- [x] Node2D scene tree per tech-arch Section 4.2
+- [x] Sprite2D for enemy battle sprite (32x32 placeholder)
+- [x] AnimationPlayer with idle, hit_reaction, death stub animations
+- [x] GDScript: load enemy data from DataManager by enemy ID
+- [x] GDScript: runtime HP/MP/status tracking
+- [x] ~~GDScript: weighted-random AI~~ → deferred to gap 3.3 (Battle Scene)
+- [x] ~~GDScript: scripted AI for bosses~~ → deferred to gap 3.3 (Battle Scene)
+- [x] GDScript: elemental profile checks (weakness/resistance/immune/absorb with correct multipliers)
+- [x] GDScript: status effect vulnerability checks (per-enemy + type default immunities)
+- [x] GDScript: drop/steal resolution (common, rare rates)
+
+**Notes:**
+- AI (weighted-random + boss scripted) deferred to gap 3.3 — requires ATB turn loop
+- TYPE_IMMUNITIES const maps 8 enemy types to default status immunities per bestiary/README.md
+- Elemental multipliers: -1.0 (absorb), 0.0 (immune), 0.75 (resist), 1.5 (weak), 1.0 (neutral)
+- Status system: apply/remove/tick/has_status with duration tracking
+- Signals: damage_taken, healed, status_applied, status_removed, died
+- GUT tests in test_enemy.gd, all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-05-enemy-prefab-design.md`
 
 **Blocking:** Battle scene (needs enemies to fight)
 

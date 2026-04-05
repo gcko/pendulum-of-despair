@@ -237,4 +237,53 @@ Reference for all review agents. Check every applicable item.
 - [ ] UI layout matches ui-design.md
 - [ ] Audio behavior matches audio.md
 - [ ] Save behavior matches save-system.md
+
+---
+
+## 8. Defensive Coding (from Copilot gap analyses PRs #105-116)
+
+### Input Validation
+- [ ] Damage/heal methods clamp `amount` to >= 0 (prevent negative inputs reversing behavior)
+- [ ] Methods that accept indices validate bounds before access
+- [ ] Enum parameters validated against known values (not just any string)
+- [ ] Resource paths validated with `ResourceLoader.exists()` before `load()`
+
+### Default State Safety
+- [ ] Boolean state vars (`is_alive`, `is_ready`, etc.) default to the SAFE state (false/inactive), not the active state
+- [ ] Uninitialized entities return empty/safe values from getters (not defaults that look valid)
+- [ ] `initialize()` methods reset ALL mutable state before loading (safe for re-init)
+- [ ] `@onready` vars guarded with null checks when accessed from methods that may run before `_ready()`
+
+### Signal Safety
+- [ ] State-transition signals emit only ONCE per transition (guard against double-fire)
+- [ ] Signals not emitted on uninitialized or dead entities
+- [ ] Signal emission happens AFTER state mutation (not before)
+
+### Node Reference Safety
+- [ ] Use `get_node_or_null()` instead of `get_node()` for fallback paths
+- [ ] `@onready` fallbacks use `get_node_or_null()` not `get_node()` (prevents crash if node missing)
+
+---
+
+## 9. JSON Data Gap Work (from PRs #108-113)
+
+### HARD GATES (mandatory before every data commit)
+- [ ] Programmatic stale-count scan: all count claims in spec/plan/gap docs match actual file/entry counts
+- [ ] Cross-file ID uniqueness: no duplicate IDs within namespace (items, enemies, equipment, dialogue)
+- [ ] All enemy_ids in encounter files exist in gap 1.2 enemy data
+- [ ] All material/equipment IDs in crafting files exist in gap 1.3 data
+- [ ] All JSON files use 2-space indent per .editorconfig (no tabs)
+
+### Mirror Staleness Prevention
+- [ ] After changing ANY value in data files, grep ALL spec/plan/gap docs for the old value
+- [ ] After changing act values, propagate to spec file structure tables AND plan dungeon lists
+- [ ] After changing entry counts (adding/removing entries), update ALL docs that reference the count
+- [ ] When fixing a pattern-based issue, grep ALL files for the same pattern (not just flagged instances)
+
+### Source Doc Verification
+- [ ] Every value traces to a canonical doc in docs/story/
+- [ ] Bonus_effect text matches equipment.md/crafting.md VERBATIM (no paraphrasing)
+- [ ] Speaker IDs match characters.md or npcs.md
+- [ ] Flag names match events.md
+- [ ] Animation IDs match dialogue-system.md catalog (14 animations + clear)
 - [ ] Accessibility features match accessibility.md
