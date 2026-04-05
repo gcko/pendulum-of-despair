@@ -138,3 +138,12 @@ func _on_interaction_area_body_entered(body: Node2D) -> void:
 func _on_interaction_area_body_exited(body: Node2D) -> void:
 	if _current_interactable == body:
 		_current_interactable = null
+
+
+func _on_interaction_area_area_entered(area: Area2D) -> void:
+	_current_interactable = area
+
+
+func _on_interaction_area_area_exited(area: Area2D) -> void:
+	if _current_interactable == area:
+		_current_interactable = null

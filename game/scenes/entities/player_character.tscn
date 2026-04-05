@@ -57,6 +57,7 @@ shape = SubResource("RectangleShape2D_body")
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
+monitorable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_interact")
@@ -68,3 +69,5 @@ libraries = {
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_area_exited"]
