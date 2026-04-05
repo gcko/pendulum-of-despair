@@ -55,8 +55,8 @@ var current_mp: int = 0
 ## Active status effects: [{name: String, remaining_turns: int}].
 var active_statuses: Array[Dictionary] = []
 
-## Whether the enemy is still alive.
-var is_alive: bool = true
+## Whether the enemy is still alive. Defaults false until initialize().
+var is_alive: bool = false
 
 ## Reference to child nodes.
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -89,8 +89,10 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	_load_placeholder_sprite()
 
 
-## Get the enemy's base stats as a dictionary subset.
+## Get the enemy's base stats as a dictionary subset. Empty if not initialized.
 func get_stats() -> Dictionary:
+	if enemy_data.is_empty():
+		return {}
 	var stat_keys: Array[String] = [
 		"hp",
 		"mp",
@@ -198,22 +200,24 @@ func has_status(status_name: String) -> bool:
 	return false
 
 
-## Apply damage. Clamps HP to 0. Emits damage_taken and died (once) signals.
+## Apply damage. Clamps amount >= 0 and HP to 0. Emits damage_taken and died (once).
 func take_damage(amount: int) -> void:
 	if not is_alive:
 		return
-	current_hp = max(0, current_hp - amount)
-	damage_taken.emit(amount)
+	var clamped: int = max(0, amount)
+	current_hp = max(0, current_hp - clamped)
+	damage_taken.emit(clamped)
 	if current_hp <= 0:
 		is_alive = false
 		died.emit()
 
 
-## Apply healing. Clamps HP to max base HP. Restores is_alive. Emits healed signal.
+## Apply healing. Clamps amount >= 0 and HP to max. Restores is_alive. Emits healed.
 func heal(amount: int) -> void:
+	var clamped: int = max(0, amount)
 	var max_hp: int = enemy_data.get("hp", 0)
 	var old_hp: int = current_hp
-	current_hp = min(max_hp, current_hp + amount)
+	current_hp = min(max_hp, current_hp + clamped)
 	if current_hp > 0:
 		is_alive = true
 	var actual_heal: int = current_hp - old_hp

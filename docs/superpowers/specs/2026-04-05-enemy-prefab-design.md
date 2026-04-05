@@ -85,7 +85,7 @@ var current_mp: int = 0
 ## Active status effects: [{name: String, remaining_turns: int}]
 var active_statuses: Array[Dictionary] = []
 
-## Computed from current_hp > 0.
+## Stored bool, defaults false. Set true by initialize(), false by take_damage(), restored by heal().
 var is_alive: bool = true
 ```
 
@@ -238,7 +238,7 @@ func roll_steal(tier: String) -> Dictionary:
 4. **test_take_damage_clamps_to_zero** — Take massive damage, HP = 0, is_alive = false
 5. **test_died_signal_emitted** — Verify died signal fires on lethal damage
 6. **test_heal_clamps_to_max** — Heal past max HP, verify clamped
-7. **test_elemental_weakness** — Ley Vermin weak to frost, verify multiplier 1.5
+7. **test_elemental_weakness** — unstable_crystal weak to frost, verify multiplier 1.5
 8. **test_elemental_neutral** — Non-weak element returns 1.0
 9. **test_status_immunity** — Construct immune to Poison, verify is_immune_to_status
 10. **test_apply_status_success** — Apply non-immune status, verify active

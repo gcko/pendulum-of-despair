@@ -458,7 +458,7 @@ GDScript loads data from Tier 1 JSON via DataManager.
 - Elemental multipliers: -1.0 (absorb), 0.0 (immune), 0.75 (resist), 1.5 (weak), 1.0 (neutral)
 - Status system: apply/remove/tick/has_status with duration tracking
 - Signals: damage_taken, healed, status_applied, status_removed, died
-- 16 GUT tests in test_enemy.gd, all code passes gdlint + gdformat
+- GUT tests in test_enemy.gd, all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-05-enemy-prefab-design.md`
 
 **Blocking:** Battle scene (needs enemies to fight)
