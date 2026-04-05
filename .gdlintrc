@@ -38,3 +38,5 @@ max-function-length: 60
 max-returns: 8
 max-branches: 12
 max-local-variables: 15
+# Raised from 20 to 40 — test files need many test_ methods
+max-public-methods: 40

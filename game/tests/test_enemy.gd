@@ -99,6 +99,24 @@ func test_element_neutral() -> void:
 	)
 
 
+func test_element_absorb() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {"absorb": ["flame"], "weaknesses": [], "resistances": [], "immunities": []}
+	assert_eq(enemy.get_element_multiplier("flame"), -1.0, "Absorb should return -1.0")
+
+
+func test_element_immune() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {"absorb": [], "weaknesses": [], "resistances": [], "immunities": ["storm"]}
+	assert_eq(enemy.get_element_multiplier("storm"), 0.0, "Immune should return 0.0")
+
+
+func test_element_resist() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {"absorb": [], "weaknesses": [], "resistances": ["earth"], "immunities": []}
+	assert_eq(enemy.get_element_multiplier("earth"), 0.75, "Resist should return 0.75")
+
+
 func test_status_immunity_by_type() -> void:
 	var enemy = _create_enemy()
 	# Construct type should be immune to poison
@@ -151,9 +169,37 @@ func test_roll_steal_returns_dict() -> void:
 	assert_has(result, "success", "result should have success")
 
 
+func test_roll_steal_guaranteed_success() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"steal": {"common": {"item_id": "test_item", "rate": 100}},
+	}
+	var result: Dictionary = enemy.roll_steal("common")
+	assert_true(result.get("success"), "100% rate should always succeed")
+	assert_eq(result.get("item_id"), "test_item", "Should return item_id")
+
+
+func test_roll_steal_guaranteed_fail() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"steal": {"common": {"item_id": "test_item", "rate": 0}},
+	}
+	var result: Dictionary = enemy.roll_steal("common")
+	assert_false(result.get("success"), "0% rate should always fail")
+	assert_eq(result.get("item_id"), "", "Failed steal should return empty")
+
+
 func test_roll_drop_returns_dict() -> void:
 	var enemy = _create_enemy()
 	enemy.initialize("ley_vermin", "act_i")
 	var result: Dictionary = enemy.roll_drop()
 	assert_has(result, "item_id", "result should have item_id")
 	assert_has(result, "success", "result should have success")
+
+
+func test_roll_drop_guaranteed_success() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {"drop": {"item_id": "gold_coin", "rate": 100}}
+	var result: Dictionary = enemy.roll_drop()
+	assert_true(result.get("success"), "100% rate should always succeed")
+	assert_eq(result.get("item_id"), "gold_coin", "Should return item_id")
