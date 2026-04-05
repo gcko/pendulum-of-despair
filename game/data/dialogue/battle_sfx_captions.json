@@ -32,17 +32,6 @@
       "sfx": null
     },
     {
-      "id": "battle_sfx_captions_003",
-      "speaker": "",
-      "lines": [
-        "See [accessibility.md](../accessibility.md) Section 6."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
       "id": "battle_sfx_captions_004",
       "speaker": "",
       "lines": [

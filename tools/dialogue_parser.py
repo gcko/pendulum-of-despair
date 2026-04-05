@@ -324,6 +324,10 @@ def segment_entries(raw_text):
         if re.match(r'^\s*\[.+?\]\(.+?\.md\)', line):
             i += 1
             continue
+        # Skip lines containing doc references (e.g., "See [accessibility.md](...)")
+        if re.search(r'\[.+?\.md\]\(.+?\)', line):
+            i += 1
+            continue
         # Skip pure italic markdown links: *[text](file.md)*
         if re.match(r'^\s*\*\[.+?\]\(.+?\)\*\s*$', line):
             i += 1
