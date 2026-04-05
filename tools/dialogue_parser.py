@@ -1153,7 +1153,7 @@ def validate_all():
                     pass
                 # Numeric comparison conditions (e.g., "council_result >= 2")
                 # Validate the variable name portion, skip comparison syntax
-                elif re.match(r'^[a-z_]+\s*(>=|<=|==|!=|>|<)\s*\d+$', condition):
+                elif re.match(r'^[a-z][a-z0-9_]*\s*(>=|<=|==|!=|>|<)\s*\w+$', condition):
                     var_name = re.match(r'^([a-z][a-z0-9_]*)', condition).group(1)
                     if var_name not in valid_flags and var_name not in skip_words:
                         if any(var_name.startswith(p) for p in placeholder_prefixes):
@@ -1199,6 +1199,9 @@ def validate_all():
                 for anim in animations:
                     if anim.get("anim") not in VALID_ANIMATIONS:
                         unknown_anims.add(anim.get("anim", "?"))
+                    who = anim.get("who", "")
+                    if who and who not in valid_speakers and who != "":
+                        unknown_speakers.add(who)
 
             # Check SFX
             if sfx:
