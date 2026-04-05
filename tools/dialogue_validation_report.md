@@ -25,11 +25,11 @@ runtime implementation (choice branching, reunion ordering, etc.).
 - `choice_3_selected`
 - `consulted_grandmother_seyth`
 - `default_arrival`
+- `edren_not_first_reunion`
 - `edren_not_found`
 - `edren_reaches_him_first`
 - `lira_reaches_him_first`
 - `maren_reaches_him_first`
-- `reunion_order != edren`
 
 ### Battle-Event Triggers (4)
 

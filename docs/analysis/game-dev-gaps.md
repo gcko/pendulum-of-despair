@@ -308,7 +308,7 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
-**Estimated Size:** L (109 JSON files, 1035 entries)
+**Estimated Size:** L (109 JSON files, 1034 entries)
 **Output:** `game/data/dialogue/{scene_id}.json`, `game/data/dialogue/npc_{npc_id}.json`, `game/data/dialogue/battle_{context_id}.json`
 **Source Docs:** `script/` (6,531 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
 **Architecture Ref:** `technical-architecture.md` Section 2.5

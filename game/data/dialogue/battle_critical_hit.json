@@ -5,7 +5,7 @@
       "id": "battle_critical_hit_001",
       "speaker": "",
       "lines": [
-        "- \"Critical!\" *(2x damage, screen flash)*"
+        "Critical!"
       ],
       "condition": null,
       "animations": null,

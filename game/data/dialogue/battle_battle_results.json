@@ -5,10 +5,10 @@
       "id": "battle_battle_results_001",
       "speaker": "",
       "lines": [
-        "- \"[Character] gained [X] EXP.\"",
-        "- \"Found [X] Gold.\"",
-        "- \"[Character] reached Level [X]!\" *(with level-up fanfare)*",
-        "- \"Obtained [Item Name].\""
+        "[Character] gained [X] EXP.",
+        "Found [X] Gold.",
+        "[Character] reached Level [X]!",
+        "Obtained [Item Name]."
       ],
       "condition": null,
       "animations": null,
