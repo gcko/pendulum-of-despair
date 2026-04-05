@@ -87,6 +87,33 @@ func test_get_current_dialogue_with_flag() -> void:
 	assert_eq(result.get("id"), "test_001", "should return flagged entry")
 
 
+func test_get_current_dialogue_null_before_conditioned() -> void:
+	# Regression: real NPC data has null-condition entries BEFORE conditioned ones.
+	# The priority stack must still check conditioned entries when their flags are set.
+	var npc = _create_npc()
+	npc.npc_id = "test_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["default first"]},
+		{"id": "default_002", "condition": null, "lines": ["default second"]},
+		{"id": "flagged_001", "condition": "late_game_flag", "lines": ["late game"]},
+	]
+	# Without flag: should return last null-condition entry (fallback)
+	var result_no_flag: Dictionary = npc.get_current_dialogue()
+	assert_eq(
+		result_no_flag.get("id"),
+		"default_002",
+		"without flag should return last default",
+	)
+	# With flag: should return conditioned entry
+	EventFlags.set_flag("late_game_flag", true)
+	var result_with_flag: Dictionary = npc.get_current_dialogue()
+	assert_eq(
+		result_with_flag.get("id"),
+		"flagged_001",
+		"with flag should return conditioned entry",
+	)
+
+
 # --- Condition Evaluation ---
 
 

@@ -49,13 +49,19 @@ func interact() -> void:
 
 
 ## Get the current dialogue entry based on priority stack resolution.
-## Walks entries top-to-bottom, returns first whose condition is true.
+## First pass: check conditioned entries (skip null/empty conditions).
+## Second pass: return last null-condition entry as fallback.
+## This handles data where default entries appear before conditioned ones.
 func get_current_dialogue() -> Dictionary:
+	var fallback: Dictionary = {}
 	for entry: Dictionary in dialogue_entries:
 		var condition = entry.get("condition")
+		if condition == null or condition == "":
+			fallback = entry
+			continue
 		if _evaluate_condition(condition):
 			return entry
-	return {}
+	return fallback
 
 
 ## Evaluate a condition expression against current game state.

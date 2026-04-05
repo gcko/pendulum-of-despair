@@ -80,7 +80,9 @@ func initialize(p_npc_id: String) -> void
 func interact() -> void
 
 ## Get the current dialogue entry based on priority stack resolution.
-## Returns the first entry whose condition evaluates true, or empty dict.
+## Two-pass: first checks conditioned entries (skips null), then falls
+## back to the last null-condition entry. Handles data where defaults
+## appear before conditioned entries in the JSON array.
 func get_current_dialogue() -> Dictionary
 ```
 
