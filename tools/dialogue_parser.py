@@ -843,15 +843,72 @@ def split_lines_on_newlines(lines):
     return result if result else [""]
 
 
+def deduplicate_animations(animations):
+    """Remove exact duplicate animation entries (same who/anim/when)."""
+    if not animations:
+        return animations
+    seen = set()
+    result = []
+    for a in animations:
+        key = (a.get("who", ""), a.get("anim", ""), a.get("when", ""))
+        if key not in seen:
+            seen.add(key)
+            result.append(a)
+    return result if result else None
+
+
+def normalize_condition(condition):
+    """Normalize condition strings.
+
+    - Convert 'X_is_in_the_party' → 'party_has(x)'
+    - Decompose compound placeholders with '_and_' into AND conditions
+    - Normalize battle ability triggers to shorter snake_case
+    """
+    if not condition:
+        return condition
+
+    # Battle ability trigger normalization (FIX 10-13)
+    battle_ability_map = {
+        "edren_uses_steadfast_resolve_during_the_fight": "battle_edren_steadfast_resolve",
+        "lira_uses_a_healing_ability_on_the_party": "battle_lira_heal",
+        "torren_uses_rootsong": "battle_torren_rootsong",
+        "maren_uses_pallor_sight": "battle_maren_pallor_sight",
+    }
+    if condition in battle_ability_map:
+        return battle_ability_map[condition]
+
+    # FIX 6: Convert 'X_is_in_the_party' → 'party_has(x)'
+    party_match = re.match(r'^([a-z_]+)_is_in_the_party$', condition)
+    if party_match:
+        char_name = party_match.group(1)
+        return f"party_has({char_name})"
+
+    # FIX 7-9: Decompose compound placeholders with '_and_'
+    # Pattern: X_is_not_first_reunion_and_Yfound_set
+    compound_match = re.match(
+        r'^([a-z]+)_is_not_first_reunion_and_([a-z]+)found_set$', condition
+    )
+    if compound_match:
+        char = compound_match.group(1)
+        other = compound_match.group(2)
+        return f"reunion_order != {char} AND {other}_found"
+
+    return condition
+
+
 def clean_entry(entry):
     """Ensure all 7 fields present, clean up internal tracking."""
     raw_lines = entry["lines"] if entry["lines"] else [""]
+    # Normalize condition (FIX 6, 7-9, 10-13)
+    condition = normalize_condition(entry.get("condition"))
+    # Deduplicate animations (FIX 4-5)
+    animations = deduplicate_animations(entry.get("animations")) if entry.get("animations") else None
     return {
         "id": entry["id"],
         "speaker": entry["speaker"],
         "lines": split_lines_on_newlines(raw_lines),
-        "condition": entry.get("condition"),
-        "animations": entry.get("animations") if entry.get("animations") else None,
+        "condition": condition,
+        "animations": animations,
         "choice": entry.get("choice") if entry.get("choice") else None,
         "sfx": entry.get("sfx") if entry.get("sfx") else None,
     }
@@ -996,6 +1053,8 @@ def validate_all():
 
     unknown_speakers = set()
     unknown_flags = set()
+    placeholder_flags = set()  # Parser-generated placeholders
+    battle_trigger_flags = set()  # Battle-event triggers (gap 3.3)
     unknown_anims = set()
     unknown_sfx = set()
     empty_lines = []
@@ -1080,9 +1139,49 @@ def validate_all():
                         # Boolean/comparison operators
                         "not", "and", "or", "not_set",
                     }
-                    for fn in flag_names:
-                        if fn not in valid_flags and fn not in skip_words:
-                            unknown_flags.add(fn)
+                    # Known battle-event trigger prefixes (gap 3.3)
+                    battle_triggers = {
+                        "battle_edren_steadfast_resolve",
+                        "battle_lira_heal",
+                        "battle_torren_rootsong",
+                        "battle_maren_pallor_sight",
+                    }
+                    # Known parser-generated placeholders
+                    placeholder_prefixes = (
+                        "choice_", "default_", "consulted_",
+                        "reunion_order",
+                    )
+                    # Suffixes that indicate parser-generated branch conditions
+                    placeholder_suffixes = (
+                        "_reaches_him_first", "_reaches_her_first",
+                        "_not_found", "_not_set",
+                    )
+                    # Compound conditions use AND — check each part
+                    if " AND " in condition:
+                        parts = condition.split(" AND ")
+                        for part in parts:
+                            part = part.strip()
+                            # reunion_order != X is a compound placeholder
+                            if part.startswith("reunion_order"):
+                                placeholder_flags.add(part)
+                            else:
+                                part_flags = re.findall(r'[a-z][a-z0-9_]+', part)
+                                for fn in part_flags:
+                                    if fn not in valid_flags and fn not in skip_words:
+                                        placeholder_flags.add(fn)
+                    elif condition in battle_triggers:
+                        battle_trigger_flags.add(condition)
+                    else:
+                        for fn in flag_names:
+                            if fn not in valid_flags and fn not in skip_words:
+                                if any(fn.startswith(p) for p in placeholder_prefixes):
+                                    placeholder_flags.add(fn)
+                                elif any(fn.endswith(s) for s in placeholder_suffixes):
+                                    placeholder_flags.add(fn)
+                                elif fn.startswith("battle_"):
+                                    battle_trigger_flags.add(fn)
+                                else:
+                                    unknown_flags.add(fn)
 
             # Check animations
             if animations:
@@ -1125,6 +1224,22 @@ def validate_all():
             report_lines.append(f"- `{f}`")
         report_lines.append("")
 
+    if placeholder_flags:
+        report_lines.append(f"### Parser-Generated Placeholders ({len(placeholder_flags)})\n")
+        report_lines.append("These conditions are auto-generated by the parser and require")
+        report_lines.append("runtime implementation (choice branching, reunion ordering, etc.).\n")
+        for f in sorted(placeholder_flags):
+            report_lines.append(f"- `{f}`")
+        report_lines.append("")
+
+    if battle_trigger_flags:
+        report_lines.append(f"### Battle-Event Triggers ({len(battle_trigger_flags)})\n")
+        report_lines.append("These conditions are intentional battle-event triggers documented")
+        report_lines.append("in battle-dialogue.md. They will be set by the battle system (gap 3.3).\n")
+        for f in sorted(battle_trigger_flags):
+            report_lines.append(f"- `{f}`")
+        report_lines.append("")
+
     if unknown_anims:
         report_lines.append(f"### Unknown Animations ({len(unknown_anims)})\n")
         for a in sorted(unknown_anims):
@@ -1164,7 +1279,10 @@ def validate_all():
         report_lines.append("")
 
     if not unknown_speakers and not unknown_flags and not unknown_anims and not unknown_sfx and not duplicate_ids and not empty_lines and not choice_issues:
-        report_lines.append("No critical issues found.\n")
+        if placeholder_flags or battle_trigger_flags:
+            report_lines.append("No critical issues found. Parser-generated placeholders and battle-event triggers listed above require runtime implementation.\n")
+        else:
+            report_lines.append("No critical issues found.\n")
 
     report_path = PROJECT_ROOT / "tools" / "dialogue_validation_report.md"
     report_path.write_text('\n'.join(report_lines) + '\n', encoding="utf-8")

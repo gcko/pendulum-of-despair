@@ -252,7 +252,7 @@
         "Scattered. Lira's with me. She infiltrated the",
         "Compact — found Cael's trail."
       ],
-      "condition": "edren_is_not_first_reunion_and_lirafound_set",
+      "condition": "reunion_order != edren AND lira_found",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -287,7 +287,7 @@
         "was holding back the corruption by himself. We stabilized the",
         "nexus."
       ],
-      "condition": "edren_is_not_first_reunion_and_torrenfound_set",
+      "condition": "reunion_order != edren AND torren_found",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -323,7 +323,7 @@
         "civilization. She found the pattern — the Pallor has done this",
         "before."
       ],
-      "condition": "edren_is_not_first_reunion_and_marenfound_set",
+      "condition": "reunion_order != edren AND maren_found",
       "animations": null,
       "choice": null,
       "sfx": null

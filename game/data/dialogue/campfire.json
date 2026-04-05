@@ -112,11 +112,6 @@
           "who": "torren",
           "anim": "nod",
           "when": "after_line_0"
-        },
-        {
-          "who": "torren",
-          "anim": "nod",
-          "when": "after_line_0"
         }
       ],
       "choice": null,

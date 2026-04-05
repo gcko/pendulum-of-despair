@@ -277,7 +277,7 @@
         "I learned this at the monastery. I'm not leaving you,",
         "Cael. Not again."
       ],
-      "condition": "edren_uses_steadfast_resolve_during_the_fight",
+      "condition": "battle_edren_steadfast_resolve",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -289,7 +289,7 @@
         "The Pallor's grip is fluctuating. He's still in there.",
         "I can see it in the energy patterns."
       ],
-      "condition": "lira_uses_a_healing_ability_on_the_party",
+      "condition": "battle_lira_heal",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -301,7 +301,7 @@
         "The spirits remember him. They're singing for him.",
         "Not against him."
       ],
-      "condition": "torren_uses_rootsong",
+      "condition": "battle_torren_rootsong",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -313,7 +313,7 @@
         "This is the worst fight I've ever been in. And I've",
         "been in a lot of fights."
       ],
-      "condition": "sable_is_in_the_party",
+      "condition": "party_has(sable)",
       "animations": null,
       "choice": null,
       "sfx": null
@@ -337,7 +337,7 @@
         "I can see the Pallor's grip. It's wrapped around his",
         "heart. But there's a gap. He's holding it open. For us."
       ],
-      "condition": "maren_uses_pallor_sight",
+      "condition": "battle_maren_pallor_sight",
       "animations": null,
       "choice": null,
       "sfx": null

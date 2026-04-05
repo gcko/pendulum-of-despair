@@ -157,11 +157,6 @@
           "who": "torren",
           "anim": "nod",
           "when": "before_line_0"
-        },
-        {
-          "who": "torren",
-          "anim": "nod",
-          "when": "before_line_0"
         }
       ],
       "choice": null,
