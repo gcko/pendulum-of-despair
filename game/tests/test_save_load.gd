@@ -79,8 +79,9 @@ func test_populated_slot_display() -> void:
 				"slot_type": "manual",
 			},
 			"party": [],
-			"formation": {"active": ["edren", "cael"], "reserve": [], "guests": []},
+			"formation": {"active": ["edren", "cael"], "reserve": [], "rows": {}},
 			"inventory": {},
+			"owned_equipment": [],
 			"crafting": {},
 			"ley_crystals": {},
 			"world":
