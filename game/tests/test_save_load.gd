@@ -4,8 +4,12 @@ extends GutTest
 const SAVE_LOAD_SCENE: PackedScene = preload("res://scenes/overlay/save_load.tscn")
 
 
+func before_each() -> void:
+	for slot: int in [0, 1, 2, 3]:
+		SaveManager.delete_slot(slot)
+
+
 func after_each() -> void:
-	# Clean up any save files created during tests
 	for slot: int in [0, 1, 2, 3]:
 		SaveManager.delete_slot(slot)
 

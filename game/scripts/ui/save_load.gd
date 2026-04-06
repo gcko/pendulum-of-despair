@@ -81,7 +81,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_handle_confirm_input(event)
 
 
-## Initialize as save point interaction (shows 3-option menu first).
 func open_save_point() -> void:
 	_mode = Mode.SAVE_POINT
 	_sub_state = SubState.SAVE_POINT_MENU
@@ -91,7 +90,6 @@ func open_save_point() -> void:
 	_update_save_point_display()
 
 
-## Initialize as direct save screen (from menu).
 func open_save() -> void:
 	_mode = Mode.SAVE
 	_sub_state = SubState.SLOT_SELECT
@@ -99,7 +97,6 @@ func open_save() -> void:
 	_show_slots(false)
 
 
-## Initialize as load screen (from title or menu).
 func open_load() -> void:
 	_mode = Mode.LOAD
 	_sub_state = SubState.SLOT_SELECT
@@ -127,27 +124,27 @@ func _refresh_slot_display() -> void:
 	for i: int in range(3):
 		_update_slot_panel(_manual_slots[i], _slot_previews[i + 1])
 	if _auto_slot.visible:
-		_update_slot_panel(_auto_slot, _slot_previews[0])
+		_update_slot_panel(_auto_slot, _slot_previews[0], true)
 
 
-func _update_slot_panel(panel: PanelContainer, data: Dictionary) -> void:
+func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
 	var header: Label = panel.get_node("HeaderLabel")
 	var party: Label = panel.get_node("PartyLabel")
+	var prefix: String = "AUTO - " if is_auto else ""
 	if data.is_empty():
-		header.text = "Empty"
+		header.text = prefix + "Empty"
 		header.modulate = COLOR_DISABLED
 		party.text = ""
 	elif data.has("error"):
-		header.text = "Corrupted"
+		header.text = prefix + "Corrupted"
 		header.modulate = Color("#ff4444")
 		party.text = ""
 	else:
-		var meta: Dictionary = data.get("meta", {})
 		var world: Dictionary = data.get("world", {})
 		var loc: String = world.get("current_location", "Unknown")
-		var pt: int = meta.get("playtime", 0)
+		var pt: int = data.get("meta", {}).get("playtime", 0)
 		header.text = (
-			"%s  Time %d:%02d  Gold %d" % [loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
+			"%s%s  %d:%02d  %dg" % [prefix, loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
 		)
 		header.modulate = COLOR_NORMAL
 		var active: Array = data.get("formation", {}).get("active", [])
@@ -211,11 +208,13 @@ func _handle_rest_input(event: InputEvent) -> void:
 			_show_slots(false)
 		else:
 			_sub_state = SubState.SAVE_POINT_MENU
+			_save_point_menu.visible = true
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		_rest_menu.visible = false
 		_rest_after_save = false
 		_sub_state = SubState.SAVE_POINT_MENU
+		_save_point_menu.visible = true
 		get_viewport().set_input_as_handled()
 
 
@@ -248,17 +247,16 @@ func _handle_confirm_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-# --- Actions ---
-
-
 func _confirm_save_point() -> void:
 	match _save_point_selection:
 		SavePointOption.REST:
+			_save_point_menu.visible = false
 			_sub_state = SubState.REST_MENU
 			_rest_selection = 0
 			_rest_menu.visible = true
 			_update_rest_display()
 		SavePointOption.REST_SAVE:
+			_save_point_menu.visible = false
 			_rest_after_save = true
 			_sub_state = SubState.REST_MENU
 			_rest_selection = 0

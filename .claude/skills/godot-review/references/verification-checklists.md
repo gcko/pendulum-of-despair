@@ -95,6 +95,12 @@ Reference for all review agents. Check every applicable item.
 - [ ] Tests that inject fake data must not call methods that overwrite it (e.g., `_refresh` calling `SaveManager.get_slot_previews()`)
 - [ ] Tests that depend on state absence (no saves) must ensure cleanup runs even across test files
 - [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
+- [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
+
+### State Transition Visibility (from Copilot PR #119 batch 4)
+- [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
+- [ ] When refresh/update methods rewrite display text, preserve prefixes or labels that distinguish node types (e.g., "AUTO" prefix on auto-save slot)
+- [ ] `has_X()` / `is_X_available()` checks must validate the same criteria as the corresponding `load_X()` / `get_X()` — file existence alone is not validity (corrupted files)
 
 ---
 

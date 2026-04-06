@@ -106,11 +106,11 @@ func load_most_recent() -> Dictionary:
 	return _load_most_recent_save()
 
 
-## Check whether any save file exists (for title screen Continue button).
+## Check whether any valid (non-corrupted) save exists (for title screen Continue).
 func has_any_save() -> bool:
 	for slot: int in [0, 1, 2, 3]:
-		var path: String = _slot_path(slot)
-		if FileAccess.file_exists(path):
+		var data: Dictionary = load_game(slot)
+		if not data.is_empty() and not data.has("error"):
 			return true
 	return false
 
