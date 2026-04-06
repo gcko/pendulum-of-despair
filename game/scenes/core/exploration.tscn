@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/exploration.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_location"]
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.333, 0.4, 0.667, 1)
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_fade"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Exploration" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="CurrentMap" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = false
+
+[node name="FadeOverlay" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="FadeRect" type="ColorRect" parent="FadeOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 1)
+visible = false
+
+[node name="LocationFlash" type="CanvasLayer" parent="."]
+layer = 15
+
+[node name="LocationLabel" type="PanelContainer" parent="LocationFlash"]
+offset_left = 80.0
+offset_top = 4.0
+offset_right = 240.0
+offset_bottom = 20.0
+theme_override_styles/panel = SubResource("StyleBox_location")
+visible = false
+
+[node name="NameLabel" type="Label" parent="LocationFlash/LocationLabel"]
+layout_mode = 2
+horizontal_alignment = 1
+text = ""

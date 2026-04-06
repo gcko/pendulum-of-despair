@@ -124,6 +124,13 @@ func _load_placeholder_sprite() -> void:
 		sprite.texture = texture
 
 
+## Attempt to interact with the nearest interactable. Emits interaction_requested
+## if an interactable is in range. Called by exploration scene on confirm press.
+func try_interact() -> void:
+	if _current_interactable != null:
+		interaction_requested.emit(_current_interactable)
+
+
 func _on_interaction_area_body_entered(body: Node2D) -> void:
 	_current_interactable = body
 

@@ -544,26 +544,41 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.2 Exploration Scene
 
-**Status:** NOT STARTED
+**Status:** MOSTLY COMPLETE
+**Completed:** 2026-04-06 (Minimal Viable — Option A)
 **Priority:** P0 — blocks all overworld/town/dungeon gameplay
-**Estimated Size:** L (1 .tscn + multiple .gd + map loading system)
-**Output:** `game/scenes/core/exploration.tscn`, `game/scripts/core/exploration.gd`, map loader scripts
+**Estimated Size:** L (1 .tscn + 1 .gd + test maps)
+**Output:** `game/scenes/core/exploration.tscn`, `game/scripts/core/exploration.gd`, test map scenes
 **Source Docs:** `overworld.md` (movement, transitions, weather), `combat-formulas.md` (danger counter, encounter trigger), `geography.md` (terrain types), `save-system.md` (auto-save triggers), `technical-architecture.md` Section 3
 **Depends On:** 2.1 (PlayerCharacter), 2.2 (NPC), 2.4 (Interactables), 1.6 (Encounter Tables)
 
 **What's Needed:**
-- [ ] TileMapLayer-based map rendering (up to 4 layers per tech-arch Section 7)
-- [ ] Map loading system (load .tscn map files by ID)
-- [ ] Player character instantiation and movement
-- [ ] NPC, chest, trigger, save point placement from map data
-- [ ] Camera2D following player (pixel-snapped, integer zoom only)
-- [ ] Danger counter system from combat-formulas.md (step counting, terrain increments)
-- [ ] Random encounter trigger → GameManager.change_core_state(BATTLE)
-- [ ] Map transition (door/exit → fade to black → load new map)
-- [ ] Menu button → GameManager.push_overlay(MENU)
-- [ ] NPC/chest/save interaction → appropriate overlay
-- [ ] Auto-save triggers per save-system.md Section 6 (new floor, boss zone, new town, quest complete)
-- [ ] Audio context switching via AudioManager (biome music + ambient per audio.md mixing model)
+- [ ] ~~TileMapLayer-based map rendering~~ → test maps use ColorRect backgrounds; real tilemaps deferred to gap 4.1
+- [x] Map loading system (load .tscn map files by ID)
+- [x] Player character instantiation and movement
+- [x] NPC, chest, trigger, save point placement from map data
+- [x] Camera2D following player (pixel-snapped, integer zoom only)
+- [ ] ~~Danger counter system~~ → deferred until gap 3.3 (Battle Scene) exists
+- [ ] ~~Random encounter trigger~~ → deferred until gap 3.3
+- [x] Map transition (door/exit → fade to black → load new map)
+- [ ] ~~Menu button~~ → deferred until gap 3.4 (Menu Overlay)
+- [x] NPC/chest/save interaction → appropriate overlay
+- [ ] ~~Auto-save triggers~~ → deferred until exploration is stable
+- [ ] ~~Audio context switching~~ → deferred to gap 3.8 (Audio Integration)
+
+**Notes:**
+- Minimal Viable Exploration (Option A): core integration only, no encounters/audio/menu
+- Map scenes loaded dynamically from res://scenes/maps/ by ID
+- Entity signals wired on map load, disconnected on unload
+- NPC dialogue_data wrapped in array for dialogue_box.show_dialogue() contract
+- Fade-to-black transitions via Tween on ColorRect (0.3s each direction)
+- Location name flash per ui-design.md 15.2 (fade in 0.5s, hold 2s, fade out 0.5s)
+- PlayerCharacter gained try_interact() public method for exploration input handling
+- New Game initializes from GameManager.transition_data, Continue restores position from save
+- 2 test maps (test_room with entities, test_room_2 for transitions)
+- GUT tests in test_exploration.gd (10 tests), all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-06-exploration-scene-design.md`
+- **The game now has a walkable, interactive world** — player can explore, talk to NPCs, open chests, save, and transition between maps
 
 **Blocking:** All overworld, town, and dungeon gameplay
 
