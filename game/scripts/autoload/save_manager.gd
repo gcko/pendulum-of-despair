@@ -235,9 +235,11 @@ func _validate(data: Dictionary) -> bool:
 
 
 ## Delete a save slot file. Returns true if deleted or already absent.
+## Accepts slot 0 (auto) through 3 (manual). UI should restrict user-facing
+## delete to slots 1-3; slot 0 is for programmatic cleanup (tests, FFR).
 func delete_slot(slot: int) -> bool:
-	if slot < 1 or slot > 3:
-		push_error("SaveManager: Cannot delete slot %d (valid: 1-3)" % slot)
+	if slot < 0 or slot > 3:
+		push_error("SaveManager: Cannot delete slot %d (valid: 0-3)" % slot)
 		return false
 	var path: String = _slot_path(slot)
 	if not FileAccess.file_exists(path):

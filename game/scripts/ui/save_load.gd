@@ -103,8 +103,9 @@ func open_save() -> void:
 func open_load() -> void:
 	_mode = Mode.LOAD
 	_sub_state = SubState.SLOT_SELECT
-	_show_slots(true)
+	_slot_previews = SaveManager.get_slot_previews()
 	_select_first_populated_slot()
+	_show_slots(true)
 
 
 func _hide_all() -> void:
