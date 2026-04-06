@@ -96,6 +96,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Tests that depend on state absence (no saves) must ensure cleanup runs even across test files
 - [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
 - [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
+- [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
 
 ### State Transition Visibility (from Copilot PR #119 batch 4)
 - [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
