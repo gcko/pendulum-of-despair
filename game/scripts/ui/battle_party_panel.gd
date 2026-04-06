@@ -55,8 +55,8 @@ func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
 
 	var atb_bar: ColorRect = row.get_node_or_null("ATBBar")
 	if atb_bar != null:
-		var fill_ratio: float = float(atb_gauge) / 16000.0
-		atb_bar.size.x = fill_ratio * 20.0
+		var fill_ratio: float = clampf(float(atb_gauge) / 16000.0, 0.0, 1.0)
+		atb_bar.custom_minimum_size.x = fill_ratio * 20.0
 		atb_bar.color = COLOR_ATB_FILL
 
 

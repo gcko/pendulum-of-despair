@@ -8,6 +8,7 @@ extends CanvasLayer
 signal results_dismissed
 signal command_submitted(command: Dictionary)
 signal command_cancelled
+signal submenu_state_changed(is_open: bool)
 
 const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
@@ -41,6 +42,8 @@ func _ready() -> void:
 	if _command_menu != null:
 		_command_menu.command_selected.connect(_on_command_selected)
 		_command_menu.command_cancelled.connect(_on_command_cancelled)
+		_command_menu.submenu_opened.connect(_on_submenu_opened)
+		_command_menu.submenu_closed.connect(_on_submenu_closed)
 
 	if _message_area != null:
 		_message_area.visible = false
@@ -92,6 +95,14 @@ func _on_command_cancelled() -> void:
 	if _party_panel != null:
 		_party_panel.set_active_slot(-1)
 	command_cancelled.emit()
+
+
+func _on_submenu_opened() -> void:
+	submenu_state_changed.emit(true)
+
+
+func _on_submenu_closed() -> void:
+	submenu_state_changed.emit(false)
 
 
 func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> void:

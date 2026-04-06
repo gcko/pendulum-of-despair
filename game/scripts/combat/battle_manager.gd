@@ -42,6 +42,7 @@ func _ready() -> void:
 		_ui.command_submitted.connect(_on_ui_command)
 		_ui.command_cancelled.connect(_on_ui_cancel)
 		_ui.results_dismissed.connect(_on_results_dismissed)
+		_ui.submenu_state_changed.connect(_on_submenu_state)
 
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
@@ -77,19 +78,22 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not _battle_active or _awaiting_input_for != "":
+	if not _battle_active:
 		return
+	# ATB ticks even during player input (Active mode handles pause internally)
 	_tick_realtime_statuses(delta)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if not _battle_active:
 		return
 	_emit_party_state()
+	if _awaiting_input_for != "":
+		return  # Waiting for player command — don't process queue
 	var queue: Array[String] = _atb.get_ready_queue()
 	for id: String in queue:
 		if id.begins_with("party_"):
 			_awaiting_input_for = id
-			var slot: int = _parse_slot(id)
+			var slot: int = id.replace("party_", "").to_int()
 			_clear_defend(slot)
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
@@ -125,7 +129,7 @@ func _on_ui_command(command: Dictionary) -> void:
 		"ability":
 			_do_attack(actor_id, command)
 	_atb.reset_gauge(actor_id)
-	_state.tick_statuses(_parse_slot(actor_id))
+	_state.tick_statuses(actor_id.replace("party_", "").to_int())
 	_check_end_conditions()
 
 
@@ -136,13 +140,18 @@ func _on_ui_cancel() -> void:
 	_awaiting_input_for = ""
 
 
+## Called by UI signal — submenu opened/closed (for ATB wait mode pausing).
+func _on_submenu_state(is_open: bool) -> void:
+	_atb.set_submenu_open(is_open)
+
+
 ## Called by UI signal — player dismissed results screen.
 func _on_results_dismissed() -> void:
 	_exit_battle("victory")
 
 
 func _do_attack(actor_id: String, command: Dictionary) -> void:
-	var slot: int = _parse_slot(actor_id)
+	var slot: int = actor_id.replace("party_", "").to_int()
 	var target_idx: int = command.get("target", 0)
 	if target_idx < 0 or target_idx >= _enemies.size():
 		return
@@ -158,7 +167,7 @@ func _do_attack(actor_id: String, command: Dictionary) -> void:
 
 
 func _do_magic(actor_id: String, command: Dictionary) -> void:
-	var slot: int = _parse_slot(actor_id)
+	var slot: int = actor_id.replace("party_", "").to_int()
 	var member: Dictionary = _state.get_member(slot)
 	if member.is_empty():
 		return
@@ -236,7 +245,7 @@ func _do_item(command: Dictionary) -> void:
 
 ## Defend: halve all incoming damage. Cleared on next turn via _clear_defend().
 func _do_defend(actor_id: String) -> void:
-	var slot: int = _parse_slot(actor_id)
+	var slot: int = actor_id.replace("party_", "").to_int()
 	_state.set_defending(slot, true)
 	_state.set_buff(slot, "damage_taken_mult", 0.5)
 	var name: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
@@ -258,7 +267,15 @@ func _do_flee() -> void:
 		message.emit("Can't escape!")
 		flee_result.emit(false)
 		return
-	var chance: int = DamageCalc.calculate_flee_chance(_state.get_avg_party_spd(), _avg_enemy_spd())
+	var es: float = 0.0
+	var ec: int = 0
+	for e: Node in _enemies:
+		if e.is_alive:
+			es += e.get_stats().get("spd", 10)
+			ec += 1
+	var chance: int = DamageCalc.calculate_flee_chance(
+		_state.get_avg_party_spd(), es / maxf(1.0, ec)
+	)
 	if randi() % 100 < chance:
 		message.emit("Escaped!")
 		flee_result.emit(true)
@@ -369,30 +386,15 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 
 
 func _tick_realtime_statuses(delta: float) -> void:
-	if _atb.should_pause_timers():
-		return
-	for i: int in range(4):
-		_state.tick_realtime_statuses(i, delta)
+	if not _atb.should_pause_timers():
+		for i: int in range(4):
+			_state.tick_realtime_statuses(i, delta)
 
 
 func _emit_party_state() -> void:
-	var members: Array = []
-	var gauges: Dictionary = {}
+	var m: Array = []
+	var g: Dictionary = {}
 	for i: int in range(4):
-		members.append(_state.get_member(i))
-		gauges["party_%d" % i] = _atb.get_gauge("party_%d" % i)
-	party_state_updated.emit(members, gauges)
-
-
-func _avg_enemy_spd() -> float:
-	var t: float = 0.0
-	var c: int = 0
-	for e: Node in _enemies:
-		if e.is_alive:
-			t += e.get_stats().get("spd", 10)
-			c += 1
-	return t / maxf(1.0, c)
-
-
-func _parse_slot(cid: String) -> int:
-	return cid.replace("party_", "").to_int()
+		m.append(_state.get_member(i))
+		g["party_%d" % i] = _atb.get_gauge("party_%d" % i)
+	party_state_updated.emit(m, g)

@@ -611,7 +611,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Flee formula per combat-formulas.md (SPD-based)
 - [x] Battle UI per ui-design.md: party panel (HP/MP bars, ATB gauge), enemy area, command menu, damage numbers
 - [x] Victory: XP/gold distribution per progression.md (full to 4 active, 50% to 2 absent, 0 to KO)
-- [x] Defeat: Faint-and-Fast-Reload flow (basic — loads save, merges XP/gold)
+- [ ] ~~Defeat: Faint-and-Fast-Reload~~ → Basic defeat exits to exploration with faint result. SaveManager load/merge logic deferred
 - [ ] ~~Boss battles: scripted AI~~ → Boss AI stubbed (basic attack only). Scripted phase behavior deferred to gap 4.1+
 - [x] Formation types: Normal, Back Attack, Preemptive
 - [ ] ~~Battle music via AudioManager~~ → deferred to gap 3.8 (Audio Integration)

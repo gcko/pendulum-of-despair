@@ -3,6 +3,8 @@ extends PanelContainer
 
 signal command_selected(command: Dictionary)
 signal command_cancelled
+signal submenu_opened
+signal submenu_closed
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -105,6 +107,7 @@ func _handle_submenu_input(event: InputEvent) -> void:
 		_state = MenuState.COMMAND
 		if _submenu != null:
 			_submenu.visible = false
+		submenu_closed.emit()
 
 
 func _handle_target_input(event: InputEvent) -> void:
@@ -126,6 +129,7 @@ func _handle_target_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_cancel"):
 		if _pending_command.get("type", "") == "attack":
 			_state = MenuState.COMMAND
+			submenu_closed.emit()
 		else:
 			_state = MenuState.SUBMENU
 			if _submenu != null:
@@ -160,11 +164,13 @@ func _start_target_selection(is_enemy: bool, count: int = 0) -> void:
 	_target_cursor = 0
 	_target_count = maxi(1, count if count > 0 else _target_count)
 	_state = MenuState.TARGET
+	submenu_opened.emit()
 
 
 func _show_submenu() -> void:
 	_submenu_cursor = 0
 	_state = MenuState.SUBMENU
+	submenu_opened.emit()
 	if _submenu != null:
 		_submenu.visible = true
 	_update_submenu_display()
