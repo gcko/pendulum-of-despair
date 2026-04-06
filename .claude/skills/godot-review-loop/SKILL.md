@@ -219,9 +219,6 @@ After all review rounds complete but BEFORE pushing:
    - Calculate pre-Copilot catch rate: (issues agents found independently) / (total Copilot comments)
    - If catch rate < 80%, investigate root cause and update agent prompts
 
-6. **Trigger re-review if applicable** — if `.github/workflows/claude-re-review.yml`
-   exists, post a PR conversation comment with `/re-review` after pushing.
-
 ## Push and Summary
 
 After all rounds complete, Copilot comments replied to, and gap analysis done:

@@ -95,9 +95,9 @@ func load_from_save(data: Dictionary) -> void:
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
 	playtime = data.get("meta", {}).get("playtime", 0)
+	is_at_save_point = false
 	var event_flags: Dictionary = world.get("event_flags", {})
-	if not event_flags.is_empty():
-		EventFlags.load_from_save(event_flags)
+	EventFlags.load_from_save(event_flags)
 
 
 func build_save_data() -> Dictionary:
@@ -158,10 +158,8 @@ func get_equipment_bonus(character_id: String, stat: String) -> int:
 		if equip_id == "":
 			continue
 		var item_data: Dictionary = Helpers.lookup_equipment(equip_id)
-		if stat == "atk" and slot == "weapon":
-			total += item_data.get("atk", 0)
-		var bonus_stats: Dictionary = item_data.get("bonus_stats", {})
-		total += bonus_stats.get(stat, 0)
+		total += Helpers.get_top_level_stat(item_data, slot, stat)
+		total += item_data.get("bonus_stats", {}).get(stat, 0)
 	return total
 
 
@@ -290,6 +288,8 @@ func add_item(item_id: String, quantity: int) -> void:
 
 
 func remove_item(item_id: String, quantity: int) -> void:
+	if quantity <= 0:
+		return
 	var consumables: Dictionary = inventory.get("consumables", {})
 	var current: int = consumables.get(item_id, 0)
 	var remaining: int = maxi(0, current - quantity)
@@ -311,6 +311,8 @@ func add_gold(amount: int) -> void:
 
 
 func spend_gold(amount: int) -> bool:
+	if amount <= 0:
+		return false
 	if amount > gold:
 		return false
 	gold -= amount

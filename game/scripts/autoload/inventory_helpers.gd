@@ -90,12 +90,29 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 			target["status_effects"] = remaining
 
 
+## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).
+static func get_top_level_stat(item_data: Dictionary, slot: String, stat: String) -> int:
+	if stat == "atk" and slot == "weapon":
+		return item_data.get("atk", 0)
+	if stat in ["def", "mdef"] and slot in ["head", "body"]:
+		return item_data.get(stat, 0)
+	return 0
+
+
 ## Get sort value for equipment optimization.
 static func get_equip_sort_value(item_data: Dictionary, slot: String, priority_stat: String) -> int:
 	if slot == "weapon":
 		return item_data.get("atk", 0)
 	var bonus: Dictionary = item_data.get("bonus_stats", {})
-	return bonus.get(priority_stat, 0) + bonus.get("def", 0) + bonus.get("mdef", 0)
+	var top_def: int = get_top_level_stat(item_data, slot, "def")
+	var top_mdef: int = get_top_level_stat(item_data, slot, "mdef")
+	return (
+		bonus.get(priority_stat, 0)
+		+ top_def
+		+ bonus.get("def", 0)
+		+ top_mdef
+		+ bonus.get("mdef", 0)
+	)
 
 
 static func calculate_stats_at_level(
@@ -185,6 +202,13 @@ static func build_save_dict(
 			"unlocked_recipes": [],
 		},
 		"ley_crystals": {"collected": []},
+		"meta":
+		{
+			"version": 1,
+			"playtime": PartyState.playtime,
+			"saved_at": Time.get_date_string_from_system(),
+			"slot_type": "manual",
+		},
 		"world":
 		{
 			"event_flags": flags,

@@ -86,6 +86,7 @@ func open() -> void:
 	_cursor_index = 0
 	_patience_was_on = _config.get("patience_mode", false)
 	_reduce_was_on = _config.get("reduce_motion", false)
+	_apply_cascades()
 	_update_display()
 
 

@@ -296,9 +296,12 @@ func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id:
 		if eid == "":
 			continue
 		var item_data: Dictionary = _lookup_equipment(eid)
-		if stat == "atk" and s == "weapon":
-			total += item_data.get("atk", 0)
+		total += Helpers.get_top_level_stat(item_data, s, stat)
 		total += item_data.get("bonus_stats", {}).get(stat, 0)
+	if stat == "hp":
+		return clampi(total, 0, 14999)
+	if stat == "mp":
+		return clampi(total, 0, 1499)
 	return clampi(total, 0, 255)
 
 

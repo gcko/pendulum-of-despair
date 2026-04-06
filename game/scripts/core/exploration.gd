@@ -243,6 +243,7 @@ func _on_chest_opened(chest_id: String, item_id: String) -> void:
 
 
 func _on_save_point_activated(_save_point_id: String) -> void:
+	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		var overlay: Node = GameManager.overlay_node
 		if overlay != null and overlay.has_method("open_save_point"):
