@@ -9,6 +9,11 @@ func before_each() -> void:
 	EventFlags.clear_all()
 
 
+func after_each() -> void:
+	GameManager.transition_data = {}
+	EventFlags.clear_all()
+
+
 func _create_exploration():
 	GameManager.transition_data = {"new_game": true}
 	var exp = EXPLORATION_SCENE.instantiate()
