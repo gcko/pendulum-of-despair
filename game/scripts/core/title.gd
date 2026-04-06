@@ -64,6 +64,7 @@ func _confirm_selection() -> void:
 				push_warning("Title: Exploration scene not found")
 				_input_active = true
 				return
+			PartyState.initialize_new_game()
 			GameManager.change_core_state(GameManager.CoreState.EXPLORATION, {"new_game": true})
 		MenuOption.CONTINUE:
 			if not _has_save:
@@ -77,7 +78,10 @@ func _confirm_selection() -> void:
 			var save_data: Dictionary = {"save_slot": result["slot"], "save_data": result["data"]}
 			GameManager.change_core_state(GameManager.CoreState.EXPLORATION, save_data)
 		MenuOption.CONFIG:
-			pass  # Stubbed — gap 3.4
+			if GameManager.push_overlay(GameManager.OverlayState.MENU):
+				var overlay: Node = GameManager.overlay_node
+				if overlay != null and overlay.has_method("open_config_direct"):
+					overlay.open_config_direct()
 
 
 func _update_display() -> void:
@@ -102,5 +106,5 @@ func _is_option_disabled(index: int) -> bool:
 		MenuOption.CONTINUE:
 			return not _has_save
 		MenuOption.CONFIG:
-			return true  # Stubbed
+			return false
 	return false

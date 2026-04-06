@@ -38,6 +38,10 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
+	if event.is_action_pressed("ui_menu"):
+		if GameManager.push_overlay(GameManager.OverlayState.MENU):
+			get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("ui_accept") and _player != null:
 		if _player.has_method("try_interact"):
 			_player.try_interact()

@@ -296,36 +296,11 @@ func _load_most_recent_save() -> Dictionary:
 
 
 func _build_save_data() -> Dictionary:
-	# TODO: Gather state from GameManager, EventFlags, party, inventory
-	push_warning("SaveManager: _build_save_data() returning stub data")
-	return {
-		"party": [],
-		"formation": {"active": [], "reserve": [], "guests": []},
-		"inventory": {"consumables": [], "equipment": [], "materials": [], "key_items": []},
-		"crafting":
-		{
-			"arcanite_charges": 12,
-			"device_loadout": [{}, {}, {}, {}, {}],
-			"discovered_synergies": [],
-			"unlocked_recipes": [],
-		},
-		"ley_crystals": {"collected": []},
-		"world":
-		{
-			"event_flags": {},
-			"act": "1",
-			"current_location": "",
-			"current_position": {"x": 0, "y": 0},
-			"gold": 0
-		},
-		"quests": {"active": [], "completed": []},
-		"completion": {"bestiary": [], "treasures": [], "items_found": []},
-	}
+	return PartyState.build_save_data()
 
 
 func _get_playtime() -> int:
-	# TODO: Track cumulative play time
-	return 0
+	return PartyState.playtime
 
 
 func _capture_party_xp() -> Dictionary:
@@ -359,5 +334,5 @@ func _full_restore(_data: Dictionary) -> void:
 	pass  # TODO: Set HP/MP to 100% max, clear all status ailments
 
 
-func _apply_save_data(_data: Dictionary) -> void:
-	pass  # TODO: Restore game state from loaded save data
+func _apply_save_data(data: Dictionary) -> void:
+	PartyState.load_from_save(data)

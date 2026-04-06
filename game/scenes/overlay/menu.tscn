@@ -1,0 +1,653 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/menu_overlay.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/menu_items.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/ui/menu_equip.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/ui/menu_status.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/ui/menu_config.gd" id="5"]
+
+[node name="Menu" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 1)
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 218.0
+offset_bottom = 140.0
+
+[node name="Row0" type="HBoxContainer" parent="MainPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 212.0
+offset_bottom = 36.0
+
+[node name="NameLabel" type="Label" parent="MainPanel/Row0"]
+text = "EDREN"
+
+[node name="LvLabel" type="Label" parent="MainPanel/Row0"]
+text = "LV 1"
+
+[node name="HPLabel" type="Label" parent="MainPanel/Row0"]
+text = "HP 95/95"
+
+[node name="MPLabel" type="Label" parent="MainPanel/Row0"]
+text = "MP 15/15"
+
+[node name="Row1" type="HBoxContainer" parent="MainPanel"]
+offset_left = 4.0
+offset_top = 38.0
+offset_right = 212.0
+offset_bottom = 70.0
+
+[node name="NameLabel" type="Label" parent="MainPanel/Row1"]
+text = "CAEL"
+
+[node name="LvLabel" type="Label" parent="MainPanel/Row1"]
+text = "LV 1"
+
+[node name="HPLabel" type="Label" parent="MainPanel/Row1"]
+text = "HP 78/78"
+
+[node name="MPLabel" type="Label" parent="MainPanel/Row1"]
+text = "MP 25/25"
+
+[node name="Row2" type="HBoxContainer" parent="MainPanel"]
+offset_left = 4.0
+offset_top = 72.0
+offset_right = 212.0
+offset_bottom = 104.0
+
+[node name="NameLabel" type="Label" parent="MainPanel/Row2"]
+text = ""
+
+[node name="LvLabel" type="Label" parent="MainPanel/Row2"]
+text = ""
+
+[node name="HPLabel" type="Label" parent="MainPanel/Row2"]
+text = ""
+
+[node name="MPLabel" type="Label" parent="MainPanel/Row2"]
+text = ""
+
+[node name="Row3" type="HBoxContainer" parent="MainPanel"]
+offset_left = 4.0
+offset_top = 106.0
+offset_right = 212.0
+offset_bottom = 138.0
+
+[node name="NameLabel" type="Label" parent="MainPanel/Row3"]
+text = ""
+
+[node name="LvLabel" type="Label" parent="MainPanel/Row3"]
+text = ""
+
+[node name="HPLabel" type="Label" parent="MainPanel/Row3"]
+text = ""
+
+[node name="MPLabel" type="Label" parent="MainPanel/Row3"]
+text = ""
+
+[node name="CommandPanel" type="PanelContainer" parent="."]
+offset_left = 222.0
+offset_top = 2.0
+offset_right = 318.0
+offset_bottom = 140.0
+
+[node name="Cmd0" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 4.0
+text = "Item"
+
+[node name="Cmd1" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 18.0
+text = "Magic"
+
+[node name="Cmd2" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 32.0
+text = "Abilities"
+
+[node name="Cmd3" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 46.0
+text = "Equip"
+
+[node name="Cmd4" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 60.0
+text = "Crystal"
+
+[node name="Cmd5" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 74.0
+text = "Status"
+
+[node name="Cmd6" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 88.0
+text = "Formation"
+
+[node name="Cmd7" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 102.0
+text = "Config"
+
+[node name="Cmd8" type="Label" parent="CommandPanel"]
+offset_left = 12.0
+offset_top = 116.0
+text = "Save"
+
+[node name="InfoPanel" type="PanelContainer" parent="."]
+offset_left = 2.0
+offset_top = 142.0
+offset_right = 318.0
+offset_bottom = 178.0
+
+[node name="LocationLabel" type="Label" parent="InfoPanel"]
+offset_left = 4.0
+offset_top = 4.0
+text = ""
+
+[node name="TimeLabel" type="Label" parent="InfoPanel"]
+offset_left = 222.0
+offset_top = 4.0
+text = "0:00"
+
+[node name="GoldLabel" type="Label" parent="InfoPanel"]
+offset_left = 222.0
+offset_top = 18.0
+text = "0 Gold"
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(224, 10)
+
+[node name="CharCursor" type="Sprite2D" parent="."]
+position = Vector2(-20, -20)
+visible = false
+
+[node name="SubScreen" type="Control" parent="."]
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="ItemScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("2")
+
+[node name="TabBar" type="HBoxContainer" parent="SubScreen/ItemScreen"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 316.0
+offset_bottom = 16.0
+
+[node name="UseTab" type="Label" parent="SubScreen/ItemScreen/TabBar"]
+text = "USE"
+
+[node name="ArrangeTab" type="Label" parent="SubScreen/ItemScreen/TabBar"]
+text = "ARRANGE"
+
+[node name="KeyTab" type="Label" parent="SubScreen/ItemScreen/TabBar"]
+text = "KEY"
+
+[node name="DescLabel" type="Label" parent="SubScreen/ItemScreen"]
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 316.0
+offset_bottom = 32.0
+text = ""
+
+[node name="ItemContainer" type="VBoxContainer" parent="SubScreen/ItemScreen"]
+offset_left = 4.0
+offset_top = 36.0
+offset_right = 316.0
+offset_bottom = 140.0
+
+[node name="Item0" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item1" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item2" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item3" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item4" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item5" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item6" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item7" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item8" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item9" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item10" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="Item11" type="Label" parent="SubScreen/ItemScreen/ItemContainer"]
+text = ""
+
+[node name="TargetPanel" type="PanelContainer" parent="SubScreen/ItemScreen"]
+visible = false
+offset_left = 160.0
+offset_top = 36.0
+offset_right = 316.0
+offset_bottom = 100.0
+
+[node name="Target0" type="Label" parent="SubScreen/ItemScreen/TargetPanel"]
+offset_left = 4.0
+offset_top = 4.0
+text = ""
+
+[node name="Target1" type="Label" parent="SubScreen/ItemScreen/TargetPanel"]
+offset_left = 4.0
+offset_top = 18.0
+text = ""
+
+[node name="Target2" type="Label" parent="SubScreen/ItemScreen/TargetPanel"]
+offset_left = 4.0
+offset_top = 32.0
+text = ""
+
+[node name="Target3" type="Label" parent="SubScreen/ItemScreen/TargetPanel"]
+offset_left = 4.0
+offset_top = 46.0
+text = ""
+
+[node name="EquipScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("3")
+
+[node name="ModeBar" type="HBoxContainer" parent="SubScreen/EquipScreen"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 316.0
+offset_bottom = 16.0
+
+[node name="EquipMode" type="Label" parent="SubScreen/EquipScreen/ModeBar"]
+text = "EQUIP"
+
+[node name="OptimumMode" type="Label" parent="SubScreen/EquipScreen/ModeBar"]
+text = "OPTIMUM"
+
+[node name="RemoveMode" type="Label" parent="SubScreen/EquipScreen/ModeBar"]
+text = "REMOVE"
+
+[node name="EmptyMode" type="Label" parent="SubScreen/EquipScreen/ModeBar"]
+text = "EMPTY"
+
+[node name="NameLabel" type="Label" parent="SubScreen/EquipScreen"]
+offset_left = 180.0
+offset_top = 20.0
+text = ""
+
+[node name="SlotPanel" type="VBoxContainer" parent="SubScreen/EquipScreen"]
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 90.0
+
+[node name="Slot0" type="Label" parent="SubScreen/EquipScreen/SlotPanel"]
+text = "Weapon: ---"
+
+[node name="Slot1" type="Label" parent="SubScreen/EquipScreen/SlotPanel"]
+text = "Head: ---"
+
+[node name="Slot2" type="Label" parent="SubScreen/EquipScreen/SlotPanel"]
+text = "Body: ---"
+
+[node name="Slot3" type="Label" parent="SubScreen/EquipScreen/SlotPanel"]
+text = "Access: ---"
+
+[node name="Slot4" type="Label" parent="SubScreen/EquipScreen/SlotPanel"]
+text = "Crystal: ---"
+
+[node name="StatPanel" type="VBoxContainer" parent="SubScreen/EquipScreen"]
+offset_left = 180.0
+offset_top = 36.0
+offset_right = 316.0
+offset_bottom = 120.0
+
+[node name="Stat0" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "ATK 0"
+
+[node name="Stat1" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "DEF 0"
+
+[node name="Stat2" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "MAG 0"
+
+[node name="Stat3" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "MDEF 0"
+
+[node name="Stat4" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "SPD 0"
+
+[node name="Stat5" type="Label" parent="SubScreen/EquipScreen/StatPanel"]
+text = "LCK 0"
+
+[node name="InfoLabel" type="Label" parent="SubScreen/EquipScreen"]
+offset_left = 4.0
+offset_top = 160.0
+offset_right = 316.0
+offset_bottom = 176.0
+text = ""
+
+[node name="ItemList" type="VBoxContainer" parent="SubScreen/EquipScreen"]
+visible = false
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 160.0
+
+[node name="Item0" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item1" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item2" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item3" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item4" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item5" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item6" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item7" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item8" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="Item9" type="Label" parent="SubScreen/EquipScreen/ItemList"]
+text = ""
+
+[node name="StatusScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("4")
+
+[node name="NameLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 4.0
+text = ""
+
+[node name="ClassLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 18.0
+text = ""
+
+[node name="LvLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 32.0
+text = ""
+
+[node name="XpLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 46.0
+text = ""
+
+[node name="NextLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 60.0
+text = ""
+
+[node name="HPLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 160.0
+offset_top = 4.0
+text = ""
+
+[node name="MPLabel" type="Label" parent="SubScreen/StatusScreen"]
+offset_left = 160.0
+offset_top = 18.0
+text = ""
+
+[node name="StatPanel" type="VBoxContainer" parent="SubScreen/StatusScreen"]
+offset_left = 160.0
+offset_top = 36.0
+offset_right = 316.0
+offset_bottom = 120.0
+
+[node name="Stat0" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Stat1" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Stat2" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Stat3" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Stat4" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Stat5" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Derived0" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Derived1" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="Derived2" type="Label" parent="SubScreen/StatusScreen/StatPanel"]
+text = ""
+
+[node name="CmdPanel" type="VBoxContainer" parent="SubScreen/StatusScreen"]
+offset_left = 4.0
+offset_top = 90.0
+offset_right = 150.0
+offset_bottom = 160.0
+
+[node name="Cmd0" type="Label" parent="SubScreen/StatusScreen/CmdPanel"]
+text = ""
+
+[node name="Cmd1" type="Label" parent="SubScreen/StatusScreen/CmdPanel"]
+text = ""
+
+[node name="Cmd2" type="Label" parent="SubScreen/StatusScreen/CmdPanel"]
+text = ""
+
+[node name="Cmd3" type="Label" parent="SubScreen/StatusScreen/CmdPanel"]
+text = ""
+
+[node name="Cmd4" type="Label" parent="SubScreen/StatusScreen/CmdPanel"]
+text = ""
+
+[node name="EquipPanel" type="VBoxContainer" parent="SubScreen/StatusScreen"]
+offset_left = 160.0
+offset_top = 126.0
+offset_right = 316.0
+offset_bottom = 176.0
+
+[node name="Equip0" type="Label" parent="SubScreen/StatusScreen/EquipPanel"]
+text = ""
+
+[node name="Equip1" type="Label" parent="SubScreen/StatusScreen/EquipPanel"]
+text = ""
+
+[node name="Equip2" type="Label" parent="SubScreen/StatusScreen/EquipPanel"]
+text = ""
+
+[node name="Equip3" type="Label" parent="SubScreen/StatusScreen/EquipPanel"]
+text = ""
+
+[node name="Equip4" type="Label" parent="SubScreen/StatusScreen/EquipPanel"]
+text = ""
+
+[node name="ConfigScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("5")
+
+[node name="SettingList" type="VBoxContainer" parent="SubScreen/ConfigScreen"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 316.0
+offset_bottom = 170.0
+
+[node name="Name0" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Battle Speed"
+
+[node name="Value0" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "3"
+
+[node name="Name1" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "ATB Mode"
+
+[node name="Value1" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Active"
+
+[node name="Name2" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Text Speed"
+
+[node name="Value2" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Normal"
+
+[node name="Name3" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Battle Cursor"
+
+[node name="Value3" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Reset"
+
+[node name="Name4" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Sound"
+
+[node name="Value4" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Stereo"
+
+[node name="Name5" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Music Volume"
+
+[node name="Value5" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "8"
+
+[node name="Name6" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "SFX Volume"
+
+[node name="Value6" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "8"
+
+[node name="Name7" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Screen Shake"
+
+[node name="Value7" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "On"
+
+[node name="Name8" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Mode 7 Intensity"
+
+[node name="Value8" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "6"
+
+[node name="Name9" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Window R"
+
+[node name="Value9" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "0"
+
+[node name="Name10" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Window G"
+
+[node name="Value10" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "0"
+
+[node name="Name11" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Window B"
+
+[node name="Value11" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "8"
+
+[node name="Name12" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Patience Mode"
+
+[node name="Value12" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Off"
+
+[node name="Name13" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Color-Blind Mode"
+
+[node name="Value13" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Off"
+
+[node name="Name14" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "High-Res Text"
+
+[node name="Value14" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Off"
+
+[node name="Name15" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Reduce Motion"
+
+[node name="Value15" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Off"
+
+[node name="Name16" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Flash Intensity"
+
+[node name="Value16" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Full"
+
+[node name="Name17" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Transition Style"
+
+[node name="Value17" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Classic"
+
+[node name="Name18" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "SFX Captions"
+
+[node name="Value18" type="Label" parent="SubScreen/ConfigScreen/SettingList"]
+text = "Off"
+
+[node name="PreviewRect" type="ColorRect" parent="SubScreen/ConfigScreen"]
+offset_left = 240.0
+offset_top = 140.0
+offset_right = 310.0
+offset_bottom = 170.0
+color = Color(0, 0, 0.25, 1)
+
+[node name="StubLabel" type="Label" parent="SubScreen"]
+visible = false
+offset_left = 100.0
+offset_top = 80.0
+offset_right = 220.0
+offset_bottom = 100.0
+text = "Not yet available"
+horizontal_alignment = 1
