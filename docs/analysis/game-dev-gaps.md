@@ -586,35 +586,50 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.3 Battle Scene
 
-**Status:** NOT STARTED
+**Status:** MOSTLY COMPLETE
+**Completed:** 2026-04-06 (Core Battle System)
 **Priority:** P0 — blocks all combat
-**Estimated Size:** L (1 .tscn + 5+ .gd files for battle subsystems)
-**Output:** `game/scenes/core/battle.tscn`, `game/scripts/combat/` (battle_manager.gd, atb_system.gd, damage_calculator.gd, battle_ui.gd, battle_ai.gd)
+**Estimated Size:** L (1 .tscn + 8 .gd files for battle subsystems)
+**Output:** `game/scenes/core/battle.tscn`, `game/scripts/combat/` (battle_manager.gd, atb_system.gd, damage_calculator.gd, battle_state.gd, battle_ai.gd), `game/scripts/ui/` (battle_ui.gd, battle_party_panel.gd, battle_command_menu.gd)
 **Source Docs:** `combat-formulas.md` (ALL formulas), `ui-design.md` (battle screen layout), `abilities.md`, `magic.md`, `items.md` (battle-usable items), `difficulty-balance.md` (pacing targets)
 **Depends On:** 2.3 (Enemy Prefab), 1.1 (Character Data), 1.2 (Enemy Data), 1.5 (Spells & Abilities)
 
 **What's Needed:**
-- [ ] ATB gauge system: `floor((SPD + 25) * battle_speed_factor * status_modifiers)` per combat-formulas.md
-- [ ] Active vs Wait mode (gauge pauses during menu in Wait mode)
-- [ ] Battle speed 1-6 scale
-- [ ] Turn order resolution when multiple gauges fill simultaneously
-- [ ] Physical damage: `(ATK * ATK) / 6 - DEF` with variance `random_int(240,255)/256`
-- [ ] Magical damage: `MAG × power / 4 - MDEF` with element multiplier
-- [ ] Healing: `MAG × power × 0.8`
-- [ ] Critical hit: `LCK/4` rate (cap 50%), 2× damage
-- [ ] Hit/miss: 3-stage resolution (accuracy vs evasion) per combat-formulas.md
-- [ ] Elemental multipliers: 1.5× weak, 0.75× disadvantage, 0.5× same, 0× immune, -1× absorb
-- [ ] Status effect application: two-stage (MAG vs MDEF, then MEVA% resist)
-- [ ] Row system: front/back, 50% physical modifier, back-row spears bypass
-- [ ] 6 command types: Attack, Magic, Ability, Item, Defend, Flee
-- [ ] Flee formula per combat-formulas.md (SPD-based)
-- [ ] Battle UI per ui-design.md: party panel (HP/MP bars, ATB gauge), enemy area, command menu, damage numbers, status icons (22 unified icons)
-- [ ] Victory: XP/gold distribution per progression.md (full to 4 active, 50% to 2 absent, 0 to KO)
-- [ ] Defeat: Faint-and-Fast-Reload via SaveManager
-- [ ] Boss battles: scripted AI, phase transitions, immunity lists, scripted events
-- [ ] Formation types: Normal, Back Attack, Preemptive (rates per encounter data)
-- [ ] Battle music via AudioManager (hard cut in, crossfade out per audio.md)
-- [ ] Damage cap: 14,999 (mirrors HP cap)
+- [x] ATB gauge system: `floor((SPD + 25) * battle_speed_factor * status_modifiers)` per combat-formulas.md
+- [x] Active vs Wait mode (gauge pauses during menu in Wait mode)
+- [x] Battle speed 1-6 scale
+- [x] Turn order resolution when multiple gauges fill simultaneously
+- [x] Physical damage: `(ATK * ATK) / 6 - DEF` with variance `random_int(240,255)/256`
+- [x] Magical damage: `MAG × power / 4 - MDEF` with element multiplier
+- [x] Healing: `MAG × power × 0.8`
+- [x] Critical hit: `LCK/4` rate (cap 50%), 2× damage
+- [x] Hit/miss: 3-stage resolution (accuracy vs evasion) per combat-formulas.md
+- [x] Elemental multipliers: 1.5× weak, 0.75× disadvantage, 0.5× same, 0× immune, -1× absorb
+- [ ] ~~Status effect application~~ → Formula in damage_calculator.gd, apply path not wired in combat actions yet
+- [x] Row system: front/back, 50% physical modifier, back-row spears bypass
+- [x] 6 command types: Attack, Magic, Ability, Item, Defend, Flee
+- [x] Flee formula per combat-formulas.md (SPD-based)
+- [x] Battle UI per ui-design.md: party panel (HP/MP bars, ATB gauge), enemy area, command menu, damage numbers
+- [ ] ~~Victory: XP/gold distribution~~ → Totals summed and emitted, per-member split (active/absent/KO) not implemented
+- [ ] ~~Defeat: Faint-and-Fast-Reload~~ → Basic defeat exits to exploration with faint result. SaveManager load/merge logic deferred
+- [ ] ~~Boss battles: scripted AI~~ → Boss AI stubbed (basic attack only). Scripted phase behavior deferred to gap 4.1+
+- [x] Formation types: Normal, Back Attack, Preemptive
+- [ ] ~~Battle music via AudioManager~~ → deferred to gap 3.8 (Audio Integration)
+- [x] Damage cap: 14,999 (mirrors HP cap)
+- [ ] ~~Status icons (22 unified icons)~~ → Status text tracked, icon rendering deferred to UI polish
+- [ ] ~~Patience Mode~~ → ATB mode flag implemented, full patience pause deferred to gap 3.4 (Config)
+- [ ] ~~Combat interactions (Frozen Shatter, etc.)~~ → Hooks in place, not implemented (gap 4.1+)
+- [ ] ~~Equipment stat modifiers~~ → Base stats only, equipment bonuses deferred to gap 3.4 (Menu)
+- [ ] ~~Maren WG visual bar~~ → Tracked in state, purple bar deferred to UI polish
+
+**Notes:**
+- 6 combat scripts + 3 UI scripts + 1 .tscn scene + 4 test files
+- Architecture: damage_calculator.gd (pure static formulas), atb_system.gd (gauge ownership), battle_state.gd (party runtime), battle_ai.gd (weighted-random), battle_manager.gd (orchestrator)
+- Signal-based decoupling: battle_manager emits signals, battle_ui observes
+- All formulas verified against combat-formulas.md milestone tables in test_damage_calculator.gd
+- GUT tests exist but GUT framework has compatibility issues with Godot 4.6 (.uid regeneration)
+- Design spec: `docs/superpowers/specs/2026-04-06-battle-scene-design.md`
+- **This unblocks gap 4.1 (Ember Vein vertical slice)** — the critical path to first playable dungeon
 
 **Blocking:** All combat gameplay. This is the most complex single system.
 
