@@ -246,6 +246,33 @@ For EVERY public method in EVERY changed .gd file, ask:
 4. Are collision layers correct for the interaction system?
 5. Does the spec accurately describe the implementation?
 
+### Behavioral State Trace (MANDATORY — the pass that catches what structural review misses)
+
+For EVERY entity, signal connection, and state transition in changed code,
+trace these paths. Write the answer for each. "I didn't check" = bug.
+
+1. **Repeatability:** Can this happen twice? Does the code allow it?
+   (Doors, menus, interactions must be repeatable. One-shot entities
+   like TriggerZone must NOT be used for repeatable actions.)
+2. **Ownership:** Exactly ONE handler per input action. Grep for the
+   action name across ALL .gd files. Two handlers = double-fire bug.
+3. **Initialization:** Every entity with initialize() — is it called?
+   With correct args? Trace from .tscn metadata → load code → initialize().
+4. **Dimensions:** Every size/position value — does it match viewport
+   (320x180)? Tile size (16x16)? Sprite size (16x24)?
+5. **Cleanup:** Every test — does before_each clear ALL global state?
+   (GameManager.transition_data, EventFlags, SaveManager slots)
+6. **Spec drift:** Re-read the spec after implementation. Grep for EVERY
+   changed concept across ALL spec sections, not just the first match.
+7. **Return paths:** After every overlay push or map load — can the
+   user return? What state is restored? Are panels hidden/shown correctly?
+8. **Actor filtering:** For every Area2D signal — WHO can trigger it?
+   Filter to intended actor. Without this, any physics body triggers it.
+9. **Failure chain:** For every operation that can fail — trace ALL
+   in-flight state (tweens, flags, visibility). One check is not enough.
+10. **Ordering:** Validate BEFORE destroy. If new resource fails to load,
+    old resource must survive.
+
 ## Rules
 
 - **3 agents per round.** Always dispatch all 3. Each covers different

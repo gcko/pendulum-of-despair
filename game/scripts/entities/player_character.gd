@@ -47,12 +47,6 @@ func _physics_process(_delta: float) -> void:
 	position = position.round()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and _current_interactable != null:
-		interaction_requested.emit(_current_interactable)
-		get_viewport().set_input_as_handled()
-
-
 ## Initialize the character with data from DataManager.
 ## Call after adding to the scene tree.
 func initialize(p_character_id: String) -> void:
@@ -122,6 +116,13 @@ func _load_placeholder_sprite() -> void:
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
+
+
+## Attempt to interact with the nearest interactable. Emits interaction_requested
+## if an interactable is in range. Called by exploration scene on confirm press.
+func try_interact() -> void:
+	if _current_interactable != null:
+		interaction_requested.emit(_current_interactable)
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:

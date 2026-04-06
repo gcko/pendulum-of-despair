@@ -170,6 +170,48 @@ correct? Does the spec match what I just wrote?
 *Mirror check:* `grep -r "old_value" docs/` after every change. Fix
 every stale reference immediately — don't defer.
 
+*GDScript runtime safety pass (MANDATORY for any _input/_unhandled_input handler):*
+- Does any action in this handler trigger a scene swap (`change_core_state`,
+  `change_scene_to_file`, `pop_overlay`)? If yes, that call MUST be the
+  LAST line — no `get_viewport()`, no member access, no signal emission after it.
+- `get_viewport()` returns null after scene swap is queued. NEVER call
+  `get_viewport().set_input_as_handled()` after a scene transition.
+- Static review CANNOT catch these bugs. Ask the user to press F5 and test
+  every input handler on every screen before declaring done.
+
+*Behavioral state trace (MANDATORY — the pass Copilot does that I keep skipping):*
+For EVERY entity, signal, and state machine in the code, ask these questions
+and write down the answers. Do NOT skip this. Do NOT say "I should do this"
+and then not do it. Actually trace each path:
+
+1. **Repeatability:** Can this action happen more than once? If yes, does the
+   code allow it? (PR #120: TriggerZone is one-shot but doors must be
+   repeatable. Used wrong entity type.)
+2. **Ownership:** Who owns this input/action? Is there exactly ONE handler?
+   (PR #120: Both player_character and exploration handled ui_accept —
+   double-fire.)
+3. **Initialization:** Every entity that needs initialize() — is it actually
+   called? With the right arguments? (PR #120: metadata set on .tscn but
+   initialize() never called. Entities silently did nothing.)
+4. **Dimensions:** Do pixel sizes match the viewport? (PR #120: 176px
+   background in 180px viewport — 4px gap.)
+5. **State cleanup:** Do tests reset ALL global state they depend on?
+   (PR #120: EventFlags not cleared, tests leaked state.)
+6. **Spec accuracy:** Does the spec describe what was ACTUALLY built, not
+   what was PLANNED? Grep for EVERY changed concept across ALL spec sections.
+7. **Return path:** After any state change (overlay push, map load, scene
+   swap), can the user get back? What happens when they do?
+8. **Actor filtering:** For every Area2D signal — WHO can trigger it? If
+   the answer is "anything with a physics body," add a filter.
+9. **Failure chain:** For every operation that can fail — trace ALL
+   in-flight state (tweens, flags, visibility). Kill tweens, reset flags.
+   One failure check is not enough — trace the FULL chain.
+10. **Ordering:** Validate BEFORE destroy. If you free an old resource
+    then fail to load the new one, the user is stuck with nothing.
+
+For each question, write the entity/file/line and the answer. If you can't
+answer "yes it works" with a specific code reference, it's a bug.
+
 ### 5. Verify (Adversarial Audit Against Design Docs)
 
 After implementation, verify every output against canonical docs.

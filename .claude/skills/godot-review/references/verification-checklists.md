@@ -76,6 +76,13 @@ Reference for all review agents. Check every applicable item.
 - [ ] State set before deferred calls (e.g., `change_scene_to_file`) must be REVERTED on failure, not omitted — new scene `_ready()` reads state immediately
 - [ ] GDScript falsy checks (`if data`) fail for empty `[]`/`{}`/`0` — use explicit `!= null` when checking for null returns
 
+### GDScript Runtime Safety (from PR #120 manual testing)
+- [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
+- [ ] Any code that runs AFTER a scene transition call (`change_core_state`, `pop_overlay`) may execute on a freed/freeing node. Move transition calls to the END of the function, never follow with member access.
+- [ ] `get_tree()` can also return null in edge cases during scene teardown. Guard autoload calls (`GameManager.X`, `SaveManager.X`) that use `get_tree()` internally.
+- [ ] Test ALL input handlers by pressing every key on every screen in the Godot editor — `_unhandled_input` bugs only surface at runtime, not in static review.
+- [ ] After writing any `_unhandled_input` or `_input` handler, trace: "what happens if the action I take here destroys this node?" If the answer is "yes it can", move the destructive call to the last line and put nothing after it.
+
 ### Documentation Accuracy
 - [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state
 - [ ] If `run/main_scene` is empty, don't claim the game can be "run" — say "open in editor"
@@ -97,6 +104,23 @@ Reference for all review agents. Check every applicable item.
 - [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
 - [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
 - [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
+
+### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
+
+**HOW TO USE:** For each item, write the file:line and your answer. Do NOT
+skip items. Do NOT write "PASS" without a specific code reference. If you
+cannot point to the exact line that handles the case, it's a bug.
+
+- [ ] **Repeatability:** For every entity used in maps — can it happen twice? Doors/transitions MUST be repeatable (use Area2D, NOT one-shot TriggerZone). Story triggers are one-shot.
+- [ ] **Input ownership:** Grep for each input action (ui_accept, ui_cancel, etc.) across ALL .gd files. Exactly ONE handler per action per active scene. Two handlers = double-fire bug.
+- [ ] **Initialization chain:** For every entity in a .tscn map — trace: metadata set → exploration reads metadata → calls initialize(). If any link is missing, entity silently does nothing.
+- [ ] **Viewport dimensions:** Every ColorRect, background, panel size must match viewport (320x180). Every tile position must align to 16x16 grid. Every sprite must match spec sizes.
+- [ ] **Global state cleanup:** Every test file must clear ALL singletons in before_each: GameManager.transition_data, EventFlags.clear_all(), SaveManager.delete_slot(0-3).
+- [ ] **Spec-implementation sync:** After implementation, grep spec for EVERY changed concept name. Update ALL occurrences, not just the first one you find.
+- [ ] **Return path completeness:** After every overlay push or sub-state change, trace the cancel/return path. Are panels shown/hidden correctly? Is cursor visible/hidden correctly?
+- [ ] **Actor filtering:** For every Area2D signal (body_entered, area_entered) — WHO can trigger it? Filter to the intended actor (e.g., `if body != _player: return`). Without this, any physics body triggers the action.
+- [ ] **Failure chain:** For every operation that can fail (load_map, push_overlay, ResourceLoader) — trace what happens to ALL in-flight state: tweens, flags, visibility, freed nodes. Kill tweens, reset flags, restore visibility. One failure check is not enough — trace the FULL chain.
+- [ ] **Ordering:** For every function that destroys-then-creates — validate the NEW thing BEFORE destroying the OLD thing. If validation fails, the old state must survive intact.
 
 ### State Transition Visibility (from Copilot PR #119 batch 4)
 - [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).

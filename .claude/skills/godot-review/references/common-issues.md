@@ -159,3 +159,13 @@ Copilot caught 3 test isolation issues: no cleanup, fake data overwritten
 by real data methods, cross-file state leakage. Fix: after_each cleanup,
 call targeted update methods instead of full refresh, ensure all test
 files clean up shared state.
+
+### 17. GDScript Runtime Safety (PR #120)
+
+Code after scene transitions crashes because the current node is being
+freed. `get_viewport()` returns null after `change_scene_to_file()`.
+Any method call on `self` or member access after a scene swap is
+undefined behavior. Root cause: static review cannot catch runtime-only
+errors in input handlers — these only surface when actually pressing
+keys in the Godot editor. **Every input handler that can trigger a
+scene transition must be manually tested in-editor.**

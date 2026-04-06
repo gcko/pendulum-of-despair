@@ -44,13 +44,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_down"):
 		_move_cursor(1)
-		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_move_cursor(-1)
-		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		_confirm_selection()
-		get_viewport().set_input_as_handled()
 
 
 func _move_cursor(direction: int) -> void:
