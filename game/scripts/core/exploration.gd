@@ -44,6 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
 		if _player.has_method("try_interact"):
+			get_viewport().set_input_as_handled()
 			_player.try_interact()
 
 
@@ -113,6 +114,7 @@ func _initialize_from_transition_data() -> void:
 		load_map("test_room")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
+		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
 		var location: String = world.get("current_location", "")
 		if location == "":

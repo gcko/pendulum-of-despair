@@ -128,8 +128,10 @@ func _refresh_slot_display() -> void:
 
 
 func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
-	var header: Label = panel.get_node("HeaderLabel")
-	var party: Label = panel.get_node("PartyLabel")
+	var header: Label = panel.get_node_or_null("HeaderLabel")
+	var party: Label = panel.get_node_or_null("PartyLabel")
+	if header == null or party == null:
+		return
 	var prefix: String = "AUTO - " if is_auto else ""
 	if data.is_empty():
 		header.text = prefix + "Empty"
@@ -148,8 +150,7 @@ func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool =
 			"%s%s  %d:%02d  %dg" % [prefix, loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
 		)
 		header.modulate = COLOR_NORMAL
-		var active: Array = data.get("formation", {}).get("active", [])
-		party.text = "  ".join(active.map(func(c: Variant) -> String: return str(c)))
+		party.text = Helpers.format_active_party_names(data)
 
 
 func _select_first_populated_slot() -> void:

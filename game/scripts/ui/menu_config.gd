@@ -84,9 +84,15 @@ func _ready() -> void:
 func open() -> void:
 	_config = PartyState.get_config().duplicate()
 	_cursor_index = 0
-	_patience_was_on = false
-	_reduce_was_on = false
-	_apply_cascades()
+	# Load persisted pre-cascade values so restore works across re-opens
+	_pre_patience_atb = _config.get("_pre_patience_atb", "active")
+	_pre_patience_speed = _config.get("_pre_patience_speed", 3)
+	_pre_reduce_shake = _config.get("_pre_reduce_shake", true)
+	_pre_reduce_mode7 = _config.get("_pre_reduce_mode7", 6)
+	_pre_reduce_flash = _config.get("_pre_reduce_flash", "full")
+	_pre_reduce_transition = _config.get("_pre_reduce_transition", "classic")
+	_patience_was_on = _config.get("patience_mode", false)
+	_reduce_was_on = _config.get("reduce_motion", false)
 	_update_display()
 
 
@@ -187,9 +193,11 @@ func _apply_cascades() -> void:
 	# Patience Mode cascade
 	var patience: bool = _config.get("patience_mode", false)
 	if patience and not _patience_was_on:
-		# Capture current values before forcing cascade
+		# Capture and persist pre-cascade values for restore across re-opens
 		_pre_patience_atb = _config.get("atb_mode", "active")
 		_pre_patience_speed = _config.get("battle_speed", 3)
+		PartyState.set_config("_pre_patience_atb", _pre_patience_atb)
+		PartyState.set_config("_pre_patience_speed", _pre_patience_speed)
 	if patience:
 		_config["atb_mode"] = "wait"
 		_config["battle_speed"] = 6
@@ -210,6 +218,10 @@ func _apply_cascades() -> void:
 		_pre_reduce_mode7 = _config.get("mode7_intensity", 6)
 		_pre_reduce_flash = _config.get("flash_intensity", "full")
 		_pre_reduce_transition = _config.get("transition_style", "classic")
+		PartyState.set_config("_pre_reduce_shake", _pre_reduce_shake)
+		PartyState.set_config("_pre_reduce_mode7", _pre_reduce_mode7)
+		PartyState.set_config("_pre_reduce_flash", _pre_reduce_flash)
+		PartyState.set_config("_pre_reduce_transition", _pre_reduce_transition)
 	if reduce:
 		_config["screen_shake"] = false
 		_config["mode7_intensity"] = 1

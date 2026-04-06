@@ -221,3 +221,17 @@ static func build_save_dict(
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}
+
+
+## Resolve formation active indices to uppercase character names for display.
+static func format_active_party_names(save_data: Dictionary) -> String:
+	var party_arr: Array = save_data.get("party", [])
+	var active: Array = save_data.get("formation", {}).get("active", [])
+	var names: Array[String] = []
+	for idx: Variant in active:
+		var i: int = int(idx) if idx is int or idx is float else -1
+		if i >= 0 and i < party_arr.size() and party_arr[i] is Dictionary:
+			names.append(str(party_arr[i].get("character_id", "???")).to_upper())
+		else:
+			names.append(str(idx))
+	return "  ".join(names)

@@ -305,13 +305,12 @@ func _get_playtime() -> int:
 
 
 func _capture_party_xp() -> Dictionary:
-	# TODO: Read XP per character from party state
+	# TODO: Read XP per character from party state (detailed breakdown)
 	return {}
 
 
 func _capture_gold() -> int:
-	# TODO: Read gold from world state
-	return 0
+	return PartyState.gold
 
 
 func _capture_boss_cutscene_flags() -> Dictionary:

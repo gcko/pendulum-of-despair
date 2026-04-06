@@ -232,8 +232,8 @@ func _open_save() -> void:
 		return  # Save command is disabled (greyed out)
 	# Schedule save overlay push on GameManager (autoload, never freed) before
 	# popping this overlay. call_deferred runs after the current frame's
-	# queue_free processing, so GameManager._push_save_overlay executes safely.
-	GameManager.call_deferred("_push_save_overlay")
+	# queue_free processing, so GameManager.push_save_overlay executes safely.
+	GameManager.call_deferred("push_save_overlay")
 	GameManager.pop_overlay()
 
 
