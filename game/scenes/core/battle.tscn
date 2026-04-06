@@ -1,0 +1,210 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/battle_manager.gd" id="1_manager"]
+[ext_resource type="Script" path="res://scripts/combat/atb_system.gd" id="2_atb"]
+[ext_resource type="Script" path="res://scripts/combat/battle_state.gd" id="3_state"]
+[ext_resource type="Script" path="res://scripts/ui/battle_ui.gd" id="4_ui"]
+[ext_resource type="Script" path="res://scripts/ui/battle_party_panel.gd" id="5_panel"]
+[ext_resource type="Script" path="res://scripts/ui/battle_command_menu.gd" id="6_cmd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0, 0, 0.15, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.333, 0.4, 0.667, 1)
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_msg"]
+bg_color = Color(0, 0, 0.15, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.333, 0.4, 0.667, 1)
+content_margin_left = 4.0
+content_margin_top = 1.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1_manager")
+
+[node name="ATBSystem" type="Node" parent="."]
+script = ExtResource("2_atb")
+
+[node name="BattleState" type="Node" parent="."]
+script = ExtResource("3_state")
+
+[node name="EnemyArea" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 90)
+
+[node name="BattleUI" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("4_ui")
+
+[node name="PartyPanel" type="PanelContainer" parent="BattleUI"]
+offset_left = 0.0
+offset_top = 117.0
+offset_right = 208.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+script = ExtResource("5_panel")
+
+[node name="Row0" type="HBoxContainer" parent="BattleUI/PartyPanel"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Row0"]
+layout_mode = 2
+text = ""
+
+[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Row0"]
+layout_mode = 2
+text = ""
+
+[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Row0"]
+layout_mode = 2
+text = ""
+
+[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row0"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 4)
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row1" type="HBoxContainer" parent="BattleUI/PartyPanel"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Row1"]
+layout_mode = 2
+text = ""
+
+[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Row1"]
+layout_mode = 2
+text = ""
+
+[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Row1"]
+layout_mode = 2
+text = ""
+
+[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row1"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 4)
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row2" type="HBoxContainer" parent="BattleUI/PartyPanel"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Row2"]
+layout_mode = 2
+text = ""
+
+[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Row2"]
+layout_mode = 2
+text = ""
+
+[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Row2"]
+layout_mode = 2
+text = ""
+
+[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row2"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 4)
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row3" type="HBoxContainer" parent="BattleUI/PartyPanel"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Row3"]
+layout_mode = 2
+text = ""
+
+[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Row3"]
+layout_mode = 2
+text = ""
+
+[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Row3"]
+layout_mode = 2
+text = ""
+
+[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row3"]
+layout_mode = 2
+custom_minimum_size = Vector2(20, 4)
+color = Color(1, 0.8, 0, 1)
+
+[node name="CommandMenu" type="PanelContainer" parent="BattleUI"]
+offset_left = 212.0
+offset_top = 117.0
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+visible = false
+script = ExtResource("6_cmd")
+
+[node name="CommandList" type="VBoxContainer" parent="BattleUI/CommandMenu"]
+layout_mode = 2
+
+[node name="Cmd0" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Cmd1" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Magic"
+
+[node name="Cmd2" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Ability"
+
+[node name="Cmd3" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Item"
+
+[node name="Cmd4" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Defend"
+
+[node name="Cmd5" type="Label" parent="BattleUI/CommandMenu/CommandList"]
+layout_mode = 2
+text = "Flee"
+
+[node name="SubMenu" type="PanelContainer" parent="BattleUI/CommandMenu"]
+offset_left = -212.0
+offset_top = 0.0
+offset_right = -4.0
+offset_bottom = 63.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+visible = false
+
+[node name="SubMenuList" type="VBoxContainer" parent="BattleUI/CommandMenu/SubMenu"]
+layout_mode = 2
+
+[node name="MessageArea" type="PanelContainer" parent="BattleUI"]
+offset_left = 80.0
+offset_top = 2.0
+offset_right = 240.0
+offset_bottom = 16.0
+theme_override_styles/panel = SubResource("StyleBox_msg")
+visible = false
+
+[node name="MessageLabel" type="Label" parent="BattleUI/MessageArea"]
+layout_mode = 2
+horizontal_alignment = 1
+text = ""
+
+[node name="ResultsPanel" type="PanelContainer" parent="BattleUI"]
+offset_left = 60.0
+offset_top = 30.0
+offset_right = 260.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+visible = false
+
+[node name="ResultsLabel" type="Label" parent="BattleUI/ResultsPanel"]
+layout_mode = 2
+text = ""
