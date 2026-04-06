@@ -1,6 +1,7 @@
 extends Control
 ## Status sub-screen: read-only character stat sheet.
 
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_HP: Color = Color("#44cc44")
 const COLOR_HP_LOW: Color = Color("#ff4444")
@@ -130,8 +131,8 @@ func _update_display() -> void:
 			continue
 		if i < SLOT_NAMES.size():
 			var eid: String = equip.get(SLOT_NAMES[i], "")
-			var name: String = _get_equipment_name(eid)
-			_equip_labels[i].text = "%s: %s" % [SLOT_DISPLAY[i], name]
+			var equip_name: String = _get_equipment_name(eid)
+			_equip_labels[i].text = "%s: %s" % [SLOT_DISPLAY[i], equip_name]
 			_equip_labels[i].modulate = COLOR_NORMAL
 
 
@@ -155,12 +156,8 @@ func _get_ability_name(character_id: String) -> String:
 func _get_equipment_name(equip_id: String) -> String:
 	if equip_id == "":
 		return "---"
-	for equip_type: String in ["weapons", "armor", "accessories"]:
-		var items: Array = DataManager.load_equipment(equip_type)
-		for item: Variant in items:
-			if item is Dictionary and (item as Dictionary).get("id", "") == equip_id:
-				return (item as Dictionary).get("name", equip_id)
-	return equip_id
+	var data: Dictionary = Helpers.lookup_equipment(equip_id)
+	return data.get("name", equip_id)
 
 
 func _format_number(value: int) -> String:

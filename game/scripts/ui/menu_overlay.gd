@@ -31,6 +31,7 @@ var _command_index: int = 0
 var _char_index: int = 0
 var _active_sub_screen: Control = null
 var _active_party: Array[Dictionary] = []
+var _config_direct: bool = false
 
 @onready var _command_labels: Array[Label] = []
 @onready var _party_rows: Array[Control] = []
@@ -66,6 +67,7 @@ func _ready() -> void:
 
 ## Open directly to config screen (used by title screen).
 func open_config_direct() -> void:
+	_config_direct = true
 	_hide_all_sub_screens()
 	_open_sub_screen(_config_screen)
 	if _config_screen.has_method("open"):
@@ -193,6 +195,11 @@ func _close_sub_screen() -> void:
 		_active_sub_screen.visible = false
 		_active_sub_screen = null
 	_stub_label.visible = false
+	if _config_direct:
+		_config_direct = false
+		get_viewport().set_input_as_handled()
+		GameManager.pop_overlay()
+		return
 	_state = MenuState.COMMAND
 	_refresh_party_data()
 	_update_display()

@@ -60,8 +60,18 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 				value = int(float(max_mp) * float(pct) / 100.0)
 			target["current_mp"] = mini(target.get("current_mp", 0) + value, max_mp)
 		"restore_hp_mp":
-			target["current_hp"] = target.get("max_hp", 1)
-			target["current_mp"] = target.get("max_mp", 0)
+			var max_hp: int = target.get("max_hp", 1)
+			var max_mp: int = target.get("max_mp", 0)
+			if item_data.has("restore_percent"):
+				var pct: int = item_data.get("restore_percent", 0)
+				var hp_val: int = int(float(max_hp) * float(pct) / 100.0)
+				var mp_val: int = int(float(max_mp) * float(pct) / 100.0)
+				target["current_hp"] = mini(target.get("current_hp", 0) + hp_val, max_hp)
+				target["current_mp"] = mini(target.get("current_mp", 0) + mp_val, max_mp)
+			else:
+				target["current_hp"] = max_hp
+				target["current_mp"] = max_mp
+			target["status_effects"] = [] as Array
 		"revive":
 			if target.get("current_hp", 0) <= 0:
 				var max_hp: int = target.get("max_hp", 1)

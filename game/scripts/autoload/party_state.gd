@@ -53,6 +53,7 @@ func _ready() -> void:
 func initialize_new_game() -> void:
 	members.clear()
 	owned_equipment.clear()
+	_next_inst_id = 0
 	is_at_save_point = false
 	EventFlags.clear_all()
 	_add_character("edren", 1)
@@ -75,6 +76,7 @@ func initialize_new_game() -> void:
 func load_from_save(data: Dictionary) -> void:
 	members.clear()
 	owned_equipment.clear()
+	_next_inst_id = 0
 
 	var party_data: Array = data.get("party", [])
 	for m: Variant in party_data:
@@ -304,7 +306,8 @@ func get_gold() -> int:
 
 
 func add_gold(amount: int) -> void:
-	gold += amount
+	if amount > 0:
+		gold += amount
 
 
 func spend_gold(amount: int) -> bool:
@@ -337,7 +340,7 @@ func _add_character(character_id: String, level: int) -> void:
 		push_error("PartyState: Character not found: %s" % character_id)
 		return
 	var base: Dictionary = char_data.get("base_stats", {})
-	var growth: Dictionary = char_data.get("growth_rates", {})
+	var growth: Dictionary = char_data.get("growth", {})
 	var stats: Dictionary = Helpers.calculate_stats_at_level(base, growth, level)
 	var starting_equip: Dictionary = STARTING_EQUIPMENT.get(
 		character_id, {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""}
