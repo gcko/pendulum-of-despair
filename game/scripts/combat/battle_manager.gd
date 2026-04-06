@@ -41,8 +41,9 @@ func _ready() -> void:
 	_ui.initialize(self)
 	_ui.command_submitted.connect(_on_ui_command)
 	_ui.command_cancelled.connect(_on_ui_cancel)
-	_ui.results_dismissed.connect(_on_results_dismissed)
+	_ui.results_dismissed.connect(func() -> void: _exit_battle("victory"))
 	_ui.submenu_state_changed.connect(_on_submenu_state)
+	_state.member_died.connect(_on_party_member_died)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -142,18 +143,21 @@ func _on_ui_cancel() -> void:
 	_awaiting_input_for = ""
 
 
+func _on_party_member_died(slot: int) -> void:
+	_atb.remove_combatant("party_%d" % slot)
+	if _awaiting_input_for == "party_%d" % slot:
+		_awaiting_input_for = ""
+		_atb.set_command_menu_open(false)
+
+
 func _on_submenu_state(is_open: bool) -> void:
 	_atb.set_submenu_open(is_open)
 
 
-func _on_results_dismissed() -> void:
-	_exit_battle("victory")
-
-
 func _do_attack(actor_id: String, command: Dictionary) -> void:
 	var slot: int = actor_id.replace("party_", "").to_int()
-	var target_idx: int = command.get("target", 0)
-	if target_idx < 0 or target_idx >= _enemies.size():
+	var target_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
+	if target_idx < 0:
 		return
 	var member: Dictionary = _state.get_member(slot)
 	message.emit("%s attacks!" % member.get("character_data", {}).get("name", "???"))
@@ -185,7 +189,13 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		_state.gain_weave_gauge_for_maren(10)
 	var target_type: String = spell.get("target", "single_enemy")
 	if target_type == "single_enemy":
-		_do_magic_on_enemy(slot, mag, power, element, command.get("target", 0))
+		_do_magic_on_enemy(
+			slot,
+			mag,
+			power,
+			element,
+			BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
+		)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
 			if _enemies[i].is_alive:

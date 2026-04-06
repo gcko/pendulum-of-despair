@@ -210,7 +210,7 @@ func _show_results(rewards: Dictionary) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _results_showing and event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		_results_panel.visible = false
 		_results_showing = false
-		# Signal up — parent handles scene transition
 		results_dismissed.emit()

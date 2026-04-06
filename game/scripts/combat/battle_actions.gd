@@ -8,6 +8,18 @@ extends RefCounted
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 
 
+## Map a UI cursor index (0..living-1) to an actual _enemies array index.
+## Returns -1 if no living enemies.
+static func resolve_enemy_target(cursor: int, enemies: Array) -> int:
+	var living: Array[int] = []
+	for i: int in range(enemies.size()):
+		if enemies[i].is_alive:
+			living.append(i)
+	if living.is_empty():
+		return -1
+	return living[clampi(cursor, 0, living.size() - 1)]
+
+
 ## Execute a physical attack from a party member against an enemy.
 ## Returns the damage dealt (0 on miss).
 static func execute_party_attack(
