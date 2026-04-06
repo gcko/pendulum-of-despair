@@ -42,11 +42,12 @@ func _ready() -> void:
 	_ui.command_submitted.connect(_on_ui_command)
 	_ui.command_cancelled.connect(_on_ui_cancel)
 	_ui.results_dismissed.connect(func() -> void: _exit_battle("victory"))
-	_ui.submenu_state_changed.connect(_on_submenu_state)
+	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
+		call_deferred("_exit_battle", "flee")
 		return
 	_return_map_id = data.get("return_map_id", "")
 	_return_position = data.get("return_position", Vector2.ZERO)
@@ -124,7 +125,7 @@ func _on_ui_command(command: Dictionary) -> void:
 			_do_flee()
 		"ability":
 			_do_attack(actor_id, command)
-	if not ok:  # Command failed — re-prompt
+	if not ok:
 		_atb.set_command_menu_open(true)
 		var s: int = actor_id.replace("party_", "").to_int()
 		var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
@@ -148,10 +149,6 @@ func _on_party_member_died(slot: int) -> void:
 	if _awaiting_input_for == "party_%d" % slot:
 		_awaiting_input_for = ""
 		_atb.set_command_menu_open(false)
-
-
-func _on_submenu_state(is_open: bool) -> void:
-	_atb.set_submenu_open(is_open)
 
 
 func _do_attack(actor_id: String, command: Dictionary) -> void:

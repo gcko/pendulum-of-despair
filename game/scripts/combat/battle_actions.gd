@@ -139,4 +139,5 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 		)
 	)
 	state.take_damage(target_slot, dmg)
-	return {"hit": true, "damage": dmg, "type": "physical"}
+	var dtype: String = "critical" if is_crit else "physical"
+	return {"hit": true, "damage": dmg, "type": dtype}
