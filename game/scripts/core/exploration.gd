@@ -10,9 +10,10 @@ const FADE_DURATION: float = 0.3
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
-var _player: CharacterBody2D = null
+var _player: Node2D = null
 var _transitioning: bool = false
 var _last_flash_id: String = ""
+var _flash_tween: Tween = null
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -37,7 +38,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		_player.try_interact()
+		if _player.has_method("try_interact"):
+			_player.try_interact()
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
@@ -60,6 +62,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_map_container.add_child(_current_map)
 	_current_map_id = map_id
 
+	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
 
@@ -72,14 +75,16 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 
 
 func flash_location_name(location_name: String) -> void:
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
 	_location_label.text = location_name
 	_location_panel.visible = true
 	_location_panel.modulate = Color(1, 1, 1, 0)
-	var tween: Tween = create_tween()
-	tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
-	tween.tween_interval(2.0)
-	tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
-	tween.tween_callback(_hide_location_panel)
+	_flash_tween = create_tween()
+	_flash_tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
+	_flash_tween.tween_interval(2.0)
+	_flash_tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
+	_flash_tween.tween_callback(_hide_location_panel)
 
 
 func _hide_location_panel() -> void:
@@ -89,8 +94,10 @@ func _hide_location_panel() -> void:
 func _spawn_player() -> void:
 	_player = PLAYER_SCENE.instantiate()
 	add_child(_player)
-	_player.initialize("edren")
-	_player.interaction_requested.connect(_on_interaction_requested)
+	if _player.has_method("initialize"):
+		_player.initialize("edren")
+	if _player.has_signal("interaction_requested"):
+		_player.interaction_requested.connect(_on_interaction_requested)
 
 
 func _initialize_from_transition_data() -> void:
@@ -109,6 +116,43 @@ func _initialize_from_transition_data() -> void:
 			_player.position = Vector2(pos["x"], pos["y"])
 	else:
 		load_map("test_room")
+
+
+func _initialize_entities(map_node: Node2D) -> void:
+	var entities: Node = map_node.get_node_or_null("Entities")
+	if entities == null:
+		return
+	for child: Node in entities.get_children():
+		if not child.has_method("initialize"):
+			continue
+		if child.has_signal("npc_interacted"):
+			var npc_id: String = child.get_meta("npc_id", "")
+			if npc_id != "":
+				child.initialize(npc_id)
+			else:
+				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
+		elif child.has_signal("chest_opened"):
+			var chest_id: String = child.get_meta("chest_id", "")
+			var item_id: String = child.get_meta("item_id", "")
+			if chest_id != "" and item_id != "":
+				child.initialize(chest_id, item_id)
+			else:
+				push_error("Exploration: Chest '%s' missing metadata" % child.name)
+		elif child.has_signal("save_point_activated"):
+			var sp_id: String = child.get_meta("save_point_id", "")
+			if sp_id != "":
+				child.initialize(sp_id)
+			else:
+				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
+
+	var transitions: Node = map_node.get_node_or_null("Transitions")
+	if transitions == null:
+		return
+	for child: Node in transitions.get_children():
+		if child.has_method("initialize") and child.has_signal("triggered"):
+			var trigger_id: String = child.get_meta("trigger_id", "")
+			if trigger_id != "":
+				child.initialize(trigger_id)
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
@@ -135,19 +179,27 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		for child: Node in entities.get_children():
 			for sig_name: String in ["npc_interacted", "chest_opened", "save_point_activated"]:
 				if child.has_signal(sig_name):
-					var sig: Signal = child.get(sig_name)
-					for conn: Dictionary in sig.get_connections():
-						if conn["callable"].get_object() == self:
-							sig.disconnect(conn["callable"])
+					var callable_ref: Callable = _get_handler_for_signal(sig_name)
+					if child.is_connected(sig_name, callable_ref):
+						child.disconnect(sig_name, callable_ref)
 
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
 			if child.has_signal("triggered"):
-				var sig: Signal = child.triggered
-				for conn: Dictionary in sig.get_connections():
-					if conn["callable"].get_object() == self:
-						sig.disconnect(conn["callable"])
+				if child.is_connected("triggered", _on_trigger_zone_triggered):
+					child.disconnect("triggered", _on_trigger_zone_triggered)
+
+
+func _get_handler_for_signal(sig_name: String) -> Callable:
+	match sig_name:
+		"npc_interacted":
+			return _on_npc_interacted
+		"chest_opened":
+			return _on_chest_opened
+		"save_point_activated":
+			return _on_save_point_activated
+	return Callable()
 
 
 func _position_player_at_spawn(spawn_name: String) -> void:

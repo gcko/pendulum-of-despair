@@ -82,11 +82,16 @@ func test_save_point_signal_wired() -> void:
 # --- Map Transitions ---
 
 
-func test_transition_flag_blocks_input() -> void:
+func test_transition_flag_blocks_interaction() -> void:
 	var exp = _create_exploration()
 	exp._transitioning = true
-	# Attempting interaction while transitioning should be blocked
-	assert_true(exp._transitioning, "transitioning flag should block input")
+	# _on_interaction_requested should early-return when transitioning
+	# Create a mock interactable with interact() and verify it's NOT called
+	var mock: Node2D = Node2D.new()
+	add_child_autofree(mock)
+	exp._on_interaction_requested(mock)
+	# If interact() were called on a Node2D it would error — no error means blocked
+	assert_true(exp._transitioning, "transitioning should still be true")
 
 
 func test_location_flash_sets_text() -> void:

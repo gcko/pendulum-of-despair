@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/exploration.gd" id="1_script"]
 
@@ -13,9 +13,6 @@ content_margin_left = 4.0
 content_margin_top = 2.0
 content_margin_right = 4.0
 content_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBox_fade"]
-bg_color = Color(0, 0, 0, 1)
 
 [node name="Exploration" type="Node2D"]
 script = ExtResource("1_script")
@@ -32,8 +29,6 @@ layer = 20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 320.0
-offset_bottom = 180.0
 color = Color(0, 0, 0, 1)
 visible = false
 
