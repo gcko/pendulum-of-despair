@@ -131,20 +131,20 @@ func test_restore_mp_clamps_to_max() -> void:
 
 func test_apply_turn_based_status() -> void:
 	_state.add_member(0, _make_char_data())
-	_state.apply_status(0, "haste", "turns", 5)
+	_state.apply_status(0, "haste", "turns", 5.0)
 	assert_true(_state.has_status(0, "haste"))
 
 
 func test_tick_decrements_turn_status() -> void:
 	_state.add_member(0, _make_char_data())
-	_state.apply_status(0, "haste", "turns", 1)
+	_state.apply_status(0, "haste", "turns", 1.0)
 	_state.tick_statuses(0)
 	assert_false(_state.has_status(0, "haste"), "expired after 1 tick")
 
 
 func test_tick_preserves_multi_turn_status() -> void:
 	_state.add_member(0, _make_char_data())
-	_state.apply_status(0, "haste", "turns", 3)
+	_state.apply_status(0, "haste", "turns", 3.0)
 	_state.tick_statuses(0)
 	assert_true(_state.has_status(0, "haste"), "still active after 1 of 3 ticks")
 
@@ -160,15 +160,15 @@ func test_realtime_status_decrements_by_delta() -> void:
 
 func test_remove_status() -> void:
 	_state.add_member(0, _make_char_data())
-	_state.apply_status(0, "poison", "turns", 5)
+	_state.apply_status(0, "poison", "turns", 5.0)
 	_state.remove_status(0, "poison")
 	assert_false(_state.has_status(0, "poison"))
 
 
 func test_apply_replaces_existing() -> void:
 	_state.add_member(0, _make_char_data())
-	_state.apply_status(0, "haste", "turns", 2)
-	_state.apply_status(0, "haste", "turns", 5)
+	_state.apply_status(0, "haste", "turns", 2.0)
+	_state.apply_status(0, "haste", "turns", 5.0)
 	# Should have only one instance with 5 turns
 	_state.tick_statuses(0)
 	_state.tick_statuses(0)
@@ -178,7 +178,7 @@ func test_apply_replaces_existing() -> void:
 func test_status_signals() -> void:
 	_state.add_member(0, _make_char_data())
 	watch_signals(_state)
-	_state.apply_status(0, "slow", "turns", 1)
+	_state.apply_status(0, "slow", "turns", 1.0)
 	assert_signal_emitted(_state, "status_applied")
 	_state.tick_statuses(0)
 	assert_signal_emitted(_state, "status_removed")

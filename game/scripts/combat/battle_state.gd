@@ -95,10 +95,10 @@ func heal(slot: int, amount: int) -> void:
 		member_healed.emit(slot, actual)
 
 
-## Spend MP. Returns false if insufficient.
+## Spend MP. Returns false if insufficient or negative amount.
 func spend_mp(slot: int, amount: int) -> bool:
 	var m: Dictionary = get_member(slot)
-	if m.is_empty():
+	if m.is_empty() or amount < 0:
 		return false
 	if m["current_mp"] < amount:
 		return false
@@ -106,16 +106,17 @@ func spend_mp(slot: int, amount: int) -> bool:
 	return true
 
 
-## Restore MP.
+## Restore MP. Clamps amount to >= 0.
 func restore_mp(slot: int, amount: int) -> void:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return
-	m["current_mp"] = mini(m["max_mp"], m["current_mp"] + amount)
+	var clamped: int = maxi(0, amount)
+	m["current_mp"] = mini(m["max_mp"], m["current_mp"] + clamped)
 
 
-## Apply a status effect.
-func apply_status(slot: int, status_name: String, duration_type: String, duration) -> void:
+## Apply a status effect. Duration is turns (int) or seconds (float).
+func apply_status(slot: int, status_name: String, duration_type: String, duration: float) -> void:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return
@@ -221,7 +222,32 @@ func set_defending(slot: int, defending: bool) -> void:
 
 ## Check if all party members are dead.
 func is_party_wiped() -> bool:
-	for m in _members:
+	for m: Variant in _members:
 		if m != null and m["is_alive"]:
 			return false
 	return true
+
+
+## Get average SPD of living party members.
+func get_avg_party_spd() -> float:
+	var total: float = 0.0
+	var count: int = 0
+	for i: int in range(4):
+		var m: Dictionary = get_member(i)
+		if not m.is_empty() and m.get("is_alive", false):
+			total += get_effective_stat(i, "spd")
+			count += 1
+	return total / maxf(1.0, count)
+
+
+## Gain Weave Gauge for a specific slot (Maren only).
+func gain_weave_gauge(slot: int, amount: int) -> void:
+	var m: Dictionary = get_member(slot)
+	if m.get("character_id", "") == "maren":
+		m["wg"] = mini(100, m.get("wg", 0) + amount)
+
+
+## Gain Weave Gauge for Maren from any slot.
+func gain_weave_gauge_for_maren(amount: int) -> void:
+	for i: int in range(4):
+		gain_weave_gauge(i, amount)

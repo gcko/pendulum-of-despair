@@ -33,8 +33,16 @@ var _submenu_open: bool = false
 var _command_menu_open: bool = false
 
 
+## Check if real-time status timers should pause (for Wait/Patience modes).
+func should_pause_timers() -> bool:
+	return _should_pause()
+
+
 ## Add a combatant to the ATB system.
 func add_combatant(id: String, spd: int, is_enemy: bool) -> void:
+	if id == "":
+		push_error("ATBSystem: Cannot add combatant with empty ID")
+		return
 	_combatants[id] = {
 		"gauge": 0,
 		"spd": spd,

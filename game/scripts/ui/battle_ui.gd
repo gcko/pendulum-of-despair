@@ -1,14 +1,22 @@
 extends CanvasLayer
 ## Battle UI controller — observes battle_manager signals, coordinates
 ## child UI components, manages damage popups and results screen.
+##
+## Initialized by battle_manager via initialize() — no get_parent().
+## Emits results_dismissed signal — never calls parent methods directly.
+
+signal results_dismissed
+signal command_submitted(command: Dictionary)
+signal command_cancelled
 
 const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
 const COLOR_MISS: Color = Color("#888888")
 const COLOR_CRIT: Color = Color("#ffff44")
 
-var _battle_manager: Node = null
 var _message_timer: float = 0.0
+var _enemy_positions: Array[Vector2] = []
+var _results_showing: bool = false
 
 @onready var _party_panel: PanelContainer = $PartyPanel
 @onready var _command_menu: PanelContainer = $CommandMenu
@@ -17,20 +25,19 @@ var _message_timer: float = 0.0
 @onready var _results_panel: PanelContainer = $ResultsPanel
 
 
+## Called by battle_manager to inject itself — "call down" pattern.
+func initialize(manager: Node) -> void:
+	manager.battle_started.connect(_on_battle_started)
+	manager.turn_ready.connect(_on_turn_ready)
+	manager.damage_dealt.connect(_on_damage_dealt)
+	manager.message.connect(_on_message)
+	manager.victory.connect(_on_victory)
+	manager.defeat.connect(_on_defeat)
+	manager.combatant_died.connect(_on_combatant_died)
+	manager.party_state_updated.connect(_on_party_state_updated)
+
+
 func _ready() -> void:
-	_battle_manager = get_parent()
-	if _battle_manager == null:
-		push_error("BattleUI: No parent battle manager")
-		return
-
-	_battle_manager.battle_started.connect(_on_battle_started)
-	_battle_manager.turn_ready.connect(_on_turn_ready)
-	_battle_manager.damage_dealt.connect(_on_damage_dealt)
-	_battle_manager.message.connect(_on_message)
-	_battle_manager.victory.connect(_on_victory)
-	_battle_manager.defeat.connect(_on_defeat)
-	_battle_manager.combatant_died.connect(_on_combatant_died)
-
 	if _command_menu != null:
 		_command_menu.command_selected.connect(_on_command_selected)
 		_command_menu.command_cancelled.connect(_on_command_cancelled)
@@ -49,42 +56,34 @@ func _process(delta: float) -> void:
 		if _message_timer <= 0.0 and _message_area != null:
 			_message_area.visible = false
 
-	_update_party_panel()
+
+func _on_battle_started(_party: Array, _enemies: Array, enemy_positions: Array) -> void:
+	_enemy_positions = []
+	for pos: Variant in enemy_positions:
+		_enemy_positions.append(pos as Vector2)
 
 
-func _on_battle_started(_party: Array, _enemies: Array) -> void:
-	_update_party_panel()
-
-
-func _on_turn_ready(combatant_id: String, is_party: bool) -> void:
+func _on_turn_ready(
+	_combatant_id: String,
+	is_party: bool,
+	slot: int,
+	enemy_count: int,
+	is_boss: bool,
+	character_data: Dictionary,
+) -> void:
 	if not is_party:
 		return
-	var slot: int = combatant_id.replace("party_", "").to_int()
 	if _party_panel != null:
 		_party_panel.set_active_slot(slot)
-
-	var state: Node = _battle_manager.get_node_or_null("BattleState")
-	if state != null and _command_menu != null:
-		var member: Dictionary = state.get_member(slot)
-		var char_data: Dictionary = member.get("character_data", {})
-		_command_menu.set_enemy_count(_battle_manager._enemies.size())
-		_command_menu.show_commands(char_data, _battle_manager._is_boss)
-
-		var atb: Node = _battle_manager.get_node_or_null("ATBSystem")
-		if atb != null:
-			atb.set_command_menu_open(true)
+	if _command_menu != null:
+		_command_menu.set_enemy_count(enemy_count)
+		_command_menu.show_commands(character_data, is_boss)
 
 
 func _on_command_selected(command: Dictionary) -> void:
-	var atb: Node = _battle_manager.get_node_or_null("ATBSystem")
-	if atb != null:
-		atb.set_command_menu_open(false)
-		atb.set_submenu_open(false)
-
 	if _party_panel != null:
 		_party_panel.set_active_slot(-1)
-
-	_battle_manager.submit_command(command)
+	command_submitted.emit(command)
 
 
 func _on_command_cancelled() -> void:
@@ -92,10 +91,7 @@ func _on_command_cancelled() -> void:
 		_command_menu.hide_menu()
 	if _party_panel != null:
 		_party_panel.set_active_slot(-1)
-
-	var atb: Node = _battle_manager.get_node_or_null("ATBSystem")
-	if atb != null:
-		atb.set_command_menu_open(false)
+	command_cancelled.emit()
 
 
 func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> void:
@@ -140,20 +136,9 @@ func _on_combatant_died(_combatant_id: String) -> void:
 	pass
 
 
-func _update_party_panel() -> void:
-	if _party_panel == null or _battle_manager == null:
-		return
-	var state: Node = _battle_manager.get_node_or_null("BattleState")
-	var atb: Node = _battle_manager.get_node_or_null("ATBSystem")
-	if state == null or atb == null:
-		return
-
-	var members: Array = []
-	var gauges: Dictionary = {}
-	for i: int in range(4):
-		members.append(state.get_member(i))
-		gauges["party_%d" % i] = atb.get_gauge("party_%d" % i)
-	_party_panel.update_party(members, gauges)
+func _on_party_state_updated(members: Array, gauges: Dictionary) -> void:
+	if _party_panel != null:
+		_party_panel.update_party(members, gauges)
 
 
 func _spawn_damage_number(target_id: String, text: String, color: Color) -> void:
@@ -175,8 +160,8 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 func _get_target_position(target_id: String) -> Vector2:
 	if target_id.begins_with("enemy_"):
 		var idx: int = target_id.replace("enemy_", "").to_int()
-		if idx < _battle_manager._enemies.size():
-			return _battle_manager._enemies[idx].global_position
+		if idx < _enemy_positions.size():
+			return _enemy_positions[idx]
 	elif target_id.begins_with("party_"):
 		var slot: int = target_id.replace("party_", "").to_int()
 		return Vector2(40, 120 + slot * 15)
@@ -187,6 +172,7 @@ func _show_results(rewards: Dictionary) -> void:
 	if _results_panel == null:
 		return
 	_results_panel.visible = true
+	_results_showing = true
 
 	var results_label: Label = _results_panel.get_node_or_null("ResultsLabel")
 	if results_label != null:
@@ -200,8 +186,8 @@ func _show_results(rewards: Dictionary) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _results_panel != null and _results_panel.visible:
-		if event.is_action_pressed("ui_accept"):
-			_results_panel.visible = false
-			# _exit_battle MUST be the last call — no code after scene swap
-			_battle_manager._exit_battle("victory")
+	if _results_showing and event.is_action_pressed("ui_accept"):
+		_results_panel.visible = false
+		_results_showing = false
+		# Signal up — parent handles scene transition
+		results_dismissed.emit()

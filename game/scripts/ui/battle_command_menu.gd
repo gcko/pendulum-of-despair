@@ -87,6 +87,12 @@ func _handle_command_input(event: InputEvent) -> void:
 
 
 func _handle_submenu_input(event: InputEvent) -> void:
+	if _submenu_items.is_empty():
+		if event.is_action_pressed("ui_cancel"):
+			_state = MenuState.COMMAND
+			if _submenu != null:
+				_submenu.visible = false
+		return
 	if event.is_action_pressed("ui_up"):
 		_submenu_cursor = (_submenu_cursor - 1 + _submenu_items.size()) % _submenu_items.size()
 		_update_submenu_display()
@@ -190,9 +196,9 @@ func set_submenu_items(items: Array[Dictionary]) -> void:
 	_update_submenu_display()
 
 
-## Set enemy count for target selection.
+## Set enemy count for target selection. Minimum 1 to prevent division by zero.
 func set_enemy_count(count: int) -> void:
-	_target_count = count
+	_target_count = maxi(1, count)
 
 
 func _update_command_display() -> void:
