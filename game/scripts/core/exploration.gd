@@ -123,6 +123,8 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
 
+	if _player != null:
+		_last_player_tile = Vector2i(_player.position) / 16
 	_encounter_config = {}
 	_danger_counter = 0
 	var encounters: Dictionary = DataManager.load_encounters(_current_map_id)

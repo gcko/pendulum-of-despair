@@ -198,16 +198,17 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 	member["xp_to_next"] = xp_to_next_level(level)
 	if level > old_level:
 		var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
-		var base: Dictionary = char_data.get("base_stats", {})
-		var growth: Dictionary = char_data.get("growth", {})
-		var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
-		member["base_stats"] = new_stats
-		member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
-		member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
+		if not char_data.is_empty():
+			var base: Dictionary = char_data.get("base_stats", {})
+			var growth: Dictionary = char_data.get("growth", {})
+			var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
+			member["base_stats"] = new_stats
+			member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
+			member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
+			for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
+				member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
 		member["current_hp"] = member["max_hp"]
 		member["current_mp"] = member["max_mp"]
-		for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
-			member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
 	return {"leveled_up": level > old_level, "old_level": old_level, "new_level": level}
 
 
@@ -228,32 +229,24 @@ static func distribute_rewards(
 		if member.get("current_hp", 0) > 0:
 			var result: Dictionary = add_xp_to_member(member, xp_amount)
 			if result.get("leveled_up", false):
-				(
-					level_ups
-					. append(
-						{
-							"character_id": member.get("character_id", ""),
-							"old_level": result.get("old_level", 0),
-							"new_level": result.get("new_level", 0),
-						}
-					)
-				)
+				var lu: Dictionary = {
+					"character_id": member.get("character_id", ""),
+					"old_level": result.get("old_level", 0),
+					"new_level": result.get("new_level", 0),
+				}
+				level_ups.append(lu)
 	# Reserve party: 50% XP (KO'd get 0)
 	for member: Dictionary in reserve_party:
 		if member.get("current_hp", 0) <= 0:
 			continue
 		var result: Dictionary = add_xp_to_member(member, xp_amount / 2)
 		if result.get("leveled_up", false):
-			(
-				level_ups
-				. append(
-					{
-						"character_id": member.get("character_id", ""),
-						"old_level": result.get("old_level", 0),
-						"new_level": result.get("new_level", 0),
-					}
-				)
-			)
+			var lu: Dictionary = {
+				"character_id": member.get("character_id", ""),
+				"old_level": result.get("old_level", 0),
+				"new_level": result.get("new_level", 0),
+			}
+			level_ups.append(lu)
 	return {
 		"level_ups": level_ups,
 		"gold_gained": rewards.get("gold", 0),
@@ -378,7 +371,9 @@ static func apply_battle_rewards(
 	add_gold_fn.call(rewards.get("gold", 0))
 	for drop: Variant in rewards.get("drops", []):
 		if drop is Dictionary:
-			add_item_fn.call((drop as Dictionary).get("item_id", ""), 1)
+			var item_id: String = (drop as Dictionary).get("item_id", "")
+			if not item_id.is_empty():
+				add_item_fn.call(item_id, 1)
 	return result
 
 
