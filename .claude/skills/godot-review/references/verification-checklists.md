@@ -105,6 +105,15 @@ Reference for all review agents. Check every applicable item.
 - [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
 - [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
 
+### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
+- [ ] **Repeatability:** For every entity used in maps — can it happen twice? Doors/transitions MUST be repeatable (use Area2D, NOT one-shot TriggerZone). Story triggers are one-shot.
+- [ ] **Input ownership:** Grep for each input action (ui_accept, ui_cancel, etc.) across ALL .gd files. Exactly ONE handler per action per active scene. Two handlers = double-fire bug.
+- [ ] **Initialization chain:** For every entity in a .tscn map — trace: metadata set → exploration reads metadata → calls initialize(). If any link is missing, entity silently does nothing.
+- [ ] **Viewport dimensions:** Every ColorRect, background, panel size must match viewport (320x180). Every tile position must align to 16x16 grid. Every sprite must match spec sizes.
+- [ ] **Global state cleanup:** Every test file must clear ALL singletons in before_each: GameManager.transition_data, EventFlags.clear_all(), SaveManager.delete_slot(0-3).
+- [ ] **Spec-implementation sync:** After implementation, re-read spec. Update every claim that doesn't match what was built. "TileMapLayer" in spec but ColorRect in code = stale spec.
+- [ ] **Return path completeness:** After every overlay push or sub-state change, trace the cancel/return path. Are panels shown/hidden correctly? Is cursor visible/hidden correctly?
+
 ### State Transition Visibility (from Copilot PR #119 batch 4)
 - [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
 - [ ] When refresh/update methods rewrite display text, preserve prefixes or labels that distinguish node types (e.g., "AUTO" prefix on auto-save slot)

@@ -257,6 +257,11 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 
 
 func _do_map_swap(target_map: String, target_spawn: String) -> void:
+	var map_path: String = MAP_BASE_PATH + target_map + ".tscn"
+	if not ResourceLoader.exists(map_path):
+		push_error("Exploration: Transition target not found: %s" % map_path)
+		_end_transition()
+		return
 	load_map(target_map, target_spawn)
 
 

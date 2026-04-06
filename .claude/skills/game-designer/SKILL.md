@@ -179,6 +179,33 @@ every stale reference immediately — don't defer.
 - Static review CANNOT catch these bugs. Ask the user to press F5 and test
   every input handler on every screen before declaring done.
 
+*Behavioral state trace (MANDATORY — the pass Copilot does that I keep skipping):*
+For EVERY entity, signal, and state machine in the code, ask these questions
+and write down the answers. Do NOT skip this. Do NOT say "I should do this"
+and then not do it. Actually trace each path:
+
+1. **Repeatability:** Can this action happen more than once? If yes, does the
+   code allow it? (PR #120: TriggerZone is one-shot but doors must be
+   repeatable. Used wrong entity type.)
+2. **Ownership:** Who owns this input/action? Is there exactly ONE handler?
+   (PR #120: Both player_character and exploration handled ui_accept —
+   double-fire.)
+3. **Initialization:** Every entity that needs initialize() — is it actually
+   called? With the right arguments? (PR #120: metadata set on .tscn but
+   initialize() never called. Entities silently did nothing.)
+4. **Dimensions:** Do pixel sizes match the viewport? (PR #120: 176px
+   background in 180px viewport — 4px gap.)
+5. **State cleanup:** Do tests reset ALL global state they depend on?
+   (PR #120: EventFlags not cleared, tests leaked state.)
+6. **Spec accuracy:** Does the spec describe what was ACTUALLY built, not
+   what was PLANNED? (PR #120: spec said TileMapLayer, code used ColorRect.)
+7. **Return path:** After any state change (overlay push, map load, scene
+   swap), can the user get back? What happens when they do? (PR #119: menu
+   overlap when returning from rest sub-state.)
+
+For each question, write the entity/file/line and the answer. If you can't
+answer "yes it works" with a specific code reference, it's a bug.
+
 ### 5. Verify (Adversarial Audit Against Design Docs)
 
 After implementation, verify every output against canonical docs.
