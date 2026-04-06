@@ -315,6 +315,36 @@ static func build_save_dict(
 	}
 
 
+## Filter owned equipment entries by slot and character equip rules.
+static func filter_equippable_for_slot(
+	owned_equipment: Array[Dictionary],
+	character_id: String,
+	slot: String,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for entry: Dictionary in owned_equipment:
+		var equip_id: String = entry.get("equipment_id", "")
+		var item_data: Dictionary = lookup_equipment(equip_id)
+		if item_data.is_empty() or not can_equip(character_id, slot, item_data):
+			continue
+		result.append(item_data)
+	return result
+
+
+## Get active party members by resolving formation indices into the members array.
+static func get_active_members(
+	members: Array[Dictionary],
+	formation: Dictionary,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var active: Array = formation.get("active", [])
+	for idx: Variant in active:
+		var i: int = idx as int
+		if i >= 0 and i < members.size():
+			result.append(members[i])
+	return result
+
+
 ## Get reserve (non-active) members from a members array and formation dict.
 static func get_reserve_members(
 	members: Array[Dictionary],
