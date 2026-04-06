@@ -558,10 +558,10 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Player character instantiation and movement
 - [x] NPC, chest, trigger, save point placement from map data
 - [x] Camera2D following player (pixel-snapped, integer zoom only)
-- [ ] ~~Danger counter system~~ → deferred until gap 3.3 (Battle Scene) exists
-- [ ] ~~Random encounter trigger~~ → deferred until gap 3.3
+- [x] Danger counter system — EncounterSystem static helper + step detection in exploration
+- [x] Random encounter trigger — weighted group selection, formation roll, battle entry
 - [x] Map transition (door/exit → fade to black → load new map)
-- [ ] ~~Menu button~~ → deferred until gap 3.4 (Menu Overlay)
+- [x] Menu button — wired in PR #122 (gap 3.4 phase 1)
 - [x] NPC/chest/save interaction → appropriate overlay
 - [ ] ~~Auto-save triggers~~ → deferred until exploration is stable
 - [ ] ~~Audio context switching~~ → deferred to gap 3.8 (Audio Integration)
@@ -579,6 +579,10 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - GUT tests in test_exploration.gd (10 tests), all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-06-exploration-scene-design.md`
 - **The game now has a walkable, interactive world** — player can explore, talk to NPCs, open chests, save, and transition between maps
+- Encounter loop wired: danger counter increments per step (16px tile), EncounterSystem static helper handles check/roll/select/formation, battle entry/return with rewards
+- XP distribution: active alive = full, KO'd = 0, reserve = 50%. Level-up recalculates stats from character JSON. XP clamped to 0 at level 150
+- Accessory encounter modifiers: Ward Talisman/Infiltrator's Cloak ×0.5, Lure Talisman ×2.0
+- Design spec: `docs/superpowers/specs/2026-04-06-encounter-battle-rewards-loop-design.md`
 
 **Blocking:** All overworld, town, and dungeon gameplay
 
@@ -610,8 +614,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] 6 command types: Attack, Magic, Ability, Item, Defend, Flee
 - [x] Flee formula per combat-formulas.md (SPD-based)
 - [x] Battle UI per ui-design.md: party panel (HP/MP bars, ATB gauge), enemy area, command menu, damage numbers
-- [ ] ~~Victory: XP/gold distribution~~ → Totals summed and emitted, per-member split (active/absent/KO) not implemented
-- [ ] ~~Defeat: Faint-and-Fast-Reload~~ → Basic defeat exits to exploration with faint result. SaveManager load/merge logic deferred
+- [x] Victory: XP/gold/drops distribution — add_xp_to_member with level-up, active/KO/reserve split, drops in transition data
+- [ ] ~~Defeat: Faint-and-Fast-Reload~~ → Exploration handles faint result and calls SaveManager.faint_and_fast_reload(). SaveManager load/merge logic deferred
 - [ ] ~~Boss battles: scripted AI~~ → Boss AI stubbed (basic attack only). Scripted phase behavior deferred to gap 4.1+
 - [x] Formation types: Normal, Back Attack, Preemptive
 - [ ] ~~Battle music via AudioManager~~ → deferred to gap 3.8 (Audio Integration)
@@ -1010,6 +1014,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-02 | Initial audit | All implementation gaps cataloged (30 gaps across 4 tiers) | — |
 | 2026-04-02 | Self-review + Copilot review | Fixed gap count (27→30), recommended path, priority/size/dep errors, missing source docs, markdown syntax | — |
 | 2026-04-02 | 1.1 Character Data | NOT STARTED → COMPLETE. 6 JSON files (edren, cael, lira, torren, sable, maren). All values verified against progression.md and characters.md. Milestone formula spot-checked. Ability/spell learn schedules deferred to Gap 1.5 (lives in spell JSONs). Unblocks: 2.1, 3.3, 3.4. | — |
+| 2026-04-06 | 3.2 + 3.3 integration | Wired end-to-end encounter→battle→rewards loop. EncounterSystem static helper (5 methods), BattleManager drops in transition data, XP/level-up distribution, exploration danger counter + battle return handling. 1 new file, 4 modified, 2 test files. | — |
 
 ---
 
