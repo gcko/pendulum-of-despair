@@ -512,7 +512,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.1 Title Screen
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-06
 **Priority:** P1 — blocks game entry point
 **Estimated Size:** S (1 .tscn + 1 .gd)
 **Output:** `game/scenes/core/title.tscn`, `game/scripts/core/title.gd`
@@ -520,13 +521,22 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Depends On:** None (minimal — just needs GameManager for transitions)
 
 **What's Needed:**
-- [ ] Title screen scene with game logo placeholder, menu options (New Game, Continue, Config)
-- [ ] New Game: initialize fresh game state, transition to Exploration
-- [ ] Continue: show save slot selection, load save, transition to Exploration
-- [ ] Config: push config overlay
-- [ ] Title music playback via AudioManager
-- [ ] Keyboard/gamepad navigation per accessibility.md input spec
-- [ ] Set as `run/main_scene` in project.godot (first runnable scene)
+- [x] Title screen scene with game logo placeholder, menu options (New Game, Continue, Config)
+- [x] New Game: initialize fresh game state, transition to Exploration
+- [x] Continue: ~~show save slot selection~~ loads most recent save via SaveManager.load_most_recent(), transition to Exploration
+- [x] ~~Config: push config overlay~~ → Config stubbed (greyed out), deferred to gap 3.4
+- [ ] ~~Title music playback via AudioManager~~ → deferred to gap 3.8 (Audio Integration)
+- [x] Keyboard/gamepad navigation per accessibility.md input spec
+- [x] Set as `run/main_scene` in project.godot (first runnable scene)
+
+**Notes:**
+- Bundled with gaps 3.5 (Dialogue) and 3.6 (Save/Load) in one PR
+- Continue greyed out when no saves exist, shows error on corrupted save
+- Config greyed out with stub — opens nothing until gap 3.4 (Menu Overlay)
+- SaveManager gained 5 new public methods: load_most_recent(), has_any_save(), get_slot_previews(), delete_slot(), copy_slot()
+- GUT tests in test_title.gd, all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`
+- **Game is now launchable in Godot editor** (first runnable scene)
 
 **Blocking:** Game is not runnable without a main scene. This is the entry point.
 
@@ -623,25 +633,36 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.5 Dialogue Overlay
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-06
 **Priority:** P1 — blocks all NPC interaction and story scenes
-**Estimated Size:** M (1 .tscn + 2-3 .gd files)
+**Estimated Size:** M (1 .tscn + 1 .gd)
 **Output:** `game/scenes/overlay/dialogue.tscn`, `game/scripts/ui/dialogue_box.gd`
 **Source Docs:** `ui-design.md` Section 12 (text box specs), `dialogue-system.md` (rendering rules, typewriter effect, choice prompts)
 **Depends On:** 1.8 (Dialogue Data)
 
 **What's Needed:**
-- [ ] Full-width text box at screen bottom per ui-design.md
-- [ ] Typewriter text effect with configurable speed (instant, fast, normal, slow)
-- [ ] Speaker name display (top-left of text box)
-- [ ] 3-line text box limit per ui-design.md
-- [ ] Button press to advance (with "waiting" indicator)
-- [ ] Choice prompt display with cursor navigation
-- [ ] Animation trigger system ([animation_id] markers from dialogue data)
-- [ ] SFX trigger system (sfx markers from dialogue data)
-- [ ] Flag condition evaluation (binary, numeric, string, party_has per dialogue-system.md)
-- [ ] Flag setting on dialogue completion (set EventFlags per events.md)
-- [ ] Process mode: PROCESS_MODE_ALWAYS
+- [x] Full-width text box at screen bottom per ui-design.md
+- [x] Typewriter text effect with configurable speed (instant, fast, normal, slow)
+- [x] Speaker name display (top-left of text box)
+- [x] 3-line text box limit per ui-design.md (pagination for entries with >3 lines)
+- [x] Button press to advance (with "waiting" indicator — bouncing advance arrow)
+- [x] Choice prompt display with cursor navigation (2-4 options, cancel selects bottom)
+- [x] Animation trigger system (animation_requested signal with who + anim)
+- [x] SFX trigger system (sfx_requested signal with sfx_id)
+- [x] ~~Flag condition evaluation~~ → not needed here; NPC prefab resolves priority stack before emitting
+- [x] Flag setting on dialogue completion (flag_set_requested signal)
+- [x] Process mode: PROCESS_MODE_ALWAYS
+
+**Notes:**
+- Bundled with gaps 3.1 (Title) and 3.6 (Save/Load) in one PR
+- Signal-only design: dialogue overlay emits animation_requested/sfx_requested, parent scene handles playback
+- Text speed reads from config defaults.json (default: "normal" = 60 cps)
+- Empty entries array immediately emits dialogue_finished and pops overlay
+- Cael's grey border flicker (Act IV) deferred to gap 3.7 (Cutscene)
+- GUT tests in test_dialogue.gd (14 tests), all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`
+- **This unblocks gap 3.7 (Cutscene Overlay)** which depends on 3.5
 
 **Blocking:** All NPC dialogue, story scenes, tutorials, quest interactions
 
@@ -649,22 +670,34 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.6 Save/Load Overlay
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-06
 **Priority:** P1 — blocks manual saving
-**Estimated Size:** M (1 .tscn + 2 .gd files)
+**Estimated Size:** M (1 .tscn + 1 .gd)
 **Output:** `game/scenes/overlay/save_load.tscn`, `game/scripts/ui/save_load.gd`
 **Source Docs:** `save-system.md` (save point 3-option menu, slot display), `ui-design.md` (save/load screen layout), `overworld.md` (save point specification)
 **Depends On:** SaveManager autoload (already exists)
 
 **What's Needed:**
-- [ ] Save point 3-option menu: Rest, Rest & Save, Save per save-system.md Section 5
-- [ ] Rest: consume tiered rest item (Sleeping Bag/Tent/Pavilion), restore HP/MP per save-system.md
-- [ ] Save/Load slot display: 3 manual + 1 auto, party member display, playtime, location, level per ui-design.md
-- [ ] Save: write via SaveManager.save_game(slot)
-- [ ] Load: read via SaveManager.load_game(slot), apply state, transition
-- [ ] Copy/delete save slot functionality
-- [ ] Confirmation dialogs for overwrite/delete
-- [ ] Process mode: PROCESS_MODE_ALWAYS
+- [x] Save point 3-option menu: Rest, Rest & Save, Save per save-system.md Section 5
+- [x] ~~Rest: consume tiered rest item (Sleeping Bag/Tent/Pavilion), restore HP/MP per save-system.md~~ → Rest sub-menu UI shown but consumption stubbed (push_warning), deferred to gap 3.4
+- [x] Save/Load slot display: 3 manual + 1 auto, party member display, playtime, location, level per ui-design.md
+- [x] Save: write via SaveManager.save_game(slot)
+- [x] Load: read via SaveManager.load_game(slot), apply state, transition
+- [x] Copy/delete save slot functionality (methods exist; UI flow for Copy/Delete deferred to gap 3.4 operations menu)
+- [x] Confirmation dialogs for overwrite/delete (overwrite works; delete UI path deferred to gap 3.4)
+- [x] Process mode: PROCESS_MODE_ALWAYS
+
+**Notes:**
+- Bundled with gaps 3.1 (Title) and 3.5 (Dialogue) in one PR
+- Sub-state machine: SAVE_POINT_MENU → REST_MENU / SLOT_SELECT → CONFIRM
+- Rest item consumption stubbed with push_warning — full implementation needs inventory system (gap 3.4)
+- Inn rest variant (paid rest) deferred to gap 3.2 (Exploration Scene)
+- Load screen: auto slot (blue accent) + divider + 3 manual slots, corrupted slots shown in red
+- Auto-save slot can be loaded; copy-from promotion deferred to gap 3.4 operations menu
+- Selected slot highlighted with gold modulate; cursor repositions on navigation
+- GUT tests in test_save_load.gd (12 tests), all code passes gdlint + gdformat
+- Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`
 
 **Blocking:** Manual save/load, save point gameplay loop
 

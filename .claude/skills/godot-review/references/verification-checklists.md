@@ -55,7 +55,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Dictionary key access guarded before write (`data.get()` or `has()` before `data["key"] = value`)
 - [ ] `load()` / `preload()` results checked for null before calling `.instantiate()`
 - [ ] `ResourceLoader.exists(path)` checked before `change_scene_to_file(path)` or `load(path)`
-- [ ] Public API parameters validated for range (e.g., slot 0-3, not arbitrary int)
+- [ ] Public API parameters validated for range (e.g., slot 0-3, not arbitrary int). Verify range matches ALL callers including tests and internal cleanup — not just UI-facing use (PR #119 batch 3: delete_slot restricted to 1-3 but tests needed 0)
 - [ ] `assert(false)` NOT used as the sole error handler — asserts are disabled in release builds. Use `push_error()` + `get_tree().quit(1)` for truly fatal errors.
 - [ ] Stub/placeholder methods that return empty data (`{}`, `[]`, `0`) don't cause downstream failures (e.g., save_game writing empty dict that fails validation on load)
 - [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
@@ -83,6 +83,25 @@ Reference for all review agents. Check every applicable item.
 - [ ] Spec setting descriptions match actual project.godot values and format
 - [ ] Review reference doc headings/counts match actual content (e.g., "10 categories" vs actual 12)
 - [ ] Code comments in migration/versioning logic match actual constants and scheme
+- [ ] Gap tracker "Notes" section claims only match actual implementation (no claiming gold border if using modulate, no claiming copy-from if no UI path)
+
+### Scene Rendering (from Copilot PR #119 gap analysis)
+- [ ] NinePatchRect nodes MUST have a texture assigned — otherwise invisible. Prefer PanelContainer + StyleBoxFlat for UI windows without art assets.
+- [ ] Sprite2D nodes MUST have a texture assigned — otherwise invisible even when set to visible. Assign a placeholder if no art exists.
+- [ ] UI panel colors (bg_color, border_color) must match ui-design.md Section 1.4 palette hex values
+
+### Test Hygiene (from Copilot PR #119 gap analysis)
+- [ ] Tests that create persistent state (save files, config files) must have `after_each()` cleanup
+- [ ] Tests that inject fake data must not call methods that overwrite it (e.g., `_refresh` calling `SaveManager.get_slot_previews()`)
+- [ ] Tests that depend on state absence (no saves) must ensure cleanup runs even across test files
+- [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
+- [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
+- [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
+
+### State Transition Visibility (from Copilot PR #119 batch 4)
+- [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
+- [ ] When refresh/update methods rewrite display text, preserve prefixes or labels that distinguish node types (e.g., "AUTO" prefix on auto-save slot)
+- [ ] `has_X()` / `is_X_available()` checks must validate the same criteria as the corresponding `load_X()` / `get_X()` — file existence alone is not validity (corrupted files)
 
 ---
 

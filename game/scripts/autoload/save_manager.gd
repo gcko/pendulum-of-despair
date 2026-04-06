@@ -99,6 +99,32 @@ func auto_save() -> void:
 		push_warning("SaveManager: Auto-save failed")
 
 
+## Load the most recent save file (manual or auto, by timestamp).
+## Returns {slot: int, data: Dictionary} or empty dict if no saves exist.
+## Public wrapper for title screen Continue flow.
+func load_most_recent() -> Dictionary:
+	return _load_most_recent_save()
+
+
+## Check whether any valid (non-corrupted) save exists (for title screen Continue).
+func has_any_save() -> bool:
+	for slot: int in [0, 1, 2, 3]:
+		var data: Dictionary = load_game(slot)
+		if not data.is_empty() and not data.has("error"):
+			return true
+	return false
+
+
+## Load preview data for all save slots (for slot display in save/load screen).
+## Returns array of 4 Dictionaries (index 0=auto, 1-3=manual).
+## Empty dict for unused slots, dict with "error" key for corrupted.
+func get_slot_previews() -> Array[Dictionary]:
+	var previews: Array[Dictionary] = []
+	for slot: int in [0, 1, 2, 3]:
+		previews.append(load_game(slot))
+	return previews
+
+
 ## Faint-and-Fast-Reload: party wipe recovery.
 ## Control flow is wired; merge/restore steps are stubbed (pass).
 ## When implemented: preserves XP, gold, boss_cutscene_seen flags
@@ -206,6 +232,35 @@ func _validate(data: Dictionary) -> bool:
 	if not data["world"] is Dictionary:
 		return false
 	return true
+
+
+## Delete a save slot file. Returns true if deleted or already absent.
+## Accepts slot 0 (auto) through 3 (manual). UI should restrict user-facing
+## delete to slots 1-3; slot 0 is for programmatic cleanup (tests, FFR).
+func delete_slot(slot: int) -> bool:
+	if slot < 0 or slot > 3:
+		push_error("SaveManager: Cannot delete slot %d (valid: 0-3)" % slot)
+		return false
+	var path: String = _slot_path(slot)
+	if not FileAccess.file_exists(path):
+		return true
+	var err: Error = DirAccess.remove_absolute(path)
+	if err != OK:
+		push_error("SaveManager: Failed to delete %s (error %d)" % [path, err])
+		return false
+	return true
+
+
+## Copy save data from one slot to another. Returns true on success.
+func copy_slot(source: int, dest: int) -> bool:
+	if source < 0 or source > 3 or dest < 1 or dest > 3:
+		push_error("SaveManager: Invalid copy slots %d -> %d" % [source, dest])
+		return false
+	var data: Dictionary = load_game(source)
+	if data.is_empty() or data.has("error"):
+		push_error("SaveManager: Cannot copy from empty/corrupted slot %d" % source)
+		return false
+	return _write_data_to_slot(dest, data)
 
 
 ## Map slot number to file path.

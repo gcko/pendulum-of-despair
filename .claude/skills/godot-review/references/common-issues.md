@@ -142,3 +142,20 @@ style violation. Should fix before merge.
 
 **SUGGESTION:** Improvement opportunity, minor style preference,
 performance optimization for non-hot path. Fix if trivial.
+
+---
+
+### 15. Scene Rendering (PR #119)
+
+NinePatchRect/Panel nodes without textures or StyleBox render invisible.
+Copilot caught 7 invisible UI panels (5 NinePatchRect + 2 Sprite2D)
+across 2 scene files. Fix: use PanelContainer + StyleBoxFlat for UI
+windows, ensure all Sprite2D have assigned textures.
+
+### 16. Test Isolation (PR #119)
+
+Tests that create persistent state (save files) pollute other tests.
+Copilot caught 3 test isolation issues: no cleanup, fake data overwritten
+by real data methods, cross-file state leakage. Fix: after_each cleanup,
+call targeted update methods instead of full refresh, ensure all test
+files clean up shared state.
