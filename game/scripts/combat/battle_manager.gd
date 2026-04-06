@@ -65,16 +65,15 @@ func _ready() -> void:
 			if not _state.get_member(i).is_empty():
 				_state.swap_row(i)
 	_battle_active = true
-	var positions: Array[Vector2] = []
-	for enemy: Node in _enemies:
-		positions.append(enemy.position)
-	var party_sum: Array = []
-	for i: int in range(4):
-		party_sum.append(_state.get_member(i))
-	var enemy_sum: Array = []
+	var pos: Array[Vector2] = []
+	var es: Array = []
 	for e: Node in _enemies:
-		enemy_sum.append({"name": e.get_display_name(), "hp": e.current_hp})
-	battle_started.emit(party_sum, enemy_sum, positions)
+		pos.append(e.position)
+		es.append({"name": e.get_display_name(), "hp": e.current_hp})
+	var ps: Array = []
+	for i: int in range(4):
+		ps.append(_state.get_member(i))
+	battle_started.emit(ps, es, pos)
 
 
 func _process(delta: float) -> void:
@@ -93,6 +92,7 @@ func _process(delta: float) -> void:
 	for id: String in queue:
 		if id.begins_with("party_"):
 			_awaiting_input_for = id
+			_atb.set_command_menu_open(true)
 			var slot: int = id.replace("party_", "").to_int()
 			_clear_defend(slot)
 			var member: Dictionary = _state.get_member(slot)

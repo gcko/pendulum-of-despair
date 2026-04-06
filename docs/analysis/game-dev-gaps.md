@@ -605,12 +605,12 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Critical hit: `LCK/4` rate (cap 50%), 2× damage
 - [x] Hit/miss: 3-stage resolution (accuracy vs evasion) per combat-formulas.md
 - [x] Elemental multipliers: 1.5× weak, 0.75× disadvantage, 0.5× same, 0× immune, -1× absorb
-- [x] Status effect application: two-stage (MAG vs MDEF, then MEVA% resist)
+- [ ] ~~Status effect application~~ → Formula in damage_calculator.gd, apply path not wired in combat actions yet
 - [x] Row system: front/back, 50% physical modifier, back-row spears bypass
 - [x] 6 command types: Attack, Magic, Ability, Item, Defend, Flee
 - [x] Flee formula per combat-formulas.md (SPD-based)
 - [x] Battle UI per ui-design.md: party panel (HP/MP bars, ATB gauge), enemy area, command menu, damage numbers
-- [x] Victory: XP/gold distribution per progression.md (full to 4 active, 50% to 2 absent, 0 to KO)
+- [ ] ~~Victory: XP/gold distribution~~ → Totals summed and emitted, per-member split (active/absent/KO) not implemented
 - [ ] ~~Defeat: Faint-and-Fast-Reload~~ → Basic defeat exits to exploration with faint result. SaveManager load/merge logic deferred
 - [ ] ~~Boss battles: scripted AI~~ → Boss AI stubbed (basic attack only). Scripted phase behavior deferred to gap 4.1+
 - [x] Formation types: Normal, Back Attack, Preemptive
@@ -623,7 +623,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [ ] ~~Maren WG visual bar~~ → Tracked in state, purple bar deferred to UI polish
 
 **Notes:**
-- 5 combat scripts + 3 UI scripts + 1 .tscn scene + 4 test files
+- 6 combat scripts + 3 UI scripts + 1 .tscn scene + 4 test files
 - Architecture: damage_calculator.gd (pure static formulas), atb_system.gd (gauge ownership), battle_state.gd (party runtime), battle_ai.gd (weighted-random), battle_manager.gd (orchestrator)
 - Signal-based decoupling: battle_manager emits signals, battle_ui observes
 - All formulas verified against combat-formulas.md milestone tables in test_damage_calculator.gd

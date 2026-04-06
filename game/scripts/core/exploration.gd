@@ -116,6 +116,13 @@ func _initialize_from_transition_data() -> void:
 		var pos: Dictionary = world.get("current_position", {})
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
+	elif data.has("result"):
+		# Return from battle — restore map and position
+		var map_id: String = data.get("map_id", "test_room")
+		load_map(map_id)
+		var pos: Vector2 = data.get("position", Vector2(80, 90))
+		if _player != null:
+			_player.position = pos
 	else:
 		load_map("test_room")
 

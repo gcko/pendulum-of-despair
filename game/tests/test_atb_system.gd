@@ -154,3 +154,59 @@ func test_reset_gauge_after_acting() -> void:
 	_atb.set_gauge("party_0", 16000)
 	_atb.reset_gauge("party_0")
 	assert_eq(_atb.get_gauge("party_0"), 0, "gauge reset to 0 after acting")
+
+
+# --- Remove Combatant ---
+
+
+func test_remove_combatant_from_queue() -> void:
+	_atb.add_combatant("enemy_0", 10, true)
+	_atb.set_gauge("enemy_0", 16000)
+	_atb.remove_combatant("enemy_0")
+	var queue: Array = _atb.get_ready_queue()
+	assert_eq(queue.size(), 0, "removed combatant not in queue")
+
+
+func test_remove_combatant_not_ticked() -> void:
+	_atb.add_combatant("enemy_0", 10, true)
+	_atb.remove_combatant("enemy_0")
+	_atb.set_battle_speed(3)
+	_atb.tick(1.0 / 60.0)
+	assert_eq(_atb.get_gauge("enemy_0"), 0, "removed combatant returns 0")
+
+
+# --- Combatant Ready Signal ---
+
+
+func test_combatant_ready_signal_emitted() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.set_gauge("party_0", 15999)
+	_atb.set_battle_speed(3)
+	watch_signals(_atb)
+	_atb.tick(1.0 / 60.0)
+	assert_signal_emitted(_atb, "combatant_ready")
+
+
+# --- Normal Formation ---
+
+
+func test_normal_formation_all_zero() -> void:
+	_atb.add_combatant("party_0", 10, false)
+	_atb.add_combatant("enemy_0", 10, true)
+	_atb.apply_formation("normal")
+	assert_eq(_atb.get_gauge("party_0"), 0, "party 0 on normal")
+	assert_eq(_atb.get_gauge("enemy_0"), 0, "enemy 0 on normal")
+
+
+# --- Should Pause Timers ---
+
+
+func test_should_pause_timers_active_mode() -> void:
+	_atb.set_atb_mode("active")
+	assert_false(_atb.should_pause_timers(), "active never pauses")
+
+
+func test_should_pause_timers_wait_submenu() -> void:
+	_atb.set_atb_mode("wait")
+	_atb.set_submenu_open(true)
+	assert_true(_atb.should_pause_timers(), "wait pauses on submenu")

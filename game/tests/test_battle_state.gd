@@ -256,5 +256,66 @@ func test_all_dead_detection() -> void:
 
 
 func test_empty_party_is_wiped() -> void:
-	# No members added — all nulls
 	assert_true(_state.is_party_wiped(), "empty party counts as wiped")
+
+
+# --- Avg Party SPD ---
+
+
+func test_avg_party_spd() -> void:
+	assert_eq(_state.get_avg_party_spd(), 0.0, "empty party returns 0")
+	_state.add_member(0, _make_char_data())
+	_state.add_member(1, _make_char_data())
+	assert_eq(_state.get_avg_party_spd(), 10.0, "avg of two SPD 10")
+	_state.take_damage(1, 999)
+	assert_eq(_state.get_avg_party_spd(), 10.0, "dead excluded")
+
+
+# --- Weave Gauge ---
+
+
+func _make_maren_data() -> Dictionary:
+	return {
+		"id": "maren",
+		"name": "Maren",
+		"base_stats":
+		{"hp": 50, "mp": 55, "atk": 6, "def": 6, "mag": 22, "mdef": 18, "spd": 8, "lck": 5},
+	}
+
+
+func test_weave_gauge_only_maren() -> void:
+	_state.add_member(0, _make_maren_data())
+	_state.gain_weave_gauge(0, 10)
+	assert_eq(_state.get_member(0).get("wg", 0), 10)
+
+
+func test_weave_gauge_non_maren_noop() -> void:
+	_state.add_member(0, _make_char_data())  # edren
+	_state.gain_weave_gauge(0, 10)
+	assert_eq(_state.get_member(0).get("wg", 0), 0, "non-maren unaffected")
+
+
+func test_weave_gauge_caps_at_100() -> void:
+	_state.add_member(0, _make_maren_data())
+	_state.gain_weave_gauge(0, 90)
+	_state.gain_weave_gauge(0, 20)
+	assert_eq(_state.get_member(0).get("wg", 0), 100, "capped at 100")
+
+
+func test_weave_gauge_for_maren_iterates() -> void:
+	_state.add_member(0, _make_char_data())  # edren
+	_state.add_member(1, _make_maren_data())  # maren
+	_state.gain_weave_gauge_for_maren(15)
+	assert_eq(_state.get_member(0).get("wg", 0), 0, "edren unaffected")
+	assert_eq(_state.get_member(1).get("wg", 0), 15, "maren gains WG")
+
+
+# --- Defend Buff Cycle ---
+
+
+func test_defend_buff_cycle() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.set_buff(0, "damage_taken_mult", 0.5)
+	assert_eq(_state.get_member(0).get("damage_taken_mult", 1.0), 0.5, "set to 0.5")
+	_state.set_buff(0, "damage_taken_mult", 1.0)
+	assert_eq(_state.get_member(0).get("damage_taken_mult", 1.0), 1.0, "cleared to 1.0")

@@ -98,6 +98,16 @@ func test_physical_elemental_absorb_returns_positive() -> void:
 	assert_gt(result, 0, "absorb returns positive healing value")
 
 
+func test_physical_interaction_mult_reduces() -> void:
+	var normal: int = DamageCalc.calculate_physical(
+		50, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0
+	)
+	var half: int = DamageCalc.calculate_physical(
+		50, 1.0, 10, false, 0.5, "front", "front", false, [], false, 1.0
+	)
+	assert_lt(half, normal, "interaction_mult 0.5 reduces damage")
+
+
 # --- Magic Damage ---
 
 
@@ -134,6 +144,12 @@ func test_magic_with_resonance_buff() -> void:
 	var base: int = DamageCalc.calculate_magic(100, 50, 20, 1.0, 1.0, [], [])
 	var buffed: int = DamageCalc.calculate_magic(100, 50, 20, 1.0, 1.0, [1.3], [])
 	assert_gt(buffed, base, "resonance increases damage")
+
+
+func test_magic_reduction_reduces_damage() -> void:
+	var no_red: int = DamageCalc.calculate_magic(100, 50, 20, 1.0, 1.0, [], [])
+	var with_red: int = DamageCalc.calculate_magic(100, 50, 20, 1.0, 1.0, [], [0.25])
+	assert_lt(with_red, no_red, "magic damage reduction works")
 
 
 # --- Healing ---
