@@ -637,25 +637,39 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.4 Menu Overlay
 
-**Status:** NOT STARTED
+**Status:** MOSTLY COMPLETE
+**Completed:** 2026-04-06 (Phase 1 — 5 of 9 screens)
 **Priority:** P1 — blocks inventory management, equipment, party setup
 **Estimated Size:** L (1 .tscn + 10+ .gd files for sub-screens)
-**Output:** `game/scenes/overlay/menu.tscn`, `game/scripts/ui/` (menu screens)
+**Output:** `game/scenes/overlay/menu.tscn`, `game/scripts/ui/` (menu screens), `game/scripts/autoload/party_state.gd`
 **Source Docs:** `ui-design.md` (all 14 screen designs — 1,180 lines)
 **Depends On:** 1.1 (Character Data), 1.3 (Items & Equipment), 1.4 (Shop Data — for buy/sell screens), 1.5 (Spells & Abilities)
 
 **What's Needed:**
-- [ ] 9-command main menu: Items, Equipment, Magic, Abilities, Status, Formation, Ley Crystals, Config, Save (only at save points)
-- [ ] Items screen: categorized list, use/discard, stack counts
-- [ ] Equipment screen: 5 slots per character, stat comparison display
-- [ ] Magic screen: per-character spell list, MP costs, learned/unlearned
-- [ ] Abilities screen: per-character unique command, sub-abilities
-- [ ] Status screen: full stat display, equipment summary, elemental profile
-- [ ] Formation screen: active/reserve party, row assignment (front/back), drag arrangement
-- [ ] Ley Crystal screen: collected crystals, equip slot, level/XP display
-- [ ] Config screen: all 17 settings from accessibility.md
-- [ ] All screens: keyboard/gamepad navigation, cursor memory, per ui-design.md specs
-- [ ] Process mode: PROCESS_MODE_ALWAYS (runs while game paused)
+- [x] 9-command main menu: Items, Equipment, Magic, Abilities, Status, Formation, Ley Crystals, Config, Save (only at save points)
+- [x] Items screen: categorized list, use/discard, stack counts
+- [x] Equipment screen: 5 slots per character, stat comparison display
+- [ ] Magic screen: per-character spell list, MP costs, learned/unlearned — Phase 2
+- [ ] Abilities screen: per-character unique command, sub-abilities — Phase 2
+- [x] Status screen: full stat display, equipment summary, elemental profile
+- [ ] Formation screen: active/reserve party, row assignment (front/back), drag arrangement — Phase 2
+- [ ] Ley Crystal screen: collected crystals, equip slot, level/XP display — Phase 2
+- [x] Config screen: all 17 settings from accessibility.md (with cascade logic)
+- [x] All screens: keyboard/gamepad navigation, cursor memory, per ui-design.md specs
+- [x] Process mode: PROCESS_MODE_ALWAYS (runs while game paused)
+- [x] PartyState autoload: runtime party/inventory/equipment state
+- [x] SaveManager wired to PartyState (build/apply save data)
+- [x] Title screen: New Game initializes PartyState, Config opens menu overlay
+- [x] Exploration: Escape key opens menu overlay
+- [ ] Shop buy/sell interface — Phase 2
+
+**Notes:**
+- Phase 1 implements 5 screens (Items, Equipment, Status, Config, Save integration) + 4 stubs (Magic, Abilities, Formation, Crystal)
+- New PartyState autoload (389 lines + 86-line inventory_helpers.gd) bridges static JSON data to live gameplay
+- Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
+- Equipment screen has live stat comparison with green/red delta indicators
+- 8 new .gd files + 1 .tscn + 1 test file; 4 modified files
+- Design spec: `docs/superpowers/specs/2026-04-06-menu-overlay-phase1-design.md`
 
 **Blocking:** Player inventory management, equipment optimization, party configuration
 

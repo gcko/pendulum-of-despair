@@ -748,7 +748,7 @@ user://
 ### 6.2 Save File Format
 
 JSON matching [save-system.md](../story/save-system.md) Section 3
-schema (9 groups):
+schema (10 groups):
 
 ```json
 {
@@ -759,8 +759,9 @@ schema (9 groups):
     "slot_type": "manual"
   },
   "party": [],
-  "formation": { "active": [], "reserve": [], "guests": [] },
-  "inventory": { "consumables": [], "equipment": [], "materials": [], "key_items": [] },
+  "formation": { "active": [], "reserve": [], "rows": {} },
+  "inventory": { "consumables": {}, "materials": {}, "key_items": [] },
+  "owned_equipment": [],
   "crafting": { "arcanite_charges": 12, "device_loadout": [], "discovered_synergies": [], "unlocked_recipes": [] },
   "ley_crystals": { "collected": [] },
   "world": { "event_flags": {}, "act": "1", "current_location": "...", "current_position": { "x": 0, "y": 0 }, "gold": 0 },
@@ -817,7 +818,7 @@ func _migrate(data: Dictionary) -> Dictionary:
 
 func _validate(data: Dictionary) -> bool:
     # Check required top-level keys exist
-    var required = ["meta", "party", "formation", "inventory",
+    var required = ["meta", "party", "formation", "inventory", "owned_equipment",
                     "crafting", "ley_crystals", "world", "quests", "completion"]
     for key in required:
         if not data.has(key):

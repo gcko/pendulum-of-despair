@@ -38,12 +38,18 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
+	if event.is_action_pressed("ui_menu"):
+		if GameManager.push_overlay(GameManager.OverlayState.MENU):
+			get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("ui_accept") and _player != null:
 		if _player.has_method("try_interact"):
+			get_viewport().set_input_as_handled()
 			_player.try_interact()
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
+	PartyState.is_at_save_point = false
 	# Validate BEFORE freeing old map — don't leave exploration with no map
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):
@@ -108,6 +114,7 @@ func _initialize_from_transition_data() -> void:
 		load_map("test_room")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
+		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
 		var location: String = world.get("current_location", "")
 		if location == "":
@@ -239,6 +246,7 @@ func _on_chest_opened(chest_id: String, item_id: String) -> void:
 
 
 func _on_save_point_activated(_save_point_id: String) -> void:
+	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		var overlay: Node = GameManager.overlay_node
 		if overlay != null and overlay.has_method("open_save_point"):

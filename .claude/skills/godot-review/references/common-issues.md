@@ -5,7 +5,7 @@ checklists.
 
 ---
 
-## 12 Issue Categories
+## 24 Issue Categories
 
 ### 1. Type Safety
 Missing or incorrect static typing. Catches errors at parse time
@@ -169,3 +169,62 @@ undefined behavior. Root cause: static review cannot catch runtime-only
 errors in input handlers — these only surface when actually pressing
 keys in the Godot editor. **Every input handler that can trigger a
 scene transition must be manually tested in-editor.**
+
+### 18. Semantic Correctness (PR #122)
+
+Code checks for a data field's EXISTENCE but doesn't use the VALUE
+correctly in computation. Examples: `restore_percent` treated as boolean
+flag instead of computing actual percentage; revive always using
+`max_hp / 4` instead of the item's configured value. The code LOOKS
+correct at a glance (it references the right field) but produces wrong
+results. **For every item/skill effect, trace the data value from JSON
+through to the actual game effect.**
+
+### 19. Constraint Propagation (PR #122)
+
+A rule or constraint exists in the data schema but isn't enforced at
+ALL layers. Example: `requires_save_point` defined on items but not
+checked in `use_item()`, not enforced in `confirm_item()`, and not
+reflected in UI greying. **Every data constraint must be enforced at
+backend logic, selection/confirmation UI, AND display (greying/hiding).**
+
+### 20. Cross-Session State Cleanup (PR #122)
+
+Singleton state persists across game sessions. EventFlags and transient
+gameplay flags (like `is_at_save_point`) not cleared on new game start,
+not restored from save data on load. **Audit every singleton for
+session-scoped state that would be wrong if carried into a new or
+loaded game.**
+
+### 21. Runtime Instance ID Uniqueness (PR #122)
+
+Equipment instances or runtime-generated entities have non-unique IDs
+(e.g., index-based instead of incrementing counter). Ownership not
+validated on transfer operations (equip/unequip allows items not owned
+by the character). **Use globally unique IDs and validate ownership
+before any transfer.**
+
+### 22. Empty Collection Guards (PR #122)
+
+Operations on collections (party, inventory, enemy list) don't guard
+against the empty case. Division by `party.size()` causes divide-by-zero.
+Array index `[0]` on empty array causes crash. UI character select with
+no characters causes crash. **Guard every collection operation against
+size zero.**
+
+### 23. State Toggle Symmetry (PR #122)
+
+State modifications have an enable path but no corresponding disable/restore
+path. Example: Patience mode slows animations and Reduce Motion disables
+particles, but disabling these options doesn't restore original values.
+Cascading changes (X changes Y and Z) only cascade on enable, not
+disable. **Every toggle must be symmetric: enable AND disable must
+both fully work.**
+
+### 24. Numeric Conversion Accuracy (PR #122)
+
+Math formulas that convert between ranges or bit-depths use wrong
+constants. Example: 5-bit (0-31) to float (0.0-1.0) using `/ 32.0`
+instead of `/ 31.0`, so maximum value (31) maps to 0.96875 instead of
+1.0. **Verify all conversion formulas at boundary values (min, mid, max)
+and cross-reference against the source format specification.**

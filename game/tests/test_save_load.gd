@@ -14,8 +14,8 @@ func after_each() -> void:
 		SaveManager.delete_slot(slot)
 
 
-func _create_save_load():
-	var sl = SAVE_LOAD_SCENE.instantiate()
+func _create_save_load() -> Node:
+	var sl: Node = SAVE_LOAD_SCENE.instantiate()
 	add_child_autofree(sl)
 	return sl
 
@@ -24,7 +24,7 @@ func _create_save_load():
 
 
 func test_save_load_scene_loads() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	assert_not_null(sl, "save/load scene should instantiate")
 
 
@@ -32,7 +32,7 @@ func test_save_load_scene_loads() -> void:
 
 
 func test_save_point_menu_visible() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_save_point()
 	assert_true(sl._save_point_menu.visible, "save point menu should be visible")
 	assert_eq(sl._sub_state, sl.SubState.SAVE_POINT_MENU, "should be in save point menu state")
@@ -42,13 +42,13 @@ func test_save_point_menu_visible() -> void:
 
 
 func test_save_mode_hides_auto() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_save()
 	assert_false(sl._auto_slot.visible, "auto slot should be hidden in save mode")
 
 
 func test_load_mode_shows_auto() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_load()
 	assert_true(sl._auto_slot.visible, "auto slot should be visible in load mode")
 
@@ -57,16 +57,16 @@ func test_load_mode_shows_auto() -> void:
 
 
 func test_empty_slot_display() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_save()
 	# With no saves, all slots should show "Empty"
-	var header = sl._manual_slots[0].get_node_or_null("HeaderLabel")
+	var header: Label = sl._manual_slots[0].get_node_or_null("HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_eq(header.text, "Empty", "empty slot should show Empty text")
 
 
 func test_populated_slot_display() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	# Manually set preview data to test display
 	sl._slot_previews = [
 		{},  # auto: empty
@@ -79,8 +79,9 @@ func test_populated_slot_display() -> void:
 				"slot_type": "manual",
 			},
 			"party": [],
-			"formation": {"active": ["edren", "cael"], "reserve": [], "guests": []},
+			"formation": {"active": ["edren", "cael"], "reserve": [], "rows": {}},
 			"inventory": {},
+			"owned_equipment": [],
 			"crafting": {},
 			"ley_crystals": {},
 			"world":
@@ -99,7 +100,7 @@ func test_populated_slot_display() -> void:
 	]
 	# Call _update_slot_panel directly to avoid _refresh overwriting with real data
 	sl._update_slot_panel(sl._manual_slots[0], sl._slot_previews[1])
-	var header = sl._manual_slots[0].get_node_or_null("HeaderLabel")
+	var header: Label = sl._manual_slots[0].get_node_or_null("HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_string_contains(header.text, "Valdris Crown", "should show location name")
 
@@ -108,7 +109,7 @@ func test_populated_slot_display() -> void:
 
 
 func test_save_writes_file() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	watch_signals(sl)
 	sl.open_save()
 	sl._do_save(1)
@@ -116,7 +117,7 @@ func test_save_writes_file() -> void:
 
 
 func test_overwrite_shows_confirm() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_save()
 	# Fake a populated slot preview
 	sl._slot_previews[1] = {
@@ -140,7 +141,7 @@ func test_overwrite_shows_confirm() -> void:
 
 
 func test_delete_clears_slot() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	var saved: bool = SaveManager.save_game(3)
 	assert_true(saved, "save_game should succeed before deletion test")
 	var pre_data: Dictionary = SaveManager.load_game(3)
@@ -155,7 +156,7 @@ func test_delete_clears_slot() -> void:
 
 
 func test_cancel_from_save_point() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	sl.open_save_point()
 	# Cancel should pop overlay — verify state is save point menu
 	assert_eq(sl._sub_state, sl.SubState.SAVE_POINT_MENU, "should be in save point menu")
@@ -165,7 +166,7 @@ func test_cancel_from_save_point() -> void:
 
 
 func test_copy_slot() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	# Create a save in slot 1
 	SaveManager.save_game(1)
 	sl.open_save()
@@ -179,7 +180,7 @@ func test_copy_slot() -> void:
 
 
 func test_load_initial_selection() -> void:
-	var sl = _create_save_load()
+	var sl: Node = _create_save_load()
 	# With no saves, should default to slot 1
 	sl.open_load()
 	assert_eq(sl._selected_slot, 1, "should default to slot 1 when no saves")

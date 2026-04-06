@@ -88,12 +88,12 @@ func push_overlay(state: OverlayState) -> bool:
 		push_error("GameManager: Failed to load overlay: %s" % scene_path)
 		return false
 
-	get_tree().paused = true
 	current_overlay = state
 	var scene: Node = (resource as PackedScene).instantiate()
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(scene)
 	overlay_node = scene
+	get_tree().paused = true
 	overlay_state_changed.emit(state)
 	return true
 
@@ -106,3 +106,11 @@ func pop_overlay() -> void:
 	current_overlay = OverlayState.NONE
 	overlay_state_changed.emit(OverlayState.NONE)
 	get_tree().paused = false
+
+
+## Deferred helper: push save overlay after the menu overlay is freed.
+## Called via call_deferred from menu_overlay._open_save().
+func push_save_overlay() -> void:
+	if push_overlay(OverlayState.SAVE_LOAD):
+		if overlay_node != null and overlay_node.has_method("open_save"):
+			overlay_node.open_save()

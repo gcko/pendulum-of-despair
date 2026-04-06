@@ -1,9 +1,10 @@
 extends CanvasLayer
-## Save/Load overlay: save point menu, slot display, rest stubs.
-## Modes: SAVE_POINT, SAVE, LOAD. Sub-state machine for navigation.
+## Save/Load overlay: save point menu, slot display, rest stubs. Modes: SAVE_POINT, SAVE, LOAD.
 
 signal save_completed(slot: int)
 signal load_completed(slot: int)
+
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 
 ## Colors from ui-design.md Section 1.4.
 const COLOR_SELECTED: Color = Color("#ffff88")
@@ -128,8 +129,10 @@ func _refresh_slot_display() -> void:
 
 
 func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
-	var header: Label = panel.get_node("HeaderLabel")
-	var party: Label = panel.get_node("PartyLabel")
+	var header: Label = panel.get_node_or_null("HeaderLabel")
+	var party: Label = panel.get_node_or_null("PartyLabel")
+	if header == null or party == null:
+		return
 	var prefix: String = "AUTO - " if is_auto else ""
 	if data.is_empty():
 		header.text = prefix + "Empty"
@@ -148,8 +151,7 @@ func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool =
 			"%s%s  %d:%02d  %dg" % [prefix, loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
 		)
 		header.modulate = COLOR_NORMAL
-		var active: Array = data.get("formation", {}).get("active", [])
-		party.text = "  ".join(active.map(func(c: Variant) -> String: return str(c)))
+		party.text = Helpers.format_active_party_names(data)
 
 
 func _select_first_populated_slot() -> void:
@@ -185,8 +187,8 @@ func _handle_save_point_input(event: InputEvent) -> void:
 		_confirm_save_point()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		GameManager.pop_overlay()
 		get_viewport().set_input_as_handled()
+		GameManager.pop_overlay()
 
 
 func _handle_rest_input(event: InputEvent) -> void:
@@ -227,11 +229,11 @@ func _handle_slot_input(event: InputEvent) -> void:
 		_move_slot_cursor(-1)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		_confirm_slot()
-		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		_cancel_from_slots()
 		get_viewport().set_input_as_handled()
+		_cancel_from_slots()
 
 
 func _handle_confirm_input(event: InputEvent) -> void:
@@ -240,8 +242,8 @@ func _handle_confirm_input(event: InputEvent) -> void:
 		_update_confirm_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		_execute_confirm()
 		get_viewport().set_input_as_handled()
+		_execute_confirm()
 	elif event.is_action_pressed("ui_cancel"):
 		_confirm_dialog.visible = false
 		_sub_state = SubState.SLOT_SELECT

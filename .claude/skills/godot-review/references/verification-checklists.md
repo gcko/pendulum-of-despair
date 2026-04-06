@@ -76,6 +76,41 @@ Reference for all review agents. Check every applicable item.
 - [ ] State set before deferred calls (e.g., `change_scene_to_file`) must be REVERTED on failure, not omitted — new scene `_ready()` reads state immediately
 - [ ] GDScript falsy checks (`if data`) fail for empty `[]`/`{}`/`0` — use explicit `!= null` when checking for null returns
 
+### Semantic Correctness (from Copilot PR #122 gap analysis)
+- [ ] Data field values used in COMPUTATION, not just existence checks — if a field is `restore_percent: 25`, the code must multiply by 0.25, not treat it as a boolean flag
+- [ ] Configurable values in data (e.g., revive HP fraction) must flow through to the formula — hardcoded fallbacks (e.g., always `max_hp / 4`) bypass the data
+- [ ] For every item/skill effect: trace the data value from JSON -> code -> actual game effect. If the value doesn't change the output, it's a semantic bug
+
+### Constraint Propagation (from Copilot PR #122 gap analysis)
+- [ ] Every constraint in JSON data (e.g., `requires_save_point`, `usable_in_battle`, `target_type`) must be enforced at ALL layers: backend logic, selection/confirmation UI, and display (greying/hiding)
+- [ ] After adding a new data constraint field, grep for every call site that reads the parent entity and verify the constraint is checked
+- [ ] Constraints must be tested from the USER perspective (can I select the item? can I confirm it? does it execute?) — not just backend validation
+
+### Cross-Session State Cleanup (from Copilot PR #122 gap analysis)
+- [ ] Singleton state (EventFlags, GameManager flags like `is_at_save_point`) must be cleared on NEW GAME start — not just test `before_each()`
+- [ ] Singleton state must be RESTORED from save data on LOAD GAME — if EventFlags are saved, they must be loaded back
+- [ ] Audit every singleton for session-scoped state: anything set during gameplay that would be wrong if carried into a new/loaded game
+
+### Runtime Instance ID Uniqueness (from Copilot PR #122 gap analysis)
+- [ ] Equipment instances, inventory slots, or any runtime-generated IDs must be globally unique (use incrementing counter or UUID, not index-based)
+- [ ] Methods that transfer ownership (equip, unequip, trade) must validate the entity OWNS the item before allowing the operation
+- [ ] Duplicate ID detection: after any add/create operation, assert the new ID does not already exist in the collection
+
+### Empty Collection Guards (from Copilot PR #122 gap analysis)
+- [ ] Any division by collection size (e.g., `party.size()`) must guard against zero — empty party, empty inventory, empty enemy list
+- [ ] Array index access must check `size() > 0` before `[0]` or similar — empty arrays cause index-out-of-bounds
+- [ ] UI that displays collection items (character select, item list) must handle the empty case with a message or disabled state, not crash
+
+### State Toggle Symmetry (from Copilot PR #122 gap analysis)
+- [ ] Every state modification that has an ENABLE path must have a corresponding DISABLE/RESTORE path — if Patience mode slows animations, disabling Patience must restore original speeds
+- [ ] Cascading state changes (setting X also changes Y and Z) must cascade in BOTH directions — toggling X off must also undo Y and Z
+- [ ] For every accessibility/config toggle, trace: enable -> what changes? disable -> are ALL changes reverted? If not, the toggle is one-way (permanent)
+
+### Numeric Conversion Accuracy (from Copilot PR #122 gap analysis)
+- [ ] Bit-depth conversions (e.g., 5-bit 0-31 to float 0.0-1.0) must use correct formula: `value / 31.0` not `value / 32.0` — verify boundary values (0 maps to 0.0, max maps to 1.0)
+- [ ] Percentage calculations must produce the correct range — verify at 0%, 50%, 100% boundary inputs
+- [ ] Any formula ported from a reference (SNES color format, damage formula) must be verified against known input/output pairs from the source
+
 ### GDScript Runtime Safety (from PR #120 manual testing)
 - [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
 - [ ] Any code that runs AFTER a scene transition call (`change_core_state`, `pop_overlay`) may execute on a freed/freeing node. Move transition calls to the END of the function, never follow with member access.
@@ -113,7 +148,7 @@ cannot point to the exact line that handles the case, it's a bug.
 
 - [ ] **Repeatability:** For every entity used in maps — can it happen twice? Doors/transitions MUST be repeatable (use Area2D, NOT one-shot TriggerZone). Story triggers are one-shot.
 - [ ] **Input ownership:** Grep for each input action (ui_accept, ui_cancel, etc.) across ALL .gd files. Exactly ONE handler per action per active scene. Two handlers = double-fire bug.
-- [ ] **Initialization chain:** For every entity in a .tscn map — trace: metadata set → exploration reads metadata → calls initialize(). If any link is missing, entity silently does nothing.
+- [ ] **Initialization chain:** For every entity in a .tscn map — trace: metadata set -> exploration reads metadata -> calls initialize(). If any link is missing, entity silently does nothing.
 - [ ] **Viewport dimensions:** Every ColorRect, background, panel size must match viewport (320x180). Every tile position must align to 16x16 grid. Every sprite must match spec sizes.
 - [ ] **Global state cleanup:** Every test file must clear ALL singletons in before_each: GameManager.transition_data, EventFlags.clear_all(), SaveManager.delete_slot(0-3).
 - [ ] **Spec-implementation sync:** After implementation, grep spec for EVERY changed concept name. Update ALL occurrences, not just the first one you find.
@@ -123,7 +158,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] **Ordering:** For every function that destroys-then-creates — validate the NEW thing BEFORE destroying the OLD thing. If validation fails, the old state must survive intact.
 
 ### State Transition Visibility (from Copilot PR #119 batch 4)
-- [ ] When switching sub-states (e.g., save_point_menu → rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
+- [ ] When switching sub-states (e.g., save_point_menu -> rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
 - [ ] When refresh/update methods rewrite display text, preserve prefixes or labels that distinguish node types (e.g., "AUTO" prefix on auto-save slot)
 - [ ] `has_X()` / `is_X_available()` checks must validate the same criteria as the corresponding `load_X()` / `get_X()` — file existence alone is not validity (corrupted files)
 
