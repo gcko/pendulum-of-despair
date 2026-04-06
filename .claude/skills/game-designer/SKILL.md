@@ -170,6 +170,15 @@ correct? Does the spec match what I just wrote?
 *Mirror check:* `grep -r "old_value" docs/` after every change. Fix
 every stale reference immediately — don't defer.
 
+*GDScript runtime safety pass (MANDATORY for any _input/_unhandled_input handler):*
+- Does any action in this handler trigger a scene swap (`change_core_state`,
+  `change_scene_to_file`, `pop_overlay`)? If yes, that call MUST be the
+  LAST line — no `get_viewport()`, no member access, no signal emission after it.
+- `get_viewport()` returns null after scene swap is queued. NEVER call
+  `get_viewport().set_input_as_handled()` after a scene transition.
+- Static review CANNOT catch these bugs. Ask the user to press F5 and test
+  every input handler on every screen before declaring done.
+
 ### 5. Verify (Adversarial Audit Against Design Docs)
 
 After implementation, verify every output against canonical docs.

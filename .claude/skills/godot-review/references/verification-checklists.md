@@ -76,6 +76,13 @@ Reference for all review agents. Check every applicable item.
 - [ ] State set before deferred calls (e.g., `change_scene_to_file`) must be REVERTED on failure, not omitted — new scene `_ready()` reads state immediately
 - [ ] GDScript falsy checks (`if data`) fail for empty `[]`/`{}`/`0` — use explicit `!= null` when checking for null returns
 
+### GDScript Runtime Safety (from PR #120 manual testing)
+- [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
+- [ ] Any code that runs AFTER a scene transition call (`change_core_state`, `pop_overlay`) may execute on a freed/freeing node. Move transition calls to the END of the function, never follow with member access.
+- [ ] `get_tree()` can also return null in edge cases during scene teardown. Guard autoload calls (`GameManager.X`, `SaveManager.X`) that use `get_tree()` internally.
+- [ ] Test ALL input handlers by pressing every key on every screen in the Godot editor — `_unhandled_input` bugs only surface at runtime, not in static review.
+- [ ] After writing any `_unhandled_input` or `_input` handler, trace: "what happens if the action I take here destroys this node?" If the answer is "yes it can", move the destructive call to the last line and put nothing after it.
+
 ### Documentation Accuracy
 - [ ] CLI commands in AGENTS.md/CLAUDE.md actually work in the current project state
 - [ ] If `run/main_scene` is empty, don't claim the game can be "run" — say "open in editor"
