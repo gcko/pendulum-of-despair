@@ -187,9 +187,44 @@ previous round has checked. Track which files have been read.
 4. **Post-fix re-read:** re-read the full script around each edit.
 5. **Commit locally** (do NOT push until all rounds complete).
 
+## Copilot Comment Handling (MANDATORY)
+
+After all review rounds complete but BEFORE pushing:
+
+1. **Fetch all Copilot review comments** using paginated gh API:
+   ```bash
+   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate \
+     --jq '.[] | select(.in_reply_to_id == null) | {id, user: .user.login, path, line: .original_line, body}'
+   ```
+
+2. **Filter to unaddressed comments** — skip comments that already have
+   replies from the repo owner.
+
+3. **Assess each comment** — all Copilot comments should already be
+   fixed by the review rounds. If any are NOT fixed, fix them now.
+
+4. **Reply to every comment** individually using the correct API:
+   ```bash
+   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies \
+     -f body="Fixed in <commit-sha>. <brief explanation>"
+   ```
+   **Do NOT @mention Copilot** — mentioning triggers unwanted responses.
+
+5. **Run Copilot gap analysis** — categorize every Copilot comment:
+   - Map each to a category (semantic correctness, constraint propagation,
+     state leakage, data integrity, input ownership, defensive coding,
+     state machine completeness, numeric correctness, mirror staleness)
+   - Check if existing verification-checklists.md covers each category
+   - If gaps found, ADD new checklist items immediately (don't suggest)
+   - Calculate pre-Copilot catch rate: (issues agents found independently) / (total Copilot comments)
+   - If catch rate < 80%, investigate root cause and update agent prompts
+
+6. **Trigger re-review if applicable** — if `.github/workflows/claude-re-review.yml`
+   exists, post a PR conversation comment with `/re-review` after pushing.
+
 ## Push and Summary
 
-After all rounds complete (or early exit on clean round):
+After all rounds complete, Copilot comments replied to, and gap analysis done:
 
 ```bash
 git push
@@ -218,6 +253,16 @@ Summary format:
 | Signal Architecture | N |
 | Pixel Rendering | N |
 | ...etc |
+
+### Copilot Comment Handling
+| Metric | Value |
+|--------|-------|
+| Total Copilot comments | N |
+| Already fixed by review | N |
+| Fixed after Copilot | N |
+| Replies posted | N |
+| Pre-Copilot catch rate | N% |
+| New checklist items added | N |
 
 Generated with [Claude Code](https://claude.ai/code)
 ```

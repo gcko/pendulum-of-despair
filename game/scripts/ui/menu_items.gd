@@ -221,7 +221,11 @@ func _update_display() -> void:
 			_item_labels[i].text = "%s %s" % [item.get("name", ""), qty_str]
 			_item_labels[i].visible = true
 			var is_usable: bool = item.get("usable_in_field", false)
-			if is_usable and item.get("requires_save_point", false) and not PartyState.is_at_save_point:
+			if (
+				is_usable
+				and item.get("requires_save_point", false)
+				and not PartyState.is_at_save_point
+			):
 				is_usable = false
 			if i == _cursor_index:
 				_item_labels[i].modulate = COLOR_SELECTED
