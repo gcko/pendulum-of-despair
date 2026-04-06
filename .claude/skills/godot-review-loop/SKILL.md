@@ -262,10 +262,16 @@ trace these paths. Write the answer for each. "I didn't check" = bug.
    (320x180)? Tile size (16x16)? Sprite size (16x24)?
 5. **Cleanup:** Every test — does before_each clear ALL global state?
    (GameManager.transition_data, EventFlags, SaveManager slots)
-6. **Spec drift:** Re-read the spec after implementation. Does it
-   describe what was BUILT, not what was PLANNED?
+6. **Spec drift:** Re-read the spec after implementation. Grep for EVERY
+   changed concept across ALL spec sections, not just the first match.
 7. **Return paths:** After every overlay push or map load — can the
    user return? What state is restored? Are panels hidden/shown correctly?
+8. **Actor filtering:** For every Area2D signal — WHO can trigger it?
+   Filter to intended actor. Without this, any physics body triggers it.
+9. **Failure chain:** For every operation that can fail — trace ALL
+   in-flight state (tweens, flags, visibility). One check is not enough.
+10. **Ordering:** Validate BEFORE destroy. If new resource fails to load,
+    old resource must survive.
 
 ## Rules
 

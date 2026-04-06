@@ -198,10 +198,16 @@ and then not do it. Actually trace each path:
 5. **State cleanup:** Do tests reset ALL global state they depend on?
    (PR #120: EventFlags not cleared, tests leaked state.)
 6. **Spec accuracy:** Does the spec describe what was ACTUALLY built, not
-   what was PLANNED? (PR #120: spec said TileMapLayer, code used ColorRect.)
+   what was PLANNED? Grep for EVERY changed concept across ALL spec sections.
 7. **Return path:** After any state change (overlay push, map load, scene
-   swap), can the user get back? What happens when they do? (PR #119: menu
-   overlap when returning from rest sub-state.)
+   swap), can the user get back? What happens when they do?
+8. **Actor filtering:** For every Area2D signal — WHO can trigger it? If
+   the answer is "anything with a physics body," add a filter.
+9. **Failure chain:** For every operation that can fail — trace ALL
+   in-flight state (tweens, flags, visibility). Kill tweens, reset flags.
+   One failure check is not enough — trace the FULL chain.
+10. **Ordering:** Validate BEFORE destroy. If you free an old resource
+    then fail to load the new one, the user is stuck with nothing.
 
 For each question, write the entity/file/line and the answer. If you can't
 answer "yes it works" with a specific code reference, it's a bug.
