@@ -91,8 +91,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		_player.try_interact()
-		get_viewport().set_input_as_handled()
+		if _player.has_method("try_interact"):
+			_player.try_interact()
 
 
 ## Load a map by ID and place player at spawn or named position.

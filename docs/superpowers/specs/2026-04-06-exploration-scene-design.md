@@ -78,8 +78,8 @@ var _current_map_id: String = ""
 ## Reference to the active map scene node.
 var _current_map: Node2D = null
 
-## Player character instance.
-var _player: CharacterBody2D = null
+## Player character instance (typed as Node2D to allow duck-typed try_interact calls).
+var _player: Node2D = null
 
 ## Whether a map transition is in progress (prevents double-trigger).
 var _transitioning: bool = false
@@ -119,17 +119,20 @@ When entities are placed in a map, exploration.gd connects their signals:
 | `NPC.npc_interacted(npc_id, dialogue_data)` | `_on_npc_interacted` | Push DIALOGUE overlay, pass `[dialogue_data]` (wrap single dict in array) |
 | `TreasureChest.chest_opened(chest_id, item_id)` | `_on_chest_opened` | Show "Found [item]!" flash |
 | `SavePoint.save_point_activated(save_point_id)` | `_on_save_point_activated` | Push SAVE_LOAD overlay |
-| `TriggerZone.triggered(trigger_id)` | `_on_trigger_zone_triggered` | Check if transition trigger → load_map; else handle event |
+| `Area2D.body_entered` (Transitions) | `_on_transition_body_entered` | Read target_map/target_spawn metadata, fade transition to new map |
 
 ### Map Transition Flow
 
-1. Player enters a TriggerZone with `map_target` metadata
-2. `_on_trigger_zone_triggered` checks metadata: if has `target_map`, start transition
-3. Set `_transitioning = true` (block further triggers)
+1. Player walks into a Transitions/Area2D with `target_map` metadata
+2. `_on_transition_body_entered` reads `target_map` and `target_spawn` from Area2D metadata
+3. Set `_transitioning = true` (block further triggers and interaction)
 4. Fade to black (0.3s via Tween on a ColorRect overlay)
-5. Unload current map, call `load_map(target_map, target_spawn)`
-6. Fade in (0.3s)
-7. Set `_transitioning = false`
+5. Verify target map exists (ResourceLoader.exists). If missing, end transition and return.
+6. Unload current map, call `load_map(target_map, target_spawn)`
+7. Fade in (0.3s)
+8. Set `_transitioning = false`
+
+**Note:** Transitions use plain Area2D (repeatable), NOT TriggerZone (one-shot with EventFlags persistence).
 
 ### Camera2D Configuration
 
@@ -137,7 +140,7 @@ When entities are placed in a map, exploration.gd connects their signals:
 - `position_smoothing_enabled = false` (pixel-perfect, no interpolation)
 - Snaps to pixel grid: `position = player.position.round()`
 - No zoom (integer 1x only at 320x180)
-- Stops at map edges via camera limits (set from TileMapLayer bounds)
+- No camera limits in MVP (deferred to gap 4.1 with real TileMapLayer maps)
 
 ### Location Name Flash
 
@@ -155,26 +158,26 @@ A minimal test map to verify the exploration scene works:
 
 ```
 test_room (Node2D)
-├── TileMapLayer                  — 20x11 grid of passable tiles + walls
+├── Background (ColorRect)        — 320x180 tan placeholder
 ├── Entities (Node2D)
-│   ├── TestNPC (NPC instance)    — initialized with "bren" dialogue
-│   ├── TestChest (TreasureChest) — initialized with test item
-│   └── TestSavePoint (SavePoint) — initialized with "test_save"
+│   ├── TestNPC (NPC instance)    — metadata/npc_id="bren"
+│   ├── TestChest (TreasureChest) — metadata/chest_id + item_id
+│   └── TestSavePoint (SavePoint) — metadata/save_point_id
 ├── Transitions (Node2D)
-│   └── ExitTrigger (TriggerZone) — leads to test_room_2
+│   └── ExitEast (Area2D)         — metadata/target_map="test_room_2", collision_mask=2
 └── PlayerSpawn (Marker2D)        — position (80, 90)
 ```
 
 A second test room for map transitions:
 ```
 test_room_2 (Node2D)
-├── TileMapLayer
+├── Background (ColorRect)        — 320x180 blue placeholder
 ├── Transitions (Node2D)
-│   └── ReturnTrigger (TriggerZone) — leads back to test_room
-└── PlayerSpawn (Marker2D)
+│   └── ReturnWest (Area2D)       — metadata/target_map="test_room"
+└── EntryWest (Marker2D)          — position (32, 90)
 ```
 
-Both rooms use simple colored tile placeholder tilesets (16x16).
+Both rooms use ColorRect backgrounds (real TileMapLayer deferred to gap 4.1).
 
 ---
 

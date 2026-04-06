@@ -84,14 +84,17 @@ func test_save_point_signal_wired() -> void:
 
 func test_transition_flag_blocks_interaction() -> void:
 	var exp = _create_exploration()
+	# Use a real entity that has interact() — e.g., the NPC from the map
+	var entities = exp._current_map.get_node_or_null("Entities")
+	var npc = entities.get_node_or_null("TestNPC")
+	assert_not_null(npc, "test NPC must exist for this test")
+	watch_signals(npc)
 	exp._transitioning = true
-	# _on_interaction_requested should early-return when transitioning
-	# Create a mock interactable with interact() and verify it's NOT called
-	var mock: Node2D = Node2D.new()
-	add_child_autofree(mock)
-	exp._on_interaction_requested(mock)
-	# If interact() were called on a Node2D it would error — no error means blocked
-	assert_true(exp._transitioning, "transitioning should still be true")
+	exp._on_interaction_requested(npc)
+	# NPC.interact() emits npc_interacted — if blocked, signal should NOT emit
+	assert_signal_not_emitted(
+		npc, "npc_interacted", "interaction should be blocked during transition"
+	)
 
 
 func test_location_flash_sets_text() -> void:
