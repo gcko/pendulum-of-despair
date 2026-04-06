@@ -1,5 +1,4 @@
 extends Node2D
-## Battle orchestrator. Calls down to UI via initialize(). UI signals up.
 
 signal battle_started(party: Array, enemies: Array, enemy_positions: Array)
 signal turn_ready(
@@ -11,7 +10,6 @@ signal victory(rewards: Dictionary)
 signal defeat
 signal flee_result(success: bool)
 signal message(text: String)
-signal party_state_updated(members: Array, gauges: Dictionary)
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleAI = preload("res://scripts/combat/battle_ai.gd")
@@ -36,14 +34,15 @@ var _earned_gold: int = 0
 
 
 func _ready() -> void:
-	# Initialize UI — "call down" pattern, no get_parent()
-	if _ui != null:
-		_ui.initialize(self)
-		_ui.command_submitted.connect(_on_ui_command)
-		_ui.command_cancelled.connect(_on_ui_cancel)
-		_ui.results_dismissed.connect(_on_results_dismissed)
-		_ui.submenu_state_changed.connect(_on_submenu_state)
-
+	if _ui == null:
+		push_error("BattleManager: BattleUI not found")
+		call_deferred("_exit_battle", "flee")
+		return
+	_ui.initialize(self)
+	_ui.command_submitted.connect(_on_ui_command)
+	_ui.command_cancelled.connect(_on_ui_cancel)
+	_ui.results_dismissed.connect(_on_results_dismissed)
+	_ui.submenu_state_changed.connect(_on_submenu_state)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
@@ -85,9 +84,8 @@ func _process(delta: float) -> void:
 	_check_end_conditions()
 	if not _battle_active:
 		return
-	_emit_party_state()
 	if _awaiting_input_for != "":
-		return  # Waiting for player command — don't process queue
+		return
 	var queue: Array[String] = _atb.get_ready_queue()
 	for id: String in queue:
 		if id.begins_with("party_"):
@@ -376,7 +374,8 @@ func _setup_party() -> void:
 
 
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
-	for i: int in range(encounter_group.size()):
+	var count: int = mini(6, encounter_group.size())
+	for i: int in range(count):
 		var enemy_node: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(enemy_node)
 		enemy_node.initialize(encounter_group[i], enemy_act)
@@ -389,12 +388,3 @@ func _tick_realtime_statuses(delta: float) -> void:
 	if not _atb.should_pause_timers():
 		for i: int in range(4):
 			_state.tick_realtime_statuses(i, delta)
-
-
-func _emit_party_state() -> void:
-	var m: Array = []
-	var g: Dictionary = {}
-	for i: int in range(4):
-		m.append(_state.get_member(i))
-		g["party_%d" % i] = _atb.get_gauge("party_%d" % i)
-	party_state_updated.emit(m, g)

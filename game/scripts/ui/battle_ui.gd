@@ -35,7 +35,6 @@ func initialize(manager: Node) -> void:
 	manager.victory.connect(_on_victory)
 	manager.defeat.connect(_on_defeat)
 	manager.combatant_died.connect(_on_combatant_died)
-	manager.party_state_updated.connect(_on_party_state_updated)
 
 
 func _ready() -> void:
@@ -145,11 +144,6 @@ func _on_defeat() -> void:
 
 func _on_combatant_died(_combatant_id: String) -> void:
 	pass
-
-
-func _on_party_state_updated(members: Array, gauges: Dictionary) -> void:
-	if _party_panel != null:
-		_party_panel.update_party(members, gauges)
 
 
 func _spawn_damage_number(target_id: String, text: String, color: Color) -> void:
