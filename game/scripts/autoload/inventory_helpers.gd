@@ -175,6 +175,83 @@ static func xp_to_next_level(level: int) -> int:
 	return int(10.0 * pow(float(level), 1.8))
 
 
+## Add XP to a party member, processing any level-ups.
+## Recalculates stats on level-up using character JSON data.
+## Returns {leveled_up: bool, old_level: int, new_level: int}.
+## Source: progression.md § XP Distribution, § Two-Phase XP Curve.
+static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
+	var level: int = member.get("level", 1)
+	var xp: int = member.get("current_xp", 0) + amount
+	var old_level: int = level
+	while level < 150:
+		var needed: int = xp_to_next_level(level)
+		if needed <= 0 or xp < needed:
+			break
+		xp -= needed
+		level += 1
+	member["current_xp"] = xp
+	member["level"] = level
+	member["xp_to_next"] = xp_to_next_level(level)
+	if level > old_level:
+		var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
+		var base: Dictionary = char_data.get("base_stats", {})
+		var growth: Dictionary = char_data.get("growth", {})
+		var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
+		member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
+		member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
+		for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
+			member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
+	return {"leveled_up": level > old_level, "old_level": old_level, "new_level": level}
+
+
+## Distribute battle rewards across active and reserve party.
+## Active alive: full XP. KO'd: 0 XP. Reserve: 50% XP.
+## Returns {level_ups: Array, gold_gained: int, items_gained: Array}.
+## Source: progression.md § XP Distribution Rules.
+static func distribute_rewards(
+	rewards: Dictionary,
+	active_party: Array[Dictionary],
+	reserve_party: Array[Dictionary],
+) -> Dictionary:
+	var level_ups: Array[Dictionary] = []
+	var xp_amount: int = rewards.get("xp", 0)
+	var drops: Array = rewards.get("drops", [])
+	# Active party: full XP if alive, 0 if KO'd
+	for member: Dictionary in active_party:
+		if member.get("current_hp", 0) > 0:
+			var result: Dictionary = add_xp_to_member(member, xp_amount)
+			if result.get("leveled_up", false):
+				(
+					level_ups
+					. append(
+						{
+							"character_id": member.get("character_id", ""),
+							"old_level": result.get("old_level", 0),
+							"new_level": result.get("new_level", 0),
+						}
+					)
+				)
+	# Reserve party: 50% XP
+	for member: Dictionary in reserve_party:
+		var result: Dictionary = add_xp_to_member(member, xp_amount / 2)
+		if result.get("leveled_up", false):
+			(
+				level_ups
+				. append(
+					{
+						"character_id": member.get("character_id", ""),
+						"old_level": result.get("old_level", 0),
+						"new_level": result.get("new_level", 0),
+					}
+				)
+			)
+	return {
+		"level_ups": level_ups,
+		"gold_gained": rewards.get("gold", 0),
+		"items_gained": drops,
+	}
+
+
 ## Load config from disk, merging user overrides onto defaults.
 static func load_config_from_disk() -> Dictionary:
 	var user_config: Dictionary = {}
