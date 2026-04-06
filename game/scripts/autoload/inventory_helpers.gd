@@ -28,7 +28,8 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 		var equippable: Array = item_data.get("equippable_by", [])
 		return character_id in equippable
 	if slot == "head":
-		return true
+		var equippable: Array = item_data.get("equippable_by", [])
+		return equippable.is_empty() or character_id in equippable
 	if slot == "body":
 		var armor_class: String = item_data.get("armor_class", "light")
 		if armor_class == "heavy":
@@ -37,7 +38,8 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 			return character_id in ["maren", "torren"]
 		return true
 	if slot == "accessory" or slot == "crystal":
-		return true
+		var equippable: Array = item_data.get("equippable_by", [])
+		return equippable.is_empty() or character_id in equippable
 	return false
 
 
@@ -71,7 +73,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 			else:
 				target["current_hp"] = max_hp
 				target["current_mp"] = max_mp
-			target["status_effects"] = [] as Array
+			if item_data.get("clears_status", false):
+				target["status_effects"] = [] as Array
 		"revive":
 			if target.get("current_hp", 0) <= 0:
 				var max_hp: int = target.get("max_hp", 1)
@@ -88,6 +91,16 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 					if status_name not in cures:
 						remaining.append(s)
 			target["status_effects"] = remaining
+		"stat_boost":
+			var stat_key: String = item_data.get("stat", "")
+			var boost: int = item_data.get("value", 0)
+			if stat_key != "" and boost > 0:
+				var current: int = target.get(stat_key, 0)
+				target[stat_key] = current + boost
+		"teleport":
+			push_warning("InventoryHelpers: teleport effect not yet implemented")
+		"preemptive":
+			push_warning("InventoryHelpers: preemptive effect not yet implemented")
 
 
 ## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).
@@ -198,7 +211,7 @@ static func build_save_dict(
 		"crafting":
 		{
 			"arcanite_charges": 12,
-			"device_loadout": [{}, {}, {}, {}, {}],
+			"device_loadout": [null, null, null, null, null],
 			"discovered_synergies": [],
 			"unlocked_recipes": [],
 		},

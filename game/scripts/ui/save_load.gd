@@ -1,9 +1,10 @@
 extends CanvasLayer
-## Save/Load overlay: save point menu, slot display, rest stubs.
-## Modes: SAVE_POINT, SAVE, LOAD. Sub-state machine for navigation.
+## Save/Load overlay: save point menu, slot display, rest stubs. Modes: SAVE_POINT, SAVE, LOAD.
 
 signal save_completed(slot: int)
 signal load_completed(slot: int)
+
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 
 ## Colors from ui-design.md Section 1.4.
 const COLOR_SELECTED: Color = Color("#ffff88")

@@ -255,7 +255,7 @@ const COLOR_WINDOW_BORDER: Color = Color("#5566aa")   # blue-grey
 Per ui-design.md Section 4.
 
 **Layout:** Tab bar (USE | ARRANGE | KEY) → description area →
-two-column item list.
+single-column item list.
 
 **State:**
 ```
