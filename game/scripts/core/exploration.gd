@@ -38,7 +38,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
 		_player.try_interact()
-		get_viewport().set_input_as_handled()
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
