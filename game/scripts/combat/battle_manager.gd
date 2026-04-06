@@ -78,7 +78,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not _battle_active:
 		return
-	# ATB ticks even during player input (Active mode handles pause internally)
 	_tick_realtime_statuses(delta)
 	_atb.tick(delta)
 	_check_end_conditions()
@@ -93,7 +92,8 @@ func _process(delta: float) -> void:
 			_clear_defend(slot)
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
-			turn_ready.emit(id, true, slot, _count_living_enemies(), _is_boss, char_data)
+			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
+			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
 		elif id.begins_with("enemy_"):
 			_execute_enemy_turn(id)
 			_atb.reset_gauge(id)
@@ -123,27 +123,29 @@ func _on_ui_command(command: Dictionary) -> void:
 			_do_flee()
 		"ability":
 			_do_attack(actor_id, command)
-	if not ok:
-		return  # Command failed — keep turn, re-prompt
+	if not ok:  # Command failed — re-prompt
+		_atb.set_command_menu_open(true)
+		var s: int = actor_id.replace("party_", "").to_int()
+		var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
+		turn_ready.emit(
+			actor_id, true, s, lc, _is_boss, _state.get_member(s).get("character_data", {})
+		)
+		return
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
 	_state.tick_statuses(actor_id.replace("party_", "").to_int())
 	_check_end_conditions()
 
 
-## Called by UI signal — player cancelled command menu.
 func _on_ui_cancel() -> void:
-	# Re-queue the combatant so they get another turn prompt
 	_atb.set_command_menu_open(false)
 	_awaiting_input_for = ""
 
 
-## Called by UI signal — submenu opened/closed (for ATB wait mode pausing).
 func _on_submenu_state(is_open: bool) -> void:
 	_atb.set_submenu_open(is_open)
 
 
-## Called by UI signal — player dismissed results screen.
 func _on_results_dismissed() -> void:
 	_exit_battle("victory")
 
@@ -191,15 +193,15 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	elif target_type == "single_ally":
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		var tgt: int = command.get("target", 0)
-		_state.heal(tgt, heal_amt)
-		damage_dealt.emit("party_%d" % tgt, heal_amt, "heal")
+		var actual: int = _state.heal(tgt, heal_amt)
+		damage_dealt.emit("party_%d" % tgt, actual, "heal")
 	elif target_type == "all_allies":
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		for i: int in range(4):
 			var m: Dictionary = _state.get_member(i)
 			if not m.is_empty() and m.get("is_alive", false):
-				_state.heal(i, heal_amt)
-				damage_dealt.emit("party_%d" % i, heal_amt, "heal")
+				var actual: int = _state.heal(i, heal_amt)
+				damage_dealt.emit("party_%d" % i, actual, "heal")
 	return true
 
 
@@ -229,9 +231,8 @@ func _do_item(command: Dictionary) -> void:
 	message.emit("Used %s!" % item.get("name", "Item"))
 	match item.get("effect_type", ""):
 		"restore_hp":
-			var amt: int = item.get("restore_amount", 100)
-			_state.heal(target_slot, amt)
-			damage_dealt.emit("party_%d" % target_slot, amt, "heal")
+			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100))
+			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))
 		"cure_status":
@@ -242,7 +243,6 @@ func _do_item(command: Dictionary) -> void:
 				_exit_battle("flee")
 
 
-## Defend: halve all incoming damage. Cleared on next turn via _clear_defend().
 func _do_defend(actor_id: String) -> void:
 	var slot: int = actor_id.replace("party_", "").to_int()
 	_state.set_defending(slot, true)
@@ -251,7 +251,6 @@ func _do_defend(actor_id: String) -> void:
 	message.emit("%s defends!" % name)
 
 
-## Clear defend: restore damage_taken_mult to 1.0.
 func _clear_defend(slot: int) -> void:
 	var m: Dictionary = _state.get_member(slot)
 	if m.is_empty():
@@ -383,14 +382,6 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
 		_enemies.append(enemy_node)
 		_atb.add_combatant("enemy_%d" % i, enemy_node.get_stats().get("spd", 10), true)
-
-
-func _count_living_enemies() -> int:
-	var c: int = 0
-	for e: Node in _enemies:
-		if e.is_alive:
-			c += 1
-	return c
 
 
 func _tick_realtime_statuses(delta: float) -> void:

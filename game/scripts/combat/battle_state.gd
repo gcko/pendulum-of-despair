@@ -79,11 +79,11 @@ func take_damage(slot: int, amount: int) -> void:
 		member_died.emit(slot)
 
 
-## Heal a party member.
-func heal(slot: int, amount: int) -> void:
+## Heal a party member. Returns actual HP restored (clamped to max).
+func heal(slot: int, amount: int) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
-		return
+		return 0
 	var clamped: int = maxi(0, amount)
 	var old_hp: int = m["current_hp"]
 	m["current_hp"] = mini(m["max_hp"], m["current_hp"] + clamped)
@@ -93,6 +93,7 @@ func heal(slot: int, amount: int) -> void:
 		member_revived.emit(slot)
 	if actual > 0:
 		member_healed.emit(slot, actual)
+	return actual
 
 
 ## Spend MP. Returns false if insufficient or negative amount.
