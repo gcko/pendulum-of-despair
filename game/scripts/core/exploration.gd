@@ -127,7 +127,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_danger_counter = 0
 	var encounters: Dictionary = DataManager.load_encounters(_current_map_id)
 	if not encounters.is_empty():
-		var floors: Array = encounters.get("floors", [])
+		var floors: Array = encounters.get("floors", encounters.get("zones", []))
 		if floors.size() > 0 and floors[0] is Dictionary:
 			_encounter_config = floors[0]
 

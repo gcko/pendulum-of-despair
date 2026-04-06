@@ -181,6 +181,8 @@ static func xp_to_next_level(level: int) -> int:
 ## Source: progression.md § XP Distribution, § Two-Phase XP Curve.
 static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 	var level: int = member.get("level", 1)
+	if amount <= 0:
+		return {"leveled_up": false, "old_level": level, "new_level": level}
 	var xp: int = member.get("current_xp", 0) + amount
 	var old_level: int = level
 	while level < 150:
@@ -342,7 +344,7 @@ static func get_active_members(
 	var result: Array[Dictionary] = []
 	var active: Array = formation.get("active", [])
 	for idx: Variant in active:
-		var i: int = idx as int
+		var i: int = int(idx) if idx is int or idx is float else -1
 		if i >= 0 and i < members.size():
 			result.append(members[i])
 	return result

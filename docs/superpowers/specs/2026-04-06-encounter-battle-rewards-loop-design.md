@@ -263,20 +263,20 @@ static func distribute_rewards(
 
 ```
 var level: int = member.get("level", 1)
-var xp: int = member.get("xp", 0) + amount
+var xp: int = member.get("current_xp", 0) + amount
 var old_level: int = level
 while level < 150:
     var needed: int = xp_to_next_level(level)
     if needed <= 0 or xp < needed: break
     xp -= needed
     level += 1
-member["xp"] = xp
+member["current_xp"] = xp
 member["level"] = level
 if level > old_level:
     # Recalculate stats using character's base/growth from JSON
     var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
     var base: Dictionary = char_data.get("base_stats", {})
-    var growth: Dictionary = char_data.get("growth_rates", {})
+    var growth: Dictionary = char_data.get("growth", {})
     var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
     member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
     member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))

@@ -579,7 +579,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - GUT tests in test_exploration.gd (10 tests), all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-06-exploration-scene-design.md`
 - **The game now has a walkable, interactive world** — player can explore, talk to NPCs, open chests, save, and transition between maps
-- Encounter loop wired: danger counter increments per step (16px tile), EncounterSystem static helper handles check/roll/select/formation, battle entry/return with rewards
+- Encounter loop wired: danger counter increments per step (16px tile), EncounterSystem static helper handles check/roll/select/formation, battle entry/return with rewards. Floor-ID config selection deferred (always uses first floor/zone entry). Act scaling hardcoded 1.0 (deferred to gap 4.1)
 - XP distribution: active alive = full, KO'd = 0, reserve = 50%. Level-up recalculates stats from character JSON. XP clamped to 0 at level 150
 - Accessory encounter modifiers: Ward Talisman/Infiltrator's Cloak ×0.5, Lure Talisman ×2.0
 - Design spec: `docs/superpowers/specs/2026-04-06-encounter-battle-rewards-loop-design.md`
