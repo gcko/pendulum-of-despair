@@ -533,7 +533,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - Bundled with gaps 3.5 (Dialogue) and 3.6 (Save/Load) in one PR
 - Continue greyed out when no saves exist, shows error on corrupted save
 - Config greyed out with stub — opens nothing until gap 3.4 (Menu Overlay)
-- SaveManager gained 3 new public methods: load_most_recent(), has_any_save(), get_slot_previews()
+- SaveManager gained 5 new public methods: load_most_recent(), has_any_save(), get_slot_previews(), delete_slot(), copy_slot()
 - GUT tests in test_title.gd, all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`
 - **Game is now launchable in Godot editor** (first runnable scene)

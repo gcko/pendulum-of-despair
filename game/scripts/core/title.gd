@@ -72,13 +72,8 @@ func _confirm_selection() -> void:
 				push_warning("Title: Failed to load most recent save")
 				_input_active = true
 				return
-			(
-				GameManager
-				. change_core_state(
-					GameManager.CoreState.EXPLORATION,
-					{"save_slot": result["slot"], "save_data": result["data"]},
-				)
-			)
+			var save_data: Dictionary = {"save_slot": result["slot"], "save_data": result["data"]}
+			GameManager.change_core_state(GameManager.CoreState.EXPLORATION, save_data)
 		MenuOption.CONFIG:
 			pass  # Stubbed — gap 3.4
 

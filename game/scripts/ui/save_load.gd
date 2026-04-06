@@ -302,6 +302,7 @@ func _confirm_slot() -> void:
 
 
 func _cancel_from_slots() -> void:
+	_cursor.visible = false
 	if _mode == Mode.SAVE_POINT:
 		_slot_container.visible = false
 		_sub_state = SubState.SAVE_POINT_MENU
@@ -346,13 +347,8 @@ func _do_load(slot: int) -> void:
 		push_warning("SaveLoad: Failed to load slot %d" % slot)
 		return
 	load_completed.emit(slot)
-	(
-		GameManager
-		. change_core_state(
-			GameManager.CoreState.EXPLORATION,
-			{"save_slot": slot, "save_data": data},
-		)
-	)
+	var transition: Dictionary = {"save_slot": slot, "save_data": data}
+	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
 
 
 func _do_delete(slot: int) -> void:
