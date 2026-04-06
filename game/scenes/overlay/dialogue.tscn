@@ -1,0 +1,87 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/cursor_hand.png" id="2_cursor"]
+
+[sub_resource type="Animation" id="Anim_arrow_bounce"]
+resource_name = "arrow_bounce"
+length = 0.6
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimLib_main"]
+_data = {
+"arrow_bounce": SubResource("Anim_arrow_bounce")
+}
+
+[node name="Dialogue" type="CanvasLayer"]
+layer = 10
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="DialogueBox" type="NinePatchRect" parent="."]
+offset_left = 0.0
+offset_top = 140.0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="SpeakerLabel" type="Label" parent="DialogueBox"]
+offset_left = 4.0
+offset_top = -12.0
+offset_right = 100.0
+offset_bottom = 0.0
+text = "SPEAKER"
+visible = false
+
+[node name="TextLabel" type="RichTextLabel" parent="DialogueBox"]
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 316.0
+offset_bottom = 38.0
+bbcode_enabled = true
+text = ""
+visible_characters = 0
+
+[node name="AdvanceArrow" type="Sprite2D" parent="DialogueBox"]
+position = Vector2(308, 34)
+visible = false
+
+[node name="ChoiceBox" type="NinePatchRect" parent="."]
+offset_left = 200.0
+offset_top = 90.0
+offset_right = 316.0
+offset_bottom = 138.0
+visible = false
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="ChoiceBox"]
+offset_left = 16.0
+offset_top = 2.0
+offset_right = 112.0
+offset_bottom = 46.0
+
+[node name="Choice0" type="Label" parent="ChoiceBox/ChoiceContainer"]
+layout_mode = 2
+text = "Option 1"
+
+[node name="Choice1" type="Label" parent="ChoiceBox/ChoiceContainer"]
+layout_mode = 2
+text = "Option 2"
+
+[node name="Choice2" type="Label" parent="ChoiceBox/ChoiceContainer"]
+layout_mode = 2
+text = "Option 3"
+visible = false
+
+[node name="Choice3" type="Label" parent="ChoiceBox/ChoiceContainer"]
+layout_mode = 2
+text = "Option 4"
+visible = false
+
+[node name="ChoiceCursor" type="Sprite2D" parent="."]
+position = Vector2(204, 100)
+texture = ExtResource("2_cursor")
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimLib_main")
+}

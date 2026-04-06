@@ -99,6 +99,32 @@ func auto_save() -> void:
 		push_warning("SaveManager: Auto-save failed")
 
 
+## Load the most recent save file (manual or auto, by timestamp).
+## Returns {slot: int, data: Dictionary} or empty dict if no saves exist.
+## Public wrapper for title screen Continue flow.
+func load_most_recent() -> Dictionary:
+	return _load_most_recent_save()
+
+
+## Check whether any save file exists (for title screen Continue button).
+func has_any_save() -> bool:
+	for slot: int in [0, 1, 2, 3]:
+		var path: String = _slot_path(slot)
+		if FileAccess.file_exists(path):
+			return true
+	return false
+
+
+## Load preview data for all save slots (for slot display in save/load screen).
+## Returns array of 4 Dictionaries (index 0=auto, 1-3=manual).
+## Empty dict for unused slots, dict with "error" key for corrupted.
+func get_slot_previews() -> Array[Dictionary]:
+	var previews: Array[Dictionary] = []
+	for slot: int in [0, 1, 2, 3]:
+		previews.append(load_game(slot))
+	return previews
+
+
 ## Faint-and-Fast-Reload: party wipe recovery.
 ## Control flow is wired; merge/restore steps are stubbed (pass).
 ## When implemented: preserves XP, gold, boss_cutscene_seen flags
