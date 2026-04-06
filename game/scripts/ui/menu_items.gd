@@ -126,6 +126,8 @@ func _confirm_item() -> void:
 	var item: Dictionary = _items[_cursor_index]
 	if not item.get("usable_in_field", false):
 		return
+	if item.get("requires_save_point", false) and not PartyState.is_at_save_point:
+		return
 	# Open target select
 	_state = ItemState.TARGET_SELECT
 	_target_index = 0
@@ -219,6 +221,8 @@ func _update_display() -> void:
 			_item_labels[i].text = "%s %s" % [item.get("name", ""), qty_str]
 			_item_labels[i].visible = true
 			var is_usable: bool = item.get("usable_in_field", false)
+			if is_usable and item.get("requires_save_point", false) and not PartyState.is_at_save_point:
+				is_usable = false
 			if i == _cursor_index:
 				_item_labels[i].modulate = COLOR_SELECTED
 			elif not is_usable and _tab == ItemTab.USE:

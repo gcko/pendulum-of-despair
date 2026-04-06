@@ -95,10 +95,17 @@ func _handle_command_input(event: InputEvent) -> void:
 		_confirm_command()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
 		GameManager.pop_overlay()
 
 
 func _handle_char_select_input(event: InputEvent) -> void:
+	if _active_party.is_empty():
+		if event.is_action_pressed("ui_cancel"):
+			_char_cursor.visible = false
+			_state = MenuState.COMMAND
+			get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("ui_down"):
 		_char_index = (_char_index + 1) % _active_party.size()
 		_update_char_cursor()
@@ -216,15 +223,11 @@ func _show_stub_message() -> void:
 func _open_save() -> void:
 	if not PartyState.is_at_save_point:
 		return  # Save command is disabled (greyed out)
+	# Schedule save overlay push on GameManager (autoload, never freed) before
+	# popping this overlay. call_deferred runs after the current frame's
+	# queue_free processing, so GameManager._push_save_overlay executes safely.
+	GameManager.call_deferred("_push_save_overlay")
 	GameManager.pop_overlay()
-	call_deferred("_push_save_overlay")
-
-
-func _push_save_overlay() -> void:
-	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
-		var overlay: Node = GameManager.overlay_node
-		if overlay != null and overlay.has_method("open_save"):
-			overlay.open_save()
 
 
 func _refresh_party_data() -> void:

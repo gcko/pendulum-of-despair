@@ -43,6 +43,7 @@ var location_name: String = ""
 var is_at_save_point: bool = false
 var _config: Dictionary = {}
 var _config_loaded: bool = false
+var _next_inst_id: int = 0
 
 
 func _ready() -> void:
@@ -52,6 +53,8 @@ func _ready() -> void:
 func initialize_new_game() -> void:
 	members.clear()
 	owned_equipment.clear()
+	is_at_save_point = false
+	EventFlags.clear_all()
 	_add_character("edren", 1)
 	_add_character("cael", 1)
 	formation = {
@@ -90,33 +93,21 @@ func load_from_save(data: Dictionary) -> void:
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
 	playtime = data.get("meta", {}).get("playtime", 0)
+	var event_flags: Dictionary = world.get("event_flags", {})
+	if not event_flags.is_empty():
+		EventFlags.load_from_save(event_flags)
 
 
 func build_save_data() -> Dictionary:
-	return {
-		"party": members.duplicate(true),
-		"formation": formation.duplicate(true),
-		"inventory": inventory.duplicate(true),
-		"owned_equipment": owned_equipment.duplicate(true),
-		"crafting":
-		{
-			"arcanite_charges": 12,
-			"device_loadout": [{}, {}, {}, {}, {}],
-			"discovered_synergies": [],
-			"unlocked_recipes": [],
-		},
-		"ley_crystals": {"collected": []},
-		"world":
-		{
-			"event_flags": EventFlags.to_save_data(),
-			"act": "1",
-			"current_location": location_name,
-			"current_position": {"x": 0, "y": 0},
-			"gold": gold,
-		},
-		"quests": {"active": [], "completed": []},
-		"completion": {"bestiary": [], "treasures": [], "items_found": []},
-	}
+	return Helpers.build_save_dict(
+		members,
+		formation,
+		inventory,
+		owned_equipment,
+		location_name,
+		gold,
+		EventFlags.to_save_data()
+	)
 
 
 func get_active_party() -> Array[Dictionary]:
@@ -173,14 +164,11 @@ func get_equipment_bonus(character_id: String, stat: String) -> int:
 
 
 func get_derived_stats(character_id: String) -> Dictionary:
-	var spd: int = get_effective_stat(character_id, "spd")
-	var lck: int = get_effective_stat(character_id, "lck")
-	var mdef: int = get_effective_stat(character_id, "mdef")
-	return {
-		"eva_pct": clampi(spd / 4, 0, 50),
-		"meva_pct": clampi((mdef + spd) / 8, 0, 40),
-		"crit_pct": clampi(lck / 4, 0, 50),
-	}
+	return Helpers.compute_derived_stats(
+		get_effective_stat(character_id, "spd"),
+		get_effective_stat(character_id, "lck"),
+		get_effective_stat(character_id, "mdef")
+	)
 
 
 func equip_item(character_id: String, slot: String, equipment_id: String) -> Dictionary:
@@ -190,9 +178,14 @@ func equip_item(character_id: String, slot: String, equipment_id: String) -> Dic
 	var equip: Dictionary = m.get("equipment", {})
 	var old_id: String = equip.get(slot, "")
 
+	# Validate new item is owned (skip for starting equipment during init)
+	if not _has_owned_equipment(equipment_id):
+		push_error("PartyState: Cannot equip '%s' — not in owned_equipment" % equipment_id)
+		return {}
+
 	# Return old item to inventory
 	if old_id != "":
-		owned_equipment.append({"id": old_id + "_inst", "equipment_id": old_id})
+		owned_equipment.append({"id": _generate_inst_id(old_id), "equipment_id": old_id})
 
 	# Remove new item from inventory
 	_remove_owned_equipment(equipment_id)
@@ -212,7 +205,7 @@ func unequip_slot(character_id: String, slot: String) -> String:
 	var old_id: String = equip.get(slot, "")
 	if old_id == "":
 		return ""
-	owned_equipment.append({"id": old_id + "_inst", "equipment_id": old_id})
+	owned_equipment.append({"id": _generate_inst_id(old_id), "equipment_id": old_id})
 	equip[slot] = ""
 	m["equipment"] = equip
 	_recalculate_max_hp_mp(character_id)
@@ -236,7 +229,7 @@ func get_equippable_for_slot(character_id: String, slot: String) -> Array[Dictio
 func optimize_equipment(character_id: String) -> void:
 	var is_caster: bool = character_id in ["maren", "torren"]
 	var priority_stat: String = "mag" if is_caster else "atk"
-	for slot: String in ["weapon", "head", "body", "accessory"]:
+	for slot: String in ["weapon", "head", "body", "accessory", "crystal"]:
 		var options: Array[Dictionary] = get_equippable_for_slot(character_id, slot)
 		if options.is_empty():
 			continue
@@ -269,6 +262,8 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 		return false
 	if not item_data.get("usable_in_field", false):
 		return false
+	if item_data.get("requires_save_point", false) and not is_at_save_point:
+		return false
 
 	var target: Dictionary = get_member(target_character_id)
 	if target.is_empty():
@@ -284,6 +279,8 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 
 
 func add_item(item_id: String, quantity: int) -> void:
+	if quantity <= 0:
+		return
 	var consumables: Dictionary = inventory.get("consumables", {})
 	consumables[item_id] = consumables.get(item_id, 0) + quantity
 	inventory["consumables"] = consumables
@@ -362,19 +359,7 @@ func _add_character(character_id: String, level: int) -> void:
 
 
 func _load_config() -> void:
-	var user_config: Dictionary = {}
-	if FileAccess.file_exists(SaveManager.CONFIG_PATH):
-		var file: FileAccess = FileAccess.open(SaveManager.CONFIG_PATH, FileAccess.READ)
-		if file != null:
-			var json: JSON = JSON.new()
-			if json.parse(file.get_as_text()) == OK and json.data is Dictionary:
-				user_config = json.data as Dictionary
-			file.close()
-
-	var defaults: Dictionary = DataManager.load_json("res://data/config/defaults.json")
-	_config = defaults.duplicate()
-	for key: String in user_config:
-		_config[key] = user_config[key]
+	_config = Helpers.load_config_from_disk()
 	_config_loaded = true
 
 
@@ -389,11 +374,19 @@ func _recalculate_max_hp_mp(character_id: String) -> void:
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return
-	var base_hp: int = m.get("base_stats", {}).get("hp", 1)
-	var base_mp: int = m.get("base_stats", {}).get("mp", 0)
-	var hp_bonus: int = get_equipment_bonus(character_id, "hp")
-	var mp_bonus: int = get_equipment_bonus(character_id, "mp")
-	m["max_hp"] = mini(base_hp + hp_bonus, 14999)
-	m["max_mp"] = mini(base_mp + mp_bonus, 1499)
+	var bs: Dictionary = m.get("base_stats", {})
+	m["max_hp"] = mini(bs.get("hp", 1) + get_equipment_bonus(character_id, "hp"), 14999)
+	m["max_mp"] = mini(bs.get("mp", 0) + get_equipment_bonus(character_id, "mp"), 1499)
 	m["current_hp"] = mini(m.get("current_hp", 0), m["max_hp"])
 	m["current_mp"] = mini(m.get("current_mp", 0), m["max_mp"])
+
+
+func _generate_inst_id(equipment_id: String) -> String:
+	_next_inst_id += 1
+	return "%s_inst_%d" % [equipment_id, _next_inst_id]
+
+
+func _has_owned_equipment(equipment_id: String) -> bool:
+	return owned_equipment.any(
+		func(e: Dictionary) -> bool: return e.get("equipment_id", "") == equipment_id
+	)

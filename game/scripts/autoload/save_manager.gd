@@ -217,6 +217,7 @@ func _validate(data: Dictionary) -> bool:
 		"party",
 		"formation",
 		"inventory",
+		"owned_equipment",
 		"crafting",
 		"ley_crystals",
 		"world",

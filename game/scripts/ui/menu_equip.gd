@@ -274,10 +274,10 @@ func _update_stat_comparison() -> void:
 		var projected: int = _project_stat(member, stat, slot, new_equip_id)
 		var delta: int = projected - current
 		if delta > 0:
-			_stat_labels[i].text = "%s %d ▲%d" % [STAT_DISPLAY[i], current, projected]
+			_stat_labels[i].text = "%s %d ▲%d" % [STAT_DISPLAY[i], current, delta]
 			_stat_labels[i].modulate = COLOR_STAT_UP
 		elif delta < 0:
-			_stat_labels[i].text = "%s %d ▼%d" % [STAT_DISPLAY[i], current, projected]
+			_stat_labels[i].text = "%s %d ▼%d" % [STAT_DISPLAY[i], current, -delta]
 			_stat_labels[i].modulate = COLOR_STAT_DOWN
 		else:
 			_stat_labels[i].text = "%s %d ──" % [STAT_DISPLAY[i], current]

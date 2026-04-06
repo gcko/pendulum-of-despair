@@ -46,16 +46,18 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 	var effect: String = item_data.get("effect", "")
 	match effect:
 		"restore_hp":
+			var max_hp: int = target.get("max_hp", 1)
 			var value: int = item_data.get("value", 0)
 			if item_data.has("restore_percent"):
-				value = target.get("max_hp", 0)
-			var max_hp: int = target.get("max_hp", 1)
+				var pct: int = item_data.get("restore_percent", 0)
+				value = int(float(max_hp) * float(pct) / 100.0)
 			target["current_hp"] = mini(target.get("current_hp", 0) + value, max_hp)
 		"restore_mp":
+			var max_mp: int = target.get("max_mp", 1)
 			var value: int = item_data.get("value", 0)
 			if item_data.has("restore_percent"):
-				value = target.get("max_mp", 0)
-			var max_mp: int = target.get("max_mp", 1)
+				var pct: int = item_data.get("restore_percent", 0)
+				value = int(float(max_mp) * float(pct) / 100.0)
 			target["current_mp"] = mini(target.get("current_mp", 0) + value, max_mp)
 		"restore_hp_mp":
 			target["current_hp"] = target.get("max_hp", 1)
@@ -63,7 +65,9 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 		"revive":
 			if target.get("current_hp", 0) <= 0:
 				var max_hp: int = target.get("max_hp", 1)
-				target["current_hp"] = maxi(1, max_hp / 4)
+				var revive_pct: int = item_data.get("value", 25)
+				var revived_hp: int = int(ceil(float(max_hp) * float(revive_pct) / 100.0))
+				target["current_hp"] = clampi(revived_hp, 1, max_hp)
 		"cure_status":
 			var cures: Array = item_data.get("cures", [])
 			var effects: Array = target.get("status_effects", [])
@@ -101,9 +105,71 @@ static func calculate_stats_at_level(
 	return stats
 
 
+## Compute derived stats (evasion, magic evasion, crit) from effective stat values.
+static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
+	return {
+		"eva_pct": clampi(spd / 4, 0, 50),
+		"meva_pct": clampi((mdef + spd) / 8, 0, 40),
+		"crit_pct": clampi(lck / 4, 0, 50),
+	}
+
+
 static func xp_to_next_level(level: int) -> int:
 	if level >= 150:
 		return 0
 	if level <= 70:
 		return int(24.0 * pow(float(level), 1.5))
 	return int(10.0 * pow(float(level), 1.8))
+
+
+## Load config from disk, merging user overrides onto defaults.
+static func load_config_from_disk() -> Dictionary:
+	var user_config: Dictionary = {}
+	if FileAccess.file_exists(SaveManager.CONFIG_PATH):
+		var file: FileAccess = FileAccess.open(SaveManager.CONFIG_PATH, FileAccess.READ)
+		if file != null:
+			var json: JSON = JSON.new()
+			if json.parse(file.get_as_text()) == OK and json.data is Dictionary:
+				user_config = json.data as Dictionary
+			file.close()
+	var defaults: Dictionary = DataManager.load_json("res://data/config/defaults.json")
+	var config: Dictionary = defaults.duplicate()
+	for key: String in user_config:
+		config[key] = user_config[key]
+	return config
+
+
+## Build the save data template with stub sections for systems not yet implemented.
+static func build_save_dict(
+	party: Array,
+	form: Dictionary,
+	inv: Dictionary,
+	equips: Array,
+	loc: String,
+	g: int,
+	flags: Dictionary
+) -> Dictionary:
+	return {
+		"party": party.duplicate(true),
+		"formation": form.duplicate(true),
+		"inventory": inv.duplicate(true),
+		"owned_equipment": equips.duplicate(true),
+		"crafting":
+		{
+			"arcanite_charges": 12,
+			"device_loadout": [{}, {}, {}, {}, {}],
+			"discovered_synergies": [],
+			"unlocked_recipes": [],
+		},
+		"ley_crystals": {"collected": []},
+		"world":
+		{
+			"event_flags": flags,
+			"act": "1",
+			"current_location": loc,
+			"current_position": {"x": 0, "y": 0},
+			"gold": g,
+		},
+		"quests": {"active": [], "completed": []},
+		"completion": {"bestiary": [], "treasures": [], "items_found": []},
+	}

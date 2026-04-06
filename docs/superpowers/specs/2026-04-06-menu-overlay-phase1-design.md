@@ -41,7 +41,7 @@ the player plays. Putting it in GameManager would violate single
 responsibility (GameManager is already 109 lines with clear scope).
 
 **Autoload registration:** `PartyState` in project.godot, loaded after
-DataManager and before SaveManager.
+DataManager and SaveManager.
 
 **State shape** (mirrors save schema exactly):
 
@@ -68,8 +68,9 @@ inventory: Dictionary
   - consumables: Dictionary # {item_id: quantity}
   - materials: Dictionary   # {item_id: quantity}
   - key_items: Array[String]
-  - equipment: Array[Dictionary]  # owned unequipped gear
-    - {id: String, equipment_id: String}  # unique instance id + type id
+
+owned_equipment: Array[Dictionary]  # owned unequipped gear (top-level)
+  - {id: String, equipment_id: String}  # unique instance id + type id
 
 gold: int
 

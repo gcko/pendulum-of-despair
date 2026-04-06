@@ -63,6 +63,8 @@ var _pre_reduce_shake: bool = true
 var _pre_reduce_mode7: int = 6
 var _pre_reduce_flash: String = "full"
 var _pre_reduce_transition: String = "classic"
+var _patience_was_on: bool = false
+var _reduce_was_on: bool = false
 
 @onready var _setting_labels: Array[Label] = []
 @onready var _value_labels: Array[Label] = []
@@ -82,6 +84,8 @@ func _ready() -> void:
 func open() -> void:
 	_config = PartyState.get_config().duplicate()
 	_cursor_index = 0
+	_patience_was_on = _config.get("patience_mode", false)
+	_reduce_was_on = _config.get("reduce_motion", false)
 	_update_display()
 
 
@@ -181,14 +185,30 @@ func _adjust_toggle(key: String) -> void:
 func _apply_cascades() -> void:
 	# Patience Mode cascade
 	var patience: bool = _config.get("patience_mode", false)
+	if patience and not _patience_was_on:
+		# Capture current values before forcing cascade
+		_pre_patience_atb = _config.get("atb_mode", "active")
+		_pre_patience_speed = _config.get("battle_speed", 3)
 	if patience:
 		_config["atb_mode"] = "wait"
 		_config["battle_speed"] = 6
 		PartyState.set_config("atb_mode", "wait")
 		PartyState.set_config("battle_speed", 6)
+	elif _patience_was_on:
+		# Restore previous values
+		_config["atb_mode"] = _pre_patience_atb
+		_config["battle_speed"] = _pre_patience_speed
+		PartyState.set_config("atb_mode", _pre_patience_atb)
+		PartyState.set_config("battle_speed", _pre_patience_speed)
+	_patience_was_on = patience
 
 	# Reduce Motion cascade
 	var reduce: bool = _config.get("reduce_motion", false)
+	if reduce and not _reduce_was_on:
+		_pre_reduce_shake = _config.get("screen_shake", true)
+		_pre_reduce_mode7 = _config.get("mode7_intensity", 6)
+		_pre_reduce_flash = _config.get("flash_intensity", "full")
+		_pre_reduce_transition = _config.get("transition_style", "classic")
 	if reduce:
 		_config["screen_shake"] = false
 		_config["mode7_intensity"] = 1
@@ -198,6 +218,16 @@ func _apply_cascades() -> void:
 		PartyState.set_config("mode7_intensity", 1)
 		PartyState.set_config("flash_intensity", "off")
 		PartyState.set_config("transition_style", "simple")
+	elif _reduce_was_on:
+		_config["screen_shake"] = _pre_reduce_shake
+		_config["mode7_intensity"] = _pre_reduce_mode7
+		_config["flash_intensity"] = _pre_reduce_flash
+		_config["transition_style"] = _pre_reduce_transition
+		PartyState.set_config("screen_shake", _pre_reduce_shake)
+		PartyState.set_config("mode7_intensity", _pre_reduce_mode7)
+		PartyState.set_config("flash_intensity", _pre_reduce_flash)
+		PartyState.set_config("transition_style", _pre_reduce_transition)
+	_reduce_was_on = reduce
 
 
 func _is_setting_disabled(key: String) -> bool:
@@ -233,9 +263,9 @@ func _update_display() -> void:
 	# Window color preview
 	if _preview_rect != null:
 		var wc: Dictionary = _config.get("window_color", {"r": 0, "g": 0, "b": 8})
-		var r: float = float(wc.get("r", 0)) * 8.0 / 255.0
-		var g: float = float(wc.get("g", 0)) * 8.0 / 255.0
-		var b: float = float(wc.get("b", 8)) * 8.0 / 255.0
+		var r: float = float(wc.get("r", 0)) / 31.0
+		var g: float = float(wc.get("g", 0)) / 31.0
+		var b: float = float(wc.get("b", 8)) / 31.0
 		_preview_rect.color = Color(r, g, b)
 
 
