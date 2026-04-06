@@ -55,7 +55,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Dictionary key access guarded before write (`data.get()` or `has()` before `data["key"] = value`)
 - [ ] `load()` / `preload()` results checked for null before calling `.instantiate()`
 - [ ] `ResourceLoader.exists(path)` checked before `change_scene_to_file(path)` or `load(path)`
-- [ ] Public API parameters validated for range (e.g., slot 0-3, not arbitrary int)
+- [ ] Public API parameters validated for range (e.g., slot 0-3, not arbitrary int). Verify range matches ALL callers including tests and internal cleanup — not just UI-facing use (PR #119 batch 3: delete_slot restricted to 1-3 but tests needed 0)
 - [ ] `assert(false)` NOT used as the sole error handler — asserts are disabled in release builds. Use `push_error()` + `get_tree().quit(1)` for truly fatal errors.
 - [ ] Stub/placeholder methods that return empty data (`{}`, `[]`, `0`) don't cause downstream failures (e.g., save_game writing empty dict that fails validation on load)
 - [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
