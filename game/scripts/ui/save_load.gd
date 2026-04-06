@@ -347,6 +347,9 @@ func _do_load(slot: int) -> void:
 	if data.is_empty() or data.has("error"):
 		push_warning("SaveLoad: Failed to load slot %d" % slot)
 		return
+	if not ResourceLoader.exists("res://scenes/core/exploration.tscn"):
+		push_warning("SaveLoad: Exploration scene not found, cannot load")
+		return
 	load_completed.emit(slot)
 	var transition: Dictionary = {"save_slot": slot, "save_data": data}
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
@@ -383,13 +386,13 @@ func _update_confirm_display() -> void:
 
 
 func _update_slot_selection() -> void:
+	var has_selectable: bool = _is_slot_selectable(_selected_slot)
 	var panels: Array = [_auto_slot] + _manual_slots
 	for i: int in range(4):
 		var panel: PanelContainer = panels[i]
-		if i == _selected_slot:
-			panel.modulate = Color("#ffcc44")
-		else:
-			panel.modulate = Color.WHITE
-	_cursor.visible = true
+		panel.modulate = Color("#ffcc44") if i == _selected_slot and has_selectable else Color.WHITE
+	_cursor.visible = has_selectable
+	if not has_selectable:
+		return
 	var target: PanelContainer = panels[_selected_slot]
 	_cursor.global_position = Vector2(4, target.global_position.y + target.size.y / 2.0)
