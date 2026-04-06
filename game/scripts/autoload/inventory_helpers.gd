@@ -199,6 +199,7 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 		var base: Dictionary = char_data.get("base_stats", {})
 		var growth: Dictionary = char_data.get("growth", {})
 		var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
+		member["base_stats"] = new_stats
 		member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
 		member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
 		for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
@@ -233,8 +234,10 @@ static func distribute_rewards(
 						}
 					)
 				)
-	# Reserve party: 50% XP
+	# Reserve party: 50% XP (KO'd get 0)
 	for member: Dictionary in reserve_party:
+		if member.get("current_hp", 0) <= 0:
+			continue
 		var result: Dictionary = add_xp_to_member(member, xp_amount / 2)
 		if result.get("leveled_up", false):
 			(
