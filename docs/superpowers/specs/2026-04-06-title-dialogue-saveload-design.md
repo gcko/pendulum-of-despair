@@ -395,14 +395,15 @@ Godot provides `ui_up`, `ui_down`, `ui_accept`, `ui_cancel` as built-in actions.
 
 ## Tests
 
-### test_title.gd (6 tests)
+### test_title.gd (7 tests)
 
 1. **test_title_scene_loads** — instantiate title.tscn, verify root node exists
 2. **test_menu_options_exist** — verify 3 menu option labels present
 3. **test_initial_selection** — verify cursor starts on New Game (index 0)
-4. **test_cursor_wraps** — move up from index 0 wraps to last option
-5. **test_continue_disabled_no_saves** — Continue option greyed out when no saves
-6. **test_config_disabled** — Config option greyed out (stubbed)
+4. **test_cursor_wraps_up** — move up from index 0 wraps to last option
+5. **test_cursor_wraps_down** — move down from last wraps to index 0
+6. **test_continue_disabled_no_saves** — Continue option greyed out when no saves
+7. **test_config_disabled** — Config option greyed out (stubbed)
 
 ### test_dialogue.gd (14 tests)
 

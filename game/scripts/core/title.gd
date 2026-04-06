@@ -62,6 +62,11 @@ func _confirm_selection() -> void:
 	match _selected:
 		MenuOption.NEW_GAME:
 			_input_active = false
+			var scene_path: String = "res://scenes/core/exploration.tscn"
+			if not ResourceLoader.exists(scene_path):
+				push_warning("Title: Exploration scene not found")
+				_input_active = true
+				return
 			GameManager.change_core_state(GameManager.CoreState.EXPLORATION, {"new_game": true})
 		MenuOption.CONTINUE:
 			if not _has_save:

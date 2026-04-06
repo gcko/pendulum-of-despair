@@ -141,7 +141,8 @@ func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool =
 		party.text = ""
 	else:
 		var world: Dictionary = data.get("world", {})
-		var loc: String = world.get("current_location", "Unknown")
+		var raw_loc: String = world.get("current_location", "")
+		var loc: String = raw_loc if raw_loc != "" else "Unknown"
 		var pt: int = data.get("meta", {}).get("playtime", 0)
 		header.text = (
 			"%s%s  %d:%02d  %dg" % [prefix, loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
