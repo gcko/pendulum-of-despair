@@ -364,18 +364,12 @@ func _do_load(slot: int) -> void:
 
 
 func _do_delete(slot: int) -> void:
-	var path: String = SaveManager._slot_path(slot)
-	if FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)
+	SaveManager.delete_slot(slot)
 	_refresh_slot_display()
 
 
 func _do_copy(source: int, dest: int) -> void:
-	var data: Dictionary = SaveManager.load_game(source)
-	if data.is_empty() or data.has("error"):
-		push_warning("SaveLoad: Cannot copy corrupted/empty slot %d" % source)
-		return
-	SaveManager._write_data_to_slot(dest, data)
+	SaveManager.copy_slot(source, dest)
 	_refresh_slot_display()
 
 

@@ -234,6 +234,33 @@ func _validate(data: Dictionary) -> bool:
 	return true
 
 
+## Delete a save slot file. Returns true if deleted or already absent.
+func delete_slot(slot: int) -> bool:
+	if slot < 1 or slot > 3:
+		push_error("SaveManager: Cannot delete slot %d (valid: 1-3)" % slot)
+		return false
+	var path: String = _slot_path(slot)
+	if not FileAccess.file_exists(path):
+		return true
+	var err: Error = DirAccess.remove_absolute(path)
+	if err != OK:
+		push_error("SaveManager: Failed to delete %s (error %d)" % [path, err])
+		return false
+	return true
+
+
+## Copy save data from one slot to another. Returns true on success.
+func copy_slot(source: int, dest: int) -> bool:
+	if source < 0 or source > 3 or dest < 1 or dest > 3:
+		push_error("SaveManager: Invalid copy slots %d -> %d" % [source, dest])
+		return false
+	var data: Dictionary = load_game(source)
+	if data.is_empty() or data.has("error"):
+		push_error("SaveManager: Cannot copy from empty/corrupted slot %d" % source)
+		return false
+	return _write_data_to_slot(dest, data)
+
+
 ## Map slot number to file path.
 func _slot_path(slot: int) -> String:
 	if slot == 0:

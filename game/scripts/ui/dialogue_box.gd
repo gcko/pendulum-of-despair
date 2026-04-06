@@ -10,8 +10,6 @@ signal dialogue_finished
 signal choice_made(choice_index: int)
 signal animation_requested(who: String, anim: String)
 signal sfx_requested(sfx_id: String)
-signal flag_set_requested(flag_name: String, value: Variant)
-
 ## Text speed in characters per second, indexed by config setting name.
 const TEXT_SPEEDS: Dictionary = {
 	"slow": 30,
@@ -200,10 +198,15 @@ func _advance() -> void:
 
 
 func _show_choice(choice_data: Dictionary) -> void:
-	_in_choice = true
-	_choice_index = 0
 	var options: Array = choice_data.get("options", [])
 	_choice_count = mini(options.size(), 4)
+	if _choice_count == 0:
+		# No valid options — skip choice and advance
+		_current_index += 1
+		_show_entry(_current_index)
+		return
+	_in_choice = true
+	_choice_index = 0
 
 	for i: int in range(4):
 		if i < _choice_count:
@@ -263,6 +266,9 @@ func _update_choice_display() -> void:
 		)
 
 
+## Fire animation signals for an entry. Timing filter is stubbed — all animations
+## fire at entry start regardless of "when" field. Filter by timing deferred to
+## gap 3.7 (Cutscene) when per-line animation scheduling is implemented.
 func _fire_animations(entry: Dictionary, _timing_filter: String) -> void:
 	var animations: Variant = entry.get("animations")
 	if animations == null or not animations is Array:

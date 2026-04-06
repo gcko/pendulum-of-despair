@@ -134,9 +134,9 @@ func test_delete_clears_slot() -> void:
 	SaveManager.save_game(3)
 	sl.open_save()
 	sl._do_delete(3)
-	# File should be removed
-	var path: String = SaveManager._slot_path(3)
-	assert_false(FileAccess.file_exists(path), "slot file should be deleted")
+	# Slot should now load as empty
+	var data: Dictionary = SaveManager.load_game(3)
+	assert_true(data.is_empty(), "deleted slot should load as empty")
 
 
 # --- Cancel ---
@@ -162,8 +162,8 @@ func test_copy_slot() -> void:
 	var data: Dictionary = SaveManager.load_game(2)
 	assert_false(data.is_empty(), "copied slot should have data")
 	# Clean up
-	sl._do_delete(1)
-	sl._do_delete(2)
+	SaveManager.delete_slot(1)
+	SaveManager.delete_slot(2)
 
 
 func test_load_initial_selection() -> void:

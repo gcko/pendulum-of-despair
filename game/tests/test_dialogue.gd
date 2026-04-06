@@ -212,9 +212,13 @@ func test_choice_cancel_selects_bottom() -> void:
 	dlg._complete_text()
 	dlg._advance()
 	assert_eq(dlg._choice_index, 0, "should start on first choice")
-	# Simulate cancel press — per ui-design.md 12.4, selects bottom option
-	dlg._choice_index = dlg._choice_count - 1
-	assert_eq(dlg._choice_index, 1, "cancel should select bottom option (No)")
+	# Simulate cancel input — _handle_choice_input sets index to bottom and selects
+	var cancel_event: InputEventAction = InputEventAction.new()
+	cancel_event.action = "ui_cancel"
+	cancel_event.pressed = true
+	dlg._handle_choice_input(cancel_event)
+	# After cancel, choice should have been made (bottom option selected)
+	assert_false(dlg._in_choice, "should exit choice mode after cancel")
 
 
 # --- Signals ---
