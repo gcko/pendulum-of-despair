@@ -187,7 +187,8 @@ static func build_save_dict(
 	equips: Array,
 	loc: String,
 	g: int,
-	flags: Dictionary
+	flags: Dictionary,
+	play_time: int = 0
 ) -> Dictionary:
 	return {
 		"party": party.duplicate(true),
@@ -205,8 +206,8 @@ static func build_save_dict(
 		"meta":
 		{
 			"version": 1,
-			"playtime": PartyState.playtime,
-			"saved_at": Time.get_date_string_from_system(),
+			"playtime": play_time,
+			"saved_at": Time.get_datetime_string_from_system(),
 			"slot_type": "manual",
 		},
 		"world":

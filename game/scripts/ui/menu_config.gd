@@ -281,7 +281,7 @@ func _format_value(setting: Dictionary, key: String) -> String:
 			return str(_config.get(key, 0))
 		"cycle":
 			var val: String = str(_config.get(key, ""))
-			return val.capitalize()
+			return val.replace("_", "-").capitalize()
 		"toggle":
 			var val: bool = _config.get(key, false)
 			return "On" if val else "Off"

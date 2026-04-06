@@ -48,6 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
+	PartyState.is_at_save_point = false
 	# Validate BEFORE freeing old map — don't leave exploration with no map
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):

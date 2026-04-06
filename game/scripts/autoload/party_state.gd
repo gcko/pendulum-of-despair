@@ -108,7 +108,8 @@ func build_save_data() -> Dictionary:
 		owned_equipment,
 		location_name,
 		gold,
-		EventFlags.to_save_data()
+		EventFlags.to_save_data(),
+		playtime
 	)
 
 

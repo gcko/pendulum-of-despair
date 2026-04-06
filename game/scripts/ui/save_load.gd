@@ -185,8 +185,8 @@ func _handle_save_point_input(event: InputEvent) -> void:
 		_confirm_save_point()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		GameManager.pop_overlay()
 		get_viewport().set_input_as_handled()
+		GameManager.pop_overlay()
 
 
 func _handle_rest_input(event: InputEvent) -> void:
@@ -227,11 +227,11 @@ func _handle_slot_input(event: InputEvent) -> void:
 		_move_slot_cursor(-1)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		_confirm_slot()
-		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		_cancel_from_slots()
 		get_viewport().set_input_as_handled()
+		_cancel_from_slots()
 
 
 func _handle_confirm_input(event: InputEvent) -> void:
@@ -240,8 +240,8 @@ func _handle_confirm_input(event: InputEvent) -> void:
 		_update_confirm_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		_execute_confirm()
 		get_viewport().set_input_as_handled()
+		_execute_confirm()
 	elif event.is_action_pressed("ui_cancel"):
 		_confirm_dialog.visible = false
 		_sub_state = SubState.SLOT_SELECT

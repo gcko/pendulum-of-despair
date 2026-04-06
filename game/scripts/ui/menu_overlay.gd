@@ -94,8 +94,8 @@ func _handle_command_input(event: InputEvent) -> void:
 		_update_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		_confirm_command()
 		get_viewport().set_input_as_handled()
+		_confirm_command()
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		GameManager.pop_overlay()
