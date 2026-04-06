@@ -35,14 +35,14 @@ var _copy_source_slot: int = -1
 var _rest_after_save: bool = false
 var _slot_previews: Array[Dictionary] = []
 
-@onready var _save_point_menu: NinePatchRect = $SavePointMenu
+@onready var _save_point_menu: PanelContainer = $SavePointMenu
 @onready var _save_point_options: Array[Label] = []
 @onready var _slot_container: VBoxContainer = $SlotContainer
 @onready var _auto_slot: PanelContainer = $SlotContainer/AutoSlot
 @onready var _manual_slots: Array[PanelContainer] = []
-@onready var _rest_menu: NinePatchRect = $RestMenu
+@onready var _rest_menu: PanelContainer = $RestMenu
 @onready var _rest_options: Array[Label] = []
-@onready var _confirm_dialog: NinePatchRect = $ConfirmDialog
+@onready var _confirm_dialog: PanelContainer = $ConfirmDialog
 @onready var _confirm_label: Label = $ConfirmDialog/ConfirmLabel
 @onready var _confirm_yes: Label = $ConfirmDialog/YesOption
 @onready var _confirm_no: Label = $ConfirmDialog/NoOption

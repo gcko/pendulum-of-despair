@@ -4,6 +4,12 @@ extends GutTest
 const SAVE_LOAD_SCENE: PackedScene = preload("res://scenes/overlay/save_load.tscn")
 
 
+func after_each() -> void:
+	# Clean up any save files created during tests
+	for slot: int in [0, 1, 2, 3]:
+		SaveManager.delete_slot(slot)
+
+
 func _create_save_load():
 	var sl = SAVE_LOAD_SCENE.instantiate()
 	add_child_autofree(sl)
@@ -87,7 +93,8 @@ func test_populated_slot_display() -> void:
 		{},  # slot 2: empty
 		{},  # slot 3: empty
 	]
-	sl._refresh_slot_display()
+	# Call _update_slot_panel directly to avoid _refresh overwriting with real data
+	sl._update_slot_panel(sl._manual_slots[0], sl._slot_previews[1])
 	var header = sl._manual_slots[0].get_node_or_null("HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_string_contains(header.text, "Valdris Crown", "should show location name")
@@ -130,13 +137,14 @@ func test_overwrite_shows_confirm() -> void:
 
 func test_delete_clears_slot() -> void:
 	var sl = _create_save_load()
-	# Create a temp save file to delete
-	SaveManager.save_game(3)
+	var saved: bool = SaveManager.save_game(3)
+	assert_true(saved, "save_game should succeed before deletion test")
+	var pre_data: Dictionary = SaveManager.load_game(3)
+	assert_false(pre_data.is_empty(), "slot should have data before deletion")
 	sl.open_save()
 	sl._do_delete(3)
-	# Slot should now load as empty
-	var data: Dictionary = SaveManager.load_game(3)
-	assert_true(data.is_empty(), "deleted slot should load as empty")
+	var post_data: Dictionary = SaveManager.load_game(3)
+	assert_true(post_data.is_empty(), "deleted slot should load as empty")
 
 
 # --- Cancel ---

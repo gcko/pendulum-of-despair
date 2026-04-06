@@ -61,11 +61,12 @@ var _choice_count: int = 0
 ## Current text speed (chars per second).
 var _text_speed: int = 60
 
-@onready var _dialogue_box: NinePatchRect = $DialogueBox
-@onready var _speaker_label: Label = $DialogueBox/SpeakerLabel
+@onready var _dialogue_box: PanelContainer = $DialogueBox
+@onready var _speaker_container: PanelContainer = $DialogueBox/SpeakerLabel
+@onready var _speaker_label: Label = $DialogueBox/SpeakerLabel/NameLabel
 @onready var _text_label: RichTextLabel = $DialogueBox/TextLabel
 @onready var _advance_arrow: Sprite2D = $DialogueBox/AdvanceArrow
-@onready var _choice_box: NinePatchRect = $ChoiceBox
+@onready var _choice_box: PanelContainer = $ChoiceBox
 @onready var _choice_labels: Array[Label] = []
 @onready var _choice_cursor: Sprite2D = $ChoiceCursor
 
@@ -144,9 +145,9 @@ func _show_entry(index: int) -> void:
 	var speaker: String = entry.get("speaker", "")
 	if speaker != "":
 		_speaker_label.text = speaker.to_upper()
-		_speaker_label.visible = true
+		_speaker_container.visible = true
 	else:
-		_speaker_label.visible = false
+		_speaker_container.visible = false
 
 	# Set lines
 	_current_lines = entry.get("lines", [])

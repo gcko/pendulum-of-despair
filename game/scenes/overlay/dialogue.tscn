@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/ui/cursor_hand.png" id="2_cursor"]
@@ -13,24 +13,53 @@ _data = {
 "arrow_bounce": SubResource("Anim_arrow_bounce")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBox_dialogue"]
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.333, 0.4, 0.667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_choice"]
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.333, 0.4, 0.667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_speaker"]
+bg_color = Color(0, 0, 0.188, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.333, 0.4, 0.667, 1)
+
 [node name="Dialogue" type="CanvasLayer"]
 layer = 10
 process_mode = 3
 script = ExtResource("1_script")
 
-[node name="DialogueBox" type="NinePatchRect" parent="."]
+[node name="DialogueBox" type="PanelContainer" parent="."]
 offset_left = 0.0
 offset_top = 140.0
 offset_right = 320.0
 offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBox_dialogue")
 
-[node name="SpeakerLabel" type="Label" parent="DialogueBox"]
+[node name="SpeakerLabel" type="PanelContainer" parent="DialogueBox"]
 offset_left = 4.0
 offset_top = -10.0
 offset_right = 100.0
 offset_bottom = 0.0
-text = "SPEAKER"
+theme_override_styles/panel = SubResource("StyleBox_speaker")
 visible = false
+
+[node name="NameLabel" type="Label" parent="DialogueBox/SpeakerLabel"]
+layout_mode = 2
+text = "SPEAKER"
 
 [node name="TextLabel" type="RichTextLabel" parent="DialogueBox"]
 offset_left = 4.0
@@ -43,13 +72,15 @@ visible_characters = 0
 
 [node name="AdvanceArrow" type="Sprite2D" parent="DialogueBox"]
 position = Vector2(308, 34)
+texture = ExtResource("2_cursor")
 visible = false
 
-[node name="ChoiceBox" type="NinePatchRect" parent="."]
+[node name="ChoiceBox" type="PanelContainer" parent="."]
 offset_left = 200.0
 offset_top = 90.0
 offset_right = 316.0
 offset_bottom = 138.0
+theme_override_styles/panel = SubResource("StyleBox_choice")
 visible = false
 
 [node name="ChoiceContainer" type="VBoxContainer" parent="ChoiceBox"]

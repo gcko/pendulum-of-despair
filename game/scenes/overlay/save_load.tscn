@@ -1,7 +1,31 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/save_load.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/ui/cursor_hand.png" id="2_cursor"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_menu"]
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.333, 0.4, 0.667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_slot"]
+bg_color = Color(0, 0, 0.188, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.333, 0.4, 0.667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_auto"]
+bg_color = Color(0, 0, 0.188, 1)
+border_width_left = 3
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.533, 0.667, 1.0, 1)
 
 [node name="SaveLoad" type="CanvasLayer"]
 layer = 10
@@ -15,11 +39,12 @@ offset_right = 320.0
 offset_bottom = 180.0
 color = Color(0, 0, 0, 0.5)
 
-[node name="SavePointMenu" type="NinePatchRect" parent="."]
+[node name="SavePointMenu" type="PanelContainer" parent="."]
 offset_left = 100.0
 offset_top = 50.0
 offset_right = 220.0
 offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBox_menu")
 visible = false
 
 [node name="RestOption" type="Label" parent="SavePointMenu"]
@@ -52,6 +77,7 @@ visible = false
 
 [node name="AutoSlot" type="PanelContainer" parent="SlotContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_auto")
 visible = false
 
 [node name="HeaderLabel" type="Label" parent="SlotContainer/AutoSlot"]
@@ -64,6 +90,7 @@ text = ""
 
 [node name="Slot1" type="PanelContainer" parent="SlotContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_slot")
 
 [node name="HeaderLabel" type="Label" parent="SlotContainer/Slot1"]
 layout_mode = 2
@@ -75,6 +102,7 @@ text = ""
 
 [node name="Slot2" type="PanelContainer" parent="SlotContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_slot")
 
 [node name="HeaderLabel" type="Label" parent="SlotContainer/Slot2"]
 layout_mode = 2
@@ -86,6 +114,7 @@ text = ""
 
 [node name="Slot3" type="PanelContainer" parent="SlotContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_slot")
 
 [node name="HeaderLabel" type="Label" parent="SlotContainer/Slot3"]
 layout_mode = 2
@@ -95,11 +124,12 @@ text = "Empty"
 layout_mode = 2
 text = ""
 
-[node name="RestMenu" type="NinePatchRect" parent="."]
+[node name="RestMenu" type="PanelContainer" parent="."]
 offset_left = 80.0
 offset_top = 40.0
 offset_right = 240.0
 offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBox_menu")
 visible = false
 
 [node name="SleepingBagOption" type="Label" parent="RestMenu"]
@@ -123,11 +153,12 @@ offset_right = 152.0
 offset_bottom = 54.0
 text = "Pavilion (100%)"
 
-[node name="ConfirmDialog" type="NinePatchRect" parent="."]
+[node name="ConfirmDialog" type="PanelContainer" parent="."]
 offset_left = 100.0
 offset_top = 70.0
 offset_right = 220.0
 offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBox_menu")
 visible = false
 
 [node name="ConfirmLabel" type="Label" parent="ConfirmDialog"]
