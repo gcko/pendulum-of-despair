@@ -47,12 +47,6 @@ func _physics_process(_delta: float) -> void:
 	position = position.round()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and _current_interactable != null:
-		interaction_requested.emit(_current_interactable)
-		get_viewport().set_input_as_handled()
-
-
 ## Initialize the character with data from DataManager.
 ## Call after adding to the scene tree.
 func initialize(p_character_id: String) -> void:

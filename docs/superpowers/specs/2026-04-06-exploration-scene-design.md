@@ -50,16 +50,17 @@ Exploration (Node2D)
 The loaded map scene is instanced as a child of `CurrentMap`. Map scenes contain:
 ```
 MapScene (Node2D)
-├── TileMapLayer(s)               — terrain layers (up to 4)
+├── Background (ColorRect)        — placeholder colored background (real TileMapLayers in gap 4.1)
 ├── Entities (Node2D)             — container for placed entities
-│   ├── NPC instances
-│   ├── TreasureChest instances
-│   ├── TriggerZone instances
-│   └── SavePoint instances
-├── Transitions (Node2D)          — door/exit trigger zones
-│   └── TriggerZone instances (with map_target metadata)
+│   ├── NPC instances             — metadata: npc_id
+│   ├── TreasureChest instances   — metadata: chest_id, item_id
+│   └── SavePoint instances       — metadata: save_point_id
+├── Transitions (Node2D)          — door/exit Area2D zones (repeatable, NOT one-shot TriggerZone)
+│   └── Area2D instances (with target_map, target_spawn metadata)
 └── PlayerSpawn (Marker2D)        — where player appears on entry
 ```
+
+**Note:** Map transitions use plain Area2D with `body_entered`, NOT TriggerZone. TriggerZone is one-shot (persists fired state in EventFlags) and unsuitable for doors that must be re-entered.
 
 ---
 

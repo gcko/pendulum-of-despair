@@ -5,8 +5,8 @@ const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.ts
 
 
 func before_each() -> void:
-	# Ensure clean state
 	GameManager.transition_data = {}
+	EventFlags.clear_all()
 
 
 func _create_exploration():

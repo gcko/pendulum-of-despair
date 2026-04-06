@@ -1,22 +1,29 @@
 [gd_scene load_steps=1 format=3]
 
-[ext_resource type="PackedScene" path="res://scenes/entities/trigger_zone.tscn" id="1_trigger"]
+[sub_resource type="RectangleShape2D" id="Shape_exit"]
+size = Vector2(16, 32)
 
 [node name="TestRoom2" type="Node2D"]
 metadata/location_name = "Test Room 2"
 
 [node name="Background" type="ColorRect" parent="."]
 offset_right = 320.0
-offset_bottom = 176.0
+offset_bottom = 180.0
 color = Color(0.549, 0.706, 0.824, 1)
 
 [node name="Transitions" type="Node2D" parent="."]
 
-[node name="ReturnWest" parent="Transitions" instance=ExtResource("1_trigger")]
+[node name="ReturnWest" type="Area2D" parent="Transitions"]
 position = Vector2(16, 90)
-metadata/trigger_id = "exit_west"
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
 metadata/target_map = "test_room"
 metadata/target_spawn = "PlayerSpawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ReturnWest"]
+shape = SubResource("Shape_exit")
 
 [node name="EntryWest" type="Marker2D" parent="."]
 position = Vector2(32, 90)

@@ -145,15 +145,6 @@ func _initialize_entities(map_node: Node2D) -> void:
 			else:
 				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
 
-	var transitions: Node = map_node.get_node_or_null("Transitions")
-	if transitions == null:
-		return
-	for child: Node in transitions.get_children():
-		if child.has_method("initialize") and child.has_signal("triggered"):
-			var trigger_id: String = child.get_meta("trigger_id", "")
-			if trigger_id != "":
-				child.initialize(trigger_id)
-
 
 func _connect_entity_signals(map_node: Node2D) -> void:
 	var entities: Node = map_node.get_node_or_null("Entities")
@@ -166,11 +157,12 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 			if child.has_signal("save_point_activated"):
 				child.save_point_activated.connect(_on_save_point_activated)
 
+	# Transitions use plain Area2D with body_entered (repeatable, not one-shot TriggerZone)
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
-			if child.has_signal("triggered"):
-				child.triggered.connect(_on_trigger_zone_triggered)
+			if child is Area2D and child.has_meta("target_map"):
+				child.body_entered.connect(_on_transition_body_entered.bind(child))
 
 
 func _disconnect_entity_signals(map_node: Node2D) -> void:
@@ -186,9 +178,10 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
-			if child.has_signal("triggered"):
-				if child.is_connected("triggered", _on_trigger_zone_triggered):
-					child.disconnect("triggered", _on_trigger_zone_triggered)
+			if child is Area2D:
+				for conn: Dictionary in child.body_entered.get_connections():
+					if conn["callable"].get_object() == self:
+						child.body_entered.disconnect(conn["callable"])
 
 
 func _get_handler_for_signal(sig_name: String) -> Callable:
@@ -243,19 +236,13 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 			overlay.open_save_point()
 
 
-func _on_trigger_zone_triggered(trigger_id: String) -> void:
-	if _transitioning or _current_map == null:
+func _on_transition_body_entered(_body: Node2D, area: Area2D) -> void:
+	if _transitioning:
 		return
-	var transitions: Node = _current_map.get_node_or_null("Transitions")
-	if transitions == null:
-		return
-	for child: Node in transitions.get_children():
-		if child.get_meta("trigger_id", "") == trigger_id:
-			var target_map: String = child.get_meta("target_map", "")
-			var target_spawn: String = child.get_meta("target_spawn", "")
-			if target_map != "":
-				_transition_to_map(target_map, target_spawn)
-			return
+	var target_map: String = area.get_meta("target_map", "")
+	var target_spawn: String = area.get_meta("target_spawn", "")
+	if target_map != "":
+		_transition_to_map(target_map, target_spawn)
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
