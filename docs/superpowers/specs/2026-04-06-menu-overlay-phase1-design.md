@@ -280,10 +280,10 @@ var _target_index: int = 0
 - Cancel returns to menu COMMAND state.
 
 **Item use effects** (from items.md consumable data):
-- Potion: restore 250 HP to one target
-- Hi-Potion: restore 1000 HP to one target
-- Mega-Potion: restore full HP to one target
-- Ether: restore 50 MP to one target
+- Potion: restore 100 HP to one target
+- Hi-Potion: restore 500 HP to one target
+- X-Potion: restore full HP to one target
+- Ether: restore 30 MP to one target
 - Elixir: restore full HP + MP to one target
 - Phoenix Feather: revive from Faint with 25% HP
 - Antidote: cure Poison
@@ -476,24 +476,30 @@ if event.is_action_pressed("ui_menu"):
         get_viewport().set_input_as_handled()
 ```
 
+**Title screen Config integration:** The title screen opens the menu
+overlay in "config direct" mode via `open_config_direct()`. This skips
+the COMMAND state and goes straight to the Config sub-screen. When the
+user presses cancel, the overlay closes back to the title screen
+(instead of dropping into the full menu command list). The
+`_config_direct` flag controls this behavior.
+
 ---
 
 ## 6. File Manifest
 
-### New Files (10)
+### New Files (9)
 
 | File | Purpose | Lines (est.) |
 |------|---------|-------------|
-| `game/scripts/autoload/party_state.gd` | Runtime party/inventory state | ~300 |
+| `game/scripts/autoload/party_state.gd` | Runtime party/inventory state | ~395 |
+| `game/scripts/autoload/inventory_helpers.gd` | Static inventory/equipment helpers | ~195 |
 | `game/scenes/overlay/menu.tscn` | Menu overlay scene | — |
-| `game/scripts/ui/menu_overlay.gd` | Menu frame + command navigation | ~200 |
-| `game/scripts/ui/menu_items.gd` | Items sub-screen | ~200 |
-| `game/scripts/ui/menu_equip.gd` | Equipment sub-screen | ~250 |
-| `game/scripts/ui/menu_status.gd` | Status sub-screen | ~150 |
-| `game/scripts/ui/menu_config.gd` | Config sub-screen | ~250 |
-| `game/tests/test_party_state.gd` | PartyState unit tests | ~200 |
-| `game/tests/test_menu_overlay.gd` | Menu navigation tests | ~100 |
-| `game/assets/sprites/ui/cursor.png` | 2-frame hand cursor placeholder | — |
+| `game/scripts/ui/menu_overlay.gd` | Menu frame + command navigation | ~330 |
+| `game/scripts/ui/menu_items.gd` | Items sub-screen | ~265 |
+| `game/scripts/ui/menu_equip.gd` | Equipment sub-screen | ~325 |
+| `game/scripts/ui/menu_status.gd` | Status sub-screen | ~170 |
+| `game/scripts/ui/menu_config.gd` | Config sub-screen | ~290 |
+| `game/tests/test_party_state.gd` | PartyState unit tests | ~225 |
 
 ### Modified Files (4)
 

@@ -1,6 +1,7 @@
 extends Control
 ## Equipment sub-screen: EQUIP / OPTIMUM / REMOVE / EMPTY modes.
 
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -318,9 +319,4 @@ func _get_equipped_by(equip_id: String) -> String:
 
 
 func _lookup_equipment(equipment_id: String) -> Dictionary:
-	for equip_type: String in ["weapons", "armor", "accessories"]:
-		var items: Array = DataManager.load_equipment(equip_type)
-		for item: Variant in items:
-			if item is Dictionary and (item as Dictionary).get("id", "") == equipment_id:
-				return item as Dictionary
-	return {}
+	return Helpers.lookup_equipment(equipment_id)

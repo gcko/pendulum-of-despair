@@ -124,6 +124,19 @@ static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
 	}
 
 
+## Scan owned equipment entries for the highest _inst_ suffix number.
+static func find_max_inst_id(owned_equipment: Array) -> int:
+	var max_id: int = 0
+	for e: Variant in owned_equipment:
+		if not e is Dictionary:
+			continue
+		var inst: String = (e as Dictionary).get("id", "")
+		var idx: int = inst.rfind("_inst_")
+		if idx >= 0:
+			max_id = maxi(max_id, inst.substr(idx + 6).to_int())
+	return max_id
+
+
 static func xp_to_next_level(level: int) -> int:
 	if level >= 150:
 		return 0

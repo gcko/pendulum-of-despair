@@ -76,7 +76,6 @@ func initialize_new_game() -> void:
 func load_from_save(data: Dictionary) -> void:
 	members.clear()
 	owned_equipment.clear()
-	_next_inst_id = 0
 
 	var party_data: Array = data.get("party", [])
 	for m: Variant in party_data:
@@ -90,6 +89,7 @@ func load_from_save(data: Dictionary) -> void:
 	for e: Variant in equip_data:
 		if e is Dictionary:
 			owned_equipment.append(e as Dictionary)
+	_next_inst_id = Helpers.find_max_inst_id(owned_equipment)
 
 	var world: Dictionary = data.get("world", {})
 	gold = world.get("gold", 0)
