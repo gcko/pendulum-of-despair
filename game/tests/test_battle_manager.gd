@@ -125,7 +125,7 @@ func test_status_with_zero_mag_and_mdef() -> void:
 
 
 func test_status_high_mag_vs_low_mdef() -> void:
-	# High MAG overwhelms low MDEF — should land frequently
+	seed(500)
 	var successes: int = 0
 	for i: int in range(100):
 		if DamageCalc.roll_status(90, 200, 10, 10):

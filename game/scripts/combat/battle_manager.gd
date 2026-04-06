@@ -95,7 +95,11 @@ func _process(delta: float) -> void:
 			_clear_defend(slot)
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
-			turn_ready.emit(id, true, slot, _enemies.size(), _is_boss, char_data)
+			var living: int = 0
+			for e: Node in _enemies:
+				if e.is_alive:
+					living += 1
+			turn_ready.emit(id, true, slot, living, _is_boss, char_data)
 			return
 		if id.begins_with("enemy_"):
 			_execute_enemy_turn(id)
@@ -110,14 +114,14 @@ func _on_ui_command(command: Dictionary) -> void:
 	if not _battle_active or _awaiting_input_for == "":
 		return
 	var actor_id: String = _awaiting_input_for
-	_awaiting_input_for = ""
 	_atb.set_command_menu_open(false)
 	_atb.set_submenu_open(false)
+	var ok: bool = true
 	match command.get("type", ""):
 		"attack":
 			_do_attack(actor_id, command)
 		"magic":
-			_do_magic(actor_id, command)
+			ok = _do_magic(actor_id, command)
 		"item":
 			_do_item(command)
 		"defend":
@@ -126,6 +130,9 @@ func _on_ui_command(command: Dictionary) -> void:
 			_do_flee()
 		"ability":
 			_do_attack(actor_id, command)
+	if not ok:
+		return  # Command failed — keep turn, re-prompt
+	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
 	_state.tick_statuses(actor_id.replace("party_", "").to_int())
 	_check_end_conditions()
@@ -164,15 +171,15 @@ func _do_attack(actor_id: String, command: Dictionary) -> void:
 		_atb.remove_combatant("enemy_%d" % target_idx)
 
 
-func _do_magic(actor_id: String, command: Dictionary) -> void:
+func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	var slot: int = actor_id.replace("party_", "").to_int()
 	var member: Dictionary = _state.get_member(slot)
 	if member.is_empty():
-		return
+		return false
 	var spell: Dictionary = command.get("spell", {})
 	if not _state.spend_mp(slot, spell.get("mp_cost", 0)):
 		message.emit("Not enough MP!")
-		return
+		return false
 	var mag: int = _state.get_effective_stat(slot, "mag")
 	var power: int = spell.get("power", 10)
 	var element: String = spell.get("element", "non_elemental")
@@ -200,6 +207,7 @@ func _do_magic(actor_id: String, command: Dictionary) -> void:
 			if not m.is_empty() and m.get("is_alive", false):
 				_state.heal(i, heal_amt)
 				damage_dealt.emit("party_%d" % i, heal_amt, "heal")
+	return true
 
 
 func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, idx: int) -> void:
@@ -379,7 +387,7 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 		var enemy_node: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(enemy_node)
 		enemy_node.initialize(encounter_group[i], enemy_act)
-		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + (i / 3) * 48.0)
+		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
 		_enemies.append(enemy_node)
 		_atb.add_combatant("enemy_%d" % i, enemy_node.get_stats().get("spd", 10), true)
 

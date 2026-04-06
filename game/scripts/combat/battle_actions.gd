@@ -106,18 +106,25 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = randi() % 100 < 5  # Enemy fixed 5% crit
-	var dmg: int = DamageCalc.calculate_physical(
-		atk,
-		1.0,
-		target_def,
-		is_crit,
-		1.0,
-		"front",
-		member.get("row", "front"),
-		false,
-		[],
-		false,
-		1.0
+	var reduction: Array = []
+	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
+	if dmg_mult < 1.0:
+		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
+	var dmg: int = (
+		DamageCalc
+		. calculate_physical(
+			atk,
+			1.0,
+			target_def,
+			is_crit,
+			1.0,
+			"front",
+			member.get("row", "front"),
+			false,
+			reduction,
+			false,
+			1.0,
+		)
 	)
 	state.take_damage(target_slot, dmg)
 	return {"hit": true, "damage": dmg, "type": "physical"}

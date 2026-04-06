@@ -94,6 +94,7 @@ func _handle_submenu_input(event: InputEvent) -> void:
 			_state = MenuState.COMMAND
 			if _submenu != null:
 				_submenu.visible = false
+			submenu_closed.emit()
 		return
 	if event.is_action_pressed("ui_up"):
 		_submenu_cursor = (_submenu_cursor - 1 + _submenu_items.size()) % _submenu_items.size()

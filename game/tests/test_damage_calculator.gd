@@ -176,6 +176,7 @@ func test_healing_cap() -> void:
 
 
 func test_hit_rate_base_90() -> void:
+	seed(100)
 	var hits: int = 0
 	for i: int in range(1000):
 		if DamageCalc.roll_hit(10, 10):
@@ -184,6 +185,7 @@ func test_hit_rate_base_90() -> void:
 
 
 func test_hit_rate_minimum_20() -> void:
+	seed(200)
 	var hits: int = 0
 	for i: int in range(1000):
 		if DamageCalc.roll_hit(1, 255):
@@ -192,6 +194,7 @@ func test_hit_rate_minimum_20() -> void:
 
 
 func test_evasion_rate_cap_50() -> void:
+	seed(300)
 	var evades: int = 0
 	for i: int in range(1000):
 		if DamageCalc.roll_evasion(255):
@@ -203,6 +206,7 @@ func test_evasion_rate_cap_50() -> void:
 
 
 func test_crit_rate_scales_with_lck() -> void:
+	seed(400)
 	var crits: int = 0
 	for i: int in range(1000):
 		if DamageCalc.roll_crit(100):
