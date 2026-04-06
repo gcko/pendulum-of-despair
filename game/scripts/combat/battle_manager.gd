@@ -84,24 +84,17 @@ func _process(delta: float) -> void:
 	_check_end_conditions()
 	if not _battle_active:
 		return
-	if _awaiting_input_for != "":
-		return
 	var queue: Array[String] = _atb.get_ready_queue()
 	for id: String in queue:
-		if id.begins_with("party_"):
+		if id.begins_with("party_") and _awaiting_input_for == "":
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
 			var slot: int = id.replace("party_", "").to_int()
 			_clear_defend(slot)
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
-			var living: int = 0
-			for e: Node in _enemies:
-				if e.is_alive:
-					living += 1
-			turn_ready.emit(id, true, slot, living, _is_boss, char_data)
-			return
-		if id.begins_with("enemy_"):
+			turn_ready.emit(id, true, slot, _count_living_enemies(), _is_boss, char_data)
+		elif id.begins_with("enemy_"):
 			_execute_enemy_turn(id)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
@@ -390,6 +383,14 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
 		_enemies.append(enemy_node)
 		_atb.add_combatant("enemy_%d" % i, enemy_node.get_stats().get("spd", 10), true)
+
+
+func _count_living_enemies() -> int:
+	var c: int = 0
+	for e: Node in _enemies:
+		if e.is_alive:
+			c += 1
+	return c
 
 
 func _tick_realtime_statuses(delta: float) -> void:

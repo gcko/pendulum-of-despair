@@ -15,6 +15,7 @@ const COLOR_HEAL: Color = Color("#44ff44")
 const COLOR_MISS: Color = Color("#888888")
 const COLOR_CRIT: Color = Color("#ffff44")
 
+var _manager: Node = null
 var _message_timer: float = 0.0
 var _enemy_positions: Array[Vector2] = []
 var _results_showing: bool = false
@@ -28,6 +29,7 @@ var _results_showing: bool = false
 
 ## Called by battle_manager to inject itself — "call down" pattern.
 func initialize(manager: Node) -> void:
+	_manager = manager
 	manager.battle_started.connect(_on_battle_started)
 	manager.turn_ready.connect(_on_turn_ready)
 	manager.damage_dealt.connect(_on_damage_dealt)
@@ -57,6 +59,7 @@ func _process(delta: float) -> void:
 		_message_timer -= delta
 		if _message_timer <= 0.0 and _message_area != null:
 			_message_area.visible = false
+	_update_party_panel()
 
 
 func _on_battle_started(_party: Array, _enemies: Array, enemy_positions: Array) -> void:
@@ -144,6 +147,21 @@ func _on_defeat() -> void:
 
 func _on_combatant_died(_combatant_id: String) -> void:
 	pass
+
+
+func _update_party_panel() -> void:
+	if _party_panel == null or _manager == null:
+		return
+	var state: Node = _manager.get_node_or_null("BattleState")
+	var atb: Node = _manager.get_node_or_null("ATBSystem")
+	if state == null or atb == null:
+		return
+	var m: Array = []
+	var g: Dictionary = {}
+	for i: int in range(4):
+		m.append(state.get_member(i))
+		g["party_%d" % i] = atb.get_gauge("party_%d" % i)
+	_party_panel.update_party(m, g)
 
 
 func _spawn_damage_number(target_id: String, text: String, color: Color) -> void:
