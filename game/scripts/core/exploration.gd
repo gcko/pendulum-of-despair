@@ -14,6 +14,7 @@ var _player: Node2D = null
 var _transitioning: bool = false
 var _last_flash_id: String = ""
 var _flash_tween: Tween = null
+var _transition_tween: Tween = null
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -43,20 +44,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
-	if _current_map != null:
-		_disconnect_entity_signals(_current_map)
-		_current_map.queue_free()
-		_current_map = null
-
+	# Validate BEFORE freeing old map — don't leave exploration with no map
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Map not found: %s" % map_path)
 		return
-
 	var map_resource: Resource = load(map_path)
 	if not map_resource is PackedScene:
 		push_error("Exploration: Invalid map resource: %s" % map_path)
 		return
+
+	# Safe to free old map now that new one is validated
+	if _current_map != null:
+		_disconnect_entity_signals(_current_map)
+		_current_map.queue_free()
+		_current_map = null
 
 	_current_map = (map_resource as PackedScene).instantiate()
 	_map_container.add_child(_current_map)
@@ -236,8 +238,10 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 			overlay.open_save_point()
 
 
-func _on_transition_body_entered(_body: Node2D, area: Area2D) -> void:
+func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning:
+		return
+	if body != _player:
 		return
 	var target_map: String = area.get_meta("target_map", "")
 	var target_spawn: String = area.get_meta("target_spawn", "")
@@ -249,17 +253,19 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	_transitioning = true
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
-	var tween: Tween = create_tween()
-	tween.tween_property(_fade_rect, "color:a", 1.0, FADE_DURATION)
-	tween.tween_callback(_do_map_swap.bind(target_map, target_spawn))
-	tween.tween_property(_fade_rect, "color:a", 0.0, FADE_DURATION)
-	tween.tween_callback(_end_transition)
+	_transition_tween = create_tween()
+	_transition_tween.tween_property(_fade_rect, "color:a", 1.0, FADE_DURATION)
+	_transition_tween.tween_callback(_do_map_swap.bind(target_map, target_spawn))
+	_transition_tween.tween_property(_fade_rect, "color:a", 0.0, FADE_DURATION)
+	_transition_tween.tween_callback(_end_transition)
 
 
 func _do_map_swap(target_map: String, target_spawn: String) -> void:
 	var map_path: String = MAP_BASE_PATH + target_map + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Transition target not found: %s" % map_path)
+		if _transition_tween != null and _transition_tween.is_valid():
+			_transition_tween.kill()
 		_end_transition()
 		return
 	load_map(target_map, target_spawn)
