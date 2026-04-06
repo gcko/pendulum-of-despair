@@ -40,7 +40,7 @@ static func select_encounter_group(groups: Array) -> Dictionary:
 	for g: Variant in groups:
 		if g is Dictionary:
 			cumulative += float((g as Dictionary).get("weight", 0.0))
-			if roll <= cumulative:
+			if roll < cumulative:
 				return g as Dictionary
 	# Fallback (float rounding)
 	return groups[groups.size() - 1] if groups[groups.size() - 1] is Dictionary else {}

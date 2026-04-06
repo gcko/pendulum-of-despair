@@ -354,8 +354,6 @@ func _handle_victory() -> void:
 
 
 func _handle_defeat() -> void:
-	_battle_active = false
-	_awaiting_input_for = ""
 	defeat.emit()
 	_exit_battle("faint")
 
@@ -372,6 +370,8 @@ func _exit_battle(result: String) -> void:
 		"earned_drops": _earned_drops,
 	}
 	_earned_drops = []
+	_earned_xp = 0
+	_earned_gold = 0
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
 
 
