@@ -57,11 +57,21 @@ func test_add_xp_at_cap() -> void:
 	assert_eq(member.get("current_xp", -1), 0, "XP should clamp to 0 at cap")
 
 
-func test_add_xp_recalculates_stats() -> void:
-	var member: Dictionary = _make_member("edren", 1, 0, 95)
-	var old_max_hp: int = member.get("max_hp", 0)
+func test_add_xp_level_up_restores_hp_mp() -> void:
+	var member: Dictionary = _make_member("edren", 1, 0, 50)
+	member["current_hp"] = 10
+	member["current_mp"] = 3
 	Helpers.add_xp_to_member(member, 30)  # Level 1->2
-	assert_gt(member.get("max_hp", 0), old_max_hp, "max_hp should increase on level up")
+	assert_eq(
+		member.get("current_hp", 0),
+		member.get("max_hp", 0),
+		"HP should be fully restored on level up",
+	)
+	assert_eq(
+		member.get("current_mp", 0),
+		member.get("max_mp", 0),
+		"MP should be fully restored on level up",
+	)
 
 
 func test_distribute_rewards_alive_get_full_xp() -> void:

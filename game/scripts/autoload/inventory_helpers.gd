@@ -204,6 +204,8 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 		member["base_stats"] = new_stats
 		member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
 		member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
+		member["current_hp"] = member["max_hp"]
+		member["current_mp"] = member["max_mp"]
 		for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
 			member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
 	return {"leveled_up": level > old_level, "old_level": old_level, "new_level": level}

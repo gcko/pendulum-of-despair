@@ -96,7 +96,7 @@ roll = randf() * total_weight
 cumulative = 0
 for group in groups:
     cumulative += group.weight
-    if roll <= cumulative: return group
+    if roll < cumulative: return group  # Strict < avoids bias at weight boundaries
 ```
 
 **Formation roll:**
