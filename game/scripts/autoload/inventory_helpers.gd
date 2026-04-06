@@ -189,6 +189,8 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 			break
 		xp -= needed
 		level += 1
+	if level >= 150:
+		xp = 0
 	member["current_xp"] = xp
 	member["level"] = level
 	member["xp_to_next"] = xp_to_next_level(level)
@@ -311,6 +313,36 @@ static func build_save_dict(
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}
+
+
+## Get reserve (non-active) members from a members array and formation dict.
+static func get_reserve_members(
+	members: Array[Dictionary],
+	formation: Dictionary,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var active_indices: Array = formation.get("active", [])
+	for i: int in range(members.size()):
+		if i not in active_indices:
+			result.append(members[i])
+	return result
+
+
+## Apply gold and item drops from rewards dict to party state via callbacks.
+## Calls add_gold_fn and add_item_fn closures, returns distribute_rewards summary.
+static func apply_battle_rewards(
+	rewards: Dictionary,
+	active: Array[Dictionary],
+	reserve: Array[Dictionary],
+	add_gold_fn: Callable,
+	add_item_fn: Callable,
+) -> Dictionary:
+	var result: Dictionary = distribute_rewards(rewards, active, reserve)
+	add_gold_fn.call(rewards.get("gold", 0))
+	for drop: Variant in rewards.get("drops", []):
+		if drop is Dictionary:
+			add_item_fn.call((drop as Dictionary).get("item_id", ""), 1)
+	return result
 
 
 ## Resolve formation active indices to uppercase character names for display.

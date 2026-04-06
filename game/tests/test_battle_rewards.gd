@@ -54,6 +54,7 @@ func test_add_xp_at_cap() -> void:
 	var result: Dictionary = Helpers.add_xp_to_member(member, 9999)
 	assert_false(result.get("leveled_up", true), "should not level past 150")
 	assert_eq(member.get("level", 0), 150, "level should stay 150")
+	assert_eq(member.get("current_xp", -1), 0, "XP should clamp to 0 at cap")
 
 
 func test_add_xp_recalculates_stats() -> void:
