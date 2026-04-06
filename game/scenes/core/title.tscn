@@ -64,7 +64,7 @@ horizontal_alignment = 1
 
 [node name="ConfigOption" type="Label" parent="MenuContainer"]
 layout_mode = 2
-text = "Config"
+text = "Config (Coming Soon)"
 horizontal_alignment = 1
 
 [node name="Cursor" type="Sprite2D" parent="."]

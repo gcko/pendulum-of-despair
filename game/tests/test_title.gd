@@ -39,6 +39,14 @@ func test_cursor_wraps_down() -> void:
 	assert_eq(title._selected, 0, "should wrap to first option")
 
 
+func test_continue_disabled_no_saves() -> void:
+	var title = _create_title()
+	assert_true(
+		title._is_option_disabled(title.MenuOption.CONTINUE),
+		"continue should be disabled when no saves exist",
+	)
+
+
 func test_config_disabled() -> void:
 	var title = _create_title()
 	assert_true(title._is_option_disabled(title.MenuOption.CONFIG), "config should be disabled")

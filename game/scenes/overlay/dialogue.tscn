@@ -26,7 +26,7 @@ offset_bottom = 180.0
 
 [node name="SpeakerLabel" type="Label" parent="DialogueBox"]
 offset_left = 4.0
-offset_top = -12.0
+offset_top = -10.0
 offset_right = 100.0
 offset_bottom = 0.0
 text = "SPEAKER"

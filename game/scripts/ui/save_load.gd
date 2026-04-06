@@ -1,9 +1,6 @@
 extends CanvasLayer
-## Save/Load overlay with save point 3-option menu, slot display, and rest stubs.
-##
-## Three operating modes: SAVE_POINT (from save point interaction),
-## SAVE (from menu), LOAD (from title screen or menu).
-## Sub-state machine handles navigation through menus and confirmations.
+## Save/Load overlay: save point menu, slot display, rest stubs.
+## Modes: SAVE_POINT, SAVE, LOAD. Sub-state machine for navigation.
 
 signal save_completed(slot: int)
 signal load_completed(slot: int)
@@ -35,6 +32,7 @@ var _confirm_selection: int = 1  # Default to "No"
 var _pending_operation: String = ""
 var _pending_slot: int = -1
 var _copy_source_slot: int = -1
+var _rest_after_save: bool = false
 var _slot_previews: Array[Dictionary] = []
 
 @onready var _save_point_menu: NinePatchRect = $SavePointMenu
@@ -218,10 +216,18 @@ func _handle_rest_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept"):
 		push_warning("SaveLoad: Rest item consumption not yet implemented")
 		_rest_menu.visible = false
-		_sub_state = SubState.SAVE_POINT_MENU
+		if _rest_after_save:
+			_rest_after_save = false
+			_save_point_menu.visible = false
+			_sub_state = SubState.SLOT_SELECT
+			_selected_slot = 1
+			_show_slots(false)
+		else:
+			_sub_state = SubState.SAVE_POINT_MENU
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		_rest_menu.visible = false
+		_rest_after_save = false
 		_sub_state = SubState.SAVE_POINT_MENU
 		get_viewport().set_input_as_handled()
 
@@ -266,11 +272,11 @@ func _confirm_save_point() -> void:
 			_rest_menu.visible = true
 			_update_rest_display()
 		SavePointOption.REST_SAVE:
-			push_warning("SaveLoad: Rest item consumption not yet implemented")
-			_save_point_menu.visible = false
-			_sub_state = SubState.SLOT_SELECT
-			_selected_slot = 1
-			_show_slots(false)
+			_rest_after_save = true
+			_sub_state = SubState.REST_MENU
+			_rest_selection = 0
+			_rest_menu.visible = true
+			_update_rest_display()
 		SavePointOption.SAVE:
 			_save_point_menu.visible = false
 			_sub_state = SubState.SLOT_SELECT

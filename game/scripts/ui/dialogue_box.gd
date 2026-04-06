@@ -10,6 +10,9 @@ signal dialogue_finished
 signal choice_made(choice_index: int)
 signal animation_requested(who: String, anim: String)
 signal sfx_requested(sfx_id: String)
+## Emitted when a choice option has flag_set data. Exploration scene handles.
+signal flag_set_requested(flag_name: String, value: Variant)
+
 ## Text speed in characters per second, indexed by config setting name.
 const TEXT_SPEEDS: Dictionary = {
 	"slow": 30,
@@ -185,10 +188,10 @@ func _advance() -> void:
 		_show_page()
 		return
 
-	# Check if entry has a choice prompt
+	# Check if entry has a choice prompt (array of options per dialogue data format)
 	var entry: Dictionary = _entries[_current_index]
 	var choice_data: Variant = entry.get("choice")
-	if choice_data != null and choice_data is Dictionary:
+	if choice_data != null and choice_data is Array:
 		_show_choice(choice_data)
 		return
 
@@ -197,11 +200,9 @@ func _advance() -> void:
 	_show_entry(_current_index)
 
 
-func _show_choice(choice_data: Dictionary) -> void:
-	var options: Array = choice_data.get("options", [])
+func _show_choice(options: Array) -> void:
 	_choice_count = mini(options.size(), 4)
 	if _choice_count == 0:
-		# No valid options — skip choice and advance
 		_current_index += 1
 		_show_entry(_current_index)
 		return
@@ -210,7 +211,9 @@ func _show_choice(choice_data: Dictionary) -> void:
 
 	for i: int in range(4):
 		if i < _choice_count:
-			_choice_labels[i].text = options[i].get("text", "")
+			var opt: Variant = options[i]
+			var label_text: String = opt.get("label", "") if opt is Dictionary else ""
+			_choice_labels[i].text = label_text
 			_choice_labels[i].visible = true
 		else:
 			_choice_labels[i].visible = false
@@ -244,6 +247,20 @@ func _select_choice() -> void:
 	_choice_box.visible = false
 	_choice_cursor.visible = false
 	choice_made.emit(_choice_index)
+
+	# Emit flag_set if the selected option has flag/score data
+	var entry: Dictionary = _entries[_current_index]
+	var choices: Variant = entry.get("choice")
+	if choices is Array and _choice_index < choices.size():
+		var opt: Variant = choices[_choice_index]
+		if opt is Dictionary:
+			var flag: String = opt.get("flag_set", "")
+			if flag != "":
+				flag_set_requested.emit(flag, true)
+			var score_name: String = opt.get("score_name", "")
+			var score_delta: int = opt.get("score_delta", 0)
+			if score_name != "" and score_delta != 0:
+				flag_set_requested.emit(score_name, score_delta)
 
 	# Advance to next entry
 	_current_index += 1

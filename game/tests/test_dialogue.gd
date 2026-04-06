@@ -152,7 +152,7 @@ func test_choice_display() -> void:
 					"lines": ["Pick one."],
 					"condition": null,
 					"animations": null,
-					"choice": {"options": [{"text": "Yes"}, {"text": "No"}]},
+					"choice": [{"label": "Yes"}, {"label": "No"}],
 					"sfx": null,
 				},
 			]
@@ -178,7 +178,7 @@ func test_choice_selection() -> void:
 					"lines": ["Pick one."],
 					"condition": null,
 					"animations": null,
-					"choice": {"options": [{"text": "Yes"}, {"text": "No"}]},
+					"choice": [{"label": "Yes"}, {"label": "No"}],
 					"sfx": null,
 				},
 			]
@@ -203,7 +203,7 @@ func test_choice_cancel_selects_bottom() -> void:
 					"lines": ["Pick one."],
 					"condition": null,
 					"animations": null,
-					"choice": {"options": [{"text": "Yes"}, {"text": "No"}]},
+					"choice": [{"label": "Yes"}, {"label": "No"}],
 					"sfx": null,
 				},
 			]
