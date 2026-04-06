@@ -4,6 +4,7 @@ node_modules/
 # Godot
 .godot/
 *.import
+*.uid
 export_presets.cfg
 *.translation
 game/export/
