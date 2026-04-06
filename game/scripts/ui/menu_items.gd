@@ -1,5 +1,5 @@
 extends Control
-## Items sub-screen: USE / ARRANGE / KEY tabs with two-column item list.
+## Items sub-screen: USE / ARRANGE / KEY tabs with single-column item list.
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
