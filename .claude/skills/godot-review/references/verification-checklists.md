@@ -83,6 +83,18 @@ Reference for all review agents. Check every applicable item.
 - [ ] Spec setting descriptions match actual project.godot values and format
 - [ ] Review reference doc headings/counts match actual content (e.g., "10 categories" vs actual 12)
 - [ ] Code comments in migration/versioning logic match actual constants and scheme
+- [ ] Gap tracker "Notes" section claims only match actual implementation (no claiming gold border if using modulate, no claiming copy-from if no UI path)
+
+### Scene Rendering (from Copilot PR #119 gap analysis)
+- [ ] NinePatchRect nodes MUST have a texture assigned — otherwise invisible. Prefer PanelContainer + StyleBoxFlat for UI windows without art assets.
+- [ ] Sprite2D nodes MUST have a texture assigned — otherwise invisible even when set to visible. Assign a placeholder if no art exists.
+- [ ] UI panel colors (bg_color, border_color) must match ui-design.md Section 1.4 palette hex values
+
+### Test Hygiene (from Copilot PR #119 gap analysis)
+- [ ] Tests that create persistent state (save files, config files) must have `after_each()` cleanup
+- [ ] Tests that inject fake data must not call methods that overwrite it (e.g., `_refresh` calling `SaveManager.get_slot_previews()`)
+- [ ] Tests that depend on state absence (no saves) must ensure cleanup runs even across test files
+- [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
 
 ---
 

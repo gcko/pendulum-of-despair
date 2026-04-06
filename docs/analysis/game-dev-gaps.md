@@ -684,8 +684,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Save/Load slot display: 3 manual + 1 auto, party member display, playtime, location, level per ui-design.md
 - [x] Save: write via SaveManager.save_game(slot)
 - [x] Load: read via SaveManager.load_game(slot), apply state, transition
-- [x] Copy/delete save slot functionality
-- [x] Confirmation dialogs for overwrite/delete
+- [x] Copy/delete save slot functionality (methods exist; UI flow for Copy/Delete deferred to gap 3.4 operations menu)
+- [x] Confirmation dialogs for overwrite/delete (overwrite works; delete UI path deferred to gap 3.4)
 - [x] Process mode: PROCESS_MODE_ALWAYS
 
 **Notes:**
@@ -694,8 +694,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - Rest item consumption stubbed with push_warning — full implementation needs inventory system (gap 3.4)
 - Inn rest variant (paid rest) deferred to gap 3.2 (Exploration Scene)
 - Load screen: auto slot (blue accent) + divider + 3 manual slots, corrupted slots shown in red
-- Auto-save slot can be loaded or copied-from (promotion per save-system.md Section 5)
-- Selected slot highlighted with gold border per ui-design.md Section 13.3
+- Auto-save slot can be loaded; copy-from promotion deferred to gap 3.4 operations menu
+- Selected slot highlighted with gold modulate; cursor repositions on navigation
 - GUT tests in test_save_load.gd (12 tests), all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`
 

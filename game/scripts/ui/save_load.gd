@@ -118,6 +118,7 @@ func _show_slots(show_auto: bool) -> void:
 	_slot_container.visible = true
 	_auto_slot.visible = show_auto
 	_refresh_slot_display()
+	_update_slot_selection()
 
 
 func _refresh_slot_display() -> void:
@@ -129,42 +130,27 @@ func _refresh_slot_display() -> void:
 
 
 func _update_slot_panel(panel: PanelContainer, data: Dictionary) -> void:
-	var header_label: Label = panel.get_node_or_null("HeaderLabel")
-	var party_label: Label = panel.get_node_or_null("PartyLabel")
-
+	var header: Label = panel.get_node("HeaderLabel")
+	var party: Label = panel.get_node("PartyLabel")
 	if data.is_empty():
-		if header_label != null:
-			header_label.text = "Empty"
-			header_label.modulate = COLOR_DISABLED
-		if party_label != null:
-			party_label.text = ""
+		header.text = "Empty"
+		header.modulate = COLOR_DISABLED
+		party.text = ""
 	elif data.has("error"):
-		if header_label != null:
-			header_label.text = "Corrupted"
-			header_label.modulate = Color("#ff4444")
-		if party_label != null:
-			party_label.text = ""
+		header.text = "Corrupted"
+		header.modulate = Color("#ff4444")
+		party.text = ""
 	else:
 		var meta: Dictionary = data.get("meta", {})
 		var world: Dictionary = data.get("world", {})
-		var formation: Dictionary = data.get("formation", {})
-		var location: String = world.get("current_location", "Unknown")
-		var playtime: int = meta.get("playtime", 0)
-		var gold: int = world.get("gold", 0)
-		var time_str: String = "%d:%02d" % [playtime / 3600, (playtime % 3600) / 60]
-
-		if header_label != null:
-			header_label.text = "%s  Time %s  Gold %d" % [location, time_str, gold]
-			header_label.modulate = COLOR_NORMAL
-
-		if party_label != null:
-			var active: Array = formation.get("active", [])
-			var party_text: String = ""
-			for char_id: Variant in active:
-				if party_text != "":
-					party_text += "  "
-				party_text += str(char_id)
-			party_label.text = party_text
+		var loc: String = world.get("current_location", "Unknown")
+		var pt: int = meta.get("playtime", 0)
+		header.text = (
+			"%s  Time %d:%02d  Gold %d" % [loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
+		)
+		header.modulate = COLOR_NORMAL
+		var active: Array = data.get("formation", {}).get("active", [])
+		party.text = "  ".join(active.map(func(c: Variant) -> String: return str(c)))
 
 
 func _select_first_populated_slot() -> void:
@@ -298,6 +284,7 @@ func _move_slot_cursor(direction: int) -> void:
 		attempts += 1
 		if _mode != Mode.LOAD or _is_slot_selectable(new_slot):
 			_selected_slot = new_slot
+			_update_slot_selection()
 			return
 
 
@@ -397,3 +384,16 @@ func _update_rest_display() -> void:
 func _update_confirm_display() -> void:
 	_confirm_yes.modulate = COLOR_SELECTED if _confirm_selection == 0 else COLOR_NORMAL
 	_confirm_no.modulate = COLOR_SELECTED if _confirm_selection == 1 else COLOR_NORMAL
+
+
+func _update_slot_selection() -> void:
+	var panels: Array = [_auto_slot] + _manual_slots
+	for i: int in range(4):
+		var panel: PanelContainer = panels[i]
+		if i == _selected_slot:
+			panel.modulate = Color("#ffcc44")
+		else:
+			panel.modulate = Color.WHITE
+	_cursor.visible = true
+	var target: PanelContainer = panels[_selected_slot]
+	_cursor.global_position = Vector2(4, target.global_position.y + target.size.y / 2.0)

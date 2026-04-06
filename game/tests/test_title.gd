@@ -4,6 +4,12 @@ extends GutTest
 const TITLE_SCENE: PackedScene = preload("res://scenes/core/title.tscn")
 
 
+func after_each() -> void:
+	# Clean up any save files that other tests may have created
+	for slot: int in [0, 1, 2, 3]:
+		SaveManager.delete_slot(slot)
+
+
 func _create_title():
 	var title = TITLE_SCENE.instantiate()
 	add_child_autofree(title)
