@@ -41,7 +41,7 @@ the player plays. Putting it in GameManager would violate single
 responsibility (GameManager is already 109 lines with clear scope).
 
 **Autoload registration:** `PartyState` in project.godot, loaded after
-DataManager and SaveManager.
+DataManager and SaveManager (depends on both for data lookup and config path).
 
 **State shape** (mirrors save schema exactly):
 
