@@ -576,15 +576,17 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player or _transitioning:
 		return
 	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.is_set(flag):
+	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
-	if dialogue is Array and not (dialogue as Array).is_empty():
-		if not flag.is_empty():
-			EventFlags.set_flag(flag)
-		GameManager.push_overlay(GameManager.OverlayState.DIALOGUE, {
-			"dialogue": dialogue,
-		})
+	if not (dialogue is Array) or (dialogue as Array).is_empty():
+		return
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		var overlay: Node = GameManager.overlay_node
+		if overlay != null and overlay.has_method("show_dialogue"):
+			overlay.show_dialogue(dialogue as Array)
+			if not flag.is_empty():
+				EventFlags.set_flag(flag, true)
 ```
 
 - [ ] **Step 2: Add disconnect for dialogue triggers**
@@ -618,10 +620,10 @@ overlay contract:
 
 ```
 [
-  {"speaker": "Edren", "text": "Hold."},
-  {"speaker": "Edren", "text": "No marks. No signs of a fight. They just... stopped."},
-  {"speaker": "Cael", "text": "They didn't die fighting. They died feeling something."},
-  {"speaker": "Edren", "text": "There'll be more."}
+  {"speaker": "Edren", "lines": ["Hold."]},
+  {"speaker": "Edren", "lines": ["No marks. No signs of a fight. They just... stopped."]},
+  {"speaker": "Cael", "lines": ["They didn't die fighting. They died feeling something."]},
+  {"speaker": "Edren", "lines": ["There'll be more."]}
 ]
 ```
 
