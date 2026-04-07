@@ -822,6 +822,18 @@
 			"crafting_use": "Ley-element weapon components"
 		},
 		{
+			"id": "vein_guardians_core",
+			"name": "Vein Guardian's Core",
+			"category": "material",
+			"tier": 3,
+			"source_category": "boss_specific",
+			"sell_price": 300,
+			"sellable": true,
+			"stack_limit": 99,
+			"description": "A crystalline core still warm with ember heat, taken from the Vein Guardian.",
+			"crafting_use": "Ley-element crafting; sell for gold"
+		},
+		{
 			"id": "ley_crystal_fragment",
 			"name": "Ley Crystal Fragment",
 			"category": "material",

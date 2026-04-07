@@ -206,6 +206,22 @@
 			"availability": "Act III shops (limited)"
 		},
 		{
+			"id": "ember_tonic",
+			"name": "Ember Tonic",
+			"category": "consumable",
+			"subcategory": "mp_restoration",
+			"effect": "restore_mp",
+			"value": 50,
+			"buy_price": 300,
+			"sell_price": 150,
+			"stack_limit": 199,
+			"description": "Restores 50 MP to one ally.",
+			"target": "single_ally",
+			"usable_in_battle": true,
+			"usable_in_field": true,
+			"availability": "Ember Vein chest (Floor 4)"
+		},
+		{
 			"id": "phoenix_feather",
 			"name": "Phoenix Feather",
 			"category": "consumable",
@@ -220,6 +236,22 @@
 			"usable_in_battle": true,
 			"usable_in_field": true,
 			"availability": "Act I shops"
+		},
+		{
+			"id": "phoenix_down",
+			"name": "Phoenix Down",
+			"category": "consumable",
+			"subcategory": "revival",
+			"effect": "revive",
+			"value": 25,
+			"buy_price": null,
+			"sell_price": 250,
+			"stack_limit": 99,
+			"description": "Revives one ally at 25% HP.",
+			"target": "single_ally",
+			"usable_in_battle": true,
+			"usable_in_field": true,
+			"availability": "Ember Vein chest (Floor 3)"
 		},
 		{
 			"id": "phoenix_pinion",
