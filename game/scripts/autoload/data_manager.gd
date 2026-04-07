@@ -67,9 +67,13 @@ func _fatal(msg: String) -> void:
 	get_tree().quit(1)
 
 
-## Load enemy data for an act. Returns the "enemies" array.
+## Load enemy data for an act. Returns the "enemies" array, or empty if missing.
 func load_enemies(act: String) -> Array:
-	var data: Variant = load_json("res://data/enemies/%s.json" % act)
+	var path: String = "res://data/enemies/%s.json" % act
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Enemy file not found: %s" % path)
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("enemies"):
 		return data["enemies"]
 	return []
@@ -97,9 +101,13 @@ func load_equipment(equipment_type: String) -> Array:
 	return []
 
 
-## Load character data by ID.
+## Load character data by ID. Returns empty dict if file missing.
 func load_character(character_id: String) -> Dictionary:
-	var data: Variant = load_json("res://data/characters/%s.json" % character_id)
+	var path: String = "res://data/characters/%s.json" % character_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Character file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
@@ -128,26 +136,35 @@ func load_encounters(dungeon: String) -> Dictionary:
 	return {}
 
 
-## Load spell data for a tradition.
+## Load spell data for a tradition. Returns empty array if file missing.
 func load_spells(tradition: String) -> Array:
-	var data: Variant = load_json("res://data/spells/%s.json" % tradition)
+	var path: String = "res://data/spells/%s.json" % tradition
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("spells"):
 		return data["spells"]
 	return []
 
 
-## Load dialogue data for a scene.
+## Load dialogue data for a scene. Returns empty dict if file missing.
 func load_dialogue(scene_id: String) -> Dictionary:
-	var data: Variant = load_json("res://data/dialogue/%s.json" % scene_id)
+	var path: String = "res://data/dialogue/%s.json" % scene_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Dialogue file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
 
 
-## Load crafting data (devices or recipes).
+## Load crafting data (devices or recipes). Returns empty dict if missing.
 func load_crafting(crafting_type: String) -> Variant:
-	var data: Variant = load_json("res://data/crafting/%s.json" % crafting_type)
-	return data if data != null else {}
+	var path: String = "res://data/crafting/%s.json" % crafting_type
+	if not FileAccess.file_exists(path):
+		return {}
+	return load_json(path)
 
 
 ## Clear the cache (useful for testing or hot-reload).

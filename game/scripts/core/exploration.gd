@@ -93,8 +93,8 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
-	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
-	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
+	var eids: Variant = area.get_meta("enemy_ids", [])
+	var enemy_ids: Array = eids if eids is Array else []
 	if enemy_ids.is_empty():
 		return
 	_danger_counter = 0
@@ -306,9 +306,8 @@ func _find_entity_npc(npc_id: String) -> Node:
 	return null
 
 
-func _handle_inn(npc_node: Node) -> void:
-	var cost: int = npc_node.get_meta("inn_cost", 150)
-	if not PartyState.spend_gold(cost):
+func _handle_inn(node: Node) -> void:
+	if not PartyState.spend_gold(node.get_meta("inn_cost", 150)):
 		flash_location_name("Not enough gold.")
 		return
 	PartyState.rest_at_inn()
@@ -330,6 +329,7 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 
 
 func _on_chest_opened(_chest_id: String, item_id: String) -> void:
+	PartyState.add_item(item_id, 1)
 	flash_location_name("Found %s!" % item_id)
 
 
