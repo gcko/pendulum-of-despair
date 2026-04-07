@@ -291,11 +291,17 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	var action: Dictionary
 	if _is_boss and enemy.enemy_data.get("id", "") == "vein_guardian":
 		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		action = _get_vein_guardian_action(_turn_counter, hp_ratio)
-	elif _is_boss:
-		action = BattleAI.select_boss_action(enemy.enemy_data, enemy.current_hp, pm, pr)
-	else:
+		action = BattleAI.get_vein_guardian_action(
+			_state, _turn_counter, hp_ratio, _vg_last_action, _vg_reconstructed
+		)
+	elif enemy.enemy_data.get("is_mini_boss", false) or not _is_boss:
 		action = BattleAI.select_action(enemy.enemy_data, pm, pr)
+	else:
+		action = BattleAI.select_boss_action(enemy.enemy_data, enemy.current_hp, pm, pr)
+	if enemy.enemy_data.get("id", "") == "vein_guardian":
+		_vg_last_action = action.get("id", "")
+		if action.get("id", "") == "reconstruct":
+			_vg_reconstructed = true
 	_turn_counter += 1
 	var atype: String = action.get("type", "")
 	if atype == "heal" and action.get("target", "") == "self":
@@ -305,12 +311,17 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	elif atype in ["attack", "ability"]:
 		if atype == "ability":
 			_state.gain_weave_gauge_for_maren(15)
+		var elem: String = action.get("element", "")
 		if action.get("target", "") == "all":
 			message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "ability")])
 			for i: int in range(4):
 				var m: Dictionary = _state.get_member(i)
 				if not m.is_empty() and m.get("is_alive", false):
-					var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, i)
+					var result: Dictionary
+					if not elem.is_empty():
+						result = BattleActions.execute_enemy_magic(_state, enemy, i, elem)
+					else:
+						result = BattleActions.execute_enemy_attack(_state, enemy, i)
 					damage_dealt.emit(
 						"party_%d" % i, result.get("damage", 0), result.get("type", "miss")
 					)
@@ -336,7 +347,8 @@ func _check_end_conditions() -> void:
 			var d: Dictionary = e.roll_drop()
 			if d.get("success", false):
 				_earned_drops.append({"item_id": d.get("item_id", "")})
-		victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops})
+		var r: Dictionary = {"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops}
+		victory.emit(r)
 	elif _state.is_party_wiped():
 		defeat.emit()
 		_exit_battle("faint")
@@ -345,34 +357,19 @@ func _check_end_conditions() -> void:
 func _exit_battle(result: String) -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
-	var t: Dictionary = {"result": result, "map_id": _return_map_id, "position": _return_position}
-	t.merge({"earned_xp": _earned_xp, "earned_gold": _earned_gold, "earned_drops": _earned_drops})
-	t["boss_flag"] = _boss_flag
+	var t: Dictionary = {
+		"result": result,
+		"map_id": _return_map_id,
+		"position": _return_position,
+		"earned_xp": _earned_xp,
+		"earned_gold": _earned_gold,
+		"earned_drops": _earned_drops,
+		"boss_flag": _boss_flag
+	}
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, t)
-
-
-func _pick_alive_target() -> int:
-	var alive: Array[int] = []
-	for i: int in range(4):
-		if _state.get_member(i).get("current_hp", 0) > 0:
-			alive.append(i)
-	return alive[randi() % alive.size()] if not alive.is_empty() else 0
-
-
-func _get_vein_guardian_action(turn: int, hp_ratio: float) -> Dictionary:
-	if hp_ratio <= 0.5 and not _vg_reconstructed:
-		_vg_reconstructed = true
-		_vg_last_action = "reconstruct"
-		return {"type": "heal", "id": "reconstruct", "target": "self", "value": 300}
-	var use_ember: bool = (turn % 3 == 0 and turn % 4 != 0) or _vg_last_action == "crystal_slam"
-	var action: String = "ember_pulse" if use_ember else "crystal_slam"
-	_vg_last_action = action
-	if action == "crystal_slam":
-		return {"type": "attack", "id": "crystal_slam", "target_slot": _pick_alive_target()}
-	return {"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame"}
 
 
 func _setup_party() -> void:
@@ -390,9 +387,9 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 	_vg_reconstructed = false
 	_turn_counter = 0
 	for i: int in range(mini(6, encounter_group.size())):
-		var enemy_node: Node = ENEMY_SCENE.instantiate()
-		_enemy_area.add_child(enemy_node)
-		enemy_node.initialize(encounter_group[i], enemy_act)
-		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
-		_enemies.append(enemy_node)
-		_atb.add_combatant("enemy_%d" % i, enemy_node.get_stats().get("spd", 10), true)
+		var e: Node = ENEMY_SCENE.instantiate()
+		_enemy_area.add_child(e)
+		e.initialize(encounter_group[i], enemy_act)
+		e.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
+		_enemies.append(e)
+		_atb.add_combatant("enemy_%d" % i, e.get_stats().get("spd", 10), true)
