@@ -26,6 +26,7 @@ var _battle_active: bool = false
 var _awaiting_input_for: String = ""
 var _earned_xp: int = 0
 var _earned_gold: int = 0
+var _earned_drops: Array[Dictionary] = []
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -104,7 +105,6 @@ func _process(delta: float) -> void:
 				return
 
 
-## Called by UI signal — player selected a command.
 func _on_ui_command(command: Dictionary) -> void:
 	if not _battle_active or _awaiting_input_for == "":
 		return
@@ -349,12 +349,11 @@ func _handle_victory() -> void:
 		var drop: Dictionary = enemy.roll_drop()
 		if drop.get("success", false):
 			drops.append({"item_id": drop.get("item_id", "")})
+	_earned_drops = drops
 	victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": drops})
 
 
 func _handle_defeat() -> void:
-	_battle_active = false
-	_awaiting_input_for = ""
 	defeat.emit()
 	_exit_battle("faint")
 
@@ -368,7 +367,11 @@ func _exit_battle(result: String) -> void:
 		"position": _return_position,
 		"earned_xp": _earned_xp,
 		"earned_gold": _earned_gold,
+		"earned_drops": _earned_drops,
 	}
+	_earned_drops = []
+	_earned_xp = 0
+	_earned_gold = 0
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
 
 

@@ -175,6 +175,85 @@ static func xp_to_next_level(level: int) -> int:
 	return int(10.0 * pow(float(level), 1.8))
 
 
+## Add XP to a party member, processing any level-ups.
+## Recalculates stats on level-up using character JSON data.
+## Returns {leveled_up: bool, old_level: int, new_level: int}.
+## Source: progression.md § XP Distribution, § Two-Phase XP Curve.
+static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
+	var level: int = member.get("level", 1)
+	if amount <= 0:
+		return {"leveled_up": false, "old_level": level, "new_level": level}
+	var xp: int = member.get("current_xp", 0) + amount
+	var old_level: int = level
+	while level < 150:
+		var needed: int = xp_to_next_level(level)
+		if needed <= 0 or xp < needed:
+			break
+		xp -= needed
+		level += 1
+	if level >= 150:
+		xp = 0
+	member["current_xp"] = xp
+	member["level"] = level
+	member["xp_to_next"] = xp_to_next_level(level)
+	if level > old_level:
+		var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
+		if not char_data.is_empty():
+			var base: Dictionary = char_data.get("base_stats", {})
+			var growth: Dictionary = char_data.get("growth", {})
+			var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
+			member["base_stats"] = new_stats
+			member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
+			member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
+			for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
+				member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
+		member["current_hp"] = member["max_hp"]
+		member["current_mp"] = member["max_mp"]
+	return {"leveled_up": level > old_level, "old_level": old_level, "new_level": level}
+
+
+## Distribute battle rewards across active and reserve party.
+## Active alive: full XP. KO'd: 0 XP. Reserve: 50% XP.
+## Returns {level_ups: Array, gold_gained: int, items_gained: Array}.
+## Source: progression.md § XP Distribution Rules.
+static func distribute_rewards(
+	rewards: Dictionary,
+	active_party: Array[Dictionary],
+	reserve_party: Array[Dictionary],
+) -> Dictionary:
+	var level_ups: Array[Dictionary] = []
+	var xp_amount: int = rewards.get("xp", 0)
+	var drops: Array = rewards.get("drops", [])
+	# Active party: full XP if alive, 0 if KO'd
+	for member: Dictionary in active_party:
+		if member.get("current_hp", 0) > 0:
+			var result: Dictionary = add_xp_to_member(member, xp_amount)
+			if result.get("leveled_up", false):
+				var lu: Dictionary = {
+					"character_id": member.get("character_id", ""),
+					"old_level": result.get("old_level", 0),
+					"new_level": result.get("new_level", 0),
+				}
+				level_ups.append(lu)
+	# Reserve party: 50% XP (KO'd get 0)
+	for member: Dictionary in reserve_party:
+		if member.get("current_hp", 0) <= 0:
+			continue
+		var result: Dictionary = add_xp_to_member(member, xp_amount / 2)
+		if result.get("leveled_up", false):
+			var lu: Dictionary = {
+				"character_id": member.get("character_id", ""),
+				"old_level": result.get("old_level", 0),
+				"new_level": result.get("new_level", 0),
+			}
+			level_ups.append(lu)
+	return {
+		"level_ups": level_ups,
+		"gold_gained": rewards.get("gold", 0),
+		"items_gained": drops,
+	}
+
+
 ## Load config from disk, merging user overrides onto defaults.
 static func load_config_from_disk() -> Dictionary:
 	var user_config: Dictionary = {}
@@ -234,6 +313,68 @@ static func build_save_dict(
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}
+
+
+## Filter owned equipment entries by slot and character equip rules.
+static func filter_equippable_for_slot(
+	owned_equipment: Array[Dictionary],
+	character_id: String,
+	slot: String,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for entry: Dictionary in owned_equipment:
+		var equip_id: String = entry.get("equipment_id", "")
+		var item_data: Dictionary = lookup_equipment(equip_id)
+		if item_data.is_empty() or not can_equip(character_id, slot, item_data):
+			continue
+		result.append(item_data)
+	return result
+
+
+## Get active party members by resolving formation indices into the members array.
+static func get_active_members(
+	members: Array[Dictionary],
+	formation: Dictionary,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var active: Array = formation.get("active", [])
+	for idx: Variant in active:
+		var i: int = int(idx) if idx is int or idx is float else -1
+		if i >= 0 and i < members.size():
+			result.append(members[i])
+	return result
+
+
+## Get reserve (non-active) members from a members array and formation dict.
+static func get_reserve_members(
+	members: Array[Dictionary],
+	formation: Dictionary,
+) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var active_indices: Array = formation.get("active", [])
+	for i: int in range(members.size()):
+		if i not in active_indices:
+			result.append(members[i])
+	return result
+
+
+## Apply gold and item drops from rewards dict to party state via callbacks.
+## Calls add_gold_fn and add_item_fn closures, returns distribute_rewards summary.
+static func apply_battle_rewards(
+	rewards: Dictionary,
+	active: Array[Dictionary],
+	reserve: Array[Dictionary],
+	add_gold_fn: Callable,
+	add_item_fn: Callable,
+) -> Dictionary:
+	var result: Dictionary = distribute_rewards(rewards, active, reserve)
+	add_gold_fn.call(rewards.get("gold", 0))
+	for drop: Variant in rewards.get("drops", []):
+		if drop is Dictionary:
+			var item_id: String = (drop as Dictionary).get("item_id", "")
+			if not item_id.is_empty():
+				add_item_fn.call(item_id, 1)
+	return result
 
 
 ## Resolve formation active indices to uppercase character names for display.

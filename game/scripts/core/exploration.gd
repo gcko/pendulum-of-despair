@@ -7,6 +7,7 @@ signal map_changed(map_id: String)
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
+const EncounterSystem = preload("res://scripts/combat/encounter_system.gd")
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
@@ -15,6 +16,9 @@ var _transitioning: bool = false
 var _last_flash_id: String = ""
 var _flash_tween: Tween = null
 var _transition_tween: Tween = null
+var _danger_counter: int = 0
+var _last_player_tile: Vector2i = Vector2i(-999, -999)
+var _encounter_config: Dictionary = {}
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -35,6 +39,16 @@ func _process(_delta: float) -> void:
 		_camera.position = _player.position.round()
 
 
+func _physics_process(_delta: float) -> void:
+	if _player == null or _transitioning:
+		return
+	var current_tile: Vector2i = Vector2i(_player.position) / 16
+	if current_tile == _last_player_tile:
+		return
+	_last_player_tile = current_tile
+	_process_encounter_step()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
@@ -46,6 +60,41 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _player.has_method("try_interact"):
 			get_viewport().set_input_as_handled()
 			_player.try_interact()
+
+
+func _process_encounter_step() -> void:
+	if _encounter_config.is_empty():
+		return
+	var base: int = _encounter_config.get("danger_increment", 0)
+	if base <= 0:
+		return
+	var act_scale: float = 1.0
+	var acc_mod: float = EncounterSystem.get_accessory_modifier(PartyState.get_active_party())
+	_danger_counter += EncounterSystem.roll_increment(base, act_scale, acc_mod)
+	if EncounterSystem.check_encounter(_danger_counter):
+		_trigger_random_encounter()
+
+
+func _trigger_random_encounter() -> void:
+	if _transitioning:
+		return
+	var groups: Array = _encounter_config.get("groups", [])
+	if groups.is_empty():
+		return
+	var group: Dictionary = EncounterSystem.select_encounter_group(groups)
+	var rates: Dictionary = _encounter_config.get("formation_rates", {})
+	var formation: String = EncounterSystem.roll_formation(rates)
+	_danger_counter = 0
+	_transitioning = true
+	var transition: Dictionary = {
+		"encounter_group": group.get("enemies", []),
+		"formation_type": formation,
+		"return_map_id": _current_map_id,
+		"return_position": _player.position,
+		"enemy_act": "act_i",
+		"encounter_source": "random",
+	}
+	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
@@ -73,6 +122,16 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
+
+	if _player != null:
+		_last_player_tile = Vector2i(_player.position) / 16
+	_encounter_config = {}
+	_danger_counter = 0
+	var encounters: Dictionary = DataManager.load_encounters(_current_map_id)
+	if not encounters.is_empty():
+		var floors: Array = encounters.get("floors", encounters.get("zones", []))
+		if floors.size() > 0 and floors[0] is Dictionary:
+			_encounter_config = floors[0]
 
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
@@ -124,7 +183,22 @@ func _initialize_from_transition_data() -> void:
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
-		# Return from battle — restore map and position
+		# Return from battle — apply rewards, restore map and position
+		var result: String = data.get("result", "")
+		match result:
+			"victory":
+				var rewards: Dictionary = {
+					"xp": data.get("earned_xp", 0),
+					"gold": data.get("earned_gold", 0),
+					"drops": data.get("earned_drops", []),
+				}
+				PartyState.distribute_battle_rewards(rewards)
+			"faint":
+				SaveManager.faint_and_fast_reload()
+				return
+			"flee":
+				pass
+		_danger_counter = 0
 		var map_id: String = data.get("map_id", "test_room")
 		load_map(map_id)
 		var pos: Vector2 = data.get("position", Vector2(80, 90))
@@ -265,6 +339,7 @@ func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
+	_danger_counter = 0
 	_transitioning = true
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)

@@ -114,13 +114,19 @@ func build_save_data() -> Dictionary:
 
 
 func get_active_party() -> Array[Dictionary]:
-	var result: Array[Dictionary] = []
-	var active: Array = formation.get("active", [])
-	for idx: Variant in active:
-		var i: int = idx as int
-		if i >= 0 and i < members.size():
-			result.append(members[i])
-	return result
+	return Helpers.get_active_members(members, formation)
+
+
+## Get reserve (non-active) party members.
+func get_reserve_party() -> Array[Dictionary]:
+	return Helpers.get_reserve_members(members, formation)
+
+
+## Apply battle rewards (XP, gold, drops). Returns Helpers.distribute_rewards() summary.
+func distribute_battle_rewards(rewards: Dictionary) -> Dictionary:
+	return Helpers.apply_battle_rewards(
+		rewards, get_active_party(), get_reserve_party(), add_gold, add_item
+	)
 
 
 func get_member(character_id: String) -> Dictionary:
@@ -215,16 +221,7 @@ func unequip_slot(character_id: String, slot: String) -> String:
 
 
 func get_equippable_for_slot(character_id: String, slot: String) -> Array[Dictionary]:
-	var result: Array[Dictionary] = []
-	for entry: Dictionary in owned_equipment:
-		var equip_id: String = entry.get("equipment_id", "")
-		var item_data: Dictionary = Helpers.lookup_equipment(equip_id)
-		if item_data.is_empty():
-			continue
-		if not Helpers.can_equip(character_id, slot, item_data):
-			continue
-		result.append(item_data)
-	return result
+	return Helpers.filter_equippable_for_slot(owned_equipment, character_id, slot)
 
 
 func optimize_equipment(character_id: String) -> void:
