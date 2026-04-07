@@ -185,16 +185,11 @@ func equip_item(character_id: String, slot: String, equipment_id: String) -> Dic
 	var equip: Dictionary = m.get("equipment", {})
 	var old_id: String = equip.get(slot, "")
 
-	# Validate new item is owned (skip for starting equipment during init)
 	if not _has_owned_equipment(equipment_id):
 		push_error("PartyState: Cannot equip '%s' — not in owned_equipment" % equipment_id)
 		return {}
-
-	# Return old item to inventory
 	if old_id != "":
 		owned_equipment.append({"id": _generate_inst_id(old_id), "equipment_id": old_id})
-
-	# Remove new item from inventory
 	_remove_owned_equipment(equipment_id)
 
 	equip[slot] = equipment_id
@@ -254,7 +249,6 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	var qty: int = consumables.get(item_id, 0)
 	if qty <= 0:
 		return false
-
 	var item_data: Dictionary = Helpers.lookup_consumable(item_id)
 	if item_data.is_empty():
 		return false
@@ -262,11 +256,9 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 		return false
 	if item_data.get("requires_save_point", false) and not is_at_save_point:
 		return false
-
 	var target: Dictionary = get_member(target_character_id)
 	if target.is_empty():
 		return false
-
 	Helpers.apply_item_effect(item_data, target)
 	consumables[item_id] = qty - 1
 	if consumables[item_id] <= 0:
@@ -315,6 +307,19 @@ func spend_gold(amount: int) -> bool:
 		return false
 	gold -= amount
 	return true
+
+
+## Restore all party members to full HP/MP/AC and clear status.
+## Called when resting at an inn. Per economy.md inn rules.
+func rest_at_inn() -> void:
+	for member: Dictionary in get_active_party():
+		if member.is_empty():
+			continue
+		var stats: Dictionary = member.get("base_stats", {})
+		member["current_hp"] = member.get("max_hp", stats.get("hp", 1))
+		member["current_mp"] = member.get("max_mp", stats.get("mp", 0))
+		member["current_ac"] = member.get("max_ac", 12)
+		member["status_effects"] = []
 
 
 func get_config() -> Dictionary:
