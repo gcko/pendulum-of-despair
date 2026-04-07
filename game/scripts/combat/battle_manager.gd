@@ -343,7 +343,7 @@ func _check_end_conditions() -> void:
 		_awaiting_input_for = ""
 		_earned_drops = []
 		for e: Node in _enemies:
-			_earned_xp += e.enemy_data.get("xp", 0)
+			_earned_xp += e.enemy_data.get("exp", e.enemy_data.get("xp", 0))
 			_earned_gold += e.enemy_data.get("gold", 0)
 			var d: Dictionary = e.roll_drop()
 			if d.get("success", false):
