@@ -33,13 +33,13 @@ fi
 if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
     echo "=== Pre-push: GUT tests ==="
     TEST_OUTPUT=$("$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1)
-    FAILING=$(echo "$TEST_OUTPUT" | grep "^Failing Tests" | awk '{print $NF}')
+    FAILING=$(echo "$TEST_OUTPUT" | grep "^Failing Tests" | awk '{print $NF}' || true)
     if [ -n "$FAILING" ] && [ "$FAILING" != "0" ]; then
         echo "$TEST_OUTPUT" | tail -30
         echo "GUT tests FAILED ($FAILING failing). Fix tests before pushing."
         exit 1
     fi
-    PASSING=$(echo "$TEST_OUTPUT" | grep "^Passing Tests" | awk '{print $NF}')
+    PASSING=$(echo "$TEST_OUTPUT" | grep "^Passing Tests" | awk '{print $NF}' || true)
     echo "GUT tests passed ($PASSING passing)."
 else
     echo "=== Pre-push: GUT tests SKIPPED (Godot not found) ==="
