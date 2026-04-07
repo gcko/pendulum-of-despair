@@ -47,7 +47,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_up"):
 		_move_cursor(-1)
 	elif event.is_action_pressed("ui_accept"):
-		_confirm_selection()
+		if not _is_option_disabled(_selected):
+			_confirm_selection()
 
 
 func _move_cursor(direction: int) -> void:

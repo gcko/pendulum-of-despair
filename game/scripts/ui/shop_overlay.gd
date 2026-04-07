@@ -90,6 +90,9 @@ func _load_shop(shop_id: String) -> void:
 	for entry: Variant in raw_inventory:
 		if not entry is Dictionary:
 			continue
+		var req_act: int = entry.get("available_act", 1)
+		if req_act > 1:
+			continue
 		var item_id: String = entry.get("item_id", "")
 		var buy_price: int = entry.get("buy_price", 0)
 		if item_id == "":
