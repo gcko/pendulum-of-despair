@@ -19,14 +19,12 @@ func load_json(path: String) -> Variant:
 		return _cache[path]
 
 	if not FileAccess.file_exists(path):
-		push_error("DataManager: File not found: %s" % path)
-		get_tree().quit(1)
+		_fatal("File not found: %s" % path)
 		return null
 
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if not file:
-		push_error("DataManager: Cannot open: %s" % path)
-		get_tree().quit(1)
+		_fatal("Cannot open: %s" % path)
 		return null
 
 	var json: JSON = JSON.new()
@@ -34,17 +32,39 @@ func load_json(path: String) -> Variant:
 	file.close()
 
 	if result != OK:
-		push_error(
+		_fatal(
 			(
-				"DataManager: Malformed JSON at %s line %d: %s"
+				"Malformed JSON at %s line %d: %s"
 				% [path, json.get_error_line(), json.get_error_message()]
 			)
 		)
-		get_tree().quit(1)
 		return null
 
 	_cache[path] = json.data
 	return json.data
+
+
+## Fatal error handler. Logs to user://crash.log, prints stack trace,
+## then exits. The crash log persists after the game closes so errors
+## are never silently lost.
+func _fatal(msg: String) -> void:
+	var full: String = "FATAL DataManager: %s" % msg
+	push_error(full)
+	print(full)
+	var trace: String = ""
+	for frame: Dictionary in get_stack():
+		trace += (
+			"  %s:%d in %s\n"
+			% [frame.get("source", "?"), frame.get("line", 0), frame.get("function", "?")]
+		)
+	print(trace)
+	var log_path: String = "user://crash.log"
+	var log_file: FileAccess = FileAccess.open(log_path, FileAccess.WRITE)
+	if log_file != null:
+		log_file.store_string("%s\n%s" % [full, trace])
+		log_file.close()
+		print("Crash log written to: %s" % ProjectSettings.globalize_path(log_path))
+	get_tree().quit(1)
 
 
 ## Load enemy data for an act. Returns the "enemies" array.
