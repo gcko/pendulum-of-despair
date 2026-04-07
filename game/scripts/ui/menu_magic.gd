@@ -35,14 +35,13 @@ var _showing_feedback: bool = false
 
 func _ready() -> void:
 	_spell_labels = []
-	for i: int in range(GRID_ROWS):
-		var label: Label = _left_col.get_node_or_null("Spell%d" % i)
-		if label != null:
-			_spell_labels.append(label)
-	for i: int in range(GRID_ROWS):
-		var label: Label = _right_col.get_node_or_null("Spell%d" % (i + GRID_ROWS))
-		if label != null:
-			_spell_labels.append(label)
+	for row: int in range(GRID_ROWS):
+		var left: Label = _left_col.get_node_or_null("Spell%d" % row)
+		var right: Label = _right_col.get_node_or_null("Spell%d" % (row + GRID_ROWS))
+		if left != null:
+			_spell_labels.append(left)
+		if right != null:
+			_spell_labels.append(right)
 	_target_labels = []
 	for i: int in range(4):
 		var label: Label = _target_panel.get_node_or_null("Target%d" % i)

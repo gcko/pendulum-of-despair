@@ -13,7 +13,7 @@
 - Two-column scrollable spell grid per ui-design.md Section 6
 - Character info header (name, LV, HP/MP)
 - Spell description area showing selected spell's effect text
-- Field cast flow: healing/buff/utility spells → target select → MP deduct → apply
+- Field cast flow: healing spells only → target select → MP deduct → heal
 - Offensive spells greyed out (battle only)
 - Static spell resolution helper (spell_helpers.gd)
 - PartyState.spend_mp() and heal_member() methods
@@ -49,7 +49,7 @@ sorted by tier then MP cost.
 static func can_field_cast(spell: Dictionary) -> bool
 ```
 
-Returns true if `spell.category` is in `["healing", "buff", "utility"]`.
+Returns true if `spell.category` is `"healing"`. Buff/utility deferred.
 
 ```gdscript
 static func get_field_heal_amount(caster_mag: int, spell: Dictionary) -> int

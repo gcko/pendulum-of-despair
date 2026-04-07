@@ -653,7 +653,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] 9-command main menu: Items, Equipment, Magic, Abilities, Status, Formation, Ley Crystals, Config, Save (only at save points)
 - [x] Items screen: categorized list, use/discard, stack counts
 - [x] Equipment screen: 5 slots per character, stat comparison display
-- [x] Magic screen: two-column spell grid, field-cast healing/buff, MP deduction — Phase 2 (2026-04-07)
+- [x] Magic screen: two-column spell grid, field-cast healing only, MP deduction — Phase 2 (2026-04-07)
 - [ ] Abilities screen: per-character unique command, sub-abilities — Phase 2
 - [x] Status screen: full stat display, equipment summary, elemental profile
 - [ ] Formation screen: active/reserve party, row assignment (front/back), drag arrangement — Phase 2
