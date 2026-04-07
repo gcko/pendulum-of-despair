@@ -106,5 +106,5 @@ func _is_option_disabled(index: int) -> bool:
 		MenuOption.CONTINUE:
 			return not _has_save
 		MenuOption.CONFIG:
-			return false
+			return true
 	return false

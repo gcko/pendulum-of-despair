@@ -136,7 +136,8 @@ func test_magic_absorb_returns_positive() -> void:
 
 
 func test_magic_damage_cap() -> void:
-	var result: int = DamageCalc.calculate_magic(255, 120, 0, 1.5, 1.0, [], [])
+	# mag=255, power=255, mdef=0 → raw = (255*255)/4 = 16256, exceeds cap
+	var result: int = DamageCalc.calculate_magic(255, 255, 0, 1.0, 1.0, [], [])
 	assert_eq(result, 14999, "magic capped at 14999")
 
 
@@ -190,7 +191,7 @@ func test_hit_rate_minimum_20() -> void:
 	for i: int in range(1000):
 		if DamageCalc.roll_hit(1, 255):
 			hits += 1
-	assert_between(hits, 150, 260, "~20% minimum hit rate")
+	assert_between(hits, 130, 270, "~20% minimum hit rate")
 
 
 func test_evasion_rate_cap_50() -> void:

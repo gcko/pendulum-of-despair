@@ -67,37 +67,33 @@ func test_empty_slot_display() -> void:
 
 func test_populated_slot_display() -> void:
 	var sl: Node = _create_save_load()
-	# Manually set preview data to test display
-	sl._slot_previews = [
-		{},  # auto: empty
+	# Build preview data using the typed array's existing structure
+	var preview: Dictionary = {
+		"meta":
 		{
-			"meta":
-			{
-				"version": 1,
-				"playtime": 3723,
-				"saved_at": "2026-04-06",
-				"slot_type": "manual",
-			},
-			"party": [],
-			"formation": {"active": ["edren", "cael"], "reserve": [], "rows": {}},
-			"inventory": {},
-			"owned_equipment": [],
-			"crafting": {},
-			"ley_crystals": {},
-			"world":
-			{
-				"current_location": "Valdris Crown",
-				"gold": 1200,
-				"event_flags": {},
-				"act": "1",
-				"current_position": {"x": 0, "y": 0},
-			},
-			"quests": {},
-			"completion": {},
+			"version": 1,
+			"playtime": 3723,
+			"saved_at": "2026-04-06",
+			"slot_type": "manual",
 		},
-		{},  # slot 2: empty
-		{},  # slot 3: empty
-	]
+		"party": [],
+		"formation": {"active": ["edren", "cael"], "reserve": [], "rows": {}},
+		"inventory": {},
+		"owned_equipment": [],
+		"crafting": {},
+		"ley_crystals": {},
+		"world":
+		{
+			"current_location": "Valdris Crown",
+			"gold": 1200,
+			"event_flags": {},
+			"act": "1",
+			"current_position": {"x": 0, "y": 0},
+		},
+		"quests": {},
+		"completion": {},
+	}
+	sl._slot_previews[1] = preview
 	# Call _update_slot_panel directly to avoid _refresh overwriting with real data
 	sl._update_slot_panel(sl._manual_slots[0], sl._slot_previews[1])
 	var header: Label = sl._manual_slots[0].get_node_or_null("HeaderLabel")

@@ -29,6 +29,7 @@ func test_initialize_empty_id_blocked() -> void:
 	npc.initialize("")
 	assert_eq(npc.npc_id, "", "npc_id should remain empty")
 	assert_true(npc.dialogue_entries.is_empty(), "no dialogue should load")
+	assert_push_error_count(1, "empty npc_id should trigger push_error")
 
 
 # --- Interaction ---
