@@ -40,7 +40,7 @@ digraph mode {
 ### PR Mode (argument provided)
 
 1. Parse the PR number from the argument (strip URL if needed)
-2. Fetch changed files via `gh api /repos/{owner}/{repo}/pulls/{pr_number}/files`
+2. Fetch changed files via `gh api /repos/{owner}/{repo}/pulls/{pr_number}/files --paginate`
 3. Run all validation passes
 4. Post the review as a PR comment via `gh pr review` or `gh pr comment`
 

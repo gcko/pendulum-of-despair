@@ -191,11 +191,39 @@ previous round has checked. Track which files have been read.
 
 After all review rounds complete but BEFORE pushing:
 
-1. **Fetch all Copilot review comments** using paginated gh API:
-   ```bash
-   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate \
-     --jq '.[] | select(.in_reply_to_id == null) | {id, user: .user.login, path, line: .original_line, body}'
-   ```
+### Exact commands (copy-paste these)
+
+```bash
+# Get repo name
+REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+
+# 1. Fetch ALL top-level review comments (MUST use --paginate)
+gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | {id, user: .user.login, path, line: .original_line, body}'
+
+# 2. Count total top-level comments
+gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | .id' | wc -l
+
+# 3. Reply to a specific comment
+gh api repos/$REPO/pulls/{pr_number}/comments/{comment_id}/replies \
+  -f body="Fixed in <commit-sha>. <brief explanation>"
+
+# 4. VERIFICATION: Find unreplied comments (run AFTER replying)
+ALL_IDS=$(gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | .id')
+REPLIED_TO=$(gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id != null) | .in_reply_to_id' | sort -u)
+for id in $ALL_IDS; do
+  echo "$REPLIED_TO" | grep -q "^${id}$" || echo "UNREPLIED: $id"
+done
+```
+
+### Process
+
+1. **Fetch all comments** using the paginated command above.
+   **CRITICAL:** Copilot submits comments in batches that arrive
+   minutes apart. Always re-check after replying.
 
 2. **Filter to unaddressed comments** — skip comments that already have
    replies from the repo owner.
@@ -203,14 +231,14 @@ After all review rounds complete but BEFORE pushing:
 3. **Assess each comment** — all Copilot comments should already be
    fixed by the review rounds. If any are NOT fixed, fix them now.
 
-4. **Reply to every comment** individually using the correct API:
-   ```bash
-   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments/{comment_id}/replies \
-     -f body="Fixed in <commit-sha>. <brief explanation>"
-   ```
+4. **Reply to every comment** individually using the reply command above.
    **Do NOT @mention Copilot** — mentioning triggers unwanted responses.
 
-5. **Run Copilot gap analysis** — categorize every Copilot comment:
+5. **Run verification gate** — Execute the "find unreplied" command.
+   If ANY unreplied IDs appear, fetch and address them. **Do NOT push
+   until unreplied count is zero.**
+
+6. **Run Copilot gap analysis** — categorize every Copilot comment:
    - Map each to a category (semantic correctness, constraint propagation,
      state leakage, data integrity, input ownership, defensive coding,
      state machine completeness, numeric correctness, mirror staleness)
