@@ -19,6 +19,7 @@ var _transition_tween: Tween = null
 var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
+var _current_floor_id: String = ""
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -123,14 +124,21 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
 
+	_current_floor_id = _current_map.get_meta("floor_id", "")
 	if _player != null:
 		_last_player_tile = Vector2i(_player.position) / 16
 	_encounter_config = {}
 	_danger_counter = 0
-	var encounters: Dictionary = DataManager.load_encounters(_current_map_id)
+	var dungeon_id: String = _current_map.get_meta("dungeon_id", _current_map_id)
+	var encounters: Dictionary = DataManager.load_encounters(dungeon_id)
 	if not encounters.is_empty():
 		var floors: Array = encounters.get("floors", encounters.get("zones", []))
-		if floors.size() > 0 and floors[0] is Dictionary:
+		for floor_entry: Variant in floors:
+			if floor_entry is Dictionary:
+				if (floor_entry as Dictionary).get("floor_id", "") == _current_floor_id:
+					_encounter_config = floor_entry as Dictionary
+					break
+		if _encounter_config.is_empty() and floors.size() > 0 and floors[0] is Dictionary:
 			_encounter_config = floors[0]
 
 	var location_name: String = _current_map.get_meta("location_name", "")
