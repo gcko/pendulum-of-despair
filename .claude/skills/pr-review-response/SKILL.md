@@ -158,12 +158,43 @@ Run `pnpm lint` only.
 ## Step 3: Fetch Comments
 
 **CRITICAL: Always use `--paginate`.** GitHub API defaults to 30 per
-page. Without it, comments beyond page 1 are silently dropped.
+page. Without it, comments beyond page 1 are silently dropped. This
+has caused repeated failures on PRs #108, #109, #110, #124.
+
+### Exact commands (copy-paste these)
 
 ```bash
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/reviews --paginate
-gh api /repos/{owner}/{repo}/pulls/{pr_number}/comments --paginate
+# Get repo name
+REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+
+# Fetch ALL top-level review comments (paginated)
+gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | {id, user: .user.login, path, line: .original_line, body}'
+
+# Count total top-level comments
+gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | .id' | wc -l
+
+# Find unreplied comments (run AFTER replying to verify none missed)
+ALL_IDS=$(gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id == null) | .id')
+REPLIED_TO=$(gh api repos/$REPO/pulls/{pr_number}/comments --paginate \
+  --jq '.[] | select(.in_reply_to_id != null) | .in_reply_to_id' | sort -u)
+for id in $ALL_IDS; do
+  echo "$REPLIED_TO" | grep -q "^${id}$" || echo "UNREPLIED: $id"
+done
+
+# Reply to a specific comment
+gh api repos/$REPO/pulls/{pr_number}/comments/{comment_id}/replies \
+  -f body="Fixed in <commit-sha>. <brief explanation>"
 ```
+
+### Verification gate (MANDATORY)
+
+After replying to all comments, run the "find unreplied" command above.
+If ANY unreplied IDs appear, fetch and address them. **Do NOT push
+until unreplied count is zero.** Copilot submits comments in batches
+that arrive minutes apart — always re-check.
 
 Parse each comment for: `id`, `user.login`, `path`, `line`, `body`,
 `in_reply_to_id`.

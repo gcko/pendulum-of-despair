@@ -79,3 +79,28 @@ static func _get_boss_phase(enemy_data: Dictionary, current_hp: int) -> int:
 		if current_hp <= threshold:
 			return i + 1
 	return 0
+
+
+## Pick a random living party member slot from battle state.
+static func pick_alive_target(state: Node) -> int:
+	var alive: Array[int] = []
+	for i: int in range(4):
+		if state.get_member(i).get("is_alive", false):
+			alive.append(i)
+	return alive[randi() % alive.size()] if not alive.is_empty() else 0
+
+
+## Vein Guardian scripted AI (hardcoded, tech debt).
+## Phase 1: alternate Crystal Slam / Ember Pulse, Ember Pulse every 3rd turn.
+## Phase 2 (<= 50% HP): Reconstruct once, then resume attacks.
+static func get_vein_guardian_action(
+	state: Node, turn: int, hp_ratio: float, last_action: String, reconstructed: bool
+) -> Dictionary:
+	if hp_ratio <= 0.5 and not reconstructed:
+		return {"type": "heal", "id": "reconstruct", "target": "self", "value": 300}
+	var use_ember: bool = (turn % 3 == 0 and turn % 4 != 0) or last_action == "crystal_slam"
+	if not use_ember:
+		return {"type": "attack", "id": "crystal_slam", "target_slot": pick_alive_target(state)}
+	return {
+		"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame", "power": 20
+	}

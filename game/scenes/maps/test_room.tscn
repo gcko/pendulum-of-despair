@@ -44,5 +44,20 @@ metadata/target_spawn = "EntryWest"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitEast"]
 shape = SubResource("Shape_exit")
 
+[node name="ExitWestDungeon" type="Area2D" parent="Transitions"]
+position = Vector2(16, 90)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "dungeons/ember_vein_f1"
+metadata/target_spawn = "PlayerSpawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitWestDungeon"]
+shape = SubResource("Shape_exit")
+
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(80, 90)
+
+[node name="from_ember_vein" type="Marker2D" parent="."]
+position = Vector2(32, 90)

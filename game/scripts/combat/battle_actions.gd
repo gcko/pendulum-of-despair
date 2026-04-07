@@ -100,6 +100,31 @@ static func apply_magic_to_enemy(
 	return {"hit": true, "damage": dmg, "type": "magic", "killed": not enemy.is_alive}
 
 
+## Execute an enemy magic ability against a party member.
+## Uses MAG/MDEF formula. element_mod is 1.0 until party resistances exist.
+static func execute_enemy_magic(
+	state: Node, enemy: Node, target_slot: int, _element: String, power: int
+) -> Dictionary:
+	var stats: Dictionary = enemy.get_stats()
+	var mag: int = stats.get("mag", 10)
+	var spd: int = stats.get("spd", 10)
+	var member: Dictionary = state.get_member(target_slot)
+	if member.is_empty() or not member.get("is_alive", false):
+		return {"hit": false, "damage": 0, "type": "miss"}
+	var target_mdef: int = state.get_effective_stat(target_slot, "mdef")
+	var target_spd: int = state.get_effective_stat(target_slot, "spd")
+	if not DamageCalc.roll_hit(spd, target_spd):
+		return {"hit": false, "damage": 0, "type": "miss"}
+	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
+	var reduction: Array = []
+	if dmg_mult < 1.0:
+		reduction.append(1.0 - dmg_mult)
+	# element_mod 1.0 until party resistances are implemented
+	var dmg: int = DamageCalc.calculate_magic(mag, power, target_mdef, 1.0, 1.0, [], reduction)
+	state.take_damage(target_slot, dmg)
+	return {"hit": true, "damage": dmg, "type": "magic"}
+
+
 ## Execute an enemy physical attack against a party member.
 static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> Dictionary:
 	var stats: Dictionary = enemy.get_stats()

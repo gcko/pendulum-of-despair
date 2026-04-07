@@ -21,16 +21,20 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		push_error("BattleState: Invalid slot %d" % slot)
 		return
 	var stats: Dictionary = char_data.get("base_stats", {})
+	var max_hp: int = char_data.get("max_hp", stats.get("hp", 1))
+	var current_hp: int = char_data.get("current_hp", max_hp)
+	var max_mp: int = char_data.get("max_mp", stats.get("mp", 0))
+	var current_mp: int = char_data.get("current_mp", max_mp)
 	_members[slot] = {
-		"character_id": char_data.get("id", ""),
+		"character_id": char_data.get("character_id", char_data.get("id", "")),
 		"character_data": char_data,
-		"current_hp": stats.get("hp", 1),
-		"max_hp": stats.get("hp", 1),
-		"current_mp": stats.get("mp", 0),
-		"max_mp": stats.get("mp", 0),
+		"current_hp": current_hp,
+		"max_hp": max_hp,
+		"current_mp": current_mp,
+		"max_mp": max_mp,
 		"row": char_data.get("default_row", "front"),
 		"active_statuses": [] as Array[Dictionary],
-		"is_alive": true,
+		"is_alive": current_hp > 0,
 		"is_defending": false,
 		# Buffs
 		"atk_mult": 1.0,

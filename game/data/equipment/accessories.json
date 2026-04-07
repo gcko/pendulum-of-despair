@@ -27,6 +27,32 @@
 			"description": "A sturdy bracelet that reinforces physical defense."
 		},
 		{
+			"id": "miners_hardhat",
+			"name": "Miner's Hardhat",
+			"subcategory": "stat_boost",
+			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"effect": "+3 DEF, reduces pitfall stun duration",
+			"bonus_stats": {"def": 3},
+			"special": "Reduces pitfall stun duration",
+			"buy_price": null,
+			"sell_price": 75,
+			"acquired": "Ember Vein chest (Floor 2)",
+			"description": "A reinforced hardhat from a Carradan mine. Softens the blow from pitfall traps."
+		},
+		{
+			"id": "ember_ring",
+			"name": "Ember Ring",
+			"subcategory": "stat_boost",
+			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"effect": "+3 ATK, +2 MAG",
+			"bonus_stats": {"atk": 3, "mag": 2},
+			"special": null,
+			"buy_price": null,
+			"sell_price": 150,
+			"acquired": "Ember Vein chest (Floor 2, behind mini-boss)",
+			"description": "A ring set with ember crystal that sharpens both blade and spell."
+		},
+		{
 			"id": "magic_earring",
 			"name": "Magic Earring",
 			"subcategory": "stat_boost",

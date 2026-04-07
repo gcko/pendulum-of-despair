@@ -16,6 +16,21 @@
 			"description": "A standard-issue Compact training blade."
 		},
 		{
+			"id": "carradan_mining_pick",
+			"name": "Carradan Mining Pick",
+			"type": "sword",
+			"tier": 1,
+			"equippable_by": ["edren"],
+			"atk": 8,
+			"bonus_stats": {},
+			"element": null,
+			"special": null,
+			"buy_price": null,
+			"sell_price": 100,
+			"acquired": "Ember Vein chest (Floor 1, cart-accessible room)",
+			"description": "A heavy Carradan mining pick repurposed as a weapon. Crude but effective."
+		},
+		{
 			"id": "valdris_blade",
 			"name": "Valdris Blade",
 			"type": "sword",

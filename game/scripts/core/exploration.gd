@@ -1,6 +1,4 @@
 extends Node2D
-## Exploration core state scene. Loads maps, manages player, wires entity signals.
-## Reads GameManager.transition_data on _ready() for New Game vs Continue.
 
 signal map_changed(map_id: String)
 
@@ -19,6 +17,7 @@ var _transition_tween: Tween = null
 var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
+var _current_floor_id: String = ""
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -68,9 +67,8 @@ func _process_encounter_step() -> void:
 	var base: int = _encounter_config.get("danger_increment", 0)
 	if base <= 0:
 		return
-	var act_scale: float = 1.0
 	var acc_mod: float = EncounterSystem.get_accessory_modifier(PartyState.get_active_party())
-	_danger_counter += EncounterSystem.roll_increment(base, act_scale, acc_mod)
+	_danger_counter += EncounterSystem.roll_increment(base, 1.0, acc_mod)
 	if EncounterSystem.check_encounter(_danger_counter):
 		_trigger_random_encounter()
 
@@ -97,9 +95,36 @@ func _trigger_random_encounter() -> void:
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
+func _trigger_boss_encounter(area: Area2D) -> void:
+	if _transitioning or _player == null:
+		return
+	var boss_id: String = area.get_meta("boss_id", "")
+	var flag: String = area.get_meta("flag", "")
+	if boss_id.is_empty():
+		return
+	if not flag.is_empty() and EventFlags.get_flag(flag):
+		return
+	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
+	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
+	if enemy_ids.is_empty():
+		return
+	_danger_counter = 0
+	_transitioning = true
+	var transition: Dictionary = {
+		"encounter_group": enemy_ids,
+		"formation_type": "normal",
+		"return_map_id": _current_map_id,
+		"return_position": _player.position,
+		"enemy_act": area.get_meta("enemy_act", "act_i"),
+		"encounter_source": "boss",
+		"is_boss": true,
+		"boss_flag": flag,
+	}
+	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+
+
 func load_map(map_id: String, spawn_name: String = "") -> void:
 	PartyState.is_at_save_point = false
-	# Validate BEFORE freeing old map — don't leave exploration with no map
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Map not found: %s" % map_path)
@@ -108,36 +133,40 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if not map_resource is PackedScene:
 		push_error("Exploration: Invalid map resource: %s" % map_path)
 		return
-
-	# Safe to free old map now that new one is validated
 	if _current_map != null:
 		_disconnect_entity_signals(_current_map)
 		_current_map.queue_free()
 		_current_map = null
-
 	_current_map = (map_resource as PackedScene).instantiate()
 	_map_container.add_child(_current_map)
 	_current_map_id = map_id
-
 	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
-
+	_current_floor_id = _current_map.get_meta("floor_id", "")
 	if _player != null:
 		_last_player_tile = Vector2i(_player.position) / 16
 	_encounter_config = {}
 	_danger_counter = 0
-	var encounters: Dictionary = DataManager.load_encounters(_current_map_id)
+	var dungeon_id: String = _current_map.get_meta("dungeon_id", _current_map_id)
+	var encounters: Dictionary = DataManager.load_encounters(dungeon_id)
 	if not encounters.is_empty():
-		var floors: Array = encounters.get("floors", encounters.get("zones", []))
-		if floors.size() > 0 and floors[0] is Dictionary:
-			_encounter_config = floors[0]
-
+		var use_zones: bool = encounters.has("zones") and not encounters.has("floors")
+		var entries: Array = encounters.get("floors", encounters.get("zones", []))
+		var id_key: String = "zone_id" if use_zones else "floor_id"
+		var match_id: String = _current_floor_id if not use_zones else _current_map_id
+		for entry: Variant in entries:
+			if entry is Dictionary:
+				if (entry as Dictionary).get(id_key, "") == match_id:
+					_encounter_config = entry as Dictionary
+					break
+		if _encounter_config.is_empty() and entries.size() > 0 and entries[0] is Dictionary:
+			if use_zones or not match_id.is_empty():
+				_encounter_config = entries[0]
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
-
 	map_changed.emit(map_id)
 
 
@@ -151,11 +180,7 @@ func flash_location_name(location_name: String) -> void:
 	_flash_tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
 	_flash_tween.tween_interval(2.0)
 	_flash_tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
-	_flash_tween.tween_callback(_hide_location_panel)
-
-
-func _hide_location_panel() -> void:
-	_location_panel.visible = false
+	_flash_tween.tween_callback(_location_panel.hide)
 
 
 func _spawn_player() -> void:
@@ -175,35 +200,30 @@ func _initialize_from_transition_data() -> void:
 		var save_data: Dictionary = data.get("save_data", {})
 		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
-		var location: String = world.get("current_location", "")
-		if location == "":
-			location = "test_room"
-		load_map(location)
+		var location: String = world.get("current_location", "test_room")
+		load_map(location if location != "" else "test_room")
 		var pos: Dictionary = world.get("current_position", {})
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
-		# Return from battle — apply rewards, restore map and position
-		var result: String = data.get("result", "")
-		match result:
-			"victory":
-				var rewards: Dictionary = {
-					"xp": data.get("earned_xp", 0),
-					"gold": data.get("earned_gold", 0),
-					"drops": data.get("earned_drops", []),
-				}
-				PartyState.distribute_battle_rewards(rewards)
-			"faint":
-				SaveManager.faint_and_fast_reload()
-				return
-			"flee":
-				pass
+		var r: String = data.get("result", "")
+		if r == "victory":
+			var rewards: Dictionary = {
+				"xp": data.get("earned_xp", 0),
+				"gold": data.get("earned_gold", 0),
+				"drops": data.get("earned_drops", [])
+			}
+			PartyState.distribute_battle_rewards(rewards)
+			var boss_flag: String = data.get("boss_flag", "")
+			if not boss_flag.is_empty():
+				EventFlags.set_flag(boss_flag, true)
+		elif r == "faint":
+			SaveManager.faint_and_fast_reload()
+			return
 		_danger_counter = 0
-		var map_id: String = data.get("map_id", "test_room")
-		load_map(map_id)
-		var pos: Vector2 = data.get("position", Vector2(80, 90))
+		load_map(data.get("map_id", "test_room"))
 		if _player != null:
-			_player.position = pos
+			_player.position = data.get("position", Vector2(80, 90))
 	else:
 		load_map("test_room")
 
@@ -217,23 +237,23 @@ func _initialize_entities(map_node: Node2D) -> void:
 			continue
 		if child.has_signal("npc_interacted"):
 			var npc_id: String = child.get_meta("npc_id", "")
-			if npc_id != "":
-				child.initialize(npc_id)
-			else:
+			if npc_id.is_empty():
 				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
+				continue
+			child.initialize(npc_id)
 		elif child.has_signal("chest_opened"):
 			var chest_id: String = child.get_meta("chest_id", "")
 			var item_id: String = child.get_meta("item_id", "")
-			if chest_id != "" and item_id != "":
-				child.initialize(chest_id, item_id)
-			else:
-				push_error("Exploration: Chest '%s' missing metadata" % child.name)
+			if chest_id.is_empty() or item_id.is_empty():
+				push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
+				continue
+			child.initialize(chest_id, item_id)
 		elif child.has_signal("save_point_activated"):
 			var sp_id: String = child.get_meta("save_point_id", "")
-			if sp_id != "":
-				child.initialize(sp_id)
-			else:
+			if sp_id.is_empty():
 				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
+				continue
+			child.initialize(sp_id)
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
@@ -246,8 +266,10 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.chest_opened.connect(_on_chest_opened)
 			if child.has_signal("save_point_activated"):
 				child.save_point_activated.connect(_on_save_point_activated)
-
-	# Transitions use plain Area2D with body_entered (repeatable, not one-shot TriggerZone)
+			if child is Area2D and child.has_meta("boss_id"):
+				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
+			elif child is Area2D and child.has_meta("dialogue_data"):
+				child.body_entered.connect(_on_dialogue_trigger_entered.bind(child))
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
@@ -256,33 +278,23 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 
 
 func _disconnect_entity_signals(map_node: Node2D) -> void:
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities != null:
-		for child: Node in entities.get_children():
-			for sig_name: String in ["npc_interacted", "chest_opened", "save_point_activated"]:
-				if child.has_signal(sig_name):
-					var callable_ref: Callable = _get_handler_for_signal(sig_name)
-					if child.is_connected(sig_name, callable_ref):
-						child.disconnect(sig_name, callable_ref)
-
-	var transitions: Node = map_node.get_node_or_null("Transitions")
-	if transitions != null:
-		for child: Node in transitions.get_children():
+	var sigs: Dictionary = {
+		"npc_interacted": _on_npc_interacted,
+		"chest_opened": _on_chest_opened,
+		"save_point_activated": _on_save_point_activated
+	}
+	for group: String in ["Entities", "Transitions"]:
+		var container: Node = map_node.get_node_or_null(group)
+		if container == null:
+			continue
+		for child: Node in container.get_children():
+			for sig: String in sigs:
+				if child.has_signal(sig) and child.is_connected(sig, sigs[sig]):
+					child.disconnect(sig, sigs[sig])
 			if child is Area2D:
 				for conn: Dictionary in child.body_entered.get_connections():
 					if conn["callable"].get_object() == self:
 						child.body_entered.disconnect(conn["callable"])
-
-
-func _get_handler_for_signal(sig_name: String) -> Callable:
-	match sig_name:
-		"npc_interacted":
-			return _on_npc_interacted
-		"chest_opened":
-			return _on_chest_opened
-		"save_point_activated":
-			return _on_save_point_activated
-	return Callable()
 
 
 func _position_player_at_spawn(spawn_name: String) -> void:
@@ -290,13 +302,7 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 		return
 	var marker_name: String = spawn_name if spawn_name != "" else "PlayerSpawn"
 	var spawn: Node2D = _current_map.get_node_or_null(marker_name)
-	if spawn != null:
-		_player.position = spawn.position.round()
-	else:
-		_player.position = Vector2(80, 90)
-
-
-# --- Signal handlers ---
+	_player.position = spawn.position.round() if spawn != null else Vector2(80, 90)
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
@@ -327,15 +333,35 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 			overlay.open_save_point()
 
 
-func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning:
-		return
+func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player:
 		return
+	_trigger_boss_encounter(area)
+
+
+func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
+	if body != _player or _transitioning:
+		return
+	var flag: String = area.get_meta("flag", "")
+	if not flag.is_empty() and EventFlags.get_flag(flag):
+		return
+	var dialogue: Variant = area.get_meta("dialogue_data", [])
+	if not (dialogue is Array) or (dialogue as Array).is_empty():
+		return
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		var overlay: Node = GameManager.overlay_node
+		if overlay != null and overlay.has_method("show_dialogue"):
+			overlay.show_dialogue(dialogue as Array)
+			if not flag.is_empty():
+				EventFlags.set_flag(flag, true)
+
+
+func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
+	if _transitioning or body != _player:
+		return
 	var target_map: String = area.get_meta("target_map", "")
-	var target_spawn: String = area.get_meta("target_spawn", "")
 	if target_map != "":
-		_transition_to_map(target_map, target_spawn)
+		_transition_to_map(target_map, area.get_meta("target_spawn", ""))
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
@@ -354,11 +380,19 @@ func _do_map_swap(target_map: String, target_spawn: String) -> void:
 	var map_path: String = MAP_BASE_PATH + target_map + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Transition target not found: %s" % map_path)
-		if _transition_tween != null and _transition_tween.is_valid():
-			_transition_tween.kill()
-		_end_transition()
+		_abort_transition()
 		return
+	var had_map: bool = _current_map != null
 	load_map(target_map, target_spawn)
+	if had_map and _current_map == null:
+		push_error("Exploration: load_map failed for: %s" % map_path)
+		_abort_transition()
+
+
+func _abort_transition() -> void:
+	if _transition_tween != null and _transition_tween.is_valid():
+		_transition_tween.kill()
+	_end_transition()
 
 
 func _end_transition() -> void:
