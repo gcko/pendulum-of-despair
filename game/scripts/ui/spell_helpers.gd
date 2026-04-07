@@ -2,7 +2,8 @@ extends RefCounted
 ## Static helpers for resolving known spells and field-cast effects.
 
 const TRADITIONS: Array[String] = ["ley_line", "forgewright", "spirit", "streetwise", "void"]
-const FIELD_CATEGORIES: Array[String] = ["healing", "buff", "utility"]
+## Only healing for now. Buff/utility field-cast deferred until effect application exists.
+const FIELD_CATEGORIES: Array[String] = ["healing"]
 
 
 ## Get all spells a character knows at their current level.
@@ -30,12 +31,12 @@ static func can_field_cast(spell: Dictionary) -> bool:
 	return spell.get("category", "") in FIELD_CATEGORIES
 
 
-## Calculate field-cast healing amount.
+## Calculate field-cast healing. Deterministic (no variance) for field UX. Capped at 14999.
 static func get_field_heal_amount(caster_mag: int, spell: Dictionary) -> int:
 	var power: int = spell.get("power", 0)
 	if power <= 0:
 		return 0
-	return int(caster_mag * power * 0.8)
+	return mini(14999, int(caster_mag * power * 0.8))
 
 
 static func _sort_by_tier_then_cost(a: Dictionary, b: Dictionary) -> bool:

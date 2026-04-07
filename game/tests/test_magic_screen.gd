@@ -111,10 +111,10 @@ func test_can_field_cast_offensive_blocked() -> void:
 	)
 
 
-func test_can_field_cast_buff() -> void:
-	# Wardglass is category "buff"
+func test_can_field_cast_buff_blocked() -> void:
+	# Buff field-cast deferred until effect application exists
 	var spell: Dictionary = {"category": "buff"}
-	assert_true(SpellHelpers.can_field_cast(spell), "Buff spells should be field-castable")
+	assert_false(SpellHelpers.can_field_cast(spell), "Buff spells not field-castable yet")
 
 
 func test_can_field_cast_debuff_blocked() -> void:

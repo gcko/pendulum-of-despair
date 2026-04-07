@@ -58,6 +58,7 @@ func open(character_id: String) -> void:
 	_scroll_offset = 0
 	_state = MagicState.BROWSING
 	_showing_feedback = false
+	_feedback_timer = 0.0
 	var member: Dictionary = PartyState.get_member(character_id)
 	var level: int = member.get("level", 1)
 	_spells = SpellHelpers.get_known_spells(character_id, level)
@@ -194,10 +195,13 @@ func _cast_on_target(living: Array[Dictionary]) -> void:
 	var target_id: String = living[_target_index].get("character_id", "")
 	var caster_mag: int = PartyState.get_effective_stat(_character_id, "mag")
 	var heal_amount: int = SpellHelpers.get_field_heal_amount(caster_mag, spell)
+	var restored: int = 0
 	if heal_amount > 0:
-		PartyState.heal_member(target_id, heal_amount)
+		restored = PartyState.heal_member(target_id, heal_amount)
+	_target_panel.visible = false
+	_state = MagicState.BROWSING
+	_show_feedback("Restored %d HP!" % restored if restored > 0 else "No effect.")
 	_update_char_info()
-	_update_target_display()
 	_update_grid()
 
 
