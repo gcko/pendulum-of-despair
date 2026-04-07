@@ -16,6 +16,8 @@ const COLOR_NORMAL: Color = Color("#ccddff")
 
 ## Resolved inventory: array of {item_id, name, buy_price}.
 var _inventory: Array = []
+## Set of equipment item_ids (buy routes to owned_equipment, not consumables).
+var _equipment_ids: Dictionary = {}
 ## Currently highlighted row index.
 var _selected: int = 0
 ## Timer accumulator for clearing feedback text.
@@ -108,7 +110,9 @@ func _build_name_map() -> Dictionary:
 	for eq_type: String in ["weapons", "armor", "accessories"]:
 		for item: Variant in DataManager.load_equipment(eq_type):
 			if item is Dictionary:
-				result[item.get("id", "")] = item.get("name", "")
+				var eid: String = item.get("id", "")
+				result[eid] = item.get("name", "")
+				_equipment_ids[eid] = true
 	return result
 
 
@@ -145,7 +149,11 @@ func _try_buy() -> void:
 	var entry: Dictionary = _inventory[_selected]
 	var price: int = entry["buy_price"]
 	if PartyState.spend_gold(price):
-		PartyState.add_item(entry["item_id"], 1)
+		var iid: String = entry["item_id"]
+		if _equipment_ids.has(iid):
+			PartyState.add_equipment(iid)
+		else:
+			PartyState.add_item(iid, 1)
 		_refresh_gold()
 		_show_feedback("Purchased!")
 	else:

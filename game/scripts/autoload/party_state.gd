@@ -268,6 +268,11 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	return true
 
 
+## Add equipment to owned inventory with a generated instance ID.
+func add_equipment(eid: String) -> void:
+	owned_equipment.append({"id": _generate_inst_id(eid), "equipment_id": eid})
+
+
 func add_item(item_id: String, quantity: int) -> void:
 	if quantity <= 0:
 		return
@@ -280,14 +285,13 @@ func add_item(item_id: String, quantity: int) -> void:
 func remove_item(item_id: String, quantity: int) -> void:
 	if quantity <= 0:
 		return
-	var consumables: Dictionary = inventory.get("consumables", {})
-	var current: int = consumables.get(item_id, 0)
-	var remaining: int = maxi(0, current - quantity)
-	if remaining <= 0:
-		consumables.erase(item_id)
+	var cons: Dictionary = inventory.get("consumables", {})
+	var left: int = maxi(0, cons.get(item_id, 0) - quantity)
+	if left <= 0:
+		cons.erase(item_id)
 	else:
-		consumables[item_id] = remaining
-	inventory["consumables"] = consumables
+		cons[item_id] = left
+	inventory["consumables"] = cons
 	inventory_changed.emit()
 
 
@@ -301,16 +305,13 @@ func add_gold(amount: int) -> void:
 
 
 func spend_gold(amount: int) -> bool:
-	if amount <= 0:
-		return false
-	if amount > gold:
+	if amount <= 0 or amount > gold:
 		return false
 	gold -= amount
 	return true
 
 
-## Restore ALL party members (active + reserve) to full HP/MP/AC and
-## clear status ailments. Per economy.md: inns heal the entire party.
+## Restore ALL party members to full HP/MP/AC, clear status. Per economy.md.
 func rest_at_inn() -> void:
 	for member: Dictionary in members:
 		if member.is_empty():
