@@ -103,7 +103,7 @@ static func apply_magic_to_enemy(
 ## Execute an enemy magic ability against a party member.
 ## Uses MAG/MDEF formula. element_mod is 1.0 until party resistances exist.
 static func execute_enemy_magic(
-	state: Node, enemy: Node, target_slot: int, element: String, power: int
+	state: Node, enemy: Node, target_slot: int, _element: String, power: int
 ) -> Dictionary:
 	var stats: Dictionary = enemy.get_stats()
 	var mag: int = stats.get("mag", 10)
@@ -119,8 +119,7 @@ static func execute_enemy_magic(
 	var reduction: Array = []
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
-	# element_mod: 1.0 for now (party resistances not yet implemented)
-	var _elem: String = element
+	# element_mod 1.0 until party resistances are implemented
 	var dmg: int = DamageCalc.calculate_magic(mag, power, target_mdef, 1.0, 1.0, [], reduction)
 	state.take_damage(target_slot, dmg)
 	return {"hit": true, "damage": dmg, "type": "magic"}
