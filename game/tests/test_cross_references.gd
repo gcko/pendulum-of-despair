@@ -295,3 +295,24 @@ func test_load_character_returns_empty_for_nonexistent() -> void:
 func test_load_crafting_returns_empty_for_nonexistent() -> void:
 	var result: Variant = DataManager.load_crafting("nonexistent_type_999")
 	assert_eq(result, {}, "load_crafting should return empty dict for missing type")
+
+
+# ── 8. Spell learned_by character IDs ───────────────────────────────
+
+
+func test_all_spell_learned_by_characters_exist() -> void:
+	var valid: Array[String] = ["edren", "cael", "maren", "lira", "torren", "sable"]
+	var bad: Array[String] = []
+	for tradition: String in ["ley_line", "forgewright", "spirit", "streetwise", "void"]:
+		var spells: Array = DataManager.load_spells(tradition)
+		for spell: Variant in spells:
+			if not spell is Dictionary:
+				continue
+			var s: Dictionary = spell as Dictionary
+			for entry: Variant in s.get("learned_by", []):
+				if not entry is Dictionary:
+					continue
+				var cid: String = (entry as Dictionary).get("character", "")
+				if cid != "" and cid not in valid:
+					bad.append("%s: unknown '%s'" % [s.get("id", "?"), cid])
+	assert_eq(bad.size(), 0, "All spell characters valid: %s" % str(bad))
