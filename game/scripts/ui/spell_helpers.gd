@@ -32,8 +32,10 @@ static func can_field_cast(spell: Dictionary) -> bool:
 
 
 ## Calculate field-cast healing. Deterministic (no variance) for field UX. Capped at 14999.
+## Returns 0 if spell has no power or power is null.
 static func get_field_heal_amount(caster_mag: int, spell: Dictionary) -> int:
-	var power: int = spell.get("power", 0)
+	var power_raw: Variant = spell.get("power", 0)
+	var power: int = power_raw as int if power_raw is int else 0
 	if power <= 0:
 		return 0
 	return mini(14999, int(caster_mag * power * 0.8))

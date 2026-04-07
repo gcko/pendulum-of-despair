@@ -52,14 +52,16 @@ static func can_field_cast(spell: Dictionary) -> bool
 Returns true if `spell.category` is in `["healing", "buff", "utility"]`.
 
 ```gdscript
-static func get_field_effect(spell: Dictionary, caster_mag: int) -> Dictionary
+static func get_field_heal_amount(caster_mag: int, spell: Dictionary) -> int
 ```
 
-Returns `{type: "heal", value: N}` for healing spells using the
-magic healing formula from combat-formulas.md:
-`healing = MAG * spell_power * 0.8` (no defense, no variance in field).
+Returns healing amount for field-cast healing spells using the
+formula from combat-formulas.md:
+`healing = MAG * spell_power * 0.8` (no defense, no variance in field,
+capped at 14,999). Returns 0 if spell has no power or power is null.
 
-For buff/utility spells, returns `{type: "status", status_name: "..."}`.
+**Note:** Only healing spells are field-castable. Buff/utility field
+effects deferred until effect application system exists.
 
 ### menu_magic.gd (screen script, ~220 lines)
 
