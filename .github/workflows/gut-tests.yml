@@ -1,0 +1,21 @@
+name: GUT Tests
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  gut-tests:
+    name: Run GUT Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run GUT tests
+        uses: ceceppa/godot-gut-ci@main
+        with:
+          godot_version: "4.6.2"
+          project_path: "game"
+          gut_params: "-gdir=res://tests -gprefix=test_ -gsuffix=.gd -gexit"
