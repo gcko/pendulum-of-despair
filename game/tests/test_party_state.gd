@@ -222,3 +222,83 @@ func test_class_titles() -> void:
 	assert_eq(_state.CLASS_TITLES.get("edren", ""), "Knight")
 	assert_eq(_state.CLASS_TITLES.get("maren", ""), "Archmage")
 	assert_eq(_state.CLASS_TITLES.get("sable", ""), "Thief")
+
+
+# --- Rest at Inn ---
+
+
+func test_rest_at_inn_heals_all_members() -> void:
+	_state.initialize_new_game()
+	for member: Dictionary in _state.members:
+		member["current_hp"] = 1
+		member["current_mp"] = 0
+	_state.rest_at_inn()
+	for member: Dictionary in _state.members:
+		var cid: String = member.get("character_id", "")
+		assert_eq(
+			member.get("current_hp", 0),
+			member.get("max_hp", 0),
+			"%s HP should be fully restored" % cid
+		)
+		assert_eq(
+			member.get("current_mp", 0),
+			member.get("max_mp", 0),
+			"%s MP should be fully restored" % cid
+		)
+
+
+func test_rest_at_inn_clears_status_effects() -> void:
+	_state.initialize_new_game()
+	for member: Dictionary in _state.members:
+		member["status_effects"] = ["poison", "blind"]
+	_state.rest_at_inn()
+	for member: Dictionary in _state.members:
+		var cid: String = member.get("character_id", "")
+		var effects: Array = member.get("status_effects", [])
+		assert_true(effects.is_empty(), "%s status_effects should be empty after inn rest" % cid)
+
+
+func test_rest_at_inn_heals_reserve_members() -> void:
+	_state.initialize_new_game()
+	# Move Cael (index 1) to reserve
+	_state.formation["active"] = [0] as Array[int]
+	_state.formation["reserve"] = [1] as Array[int]
+	# Damage the reserve member
+	var cael: Dictionary = _state.get_member("cael")
+	cael["current_hp"] = 1
+	cael["current_mp"] = 0
+	_state.rest_at_inn()
+	assert_eq(
+		cael.get("current_hp", 0),
+		cael.get("max_hp", 0),
+		"Reserve member HP should be fully restored"
+	)
+	assert_eq(
+		cael.get("current_mp", 0),
+		cael.get("max_mp", 0),
+		"Reserve member MP should be fully restored"
+	)
+
+
+# --- Equipment Instance IDs ---
+
+
+func test_add_equipment_creates_unique_ids() -> void:
+	_state.initialize_new_game()
+	_state.add_equipment("iron_sword")
+	_state.add_equipment("iron_sword")
+	assert_eq(_state.owned_equipment.size(), 2, "Should have 2 owned equipment entries")
+	var id_a: String = _state.owned_equipment[0].get("id", "")
+	var id_b: String = _state.owned_equipment[1].get("id", "")
+	assert_ne(id_a, id_b, "Instance IDs should be unique")
+	assert_true(id_a.begins_with("iron_sword_inst_"), "First ID should match pattern: %s" % id_a)
+	assert_true(id_b.begins_with("iron_sword_inst_"), "Second ID should match pattern: %s" % id_b)
+
+
+func test_add_equipment_stores_correct_equipment_id() -> void:
+	_state.initialize_new_game()
+	_state.add_equipment("valdris_blade")
+	var entry: Dictionary = _state.owned_equipment[0]
+	assert_eq(
+		entry.get("equipment_id", ""), "valdris_blade", "equipment_id should match the added item"
+	)
