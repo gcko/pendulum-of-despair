@@ -101,4 +101,6 @@ static func get_vein_guardian_action(
 	var use_ember: bool = (turn % 3 == 0 and turn % 4 != 0) or last_action == "crystal_slam"
 	if not use_ember:
 		return {"type": "attack", "id": "crystal_slam", "target_slot": pick_alive_target(state)}
-	return {"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame"}
+	return {
+		"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame", "power": 20
+	}

@@ -44,9 +44,8 @@
 
 ### Tech Debt (track in beads)
 
-1. **Vein Guardian hardcoded AI** — `_get_vein_guardian_action()` in
-   battle_manager.gd. Refactor to data-driven `boss_ai.gd` when second
-   boss is implemented.
+1. **Vein Guardian hardcoded AI** — `BattleAI.get_vein_guardian_action()` in
+   battle_ai.gd. Refactor to data-driven when second boss is implemented.
 2. **Placeholder tileset** — 4-color squares. Replace with pixel art
    in gap 4.8.
 3. **Dialogue stubs for cutscenes** — Replace with cutscene system in
@@ -228,50 +227,50 @@ source of truth. `docs/story/bestiary/act-i.md` is the source.
 New method in `game/scripts/combat/battle_manager.gd`:
 
 ```
-_get_vein_guardian_action(turn: int, hp_ratio: float) -> Dictionary
+BattleAI.get_vein_guardian_action(state, turn, hp_ratio, last_action, reconstructed)
 ```
 
 ### State Variables
 
-Added to battle_manager.gd instance scope:
+Tracked in battle_manager.gd, passed to BattleAI:
 
 ```gdscript
-var _vg_phase: int = 1
 var _vg_last_action: String = ""
 var _vg_reconstructed: bool = false
+var _turn_counter: int = 0
 ```
 
-Reset in `_setup_enemies()` when `is_boss` is true.
+Reset in `_setup_enemies()`.
 
 ### Phase Logic
 
 ```
 Phase 1 (hp_ratio > 0.5 OR already reconstructed):
-  if turn % 4 == 0 → Crystal Slam
-  elif turn % 3 == 0 → Ember Pulse
-  elif _vg_last_action == "crystal_slam" → Ember Pulse
-  else → Crystal Slam
+  if turn % 3 == 0 and turn % 4 != 0 → Ember Pulse (AoE, flame, power 20)
+  elif last_action == "crystal_slam" → Ember Pulse
+  else → Crystal Slam (single, highest threat)
 
-Phase 2 trigger (hp_ratio <= 0.5 AND NOT _vg_reconstructed):
+Phase 2 trigger (hp_ratio <= 0.5 AND NOT reconstructed):
   → Reconstruct (heal 300 HP, skip attack)
-  → Set _vg_reconstructed = true
   → Next turn returns to Phase 1 logic
 ```
 
 ### Integration Point
 
-In `_execute_enemy_turn()`, when the current enemy's data has
-`is_boss == true` and `id == "vein_guardian"`:
+In `_execute_enemy_turn()`, battle_manager.gd delegates to BattleAI:
 
 ```gdscript
-if enemy_data.get("id", "") == "vein_guardian":
-    action = _get_vein_guardian_action(_turn_counter, hp_ratio)
-else:
-    action = BattleAI.select_action(enemy_data, party_state)
+action = BattleAI.get_vein_guardian_action(
+    _state, _turn_counter, hp_ratio, _vg_last_action, _vg_reconstructed
+)
+# State tracked from returned action:
+_vg_last_action = action.get("id", "")
+if action.get("id", "") == "reconstruct":
+    _vg_reconstructed = true
 ```
 
 **Tech debt:** This `if` chain does not scale. When a second boss
-exists, refactor to a `boss_ai.gd` that reads phase/pattern tables
+exists, refactor to data-driven AI that reads phase/pattern tables
 from enemy JSON `"ai_script"` field.
 
 ---
@@ -547,7 +546,9 @@ node, placing the player at the correct entry position.
 | File | Changes |
 |------|---------|
 | `game/scripts/core/exploration.gd` | `_trigger_boss_encounter()`, floor-specific config, `_current_floor_id` |
-| `game/scripts/combat/battle_manager.gd` | `_get_vein_guardian_action()`, VG state vars, `_setup_party()` PartyState fix, boss flee disable |
+| `game/scripts/combat/battle_manager.gd` | VG state tracking, `_setup_party()` PartyState fix, boss flee disable |
+| `game/scripts/combat/battle_ai.gd` | `get_vein_guardian_action()`, `pick_alive_target()` |
+| `game/scripts/combat/battle_actions.gd` | `execute_enemy_magic()` for enemy AoE magic damage |
 | `game/data/items/consumables.json` | Append Ember Tonic, Drake Fang |
 | `game/data/items/materials.json` | Append Vein Guardian's Core |
 | `game/data/equipment/weapons.json` | Append Carradan Mining Pick |

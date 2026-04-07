@@ -319,7 +319,8 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 				if not m.is_empty() and m.get("is_alive", false):
 					var result: Dictionary
 					if not elem.is_empty():
-						result = BattleActions.execute_enemy_magic(_state, enemy, i, elem)
+						var pwr: int = action.get("power", 10)
+						result = BattleActions.execute_enemy_magic(_state, enemy, i, elem, pwr)
 					else:
 						result = BattleActions.execute_enemy_attack(_state, enemy, i)
 					damage_dealt.emit(
