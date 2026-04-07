@@ -1,0 +1,14 @@
+{
+  "scene_id": "npc_valdris_shopkeeper",
+  "entries": [
+    {
+      "id": "npc_valdris_shopkeeper_001",
+      "speaker": "valdris_shopkeeper",
+      "lines": ["Welcome! Take a look around."],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
