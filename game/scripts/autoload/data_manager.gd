@@ -75,17 +75,23 @@ func load_enemies(act: String) -> Array:
 	return []
 
 
-## Load item data by category. Returns the items array.
+## Load item data by category. Returns the items array, or empty if file missing.
 func load_items(category: String) -> Array:
-	var data: Variant = load_json("res://data/items/%s.json" % category)
+	var path: String = "res://data/items/%s.json" % category
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("items"):
 		return data["items"]
 	return []
 
 
-## Load equipment data by type (weapons, armor, accessories).
+## Load equipment data by type. Returns the array, or empty if file missing.
 func load_equipment(equipment_type: String) -> Array:
-	var data: Variant = load_json("res://data/equipment/%s.json" % equipment_type)
+	var path: String = "res://data/equipment/%s.json" % equipment_type
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has(equipment_type):
 		return data[equipment_type]
 	return []
@@ -99,9 +105,13 @@ func load_character(character_id: String) -> Dictionary:
 	return {}
 
 
-## Load shop inventory for a town.
-func load_shop(town: String) -> Dictionary:
-	var data: Variant = load_json("res://data/shops/%s.json" % town)
+## Load shop inventory by shop_id. Returns empty dict if file missing.
+func load_shop(shop_id: String) -> Dictionary:
+	var path: String = "res://data/shops/%s.json" % shop_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Shop file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}

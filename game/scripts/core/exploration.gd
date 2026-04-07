@@ -148,8 +148,9 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 			if entry is Dictionary and (entry as Dictionary).get(id_key, "") == match_id:
 				_encounter_config = entry as Dictionary
 				break
-		if _encounter_config.is_empty() and entries.size() > 0 and entries[0] is Dictionary:
-			_encounter_config = entries[0]
+		if _encounter_config.is_empty() and not match_id.is_empty() and not entries.is_empty():
+			if entries[0] is Dictionary:
+				_encounter_config = entries[0]
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)
@@ -157,10 +158,10 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	map_changed.emit(map_id)
 
 
-func flash_location_name(location_name: String) -> void:
+func flash_location_name(text: String) -> void:
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
-	_location_label.text = location_name
+	_location_label.text = text
 	_location_panel.visible = true
 	_location_panel.modulate = Color(1, 1, 1, 0)
 	_flash_tween = create_tween()
@@ -291,17 +292,17 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if not _transitioning:
+	if not _transitioning and interactable.has_method("interact"):
 		interactable.interact()
 
 
 func _find_entity_npc(npc_id: String) -> Node:
-	var entities: Node = _current_map.get_node_or_null("Entities")
-	if entities == null:
+	var ents: Node = _current_map.get_node_or_null("Entities")
+	if ents == null:
 		return null
-	for child: Node in entities.get_children():
-		if child.has_signal("npc_interacted") and child.npc_id == npc_id:
-			return child
+	for c: Node in ents.get_children():
+		if c.has_signal("npc_interacted") and c.get("npc_id") == npc_id:
+			return c
 	return null
 
 
@@ -319,8 +320,8 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 	if npc_node != null:
 		if npc_node.has_meta("shop_id"):
 			GameManager.transition_data = {"shop_id": npc_node.get_meta("shop_id")}
-			GameManager.push_overlay(GameManager.OverlayState.SHOP)
-			return
+			if GameManager.push_overlay(GameManager.OverlayState.SHOP):
+				return
 		if npc_node.has_meta("inn_id"):
 			_handle_inn(npc_node)
 			return
@@ -362,9 +363,9 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player:
 		return
-	var target_map: String = area.get_meta("target_map", "")
-	if target_map != "":
-		_transition_to_map(target_map, area.get_meta("target_spawn", ""))
+	var tgt: String = area.get_meta("target_map", "")
+	if tgt != "":
+		_transition_to_map(tgt, area.get_meta("target_spawn", ""))
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:

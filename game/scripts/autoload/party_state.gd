@@ -309,16 +309,15 @@ func spend_gold(amount: int) -> bool:
 	return true
 
 
-## Restore all party members to full HP/MP/AC and clear status.
-## Called when resting at an inn. Per economy.md inn rules.
+## Restore ALL party members (active + reserve) to full HP/MP/AC and
+## clear status ailments. Per economy.md: inns heal the entire party.
 func rest_at_inn() -> void:
-	for member: Dictionary in get_active_party():
+	for member: Dictionary in members:
 		if member.is_empty():
 			continue
-		var stats: Dictionary = member.get("base_stats", {})
-		member["current_hp"] = member.get("max_hp", stats.get("hp", 1))
-		member["current_mp"] = member.get("max_mp", stats.get("mp", 0))
-		member["current_ac"] = member.get("max_ac", 12)
+		member["current_hp"] = member.get("max_hp", 1)
+		member["current_mp"] = member.get("max_mp", 0)
+		member["current_ac"] = 12
 		member["status_effects"] = []
 
 
