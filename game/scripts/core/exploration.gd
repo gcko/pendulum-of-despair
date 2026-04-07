@@ -206,22 +206,20 @@ func _initialize_from_transition_data() -> void:
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
-		match data.get("result", ""):
-			"victory":
-				var rewards: Dictionary = {
-					"xp": data.get("earned_xp", 0),
-					"gold": data.get("earned_gold", 0),
-					"drops": data.get("earned_drops", []),
-				}
-				PartyState.distribute_battle_rewards(rewards)
-				var boss_flag: String = data.get("boss_flag", "")
-				if not boss_flag.is_empty():
-					EventFlags.set_flag(boss_flag, true)
-			"faint":
-				SaveManager.faint_and_fast_reload()
-				return
-			"flee":
-				pass
+		var r: String = data.get("result", "")
+		if r == "victory":
+			var rewards: Dictionary = {
+				"xp": data.get("earned_xp", 0),
+				"gold": data.get("earned_gold", 0),
+				"drops": data.get("earned_drops", [])
+			}
+			PartyState.distribute_battle_rewards(rewards)
+			var boss_flag: String = data.get("boss_flag", "")
+			if not boss_flag.is_empty():
+				EventFlags.set_flag(boss_flag, true)
+		elif r == "faint":
+			SaveManager.faint_and_fast_reload()
+			return
 		_danger_counter = 0
 		load_map(data.get("map_id", "test_room"))
 		if _player != null:
@@ -270,7 +268,7 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.save_point_activated.connect(_on_save_point_activated)
 			if child is Area2D and child.has_meta("boss_id"):
 				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
-			if child is Area2D and child.has_meta("dialogue_data"):
+			elif child is Area2D and child.has_meta("dialogue_data"):
 				child.body_entered.connect(_on_dialogue_trigger_entered.bind(child))
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
@@ -280,24 +278,19 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 
 
 func _disconnect_entity_signals(map_node: Node2D) -> void:
-	var sig_map: Dictionary = {
+	var sigs: Dictionary = {
 		"npc_interacted": _on_npc_interacted,
 		"chest_opened": _on_chest_opened,
-		"save_point_activated": _on_save_point_activated,
+		"save_point_activated": _on_save_point_activated
 	}
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities != null:
-		for child: Node in entities.get_children():
-			for sig: String in sig_map:
-				if child.has_signal(sig) and child.is_connected(sig, sig_map[sig]):
-					child.disconnect(sig, sig_map[sig])
-			if child is Area2D and (child.has_meta("boss_id") or child.has_meta("dialogue_data")):
-				for conn: Dictionary in child.body_entered.get_connections():
-					if conn["callable"].get_object() == self:
-						child.body_entered.disconnect(conn["callable"])
-	var transitions: Node = map_node.get_node_or_null("Transitions")
-	if transitions != null:
-		for child: Node in transitions.get_children():
+	for group: String in ["Entities", "Transitions"]:
+		var container: Node = map_node.get_node_or_null(group)
+		if container == null:
+			continue
+		for child: Node in container.get_children():
+			for sig: String in sigs:
+				if child.has_signal(sig) and child.is_connected(sig, sigs[sig]):
+					child.disconnect(sig, sigs[sig])
 			if child is Area2D:
 				for conn: Dictionary in child.body_entered.get_connections():
 					if conn["callable"].get_object() == self:
@@ -387,11 +380,19 @@ func _do_map_swap(target_map: String, target_spawn: String) -> void:
 	var map_path: String = MAP_BASE_PATH + target_map + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Transition target not found: %s" % map_path)
-		if _transition_tween != null and _transition_tween.is_valid():
-			_transition_tween.kill()
-		_end_transition()
+		_abort_transition()
 		return
+	var had_map: bool = _current_map != null
 	load_map(target_map, target_spawn)
+	if had_map and _current_map == null:
+		push_error("Exploration: load_map failed for: %s" % map_path)
+		_abort_transition()
+
+
+func _abort_transition() -> void:
+	if _transition_tween != null and _transition_tween.is_valid():
+		_transition_tween.kill()
+	_end_transition()
 
 
 func _end_transition() -> void:

@@ -75,6 +75,18 @@ shape = SubResource("Shape_trigger")
 
 [node name="Transitions" type="Node2D" parent="."]
 
+[node name="StairsToF1" type="Area2D" parent="Transitions"]
+position = Vector2(48, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "dungeons/ember_vein_f1"
+metadata/target_spawn = "from_ember_vein_f2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/StairsToF1"]
+shape = SubResource("Shape_transition")
+
 [node name="StairsToF4" type="Area2D" parent="Transitions"]
 position = Vector2(592, 448)
 collision_layer = 0

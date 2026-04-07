@@ -58,6 +58,18 @@ shape = SubResource("Shape_trigger")
 
 [node name="Transitions" type="Node2D" parent="."]
 
+[node name="ExitToTestRoom" type="Area2D" parent="Transitions"]
+position = Vector2(48, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "test_room"
+metadata/target_spawn = "from_ember_vein"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToTestRoom"]
+shape = SubResource("Shape_transition")
+
 [node name="StairsToF2" type="Area2D" parent="Transitions"]
 position = Vector2(592, 448)
 collision_layer = 0

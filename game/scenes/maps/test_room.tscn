@@ -58,3 +58,6 @@ shape = SubResource("Shape_exit")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(80, 90)
+
+[node name="from_ember_vein" type="Marker2D" parent="."]
+position = Vector2(32, 90)

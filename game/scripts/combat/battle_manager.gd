@@ -305,52 +305,53 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	elif atype in ["attack", "ability"]:
 		if atype == "ability":
 			_state.gain_weave_gauge_for_maren(15)
-		var tgt: int = action.get("target_slot", 0)
-		var tgt_name: String = _state.get_member(tgt).get("character_data", {}).get("name", "???")
-		message.emit("%s attacks %s!" % [enemy.get_display_name(), tgt_name])
-		var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, tgt)
-		damage_dealt.emit("party_%d" % tgt, result.get("damage", 0), result.get("type", "miss"))
+		if action.get("target", "") == "all":
+			message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "ability")])
+			for i: int in range(4):
+				var m: Dictionary = _state.get_member(i)
+				if not m.is_empty() and m.get("is_alive", false):
+					var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, i)
+					damage_dealt.emit(
+						"party_%d" % i, result.get("damage", 0), result.get("type", "miss")
+					)
+		else:
+			var tgt: int = action.get("target_slot", 0)
+			var tgt_name: String = _state.get_member(tgt).get("character_data", {}).get(
+				"name", "???"
+			)
+			message.emit("%s attacks %s!" % [enemy.get_display_name(), tgt_name])
+			var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, tgt)
+			damage_dealt.emit("party_%d" % tgt, result.get("damage", 0), result.get("type", "miss"))
 	enemy.tick_statuses()
 
 
 func _check_end_conditions() -> void:
 	if _enemies.all(func(e: Node) -> bool: return not e.is_alive):
-		_handle_victory()
-		return
-	if _state.is_party_wiped():
+		_battle_active = false
+		_awaiting_input_for = ""
+		_earned_drops = []
+		for e: Node in _enemies:
+			_earned_xp += e.enemy_data.get("xp", 0)
+			_earned_gold += e.enemy_data.get("gold", 0)
+			var d: Dictionary = e.roll_drop()
+			if d.get("success", false):
+				_earned_drops.append({"item_id": d.get("item_id", "")})
+		victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops})
+	elif _state.is_party_wiped():
 		defeat.emit()
 		_exit_battle("faint")
-
-
-func _handle_victory() -> void:
-	_battle_active = false
-	_awaiting_input_for = ""
-	_earned_drops = []
-	for enemy: Node in _enemies:
-		_earned_xp += enemy.enemy_data.get("xp", 0)
-		_earned_gold += enemy.enemy_data.get("gold", 0)
-		var drop: Dictionary = enemy.roll_drop()
-		if drop.get("success", false):
-			_earned_drops.append({"item_id": drop.get("item_id", "")})
-	victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops})
 
 
 func _exit_battle(result: String) -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
-	var transition: Dictionary = {
-		"result": result,
-		"map_id": _return_map_id,
-		"position": _return_position,
-		"earned_xp": _earned_xp,
-		"earned_gold": _earned_gold,
-		"earned_drops": _earned_drops,
-		"boss_flag": _boss_flag,
-	}
+	var t: Dictionary = {"result": result, "map_id": _return_map_id, "position": _return_position}
+	t.merge({"earned_xp": _earned_xp, "earned_gold": _earned_gold, "earned_drops": _earned_drops})
+	t["boss_flag"] = _boss_flag
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0
-	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
+	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, t)
 
 
 func _pick_alive_target() -> int:
