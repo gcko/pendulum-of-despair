@@ -653,7 +653,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] 9-command main menu: Items, Equipment, Magic, Abilities, Status, Formation, Ley Crystals, Config, Save (only at save points)
 - [x] Items screen: categorized list, use/discard, stack counts
 - [x] Equipment screen: 5 slots per character, stat comparison display
-- [ ] Magic screen: per-character spell list, MP costs, learned/unlearned — Phase 2
+- [x] Magic screen: two-column spell grid, field-cast healing/buff, MP deduction — Phase 2 (2026-04-07)
 - [ ] Abilities screen: per-character unique command, sub-abilities — Phase 2
 - [x] Status screen: full stat display, equipment summary, elemental profile
 - [ ] Formation screen: active/reserve party, row assignment (front/back), drag arrangement — Phase 2
@@ -665,11 +665,13 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] SaveManager wired to PartyState (build/apply save data)
 - [x] Title screen: New Game initializes PartyState, Config opens menu overlay
 - [x] Exploration: Escape key opens menu overlay
-- [ ] Shop buy/sell interface — Phase 2
+- [x] Shop buy/sell interface — buy-only via shop_overlay.gd (2026-04-07)
 
 **Notes:**
-- Phase 1 implements 5 screens (Items, Equipment, Status, Config, Save integration) + 4 stubs (Magic, Abilities, Formation, Crystal)
-- New PartyState autoload (389 lines + 86-line inventory_helpers.gd) bridges static JSON data to live gameplay
+- Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework
+- Phase 2 progress: Magic screen complete (spell_helpers.gd + menu_magic.gd), Shop buy-only (shop_overlay.gd)
+- Remaining Phase 2: Abilities, Formation, Ley Crystal screens
+- PartyState: spend_mp(), heal_member() added for Magic field-cast
 - Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
 - Equipment screen has live stat comparison with green/red delta indicators
 - 8 new .gd files + 1 .tscn + 1 test file; 4 modified files
