@@ -1,5 +1,4 @@
 extends Node2D
-## Exploration core state scene. Loads maps, manages player, wires entity signals.
 
 signal map_changed(map_id: String)
 
@@ -97,7 +96,7 @@ func _trigger_random_encounter() -> void:
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning:
+	if _transitioning or _player == null:
 		return
 	var boss_id: String = area.get_meta("boss_id", "")
 	var flag: String = area.get_meta("flag", "")
@@ -107,6 +106,9 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 		return
 	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
 	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
+	if enemy_ids.is_empty():
+		return
+	_danger_counter = 0
 	_transitioning = true
 	var transition: Dictionary = {
 		"encounter_group": enemy_ids,
@@ -156,6 +158,10 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 					_encounter_config = floor_entry as Dictionary
 					break
 		if _encounter_config.is_empty() and floors.size() > 0 and floors[0] is Dictionary:
+			if not _current_floor_id.is_empty():
+				push_warning(
+					"Exploration: No floor match for '%s', using floor[0]" % _current_floor_id
+				)
 			_encounter_config = floors[0]
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
@@ -174,11 +180,7 @@ func flash_location_name(location_name: String) -> void:
 	_flash_tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
 	_flash_tween.tween_interval(2.0)
 	_flash_tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
-	_flash_tween.tween_callback(_hide_location_panel)
-
-
-func _hide_location_panel() -> void:
-	_location_panel.visible = false
+	_flash_tween.tween_callback(_location_panel.hide)
 
 
 func _spawn_player() -> void:
@@ -204,8 +206,7 @@ func _initialize_from_transition_data() -> void:
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
-		var result: String = data.get("result", "")
-		match result:
+		match data.get("result", ""):
 			"victory":
 				var rewards: Dictionary = {
 					"xp": data.get("earned_xp", 0),
@@ -222,11 +223,9 @@ func _initialize_from_transition_data() -> void:
 			"flee":
 				pass
 		_danger_counter = 0
-		var map_id: String = data.get("map_id", "test_room")
-		load_map(map_id)
-		var pos: Vector2 = data.get("position", Vector2(80, 90))
+		load_map(data.get("map_id", "test_room"))
 		if _player != null:
-			_player.position = pos
+			_player.position = data.get("position", Vector2(80, 90))
 	else:
 		load_map("test_room")
 
@@ -356,19 +355,20 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
 	if not (dialogue is Array) or (dialogue as Array).is_empty():
 		return
-	if not flag.is_empty():
-		EventFlags.set_flag(flag)
-	var payload: Dictionary = {"dialogue": dialogue}
-	GameManager.push_overlay(GameManager.OverlayState.DIALOGUE, payload)
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		var overlay: Node = GameManager.overlay_node
+		if overlay != null and overlay.has_method("show_dialogue"):
+			overlay.show_dialogue(dialogue as Array)
+			if not flag.is_empty():
+				EventFlags.set_flag(flag)
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player:
 		return
 	var target_map: String = area.get_meta("target_map", "")
-	var target_spawn: String = area.get_meta("target_spawn", "")
 	if target_map != "":
-		_transition_to_map(target_map, target_spawn)
+		_transition_to_map(target_map, area.get_meta("target_spawn", ""))
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:

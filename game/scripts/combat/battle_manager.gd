@@ -19,6 +19,7 @@ const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 var _return_map_id: String = ""
 var _return_position: Vector2 = Vector2.ZERO
 var _is_boss: bool = false
+var _boss_flag: String = ""
 var _formation_type: String = "normal"
 var _enemies: Array[Node] = []
 var _battle_active: bool = false
@@ -55,6 +56,7 @@ func _ready() -> void:
 	_return_map_id = data.get("return_map_id", "")
 	_return_position = data.get("return_position", Vector2.ZERO)
 	_is_boss = data.get("is_boss", false)
+	_boss_flag = data.get("boss_flag", "")
 	_formation_type = data.get("formation_type", "normal")
 	var encounter_group: Array = data.get("encounter_group", [])
 	if encounter_group.is_empty():
@@ -69,14 +71,12 @@ func _ready() -> void:
 			if not _state.get_member(i).is_empty():
 				_state.swap_row(i)
 	_battle_active = true
-	var ps: Array = []
-	for i: int in range(4):
-		ps.append(_state.get_member(i))
+	var ps: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
 	var es: Array = []
 	var pos: Array[Vector2] = []
 	for e: Node in _enemies:
-		pos.append(e.position)
 		es.append({"name": e.get_display_name(), "hp": e.current_hp})
+		pos.append(e.position)
 	battle_started.emit(ps, es, pos)
 
 
@@ -88,8 +88,7 @@ func _process(delta: float) -> void:
 	_check_end_conditions()
 	if not _battle_active:
 		return
-	var queue: Array[String] = _atb.get_ready_queue()
-	for id: String in queue:
+	for id: String in _atb.get_ready_queue():
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
@@ -127,8 +126,9 @@ func _on_ui_command(command: Dictionary) -> void:
 			_do_defend(actor_id)
 		"flee":
 			if _is_boss:
-				return
-			_do_flee()
+				ok = false
+			else:
+				_do_flee()
 		"ability":
 			_do_attack(actor_id, command)
 	if not ok:
@@ -253,19 +253,17 @@ func _do_defend(actor_id: String) -> void:
 	var slot: int = actor_id.replace("party_", "").to_int()
 	_state.set_defending(slot, true)
 	_state.set_buff(slot, "damage_taken_mult", 0.5)
-	var dname: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	message.emit("%s defends!" % dname)
+	var n: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
+	message.emit("%s defends!" % n)
 
 
 func _do_flee() -> void:
-	var es: float = 0.0
-	var ec: int = 0
-	for e: Node in _enemies:
-		if e.is_alive:
-			es += e.get_stats().get("spd", 10)
-			ec += 1
+	var alive_enemies: Array = _enemies.filter(func(e: Node) -> bool: return e.is_alive)
+	var enemy_spd_sum: float = alive_enemies.reduce(
+		func(acc: float, e: Node) -> float: return acc + e.get_stats().get("spd", 10), 0.0
+	)
 	var chance: int = DamageCalc.calculate_flee_chance(
-		_state.get_avg_party_spd(), es / maxf(1.0, ec)
+		_state.get_avg_party_spd(), enemy_spd_sum / maxf(1.0, alive_enemies.size())
 	)
 	if randi() % 100 < chance:
 		message.emit("Escaped!")
@@ -283,12 +281,10 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	var enemy: Node = _enemies[idx]
 	if not enemy.is_alive:
 		return
-	var pm: Array = []
-	var pr: Array = []
-	for i: int in range(4):
-		var m: Dictionary = _state.get_member(i)
-		pm.append(m)
-		pr.append(m.get("row", "front") if not m.is_empty() else "front")
+	var pm: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
+	var pr: Array = pm.map(
+		func(m: Dictionary) -> String: return m.get("row", "front") if not m.is_empty() else "front"
+	)
 	var action: Dictionary
 	if _is_boss and enemy.enemy_data.get("id", "") == "vein_guardian":
 		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
@@ -326,15 +322,14 @@ func _check_end_conditions() -> void:
 func _handle_victory() -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
-	var drops: Array[Dictionary] = []
+	_earned_drops = []
 	for enemy: Node in _enemies:
 		_earned_xp += enemy.enemy_data.get("xp", 0)
 		_earned_gold += enemy.enemy_data.get("gold", 0)
 		var drop: Dictionary = enemy.roll_drop()
 		if drop.get("success", false):
-			drops.append({"item_id": drop.get("item_id", "")})
-	_earned_drops = drops
-	victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": drops})
+			_earned_drops.append({"item_id": drop.get("item_id", "")})
+	victory.emit({"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops})
 
 
 func _exit_battle(result: String) -> void:
@@ -346,7 +341,8 @@ func _exit_battle(result: String) -> void:
 		"position": _return_position,
 		"earned_xp": _earned_xp,
 		"earned_gold": _earned_gold,
-		"earned_drops": _earned_drops
+		"earned_drops": _earned_drops,
+		"boss_flag": _boss_flag,
 	}
 	_earned_drops = []
 	_earned_xp = 0
@@ -354,8 +350,14 @@ func _exit_battle(result: String) -> void:
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
 
 
-## Hardcoded Vein Guardian boss AI. Tech debt: refactor to data-driven
-## boss_ai.gd when second boss is implemented.
+func _pick_alive_target() -> int:
+	var alive: Array[int] = []
+	for i: int in range(4):
+		if _state.get_member(i).get("current_hp", 0) > 0:
+			alive.append(i)
+	return alive[randi() % alive.size()] if not alive.is_empty() else 0
+
+
 func _get_vein_guardian_action(turn: int, hp_ratio: float) -> Dictionary:
 	if hp_ratio <= 0.5 and not _vg_reconstructed:
 		_vg_reconstructed = true
@@ -365,7 +367,7 @@ func _get_vein_guardian_action(turn: int, hp_ratio: float) -> Dictionary:
 	var action: String = "ember_pulse" if use_ember else "crystal_slam"
 	_vg_last_action = action
 	if action == "crystal_slam":
-		return {"type": "attack", "id": "crystal_slam", "target": "single"}
+		return {"type": "attack", "id": "crystal_slam", "target_slot": _pick_alive_target()}
 	return {"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame"}
 
 
@@ -382,8 +384,7 @@ func _setup_party() -> void:
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 	_vg_last_action = ""
 	_vg_reconstructed = false
-	var count: int = mini(6, encounter_group.size())
-	for i: int in range(count):
+	for i: int in range(mini(6, encounter_group.size())):
 		var enemy_node: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(enemy_node)
 		enemy_node.initialize(encounter_group[i], enemy_act)
