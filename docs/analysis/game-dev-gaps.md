@@ -847,22 +847,39 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 ### 4.2 Vertical Slice: Valdris Crown (First Town)
 
-**Status:** NOT STARTED
+**Status:** MOSTLY COMPLETE
 **Priority:** P0 — first town proof
 **Estimated Size:** L (tilemap, NPC placements, shop integration)
-**Output:** `game/scenes/maps/towns/valdris_crown.tscn`
+**Completed:** 2026-04-07
+**Output:** `game/scenes/maps/towns/valdris_lower_ward.tscn`, `game/scenes/maps/towns/valdris_anchor_oar.tscn`, `game/scenes/overlay/shop_overlay.tscn`
 **Source Docs:** `city-valdris.md` (layout, districts, NPCs), `interiors.md` (interior map layouts), `economy.md` (Valdris shops), `npcs.md` (Valdris NPCs), `script/act-i.md` (Valdris arrival scenes)
 **Depends On:** 3.2 (Exploration), 3.4 (Menu — for shops), 3.5 (Dialogue), 2.2 (NPC), 2.4 (SavePoint), 1.4 (Shop Data)
 
-**What's Needed:**
-- [ ] Town tilemap from city-valdris.md layout
-- [ ] NPC placements with flag-gated dialogue
-- [ ] Shop NPCs wired to shop data (general store, equipment, herbalist)
-- [ ] Inn functionality (rest + save per save-system.md)
-- [ ] Save point(s) placement
-- [ ] Story scenes from script/act-i.md (Valdris arrival)
-- [ ] Interior transitions (enter buildings → interior maps)
-- [ ] Music/ambient per music.md Valdris tracks
+**What's Done (Lower Ward vertical slice):**
+- [x] Lower Ward exterior tilemap (40x35 tiles, placeholder)
+- [x] Anchor & Oar tavern interior (16x14 tiles)
+- [x] 7 NPCs with flag-gated dialogue (Bren, Wynn, Old Harren, Renn, Thessa, Sgt. Marek, Nella)
+- [x] 2 shop NPCs wired to existing shop JSON (general store, armorer)
+- [x] Buy-only shop overlay (new SHOP overlay state + scene)
+- [x] Inn functionality (rest via Renn, 150g, restores HP/MP/AC)
+- [x] 2 save points (Chapel exterior, tavern interior)
+- [x] Transitions: South Gate ↔ test_room, exterior ↔ tavern
+- [x] Encounter logic extracted to encounter_handler.gd
+
+**What Remains (deferred to gap 4.4):**
+- [ ] Districts B-E (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
+- [ ] Scene 7 story sequence (needs 6-person party + cutscene system 3.7)
+- [ ] Specialty/Accessory shop, Armor Shop (Citizen's Walk district)
+- [ ] Tavern upper floor, Barracks interior, Chapel interior, Cael's Quarters
+- [ ] Act II shop restocking (diplomatic_mission_start)
+- [ ] Music/ambient per music.md (gap 3.8)
+- [ ] Story scenes from script/act-i.md Scene 7
+
+**Notes:**
+- Shop overlay is buy-only (no sell mode, no quantity picker)
+- encounter_handler.gd extracted from exploration.gd for line budget
+- PartyState.rest_at_inn() added for inn healing
+- Placeholder 6-tile tileset (4 dungeon + 2 town tiles)
 
 **Blocking:** First complete town experience, shop/economy testing
 
