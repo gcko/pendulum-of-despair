@@ -87,9 +87,12 @@ func load_shop(town: String) -> Dictionary:
 	return {}
 
 
-## Load encounter data for a dungeon.
+## Load encounter data for a dungeon. Returns empty dict if no encounter file exists.
 func load_encounters(dungeon: String) -> Dictionary:
-	var data: Variant = load_json("res://data/encounters/%s.json" % dungeon)
+	var path: String = "res://data/encounters/%s.json" % dungeon
+	if not FileAccess.file_exists(path):
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
