@@ -20,4 +20,30 @@ python3 "$GATE_DIR/check_stale_counts.py"
 echo "=== Pre-push: Scene reference validation ==="
 python3 "$GATE_DIR/check_scene_refs.py"
 
+# === QUALITY GATE G: GUT unit tests ===
+# Run all GUT tests headless. Requires Godot binary on PATH or at
+# /Applications/Godot.app (macOS). Skip gracefully if Godot not found.
+GODOT_BIN=""
+if command -v godot >/dev/null 2>&1; then
+    GODOT_BIN="godot"
+elif [ -x "/Applications/Godot.app/Contents/MacOS/Godot" ]; then
+    GODOT_BIN="/Applications/Godot.app/Contents/MacOS/Godot"
+fi
+
+if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
+    echo "=== Pre-push: GUT tests ==="
+    TEMP_LOG=/tmp/gut_prepush.log
+    "$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \
+        sed 's/\x1b\[[0-9;]*m//g' | tee "$TEMP_LOG"
+    # Check for failures in stripped output (ANSI-safe)
+    if grep -q "Failing Tests" "$TEMP_LOG" && ! grep -qE "Failing Tests\s+0" "$TEMP_LOG"; then
+        echo "GUT tests FAILED. Fix tests before pushing."
+        exit 1
+    fi
+    PASSING=$(grep "Passing Tests" "$TEMP_LOG" | awk '{print $NF}' || true)
+    echo "GUT tests passed ($PASSING passing)."
+else
+    echo "=== Pre-push: GUT tests SKIPPED (Godot not found) ==="
+fi
+
 echo "=== All pre-push quality gates passed ==="

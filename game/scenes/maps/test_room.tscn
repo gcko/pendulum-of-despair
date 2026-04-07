@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="1_npc"]
 [ext_resource type="PackedScene" path="res://scenes/entities/treasure_chest.tscn" id="2_chest"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id="Shape_exit"]
 size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_north_valdris"]
+size = Vector2(32, 16)
 
 [node name="TestRoom" type="Node2D"]
 metadata/location_name = "Test Room"
@@ -56,8 +59,23 @@ metadata/target_spawn = "PlayerSpawn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitWestDungeon"]
 shape = SubResource("Shape_exit")
 
+[node name="ExitNorthValdris" type="Area2D" parent="Transitions"]
+position = Vector2(160, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_lower_ward"
+metadata/target_spawn = "from_test_room"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitNorthValdris"]
+shape = SubResource("Shape_north_valdris")
+
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(80, 90)
 
 [node name="from_ember_vein" type="Marker2D" parent="."]
 position = Vector2(32, 90)
+
+[node name="from_valdris" type="Marker2D" parent="."]
+position = Vector2(160, 32)

@@ -185,16 +185,11 @@ func equip_item(character_id: String, slot: String, equipment_id: String) -> Dic
 	var equip: Dictionary = m.get("equipment", {})
 	var old_id: String = equip.get(slot, "")
 
-	# Validate new item is owned (skip for starting equipment during init)
 	if not _has_owned_equipment(equipment_id):
 		push_error("PartyState: Cannot equip '%s' — not in owned_equipment" % equipment_id)
 		return {}
-
-	# Return old item to inventory
 	if old_id != "":
 		owned_equipment.append({"id": _generate_inst_id(old_id), "equipment_id": old_id})
-
-	# Remove new item from inventory
 	_remove_owned_equipment(equipment_id)
 
 	equip[slot] = equipment_id
@@ -254,7 +249,6 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	var qty: int = consumables.get(item_id, 0)
 	if qty <= 0:
 		return false
-
 	var item_data: Dictionary = Helpers.lookup_consumable(item_id)
 	if item_data.is_empty():
 		return false
@@ -262,11 +256,9 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 		return false
 	if item_data.get("requires_save_point", false) and not is_at_save_point:
 		return false
-
 	var target: Dictionary = get_member(target_character_id)
 	if target.is_empty():
 		return false
-
 	Helpers.apply_item_effect(item_data, target)
 	consumables[item_id] = qty - 1
 	if consumables[item_id] <= 0:
@@ -274,6 +266,11 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	inventory["consumables"] = consumables
 	inventory_changed.emit()
 	return true
+
+
+## Add equipment to owned inventory with a generated instance ID.
+func add_equipment(eid: String) -> void:
+	owned_equipment.append({"id": _generate_inst_id(eid), "equipment_id": eid})
 
 
 func add_item(item_id: String, quantity: int) -> void:
@@ -288,14 +285,13 @@ func add_item(item_id: String, quantity: int) -> void:
 func remove_item(item_id: String, quantity: int) -> void:
 	if quantity <= 0:
 		return
-	var consumables: Dictionary = inventory.get("consumables", {})
-	var current: int = consumables.get(item_id, 0)
-	var remaining: int = maxi(0, current - quantity)
-	if remaining <= 0:
-		consumables.erase(item_id)
+	var cons: Dictionary = inventory.get("consumables", {})
+	var left: int = maxi(0, cons.get(item_id, 0) - quantity)
+	if left <= 0:
+		cons.erase(item_id)
 	else:
-		consumables[item_id] = remaining
-	inventory["consumables"] = consumables
+		cons[item_id] = left
+	inventory["consumables"] = cons
 	inventory_changed.emit()
 
 
@@ -309,12 +305,21 @@ func add_gold(amount: int) -> void:
 
 
 func spend_gold(amount: int) -> bool:
-	if amount <= 0:
-		return false
-	if amount > gold:
+	if amount <= 0 or amount > gold:
 		return false
 	gold -= amount
 	return true
+
+
+## Restore ALL party members to full HP/MP/AC, clear status. Per economy.md.
+func rest_at_inn() -> void:
+	for member: Dictionary in members:
+		if member.is_empty():
+			continue
+		member["current_hp"] = member.get("max_hp", 1)
+		member["current_mp"] = member.get("max_mp", 0)
+		member["current_ac"] = 12
+		member["status_effects"] = []
 
 
 func get_config() -> Dictionary:

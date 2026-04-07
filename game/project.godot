@@ -1,12 +1,18 @@
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
-; but it is readable and editable as a plain text file.
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
 
 [application]
 
 config/name="Pendulum of Despair"
 run/main_scene="res://scenes/core/title.tscn"
-config/features=PackedStringArray("4.6")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
 
@@ -24,7 +30,6 @@ window/size/viewport_height=180
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
 window/stretch/scale_mode="integer"
 
 [input]

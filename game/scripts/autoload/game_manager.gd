@@ -21,10 +21,11 @@ const OVERLAY_SCENES: Dictionary = {
 	OverlayState.DIALOGUE: "res://scenes/overlay/dialogue.tscn",
 	OverlayState.SAVE_LOAD: "res://scenes/overlay/save_load.tscn",
 	OverlayState.CUTSCENE: "res://scenes/overlay/cutscene.tscn",
+	OverlayState.SHOP: "res://scenes/overlay/shop_overlay.tscn",
 }
 
 enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
 
 ## Current active states.
 var current_core: CoreState = CoreState.TITLE

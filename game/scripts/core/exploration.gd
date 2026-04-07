@@ -5,7 +5,7 @@ signal map_changed(map_id: String)
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
-const EncounterSystem = preload("res://scripts/combat/encounter_system.gd")
+const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
@@ -56,56 +56,45 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		if _player.has_method("try_interact"):
-			get_viewport().set_input_as_handled()
-			_player.try_interact()
+		get_viewport().set_input_as_handled()
+		_player.try_interact()
 
 
 func _process_encounter_step() -> void:
 	if _encounter_config.is_empty():
 		return
-	var base: int = _encounter_config.get("danger_increment", 0)
-	if base <= 0:
-		return
-	var acc_mod: float = EncounterSystem.get_accessory_modifier(PartyState.get_active_party())
-	_danger_counter += EncounterSystem.roll_increment(base, 1.0, acc_mod)
-	if EncounterSystem.check_encounter(_danger_counter):
+	var result: int = EncounterHandler.process_step(
+		_encounter_config, _danger_counter, PartyState.get_active_party()
+	)
+	if result == -1:
 		_trigger_random_encounter()
+	else:
+		_danger_counter = result
 
 
 func _trigger_random_encounter() -> void:
 	if _transitioning:
 		return
-	var groups: Array = _encounter_config.get("groups", [])
-	if groups.is_empty():
+	var transition: Dictionary = EncounterHandler.build_random_encounter(
+		_encounter_config, _current_map_id, _player.position
+	)
+	if transition.is_empty():
 		return
-	var group: Dictionary = EncounterSystem.select_encounter_group(groups)
-	var rates: Dictionary = _encounter_config.get("formation_rates", {})
-	var formation: String = EncounterSystem.roll_formation(rates)
 	_danger_counter = 0
 	_transitioning = true
-	var transition: Dictionary = {
-		"encounter_group": group.get("enemies", []),
-		"formation_type": formation,
-		"return_map_id": _current_map_id,
-		"return_position": _player.position,
-		"enemy_act": "act_i",
-		"encounter_source": "random",
-	}
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
 	if _transitioning or _player == null:
 		return
-	var boss_id: String = area.get_meta("boss_id", "")
-	var flag: String = area.get_meta("flag", "")
-	if boss_id.is_empty():
+	if area.get_meta("boss_id", "").is_empty():
 		return
+	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
-	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
-	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
+	var eids: Variant = area.get_meta("enemy_ids", [])
+	var enemy_ids: Array = eids if eids is Array else []
 	if enemy_ids.is_empty():
 		return
 	_danger_counter = 0
@@ -156,12 +145,11 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		var id_key: String = "zone_id" if use_zones else "floor_id"
 		var match_id: String = _current_floor_id if not use_zones else _current_map_id
 		for entry: Variant in entries:
-			if entry is Dictionary:
-				if (entry as Dictionary).get(id_key, "") == match_id:
-					_encounter_config = entry as Dictionary
-					break
-		if _encounter_config.is_empty() and entries.size() > 0 and entries[0] is Dictionary:
-			if use_zones or not match_id.is_empty():
+			if entry is Dictionary and (entry as Dictionary).get(id_key, "") == match_id:
+				_encounter_config = entry as Dictionary
+				break
+		if _encounter_config.is_empty() and not match_id.is_empty() and not entries.is_empty():
+			if entries[0] is Dictionary:
 				_encounter_config = entries[0]
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
@@ -170,10 +158,10 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	map_changed.emit(map_id)
 
 
-func flash_location_name(location_name: String) -> void:
+func flash_location_name(text: String) -> void:
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
-	_location_label.text = location_name
+	_location_label.text = text
 	_location_panel.visible = true
 	_location_panel.modulate = Color(1, 1, 1, 0)
 	_flash_tween = create_tween()
@@ -186,10 +174,8 @@ func flash_location_name(location_name: String) -> void:
 func _spawn_player() -> void:
 	_player = PLAYER_SCENE.instantiate()
 	add_child(_player)
-	if _player.has_method("initialize"):
-		_player.initialize("edren")
-	if _player.has_signal("interaction_requested"):
-		_player.interaction_requested.connect(_on_interaction_requested)
+	_player.initialize("edren")
+	_player.interaction_requested.connect(_on_interaction_requested)
 
 
 func _initialize_from_transition_data() -> void:
@@ -306,31 +292,51 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if _transitioning:
-		return
-	if interactable.has_method("interact"):
+	if not _transitioning and interactable.has_method("interact"):
 		interactable.interact()
 
 
-func _on_npc_interacted(_npc_id: String, dialogue_data: Dictionary) -> void:
+func _find_entity_npc(npc_id: String) -> Node:
+	var ents: Node = _current_map.get_node_or_null("Entities")
+	if ents == null:
+		return null
+	for c: Node in ents.get_children():
+		if c.has_signal("npc_interacted") and c.get("npc_id") == npc_id:
+			return c
+	return null
+
+
+func _handle_inn(node: Node) -> void:
+	if not PartyState.spend_gold(node.get_meta("inn_cost", 150)):
+		flash_location_name("Not enough gold.")
+		return
+	PartyState.rest_at_inn()
+	flash_location_name("Rested at the inn.")
+
+
+func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
+	var npc_node: Node = _find_entity_npc(npc_id)
+	if npc_node != null:
+		if npc_node.has_meta("shop_id"):
+			GameManager.transition_data = {"shop_id": npc_node.get_meta("shop_id")}
+			if GameManager.push_overlay(GameManager.OverlayState.SHOP):
+				return
+		if npc_node.has_meta("inn_id"):
+			_handle_inn(npc_node)
+			return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		var overlay: Node = GameManager.overlay_node
-		if overlay != null and overlay.has_method("show_dialogue"):
-			overlay.show_dialogue([dialogue_data])
+		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
-func _on_chest_opened(chest_id: String, item_id: String) -> void:
+func _on_chest_opened(_chest_id: String, item_id: String) -> void:
+	PartyState.add_item(item_id, 1)
 	flash_location_name("Found %s!" % item_id)
-	if OS.is_debug_build():
-		print_debug("Chest %s opened: %s" % [chest_id, item_id])
 
 
 func _on_save_point_activated(_save_point_id: String) -> void:
 	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
-		var overlay: Node = GameManager.overlay_node
-		if overlay != null and overlay.has_method("open_save_point"):
-			overlay.open_save_point()
+		GameManager.overlay_node.open_save_point()
 
 
 func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
@@ -349,19 +355,17 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if not (dialogue is Array) or (dialogue as Array).is_empty():
 		return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		var overlay: Node = GameManager.overlay_node
-		if overlay != null and overlay.has_method("show_dialogue"):
-			overlay.show_dialogue(dialogue as Array)
-			if not flag.is_empty():
-				EventFlags.set_flag(flag, true)
+		GameManager.overlay_node.show_dialogue(dialogue as Array)
+		if not flag.is_empty():
+			EventFlags.set_flag(flag, true)
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player:
 		return
-	var target_map: String = area.get_meta("target_map", "")
-	if target_map != "":
-		_transition_to_map(target_map, area.get_meta("target_spawn", ""))
+	var tgt: String = area.get_meta("target_map", "")
+	if tgt != "":
+		_transition_to_map(tgt, area.get_meta("target_spawn", ""))
 
 
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
@@ -382,11 +386,7 @@ func _do_map_swap(target_map: String, target_spawn: String) -> void:
 		push_error("Exploration: Transition target not found: %s" % map_path)
 		_abort_transition()
 		return
-	var had_map: bool = _current_map != null
 	load_map(target_map, target_spawn)
-	if had_map and _current_map == null:
-		push_error("Exploration: load_map failed for: %s" % map_path)
-		_abort_transition()
 
 
 func _abort_transition() -> void:

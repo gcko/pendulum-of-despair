@@ -19,14 +19,12 @@ func load_json(path: String) -> Variant:
 		return _cache[path]
 
 	if not FileAccess.file_exists(path):
-		push_error("DataManager: File not found: %s" % path)
-		get_tree().quit(1)
+		_fatal("File not found: %s" % path)
 		return null
 
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if not file:
-		push_error("DataManager: Cannot open: %s" % path)
-		get_tree().quit(1)
+		_fatal("Cannot open: %s" % path)
 		return null
 
 	var json: JSON = JSON.new()
@@ -34,87 +32,139 @@ func load_json(path: String) -> Variant:
 	file.close()
 
 	if result != OK:
-		push_error(
+		_fatal(
 			(
-				"DataManager: Malformed JSON at %s line %d: %s"
+				"Malformed JSON at %s line %d: %s"
 				% [path, json.get_error_line(), json.get_error_message()]
 			)
 		)
-		get_tree().quit(1)
 		return null
 
 	_cache[path] = json.data
 	return json.data
 
 
-## Load enemy data for an act. Returns the "enemies" array.
+## Fatal error handler. Logs to user://crash.log, prints stack trace,
+## then exits. The crash log persists after the game closes so errors
+## are never silently lost.
+func _fatal(msg: String) -> void:
+	var full: String = "FATAL DataManager: %s" % msg
+	push_error(full)
+	print(full)
+	var trace: String = ""
+	for frame: Dictionary in get_stack():
+		trace += (
+			"  %s:%d in %s\n"
+			% [frame.get("source", "?"), frame.get("line", 0), frame.get("function", "?")]
+		)
+	print(trace)
+	var log_path: String = "user://crash.log"
+	var log_file: FileAccess = FileAccess.open(log_path, FileAccess.WRITE)
+	if log_file != null:
+		log_file.store_string("%s\n%s" % [full, trace])
+		log_file.close()
+		print("Crash log written to: %s" % ProjectSettings.globalize_path(log_path))
+	get_tree().quit(1)
+
+
+## Load enemy data for an act. Returns the "enemies" array, or empty if missing.
 func load_enemies(act: String) -> Array:
-	var data: Variant = load_json("res://data/enemies/%s.json" % act)
+	var path: String = "res://data/enemies/%s.json" % act
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Enemy file not found: %s" % path)
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("enemies"):
 		return data["enemies"]
 	return []
 
 
-## Load item data by category. Returns the items array.
+## Load item data by category. Returns the items array, or empty if file missing.
 func load_items(category: String) -> Array:
-	var data: Variant = load_json("res://data/items/%s.json" % category)
+	var path: String = "res://data/items/%s.json" % category
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("items"):
 		return data["items"]
 	return []
 
 
-## Load equipment data by type (weapons, armor, accessories).
+## Load equipment data by type. Returns the array, or empty if file missing.
 func load_equipment(equipment_type: String) -> Array:
-	var data: Variant = load_json("res://data/equipment/%s.json" % equipment_type)
+	var path: String = "res://data/equipment/%s.json" % equipment_type
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has(equipment_type):
 		return data[equipment_type]
 	return []
 
 
-## Load character data by ID.
+## Load character data by ID. Returns empty dict if file missing.
 func load_character(character_id: String) -> Dictionary:
-	var data: Variant = load_json("res://data/characters/%s.json" % character_id)
+	var path: String = "res://data/characters/%s.json" % character_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Character file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
 
 
-## Load shop inventory for a town.
-func load_shop(town: String) -> Dictionary:
-	var data: Variant = load_json("res://data/shops/%s.json" % town)
+## Load shop inventory by shop_id. Returns empty dict if file missing.
+func load_shop(shop_id: String) -> Dictionary:
+	var path: String = "res://data/shops/%s.json" % shop_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Shop file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
 
 
-## Load encounter data for a dungeon.
+## Load encounter data for a dungeon. Returns empty dict if no encounter file exists.
 func load_encounters(dungeon: String) -> Dictionary:
-	var data: Variant = load_json("res://data/encounters/%s.json" % dungeon)
+	var path: String = "res://data/encounters/%s.json" % dungeon
+	if not FileAccess.file_exists(path):
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
 
 
-## Load spell data for a tradition.
+## Load spell data for a tradition. Returns empty array if file missing.
 func load_spells(tradition: String) -> Array:
-	var data: Variant = load_json("res://data/spells/%s.json" % tradition)
+	var path: String = "res://data/spells/%s.json" % tradition
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
 	if data is Dictionary and data.has("spells"):
 		return data["spells"]
 	return []
 
 
-## Load dialogue data for a scene.
+## Load dialogue data for a scene. Returns empty dict if file missing.
 func load_dialogue(scene_id: String) -> Dictionary:
-	var data: Variant = load_json("res://data/dialogue/%s.json" % scene_id)
+	var path: String = "res://data/dialogue/%s.json" % scene_id
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Dialogue file not found: %s" % path)
+		return {}
+	var data: Variant = load_json(path)
 	if data is Dictionary:
 		return data
 	return {}
 
 
-## Load crafting data (devices or recipes).
+## Load crafting data (devices or recipes). Returns empty dict if missing.
 func load_crafting(crafting_type: String) -> Variant:
-	var data: Variant = load_json("res://data/crafting/%s.json" % crafting_type)
-	return data if data != null else {}
+	var path: String = "res://data/crafting/%s.json" % crafting_type
+	if not FileAccess.file_exists(path):
+		return {}
+	return load_json(path)
 
 
 ## Clear the cache (useful for testing or hot-reload).

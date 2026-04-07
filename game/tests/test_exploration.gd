@@ -114,3 +114,80 @@ func test_map_changed_signal() -> void:
 	watch_signals(exp)
 	exp.load_map("test_room_2")
 	assert_signal_emitted(exp, "map_changed", "should emit map_changed")
+
+
+# --- Chest & Inventory ---
+
+
+func test_chest_opened_adds_item_to_inventory() -> void:
+	var exp = _create_exploration()
+	var prev_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
+	exp._on_chest_opened("test_chest_99", "potion")
+	var new_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
+	assert_eq(new_qty, prev_qty + 1, "chest should add item to inventory")
+
+
+# --- Encounter Config ---
+
+
+func test_encounter_fallback_skipped_on_empty_floor_id() -> void:
+	var exp = _create_exploration()
+	# After initial load_map the encounter config is set from the map.
+	# Load a map that has an empty floor_id but a dungeon_id that resolves.
+	# The test_room map has no floor_id metadata, so _current_floor_id = "".
+	# When floor_id is empty the encounter matching loop uses match_id = ""
+	# which should NOT match any floor entry — _encounter_config stays empty.
+	exp._encounter_config = {}
+	exp._current_floor_id = ""
+	# Re-trigger the encounter loading logic by calling load_map on test_room.
+	# test_room has no encounter file, so config should remain empty.
+	exp.load_map("test_room")
+	assert_true(
+		exp._encounter_config.is_empty(),
+		"encounter config should stay empty when floor_id is empty and no match found"
+	)
+
+
+# --- NPC Shop & Inn ---
+
+
+func test_npc_with_shop_id_opens_shop_overlay() -> void:
+	var exp = _create_exploration()
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	assert_not_null(entities, "entities node required")
+	var npc: Node = entities.get_node_or_null("TestNPC")
+	assert_not_null(npc, "test NPC required")
+	# Add shop_id metadata to the NPC so the handler routes to shop overlay.
+	npc.set_meta("shop_id", "aelhart_general")
+	watch_signals(GameManager)
+	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	# push_overlay emits overlay_state_changed with SHOP
+	assert_signal_emitted(GameManager, "overlay_state_changed", "should open shop overlay")
+	# Clean up the overlay so it does not leak into the next test
+	GameManager.pop_overlay()
+
+
+func test_inn_interaction_deducts_gold() -> void:
+	var exp = _create_exploration()
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	assert_not_null(entities, "entities node required")
+	var npc: Node = entities.get_node_or_null("TestNPC")
+	assert_not_null(npc, "test NPC required")
+	npc.set_meta("inn_id", "test_inn")
+	npc.set_meta("inn_cost", 150)
+	PartyState.gold = 500
+	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	assert_eq(PartyState.gold, 350, "gold should decrease by inn cost")
+
+
+func test_inn_interaction_insufficient_gold_rejected() -> void:
+	var exp = _create_exploration()
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	assert_not_null(entities, "entities node required")
+	var npc: Node = entities.get_node_or_null("TestNPC")
+	assert_not_null(npc, "test NPC required")
+	npc.set_meta("inn_id", "test_inn")
+	npc.set_meta("inn_cost", 150)
+	PartyState.gold = 50
+	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	assert_eq(PartyState.gold, 50, "gold should be unchanged when insufficient")

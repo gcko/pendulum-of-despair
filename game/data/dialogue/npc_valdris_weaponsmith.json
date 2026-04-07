@@ -1,0 +1,14 @@
+{
+  "scene_id": "npc_valdris_weaponsmith",
+  "entries": [
+    {
+      "id": "npc_valdris_weaponsmith_001",
+      "speaker": "valdris_weaponsmith",
+      "lines": ["Good steel keeps you alive. Browse my stock."],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

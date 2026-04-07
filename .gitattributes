@@ -1,0 +1,3 @@
+# Mark third-party addons as vendored so GitHub (and Copilot code review)
+# excludes them from diffs, language stats, and review comments.
+game/addons/** linguist-vendored
