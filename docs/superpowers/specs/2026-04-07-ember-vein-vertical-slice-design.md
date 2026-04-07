@@ -20,7 +20,7 @@
 - Boss encounter trigger zones (new exploration method)
 - Floor-specific encounter config loading (fix always-first-floor)
 - PartyState integration for battle setup (live stats in battle)
-- Treasure chests (8 items across 3 floors)
+- Treasure chests (9 items across 3 floors)
 - Save points (1 per floor)
 - Floor transitions (stairs triggers with fade-to-black)
 - Dialogue stubs for 4 story beats (via existing dialogue overlay)
@@ -99,9 +99,17 @@ Node2D (root)
 
 | Floor | Tiles | Pixels | Random Encounters |
 |-------|-------|--------|-------------------|
-| F1: Upper Mine | 40x30 | 640x480 | Yes (floors 1-2 groups) |
-| F2: Lower Mine | 40x30 | 640x480 | Yes (floor 3 groups) |
-| F4: Boss Arena | 20x15 | 320x240 | No |
+| F1: Upper Mine | 40x30 | 640x480 | Yes — encounter JSON floor_id `"1-2"` |
+| F2: Lower Mine | 40x30 | 640x480 | Yes — encounter JSON floor_id `"3"` (Mine Shade + Ember Wisp) |
+| F4: Boss Arena | 20x15 | 320x240 | No (safe zone) |
+
+**Floor-to-encounter mapping note:** The vertical slice skips Floor 3
+(Ancient Ruin). Vertical-slice F2 (Lower Mine) uses encounter JSON
+floor_id `"3"` groups because the player has progressed deeper and
+encounters tougher enemies. F1 uses floor_id `"1-2"`. This is a
+deliberate mapping, not a 1:1 correspondence with dungeon floor
+numbers. F4 boss arena is 20x15 (reduced from canonical 35x30 for
+the vertical slice — boss arena only, no exploration corridors).
 
 ---
 
@@ -112,12 +120,24 @@ Node2D (root)
 Values from `docs/story/bestiary/act-i.md`. Each file contains stats,
 elemental profile, drop table, and attack list.
 
-| Enemy | ID | Lv | HP | ATK | DEF | MAG | MDEF | SPD | LCK | XP | Gold |
-|-------|----|----|----|-----|-----|-----|------|-----|-----|----|------|
-| Ley Vermin | `ley_vermin` | 1 | 23 | 8 | 4 | 2 | 3 | 6 | 3 | 5 | 3 |
-| Unstable Crystal | `unstable_crystal` | 3 | 64 | 12 | 10 | 8 | 6 | 4 | 2 | 12 | 8 |
-| Mine Shade | `mine_shade` | 4 | 96 | 14 | 8 | 12 | 10 | 8 | 4 | 18 | 12 |
-| Ember Wisp | `ember_wisp` | 5 | 125 | 10 | 6 | 16 | 12 | 10 | 5 | 22 | 15 |
+| Enemy | ID | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | XP | Gold |
+|-------|----|----|----|----|----|-----|-----|------|-----|----|------|
+| Ley Vermin | `ley_vermin` | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 4 | 1 |
+| Unstable Crystal | `unstable_crystal` | 3 | 64 | 10 | 13 | 6 | 10 | 7 | 10 | 10 | 5 |
+| Mine Shade | `mine_shade` | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 11 | 5 |
+| Ember Wisp | `ember_wisp` | 5 | 125 | 17 | 13 | 11 | 14 | 9 | 12 | 12 | 5 |
+
+**LCK:** Not specified in bestiary table. Default to 0 in JSON.
+
+**Enemy details:**
+- Ley Vermin: No weaknesses/resistances. Steal: Beast Hide (75%). Drop: Sharp Fang (25%).
+- Unstable Crystal: Weak Frost, Absorbs Flame, Immune Petrify. Steal: Element Shard (75%). Drop: Elemental Core (25%).
+- Mine Shade: Weak Ley, Immune Poison+Petrify. Steal: Ether Wisp (75%). Drop: Spirit Essence (25%).
+- Ember Wisp: Weak Frost, Absorbs Flame, Immune Petrify. Steal: Element Shard (75%). Drop: Elemental Core (25%).
+
+**Note:** Only 4 of the 8 Ember Vein regular enemies are included in the
+vertical slice (Restless Dead, Tomb Mite, Bone Warden, The Flickering
+omitted). This is a deliberate subset for scope control.
 
 **Note:** These values MUST be verified against the bestiary during
 implementation. The table above is a transcription checkpoint, not the
@@ -146,12 +166,12 @@ source of truth. `docs/story/bestiary/act-i.md` is the source.
     {"id": "bite", "name": "Bite", "type": "physical", "power": 10}
   ],
   "drops": {
-    "item_id": "potion",
-    "rate": 15
+    "item_id": "sharp_fang",
+    "rate": 25
   },
   "steal": {
-    "item_id": "",
-    "rate": 0
+    "item_id": "beast_hide",
+    "rate": 75
   },
   "xp": 5,
   "gold": 3,
@@ -167,14 +187,16 @@ source of truth. `docs/story/bestiary/act-i.md` is the source.
 | ID | `ember_drake` |
 | Level | 8 |
 | HP | 1,500 |
-| ATK / DEF / MAG / MDEF / SPD / LCK | 22 / 15 / 14 / 10 / 12 / 6 |
+| MP | 0 |
+| ATK / DEF / MAG / MDEF / SPD | 23 / 11 / 17 / 12 / 14 |
 | Weakness | Frost |
 | Resists | — |
-| Attacks | Claw (phys, power 18), Flame Breath (mag, fire, power 22), Pounce (phys, power 15) |
-| AI | Weighted-random (existing battle_ai.gd) |
+| Attacks | Tail Swipe (phys, single, highest threat — default), Flame Breath (mag, fire, party-wide AoE, 1-turn charge — turn % 3), Pounce (phys, single, back-row target) |
+| AI | Weighted-random for vertical slice (**tech debt:** canonical AI is conditional priority-list per bosses.md) |
+| Steal | Drake Scale (75%) |
 | Drop | Drake Fang (100%) |
-| XP / Gold | 120 / 80 |
-| is_boss | true |
+| XP / Gold | 44 / 50 |
+| is_boss | false |
 | is_mini_boss | true |
 
 ### Vein Guardian (Boss)
@@ -184,12 +206,14 @@ source of truth. `docs/story/bestiary/act-i.md` is the source.
 | ID | `vein_guardian` |
 | Level | 12 |
 | HP | 6,000 |
-| ATK / DEF / MAG / MDEF / SPD / LCK | 28 / 20 / 24 / 18 / 8 / 4 |
+| MP | 42 |
+| ATK / DEF / MAG / MDEF / SPD | 40 / 24 / 39 / 24 / 20 |
 | Weakness | Storm |
 | Resists | Flame |
 | Immunities | Death, Petrify, Stop, Sleep, Confusion |
-| Attacks | Crystal Slam (phys, power 30, single), Ember Pulse (mag, fire, power 24, AoE), Reconstruct (heal 300 HP, self) |
+| Attacks | Crystal Slam (phys, single, highest threat, 1-turn telegraph), Ember Pulse (mag, fire, party-wide AoE, 1-turn telegraph), Reconstruct (self, heal 300 HP) |
 | AI | Hardcoded scripted (see Section 4) |
+| Steal | Vein Shard (100%) |
 | Drop | Vein Guardian's Core (100%) |
 | XP / Gold | 800 / 50 |
 | is_boss | true |
@@ -372,7 +396,8 @@ with IDs and names — full stat integration uses existing systems.
 | Potion (x3) | Consumable | F1 chest | Already exists in items data |
 | Iron Bracelet | Accessory | F1 chest | `game/data/equipment/accessories.json` (append) |
 | Antidote (x2) | Consumable | F2 chest | Already exists in items data |
-| Ember Ring | Accessory | F2 chest | `game/data/equipment/accessories.json` (append) |
+| Miner's Hardhat | Accessory | F2 chest | `game/data/equipment/accessories.json` (append) |
+| Ember Ring | Accessory | F2 chest (behind mini-boss) | `game/data/equipment/accessories.json` (append) |
 | Potion (x3) | Consumable | F4 chest | Already exists |
 | Ember Tonic | Consumable | F4 chest | `game/data/items/consumables.json` (append) |
 | Drake Fang | Consumable | Ember Drake drop | `game/data/items/consumables.json` (append) |
@@ -396,41 +421,50 @@ Story beats delivered via existing dialogue overlay (not cutscene
 system). Each is a TriggerZone in the map that calls
 `GameManager.push_overlay(DIALOGUE)` with dialogue data.
 
-### Beat 1: Floor 1 Entry
+### Beat 1: Floor 1 — First Dead
 
-**Trigger:** Area2D near F1 entrance, one-shot (flag-gated)
+**Trigger:** Area2D near dead miners on F1, one-shot (flag-gated)
 **Flag:** `ember_vein_entry_seen`
+**Source:** `script/act-i.md` Scene 1a (lines 39-49)
 
 ```
-Edren: "Stay close. The miners reported strange lights before they
-stopped reporting altogether."
-Cael: "The air feels heavy. Like something is pressing down."
+Edren: "Hold."
+Edren: "No marks. No signs of a fight. They just... stopped."
+Cael: "They didn't die fighting. They died feeling something."
+Edren: "There'll be more."
 ```
 
-### Beat 2: Floor 2 Dead Miners
+### Beat 2: Floor 2 — The Letter
 
 **Trigger:** Area2D near miner bodies on F2, one-shot
 **Flag:** `ember_vein_miners_seen`
+**Source:** `script/act-i.md` Scene 1b (condensed for stub)
 
 ```
-Cael: "They didn't die fighting. They died feeling something."
-Edren: "No wounds. No signs of struggle. Just... this."
-Cael: "Whatever killed them, it wasn't quick. Look at their faces."
+Cael: "More of them. Six here."
+Edren: "This one's clutching something. A letter — half-written."
+Cael: "He was trying to get back. Look — his hand is reaching
+for the stairs."
 ```
 
-### Beat 3: Floor 4 Pendulum Discovery
+Note: Full Scene 1b includes the miner's journal and Mine Water Vial
+acquisition. Deferred to content pass (key item system not in scope).
+
+### Beat 3: Floor 4 — Pendulum Discovery
 
 **Trigger:** Area2D at Pendulum pedestal on F4, one-shot
 **Flag:** `pendulum_discovered`
+**Source:** `script/act-i.md` Scene 1d (lines 124-149)
 
 ```
-Cael: "Seven of them. Arranged like a mural I've never seen."
-Edren: "They arranged themselves. No drag marks."
+Cael: "Seven of them. Arranged like the mural."
+Edren: "They arranged themselves. Look — no drag marks."
 Cael: "They walked in, sat down, and gave up."
-Edren: "We need to take this to Valdris. If the Compact finds it—"
-Cael: "Don't. Something about this place."
+Edren: "We can't leave it here. If the Compact finds it—"
+Cael: "Don't. Something about this place. I can feel it."
+Edren: "We don't have a choice. We report to Valdris."
 [Edren picks up the Pendulum. The needle twitches once.]
-[The room shudders. Dust falls. Ley channels flare bright then dim.]
+[The room shudders. Ley channels flare bright then dim.]
 Cael: "Something heard that."
 ```
 
@@ -449,13 +483,22 @@ Edren: "I do."
 
 ## 10. Event Flags
 
-| Flag | Set When | Effect |
-|------|----------|--------|
-| `ember_vein_entry_seen` | F1 dialogue trigger | Prevents re-trigger |
-| `ember_vein_miners_seen` | F2 dialogue trigger | Prevents re-trigger |
-| `ember_drake_defeated` | Ember Drake battle victory | Prevents re-trigger, opens path |
-| `pendulum_discovered` | F4 Pendulum dialogue | Marks Pendulum obtained |
-| `vaelith_ember_vein` | Vein Guardian defeated | Marks dungeon complete |
+| Flag | Set When | Effect | Source |
+|------|----------|--------|--------|
+| `ember_vein_entry_seen` | F1 dialogue trigger | Prevents re-trigger | New (vertical slice) |
+| `ember_vein_miners_seen` | F2 dialogue trigger | Prevents re-trigger | New (vertical slice) |
+| `ember_drake_defeated` | Ember Drake battle victory | Prevents re-trigger, opens path | New (vertical slice) — add to events.md |
+| `pendulum_discovered` | F4 Pendulum dialogue | Marks Pendulum obtained | events.md flag 1 |
+| `vaelith_ember_vein` | Vein Guardian defeated | Marks dungeon complete | events.md flag 2 |
+
+**Notes:**
+- `ember_drake_defeated`, `ember_vein_entry_seen`, `ember_vein_miners_seen`
+  are new flags not in events.md — add them during implementation.
+- `vaelith_ember_vein` is defined in events.md as "Vein Guardian defeated
+  in Ember Vein." The Vaelith encounter (Scene 2) is out of scope for the
+  vertical slice — the flag fires on boss defeat as a proxy.
+- Downstream: flag 39 `opening_credits_seen` depends on `vaelith_ember_vein`
+  but is not in scope (Dawn March sequence).
 
 ---
 
