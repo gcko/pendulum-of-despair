@@ -68,7 +68,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "ember_vein_miners_seen"
-metadata/dialogue_data = [{"speaker": "Cael", "text": "More of them. Six here."}, {"speaker": "Edren", "text": "This one's clutching something. A letter -- half-written."}, {"speaker": "Cael", "text": "He was trying to get back. Look -- his hand is reaching for the stairs."}]
+metadata/dialogue_data = [{"speaker": "Cael", "lines": ["More of them. Six here."]}, {"speaker": "Edren", "lines": ["This one's clutching something. A letter -- half-written."]}, {"speaker": "Cael", "lines": ["He was trying to get back. Look -- his hand is reaching for the stairs."]}]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/DialogueMiners"]
 shape = SubResource("Shape_trigger")

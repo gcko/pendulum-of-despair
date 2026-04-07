@@ -83,7 +83,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not _battle_active:
 		return
-	_tick_realtime_statuses(delta)
+	if not _atb.should_pause_timers():
+		for i: int in range(4):
+			_state.tick_realtime_statuses(i, delta)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if not _battle_active:
@@ -126,6 +128,7 @@ func _on_ui_command(command: Dictionary) -> void:
 			_do_defend(actor_id)
 		"flee":
 			if _is_boss:
+				message.emit("Can't escape!")
 				ok = false
 			else:
 				_do_flee()
@@ -253,8 +256,8 @@ func _do_defend(actor_id: String) -> void:
 	var slot: int = actor_id.replace("party_", "").to_int()
 	_state.set_defending(slot, true)
 	_state.set_buff(slot, "damage_taken_mult", 0.5)
-	var n: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	message.emit("%s defends!" % n)
+	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
+	message.emit("%s defends!" % nm)
 
 
 func _do_flee() -> void:
@@ -392,9 +395,3 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 		enemy_node.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
 		_enemies.append(enemy_node)
 		_atb.add_combatant("enemy_%d" % i, enemy_node.get_stats().get("spd", 10), true)
-
-
-func _tick_realtime_statuses(delta: float) -> void:
-	if not _atb.should_pause_timers():
-		for i: int in range(4):
-			_state.tick_realtime_statuses(i, delta)

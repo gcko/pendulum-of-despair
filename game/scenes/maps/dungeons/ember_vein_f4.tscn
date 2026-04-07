@@ -43,7 +43,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "pendulum_discovered"
-metadata/dialogue_data = [{"speaker": "Cael", "text": "Seven of them. Arranged like the mural."}, {"speaker": "Edren", "text": "They arranged themselves. Look -- no drag marks."}, {"speaker": "Cael", "text": "They walked in, sat down, and gave up."}, {"speaker": "Edren", "text": "We can't leave it here. If the Compact finds it--"}, {"speaker": "Cael", "text": "Don't. Something about this place. I can feel it."}, {"speaker": "Edren", "text": "We don't have a choice. We report to Valdris."}, {"speaker": "", "text": "[The Pendulum's needle twitches. The room shudders.]"}, {"speaker": "Cael", "text": "Something heard that."}]
+metadata/dialogue_data = [{"speaker": "Cael", "lines": ["Seven of them. Arranged like the mural."]}, {"speaker": "Edren", "lines": ["They arranged themselves. Look -- no drag marks."]}, {"speaker": "Cael", "lines": ["They walked in, sat down, and gave up."]}, {"speaker": "Edren", "lines": ["We can't leave it here. If the Compact finds it--"]}, {"speaker": "Cael", "lines": ["Don't. Something about this place. I can feel it."]}, {"speaker": "Edren", "lines": ["We don't have a choice. We report to Valdris."]}, {"speaker": "", "lines": ["[The Pendulum's needle twitches. The room shudders.]"]}, {"speaker": "Cael", "lines": ["Something heard that."]}]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/PendulumDialogue"]
 shape = SubResource("Shape_trigger")
@@ -69,7 +69,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "ember_vein_exit_seen"
-metadata/dialogue_data = [{"speaker": "Edren", "text": "This way. The soldiers are above us, not ahead."}, {"speaker": "Cael", "text": "You hope."}, {"speaker": "Edren", "text": "I do."}]
+metadata/dialogue_data = [{"speaker": "Edren", "lines": ["This way. The soldiers are above us, not ahead."]}, {"speaker": "Cael", "lines": ["You hope."]}, {"speaker": "Edren", "lines": ["I do."]}]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/ExitDialogue"]
 shape = SubResource("Shape_trigger")

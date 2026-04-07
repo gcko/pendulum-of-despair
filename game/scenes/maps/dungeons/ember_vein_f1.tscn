@@ -51,7 +51,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "ember_vein_entry_seen"
-metadata/dialogue_data = [{"speaker": "Edren", "text": "Hold."}, {"speaker": "Edren", "text": "No marks. No signs of a fight. They just... stopped."}, {"speaker": "Cael", "text": "They didn't die fighting. They died feeling something."}, {"speaker": "Edren", "text": "There'll be more."}]
+metadata/dialogue_data = [{"speaker": "Edren", "lines": ["Hold."]}, {"speaker": "Edren", "lines": ["No marks. No signs of a fight. They just... stopped."]}, {"speaker": "Cael", "lines": ["They didn't die fighting. They died feeling something."]}, {"speaker": "Edren", "lines": ["There'll be more."]}]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/DialogueEntry"]
 shape = SubResource("Shape_trigger")
