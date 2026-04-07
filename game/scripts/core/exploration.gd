@@ -6,6 +6,7 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_characte
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
 const EncounterSystem = preload("res://scripts/combat/encounter_system.gd")
+const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
@@ -64,34 +65,25 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process_encounter_step() -> void:
 	if _encounter_config.is_empty():
 		return
-	var base: int = _encounter_config.get("danger_increment", 0)
-	if base <= 0:
-		return
-	var acc_mod: float = EncounterSystem.get_accessory_modifier(PartyState.get_active_party())
-	_danger_counter += EncounterSystem.roll_increment(base, 1.0, acc_mod)
-	if EncounterSystem.check_encounter(_danger_counter):
+	var result: int = EncounterHandler.process_step(
+		_encounter_config, _danger_counter, PartyState.get_active_party()
+	)
+	if result == -1:
 		_trigger_random_encounter()
+	else:
+		_danger_counter = result
 
 
 func _trigger_random_encounter() -> void:
 	if _transitioning:
 		return
-	var groups: Array = _encounter_config.get("groups", [])
-	if groups.is_empty():
+	var transition: Dictionary = EncounterHandler.build_random_encounter(
+		_encounter_config, _current_map_id, _player.position
+	)
+	if transition.is_empty():
 		return
-	var group: Dictionary = EncounterSystem.select_encounter_group(groups)
-	var rates: Dictionary = _encounter_config.get("formation_rates", {})
-	var formation: String = EncounterSystem.roll_formation(rates)
 	_danger_counter = 0
 	_transitioning = true
-	var transition: Dictionary = {
-		"encounter_group": group.get("enemies", []),
-		"formation_type": formation,
-		"return_map_id": _current_map_id,
-		"return_position": _player.position,
-		"enemy_act": "act_i",
-		"encounter_source": "random",
-	}
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
