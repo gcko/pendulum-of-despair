@@ -298,7 +298,7 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	if atype == "heal" and action.get("target", "") == "self":
 		var heal_amount: int = action.get("value", 0)
 		enemy.current_hp = mini(enemy.current_hp + heal_amount, enemy.enemy_data.get("hp", 1))
-		damage_dealt.emit("-1", heal_amount, "heal")
+		damage_dealt.emit("enemy_%d" % idx, heal_amount, "heal")
 	elif atype in ["attack", "ability"]:
 		if atype == "ability":
 			_state.gain_weave_gauge_for_maren(15)
@@ -384,6 +384,7 @@ func _setup_party() -> void:
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 	_vg_last_action = ""
 	_vg_reconstructed = false
+	_turn_counter = 0
 	for i: int in range(mini(6, encounter_group.size())):
 		var enemy_node: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(enemy_node)

@@ -102,7 +102,7 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 	var flag: String = area.get_meta("flag", "")
 	if boss_id.is_empty():
 		return
-	if not flag.is_empty() and EventFlags.is_set(flag):
+	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
 	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
 	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
@@ -157,12 +157,12 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 				if (floor_entry as Dictionary).get("floor_id", "") == _current_floor_id:
 					_encounter_config = floor_entry as Dictionary
 					break
-		if _encounter_config.is_empty() and floors.size() > 0 and floors[0] is Dictionary:
-			if not _current_floor_id.is_empty():
+		if _encounter_config.is_empty() and not _current_floor_id.is_empty():
+			if floors.size() > 0 and floors[0] is Dictionary:
 				push_warning(
 					"Exploration: No floor match for '%s', using floor[0]" % _current_floor_id
 				)
-			_encounter_config = floors[0]
+				_encounter_config = floors[0]
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)
@@ -216,7 +216,7 @@ func _initialize_from_transition_data() -> void:
 				PartyState.distribute_battle_rewards(rewards)
 				var boss_flag: String = data.get("boss_flag", "")
 				if not boss_flag.is_empty():
-					EventFlags.set_flag(boss_flag)
+					EventFlags.set_flag(boss_flag, true)
 			"faint":
 				SaveManager.faint_and_fast_reload()
 				return
@@ -350,7 +350,7 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player or _transitioning:
 		return
 	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.is_set(flag):
+	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
 	if not (dialogue is Array) or (dialogue as Array).is_empty():
@@ -360,7 +360,7 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 		if overlay != null and overlay.has_method("show_dialogue"):
 			overlay.show_dialogue(dialogue as Array)
 			if not flag.is_empty():
-				EventFlags.set_flag(flag)
+				EventFlags.set_flag(flag, true)
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
