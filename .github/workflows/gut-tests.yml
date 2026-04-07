@@ -5,6 +5,9 @@ on:
     branches: [main]
     types: [opened, synchronize, reopened]
 
+env:
+  GODOT_VERSION: "4.6.2"
+
 jobs:
   gut-tests:
     name: Run GUT Tests
@@ -13,9 +16,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download Godot
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          unzip -q Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          sudo mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          chmod +x /usr/local/bin/godot
+
+      - name: Import Godot project (register GUT classes)
+        run: |
+          godot --headless --path game/ --import
+        timeout-minutes: 2
+
       - name: Run GUT tests
-        uses: ceceppa/godot-gut-ci@main
-        with:
-          godot_version: "4.6.2"
-          project_path: "game"
-          gut_params: "-gdir=res://tests -gprefix=test_ -gsuffix=.gd -gexit"
+        run: |
+          godot --headless --path game/ -s addons/gut/gut_cmdln.gd -gdir=res://tests -gprefix=test_ -gsuffix=.gd -gexit 2>&1 | tee /tmp/gut.log
+          if grep -q "All tests passed" /tmp/gut.log; then
+            echo "All tests passed!"
+            exit 0
+          elif grep -qE "Failing Tests\s+0" /tmp/gut.log; then
+            echo "All tests passed!"
+            exit 0
+          else
+            echo "Tests failed!"
+            exit 1
+          fi
+        timeout-minutes: 5
