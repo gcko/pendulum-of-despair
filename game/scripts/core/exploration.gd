@@ -98,6 +98,31 @@ func _trigger_random_encounter() -> void:
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
+func _trigger_boss_encounter(area: Area2D) -> void:
+	if _transitioning:
+		return
+	var boss_id: String = area.get_meta("boss_id", "")
+	var flag: String = area.get_meta("flag", "")
+	if boss_id.is_empty():
+		return
+	if not flag.is_empty() and EventFlags.is_set(flag):
+		return
+	var enemy_ids_raw: Variant = area.get_meta("enemy_ids", [])
+	var enemy_ids: Array = enemy_ids_raw if enemy_ids_raw is Array else []
+	_transitioning = true
+	var transition: Dictionary = {
+		"encounter_group": enemy_ids,
+		"formation_type": "normal",
+		"return_map_id": _current_map_id,
+		"return_position": _player.position,
+		"enemy_act": area.get_meta("enemy_act", "act_i"),
+		"encounter_source": "boss",
+		"is_boss": true,
+		"boss_flag": flag,
+	}
+	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+
+
 func load_map(map_id: String, spawn_name: String = "") -> void:
 	PartyState.is_at_save_point = false
 	# Validate BEFORE freeing old map — don't leave exploration with no map
@@ -109,21 +134,17 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if not map_resource is PackedScene:
 		push_error("Exploration: Invalid map resource: %s" % map_path)
 		return
-
 	# Safe to free old map now that new one is validated
 	if _current_map != null:
 		_disconnect_entity_signals(_current_map)
 		_current_map.queue_free()
 		_current_map = null
-
 	_current_map = (map_resource as PackedScene).instantiate()
 	_map_container.add_child(_current_map)
 	_current_map_id = map_id
-
 	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
-
 	_current_floor_id = _current_map.get_meta("floor_id", "")
 	if _player != null:
 		_last_player_tile = Vector2i(_player.position) / 16
@@ -140,12 +161,10 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 					break
 		if _encounter_config.is_empty() and floors.size() > 0 and floors[0] is Dictionary:
 			_encounter_config = floors[0]
-
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
-
 	map_changed.emit(map_id)
 
 
@@ -183,15 +202,12 @@ func _initialize_from_transition_data() -> void:
 		var save_data: Dictionary = data.get("save_data", {})
 		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
-		var location: String = world.get("current_location", "")
-		if location == "":
-			location = "test_room"
-		load_map(location)
+		var location: String = world.get("current_location", "test_room")
+		load_map(location if location != "" else "test_room")
 		var pos: Dictionary = world.get("current_position", {})
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
-		# Return from battle — apply rewards, restore map and position
 		var result: String = data.get("result", "")
 		match result:
 			"victory":
@@ -201,6 +217,9 @@ func _initialize_from_transition_data() -> void:
 					"drops": data.get("earned_drops", []),
 				}
 				PartyState.distribute_battle_rewards(rewards)
+				var boss_flag: String = data.get("boss_flag", "")
+				if not boss_flag.is_empty():
+					EventFlags.set_flag(boss_flag)
 			"faint":
 				SaveManager.faint_and_fast_reload()
 				return
@@ -235,7 +254,7 @@ func _initialize_entities(map_node: Node2D) -> void:
 			if chest_id != "" and item_id != "":
 				child.initialize(chest_id, item_id)
 			else:
-				push_error("Exploration: Chest '%s' missing metadata" % child.name)
+				push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
 		elif child.has_signal("save_point_activated"):
 			var sp_id: String = child.get_meta("save_point_id", "")
 			if sp_id != "":
@@ -254,8 +273,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.chest_opened.connect(_on_chest_opened)
 			if child.has_signal("save_point_activated"):
 				child.save_point_activated.connect(_on_save_point_activated)
-
-	# Transitions use plain Area2D with body_entered (repeatable, not one-shot TriggerZone)
+			if child is Area2D and child.has_meta("boss_id"):
+				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
@@ -267,12 +286,15 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 	var entities: Node = map_node.get_node_or_null("Entities")
 	if entities != null:
 		for child: Node in entities.get_children():
-			for sig_name: String in ["npc_interacted", "chest_opened", "save_point_activated"]:
-				if child.has_signal(sig_name):
-					var callable_ref: Callable = _get_handler_for_signal(sig_name)
-					if child.is_connected(sig_name, callable_ref):
-						child.disconnect(sig_name, callable_ref)
-
+			for sig: String in ["npc_interacted", "chest_opened", "save_point_activated"]:
+				if child.has_signal(sig):
+					var cb: Callable = _entity_signal_handler(sig)
+					if child.is_connected(sig, cb):
+						child.disconnect(sig, cb)
+			if child is Area2D and child.has_meta("boss_id"):
+				for conn: Dictionary in child.body_entered.get_connections():
+					if conn["callable"].get_object() == self:
+						child.body_entered.disconnect(conn["callable"])
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
@@ -282,7 +304,7 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 						child.body_entered.disconnect(conn["callable"])
 
 
-func _get_handler_for_signal(sig_name: String) -> Callable:
+func _entity_signal_handler(sig_name: String) -> Callable:
 	match sig_name:
 		"npc_interacted":
 			return _on_npc_interacted
@@ -302,9 +324,6 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 		_player.position = spawn.position.round()
 	else:
 		_player.position = Vector2(80, 90)
-
-
-# --- Signal handlers ---
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
@@ -333,6 +352,12 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 		var overlay: Node = GameManager.overlay_node
 		if overlay != null and overlay.has_method("open_save_point"):
 			overlay.open_save_point()
+
+
+func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
+	if body != _player:
+		return
+	_trigger_boss_encounter(area)
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
