@@ -143,7 +143,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		var use_zones: bool = encounters.has("zones") and not encounters.has("floors")
 		var entries: Array = encounters.get("floors", encounters.get("zones", []))
 		var id_key: String = "zone_id" if use_zones else "floor_id"
-		var match_id: String = _current_floor_id if not use_zones else _current_map_id
+		var match_id: String = _current_floor_id
 		for entry: Variant in entries:
 			if entry is Dictionary and (entry as Dictionary).get(id_key, "") == match_id:
 				_encounter_config = entry as Dictionary
