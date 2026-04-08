@@ -114,6 +114,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Bit-depth conversions (e.g., 5-bit 0-31 to float 0.0-1.0) must use correct formula: `value / 31.0` not `value / 32.0` — verify boundary values (0 maps to 0.0, max maps to 1.0)
 - [ ] Percentage calculations must produce the correct range — verify at 0%, 50%, 100% boundary inputs
 - [ ] Any formula ported from a reference (SNES color format, damage formula) must be verified against known input/output pairs from the source
+- [ ] GDScript `/` operator yields float, not int. When integer division is intended in a function returning `-> int`, wrap with `int()` or use explicit `floori()`. (PR #130: `total / members.size()` returned float, caused implicit truncation warning)
 
 ### GDScript Runtime Safety (from PR #120 manual testing)
 - [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
