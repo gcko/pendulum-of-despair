@@ -21,6 +21,14 @@ func _create_exploration():
 	return exp
 
 
+func _create_exploration_test_room():
+	GameManager.transition_data = {}
+	var exp = EXPLORATION_SCENE.instantiate()
+	add_child_autofree(exp)
+	exp.load_map("test_room")
+	return exp
+
+
 # --- Scene Loading ---
 
 
@@ -36,7 +44,7 @@ func test_load_map_creates_children() -> void:
 
 
 func test_player_spawns_at_marker() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	assert_not_null(exp._player, "player should be instantiated")
 	assert_eq(exp._player.position, Vector2(80, 90), "player should be at spawn point")
 
@@ -53,7 +61,7 @@ func test_camera_follows_player() -> void:
 
 
 func test_npc_interaction_signal_wired() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node should exist")
 	var npc = entities.get_node_or_null("TestNPC")
@@ -64,7 +72,7 @@ func test_npc_interaction_signal_wired() -> void:
 
 
 func test_chest_interaction_signal_wired() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var chest = entities.get_node_or_null("TestChest")
 	assert_not_null(chest, "test chest should exist in map")
@@ -74,7 +82,7 @@ func test_chest_interaction_signal_wired() -> void:
 
 
 func test_save_point_signal_wired() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var sp = entities.get_node_or_null("TestSavePoint")
 	assert_not_null(sp, "test save point should exist in map")
@@ -88,7 +96,7 @@ func test_save_point_signal_wired() -> void:
 
 
 func test_transition_flag_blocks_interaction() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	# Use a real entity that has interact() — e.g., the NPC from the map
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var npc = entities.get_node_or_null("TestNPC")
@@ -152,7 +160,7 @@ func test_encounter_fallback_skipped_on_empty_floor_id() -> void:
 
 
 func test_npc_with_shop_id_opens_shop_overlay() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
@@ -168,7 +176,7 @@ func test_npc_with_shop_id_opens_shop_overlay() -> void:
 
 
 func test_inn_interaction_deducts_gold() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
@@ -181,7 +189,7 @@ func test_inn_interaction_deducts_gold() -> void:
 
 
 func test_inn_interaction_insufficient_gold_rejected() -> void:
-	var exp = _create_exploration()
+	var exp = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")

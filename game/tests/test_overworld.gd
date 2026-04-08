@@ -18,15 +18,15 @@ func test_overworld_encounter_data_exists() -> void:
 
 func test_highland_zone_has_groups() -> void:
 	var data: Dictionary = DataManager.load_encounters("overworld")
-	var floors: Array = data.get("floors", data.get("zones", []))
+	var zones: Array = data.get("zones", data.get("floors", []))
 	var found: bool = false
-	for entry: Variant in floors:
-		if entry is Dictionary and (entry as Dictionary).get("floor_id", "") == "valdris_highlands":
+	for entry: Variant in zones:
+		if entry is Dictionary and (entry as Dictionary).get("zone_id", "") == "valdris_highlands":
 			found = true
 			var groups: Array = (entry as Dictionary).get("groups", [])
 			assert_gt(groups.size(), 0, "Highland zone should have encounter groups")
 			break
-	assert_true(found, "Should find valdris_highlands floor entry")
+	assert_true(found, "Should find valdris_highlands zone entry")
 
 
 func test_overworld_has_valdris_transition() -> void:
