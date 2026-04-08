@@ -68,7 +68,7 @@ collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/target_map = "test_room"
+metadata/target_map = "overworld"
 metadata/target_spawn = "from_valdris"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/SouthGate"]
@@ -93,4 +93,7 @@ position = Vector2(80, 528)
 position = Vector2(512, 288)
 
 [node name="from_test_room" type="Marker2D" parent="."]
+position = Vector2(80, 528)
+
+[node name="from_overworld" type="Marker2D" parent="."]
 position = Vector2(80, 528)
