@@ -82,11 +82,15 @@ func test_config_has_title_label() -> void:
 # --- Character cursor uses global_position ---
 
 
-func test_char_cursor_uses_global_position() -> void:
+func test_char_select_uses_color_highlight() -> void:
 	var text: String = _read_file("res://scripts/ui/menu_overlay.gd")
 	assert_true(
-		text.contains("global_position"),
-		"char cursor should use global_position for correct coordinate space",
+		text.contains("COLOR_SELECTED if i == _char_index"),
+		"char select should highlight selected member name with COLOR_SELECTED",
+	)
+	assert_true(
+		text.contains("_clear_char_highlight"),
+		"char select should clear highlight on cancel/accept",
 	)
 
 

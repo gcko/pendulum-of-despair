@@ -69,6 +69,7 @@ var _reduce_was_on: bool = false
 @onready var _setting_labels: Array[Label] = []
 @onready var _value_labels: Array[Label] = []
 @onready var _preview_rect: ColorRect = $Layout/PreviewRect
+@onready var _scroll: ScrollContainer = $Layout/SettingsPanel/ScrollContainer
 
 
 func _ready() -> void:
@@ -108,10 +109,12 @@ func handle_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("ui_down"):
 		_cursor_index = (_cursor_index + 1) % SETTINGS.size()
 		_update_display()
+		_scroll_to_selected()
 		return true
 	if event.is_action_pressed("ui_up"):
 		_cursor_index = (_cursor_index - 1 + SETTINGS.size()) % SETTINGS.size()
 		_update_display()
+		_scroll_to_selected()
 		return true
 	if event.is_action_pressed("ui_left"):
 		_adjust(-1)
@@ -255,6 +258,12 @@ func _is_setting_disabled(key: String) -> bool:
 	if reduce and key in ["screen_shake", "mode7_intensity", "flash_intensity", "transition_style"]:
 		return true
 	return false
+
+
+func _scroll_to_selected() -> void:
+	if _scroll == null or _cursor_index >= _setting_labels.size():
+		return
+	_scroll.ensure_control_visible(_setting_labels[_cursor_index])
 
 
 func _update_display() -> void:

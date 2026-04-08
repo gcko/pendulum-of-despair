@@ -111,6 +111,7 @@ func _handle_char_select_input(event: InputEvent) -> void:
 	if _active_party.is_empty():
 		if event.is_action_pressed("ui_cancel"):
 			_char_cursor.visible = false
+			_clear_char_highlight()
 			_state = MenuState.COMMAND
 			get_viewport().set_input_as_handled()
 		return
@@ -123,10 +124,12 @@ func _handle_char_select_input(event: InputEvent) -> void:
 		_update_char_cursor()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
+		_clear_char_highlight()
 		_open_sub_screen_for_character()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		_char_cursor.visible = false
+		_clear_char_highlight()
 		_state = MenuState.COMMAND
 		get_viewport().set_input_as_handled()
 
@@ -324,12 +327,22 @@ func _update_party_row(slot: int, member: Dictionary) -> void:
 		mp_label.modulate = COLOR_MP
 
 
+func _clear_char_highlight() -> void:
+	for i: int in range(_party_rows.size()):
+		if _party_rows[i] == null:
+			continue
+		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
+		if name_lbl != null:
+			name_lbl.modulate = Color.WHITE
+
+
 func _update_char_cursor() -> void:
-	if _char_index >= _party_rows.size() or _party_rows[_char_index] == null:
-		return
-	var row: Control = _party_rows[_char_index]
-	var gp: Vector2 = row.global_position
-	_char_cursor.global_position = Vector2(gp.x - 48, gp.y + row.size.y / 2.0)
+	for i: int in range(_party_rows.size()):
+		if _party_rows[i] == null:
+			continue
+		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
+		if name_lbl != null:
+			name_lbl.modulate = COLOR_SELECTED if i == _char_index else Color.WHITE
 
 
 func _update_info_panel() -> void:
