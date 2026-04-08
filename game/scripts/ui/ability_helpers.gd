@@ -23,7 +23,7 @@ static func get_known_abilities(character_id: String, level: int) -> Array:
 			var event: String = a.get("story_event", "")
 			if event == "" or not EventFlags.get_flag(event):
 				continue
-		elif req_level is int and (req_level as int) > level:
+		elif req_level != null and int(req_level) > level:
 			continue
 		elif req_level == null:
 			continue
@@ -65,6 +65,6 @@ static func get_resource_label(character_id: String, member: Dictionary) -> Stri
 
 
 static func _sort_by_level(a: Dictionary, b: Dictionary) -> bool:
-	var la: int = a.get("level_learned", 0) if a.get("level_learned") is int else 0
-	var lb: int = b.get("level_learned", 0) if b.get("level_learned") is int else 0
+	var la: int = int(a.get("level_learned", 0)) if a.get("level_learned") != null else 0
+	var lb: int = int(b.get("level_learned", 0)) if b.get("level_learned") != null else 0
 	return la < lb
