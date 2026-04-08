@@ -60,7 +60,7 @@ func test_empty_slot_display() -> void:
 	var sl: Node = _create_save_load()
 	sl.open_save()
 	# With no saves, all slots should show "Empty"
-	var header: Label = sl._manual_slots[0].get_node_or_null("HeaderLabel")
+	var header: Label = sl._manual_slots[0].get_node_or_null("SlotLayout/HeaderRow/HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_eq(header.text, "Empty", "empty slot should show Empty text")
 
@@ -96,7 +96,7 @@ func test_populated_slot_display() -> void:
 	sl._slot_previews[1] = preview
 	# Call _update_slot_panel directly to avoid _refresh overwriting with real data
 	sl._update_slot_panel(sl._manual_slots[0], sl._slot_previews[1])
-	var header: Label = sl._manual_slots[0].get_node_or_null("HeaderLabel")
+	var header: Label = sl._manual_slots[0].get_node_or_null("SlotLayout/HeaderRow/HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_string_contains(header.text, "Valdris Crown", "should show location name")
 

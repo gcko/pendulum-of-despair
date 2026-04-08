@@ -8,7 +8,7 @@
 > **Companion to:** `docs/analysis/game-design-gaps.md` (design docs — 24/25 COMPLETE)
 > **Architecture reference:** `docs/plans/technical-architecture.md`
 > **Engine:** Godot 4.6+ / GDScript only
-> **Resolution:** 320x180 native, integer-scaled
+> **Resolution:** 1280x720 native (changed from 320x180 on 2026-04-08), 4x camera zoom for game world, integer-scaled window
 
 ## How to Read This Document
 
@@ -26,7 +26,7 @@ adds a "Completed" date + commit reference.
 ## What Already Exists
 
 **PR #105 (merged 2026-04-02):** Godot project initialized with:
-- `game/project.godot` — viewport 320x180, integer scaling, 5 autoloads
+- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 5 autoloads, 4x camera zoom in exploration
 - 5 autoload singletons in `game/scripts/autoload/` (GameManager,
   DataManager, AudioManager, SaveManager, EventFlags) — all have
   public API + defensive coding, stubs for game-state-dependent methods
@@ -177,14 +177,14 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P1 — blocks town implementation
-**Estimated Size:** M (23 JSON files, one per shop across 10 towns)
+**Estimated Size:** M (24 JSON files, one per shop across 11 towns)
 **Output:** `game/data/shops/{shop_id}.json`
 **Source Docs:** `economy.md` (complete shop inventories per town with event-gated restocking)
 **Architecture Ref:** `technical-architecture.md` Section 2.4
 **Depends On:** 1.3 (Items & Equipment — item IDs must exist)
 
 **What's Needed:**
-- [x] Per-shop JSON following Section 2.4 schema (23 files, one per shop)
+- [x] Per-shop JSON following Section 2.4 schema (24 files, one per shop)
 - [x] All 10 town inventories from economy.md (102 unique item_ids across all shops)
 - [x] Event-gated restock entries (available_act, restock_event)
 - [x] Caldera 150% inflation pricing per economy.md (markup: 1.5 on Company shops)
@@ -192,7 +192,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Verify prices match economy.md tables
 
 **Notes:**
-- 23 shop files (multiple shops per town: general, armorer, specialty, etc.)
+- 24 shop files (multiple shops per town: general, armorer, specialty, etc.; includes Roothollow herbalist from gap 4.4)
 - Caldera Company Store/Armorer have markup: 1.5 with pre-multiplied prices
 - Caldera Black Market has markup: 1.0 (standard prices)
 - Interlude scarcity handled at runtime, not in static data
@@ -667,6 +667,19 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Exploration: Escape key opens menu overlay
 - [x] Shop buy/sell interface — buy-only via shop_overlay.gd (2026-04-07)
 
+**Phase 3: FF6-Style UI Polish (NOT STARTED — P1)**
+- [ ] All 9 sub-screens need FF6-style bordered panels (PanelContainer with border StyleBox)
+- [ ] Sub-screens should fully replace MainPanel content area, not overlay on top
+- [ ] Item screen: tabbed header + description + bordered item list
+- [ ] Config screen: setting name + value pairs in bordered box, contained within panel
+- [ ] Equipment screen: slot list + stat comparison in separate bordered boxes
+- [ ] Magic screen: character info + bordered spell grid
+- [ ] Formation screen: bordered member list with proper row/swap display
+- [ ] Status screen: bordered stat display + equipment summary
+- [ ] Abilities screen: bordered ability list per character
+- [ ] Reference: FF6 menu design (distinct bordered panels per sub-screen)
+- [ ] Viewport changed from 320x180 to 1280x720 (2026-04-08) — 4x camera zoom for game world, UI renders at native 1280x720. Main frame panels properly laid out, sub-screen content needs bordered containers.
+
 **Notes:**
 - Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework
 - Phase 2 progress: Magic, Abilities, Formation, Shop buy-only — all complete
@@ -675,7 +688,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - PartyState: spend_mp(), heal_member() added for Magic field-cast
 - Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
 - Equipment screen has live stat comparison with green/red delta indicators
-- 8 new .gd files + 1 .tscn + 1 test file; 4 modified files
+- Viewport changed to 1280x720 with 4x camera zoom (2026-04-08). Main menu frame, dialogue (FF6 inline speaker), and save screen layouts fixed. Sub-screen polish deferred to Phase 3.
+- Beads issue: pendulum-of-despair-afs (P1)
 - Design spec: `docs/superpowers/specs/2026-04-06-menu-overlay-phase1-design.md`
 
 **Blocking:** Player inventory management, equipment optimization, party configuration
@@ -924,20 +938,49 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 ### 4.4 Remaining Act I Content
 
-**Status:** NOT STARTED
+**Status:** IN PROGRESS
 **Priority:** P1 — completes Act I
-**Estimated Size:** L (multiple maps, cutscenes, encounters)
+**Estimated Size:** XL (multiple phases)
 **Output:** Additional dungeon/town maps, story scenes
-**Source Docs:** `dungeons-world.md` (Fenmother's Hollow), `script/act-i.md` (remaining Act I scenes), `events.md` (Act I flags)
-**Depends On:** 4.1 (Ember Vein — proves the pipeline), 4.2 (Valdris — proves towns), 4.3 (Overworld — connects locations)
+**Source Docs:** `dungeons-world.md`, `script/act-i.md`, `events.md`, `economy.md`, `npcs.md`, `locations.md`
+**Depends On:** 4.1, 4.2, 4.3 (all MOSTLY COMPLETE)
 
-**What's Needed:**
-- [ ] Fenmother's Hollow dungeon (second dungeon, different biome)
-- [ ] Roothollow village (Thornmere faction introduction)
-- [ ] Act I overworld zones (Valdris Highlands, Ley-Scarred Plains)
-- [ ] Remaining Act I story scenes from script/act-i.md
-- [ ] Act I side content (early accessible areas)
-- [ ] Act I progression testing (level pacing, economy, difficulty)
+**Phase A: Wilds Route (COMPLETE — 2026-04-08)**
+- [x] Roothollow village map (30x25 tiles, Vessa NPC, herbalist shop, save point)
+- [x] Maren's Refuge interior map (16x14 tiles, Maren NPC)
+- [x] Overworld transitions to both locations (bidirectional)
+- [x] Scene 5 dialogue trigger (Torren joins party via torren_encounter.json)
+- [x] Scene 6 dialogue trigger (Maren joins party via scene_6_marens_warning.json)
+- [x] PartyState.add_member() and has_member() public API
+- [x] Roothollow herbalist shop (roothollow_herbalist.json, 9 consumable items)
+- [x] Thornmere Wilds overworld encounter zone added to overworld.json
+- [x] Tileset extended to 10 tiles (forest floor, bioluminescent)
+- [x] dialogue_scene_id + required_flag support in exploration.gd dialogue triggers
+- [x] Integration tests (test_wilds_route.gd, ~25 tests)
+- [x] Design spec: `docs/superpowers/specs/2026-04-08-wilds-route-design.md`
+
+**Phase A2: Fenmother's Hollow (NOT STARTED)**
+- [ ] Second Act I dungeon (forest/swamp biome, 3 floors)
+- [ ] Drowned Sentinel mini-boss + Corrupted Fenmother boss
+- [ ] Encounter data exists (fenmothers_hollow.json)
+- [ ] New enemy types (marsh_serpent, drowned_bones, ley_jellyfish, polluted_elemental)
+
+**Phase B: Opening Sequence (NOT STARTED)**
+- [ ] Ironmouth outpost map
+- [ ] Ember Vein F3 (Ancient Ruin floor, puzzles)
+- [ ] Scenes 1-4 (tutorial, Vaelith, Lira+Sable join, Dawn March credits)
+- [ ] Party starts with Edren+Cael only, others join during Act I
+
+**Phase C: Capital Completion (NOT STARTED)**
+- [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
+- [ ] Scene 7 (throne hall, court free-roam, Cael's grey eyes moment)
+- [ ] Thornwatch garrison rest stop
+- [ ] Act I finale flag: pendulum_to_capital
+
+**Notes:**
+- Party assembly now works: Edren+Cael at new game, Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6). Lira+Sable join deferred to Phase B (Scenes 3-4).
+- Dialogue triggers use dialogue_scene_id metadata (loads from DataManager) instead of inline dialogue_data — scalable for large scenes.
+- required_flag metadata on triggers enables prerequisite flag checking (e.g., Scene 6 requires torren_joined).
 
 **Blocking:** Act II content (needs Act I complete for flag state)
 

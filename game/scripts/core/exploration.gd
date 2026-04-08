@@ -29,6 +29,7 @@ var _current_floor_id: String = ""
 func _ready() -> void:
 	_fade_rect.visible = false
 	_location_panel.visible = false
+	_camera.zoom = Vector2(4, 4)
 	_spawn_player()
 	_initialize_from_transition_data()
 
@@ -212,6 +213,9 @@ func _initialize_from_transition_data() -> void:
 			_player.position = data.get("position", Vector2(80, 90))
 	else:
 		load_map("overworld")
+	# Safety net: if a party-joining flag was set but the member was never
+	# added (e.g., crash or force-quit during dialogue), pick them up now.
+	_check_party_joining_flags()
 
 
 func _initialize_entities(map_node: Node2D) -> void:
@@ -254,7 +258,10 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.save_point_activated.connect(_on_save_point_activated)
 			if child is Area2D and child.has_meta("boss_id"):
 				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
-			elif child is Area2D and child.has_meta("dialogue_data"):
+			elif (
+				child is Area2D
+				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
+			):
 				child.body_entered.connect(_on_dialogue_trigger_entered.bind(child))
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
@@ -351,13 +358,45 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
+	var required: String = area.get_meta("required_flag", "")
+	if not required.is_empty() and not EventFlags.get_flag(required):
+		return
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
+	var scene_id: String = area.get_meta("dialogue_scene_id", "")
+	if scene_id != "":
+		var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
+		dialogue = scene_data.get("entries", [])
 	if not (dialogue is Array) or (dialogue as Array).is_empty():
 		return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(dialogue as Array)
 		if not flag.is_empty():
 			EventFlags.set_flag(flag, true)
+			GameManager.overlay_state_changed.connect(
+				_on_dialogue_closed_check_party, CONNECT_ONE_SHOT
+			)
+
+
+func _on_dialogue_closed_check_party(_state: Variant) -> void:
+	_check_party_joining_flags()
+
+
+func _check_party_joining_flags() -> void:
+	if EventFlags.get_flag("torren_joined") and not PartyState.has_member("torren"):
+		PartyState.add_member("torren", _get_party_avg_level())
+		flash_location_name("Torren joined the party!")
+	if EventFlags.get_flag("maren_warning") and not PartyState.has_member("maren"):
+		PartyState.add_member("maren", _get_party_avg_level())
+		flash_location_name("Maren joined the party!")
+
+
+func _get_party_avg_level() -> int:
+	if PartyState.members.is_empty():
+		return 1
+	var total: int = 0
+	for m: Dictionary in PartyState.members:
+		total += m.get("level", 1) as int
+	return maxi(1, int(total / PartyState.members.size()))
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:

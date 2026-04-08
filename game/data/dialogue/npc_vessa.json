@@ -1,0 +1,30 @@
+{
+  "scene_id": "npc_vessa",
+  "entries": [
+    {
+      "id": "npc_vessa_001",
+      "speaker": "vessa",
+      "lines": [
+        "That thing you carry -- the totems know it.",
+        "They're shaking. Take it from my home before dawn,",
+        "or I will put it in the river myself."
+      ],
+      "condition": null,
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_vessa_002",
+      "speaker": "vessa",
+      "lines": [
+        "The great stags once carried the spirit-speakers",
+        "between the groves. Few bond with them now."
+      ],
+      "condition": "torren_joined",
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

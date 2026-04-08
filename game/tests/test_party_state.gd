@@ -302,3 +302,67 @@ func test_add_equipment_stores_correct_equipment_id() -> void:
 	assert_eq(
 		entry.get("equipment_id", ""), "valdris_blade", "equipment_id should match the added item"
 	)
+
+
+# --- add_member / has_member ---
+
+
+func test_add_member_adds_to_party() -> void:
+	_state.initialize_new_game()
+	assert_eq(_state.members.size(), 2, "should start with 2 members")
+	_state.add_member("torren", 3)
+	assert_eq(_state.members.size(), 3, "should have 3 members after add")
+	var m: Dictionary = _state.get_member("torren")
+	assert_eq(m.get("character_id", ""), "torren", "torren should be in party")
+	assert_eq(m.get("level", 0), 3, "torren should be at level 3")
+
+
+func test_add_member_prevents_duplicates() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 3)
+	_state.add_member("torren", 5)
+	var count: int = 0
+	for m: Dictionary in _state.members:
+		if m.get("character_id", "") == "torren":
+			count += 1
+	assert_eq(count, 1, "should not add duplicate members")
+
+
+func test_add_member_sets_formation() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 1)
+	var active: Array = _state.formation.get("active", [])
+	assert_true(active.has(2), "torren (idx 2) should be in active party")
+	_state.add_member("maren", 1)
+	active = _state.formation.get("active", [])
+	assert_true(active.has(3), "maren (idx 3) should be in active (4th slot)")
+
+
+func test_add_member_overflow_to_reserve() -> void:
+	_state.initialize_new_game()
+	_state.add_member("lira", 1)
+	_state.add_member("sable", 1)
+	_state.add_member("torren", 1)
+	var reserve: Array = _state.formation.get("reserve", [])
+	assert_true(reserve.has(4), "torren (idx 4) should go to reserve when active full")
+
+
+func test_has_member() -> void:
+	_state.initialize_new_game()
+	assert_true(_state.has_member("edren"), "edren should exist")
+	assert_false(_state.has_member("torren"), "torren should not exist yet")
+	_state.add_member("torren", 1)
+	assert_true(_state.has_member("torren"), "torren should exist after add")
+
+
+func test_add_member_empty_id_ignored() -> void:
+	_state.initialize_new_game()
+	_state.add_member("", 1)
+	assert_eq(_state.members.size(), 2, "empty id should not add a member")
+
+
+func test_add_member_negative_level_clamped() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", -5)
+	var m: Dictionary = _state.get_member("torren")
+	assert_eq(m.get("level", 0), 1, "negative level should be clamped to 1")

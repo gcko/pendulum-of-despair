@@ -1,0 +1,17 @@
+{
+  "scene_id": "npc_roothollow_herbalist",
+  "entries": [
+    {
+      "id": "npc_roothollow_herbalist_001",
+      "speaker": "herbalist",
+      "lines": [
+        "The forest provides what we need. Remedies, salves,",
+        "wards against the things that creep in the dark."
+      ],
+      "condition": null,
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

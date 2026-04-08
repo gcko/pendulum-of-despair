@@ -31,6 +31,17 @@ elif [ -x "/Applications/Godot.app/Contents/MacOS/Godot" ]; then
 fi
 
 if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
+    echo "=== Pre-push: Godot import ==="
+    set +e
+    IMPORT_LOG=$("$GODOT_BIN" --headless --path game/ --import 2>&1)
+    IMPORT_EXIT=$?
+    set -e
+    if [ $IMPORT_EXIT -ne 0 ]; then
+        echo "$IMPORT_LOG"
+        echo "Godot import FAILED (exit $IMPORT_EXIT)."
+        exit 1
+    fi
+    echo "Godot import passed."
     echo "=== Pre-push: GUT tests ==="
     TEMP_LOG=/tmp/gut_prepush.log
     "$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \

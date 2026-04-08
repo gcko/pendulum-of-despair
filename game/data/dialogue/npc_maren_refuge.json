@@ -1,0 +1,17 @@
+{
+  "scene_id": "npc_maren_refuge",
+  "entries": [
+    {
+      "id": "npc_maren_refuge_001",
+      "speaker": "maren",
+      "lines": [
+        "I left the court because they wouldn't listen.",
+        "Maybe now they'll have to."
+      ],
+      "condition": null,
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

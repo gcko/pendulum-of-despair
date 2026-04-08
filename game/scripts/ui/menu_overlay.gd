@@ -37,9 +37,9 @@ var _config_direct: bool = false
 @onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
 @onready var _char_cursor: Sprite2D = $CharCursor
-@onready var _gold_label: Label = $InfoPanel/GoldLabel
-@onready var _time_label: Label = $InfoPanel/TimeLabel
-@onready var _location_label: Label = $InfoPanel/LocationLabel
+@onready var _gold_label: Label = $InfoPanel/Margin/Layout/RightCol/GoldLabel
+@onready var _time_label: Label = $InfoPanel/Margin/Layout/RightCol/TimeLabel
+@onready var _location_label: Label = $InfoPanel/Margin/Layout/LocationLabel
 @onready var _magic_screen: Control = $SubScreen/MagicScreen
 @onready var _item_screen: Control = $SubScreen/ItemScreen
 @onready var _equip_screen: Control = $SubScreen/EquipScreen
@@ -53,13 +53,13 @@ var _config_direct: bool = false
 func _ready() -> void:
 	_command_labels = []
 	for i: int in range(COMMANDS.size()):
-		var label: Label = get_node_or_null("CommandPanel/Cmd%d" % i)
+		var label: Label = get_node_or_null("CommandPanel/Margin/CmdList/Cmd%d" % i)
 		if label != null:
 			label.text = COMMANDS[i]["name"]
 			_command_labels.append(label)
 	_party_rows = []
 	for i: int in range(4):
-		var row: Control = get_node_or_null("MainPanel/Row%d" % i)
+		var row: Control = get_node_or_null("MainPanel/Margin/Rows/Row%d" % i)
 		_party_rows.append(row)
 	_char_cursor.visible = false
 	_hide_all_sub_screens()
@@ -274,7 +274,7 @@ func _update_display() -> void:
 	# Update command cursor
 	if _cursor != null and _command_index < _command_labels.size():
 		var target: Label = _command_labels[_command_index]
-		_cursor.position = Vector2(target.position.x - 12, target.position.y + target.size.y / 2.0)
+		_cursor.position = Vector2(target.position.x - 48, target.position.y + target.size.y / 2.0)
 	# Update party rows
 	for i: int in range(4):
 		if _party_rows[i] == null:
@@ -316,7 +316,7 @@ func _update_char_cursor() -> void:
 	if _char_index >= _party_rows.size() or _party_rows[_char_index] == null:
 		return
 	var row: Control = _party_rows[_char_index]
-	_char_cursor.position = Vector2(row.position.x - 12, row.position.y + row.size.y / 2.0)
+	_char_cursor.position = Vector2(row.position.x - 48, row.position.y + row.size.y / 2.0)
 
 
 func _update_info_panel() -> void:

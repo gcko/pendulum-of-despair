@@ -5,6 +5,9 @@ extends Control
 ## Menu: New Game, Continue, Config (stubbed).
 ## Uses built-in Godot input actions (ui_up, ui_down, ui_accept).
 
+## Menu option indices.
+enum MenuOption { NEW_GAME, CONTINUE, CONFIG }
+
 ## Number of menu options.
 const MENU_COUNT: int = 3
 
@@ -12,9 +15,6 @@ const MENU_COUNT: int = 3
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-
-## Menu option indices.
-enum MenuOption { NEW_GAME, CONTINUE, CONFIG }
 
 ## Currently selected menu index.
 var _selected: int = 0
@@ -97,7 +97,7 @@ func _update_display() -> void:
 	if _cursor != null and _options.size() > _selected:
 		var target: Label = _options[_selected]
 		_cursor.global_position = Vector2(
-			target.global_position.x - 20,
+			target.global_position.x - 80,
 			target.global_position.y + target.size.y / 2.0,
 		)
 

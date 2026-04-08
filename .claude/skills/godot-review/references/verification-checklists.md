@@ -114,6 +114,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Bit-depth conversions (e.g., 5-bit 0-31 to float 0.0-1.0) must use correct formula: `value / 31.0` not `value / 32.0` — verify boundary values (0 maps to 0.0, max maps to 1.0)
 - [ ] Percentage calculations must produce the correct range — verify at 0%, 50%, 100% boundary inputs
 - [ ] Any formula ported from a reference (SNES color format, damage formula) must be verified against known input/output pairs from the source
+- [ ] GDScript `/` operator yields float, not int. When integer division is intended in a function returning `-> int`, wrap with `int()` or use explicit `floori()`. (PR #130: `total / members.size()` returned float, caused implicit truncation warning)
 
 ### GDScript Runtime Safety (from PR #120 manual testing)
 - [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
@@ -375,7 +376,12 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After changing ANY value in data files, grep ALL spec/plan/gap docs for the old value
 - [ ] After changing act values, propagate to spec file structure tables AND plan dungeon lists
 - [ ] After changing entry counts (adding/removing entries), update ALL docs that reference the count
+- [ ] After removing an item/entry during review: `grep -r "removed_item_id" docs/` to find ALL spec/plan/gap references to the removed item and update them (PR #130: despair_ward removed from herbalist but 5 doc references remained)
 - [ ] When fixing a pattern-based issue, grep ALL files for the same pattern (not just flagged instances)
+
+### Scene Naming Consistency
+- [ ] metadata/map_id must match the scene's relative path under scenes/maps/ (e.g., "towns/roothollow" not "roothollow"). Check all new .tscn files against existing naming pattern. (PR #130: bare map_ids caused Copilot comments)
+- [ ] Test function names must match what they actually assert (e.g., "test_excludes_X" not "test_no_equipment" if only checking one item)
 
 ### Source Doc Verification
 - [ ] Every value traces to a canonical doc in docs/story/

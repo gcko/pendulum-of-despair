@@ -15,26 +15,26 @@ _data = {
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_dialogue"]
 bg_color = Color(0, 0, 0.251, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_choice"]
 bg_color = Color(0, 0, 0.251, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_speaker"]
 bg_color = Color(0, 0, 0.188, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [node name="Dialogue" type="CanvasLayer"]
@@ -44,15 +44,15 @@ script = ExtResource("1_script")
 
 [node name="DialogueBox" type="PanelContainer" parent="."]
 offset_left = 0.0
-offset_top = 140.0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_top = 560.0
+offset_right = 1280.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBox_dialogue")
 
 [node name="SpeakerLabel" type="PanelContainer" parent="DialogueBox"]
-offset_left = 4.0
-offset_top = -10.0
-offset_right = 100.0
+offset_left = 16.0
+offset_top = -40.0
+offset_right = 400.0
 offset_bottom = 0.0
 theme_override_styles/panel = SubResource("StyleBox_speaker")
 visible = false
@@ -62,32 +62,32 @@ layout_mode = 2
 text = "SPEAKER"
 
 [node name="TextLabel" type="RichTextLabel" parent="DialogueBox"]
-offset_left = 4.0
-offset_top = 2.0
-offset_right = 316.0
-offset_bottom = 38.0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 1264.0
+offset_bottom = 152.0
 bbcode_enabled = true
 text = ""
 visible_characters = 0
 
 [node name="AdvanceArrow" type="Sprite2D" parent="DialogueBox"]
-position = Vector2(308, 34)
+position = Vector2(1232, 136)
 texture = ExtResource("2_cursor")
 visible = false
 
 [node name="ChoiceBox" type="PanelContainer" parent="."]
-offset_left = 200.0
-offset_top = 90.0
-offset_right = 316.0
-offset_bottom = 138.0
+offset_left = 800.0
+offset_top = 360.0
+offset_right = 1264.0
+offset_bottom = 552.0
 theme_override_styles/panel = SubResource("StyleBox_choice")
 visible = false
 
 [node name="ChoiceContainer" type="VBoxContainer" parent="ChoiceBox"]
-offset_left = 16.0
-offset_top = 2.0
-offset_right = 112.0
-offset_bottom = 46.0
+offset_left = 64.0
+offset_top = 8.0
+offset_right = 448.0
+offset_bottom = 184.0
 
 [node name="Choice0" type="Label" parent="ChoiceBox/ChoiceContainer"]
 layout_mode = 2
@@ -108,7 +108,7 @@ text = "Option 4"
 visible = false
 
 [node name="ChoiceCursor" type="Sprite2D" parent="."]
-position = Vector2(204, 100)
+position = Vector2(816, 400)
 texture = ExtResource("2_cursor")
 visible = false
 
