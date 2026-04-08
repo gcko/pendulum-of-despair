@@ -2,6 +2,8 @@ extends CanvasLayer
 ## Main menu overlay — command list, character select, sub-screen dispatch.
 ## Process mode set by GameManager.push_overlay().
 
+enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -19,12 +21,10 @@ const COMMANDS: Array[Dictionary] = [
 	{"name": "Equip", "char_select": true, "stubbed": false},
 	{"name": "Crystal", "char_select": true, "stubbed": true},
 	{"name": "Status", "char_select": true, "stubbed": false},
-	{"name": "Formation", "char_select": false, "stubbed": true},
+	{"name": "Formation", "char_select": false, "stubbed": false},
 	{"name": "Config", "char_select": false, "stubbed": false},
 	{"name": "Save", "char_select": false, "stubbed": false},
 ]
-
-enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
 
 var _state: MenuState = MenuState.COMMAND
 var _command_index: int = 0
@@ -46,6 +46,7 @@ var _config_direct: bool = false
 @onready var _abilities_screen: Control = $SubScreen/AbilitiesScreen
 @onready var _status_screen: Control = $SubScreen/StatusScreen
 @onready var _config_screen: Control = $SubScreen/ConfigScreen
+@onready var _formation_screen: Control = $SubScreen/FormationScreen
 @onready var _stub_label: Label = $SubScreen/StubLabel
 
 
@@ -160,6 +161,10 @@ func _confirm_command() -> void:
 			_open_sub_screen(_item_screen)
 			if _item_screen.has_method("open"):
 				_item_screen.open()
+		"Formation":
+			_open_sub_screen(_formation_screen)
+			if _formation_screen.has_method("open"):
+				_formation_screen.open()
 		"Config":
 			_open_sub_screen(_config_screen)
 			if _config_screen.has_method("open"):
@@ -229,6 +234,8 @@ func _hide_all_sub_screens() -> void:
 		_status_screen.visible = false
 	if _config_screen != null:
 		_config_screen.visible = false
+	if _formation_screen != null:
+		_formation_screen.visible = false
 	if _stub_label != null:
 		_stub_label.visible = false
 
