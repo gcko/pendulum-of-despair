@@ -198,7 +198,7 @@ func test_roothollow_herbalist_item_count() -> void:
 	assert_eq(inv.size(), 9, "roothollow herbalist should have exactly 9 items")
 
 
-func test_roothollow_herbalist_no_equipment() -> void:
+func test_roothollow_herbalist_excludes_despair_ward() -> void:
 	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
 	var shop: Dictionary = data.get("shop", data)
 	var inv: Array = shop.get("inventory", [])
