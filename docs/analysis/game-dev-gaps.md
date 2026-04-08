@@ -924,20 +924,49 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 ### 4.4 Remaining Act I Content
 
-**Status:** NOT STARTED
+**Status:** IN PROGRESS
 **Priority:** P1 — completes Act I
-**Estimated Size:** L (multiple maps, cutscenes, encounters)
+**Estimated Size:** XL (multiple phases)
 **Output:** Additional dungeon/town maps, story scenes
-**Source Docs:** `dungeons-world.md` (Fenmother's Hollow), `script/act-i.md` (remaining Act I scenes), `events.md` (Act I flags)
-**Depends On:** 4.1 (Ember Vein — proves the pipeline), 4.2 (Valdris — proves towns), 4.3 (Overworld — connects locations)
+**Source Docs:** `dungeons-world.md`, `script/act-i.md`, `events.md`, `economy.md`, `npcs.md`, `locations.md`
+**Depends On:** 4.1, 4.2, 4.3 (all MOSTLY COMPLETE)
 
-**What's Needed:**
-- [ ] Fenmother's Hollow dungeon (second dungeon, different biome)
-- [ ] Roothollow village (Thornmere faction introduction)
-- [ ] Act I overworld zones (Valdris Highlands, Ley-Scarred Plains)
-- [ ] Remaining Act I story scenes from script/act-i.md
-- [ ] Act I side content (early accessible areas)
-- [ ] Act I progression testing (level pacing, economy, difficulty)
+**Phase A: Wilds Route (COMPLETE — 2026-04-08)**
+- [x] Roothollow village map (30x25 tiles, Vessa NPC, herbalist shop, save point)
+- [x] Maren's Refuge interior map (16x14 tiles, Maren NPC)
+- [x] Overworld transitions to both locations (bidirectional)
+- [x] Scene 5 dialogue trigger (Torren joins party via torren_encounter.json)
+- [x] Scene 6 dialogue trigger (Maren joins party via scene_6_marens_warning.json)
+- [x] PartyState.add_member() and has_member() public API
+- [x] Roothollow herbalist shop (roothollow_herbalist.json, 10 items incl. Despair Ward)
+- [x] Thornmere Wilds overworld encounter zone added to overworld.json
+- [x] Tileset extended to 10 tiles (forest floor, bioluminescent)
+- [x] dialogue_scene_id + required_flag support in exploration.gd dialogue triggers
+- [x] Integration tests (test_wilds_route.gd, ~25 tests)
+- [x] Design spec: `docs/superpowers/specs/2026-04-08-wilds-route-design.md`
+
+**Phase A2: Fenmother's Hollow (NOT STARTED)**
+- [ ] Second Act I dungeon (forest/swamp biome, 3 floors)
+- [ ] Drowned Sentinel mini-boss + Corrupted Fenmother boss
+- [ ] Encounter data exists (fenmothers_hollow.json)
+- [ ] New enemy types (marsh_serpent, drowned_bones, ley_jellyfish, polluted_elemental)
+
+**Phase B: Opening Sequence (NOT STARTED)**
+- [ ] Ironmouth outpost map
+- [ ] Ember Vein F3 (Ancient Ruin floor, puzzles)
+- [ ] Scenes 1-4 (tutorial, Vaelith, Lira+Sable join, Dawn March credits)
+- [ ] Party starts with Edren+Cael only, others join during Act I
+
+**Phase C: Capital Completion (NOT STARTED)**
+- [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
+- [ ] Scene 7 (throne hall, court free-roam, Cael's grey eyes moment)
+- [ ] Thornwatch garrison rest stop
+- [ ] Act I finale flag: pendulum_to_capital
+
+**Notes:**
+- Party assembly now works: Edren+Cael at new game, Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6). Lira+Sable join deferred to Phase B (Scenes 3-4).
+- Dialogue triggers use dialogue_scene_id metadata (loads from DataManager) instead of inline dialogue_data — scalable for large scenes.
+- required_flag metadata on triggers enables prerequisite flag checking (e.g., Scene 6 requires torren_joined).
 
 **Blocking:** Act II content (needs Act I complete for flag state)
 

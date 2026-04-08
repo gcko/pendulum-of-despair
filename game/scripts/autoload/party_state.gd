@@ -65,6 +65,30 @@ func initialize_new_game() -> void:
 	location_name = ""
 
 
+func add_member(character_id: String, level: int = 1) -> void:
+	for m: Dictionary in members:
+		if m.get("character_id", "") == character_id:
+			return
+	_add_character(character_id, level)
+	var idx: int = members.size() - 1
+	if formation.get("active", []).size() < 4:
+		formation["active"].append(idx)
+	else:
+		if not formation.has("reserve"):
+			formation["reserve"] = [] as Array[int]
+		formation["reserve"].append(idx)
+	var char_data: Dictionary = DataManager.load_character(character_id)
+	var default_row: String = char_data.get("default_row", "back")
+	formation["rows"][character_id] = default_row
+
+
+func has_member(character_id: String) -> bool:
+	for m: Dictionary in members:
+		if m.get("character_id", "") == character_id:
+			return true
+	return false
+
+
 func load_from_save(data: Dictionary) -> void:
 	members.clear()
 	owned_equipment.clear()

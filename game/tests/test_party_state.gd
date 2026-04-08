@@ -302,3 +302,54 @@ func test_add_equipment_stores_correct_equipment_id() -> void:
 	assert_eq(
 		entry.get("equipment_id", ""), "valdris_blade", "equipment_id should match the added item"
 	)
+
+
+# --- add_member / has_member ---
+
+
+func test_add_member_adds_to_party() -> void:
+	PartyState.initialize_new_game()
+	assert_eq(PartyState.members.size(), 2, "should start with 2 members")
+	PartyState.add_member("torren", 3)
+	assert_eq(PartyState.members.size(), 3, "should have 3 members after add")
+	var m: Dictionary = PartyState.get_member("torren")
+	assert_eq(m.get("character_id", ""), "torren", "torren should be in party")
+	assert_eq(m.get("level", 0), 3, "torren should be at level 3")
+
+
+func test_add_member_prevents_duplicates() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_member("torren", 3)
+	PartyState.add_member("torren", 5)
+	var count: int = 0
+	for m: Dictionary in PartyState.members:
+		if m.get("character_id", "") == "torren":
+			count += 1
+	assert_eq(count, 1, "should not add duplicate members")
+
+
+func test_add_member_sets_formation() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_member("torren", 1)
+	var active: Array = PartyState.formation.get("active", [])
+	assert_true(active.has(2), "torren (idx 2) should be in active party")
+	PartyState.add_member("maren", 1)
+	active = PartyState.formation.get("active", [])
+	assert_true(active.has(3), "maren (idx 3) should be in active (4th slot)")
+
+
+func test_add_member_overflow_to_reserve() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_member("lira", 1)
+	PartyState.add_member("sable", 1)
+	PartyState.add_member("torren", 1)
+	var reserve: Array = PartyState.formation.get("reserve", [])
+	assert_true(reserve.has(4), "torren (idx 4) should go to reserve when active full")
+
+
+func test_has_member() -> void:
+	PartyState.initialize_new_game()
+	assert_true(PartyState.has_member("edren"), "edren should exist")
+	assert_false(PartyState.has_member("torren"), "torren should not exist yet")
+	PartyState.add_member("torren", 1)
+	assert_true(PartyState.has_member("torren"), "torren should exist after add")

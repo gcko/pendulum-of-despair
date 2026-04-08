@@ -303,6 +303,54 @@
       ]
     },
     {
+      "zone_id": "thornmere_wilds",
+      "name": "Thornmere Wilds",
+      "terrain_type": "low_visibility",
+      "act": "act_i",
+      "danger_tier": 2,
+      "danger_increment": 160,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 15.0,
+        "preemptive": 10.0
+      },
+      "groups": [
+        {
+          "format": 1,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 2,
+          "enemies": [
+            "marsh_serpent",
+            "drowned_bones"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 3,
+          "enemies": [
+            "drowned_bones",
+            "drowned_bones"
+          ],
+          "weight": 31.25
+        },
+        {
+          "format": 4,
+          "enemies": [
+            "marsh_serpent",
+            "marsh_serpent",
+            "drowned_bones"
+          ],
+          "weight": 6.25
+        }
+      ]
+    },
+    {
       "zone_id": "deep_thornmere",
       "name": "Deep Thornmere",
       "terrain_type": "low_visibility",
