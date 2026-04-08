@@ -8,6 +8,11 @@ func before_each() -> void:
 	EventFlags.clear_all()
 
 
+func after_each() -> void:
+	DataManager.clear_cache()
+	EventFlags.clear_all()
+
+
 # --- Scene Existence ---
 
 
@@ -85,16 +90,16 @@ func test_roothollow_herbalist_shop_exists() -> void:
 	assert_false(shop.is_empty(), "shop wrapper should contain shop object")
 
 
-func test_roothollow_herbalist_has_despair_ward() -> void:
+func test_roothollow_herbalist_has_tent() -> void:
 	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
 	var shop: Dictionary = data.get("shop", data)
 	var inv: Array = shop.get("inventory", [])
 	var found: bool = false
 	for item: Variant in inv:
-		if item is Dictionary and (item as Dictionary).get("item_id", "") == "despair_ward":
+		if item is Dictionary and (item as Dictionary).get("item_id", "") == "tent":
 			found = true
 			break
-	assert_true(found, "roothollow herbalist should stock despair_ward")
+	assert_true(found, "roothollow herbalist should stock tent")
 
 
 # --- Dialogue Data ---

@@ -5,8 +5,9 @@
       "id": "npc_vessa_001",
       "speaker": "vessa",
       "lines": [
-        "The totems have been shaking since you arrived.",
-        "Whatever you carry, it is not welcome here."
+        "That thing you carry -- the totems know it.",
+        "They're shaking. Take it from my home before dawn,",
+        "or I will put it in the river myself."
       ],
       "condition": null,
       "animations": [],
@@ -17,8 +18,8 @@
       "id": "npc_vessa_002",
       "speaker": "vessa",
       "lines": [
-        "Torren will guide you. He knows the deep paths",
-        "better than anyone alive."
+        "The great stags once carried the spirit-speakers",
+        "between the groves. Few bond with them now."
       ],
       "condition": "torren_joined",
       "animations": [],

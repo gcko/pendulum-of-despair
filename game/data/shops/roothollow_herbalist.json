@@ -13,8 +13,7 @@
       { "item_id": "echo_drop", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "eye_drops", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "smelling_salts", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "despair_ward", "buy_price": 5000, "available_act": 1, "stock_limit": null, "restock_event": null }
+      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null }
     ]
   }
 }

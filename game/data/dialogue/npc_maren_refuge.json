@@ -5,22 +5,10 @@
       "id": "npc_maren_refuge_001",
       "speaker": "maren",
       "lines": [
-        "The ley line beneath this cottage dims more each day.",
-        "Whatever is behind that door, it knows we are here."
+        "I left the court because they wouldn't listen.",
+        "Maybe now they'll have to."
       ],
       "condition": null,
-      "animations": [],
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "npc_maren_refuge_002",
-      "speaker": "maren",
-      "lines": [
-        "To Valdris, then. And pray they listen better",
-        "than they did last time."
-      ],
-      "condition": "maren_warning",
       "animations": [],
       "choice": null,
       "sfx": null

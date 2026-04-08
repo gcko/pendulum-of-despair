@@ -66,16 +66,20 @@ func initialize_new_game() -> void:
 
 
 func add_member(character_id: String, level: int = 1) -> void:
+	if character_id.is_empty():
+		return
+	level = maxi(1, level)
 	for m: Dictionary in members:
 		if m.get("character_id", "") == character_id:
 			return
+	var prev_size: int = members.size()
 	_add_character(character_id, level)
+	if members.size() == prev_size:
+		return
 	var idx: int = members.size() - 1
-	if formation.get("active", []).size() < 4:
+	if formation["active"].size() < 4:
 		formation["active"].append(idx)
 	else:
-		if not formation.has("reserve"):
-			formation["reserve"] = [] as Array[int]
 		formation["reserve"].append(idx)
 	var char_data: Dictionary = DataManager.load_character(character_id)
 	var default_row: String = char_data.get("default_row", "back")

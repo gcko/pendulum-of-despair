@@ -31,7 +31,7 @@ position = Vector2(400, 180)
 metadata/npc_id = "roothollow_herbalist"
 metadata/shop_id = "roothollow_herbalist"
 
-[node name="RootholowSave" parent="Entities" instance=ExtResource("3_save")]
+[node name="RoothollowSave" parent="Entities" instance=ExtResource("3_save")]
 position = Vector2(240, 320)
 metadata/save_point_id = "roothollow_shrine"
 
@@ -49,7 +49,7 @@ metadata/target_spawn = "from_roothollow"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_exit")
 
-[node name="Scene5Trigger" type="Area2D" parent="."]
+[node name="Scene5Trigger" type="Area2D" parent="Entities"]
 position = Vector2(240, 100)
 collision_layer = 0
 collision_mask = 2
@@ -58,7 +58,7 @@ monitorable = false
 metadata/flag = "torren_joined"
 metadata/dialogue_scene_id = "torren_encounter"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene5Trigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene5Trigger"]
 shape = SubResource("Shape_scene5")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
