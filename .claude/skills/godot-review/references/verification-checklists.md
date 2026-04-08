@@ -379,6 +379,10 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After removing an item/entry during review: `grep -r "removed_item_id" docs/` to find ALL spec/plan/gap references to the removed item and update them (PR #130: despair_ward removed from herbalist but 5 doc references remained)
 - [ ] When fixing a pattern-based issue, grep ALL files for the same pattern (not just flagged instances)
 
+### Scene Naming Consistency
+- [ ] metadata/map_id must match the scene's relative path under scenes/maps/ (e.g., "towns/roothollow" not "roothollow"). Check all new .tscn files against existing naming pattern. (PR #130: bare map_ids caused Copilot comments)
+- [ ] Test function names must match what they actually assert (e.g., "test_excludes_X" not "test_no_equipment" if only checking one item)
+
 ### Source Doc Verification
 - [ ] Every value traces to a canonical doc in docs/story/
 - [ ] Bonus_effect text matches equipment.md/crafting.md VERBATIM (no paraphrasing)
