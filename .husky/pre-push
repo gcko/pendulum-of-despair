@@ -32,8 +32,10 @@ fi
 
 if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
     echo "=== Pre-push: Godot import ==="
+    set +e
     IMPORT_LOG=$("$GODOT_BIN" --headless --path game/ --import 2>&1)
     IMPORT_EXIT=$?
+    set -e
     if [ $IMPORT_EXIT -ne 0 ]; then
         echo "$IMPORT_LOG"
         echo "Godot import FAILED (exit $IMPORT_EXIT)."

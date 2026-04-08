@@ -392,7 +392,7 @@ func _get_party_avg_level() -> int:
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
 		total += m.get("level", 1) as int
-	return maxi(1, total / PartyState.members.size())
+	return maxi(1, int(total / PartyState.members.size()))
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:

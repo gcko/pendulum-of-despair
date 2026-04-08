@@ -375,6 +375,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After changing ANY value in data files, grep ALL spec/plan/gap docs for the old value
 - [ ] After changing act values, propagate to spec file structure tables AND plan dungeon lists
 - [ ] After changing entry counts (adding/removing entries), update ALL docs that reference the count
+- [ ] After removing an item/entry during review: `grep -r "removed_item_id" docs/` to find ALL spec/plan/gap references to the removed item and update them (PR #130: despair_ward removed from herbalist but 5 doc references remained)
 - [ ] When fixing a pattern-based issue, grep ALL files for the same pattern (not just flagged instances)
 
 ### Source Doc Verification

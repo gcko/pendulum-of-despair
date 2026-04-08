@@ -188,6 +188,29 @@ func test_roothollow_has_save_point() -> void:
 	)
 
 
+# --- Shop Item Count Validation ---
+
+
+func test_roothollow_herbalist_item_count() -> void:
+	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
+	var shop: Dictionary = data.get("shop", data)
+	var inv: Array = shop.get("inventory", [])
+	assert_eq(inv.size(), 9, "roothollow herbalist should have exactly 9 items")
+
+
+func test_roothollow_herbalist_no_equipment() -> void:
+	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
+	var shop: Dictionary = data.get("shop", data)
+	var inv: Array = shop.get("inventory", [])
+	for item: Variant in inv:
+		if item is Dictionary:
+			var item_id: String = (item as Dictionary).get("item_id", "")
+			assert_false(
+				item_id == "despair_ward",
+				"herbalist should not stock equipment (despair_ward is in craftsman shop)",
+			)
+
+
 # --- Helper ---
 
 

@@ -82,9 +82,9 @@ NW area: Entrance from overworld
   - Dialogue trigger zone for Scene 5 (first visit only)
   - Flag-gated: fires only when !torren_joined
 
-Central chamber: Vessa NPC + Torren NPC
+Central chamber: Vessa NPC
   - Vessa: flag-gated dialogue (npc_vessa in dialogue data)
-  - Torren: present until torren_joined flag set
+  - Torren joins via Scene5Trigger dialogue (not a placed NPC entity)
 
 East alcove: Herbalist shop NPC
   - shop_id: "roothollow_herbalist"
@@ -275,16 +275,14 @@ Thornmere Provisioner inventory, with `available_act: 1`:
       { "item_id": "echo_drop", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "eye_drops", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "smelling_salts", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "despair_ward", "buy_price": 5000, "available_act": 1, "stock_limit": null, "restock_event": null }
+      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null }
     ]
   }
 }
 ```
 
-Note: Wyrmbone Lance and Warding Crown are Craftsman shop items
-(Act II availability per economy.md). Despair Ward included in
-Herbalist because it's the only Act I source per economy.md.
+Note: Wyrmbone Lance, Warding Crown, and Despair Ward are Craftsman
+shop items (Act II availability per economy.md, thornmere_craftsman.json).
 
 ---
 

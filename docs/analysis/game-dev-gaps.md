@@ -938,7 +938,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Scene 5 dialogue trigger (Torren joins party via torren_encounter.json)
 - [x] Scene 6 dialogue trigger (Maren joins party via scene_6_marens_warning.json)
 - [x] PartyState.add_member() and has_member() public API
-- [x] Roothollow herbalist shop (roothollow_herbalist.json, 10 items incl. Despair Ward)
+- [x] Roothollow herbalist shop (roothollow_herbalist.json, 9 consumable items)
 - [x] Thornmere Wilds overworld encounter zone added to overworld.json
 - [x] Tileset extended to 10 tiles (forest floor, bioluminescent)
 - [x] dialogue_scene_id + required_flag support in exploration.gd dialogue triggers

@@ -57,20 +57,18 @@
       { "item_id": "echo_drop", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "eye_drops", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null },
       { "item_id": "smelling_salts", "buy_price": 75, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null },
-      { "item_id": "despair_ward", "buy_price": 5000, "available_act": 1, "stock_limit": null, "restock_event": null }
+      { "item_id": "tent", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null }
     ]
   }
 }
 ```
 
-All prices from economy.md Thornmere Provisioner table. Despair Ward is
-the only Act I source per economy.md.
+All prices from economy.md Thornmere Provisioner table. Despair Ward
+belongs to the Thornmere Craftsman shop (thornmere_craftsman.json).
 
 - [ ] **Step 2: Verify item IDs resolve**
 
-Check that every item_id in the shop exists in `game/data/items/consumables.json`
-or `game/data/equipment/accessories.json` (despair_ward is an accessory).
+Check that every item_id in the shop exists in `game/data/items/consumables.json`.
 
 ```bash
 python3 -c "
@@ -745,15 +743,10 @@ func test_roothollow_herbalist_shop_exists() -> void:
 	assert_false(data.is_empty(), "roothollow herbalist shop should load")
 
 
-func test_roothollow_herbalist_has_despair_ward() -> void:
+func test_roothollow_herbalist_item_count() -> void:
 	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
 	var inv: Array = data.get("inventory", [])
-	var found: bool = false
-	for item: Variant in inv:
-		if item is Dictionary and (item as Dictionary).get("item_id", "") == "despair_ward":
-			found = true
-			break
-	assert_true(found, "roothollow herbalist should stock despair_ward")
+	assert_eq(inv.size(), 9, "roothollow herbalist should have 9 consumable items")
 
 
 # --- Dialogue Data ---
@@ -922,7 +915,7 @@ details under the "What's Needed" section:
 - [x] Scene 5 dialogue trigger (Torren joins party via torren_encounter.json)
 - [x] Scene 6 dialogue trigger (Maren joins party via scene_6_marens_warning.json)
 - [x] PartyState.add_member() public API
-- [x] Roothollow herbalist shop (roothollow_herbalist.json, 10 items)
+- [x] Roothollow herbalist shop (roothollow_herbalist.json, 9 consumable items)
 - [x] Thornmere Wilds overworld encounter zone
 - [x] Tileset extended to 10 tiles (forest floor, bioluminescent)
 - [x] Integration tests (test_wilds_route.gd)
