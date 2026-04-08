@@ -144,7 +144,8 @@ func _show_entry(index: int) -> void:
 	# Set speaker — FF6 inline style: "SPEAKER: text"
 	var speaker: String = entry.get("speaker", "")
 	_speaker_container.visible = false
-	_current_lines = entry.get("lines", [])
+	var raw_lines: Array = entry.get("lines", [])
+	_current_lines = raw_lines.duplicate()
 	if speaker != "" and _current_lines.size() > 0:
 		_current_lines[0] = speaker.to_upper() + ": " + _current_lines[0]
 	elif speaker != "":
