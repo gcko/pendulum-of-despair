@@ -52,9 +52,9 @@ var _slot_previews: Array[Dictionary] = []
 
 func _ready() -> void:
 	_save_point_options = [
-		$SavePointMenu/RestOption,
-		$SavePointMenu/RestSaveOption,
-		$SavePointMenu/SaveOption,
+		$SavePointMenu/OptionList/RestOption,
+		$SavePointMenu/OptionList/RestSaveOption,
+		$SavePointMenu/OptionList/SaveOption,
 	]
 	_manual_slots = [
 		$SlotContainer/Slot1,

@@ -141,16 +141,14 @@ func _show_entry(index: int) -> void:
 	# Fire SFX markers
 	_fire_sfx(entry)
 
-	# Set speaker
+	# Set speaker — FF6 inline style: "SPEAKER: text"
 	var speaker: String = entry.get("speaker", "")
-	if speaker != "":
-		_speaker_label.text = speaker.to_upper()
-		_speaker_container.visible = true
-	else:
-		_speaker_container.visible = false
-
-	# Set lines
+	_speaker_container.visible = false
 	_current_lines = entry.get("lines", [])
+	if speaker != "" and _current_lines.size() > 0:
+		_current_lines[0] = speaker.to_upper() + ": " + _current_lines[0]
+	elif speaker != "":
+		_current_lines = [speaker.to_upper() + ":"]
 	_page_start = 0
 	_show_page()
 
