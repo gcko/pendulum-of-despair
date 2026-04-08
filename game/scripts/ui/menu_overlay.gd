@@ -14,7 +14,7 @@ const COLOR_WINDOW_BG: Color = Color("#000040")
 ## Command definitions: name, requires_character_select, is_stubbed.
 const COMMANDS: Array[Dictionary] = [
 	{"name": "Item", "char_select": false, "stubbed": false},
-	{"name": "Magic", "char_select": true, "stubbed": true},
+	{"name": "Magic", "char_select": true, "stubbed": false},
 	{"name": "Abilities", "char_select": true, "stubbed": true},
 	{"name": "Equip", "char_select": true, "stubbed": false},
 	{"name": "Crystal", "char_select": true, "stubbed": true},
@@ -40,6 +40,7 @@ var _config_direct: bool = false
 @onready var _gold_label: Label = $InfoPanel/GoldLabel
 @onready var _time_label: Label = $InfoPanel/TimeLabel
 @onready var _location_label: Label = $InfoPanel/LocationLabel
+@onready var _magic_screen: Control = $SubScreen/MagicScreen
 @onready var _item_screen: Control = $SubScreen/ItemScreen
 @onready var _equip_screen: Control = $SubScreen/EquipScreen
 @onready var _status_screen: Control = $SubScreen/StatusScreen
@@ -171,6 +172,10 @@ func _open_sub_screen_for_character() -> void:
 	var cmd_name: String = COMMANDS[_command_index].get("name", "")
 	_char_cursor.visible = false
 	match cmd_name:
+		"Magic":
+			_open_sub_screen(_magic_screen)
+			if _magic_screen.has_method("open"):
+				_magic_screen.open(character_id)
 		"Equip":
 			_open_sub_screen(_equip_screen)
 			if _equip_screen.has_method("open"):
@@ -207,6 +212,8 @@ func _close_sub_screen() -> void:
 
 
 func _hide_all_sub_screens() -> void:
+	if _magic_screen != null:
+		_magic_screen.visible = false
 	if _item_screen != null:
 		_item_screen.visible = false
 	if _equip_screen != null:

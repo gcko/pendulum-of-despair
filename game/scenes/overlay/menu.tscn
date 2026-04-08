@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/menu_overlay.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/menu_items.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/ui/menu_equip.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/ui/menu_status.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/ui/menu_config.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/ui/menu_magic.gd" id="6"]
 
 [node name="Menu" type="CanvasLayer"]
 layer = 10
@@ -639,6 +640,102 @@ offset_top = 140.0
 offset_right = 310.0
 offset_bottom = 170.0
 color = Color(0, 0, 0.25, 1)
+
+[node name="MagicScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("6")
+
+[node name="DescLabel" type="Label" parent="SubScreen/MagicScreen"]
+offset_left = 4.0
+offset_top = 0.0
+offset_right = 316.0
+offset_bottom = 14.0
+text = ""
+
+[node name="CharInfo" type="HBoxContainer" parent="SubScreen/MagicScreen"]
+offset_left = 4.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 32.0
+
+[node name="NameLabel" type="Label" parent="SubScreen/MagicScreen/CharInfo"]
+text = ""
+
+[node name="LvLabel" type="Label" parent="SubScreen/MagicScreen/CharInfo"]
+text = ""
+
+[node name="HPLabel" type="Label" parent="SubScreen/MagicScreen/CharInfo"]
+text = ""
+
+[node name="MPLabel" type="Label" parent="SubScreen/MagicScreen/CharInfo"]
+text = ""
+
+[node name="SpellGrid" type="HBoxContainer" parent="SubScreen/MagicScreen"]
+offset_left = 4.0
+offset_top = 40.0
+offset_right = 316.0
+offset_bottom = 136.0
+
+[node name="LeftCol" type="VBoxContainer" parent="SubScreen/MagicScreen/SpellGrid"]
+
+[node name="Spell0" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="Spell1" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="Spell2" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="Spell3" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="Spell4" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="Spell5" type="Label" parent="SubScreen/MagicScreen/SpellGrid/LeftCol"]
+text = ""
+
+[node name="RightCol" type="VBoxContainer" parent="SubScreen/MagicScreen/SpellGrid"]
+
+[node name="Spell6" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="Spell7" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="Spell8" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="Spell9" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="Spell10" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="Spell11" type="Label" parent="SubScreen/MagicScreen/SpellGrid/RightCol"]
+text = ""
+
+[node name="TargetPanel" type="VBoxContainer" parent="SubScreen/MagicScreen"]
+visible = false
+offset_left = 4.0
+offset_top = 40.0
+offset_right = 316.0
+offset_bottom = 104.0
+
+[node name="Target0" type="Label" parent="SubScreen/MagicScreen/TargetPanel"]
+text = ""
+
+[node name="Target1" type="Label" parent="SubScreen/MagicScreen/TargetPanel"]
+text = ""
+
+[node name="Target2" type="Label" parent="SubScreen/MagicScreen/TargetPanel"]
+text = ""
+
+[node name="Target3" type="Label" parent="SubScreen/MagicScreen/TargetPanel"]
+text = ""
 
 [node name="StubLabel" type="Label" parent="SubScreen"]
 visible = false

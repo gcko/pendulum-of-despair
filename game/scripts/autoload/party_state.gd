@@ -26,16 +26,8 @@ const STARTING_CONSUMABLES: Dictionary = {
 const STARTING_GOLD: int = 200
 
 var members: Array[Dictionary] = []
-var formation: Dictionary = {
-	"active": [] as Array[int],
-	"reserve": [] as Array[int],
-	"rows": {} as Dictionary,
-}
-var inventory: Dictionary = {
-	"consumables": {} as Dictionary,
-	"materials": {} as Dictionary,
-	"key_items": [] as Array[String],
-}
+var formation: Dictionary = {"active": [], "reserve": [], "rows": {}}
+var inventory: Dictionary = {"consumables": {}, "materials": {}, "key_items": []}
 var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
 var playtime: int = 0
@@ -76,28 +68,23 @@ func initialize_new_game() -> void:
 func load_from_save(data: Dictionary) -> void:
 	members.clear()
 	owned_equipment.clear()
-
 	var party_data: Array = data.get("party", [])
 	for m: Variant in party_data:
 		if m is Dictionary:
 			members.append(m as Dictionary)
-
 	formation = data.get("formation", {"active": [], "reserve": [], "rows": {}})
 	inventory = data.get("inventory", {"consumables": {}, "materials": {}, "key_items": []})
-
 	var equip_data: Array = data.get("owned_equipment", [])
 	for e: Variant in equip_data:
 		if e is Dictionary:
 			owned_equipment.append(e as Dictionary)
 	_next_inst_id = Helpers.find_max_inst_id(owned_equipment)
-
 	var world: Dictionary = data.get("world", {})
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
-	var event_flags: Dictionary = world.get("event_flags", {})
-	EventFlags.load_from_save(event_flags)
+	EventFlags.load_from_save(world.get("event_flags", {}))
 
 
 func build_save_data() -> Dictionary:
@@ -144,9 +131,7 @@ func get_effective_stat(character_id: String, stat: String) -> int:
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return 0
-	var base: int = m.get("base_stats", {}).get(stat, 0)
-	var bonus: int = get_equipment_bonus(character_id, stat)
-	var total: int = base + bonus
+	var total: int = m.get("base_stats", {}).get(stat, 0) + get_equipment_bonus(character_id, stat)
 	if stat == "hp":
 		return mini(total, 14999)
 	if stat == "mp":
@@ -184,14 +169,12 @@ func equip_item(character_id: String, slot: String, equipment_id: String) -> Dic
 		return {}
 	var equip: Dictionary = m.get("equipment", {})
 	var old_id: String = equip.get(slot, "")
-
 	if not _has_owned_equipment(equipment_id):
 		push_error("PartyState: Cannot equip '%s' — not in owned_equipment" % equipment_id)
 		return {}
 	if old_id != "":
 		owned_equipment.append({"id": _generate_inst_id(old_id), "equipment_id": old_id})
 	_remove_owned_equipment(equipment_id)
-
 	equip[slot] = equipment_id
 	m["equipment"] = equip
 	_recalculate_max_hp_mp(character_id)
@@ -220,8 +203,7 @@ func get_equippable_for_slot(character_id: String, slot: String) -> Array[Dictio
 
 
 func optimize_equipment(character_id: String) -> void:
-	var is_caster: bool = character_id in ["maren", "torren"]
-	var priority_stat: String = "mag" if is_caster else "atk"
+	var priority_stat: String = "mag" if character_id in ["maren", "torren"] else "atk"
 	for slot: String in ["weapon", "head", "body", "accessory", "crystal"]:
 		var options: Array[Dictionary] = get_equippable_for_slot(character_id, slot)
 		if options.is_empty():
@@ -250,9 +232,7 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	if qty <= 0:
 		return false
 	var item_data: Dictionary = Helpers.lookup_consumable(item_id)
-	if item_data.is_empty():
-		return false
-	if not item_data.get("usable_in_field", false):
+	if item_data.is_empty() or not item_data.get("usable_in_field", false):
 		return false
 	if item_data.get("requires_save_point", false) and not is_at_save_point:
 		return false
@@ -286,11 +266,9 @@ func remove_item(item_id: String, quantity: int) -> void:
 	if quantity <= 0:
 		return
 	var cons: Dictionary = inventory.get("consumables", {})
-	var left: int = maxi(0, cons.get(item_id, 0) - quantity)
-	if left <= 0:
+	cons[item_id] = maxi(0, cons.get(item_id, 0) - quantity)
+	if cons[item_id] <= 0:
 		cons.erase(item_id)
-	else:
-		cons[item_id] = left
 	inventory["consumables"] = cons
 	inventory_changed.emit()
 
@@ -322,6 +300,25 @@ func rest_at_inn() -> void:
 		member["status_effects"] = []
 
 
+## Deduct MP from a party member. Returns false if insufficient.
+func spend_mp(character_id: String, amount: int) -> bool:
+	var m: Dictionary = get_member(character_id)
+	if m.is_empty() or amount <= 0 or m.get("current_mp", 0) < amount:
+		return false
+	m["current_mp"] -= amount
+	return true
+
+
+## Heal a party member's HP. Returns actual amount restored.
+func heal_member(character_id: String, amount: int) -> int:
+	var m: Dictionary = get_member(character_id)
+	if m.is_empty() or amount <= 0:
+		return 0
+	var old: int = m.get("current_hp", 0)
+	m["current_hp"] = mini(m.get("max_hp", old), old + amount)
+	return m["current_hp"] - old
+
+
 func get_config() -> Dictionary:
 	if not _config_loaded:
 		_load_config()
@@ -344,9 +341,9 @@ func _add_character(character_id: String, level: int) -> void:
 	if char_data.is_empty():
 		push_error("PartyState: Character not found: %s" % character_id)
 		return
-	var base: Dictionary = char_data.get("base_stats", {})
-	var growth: Dictionary = char_data.get("growth", {})
-	var stats: Dictionary = Helpers.calculate_stats_at_level(base, growth, level)
+	var stats: Dictionary = Helpers.calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), level
+	)
 	var starting_equip: Dictionary = STARTING_EQUIPMENT.get(
 		character_id, {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""}
 	)
