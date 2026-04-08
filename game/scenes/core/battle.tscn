@@ -9,27 +9,27 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
 bg_color = Color(0, 0, 0.15, 0.9)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 border_color = Color(0.333, 0.4, 0.667, 1)
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 2.0
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_msg"]
 bg_color = Color(0, 0, 0.15, 0.9)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 border_color = Color(0.333, 0.4, 0.667, 1)
-content_margin_left = 4.0
-content_margin_top = 1.0
-content_margin_right = 4.0
-content_margin_bottom = 1.0
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_manager")
@@ -43,7 +43,7 @@ script = ExtResource("3_state")
 [node name="EnemyArea" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(160, 90)
+position = Vector2(640, 360)
 
 [node name="BattleUI" type="CanvasLayer" parent="."]
 layer = 10
@@ -51,9 +51,9 @@ script = ExtResource("4_ui")
 
 [node name="PartyPanel" type="PanelContainer" parent="BattleUI"]
 offset_left = 0.0
-offset_top = 117.0
-offset_right = 208.0
-offset_bottom = 180.0
+offset_top = 468.0
+offset_right = 832.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBox_panel")
 script = ExtResource("5_panel")
 
@@ -74,7 +74,7 @@ text = ""
 
 [node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row0"]
 layout_mode = 2
-custom_minimum_size = Vector2(20, 4)
+custom_minimum_size = Vector2(80, 16)
 color = Color(1, 0.8, 0, 1)
 
 [node name="Row1" type="HBoxContainer" parent="BattleUI/PartyPanel"]
@@ -94,7 +94,7 @@ text = ""
 
 [node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row1"]
 layout_mode = 2
-custom_minimum_size = Vector2(20, 4)
+custom_minimum_size = Vector2(80, 16)
 color = Color(1, 0.8, 0, 1)
 
 [node name="Row2" type="HBoxContainer" parent="BattleUI/PartyPanel"]
@@ -114,7 +114,7 @@ text = ""
 
 [node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row2"]
 layout_mode = 2
-custom_minimum_size = Vector2(20, 4)
+custom_minimum_size = Vector2(80, 16)
 color = Color(1, 0.8, 0, 1)
 
 [node name="Row3" type="HBoxContainer" parent="BattleUI/PartyPanel"]
@@ -134,14 +134,14 @@ text = ""
 
 [node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Row3"]
 layout_mode = 2
-custom_minimum_size = Vector2(20, 4)
+custom_minimum_size = Vector2(80, 16)
 color = Color(1, 0.8, 0, 1)
 
 [node name="CommandMenu" type="PanelContainer" parent="BattleUI"]
-offset_left = 212.0
-offset_top = 117.0
-offset_right = 320.0
-offset_bottom = 180.0
+offset_left = 848.0
+offset_top = 468.0
+offset_right = 1280.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBox_panel")
 visible = false
 script = ExtResource("6_cmd")
@@ -174,10 +174,10 @@ layout_mode = 2
 text = "Flee"
 
 [node name="SubMenu" type="PanelContainer" parent="BattleUI/CommandMenu"]
-offset_left = -212.0
+offset_left = -848.0
 offset_top = 0.0
-offset_right = -4.0
-offset_bottom = 63.0
+offset_right = -16.0
+offset_bottom = 252.0
 theme_override_styles/panel = SubResource("StyleBox_panel")
 visible = false
 
@@ -185,10 +185,10 @@ visible = false
 layout_mode = 2
 
 [node name="MessageArea" type="PanelContainer" parent="BattleUI"]
-offset_left = 80.0
-offset_top = 2.0
-offset_right = 240.0
-offset_bottom = 16.0
+offset_left = 320.0
+offset_top = 8.0
+offset_right = 960.0
+offset_bottom = 64.0
 theme_override_styles/panel = SubResource("StyleBox_msg")
 visible = false
 
@@ -198,10 +198,10 @@ horizontal_alignment = 1
 text = ""
 
 [node name="ResultsPanel" type="PanelContainer" parent="BattleUI"]
-offset_left = 60.0
-offset_top = 30.0
-offset_right = 260.0
-offset_bottom = 150.0
+offset_left = 240.0
+offset_top = 120.0
+offset_right = 1040.0
+offset_bottom = 600.0
 theme_override_styles/panel = SubResource("StyleBox_panel")
 visible = false
 

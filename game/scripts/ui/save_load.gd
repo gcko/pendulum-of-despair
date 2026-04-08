@@ -4,13 +4,6 @@ extends CanvasLayer
 signal save_completed(slot: int)
 signal load_completed(slot: int)
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
-
-## Colors from ui-design.md Section 1.4.
-const COLOR_SELECTED: Color = Color("#ffff88")
-const COLOR_NORMAL: Color = Color("#ccddff")
-const COLOR_DISABLED: Color = Color("#666688")
-
 ## Operating modes.
 enum Mode { SAVE_POINT, SAVE, LOAD }
 
@@ -19,6 +12,13 @@ enum SubState { SAVE_POINT_MENU, REST_MENU, SLOT_SELECT, CONFIRM }
 
 ## Save point menu options.
 enum SavePointOption { REST, REST_SAVE, SAVE }
+
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+
+## Colors from ui-design.md Section 1.4.
+const COLOR_SELECTED: Color = Color("#ffff88")
+const COLOR_NORMAL: Color = Color("#ccddff")
+const COLOR_DISABLED: Color = Color("#666688")
 
 ## Current mode.
 var _mode: Mode = Mode.SAVE
@@ -397,4 +397,4 @@ func _update_slot_selection() -> void:
 	if not has_selectable:
 		return
 	var target: PanelContainer = panels[_selected_slot]
-	_cursor.global_position = Vector2(4, target.global_position.y + target.size.y / 2.0)
+	_cursor.global_position = Vector2(16, target.global_position.y + target.size.y / 2.0)

@@ -171,11 +171,11 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	var pos: Vector2 = _get_target_position(target_id)
-	label.position = pos - Vector2(20, 16)
+	label.position = pos - Vector2(80, 64)
 	add_child(label)
 
 	var tween: Tween = create_tween()
-	tween.tween_property(label, "position:y", pos.y - 32, 0.5)
+	tween.tween_property(label, "position:y", pos.y - 128, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)
 
@@ -187,8 +187,8 @@ func _get_target_position(target_id: String) -> Vector2:
 			return _enemy_positions[idx]
 	elif target_id.begins_with("party_"):
 		var slot: int = target_id.replace("party_", "").to_int()
-		return Vector2(40, 120 + slot * 15)
-	return Vector2(160, 90)
+		return Vector2(160, 480 + slot * 60)
+	return Vector2(640, 360)
 
 
 func _show_results(rewards: Dictionary) -> void:

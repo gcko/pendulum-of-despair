@@ -32,10 +32,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -100.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 50.0
+offset_left = -400.0
+offset_top = 120.0
+offset_right = 400.0
+offset_bottom = 200.0
 text = "Pendulum of Despair"
 horizontal_alignment = 1
 
@@ -46,10 +46,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -80.0
-offset_right = 40.0
-offset_bottom = -20.0
+offset_left = -160.0
+offset_top = -320.0
+offset_right = 160.0
+offset_bottom = -80.0
 alignment = 1
 
 [node name="NewGameOption" type="Label" parent="MenuContainer"]
@@ -68,7 +68,7 @@ text = "Config (Coming Soon)"
 horizontal_alignment = 1
 
 [node name="Cursor" type="Sprite2D" parent="."]
-position = Vector2(80, 130)
+position = Vector2(320, 520)
 texture = ExtResource("2_cursor")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

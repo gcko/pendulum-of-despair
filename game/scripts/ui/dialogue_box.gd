@@ -279,7 +279,7 @@ func _update_choice_display() -> void:
 	if _choice_cursor != null and _choice_count > 0:
 		var target: Label = _choice_labels[_choice_index]
 		_choice_cursor.global_position = Vector2(
-			target.global_position.x - 16,
+			target.global_position.x - 64,
 			target.global_position.y + target.size.y / 2.0,
 		)
 
