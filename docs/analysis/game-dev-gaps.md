@@ -177,14 +177,14 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P1 — blocks town implementation
-**Estimated Size:** M (23 JSON files, one per shop across 10 towns)
+**Estimated Size:** M (24 JSON files, one per shop across 11 towns)
 **Output:** `game/data/shops/{shop_id}.json`
 **Source Docs:** `economy.md` (complete shop inventories per town with event-gated restocking)
 **Architecture Ref:** `technical-architecture.md` Section 2.4
 **Depends On:** 1.3 (Items & Equipment — item IDs must exist)
 
 **What's Needed:**
-- [x] Per-shop JSON following Section 2.4 schema (23 files, one per shop)
+- [x] Per-shop JSON following Section 2.4 schema (24 files, one per shop)
 - [x] All 10 town inventories from economy.md (102 unique item_ids across all shops)
 - [x] Event-gated restock entries (available_act, restock_event)
 - [x] Caldera 150% inflation pricing per economy.md (markup: 1.5 on Company shops)
@@ -192,7 +192,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Verify prices match economy.md tables
 
 **Notes:**
-- 23 shop files (multiple shops per town: general, armorer, specialty, etc.)
+- 24 shop files (multiple shops per town: general, armorer, specialty, etc.; includes Roothollow herbalist from gap 4.4)
 - Caldera Company Store/Armorer have markup: 1.5 with pre-multiplied prices
 - Caldera Black Market has markup: 1.0 (standard prices)
 - Interlude scarcity handled at runtime, not in static data
