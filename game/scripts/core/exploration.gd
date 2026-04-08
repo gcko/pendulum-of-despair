@@ -29,6 +29,7 @@ var _current_floor_id: String = ""
 func _ready() -> void:
 	_fade_rect.visible = false
 	_location_panel.visible = false
+	_camera.zoom = Vector2(4, 4)
 	_spawn_player()
 	_initialize_from_transition_data()
 
