@@ -1,6 +1,8 @@
 extends Control
 ## Magic sub-screen: two-column spell grid with field-cast support.
 
+enum MagicState { BROWSING, TARGET_SELECT }
+
 const SpellHelpers = preload("res://scripts/ui/spell_helpers.gd")
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -9,8 +11,6 @@ const GRID_ROWS: int = 6
 const GRID_COLS: int = 2
 const GRID_SIZE: int = GRID_ROWS * GRID_COLS
 const FEEDBACK_DELAY: float = 1.5
-
-enum MagicState { BROWSING, TARGET_SELECT }
 
 var _character_id: String = ""
 var _spells: Array = []
@@ -21,14 +21,14 @@ var _state: MagicState = MagicState.BROWSING
 var _feedback_timer: float = 0.0
 var _showing_feedback: bool = false
 
-@onready var _desc_label: Label = $DescLabel
-@onready var _name_label: Label = $CharInfo/NameLabel
-@onready var _lv_label: Label = $CharInfo/LvLabel
-@onready var _hp_label: Label = $CharInfo/HPLabel
-@onready var _mp_label: Label = $CharInfo/MPLabel
-@onready var _left_col: VBoxContainer = $SpellGrid/LeftCol
-@onready var _right_col: VBoxContainer = $SpellGrid/RightCol
-@onready var _target_panel: VBoxContainer = $TargetPanel
+@onready var _desc_label: Label = $Layout/DescPanel/DescLabel
+@onready var _name_label: Label = $Layout/CharPanel/CharInfo/NameLabel
+@onready var _lv_label: Label = $Layout/CharPanel/CharInfo/LvLabel
+@onready var _hp_label: Label = $Layout/CharPanel/CharInfo/HPLabel
+@onready var _mp_label: Label = $Layout/CharPanel/CharInfo/MPLabel
+@onready var _left_col: VBoxContainer = $Layout/SpellPanel/SpellGrid/LeftCol
+@onready var _right_col: VBoxContainer = $Layout/SpellPanel/SpellGrid/RightCol
+@onready var _target_panel: PanelContainer = $Layout/TargetPanel
 @onready var _spell_labels: Array[Label] = []
 @onready var _target_labels: Array[Label] = []
 
@@ -44,7 +44,7 @@ func _ready() -> void:
 			_spell_labels.append(right)
 	_target_labels = []
 	for i: int in range(4):
-		var label: Label = _target_panel.get_node_or_null("Target%d" % i)
+		var label: Label = _target_panel.get_node_or_null("TargetList/Target%d" % i)
 		if label != null:
 			_target_labels.append(label)
 	_target_panel.visible = false

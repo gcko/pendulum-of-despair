@@ -15,13 +15,13 @@ const SLOT_DISPLAY: Array[String] = ["Weapon", "Head", "Body", "Access", "Crysta
 
 var _character_id: String = ""
 
-@onready var _name_label: Label = $NameLabel
-@onready var _class_label: Label = $ClassLabel
-@onready var _lv_label: Label = $LvLabel
-@onready var _xp_label: Label = $XpLabel
-@onready var _next_label: Label = $NextLabel
-@onready var _hp_label: Label = $HPLabel
-@onready var _mp_label: Label = $MPLabel
+@onready var _name_label: Label = $Layout/IdentityPanel/IdentityRow/NameCol/NameLabel
+@onready var _class_label: Label = $Layout/IdentityPanel/IdentityRow/NameCol/ClassLabel
+@onready var _lv_label: Label = $Layout/IdentityPanel/IdentityRow/LevelCol/LvLabel
+@onready var _xp_label: Label = $Layout/IdentityPanel/IdentityRow/LevelCol/XpLabel
+@onready var _next_label: Label = $Layout/IdentityPanel/IdentityRow/LevelCol/NextLabel
+@onready var _hp_label: Label = $Layout/IdentityPanel/IdentityRow/VitalCol/HPLabel
+@onready var _mp_label: Label = $Layout/IdentityPanel/IdentityRow/VitalCol/MPLabel
 @onready var _stat_labels: Array[Label] = []
 @onready var _derived_labels: Array[Label] = []
 @onready var _cmd_labels: Array[Label] = []
@@ -31,22 +31,28 @@ var _character_id: String = ""
 func _ready() -> void:
 	_stat_labels = []
 	for i: int in range(6):
-		var label: Label = get_node_or_null("StatPanel/Stat%d" % i)
+		var label: Label = get_node_or_null(
+			"Layout/DetailRow/RightCol/StatPanel/StatList/Stat%d" % i
+		)
 		if label != null:
 			_stat_labels.append(label)
 	_derived_labels = []
 	for i: int in range(3):
-		var label: Label = get_node_or_null("StatPanel/Derived%d" % i)
+		var label: Label = get_node_or_null(
+			"Layout/DetailRow/RightCol/StatPanel/StatList/Derived%d" % i
+		)
 		if label != null:
 			_derived_labels.append(label)
 	_cmd_labels = []
 	for i: int in range(5):
-		var label: Label = get_node_or_null("CmdPanel/Cmd%d" % i)
+		var label: Label = get_node_or_null("Layout/DetailRow/LeftCol/CmdPanel/CmdList/Cmd%d" % i)
 		if label != null:
 			_cmd_labels.append(label)
 	_equip_labels = []
 	for i: int in range(5):
-		var label: Label = get_node_or_null("EquipPanel/Equip%d" % i)
+		var label: Label = get_node_or_null(
+			"Layout/DetailRow/RightCol/EquipPanel/EquipList/Equip%d" % i
+		)
 		if label != null:
 			_equip_labels.append(label)
 

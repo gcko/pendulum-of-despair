@@ -68,15 +68,15 @@ var _reduce_was_on: bool = false
 
 @onready var _setting_labels: Array[Label] = []
 @onready var _value_labels: Array[Label] = []
-@onready var _preview_rect: ColorRect = $PreviewRect
+@onready var _preview_rect: ColorRect = $Layout/PreviewRect
 
 
 func _ready() -> void:
 	_setting_labels = []
 	_value_labels = []
 	for i: int in range(SETTINGS.size()):
-		var sl: Label = get_node_or_null("SettingList/Name%d" % i)
-		var vl: Label = get_node_or_null("SettingList/Value%d" % i)
+		var sl: Label = get_node_or_null("Layout/SettingsPanel/SettingList/Name%d" % i)
+		var vl: Label = get_node_or_null("Layout/SettingsPanel/SettingList/Value%d" % i)
 		_setting_labels.append(sl)
 		_value_labels.append(vl)
 

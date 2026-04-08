@@ -1,12 +1,12 @@
 extends Control
 ## Items sub-screen: USE / ARRANGE / KEY tabs with single-column item list.
 
+enum ItemTab { USE, ARRANGE, KEY }
+enum ItemState { BROWSING, TARGET_SELECT }
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-
-enum ItemTab { USE, ARRANGE, KEY }
-enum ItemState { BROWSING, TARGET_SELECT }
 
 var _tab: ItemTab = ItemTab.USE
 var _state: ItemState = ItemState.BROWSING
@@ -16,27 +16,27 @@ var _items: Array[Dictionary] = []
 var _sort_mode: int = 0  # 0=type, 1=name, 2=quantity
 
 @onready var _tab_labels: Array[Label] = []
-@onready var _desc_label: Label = $DescLabel
-@onready var _item_container: Control = $ItemContainer
+@onready var _desc_label: Label = $Layout/DescPanel/DescLabel
+@onready var _item_container: Control = $Layout/ListPanel/ItemContainer
 @onready var _item_labels: Array[Label] = []
-@onready var _target_panel: Control = $TargetPanel
+@onready var _target_panel: Control = $Layout/TargetPanel
 @onready var _target_labels: Array[Label] = []
 
 
 func _ready() -> void:
 	_tab_labels = []
 	for tab_name: String in ["UseTab", "ArrangeTab", "KeyTab"]:
-		var label: Label = get_node_or_null("TabBar/" + tab_name)
+		var label: Label = get_node_or_null("Layout/TabPanel/TabBar/" + tab_name)
 		if label != null:
 			_tab_labels.append(label)
 	_item_labels = []
 	for i: int in range(12):
-		var label: Label = get_node_or_null("ItemContainer/Item%d" % i)
+		var label: Label = get_node_or_null("Layout/ListPanel/ItemContainer/Item%d" % i)
 		if label != null:
 			_item_labels.append(label)
 	_target_labels = []
 	for i: int in range(4):
-		var label: Label = get_node_or_null("TargetPanel/Target%d" % i)
+		var label: Label = get_node_or_null("Layout/TargetPanel/Target%d" % i)
 		if label != null:
 			_target_labels.append(label)
 	if _target_panel != null:

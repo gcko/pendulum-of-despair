@@ -37,6 +37,9 @@ var _config_direct: bool = false
 @onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
 @onready var _char_cursor: Sprite2D = $CharCursor
+@onready var _main_panel: PanelContainer = $MainPanel
+@onready var _command_panel: PanelContainer = $CommandPanel
+@onready var _info_panel: PanelContainer = $InfoPanel
 @onready var _gold_label: Label = $InfoPanel/Margin/Layout/RightCol/GoldLabel
 @onready var _time_label: Label = $InfoPanel/Margin/Layout/RightCol/TimeLabel
 @onready var _location_label: Label = $InfoPanel/Margin/Layout/LocationLabel
@@ -198,6 +201,11 @@ func _open_sub_screen_for_character() -> void:
 
 func _open_sub_screen(screen: Control) -> void:
 	_hide_all_sub_screens()
+	_main_panel.visible = false
+	_command_panel.visible = false
+	_info_panel.visible = false
+	_cursor.visible = false
+	_char_cursor.visible = false
 	screen.visible = true
 	_active_sub_screen = screen
 	_state = MenuState.SUB_SCREEN
@@ -215,6 +223,10 @@ func _close_sub_screen() -> void:
 		get_viewport().set_input_as_handled()
 		GameManager.pop_overlay()
 		return
+	_main_panel.visible = true
+	_command_panel.visible = true
+	_info_panel.visible = true
+	_cursor.visible = true
 	_state = MenuState.COMMAND
 	_refresh_party_data()
 	_update_display()
