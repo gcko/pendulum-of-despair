@@ -70,12 +70,15 @@ func test_config_has_scroll_container() -> void:
 
 func test_config_has_title_label() -> void:
 	var text: String = _read_file("res://scenes/overlay/menu.tscn")
+	# Check that a label with text "Config" exists under TitlePanel specifically
+	var marker: String = 'parent="SubScreen/ConfigScreen/Layout/HeaderRow/TitlePanel"'
+	var idx: int = text.find(marker)
+	assert_true(idx >= 0, "ConfigScreen should have TitlePanel node")
+	# The text = "Config" should appear within 200 chars after the TitlePanel parent line
+	var after: String = text.substr(idx, 200)
 	assert_true(
-		(
-			text.contains('parent="SubScreen/ConfigScreen/Layout/HeaderRow/TitlePanel"')
-			and text.contains('text = "Config"')
-		),
-		"ConfigScreen TitlePanel should contain Config label",
+		after.contains('text = "Config"'),
+		"TitlePanel child should have text Config",
 	)
 
 

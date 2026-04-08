@@ -138,8 +138,8 @@ func _handle_sub_screen_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 	if event.is_action_pressed("ui_cancel"):
-		_close_sub_screen()
 		get_viewport().set_input_as_handled()
+		_close_sub_screen()
 
 
 func _confirm_command() -> void:

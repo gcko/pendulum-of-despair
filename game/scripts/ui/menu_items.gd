@@ -36,7 +36,7 @@ func _ready() -> void:
 			_item_labels.append(label)
 	_target_labels = []
 	for i: int in range(4):
-		var label: Label = get_node_or_null("Layout/TargetPanel/Target%d" % i)
+		var label: Label = get_node_or_null("Layout/TargetPanel/TargetList/Target%d" % i)
 		if label != null:
 			_target_labels.append(label)
 	if _target_panel != null:

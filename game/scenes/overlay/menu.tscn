@@ -312,16 +312,23 @@ text = ""
 visible = false
 theme_override_styles/panel = SubResource("StyleBox_ff6_window")
 
-[node name="Target0" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel"]
+[node name="TargetList" type="VBoxContainer" parent="SubScreen/ItemScreen/Layout/TargetPanel"]
+layout_mode = 2
+
+[node name="Target0" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel/TargetList"]
+layout_mode = 2
 text = ""
 
-[node name="Target1" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel"]
+[node name="Target1" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel/TargetList"]
+layout_mode = 2
 text = ""
 
-[node name="Target2" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel"]
+[node name="Target2" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel/TargetList"]
+layout_mode = 2
 text = ""
 
-[node name="Target3" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel"]
+[node name="Target3" type="Label" parent="SubScreen/ItemScreen/Layout/TargetPanel/TargetList"]
+layout_mode = 2
 text = ""
 
 [node name="EquipScreen" type="Control" parent="SubScreen"]
