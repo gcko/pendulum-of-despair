@@ -213,6 +213,9 @@ func _initialize_from_transition_data() -> void:
 			_player.position = data.get("position", Vector2(80, 90))
 	else:
 		load_map("overworld")
+	# Safety net: if a party-joining flag was set but the member was never
+	# added (e.g., crash or force-quit during dialogue), pick them up now.
+	_check_party_joining_flags()
 
 
 func _initialize_entities(map_node: Node2D) -> void:

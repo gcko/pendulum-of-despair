@@ -15,7 +15,7 @@
 
 - 2 new map scenes: Roothollow village, Maren's Refuge cottage
 - Overworld expansion: 2 new transition triggers + spawn markers
-- 1 new shop: Roothollow Herbalist (Act I consumables + unique gear)
+- 1 new shop: Roothollow Herbalist (Act I consumables)
 - Story Scenes 5-6 via dialogue trigger zones (not cutscene system)
 - Party assembly: Torren joins (Scene 5), Maren joins (Scene 6)
 - PartyState.add_member() public API
@@ -97,7 +97,7 @@ Exit: Transition back to overworld (from_roothollow marker)
 Scene tree:
 ```
 Node2D "Roothollow"
-  metadata/map_id = "roothollow"
+  metadata/map_id = "towns/roothollow"
   metadata/dungeon_id = ""
   metadata/floor_id = ""
   metadata/location_name = "Roothollow"
@@ -160,7 +160,7 @@ Exit: Transition back to overworld (from_marens_refuge marker)
 Scene tree:
 ```
 Node2D "MarensRefuge"
-  metadata/map_id = "marens_refuge"
+  metadata/map_id = "towns/marens_refuge"
   metadata/dungeon_id = ""
   metadata/floor_id = ""
   metadata/location_name = "Maren's Refuge"

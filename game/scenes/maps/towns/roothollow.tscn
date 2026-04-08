@@ -11,7 +11,7 @@ size = Vector2(48, 32)
 size = Vector2(96, 32)
 
 [node name="Roothollow" type="Node2D"]
-metadata/map_id = "roothollow"
+metadata/map_id = "towns/roothollow"
 metadata/dungeon_id = ""
 metadata/floor_id = ""
 metadata/location_name = "Roothollow"

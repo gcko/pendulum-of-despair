@@ -10,7 +10,7 @@ size = Vector2(32, 16)
 size = Vector2(96, 32)
 
 [node name="MarensRefuge" type="Node2D"]
-metadata/map_id = "marens_refuge"
+metadata/map_id = "towns/marens_refuge"
 metadata/dungeon_id = ""
 metadata/floor_id = ""
 metadata/location_name = "Maren's Refuge"
