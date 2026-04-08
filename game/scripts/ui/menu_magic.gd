@@ -187,8 +187,7 @@ func _cast_on_target(living: Array[Dictionary]) -> void:
 		return
 	var spell: Dictionary = _spells[spell_index]
 	var mp_cost: int = spell.get("mp_cost", 0)
-	var ok: bool = PartyState.spend_mp(_character_id, mp_cost)
-	if not ok:
+	if mp_cost > 0 and not PartyState.spend_mp(_character_id, mp_cost):
 		_show_feedback("Not enough MP.")
 		return
 	var target_id: String = living[_target_index].get("character_id", "")

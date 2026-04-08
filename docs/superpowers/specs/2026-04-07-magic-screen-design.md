@@ -10,7 +10,7 @@
 ### In Scope
 
 - Magic sub-screen in menu overlay (menu_magic.gd)
-- Two-column scrollable spell grid per ui-design.md Section 6
+- Two-column spell grid (12 slots, scroll deferred) per ui-design.md Section 6
 - Character info header (name, LV, HP/MP)
 - Spell description area showing selected spell's effect text
 - Field cast flow: healing spells only → target select → MP deduct → heal
@@ -155,7 +155,7 @@ User selects Magic → Character
   → TARGET_SELECT state
   → User picks target
   → PartyState.spend_mp(character_id, spell.mp_cost)
-  → SpellHelpers.get_field_effect(spell, caster_mag)
+  → SpellHelpers.get_field_heal_amount(caster_mag, spell)
   → PartyState.heal_member(target_id, heal_amount)
   → Refresh display, return to BROWSING
 ```
@@ -176,7 +176,7 @@ User selects Magic → Character
 **Field cast tests:**
 - `test_can_field_cast_healing` — healing spell returns true
 - `test_can_field_cast_offensive_blocked` — offensive spell returns false
-- `test_can_field_cast_buff` — buff spell returns true
+- `test_can_field_cast_buff_blocked` — buff spell returns false (deferred)
 - `test_field_heal_effect_matches_formula` — verify MAG * power * 0.8
 
 **PartyState integration:**

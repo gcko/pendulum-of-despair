@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a Magic sub-screen to the main menu that shows a character's known spells in a two-column grid and allows field-casting healing/buff spells on party members.
+**Goal:** Add a Magic sub-screen to the main menu that shows a character's known spells in a two-column grid and allows field-casting healing spells on party members.
 
 **Architecture:** New `menu_magic.gd` screen following the `menu_items.gd` pattern (open/close/handle_input API). Static `spell_helpers.gd` resolves known spells from JSON data. PartyState gains spend_mp/heal_member methods. Tests cover spell resolution, field casting, and integration.
 
@@ -43,7 +43,7 @@ extends RefCounted
 const TRADITIONS: Array[String] = [
     "ley_line", "forgewright", "spirit", "streetwise", "void"
 ]
-const FIELD_CATEGORIES: Array[String] = ["healing", "buff", "utility"]
+const FIELD_CATEGORIES: Array[String] = ["healing"]
 
 
 ## Get all spells a character knows at their current level.
