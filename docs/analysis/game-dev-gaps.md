@@ -8,7 +8,7 @@
 > **Companion to:** `docs/analysis/game-design-gaps.md` (design docs — 24/25 COMPLETE)
 > **Architecture reference:** `docs/plans/technical-architecture.md`
 > **Engine:** Godot 4.6+ / GDScript only
-> **Resolution:** 320x180 native, integer-scaled
+> **Resolution:** 1280x720 native (changed from 320x180 on 2026-04-08), 4x camera zoom for game world, integer-scaled window
 
 ## How to Read This Document
 
@@ -26,7 +26,7 @@ adds a "Completed" date + commit reference.
 ## What Already Exists
 
 **PR #105 (merged 2026-04-02):** Godot project initialized with:
-- `game/project.godot` — viewport 320x180, integer scaling, 5 autoloads
+- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 5 autoloads, 4x camera zoom in exploration
 - 5 autoload singletons in `game/scripts/autoload/` (GameManager,
   DataManager, AudioManager, SaveManager, EventFlags) — all have
   public API + defensive coding, stubs for game-state-dependent methods
@@ -667,6 +667,19 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Exploration: Escape key opens menu overlay
 - [x] Shop buy/sell interface — buy-only via shop_overlay.gd (2026-04-07)
 
+**Phase 3: FF6-Style UI Polish (NOT STARTED — P1)**
+- [ ] All 9 sub-screens need FF6-style bordered panels (PanelContainer with border StyleBox)
+- [ ] Sub-screens should fully replace MainPanel content area, not overlay on top
+- [ ] Item screen: tabbed header + description + bordered item list
+- [ ] Config screen: setting name + value pairs in bordered box, contained within panel
+- [ ] Equipment screen: slot list + stat comparison in separate bordered boxes
+- [ ] Magic screen: character info + bordered spell grid
+- [ ] Formation screen: bordered member list with proper row/swap display
+- [ ] Status screen: bordered stat display + equipment summary
+- [ ] Abilities screen: bordered ability list per character
+- [ ] Reference: FF6 menu design (distinct bordered panels per sub-screen)
+- [ ] Viewport changed from 320x180 to 1280x720 (2026-04-08) — 4x camera zoom for game world, UI renders at native 1280x720. Main frame panels properly laid out, sub-screen content needs bordered containers.
+
 **Notes:**
 - Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework
 - Phase 2 progress: Magic, Abilities, Formation, Shop buy-only — all complete
@@ -675,7 +688,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - PartyState: spend_mp(), heal_member() added for Magic field-cast
 - Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
 - Equipment screen has live stat comparison with green/red delta indicators
-- 8 new .gd files + 1 .tscn + 1 test file; 4 modified files
+- Viewport changed to 1280x720 with 4x camera zoom (2026-04-08). Main menu frame, dialogue (FF6 inline speaker), and save screen layouts fixed. Sub-screen polish deferred to Phase 3.
+- Beads issue: pendulum-of-despair-afs (P1)
 - Design spec: `docs/superpowers/specs/2026-04-06-menu-overlay-phase1-design.md`
 
 **Blocking:** Player inventory management, equipment optimization, party configuration
