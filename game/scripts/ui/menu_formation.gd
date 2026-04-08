@@ -14,7 +14,6 @@ var _cursor: int = 0
 var _swap_source: int = -1
 var _state: FormationState = FormationState.BROWSING
 
-@onready var _title_label: Label = $TitleLabel
 @onready var _member_labels: Array[Label] = []
 @onready var _swap_label: Label = $SwapLabel
 

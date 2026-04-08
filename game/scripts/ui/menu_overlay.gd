@@ -155,7 +155,7 @@ func _confirm_command() -> void:
 		_char_cursor.visible = true
 		_update_char_cursor()
 		return
-	# Direct sub-screens (Item, Config)
+	# Direct sub-screens (no character select)
 	match cmd_name:
 		"Item":
 			_open_sub_screen(_item_screen)
