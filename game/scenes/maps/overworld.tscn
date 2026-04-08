@@ -90,3 +90,35 @@ position = Vector2(448, 448)
 
 [node name="from_marens_refuge" type="Marker2D" parent="."]
 position = Vector2(224, 464)
+
+[node name="LabelValdris" type="Label" parent="."]
+offset_left = 48
+offset_top = 56
+offset_right = 148
+offset_bottom = 72
+text = "Valdris Crown"
+horizontal_alignment = 1
+
+[node name="LabelEmberVein" type="Label" parent="."]
+offset_left = 840
+offset_top = 536
+offset_right = 940
+offset_bottom = 552
+text = "Ember Vein"
+horizontal_alignment = 1
+
+[node name="LabelRoothollow" type="Label" parent="."]
+offset_left = 440
+offset_top = 456
+offset_right = 540
+offset_bottom = 472
+text = "Roothollow"
+horizontal_alignment = 1
+
+[node name="LabelMarensRefuge" type="Label" parent="."]
+offset_left = 148
+offset_top = 472
+offset_right = 260
+offset_bottom = 488
+text = "Maren's Refuge"
+horizontal_alignment = 1
