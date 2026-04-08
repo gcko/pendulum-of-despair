@@ -24,76 +24,107 @@ offset_top = 8.0
 offset_right = 872.0
 offset_bottom = 560.0
 
-[node name="Row0" type="HBoxContainer" parent="MainPanel"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 848.0
-offset_bottom = 144.0
+[node name="Margin" type="MarginContainer" parent="MainPanel"]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="NameLabel" type="Label" parent="MainPanel/Row0"]
+[node name="Rows" type="VBoxContainer" parent="MainPanel/Margin"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Row0" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="NameLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "EDREN"
 
-[node name="LvLabel" type="Label" parent="MainPanel/Row0"]
+[node name="LvLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
+custom_minimum_size = Vector2(80, 0)
 text = "LV 1"
 
-[node name="HPLabel" type="Label" parent="MainPanel/Row0"]
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "HP 95/95"
 
-[node name="MPLabel" type="Label" parent="MainPanel/Row0"]
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "MP 15/15"
 
-[node name="Row1" type="HBoxContainer" parent="MainPanel"]
-offset_left = 16.0
-offset_top = 152.0
-offset_right = 848.0
-offset_bottom = 280.0
+[node name="Row1" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
+size_flags_vertical = 3
+theme_override_constants/separation = 24
 
-[node name="NameLabel" type="Label" parent="MainPanel/Row1"]
+[node name="NameLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "CAEL"
 
-[node name="LvLabel" type="Label" parent="MainPanel/Row1"]
+[node name="LvLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
+custom_minimum_size = Vector2(80, 0)
 text = "LV 1"
 
-[node name="HPLabel" type="Label" parent="MainPanel/Row1"]
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "HP 78/78"
 
-[node name="MPLabel" type="Label" parent="MainPanel/Row1"]
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = "MP 25/25"
 
-[node name="Row2" type="HBoxContainer" parent="MainPanel"]
-offset_left = 16.0
-offset_top = 288.0
-offset_right = 848.0
-offset_bottom = 416.0
+[node name="Row2" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
+size_flags_vertical = 3
+theme_override_constants/separation = 24
 
-[node name="NameLabel" type="Label" parent="MainPanel/Row2"]
+[node name="NameLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
-[node name="LvLabel" type="Label" parent="MainPanel/Row2"]
+[node name="LvLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
+custom_minimum_size = Vector2(80, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="MainPanel/Row2"]
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
-[node name="MPLabel" type="Label" parent="MainPanel/Row2"]
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
-[node name="Row3" type="HBoxContainer" parent="MainPanel"]
-offset_left = 16.0
-offset_top = 424.0
-offset_right = 848.0
-offset_bottom = 552.0
+[node name="Row3" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
+size_flags_vertical = 3
+theme_override_constants/separation = 24
 
-[node name="NameLabel" type="Label" parent="MainPanel/Row3"]
+[node name="NameLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
-[node name="LvLabel" type="Label" parent="MainPanel/Row3"]
+[node name="LvLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
+custom_minimum_size = Vector2(80, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="MainPanel/Row3"]
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
-[node name="MPLabel" type="Label" parent="MainPanel/Row3"]
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
+custom_minimum_size = Vector2(160, 0)
+size_flags_horizontal = 3
 text = ""
 
 [node name="CommandPanel" type="PanelContainer" parent="."]
@@ -102,49 +133,41 @@ offset_top = 8.0
 offset_right = 1272.0
 offset_bottom = 560.0
 
-[node name="Cmd0" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 16.0
+[node name="Margin" type="MarginContainer" parent="CommandPanel"]
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="CmdList" type="VBoxContainer" parent="CommandPanel/Margin"]
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Cmd0" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Item"
 
-[node name="Cmd1" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 72.0
+[node name="Cmd1" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Magic"
 
-[node name="Cmd2" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 128.0
+[node name="Cmd2" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Abilities"
 
-[node name="Cmd3" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 184.0
+[node name="Cmd3" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Equip"
 
-[node name="Cmd4" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 240.0
+[node name="Cmd4" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Crystal"
 
-[node name="Cmd5" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 296.0
+[node name="Cmd5" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Status"
 
-[node name="Cmd6" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 352.0
+[node name="Cmd6" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Formation"
 
-[node name="Cmd7" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 408.0
+[node name="Cmd7" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Config"
 
-[node name="Cmd8" type="Label" parent="CommandPanel"]
-offset_left = 48.0
-offset_top = 464.0
+[node name="Cmd8" type="Label" parent="CommandPanel/Margin/CmdList"]
 text = "Save"
 
 [node name="InfoPanel" type="PanelContainer" parent="."]
@@ -153,20 +176,31 @@ offset_top = 568.0
 offset_right = 1272.0
 offset_bottom = 712.0
 
-[node name="LocationLabel" type="Label" parent="InfoPanel"]
-offset_left = 16.0
-offset_top = 16.0
+[node name="Margin" type="MarginContainer" parent="InfoPanel"]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Layout" type="HBoxContainer" parent="InfoPanel/Margin"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LocationLabel" type="Label" parent="InfoPanel/Margin/Layout"]
+size_flags_horizontal = 3
 text = ""
 
-[node name="TimeLabel" type="Label" parent="InfoPanel"]
-offset_left = 888.0
-offset_top = 16.0
-text = "0:00"
+[node name="RightCol" type="VBoxContainer" parent="InfoPanel/Margin/Layout"]
+custom_minimum_size = Vector2(200, 0)
+theme_override_constants/separation = 8
 
-[node name="GoldLabel" type="Label" parent="InfoPanel"]
-offset_left = 888.0
-offset_top = 72.0
+[node name="TimeLabel" type="Label" parent="InfoPanel/Margin/Layout/RightCol"]
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="GoldLabel" type="Label" parent="InfoPanel/Margin/Layout/RightCol"]
 text = "0 Gold"
+horizontal_alignment = 2
 
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(896, 40)

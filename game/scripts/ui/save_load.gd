@@ -129,28 +129,42 @@ func _refresh_slot_display() -> void:
 
 
 func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
-	var header: Label = panel.get_node_or_null("HeaderLabel")
-	var party: Label = panel.get_node_or_null("PartyLabel")
+	var header: Label = panel.get_node_or_null("SlotLayout/HeaderRow/HeaderLabel")
+	var playtime_lbl: Label = panel.get_node_or_null("SlotLayout/HeaderRow/PlaytimeLabel")
+	var gold_lbl: Label = panel.get_node_or_null("SlotLayout/HeaderRow/GoldLabel")
+	var party: Label = panel.get_node_or_null("SlotLayout/PartyLabel")
 	if header == null or party == null:
 		return
 	var prefix: String = "AUTO - " if is_auto else ""
 	if data.is_empty():
 		header.text = prefix + "Empty"
 		header.modulate = COLOR_DISABLED
+		if playtime_lbl:
+			playtime_lbl.text = ""
+		if gold_lbl:
+			gold_lbl.text = ""
 		party.text = ""
 	elif data.has("error"):
 		header.text = prefix + "Corrupted"
 		header.modulate = Color("#ff4444")
+		if playtime_lbl:
+			playtime_lbl.text = ""
+		if gold_lbl:
+			gold_lbl.text = ""
 		party.text = ""
 	else:
 		var world: Dictionary = data.get("world", {})
 		var raw_loc: String = world.get("current_location", "")
 		var loc: String = raw_loc if raw_loc != "" else "Unknown"
 		var pt: int = data.get("meta", {}).get("playtime", 0)
-		header.text = (
-			"%s%s  %d:%02d  %dg" % [prefix, loc, pt / 3600, (pt % 3600) / 60, world.get("gold", 0)]
-		)
+		header.text = "%s%s" % [prefix, loc]
 		header.modulate = COLOR_NORMAL
+		if playtime_lbl:
+			playtime_lbl.text = "%d:%02d" % [pt / 3600, (pt % 3600) / 60]
+			playtime_lbl.modulate = COLOR_NORMAL
+		if gold_lbl:
+			gold_lbl.text = "%dg" % world.get("gold", 0)
+			gold_lbl.modulate = COLOR_NORMAL
 		party.text = Helpers.format_active_party_names(data)
 
 

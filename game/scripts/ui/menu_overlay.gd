@@ -37,9 +37,9 @@ var _config_direct: bool = false
 @onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
 @onready var _char_cursor: Sprite2D = $CharCursor
-@onready var _gold_label: Label = $InfoPanel/GoldLabel
-@onready var _time_label: Label = $InfoPanel/TimeLabel
-@onready var _location_label: Label = $InfoPanel/LocationLabel
+@onready var _gold_label: Label = $InfoPanel/Margin/Layout/RightCol/GoldLabel
+@onready var _time_label: Label = $InfoPanel/Margin/Layout/RightCol/TimeLabel
+@onready var _location_label: Label = $InfoPanel/Margin/Layout/LocationLabel
 @onready var _magic_screen: Control = $SubScreen/MagicScreen
 @onready var _item_screen: Control = $SubScreen/ItemScreen
 @onready var _equip_screen: Control = $SubScreen/EquipScreen
@@ -53,13 +53,13 @@ var _config_direct: bool = false
 func _ready() -> void:
 	_command_labels = []
 	for i: int in range(COMMANDS.size()):
-		var label: Label = get_node_or_null("CommandPanel/Cmd%d" % i)
+		var label: Label = get_node_or_null("CommandPanel/Margin/CmdList/Cmd%d" % i)
 		if label != null:
 			label.text = COMMANDS[i]["name"]
 			_command_labels.append(label)
 	_party_rows = []
 	for i: int in range(4):
-		var row: Control = get_node_or_null("MainPanel/Row%d" % i)
+		var row: Control = get_node_or_null("MainPanel/Margin/Rows/Row%d" % i)
 		_party_rows.append(row)
 	_char_cursor.visible = false
 	_hide_all_sub_screens()

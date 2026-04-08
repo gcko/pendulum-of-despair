@@ -68,6 +68,7 @@ offset_left = 40.0
 offset_top = 40.0
 offset_right = 1240.0
 offset_bottom = 680.0
+theme_override_constants/separation = 12
 visible = false
 
 [node name="AutoSlot" type="PanelContainer" parent="SlotContainer"]
@@ -75,11 +76,31 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_auto")
 visible = false
 
-[node name="HeaderLabel" type="Label" parent="SlotContainer/AutoSlot"]
+[node name="SlotLayout" type="VBoxContainer" parent="SlotContainer/AutoSlot"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeaderRow" type="HBoxContainer" parent="SlotContainer/AutoSlot/SlotLayout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SlotContainer/AutoSlot/SlotLayout/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "AUTO - Empty"
 
-[node name="PartyLabel" type="Label" parent="SlotContainer/AutoSlot"]
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/AutoSlot/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+text = ""
+
+[node name="GoldLabel" type="Label" parent="SlotContainer/AutoSlot/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+custom_minimum_size = Vector2(80, 0)
+text = ""
+
+[node name="PartyLabel" type="Label" parent="SlotContainer/AutoSlot/SlotLayout"]
 layout_mode = 2
 text = ""
 
@@ -87,11 +108,31 @@ text = ""
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_slot")
 
-[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot1"]
+[node name="SlotLayout" type="VBoxContainer" parent="SlotContainer/Slot1"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeaderRow" type="HBoxContainer" parent="SlotContainer/Slot1/SlotLayout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot1/SlotLayout/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Empty"
 
-[node name="PartyLabel" type="Label" parent="SlotContainer/Slot1"]
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot1/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+text = ""
+
+[node name="GoldLabel" type="Label" parent="SlotContainer/Slot1/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+custom_minimum_size = Vector2(80, 0)
+text = ""
+
+[node name="PartyLabel" type="Label" parent="SlotContainer/Slot1/SlotLayout"]
 layout_mode = 2
 text = ""
 
@@ -99,11 +140,31 @@ text = ""
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_slot")
 
-[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot2"]
+[node name="SlotLayout" type="VBoxContainer" parent="SlotContainer/Slot2"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeaderRow" type="HBoxContainer" parent="SlotContainer/Slot2/SlotLayout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot2/SlotLayout/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Empty"
 
-[node name="PartyLabel" type="Label" parent="SlotContainer/Slot2"]
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot2/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+text = ""
+
+[node name="GoldLabel" type="Label" parent="SlotContainer/Slot2/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+custom_minimum_size = Vector2(80, 0)
+text = ""
+
+[node name="PartyLabel" type="Label" parent="SlotContainer/Slot2/SlotLayout"]
 layout_mode = 2
 text = ""
 
@@ -111,11 +172,31 @@ text = ""
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBox_slot")
 
-[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot3"]
+[node name="SlotLayout" type="VBoxContainer" parent="SlotContainer/Slot3"]
 layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeaderRow" type="HBoxContainer" parent="SlotContainer/Slot3/SlotLayout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderLabel" type="Label" parent="SlotContainer/Slot3/SlotLayout/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Empty"
 
-[node name="PartyLabel" type="Label" parent="SlotContainer/Slot3"]
+[node name="PlaytimeLabel" type="Label" parent="SlotContainer/Slot3/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+text = ""
+
+[node name="GoldLabel" type="Label" parent="SlotContainer/Slot3/SlotLayout/HeaderRow"]
+layout_mode = 2
+horizontal_alignment = 2
+custom_minimum_size = Vector2(80, 0)
+text = ""
+
+[node name="PartyLabel" type="Label" parent="SlotContainer/Slot3/SlotLayout"]
 layout_mode = 2
 text = ""
 
