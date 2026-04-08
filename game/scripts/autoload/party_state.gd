@@ -68,14 +68,12 @@ func initialize_new_game() -> void:
 func load_from_save(data: Dictionary) -> void:
 	members.clear()
 	owned_equipment.clear()
-	var party_data: Array = data.get("party", [])
-	for m: Variant in party_data:
+	for m: Variant in data.get("party", []):
 		if m is Dictionary:
 			members.append(m as Dictionary)
 	formation = data.get("formation", {"active": [], "reserve": [], "rows": {}})
 	inventory = data.get("inventory", {"consumables": {}, "materials": {}, "key_items": []})
-	var equip_data: Array = data.get("owned_equipment", [])
-	for e: Variant in equip_data:
+	for e: Variant in data.get("owned_equipment", []):
 		if e is Dictionary:
 			owned_equipment.append(e as Dictionary)
 	_next_inst_id = Helpers.find_max_inst_id(owned_equipment)
@@ -298,6 +296,64 @@ func rest_at_inn() -> void:
 		member["current_mp"] = member.get("max_mp", 0)
 		member["current_ac"] = 12
 		member["status_effects"] = []
+
+
+## Get a character's row. Returns "front" or "back".
+func get_row(character_id: String) -> String:
+	return formation.get("rows", {}).get(character_id, "front")
+
+
+## Toggle a character's row between front and back.
+func toggle_row(character_id: String) -> void:
+	var rows: Dictionary = formation.get("rows", {})
+	rows[character_id] = "back" if rows.get(character_id, "front") == "front" else "front"
+	formation["rows"] = rows
+
+
+## Get all members in formation order (active first, then reserve).
+func get_formation_list() -> Array:
+	var result: Array = []
+	var active: Array = formation.get("active", [])
+	for a: Variant in active:
+		var idx: int = int(a)
+		if idx >= 0 and idx < members.size():
+			var m: Dictionary = members[idx].duplicate()
+			m["_is_active"] = true
+			m["_formation_index"] = result.size()
+			result.append(m)
+	for i: int in range(members.size()):
+		if i not in active:
+			var m: Dictionary = members[i].duplicate()
+			m["_is_active"] = false
+			m["_formation_index"] = result.size()
+			result.append(m)
+	return result
+
+
+## Swap two positions in the combined formation list.
+func swap_formation_positions(idx_a: int, idx_b: int) -> void:
+	var active: Array = formation.get("active", [])
+	var all_idx: Array = []
+	for a: Variant in active:
+		all_idx.append(int(a))
+	for i: int in range(members.size()):
+		if i not in all_idx:
+			all_idx.append(i)
+	if (
+		idx_a == idx_b
+		or idx_a < 0
+		or idx_b < 0
+		or idx_a >= all_idx.size()
+		or idx_b >= all_idx.size()
+	):
+		return
+	var tmp: int = all_idx[idx_a]
+	all_idx[idx_a] = all_idx[idx_b]
+	all_idx[idx_b] = tmp
+	var new_active: Array[int] = []
+	for i: int in range(mini(active.size(), all_idx.size())):
+		new_active.append(all_idx[i])
+	formation["active"] = new_active
 
 
 ## Deduct MP from a party member. Returns false if insufficient.

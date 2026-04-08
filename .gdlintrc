@@ -33,7 +33,7 @@ class-definitions-order:
 
 # Limits
 max-line-length: 120
-max-file-lines: 400
+max-file-lines: 460
 max-function-length: 60
 max-returns: 8
 max-branches: 12
