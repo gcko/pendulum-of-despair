@@ -28,11 +28,8 @@ func test_all_subscreens_have_layout_container() -> void:
 	]
 	for screen: String in screens:
 		assert_true(
-			(
-				text.contains('parent="SubScreen/%s/Layout' % screen)
-				or text.contains('parent="SubScreen/%s"' % screen)
-			),
-			"%s should have Layout container" % screen,
+			text.contains('parent="SubScreen/%s/Layout' % screen),
+			"%s should have children under Layout container" % screen,
 		)
 
 

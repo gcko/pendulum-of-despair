@@ -89,6 +89,8 @@ func _ready() -> void:
 func open() -> void:
 	_config = PartyState.get_config().duplicate()
 	_cursor_index = 0
+	if _scroll != null:
+		_scroll.scroll_vertical = 0
 	# Load persisted pre-cascade values so restore works across re-opens
 	_pre_patience_atb = _config.get("_pre_patience_atb", "active")
 	_pre_patience_speed = _config.get("_pre_patience_speed", 3)

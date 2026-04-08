@@ -64,7 +64,6 @@ func _ready() -> void:
 	for i: int in range(4):
 		var row: Control = get_node_or_null("MainPanel/Margin/Rows/Row%d" % i)
 		_party_rows.append(row)
-	_char_cursor.visible = false
 	_hide_all_sub_screens()
 	_refresh_party_data()
 	_update_display()
@@ -110,7 +109,6 @@ func _handle_command_input(event: InputEvent) -> void:
 func _handle_char_select_input(event: InputEvent) -> void:
 	if _active_party.is_empty():
 		if event.is_action_pressed("ui_cancel"):
-			_char_cursor.visible = false
 			_clear_char_highlight()
 			_state = MenuState.COMMAND
 			get_viewport().set_input_as_handled()
@@ -128,7 +126,6 @@ func _handle_char_select_input(event: InputEvent) -> void:
 		_open_sub_screen_for_character()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		_char_cursor.visible = false
 		_clear_char_highlight()
 		_state = MenuState.COMMAND
 		get_viewport().set_input_as_handled()
@@ -158,7 +155,6 @@ func _confirm_command() -> void:
 	if cmd.get("char_select", false):
 		_state = MenuState.CHARACTER_SELECT
 		_char_index = 0
-		_char_cursor.visible = true
 		_update_char_cursor()
 		return
 	# Direct sub-screens (no character select)
@@ -182,7 +178,6 @@ func _open_sub_screen_for_character() -> void:
 		return
 	var character_id: String = _active_party[_char_index].get("character_id", "")
 	var cmd_name: String = COMMANDS[_command_index].get("name", "")
-	_char_cursor.visible = false
 	match cmd_name:
 		"Magic":
 			_open_sub_screen(_magic_screen)
@@ -208,7 +203,6 @@ func _open_sub_screen(screen: Control) -> void:
 	_command_panel.visible = false
 	_info_panel.visible = false
 	_cursor.visible = false
-	_char_cursor.visible = false
 	screen.visible = true
 	_active_sub_screen = screen
 	_state = MenuState.SUB_SCREEN
