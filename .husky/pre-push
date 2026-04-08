@@ -31,6 +31,8 @@ elif [ -x "/Applications/Godot.app/Contents/MacOS/Godot" ]; then
 fi
 
 if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
+    echo "=== Pre-push: Godot import ==="
+    "$GODOT_BIN" --headless --path game/ --import 2>&1 | tail -1
     echo "=== Pre-push: GUT tests ==="
     TEMP_LOG=/tmp/gut_prepush.log
     "$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \

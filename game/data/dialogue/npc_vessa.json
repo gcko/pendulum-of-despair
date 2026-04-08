@@ -1,0 +1,29 @@
+{
+  "scene_id": "npc_vessa",
+  "entries": [
+    {
+      "id": "npc_vessa_001",
+      "speaker": "vessa",
+      "lines": [
+        "The totems have been shaking since you arrived.",
+        "Whatever you carry, it is not welcome here."
+      ],
+      "condition": null,
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_vessa_002",
+      "speaker": "vessa",
+      "lines": [
+        "Torren will guide you. He knows the deep paths",
+        "better than anyone alive."
+      ],
+      "condition": "torren_joined",
+      "animations": [],
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
