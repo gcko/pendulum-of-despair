@@ -81,11 +81,14 @@ func test_overworld_to_marens_refuge_round_trip() -> void:
 func test_roothollow_herbalist_shop_exists() -> void:
 	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
 	assert_false(data.is_empty(), "roothollow herbalist shop should load")
+	var shop: Dictionary = data.get("shop", {})
+	assert_false(shop.is_empty(), "shop wrapper should contain shop object")
 
 
 func test_roothollow_herbalist_has_despair_ward() -> void:
 	var data: Dictionary = DataManager.load_shop("roothollow_herbalist")
-	var inv: Array = data.get("inventory", [])
+	var shop: Dictionary = data.get("shop", data)
+	var inv: Array = shop.get("inventory", [])
 	var found: bool = false
 	for item: Variant in inv:
 		if item is Dictionary and (item as Dictionary).get("item_id", "") == "despair_ward":
