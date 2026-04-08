@@ -97,7 +97,7 @@ Central area: Open grassland with encounter zone.
 Map metadata:
   metadata/map_id = "overworld"
   metadata/dungeon_id = "overworld"
-  metadata/floor_id = "highland"
+  metadata/floor_id = "valdris_highlands"
   metadata/location_name = "Valdris Highlands"
 ```
 
@@ -148,7 +148,7 @@ Node2D "Overworld"
 The overworld encounter data exists at `game/data/encounters/overworld.json`
 (created in gap 1.6). It has terrain zones with floor_ids.
 
-The overworld map sets `metadata/floor_id = "highland"` which matches
+The overworld map sets `metadata/floor_id = "valdris_highlands"` which matches
 the highland terrain zone in the encounter data. This gives the player
 random encounters while walking between locations.
 
@@ -165,7 +165,7 @@ match `floor_id` in the floors array.
 **Scene existence and metadata:**
 - `test_overworld_scene_exists` — file at res://scenes/maps/overworld.tscn exists
 - `test_overworld_has_dungeon_id` — metadata/dungeon_id = "overworld"
-- `test_overworld_has_floor_id` — metadata/floor_id = "highland"
+- `test_overworld_has_floor_id` — metadata/floor_id = "valdris_highlands"
 - `test_overworld_has_location_name` — metadata/location_name present
 
 **Encounter integration:**
