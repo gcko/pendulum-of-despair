@@ -79,7 +79,7 @@ func test_config_has_title_label() -> void:
 	)
 
 
-# --- Character cursor uses global_position ---
+# --- Character select uses color highlight ---
 
 
 func test_char_select_uses_color_highlight() -> void:

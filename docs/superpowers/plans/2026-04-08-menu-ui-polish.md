@@ -404,7 +404,7 @@ gdlint game/scripts/ui/menu_overlay.gd game/scripts/ui/menu_items.gd \
   -s addons/gut/gut_cmdln.gd
 ```
 
-All 396 tests must pass.
+All GUT tests must pass.
 
 - [ ] **Step 3: Update gap tracker**
 

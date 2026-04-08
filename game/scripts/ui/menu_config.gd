@@ -263,7 +263,9 @@ func _is_setting_disabled(key: String) -> bool:
 func _scroll_to_selected() -> void:
 	if _scroll == null or _cursor_index >= _setting_labels.size():
 		return
-	_scroll.ensure_control_visible(_setting_labels[_cursor_index])
+	var label: Label = _setting_labels[_cursor_index]
+	if label != null:
+		_scroll.ensure_control_visible(label)
 
 
 func _update_display() -> void:

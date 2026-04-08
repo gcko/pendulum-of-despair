@@ -668,7 +668,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Shop buy/sell interface — buy-only via shop_overlay.gd (2026-04-07)
 
 **Phase 3: FF6-Style UI Polish (COMPLETE — 2026-04-08)**
-- [x] All 7 sub-screens use FF6-style bordered panels (StyleBoxFlat with gradient+glow)
+- [x] All 7 sub-screens use FF6-style bordered panels (StyleBoxFlat with flat dark blue + border + shadow glow)
 - [x] Sub-screens fully replace MainPanel/CommandPanel/InfoPanel (hidden on open, restored on close)
 - [x] Item screen: TabPanel + DescPanel + ListPanel + TargetPanel
 - [x] Config screen: HeaderRow + SettingsPanel + FooterRow with desc/hints
