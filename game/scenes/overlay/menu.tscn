@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/menu_overlay.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/menu_items.gd" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/ui/menu_status.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/ui/menu_config.gd" id="5"]
 [ext_resource type="Script" path="res://scripts/ui/menu_magic.gd" id="6"]
+[ext_resource type="Script" path="res://scripts/ui/menu_abilities.gd" id="7"]
 
 [node name="Menu" type="CanvasLayer"]
 layer = 10
@@ -735,6 +736,80 @@ text = ""
 text = ""
 
 [node name="Target3" type="Label" parent="SubScreen/MagicScreen/TargetPanel"]
+text = ""
+
+[node name="AbilitiesScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("7")
+
+[node name="DescLabel" type="Label" parent="SubScreen/AbilitiesScreen"]
+offset_left = 4.0
+offset_top = 0.0
+offset_right = 316.0
+offset_bottom = 14.0
+text = ""
+
+[node name="CharInfo" type="HBoxContainer" parent="SubScreen/AbilitiesScreen"]
+offset_left = 4.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 32.0
+
+[node name="NameLabel" type="Label" parent="SubScreen/AbilitiesScreen/CharInfo"]
+text = ""
+
+[node name="LvLabel" type="Label" parent="SubScreen/AbilitiesScreen/CharInfo"]
+text = ""
+
+[node name="ResourceLabel" type="Label" parent="SubScreen/AbilitiesScreen/CharInfo"]
+text = ""
+
+[node name="AbilityGrid" type="HBoxContainer" parent="SubScreen/AbilitiesScreen"]
+offset_left = 4.0
+offset_top = 40.0
+offset_right = 316.0
+offset_bottom = 136.0
+
+[node name="LeftCol" type="VBoxContainer" parent="SubScreen/AbilitiesScreen/AbilityGrid"]
+
+[node name="Ability0" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="Ability1" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="Ability2" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="Ability3" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="Ability4" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="Ability5" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/LeftCol"]
+text = ""
+
+[node name="RightCol" type="VBoxContainer" parent="SubScreen/AbilitiesScreen/AbilityGrid"]
+
+[node name="Ability6" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="Ability7" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="Ability8" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="Ability9" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="Ability10" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="Ability11" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
 text = ""
 
 [node name="StubLabel" type="Label" parent="SubScreen"]
