@@ -368,7 +368,13 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 		GameManager.overlay_node.show_dialogue(dialogue as Array)
 		if not flag.is_empty():
 			EventFlags.set_flag(flag, true)
-			_check_party_joining_flags()
+			GameManager.overlay_state_changed.connect(
+				_on_dialogue_closed_check_party, CONNECT_ONE_SHOT
+			)
+
+
+func _on_dialogue_closed_check_party(_state: Variant) -> void:
+	_check_party_joining_flags()
 
 
 func _check_party_joining_flags() -> void:
