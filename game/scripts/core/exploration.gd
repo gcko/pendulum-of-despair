@@ -181,13 +181,13 @@ func _spawn_player() -> void:
 func _initialize_from_transition_data() -> void:
 	var data: Dictionary = GameManager.transition_data
 	if data.get("new_game", false):
-		load_map("test_room")
+		load_map("overworld")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
 		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
-		var location: String = world.get("current_location", "test_room")
-		load_map(location if location != "" else "test_room")
+		var location: String = world.get("current_location", "overworld")
+		load_map(location if location != "" else "overworld")
 		var pos: Dictionary = world.get("current_position", {})
 		if _player != null and pos.has("x") and pos.has("y"):
 			_player.position = Vector2(pos["x"], pos["y"])
@@ -207,11 +207,11 @@ func _initialize_from_transition_data() -> void:
 			SaveManager.faint_and_fast_reload()
 			return
 		_danger_counter = 0
-		load_map(data.get("map_id", "test_room"))
+		load_map(data.get("map_id", "overworld"))
 		if _player != null:
 			_player.position = data.get("position", Vector2(80, 90))
 	else:
-		load_map("test_room")
+		load_map("overworld")
 
 
 func _initialize_entities(map_node: Node2D) -> void:
