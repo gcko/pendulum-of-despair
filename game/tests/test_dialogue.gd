@@ -68,8 +68,11 @@ func test_show_dialogue_sets_entries() -> void:
 func test_speaker_name_displayed() -> void:
 	var dlg = _create_dialogue()
 	dlg.show_dialogue(_sample_entries())
-	assert_true(dlg._speaker_container.visible, "speaker label should be visible")
-	assert_eq(dlg._speaker_label.text, "EDREN", "should show speaker name uppercased")
+	assert_false(dlg._speaker_container.visible, "speaker container hidden (inline mode)")
+	assert_true(
+		dlg._text_label.text.begins_with("EDREN:"),
+		"text should start with inline speaker name",
+	)
 
 
 func test_speaker_name_empty() -> void:
