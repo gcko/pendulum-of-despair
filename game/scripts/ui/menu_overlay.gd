@@ -328,7 +328,8 @@ func _update_char_cursor() -> void:
 	if _char_index >= _party_rows.size() or _party_rows[_char_index] == null:
 		return
 	var row: Control = _party_rows[_char_index]
-	_char_cursor.position = Vector2(row.position.x - 48, row.position.y + row.size.y / 2.0)
+	var gp: Vector2 = row.global_position
+	_char_cursor.global_position = Vector2(gp.x - 48, gp.y + row.size.y / 2.0)
 
 
 func _update_info_panel() -> void:

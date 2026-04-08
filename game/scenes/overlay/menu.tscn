@@ -604,127 +604,160 @@ theme_override_constants/separation = 8
 [node name="SettingNamePanel" type="PanelContainer" parent="SubScreen/ConfigScreen/Layout/HeaderRow"]
 theme_override_styles/panel = SubResource("StyleBox_ff6_window")
 
+[node name="SettingNameLabel" type="Label" parent="SubScreen/ConfigScreen/Layout/HeaderRow/SettingNamePanel"]
+text = ""
+
 [node name="TitlePanel" type="PanelContainer" parent="SubScreen/ConfigScreen/Layout/HeaderRow"]
 theme_override_styles/panel = SubResource("StyleBox_ff6_window")
+
+[node name="TitleLabel" type="Label" parent="SubScreen/ConfigScreen/Layout/HeaderRow/TitlePanel"]
+text = "Config"
 
 [node name="SettingsPanel" type="PanelContainer" parent="SubScreen/ConfigScreen/Layout"]
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBox_ff6_window")
 
-[node name="SettingList" type="VBoxContainer" parent="SubScreen/ConfigScreen/Layout/SettingsPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="SubScreen/ConfigScreen/Layout/SettingsPanel"]
+horizontal_scroll_mode = 0
+clip_contents = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Name0" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="SettingList" type="GridContainer" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer"]
+columns = 2
+size_flags_horizontal = 3
+
+[node name="Name0" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Battle Speed"
 
-[node name="Value0" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value0" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "3"
 
-[node name="Name1" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name1" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "ATB Mode"
 
-[node name="Value1" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value1" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Active"
 
-[node name="Name2" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name2" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Text Speed"
 
-[node name="Value2" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value2" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Normal"
 
-[node name="Name3" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name3" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Battle Cursor"
 
-[node name="Value3" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value3" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Reset"
 
-[node name="Name4" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name4" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Sound"
 
-[node name="Value4" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value4" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Stereo"
 
-[node name="Name5" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name5" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Music Volume"
 
-[node name="Value5" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value5" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "8"
 
-[node name="Name6" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name6" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "SFX Volume"
 
-[node name="Value6" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value6" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "8"
 
-[node name="Name7" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name7" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Screen Shake"
 
-[node name="Value7" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value7" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "On"
 
-[node name="Name8" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name8" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Mode 7 Intensity"
 
-[node name="Value8" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value8" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "6"
 
-[node name="Name9" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name9" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Window R"
 
-[node name="Value9" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value9" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "0"
 
-[node name="Name10" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name10" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Window G"
 
-[node name="Value10" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value10" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "0"
 
-[node name="Name11" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name11" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Window B"
 
-[node name="Value11" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value11" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "8"
 
-[node name="Name12" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name12" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Patience Mode"
 
-[node name="Value12" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value12" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
-[node name="Name13" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name13" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Color-Blind Mode"
 
-[node name="Value13" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value13" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
-[node name="Name14" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name14" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "High-Res Text"
 
-[node name="Value14" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value14" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
-[node name="Name15" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name15" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Reduce Motion"
 
-[node name="Value15" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value15" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
-[node name="Name16" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name16" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Flash Intensity"
 
-[node name="Value16" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value16" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Full"
 
-[node name="Name17" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name17" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "Transition Style"
 
-[node name="Value17" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value17" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Classic"
 
-[node name="Name18" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Name18" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
+size_flags_horizontal = 3
 text = "SFX Captions"
 
-[node name="Value18" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/SettingList"]
+[node name="Value18" type="Label" parent="SubScreen/ConfigScreen/Layout/SettingsPanel/ScrollContainer/SettingList"]
 text = "Off"
 
 [node name="FooterRow" type="HBoxContainer" parent="SubScreen/ConfigScreen/Layout"]
