@@ -4,7 +4,7 @@
 
 **Goal:** Replace all 7 menu sub-screens with FF6-style bordered window panels using full-viewport replacement mode, fixing all text overlap and visual polish issues.
 
-**Architecture:** Each sub-screen wraps its content in PanelContainer nodes with a shared StyleBoxFlat (dark blue gradient + border + glow). Opening a sub-screen hides the main menu panels (MainPanel, CommandPanel, InfoPanel). Internal layouts use VBox/HBox containers. Node paths updated in corresponding .gd scripts.
+**Architecture:** Each sub-screen wraps its content in PanelContainer nodes with a shared StyleBoxFlat (flat dark blue + border + glow). Opening a sub-screen hides the main menu panels (MainPanel, CommandPanel, InfoPanel). Internal layouts use VBox/HBox containers. Node paths updated in corresponding .gd scripts.
 
 **Tech Stack:** Godot 4.6, GDScript, StyleBoxFlat, PanelContainer, VBoxContainer, HBoxContainer
 
@@ -19,7 +19,7 @@
 | `game/scenes/overlay/menu.tscn` | MODIFY | Add shared StyleBoxFlat sub-resource, restructure all 7 sub-screens |
 | `game/scripts/ui/menu_overlay.gd` | MODIFY | Hide/show main panels on sub-screen open/close |
 | `game/scripts/ui/menu_items.gd` | MODIFY | Update @onready paths for PanelContainer structure |
-| `game/scripts/ui/menu_equipment.gd` | MODIFY | Update @onready paths |
+| `game/scripts/ui/menu_equip.gd` | MODIFY | Update @onready paths |
 | `game/scripts/ui/menu_status.gd` | MODIFY | Update @onready paths |
 | `game/scripts/ui/menu_magic.gd` | MODIFY | Update @onready paths |
 | `game/scripts/ui/menu_abilities.gd` | MODIFY | Update @onready paths |
@@ -78,7 +78,7 @@ func _open_sub_screen(screen: Control) -> void:
 	_command_panel.visible = false
 	_info_panel.visible = false
 	_cursor.visible = false
-	_char_cursor.visible = false
+	# CharCursor removed — character select uses color highlight only
 	screen.visible = true
 	_active_sub_screen = screen
 	_state = MenuState.SUB_SCREEN
@@ -317,7 +317,7 @@ git commit -m "feat(engine): restructure Abilities sub-screen with FF6 bordered 
 
 **Files:**
 - Modify: `game/scenes/overlay/menu.tscn` (EquipScreen section)
-- Modify: `game/scripts/ui/menu_equipment.gd`
+- Modify: `game/scripts/ui/menu_equip.gd`
 
 - [ ] **Step 1: Restructure EquipScreen**
 
@@ -336,7 +336,7 @@ EquipScreen (Control, 0,0,1280,720)
       VBoxContainer "ItemList": 10 item labels
 ```
 
-- [ ] **Step 2: Update menu_equipment.gd node paths**
+- [ ] **Step 2: Update menu_equip.gd node paths**
 
 Update all @onready paths for ModeBar, SlotPanel, StatPanel, ItemList,
 NameLabel, InfoLabel to reference through the new Layout/PanelContainer
@@ -345,7 +345,7 @@ hierarchy.
 - [ ] **Step 3: Commit**
 
 ```bash
-git add game/scenes/overlay/menu.tscn game/scripts/ui/menu_equipment.gd
+git add game/scenes/overlay/menu.tscn game/scripts/ui/menu_equip.gd
 git commit -m "feat(engine): restructure Equipment sub-screen with FF6 bordered panels"
 ```
 
@@ -390,7 +390,7 @@ git commit -m "feat(engine): restructure Status sub-screen with FF6 bordered pan
 
 ```bash
 gdlint game/scripts/ui/menu_overlay.gd game/scripts/ui/menu_items.gd \
-  game/scripts/ui/menu_equipment.gd game/scripts/ui/menu_status.gd \
+  game/scripts/ui/menu_equip.gd game/scripts/ui/menu_status.gd \
   game/scripts/ui/menu_magic.gd game/scripts/ui/menu_abilities.gd \
   game/scripts/ui/menu_formation.gd game/scripts/ui/menu_config.gd
 ```

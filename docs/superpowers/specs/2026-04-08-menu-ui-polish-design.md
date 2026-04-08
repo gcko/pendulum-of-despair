@@ -222,7 +222,7 @@ PanelContainer "AbilityPanel" (main area, expand)
 | `game/scenes/overlay/menu.tscn` | MODIFY | Add shared StyleBox, restructure all 7 sub-screens with PanelContainers |
 | `game/scripts/ui/menu_overlay.gd` | MODIFY | Show/hide main panels on sub-screen open/close |
 | `game/scripts/ui/menu_items.gd` | MODIFY | Update node paths for new container structure |
-| `game/scripts/ui/menu_equipment.gd` | MODIFY | Update node paths |
+| `game/scripts/ui/menu_equip.gd` | MODIFY | Update node paths |
 | `game/scripts/ui/menu_status.gd` | MODIFY | Update node paths |
 | `game/scripts/ui/menu_magic.gd` | MODIFY | Update node paths |
 | `game/scripts/ui/menu_abilities.gd` | MODIFY | Update node paths |

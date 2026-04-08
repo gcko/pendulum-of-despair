@@ -36,7 +36,6 @@ var _config_direct: bool = false
 @onready var _command_labels: Array[Label] = []
 @onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
-@onready var _char_cursor: Sprite2D = $CharCursor
 @onready var _main_panel: PanelContainer = $MainPanel
 @onready var _command_panel: PanelContainer = $CommandPanel
 @onready var _info_panel: PanelContainer = $InfoPanel
@@ -115,11 +114,11 @@ func _handle_char_select_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_down"):
 		_char_index = (_char_index + 1) % _active_party.size()
-		_update_char_cursor()
+		_update_char_highlight()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_char_index = (_char_index - 1 + _active_party.size()) % _active_party.size()
-		_update_char_cursor()
+		_update_char_highlight()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		_clear_char_highlight()
@@ -155,7 +154,7 @@ func _confirm_command() -> void:
 	if cmd.get("char_select", false):
 		_state = MenuState.CHARACTER_SELECT
 		_char_index = 0
-		_update_char_cursor()
+		_update_char_highlight()
 		return
 	# Direct sub-screens (no character select)
 	match cmd_name:
@@ -330,7 +329,7 @@ func _clear_char_highlight() -> void:
 			name_lbl.modulate = Color.WHITE
 
 
-func _update_char_cursor() -> void:
+func _update_char_highlight() -> void:
 	for i: int in range(_party_rows.size()):
 		if _party_rows[i] == null:
 			continue

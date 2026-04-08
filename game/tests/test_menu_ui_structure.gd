@@ -71,8 +71,11 @@ func test_config_has_scroll_container() -> void:
 func test_config_has_title_label() -> void:
 	var text: String = _read_file("res://scenes/overlay/menu.tscn")
 	assert_true(
-		text.contains('text = "Config"'),
-		"config TitlePanel should contain Config label",
+		(
+			text.contains('parent="SubScreen/ConfigScreen/Layout/HeaderRow/TitlePanel"')
+			and text.contains('text = "Config"')
+		),
+		"ConfigScreen TitlePanel should contain Config label",
 	)
 
 
