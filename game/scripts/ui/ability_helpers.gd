@@ -45,8 +45,11 @@ static func format_cost(ability: Dictionary) -> String:
 		"wg":
 			return "%d WG" % value
 		"mp_cd":
-			var cd: int = ability.get("cooldown", 0)
-			return "%d MP/%dt" % [value, cd]
+			var cd_raw: Variant = ability.get("cooldown", 0)
+			var cd: int = int(cd_raw) if cd_raw != null else 0
+			if cd > 0:
+				return "%d MP/%dt" % [value, cd]
+			return "%d MP" % value
 		"none":
 			return "Passive"
 	return ability.get("cost", "")
