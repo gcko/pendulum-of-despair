@@ -654,7 +654,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Items screen: categorized list, use/discard, stack counts
 - [x] Equipment screen: 5 slots per character, stat comparison display
 - [x] Magic screen: two-column spell grid, field-cast healing only, MP deduction — Phase 2 (2026-04-07)
-- [ ] Abilities screen: per-character unique command, sub-abilities — Phase 2
+- [x] Abilities screen: view-only, all 6 characters, cost_type-adaptive display — Phase 2 (2026-04-08)
 - [x] Status screen: full stat display, equipment summary, elemental profile
 - [ ] Formation screen: active/reserve party, row assignment (front/back), drag arrangement — Phase 2
 - [ ] Ley Crystal screen: collected crystals, equip slot, level/XP display — Phase 2
@@ -669,8 +669,9 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 **Notes:**
 - Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework
-- Phase 2 progress: Magic screen complete (spell_helpers.gd + menu_magic.gd), Shop buy-only (shop_overlay.gd)
-- Remaining Phase 2: Abilities, Formation, Ley Crystal screens
+- Phase 2 progress: Magic (spell_helpers.gd), Abilities (ability_helpers.gd), Shop buy-only (shop_overlay.gd)
+- Remaining Phase 2: Formation, Ley Crystal screens
+- Abilities screen is view-only (battle commands); deferred: resource gauges, field-use, Favor pips
 - PartyState: spend_mp(), heal_member() added for Magic field-cast
 - Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
 - Equipment screen has live stat comparison with green/red delta indicators

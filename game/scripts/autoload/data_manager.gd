@@ -136,6 +136,17 @@ func load_encounters(dungeon: String) -> Dictionary:
 	return {}
 
 
+## Load ability data for a character. Returns the abilities array, or empty if missing.
+func load_abilities(character_id: String) -> Array:
+	var path: String = "res://data/abilities/%s.json" % character_id
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
+	if data is Dictionary and data.has("abilities"):
+		return data["abilities"]
+	return []
+
+
 ## Load spell data for a tradition. Returns empty array if file missing.
 func load_spells(tradition: String) -> Array:
 	var path: String = "res://data/spells/%s.json" % tradition

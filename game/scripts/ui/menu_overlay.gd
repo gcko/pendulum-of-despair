@@ -15,7 +15,7 @@ const COLOR_WINDOW_BG: Color = Color("#000040")
 const COMMANDS: Array[Dictionary] = [
 	{"name": "Item", "char_select": false, "stubbed": false},
 	{"name": "Magic", "char_select": true, "stubbed": false},
-	{"name": "Abilities", "char_select": true, "stubbed": true},
+	{"name": "Abilities", "char_select": true, "stubbed": false},
 	{"name": "Equip", "char_select": true, "stubbed": false},
 	{"name": "Crystal", "char_select": true, "stubbed": true},
 	{"name": "Status", "char_select": true, "stubbed": false},
@@ -43,6 +43,7 @@ var _config_direct: bool = false
 @onready var _magic_screen: Control = $SubScreen/MagicScreen
 @onready var _item_screen: Control = $SubScreen/ItemScreen
 @onready var _equip_screen: Control = $SubScreen/EquipScreen
+@onready var _abilities_screen: Control = $SubScreen/AbilitiesScreen
 @onready var _status_screen: Control = $SubScreen/StatusScreen
 @onready var _config_screen: Control = $SubScreen/ConfigScreen
 @onready var _stub_label: Label = $SubScreen/StubLabel
@@ -176,6 +177,10 @@ func _open_sub_screen_for_character() -> void:
 			_open_sub_screen(_magic_screen)
 			if _magic_screen.has_method("open"):
 				_magic_screen.open(character_id)
+		"Abilities":
+			_open_sub_screen(_abilities_screen)
+			if _abilities_screen.has_method("open"):
+				_abilities_screen.open(character_id)
 		"Equip":
 			_open_sub_screen(_equip_screen)
 			if _equip_screen.has_method("open"):
@@ -216,6 +221,8 @@ func _hide_all_sub_screens() -> void:
 		_magic_screen.visible = false
 	if _item_screen != null:
 		_item_screen.visible = false
+	if _abilities_screen != null:
+		_abilities_screen.visible = false
 	if _equip_screen != null:
 		_equip_screen.visible = false
 	if _status_screen != null:

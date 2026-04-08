@@ -316,3 +316,24 @@ func test_all_spell_learned_by_characters_exist() -> void:
 				if cid != "" and cid not in valid:
 					bad.append("%s: unknown '%s'" % [s.get("id", "?"), cid])
 	assert_eq(bad.size(), 0, "All spell characters valid: %s" % str(bad))
+
+
+# ── 9. Ability file validation ──────────────────────────────────────
+
+
+func test_all_ability_files_exist() -> void:
+	for cid: String in ["edren", "cael", "lira", "torren", "sable", "maren"]:
+		var path: String = "res://data/abilities/%s.json" % cid
+		assert_true(FileAccess.file_exists(path), "Ability file for %s should exist" % cid)
+
+
+func test_all_ability_files_valid_schema() -> void:
+	for cid: String in ["edren", "cael", "lira", "torren", "sable", "maren"]:
+		var abilities: Array = DataManager.load_abilities(cid)
+		assert_gt(abilities.size(), 0, "%s should have abilities" % cid)
+		for a: Variant in abilities:
+			assert_true(a is Dictionary, "Each ability should be a Dictionary")
+			var d: Dictionary = a as Dictionary
+			assert_true(d.has("id"), "Ability must have id in %s" % cid)
+			assert_true(d.has("name"), "Ability must have name in %s" % cid)
+			assert_true(d.has("cost_type"), "Ability must have cost_type in %s" % cid)
