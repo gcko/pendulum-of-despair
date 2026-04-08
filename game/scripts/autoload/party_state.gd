@@ -319,6 +319,24 @@ func heal_member(character_id: String, amount: int) -> int:
 	return m["current_hp"] - old
 
 
+func get_row(cid: String) -> String:
+	return formation.get("rows", {}).get(cid, "front")
+
+
+func toggle_row(cid: String) -> void:
+	var r: Dictionary = formation.get("rows", {})
+	r[cid] = "back" if r.get(cid, "front") == "front" else "front"
+	formation["rows"] = r
+
+
+func get_formation_list() -> Array:
+	return Helpers.build_formation_list(members, formation)
+
+
+func swap_formation_positions(a: int, b: int) -> void:
+	Helpers.swap_formation(members, formation, a, b)
+
+
 func get_config() -> Dictionary:
 	if not _config_loaded:
 		_load_config()

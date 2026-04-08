@@ -75,6 +75,10 @@ Reference for all review agents. Check every applicable item.
 - [ ] All functions returning `Error` or `bool` status must have return values checked — not just scene transitions (DirAccess, FileAccess, write helpers)
 - [ ] State set before deferred calls (e.g., `change_scene_to_file`) must be REVERTED on failure, not omitted — new scene `_ready()` reads state immediately
 - [ ] GDScript falsy checks (`if data`) fail for empty `[]`/`{}`/`0` — use explicit `!= null` when checking for null returns
+- [ ] `dict.get(key, default)` returns `null` (not default) when key EXISTS with null value — use `dict.get(key)` then check `!= null`, or cast explicitly: `int(val) if val != null else 0` (PRs #126, #127: power:null, cooldown:null from JSON)
+- [ ] JSON gating fields (e.g., `available_act`, `story_gated`, `restock_event`) must be enforced at the UI/display layer, not just stored in data — grep for every gating field and verify it's checked before showing the item (PR #125: shop showed Act II items in Act I)
+- [ ] Grid/list label collection order must match cursor navigation math — if cursor uses `index % cols` for column, labels must be in row-major order (left0, right0, left1, right1...), not column-major (PR #126: spell grid had column-major labels with row-major cursor)
+- [ ] After adding/modifying methods on a class, check for unused `@onready` variables and stale dict keys that should be cleaned up (PR #128: unused _title_label, stale formation.reserve)
 
 ### Semantic Correctness (from Copilot PR #122 gap analysis)
 - [ ] Data field values used in COMPUTATION, not just existence checks — if a field is `restore_percent: 25`, the code must multiply by 0.25, not treat it as a boolean flag
