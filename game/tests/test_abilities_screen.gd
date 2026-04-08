@@ -128,6 +128,11 @@ func test_format_cost_mp_cd() -> void:
 	)
 
 
+func test_format_cost_mp_cd_null_cooldown() -> void:
+	var ability: Dictionary = {"cost_type": "mp_cd", "cost_value": 0, "cooldown": null}
+	assert_eq(AbilityHelpers.format_cost(ability), "0 MP", "Null cooldown shows plain MP")
+
+
 func test_format_cost_none() -> void:
 	var ability: Dictionary = {"cost_type": "none"}
 	assert_eq(
