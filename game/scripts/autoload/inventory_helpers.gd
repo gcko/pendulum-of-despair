@@ -391,6 +391,8 @@ static func format_active_party_names(save_data: Dictionary) -> String:
 	return "  ".join(names)
 
 
+## Build ordered list: active first, then reserve. _formation_index matches
+## the index used by swap_formation — both use the same ordering contract.
 static func build_formation_list(members: Array, formation: Dictionary) -> Array:
 	var result: Array = []
 	var active: Array = formation.get("active", [])
