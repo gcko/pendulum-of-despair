@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/menu_overlay.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/menu_items.gd" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/ui/menu_config.gd" id="5"]
 [ext_resource type="Script" path="res://scripts/ui/menu_magic.gd" id="6"]
 [ext_resource type="Script" path="res://scripts/ui/menu_abilities.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/ui/menu_formation.gd" id="8"]
 
 [node name="Menu" type="CanvasLayer"]
 layer = 10
@@ -810,6 +811,47 @@ text = ""
 text = ""
 
 [node name="Ability11" type="Label" parent="SubScreen/AbilitiesScreen/AbilityGrid/RightCol"]
+text = ""
+
+[node name="FormationScreen" type="Control" parent="SubScreen"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+script = ExtResource("8")
+
+[node name="TitleLabel" type="Label" parent="SubScreen/FormationScreen"]
+offset_left = 4.0
+offset_top = 4.0
+text = "Formation"
+
+[node name="MemberList" type="VBoxContainer" parent="SubScreen/FormationScreen"]
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 316.0
+offset_bottom = 160.0
+
+[node name="Member0" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="Member1" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="Member2" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="Member3" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="Member4" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="Member5" type="Label" parent="SubScreen/FormationScreen/MemberList"]
+text = ""
+
+[node name="SwapLabel" type="Label" parent="SubScreen/FormationScreen"]
+visible = false
+offset_left = 4.0
+offset_top = 164.0
 text = ""
 
 [node name="StubLabel" type="Label" parent="SubScreen"]
