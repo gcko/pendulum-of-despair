@@ -160,7 +160,7 @@ func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool =
 		header.text = "%s%s" % [prefix, loc]
 		header.modulate = COLOR_NORMAL
 		if playtime_lbl:
-			playtime_lbl.text = "%d:%02d" % [pt / 3600, (pt % 3600) / 60]
+			playtime_lbl.text = "%d:%02d" % [int(pt / 3600), int((pt % 3600) / 60)]
 			playtime_lbl.modulate = COLOR_NORMAL
 		if gold_lbl:
 			gold_lbl.text = "%dg" % world.get("gold", 0)
