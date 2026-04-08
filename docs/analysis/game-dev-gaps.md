@@ -890,23 +890,33 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 ### 4.3 Overworld Map
 
-**Status:** NOT STARTED
+**Status:** MOSTLY COMPLETE
 **Priority:** P1 — blocks inter-location travel
 **Estimated Size:** L (large tilemap, transition system)
+**Completed:** 2026-04-08 (vertical slice)
 **Output:** `game/scenes/maps/overworld.tscn`
 **Source Docs:** `overworld.md` (Mode 7 presentation, terrain, weather), `geography.md` (terrain types, regions), `locations.md` (location positions), `transport.md` (travel modes)
 **Depends On:** 3.2 (Exploration), 1.6 (Encounter Tables — overworld encounters)
 
-**What's Needed:**
-- [ ] Large tilemap representing the game world per geography.md
-- [ ] 12 terrain types with encounter rate increments
-- [ ] Location entry points (towns, dungeons) as trigger zones
-- [ ] Miniaturized player sprite on overworld (per overworld.md)
-- [ ] Mode 7-style perspective (or simplified top-down alternative per implementation budget)
-- [ ] Location name flash on entry per ui-design.md
-- [ ] Weather/atmospheric effects per overworld.md (location-fixed + 6 story overrides)
-- [ ] Map screen (menu-accessed, parchment style, first-visit discovery)
-- [ ] Transport system hooks (Ley Stag, rail, ferry — from transport.md)
+**What's Done (vertical slice):**
+- [x] Walkable 60x40 tile overworld map (Valdris Highlands)
+- [x] 2 location entry triggers (Valdris Crown, Ember Vein)
+- [x] Bidirectional transitions: overworld ↔ town, overworld ↔ dungeon
+- [x] Random encounters via existing overworld.json (valdris_highlands zone)
+- [x] Location name flash on map entry
+- [x] Placeholder tileset extended with grass + water tiles (8 total)
+- [x] New game starts on overworld (replaced test_room)
+
+**What Remains (deferred):**
+- [ ] Mode 7-style perspective rendering (shader + camera work)
+- [ ] Miniaturized 8x12 player sprite on overworld
+- [ ] Full continent tilemap (20+ locations, 12 terrain types)
+- [ ] Weather/atmospheric effects per biome
+- [ ] Map screen (parchment style, discovery system)
+- [ ] Transport system (Ley Stag, rail, ferry, Linewalk)
+- [ ] Region boundary banners
+- [ ] Story-triggered atmospheric overrides
+- [ ] Structural tilemap changes (fissures, crater, petrification)
 
 **Blocking:** Travel between towns and dungeons, overworld encounters
 
