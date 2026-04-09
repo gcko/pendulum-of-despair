@@ -254,6 +254,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 |---|-----------|---------|---------------|---------------|
 | 1 | `pendulum_discovered` | Party finds the Pendulum in the Ember Vein central chamber | Ember Vein dungeon marked complete. Ironmouth Carradan soldiers become hostile. Lira and Sable join the party during the escape. | Lira (joins), Sable (joins) |
 | 2 | `vaelith_ember_vein` | Vein Guardian defeated in the Ember Vein | Grey stranger NPCs appear in Valdris Crown with gossip dialogue about a charming traveler seen near the mine. | Vaelith (first appearance) |
+| 2b | `vaelith_scene_complete` | Scene 2 dialogue (Vaelith encounter on overworld) viewed after Ember Vein exit | Gates Scene 3 trigger — player must see Vaelith dialogue before Ironmouth escape. Implementation-level ordering flag. | — |
 | 3 | `carradan_ambush_survived` | Party defeats Carradan soldiers at Ironmouth exit | Ironmouth becomes inaccessible (Compact locks it down). Thornmere Wilds overworld opens. | Torren (findable at Roothollow) |
 | 39 | `opening_credits_seen` | Dawn march credits sequence ends at Wilds border | Tutorial complete. True game start. Prevents credits replay. Dawn march uses existing `vaelith_ember_vein` (flag 2) as prerequisite. | Edren, Cael, Lira, Sable |
 | 4 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
