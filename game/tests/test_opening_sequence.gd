@@ -135,37 +135,46 @@ func test_scene_4_dialogue_exists() -> void:
 
 func test_overworld_has_scene2_trigger() -> void:
 	var text: String = _read_file("res://scenes/maps/overworld.tscn")
+	var idx: int = text.find("Scene2Trigger")
+	assert_gt(idx, 0, "overworld should have Scene2Trigger node")
+	var block: String = text.substr(idx, 300)
 	assert_true(
-		text.contains("vaelith_ember_vein"),
-		"overworld should have Scene 2 dialogue trigger",
+		block.contains('dialogue_scene_id = "vaelith_ember_vein"'),
+		"Scene2Trigger should reference vaelith_ember_vein dialogue",
 	)
 	assert_true(
-		text.contains("vaelith_ember_vein") and text.contains("required_flag"),
-		"Scene 2 trigger should require vaelith_ember_vein flag",
+		block.contains('required_flag = "vaelith_ember_vein"'),
+		"Scene2Trigger should require vaelith_ember_vein flag",
 	)
 
 
 func test_overworld_has_scene3_trigger() -> void:
 	var text: String = _read_file("res://scenes/maps/overworld.tscn")
+	var idx: int = text.find("Scene3Trigger")
+	assert_gt(idx, 0, "overworld should have Scene3Trigger node")
+	var block: String = text.substr(idx, 300)
 	assert_true(
-		text.contains("ironmouth_escape"),
-		"overworld should have Scene 3 dialogue trigger",
+		block.contains('flag = "carradan_ambush_survived"'),
+		"Scene3Trigger should set carradan_ambush_survived flag",
 	)
 	assert_true(
-		text.contains("carradan_ambush_survived"),
-		"Scene 3 trigger should set carradan_ambush_survived flag",
+		block.contains('dialogue_scene_id = "ironmouth_escape"'),
+		"Scene3Trigger should reference ironmouth_escape dialogue",
 	)
 
 
 func test_overworld_has_scene4_trigger() -> void:
 	var text: String = _read_file("res://scenes/maps/overworld.tscn")
+	var idx: int = text.find("Scene4Trigger")
+	assert_gt(idx, 0, "overworld should have Scene4Trigger node")
+	var block: String = text.substr(idx, 300)
 	assert_true(
-		text.contains("dawn_march"),
-		"overworld should have Scene 4 dialogue trigger",
+		block.contains('flag = "opening_credits_seen"'),
+		"Scene4Trigger should set opening_credits_seen flag",
 	)
 	assert_true(
-		text.contains("opening_credits_seen"),
-		"Scene 4 trigger should set opening_credits_seen flag",
+		block.contains('dialogue_scene_id = "dawn_march"'),
+		"Scene4Trigger should reference dawn_march dialogue",
 	)
 
 
