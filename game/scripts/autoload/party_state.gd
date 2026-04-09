@@ -17,6 +17,8 @@ const CLASS_TITLES: Dictionary = {
 const STARTING_EQUIPMENT: Dictionary = {
 	"edren": {"weapon": "training_sword", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"cael": {"weapon": "recruits_claymore", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"lira": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"sable": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
 }
 
 const STARTING_CONSUMABLES: Dictionary = {

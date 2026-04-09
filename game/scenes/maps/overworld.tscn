@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
 
@@ -12,6 +12,15 @@ size = Vector2(48, 48)
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="Shape_marens"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_scene2"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_scene3"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_scene4"]
 size = Vector2(48, 48)
 
 [node name="Overworld" type="Node2D"]
@@ -91,6 +100,45 @@ position = Vector2(448, 448)
 [node name="from_marens_refuge" type="Marker2D" parent="."]
 position = Vector2(224, 464)
 
+[node name="Scene2Trigger" type="Area2D" parent="Entities"]
+position = Vector2(816, 528)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/flag = "vaelith_scene_complete"
+metadata/required_flag = "vaelith_ember_vein"
+metadata/dialogue_scene_id = "vaelith_ember_vein"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene2Trigger"]
+shape = SubResource("Shape_scene2")
+
+[node name="Scene3Trigger" type="Area2D" parent="Entities"]
+position = Vector2(688, 496)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/flag = "carradan_ambush_survived"
+metadata/required_flag = "vaelith_scene_complete"
+metadata/dialogue_scene_id = "ironmouth_escape"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene3Trigger"]
+shape = SubResource("Shape_scene3")
+
+[node name="Scene4Trigger" type="Area2D" parent="Entities"]
+position = Vector2(576, 480)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/flag = "opening_credits_seen"
+metadata/required_flag = "carradan_ambush_survived"
+metadata/dialogue_scene_id = "dawn_march"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene4Trigger"]
+shape = SubResource("Shape_scene4")
+
 [node name="LabelValdris" type="Label" parent="."]
 offset_left = 48
 offset_top = 56
@@ -121,4 +169,12 @@ offset_top = 472
 offset_right = 260
 offset_bottom = 488
 text = "Maren's Refuge"
+horizontal_alignment = 1
+
+[node name="LabelIronmouth" type="Label" parent="."]
+offset_left = 648
+offset_top = 472
+offset_right = 760
+offset_bottom = 488
+text = "Ironmouth"
 horizontal_alignment = 1
