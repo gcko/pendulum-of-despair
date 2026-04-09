@@ -90,18 +90,20 @@ func test_fifth_member_goes_to_reserve() -> void:
 
 func test_lira_has_starting_equipment_entry() -> void:
 	var text: String = _read_file("res://scripts/autoload/party_state.gd")
-	assert_true(
-		text.contains('"lira"') and text.contains("STARTING_EQUIPMENT"),
-		"party_state should have lira in STARTING_EQUIPMENT",
-	)
+	var marker: String = "STARTING_EQUIPMENT"
+	var idx: int = text.find(marker)
+	assert_true(idx >= 0, "STARTING_EQUIPMENT should exist")
+	var block: String = text.substr(idx, 500)
+	assert_true(block.contains('"lira"'), "lira should be in STARTING_EQUIPMENT block")
 
 
 func test_sable_has_starting_equipment_entry() -> void:
 	var text: String = _read_file("res://scripts/autoload/party_state.gd")
-	assert_true(
-		text.contains('"sable"') and text.contains("STARTING_EQUIPMENT"),
-		"party_state should have sable in STARTING_EQUIPMENT",
-	)
+	var marker: String = "STARTING_EQUIPMENT"
+	var idx: int = text.find(marker)
+	assert_true(idx >= 0, "STARTING_EQUIPMENT should exist")
+	var block: String = text.substr(idx, 500)
+	assert_true(block.contains('"sable"'), "sable should be in STARTING_EQUIPMENT block")
 
 
 # --- Dialogue Data ---
