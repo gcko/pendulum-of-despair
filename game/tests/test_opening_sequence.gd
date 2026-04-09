@@ -4,6 +4,7 @@ extends GutTest
 
 
 func before_each() -> void:
+	PartyState.initialize_new_game()
 	DataManager.clear_cache()
 	EventFlags.clear_all()
 

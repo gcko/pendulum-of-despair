@@ -192,9 +192,9 @@ Lira and Sable join without weapons (player equips them from inventory).
 | `game/scripts/core/exploration.gd` | MODIFY | Add Lira+Sable to _check_party_joining_flags |
 | `game/scripts/autoload/party_state.gd` | MODIFY | Add Lira+Sable to STARTING_EQUIPMENT |
 | `game/scenes/maps/overworld.tscn` | MODIFY | Add Scene 2, 3, 4 dialogue triggers |
-| `game/data/dialogue/scene_2_vaelith_encounter.json` | CREATE | Vaelith encounter dialogue |
-| `game/data/dialogue/scene_3_ironmouth_escape.json` | CREATE | Ironmouth escape stub dialogue |
-| `game/data/dialogue/scene_4_dawn_march.json` | CREATE | Dawn March dialogue |
+| `game/data/dialogue/vaelith_ember_vein.json` | EXISTING | Vaelith encounter dialogue (gap 1.8) |
+| `game/data/dialogue/ironmouth_escape.json` | EXISTING | Ironmouth escape dialogue (gap 1.8) |
+| `game/data/dialogue/dawn_march.json` | EXISTING | Dawn March dialogue (gap 1.8) |
 | `game/tests/test_opening_sequence.gd` | CREATE | Party assembly + dialogue tests |
 | `docs/analysis/game-dev-gaps.md` | MODIFY | Update gap 4.4 Phase B |
 

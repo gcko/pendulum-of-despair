@@ -377,7 +377,9 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 			)
 
 
-func _on_dialogue_closed_check_party(_state: Variant) -> void:
+func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
+	if state != GameManager.OverlayState.NONE:
+		return
 	_check_party_joining_flags()
 
 

@@ -19,6 +19,8 @@ const STARTING_EQUIPMENT: Dictionary = {
 	"cael": {"weapon": "recruits_claymore", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"lira": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"sable": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"torren": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"maren": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
 }
 
 const STARTING_CONSUMABLES: Dictionary = {

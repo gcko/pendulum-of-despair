@@ -995,7 +995,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [ ] Act I finale flag: pendulum_to_capital
 
 **Notes:**
-- Party assembly now works: Edren+Cael at new game, Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6). Lira+Sable join deferred to Phase B (Scenes 3-4).
+- Party assembly now works: Edren+Cael at new game, Lira+Sable join via carradan_ambush_survived flag (Phase B1, PR #132), Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6).
 - Dialogue triggers use dialogue_scene_id metadata (loads from DataManager) instead of inline dialogue_data — scalable for large scenes.
 - required_flag metadata on triggers enables prerequisite flag checking (e.g., Scene 6 requires torren_joined).
 
