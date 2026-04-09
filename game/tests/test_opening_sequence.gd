@@ -28,16 +28,14 @@ func test_new_game_starts_with_two_members() -> void:
 	assert_false(PartyState.has_member("maren"), "maren should NOT be in starting party")
 
 
-func test_lira_joins_on_carradan_flag() -> void:
-	PartyState.initialize_new_game()
+func test_lira_can_be_added_to_party() -> void:
 	PartyState.add_member("lira", 1)
-	assert_true(PartyState.has_member("lira"), "lira should join after add_member")
+	assert_true(PartyState.has_member("lira"), "lira should be present after add_member")
 
 
-func test_sable_joins_on_carradan_flag() -> void:
-	PartyState.initialize_new_game()
+func test_sable_can_be_added_to_party() -> void:
 	PartyState.add_member("sable", 1)
-	assert_true(PartyState.has_member("sable"), "sable should join after add_member")
+	assert_true(PartyState.has_member("sable"), "sable should be present after add_member")
 
 
 func test_lira_sable_join_together_no_duplicates() -> void:
@@ -90,21 +88,17 @@ func test_fifth_member_goes_to_reserve() -> void:
 
 
 func test_lira_has_starting_equipment_entry() -> void:
-	var text: String = _read_file("res://scripts/autoload/party_state.gd")
-	var marker: String = "STARTING_EQUIPMENT"
-	var idx: int = text.find(marker)
-	assert_true(idx >= 0, "STARTING_EQUIPMENT should exist")
-	var block: String = text.substr(idx, 500)
-	assert_true(block.contains('"lira"'), "lira should be in STARTING_EQUIPMENT block")
+	assert_true(
+		PartyState.STARTING_EQUIPMENT.has("lira"),
+		"lira should be in STARTING_EQUIPMENT",
+	)
 
 
 func test_sable_has_starting_equipment_entry() -> void:
-	var text: String = _read_file("res://scripts/autoload/party_state.gd")
-	var marker: String = "STARTING_EQUIPMENT"
-	var idx: int = text.find(marker)
-	assert_true(idx >= 0, "STARTING_EQUIPMENT should exist")
-	var block: String = text.substr(idx, 500)
-	assert_true(block.contains('"sable"'), "sable should be in STARTING_EQUIPMENT block")
+	assert_true(
+		PartyState.STARTING_EQUIPMENT.has("sable"),
+		"sable should be in STARTING_EQUIPMENT",
+	)
 
 
 # --- Dialogue Data ---
@@ -135,58 +129,68 @@ func test_scene_4_dialogue_exists() -> void:
 
 
 func test_overworld_has_scene2_trigger() -> void:
-	var text: String = _read_file("res://scenes/maps/overworld.tscn")
-	var idx: int = text.find("Scene2Trigger")
-	assert_gt(idx, 0, "overworld should have Scene2Trigger node")
-	var block: String = text.substr(idx, 300)
-	assert_true(
-		block.contains('dialogue_scene_id = "vaelith_ember_vein"'),
+	var overworld: Node = _load_overworld()
+	var trigger: Node = overworld.get_node_or_null("Entities/Scene2Trigger")
+	assert_not_null(trigger, "overworld should have Entities/Scene2Trigger")
+	assert_eq(
+		str(trigger.get_meta("dialogue_scene_id", "")),
+		"vaelith_ember_vein",
 		"Scene2Trigger should reference vaelith_ember_vein dialogue",
 	)
-	assert_true(
-		block.contains('required_flag = "vaelith_ember_vein"'),
+	assert_eq(
+		str(trigger.get_meta("required_flag", "")),
+		"vaelith_ember_vein",
 		"Scene2Trigger should require vaelith_ember_vein flag",
 	)
+	overworld.queue_free()
 
 
 func test_overworld_has_scene3_trigger() -> void:
-	var text: String = _read_file("res://scenes/maps/overworld.tscn")
-	var idx: int = text.find("Scene3Trigger")
-	assert_gt(idx, 0, "overworld should have Scene3Trigger node")
-	var block: String = text.substr(idx, 300)
-	assert_true(
-		block.contains('flag = "carradan_ambush_survived"'),
+	var overworld: Node = _load_overworld()
+	var trigger: Node = overworld.get_node_or_null("Entities/Scene3Trigger")
+	assert_not_null(trigger, "overworld should have Entities/Scene3Trigger")
+	assert_eq(
+		str(trigger.get_meta("flag", "")),
+		"carradan_ambush_survived",
 		"Scene3Trigger should set carradan_ambush_survived flag",
 	)
-	assert_true(
-		block.contains('dialogue_scene_id = "ironmouth_escape"'),
+	assert_eq(
+		str(trigger.get_meta("dialogue_scene_id", "")),
+		"ironmouth_escape",
 		"Scene3Trigger should reference ironmouth_escape dialogue",
 	)
+	overworld.queue_free()
 
 
 func test_overworld_has_scene4_trigger() -> void:
-	var text: String = _read_file("res://scenes/maps/overworld.tscn")
-	var idx: int = text.find("Scene4Trigger")
-	assert_gt(idx, 0, "overworld should have Scene4Trigger node")
-	var block: String = text.substr(idx, 300)
-	assert_true(
-		block.contains('flag = "opening_credits_seen"'),
+	var overworld: Node = _load_overworld()
+	var trigger: Node = overworld.get_node_or_null("Entities/Scene4Trigger")
+	assert_not_null(trigger, "overworld should have Entities/Scene4Trigger")
+	assert_eq(
+		str(trigger.get_meta("flag", "")),
+		"opening_credits_seen",
 		"Scene4Trigger should set opening_credits_seen flag",
 	)
-	assert_true(
-		block.contains('dialogue_scene_id = "dawn_march"'),
+	assert_eq(
+		str(trigger.get_meta("dialogue_scene_id", "")),
+		"dawn_march",
 		"Scene4Trigger should reference dawn_march dialogue",
 	)
+	overworld.queue_free()
 
 
 func test_scene_triggers_in_story_order() -> void:
-	var text: String = _read_file("res://scenes/maps/overworld.tscn")
-	var s2_pos: int = text.find("vaelith_ember_vein")
-	var s3_pos: int = text.find("ironmouth_escape")
-	var s4_pos: int = text.find("dawn_march")
-	assert_gt(s2_pos, 0, "scene 2 trigger should exist")
-	assert_gt(s3_pos, s2_pos, "scene 3 trigger should appear after scene 2")
-	assert_gt(s4_pos, s3_pos, "scene 4 trigger should appear after scene 3")
+	var overworld: Node = _load_overworld()
+	var s2: Node = overworld.get_node_or_null("Entities/Scene2Trigger")
+	var s3: Node = overworld.get_node_or_null("Entities/Scene3Trigger")
+	var s4: Node = overworld.get_node_or_null("Entities/Scene4Trigger")
+	assert_not_null(s2, "scene 2 trigger should exist")
+	assert_not_null(s3, "scene 3 trigger should exist")
+	assert_not_null(s4, "scene 4 trigger should exist")
+	# Triggers should progress from east (Ember Vein) to west (Roothollow)
+	assert_gt(s2.position.x, s3.position.x, "scene 2 should be east of scene 3")
+	assert_gt(s3.position.x, s4.position.x, "scene 3 should be east of scene 4")
+	overworld.queue_free()
 
 
 # --- Party Join Flag Wiring ---
@@ -208,7 +212,12 @@ func test_exploration_checks_carradan_flag() -> void:
 	)
 
 
-# --- Helper ---
+# --- Helpers ---
+
+
+func _load_overworld() -> Node:
+	var scene: PackedScene = load("res://scenes/maps/overworld.tscn")
+	return scene.instantiate()
 
 
 func _read_file(path: String) -> String:

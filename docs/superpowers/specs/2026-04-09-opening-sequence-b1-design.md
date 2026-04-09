@@ -63,12 +63,21 @@ New Game → Overworld (Edren + Cael)
 
 ```gdscript
 func _check_party_joining_flags() -> void:
-    if EventFlags.get_flag("carradan_ambush_survived") and not PartyState.has_member("lira"):
-        PartyState.add_member("lira", _get_party_avg_level())
-        flash_location_name("Lira joined the party!")
-    if EventFlags.get_flag("carradan_ambush_survived") and not PartyState.has_member("sable"):
-        PartyState.add_member("sable", _get_party_avg_level())
-        flash_location_name("Sable joined the party!")
+    if EventFlags.get_flag("carradan_ambush_survived"):
+        var added_lira: bool = false
+        var added_sable: bool = false
+        if not PartyState.has_member("lira"):
+            PartyState.add_member("lira", _get_party_avg_level())
+            added_lira = true
+        if not PartyState.has_member("sable"):
+            PartyState.add_member("sable", _get_party_avg_level())
+            added_sable = true
+        if added_lira and added_sable:
+            flash_location_name("Lira and Sable joined the party!")
+        elif added_lira:
+            flash_location_name("Lira joined the party!")
+        elif added_sable:
+            flash_location_name("Sable joined the party!")
     if EventFlags.get_flag("torren_joined") and not PartyState.has_member("torren"):
         PartyState.add_member("torren", _get_party_avg_level())
         flash_location_name("Torren joined the party!")
@@ -78,6 +87,7 @@ func _check_party_joining_flags() -> void:
 ```
 
 Both Lira and Sable join on the same flag (`carradan_ambush_survived`).
+A combined flash message avoids the second call overwriting the first.
 
 ### Ember Vein Exit Flag
 
