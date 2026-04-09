@@ -13,7 +13,7 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 static func resolve_enemy_target(cursor: int, enemies: Array) -> int:
 	var living: Array[int] = []
 	for i: int in range(enemies.size()):
-		if enemies[i].is_alive:
+		if enemies[i].is_alive and not enemies[i].get_meta("untargetable", false):
 			living.append(i)
 	if living.is_empty():
 		return -1
