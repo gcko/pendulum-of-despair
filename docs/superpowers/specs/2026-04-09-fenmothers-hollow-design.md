@@ -508,17 +508,28 @@ and returns `result: "fenmother_cleansing"` instead of `result: "victory"`.
 
 ## 9. Tileset Extension
 
-Add 4 swamp tiles to the existing placeholder tileset:
+Extend the existing `game/assets/tilesets/placeholder_dungeon.png`
+(currently 10 tiles at indices 0-9, 16x16 each in a single row).
 
-| Tile | Color | Purpose |
-|------|-------|---------|
-| Marsh floor | Dark green (#2d4a2e) | Walkable ground |
-| Shallow water | Dark teal (#1a3a3a) | Walkable, encounter area |
-| Stone wall | Dark grey-brown (#3a3a2e) | Collision, walls |
-| Crystal root | Purple-teal (#4a2a5a) | Decorative, ley-corruption |
+Add 4 swamp tiles at indices 10-13:
 
-Same approach as Ember Vein: 16x16 solid-color tiles in the
-placeholder dungeon tileset. No art assets needed.
+| Index | Tile | Color | Collision | Purpose |
+|-------|------|-------|-----------|---------|
+| 10 | Marsh floor | Dark green (#2d4a2e) | No | Walkable ground |
+| 11 | Shallow water | Dark teal (#1a3a3a) | No | Walkable, encounter area |
+| 12 | Stone wall | Dark grey-brown (#3a3a2e) | Yes (physics_layer_0) | Impassable walls |
+| 13 | Crystal root | Purple-teal (#4a2a5a) | No | Decorative, ley-corruption |
+
+**Implementation:**
+1. Extend `placeholder_dungeon.png` from 160x16 to 224x16 (14 tiles)
+2. Add 4 solid-color 16x16 tiles at positions (160,0)-(223,15)
+3. Update `placeholder_dungeon.tres` to register indices 10:0 through 13:0
+4. Add physics collision to tile 12:0 (stone wall) matching tile 1:0 pattern
+5. Reimport the .png (Godot handles this automatically on file change)
+
+The .tres file currently has `texture_region_size = Vector2i(16, 16)`
+and auto-detects tiles from the atlas. Adding pixels to the right edge
+of the PNG and registering new atlas coords is sufficient.
 
 ---
 
@@ -551,38 +562,74 @@ Formation distribution: 68.75% Normal, 18.75% Back Attack, 12.5% Preemptive.
 
 ## 11. Test Plan
 
-### test_fenmothers_hollow.gd (~25 tests)
+### test_fenmothers_hollow.gd (~35 tests)
+
+Tests use scene instantiation for .tscn validation (same pattern as
+test_opening_sequence.gd) and DataManager for JSON validation.
+
+**Tileset & Assets (3 tests):**
+- `test_placeholder_tileset_png_exists` — FileAccess.file_exists("res://assets/tilesets/placeholder_dungeon.png")
+- `test_placeholder_tileset_tres_exists` — ResourceLoader.exists("res://assets/tilesets/placeholder_dungeon.tres")
+- `test_tileset_has_swamp_tiles` — Load .tres, verify atlas source has coords 10:0 through 13:0
 
 **Enemy data (9 tests):**
-- Each of the 9 enemy JSON files loads and has correct HP value
+- `test_marsh_serpent_data` — loads, HP == 140, type == "beast", level == 6
+- `test_bog_leech_data` — loads, HP == 192, type == "beast"
+- `test_drowned_bones_data` — loads, HP == 211, type == "undead", weak == "spirit"
+- `test_swamp_lurker_data` — loads, HP == 254
+- `test_ley_jellyfish_data` — loads, HP == 231, weak == "storm", absorb == "frost"
+- `test_polluted_elemental_data` — loads, HP == 273, weak == "flame", absorb == "frost"
+- `test_corrupted_spawn_data` — loads, HP == 288
+- `test_drowned_sentinel_data` — loads, HP == 4000, type == "construct", weak == "storm"
+- `test_corrupted_fenmother_data` — loads, HP == 18000, type == "boss", weak == "flame", resist == "frost"
+
+**Encounter data (2 tests):**
+- `test_encounter_data_exists` — DataManager.load_encounters("fenmothers_hollow") is not empty
+- `test_encounter_floor_ids` — has entries with floor_id "1-2" and "3"
 
 **Dialogue data (3 tests):**
-- fenmother_battle.json loads with 4 entries
-- water_of_life.json loads with 4 entries
-- fenmother_cleansing.json loads with 5 entries
+- `test_fenmother_battle_dialogue` — loads with 4 entries
+- `test_water_of_life_dialogue` — loads with 4 entries
+- `test_fenmother_cleansing_dialogue` — loads with 5 entries
 
-**Floor maps (3 tests):**
-- Each .tscn has correct metadata (map_id, dungeon_id, floor_id, location_name)
+**Floor maps — metadata (3 tests):**
+Each test instantiates the .tscn and checks metadata:
+- `test_f1_metadata` — map_id, dungeon_id, floor_id "1-2", location_name
+- `test_f2_metadata` — map_id, dungeon_id, floor_id "1-2", location_name
+- `test_f3_metadata` — map_id, dungeon_id, floor_id "3", location_name
 
-**Overworld (2 tests):**
-- FenmothersHollow transition exists with correct target_map
-- from_fenmothers_hollow spawn marker exists
+**Floor maps — tileset reference (3 tests):**
+Each test verifies the scene's TileMapLayer references the placeholder tileset:
+- `test_f1_uses_placeholder_tileset` — TileMapLayer node exists, tile_set resource path contains "placeholder_dungeon"
+- `test_f2_uses_placeholder_tileset` — same
+- `test_f3_uses_placeholder_tileset` — same
 
 **Treasure chests (3 tests):**
-- F1 has 2 chests with correct item_ids
-- F2 has 3 chests with correct item_ids
-- F3 has 1 chest (Fenmother's Blessing) with required_flag
+Instantiate each floor scene, iterate Entities children, verify chest metadata:
+- `test_f1_chests` — 2 chests: marsh_cloak, spirit_tonic (verify chest_id and item_id)
+- `test_f2_chests` — 3 chests: fenmothers_scale, spirit_bound_spear, ancient_totem
+- `test_f3_chest_flag_gated` — 1 chest with item_id "fenmothers_blessing" and required_flag "fenmother_cleansed"
+
+**Save points (3 tests):**
+- `test_f1_has_save_point` — Entities has a child with save_point_id metadata
+- `test_f2_has_save_point` — same
+- `test_f3_has_save_point` — same
 
 **Boss triggers (2 tests):**
-- F2 has Drowned Sentinel trigger with correct metadata
-- F3 has Corrupted Fenmother trigger with correct metadata
+- `test_drowned_sentinel_trigger` — F2 Entities has Area2D with boss_id "drowned_sentinel", flag "drowned_sentinel_defeated", enemy_ids contains "drowned_sentinel"
+- `test_corrupted_fenmother_trigger` — F3 Entities has Area2D with boss_id "corrupted_fenmother", flag "fenmother_cleansed", enemy_ids contains "corrupted_fenmother"
 
-**Save points (1 test):**
-- Each floor has at least one save point entity
+**Transitions (3 tests):**
+- `test_f1_to_f2_transition` — F1 Transitions has Area2D with target_map "dungeons/fenmothers_hollow_f2"
+- `test_f2_to_f3_transition_flag_gated` — F2 Transitions has Area2D with target_map "dungeons/fenmothers_hollow_f3" AND required_flag "drowned_sentinel_defeated"
+- `test_f3_to_overworld_transition` — F3 Transitions has Area2D with target_map "overworld"
 
-**Transitions (2 tests):**
-- F1→F2 and F2→F3 transitions exist
-- F2→F3 transition has required_flag "drowned_sentinel_defeated"
+**Overworld integration (2 tests):**
+- `test_overworld_has_fenmothers_hollow_transition` — instantiate overworld, find transition with target_map containing "fenmothers_hollow"
+- `test_overworld_has_fenmothers_hollow_spawn` — overworld has Marker2D "from_fenmothers_hollow"
+
+**Exploration flag-gated transition support (1 test):**
+- `test_exploration_checks_transition_required_flag` — read exploration.gd source, verify it contains "required_flag" check in _on_transition_body_entered
 
 ---
 
