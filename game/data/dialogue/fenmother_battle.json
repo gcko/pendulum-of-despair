@@ -1,0 +1,55 @@
+{
+  "scene_id": "fenmother_battle",
+  "entries": [
+    {
+      "id": "fenmother_battle_001",
+      "speaker": "narrator",
+      "lines": [
+        "The water surges. Something vast stirs beneath the",
+        "surface — tendrils of grey-green light reaching for the walls."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_battle_002",
+      "speaker": "narrator",
+      "lines": [
+        "The Fenmother shrieks — corruption pulses through the",
+        "chamber. The water rises."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_battle_003",
+      "speaker": "narrator",
+      "lines": [
+        "The corruption recedes from her eyes. For a moment,",
+        "the spirit underneath is visible — ancient, tired, asking",
+        "for help."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_battle_004",
+      "speaker": "narrator",
+      "lines": [
+        "The grey drains from the water. The Fenmother's form",
+        "settles, translucent and calm. She sinks beneath the",
+        "surface. The hollow goes quiet."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

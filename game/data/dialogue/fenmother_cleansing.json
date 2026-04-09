@@ -1,0 +1,64 @@
+{
+  "scene_id": "fenmother_cleansing",
+  "entries": [
+    {
+      "id": "fenmother_cleansing_001",
+      "speaker": "torren",
+      "lines": [
+        "I can feel her — she's still in there. Hold them off",
+        "while I work."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_cleansing_002",
+      "speaker": "narrator",
+      "lines": [
+        "Dark streaks peel from the Fenmother's flanks. Beneath",
+        "the poison, hints of blue-white luminescence appear."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_cleansing_003",
+      "speaker": "torren",
+      "lines": [
+        "She's fighting it. She's trying to help."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_cleansing_004",
+      "speaker": "narrator",
+      "lines": [
+        "The corruption recedes nearly completely. Grey",
+        "coloration fades from the Fenmother's translucent body."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "fenmother_cleansing_005",
+      "speaker": "narrator",
+      "lines": [
+        "Light floods the hollow. The corruption lifts. The",
+        "Fenmother opens her eyes — clear, golden, grateful."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
