@@ -99,7 +99,7 @@ Add a dialogue trigger near the Ember Vein entrance on the overworld:
 - Position: near from_ember_vein marker (~848, 528)
 - `required_flag = "vaelith_ember_vein"`
 - `flag = "vaelith_scene_complete"` (one-shot)
-- `dialogue_scene_id = "scene_2_vaelith_encounter"`
+- `dialogue_scene_id = "vaelith_ember_vein"`
 
 ### Scene 3: Ironmouth Escape (Placeholder)
 
@@ -107,7 +107,7 @@ Add a dialogue trigger between Ember Vein and the main overworld:
 - Position: ~(700, 500) — south of Ember Vein
 - `required_flag = "vaelith_scene_complete"`
 - `flag = "carradan_ambush_survived"`
-- `dialogue_scene_id = "scene_3_ironmouth_escape"`
+- `dialogue_scene_id = "ironmouth_escape"`
 - This is a STUB — full Scene 3 with Ironmouth map is Phase B2
 
 ### Scene 4: Dawn March
@@ -116,36 +116,35 @@ Add a dialogue trigger between Ironmouth and Roothollow:
 - Position: ~(600, 480) — midway on the overworld
 - `required_flag = "carradan_ambush_survived"`
 - `flag = "opening_credits_seen"`
-- `dialogue_scene_id = "scene_4_dawn_march"`
+- `dialogue_scene_id = "dawn_march"`
 
 ---
 
 ## 5. Dialogue Data Files
 
-### scene_2_vaelith_encounter.json (NEW)
+Uses existing dialogue files from gap 1.8 (dialogue parser):
 
-Canonical text from script/act-i.md Scene 2. Key lines:
+### vaelith_ember_vein.json (EXISTING)
+
+Canonical text from script/act-i.md Scene 2 (16 entries). Key lines:
 - Vaelith: "If I wanted to stop you, I wouldn't have waited up here"
 - Vaelith: "What a fragile little thing it is to build hope around"
 - Vaelith calls Cael by name without introduction
 - Vaelith: "Do take care of yourself, Cael"
 
-### scene_3_ironmouth_escape.json (NEW — STUB)
+### ironmouth_escape.json (EXISTING)
 
-Abbreviated version of Scene 3 for B1. Key lines:
+Full Scene 3 dialogue (15 entries). Key lines:
 - Lira: "Patrol passes in forty seconds. You came from the mine?"
 - Sable: "I was definitely not looting supplies"
-- Narrator: "Lira and Sable have joined the party"
+- Party joins handled by flag system, not dialogue
 
-Full Scene 3 with Ironmouth map combat deferred to B2.
+### dawn_march.json (EXISTING)
 
-### scene_4_dawn_march.json (NEW)
-
-Canonical text from script/act-i.md Scene 4. Key lines:
+Scene 4 walk dialogue (12 entries) with front/back group interleaving:
 - Cael: "Those miners... they just stopped"
 - Sable: "That thing in the satchel"
 - Lira: "Don't ask"
-- Title card reference (text only — visual credits deferred to B2)
 
 ---
 
