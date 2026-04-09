@@ -419,6 +419,9 @@ func _get_party_avg_level() -> int:
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player:
 		return
+	var req_flag: String = area.get_meta("required_flag", "")
+	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
+		return
 	var tgt: String = area.get_meta("target_map", "")
 	if tgt != "":
 		_transition_to_map(tgt, area.get_meta("target_spawn", ""))
