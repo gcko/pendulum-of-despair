@@ -965,11 +965,28 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [ ] Encounter data exists (fenmothers_hollow.json)
 - [ ] New enemy types (marsh_serpent, drowned_bones, ley_jellyfish, polluted_elemental)
 
-**Phase B: Opening Sequence (NOT STARTED)**
-- [ ] Ironmouth outpost map
-- [ ] Ember Vein F3 (Ancient Ruin floor, puzzles)
-- [ ] Scenes 1-4 (tutorial, Vaelith, Lira+Sable join, Dawn March credits)
-- [ ] Party starts with Edren+Cael only, others join during Act I
+**Phase B1: Party Assembly + Game Start (COMPLETE — 2026-04-09)**
+- [x] Party starts with Edren+Cael only (initialize_new_game unchanged)
+- [x] Lira+Sable join via carradan_ambush_survived flag in _check_party_joining_flags
+- [x] Lira+Sable added to STARTING_EQUIPMENT (empty — player equips)
+- [x] Scene 2 dialogue trigger on overworld (Vaelith encounter, requires vaelith_ember_vein)
+- [x] Scene 3 dialogue trigger on overworld (Ironmouth escape stub, sets carradan_ambush_survived)
+- [x] Scene 4 dialogue trigger on overworld (Dawn March, requires carradan_ambush_survived)
+- [x] Dialogue data uses existing files: vaelith_ember_vein.json, ironmouth_escape.json, dawn_march.json
+- [x] Overworld label for Ironmouth area
+- [x] Integration tests (test_opening_sequence.gd, ~20 tests)
+- [x] Design spec: docs/superpowers/specs/2026-04-09-opening-sequence-b1-design.md
+
+**Phase B2: Ironmouth + F3 + Full Scenes (NOT STARTED)**
+- [ ] Ironmouth outpost map (.tscn with NPCs, Forgewright crates)
+- [ ] Ember Vein F3 (Ancient Ruin floor with geometric puzzles)
+- [ ] Full Scene 1 tutorial dialogue (all 1a-1e beats with combat)
+- [ ] Full Scene 3 Ironmouth escape (combat sequence with soldiers)
+- [ ] Opening credits visual sequence (title card, character names)
+- [ ] Dawn March forward-only walk mechanics
+- [ ] Arcanite gear preview (Edren's enhanced equipment that breaks)
+- [ ] Change new game start location from overworld to Ember Vein F1
+- [ ] Cael hidden stat spike (Pallor's first touch)
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
@@ -978,7 +995,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [ ] Act I finale flag: pendulum_to_capital
 
 **Notes:**
-- Party assembly now works: Edren+Cael at new game, Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6). Lira+Sable join deferred to Phase B (Scenes 3-4).
+- Party assembly now works: Edren+Cael at new game, Lira+Sable join via carradan_ambush_survived flag (Phase B1, PR #132), Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6).
 - Dialogue triggers use dialogue_scene_id metadata (loads from DataManager) instead of inline dialogue_data — scalable for large scenes.
 - required_flag metadata on triggers enables prerequisite flag checking (e.g., Scene 6 requires torren_joined).
 
