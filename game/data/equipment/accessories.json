@@ -666,6 +666,45 @@
 			"sell_price": null,
 			"acquired": "Boss Rush Tier 3",
 			"description": "Remember everything."
+		},
+		{
+			"id": "marsh_cloak",
+			"name": "Marsh Cloak",
+			"subcategory": "stat_boost",
+			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"effect": "+3 DEF, +3 MDEF",
+			"bonus_stats": {"def": 3, "mdef": 3},
+			"special": null,
+			"buy_price": null,
+			"sell_price": 100,
+			"acquired": "Fenmother's Hollow chest (F1)",
+			"description": "A mossy cloak woven from marsh fibers. Dampens physical and magical blows."
+		},
+		{
+			"id": "fenmothers_scale",
+			"name": "Fenmother's Scale",
+			"subcategory": "stat_boost",
+			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"effect": "+5 MDEF, water resistance",
+			"bonus_stats": {"mdef": 5},
+			"special": "Reduces water damage by 25%",
+			"buy_price": null,
+			"sell_price": 200,
+			"acquired": "Fenmother's Hollow chest (F2)",
+			"description": "A luminous scale shed by the Fenmother. Grants protection against water magic."
+		},
+		{
+			"id": "ancient_totem",
+			"name": "Ancient Totem",
+			"subcategory": "stat_boost",
+			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"effect": "+4 MAG, +2 MDEF",
+			"bonus_stats": {"mag": 4, "mdef": 2},
+			"special": null,
+			"buy_price": null,
+			"sell_price": 175,
+			"acquired": "Fenmother's Hollow chest (F2)",
+			"description": "A carved totem from the sunken temple, still humming with old magic."
 		}
 	]
 }
