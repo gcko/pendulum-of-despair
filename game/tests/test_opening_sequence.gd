@@ -181,9 +181,9 @@ func test_overworld_has_scene4_trigger() -> void:
 
 func test_scene_triggers_in_story_order() -> void:
 	var overworld: Node = _load_overworld()
-	var s2: Node = overworld.get_node_or_null("Entities/Scene2Trigger")
-	var s3: Node = overworld.get_node_or_null("Entities/Scene3Trigger")
-	var s4: Node = overworld.get_node_or_null("Entities/Scene4Trigger")
+	var s2: Node2D = overworld.get_node_or_null("Entities/Scene2Trigger") as Node2D
+	var s3: Node2D = overworld.get_node_or_null("Entities/Scene3Trigger") as Node2D
+	var s4: Node2D = overworld.get_node_or_null("Entities/Scene4Trigger") as Node2D
 	assert_not_null(s2, "scene 2 trigger should exist")
 	assert_not_null(s3, "scene 3 trigger should exist")
 	assert_not_null(s4, "scene 4 trigger should exist")
