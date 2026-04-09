@@ -15,13 +15,13 @@ var _swap_source: int = -1
 var _state: FormationState = FormationState.BROWSING
 
 @onready var _member_labels: Array[Label] = []
-@onready var _swap_label: Label = $SwapLabel
+@onready var _swap_label: Label = $Layout/HintPanel/SwapLabel
 
 
 func _ready() -> void:
 	_member_labels = []
 	for i: int in range(MAX_SLOTS):
-		var label: Label = get_node_or_null("MemberList/Member%d" % i)
+		var label: Label = get_node_or_null("Layout/MemberPanel/MemberList/Member%d" % i)
 		if label != null:
 			_member_labels.append(label)
 

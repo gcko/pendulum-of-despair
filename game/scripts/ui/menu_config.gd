@@ -68,15 +68,20 @@ var _reduce_was_on: bool = false
 
 @onready var _setting_labels: Array[Label] = []
 @onready var _value_labels: Array[Label] = []
-@onready var _preview_rect: ColorRect = $PreviewRect
+@onready var _preview_rect: ColorRect = $Layout/PreviewRect
+@onready var _scroll: ScrollContainer = $Layout/SettingsPanel/ScrollContainer
 
 
 func _ready() -> void:
 	_setting_labels = []
 	_value_labels = []
 	for i: int in range(SETTINGS.size()):
-		var sl: Label = get_node_or_null("SettingList/Name%d" % i)
-		var vl: Label = get_node_or_null("SettingList/Value%d" % i)
+		var sl: Label = get_node_or_null(
+			"Layout/SettingsPanel/ScrollContainer/SettingList/Name%d" % i
+		)
+		var vl: Label = get_node_or_null(
+			"Layout/SettingsPanel/ScrollContainer/SettingList/Value%d" % i
+		)
 		_setting_labels.append(sl)
 		_value_labels.append(vl)
 
@@ -84,6 +89,8 @@ func _ready() -> void:
 func open() -> void:
 	_config = PartyState.get_config().duplicate()
 	_cursor_index = 0
+	if _scroll != null:
+		_scroll.scroll_vertical = 0
 	# Load persisted pre-cascade values so restore works across re-opens
 	_pre_patience_atb = _config.get("_pre_patience_atb", "active")
 	_pre_patience_speed = _config.get("_pre_patience_speed", 3)
@@ -104,10 +111,12 @@ func handle_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("ui_down"):
 		_cursor_index = (_cursor_index + 1) % SETTINGS.size()
 		_update_display()
+		_scroll_to_selected()
 		return true
 	if event.is_action_pressed("ui_up"):
 		_cursor_index = (_cursor_index - 1 + SETTINGS.size()) % SETTINGS.size()
 		_update_display()
+		_scroll_to_selected()
 		return true
 	if event.is_action_pressed("ui_left"):
 		_adjust(-1)
@@ -251,6 +260,14 @@ func _is_setting_disabled(key: String) -> bool:
 	if reduce and key in ["screen_shake", "mode7_intensity", "flash_intensity", "transition_style"]:
 		return true
 	return false
+
+
+func _scroll_to_selected() -> void:
+	if _scroll == null or _cursor_index >= _setting_labels.size():
+		return
+	var label: Label = _setting_labels[_cursor_index]
+	if label != null:
+		_scroll.ensure_control_visible(label)
 
 
 func _update_display() -> void:

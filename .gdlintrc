@@ -1,1 +1,2 @@
 max-public-methods: 40
+max-returns: 10

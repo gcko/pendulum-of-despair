@@ -36,7 +36,9 @@ var _config_direct: bool = false
 @onready var _command_labels: Array[Label] = []
 @onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
-@onready var _char_cursor: Sprite2D = $CharCursor
+@onready var _main_panel: PanelContainer = $MainPanel
+@onready var _command_panel: PanelContainer = $CommandPanel
+@onready var _info_panel: PanelContainer = $InfoPanel
 @onready var _gold_label: Label = $InfoPanel/Margin/Layout/RightCol/GoldLabel
 @onready var _time_label: Label = $InfoPanel/Margin/Layout/RightCol/TimeLabel
 @onready var _location_label: Label = $InfoPanel/Margin/Layout/LocationLabel
@@ -61,7 +63,6 @@ func _ready() -> void:
 	for i: int in range(4):
 		var row: Control = get_node_or_null("MainPanel/Margin/Rows/Row%d" % i)
 		_party_rows.append(row)
-	_char_cursor.visible = false
 	_hide_all_sub_screens()
 	_refresh_party_data()
 	_update_display()
@@ -107,23 +108,24 @@ func _handle_command_input(event: InputEvent) -> void:
 func _handle_char_select_input(event: InputEvent) -> void:
 	if _active_party.is_empty():
 		if event.is_action_pressed("ui_cancel"):
-			_char_cursor.visible = false
+			_clear_char_highlight()
 			_state = MenuState.COMMAND
 			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_down"):
 		_char_index = (_char_index + 1) % _active_party.size()
-		_update_char_cursor()
+		_update_char_highlight()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_char_index = (_char_index - 1 + _active_party.size()) % _active_party.size()
-		_update_char_cursor()
+		_update_char_highlight()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
+		_clear_char_highlight()
 		_open_sub_screen_for_character()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
-		_char_cursor.visible = false
+		_clear_char_highlight()
 		_state = MenuState.COMMAND
 		get_viewport().set_input_as_handled()
 
@@ -136,8 +138,8 @@ func _handle_sub_screen_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 	if event.is_action_pressed("ui_cancel"):
-		_close_sub_screen()
 		get_viewport().set_input_as_handled()
+		_close_sub_screen()
 
 
 func _confirm_command() -> void:
@@ -152,8 +154,7 @@ func _confirm_command() -> void:
 	if cmd.get("char_select", false):
 		_state = MenuState.CHARACTER_SELECT
 		_char_index = 0
-		_char_cursor.visible = true
-		_update_char_cursor()
+		_update_char_highlight()
 		return
 	# Direct sub-screens (no character select)
 	match cmd_name:
@@ -176,7 +177,6 @@ func _open_sub_screen_for_character() -> void:
 		return
 	var character_id: String = _active_party[_char_index].get("character_id", "")
 	var cmd_name: String = COMMANDS[_command_index].get("name", "")
-	_char_cursor.visible = false
 	match cmd_name:
 		"Magic":
 			_open_sub_screen(_magic_screen)
@@ -198,6 +198,10 @@ func _open_sub_screen_for_character() -> void:
 
 func _open_sub_screen(screen: Control) -> void:
 	_hide_all_sub_screens()
+	_main_panel.visible = false
+	_command_panel.visible = false
+	_info_panel.visible = false
+	_cursor.visible = false
 	screen.visible = true
 	_active_sub_screen = screen
 	_state = MenuState.SUB_SCREEN
@@ -215,6 +219,10 @@ func _close_sub_screen() -> void:
 		get_viewport().set_input_as_handled()
 		GameManager.pop_overlay()
 		return
+	_main_panel.visible = true
+	_command_panel.visible = true
+	_info_panel.visible = true
+	_cursor.visible = true
 	_state = MenuState.COMMAND
 	_refresh_party_data()
 	_update_display()
@@ -312,11 +320,22 @@ func _update_party_row(slot: int, member: Dictionary) -> void:
 		mp_label.modulate = COLOR_MP
 
 
-func _update_char_cursor() -> void:
-	if _char_index >= _party_rows.size() or _party_rows[_char_index] == null:
-		return
-	var row: Control = _party_rows[_char_index]
-	_char_cursor.position = Vector2(row.position.x - 48, row.position.y + row.size.y / 2.0)
+func _clear_char_highlight() -> void:
+	for i: int in range(_party_rows.size()):
+		if _party_rows[i] == null:
+			continue
+		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
+		if name_lbl != null:
+			name_lbl.modulate = Color.WHITE
+
+
+func _update_char_highlight() -> void:
+	for i: int in range(_party_rows.size()):
+		if _party_rows[i] == null:
+			continue
+		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
+		if name_lbl != null:
+			name_lbl.modulate = COLOR_SELECTED if i == _char_index else Color.WHITE
 
 
 func _update_info_panel() -> void:

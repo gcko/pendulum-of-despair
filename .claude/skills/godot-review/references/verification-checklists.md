@@ -345,6 +345,10 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After adding/removing tests: remove hardcoded test counts from docs (use descriptive text)
 - [ ] After changing method behavior: update spec's method description
 - [ ] After changing scene config: update spec's collision/config tables
+- [ ] After renaming or removing a function/variable/file: `grep -r "old_name"` across ALL files including specs, plans, tests, and comments. Dead @onready vars and stale doc references are the #1 Copilot finding on PR #131 (7% catch rate).
+- [ ] After removing UI elements (sprites, labels): verify no @onready references remain and no .visible toggles reference the removed node
+- [ ] Verify filenames in spec/plan file maps match actual filenames in the repo (PR #131: menu_equipment.gd vs menu_equip.gd caused 5 Copilot comments)
+- [ ] Test assertions must be specific enough to not false-positive on unrelated content (PR #131: 'text = "Config"' matched CommandPanel label too)
 
 ### Default State Safety
 - [ ] Boolean state vars (`is_alive`, `is_ready`, etc.) default to the SAFE state (false/inactive), not the active state

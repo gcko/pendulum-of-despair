@@ -667,18 +667,18 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Exploration: Escape key opens menu overlay
 - [x] Shop buy/sell interface — buy-only via shop_overlay.gd (2026-04-07)
 
-**Phase 3: FF6-Style UI Polish (NOT STARTED — P1)**
-- [ ] All 9 sub-screens need FF6-style bordered panels (PanelContainer with border StyleBox)
-- [ ] Sub-screens should fully replace MainPanel content area, not overlay on top
-- [ ] Item screen: tabbed header + description + bordered item list
-- [ ] Config screen: setting name + value pairs in bordered box, contained within panel
-- [ ] Equipment screen: slot list + stat comparison in separate bordered boxes
-- [ ] Magic screen: character info + bordered spell grid
-- [ ] Formation screen: bordered member list with proper row/swap display
-- [ ] Status screen: bordered stat display + equipment summary
-- [ ] Abilities screen: bordered ability list per character
-- [ ] Reference: FF6 menu design (distinct bordered panels per sub-screen)
-- [ ] Viewport changed from 320x180 to 1280x720 (2026-04-08) — 4x camera zoom for game world, UI renders at native 1280x720. Main frame panels properly laid out, sub-screen content needs bordered containers.
+**Phase 3: FF6-Style UI Polish (COMPLETE — 2026-04-08)**
+- [x] All 7 sub-screens use FF6-style bordered panels (StyleBoxFlat with flat dark blue + border + shadow glow)
+- [x] Sub-screens fully replace MainPanel/CommandPanel/InfoPanel (hidden on open, restored on close)
+- [x] Item screen: TabPanel + DescPanel + ListPanel + TargetPanel
+- [x] Config screen: HeaderRow + SettingsPanel + FooterRow with desc/hints
+- [x] Equipment screen: ModePanel + SlotPanel + StatPanel + ItemListPanel
+- [x] Magic screen: DescPanel + CharPanel + SpellPanel (2-col grid)
+- [x] Formation screen: TitlePanel + MemberPanel + HintPanel
+- [x] Status screen: IdentityPanel + DetailRow (Stats + Equipment side-by-side)
+- [x] Abilities screen: DescPanel + CharPanel + AbilityPanel (2-col grid)
+- [x] Viewport: 1280x720 with 4x camera zoom, all UI at native resolution
+- [x] Design spec: docs/superpowers/specs/2026-04-08-menu-ui-polish-design.md
 
 **Notes:**
 - Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework

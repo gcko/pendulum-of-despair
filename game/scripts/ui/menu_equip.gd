@@ -1,6 +1,9 @@
 extends Control
 ## Equipment sub-screen: EQUIP / OPTIMUM / REMOVE / EMPTY modes.
 
+enum EquipMode { EQUIP, OPTIMUM, REMOVE, EMPTY }
+enum EquipState { MODE_SELECT, SLOT_SELECT, ITEM_SELECT }
+
 const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -12,9 +15,6 @@ const SLOT_DISPLAY: Array[String] = ["Weapon", "Head", "Body", "Access", "Crysta
 const STAT_NAMES: Array[String] = ["atk", "def", "mag", "mdef", "spd", "lck"]
 const STAT_DISPLAY: Array[String] = ["ATK", "DEF", "MAG", "MDEF", "SPD", "LCK"]
 
-enum EquipMode { EQUIP, OPTIMUM, REMOVE, EMPTY }
-enum EquipState { MODE_SELECT, SLOT_SELECT, ITEM_SELECT }
-
 var _mode: EquipMode = EquipMode.EQUIP
 var _state: EquipState = EquipState.MODE_SELECT
 var _slot_index: int = 0
@@ -25,35 +25,35 @@ var _available_items: Array[Dictionary] = []
 @onready var _mode_labels: Array[Label] = []
 @onready var _slot_labels: Array[Label] = []
 @onready var _stat_labels: Array[Label] = []
-@onready var _item_list: Control = $ItemList
+@onready var _item_list_panel: PanelContainer = $Layout/ItemListPanel
 @onready var _item_labels: Array[Label] = []
-@onready var _name_label: Label = $NameLabel
-@onready var _info_label: Label = $InfoLabel
+@onready var _name_label: Label = $Layout/SlotPanel/SlotRow/CharInfo/NameLabel
+@onready var _info_label: Label = $Layout/InfoLabel
 
 
 func _ready() -> void:
 	_mode_labels = []
 	for mode_name: String in ["EquipMode", "OptimumMode", "RemoveMode", "EmptyMode"]:
-		var label: Label = get_node_or_null("ModeBar/" + mode_name)
+		var label: Label = get_node_or_null("Layout/ModePanel/ModeBar/" + mode_name)
 		if label != null:
 			_mode_labels.append(label)
 	_slot_labels = []
 	for i: int in range(5):
-		var label: Label = get_node_or_null("SlotPanel/Slot%d" % i)
+		var label: Label = get_node_or_null("Layout/SlotPanel/SlotRow/Slots/Slot%d" % i)
 		if label != null:
 			_slot_labels.append(label)
 	_stat_labels = []
 	for i: int in range(6):
-		var label: Label = get_node_or_null("StatPanel/Stat%d" % i)
+		var label: Label = get_node_or_null("Layout/StatPanel/StatList/Stat%d" % i)
 		if label != null:
 			_stat_labels.append(label)
 	_item_labels = []
 	for i: int in range(10):
-		var label: Label = get_node_or_null("ItemList/Item%d" % i)
+		var label: Label = get_node_or_null("Layout/ItemListPanel/ItemList/Item%d" % i)
 		if label != null:
 			_item_labels.append(label)
-	if _item_list != null:
-		_item_list.visible = false
+	if _item_list_panel != null:
+		_item_list_panel.visible = false
 
 
 func open(character_id: String) -> void:
@@ -62,14 +62,14 @@ func open(character_id: String) -> void:
 	_state = EquipState.MODE_SELECT
 	_slot_index = 0
 	_item_index = 0
-	if _item_list != null:
-		_item_list.visible = false
+	if _item_list_panel != null:
+		_item_list_panel.visible = false
 	_update_display()
 
 
 func close() -> void:
-	if _item_list != null:
-		_item_list.visible = false
+	if _item_list_panel != null:
+		_item_list_panel.visible = false
 
 
 func handle_input(event: InputEvent) -> bool:
@@ -135,7 +135,7 @@ func _handle_item_input(event: InputEvent) -> bool:
 		_confirm_item()
 		return true
 	if event.is_action_pressed("ui_cancel"):
-		_item_list.visible = false
+		_item_list_panel.visible = false
 		_state = EquipState.SLOT_SELECT
 		_update_display()
 		return true
@@ -170,7 +170,7 @@ func _confirm_slot() -> void:
 	# EQUIP mode — show available items
 	_available_items = PartyState.get_equippable_for_slot(_character_id, SLOT_NAMES[_slot_index])
 	_item_index = 0
-	_item_list.visible = true
+	_item_list_panel.visible = true
 	_state = EquipState.ITEM_SELECT
 	_update_item_display()
 	_update_stat_comparison()
@@ -185,7 +185,7 @@ func _confirm_item() -> void:
 		if equip_idx < _available_items.size():
 			var equip_id: String = _available_items[equip_idx].get("id", "")
 			PartyState.equip_item(_character_id, SLOT_NAMES[_slot_index], equip_id)
-	_item_list.visible = false
+	_item_list_panel.visible = false
 	_state = EquipState.SLOT_SELECT
 	_update_display()
 

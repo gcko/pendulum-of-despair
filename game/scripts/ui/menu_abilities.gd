@@ -13,12 +13,12 @@ var _abilities: Array = []
 var _cursor: int = 0
 var _scroll_offset: int = 0
 
-@onready var _desc_label: Label = $DescLabel
-@onready var _name_label: Label = $CharInfo/NameLabel
-@onready var _lv_label: Label = $CharInfo/LvLabel
-@onready var _resource_label: Label = $CharInfo/ResourceLabel
-@onready var _left_col: VBoxContainer = $AbilityGrid/LeftCol
-@onready var _right_col: VBoxContainer = $AbilityGrid/RightCol
+@onready var _desc_label: Label = $Layout/DescPanel/DescLabel
+@onready var _name_label: Label = $Layout/CharPanel/CharInfo/NameLabel
+@onready var _lv_label: Label = $Layout/CharPanel/CharInfo/LvLabel
+@onready var _resource_label: Label = $Layout/CharPanel/CharInfo/ResourceLabel
+@onready var _left_col: VBoxContainer = $Layout/AbilityPanel/AbilityGrid/LeftCol
+@onready var _right_col: VBoxContainer = $Layout/AbilityPanel/AbilityGrid/RightCol
 @onready var _ability_labels: Array[Label] = []
 
 
