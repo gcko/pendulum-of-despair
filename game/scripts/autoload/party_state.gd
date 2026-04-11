@@ -119,7 +119,8 @@ func load_from_save(data: Dictionary) -> void:
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
-	ley_crystals = data.get("ley_crystals", {})
+	var lc_data: Variant = data.get("ley_crystals", {})
+	ley_crystals = lc_data as Dictionary if lc_data is Dictionary else {}
 
 
 func build_save_data() -> Dictionary:
@@ -221,6 +222,7 @@ func get_collected_crystals() -> Array[String]:
 	var result: Array[String] = []
 	for key: String in ley_crystals:
 		result.append(key)
+	result.sort()
 	return result
 
 

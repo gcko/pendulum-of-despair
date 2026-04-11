@@ -506,9 +506,12 @@ func _distribute_crystal_xp(xp_per_member: int) -> void:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	for idx: Variant in active:
-		if not (idx is int) or (idx as int) >= PartyState.members.size():
+		if not (idx is int or idx is float):
 			continue
-		var m: Dictionary = PartyState.members[idx as int]
+		var member_index: int = int(idx)
+		if member_index < 0 or member_index >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[member_index]
 		var cid: String = m.get("equipment", {}).get("crystal", "")
 		if not cid.is_empty():
 			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))

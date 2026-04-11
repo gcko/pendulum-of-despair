@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/ui/menu_magic.gd" id="6"]
 [ext_resource type="Script" path="res://scripts/ui/menu_abilities.gd" id="7"]
 [ext_resource type="Script" path="res://scripts/ui/menu_formation.gd" id="8"]
-[ext_resource type="Script" path="res://scripts/ui/menu_ley_crystal.gd" id="menu_ley_crystal"]
+[ext_resource type="Script" path="res://scripts/ui/menu_ley_crystal.gd" id="9"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_ff6_window"]
 bg_color = Color(0.11, 0.11, 0.31, 1)
@@ -1018,7 +1018,7 @@ text = ""
 
 [node name="CrystalScreen" type="Control" parent="SubScreen"]
 visible = false
-script = ExtResource("menu_ley_crystal")
+script = ExtResource("9")
 offset_right = 1280.0
 offset_bottom = 720.0
 
