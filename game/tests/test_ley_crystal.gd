@@ -234,6 +234,48 @@ func test_equip_crystal_emits_signal() -> void:
 	assert_signal_emitted(PartyState, "equipment_changed")
 
 
+# --- Stat Bonus Integration ---
+
+
+func test_crystal_stat_bonus_included_in_equipment_bonus() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	var bonus_before: int = PartyState.get_equipment_bonus("edren", "atk")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var bonus_after: int = PartyState.get_equipment_bonus("edren", "atk")
+	assert_gt(bonus_after, bonus_before, "crystal ATK bonus should increase equipment bonus")
+
+
+func test_unequip_slot_crystal_redirects_to_unequip_crystal() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var equip_before: int = PartyState.owned_equipment.size()
+	PartyState.unequip_slot("edren", "crystal")
+	var m: Dictionary = PartyState.get_member("edren")
+	assert_eq(
+		m.get("equipment", {}).get("crystal", ""),
+		"",
+		"unequip_slot with crystal should clear the crystal slot"
+	)
+	assert_eq(
+		PartyState.owned_equipment.size(),
+		equip_before,
+		"unequip_slot(crystal) should NOT add to owned_equipment"
+	)
+
+
+func test_hp_per_level_crystal_bonus() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("lifestone")
+	var hp_before: int = PartyState.get_equipment_bonus("edren", "hp")
+	PartyState.equip_crystal("edren", "lifestone")
+	var hp_after: int = PartyState.get_equipment_bonus("edren", "hp")
+	assert_gt(
+		hp_after, hp_before, "lifestone hp_per_level bonus should increase HP equipment bonus"
+	)
+
+
 # --- Scene Structure ---
 
 

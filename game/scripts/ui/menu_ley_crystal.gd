@@ -419,7 +419,8 @@ func _build_stat_comparison(crystal_id: String, bonus: Dictionary) -> String:
 		var current_level: int = current_runtime.get("level", 1)
 		var current_level_bonuses: Array = current_static.get("level_bonuses", [])
 		if current_level_bonuses.size() >= current_level:
-			current_bonuses = current_level_bonuses[current_level - 1]
+			var entry: Variant = current_level_bonuses[current_level - 1]
+			current_bonuses = entry as Dictionary if entry is Dictionary else {}
 	for i: int in range(STAT_KEYS.size()):
 		var key: String = STAT_KEYS[i]
 		var new_val: int = int(bonus.get(key, 0))

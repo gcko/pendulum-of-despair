@@ -270,7 +270,8 @@ func get_equipment_bonus(character_id: String, stat: String) -> int:
 	# Crystal bonuses come from ley_crystals data, not owned_equipment
 	var crystal_id: String = equip.get("crystal", "")
 	if not crystal_id.is_empty():
-		total += _get_crystal_stat_bonus(crystal_id, stat)
+		var char_level: int = m.get("level", 1)
+		total += get_crystal_stat_bonus(crystal_id, stat, char_level)
 	return total
 
 
@@ -516,7 +517,8 @@ func _remove_owned_equipment(equipment_id: String) -> void:
 
 
 ## Get a crystal's stat bonus at its current level. Reads level_bonuses from static data.
-func _get_crystal_stat_bonus(crystal_id: String, stat: String) -> int:
+## For hp/mp, also includes hp_per_level/mp_per_level scaled by character level.
+func get_crystal_stat_bonus(crystal_id: String, stat: String, char_level: int = 1) -> int:
 	var runtime: Dictionary = get_crystal_state(crystal_id)
 	if runtime.is_empty():
 		return 0
@@ -528,7 +530,12 @@ func _get_crystal_stat_bonus(crystal_id: String, stat: String) -> int:
 	var bonus: Dictionary = (
 		level_bonuses[level - 1] if level_bonuses[level - 1] is Dictionary else {}
 	)
-	return int(bonus.get(stat, 0))
+	var total: int = int(bonus.get(stat, 0))
+	if stat == "hp":
+		total += int(bonus.get("hp_per_level", 0)) * char_level
+	elif stat == "mp":
+		total += int(bonus.get("mp_per_level", 0)) * char_level
+	return total
 
 
 func _recalculate_max_hp_mp(character_id: String) -> void:
