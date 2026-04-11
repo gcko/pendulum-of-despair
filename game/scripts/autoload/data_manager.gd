@@ -170,6 +170,27 @@ func load_dialogue(scene_id: String) -> Dictionary:
 	return {}
 
 
+## Load all Ley Crystal static data. Returns the "crystals" array.
+func load_ley_crystals() -> Array:
+	var path: String = "res://data/ley_crystals.json"
+	if not FileAccess.file_exists(path):
+		push_warning("DataManager: Ley crystal file not found: %s" % path)
+		return []
+	var data: Variant = load_json(path)
+	if data is Dictionary and data.has("crystals"):
+		return data["crystals"]
+	return []
+
+
+## Get a single Ley Crystal's static data by ID. Returns empty dict if not found.
+func get_ley_crystal(crystal_id: String) -> Dictionary:
+	var crystals: Array = load_ley_crystals()
+	for entry: Variant in crystals:
+		if entry is Dictionary and (entry as Dictionary).get("id", "") == crystal_id:
+			return entry as Dictionary
+	return {}
+
+
 ## Load crafting data (devices or recipes). Returns empty dict if missing.
 func load_crafting(crafting_type: String) -> Variant:
 	var path: String = "res://data/crafting/%s.json" % crafting_type
