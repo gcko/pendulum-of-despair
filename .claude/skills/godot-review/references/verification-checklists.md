@@ -116,6 +116,14 @@ Reference for all review agents. Check every applicable item.
 - [ ] Any formula ported from a reference (SNES color format, damage formula) must be verified against known input/output pairs from the source
 - [ ] GDScript `/` operator yields float, not int. When integer division is intended in a function returning `-> int`, wrap with `int()` or use explicit `floori()`. (PR #130: `total / members.size()` returned float, caused implicit truncation warning)
 
+### JSON Save Data Type Coercion (from Copilot PR #134 gap analysis)
+- [ ] Formation indices from JSON saves are parsed as `float`, not `int`. Any code iterating formation active/reserve arrays must accept both: `if not (idx is int or idx is float): continue` then `int(idx)`. Checking only `is int` silently skips all members after a save/load cycle.
+- [ ] Dictionary keys from `ley_crystals`, `event_flags`, or any user-persisted dict have **unstable iteration order**. If UI display order matters, sort the keys before returning (e.g., `result.sort()`).
+- [ ] `data.get("key", {})` returns the stored value even if it's the wrong type (e.g., Array instead of Dictionary). Always type-check: `var val: Variant = data.get("key", {}); var d: Dictionary = val as Dictionary if val is Dictionary else {}`.
+
+### Scene File Format (from Copilot PR #134 gap analysis)
+- [ ] `ext_resource` ids in .tscn files must be numeric strings ("1", "2", ...) matching the existing pattern. Alphanumeric ids (e.g., "menu_ley_crystal") risk parse failures in some Godot versions. Use the next sequential numeric id.
+
 ### GDScript Runtime Safety (from PR #120 manual testing)
 - [ ] `get_viewport()` returns null after `change_scene_to_file()` queues current scene for deletion. NEVER call `get_viewport().set_input_as_handled()` after any method that may trigger a scene swap (`change_core_state`, `change_scene_to_file`). Remove or guard with null check.
 - [ ] Any code that runs AFTER a scene transition call (`change_core_state`, `pop_overlay`) may execute on a freed/freeing node. Move transition calls to the END of the function, never follow with member access.
