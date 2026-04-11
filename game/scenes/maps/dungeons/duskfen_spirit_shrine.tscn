@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
+[ext_resource type="PackedScene" path="res://scenes/entities/save_point.tscn" id="2_save"]
+[ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="3_npc"]
+
+[sub_resource type="RectangleShape2D" id="Shape_transition"]
+size = Vector2(32, 16)
+
+[node name="DuskfenSpiritShrine" type="Node2D"]
+metadata/map_id = "dungeons/duskfen_spirit_shrine"
+metadata/dungeon_id = "duskfen"
+metadata/location_name = "Duskfen Spirit Shrine"
+metadata/auto_sequence = "caden_binding"
+metadata/auto_sequence_flag = "caden_binding_complete"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_tileset")
+tile_map_data = PackedInt32Array(0, 10, 0, 1, 10, 0, 2, 10, 0, 3, 10, 0, 4, 10, 0, 5, 10, 0, 6, 10, 0, 7, 10, 0, 8, 10, 0, 9, 10, 0, 10, 10, 0, 11, 10, 0, 12, 10, 0, 13, 10, 0, 14, 10, 0, 15, 10, 0, 65536, 10, 0, 65537, 10, 0, 65538, 10, 0, 65539, 10, 0, 65540, 10, 0, 65541, 10, 0, 65542, 10, 0, 65543, 10, 0, 65544, 10, 0, 65545, 10, 0, 65546, 10, 0, 65547, 10, 0, 65548, 10, 0, 65549, 10, 0, 65550, 10, 0, 65551, 10, 0, 131072, 10, 0, 131073, 10, 0, 131074, 10, 0, 131075, 10, 0, 131076, 10, 0, 131077, 10, 0, 131078, 10, 0, 131079, 10, 0, 131080, 10, 0, 131081, 10, 0, 131082, 10, 0, 131083, 10, 0, 131084, 10, 0, 131085, 10, 0, 131086, 10, 0, 131087, 10, 0, 196608, 10, 0, 196609, 10, 0, 196610, 10, 0, 196611, 10, 0, 196612, 10, 0, 196613, 10, 0, 196614, 10, 0, 196615, 10, 0, 196616, 10, 0, 196617, 10, 0, 196618, 10, 0, 196619, 10, 0, 196620, 10, 0, 196621, 10, 0, 196622, 10, 0, 196623, 10, 0, 262144, 10, 0, 262145, 10, 0, 262146, 10, 0, 262147, 10, 0, 262148, 10, 0, 262149, 10, 0, 262150, 10, 0, 262151, 10, 0, 262152, 10, 0, 262153, 10, 0, 262154, 10, 0, 262155, 10, 0, 262156, 10, 0, 262157, 10, 0, 262158, 10, 0, 262159, 10, 0, 327680, 10, 0, 327681, 10, 0, 327682, 10, 0, 327683, 10, 0, 327684, 10, 0, 327685, 10, 0, 327686, 10, 0, 327687, 10, 0, 327688, 10, 0, 327689, 10, 0, 327690, 10, 0, 327691, 10, 0, 327692, 10, 0, 327693, 10, 0, 327694, 10, 0, 327695, 10, 0, 393216, 10, 0, 393217, 10, 0, 393218, 10, 0, 393219, 10, 0, 393220, 10, 0, 393221, 10, 0, 393222, 10, 0, 393223, 10, 0, 393224, 10, 0, 393225, 10, 0, 393226, 10, 0, 393227, 10, 0, 393228, 10, 0, 393229, 10, 0, 393230, 10, 0, 393231, 10, 0, 458752, 10, 0, 458753, 10, 0, 458754, 10, 0, 458755, 10, 0, 458756, 10, 0, 458757, 10, 0, 458758, 10, 0, 458759, 10, 0, 458760, 10, 0, 458761, 10, 0, 458762, 10, 0, 458763, 10, 0, 458764, 10, 0, 458765, 10, 0, 458766, 10, 0, 458767, 10, 0, 524288, 10, 0, 524289, 10, 0, 524290, 10, 0, 524291, 10, 0, 524292, 10, 0, 524293, 10, 0, 524294, 10, 0, 524295, 10, 0, 524296, 10, 0, 524297, 10, 0, 524298, 10, 0, 524299, 10, 0, 524300, 10, 0, 524301, 10, 0, 524302, 10, 0, 524303, 10, 0, 589824, 10, 0, 589825, 10, 0, 589826, 10, 0, 589827, 10, 0, 589828, 10, 0, 589829, 10, 0, 589830, 10, 0, 589831, 10, 0, 589832, 10, 0, 589833, 10, 0, 589834, 10, 0, 589835, 10, 0, 589836, 10, 0, 589837, 10, 0, 589838, 10, 0, 589839, 10, 0, 655360, 10, 0, 655361, 10, 0, 655362, 10, 0, 655363, 10, 0, 655364, 10, 0, 655365, 10, 0, 655366, 10, 0, 655367, 10, 0, 655368, 10, 0, 655369, 10, 0, 655370, 10, 0, 655371, 10, 0, 655372, 10, 0, 655373, 10, 0, 655374, 10, 0, 655375, 10, 0, 720896, 10, 0, 720897, 10, 0, 720898, 10, 0, 720899, 10, 0, 720900, 10, 0, 720901, 10, 0, 720902, 10, 0, 720903, 10, 0, 720904, 10, 0, 720905, 10, 0, 720906, 10, 0, 720907, 10, 0, 720908, 10, 0, 720909, 10, 0, 720910, 10, 0, 720911, 10, 0)
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="SavePoint" parent="Entities" instance=ExtResource("2_save")]
+position = Vector2(64, 48)
+metadata/save_point_id = "duskfen_shrine_save"
+
+[node name="CadenPostEvent" parent="Entities" instance=ExtResource("3_npc")]
+position = Vector2(128, 80)
+visible = false
+metadata/npc_id = "caden_duskfen"
+
+[node name="Transitions" type="Node2D" parent="."]
+
+[node name="OverworldExit" type="Area2D" parent="Transitions"]
+position = Vector2(128, 176)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "overworld"
+metadata/target_spawn = "from_duskfen_shrine"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/OverworldExit"]
+shape = SubResource("Shape_transition")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(128, 32)
+
+[node name="from_spirit_path" type="Marker2D" parent="."]
+position = Vector2(128, 32)
+
+[node name="from_overworld" type="Marker2D" parent="."]
+position = Vector2(128, 160)
+
+[node name="CadenSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(288, 80)
