@@ -224,7 +224,7 @@
       "subcategory": "story_item",
       "description": "A blessing granted by the Fenmother for safe passage.",
       "auto_use": false,
-      "acquired_from": "Corrupted Fenmother",
+      "acquired_from": "Caden at Duskfen Spirit Shrine",
       "plot_effect": "Safe passage through Fenmother's domain"
     },
     {

@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 ## Water level zone — blocks or reveals paths based on water wheel state.
 
 var _dungeon_id: String = ""

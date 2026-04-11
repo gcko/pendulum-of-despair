@@ -5,11 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
 size = Vector2(16, 16)
 
-[node name="WaterZone" type="Area2D"]
+[node name="WaterZone" type="StaticBody2D"]
 collision_layer = 1
 collision_mask = 0
-monitoring = false
-monitorable = true
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -404,6 +404,16 @@ func add_equipment(eid: String) -> void:
 	owned_equipment.append({"id": _generate_inst_id(eid), "equipment_id": eid})
 
 
+func add_key_item(item_id: String) -> void:
+	var key_items: Variant = inventory.get("key_items", [])
+	if not key_items is Array:
+		key_items = []
+	if item_id not in key_items:
+		key_items.append(item_id)
+		inventory["key_items"] = key_items
+		inventory_changed.emit()
+
+
 func add_item(item_id: String, quantity: int) -> void:
 	if quantity <= 0:
 		return

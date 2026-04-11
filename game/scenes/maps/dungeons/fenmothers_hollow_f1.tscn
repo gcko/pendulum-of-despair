@@ -64,6 +64,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 position = Vector2(224, 256)
 metadata/chest_id = "fenmothers_hollow_spirit_vessel"
 metadata/item_id = "spirit_vessel"
+metadata/is_key_item = true
 
 [node name="PureSpring1" parent="Entities" instance=ExtResource("5_pure_spring")]
 position = Vector2(256, 256)
