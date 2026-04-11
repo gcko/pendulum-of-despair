@@ -970,7 +970,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Cleansing wave sequence: 4 sequential battles after boss HP reaches 0
 - [x] Flag-gated transitions (required_flag on Area2D, blocks F2→F3 until sentinel defeated)
 - [x] Flag-gated chests (required_flag on treasure_chest, blocks Fenmother's Blessing)
-- [x] 7 treasure chests (2 on F1, 3 on F2, 1 post-boss on F3, 1 secret room)
+- [x] 6 treasure chests (2 on F1, 3 on F2 incl. secret room, 1 post-boss on F3)
 - [x] 3 save points (one per floor)
 - [x] Overworld entry point with label and spawn marker
 - [x] Integration tests (test_fenmothers_hollow.gd, ~37 tests)

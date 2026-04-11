@@ -360,7 +360,7 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 			_enemies.append(new_enemy)
 			var eid: String = "enemy_%d" % (_enemies.size() - 1)
 			_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
-		message.emit("Corrupted Spawn emerge from the depths!")
+		message.emit("Corrupted Spawns emerge from the depths!")
 		enemy.tick_statuses()
 		return
 	if atype == "skip":
