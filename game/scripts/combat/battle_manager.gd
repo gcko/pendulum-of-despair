@@ -155,6 +155,7 @@ func _on_ui_command(command: Dictionary) -> void:
 		return
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
+	_turn_counter += 1
 	_state.tick_statuses(actor_id.replace("party_", "").to_int())
 	_check_end_conditions()
 
@@ -434,6 +435,15 @@ func _check_end_conditions() -> void:
 		_exit_battle("faint")
 
 
+func _count_ko_party_members() -> int:
+	var count: int = 0
+	for i: int in range(4):
+		var m: Dictionary = _state.get_member(i)
+		if not m.is_empty() and not m.get("is_alive", true):
+			count += 1
+	return count
+
+
 func _exit_battle(result: String) -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
@@ -445,6 +455,8 @@ func _exit_battle(result: String) -> void:
 		"earned_gold": _earned_gold,
 		"earned_drops": _earned_drops,
 		"boss_flag": _boss_flag,
+		"turn_count": _turn_counter,
+		"ko_count": _count_ko_party_members(),
 	}
 	if _wave_num >= 0:
 		t["wave_num"] = _wave_num

@@ -23,6 +23,9 @@ var character_data: Dictionary = {}
 ## Current facing direction for animation selection.
 var facing_direction: Vector2 = Vector2.DOWN
 
+## Whether player input is currently being processed.
+var _input_enabled: bool = true
+
 ## Last interactable that entered the Area2D (not necessarily nearest).
 var _current_interactable: Node2D = null
 
@@ -32,6 +35,8 @@ var _current_interactable: Node2D = null
 
 
 func _physics_process(_delta: float) -> void:
+	if not _input_enabled:
+		return
 	var direction: Vector2 = _get_input_direction()
 
 	if direction != Vector2.ZERO:
@@ -45,6 +50,11 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	# Snap to pixel grid — no sub-pixel positions.
 	position = position.round()
+
+
+## Enable or disable player input processing (for auto-walk scenes).
+func set_input_enabled(enabled: bool) -> void:
+	_input_enabled = enabled
 
 
 ## Initialize the character with data from DataManager.
@@ -116,6 +126,12 @@ func _load_placeholder_sprite() -> void:
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
+
+
+## Play a named animation if the AnimationPlayer has it.
+func play_animation(anim_name: String) -> void:
+	if _anim_player != null and _anim_player.has_animation(anim_name):
+		_anim_player.play(anim_name)
 
 
 ## Attempt to interact with the nearest interactable. Emits interaction_requested
