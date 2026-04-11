@@ -24,6 +24,7 @@ const CLEANSING_WAVES: Array = [
 	[
 		"ley_jellyfish",
 		"ley_jellyfish",
+		"ley_jellyfish",
 		"drowned_bones",
 		"drowned_bones",
 		"drowned_bones",
@@ -32,6 +33,8 @@ const CLEANSING_WAVES: Array = [
 	[
 		"polluted_elemental",
 		"polluted_elemental",
+		"marsh_serpent",
+		"marsh_serpent",
 		"marsh_serpent",
 		"marsh_serpent",
 		"ley_jellyfish",
@@ -593,6 +596,8 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
 		_auto_walk_tween.kill()
 		_auto_walk_tween = null
+		if _player != null:
+			_player.set_input_enabled(true)
 	if _arrival_tween != null and _arrival_tween.is_valid():
 		_arrival_tween.kill()
 		_arrival_tween = null
@@ -793,6 +798,13 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 			_player.position = origin as Vector2
 		else:
 			_player.position = data.get("position", Vector2(80, 90))
+	# Re-instantiate ritual meter lost during scene recreation
+	if _ritual_meter == null:
+		_ritual_meter = RITUAL_METER_SCENE.instantiate()
+		add_child(_ritual_meter)
+		var saved_val: float = data.get("ritual_meter_value", 100.0)
+		_ritual_meter.set_value(saved_val)
+		_ritual_meter.show_meter()
 	var next_wave: int = wave_num + 1
 	if next_wave > 3:
 		_complete_cleansing(data)
@@ -837,6 +849,7 @@ func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
 		"cleansing_origin_position", data.get("position", Vector2(80, 90))
 	)
 	var player_pos: Vector2 = _player.position if _player != null else origin_pos
+	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0
 	var transition: Dictionary = {
 		"encounter_group": CLEANSING_WAVES[wave_num],
 		"formation_type": "normal",
@@ -846,6 +859,7 @@ func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
 		"encounter_source": "cleansing_wave",
 		"wave_num": wave_num,
 		"cleansing_origin_position": origin_pos,
+		"ritual_meter_value": meter_val,
 	}
 	_transitioning = true
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
@@ -940,14 +954,17 @@ func _restore_torren_to_active() -> void:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	var reserve: Array = PartyState.formation.get("reserve", [])
+	var found: Variant = null
 	for r: Variant in reserve:
 		if (r is int or r is float) and int(r) == torren_idx:
-			reserve.erase(r)
-			if active.size() < 4:
-				active.append(torren_idx)
-			else:
-				reserve.append(torren_idx)
-			return
+			found = r
+			break
+	if found != null:
+		reserve.erase(found)
+		if active.size() < 4:
+			active.append(torren_idx)
+		else:
+			push_warning("Exploration: cannot restore Torren — active party full")
 
 
 func _find_member_index(character_id: String) -> int:

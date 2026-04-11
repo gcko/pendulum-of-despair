@@ -1808,7 +1808,7 @@ git commit -m "feat(engine): integrate ritual meter and poison pools into cleans
     {"speaker": "caden", "text": "She's free. Weakened, but free. The binding I'll place will protect her while she heals."},
     {"speaker": "torren", "text": "You came all the way from the Duskfen?"},
     {"speaker": "caden", "text": "The spirits carried me. They remember the paths even when the water forgets."},
-    {"speaker": "", "text": "Caden kneels beside the shrine and traces a pattern in the water. Light follows his fingertips.", "animation": [{"who": "caden", "anim": "kneel"}]},
+    {"speaker": "", "text": "Caden kneels beside the shrine and traces a pattern in the water. Light follows his fingertips.", "animation": [{"who": "caden", "anim": "head_down", "when": "before_line_0"}]},
     {"speaker": "caden", "text": "It's done. Take this — the Fenmother's Blessing. Her domain is yours to pass through freely."},
     {"speaker": "edren", "text": "Thank you, Caden."},
     {"speaker": "caden", "text": "Don't thank me. Thank her. She chose to trust you."}
