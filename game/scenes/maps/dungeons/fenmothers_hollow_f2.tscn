@@ -82,7 +82,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/target_map = "dungeons/fenmothers_hollow_f1"
-metadata/target_spawn = "PlayerSpawn"
+metadata/target_spawn = "from_f2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ToF1"]
 shape = SubResource("Shape_transition")

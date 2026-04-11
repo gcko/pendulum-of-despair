@@ -336,6 +336,7 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 		var aid: String = action.get("id", "")
 		if aid == "spawn_adds":
 			_fm_spawned_adds = true
+			_fm_surface_count += 1
 		elif aid == "start_dive":
 			_fm_diving = true
 			_fm_surface_count = 0

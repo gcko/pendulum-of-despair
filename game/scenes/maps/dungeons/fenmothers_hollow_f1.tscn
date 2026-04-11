@@ -66,3 +66,9 @@ shape = SubResource("Shape_transition")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(48, 48)
+
+[node name="from_overworld" type="Marker2D" parent="."]
+position = Vector2(48, 48)
+
+[node name="from_f2" type="Marker2D" parent="."]
+position = Vector2(352, 416)
