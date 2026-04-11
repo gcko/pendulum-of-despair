@@ -1,8 +1,8 @@
 extends RefCounted
 ## Enemy action selection for battle.
 ##
-## Weighted-random for regular enemies. Boss AI is a stub — scripted
-## behavior deferred to content gaps (4.1+).
+## Weighted-random for regular enemies. Scripted boss AI for
+## Vein Guardian, Drowned Sentinel, and Corrupted Fenmother.
 
 
 ## Select an action for a regular enemy.

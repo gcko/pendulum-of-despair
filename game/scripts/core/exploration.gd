@@ -652,4 +652,4 @@ func _revive_fallen_at_quarter_hp() -> void:
 		var current_hp: int = m.get("current_hp", 0)
 		if current_hp <= 0:
 			var max_hp: int = m.get("max_hp", 1)
-			m["current_hp"] = maxi(1, max_hp / 4)
+			m["current_hp"] = maxi(1, int(max_hp / 4))
