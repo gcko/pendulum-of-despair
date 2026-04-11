@@ -78,6 +78,7 @@ metadata/dungeon_id = "fenmothers_hollow"
 
 [node name="MosaicFlood1" parent="Entities" instance=ExtResource("6_water_zone")]
 position = Vector2(320, 192)
+metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_low"
 metadata/zone_type = "block"
 
@@ -86,6 +87,7 @@ shape = SubResource("Shape_wz_mosaic1")
 
 [node name="MosaicFlood2" parent="Entities" instance=ExtResource("6_water_zone")]
 position = Vector2(320, 192)
+metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_2_low"
 metadata/zone_type = "block"
 
@@ -94,6 +96,7 @@ shape = SubResource("Shape_wz_mosaic2")
 
 [node name="SecretRoom" parent="Entities" instance=ExtResource("6_water_zone")]
 position = Vector2(80, 48)
+metadata/dungeon_id = "fenmothers_hollow"
 metadata/active_when = "wheel_1_high,wheel_2_high,wheel_3_high"
 metadata/zone_type = "reveal"
 

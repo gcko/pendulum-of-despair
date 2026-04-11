@@ -1,311 +1,311 @@
 {
-	"items": [
-		{
-			"id": "mine_water_vial",
-			"name": "Mine Water Vial",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A vial of water from Ember Vein's depths.",
-			"auto_use": true,
-			"acquired_from": "Ember Vein F2 chest",
-			"trigger": "approach_dying_ember_crystal",
-			"quest_link": "ember_vein_f3_access"
-		},
-		{
-			"id": "archivists_codex",
-			"name": "Archivist's Codex",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A codex from the Archive of Ages, inscribed with ley door sigils.",
-			"auto_use": true,
-			"acquired_from": "Archive of Ages quest",
-			"trigger": "approach_sealed_ley_door",
-			"quest_link": "ley_depths_f5_forgotten_forge"
-		},
-		{
-			"id": "ironmark_tunnel_map",
-			"name": "Ironmark Tunnel Map",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A hand-drawn map showing a hidden passage into Ironmark Citadel.",
-			"auto_use": true,
-			"acquired_from": "Old Foreman's Office hidden compartment",
-			"trigger": "enter_ironmark_passage",
-			"quest_link": "ironmark_citadel"
-		},
-		{
-			"id": "ironmark_key",
-			"name": "Ironmark Key",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A heavy iron key bearing the Ironmark garrison seal.",
-			"auto_use": true,
-			"acquired_from": "Post-Kole, Axis Tower",
-			"trigger": "approach_sealed_armory",
-			"quest_link": "ironmark_armory"
-		},
-		{
-			"id": "forgewright_master_key",
-			"name": "Forgewright Master Key",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A master key from the Ashmark Factory, opening all Compact-era locks.",
-			"auto_use": true,
-			"acquired_from": "Ashmark Factory quest",
-			"trigger": "approach_compact_locked_door",
-			"quest_link": "all_compact_dungeons"
-		},
-		{
-			"id": "map_to_the_convergence",
-			"name": "Map to the Convergence",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A military map marking the location of the Convergence.",
-			"auto_use": true,
-			"acquired_from": "General Kole drop",
-			"trigger": "open_world_map",
-			"quest_link": "convergence_location"
-		},
-		{
-			"id": "catacomb_map",
-			"name": "Catacomb Map",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A fragile map revealing Valdris's hidden catacomb passages.",
-			"auto_use": true,
-			"acquired_from": "Undying Warden steal",
-			"trigger": "open_minimap_valdris",
-			"quest_link": "valdris_secret_passages"
-		},
-		{
-			"id": "broodchamber_map",
-			"name": "Broodchamber Map",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A pheromone-marked map showing Caldera's nest network.",
-			"auto_use": true,
-			"acquired_from": "Pallor Nest Mother steal",
-			"trigger": "open_map_caldera",
-			"quest_link": "caldera_nest_network"
-		},
-		{
-			"id": "keepers_index",
-			"name": "Keeper's Index",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A translation index for the Dry Well's pictographic script.",
-			"auto_use": true,
-			"acquired_from": "Archive Keeper drop",
-			"trigger": "approach_pictographic_text",
-			"quest_link": "dry_well_dictionary"
-		},
-		{
-			"id": "vein_guardians_core",
-			"name": "Vein Guardian's Core",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from the Vein Guardian.",
-			"auto_use": false,
-			"acquired_from": "Vein Guardian",
-			"dropped_by": "vein_guardian",
-			"flavor_text": "A crystalline core still warm with ember heat."
-		},
-		{
-			"id": "fenmothers_tear",
-			"name": "Fenmother's Tear",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from the Corrupted Fenmother.",
-			"auto_use": false,
-			"acquired_from": "Corrupted Fenmother",
-			"dropped_by": "corrupted_fenmother",
-			"flavor_text": "A single clear drop — the Fenmother's grief, crystallized."
-		},
-		{
-			"id": "operators_badge",
-			"name": "Operator's Badge",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from The Ironbound.",
-			"auto_use": false,
-			"acquired_from": "The Ironbound",
-			"dropped_by": "the_ironbound",
-			"flavor_text": "Tarnished name badge. The second operator's name is still legible."
-		},
-		{
-			"id": "caels_pendant",
-			"name": "Cael's Pendant",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from Cael.",
-			"auto_use": false,
-			"acquired_from": "Cael (Phase 1)",
-			"dropped_by": "cael_knight_of_despair_phase_1",
-			"flavor_text": "A locket with a pressed flower inside. Lira recognizes it."
-		},
-		{
-			"id": "caels_sword",
-			"name": "Cael's Sword",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from the Pallor Incarnate.",
-			"auto_use": false,
-			"acquired_from": "Pallor Incarnate",
-			"dropped_by": "the_pallor_incarnate",
-			"flavor_text": "The blade is cold. It will not rust."
-		},
-		{
-			"id": "vaeliths_quill",
-			"name": "Vaelith's Quill",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from Vaelith.",
-			"auto_use": false,
-			"acquired_from": "Vaelith",
-			"dropped_by": "vaelith_the_ashen_shepherd",
-			"flavor_text": "An 800-year-old scholar's quill. The ink is still wet."
-		},
-		{
-			"id": "lost_page",
-			"name": "Lost Page",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from The Index.",
-			"auto_use": false,
-			"acquired_from": "The Index",
-			"dropped_by": "the_index",
-			"flavor_text": "A single page from the catalogue. One name. One story."
-		},
-		{
-			"id": "grey_echo_shard",
-			"name": "Grey Echo Shard",
-			"category": "key_item",
-			"subcategory": "boss_memento",
-			"description": "A memento from the Pallor Echo.",
-			"auto_use": false,
-			"acquired_from": "Pallor Echo",
-			"dropped_by": "pallor_echo",
-			"flavor_text": "A fragment of someone Cael used to be."
-		},
-		{
-			"id": "boring_engine_schematic",
-			"name": "Boring Engine Schematic",
-			"category": "key_item",
-			"subcategory": "crafting_schematic",
-			"description": "A schematic for an advanced Forgewright weapon component.",
-			"auto_use": false,
-			"acquired_from": "Rail Tunnels East Tunnel secret room",
-			"recipe_unlocked": "advanced_forgewright_weapon_component"
-		},
-		{
-			"id": "forge_schematic",
-			"name": "Forge Schematic",
-			"category": "key_item",
-			"subcategory": "crafting_schematic",
-			"description": "A schematic required to forge the Arcanite Lance.",
-			"auto_use": false,
-			"acquired_from": "The Architect (steal)",
-			"recipe_unlocked": "arcanite_lance"
-		},
-		{
-			"id": "daels_ledger",
-			"name": "Dael's Ledger",
-			"category": "key_item",
-			"subcategory": "crafting_schematic",
-			"description": "Dael Corran's personal records documenting the extraction timeline and worker casualties.",
-			"auto_use": false,
-			"acquired_from": "Ashmark Factory Depths post-boss (The Fading Shifts quest)",
-			"recipe_unlocked": "liras_masterwork"
-		},
-		{
-			"id": "fenmothers_blessing",
-			"name": "Fenmother's Blessing",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A blessing granted by the Fenmother for safe passage.",
-			"auto_use": false,
-			"acquired_from": "Corrupted Fenmother",
-			"plot_effect": "Safe passage through Fenmother's domain"
-		},
-		{
-			"id": "compact_battle_standard",
-			"name": "Compact Battle Standard",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A war-torn banner from the Valdris Siege.",
-			"auto_use": false,
-			"acquired_from": "The Ashen Ram",
-			"plot_effect": "Proof of Valdris Siege victory"
-		},
-		{
-			"id": "pallor_laced_iron",
-			"name": "Pallor-Laced Iron",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A chunk of iron threaded with Pallor residue.",
-			"auto_use": false,
-			"acquired_from": "The Ashen Ram (steal)",
-			"plot_effect": "Evidence of Pallor in Compact war machines"
-		},
-		{
-			"id": "corrupted_tuning_fork",
-			"name": "Corrupted Tuning Fork",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A tuning fork warped by Ashmark's corruption.",
-			"auto_use": false,
-			"acquired_from": "The Forge Warden (steal)",
-			"plot_effect": "Links Ashmark corruption to Vaelith's broader plan"
-		},
-		{
-			"id": "caldera_employee_card",
-			"name": "Caldera Employee Card",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A Compact officer's employee card, pickpocketed by Sable.",
-			"auto_use": false,
-			"acquired_from": "Sable pickpockets from Compact officer (Caldera)",
-			"plot_effect": "25% discount at all Caldera shops"
-		},
-		{
-			"id": "valdris_crest",
-			"name": "Valdris Crest",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "The crest of Valdris, entrusted by Sir Aldric.",
-			"auto_use": false,
-			"acquired_from": "Sir Aldric, Oasis A (The Last Banner quest)",
-			"plot_effect": "Unlocks bonus dialogue in Edren's Pallor trial"
-		},
-		{
-			"id": "first_tree_seed",
-			"name": "First Tree Seed",
-			"category": "key_item",
-			"subcategory": "story_item",
-			"description": "A seed from the First Tree, found in the Ashgrove Undercroft.",
-			"auto_use": false,
-			"acquired_from": "Ashgrove Undercroft chest",
-			"plot_effect": "Used at Convergence meadow post-game to trigger planting scene"
-		},
-		{
-			"id": "spirit_vessel",
-			"name": "Spirit Vessel",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "An empty fenwood bowl lined with thin ley-crystal. It could hold sacred water.",
-			"auto_use": false,
-			"acquired_from": "Fenmother's Hollow F1 hidden alcove",
-			"quest_link": "fenmothers_hollow_spirit_plant"
-		},
-		{
-			"id": "spirit_vessel_filled",
-			"name": "Spirit Vessel (Filled)",
-			"category": "key_item",
-			"subcategory": "dungeon_access",
-			"description": "A fenwood bowl brimming with pure spring water. It glows faintly with spiritual energy.",
-			"auto_use": false,
-			"acquired_from": "Pure Spring in Fenmother's Hollow F1",
-			"quest_link": "fenmothers_hollow_spirit_plant"
-		}
-	]
+  "items": [
+    {
+      "id": "mine_water_vial",
+      "name": "Mine Water Vial",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A vial of water from Ember Vein's depths.",
+      "auto_use": true,
+      "acquired_from": "Ember Vein F2 chest",
+      "trigger": "approach_dying_ember_crystal",
+      "quest_link": "ember_vein_f3_access"
+    },
+    {
+      "id": "archivists_codex",
+      "name": "Archivist's Codex",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A codex from the Archive of Ages, inscribed with ley door sigils.",
+      "auto_use": true,
+      "acquired_from": "Archive of Ages quest",
+      "trigger": "approach_sealed_ley_door",
+      "quest_link": "ley_depths_f5_forgotten_forge"
+    },
+    {
+      "id": "ironmark_tunnel_map",
+      "name": "Ironmark Tunnel Map",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A hand-drawn map showing a hidden passage into Ironmark Citadel.",
+      "auto_use": true,
+      "acquired_from": "Old Foreman's Office hidden compartment",
+      "trigger": "enter_ironmark_passage",
+      "quest_link": "ironmark_citadel"
+    },
+    {
+      "id": "ironmark_key",
+      "name": "Ironmark Key",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A heavy iron key bearing the Ironmark garrison seal.",
+      "auto_use": true,
+      "acquired_from": "Post-Kole, Axis Tower",
+      "trigger": "approach_sealed_armory",
+      "quest_link": "ironmark_armory"
+    },
+    {
+      "id": "forgewright_master_key",
+      "name": "Forgewright Master Key",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A master key from the Ashmark Factory, opening all Compact-era locks.",
+      "auto_use": true,
+      "acquired_from": "Ashmark Factory quest",
+      "trigger": "approach_compact_locked_door",
+      "quest_link": "all_compact_dungeons"
+    },
+    {
+      "id": "map_to_the_convergence",
+      "name": "Map to the Convergence",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A military map marking the location of the Convergence.",
+      "auto_use": true,
+      "acquired_from": "General Kole drop",
+      "trigger": "open_world_map",
+      "quest_link": "convergence_location"
+    },
+    {
+      "id": "catacomb_map",
+      "name": "Catacomb Map",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A fragile map revealing Valdris's hidden catacomb passages.",
+      "auto_use": true,
+      "acquired_from": "Undying Warden steal",
+      "trigger": "open_minimap_valdris",
+      "quest_link": "valdris_secret_passages"
+    },
+    {
+      "id": "broodchamber_map",
+      "name": "Broodchamber Map",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A pheromone-marked map showing Caldera's nest network.",
+      "auto_use": true,
+      "acquired_from": "Pallor Nest Mother steal",
+      "trigger": "open_map_caldera",
+      "quest_link": "caldera_nest_network"
+    },
+    {
+      "id": "keepers_index",
+      "name": "Keeper's Index",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A translation index for the Dry Well's pictographic script.",
+      "auto_use": true,
+      "acquired_from": "Archive Keeper drop",
+      "trigger": "approach_pictographic_text",
+      "quest_link": "dry_well_dictionary"
+    },
+    {
+      "id": "vein_guardians_core",
+      "name": "Vein Guardian's Core",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from the Vein Guardian.",
+      "auto_use": false,
+      "acquired_from": "Vein Guardian",
+      "dropped_by": "vein_guardian",
+      "flavor_text": "A crystalline core still warm with ember heat."
+    },
+    {
+      "id": "fenmothers_tear",
+      "name": "Fenmother's Tear",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from the Corrupted Fenmother.",
+      "auto_use": false,
+      "acquired_from": "Corrupted Fenmother",
+      "dropped_by": "corrupted_fenmother",
+      "flavor_text": "A single clear drop — the Fenmother's grief, crystallized."
+    },
+    {
+      "id": "operators_badge",
+      "name": "Operator's Badge",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from The Ironbound.",
+      "auto_use": false,
+      "acquired_from": "The Ironbound",
+      "dropped_by": "the_ironbound",
+      "flavor_text": "Tarnished name badge. The second operator's name is still legible."
+    },
+    {
+      "id": "caels_pendant",
+      "name": "Cael's Pendant",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from Cael.",
+      "auto_use": false,
+      "acquired_from": "Cael (Phase 1)",
+      "dropped_by": "cael_knight_of_despair_phase_1",
+      "flavor_text": "A locket with a pressed flower inside. Lira recognizes it."
+    },
+    {
+      "id": "caels_sword",
+      "name": "Cael's Sword",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from the Pallor Incarnate.",
+      "auto_use": false,
+      "acquired_from": "Pallor Incarnate",
+      "dropped_by": "the_pallor_incarnate",
+      "flavor_text": "The blade is cold. It will not rust."
+    },
+    {
+      "id": "vaeliths_quill",
+      "name": "Vaelith's Quill",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from Vaelith.",
+      "auto_use": false,
+      "acquired_from": "Vaelith",
+      "dropped_by": "vaelith_the_ashen_shepherd",
+      "flavor_text": "An 800-year-old scholar's quill. The ink is still wet."
+    },
+    {
+      "id": "lost_page",
+      "name": "Lost Page",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from The Index.",
+      "auto_use": false,
+      "acquired_from": "The Index",
+      "dropped_by": "the_index",
+      "flavor_text": "A single page from the catalogue. One name. One story."
+    },
+    {
+      "id": "grey_echo_shard",
+      "name": "Grey Echo Shard",
+      "category": "key_item",
+      "subcategory": "boss_memento",
+      "description": "A memento from the Pallor Echo.",
+      "auto_use": false,
+      "acquired_from": "Pallor Echo",
+      "dropped_by": "pallor_echo",
+      "flavor_text": "A fragment of someone Cael used to be."
+    },
+    {
+      "id": "boring_engine_schematic",
+      "name": "Boring Engine Schematic",
+      "category": "key_item",
+      "subcategory": "crafting_schematic",
+      "description": "A schematic for an advanced Forgewright weapon component.",
+      "auto_use": false,
+      "acquired_from": "Rail Tunnels East Tunnel secret room",
+      "recipe_unlocked": "advanced_forgewright_weapon_component"
+    },
+    {
+      "id": "forge_schematic",
+      "name": "Forge Schematic",
+      "category": "key_item",
+      "subcategory": "crafting_schematic",
+      "description": "A schematic required to forge the Arcanite Lance.",
+      "auto_use": false,
+      "acquired_from": "The Architect (steal)",
+      "recipe_unlocked": "arcanite_lance"
+    },
+    {
+      "id": "daels_ledger",
+      "name": "Dael's Ledger",
+      "category": "key_item",
+      "subcategory": "crafting_schematic",
+      "description": "Dael Corran's personal records documenting the extraction timeline and worker casualties.",
+      "auto_use": false,
+      "acquired_from": "Ashmark Factory Depths post-boss (The Fading Shifts quest)",
+      "recipe_unlocked": "liras_masterwork"
+    },
+    {
+      "id": "fenmothers_blessing",
+      "name": "Fenmother's Blessing",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A blessing granted by the Fenmother for safe passage.",
+      "auto_use": false,
+      "acquired_from": "Corrupted Fenmother",
+      "plot_effect": "Safe passage through Fenmother's domain"
+    },
+    {
+      "id": "compact_battle_standard",
+      "name": "Compact Battle Standard",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A war-torn banner from the Valdris Siege.",
+      "auto_use": false,
+      "acquired_from": "The Ashen Ram",
+      "plot_effect": "Proof of Valdris Siege victory"
+    },
+    {
+      "id": "pallor_laced_iron",
+      "name": "Pallor-Laced Iron",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A chunk of iron threaded with Pallor residue.",
+      "auto_use": false,
+      "acquired_from": "The Ashen Ram (steal)",
+      "plot_effect": "Evidence of Pallor in Compact war machines"
+    },
+    {
+      "id": "corrupted_tuning_fork",
+      "name": "Corrupted Tuning Fork",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A tuning fork warped by Ashmark's corruption.",
+      "auto_use": false,
+      "acquired_from": "The Forge Warden (steal)",
+      "plot_effect": "Links Ashmark corruption to Vaelith's broader plan"
+    },
+    {
+      "id": "caldera_employee_card",
+      "name": "Caldera Employee Card",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A Compact officer's employee card, pickpocketed by Sable.",
+      "auto_use": false,
+      "acquired_from": "Sable pickpockets from Compact officer (Caldera)",
+      "plot_effect": "25% discount at all Caldera shops"
+    },
+    {
+      "id": "valdris_crest",
+      "name": "Valdris Crest",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "The crest of Valdris, entrusted by Sir Aldric.",
+      "auto_use": false,
+      "acquired_from": "Sir Aldric, Oasis A (The Last Banner quest)",
+      "plot_effect": "Unlocks bonus dialogue in Edren's Pallor trial"
+    },
+    {
+      "id": "first_tree_seed",
+      "name": "First Tree Seed",
+      "category": "key_item",
+      "subcategory": "story_item",
+      "description": "A seed from the First Tree, found in the Ashgrove Undercroft.",
+      "auto_use": false,
+      "acquired_from": "Ashgrove Undercroft chest",
+      "plot_effect": "Used at Convergence meadow post-game to trigger planting scene"
+    },
+    {
+      "id": "spirit_vessel",
+      "name": "Spirit Vessel",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "An empty fenwood bowl lined with thin ley-crystal. It could hold sacred water.",
+      "auto_use": false,
+      "acquired_from": "Fenmother's Hollow F1 hidden alcove",
+      "quest_link": "fenmothers_hollow_spirit_plant"
+    },
+    {
+      "id": "spirit_vessel_filled",
+      "name": "Spirit Vessel (Filled)",
+      "category": "key_item",
+      "subcategory": "dungeon_access",
+      "description": "A fenwood bowl brimming with pure spring water. It glows faintly with spiritual energy.",
+      "auto_use": false,
+      "acquired_from": "Pure Spring in Fenmother's Hollow F1",
+      "quest_link": "fenmothers_hollow_spirit_plant"
+    }
+  ]
 }

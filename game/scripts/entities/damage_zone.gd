@@ -31,14 +31,14 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.has_method("try_interact"):
+	if body.is_in_group("player"):
 		_player_inside = true
 		_status_applied = false
 		_timer.start()
 
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.has_method("try_interact"):
+	if body.is_in_group("player"):
 		_player_inside = false
 		_timer.stop()
 

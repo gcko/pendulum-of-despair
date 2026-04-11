@@ -29,7 +29,9 @@ func interact() -> void:
 	if is_restored:
 		interaction_message.emit("The spirit-plant glows with restored luminescence.")
 		return
-	var key_items: Array = PartyState.inventory.get("key_items", [])
+	var key_items: Variant = PartyState.inventory.get("key_items", [])
+	if not key_items is Array:
+		return
 	if "spirit_vessel_filled" not in key_items:
 		interaction_message.emit("The spirit-plant's tendrils block the passage. It is withering.")
 		return

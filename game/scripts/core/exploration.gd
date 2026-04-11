@@ -93,10 +93,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_menu"):
 		if GameManager.push_overlay(GameManager.OverlayState.MENU):
-			get_viewport().set_input_as_handled()
+			var vp: Viewport = get_viewport()
+			if vp != null:
+				vp.set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		get_viewport().set_input_as_handled()
+		var vp: Viewport = get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 		_player.try_interact()
 
 
@@ -720,6 +724,8 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 	if _player != null:
 		_player.position = data.get("position", Vector2(80, 90))
 	_move_torren_to_reserve()
+	if _ritual_meter != null:
+		_ritual_meter.queue_free()
 	_ritual_meter = RITUAL_METER_SCENE.instantiate()
 	add_child(_ritual_meter)
 	_ritual_meter.show_meter()
@@ -887,9 +893,11 @@ func _move_torren_to_reserve() -> void:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	var reserve: Array = PartyState.formation.get("reserve", [])
-	if torren_idx in active:
-		active.erase(torren_idx)
-		reserve.append(torren_idx)
+	for a: Variant in active:
+		if (a is int or a is float) and int(a) == torren_idx:
+			active.erase(a)
+			reserve.append(torren_idx)
+			return
 
 
 func _restore_torren_to_active() -> void:
@@ -898,12 +906,14 @@ func _restore_torren_to_active() -> void:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	var reserve: Array = PartyState.formation.get("reserve", [])
-	if torren_idx in reserve:
-		reserve.erase(torren_idx)
-		if active.size() < 4:
-			active.append(torren_idx)
-		else:
-			reserve.append(torren_idx)
+	for r: Variant in reserve:
+		if (r is int or r is float) and int(r) == torren_idx:
+			reserve.erase(r)
+			if active.size() < 4:
+				active.append(torren_idx)
+			else:
+				reserve.append(torren_idx)
+			return
 
 
 func _find_member_index(character_id: String) -> int:
@@ -916,9 +926,12 @@ func _find_member_index(character_id: String) -> int:
 func _revive_fallen_at_quarter_hp() -> void:
 	var active: Array = PartyState.formation.get("active", [])
 	for idx: Variant in active:
-		if not (idx is int) or (idx as int) >= PartyState.members.size():
+		if not (idx is int or idx is float):
 			continue
-		var m: Dictionary = PartyState.members[idx as int]
+		var member_index: int = int(idx)
+		if member_index >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[member_index]
 		var current_hp: int = m.get("current_hp", 0)
 		if current_hp <= 0:
 			var max_hp: int = m.get("max_hp", 1)

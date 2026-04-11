@@ -6,7 +6,9 @@ signal interaction_message(text: String)
 
 
 func interact() -> void:
-	var key_items: Array = PartyState.inventory.get("key_items", [])
+	var key_items: Variant = PartyState.inventory.get("key_items", [])
+	if not key_items is Array:
+		return
 	if "spirit_vessel_filled" in key_items:
 		interaction_message.emit("The vessel is already full.")
 		return

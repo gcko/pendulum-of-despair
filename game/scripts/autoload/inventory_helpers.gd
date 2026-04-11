@@ -355,8 +355,12 @@ static func get_reserve_members(
 ) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	var active_indices: Array = formation.get("active", [])
+	var int_active: Array[int] = []
+	for idx: Variant in active_indices:
+		if idx is int or idx is float:
+			int_active.append(int(idx))
 	for i: int in range(members.size()):
-		if i not in active_indices:
+		if i not in int_active:
 			result.append(members[i])
 	return result
 
@@ -399,15 +403,18 @@ static func format_active_party_names(save_data: Dictionary) -> String:
 static func build_formation_list(members: Array, formation: Dictionary) -> Array:
 	var result: Array = []
 	var active: Array = formation.get("active", [])
+	var int_active: Array[int] = []
 	for a: Variant in active:
-		var idx: int = int(a)
+		if a is int or a is float:
+			int_active.append(int(a))
+	for idx: int in int_active:
 		if idx >= 0 and idx < members.size():
 			var m: Dictionary = members[idx].duplicate()
 			m["_is_active"] = true
 			m["_formation_index"] = result.size()
 			result.append(m)
 	for i: int in range(members.size()):
-		if i not in active:
+		if i not in int_active:
 			var m: Dictionary = members[i].duplicate()
 			m["_is_active"] = false
 			m["_formation_index"] = result.size()
@@ -419,7 +426,8 @@ static func swap_formation(members: Array, formation: Dictionary, idx_a: int, id
 	var active: Array = formation.get("active", [])
 	var order: Array = []
 	for a: Variant in active:
-		order.append(int(a))
+		if a is int or a is float:
+			order.append(int(a))
 	for i: int in range(members.size()):
 		if i not in order:
 			order.append(i)

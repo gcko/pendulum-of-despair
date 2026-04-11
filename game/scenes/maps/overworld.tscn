@@ -113,7 +113,7 @@ metadata/target_spawn = "from_overworld"
 shape = SubResource("Shape_fenmothers")
 
 [node name="DuskfenShrineEntry" type="Area2D" parent="Transitions"]
-position = Vector2(352, 528)
+position = Vector2(400, 528)
 collision_layer = 0
 collision_mask = 2
 monitoring = true

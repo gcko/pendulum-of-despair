@@ -50,6 +50,8 @@ shape = SubResource("Shape_boss")
 position = Vector2(176, 160)
 metadata/zone_id = "f3_seepage_left"
 metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
 
 [node name="CollisionShape2D" parent="Entities/SeepageLeft" index="2"]
 shape = SubResource("Shape_dz_seepage_left")
@@ -58,6 +60,8 @@ shape = SubResource("Shape_dz_seepage_left")
 position = Vector2(368, 160)
 metadata/zone_id = "f3_seepage_right"
 metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
 
 [node name="CollisionShape2D" parent="Entities/SeepageRight" index="2"]
 shape = SubResource("Shape_dz_seepage_right")
