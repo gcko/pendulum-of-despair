@@ -7,10 +7,20 @@ var _state: Node
 func before_each() -> void:
 	_state = preload("res://scripts/combat/battle_state.gd").new()
 	add_child_autofree(_state)
+	DataManager.clear_cache()
+	PartyState.ley_crystals.clear()
+	PartyState.members.clear()
+	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
+	PartyState.owned_equipment.clear()
 
 
 func after_each() -> void:
 	_state = null
+	DataManager.clear_cache()
+	PartyState.ley_crystals.clear()
+	PartyState.members.clear()
+	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
+	PartyState.owned_equipment.clear()
 
 
 func _make_char_data() -> Dictionary:
@@ -308,6 +318,53 @@ func test_weave_gauge_for_maren_iterates() -> void:
 	_state.gain_weave_gauge_for_maren(15)
 	assert_eq(_state.get_member(0).get("wg", 0), 0, "edren unaffected")
 	assert_eq(_state.get_member(1).get("wg", 0), 15, "maren gains WG")
+
+
+# --- Equipment Bonuses in Battle ---
+
+
+func test_effective_stat_includes_equipment_bonus() -> void:
+	# Set up PartyState with edren + weapon that gives ATK
+	PartyState.initialize_new_game()
+	var char_data: Dictionary = PartyState.get_member("edren")
+	var base_atk: int = char_data.get("base_stats", {}).get("atk", 0)
+	var equip_bonus: int = PartyState.get_equipment_bonus("edren", "atk")
+	_state.add_member(0, char_data)
+	var battle_atk: int = _state.get_effective_stat(0, "atk")
+	assert_eq(battle_atk, base_atk + equip_bonus, "battle ATK should equal base + equipment bonus")
+
+
+func test_effective_stat_includes_crystal_bonus() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var char_data: Dictionary = PartyState.get_member("edren")
+	var base_atk: int = char_data.get("base_stats", {}).get("atk", 0)
+	var equip_bonus: int = PartyState.get_equipment_bonus("edren", "atk")
+	assert_gt(equip_bonus, 0, "ember_shard should add ATK bonus")
+	_state.add_member(0, char_data)
+	var battle_atk: int = _state.get_effective_stat(0, "atk")
+	assert_eq(battle_atk, base_atk + equip_bonus, "battle ATK should include crystal bonus")
+
+
+func test_effective_stat_without_party_state_member() -> void:
+	# When character is not in PartyState (standalone test data), equipment bonus = 0
+	_state.add_member(0, _make_char_data())
+	var eff: int = _state.get_effective_stat(0, "atk")
+	assert_eq(eff, 18, "no PartyState member = base stats only")
+
+
+func test_effective_stat_stores_in_effective_stats_dict() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var char_data: Dictionary = PartyState.get_member("edren")
+	_state.add_member(0, char_data)
+	var m: Dictionary = _state.get_member(0)
+	assert_true(m.has("effective_stats"), "member should have effective_stats dict")
+	var eff_atk: int = m["effective_stats"].get("atk", 0)
+	var base_atk: int = char_data.get("base_stats", {}).get("atk", 0)
+	assert_gt(eff_atk, base_atk, "effective_stats ATK should exceed base_stats ATK")
 
 
 # --- Defend Buff Cycle ---
