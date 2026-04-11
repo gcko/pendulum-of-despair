@@ -38,6 +38,7 @@ var playtime: int = 0
 var location_name: String = ""
 var is_at_save_point: bool = false
 var ley_crystals: Dictionary = {}
+var puzzle_state: Dictionary = {}
 var _config: Dictionary = {}
 var _config_loaded: bool = false
 var _next_inst_id: int = 0
@@ -69,6 +70,7 @@ func initialize_new_game() -> void:
 	playtime = 0
 	location_name = ""
 	ley_crystals.clear()
+	puzzle_state.clear()
 
 
 func add_member(character_id: String, level: int = 1) -> void:
@@ -121,6 +123,8 @@ func load_from_save(data: Dictionary) -> void:
 	EventFlags.load_from_save(world.get("event_flags", {}))
 	var lc_data: Variant = data.get("ley_crystals", {})
 	ley_crystals = lc_data as Dictionary if lc_data is Dictionary else {}
+	var ps_data: Variant = data.get("puzzle_state", {})
+	puzzle_state = ps_data as Dictionary if ps_data is Dictionary else {}
 
 
 func build_save_data() -> Dictionary:
@@ -133,7 +137,8 @@ func build_save_data() -> Dictionary:
 		gold,
 		EventFlags.to_save_data(),
 		playtime,
-		ley_crystals
+		ley_crystals,
+		puzzle_state
 	)
 
 
@@ -224,6 +229,27 @@ func get_collected_crystals() -> Array[String]:
 		result.append(key)
 	result.sort()
 	return result
+
+
+## Set a puzzle state value for a dungeon.
+func set_puzzle_state(dungeon_id: String, key: String, value: Variant) -> void:
+	if dungeon_id.is_empty() or key.is_empty():
+		return
+	if not puzzle_state.has(dungeon_id):
+		puzzle_state[dungeon_id] = {}
+	puzzle_state[dungeon_id][key] = value
+
+
+## Get a puzzle state value. Returns default_value if not set.
+func get_puzzle_state(dungeon_id: String, key: String, default_value: Variant = false) -> Variant:
+	if not puzzle_state.has(dungeon_id):
+		return default_value
+	return puzzle_state[dungeon_id].get(key, default_value)
+
+
+## Clear all puzzle state for a dungeon.
+func clear_puzzle_state(dungeon_id: String) -> void:
+	puzzle_state.erase(dungeon_id)
 
 
 ## Apply battle rewards (XP, gold, drops). Returns Helpers.distribute_rewards() summary.

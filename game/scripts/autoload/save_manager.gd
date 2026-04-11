@@ -220,6 +220,7 @@ func _validate(data: Dictionary) -> bool:
 		"owned_equipment",
 		"crafting",
 		"ley_crystals",
+		"puzzle_state",
 		"world",
 		"quests",
 		"completion"

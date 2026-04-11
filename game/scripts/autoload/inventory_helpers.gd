@@ -281,7 +281,8 @@ static func build_save_dict(
 	g: int,
 	flags: Dictionary,
 	play_time: int = 0,
-	lc: Dictionary = {}
+	lc: Dictionary = {},
+	ps: Dictionary = {}
 ) -> Dictionary:
 	return {
 		"party": party.duplicate(true),
@@ -296,6 +297,7 @@ static func build_save_dict(
 			"unlocked_recipes": [],
 		},
 		"ley_crystals": lc.duplicate(true),
+		"puzzle_state": ps.duplicate(true),
 		"meta":
 		{
 			"version": 1,
