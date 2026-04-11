@@ -1,1062 +1,1062 @@
 {
-	"enemies": [
-		{
-			"id": "ley_vermin",
-			"name": "Ley Vermin",
-			"type": "beast",
-			"threat": "trivial",
-			"level": 1,
-			"hp": 23,
-			"mp": 0,
-			"atk": 8,
-			"def": 6,
-			"mag": 7,
-			"mdef": 5,
-			"spd": 8,
-			"gold": 1,
-			"exp": 4,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "sharp_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "sharp_fang",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f1",
-				"ember_vein_f2"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "tomb_mite",
-			"name": "Tomb Mite",
-			"type": "beast",
-			"threat": "trivial",
-			"level": 2,
-			"hp": 35,
-			"mp": 0,
-			"atk": 9,
-			"def": 7,
-			"mag": 8,
-			"mdef": 6,
-			"spd": 9,
-			"gold": 2,
-			"exp": 4,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "sharp_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "sharp_fang",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f1",
-				"ember_vein_f2"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "restless_dead",
-			"name": "Restless Dead",
-			"type": "undead",
-			"threat": "trivial",
-			"level": 3,
-			"hp": 72,
-			"mp": 10,
-			"atk": 12,
-			"def": 8,
-			"mag": 10,
-			"mdef": 7,
-			"spd": 10,
-			"gold": 2,
-			"exp": 4,
-			"weaknesses": [
-				"spirit"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"death"
-			],
-			"steal": {
-				"common": {
-					"item_id": "bone_fragment",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ancient_glyph",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_dust",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f1",
-				"ember_vein_f2",
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_undead"
-		},
-		{
-			"id": "unstable_crystal",
-			"name": "Unstable Crystal",
-			"type": "elemental",
-			"threat": "low",
-			"level": 3,
-			"hp": 64,
-			"mp": 10,
-			"atk": 13,
-			"def": 6,
-			"mag": 10,
-			"mdef": 7,
-			"spd": 10,
-			"gold": 5,
-			"exp": 10,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [
-				"flame"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f1",
-				"ember_vein_f2",
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "mine_shade",
-			"name": "Mine Shade",
-			"type": "spirit",
-			"threat": "low",
-			"level": 4,
-			"hp": 96,
-			"mp": 14,
-			"atk": 11,
-			"def": 9,
-			"mag": 12,
-			"mdef": 8,
-			"spd": 11,
-			"gold": 5,
-			"exp": 11,
-			"weaknesses": [
-				"ley"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f2",
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "bone_warden",
-			"name": "Bone Warden",
-			"type": "undead",
-			"threat": "low",
-			"level": 4,
-			"hp": 105,
-			"mp": 14,
-			"atk": 14,
-			"def": 10,
-			"mag": 11,
-			"mdef": 8,
-			"spd": 9,
-			"gold": 5,
-			"exp": 11,
-			"weaknesses": [
-				"spirit"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"death"
-			],
-			"steal": {
-				"common": {
-					"item_id": "bone_fragment",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ancient_glyph",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_dust",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f2",
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_undead"
-		},
-		{
-			"id": "ember_wisp",
-			"name": "Ember Wisp",
-			"type": "elemental",
-			"threat": "low",
-			"level": 5,
-			"hp": 125,
-			"mp": 17,
-			"atk": 13,
-			"def": 11,
-			"mag": 14,
-			"mdef": 9,
-			"spd": 12,
-			"gold": 5,
-			"exp": 12,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [
-				"flame"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "the_flickering",
-			"name": "The Flickering",
-			"type": "spirit",
-			"threat": "dangerous",
-			"level": 6,
-			"hp": 156,
-			"mp": 21,
-			"atk": 17,
-			"def": 12,
-			"mag": 14,
-			"mdef": 10,
-			"spd": 12,
-			"gold": 19,
-			"exp": 38,
-			"weaknesses": [
-				"ley"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"ember_vein_f3"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "ember_drake",
-			"name": "Ember Drake",
-			"type": "beast",
-			"threat": "dangerous",
-			"is_mini_boss": true,
-			"phases": 1,
-			"level": 8,
-			"hp": 1500,
-			"mp": 0,
-			"atk": 23,
-			"def": 11,
-			"mag": 17,
-			"mdef": 12,
-			"spd": 14,
-			"gold": 50,
-			"exp": 44,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "drake_scale",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "drake_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "drake_fang",
-				"rate": 100
-			},
-			"locations": [
-				"ember_vein_f2"
-			],
-			"ko_sound": "ko_beast",
-			"is_boss": false
-		},
-		{
-			"id": "vein_guardian",
-			"name": "Vein Guardian",
-			"type": "boss",
-			"threat": "boss",
-			"is_boss": true,
-			"phases": 2,
-			"level": 12,
-			"hp": 6000,
-			"mp": 42,
-			"atk": 40,
-			"def": 24,
-			"mag": 39,
-			"mdef": 24,
-			"spd": 20,
-			"gold": 50,
-			"exp": 800,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [
-				"flame"
-			],
-			"absorb": [],
-			"status_immunities": [
-				"death",
-				"petrify",
-				"stop",
-				"sleep",
-				"confusion"
-			],
-			"steal": {
-				"common": null,
-				"rare": {
-					"item_id": "vein_shard",
-					"rate": 100
-				}
-			},
-			"drop": {
-				"item_id": "vein_guardians_core",
-				"rate": 100
-			},
-			"locations": [
-				"ember_vein_f4"
-			],
-			"ko_sound": "ko_construct",
-			"is_mini_boss": false
-		},
-		{
-			"id": "marsh_serpent",
-			"name": "Marsh Serpent",
-			"type": "beast",
-			"threat": "low",
-			"level": 6,
-			"hp": 140,
-			"mp": 0,
-			"atk": 19,
-			"def": 10,
-			"mag": 14,
-			"mdef": 10,
-			"spd": 12,
-			"gold": 6,
-			"exp": 13,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "serpent_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "serpent_fang",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f1",
-				"fenmothers_hollow_f2",
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "bog_leech",
-			"name": "Bog Leech",
-			"type": "beast",
-			"threat": "low",
-			"level": 7,
-			"hp": 192,
-			"mp": 0,
-			"atk": 19,
-			"def": 13,
-			"mag": 15,
-			"mdef": 11,
-			"spd": 13,
-			"gold": 7,
-			"exp": 14,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "leech_ichor",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "leech_ichor",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f1",
-				"fenmothers_hollow_f2"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "drowned_bones",
-			"name": "Drowned Bones",
-			"type": "undead",
-			"threat": "low",
-			"level": 7,
-			"hp": 211,
-			"mp": 24,
-			"atk": 19,
-			"def": 14,
-			"mag": 15,
-			"mdef": 11,
-			"spd": 11,
-			"gold": 7,
-			"exp": 14,
-			"weaknesses": [
-				"spirit"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"death"
-			],
-			"steal": {
-				"common": {
-					"item_id": "bone_fragment",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ancient_glyph",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_dust",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f1",
-				"fenmothers_hollow_f2"
-			],
-			"ko_sound": "ko_undead"
-		},
-		{
-			"id": "swamp_lurker",
-			"name": "Swamp Lurker",
-			"type": "beast",
-			"threat": "standard",
-			"level": 8,
-			"hp": 254,
-			"mp": 0,
-			"atk": 20,
-			"def": 16,
-			"mag": 17,
-			"mdef": 12,
-			"spd": 12,
-			"gold": 13,
-			"exp": 26,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "lurker_shell",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "lurker_shell",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f1",
-				"fenmothers_hollow_f2",
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "ley_jellyfish",
-			"name": "Ley Jellyfish",
-			"type": "elemental",
-			"threat": "standard",
-			"level": 8,
-			"hp": 231,
-			"mp": 28,
-			"atk": 17,
-			"def": 14,
-			"mag": 19,
-			"mdef": 13,
-			"spd": 14,
-			"gold": 13,
-			"exp": 26,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [
-				"frost"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f2",
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "polluted_elemental",
-			"name": "Polluted Elemental",
-			"type": "elemental",
-			"threat": "standard",
-			"level": 9,
-			"hp": 273,
-			"mp": 31,
-			"atk": 18,
-			"def": 15,
-			"mag": 20,
-			"mdef": 14,
-			"spd": 15,
-			"gold": 13,
-			"exp": 28,
-			"weaknesses": [
-				"flame"
-			],
-			"resistances": [],
-			"absorb": [
-				"frost"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f2",
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "corrupted_spawn",
-			"name": "Corrupted Spawn",
-			"type": "beast",
-			"threat": "standard",
-			"level": 10,
-			"hp": 288,
-			"mp": 0,
-			"atk": 27,
-			"def": 14,
-			"mag": 20,
-			"mdef": 14,
-			"spd": 16,
-			"gold": 15,
-			"exp": 30,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "dark_scale",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "dark_scale",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "drowned_sentinel",
-			"name": "Drowned Sentinel",
-			"type": "construct",
-			"threat": "dangerous",
-			"is_mini_boss": true,
-			"phases": 1,
-			"level": 10,
-			"hp": 4000,
-			"mp": 0,
-			"atk": 24,
-			"def": 19,
-			"mag": 20,
-			"mdef": 14,
-			"spd": 14,
-			"gold": 250,
-			"exp": 50,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"sleep",
-				"confusion",
-				"berserk",
-				"despair"
-			],
-			"steal": {
-				"common": {
-					"item_id": "scrap_metal",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crystal_shard",
-				"rate": 25
-			},
-			"locations": [
-				"fenmothers_hollow_f2"
-			],
-			"ko_sound": "ko_construct",
-			"is_boss": false
-		},
-		{
-			"id": "corrupted_fenmother",
-			"name": "Corrupted Fenmother",
-			"type": "boss",
-			"threat": "boss",
-			"is_boss": true,
-			"phases": 3,
-			"level": 12,
-			"hp": 18000,
-			"mp": 42,
-			"atk": 40,
-			"def": 24,
-			"mag": 39,
-			"mdef": 24,
-			"spd": 20,
-			"gold": 150,
-			"exp": 2500,
-			"weaknesses": [
-				"flame"
-			],
-			"resistances": [
-				"frost"
-			],
-			"absorb": [],
-			"status_immunities": [
-				"death",
-				"petrify",
-				"stop",
-				"sleep",
-				"confusion"
-			],
-			"steal": {
-				"common": null,
-				"rare": {
-					"item_id": "fenmothers_tear",
-					"rate": 100
-				}
-			},
-			"drop": {
-				"item_id": "fenmothers_blessing",
-				"rate": 100
-			},
-			"locations": [
-				"fenmothers_hollow_f3"
-			],
-			"ko_sound": "ko_boss",
-			"is_mini_boss": false
-		},
-		{
-			"id": "plains_hare",
-			"name": "Plains Hare",
-			"type": "beast",
-			"threat": "trivial",
-			"level": 1,
-			"hp": 23,
-			"mp": 0,
-			"atk": 8,
-			"def": 6,
-			"mag": 7,
-			"mdef": 5,
-			"spd": 8,
-			"gold": 1,
-			"exp": 4,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "hare_pelt",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "hare_pelt",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_plains"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "thornback_beetle",
-			"name": "Thornback Beetle",
-			"type": "beast",
-			"threat": "low",
-			"level": 3,
-			"hp": 72,
-			"mp": 0,
-			"atk": 12,
-			"def": 8,
-			"mag": 10,
-			"mdef": 7,
-			"spd": 10,
-			"gold": 5,
-			"exp": 10,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "beetle_carapace",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "beetle_carapace",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_forest"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "road_bandit",
-			"name": "Road Bandit",
-			"type": "humanoid",
-			"threat": "low",
-			"level": 4,
-			"hp": 96,
-			"mp": 0,
-			"atk": 14,
-			"def": 9,
-			"mag": 11,
-			"mdef": 8,
-			"spd": 11,
-			"gold": 5,
-			"exp": 11,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "leather_pouch",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_road"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "forest_sprite",
-			"name": "Forest Sprite",
-			"type": "spirit",
-			"threat": "low",
-			"level": 4,
-			"hp": 96,
-			"mp": 14,
-			"atk": 11,
-			"def": 9,
-			"mag": 12,
-			"mdef": 8,
-			"spd": 11,
-			"gold": 5,
-			"exp": 11,
-			"weaknesses": [
-				"ley"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_forest"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "wild_boar",
-			"name": "Wild Boar",
-			"type": "beast",
-			"threat": "standard",
-			"level": 5,
-			"hp": 112,
-			"mp": 0,
-			"atk": 18,
-			"def": 9,
-			"mag": 13,
-			"mdef": 9,
-			"spd": 12,
-			"gold": 10,
-			"exp": 21,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "boar_tusk",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "boar_tusk",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_plains",
-				"forest_edge"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "wayward_wolf",
-			"name": "Wayward Wolf",
-			"type": "beast",
-			"threat": "standard",
-			"level": 6,
-			"hp": 156,
-			"mp": 0,
-			"atk": 17,
-			"def": 12,
-			"mag": 14,
-			"mdef": 10,
-			"spd": 12,
-			"gold": 11,
-			"exp": 22,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "wolf_pelt",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "wolf_pelt",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_forest",
-				"duskfen_road"
-			],
-			"ko_sound": "ko_beast"
-		}
-	]
+  "enemies": [
+    {
+      "id": "ley_vermin",
+      "name": "Ley Vermin",
+      "type": "beast",
+      "threat": "trivial",
+      "level": 1,
+      "hp": 23,
+      "mp": 0,
+      "atk": 8,
+      "def": 6,
+      "mag": 7,
+      "mdef": 5,
+      "spd": 8,
+      "gold": 1,
+      "exp": 4,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "sharp_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "sharp_fang",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f1",
+        "ember_vein_f2"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "tomb_mite",
+      "name": "Tomb Mite",
+      "type": "beast",
+      "threat": "trivial",
+      "level": 2,
+      "hp": 35,
+      "mp": 0,
+      "atk": 9,
+      "def": 7,
+      "mag": 8,
+      "mdef": 6,
+      "spd": 9,
+      "gold": 2,
+      "exp": 4,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "sharp_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "sharp_fang",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f1",
+        "ember_vein_f2"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "restless_dead",
+      "name": "Restless Dead",
+      "type": "undead",
+      "threat": "trivial",
+      "level": 3,
+      "hp": 72,
+      "mp": 10,
+      "atk": 12,
+      "def": 8,
+      "mag": 10,
+      "mdef": 7,
+      "spd": 10,
+      "gold": 2,
+      "exp": 4,
+      "weaknesses": [
+        "spirit"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "death"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "bone_fragment",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ancient_glyph",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_dust",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f1",
+        "ember_vein_f2",
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_undead"
+    },
+    {
+      "id": "unstable_crystal",
+      "name": "Unstable Crystal",
+      "type": "elemental",
+      "threat": "low",
+      "level": 3,
+      "hp": 64,
+      "mp": 10,
+      "atk": 13,
+      "def": 6,
+      "mag": 10,
+      "mdef": 7,
+      "spd": 10,
+      "gold": 5,
+      "exp": 10,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [
+        "flame"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f1",
+        "ember_vein_f2",
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "mine_shade",
+      "name": "Mine Shade",
+      "type": "spirit",
+      "threat": "low",
+      "level": 4,
+      "hp": 96,
+      "mp": 14,
+      "atk": 11,
+      "def": 9,
+      "mag": 12,
+      "mdef": 8,
+      "spd": 11,
+      "gold": 5,
+      "exp": 11,
+      "weaknesses": [
+        "ley"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ley_crystal_fragment",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f2",
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "bone_warden",
+      "name": "Bone Warden",
+      "type": "undead",
+      "threat": "low",
+      "level": 4,
+      "hp": 105,
+      "mp": 14,
+      "atk": 14,
+      "def": 10,
+      "mag": 11,
+      "mdef": 8,
+      "spd": 9,
+      "gold": 5,
+      "exp": 11,
+      "weaknesses": [
+        "spirit"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "death"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "bone_fragment",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ancient_glyph",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_dust",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f2",
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_undead"
+    },
+    {
+      "id": "ember_wisp",
+      "name": "Ember Wisp",
+      "type": "elemental",
+      "threat": "low",
+      "level": 5,
+      "hp": 125,
+      "mp": 17,
+      "atk": 13,
+      "def": 11,
+      "mag": 14,
+      "mdef": 9,
+      "spd": 12,
+      "gold": 5,
+      "exp": 12,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [
+        "flame"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "the_flickering",
+      "name": "The Flickering",
+      "type": "spirit",
+      "threat": "dangerous",
+      "level": 6,
+      "hp": 156,
+      "mp": 21,
+      "atk": 17,
+      "def": 12,
+      "mag": 14,
+      "mdef": 10,
+      "spd": 12,
+      "gold": 19,
+      "exp": 38,
+      "weaknesses": [
+        "ley"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ley_crystal_fragment",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "ember_vein_f3"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "ember_drake",
+      "name": "Ember Drake",
+      "type": "beast",
+      "threat": "dangerous",
+      "is_mini_boss": true,
+      "phases": 1,
+      "level": 8,
+      "hp": 1500,
+      "mp": 0,
+      "atk": 23,
+      "def": 11,
+      "mag": 17,
+      "mdef": 12,
+      "spd": 14,
+      "gold": 50,
+      "exp": 44,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "drake_scale",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "drake_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "drake_fang",
+        "rate": 100
+      },
+      "locations": [
+        "ember_vein_f2"
+      ],
+      "ko_sound": "ko_beast",
+      "is_boss": false
+    },
+    {
+      "id": "vein_guardian",
+      "name": "Vein Guardian",
+      "type": "boss",
+      "threat": "boss",
+      "is_boss": true,
+      "phases": 2,
+      "level": 12,
+      "hp": 6000,
+      "mp": 42,
+      "atk": 40,
+      "def": 24,
+      "mag": 39,
+      "mdef": 24,
+      "spd": 20,
+      "gold": 50,
+      "exp": 800,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [
+        "flame"
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "vein_shard",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "vein_guardians_core",
+        "rate": 100
+      },
+      "locations": [
+        "ember_vein_f4"
+      ],
+      "ko_sound": "ko_construct",
+      "is_mini_boss": false
+    },
+    {
+      "id": "marsh_serpent",
+      "name": "Marsh Serpent",
+      "type": "beast",
+      "threat": "low",
+      "level": 6,
+      "hp": 140,
+      "mp": 0,
+      "atk": 19,
+      "def": 10,
+      "mag": 14,
+      "mdef": 10,
+      "spd": 12,
+      "gold": 6,
+      "exp": 13,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "serpent_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "serpent_fang",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f1",
+        "fenmothers_hollow_f2",
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "bog_leech",
+      "name": "Bog Leech",
+      "type": "beast",
+      "threat": "low",
+      "level": 7,
+      "hp": 192,
+      "mp": 0,
+      "atk": 19,
+      "def": 13,
+      "mag": 15,
+      "mdef": 11,
+      "spd": 13,
+      "gold": 7,
+      "exp": 14,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "leech_ichor",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "leech_ichor",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f1",
+        "fenmothers_hollow_f2"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "drowned_bones",
+      "name": "Drowned Bones",
+      "type": "undead",
+      "threat": "low",
+      "level": 7,
+      "hp": 211,
+      "mp": 24,
+      "atk": 19,
+      "def": 14,
+      "mag": 15,
+      "mdef": 11,
+      "spd": 11,
+      "gold": 7,
+      "exp": 14,
+      "weaknesses": [
+        "spirit"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "death"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "bone_fragment",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ancient_glyph",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_dust",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f1",
+        "fenmothers_hollow_f2"
+      ],
+      "ko_sound": "ko_undead"
+    },
+    {
+      "id": "swamp_lurker",
+      "name": "Swamp Lurker",
+      "type": "beast",
+      "threat": "standard",
+      "level": 8,
+      "hp": 254,
+      "mp": 0,
+      "atk": 20,
+      "def": 16,
+      "mag": 17,
+      "mdef": 12,
+      "spd": 12,
+      "gold": 13,
+      "exp": 26,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "lurker_shell",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "lurker_shell",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f1",
+        "fenmothers_hollow_f2",
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "ley_jellyfish",
+      "name": "Ley Jellyfish",
+      "type": "elemental",
+      "threat": "standard",
+      "level": 8,
+      "hp": 231,
+      "mp": 28,
+      "atk": 17,
+      "def": 14,
+      "mag": 19,
+      "mdef": 13,
+      "spd": 14,
+      "gold": 13,
+      "exp": 26,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [
+        "frost"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f2",
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "polluted_elemental",
+      "name": "Polluted Elemental",
+      "type": "elemental",
+      "threat": "standard",
+      "level": 9,
+      "hp": 273,
+      "mp": 31,
+      "atk": 18,
+      "def": 15,
+      "mag": 20,
+      "mdef": 14,
+      "spd": 15,
+      "gold": 13,
+      "exp": 28,
+      "weaknesses": [
+        "flame"
+      ],
+      "resistances": [],
+      "absorb": [
+        "frost"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f2",
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "corrupted_spawn",
+      "name": "Corrupted Spawn",
+      "type": "beast",
+      "threat": "standard",
+      "level": 10,
+      "hp": 288,
+      "mp": 0,
+      "atk": 27,
+      "def": 14,
+      "mag": 20,
+      "mdef": 14,
+      "spd": 16,
+      "gold": 15,
+      "exp": 30,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "dark_scale",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "dark_scale",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "drowned_sentinel",
+      "name": "Drowned Sentinel",
+      "type": "construct",
+      "threat": "dangerous",
+      "is_mini_boss": true,
+      "phases": 1,
+      "level": 10,
+      "hp": 4000,
+      "mp": 0,
+      "atk": 24,
+      "def": 19,
+      "mag": 20,
+      "mdef": 14,
+      "spd": 14,
+      "gold": 250,
+      "exp": 50,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "scrap_metal",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "crystal_shard",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crystal_shard",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f2"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": false
+    },
+    {
+      "id": "corrupted_fenmother",
+      "name": "Corrupted Fenmother",
+      "type": "boss",
+      "threat": "boss",
+      "is_boss": true,
+      "phases": 3,
+      "level": 12,
+      "hp": 18000,
+      "mp": 42,
+      "atk": 40,
+      "def": 24,
+      "mag": 39,
+      "mdef": 24,
+      "spd": 20,
+      "gold": 150,
+      "exp": 2500,
+      "weaknesses": [
+        "flame"
+      ],
+      "resistances": [
+        "frost"
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "fenmothers_tear",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "fenmothers_blessing",
+        "rate": 100
+      },
+      "locations": [
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_boss",
+      "is_mini_boss": false
+    },
+    {
+      "id": "plains_hare",
+      "name": "Plains Hare",
+      "type": "beast",
+      "threat": "trivial",
+      "level": 1,
+      "hp": 23,
+      "mp": 0,
+      "atk": 8,
+      "def": 6,
+      "mag": 7,
+      "mdef": 5,
+      "spd": 8,
+      "gold": 1,
+      "exp": 4,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "hare_pelt",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "hare_pelt",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_plains"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "thornback_beetle",
+      "name": "Thornback Beetle",
+      "type": "beast",
+      "threat": "low",
+      "level": 3,
+      "hp": 72,
+      "mp": 0,
+      "atk": 12,
+      "def": 8,
+      "mag": 10,
+      "mdef": 7,
+      "spd": 10,
+      "gold": 5,
+      "exp": 10,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "beetle_carapace",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "beetle_carapace",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_forest"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "road_bandit",
+      "name": "Road Bandit",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 4,
+      "hp": 96,
+      "mp": 0,
+      "atk": 14,
+      "def": 9,
+      "mag": 11,
+      "mdef": 8,
+      "spd": 11,
+      "gold": 5,
+      "exp": 11,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "leather_pouch",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_road"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "forest_sprite",
+      "name": "Forest Sprite",
+      "type": "spirit",
+      "threat": "low",
+      "level": 4,
+      "hp": 96,
+      "mp": 14,
+      "atk": 11,
+      "def": 9,
+      "mag": 12,
+      "mdef": 8,
+      "spd": 11,
+      "gold": 5,
+      "exp": 11,
+      "weaknesses": [
+        "ley"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "ley_crystal_fragment",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_forest"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "wild_boar",
+      "name": "Wild Boar",
+      "type": "beast",
+      "threat": "standard",
+      "level": 5,
+      "hp": 112,
+      "mp": 0,
+      "atk": 18,
+      "def": 9,
+      "mag": 13,
+      "mdef": 9,
+      "spd": 12,
+      "gold": 10,
+      "exp": 21,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "boar_tusk",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "boar_tusk",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_plains",
+        "forest_edge"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "wayward_wolf",
+      "name": "Wayward Wolf",
+      "type": "beast",
+      "threat": "standard",
+      "level": 6,
+      "hp": 156,
+      "mp": 0,
+      "atk": 17,
+      "def": 12,
+      "mag": 14,
+      "mdef": 10,
+      "spd": 12,
+      "gold": 11,
+      "exp": 22,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "wolf_pelt",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "wolf_pelt",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_forest",
+        "duskfen_road"
+      ],
+      "ko_sound": "ko_beast"
+    }
+  ]
 }
