@@ -1,17 +1,36 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
 [ext_resource type="PackedScene" path="res://scenes/entities/treasure_chest.tscn" id="2_chest"]
 [ext_resource type="PackedScene" path="res://scenes/entities/save_point.tscn" id="3_save"]
+[ext_resource type="PackedScene" path="res://scenes/entities/spirit_plant.tscn" id="4_spirit_plant"]
+[ext_resource type="PackedScene" path="res://scenes/entities/water_wheel.tscn" id="5_water_wheel"]
+[ext_resource type="PackedScene" path="res://scenes/entities/water_zone.tscn" id="6_water_zone"]
+[ext_resource type="PackedScene" path="res://scenes/entities/damage_zone.tscn" id="7_damage_zone"]
 
 [sub_resource type="RectangleShape2D" id="Shape_transition"]
 size = Vector2(16, 32)
 
-[sub_resource type="RectangleShape2D" id="Shape_trigger"]
-size = Vector2(48, 48)
-
 [sub_resource type="RectangleShape2D" id="Shape_boss"]
 size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_wz_mosaic1"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="Shape_wz_mosaic2"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="Shape_wz_secret"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_dz_corrupted_east"]
+size = Vector2(96, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_dz_polluted_south"]
+size = Vector2(160, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_dz_stagnant"]
+size = Vector2(64, 64)
 
 [node name="FenmothersHollowF2" type="Node2D"]
 metadata/map_id = "dungeons/fenmothers_hollow_f2"
@@ -47,17 +66,69 @@ metadata/chest_id = "fenmothers_hollow_ancient_totem"
 metadata/item_id = "ancient_totem"
 metadata/quantity = 1
 
-[node name="SpiritPlant" type="Area2D" parent="Entities"]
+[node name="SpiritPlant1" parent="Entities" instance=ExtResource("4_spirit_plant")]
 position = Vector2(544, 160)
-collision_layer = 0
-collision_mask = 2
-monitoring = true
-monitorable = false
-metadata/dialogue_scene_id = "water_of_life"
-metadata/flag = "fenmothers_hollow_plant_seen"
+metadata/plant_id = "spirit_plant_1"
+metadata/dungeon_id = "fenmothers_hollow"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/SpiritPlant"]
-shape = SubResource("Shape_trigger")
+[node name="WaterWheel3" parent="Entities" instance=ExtResource("5_water_wheel")]
+position = Vector2(752, 160)
+metadata/wheel_id = "wheel_3"
+metadata/dungeon_id = "fenmothers_hollow"
+
+[node name="MosaicFlood1" parent="Entities" instance=ExtResource("6_water_zone")]
+position = Vector2(320, 192)
+metadata/active_when = "wheel_1_low"
+metadata/zone_type = "block"
+
+[node name="CollisionShape2D" parent="Entities/MosaicFlood1" index="2"]
+shape = SubResource("Shape_wz_mosaic1")
+
+[node name="MosaicFlood2" parent="Entities" instance=ExtResource("6_water_zone")]
+position = Vector2(320, 192)
+metadata/active_when = "wheel_2_low"
+metadata/zone_type = "block"
+
+[node name="CollisionShape2D" parent="Entities/MosaicFlood2" index="2"]
+shape = SubResource("Shape_wz_mosaic2")
+
+[node name="SecretRoom" parent="Entities" instance=ExtResource("6_water_zone")]
+position = Vector2(80, 48)
+metadata/active_when = "wheel_1_high,wheel_2_high,wheel_3_high"
+metadata/zone_type = "reveal"
+
+[node name="CollisionShape2D" parent="Entities/SecretRoom" index="2"]
+shape = SubResource("Shape_wz_secret")
+
+[node name="CorruptedPoolEast" parent="Entities" instance=ExtResource("7_damage_zone")]
+position = Vector2(608, 192)
+metadata/zone_id = "f2_corrupted_pool_east"
+metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
+
+[node name="CollisionShape2D" parent="Entities/CorruptedPoolEast" index="2"]
+shape = SubResource("Shape_dz_corrupted_east")
+
+[node name="PollutedChannelSouth" parent="Entities" instance=ExtResource("7_damage_zone")]
+position = Vector2(320, 480)
+metadata/zone_id = "f2_polluted_channel_south"
+metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
+
+[node name="CollisionShape2D" parent="Entities/PollutedChannelSouth" index="2"]
+shape = SubResource("Shape_dz_polluted_south")
+
+[node name="StagnantCorner" parent="Entities" instance=ExtResource("7_damage_zone")]
+position = Vector2(64, 80)
+metadata/zone_id = "f2_stagnant_corner"
+metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
+
+[node name="CollisionShape2D" parent="Entities/StagnantCorner" index="2"]
+shape = SubResource("Shape_dz_stagnant")
 
 [node name="DrownedSentinel" type="Area2D" parent="Entities"]
 position = Vector2(544, 320)
