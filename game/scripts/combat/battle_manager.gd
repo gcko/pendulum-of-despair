@@ -67,6 +67,8 @@ func _ready() -> void:
 	_wave_num = data.get("wave_num", -1)
 	_cleansing_origin_position = data.get("cleansing_origin_position", null)
 	_encounter_source = data.get("encounter_source", "")
+	if _encounter_source == "cleansing_wave":
+		_is_boss = true
 	var encounter_group: Array = data.get("encounter_group", [])
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
