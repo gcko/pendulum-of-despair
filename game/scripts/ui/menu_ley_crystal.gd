@@ -6,7 +6,6 @@ enum CrystalState { BROWSING, DETAIL }
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-const COLOR_EQUIPPED: Color = Color("#88ff88")
 const COLOR_STAT_UP: Color = Color("#88ff88")
 const COLOR_STAT_DOWN: Color = Color("#ff8888")
 const COLOR_WARNING: Color = Color("#ff8888")
@@ -61,6 +60,9 @@ func _ready() -> void:
 
 ## Called by menu_overlay when opening.
 func open(character_id: String) -> void:
+	if character_id.is_empty():
+		push_error("menu_ley_crystal: open() called with empty character_id")
+		return
 	_character_id = character_id
 	_cursor = 0
 	_state = CrystalState.BROWSING
@@ -133,7 +135,12 @@ func _handle_browse_input(event: InputEvent) -> bool:
 
 func _handle_detail_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("ui_accept"):
-		_equip_crystal(_detail_crystal_id)
+		var current_equipped: String = (
+			PartyState.get_member(_character_id).get("equipment", {}).get("crystal", "")
+		)
+		if current_equipped != _detail_crystal_id:
+			_equip_crystal(_detail_crystal_id)
+			_update_char_info()
 		_hide_detail()
 		return true
 	if event.is_action_pressed("ui_cancel"):
@@ -148,7 +155,7 @@ func _confirm_selection() -> void:
 		var crystal_id: String = _crystal_ids[_cursor]
 		_show_detail(crystal_id)
 	elif _cursor == total_crystal and _has_equipped_crystal():
-		PartyState.unequip_slot(_character_id, "crystal")
+		PartyState.unequip_crystal(_character_id)
 		_crystal_ids = PartyState.get_collected_crystals()
 		_cursor = mini(_cursor, _get_total_entries() - 1)
 		if _cursor < 0:
@@ -163,6 +170,10 @@ func _show_detail(crystal_id: String) -> void:
 	_detail_crystal_id = crystal_id
 	_state = CrystalState.DETAIL
 	var static_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
+	if static_data.is_empty():
+		push_error("menu_ley_crystal: crystal data not found for '%s'" % crystal_id)
+		_hide_detail()
+		return
 	var runtime: Dictionary = PartyState.get_crystal_state(crystal_id)
 	var level: int = runtime.get("level", 1)
 	if _header_label != null:
@@ -197,6 +208,27 @@ func _show_detail(crystal_id: String) -> void:
 			_warning_label.visible = true
 		else:
 			_warning_label.visible = false
+	# Update DescPanel with power at current level (spec: detail adds "Power: N")
+	if _desc_label != null:
+		var invocation: Dictionary = static_data.get("invocation", {})
+		var inv_name: String = invocation.get("name", "")
+		var inv_desc: String = invocation.get("description", "")
+		var uses: int = invocation.get("uses_per_rest", 0)
+		var level_effects: Array = invocation.get("level_effects", [])
+		var power: int = 0
+		if level_effects.size() >= level:
+			power = (
+				level_effects[level - 1].get("power", 0)
+				if level_effects[level - 1] is Dictionary
+				else 0
+			)
+		if inv_name.is_empty():
+			_desc_label.text = static_data.get("description", "")
+		elif power > 0:
+			_desc_label.text = "%s: %s  Power: %d  [%d/rest]" % [inv_name, inv_desc, power, uses]
+		else:
+			_desc_label.text = "%s: %s  [%d/rest]" % [inv_name, inv_desc, uses]
+		_desc_label.modulate = COLOR_NORMAL
 	if _detail_view != null:
 		_detail_view.visible = true
 
@@ -211,18 +243,9 @@ func _hide_detail() -> void:
 	_update_desc()
 
 
-## Equip a crystal on the current character, swapping if another character has it.
+## Equip a crystal on the current character via PartyState API.
 func _equip_crystal(crystal_id: String) -> void:
-	for m: Dictionary in PartyState.members:
-		if m.get("equipment", {}).get("crystal", "") == crystal_id:
-			m["equipment"]["crystal"] = ""
-	var member: Dictionary = PartyState.get_member(_character_id)
-	if member.is_empty():
-		return
-	if not member.has("equipment"):
-		member["equipment"] = {}
-	member["equipment"]["crystal"] = crystal_id
-	_update_char_info()
+	PartyState.equip_crystal(_character_id, crystal_id)
 
 
 func _update_xp_bar(runtime: Dictionary, static_data: Dictionary) -> void:
@@ -355,7 +378,10 @@ func _format_bonus(bonus: Dictionary) -> String:
 		var key: String = STAT_KEYS[i]
 		if bonus.has(key):
 			var val: int = int(bonus[key])
-			parts.append("%s +%d" % [STAT_LABELS[i], val])
+			if val >= 0:
+				parts.append("%s +%d" % [STAT_LABELS[i], val])
+			else:
+				parts.append("%s %d" % [STAT_LABELS[i], val])
 	if bonus.has("hp_per_level"):
 		parts.append("HP +%d/Lv" % int(bonus["hp_per_level"]))
 	if bonus.has("mp_per_level"):

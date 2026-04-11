@@ -129,9 +129,9 @@ UI shows "???" for the Lv5 bonus instead of the actual values.
 ```json
 "level_bonuses": [
   {"atk": 2, "def": 2, "mag": 2, "mdef": 2, "spd": 2, "lck": 2},
-  {"atk": 2, "def": 2, "mag": 2, "mdef": 2, "spd": 2, "lck": 2},
   {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
   {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+  {},
   {}
 ]
 ```
@@ -362,14 +362,14 @@ This hooks into the existing reward flow in exploration.gd
 
 ### Save/Load
 
-`build_save_data()` adds:
+`build_save_data()` adds `ley_crystals` at the top level of save data:
 ```gdscript
 "ley_crystals": ley_crystals.duplicate(true)
 ```
 
-`load_from_save()` restores:
+`load_from_save()` restores from the top level:
 ```gdscript
-ley_crystals = data.get("world", {}).get("ley_crystals", {})
+ley_crystals = data.get("ley_crystals", {})
 ```
 
 ## What This Does NOT Include (Deferred)

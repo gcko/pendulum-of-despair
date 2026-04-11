@@ -177,6 +177,45 @@ func add_crystal_xp(crystal_id: String, amount: int) -> void:
 	state["level"] = level
 
 
+## Equip a crystal on a character. Swaps if another character has it.
+## Crystal slot is managed separately from owned_equipment (no instance IDs).
+func equip_crystal(character_id: String, crystal_id: String) -> void:
+	if character_id.is_empty() or crystal_id.is_empty():
+		return
+	if not ley_crystals.has(crystal_id):
+		return
+	var target: Dictionary = get_member(character_id)
+	if target.is_empty():
+		return
+	# Validate target BEFORE clearing old holder (ordering rule)
+	for m: Dictionary in members:
+		if m.get("equipment", {}).get("crystal", "") == crystal_id:
+			if m.get("character_id", "") != character_id:
+				m["equipment"]["crystal"] = ""
+				_recalculate_max_hp_mp(m.get("character_id", ""))
+				equipment_changed.emit(m.get("character_id", ""))
+			break
+	if not target.has("equipment"):
+		target["equipment"] = {}
+	target["equipment"]["crystal"] = crystal_id
+	_recalculate_max_hp_mp(character_id)
+	equipment_changed.emit(character_id)
+
+
+## Unequip the crystal slot without adding to owned_equipment.
+func unequip_crystal(character_id: String) -> String:
+	var m: Dictionary = get_member(character_id)
+	if m.is_empty():
+		return ""
+	var old_id: String = m.get("equipment", {}).get("crystal", "")
+	if old_id.is_empty():
+		return ""
+	m["equipment"]["crystal"] = ""
+	_recalculate_max_hp_mp(character_id)
+	equipment_changed.emit(character_id)
+	return old_id
+
+
 ## Get all collected crystal IDs.
 func get_collected_crystals() -> Array[String]:
 	var result: Array[String] = []

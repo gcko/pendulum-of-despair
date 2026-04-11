@@ -351,7 +351,8 @@
       },
       "negative_effect": {
         "description": "Wearer randomly hit by Tier 1 Flame spell once per battle",
-        "type": "random_self_damage"
+        "type": "random_self_damage",
+        "element": "flame"
       },
       "secret_lv5": false
     },

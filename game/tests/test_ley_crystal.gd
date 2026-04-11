@@ -6,11 +6,25 @@ extends GutTest
 func before_each() -> void:
 	DataManager.clear_cache()
 	PartyState.ley_crystals.clear()
+	PartyState.members.clear()
+	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
+	PartyState.owned_equipment.clear()
+	PartyState.gold = 0
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.is_at_save_point = false
+	EventFlags.clear_all()
 
 
 func after_each() -> void:
 	DataManager.clear_cache()
 	PartyState.ley_crystals.clear()
+	PartyState.members.clear()
+	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
+	PartyState.owned_equipment.clear()
+	PartyState.gold = 0
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.is_at_save_point = false
+	EventFlags.clear_all()
 
 
 # --- Crystal Data ---
@@ -151,6 +165,73 @@ func test_load_restores_ley_crystals() -> void:
 	assert_false(state.is_empty(), "ember_shard should be restored after load_from_save")
 	assert_eq(state.get("level", 0), 2, "restored crystal should have level 2")
 	assert_eq(state.get("xp", 0), 800, "restored crystal should have 800 XP")
+
+
+# --- Equip / Unequip ---
+
+
+func test_equip_crystal_sets_slot() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var m: Dictionary = PartyState.get_member("edren")
+	assert_eq(
+		m.get("equipment", {}).get("crystal", ""),
+		"ember_shard",
+		"equip_crystal should set equipment.crystal on the character"
+	)
+
+
+func test_equip_crystal_swaps_from_other() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	PartyState.equip_crystal("cael", "ember_shard")
+	var edren: Dictionary = PartyState.get_member("edren")
+	var cael: Dictionary = PartyState.get_member("cael")
+	assert_eq(
+		edren.get("equipment", {}).get("crystal", ""),
+		"",
+		"edren's crystal should be cleared after swap"
+	)
+	assert_eq(
+		cael.get("equipment", {}).get("crystal", ""),
+		"ember_shard",
+		"cael should now have ember_shard equipped"
+	)
+
+
+func test_unequip_crystal_clears_slot() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	var old: String = PartyState.unequip_crystal("edren")
+	assert_eq(old, "ember_shard", "unequip_crystal should return the removed crystal ID")
+	var m: Dictionary = PartyState.get_member("edren")
+	assert_eq(
+		m.get("equipment", {}).get("crystal", ""), "", "crystal slot should be empty after unequip"
+	)
+
+
+func test_unequip_crystal_does_not_add_to_owned_equipment() -> void:
+	PartyState.initialize_new_game()
+	var equip_before: int = PartyState.owned_equipment.size()
+	PartyState.add_ley_crystal("ember_shard")
+	PartyState.equip_crystal("edren", "ember_shard")
+	PartyState.unequip_crystal("edren")
+	assert_eq(
+		PartyState.owned_equipment.size(),
+		equip_before,
+		"unequip_crystal should NOT add crystal to owned_equipment"
+	)
+
+
+func test_equip_crystal_emits_signal() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_ley_crystal("ember_shard")
+	watch_signals(PartyState)
+	PartyState.equip_crystal("edren", "ember_shard")
+	assert_signal_emitted(PartyState, "equipment_changed")
 
 
 # --- Scene Structure ---
