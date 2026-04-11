@@ -157,6 +157,22 @@
 			"availability": "Act II shops"
 		},
 		{
+			"id": "spirit_tonic",
+			"name": "Spirit Tonic",
+			"category": "consumable",
+			"subcategory": "mp_restoration",
+			"effect": "restore_mp",
+			"value": 50,
+			"buy_price": null,
+			"sell_price": 150,
+			"stack_limit": 199,
+			"description": "A tonic infused with marsh spirits. Restores 50 MP to one ally.",
+			"target": "single_ally",
+			"usable_in_battle": true,
+			"usable_in_field": true,
+			"availability": "Fenmother's Hollow chest (F1)"
+		},
+		{
 			"id": "ether",
 			"name": "Ether",
 			"category": "consumable",

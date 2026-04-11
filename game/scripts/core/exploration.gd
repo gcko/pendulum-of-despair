@@ -6,6 +6,37 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_characte
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
 const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
+const CLEANSING_WAVES: Array = [
+	[
+		"marsh_serpent",
+		"marsh_serpent",
+		"marsh_serpent",
+		"marsh_serpent",
+		"polluted_elemental",
+		"polluted_elemental",
+	],
+	[
+		"ley_jellyfish",
+		"ley_jellyfish",
+		"drowned_bones",
+		"drowned_bones",
+		"drowned_bones",
+		"polluted_elemental",
+	],
+	[
+		"polluted_elemental",
+		"polluted_elemental",
+		"marsh_serpent",
+		"marsh_serpent",
+		"ley_jellyfish",
+		"ley_jellyfish",
+	],
+	[
+		"corrupted_spawn",
+		"corrupted_spawn",
+		"corrupted_spawn",
+	],
+]
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
@@ -194,7 +225,14 @@ func _initialize_from_transition_data() -> void:
 			_player.position = Vector2(pos["x"], pos["y"])
 	elif data.has("result"):
 		var r: String = data.get("result", "")
+		if r == "fenmother_cleansing":
+			_start_cleansing_sequence(data)
+			return
 		if r == "victory":
+			var wave_num: int = data.get("wave_num", -1)
+			if wave_num >= 0:
+				_continue_cleansing_sequence(data)
+				return
 			var rewards: Dictionary = {
 				"xp": data.get("earned_xp", 0),
 				"gold": data.get("earned_gold", 0),
@@ -419,6 +457,9 @@ func _get_party_avg_level() -> int:
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player:
 		return
+	var req_flag: String = area.get_meta("required_flag", "")
+	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
+		return
 	var tgt: String = area.get_meta("target_map", "")
 	if tgt != "":
 		_transition_to_map(tgt, area.get_meta("target_spawn", ""))
@@ -454,3 +495,159 @@ func _abort_transition() -> void:
 func _end_transition() -> void:
 	_fade_rect.visible = false
 	_transitioning = false
+
+
+# ---------- Fenmother cleansing wave sequence ----------
+
+
+func _start_cleansing_sequence(data: Dictionary) -> void:
+	var rewards: Dictionary = {
+		"xp": data.get("earned_xp", 0),
+		"gold": data.get("earned_gold", 0),
+		"drops": data.get("earned_drops", []),
+	}
+	PartyState.distribute_battle_rewards(rewards)
+	# Prevent the boss trigger from re-firing if the player wipes mid-wave
+	# and reloads back to F3. The permanent fenmother_cleansed flag is
+	# deferred to _complete_cleansing() so post-boss chests stay gated.
+	EventFlags.set_flag("fenmother_boss_defeated", true)
+	_danger_counter = 0
+	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
+	if _player != null:
+		_player.position = data.get("position", Vector2(80, 90))
+	_move_torren_to_reserve()
+	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
+	var entries: Array = scene_data.get("entries", [])
+	if entries.is_empty():
+		_launch_cleansing_wave(0, data)
+		return
+	var dialogue: Array = [entries[0]]
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		GameManager.overlay_node.show_dialogue(dialogue)
+		GameManager.overlay_state_changed.connect(
+			_on_cleansing_dialogue_closed.bind(0, data), CONNECT_ONE_SHOT
+		)
+
+
+func _continue_cleansing_sequence(data: Dictionary) -> void:
+	var wave_num: int = data.get("wave_num", 0)
+	var rewards: Dictionary = {
+		"xp": data.get("earned_xp", 0),
+		"gold": data.get("earned_gold", 0),
+		"drops": data.get("earned_drops", []),
+	}
+	PartyState.distribute_battle_rewards(rewards)
+	_danger_counter = 0
+	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
+	if _player != null:
+		var origin: Variant = data.get("cleansing_origin_position", null)
+		if origin is Vector2:
+			_player.position = origin as Vector2
+		else:
+			_player.position = data.get("position", Vector2(80, 90))
+	var next_wave: int = wave_num + 1
+	if next_wave > 3:
+		_complete_cleansing(data)
+		return
+	_revive_fallen_at_quarter_hp()
+	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
+	var entries: Array = scene_data.get("entries", [])
+	var entry_idx: int = next_wave
+	if entry_idx >= entries.size():
+		_launch_cleansing_wave(next_wave, data)
+		return
+	var dialogue: Array = [entries[entry_idx]]
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		GameManager.overlay_node.show_dialogue(dialogue)
+		GameManager.overlay_state_changed.connect(
+			_on_cleansing_dialogue_closed.bind(next_wave, data), CONNECT_ONE_SHOT
+		)
+
+
+func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
+	if wave_num < 0 or wave_num >= CLEANSING_WAVES.size():
+		_complete_cleansing(data)
+		return
+	var origin_pos: Vector2 = data.get(
+		"cleansing_origin_position", data.get("position", Vector2(80, 90))
+	)
+	var player_pos: Vector2 = _player.position if _player != null else origin_pos
+	var transition: Dictionary = {
+		"encounter_group": CLEANSING_WAVES[wave_num],
+		"formation_type": "normal",
+		"return_map_id": "dungeons/fenmothers_hollow_f3",
+		"return_position": player_pos,
+		"enemy_act": "act_i",
+		"encounter_source": "cleansing_wave",
+		"wave_num": wave_num,
+		"cleansing_origin_position": origin_pos,
+	}
+	_transitioning = true
+	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+
+
+func _complete_cleansing(_data: Dictionary) -> void:
+	_restore_torren_to_active()
+	_revive_fallen_at_quarter_hp()
+	EventFlags.set_flag("fenmother_cleansed", true)
+	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
+	var entries: Array = scene_data.get("entries", [])
+	var final_idx: int = entries.size() - 1
+	if final_idx < 0:
+		return
+	var dialogue: Array = [entries[final_idx]]
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		GameManager.overlay_node.show_dialogue(dialogue)
+		# No further action needed after final dialogue; player is already on F3.
+
+
+func _on_cleansing_dialogue_closed(
+	state: GameManager.OverlayState, wave_num: int, data: Dictionary
+) -> void:
+	if state != GameManager.OverlayState.NONE:
+		return
+	_launch_cleansing_wave(wave_num, data)
+
+
+func _move_torren_to_reserve() -> void:
+	var torren_idx: int = _find_member_index("torren")
+	if torren_idx < 0:
+		return
+	var active: Array = PartyState.formation.get("active", [])
+	var reserve: Array = PartyState.formation.get("reserve", [])
+	if torren_idx in active:
+		active.erase(torren_idx)
+		reserve.append(torren_idx)
+
+
+func _restore_torren_to_active() -> void:
+	var torren_idx: int = _find_member_index("torren")
+	if torren_idx < 0:
+		return
+	var active: Array = PartyState.formation.get("active", [])
+	var reserve: Array = PartyState.formation.get("reserve", [])
+	if torren_idx in reserve:
+		reserve.erase(torren_idx)
+		if active.size() < 4:
+			active.append(torren_idx)
+		else:
+			reserve.append(torren_idx)
+
+
+func _find_member_index(character_id: String) -> int:
+	for i: int in range(PartyState.members.size()):
+		if PartyState.members[i].get("character_id", "") == character_id:
+			return i
+	return -1
+
+
+func _revive_fallen_at_quarter_hp() -> void:
+	var active: Array = PartyState.formation.get("active", [])
+	for idx: Variant in active:
+		if not (idx is int) or (idx as int) >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[idx as int]
+		var current_hp: int = m.get("current_hp", 0)
+		if current_hp <= 0:
+			var max_hp: int = m.get("max_hp", 1)
+			m["current_hp"] = maxi(1, int(max_hp / 4))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
 
@@ -12,6 +12,9 @@ size = Vector2(48, 48)
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="Shape_marens"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_fenmothers"]
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="Shape_scene2"]
@@ -94,11 +97,26 @@ metadata/target_spawn = "from_overworld"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/MarensRefuge"]
 shape = SubResource("Shape_marens")
 
+[node name="FenmothersHollow" type="Area2D" parent="Transitions"]
+position = Vector2(336, 528)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "dungeons/fenmothers_hollow_f1"
+metadata/target_spawn = "from_overworld"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/FenmothersHollow"]
+shape = SubResource("Shape_fenmothers")
+
 [node name="from_roothollow" type="Marker2D" parent="."]
 position = Vector2(448, 448)
 
 [node name="from_marens_refuge" type="Marker2D" parent="."]
 position = Vector2(224, 464)
+
+[node name="from_fenmothers_hollow" type="Marker2D" parent="."]
+position = Vector2(336, 528)
 
 [node name="Scene2Trigger" type="Area2D" parent="Entities"]
 position = Vector2(816, 528)
@@ -177,4 +195,12 @@ offset_top = 472
 offset_right = 760
 offset_bottom = 488
 text = "Ironmouth"
+horizontal_alignment = 1
+
+[node name="LabelFenmothersHollow" type="Label" parent="."]
+offset_left = 296
+offset_top = 536
+offset_right = 440
+offset_bottom = 552
+text = "Fenmother's Hollow"
 horizontal_alignment = 1

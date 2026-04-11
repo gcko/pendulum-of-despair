@@ -1,0 +1,52 @@
+{
+  "scene_id": "water_of_life",
+  "entries": [
+    {
+      "id": "water_of_life_001",
+      "speaker": "torren",
+      "lines": [
+        "This is old water. Older than the Compact. Older than",
+        "the Duskfen. It remembers what this place was."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "water_of_life_002",
+      "speaker": "lira",
+      "lines": [
+        "The extraction pipes from the Compact's upriver station",
+        "bypass this aquifer entirely. They didn't know it was",
+        "here. Lucky for us."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "water_of_life_003",
+      "speaker": "sable",
+      "lines": [
+        "That's a nice bowl. We taking it?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "water_of_life_004",
+      "speaker": "torren",
+      "lines": [
+        "It's a sacred vessel. We're borrowing it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

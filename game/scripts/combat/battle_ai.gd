@@ -1,8 +1,8 @@
 extends RefCounted
 ## Enemy action selection for battle.
 ##
-## Weighted-random for regular enemies. Boss AI is a stub — scripted
-## behavior deferred to content gaps (4.1+).
+## Weighted-random for regular enemies. Scripted boss AI for
+## Vein Guardian, Drowned Sentinel, and Corrupted Fenmother.
 
 
 ## Select an action for a regular enemy.
@@ -49,7 +49,8 @@ static func select_boss_action(
 	if living.is_empty():
 		return {"type": "defend", "target_slot": -1, "ability_id": ""}
 
-	var _phase: int = _get_boss_phase(enemy_data, current_hp)
+	@warning_ignore("return_value_discarded")
+	_get_boss_phase(enemy_data, current_hp)  # TODO: use for scripted AI
 	var target: int = _pick_physical_target(living, party_rows)
 	return {"type": "attack", "target_slot": target, "ability_id": ""}
 
@@ -104,3 +105,92 @@ static func get_vein_guardian_action(
 	return {
 		"type": "ability", "id": "ember_pulse", "target": "all", "element": "flame", "power": 20
 	}
+
+
+## Drowned Sentinel scripted AI (hardcoded).
+## Every 4th turn: Barnacle Shield (DEF buff). Every 3rd: Frost Wave (AoE).
+## Default: Stone Slam (physical, alive target).
+static func get_drowned_sentinel_action(state: Node, turn: int) -> Dictionary:
+	if turn % 4 == 0:
+		return {"type": "ability", "id": "barnacle_shield", "target": "self", "element": ""}
+	if turn % 3 == 0:
+		return {
+			"type": "ability", "id": "frost_wave", "target": "all", "element": "frost", "power": 20
+		}
+	return {"type": "attack", "id": "stone_slam", "target_slot": pick_alive_target(state)}
+
+
+## Corrupted Fenmother scripted AI (hardcoded).
+## Dive/surface state machine with phase transitions at 50% HP.
+## Phase 1: turn-counter priority (Tail Sweep, Water Jet).
+## Phase 2: spawn adds when low, more aggressive attacks.
+static func get_corrupted_fenmother_action(
+	state: Node,
+	turn: int,
+	hp_ratio: float,
+	surface_count: int,
+	is_diving: bool,
+	spawned_adds: bool,
+	active_adds: int
+) -> Dictionary:
+	# Dive/surface cycle: surface 3 turns, dive 2 turns
+	if is_diving:
+		if surface_count >= 2:
+			return {"type": "skip", "id": "resurface"}
+		return {"type": "skip", "id": "dive"}
+
+	if surface_count >= 3:
+		return {"type": "skip", "id": "start_dive"}
+
+	# Phase 2: <= 50% HP
+	if hp_ratio <= 0.5:
+		if active_adds < 2 and (turn % 3 == 0 or not spawned_adds):
+			return {
+				"type": "spawn",
+				"id": "spawn_adds",
+				"enemies": ["corrupted_spawn", "corrupted_spawn"]
+			}
+		if turn % 3 == 0:
+			return {
+				"type": "ability",
+				"id": "water_jet",
+				"target_slot": _pick_lowest_hp_target(state),
+				"element": "frost",
+				"power": 25
+			}
+		if turn % 2 == 0:
+			return {"type": "ability", "id": "tail_sweep", "target": "all", "element": ""}
+		return {
+			"type": "ability",
+			"id": "water_jet",
+			"target_slot": _pick_lowest_hp_target(state),
+			"element": "frost",
+			"power": 25
+		}
+
+	# Phase 1: > 50% HP
+	if turn % 4 == 0:
+		return {"type": "ability", "id": "tail_sweep", "target": "all", "element": ""}
+	if turn % 3 == 0:
+		return {
+			"type": "ability",
+			"id": "water_jet",
+			"target_slot": _pick_lowest_hp_target(state),
+			"element": "frost",
+			"power": 25
+		}
+	return {"type": "ability", "id": "tail_sweep", "target": "all", "element": ""}
+
+
+## Pick the living party member with the lowest current HP.
+static func _pick_lowest_hp_target(state: Node) -> int:
+	var best_slot: int = 0
+	var best_hp: int = 999999
+	for i: int in range(4):
+		var m: Dictionary = state.get_member(i)
+		if m.get("is_alive", false):
+			var hp: int = m.get("current_hp", 999999)
+			if hp < best_hp:
+				best_hp = hp
+				best_slot = i
+	return best_slot

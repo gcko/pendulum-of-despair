@@ -30,6 +30,12 @@ var _earned_drops: Array[Dictionary] = []
 var _vg_last_action: String = ""
 var _vg_reconstructed: bool = false
 var _turn_counter: int = 0
+var _fm_surface_count: int = 0
+var _fm_diving: bool = false
+var _fm_spawned_adds: bool = false
+var _wave_num: int = -1
+var _cleansing_origin_position: Variant = null
+var _encounter_source: String = ""
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -58,6 +64,11 @@ func _ready() -> void:
 	_is_boss = data.get("is_boss", false)
 	_boss_flag = data.get("boss_flag", "")
 	_formation_type = data.get("formation_type", "normal")
+	_wave_num = data.get("wave_num", -1)
+	_cleansing_origin_position = data.get("cleansing_origin_position", null)
+	_encounter_source = data.get("encounter_source", "")
+	if _encounter_source == "cleansing_wave":
+		_is_boss = true
 	var encounter_group: Array = data.get("encounter_group", [])
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
@@ -199,7 +210,7 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		_do_magic_on_enemy(slot, mag, power, element, etgt)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
-			if _enemies[i].is_alive:
+			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
 				_do_magic_on_enemy(slot, mag, power, element, i)
 	elif target_type in ["single_ally", "all_allies"]:
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
@@ -294,6 +305,27 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 		action = BattleAI.get_vein_guardian_action(
 			_state, _turn_counter, hp_ratio, _vg_last_action, _vg_reconstructed
 		)
+	elif _is_boss and enemy.enemy_data.get("id", "") == "drowned_sentinel":
+		action = BattleAI.get_drowned_sentinel_action(_state, _turn_counter)
+	elif _is_boss and enemy.enemy_data.get("id", "") == "corrupted_fenmother":
+		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
+		var active_adds: int = (
+			_enemies
+			. filter(
+				func(e: Node) -> bool:
+					return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
+			)
+			. size()
+		)
+		action = BattleAI.get_corrupted_fenmother_action(
+			_state,
+			_turn_counter,
+			hp_ratio,
+			_fm_surface_count,
+			_fm_diving,
+			_fm_spawned_adds,
+			active_adds
+		)
 	elif enemy.enemy_data.get("is_mini_boss", false) or not _is_boss:
 		action = BattleAI.select_action(enemy.enemy_data, pm, pr)
 	else:
@@ -302,8 +334,51 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 		_vg_last_action = action.get("id", "")
 		if action.get("id", "") == "reconstruct":
 			_vg_reconstructed = true
+	if enemy.enemy_data.get("id", "") == "corrupted_fenmother":
+		var aid: String = action.get("id", "")
+		if aid == "spawn_adds":
+			_fm_spawned_adds = true
+			_fm_surface_count += 1
+		elif aid == "start_dive":
+			_fm_diving = true
+			_fm_surface_count = 0
+		elif aid == "dive":
+			_fm_surface_count += 1
+		elif aid == "resurface":
+			_fm_diving = false
+			_fm_surface_count = 0
+		else:
+			_fm_surface_count += 1
 	_turn_counter += 1
 	var atype: String = action.get("type", "")
+	if atype == "spawn":
+		var spawn_ids: Array = action.get("enemies", [])
+		var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
+		for sid: String in spawn_ids:
+			var new_enemy: Node = ENEMY_SCENE.instantiate()
+			_enemy_area.add_child(new_enemy)
+			new_enemy.initialize(sid, act)
+			new_enemy.position = Vector2(randi() % 200 + 50, randi() % 100 + 20)
+			_enemies.append(new_enemy)
+			var eid: String = "enemy_%d" % (_enemies.size() - 1)
+			_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
+		message.emit("Corrupted Spawns emerge from the depths!")
+		enemy.tick_statuses()
+		return
+	if atype == "skip":
+		var skip_id: String = action.get("id", "")
+		if skip_id == "start_dive":
+			message.emit("The Fenmother dives beneath the surface!")
+			enemy.set_meta("untargetable", true)
+		elif skip_id == "resurface":
+			message.emit("The Fenmother resurfaces!")
+			enemy.set_meta("untargetable", false)
+		enemy.tick_statuses()
+		return
+	if atype == "ability" and action.get("target", "") == "self":
+		message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
+		enemy.tick_statuses()
+		return
 	if atype == "heal" and action.get("target", "") == "self":
 		var heal_amount: int = action.get("value", 0)
 		enemy.current_hp = mini(enemy.current_hp + heal_amount, enemy.enemy_data.get("hp", 1))
@@ -349,6 +424,10 @@ func _check_end_conditions() -> void:
 			if d.get("success", false):
 				_earned_drops.append({"item_id": d.get("item_id", "")})
 		var r: Dictionary = {"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops}
+		# Intercept: Fenmother boss triggers cleansing instead of victory
+		if _boss_flag == "fenmother_boss_defeated":
+			_exit_battle("fenmother_cleansing")
+			return
 		victory.emit(r)
 	elif _state.is_party_wiped():
 		defeat.emit()
@@ -365,8 +444,14 @@ func _exit_battle(result: String) -> void:
 		"earned_xp": _earned_xp,
 		"earned_gold": _earned_gold,
 		"earned_drops": _earned_drops,
-		"boss_flag": _boss_flag
+		"boss_flag": _boss_flag,
 	}
+	if _wave_num >= 0:
+		t["wave_num"] = _wave_num
+	if _cleansing_origin_position != null:
+		t["cleansing_origin_position"] = _cleansing_origin_position
+	if not _encounter_source.is_empty():
+		t["encounter_source"] = _encounter_source
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0
@@ -387,6 +472,9 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 	_vg_last_action = ""
 	_vg_reconstructed = false
 	_turn_counter = 0
+	_fm_surface_count = 0
+	_fm_diving = false
+	_fm_spawned_adds = false
 	for i: int in range(mini(6, encounter_group.size())):
 		var e: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(e)

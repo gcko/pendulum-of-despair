@@ -37,6 +37,9 @@ func initialize(p_chest_id: String, p_item_id: String) -> void:
 
 ## Called by exploration scene when player interacts.
 func interact() -> void:
+	var req: String = get_meta("required_flag", "")
+	if not req.is_empty() and not EventFlags.get_flag(req):
+		return
 	if chest_id == "":
 		return
 	if is_opened:

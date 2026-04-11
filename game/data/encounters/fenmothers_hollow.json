@@ -21,7 +21,7 @@
             "marsh_serpent",
             "marsh_serpent"
           ],
-          "weight": 31.25
+          "weight": 18.75
         },
         {
           "format": 2,
@@ -30,7 +30,7 @@
             "marsh_serpent",
             "drowned_bones"
           ],
-          "weight": 31.25
+          "weight": 18.75
         },
         {
           "format": 3,
@@ -38,17 +38,35 @@
             "drowned_bones",
             "drowned_bones"
           ],
-          "weight": 31.25
+          "weight": 12.5
         },
         {
           "format": 4,
           "enemies": [
-            "drowned_bones",
+            "bog_leech",
+            "bog_leech",
+            "marsh_serpent"
+          ],
+          "weight": 18.75
+        },
+        {
+          "format": 5,
+          "enemies": [
+            "swamp_lurker",
             "marsh_serpent",
+            "bog_leech"
+          ],
+          "weight": 18.75
+        },
+        {
+          "format": 6,
+          "enemies": [
+            "drowned_bones",
+            "swamp_lurker",
             "marsh_serpent",
             "marsh_serpent"
           ],
-          "weight": 6.25
+          "weight": 12.5
         }
       ]
     },
@@ -84,11 +102,11 @@
         {
           "format": 3,
           "enemies": [
-            "marsh_serpent",
+            "swamp_lurker",
             "marsh_serpent",
             "ley_jellyfish"
           ],
-          "weight": 31.25
+          "weight": 18.75
         },
         {
           "format": 4,
@@ -98,6 +116,15 @@
             "ley_jellyfish"
           ],
           "weight": 6.25
+        },
+        {
+          "format": 5,
+          "enemies": [
+            "swamp_lurker",
+            "polluted_elemental",
+            "marsh_serpent"
+          ],
+          "weight": 12.5
         }
       ]
     }

@@ -959,11 +959,33 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Integration tests (test_wilds_route.gd, ~25 tests)
 - [x] Design spec: `docs/superpowers/specs/2026-04-08-wilds-route-design.md`
 
-**Phase A2: Fenmother's Hollow (NOT STARTED)**
-- [ ] Second Act I dungeon (forest/swamp biome, 3 floors)
-- [ ] Drowned Sentinel mini-boss + Corrupted Fenmother boss
-- [ ] Encounter data exists (fenmothers_hollow.json)
-- [ ] New enemy types (marsh_serpent, drowned_bones, ley_jellyfish, polluted_elemental)
+**Phase A2: Fenmother's Hollow (MOSTLY COMPLETE — 2026-04-09)**
+- [x] 3 floor maps: F1 Flooded Entry (45x30), F2 Submerged Temple (50x35), F3 Sanctum (35x25)
+- [x] Swamp tileset: 4 new tiles (marsh floor, shallow water, stone wall, crystal root) at indices 10-13
+- [x] 9 enemy types verified in act_i.json (marsh_serpent through corrupted_fenmother)
+- [x] Encounter data verified (fenmothers_hollow.json: floors "1-2" and "3")
+- [x] 3 dialogue files: fenmother_battle.json, water_of_life.json, fenmother_cleansing.json
+- [x] Drowned Sentinel mini-boss AI (Barnacle Shield/Frost Wave/Stone Slam cycle)
+- [x] Corrupted Fenmother 3-phase boss AI (dive/surface, add spawning, victory interception)
+- [x] Cleansing wave sequence: 4 sequential battles after boss HP reaches 0
+- [x] Flag-gated transitions (required_flag on Area2D, blocks F2→F3 until sentinel defeated)
+- [x] Flag-gated chests (required_flag on treasure_chest, blocks Fenmother's Blessing)
+- [x] 6 treasure chests (2 on F1, 3 on F2 incl. secret room, 1 post-boss on F3)
+- [x] 3 save points (one per floor)
+- [x] Overworld entry point with label and spawn marker
+- [x] Integration tests (test_fenmothers_hollow.gd, ~37 tests)
+- [x] Design spec: docs/superpowers/specs/2026-04-09-fenmothers-hollow-design.md
+
+**Phase A2b: Fenmother's Hollow Puzzles (NOT STARTED)**
+- [ ] Water wheel puzzle entities (3 wheels, HIGH/LOW state)
+- [ ] Spirit Vessel key item + carry mechanic
+- [ ] Pure Spring interactable (fill vessel)
+- [ ] Spirit-plant revival interactable (pour vessel)
+- [ ] Water level zone visibility toggling
+- [ ] Poisoned pool tile damage zones (boss dive phase)
+- [ ] Ritual meter HUD element (wave defense progress bar)
+- [ ] Post-boss spirit-path transition scene
+- [ ] Caden NPC arrival cutscene (needs gap 3.7)
 
 **Phase B1: Party Assembly + Game Start (COMPLETE — 2026-04-09)**
 - [x] Party starts with Edren+Cael only (initialize_new_game unchanged)
