@@ -33,6 +33,9 @@ var _turn_counter: int = 0
 var _fm_surface_count: int = 0
 var _fm_diving: bool = false
 var _fm_spawned_adds: bool = false
+var _wave_num: int = -1
+var _cleansing_origin_position: Variant = null
+var _encounter_source: String = ""
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -61,6 +64,9 @@ func _ready() -> void:
 	_is_boss = data.get("is_boss", false)
 	_boss_flag = data.get("boss_flag", "")
 	_formation_type = data.get("formation_type", "normal")
+	_wave_num = data.get("wave_num", -1)
+	_cleansing_origin_position = data.get("cleansing_origin_position", null)
+	_encounter_source = data.get("encounter_source", "")
 	var encounter_group: Array = data.get("encounter_group", [])
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
@@ -435,8 +441,14 @@ func _exit_battle(result: String) -> void:
 		"earned_xp": _earned_xp,
 		"earned_gold": _earned_gold,
 		"earned_drops": _earned_drops,
-		"boss_flag": _boss_flag
+		"boss_flag": _boss_flag,
 	}
+	if _wave_num >= 0:
+		t["wave_num"] = _wave_num
+	if _cleansing_origin_position != null:
+		t["cleansing_origin_position"] = _cleansing_origin_position
+	if not _encounter_source.is_empty():
+		t["encounter_source"] = _encounter_source
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0
