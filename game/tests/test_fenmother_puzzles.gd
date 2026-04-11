@@ -3,6 +3,7 @@ extends GutTest
 
 const WHEEL_SCENE: PackedScene = preload("res://scenes/entities/water_wheel.tscn")
 const ZONE_SCENE: PackedScene = preload("res://scenes/entities/water_zone.tscn")
+const SPRING_SCENE: PackedScene = preload("res://scenes/entities/pure_spring.tscn")
 
 
 func before_each() -> void:
@@ -191,3 +192,47 @@ func test_zone_reveal_active_when_conditions_met() -> void:
 	zone.initialize("fenmothers_hollow", "wheel_1_high,wheel_2_high,wheel_3_high", "reveal")
 	zone.refresh()
 	assert_true(zone.visible, "reveal zone should be visible when all conditions met")
+
+
+# --- Pure Spring ---
+
+
+func test_spring_fill_with_empty_vessel() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel"]
+	var spring: Area2D = SPRING_SCENE.instantiate()
+	add_child_autofree(spring)
+	watch_signals(spring)
+	spring.interact()
+	assert_signal_emitted(spring, "spring_filled")
+	assert_true(
+		"spirit_vessel_filled" in PartyState.inventory["key_items"],
+		"should have filled vessel after interaction",
+	)
+	assert_false(
+		"spirit_vessel" in PartyState.inventory["key_items"],
+		"empty vessel should be removed",
+	)
+
+
+func test_spring_no_vessel() -> void:
+	PartyState.initialize_new_game()
+	var spring: Area2D = SPRING_SCENE.instantiate()
+	add_child_autofree(spring)
+	watch_signals(spring)
+	spring.interact()
+	assert_signal_not_emitted(spring, "spring_filled")
+
+
+func test_spring_already_filled() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	var spring: Area2D = SPRING_SCENE.instantiate()
+	add_child_autofree(spring)
+	watch_signals(spring)
+	spring.interact()
+	assert_signal_not_emitted(spring, "spring_filled")
+	assert_true(
+		"spirit_vessel_filled" in PartyState.inventory["key_items"],
+		"filled vessel should remain",
+	)
