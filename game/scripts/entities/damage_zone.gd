@@ -18,6 +18,8 @@ func initialize(p_zone_id: String, p_damage: int, p_interval: float, p_status: S
 	_tick_interval = p_interval
 	_status_effect = p_status
 	_status_applied = false
+	if _timer != null:
+		_timer.wait_time = _tick_interval
 
 
 func _ready() -> void:

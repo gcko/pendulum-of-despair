@@ -256,16 +256,22 @@ Two new entries in `game/data/items/key_items.json`:
 {
     "id": "spirit_vessel",
     "name": "Spirit Vessel",
+    "category": "key_item",
+    "subcategory": "story_item",
     "description": "An empty fenwood bowl lined with thin ley-crystal. It could hold sacred water.",
-    "type": "key_item",
-    "quest_item": true
+    "auto_use": false,
+    "acquired_from": "Fenmother's Hollow F1 hidden alcove",
+    "plot_effect": "Can be filled at Pure Spring"
 },
 {
     "id": "spirit_vessel_filled",
     "name": "Spirit Vessel (Filled)",
+    "category": "key_item",
+    "subcategory": "story_item",
     "description": "A fenwood bowl brimming with pure spring water. It glows faintly with spiritual energy.",
-    "type": "key_item",
-    "quest_item": true
+    "auto_use": false,
+    "acquired_from": "Pure Spring (Fenmother's Hollow F1)",
+    "plot_effect": "Restores spirit-plant on F2"
 }
 ```
 
@@ -679,15 +685,16 @@ secure the alliance" — Caden is the giver, not a chest.
 
 ```json
 {
+    "scene_id": "caden_binding",
     "entries": [
-        {"speaker": "caden", "text": "I felt it through the water. The old channels are open again."},
-        {"speaker": "caden", "text": "She's free. Weakened, but free. The binding I'll place will protect her while she heals."},
-        {"speaker": "torren", "text": "You came all the way from the Duskfen?"},
-        {"speaker": "caden", "text": "The spirits carried me. They remember the paths even when the water forgets."},
-        {"speaker": "", "text": "Caden kneels beside the shrine and traces a pattern in the water. Light follows his fingertips.", "animation": [{"who": "caden", "anim": "kneel"}]},
-        {"speaker": "caden", "text": "It's done. Take this — the Fenmother's Blessing. Her domain is yours to pass through freely."},
-        {"speaker": "edren", "text": "Thank you, Caden."},
-        {"speaker": "caden", "text": "Don't thank me. Thank her. She chose to trust you."}
+        {"id": "caden_binding_001", "speaker": "caden", "lines": ["I felt it through the water. The old channels are open", "again."], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_002", "speaker": "caden", "lines": ["She's free. Weakened, but free. The binding I'll place", "will protect her while she heals."], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_003", "speaker": "torren", "lines": ["You came all the way from the Duskfen?"], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_004", "speaker": "caden", "lines": ["The spirits carried me. They remember the paths even", "when the water forgets."], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_005", "speaker": "narrator", "lines": ["Caden kneels beside the shrine and traces a pattern in", "the water. Light follows his fingertips."], "condition": null, "animations": [{"who": "caden", "anim": "kneel"}], "choice": null, "sfx": null},
+        {"id": "caden_binding_006", "speaker": "caden", "lines": ["It's done. Take this -- the Fenmother's Blessing. Her", "domain is yours to pass through freely."], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_007", "speaker": "edren", "lines": ["Thank you, Caden."], "condition": null, "animations": null, "choice": null, "sfx": null},
+        {"id": "caden_binding_008", "speaker": "caden", "lines": ["Don't thank me. Thank her. She chose to trust you."], "condition": null, "animations": null, "choice": null, "sfx": null}
     ]
 }
 ```

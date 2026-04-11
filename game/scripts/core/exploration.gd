@@ -679,10 +679,7 @@ func _on_caden_dialogue_closed(
 
 
 func _caden_complete(caden: Node2D, completion_flag: String) -> void:
-	var key_items: Array = PartyState.inventory.get("key_items", [])
-	if "fenmothers_blessing" not in key_items:
-		key_items.append("fenmothers_blessing")
-		PartyState.inventory["key_items"] = key_items
+	PartyState.add_key_item("fenmothers_blessing")
 	flash_location_name("Received Fenmother's Blessing!")
 	EventFlags.set_flag(completion_flag, true)
 	caden.queue_free()
@@ -936,7 +933,7 @@ func _revive_fallen_at_quarter_hp() -> void:
 		if not (idx is int or idx is float):
 			continue
 		var member_index: int = int(idx)
-		if member_index >= PartyState.members.size():
+		if member_index < 0 or member_index >= PartyState.members.size():
 			continue
 		var m: Dictionary = PartyState.members[member_index]
 		var current_hp: int = m.get("current_hp", 0)

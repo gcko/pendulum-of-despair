@@ -550,7 +550,7 @@ The submerged sections of Floor 2 have a different water quality than Floor 1. T
 - `@` (center): Story trigger -- the party sees the Fenmother for the first time. A vast serpentine water spirit coiled around a ley-line node, visibly corrupted -- her translucent body streaked with dark, oily discoloration from ley-line poisoning. The ley-line node at the chamber's center is the source: a pillar of crystalline energy rising from the floor, once clear and luminous, now shot through with dark veins like diseased arteries. The poison flows from the node into the Fenmother, and from the Fenmother into the water. She is both victim and vector. Her eyes are open but unfocused -- milky, with occasional flashes of the clear amber they once were. Her coils shift slowly, involuntarily, like a sleeper in the grip of a nightmare. Torren staggers. He has to brace himself against the wall. "She's... she was beautiful. The carvings don't do her justice. Even like this, even poisoned, she's..." He cannot finish. Sable puts a hand on his shoulder. Says nothing. Maren (if present): "The node is the problem. The Compact's extraction is pulling ley energy out faster than it can regenerate. The node is compensating by drawing from the Fenmother herself. She's being drained to feed a machine that doesn't know she exists."
 - `S` (bottom-center): Save point directly before the boss arena. The spirit-totem here burns with a fierce, almost angry light -- the proximity to the Fenmother's power overcharges it despite the corruption.
 - `B` (center-bottom): Boss arena -- circular sanctum with the ley-line node at center. Shallow water covers the floor, reflecting the poisoned ley-light in shifting patterns. The walls are carved with the Fenmother in her glory -- the same image from the Floor 2 mosaic, but here rendered at massive scale. She fills the walls. The Fenmother attacks from the water, surfacing and diving.
-- `T` (bottom): Post-boss chest -- Fenmother's Blessing (key item, presented to Caden to secure the alliance).
+- `T` (bottom): Post-boss area -- the Fenmother's Blessing is granted by Caden at the Duskfen Spirit Shrine after the binding ritual.
 - `X` (bottom): Exit -- after the cleansing, a spirit-path opens. See "Secret Passage to Duskfen" below.
 
 **The sanctum's dual nature (Floor 3):** This space should feel sacred and violated simultaneously. The architecture is the most refined in the dungeon -- every surface is carved, every proportion deliberate. The pre-civilization builders made this chamber as an offering to the Fenmother, a place where she could rest at the convergence of the ley lines. The carvings show gratitude, reverence, love. And now the ley-line node at the chamber's center is visibly poisoned -- dark streaks in the otherwise clean energy, pulsing outward like infection spreading from a wound. The beauty of the chamber makes the corruption worse. This was not a place meant to suffer.
@@ -625,7 +625,7 @@ Caden arrives (he felt the cleansing through the water -- he was waiting at the 
 | Fenmother's Scale | Floor 2 chest | Accessory (+10 MAG DEF) |
 | Spirit-Bound Spear | Floor 2 chest | Weapon (Torren) |
 | Ancient Totem | Floor 2 secret room | Accessory (spirit magic boost, unique) |
-| Fenmother's Blessing | Floor 3 post-boss | Key item (alliance) |
+| Fenmother's Blessing | Caden at Duskfen Spirit Shrine | Key item (alliance) |
 
 ### Environmental Hazards
 
