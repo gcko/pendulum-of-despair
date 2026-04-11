@@ -2,6 +2,7 @@ extends GutTest
 ## Tests for Fenmother's Hollow Phase A2b puzzle systems.
 
 const WHEEL_SCENE: PackedScene = preload("res://scenes/entities/water_wheel.tscn")
+const ZONE_SCENE: PackedScene = preload("res://scenes/entities/water_zone.tscn")
 
 
 func before_each() -> void:
@@ -145,3 +146,48 @@ func test_wheel_empty_id_guard() -> void:
 	add_child_autofree(wheel)
 	wheel.initialize("", "fenmothers_hollow")
 	assert_eq(wheel.wheel_id, "", "should remain empty")
+
+
+# --- Water Zone ---
+
+
+func test_zone_condition_parsing_single() -> void:
+	var zone: Area2D = ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("fenmothers_hollow", "wheel_1_low", "block")
+	assert_eq(zone._conditions.size(), 1, "should parse 1 condition")
+
+
+func test_zone_condition_parsing_multiple() -> void:
+	var zone: Area2D = ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("fenmothers_hollow", "wheel_1_high,wheel_2_high,wheel_3_high", "block")
+	assert_eq(zone._conditions.size(), 3, "should parse 3 conditions")
+
+
+func test_zone_block_active_when_conditions_met() -> void:
+	var zone: Area2D = ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("fenmothers_hollow", "wheel_1_low", "block")
+	zone.refresh()
+	assert_true(zone.visible, "block zone should be visible when conditions met")
+
+
+func test_zone_block_inactive_when_conditions_not_met() -> void:
+	PartyState.set_puzzle_state("fenmothers_hollow", "wheel_1_high", true)
+	var zone: Area2D = ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("fenmothers_hollow", "wheel_1_low", "block")
+	zone.refresh()
+	assert_false(zone.visible, "block zone should be hidden when conditions not met")
+
+
+func test_zone_reveal_active_when_conditions_met() -> void:
+	PartyState.set_puzzle_state("fenmothers_hollow", "wheel_1_high", true)
+	PartyState.set_puzzle_state("fenmothers_hollow", "wheel_2_high", true)
+	PartyState.set_puzzle_state("fenmothers_hollow", "wheel_3_high", true)
+	var zone: Area2D = ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("fenmothers_hollow", "wheel_1_high,wheel_2_high,wheel_3_high", "reveal")
+	zone.refresh()
+	assert_true(zone.visible, "reveal zone should be visible when all conditions met")

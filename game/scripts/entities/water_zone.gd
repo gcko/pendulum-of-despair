@@ -1,0 +1,44 @@
+extends Area2D
+## Water level zone — blocks or reveals paths based on water wheel state.
+
+var _dungeon_id: String = ""
+var _conditions: Array[Dictionary] = []
+var _zone_type: String = "block"
+
+@onready var _sprite: Sprite2D = $Sprite2D
+@onready var _collision: CollisionShape2D = $CollisionShape2D
+
+
+func initialize(dungeon_id: String, conditions_str: String, zone_type: String) -> void:
+	_dungeon_id = dungeon_id
+	_zone_type = zone_type
+	_conditions = []
+	for cond: String in conditions_str.split(","):
+		var trimmed: String = cond.strip_edges()
+		if trimmed.is_empty():
+			continue
+		var parts: Array = trimmed.rsplit("_", true, 1)
+		if parts.size() < 2:
+			push_error("WaterZone: invalid condition format '%s'" % trimmed)
+			continue
+		var wheel_key: String = parts[0] + "_high"
+		var expected_high: bool = parts[1] == "high"
+		_conditions.append({"key": wheel_key, "expected_high": expected_high})
+	refresh()
+
+
+func refresh() -> void:
+	var all_met: bool = true
+	for cond: Dictionary in _conditions:
+		var actual: bool = PartyState.get_puzzle_state(_dungeon_id, cond["key"], false)
+		if actual != cond["expected_high"]:
+			all_met = false
+			break
+	if _zone_type == "block":
+		visible = all_met
+		if _collision != null:
+			_collision.disabled = not all_met
+	else:  # reveal
+		visible = all_met
+		if _collision != null:
+			_collision.disabled = all_met
