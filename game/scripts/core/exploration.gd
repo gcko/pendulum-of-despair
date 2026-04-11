@@ -58,6 +58,7 @@ var _current_floor_id: String = ""
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
 var _key_item_chest_ids: Dictionary = {}
+var _auto_walk_tween: Tween = null
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -99,6 +100,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				vp.set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
+		if not _player._input_enabled:
+			return
 		var vp: Viewport = get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
@@ -331,6 +334,12 @@ func _initialize_entities(map_node: Node2D) -> void:
 			var ti: float = child.get_meta("tick_interval", 1.0)
 			var se: String = child.get_meta("status_effect", "poison")
 			child.initialize(zid, dpt, ti, se)
+	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
+	if entities != null:
+		for child: Node in entities.get_children():
+			var vis_flag: String = child.get_meta("visible_when_flag", "")
+			if not vis_flag.is_empty():
+				child.visible = EventFlags.get_flag(vis_flag)
 	# Refresh water zones after all entities are initialized
 	if entities != null:
 		for child: Node in entities.get_children():
@@ -571,6 +580,9 @@ func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	_danger_counter = 0
 	_transitioning = true
+	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
+		_auto_walk_tween.kill()
+		_auto_walk_tween = null
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
 	_transition_tween = create_tween()
@@ -623,9 +635,11 @@ func _start_auto_walk() -> void:
 		_player.play_animation("walk_south" if direction.y > 0 else "walk_north")
 	var distance: float = _player.position.distance_to(target_pos)
 	var duration: float = distance / 80.0
-	var auto_tween: Tween = create_tween()
-	auto_tween.tween_property(_player, "position", target_pos, duration)
-	auto_tween.tween_callback(_player.set_input_enabled.bind(true))
+	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
+		_auto_walk_tween.kill()
+	_auto_walk_tween = create_tween()
+	_auto_walk_tween.tween_property(_player, "position", target_pos, duration)
+	_auto_walk_tween.tween_callback(_player.set_input_enabled.bind(true))
 
 
 func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:

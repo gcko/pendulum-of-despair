@@ -28,6 +28,7 @@ metadata/save_point_id = "duskfen_shrine_save"
 position = Vector2(128, 80)
 visible = false
 metadata/npc_id = "caden_duskfen"
+metadata/visible_when_flag = "caden_binding_complete"
 
 [node name="Transitions" type="Node2D" parent="."]
 
