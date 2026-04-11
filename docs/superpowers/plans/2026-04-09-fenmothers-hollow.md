@@ -282,7 +282,7 @@ flag-gated Chest. Transitions: back to F2, exit to overworld.
 
 Key details:
 - SavePoint "fenmothers_hollow_f3_save" at (~272, ~96)
-- BossTrigger at (~272, ~208): boss_id="corrupted_fenmother", flag="fenmother_cleansed", enemy_ids=["corrupted_fenmother"]
+- BossTrigger at (~272, ~208): boss_id="corrupted_fenmother", flag="fenmother_boss_defeated", enemy_ids=["corrupted_fenmother"]
 - Chest fenmothers_hollow_blessing / fenmothers_blessing at (~272, ~304) with required_flag="fenmother_cleansed"
 - Transition to F2 at (~272, ~48)
 - Transition to overworld at (~272, ~368) target_map="overworld" target_spawn="from_fenmothers_hollow"
@@ -717,7 +717,7 @@ func _check_end_conditions() -> void:
             if d.get("success", false):
                 _earned_drops.append({"item_id": d.get("item_id", "")})
         # Intercept: Fenmother boss triggers cleansing instead of victory
-        if _boss_flag == "fenmother_cleansed":
+        if _boss_flag == "fenmother_boss_defeated":
             _exit_battle("fenmother_cleansing")
             return
         var r: Dictionary = {"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops}
