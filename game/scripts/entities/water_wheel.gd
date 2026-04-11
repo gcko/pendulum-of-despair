@@ -14,7 +14,7 @@ var _dungeon_id: String = ""
 func initialize(p_wheel_id: String, p_dungeon_id: String) -> void:
 	if p_wheel_id.is_empty() or p_dungeon_id.is_empty():
 		if p_wheel_id.is_empty():
-			push_error("WaterWheel: empty wheel_id")
+			push_warning("WaterWheel: empty wheel_id")
 		return
 	wheel_id = p_wheel_id
 	_dungeon_id = p_dungeon_id
