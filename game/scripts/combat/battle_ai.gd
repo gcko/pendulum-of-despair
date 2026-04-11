@@ -49,7 +49,8 @@ static func select_boss_action(
 	if living.is_empty():
 		return {"type": "defend", "target_slot": -1, "ability_id": ""}
 
-	var phase: int = _get_boss_phase(enemy_data, current_hp)  # TODO: use phase for scripted AI
+	@warning_ignore("return_value_discarded")
+	_get_boss_phase(enemy_data, current_hp)  # TODO: use for scripted AI
 	var target: int = _pick_physical_target(living, party_rows)
 	return {"type": "attack", "target_slot": target, "ability_id": ""}
 

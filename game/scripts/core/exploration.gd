@@ -18,7 +18,6 @@ const CLEANSING_WAVES: Array = [
 	[
 		"ley_jellyfish",
 		"ley_jellyfish",
-		"ley_jellyfish",
 		"drowned_bones",
 		"drowned_bones",
 		"drowned_bones",
@@ -27,8 +26,6 @@ const CLEANSING_WAVES: Array = [
 	[
 		"polluted_elemental",
 		"polluted_elemental",
-		"marsh_serpent",
-		"marsh_serpent",
 		"marsh_serpent",
 		"marsh_serpent",
 		"ley_jellyfish",
@@ -510,9 +507,9 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
-	var boss_flag: String = data.get("boss_flag", "")
-	if not boss_flag.is_empty():
-		EventFlags.set_flag(boss_flag, true)
+	# Defer setting the permanent fenmother_cleansed flag until all waves
+	# succeed in _complete_cleansing(). Setting it here would bypass wave
+	# gates if the party wipes mid-sequence.
 	_danger_counter = 0
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	if _player != null:
