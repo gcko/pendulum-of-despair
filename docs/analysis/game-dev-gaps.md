@@ -976,16 +976,20 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Integration tests (test_fenmothers_hollow.gd, ~37 tests)
 - [x] Design spec: docs/superpowers/specs/2026-04-09-fenmothers-hollow-design.md
 
-**Phase A2b: Fenmother's Hollow Puzzles (NOT STARTED)**
-- [ ] Water wheel puzzle entities (3 wheels, HIGH/LOW state)
-- [ ] Spirit Vessel key item + carry mechanic
-- [ ] Pure Spring interactable (fill vessel)
-- [ ] Spirit-plant revival interactable (pour vessel)
-- [ ] Water level zone visibility toggling
-- [ ] Poisoned pool tile damage zones (boss dive phase)
-- [ ] Ritual meter HUD element (wave defense progress bar)
-- [ ] Post-boss spirit-path transition scene
-- [ ] Caden NPC arrival cutscene (needs gap 3.7)
+**Phase A2b: Fenmother's Hollow Puzzles (COMPLETE -- 2026-04-11)**
+- [x] Water wheel puzzle entities (3 wheels, HIGH/LOW state)
+- [x] Spirit Vessel key item + carry mechanic (two items: empty/filled swap)
+- [x] Pure Spring interactable (fill vessel)
+- [x] Spirit-plant revival interactable (pour vessel, opens passage)
+- [x] Water level zone visibility toggling (block/reveal based on wheel state)
+- [x] Poisoned pool tile damage zones (static F2/F3 + boss phase spawned)
+- [x] Ritual meter HUD element (between-wave performance-based drain)
+- [x] Post-boss spirit-path transition scene (auto-walk linear tunnel)
+- [x] Caden NPC arrival sequence (auto-triggered tween + dialogue, no gap 3.7 needed)
+- [x] PartyState.puzzle_state system for cross-floor persistence
+- [x] Duskfen Spirit Shrine hub map with permanent overworld shortcut
+- [x] ~53 tests in test_fenmother_puzzles.gd
+- [x] Design spec: docs/superpowers/specs/2026-04-11-fenmother-puzzles-a2b-design.md
 
 **Phase B1: Party Assembly + Game Start (COMPLETE — 2026-04-09)**
 - [x] Party starts with Edren+Cael only (initialize_new_game unchanged)
@@ -1144,6 +1148,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-02 | 1.1 Character Data | NOT STARTED → COMPLETE. 6 JSON files (edren, cael, lira, torren, sable, maren). All values verified against progression.md and characters.md. Milestone formula spot-checked. Ability/spell learn schedules deferred to Gap 1.5 (lives in spell JSONs). Unblocks: 2.1, 3.3, 3.4. | — |
 | 2026-04-06 | 3.2 + 3.3 integration | Wired end-to-end encounter→battle→rewards loop. EncounterSystem static helper (5 methods), BattleManager drops in transition data, XP/level-up distribution, exploration danger counter + battle return handling. 1 new file, 4 modified, 2 test files. | — |
 | 2026-04-07 | 4.1 Ember Vein vertical slice | 3-floor dungeon (F1, F2, F4) with TileMapLayer pipeline, placeholder tileset, boss trigger zones, Vein Guardian 2-phase scripted AI, Ember Drake mini-boss, floor-specific encounters, PartyState battle integration, dialogue stubs, event flags, 9 treasure items. | — |
+| 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
 
 ---
 
