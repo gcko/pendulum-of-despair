@@ -52,6 +52,11 @@ func _physics_process(_delta: float) -> void:
 	position = position.round()
 
 
+## Whether player input is currently being processed.
+func is_input_enabled() -> bool:
+	return _input_enabled
+
+
 ## Enable or disable player input processing (for auto-walk scenes).
 func set_input_enabled(enabled: bool) -> void:
 	_input_enabled = enabled

@@ -13,10 +13,19 @@ var _timer: Timer = null
 
 
 func initialize(p_zone_id: String, p_damage: int, p_interval: float, p_status: String) -> void:
+	if p_zone_id.is_empty():
+		push_error("DamageZone: empty zone_id")
+		return
+	if p_damage < 0:
+		push_error("DamageZone: negative damage %d" % p_damage)
+		return
+	if p_interval <= 0.0:
+		push_error("DamageZone: invalid interval %f" % p_interval)
+		return
 	zone_id = p_zone_id
 	damage_per_tick = p_damage
 	_tick_interval = p_interval
-	_status_effect = p_status
+	_status_effect = p_status  # Stored for future status system — not yet applied.
 	_status_applied = false
 	if _timer != null:
 		_timer.wait_time = _tick_interval

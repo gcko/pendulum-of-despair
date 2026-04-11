@@ -30,7 +30,8 @@ func initialize(dungeon_id: String, conditions_str: String, zone_type: String) -
 func refresh() -> void:
 	var all_met: bool = true
 	for cond: Dictionary in _conditions:
-		var actual: bool = PartyState.get_puzzle_state(_dungeon_id, cond["key"], false)
+		var raw: Variant = PartyState.get_puzzle_state(_dungeon_id, cond["key"], false)
+		var actual: bool = raw as bool if raw is bool else false
 		if actual != cond["expected_high"]:
 			all_met = false
 			break

@@ -59,6 +59,7 @@ var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
 var _key_item_chest_ids: Dictionary = {}
 var _auto_walk_tween: Tween = null
+var _arrival_tween: Tween = null
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -94,13 +95,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("ui_menu"):
+		if _player != null and not _player.is_input_enabled():
+			return
 		if GameManager.push_overlay(GameManager.OverlayState.MENU):
 			var vp: Viewport = get_viewport()
 			if vp != null:
 				vp.set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		if not _player._input_enabled:
+		if not _player.is_input_enabled():
 			return
 		var vp: Viewport = get_viewport()
 		if vp != null:
@@ -313,6 +316,9 @@ func _initialize_entities(map_node: Node2D) -> void:
 			if wid.is_empty():
 				push_error("Exploration: WaterWheel '%s' missing wheel_id" % child.name)
 				continue
+			if did.is_empty():
+				push_error("Exploration: WaterWheel '%s' missing dungeon_id" % child.name)
+				continue
 			child.initialize(wid, did)
 		elif child.has_method("refresh") and not child.has_signal("wheel_toggled"):
 			var did: String = child.get_meta("dungeon_id", "")
@@ -326,6 +332,9 @@ func _initialize_entities(map_node: Node2D) -> void:
 			var did: String = child.get_meta("dungeon_id", "")
 			if pid.is_empty():
 				push_error("Exploration: SpiritPlant '%s' missing plant_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: SpiritPlant '%s' missing dungeon_id" % child.name)
 				continue
 			child.initialize(pid, did)
 		elif child.has_signal("zone_damage_dealt"):
@@ -451,8 +460,8 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
-func _on_chest_opened(_chest_id: String, item_id: String) -> void:
-	if _key_item_chest_ids.get(_chest_id, false):
+func _on_chest_opened(chest_id: String, item_id: String) -> void:
+	if _key_item_chest_ids.get(chest_id, false):
 		PartyState.add_key_item(item_id)
 	else:
 		PartyState.add_item(item_id, 1)
@@ -488,8 +497,9 @@ func _on_plant_restored(_plant_id: String) -> void:
 		GameManager.overlay_node.show_dialogue(entries)
 
 
-func _on_zone_damage_dealt(_zone_id: String, _total_damage: int) -> void:
-	pass
+func _on_zone_damage_dealt(_zone_id: String, total_damage: int) -> void:
+	if total_damage > 0 and _player != null:
+		flash_location_name("-%d HP" % total_damage)
 
 
 func _on_interaction_message(text: String) -> void:
@@ -583,6 +593,9 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
 		_auto_walk_tween.kill()
 		_auto_walk_tween = null
+	if _arrival_tween != null and _arrival_tween.is_valid():
+		_arrival_tween.kill()
+		_arrival_tween = null
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
 	_transition_tween = create_tween()
@@ -664,11 +677,13 @@ func _run_caden_binding(completion_flag: String) -> void:
 	caden.position = start_pos
 	caden.modulate.a = 0.0
 	caden.initialize("caden_duskfen")
-	var arrival_tween: Tween = create_tween()
-	arrival_tween.set_parallel(true)
-	arrival_tween.tween_property(caden, "modulate:a", 1.0, 0.5)
-	arrival_tween.tween_property(caden, "position", center, 1.5)
-	arrival_tween.chain().tween_callback(_caden_start_dialogue.bind(caden, completion_flag))
+	if _arrival_tween != null and _arrival_tween.is_valid():
+		_arrival_tween.kill()
+	_arrival_tween = create_tween()
+	_arrival_tween.set_parallel(true)
+	_arrival_tween.tween_property(caden, "modulate:a", 1.0, 0.5)
+	_arrival_tween.tween_property(caden, "position", center, 1.5)
+	_arrival_tween.chain().tween_callback(_caden_start_dialogue.bind(caden, completion_flag))
 
 
 func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
@@ -771,6 +786,7 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 	_distribute_crystal_xp(rewards.get("xp", 0))
 	_danger_counter = 0
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
+	_spawned_pool_count = 0
 	if _player != null:
 		var origin: Variant = data.get("cleansing_origin_position", null)
 		if origin is Vector2:

@@ -56,7 +56,7 @@
         "the water. Light follows his fingertips."
       ],
       "condition": null,
-      "animations": [{"who": "caden", "anim": "kneel"}],
+      "animations": [{"who": "caden", "anim": "head_down"}],
       "choice": null,
       "sfx": null
     },
