@@ -5,6 +5,7 @@ const WHEEL_SCENE: PackedScene = preload("res://scenes/entities/water_wheel.tscn
 const ZONE_SCENE: PackedScene = preload("res://scenes/entities/water_zone.tscn")
 const SPRING_SCENE: PackedScene = preload("res://scenes/entities/pure_spring.tscn")
 const PLANT_SCENE: PackedScene = preload("res://scenes/entities/spirit_plant.tscn")
+const DAMAGE_ZONE_SCENE: PackedScene = preload("res://scenes/entities/damage_zone.tscn")
 
 
 func before_each() -> void:
@@ -349,3 +350,73 @@ func test_plant_reinitialize_after_restore_stays_open() -> void:
 	var col: CollisionShape2D = plant.get_node_or_null("CollisionShape2D")
 	if col != null:
 		assert_true(col.disabled, "collision should remain disabled")
+
+
+# --- Damage Zone ---
+
+
+func test_damage_zone_initialize() -> void:
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 8, 1.0, "poison")
+	assert_eq(zone.zone_id, "test_pool")
+	assert_eq(zone.damage_per_tick, 8)
+
+
+func test_damage_zone_deals_damage() -> void:
+	PartyState.initialize_new_game()
+	var edren: Dictionary = PartyState.get_member("edren")
+	var hp_before: int = edren.get("current_hp", 0)
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 10, 1.0, "")
+	zone._apply_tick()
+	var hp_after: int = PartyState.get_member("edren").get("current_hp", 0)
+	assert_lt(hp_after, hp_before, "HP should decrease after damage tick")
+
+
+func test_damage_zone_clamps_to_min_1() -> void:
+	PartyState.initialize_new_game()
+	var edren: Dictionary = PartyState.get_member("edren")
+	edren["current_hp"] = 5
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 100, 1.0, "")
+	zone._apply_tick()
+	var hp_after: int = PartyState.get_member("edren").get("current_hp", 0)
+	assert_eq(hp_after, 1, "HP should clamp to 1, not kill")
+
+
+func test_damage_zone_applies_status_first_tick_only() -> void:
+	PartyState.initialize_new_game()
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 5, 1.0, "poison")
+	zone._apply_tick()
+	assert_true(zone._status_applied, "status should be applied on first tick")
+	zone._apply_tick()
+	assert_true(zone._status_applied, "flag should remain true")
+
+
+func test_damage_zone_signal_emitted() -> void:
+	PartyState.initialize_new_game()
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 10, 1.0, "")
+	watch_signals(zone)
+	zone._apply_tick()
+	assert_signal_emitted(zone, "zone_damage_dealt")
+
+
+func test_damage_zone_no_damage_after_exit() -> void:
+	PartyState.initialize_new_game()
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 10, 1.0, "")
+	zone._player_inside = true
+	zone._apply_tick()
+	var hp_after_tick: int = PartyState.get_member("edren").get("current_hp", 0)
+	zone._player_inside = false
+	zone._on_tick()
+	var hp_after_exit: int = PartyState.get_member("edren").get("current_hp", 0)
+	assert_eq(hp_after_exit, hp_after_tick, "no further damage after player exits")
