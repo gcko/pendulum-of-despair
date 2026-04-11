@@ -323,11 +323,10 @@ Magic/Abilities screens.
 const COLOR_SELECTED: Color = Color("#ffff88")   # Yellow — cursor
 const COLOR_NORMAL: Color = Color("#ccddff")     # Blue-white — default
 const COLOR_DISABLED: Color = Color("#666688")    # Grey — equipped by other
-const COLOR_EQUIPPED: Color = Color("#88ff88")    # Green — equipped on self
 const COLOR_STAT_UP: Color = Color("#88ff88")     # Green — stat increase
 const COLOR_STAT_DOWN: Color = Color("#ff8888")   # Red — stat decrease
 const COLOR_WARNING: Color = Color("#ff8888")     # Red — negative effects
-const COLOR_MUTED: Color = Color("#888899")       # Muted — next level preview
+const COLOR_MUTED: Color = Color("#888899")       # Muted — Remove entry / preview
 ```
 
 **XP bar:** Same pixel-fill pattern as HP/MP bars in battle UI.

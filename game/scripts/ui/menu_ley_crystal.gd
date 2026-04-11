@@ -22,6 +22,7 @@ const STAT_LABELS: Array[String] = ["ATK", "DEF", "MAG", "MDEF", "SPD", "LCK"]
 var _character_id: String = ""
 var _crystal_ids: Array[String] = []
 var _cursor: int = 0
+var _scroll_offset: int = 0
 var _state: CrystalState = CrystalState.BROWSING
 var _detail_crystal_id: String = ""
 
@@ -65,6 +66,7 @@ func open(character_id: String) -> void:
 		return
 	_character_id = character_id
 	_cursor = 0
+	_scroll_offset = 0
 	_state = CrystalState.BROWSING
 	_detail_crystal_id = ""
 	_crystal_ids = PartyState.get_collected_crystals()
@@ -101,6 +103,7 @@ func _handle_browse_input(event: InputEvent) -> bool:
 		var new_cursor: int = _cursor + GRID_COLS
 		if new_cursor < total_entries:
 			_cursor = new_cursor
+			_ensure_cursor_visible()
 		_update_grid()
 		_update_desc()
 		return true
@@ -108,6 +111,7 @@ func _handle_browse_input(event: InputEvent) -> bool:
 		var new_cursor: int = _cursor - GRID_COLS
 		if new_cursor >= 0:
 			_cursor = new_cursor
+			_ensure_cursor_visible()
 		_update_grid()
 		_update_desc()
 		return true
@@ -131,6 +135,15 @@ func _handle_browse_input(event: InputEvent) -> bool:
 		_confirm_selection()
 		return true
 	return false
+
+
+## Adjust scroll offset so the cursor row is visible in the grid.
+func _ensure_cursor_visible() -> void:
+	var cursor_row: int = _cursor / GRID_COLS
+	if cursor_row < _scroll_offset:
+		_scroll_offset = cursor_row
+	elif cursor_row >= _scroll_offset + GRID_ROWS:
+		_scroll_offset = cursor_row - GRID_ROWS + 1
 
 
 func _handle_detail_input(event: InputEvent) -> bool:
@@ -285,17 +298,19 @@ func _update_char_info() -> void:
 
 func _update_grid() -> void:
 	var total_entries: int = _get_total_entries()
+	var visible_start: int = _scroll_offset * GRID_COLS
 	for i: int in range(_crystal_labels.size()):
 		var label: Label = _crystal_labels[i]
 		if label == null:
 			continue
-		if i >= total_entries:
+		var data_index: int = visible_start + i
+		if data_index >= total_entries:
 			label.text = ""
 			label.visible = false
 			continue
 		label.visible = true
-		if i < _crystal_ids.size():
-			var crystal_id: String = _crystal_ids[i]
+		if data_index < _crystal_ids.size():
+			var crystal_id: String = _crystal_ids[data_index]
 			var static_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
 			var runtime: Dictionary = PartyState.get_crystal_state(crystal_id)
 			var level: int = runtime.get("level", 1)
@@ -306,7 +321,7 @@ func _update_grid() -> void:
 			)
 			var prefix: String = "E " if is_equipped_by_other else "  "
 			label.text = "%s%-14s Lv%d" % [prefix, crystal_name, level]
-			if i == _cursor:
+			if data_index == _cursor:
 				label.modulate = COLOR_SELECTED
 			elif is_equipped_by_other:
 				label.modulate = COLOR_DISABLED
@@ -315,7 +330,7 @@ func _update_grid() -> void:
 		else:
 			# "Remove" entry
 			label.text = "  Remove"
-			label.modulate = COLOR_SELECTED if i == _cursor else COLOR_MUTED
+			label.modulate = COLOR_SELECTED if data_index == _cursor else COLOR_MUTED
 
 
 func _update_desc() -> void:
