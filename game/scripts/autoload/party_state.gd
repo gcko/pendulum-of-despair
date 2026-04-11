@@ -37,6 +37,7 @@ var gold: int = 0
 var playtime: int = 0
 var location_name: String = ""
 var is_at_save_point: bool = false
+var ley_crystals: Dictionary = {}
 var _config: Dictionary = {}
 var _config_loaded: bool = false
 var _next_inst_id: int = 0
@@ -67,6 +68,7 @@ func initialize_new_game() -> void:
 	gold = STARTING_GOLD
 	playtime = 0
 	location_name = ""
+	ley_crystals.clear()
 
 
 func add_member(character_id: String, level: int = 1) -> void:
@@ -117,6 +119,7 @@ func load_from_save(data: Dictionary) -> void:
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
+	ley_crystals = data.get("ley_crystals", {})
 
 
 func build_save_data() -> Dictionary:
@@ -128,7 +131,8 @@ func build_save_data() -> Dictionary:
 		location_name,
 		gold,
 		EventFlags.to_save_data(),
-		playtime
+		playtime,
+		ley_crystals
 	)
 
 
@@ -139,6 +143,46 @@ func get_active_party() -> Array[Dictionary]:
 ## Get reserve (non-active) party members.
 func get_reserve_party() -> Array[Dictionary]:
 	return Helpers.get_reserve_members(members, formation)
+
+
+## Add a Ley Crystal to the collection at Lv1 / 0 XP. No-op if already owned.
+func add_ley_crystal(crystal_id: String) -> void:
+	if crystal_id.is_empty() or ley_crystals.has(crystal_id):
+		return
+	ley_crystals[crystal_id] = {"xp": 0, "level": 1}
+
+
+## Get a crystal's runtime state. Returns empty dict if not owned.
+func get_crystal_state(crystal_id: String) -> Dictionary:
+	return ley_crystals.get(crystal_id, {})
+
+
+## Add XP to a crystal. Auto-levels when thresholds are crossed.
+## At Lv5 (max), excess XP is discarded. Multi-level jumps supported.
+func add_crystal_xp(crystal_id: String, amount: int) -> void:
+	if not ley_crystals.has(crystal_id) or amount <= 0:
+		return
+	var state: Dictionary = ley_crystals[crystal_id]
+	var crystal_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
+	var thresholds: Array = crystal_data.get("xp_thresholds", [0, 800, 2500, 6000, 15000])
+	var level: int = state.get("level", 1)
+	if level >= 5:
+		return
+	var xp: int = state.get("xp", 0) + amount
+	while level < 5 and level < thresholds.size() and xp >= thresholds[level]:
+		level += 1
+	if level >= 5:
+		xp = thresholds[4] if thresholds.size() > 4 else 15000
+	state["xp"] = xp
+	state["level"] = level
+
+
+## Get all collected crystal IDs.
+func get_collected_crystals() -> Array[String]:
+	var result: Array[String] = []
+	for key: String in ley_crystals:
+		result.append(key)
+	return result
 
 
 ## Apply battle rewards (XP, gold, drops). Returns Helpers.distribute_rewards() summary.
