@@ -66,10 +66,10 @@ exactly — no rounding, no approximation.
 | Polluted Elemental | Elemental | 9 | 273 | 31 | 18 | 15 | 20 | 14 | 15 | 13 | 28 | Flame | — | Frost | Petrify | F2-F3 |
 | Corrupted Spawn | Beast | 10 | 288 | 0 | 27 | 14 | 20 | 14 | 16 | 15 | 30 | — | — | — | — | F3 (waves only) |
 
-**Note:** Bog Leech and Swamp Lurker have floor ranges but do not appear
-in the existing encounter table JSON. They are included as enemy data for
-future encounter table expansion (Phase A2b may add them to encounter
-groups). Corrupted Spawn appears only in cleansing wave battles.
+**Note:** Bog Leech and Swamp Lurker are now included in encounter groups
+(added during review — originally deferred to Phase A2b). Bog Leech
+appears in F1–F2 groups, Swamp Lurker in F1–F3 groups per bestiary.
+Corrupted Spawn appears only in cleansing wave battles.
 
 **Note:** Steal data is included in all enemy JSON files for future use.
 The steal command is not yet implemented in battle_manager.gd.
@@ -201,8 +201,8 @@ In `_initialize_from_transition_data`, add `elif r == "fenmother_cleansing"`:
 | Wave | Enemies | encounter_group |
 |------|---------|-----------------|
 | 1 | "The Poison Breaks" | ["marsh_serpent","marsh_serpent","marsh_serpent","marsh_serpent","polluted_elemental","polluted_elemental"] |
-| 2 | "She Remembers" | ["ley_jellyfish","ley_jellyfish","ley_jellyfish","drowned_bones","drowned_bones","drowned_bones","polluted_elemental"] |
-| 3 | "The Last Resistance" | ["polluted_elemental","polluted_elemental","marsh_serpent","marsh_serpent","marsh_serpent","marsh_serpent","ley_jellyfish","ley_jellyfish"] |
+| 2 | "She Remembers" | ["ley_jellyfish","ley_jellyfish","drowned_bones","drowned_bones","drowned_bones","polluted_elemental"] |
+| 3 | "The Last Resistance" | ["polluted_elemental","polluted_elemental","marsh_serpent","marsh_serpent","ley_jellyfish","ley_jellyfish"] |
 | 4 | "Release" | ["corrupted_spawn","corrupted_spawn","corrupted_spawn"] |
 
 **Wave return handling:**
@@ -321,7 +321,7 @@ Entities:
   - SavePoint "fenmothers_hollow_f3_save" at (~272, ~96) — fierce glow
   - BossTrigger "corrupted_fenmother" at (~272, ~208)
     - boss_id: "corrupted_fenmother"
-    - flag: "fenmother_cleansed"
+    - flag: "fenmother_boss_defeated"
     - enemy_ids: ["corrupted_fenmother"]
     - enemy_act: "act_i"
   - Chest "fenmothers_blessing" at (~272, ~304)
@@ -617,7 +617,7 @@ Instantiate each floor scene, iterate Entities children, verify chest metadata:
 
 **Boss triggers (2 tests):**
 - `test_drowned_sentinel_trigger` — F2 Entities has Area2D with boss_id "drowned_sentinel", flag "drowned_sentinel_defeated", enemy_ids contains "drowned_sentinel"
-- `test_corrupted_fenmother_trigger` — F3 Entities has Area2D with boss_id "corrupted_fenmother", flag "fenmother_cleansed", enemy_ids contains "corrupted_fenmother"
+- `test_corrupted_fenmother_trigger` — F3 Entities has Area2D with boss_id "corrupted_fenmother", flag "fenmother_boss_defeated", enemy_ids contains "corrupted_fenmother"
 
 **Transitions (3 tests):**
 - `test_f1_to_f2_transition` — F1 Transitions has Area2D with target_map "dungeons/fenmothers_hollow_f2"

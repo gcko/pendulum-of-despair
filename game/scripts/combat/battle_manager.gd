@@ -422,7 +422,7 @@ func _check_end_conditions() -> void:
 				_earned_drops.append({"item_id": d.get("item_id", "")})
 		var r: Dictionary = {"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops}
 		# Intercept: Fenmother boss triggers cleansing instead of victory
-		if _boss_flag == "fenmother_cleansed":
+		if _boss_flag == "fenmother_boss_defeated":
 			_exit_battle("fenmother_cleansing")
 			return
 		victory.emit(r)

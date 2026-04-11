@@ -229,7 +229,7 @@ func test_f2_has_drowned_sentinel_boss() -> void:
 func test_f3_has_corrupted_fenmother_boss() -> void:
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f3.tscn")
 	assert_true(text.contains('metadata/boss_id = "corrupted_fenmother"'))
-	assert_true(text.contains('metadata/flag = "fenmother_cleansed"'))
+	assert_true(text.contains('metadata/flag = "fenmother_boss_defeated"'))
 
 
 # --- Transitions ---

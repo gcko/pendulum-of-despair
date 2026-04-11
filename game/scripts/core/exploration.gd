@@ -507,9 +507,10 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
-	# Defer setting the permanent fenmother_cleansed flag until all waves
-	# succeed in _complete_cleansing(). Setting it here would bypass wave
-	# gates if the party wipes mid-sequence.
+	# Prevent the boss trigger from re-firing if the player wipes mid-wave
+	# and reloads back to F3. The permanent fenmother_cleansed flag is
+	# deferred to _complete_cleansing() so post-boss chests stay gated.
+	EventFlags.set_flag("fenmother_boss_defeated", true)
 	_danger_counter = 0
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	if _player != null:
