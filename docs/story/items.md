@@ -471,6 +471,8 @@ These items gate progression into specific dungeons or areas. They activate auto
 
 | Item | Acquired From | Auto-Use Trigger | Dungeon/Area Affected |
 |------|--------------|-----------------|----------------------|
+| Spirit Vessel | Fenmother's Hollow F1 hidden alcove | Fill at Pure Spring | Fenmother's Hollow spirit-plants |
+| Spirit Vessel (Filled) | Pure Spring in Fenmother's Hollow F1 | Approach withered spirit-plant | Fenmother's Hollow blocked passages |
 | Mine Water Vial | Ember Vein F2 chest | Approach Dying Ember Crystal | Ember Vein F3 |
 | Archivist's Codex | Archive of Ages quest | Approach sealed ley door | Ley Depths F5, Forgotten Forge |
 | Ironmark Tunnel Map | Old Foreman's Office hidden compartment (dungeons-city.md) | Enter Ironmark passage | Ironmark Citadel |
@@ -517,7 +519,7 @@ Items that advance or gate specific plot events. Unlike dungeon access items, th
 
 | Item | Acquired From | Plot Effect |
 |------|--------------|------------|
-| Fenmother's Blessing | Corrupted Fenmother | Safe passage through Fenmother's domain |
+| Fenmother's Blessing | Caden at Duskfen Spirit Shrine | Safe passage through Fenmother's domain |
 | Compact Battle Standard | The Ashen Ram | Proof of Valdris Siege victory |
 | Pallor-Laced Iron | The Ashen Ram (steal) | Evidence of Pallor in Compact war machines |
 | Corrupted Tuning Fork | The Forge Warden (steal) | Links Ashmark corruption to Vaelith's broader plan |
