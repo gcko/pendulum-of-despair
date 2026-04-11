@@ -4,6 +4,7 @@ extends GutTest
 const WHEEL_SCENE: PackedScene = preload("res://scenes/entities/water_wheel.tscn")
 const ZONE_SCENE: PackedScene = preload("res://scenes/entities/water_zone.tscn")
 const SPRING_SCENE: PackedScene = preload("res://scenes/entities/pure_spring.tscn")
+const PLANT_SCENE: PackedScene = preload("res://scenes/entities/spirit_plant.tscn")
 
 
 func before_each() -> void:
@@ -236,3 +237,115 @@ func test_spring_already_filled() -> void:
 		"spirit_vessel_filled" in PartyState.inventory["key_items"],
 		"filled vessel should remain",
 	)
+
+
+# --- Spirit Plant ---
+
+
+func test_plant_initialize_unrestored() -> void:
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	assert_false(plant.is_restored, "should start unrestored")
+
+
+func test_plant_interact_with_filled_vessel() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	watch_signals(plant)
+	plant.interact()
+	assert_true(plant.is_restored, "should be restored after pour")
+	assert_signal_emitted(plant, "plant_restored")
+	assert_true(
+		"spirit_vessel" in PartyState.inventory["key_items"],
+		"empty vessel should be returned",
+	)
+	assert_false(
+		"spirit_vessel_filled" in PartyState.inventory["key_items"],
+		"filled vessel should be consumed",
+	)
+
+
+func test_plant_interact_without_vessel() -> void:
+	PartyState.initialize_new_game()
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	watch_signals(plant)
+	plant.interact()
+	assert_false(plant.is_restored, "should stay unrestored")
+	assert_signal_not_emitted(plant, "plant_restored")
+
+
+func test_plant_persists_restored_state() -> void:
+	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	assert_true(plant.is_restored, "should restore from puzzle_state")
+
+
+func test_plant_interact_already_restored() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	watch_signals(plant)
+	plant.interact()
+	assert_signal_not_emitted(plant, "plant_restored")
+	assert_true(
+		"spirit_vessel_filled" in PartyState.inventory["key_items"],
+		"vessel should not be consumed when already restored",
+	)
+
+
+func test_plant_collision_disabled_after_restore() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	plant.interact()
+	var col: CollisionShape2D = plant.get_node_or_null("CollisionShape2D")
+	if col != null:
+		assert_true(col.disabled, "collision should be disabled after restore")
+
+
+func test_plant_visual_changes_on_restore() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	var sprite: Sprite2D = plant.get_node_or_null("Sprite2D")
+	var color_before: Color = sprite.modulate if sprite != null else Color.WHITE
+	plant.interact()
+	if sprite != null:
+		assert_ne(sprite.modulate, color_before, "sprite color should change after restore")
+
+
+func test_plant_puzzle_state_persists_after_restore() -> void:
+	PartyState.initialize_new_game()
+	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	plant.interact()
+	var val: Variant = PartyState.get_puzzle_state("fenmothers_hollow", "plant_restored", false)
+	assert_true(val, "plant_restored should be set in puzzle_state")
+
+
+func test_plant_reinitialize_after_restore_stays_open() -> void:
+	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	var plant: StaticBody2D = PLANT_SCENE.instantiate()
+	add_child_autofree(plant)
+	plant.initialize("spirit_plant_1", "fenmothers_hollow")
+	assert_true(plant.is_restored, "should be restored from puzzle_state")
+	var col: CollisionShape2D = plant.get_node_or_null("CollisionShape2D")
+	if col != null:
+		assert_true(col.disabled, "collision should remain disabled")
