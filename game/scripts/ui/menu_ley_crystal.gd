@@ -430,6 +430,22 @@ func _build_stat_comparison(crystal_id: String, bonus: Dictionary) -> String:
 			lines.append("%s +%d" % [STAT_LABELS[i], delta])
 		elif delta < 0:
 			lines.append("%s %d" % [STAT_LABELS[i], delta])
+	# HP/MP per-level bonuses (scaled by character level)
+	var char_level: int = PartyState.get_member(_character_id).get("level", 1)
+	var new_hp: int = int(bonus.get("hp_per_level", 0)) * char_level
+	var old_hp: int = int(current_bonuses.get("hp_per_level", 0)) * char_level
+	var hp_delta: int = new_hp - old_hp
+	if hp_delta > 0:
+		lines.append("HP +%d" % hp_delta)
+	elif hp_delta < 0:
+		lines.append("HP %d" % hp_delta)
+	var new_mp: int = int(bonus.get("mp_per_level", 0)) * char_level
+	var old_mp: int = int(current_bonuses.get("mp_per_level", 0)) * char_level
+	var mp_delta: int = new_mp - old_mp
+	if mp_delta > 0:
+		lines.append("MP +%d" % mp_delta)
+	elif mp_delta < 0:
+		lines.append("MP %d" % mp_delta)
 	if lines.is_empty():
 		return "No stat change"
 	return "\n".join(lines)
