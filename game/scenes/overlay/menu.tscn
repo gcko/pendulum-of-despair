@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/menu_overlay.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/menu_items.gd" id="2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/ui/menu_magic.gd" id="6"]
 [ext_resource type="Script" path="res://scripts/ui/menu_abilities.gd" id="7"]
 [ext_resource type="Script" path="res://scripts/ui/menu_formation.gd" id="8"]
+[ext_resource type="Script" path="res://scripts/ui/menu_ley_crystal.gd" id="9"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_ff6_window"]
 bg_color = Color(0.11, 0.11, 0.31, 1)
@@ -1013,6 +1014,134 @@ theme_override_styles/panel = SubResource("StyleBox_ff6_window")
 
 [node name="SwapLabel" type="Label" parent="SubScreen/FormationScreen/Layout/HintPanel"]
 visible = false
+text = ""
+
+[node name="CrystalScreen" type="Control" parent="SubScreen"]
+visible = false
+script = ExtResource("9")
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Layout" type="VBoxContainer" parent="SubScreen/CrystalScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+
+[node name="TopRow" type="HBoxContainer" parent="SubScreen/CrystalScreen/Layout"]
+
+[node name="TitlePanel" type="PanelContainer" parent="SubScreen/CrystalScreen/Layout/TopRow"]
+theme_override_styles/panel = SubResource("StyleBox_ff6_window")
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/TopRow/TitlePanel"]
+text = "Ley Crystals"
+
+[node name="CharPanel" type="PanelContainer" parent="SubScreen/CrystalScreen/Layout/TopRow"]
+theme_override_styles/panel = SubResource("StyleBox_ff6_window")
+size_flags_horizontal = 3
+
+[node name="CharInfo" type="HBoxContainer" parent="SubScreen/CrystalScreen/Layout/TopRow/CharPanel"]
+
+[node name="NameLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/TopRow/CharPanel/CharInfo"]
+text = ""
+
+[node name="LvLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/TopRow/CharPanel/CharInfo"]
+text = ""
+
+[node name="HPLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/TopRow/CharPanel/CharInfo"]
+text = ""
+
+[node name="MPLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/TopRow/CharPanel/CharInfo"]
+text = ""
+
+[node name="CrystalPanel" type="PanelContainer" parent="SubScreen/CrystalScreen/Layout"]
+theme_override_styles/panel = SubResource("StyleBox_ff6_window")
+size_flags_vertical = 3
+
+[node name="CrystalGrid" type="HBoxContainer" parent="SubScreen/CrystalScreen/Layout/CrystalPanel"]
+
+[node name="LeftCol" type="VBoxContainer" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid"]
+size_flags_horizontal = 3
+
+[node name="Crystal0" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="Crystal1" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="Crystal2" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="Crystal3" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="Crystal4" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="Crystal5" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/LeftCol"]
+text = ""
+
+[node name="RightCol" type="VBoxContainer" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid"]
+size_flags_horizontal = 3
+
+[node name="Crystal6" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="Crystal7" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="Crystal8" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="Crystal9" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="Crystal10" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="Crystal11" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/CrystalGrid/RightCol"]
+text = ""
+
+[node name="DetailView" type="VBoxContainer" parent="SubScreen/CrystalScreen/Layout/CrystalPanel"]
+visible = false
+
+[node name="HeaderLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="XPBarBg" type="ColorRect" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+custom_minimum_size = Vector2(400, 12)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="XPBarFill" type="ColorRect" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView/XPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.667, 0.8, 1)
+
+[node name="XPLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="BonusLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="NextLevelLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="LevelUpLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="StatCompareLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="WarningLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/CrystalPanel/DetailView"]
+text = ""
+
+[node name="DescPanel" type="PanelContainer" parent="SubScreen/CrystalScreen/Layout"]
+theme_override_styles/panel = SubResource("StyleBox_ff6_window")
+
+[node name="DescLabel" type="Label" parent="SubScreen/CrystalScreen/Layout/DescPanel"]
 text = ""
 
 [node name="StubLabel" type="Label" parent="SubScreen"]

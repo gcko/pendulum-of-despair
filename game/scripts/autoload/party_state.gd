@@ -37,6 +37,7 @@ var gold: int = 0
 var playtime: int = 0
 var location_name: String = ""
 var is_at_save_point: bool = false
+var ley_crystals: Dictionary = {}
 var _config: Dictionary = {}
 var _config_loaded: bool = false
 var _next_inst_id: int = 0
@@ -67,6 +68,7 @@ func initialize_new_game() -> void:
 	gold = STARTING_GOLD
 	playtime = 0
 	location_name = ""
+	ley_crystals.clear()
 
 
 func add_member(character_id: String, level: int = 1) -> void:
@@ -117,6 +119,8 @@ func load_from_save(data: Dictionary) -> void:
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
+	var lc_data: Variant = data.get("ley_crystals", {})
+	ley_crystals = lc_data as Dictionary if lc_data is Dictionary else {}
 
 
 func build_save_data() -> Dictionary:
@@ -128,7 +132,8 @@ func build_save_data() -> Dictionary:
 		location_name,
 		gold,
 		EventFlags.to_save_data(),
-		playtime
+		playtime,
+		ley_crystals
 	)
 
 
@@ -139,6 +144,86 @@ func get_active_party() -> Array[Dictionary]:
 ## Get reserve (non-active) party members.
 func get_reserve_party() -> Array[Dictionary]:
 	return Helpers.get_reserve_members(members, formation)
+
+
+## Add a Ley Crystal to the collection at Lv1 / 0 XP. No-op if already owned.
+func add_ley_crystal(crystal_id: String) -> void:
+	if crystal_id.is_empty() or ley_crystals.has(crystal_id):
+		return
+	ley_crystals[crystal_id] = {"xp": 0, "level": 1}
+
+
+## Get a crystal's runtime state. Returns empty dict if not owned.
+func get_crystal_state(crystal_id: String) -> Dictionary:
+	return ley_crystals.get(crystal_id, {})
+
+
+## Add XP to a crystal. Auto-levels when thresholds are crossed.
+## At Lv5 (max), excess XP is discarded. Multi-level jumps supported.
+func add_crystal_xp(crystal_id: String, amount: int) -> void:
+	if not ley_crystals.has(crystal_id) or amount <= 0:
+		return
+	var state: Dictionary = ley_crystals[crystal_id]
+	var crystal_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
+	var thresholds: Array = crystal_data.get("xp_thresholds", [0, 800, 2500, 6000, 15000])
+	var level: int = state.get("level", 1)
+	if level >= 5:
+		return
+	var xp: int = state.get("xp", 0) + amount
+	while level < 5 and level < thresholds.size() and xp >= thresholds[level]:
+		level += 1
+	if level >= 5:
+		xp = thresholds[4] if thresholds.size() > 4 else 15000
+	state["xp"] = xp
+	state["level"] = level
+
+
+## Equip a crystal on a character. Swaps if another character has it.
+## Crystal slot is managed separately from owned_equipment (no instance IDs).
+func equip_crystal(character_id: String, crystal_id: String) -> void:
+	if character_id.is_empty() or crystal_id.is_empty():
+		return
+	if not ley_crystals.has(crystal_id):
+		return
+	var target: Dictionary = get_member(character_id)
+	if target.is_empty():
+		return
+	# Validate target BEFORE clearing old holder (ordering rule)
+	for m: Dictionary in members:
+		if m.get("equipment", {}).get("crystal", "") == crystal_id:
+			if m.get("character_id", "") != character_id:
+				m["equipment"]["crystal"] = ""
+				_recalculate_max_hp_mp(m.get("character_id", ""))
+				equipment_changed.emit(m.get("character_id", ""))
+			break
+	if not target.has("equipment"):
+		target["equipment"] = {}
+	target["equipment"]["crystal"] = crystal_id
+	_recalculate_max_hp_mp(character_id)
+	equipment_changed.emit(character_id)
+
+
+## Unequip the crystal slot without adding to owned_equipment.
+func unequip_crystal(character_id: String) -> String:
+	var m: Dictionary = get_member(character_id)
+	if m.is_empty():
+		return ""
+	var old_id: String = m.get("equipment", {}).get("crystal", "")
+	if old_id.is_empty():
+		return ""
+	m["equipment"]["crystal"] = ""
+	_recalculate_max_hp_mp(character_id)
+	equipment_changed.emit(character_id)
+	return old_id
+
+
+## Get all collected crystal IDs.
+func get_collected_crystals() -> Array[String]:
+	var result: Array[String] = []
+	for key: String in ley_crystals:
+		result.append(key)
+	result.sort()
+	return result
 
 
 ## Apply battle rewards (XP, gold, drops). Returns Helpers.distribute_rewards() summary.
@@ -177,13 +262,18 @@ func get_equipment_bonus(character_id: String, stat: String) -> int:
 		return 0
 	var equip: Dictionary = m.get("equipment", {})
 	var total: int = 0
-	for slot: String in ["weapon", "head", "body", "accessory", "crystal"]:
+	for slot: String in ["weapon", "head", "body", "accessory"]:
 		var equip_id: String = equip.get(slot, "")
 		if equip_id == "":
 			continue
 		var item_data: Dictionary = Helpers.lookup_equipment(equip_id)
 		total += Helpers.get_top_level_stat(item_data, slot, stat)
 		total += item_data.get("bonus_stats", {}).get(stat, 0)
+	# Crystal bonuses come from ley_crystals data, not owned_equipment
+	var crystal_id: String = equip.get("crystal", "")
+	if not crystal_id.is_empty():
+		var char_level: int = m.get("level", 1)
+		total += get_crystal_stat_bonus(crystal_id, stat, char_level)
 	return total
 
 
@@ -215,6 +305,8 @@ func equip_item(character_id: String, slot: String, equipment_id: String) -> Dic
 
 
 func unequip_slot(character_id: String, slot: String) -> String:
+	if slot == "crystal":
+		return unequip_crystal(character_id)
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return ""
@@ -236,7 +328,8 @@ func get_equippable_for_slot(character_id: String, slot: String) -> Array[Dictio
 
 func optimize_equipment(character_id: String) -> void:
 	var priority_stat: String = "mag" if character_id in ["maren", "torren"] else "atk"
-	for slot: String in ["weapon", "head", "body", "accessory", "crystal"]:
+	# Crystal slot excluded — uses ley_crystals system, not owned_equipment
+	for slot: String in ["weapon", "head", "body", "accessory"]:
 		var options: Array[Dictionary] = get_equippable_for_slot(character_id, slot)
 		if options.is_empty():
 			continue
@@ -423,6 +516,28 @@ func _remove_owned_equipment(equipment_id: String) -> void:
 		if owned_equipment[i].get("equipment_id", "") == equipment_id:
 			owned_equipment.remove_at(i)
 			return
+
+
+## Get a crystal's stat bonus at its current level. Reads level_bonuses from static data.
+## For hp/mp, also includes hp_per_level/mp_per_level scaled by character level.
+func get_crystal_stat_bonus(crystal_id: String, stat: String, char_level: int = 1) -> int:
+	var runtime: Dictionary = get_crystal_state(crystal_id)
+	if runtime.is_empty():
+		return 0
+	var level: int = runtime.get("level", 1)
+	var static_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
+	var level_bonuses: Array = static_data.get("level_bonuses", [])
+	if level_bonuses.size() < level:
+		return 0
+	var bonus: Dictionary = (
+		level_bonuses[level - 1] if level_bonuses[level - 1] is Dictionary else {}
+	)
+	var total: int = int(bonus.get(stat, 0))
+	if stat == "hp":
+		total += int(bonus.get("hp_per_level", 0)) * char_level
+	elif stat == "mp":
+		total += int(bonus.get("mp_per_level", 0)) * char_level
+	return total
 
 
 func _recalculate_max_hp_mp(character_id: String) -> void:

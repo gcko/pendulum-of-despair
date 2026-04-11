@@ -208,7 +208,7 @@ func _update_display() -> void:
 			continue
 		var slot_name: String = SLOT_NAMES[i]
 		var equip_id: String = equip.get(slot_name, "")
-		var item_name: String = _get_equipment_name(equip_id)
+		var item_name: String = _get_equipment_name(equip_id, slot_name)
 		_slot_labels[i].text = "%s: %s" % [SLOT_DISPLAY[i], item_name]
 		if _state == EquipState.SLOT_SELECT and i == _slot_index:
 			_slot_labels[i].modulate = COLOR_SELECTED
@@ -288,6 +288,7 @@ func _update_stat_comparison() -> void:
 func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id: String) -> int:
 	var base: int = member.get("base_stats", {}).get(stat, 0)
 	var equip: Dictionary = member.get("equipment", {})
+	var char_level: int = member.get("level", 1)
 	var total: int = base
 	for s: String in SLOT_NAMES:
 		var eid: String = equip.get(s, "")
@@ -295,9 +296,12 @@ func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id:
 			eid = new_equip_id
 		if eid == "":
 			continue
-		var item_data: Dictionary = _lookup_equipment(eid)
-		total += Helpers.get_top_level_stat(item_data, s, stat)
-		total += item_data.get("bonus_stats", {}).get(stat, 0)
+		if s == "crystal":
+			total += PartyState.get_crystal_stat_bonus(eid, stat, char_level)
+		else:
+			var item_data: Dictionary = _lookup_equipment(eid)
+			total += Helpers.get_top_level_stat(item_data, s, stat)
+			total += item_data.get("bonus_stats", {}).get(stat, 0)
 	if stat == "hp":
 		return clampi(total, 0, 14999)
 	if stat == "mp":
@@ -305,9 +309,12 @@ func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id:
 	return clampi(total, 0, 255)
 
 
-func _get_equipment_name(equip_id: String) -> String:
+func _get_equipment_name(equip_id: String, slot: String = "") -> String:
 	if equip_id == "":
 		return "---"
+	if slot == "crystal":
+		var crystal_data: Dictionary = DataManager.get_ley_crystal(equip_id)
+		return crystal_data.get("name", equip_id)
 	var data: Dictionary = _lookup_equipment(equip_id)
 	return data.get("name", equip_id)
 

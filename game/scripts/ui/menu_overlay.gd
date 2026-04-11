@@ -19,7 +19,7 @@ const COMMANDS: Array[Dictionary] = [
 	{"name": "Magic", "char_select": true, "stubbed": false},
 	{"name": "Abilities", "char_select": true, "stubbed": false},
 	{"name": "Equip", "char_select": true, "stubbed": false},
-	{"name": "Crystal", "char_select": true, "stubbed": true},
+	{"name": "Crystal", "char_select": true, "stubbed": false},
 	{"name": "Status", "char_select": true, "stubbed": false},
 	{"name": "Formation", "char_select": false, "stubbed": false},
 	{"name": "Config", "char_select": false, "stubbed": false},
@@ -49,6 +49,7 @@ var _config_direct: bool = false
 @onready var _status_screen: Control = $SubScreen/StatusScreen
 @onready var _config_screen: Control = $SubScreen/ConfigScreen
 @onready var _formation_screen: Control = $SubScreen/FormationScreen
+@onready var _crystal_screen: Control = $SubScreen/CrystalScreen
 @onready var _stub_label: Label = $SubScreen/StubLabel
 
 
@@ -194,6 +195,10 @@ func _open_sub_screen_for_character() -> void:
 			_open_sub_screen(_status_screen)
 			if _status_screen.has_method("open"):
 				_status_screen.open(character_id)
+		"Crystal":
+			_open_sub_screen(_crystal_screen)
+			if _crystal_screen.has_method("open"):
+				_crystal_screen.open(character_id)
 
 
 func _open_sub_screen(screen: Control) -> void:
@@ -244,6 +249,8 @@ func _hide_all_sub_screens() -> void:
 		_config_screen.visible = false
 	if _formation_screen != null:
 		_formation_screen.visible = false
+	if _crystal_screen != null:
+		_crystal_screen.visible = false
 	if _stub_label != null:
 		_stub_label.visible = false
 

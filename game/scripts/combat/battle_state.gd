@@ -15,7 +15,8 @@ signal status_removed(slot: int, status_name: String)
 var _members: Array = [null, null, null, null]
 
 
-## Add a party member to a slot.
+## Add a party member to a slot. Bakes equipment bonuses into effective_stats
+## at battle start so combat calculations reflect equipped gear and crystals.
 func add_member(slot: int, char_data: Dictionary) -> void:
 	if slot < 0 or slot > 3:
 		push_error("BattleState: Invalid slot %d" % slot)
@@ -25,9 +26,12 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 	var current_hp: int = char_data.get("current_hp", max_hp)
 	var max_mp: int = char_data.get("max_mp", stats.get("mp", 0))
 	var current_mp: int = char_data.get("current_mp", max_mp)
+	var cid: String = char_data.get("character_id", char_data.get("id", ""))
+	var effective: Dictionary = _compute_effective_stats(cid, stats)
 	_members[slot] = {
-		"character_id": char_data.get("character_id", char_data.get("id", "")),
+		"character_id": cid,
 		"character_data": char_data,
+		"effective_stats": effective,
 		"current_hp": current_hp,
 		"max_hp": max_hp,
 		"current_mp": current_mp,
@@ -190,12 +194,12 @@ func tick_realtime_statuses(slot: int, delta: float) -> void:
 			status_removed.emit(slot, sname)
 
 
-## Get effective stat with buff multiplier applied. No cap in battle.
+## Get effective stat with equipment bonuses and buff multiplier applied.
 func get_effective_stat(slot: int, stat_name: String) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return 0
-	var base: int = m["character_data"].get("base_stats", {}).get(stat_name, 0)
+	var base: int = m.get("effective_stats", {}).get(stat_name, 0)
 	var mult_key: String = stat_name + "_mult"
 	var mult: float = m.get(mult_key, 1.0)
 	return int(base * mult)
@@ -256,3 +260,15 @@ func gain_weave_gauge(slot: int, amount: int) -> void:
 func gain_weave_gauge_for_maren(amount: int) -> void:
 	for i: int in range(4):
 		gain_weave_gauge(i, amount)
+
+
+## Compute effective stats (base + equipment bonuses) for a character.
+## Called once at battle start to bake equipment into combat stats.
+func _compute_effective_stats(character_id: String, base_stats: Dictionary) -> Dictionary:
+	var effective: Dictionary = base_stats.duplicate()
+	if character_id.is_empty():
+		return effective
+	for stat: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
+		var bonus: int = PartyState.get_equipment_bonus(character_id, stat)
+		effective[stat] = effective.get(stat, 0) + bonus
+	return effective

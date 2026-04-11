@@ -280,7 +280,8 @@ static func build_save_dict(
 	loc: String,
 	g: int,
 	flags: Dictionary,
-	play_time: int = 0
+	play_time: int = 0,
+	lc: Dictionary = {}
 ) -> Dictionary:
 	return {
 		"party": party.duplicate(true),
@@ -294,7 +295,7 @@ static func build_save_dict(
 			"discovered_synergies": [],
 			"unlocked_recipes": [],
 		},
-		"ley_crystals": {"collected": []},
+		"ley_crystals": lc.duplicate(true),
 		"meta":
 		{
 			"version": 1,

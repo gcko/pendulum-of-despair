@@ -463,9 +463,8 @@ func _setup_party() -> void:
 	for i: int in range(active.size()):
 		if not active[i].is_empty():
 			_state.add_member(i, active[i])
-			_atb.add_combatant(
-				"party_%d" % i, active[i].get("base_stats", {}).get("spd", 10), false
-			)
+			var effective_spd: int = _state.get_effective_stat(i, "spd")
+			_atb.add_combatant("party_%d" % i, effective_spd, false)
 
 
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:

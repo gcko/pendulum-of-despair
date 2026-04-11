@@ -239,6 +239,7 @@ func _initialize_from_transition_data() -> void:
 				"drops": data.get("earned_drops", [])
 			}
 			PartyState.distribute_battle_rewards(rewards)
+			_distribute_crystal_xp(rewards.get("xp", 0))
 			var boss_flag: String = data.get("boss_flag", "")
 			if not boss_flag.is_empty():
 				EventFlags.set_flag(boss_flag, true)
@@ -497,6 +498,25 @@ func _end_transition() -> void:
 	_transitioning = false
 
 
+# ---------- Crystal XP distribution ----------
+
+
+func _distribute_crystal_xp(xp_per_member: int) -> void:
+	if xp_per_member <= 0:
+		return
+	var active: Array = PartyState.formation.get("active", [])
+	for idx: Variant in active:
+		if not (idx is int or idx is float):
+			continue
+		var member_index: int = int(idx)
+		if member_index < 0 or member_index >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[member_index]
+		var cid: String = m.get("equipment", {}).get("crystal", "")
+		if not cid.is_empty():
+			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))
+
+
 # ---------- Fenmother cleansing wave sequence ----------
 
 
@@ -507,6 +527,7 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
+	_distribute_crystal_xp(rewards.get("xp", 0))
 	# Prevent the boss trigger from re-firing if the player wipes mid-wave
 	# and reloads back to F3. The permanent fenmother_cleansed flag is
 	# deferred to _complete_cleansing() so post-boss chests stay gated.
@@ -537,6 +558,7 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
+	_distribute_crystal_xp(rewards.get("xp", 0))
 	_danger_counter = 0
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	if _player != null:

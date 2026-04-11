@@ -136,8 +136,9 @@ func _update_display() -> void:
 		if _equip_labels[i] == null:
 			continue
 		if i < SLOT_NAMES.size():
-			var eid: String = equip.get(SLOT_NAMES[i], "")
-			var equip_name: String = _get_equipment_name(eid)
+			var slot_name: String = SLOT_NAMES[i]
+			var eid: String = equip.get(slot_name, "")
+			var equip_name: String = _get_equipment_name(eid, slot_name)
 			_equip_labels[i].text = "%s: %s" % [SLOT_DISPLAY[i], equip_name]
 			_equip_labels[i].modulate = COLOR_NORMAL
 
@@ -159,9 +160,12 @@ func _get_ability_name(character_id: String) -> String:
 	return "Ability"
 
 
-func _get_equipment_name(equip_id: String) -> String:
+func _get_equipment_name(equip_id: String, slot: String = "") -> String:
 	if equip_id == "":
 		return "---"
+	if slot == "crystal":
+		var crystal_data: Dictionary = DataManager.get_ley_crystal(equip_id)
+		return crystal_data.get("name", equip_id)
 	var data: Dictionary = Helpers.lookup_equipment(equip_id)
 	return data.get("name", equip_id)
 

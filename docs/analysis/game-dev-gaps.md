@@ -641,8 +641,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.4 Menu Overlay
 
-**Status:** MOSTLY COMPLETE
-**Completed:** 2026-04-06 (Phase 1 — 5 of 9 screens)
+**Status:** COMPLETE
+**Completed:** 2026-04-11 (Ley Crystal screen — all 9 screens done)
 **Priority:** P1 — blocks inventory management, equipment, party setup
 **Estimated Size:** L (1 .tscn + 10+ .gd files for sub-screens)
 **Output:** `game/scenes/overlay/menu.tscn`, `game/scripts/ui/` (menu screens), `game/scripts/autoload/party_state.gd`
@@ -657,7 +657,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Abilities screen: view-only, all 6 characters, cost_type-adaptive display — Phase 2 (2026-04-08)
 - [x] Status screen: full stat display, equipment summary, elemental profile
 - [x] Formation screen: swap reorder, row toggle (F/B), active+reserve list — Phase 2 (2026-04-08)
-- [ ] Ley Crystal screen: collected crystals, equip slot, level/XP display — Phase 2
+- [x] Ley Crystal screen: browse/detail/equip, XP bar, stat comparison, negative effects — 2026-04-11
 - [x] Config screen: all 17 settings from accessibility.md (with cascade logic)
 - [x] All screens: keyboard/gamepad navigation, cursor memory, per ui-design.md specs
 - [x] Process mode: PROCESS_MODE_ALWAYS (runs while game paused)
@@ -683,8 +683,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Notes:**
 - Phase 1: 5 screens (Items, Equipment, Status, Config, Save) + framework
 - Phase 2 progress: Magic, Abilities, Formation, Shop buy-only — all complete
-- Remaining Phase 2: Ley Crystal screen only (needs PartyState crystal tracking)
-- 9 of 9 core menu screens implemented (Ley Crystal is a separate P2 system)
+- Ley Crystal screen complete (2026-04-11): browse/detail drill-down, XP bar, stat comparison, equip/unequip, save/load, crystal XP from battle rewards (30%)
+- All 9 core menu screens implemented. PartyState.ley_crystals dict tracks crystal XP/level runtime state.
 - PartyState: spend_mp(), heal_member() added for Magic field-cast
 - Config screen implements Patience Mode and Reduce Motion cascade logic per accessibility.md
 - Equipment screen has live stat comparison with green/red delta indicators
