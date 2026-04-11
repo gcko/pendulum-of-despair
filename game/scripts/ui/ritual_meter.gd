@@ -16,9 +16,15 @@ const STATUS_TEXT: Dictionary = {
 
 var meter_value: float = 100.0
 
-@onready var _fill_bar: ColorRect = $Panel/Layout/BarContainer/BarBg/BarFill
-@onready var _bar_bg: ColorRect = $Panel/Layout/BarContainer/BarBg
-@onready var _status_label: Label = $Panel/Layout/StatusLabel
+var _fill_bar: ColorRect = null
+var _bar_bg: ColorRect = null
+var _status_label: Label = null
+
+
+func _ready() -> void:
+	_fill_bar = get_node_or_null("Panel/Layout/BarContainer/BarBg/BarFill")
+	_bar_bg = get_node_or_null("Panel/Layout/BarContainer/BarBg")
+	_status_label = get_node_or_null("Panel/Layout/StatusLabel")
 
 
 func show_meter() -> void:
