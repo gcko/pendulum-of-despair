@@ -201,7 +201,7 @@ func _show_detail(crystal_id: String) -> void:
 	if _next_level_label != null:
 		if level >= 5:
 			_next_level_label.text = "Next Lv: MAX"
-		elif static_data.get("secret_lv5", false) and level < 5:
+		elif static_data.get("secret_lv5", false) and level == 4:
 			_next_level_label.text = "Next Lv: ???"
 		else:
 			var next_bonus: Dictionary = (

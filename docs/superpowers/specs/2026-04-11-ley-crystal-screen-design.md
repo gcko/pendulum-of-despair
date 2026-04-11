@@ -121,8 +121,9 @@ Each entry:
 "secret_lv5": true
 ```
 
-When `secret_lv5` is true and the crystal's current level is < 5, the
-UI shows "???" for the Lv5 bonus instead of the actual values.
+When `secret_lv5` is true and the crystal's current level is 4 (so
+the next level would be Lv5), the UI shows "???" for the next level
+preview. Levels 1-3 show the real next-level bonus normally.
 
 **Special: Dawn Fragment diminishing returns:**
 
