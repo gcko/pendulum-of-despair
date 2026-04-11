@@ -6,6 +6,7 @@ const ZONE_SCENE: PackedScene = preload("res://scenes/entities/water_zone.tscn")
 const SPRING_SCENE: PackedScene = preload("res://scenes/entities/pure_spring.tscn")
 const PLANT_SCENE: PackedScene = preload("res://scenes/entities/spirit_plant.tscn")
 const DAMAGE_ZONE_SCENE: PackedScene = preload("res://scenes/entities/damage_zone.tscn")
+const RITUAL_METER_SCRIPT: GDScript = preload("res://scripts/ui/ritual_meter.gd")
 
 
 func before_each() -> void:
@@ -420,3 +421,63 @@ func test_damage_zone_no_damage_after_exit() -> void:
 	zone._on_tick()
 	var hp_after_exit: int = PartyState.get_member("edren").get("current_hp", 0)
 	assert_eq(hp_after_exit, hp_after_tick, "no further damage after player exits")
+
+
+# --- Ritual Meter ---
+
+
+func test_ritual_meter_initial_value() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	assert_eq(meter.meter_value, 100.0, "should start at 100")
+
+
+func test_ritual_meter_drain() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	meter.drain(25.0)
+	assert_eq(meter.meter_value, 75.0, "should be 75 after draining 25")
+
+
+func test_ritual_meter_recover() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	meter.drain(50.0)
+	meter.recover(20.0)
+	assert_eq(meter.meter_value, 70.0, "should be 70 after drain 50 + recover 20")
+
+
+func test_ritual_meter_clamp_min() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	meter.drain(200.0)
+	assert_eq(meter.meter_value, 0.0, "should clamp to 0")
+	assert_true(meter.is_failed(), "should be failed at 0")
+
+
+func test_ritual_meter_clamp_max() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	meter.recover(50.0)
+	assert_eq(meter.meter_value, 100.0, "should clamp to 100")
+
+
+func test_ritual_meter_not_failed_at_1() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	meter.drain(99.0)
+	assert_false(meter.is_failed(), "should not be failed at 1")
+
+
+func test_ritual_meter_calculate_drain() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	var drain: float = meter.calculate_drain(0, 0, 6, 6, false)
+	assert_eq(drain, 15.0, "base drain only when at threshold with 0 KOs")
+
+
+func test_ritual_meter_calculate_drain_with_penalties() -> void:
+	var meter: Node = RITUAL_METER_SCRIPT.new()
+	add_child_autofree(meter)
+	var drain: float = meter.calculate_drain(1, 2, 12, 8, true)
+	assert_eq(drain, 33.0, "should sum penalties and subtract recovery")
