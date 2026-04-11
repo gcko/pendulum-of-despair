@@ -169,6 +169,9 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] **Actor filtering:** For every Area2D signal (body_entered, area_entered) — WHO can trigger it? Filter to the intended actor (e.g., `if body != _player: return`). Without this, any physics body triggers the action.
 - [ ] **Failure chain:** For every operation that can fail (load_map, push_overlay, ResourceLoader) — trace what happens to ALL in-flight state: tweens, flags, visibility, freed nodes. Kill tweens, reset flags, restore visibility. One failure check is not enough — trace the FULL chain.
 - [ ] **Ordering:** For every function that destroys-then-creates — validate the NEW thing BEFORE destroying the OLD thing. If validation fails, the old state must survive intact.
+- [ ] **State persistence after save/load:** For every entity whose visibility or state is set during gameplay (e.g., NPC shown after quest), verify the state is restored on map load. Use `visible_when_flag` metadata or explicit EventFlags checks in `_initialize_entities`. (PR #135: CadenPostEvent hidden after save/load)
+- [ ] **In-flight tween cleanup:** For every tween created during gameplay (auto-walk, animations), verify it is stored and killed when a transition or state change occurs. Orphaned tweens continue running during map swaps and can move freed nodes. (PR #135: auto-walk tween continued during fade)
+- [ ] **Input gating during cinematics:** For every `_unhandled_input` handler, verify that input actions are gated when the player is in a cinematic/auto-walk state. `_input_enabled = false` on the player does not automatically block exploration-level input handlers. (PR #135: ui_accept fired during auto-walk)
 
 ### State Transition Visibility (from Copilot PR #119 batch 4)
 - [ ] When switching sub-states (e.g., save_point_menu -> rest_menu), hide the previous panel AND show the next one. Verify BOTH directions (entering AND returning).
