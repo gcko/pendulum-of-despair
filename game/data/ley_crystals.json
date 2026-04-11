@@ -1,0 +1,592 @@
+{
+  "crystals": [
+    {
+      "id": "ember_shard",
+      "name": "Ember Shard",
+      "element": "flame",
+      "description": "Crystallized flame from deep within the Ember Vein.",
+      "acquired": "Ember Vein — Floor 4: The Pendulum Chamber",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 1},
+        {"atk": 1},
+        {"atk": 2},
+        {"atk": 2},
+        {"atk": 2, "def": 1}
+      ],
+      "invocation": {
+        "id": "forge_flare",
+        "name": "Forge Flare",
+        "element": "flame",
+        "description": "Scorches all enemies with a surge of forge-born flame.",
+        "target": "all_enemies",
+        "uses_per_rest": 5,
+        "level_effects": [
+          {"power": 150},
+          {"power": 200},
+          {"power": 300},
+          {"power": 400},
+          {"power": 500}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "iron_core",
+      "name": "Iron Core",
+      "element": "none",
+      "description": "A heavy metallic fragment pulsing with defensive ley energy.",
+      "acquired": "Valdris Crown Catacombs",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"def": 2},
+        {"def": 2},
+        {"def": 2, "hp_per_level": 50},
+        {"def": 2, "hp_per_level": 50},
+        {"def": 3, "hp_per_level": 80}
+      ],
+      "invocation": {
+        "id": "ironwall",
+        "name": "Ironwall",
+        "element": "buff",
+        "description": "Raises the party's defenses with an ironclad barrier.",
+        "target": "all_party",
+        "uses_per_rest": 4,
+        "level_effects": [
+          {"effect": "def_buff", "percent": 30, "turns": 3},
+          {"effect": "def_buff", "percent": 35, "turns": 3},
+          {"effect": "def_buff", "percent": 40, "turns": 3},
+          {"effect": "def_buff", "percent": 45, "turns": 3},
+          {"effect": "def_buff", "percent": 50, "turns": 3}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "ley_prism",
+      "name": "Ley Prism",
+      "element": "ley",
+      "description": "A faceted crystal that refracts raw ley energy into magical power.",
+      "acquired": "Archive of Ages",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"mag": 1},
+        {"mag": 2},
+        {"mag": 2},
+        {"mag": 2, "mp_per_level": 5},
+        {"mag": 3, "mp_per_level": 8}
+      ],
+      "invocation": {
+        "id": "ley_cascade",
+        "name": "Ley Cascade",
+        "element": "ley",
+        "description": "Unleashes a cascading wave of pure ley energy against all foes.",
+        "target": "all_enemies",
+        "uses_per_rest": 4,
+        "level_effects": [
+          {"power": 200},
+          {"power": 300},
+          {"power": 400},
+          {"power": 500},
+          {"power": 600}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "ward_stone",
+      "name": "Ward Stone",
+      "element": "spirit",
+      "description": "A pale stone carved with protective runes from Highcairn's monks.",
+      "acquired": "Highcairn Monastery",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"mdef": 1},
+        {"mdef": 2},
+        {"mdef": 2},
+        {"mdef": 2},
+        {"mdef": 2, "mag": 1}
+      ],
+      "invocation": {
+        "id": "null_barrier",
+        "name": "Null Barrier",
+        "element": "buff",
+        "description": "Erects a magical barrier that nullifies incoming spells.",
+        "target": "all_party",
+        "uses_per_rest": 4,
+        "level_effects": [
+          {"effect": "mdef_buff", "percent": 30, "turns": 3},
+          {"effect": "mdef_buff", "percent": 35, "turns": 3},
+          {"effect": "mdef_buff", "percent": 40, "turns": 3},
+          {"effect": "mdef_buff", "percent": 45, "turns": 3},
+          {"effect": "mdef_buff", "percent": 50, "turns": 3}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "quicksilver",
+      "name": "Quicksilver",
+      "element": "storm",
+      "description": "A mercurial shard crackling with storm-speed energy from the Undercity.",
+      "acquired": "Corrund Undercity / Sewers",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"spd": 1},
+        {"spd": 2},
+        {"spd": 2},
+        {"spd": 2, "lck": 1},
+        {"spd": 2, "lck": 2}
+      ],
+      "invocation": {
+        "id": "time_slip",
+        "name": "Time Slip",
+        "element": "buff",
+        "description": "Bends time around the party, granting them blinding speed.",
+        "target": "all_party",
+        "uses_per_rest": 3,
+        "level_effects": [
+          {"effect": "haste", "turns": 2},
+          {"effect": "haste", "turns": 3},
+          {"effect": "haste", "turns": 3},
+          {"effect": "haste", "turns": 4},
+          {"effect": "haste", "turns": 4}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "fortune_stone",
+      "name": "Fortune Stone",
+      "element": "none",
+      "description": "A warm amber gem said to carry Sable's luck wherever it wanders.",
+      "acquired": "Sable sidequest",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"lck": 2},
+        {"lck": 2},
+        {"lck": 2, "spd": 1},
+        {"lck": 3, "spd": 1},
+        {"lck": 3, "spd": 2}
+      ],
+      "invocation": {
+        "id": "fates_hand",
+        "name": "Fate's Hand",
+        "element": "buff",
+        "description": "Tips the scales of fortune in the party's favor.",
+        "target": "all_party",
+        "uses_per_rest": 5,
+        "level_effects": [
+          {"effect": "lck_buff", "percent": 50, "turns": 3},
+          {"effect": "lck_buff", "percent": 60, "turns": 3},
+          {"effect": "lck_buff", "percent": 70, "turns": 3},
+          {"effect": "lck_buff", "percent": 80, "turns": 3},
+          {"effect": "lck_buff", "percent": 100, "turns": 3}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "lifestone",
+      "name": "Lifestone",
+      "element": "spirit",
+      "description": "A verdant crystal humming with the Fenmother's restorative spirit.",
+      "acquired": "Fenmother's Hollow",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"hp_per_level": 120},
+        {"hp_per_level": 120},
+        {"hp_per_level": 150},
+        {"hp_per_level": 150},
+        {"hp_per_level": 200, "def": 1}
+      ],
+      "invocation": {
+        "id": "lifespring",
+        "name": "Lifespring",
+        "element": "spirit",
+        "description": "Channels the Fenmother's life force to heal the entire party.",
+        "target": "all_party",
+        "uses_per_rest": 6,
+        "level_effects": [
+          {"heal": 300},
+          {"heal": 500},
+          {"heal": 800},
+          {"heal": 1100},
+          {"heal": 1500}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "wellspring",
+      "name": "Wellspring",
+      "element": "ley",
+      "description": "A deep blue crystal drawn from the Ley Line Depths, brimming with arcane potential.",
+      "acquired": "Ley Line Depths",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"mp_per_level": 10},
+        {"mp_per_level": 10},
+        {"mp_per_level": 12, "mag": 1},
+        {"mp_per_level": 12, "mag": 1},
+        {"mp_per_level": 15, "mag": 2}
+      ],
+      "invocation": {
+        "id": "mana_tide",
+        "name": "Mana Tide",
+        "element": "ley",
+        "description": "Floods the party with mana drawn from a ley wellspring.",
+        "target": "all_party",
+        "uses_per_rest": 4,
+        "level_effects": [
+          {"mp": 20},
+          {"mp": 35},
+          {"mp": 50},
+          {"mp": 65},
+          {"mp": 80}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "spirit_tear",
+      "name": "Spirit Tear",
+      "element": "spirit",
+      "description": "A crystallized tear shed at the Ley Nexus Hollow, imbued with swift spiritual power.",
+      "acquired": "Ley Nexus Hollow",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"mag": 1, "spd": 1},
+        {"mag": 1, "spd": 1},
+        {"mag": 1, "spd": 1},
+        {"mag": 2, "spd": 1},
+        {"mag": 2, "spd": 2}
+      ],
+      "invocation": {
+        "id": "spirit_call",
+        "name": "Spirit Call",
+        "element": "spirit",
+        "description": "Summons a spirit tempest to assail all enemies.",
+        "target": "all_enemies",
+        "uses_per_rest": 3,
+        "level_effects": [
+          {"power": 180},
+          {"power": 280},
+          {"power": 380},
+          {"power": 470},
+          {"power": 550, "status": "regen"}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "forgewright_core",
+      "name": "Forgewright Core",
+      "element": "none",
+      "description": "A dense alloy core forged by Lira, radiating both martial and defensive might.",
+      "acquired": "Lira sidequest",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 1, "def": 1},
+        {"atk": 1, "def": 1},
+        {"atk": 2, "def": 1},
+        {"atk": 2, "def": 2},
+        {"atk": 2, "def": 2}
+      ],
+      "invocation": {
+        "id": "siege_engine",
+        "name": "Siege Engine",
+        "element": "none",
+        "description": "Hammers a single enemy with siege-force impact, shattering their defenses.",
+        "target": "single_enemy",
+        "uses_per_rest": 3,
+        "level_effects": [
+          {"power": 400, "status": "def_break"},
+          {"power": 600, "status": "def_break"},
+          {"power": 800, "status": "def_break"},
+          {"power": 1000, "status": "def_break"},
+          {"power": 1200, "status": "def_break"}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "flame_heart",
+      "name": "Flame Heart",
+      "element": "flame",
+      "description": "A volatile crystal of pure pyromantic fury, as dangerous to its bearer as to foes.",
+      "acquired": "Caldera Forge Depths",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 1, "mag": 1},
+        {"atk": 1, "mag": 1},
+        {"atk": 2, "mag": 1},
+        {"atk": 2, "mag": 2},
+        {"atk": 2, "mag": 2}
+      ],
+      "invocation": {
+        "id": "crucible_wrath",
+        "name": "Crucible Wrath",
+        "element": "flame",
+        "description": "Unleashes the full fury of the crucible upon all enemies.",
+        "target": "all_enemies",
+        "uses_per_rest": 3,
+        "level_effects": [
+          {"power": 300},
+          {"power": 450},
+          {"power": 600},
+          {"power": 750},
+          {"power": 900, "status": "burn"}
+        ]
+      },
+      "negative_effect": {
+        "description": "Wearer randomly hit by Tier 1 Flame spell once per battle",
+        "type": "random_self_damage"
+      },
+      "secret_lv5": false
+    },
+    {
+      "id": "frost_veil",
+      "name": "Frost Veil",
+      "element": "frost",
+      "description": "An icy shroud that numbs the body along with the blade.",
+      "acquired": "Frostcap Caverns",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"def": 1, "mdef": 1},
+        {"def": 1, "mdef": 1},
+        {"def": 1, "mdef": 2},
+        {"def": 2, "mdef": 2},
+        {"def": 2, "mdef": 2}
+      ],
+      "invocation": {
+        "id": "absolute_zero",
+        "name": "Absolute Zero",
+        "element": "frost",
+        "description": "Drops the temperature to absolute zero, freezing all enemies solid.",
+        "target": "all_enemies",
+        "uses_per_rest": 3,
+        "level_effects": [
+          {"power": 250},
+          {"power": 400},
+          {"power": 550},
+          {"power": 680},
+          {"power": 800, "status": "slow"}
+        ]
+      },
+      "negative_effect": {
+        "description": "Wearer SPD -15% in battle",
+        "type": "spd_penalty"
+      },
+      "secret_lv5": false
+    },
+    {
+      "id": "storm_eye",
+      "name": "Storm Eye",
+      "element": "storm",
+      "description": "A crackling gemstone from Windshear Peak that makes chaos second nature.",
+      "acquired": "Windshear Peak",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"spd": 1, "lck": 1},
+        {"spd": 1, "lck": 1},
+        {"spd": 2, "lck": 1},
+        {"spd": 2, "lck": 2},
+        {"spd": 2, "lck": 2}
+      ],
+      "invocation": {
+        "id": "tempest_surge",
+        "name": "Tempest Surge",
+        "element": "storm",
+        "description": "Unleashes a roaring tempest that batters all enemies.",
+        "target": "all_enemies",
+        "uses_per_rest": 4,
+        "level_effects": [
+          {"power": 250},
+          {"power": 400},
+          {"power": 550},
+          {"power": 680},
+          {"power": 800}
+        ]
+      },
+      "negative_effect": {
+        "description": "10% chance attacks hit random target",
+        "type": "random_target"
+      },
+      "secret_lv5": false
+    },
+    {
+      "id": "grey_remnant",
+      "name": "Grey Remnant",
+      "element": "void",
+      "description": "A dull, grey shard from the Pallor Wastes that hungers for life to fuel its power.",
+      "acquired": "Pallor Wastes",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"mag": 2},
+        {"mag": 3},
+        {"mag": 3},
+        {"mag": 3},
+        {"mag": 4}
+      ],
+      "invocation": {
+        "id": "pallor_touch",
+        "name": "Pallor Touch",
+        "element": "void",
+        "description": "Channels the void's despair into all enemies, withering their will.",
+        "target": "all_enemies",
+        "uses_per_rest": 2,
+        "level_effects": [
+          {"power": 350},
+          {"power": 500},
+          {"power": 650},
+          {"power": 830},
+          {"power": 1000, "status": "despair"}
+        ]
+      },
+      "negative_effect": {
+        "description": "HP -40 per level-up. +25% Pallor damage in combat.",
+        "type": "hp_loss_and_vulnerability"
+      },
+      "secret_lv5": false
+    },
+    {
+      "id": "dawn_fragment",
+      "name": "Dawn Fragment",
+      "element": "none",
+      "description": "A radiant shard hidden in the Dawn March, brightest at the beginning.",
+      "acquired": "Dawn March (Act I, hidden)",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 2, "def": 2, "mag": 2, "mdef": 2, "spd": 2, "lck": 2},
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {},
+        {}
+      ],
+      "invocation": {
+        "id": "first_light",
+        "name": "First Light",
+        "element": "none",
+        "description": "Blazes with dawn radiance — brilliant early on, fading with time.",
+        "target": "all_enemies",
+        "uses_per_rest": 8,
+        "level_effects": [
+          {"power": 500, "uses_override": 8},
+          {"power": 400, "uses_override": 6},
+          {"power": 300, "uses_override": 4},
+          {"power": 250, "uses_override": 3},
+          {"power": 200, "uses_override": 2}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "convergence_shard",
+      "name": "Convergence Shard",
+      "element": "none",
+      "description": "A fragment of all ley lines unified, its true power locked until the end.",
+      "acquired": "The Convergence",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {"atk": 1, "def": 1, "mag": 1, "mdef": 1, "spd": 1, "lck": 1},
+        {"atk": 3, "def": 3, "mag": 3, "mdef": 3, "spd": 3, "lck": 3}
+      ],
+      "invocation": {
+        "id": "convergence_pulse",
+        "name": "Convergence Pulse",
+        "element": "none",
+        "description": "A singular pulse of unified ley power that erupts catastrophically at its peak.",
+        "target": "all_enemies",
+        "uses_per_rest": 1,
+        "level_effects": [
+          {"power": 100},
+          {"power": 100},
+          {"power": 100},
+          {"power": 100},
+          {"power": 2000}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": true
+    },
+    {
+      "id": "null_crystal",
+      "name": "Null Crystal",
+      "element": "void",
+      "description": "A colorless void crystal that absorbs despair.",
+      "acquired": "Dreamer's Fault (post-game)",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {},
+        {},
+        {},
+        {},
+        {}
+      ],
+      "invocation": {
+        "id": "void_shield",
+        "name": "Void Shield",
+        "element": "buff",
+        "description": "Wraps the party in a void shroud, granting immunity to despair.",
+        "target": "all_party",
+        "uses_per_rest": 2,
+        "level_effects": [
+          {"effect": "despair_immune", "turns": 3},
+          {"effect": "despair_immune", "turns": 3},
+          {"effect": "despair_immune", "turns": 3},
+          {"effect": "despair_immune", "turns": 3},
+          {"effect": "despair_immune", "turns": 3}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    },
+    {
+      "id": "caels_echo",
+      "name": "Cael's Echo",
+      "element": "none",
+      "description": "A resonant crystal left at the meadow where Edren placed Cael's sword, echoing his resolve.",
+      "acquired": "Post-game (Edren places sword at meadow)",
+      "xp_thresholds": [0, 800, 2500, 6000, 15000],
+      "level_bonuses": [
+        {"atk": 1, "mag": 1},
+        {"atk": 1, "mag": 1},
+        {"atk": 2, "mag": 2},
+        {"atk": 2, "mag": 2},
+        {"atk": 2, "mag": 2, "spd": 1}
+      ],
+      "invocation": {
+        "id": "caels_resolve",
+        "name": "Cael's Resolve",
+        "element": "buff",
+        "description": "Channels Cael's unwavering resolve, bolstering and healing the entire party.",
+        "target": "all_party",
+        "uses_per_rest": 1,
+        "level_effects": [
+          {"effect": "all_stats_buff", "percent": 20, "turns": 3, "heal": 500},
+          {"effect": "all_stats_buff", "percent": 20, "turns": 3, "heal": 500},
+          {"effect": "all_stats_buff", "percent": 20, "turns": 3, "heal": 500},
+          {"effect": "all_stats_buff", "percent": 20, "turns": 3, "heal": 500},
+          {"effect": "all_stats_buff", "percent": 20, "turns": 3, "heal": 500}
+        ]
+      },
+      "negative_effect": null,
+      "secret_lv5": false
+    }
+  ]
+}
