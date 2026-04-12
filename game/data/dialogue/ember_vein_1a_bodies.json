@@ -3,9 +3,9 @@
   "entries": [
     {
       "id": "ember_vein_1a_001",
-      "speaker": "edren",
+      "speaker": "cael",
       "lines": [
-        "Hold."
+        "More of them. Same as before — no wounds, no struggle."
       ],
       "condition": null,
       "animations": null,
@@ -16,7 +16,7 @@
       "id": "ember_vein_1a_002",
       "speaker": "edren",
       "lines": [
-        "No marks. No signs of a fight. They just... stopped."
+        "Their lanterns still have oil. They didn't run out of light."
       ],
       "condition": null,
       "animations": null,
@@ -27,7 +27,7 @@
       "id": "ember_vein_1a_003",
       "speaker": "cael",
       "lines": [
-        "They didn't die fighting. They died feeling something."
+        "Something down here stopped them. Not the dark — something worse."
       ],
       "condition": null,
       "animations": null,
@@ -38,29 +38,7 @@
       "id": "ember_vein_1a_004",
       "speaker": "edren",
       "lines": [
-        "There'll be more."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ember_vein_1a_005",
-      "speaker": "cael",
-      "lines": [
-        "You say that like you've seen it before."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ember_vein_1a_006",
-      "speaker": "edren",
-      "lines": [
-        "I haven't. That's what worries me."
+        "We press on. Answers are deeper."
       ],
       "condition": null,
       "animations": null,

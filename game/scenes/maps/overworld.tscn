@@ -189,7 +189,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "opening_credits_seen"
-metadata/required_flag = "carradan_ambush_survived"
+metadata/required_flag = "ironmouth_escape_seen"
 metadata/dialogue_scene_id = "dawn_march"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene4Trigger"]

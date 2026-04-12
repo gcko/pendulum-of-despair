@@ -376,7 +376,7 @@ func optimize_equipment(character_id: String) -> void:
 			if val > best_val:
 				best = opt
 				best_val = val
-		equip_item(character_id, slot, best.get("id", ""))
+		equip_item(character_id, slot, best.get("equipment_id", ""))
 
 
 func get_consumables() -> Dictionary:

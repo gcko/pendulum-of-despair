@@ -3,9 +3,9 @@
   "entries": [
     {
       "id": "ironmouth_escape_001",
-      "speaker": "lira",
+      "speaker": "edren",
       "lines": [
-        "Stop. Don't move."
+        "We made it. But they'll send patrols."
       ],
       "condition": null,
       "animations": null,
@@ -16,8 +16,8 @@
       "id": "ironmouth_escape_002",
       "speaker": "lira",
       "lines": [
-        "Patrol passes in forty seconds. You came from the",
-        "mine?"
+        "The Wilds are dense enough to lose them. If we",
+        "keep moving, we'll reach Maren's Refuge by nightfall."
       ],
       "condition": null,
       "animations": null,
@@ -26,9 +26,9 @@
     },
     {
       "id": "ironmouth_escape_003",
-      "speaker": "edren",
+      "speaker": "sable",
       "lines": [
-        "Who are you?"
+        "Assuming the Wilds don't eat us first."
       ],
       "condition": null,
       "animations": null,
@@ -37,11 +37,10 @@
     },
     {
       "id": "ironmouth_escape_004",
-      "speaker": "lira",
+      "speaker": "cael",
       "lines": [
-        "Someone who's been tracking what the Compact pulled",
-        "out of that ruin for three months. My name is Lira. I'm a",
-        "Forgewright — or I was, until I read the wrong documents."
+        "What we found in that mine — the bodies, the",
+        "pendulum — it's all connected to the Compact."
       ],
       "condition": null,
       "animations": null,
@@ -50,123 +49,6 @@
     },
     {
       "id": "ironmouth_escape_005",
-      "speaker": "cael",
-      "lines": [
-        "You defected."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_006",
-      "speaker": "lira",
-      "lines": [
-        "I found references to something called \"Project",
-        "Pendulum\" in a classified engineering report. The Compact doesn't",
-        "classify engineering reports. That was enough."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_007",
-      "speaker": "lira",
-      "lines": [
-        "Now. This way."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_008",
-      "speaker": "edren",
-      "lines": [
-        "We're cut off."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_009",
-      "speaker": "sable",
-      "lines": [
-        "Sorry, gentlemen. Inventory check. Very official.",
-        "Come back tomorrow."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_010",
-      "speaker": "sable",
-      "lines": [
-        "Friends of yours, or am I interrupting something",
-        "private?"
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_011",
-      "speaker": "edren",
-      "lines": [
-        "We're leaving. Now."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_012",
-      "speaker": "sable",
-      "lines": [
-        "Perfect. I was just leaving too. I was definitely",
-        "not in the middle of relieving the quartermaster's office of",
-        "anything valuable."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_013",
-      "speaker": "sable",
-      "lines": [
-        "I'm Sable. And unless one of you has a boat, we're",
-        "all going through the Wilds."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_014",
-      "speaker": "lira",
-      "lines": [
-        "She's right. The forest is the only way."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_015",
       "speaker": "edren",
       "lines": [
         "Then we move. Stay together."

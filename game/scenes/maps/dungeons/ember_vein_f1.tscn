@@ -26,6 +26,7 @@ tile_map_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5,
 position = Vector2(480, 80)
 metadata/chest_id = "ember_vein_f1_chest_1"
 metadata/item_id = "carradan_mining_pick"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="Chest2" parent="Entities" instance=ExtResource("2_chest")]
