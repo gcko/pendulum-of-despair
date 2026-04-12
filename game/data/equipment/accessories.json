@@ -1150,7 +1150,6 @@
       "id": "ember_shard",
       "name": "Ember Shard",
       "subcategory": "stat_boost",
-      "type": "stat",
       "equippable_by": [
         "edren",
         "cael",

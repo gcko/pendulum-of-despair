@@ -891,11 +891,11 @@
       "status_immunities": [],
       "steal": {
         "common": {
-          "item_id": null,
+          "item_id": "",
           "rate": 0
         },
         "rare": {
-          "item_id": null,
+          "item_id": "",
           "rate": 0
         }
       },
@@ -929,11 +929,11 @@
       "status_immunities": [],
       "steal": {
         "common": {
-          "item_id": null,
+          "item_id": "",
           "rate": 0
         },
         "rare": {
-          "item_id": null,
+          "item_id": "",
           "rate": 0
         }
       },
