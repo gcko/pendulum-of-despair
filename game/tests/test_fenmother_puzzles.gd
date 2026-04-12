@@ -150,6 +150,7 @@ func test_wheel_empty_id_guard() -> void:
 	add_child_autofree(wheel)
 	wheel.initialize("", "fenmothers_hollow")
 	assert_eq(wheel.wheel_id, "", "should remain empty")
+	assert_push_error_count(1, "empty wheel_id should trigger push_error")
 
 
 # --- Water Zone ---
