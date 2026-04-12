@@ -28,7 +28,8 @@ static func calculate_physical(
 	weapon_bypasses_row: bool,
 	reduction_sources: Array,
 	is_elemental: bool,
-	element_mod: float
+	element_mod: float,
+	attacker_id: String = ""
 ) -> int:
 	# Step 3-4: Base damage with floor
 	var raw: float = maxf(1.0, (atk * atk * ability_mult) / 6.0 - target_def)
@@ -39,6 +40,10 @@ static func calculate_physical(
 
 	# Step 6: Combat interaction modifiers
 	raw *= interaction_mult
+
+	# Cael's Pallor Shimmer: +10% physical damage (permanent, hidden)
+	if attacker_id == "cael":
+		raw *= 1.1
 
 	# Step 7: Variance
 	var result: float = raw * roll_variance()
@@ -122,28 +127,28 @@ static func calculate_magic(
 ## Calculate healing per combat-formulas.md § Healing Resolution.
 ## No defense, no floor-of-1, no reduction.
 static func calculate_healing(mag: int, spell_power: int) -> int:
-	var raw: float = mag * spell_power * 0.8
+	var raw: float = maxi(0, mag) * maxi(0, spell_power) * 0.8
 	return mini(14999, int(raw * roll_variance()))
 
 
 ## Roll hit check. Returns true if attack hits.
 ## hit_rate = clamp(90 + (attacker_spd - target_spd) / 4, 20, 99)
 static func roll_hit(attacker_spd: int, target_spd: int) -> bool:
-	var hit_rate: int = clampi(90 + (attacker_spd - target_spd) / 4, 20, 99)
+	var hit_rate: int = clampi(90 + int((attacker_spd - target_spd) / 4), 20, 99)
 	return randi() % 100 < hit_rate
 
 
 ## Roll evasion check. Returns true if attack is evaded.
 ## evasion_rate = min(50, target_spd / 4)
 static func roll_evasion(target_spd: int) -> bool:
-	var evasion_rate: int = mini(50, target_spd / 4)
+	var evasion_rate: int = mini(50, int(target_spd / 4))
 	return randi() % 100 < evasion_rate
 
 
 ## Roll critical hit check. Physical only — magic never crits.
 ## crit_rate = min(50, attacker_lck / 4)
 static func roll_crit(attacker_lck: int) -> bool:
-	var crit_rate: int = mini(50, attacker_lck / 4)
+	var crit_rate: int = mini(50, int(attacker_lck / 4))
 	return randi() % 100 < crit_rate
 
 
@@ -159,7 +164,7 @@ static func roll_status(base_rate: int, caster_mag: int, target_mdef: int, targe
 	if randi() % 100 >= int(effective):
 		return false
 	# Stage 2: Magic Evasion
-	var meva_pct: int = mini(40, (target_mdef + target_spd) / 8)
+	var meva_pct: int = mini(40, int((target_mdef + target_spd) / 8))
 	return randi() % 100 >= meva_pct
 
 

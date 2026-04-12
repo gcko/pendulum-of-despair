@@ -1,0 +1,98 @@
+{
+  "scene_id": "ironmouth_lira",
+  "entries": [
+    {
+      "id": "ironmouth_lira_001",
+      "speaker": "lira",
+      "lines": [
+        "Stop. Don't move."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_002",
+      "speaker": "lira",
+      "lines": [
+        "Patrol passes in forty seconds. You came from the",
+        "mine?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_003",
+      "speaker": "edren",
+      "lines": [
+        "Who are you?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_004",
+      "speaker": "lira",
+      "lines": [
+        "Someone who's been tracking what the Compact pulled",
+        "out of that ruin for three months. My name is Lira. I'm a",
+        "Forgewright — or I was, until I read the wrong documents."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_005",
+      "speaker": "cael",
+      "lines": [
+        "You defected."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_006",
+      "speaker": "lira",
+      "lines": [
+        "I found references to something called \"Project",
+        "Pendulum\" in a classified engineering report. The Compact doesn't",
+        "classify engineering reports. That was enough."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_007",
+      "speaker": "lira",
+      "lines": [
+        "Now. This way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_008",
+      "speaker": "edren",
+      "lines": [
+        "We're cut off."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -53,7 +53,7 @@ func test_initialize_new_game_starting_equipment() -> void:
 	_state.initialize_new_game()
 	var edren: Dictionary = _state.get_member("edren")
 	var equip: Dictionary = edren.get("equipment", {})
-	assert_eq(equip.get("weapon", ""), "training_sword")
+	assert_eq(equip.get("weapon", ""), "arcanite_sword_proto")
 
 
 # --- Party Access ---
@@ -95,9 +95,9 @@ func test_derived_stats() -> void:
 
 func test_equipment_bonus_calculation() -> void:
 	_state.initialize_new_game()
-	# Training sword has atk 4
+	# Arcanite sword proto has atk 13, arcanite mail proto has def 10
 	var bonus: int = _state.get_equipment_bonus("edren", "atk")
-	assert_eq(bonus, 4, "training_sword ATK = 4")
+	assert_eq(bonus, 13, "arcanite_sword_proto ATK = 13")
 
 
 # --- Equipment ---
@@ -106,7 +106,7 @@ func test_equipment_bonus_calculation() -> void:
 func test_unequip_slot() -> void:
 	_state.initialize_new_game()
 	var old: String = _state.unequip_slot("edren", "weapon")
-	assert_eq(old, "training_sword")
+	assert_eq(old, "arcanite_sword_proto")
 	var edren: Dictionary = _state.get_member("edren")
 	assert_eq(edren.get("equipment", {}).get("weapon", ""), "")
 
@@ -115,18 +115,18 @@ func test_unequip_returns_to_owned() -> void:
 	_state.initialize_new_game()
 	_state.unequip_slot("edren", "weapon")
 	assert_eq(_state.owned_equipment.size(), 1)
-	assert_eq(_state.owned_equipment[0].get("equipment_id", ""), "training_sword")
+	assert_eq(_state.owned_equipment[0].get("equipment_id", ""), "arcanite_sword_proto")
 
 
 func test_equip_item() -> void:
 	_state.initialize_new_game()
-	# Unequip first so training_sword goes to inventory
+	# Unequip first so arcanite_sword_proto goes to inventory
 	_state.unequip_slot("edren", "weapon")
 	# Re-equip
-	var result: Dictionary = _state.equip_item("edren", "weapon", "training_sword")
+	var result: Dictionary = _state.equip_item("edren", "weapon", "arcanite_sword_proto")
 	assert_eq(result.get("old_equipment_id", ""), "")  # Was empty
 	var edren: Dictionary = _state.get_member("edren")
-	assert_eq(edren.get("equipment", {}).get("weapon", ""), "training_sword")
+	assert_eq(edren.get("equipment", {}).get("weapon", ""), "arcanite_sword_proto")
 
 
 # --- Inventory ---

@@ -110,6 +110,9 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
+	var req_flag: String = area.get_meta("required_flag", "")
+	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
+		return
 	var eids: Variant = area.get_meta("enemy_ids", [])
 	var enemy_ids: Array = eids if eids is Array else []
 	if enemy_ids.is_empty():
@@ -206,7 +209,7 @@ func _spawn_player() -> void:
 func _initialize_from_transition_data() -> void:
 	var data: Dictionary = GameManager.transition_data
 	if data.get("new_game", false):
-		load_map("overworld")
+		load_map("dungeons/ember_vein_f1", "from_overworld")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
 		PartyState.load_from_save(save_data)
@@ -312,6 +315,33 @@ func _initialize_entities(map_node: Node2D) -> void:
 			var ti: float = child.get_meta("tick_interval", 1.0)
 			var se: String = child.get_meta("status_effect", "poison")
 			child.initialize(zid, dpt, ti, se)
+		elif child.has_signal("plate_pressed"):
+			var pid: String = child.get_meta("plate_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if pid.is_empty():
+				push_error("Exploration: PressurePlate '%s' missing plate_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: PressurePlate '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(pid, did)
+		elif child.has_signal("crystal_cleared"):
+			var cid: String = child.get_meta("crystal_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if cid.is_empty():
+				push_error("Exploration: EmberCrystal '%s' missing crystal_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: EmberCrystal '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(cid, did)
+		elif child.has_signal("pitfall_triggered"):
+			var tmid: String = child.get_meta("target_map_id", "")
+			var tsp: String = child.get_meta("target_spawn", "")
+			if tmid.is_empty():
+				push_error("Exploration: PitfallZone '%s' missing target_map_id" % child.name)
+				continue
+			child.initialize(tmid, tsp)
 	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
 	if entities != null:
 		for child: Node in entities.get_children():
@@ -343,6 +373,12 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.plant_restored.connect(_on_plant_restored)
 			if child.has_signal("zone_damage_dealt"):
 				child.zone_damage_dealt.connect(_on_zone_damage_dealt)
+			if child.has_signal("plate_pressed"):
+				child.plate_pressed.connect(_on_plate_pressed)
+			if child.has_signal("crystal_cleared"):
+				child.crystal_cleared.connect(_on_crystal_cleared)
+			if child.has_signal("pitfall_triggered"):
+				child.pitfall_triggered.connect(_on_pitfall_triggered)
 			if child.has_signal("interaction_message"):
 				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
@@ -369,6 +405,9 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		"plant_restored": _on_plant_restored,
 		"zone_damage_dealt": _on_zone_damage_dealt,
 		"interaction_message": _on_interaction_message,
+		"plate_pressed": _on_plate_pressed,
+		"crystal_cleared": _on_crystal_cleared,
+		"pitfall_triggered": _on_pitfall_triggered,
 	}
 	for group: String in ["Entities", "Transitions"]:
 		var container: Node = map_node.get_node_or_null(group)
@@ -463,6 +502,27 @@ func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:
 					child.refresh()
 
 
+func _on_plate_pressed(_plate_id: String) -> void:
+	# Refresh water zones — same pattern as wheel_toggled
+	if _current_map != null:
+		var entities: Node = _current_map.get_node_or_null("Entities")
+		if entities != null:
+			for child: Node in entities.get_children():
+				if child.has_method("refresh"):
+					child.refresh()
+
+
+func _on_crystal_cleared(_crystal_id: String) -> void:
+	flash_location_name("The crystal springs to life!")
+
+
+func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
+	if _transitioning:
+		return
+	flash_location_name("The floor gives way!")
+	_transition_to_map(target_map_id, target_spawn)
+
+
 func _on_spring_filled() -> void:
 	flash_location_name("Filled the Spirit Vessel with pure water.")
 
@@ -519,6 +579,12 @@ func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
 		return
 	_check_party_joining_flags()
+	if (
+		EventFlags.get_flag("ember_vein_1e_seen")
+		and not EventFlags.get_flag("arcanite_gear_broken")
+	):
+		PartyState.break_arcanite_gear()
+		EventFlags.set_flag("arcanite_gear_broken", true)
 
 
 func _check_party_joining_flags() -> void:
@@ -551,7 +617,7 @@ func _get_party_avg_level() -> int:
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
 		total += m.get("level", 1) as int
-	return maxi(1, int(total / PartyState.members.size()))
+	return maxi(1, floori(float(total) / float(PartyState.members.size())))
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
@@ -756,7 +822,7 @@ func distribute_crystal_xp(xp_per_member: int) -> void:
 			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))
 
 
-func _get_cleansing() -> RefCounted:  # Returns CleansingSequence
+func _get_cleansing() -> CleansingSequence:
 	if _cleansing == null:
 		_cleansing = CleansingSequence.new(self)
 	return _cleansing

@@ -60,7 +60,6 @@ var is_alive: bool = false
 
 ## Reference to child nodes.
 @onready var _sprite: Sprite2D = $Sprite2D
-@onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 
 ## Initialize the enemy with data from DataManager.
@@ -206,8 +205,8 @@ func has_status(status_name: String) -> bool:
 func take_damage(amount: int) -> void:
 	if not is_alive:
 		return
-	var clamped: int = max(0, amount)
-	current_hp = max(0, current_hp - clamped)
+	var clamped: int = maxi(0, amount)
+	current_hp = maxi(0, current_hp - clamped)
 	damage_taken.emit(clamped)
 	if current_hp <= 0:
 		is_alive = false
@@ -216,10 +215,10 @@ func take_damage(amount: int) -> void:
 
 ## Apply healing. Clamps amount >= 0 and HP to max. Restores is_alive. Emits healed.
 func heal(amount: int) -> void:
-	var clamped: int = max(0, amount)
+	var clamped: int = maxi(0, amount)
 	var max_hp: int = enemy_data.get("hp", 0)
 	var old_hp: int = current_hp
-	current_hp = min(max_hp, current_hp + clamped)
+	current_hp = mini(max_hp, current_hp + clamped)
 	if current_hp > 0:
 		is_alive = true
 	var actual_heal: int = current_hp - old_hp
@@ -234,9 +233,11 @@ func roll_steal(tier: String) -> Dictionary:
 	if tier_data.is_empty():
 		return {"item_id": "", "success": false}
 	var rate: int = tier_data.get("rate", 0)
-	var success: bool = randi() % 100 < rate
+	var raw_id: Variant = tier_data.get("item_id", "")
+	var item_id: String = raw_id as String if raw_id is String else ""
+	var success: bool = randi() % 100 < rate and not item_id.is_empty()
 	return {
-		"item_id": tier_data.get("item_id", "") if success else "",
+		"item_id": item_id if success else "",
 		"success": success,
 	}
 
@@ -259,7 +260,11 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("Enemy: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var resource: Resource = load(sprite_path)
+	if not resource is Texture2D:
+		push_error("Enemy: Loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = resource as Texture2D
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture

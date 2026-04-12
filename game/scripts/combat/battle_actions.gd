@@ -6,6 +6,7 @@ extends RefCounted
 ## via passed references.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const Enemy = preload("res://scripts/entities/enemy.gd")
 
 
 ## Map a UI cursor index (0..living-1) to an actual _enemies array index.
@@ -45,18 +46,21 @@ static func execute_party_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
+	var character_id: String = member.get("character_id", "")
+	var attacker_row: String = member.get("row", "front")
 	var dmg: int = DamageCalc.calculate_physical(
 		atk,
 		1.0,
 		target_def,
 		is_crit,
 		1.0,
-		member.get("row", "front"),
+		attacker_row,
 		"front",
 		false,
 		[],
 		false,
-		1.0
+		1.0,
+		character_id
 	)
 
 	enemy.take_damage(dmg)
@@ -115,6 +119,8 @@ static func execute_enemy_magic(
 	var target_spd: int = state.get_effective_stat(target_slot, "spd")
 	if not DamageCalc.roll_hit(spd, target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
+	if DamageCalc.roll_evasion(target_spd):
+		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	var reduction: Array = []
 	if dmg_mult < 1.0:
@@ -142,11 +148,12 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 
-	var is_crit: bool = randi() % 100 < 5  # Enemy fixed 5% crit
+	var is_crit: bool = randf() < Enemy.ENEMY_CRIT_RATE
 	var reduction: Array = []
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
+	var defender_row: String = member.get("row", "front")
 	var dmg: int = (
 		DamageCalc
 		. calculate_physical(
@@ -156,7 +163,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 			is_crit,
 			1.0,
 			"front",
-			member.get("row", "front"),
+			defender_row,
 			false,
 			reduction,
 			false,

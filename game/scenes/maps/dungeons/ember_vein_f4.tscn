@@ -14,9 +14,9 @@ size = Vector2(32, 32)
 
 [node name="EmberVeinF4" type="Node2D"]
 metadata/map_id = "dungeons/ember_vein_f4"
-metadata/floor_id = ""
 metadata/location_name = "Ember Vein - The Pendulum Chamber"
 metadata/dungeon_id = "ember_vein"
+metadata/floor_id = "4"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("1_tileset")
@@ -37,13 +37,13 @@ metadata/item_id = "ember_tonic"
 metadata/quantity = 1
 
 [node name="PendulumDialogue" type="Area2D" parent="Entities"]
-position = Vector2(160, 100)
+position = Vector2(288, 208)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "pendulum_discovered"
-metadata/dialogue_data = [{"speaker": "Cael", "lines": ["Seven of them. Arranged like the mural."]}, {"speaker": "Edren", "lines": ["They arranged themselves. Look -- no drag marks."]}, {"speaker": "Cael", "lines": ["They walked in, sat down, and gave up."]}, {"speaker": "Edren", "lines": ["We can't leave it here. If the Compact finds it--"]}, {"speaker": "Cael", "lines": ["Don't. Something about this place. I can feel it."]}, {"speaker": "Edren", "lines": ["We don't have a choice. We report to Valdris."]}, {"speaker": "", "lines": ["[The Pendulum's needle twitches. The room shudders.]"]}, {"speaker": "Cael", "lines": ["Something heard that."]}]
+metadata/dialogue_scene_id = "ember_vein_1d_pendulum"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/PendulumDialogue"]
 shape = SubResource("Shape_trigger")
@@ -62,16 +62,17 @@ metadata/flag = "vaelith_ember_vein"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/VeinGuardianBoss"]
 shape = SubResource("Shape_boss")
 
-[node name="ExitDialogue" type="Area2D" parent="Entities"]
-position = Vector2(160, 200)
+[node name="EscapeDialogue" type="Area2D" parent="Entities"]
+position = Vector2(160, 208)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/flag = "ember_vein_exit_seen"
-metadata/dialogue_data = [{"speaker": "Edren", "lines": ["This way. The soldiers are above us, not ahead."]}, {"speaker": "Cael", "lines": ["You hope."]}, {"speaker": "Edren", "lines": ["I do."]}]
+metadata/dialogue_scene_id = "ember_vein_1e_escape"
+metadata/flag = "ember_vein_1e_seen"
+metadata/required_flag = "vaelith_ember_vein"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/ExitDialogue"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/EscapeDialogue"]
 shape = SubResource("Shape_trigger")
 
 [node name="Transitions" type="Node2D" parent="."]
@@ -82,8 +83,9 @@ collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/target_map = "test_room"
-metadata/target_spawn = "PlayerSpawn"
+metadata/target_map = "towns/ironmouth_docks"
+metadata/target_spawn = "from_ember_vein"
+metadata/required_flag = "ember_vein_1e_seen"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitTunnel"]
 shape = SubResource("Shape_transition")
@@ -91,5 +93,5 @@ shape = SubResource("Shape_transition")
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(160, 32)
 
-[node name="from_ember_vein_f2" type="Marker2D" parent="."]
+[node name="from_f3" type="Marker2D" parent="."]
 position = Vector2(160, 32)

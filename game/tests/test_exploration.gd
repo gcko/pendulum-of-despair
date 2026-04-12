@@ -32,7 +32,7 @@ func after_each() -> void:
 
 
 func _create_exploration() -> Node2D:
-	GameManager.transition_data = {"new_game": true}
+	GameManager.transition_data = {}
 	var exp: Node2D = EXPLORATION_SCENE.instantiate()
 	add_child_autofree(exp)
 	return exp

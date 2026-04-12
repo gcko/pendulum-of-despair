@@ -15,7 +15,14 @@ const CLASS_TITLES: Dictionary = {
 }
 
 const STARTING_EQUIPMENT: Dictionary = {
-	"edren": {"weapon": "training_sword", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"edren":
+	{
+		"weapon": "arcanite_sword_proto",
+		"head": "",
+		"body": "arcanite_mail_proto",
+		"accessory": "",
+		"crystal": ""
+	},
 	"cael": {"weapon": "recruits_claymore", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"lira": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"sable": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
@@ -369,7 +376,7 @@ func optimize_equipment(character_id: String) -> void:
 			if val > best_val:
 				best = opt
 				best_val = val
-		equip_item(character_id, slot, best.get("id", ""))
+		equip_item(character_id, slot, best.get("equipment_id", ""))
 
 
 func get_consumables() -> Dictionary:
@@ -425,6 +432,32 @@ func remove_key_item(item_id: String) -> void:
 		key_items.erase(item_id)
 		inventory["key_items"] = key_items
 		inventory_changed.emit()
+
+
+## Removes Edren's temporary arcanite equipment after Ember Vein escape.
+func break_arcanite_gear() -> void:
+	var changed: bool = false
+	for i: int in range(members.size()):
+		var member: Dictionary = members[i]
+		if member.get("character_id", "") != "edren":
+			continue
+		var equipment: Dictionary = member.get("equipment", {})
+		if equipment.get("weapon", "") == "arcanite_sword_proto":
+			equipment["weapon"] = ""
+			changed = true
+		if equipment.get("body", "") == "arcanite_mail_proto":
+			equipment["body"] = ""
+			changed = true
+		members[i]["equipment"] = equipment
+		break
+	# Also purge from owned_equipment in case player unequipped them
+	for proto_id: String in ["arcanite_sword_proto", "arcanite_mail_proto"]:
+		for i: int in range(owned_equipment.size() - 1, -1, -1):
+			if owned_equipment[i].get("equipment_id", "") == proto_id:
+				owned_equipment.remove_at(i)
+				changed = true
+	if changed:
+		equipment_changed.emit("edren")
 
 
 func add_item(item_id: String, quantity: int) -> void:

@@ -26,6 +26,7 @@ tile_map_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5,
 position = Vector2(480, 80)
 metadata/chest_id = "ember_vein_f1_chest_1"
 metadata/item_id = "carradan_mining_pick"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="Chest2" parent="Entities" instance=ExtResource("2_chest")]
@@ -38,22 +39,36 @@ metadata/quantity = 3
 position = Vector2(560, 160)
 metadata/chest_id = "ember_vein_f1_chest_3"
 metadata/item_id = "iron_bracelet"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="SavePoint1" parent="Entities" instance=ExtResource("3_save")]
 position = Vector2(80, 400)
 metadata/save_point_id = "ember_vein_f1_save"
 
-[node name="DialogueEntry" type="Area2D" parent="Entities"]
+[node name="EntryDialogue" type="Area2D" parent="Entities"]
 position = Vector2(160, 128)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/flag = "ember_vein_entry_seen"
-metadata/dialogue_data = [{"speaker": "Edren", "lines": ["Hold."]}, {"speaker": "Edren", "lines": ["No marks. No signs of a fight. They just... stopped."]}, {"speaker": "Cael", "lines": ["They didn't die fighting. They died feeling something."]}, {"speaker": "Edren", "lines": ["There'll be more."]}]
+metadata/flag = "ember_vein_1a_seen"
+metadata/dialogue_scene_id = "ember_vein_tutorial"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/DialogueEntry"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/EntryDialogue"]
+shape = SubResource("Shape_trigger")
+
+[node name="BodiesDialogue" type="Area2D" parent="Entities"]
+position = Vector2(304, 256)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/dialogue_scene_id = "ember_vein_1a_bodies"
+metadata/flag = "ember_vein_1a_bodies_seen"
+metadata/required_flag = "ember_vein_1a_seen"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/BodiesDialogue"]
 shape = SubResource("Shape_trigger")
 
 [node name="Transitions" type="Node2D" parent="."]
@@ -66,6 +81,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "overworld"
 metadata/target_spawn = "from_ember_vein"
+metadata/required_flag = "ember_vein_1a_seen"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_transition")

@@ -1,0 +1,65 @@
+{
+  "scene_id": "ironmouth_sable",
+  "entries": [
+    {
+      "id": "ironmouth_sable_001",
+      "speaker": "sable",
+      "lines": [
+        "Sorry, gentlemen. Inventory check. Very official.",
+        "Come back tomorrow."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_sable_002",
+      "speaker": "sable",
+      "lines": [
+        "Friends of yours, or am I interrupting something",
+        "private?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_sable_003",
+      "speaker": "edren",
+      "lines": [
+        "We're leaving. Now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_sable_004",
+      "speaker": "sable",
+      "lines": [
+        "Perfect. I was just leaving too. I was definitely",
+        "not in the middle of relieving the quartermaster's office of",
+        "anything valuable."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_sable_005",
+      "speaker": "sable",
+      "lines": [
+        "I'm Sable. And unless one of you has a boat, we're",
+        "all going through the Wilds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

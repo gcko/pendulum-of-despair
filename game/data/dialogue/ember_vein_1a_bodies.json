@@ -1,0 +1,49 @@
+{
+  "scene_id": "ember_vein_1a_bodies",
+  "entries": [
+    {
+      "id": "ember_vein_1a_001",
+      "speaker": "cael",
+      "lines": [
+        "More of them. Same as before — no wounds, no struggle."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_002",
+      "speaker": "edren",
+      "lines": [
+        "Their lanterns still have oil. They didn't run out of light."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_003",
+      "speaker": "cael",
+      "lines": [
+        "Something down here stopped them. Not the dark — something worse."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_004",
+      "speaker": "edren",
+      "lines": [
+        "We press on. Answers are deeper."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

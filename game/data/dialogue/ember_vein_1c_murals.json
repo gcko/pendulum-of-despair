@@ -1,0 +1,40 @@
+{
+  "scene_id": "ember_vein_1c_murals",
+  "entries": [
+    {
+      "id": "ember_vein_1c_murals_001",
+      "speaker": "cael",
+      "lines": [
+        "Look at this. Whatever they built down here, that",
+        "object was at the center of it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1c_murals_002",
+      "speaker": "edren",
+      "lines": [
+        "The figures aren't worshipping. Look at their posture."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1c_murals_003",
+      "speaker": "cael",
+      "lines": [
+        "They're bowing under weight. Like they're holding",
+        "something up."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

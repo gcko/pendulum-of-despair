@@ -869,6 +869,64 @@
         "duskfen_road"
       ],
       "ko_sound": "ko_beast"
+    },
+    {
+      "id": "compact_patrol",
+      "name": "Compact Patrol",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 5,
+      "hp": 180,
+      "mp": 0,
+      "atk": 16,
+      "def": 14,
+      "mag": 8,
+      "mdef": 10,
+      "spd": 10,
+      "gold": 30,
+      "exp": 18,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {},
+      "drop": {
+        "item_id": "potion",
+        "rate": 75
+      },
+      "locations": [
+        "ironmouth_docks"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "compact_scout",
+      "name": "Compact Scout",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 6,
+      "hp": 140,
+      "mp": 0,
+      "atk": 14,
+      "def": 10,
+      "mag": 8,
+      "mdef": 8,
+      "spd": 14,
+      "gold": 35,
+      "exp": 20,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {},
+      "drop": {
+        "item_id": "antidote",
+        "rate": 50
+      },
+      "locations": [
+        "ironmouth_docks"
+      ],
+      "ko_sound": "ko_humanoid"
     }
   ]
 }

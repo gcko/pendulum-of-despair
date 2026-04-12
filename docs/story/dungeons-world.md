@@ -101,8 +101,9 @@ standard equipment. This previews the Arcanite Forging system Lira unlocks
 later.
 
 **Pallor shimmer (Cael):** Cael's attacks have a faint visual shimmer
-throughout the Ember Vein. His damage output is ~10% above his stat line. No
-in-game explanation is given. This is the Pallor's first touch -- retroactive
+starting in the Ember Vein and persisting for the rest of the game. His
+damage output is permanently ~10% above his stat line. No in-game
+explanation is given. This is the Pallor's first touch -- retroactive
 foreshadowing visible only on replay or careful observation.
 
 **Dawn march (opening credits):** After the Vaelith encounter outside the mine

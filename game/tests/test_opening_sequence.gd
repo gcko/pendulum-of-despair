@@ -151,8 +151,13 @@ func test_overworld_has_scene3_trigger() -> void:
 	assert_not_null(trigger, "overworld should have Entities/Scene3Trigger")
 	assert_eq(
 		str(trigger.get_meta("flag", "")),
+		"ironmouth_escape_seen",
+		"Scene3Trigger should set ironmouth_escape_seen flag",
+	)
+	assert_eq(
+		str(trigger.get_meta("required_flag", "")),
 		"carradan_ambush_survived",
-		"Scene3Trigger should set carradan_ambush_survived flag",
+		"Scene3Trigger should require carradan_ambush_survived",
 	)
 	assert_eq(
 		str(trigger.get_meta("dialogue_scene_id", "")),

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
 
@@ -27,6 +27,9 @@ size = Vector2(48, 48)
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="Shape_scene4"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="Shape_ironmouth"]
 size = Vector2(48, 48)
 
 [node name="Overworld" type="Node2D"]
@@ -66,6 +69,19 @@ metadata/target_spawn = "from_overworld"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/EmberVeinEntrance"]
 shape = SubResource("Shape_ember")
+
+[node name="IronmouthDocks" type="Area2D" parent="Transitions"]
+position = Vector2(656, 464)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/ironmouth_docks"
+metadata/target_spawn = "from_overworld"
+metadata/required_flag = "vaelith_scene_complete"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/IronmouthDocks"]
+shape = SubResource("Shape_ironmouth")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(480, 320)
@@ -137,6 +153,9 @@ position = Vector2(336, 528)
 [node name="from_duskfen_shrine" type="Marker2D" parent="."]
 position = Vector2(352, 528)
 
+[node name="from_ironmouth" type="Marker2D" parent="."]
+position = Vector2(688, 496)
+
 [node name="Scene2Trigger" type="Area2D" parent="Entities"]
 position = Vector2(816, 528)
 collision_layer = 0
@@ -156,8 +175,8 @@ collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/flag = "carradan_ambush_survived"
-metadata/required_flag = "vaelith_scene_complete"
+metadata/flag = "ironmouth_escape_seen"
+metadata/required_flag = "carradan_ambush_survived"
 metadata/dialogue_scene_id = "ironmouth_escape"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene3Trigger"]
@@ -170,7 +189,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "opening_credits_seen"
-metadata/required_flag = "carradan_ambush_survived"
+metadata/required_flag = "ironmouth_escape_seen"
 metadata/dialogue_scene_id = "dawn_march"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene4Trigger"]

@@ -36,7 +36,7 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"max_hp": max_hp,
 		"current_mp": current_mp,
 		"max_mp": max_mp,
-		"row": char_data.get("default_row", "front"),
+		"row": PartyState.get_row(cid),
 		"active_statuses": [] as Array[Dictionary],
 		"is_alive": current_hp > 0,
 		"is_defending": false,
