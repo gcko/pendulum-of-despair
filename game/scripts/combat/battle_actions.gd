@@ -47,7 +47,7 @@ static func execute_party_attack(
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
 	var character_id: String = member.get("character_id", "")
-	var attacker_row: String = PartyState.get_row(character_id) if character_id != "" else "front"
+	var attacker_row: String = member.get("row", "front")
 	var dmg: int = DamageCalc.calculate_physical(
 		atk,
 		1.0,
@@ -153,8 +153,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source
-	var defender_cid: String = member.get("character_id", "")
-	var defender_row: String = PartyState.get_row(defender_cid) if defender_cid != "" else "front"
+	var defender_row: String = member.get("row", "front")
 	var dmg: int = (
 		DamageCalc
 		. calculate_physical(

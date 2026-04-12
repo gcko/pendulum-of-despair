@@ -32,32 +32,32 @@ metadata/item_id = "antidote"
 metadata/quantity = 2
 
 [node name="Chest2" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(200, 300)
+position = Vector2(208, 304)
 metadata/chest_id = "ember_vein_f2_chest_2"
 metadata/item_id = "miners_hardhat"
 metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="Chest3" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(550, 350)
+position = Vector2(544, 352)
 metadata/chest_id = "ember_vein_f2_chest_3"
 metadata/item_id = "ember_ring"
 metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="MineWaterVialChest" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(300, 200)
+position = Vector2(304, 208)
 metadata/chest_id = "ember_vein_f2_vial"
 metadata/item_id = "mine_water_vial"
 metadata/is_key_item = true
 metadata/quantity = 1
 
 [node name="SavePoint1" parent="Entities" instance=ExtResource("3_save")]
-position = Vector2(80, 350)
+position = Vector2(80, 352)
 metadata/save_point_id = "ember_vein_f2_save"
 
 [node name="BossTrigger" type="Area2D" parent="Entities"]
-position = Vector2(480, 300)
+position = Vector2(480, 304)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -71,7 +71,7 @@ metadata/flag = "ember_drake_defeated"
 shape = SubResource("Shape_boss")
 
 [node name="DialogueMiners" type="Area2D" parent="Entities"]
-position = Vector2(160, 200)
+position = Vector2(160, 208)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -83,7 +83,7 @@ metadata/dialogue_data = [{"speaker": "cael", "lines": ["More of them. Six here.
 shape = SubResource("Shape_trigger")
 
 [node name="JournalDialogue" type="Area2D" parent="Entities"]
-position = Vector2(300, 200)
+position = Vector2(304, 208)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -127,7 +127,7 @@ position = Vector2(48, 48)
 position = Vector2(48, 48)
 
 [node name="from_pitfall" type="Marker2D" parent="."]
-position = Vector2(300, 80)
+position = Vector2(304, 80)
 
 [node name="from_f3" type="Marker2D" parent="."]
 position = Vector2(352, 432)

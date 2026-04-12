@@ -27,6 +27,17 @@
     },
     {
       "id": "ironmouth_sable_003",
+      "speaker": "edren",
+      "lines": [
+        "We're leaving. Now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_sable_004",
       "speaker": "sable",
       "lines": [
         "Perfect. I was just leaving too. I was definitely",
@@ -39,7 +50,7 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_sable_004",
+      "id": "ironmouth_sable_005",
       "speaker": "sable",
       "lines": [
         "I'm Sable. And unless one of you has a boat, we're",

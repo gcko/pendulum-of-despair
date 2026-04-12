@@ -234,9 +234,11 @@ func roll_steal(tier: String) -> Dictionary:
 	if tier_data.is_empty():
 		return {"item_id": "", "success": false}
 	var rate: int = tier_data.get("rate", 0)
-	var success: bool = randi() % 100 < rate
+	var raw_id: Variant = tier_data.get("item_id", "")
+	var item_id: String = raw_id as String if raw_id is String else ""
+	var success: bool = randi() % 100 < rate and not item_id.is_empty()
 	return {
-		"item_id": tier_data.get("item_id", "") if success else "",
+		"item_id": item_id if success else "",
 		"success": success,
 	}
 

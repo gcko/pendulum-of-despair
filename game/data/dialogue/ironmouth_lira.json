@@ -26,6 +26,17 @@
     },
     {
       "id": "ironmouth_lira_003",
+      "speaker": "edren",
+      "lines": [
+        "Who are you?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_004",
       "speaker": "lira",
       "lines": [
         "Someone who's been tracking what the Compact pulled",
@@ -38,7 +49,7 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_lira_004",
+      "id": "ironmouth_lira_005",
       "speaker": "lira",
       "lines": [
         "I found references to something called \"Project",
@@ -51,7 +62,7 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_lira_005",
+      "id": "ironmouth_lira_006",
       "speaker": "lira",
       "lines": [
         "Now. This way."
@@ -62,7 +73,7 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_lira_006",
+      "id": "ironmouth_lira_007",
       "speaker": "lira",
       "lines": [
         "She's right. The forest is the only way."

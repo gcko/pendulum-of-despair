@@ -59,7 +59,7 @@ metadata/dialogue_scene_id = "ember_vein_tutorial"
 shape = SubResource("Shape_trigger")
 
 [node name="BodiesDialogue" type="Area2D" parent="Entities"]
-position = Vector2(300, 250)
+position = Vector2(304, 256)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
