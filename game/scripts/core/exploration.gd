@@ -206,7 +206,7 @@ func _spawn_player() -> void:
 func _initialize_from_transition_data() -> void:
 	var data: Dictionary = GameManager.transition_data
 	if data.get("new_game", false):
-		load_map("overworld")
+		load_map("dungeons/ember_vein_f1", "from_overworld")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
 		PartyState.load_from_save(save_data)
