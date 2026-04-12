@@ -27,7 +27,6 @@ const CLEANSING_WAVES: Array = [
 		"ley_jellyfish",
 		"drowned_bones",
 		"drowned_bones",
-		"drowned_bones",
 		"polluted_elemental",
 	],
 	[
@@ -36,8 +35,6 @@ const CLEANSING_WAVES: Array = [
 		"marsh_serpent",
 		"marsh_serpent",
 		"marsh_serpent",
-		"marsh_serpent",
-		"ley_jellyfish",
 		"ley_jellyfish",
 	],
 	[
@@ -324,7 +321,7 @@ func _initialize_entities(map_node: Node2D) -> void:
 				push_error("Exploration: WaterWheel '%s' missing dungeon_id" % child.name)
 				continue
 			child.initialize(wid, did)
-		elif child.has_method("refresh") and not child.has_signal("wheel_toggled"):
+		elif child.has_signal("zone_refreshed"):
 			var did: String = child.get_meta("dungeon_id", "")
 			var conds: String = child.get_meta("active_when", "")
 			var zt: String = child.get_meta("zone_type", "block")
@@ -607,6 +604,10 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	if _arrival_tween != null and _arrival_tween.is_valid():
 		_arrival_tween.kill()
 		_arrival_tween = null
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
+		_flash_tween = null
+		_location_panel.visible = false
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
 	_transition_tween = create_tween()

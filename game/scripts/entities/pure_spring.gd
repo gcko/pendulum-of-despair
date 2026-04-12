@@ -13,9 +13,8 @@ func interact() -> void:
 		interaction_message.emit("The vessel is already full.")
 		return
 	if "spirit_vessel" in key_items:
-		key_items.erase("spirit_vessel")
-		key_items.append("spirit_vessel_filled")
-		PartyState.inventory["key_items"] = key_items
+		PartyState.remove_key_item("spirit_vessel")
+		PartyState.add_key_item("spirit_vessel_filled")
 		spring_filled.emit()
 		return
 	interaction_message.emit("You have nothing to hold the water in.")

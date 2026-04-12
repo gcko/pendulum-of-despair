@@ -141,10 +141,10 @@ AI Script:
 - Phase 2 (at 9,000 HP): Summons 2 Corrupted Spawn. Dive/surface continues with increased aggression.
 - Phase 3 (at 0 HP): Cleansing Sequence (separate encounter). Torren channels while party defends. 4 waves:
   - Wave 1: 4 Marsh Serpents + 2 Polluted Elementals
-  - Wave 2: 3 Ley Jellyfish + 3 Drowned Bones + 1 Polluted Elemental
-  - Wave 3: 2 Polluted Elementals + 4 Marsh Serpents + 2 Ley Jellyfish
+  - Wave 2: 3 Ley Jellyfish + 2 Drowned Bones + 1 Polluted Elemental
+  - Wave 3: 2 Polluted Elementals + 3 Marsh Serpents + 1 Ley Jellyfish
   - Wave 4: 3 Corrupted Spawn (stronger, target Torren)
-- Scripted events: Phase transitions, Torren receives Spirit-Bound Spear after restoration
+- Scripted events: Phase transitions (Spirit-Bound Spear is in F2 chest, not a boss drop)
 
 - [ ] **Step 6: Verify Act I boss data**
 

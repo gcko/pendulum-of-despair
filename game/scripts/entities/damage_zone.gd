@@ -42,6 +42,8 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if zone_id.is_empty():
+		return
 	if body.is_in_group("player"):
 		_player_inside = true
 		_status_applied = false

@@ -1,6 +1,8 @@
 extends StaticBody2D
 ## Water level zone — blocks or reveals paths based on water wheel state.
 
+signal zone_refreshed
+
 var _dungeon_id: String = ""
 var _conditions: Array[Dictionary] = []
 var _zone_type: String = "block"

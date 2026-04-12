@@ -34,9 +34,8 @@ func interact() -> void:
 	if "spirit_vessel_filled" not in key_items:
 		interaction_message.emit("The spirit-plant's tendrils block the passage. It is withering.")
 		return
-	key_items.erase("spirit_vessel_filled")
-	key_items.append("spirit_vessel")
-	PartyState.inventory["key_items"] = key_items
+	PartyState.remove_key_item("spirit_vessel_filled")
+	PartyState.add_key_item("spirit_vessel")
 	is_restored = true
 	PartyState.set_puzzle_state(_dungeon_id, "%s_restored" % plant_id, true)
 	_update_visual()

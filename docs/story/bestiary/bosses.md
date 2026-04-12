@@ -241,8 +241,8 @@ spells).
 > **Note:** This encounter has three phases. Phase 3 (Cleansing Sequence)
 > is a separate wave-defense encounter that begins when the Fenmother
 > reaches 0 HP. The party cannot lose Phase 3 -- it is a non-lethal
-> narrative sequence. Torren receives the Spirit-Bound Spear after the
-> Fenmother is restored.
+> narrative sequence. The Spirit-Bound Spear is found in a chest behind
+> the spirit-plant passage on Floor 2 (before the boss fight).
 
 **Modes:** 3 (Surface, Diving, Desperate)
 
@@ -324,7 +324,7 @@ Scripted Events:
   At Wave 4 cleared:
     - cutscene: "Light floods the hollow. The corruption lifts. The
       Fenmother opens her eyes -- clear, golden, grateful."
-    - party_change: Torren receives Spirit-Bound Spear
+    - party_change: none (Spirit-Bound Spear is in F2 chest)
 ```
 
 **Design Note:** The Corrupted Fenmother is Act I's climactic encounter,

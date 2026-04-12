@@ -175,7 +175,7 @@ F1 Wheel 1 replaces the existing "WaterWheel" dialogue trigger.
 
 **Scene tree:**
 ```
-WaterZone (Area2D, collision layer 1 for block type)
+WaterZone (StaticBody2D, collision layer 1 for block type)
 ├── Sprite2D (semi-transparent blue rectangle)
 └── CollisionShape2D (sized per instance)
 ```

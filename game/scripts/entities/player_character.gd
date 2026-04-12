@@ -35,6 +35,8 @@ var _current_interactable: Node2D = null
 
 
 func _physics_process(_delta: float) -> void:
+	# Snap to pixel grid every frame — including during auto-walk tweens.
+	position = position.round()
 	if not _input_enabled:
 		return
 	var direction: Vector2 = _get_input_direction()
@@ -48,7 +50,6 @@ func _physics_process(_delta: float) -> void:
 		_play_idle_animation()
 
 	move_and_slide()
-	# Snap to pixel grid — no sub-pixel positions.
 	position = position.round()
 
 

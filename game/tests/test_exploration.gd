@@ -31,16 +31,16 @@ func after_each() -> void:
 	PartyState.is_at_save_point = false
 
 
-func _create_exploration():
+func _create_exploration() -> Node2D:
 	GameManager.transition_data = {"new_game": true}
-	var exp = EXPLORATION_SCENE.instantiate()
+	var exp: Node2D = EXPLORATION_SCENE.instantiate()
 	add_child_autofree(exp)
 	return exp
 
 
-func _create_exploration_test_room():
+func _create_exploration_test_room() -> Node2D:
 	GameManager.transition_data = {}
-	var exp = EXPLORATION_SCENE.instantiate()
+	var exp: Node2D = EXPLORATION_SCENE.instantiate()
 	add_child_autofree(exp)
 	exp.load_map("test_room")
 	return exp
@@ -50,24 +50,24 @@ func _create_exploration_test_room():
 
 
 func test_exploration_scene_loads() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	assert_not_null(exp, "exploration scene should instantiate")
 
 
 func test_load_map_creates_children() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	var map_container = exp.get_node("CurrentMap")
 	assert_gt(map_container.get_child_count(), 0, "map should be loaded as child")
 
 
 func test_player_spawns_at_marker() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp._player, "player should be instantiated")
 	assert_eq(exp._player.position, Vector2(80, 90), "player should be at spawn point")
 
 
 func test_camera_follows_player() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	exp._player.position = Vector2(100, 50)
 	exp._process(0.016)
 	var cam = exp.get_node("Camera2D")
@@ -78,7 +78,7 @@ func test_camera_follows_player() -> void:
 
 
 func test_npc_interaction_signal_wired() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node should exist")
 	var npc = entities.get_node_or_null("TestNPC")
@@ -89,7 +89,7 @@ func test_npc_interaction_signal_wired() -> void:
 
 
 func test_chest_interaction_signal_wired() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var chest = entities.get_node_or_null("TestChest")
 	assert_not_null(chest, "test chest should exist in map")
@@ -99,7 +99,7 @@ func test_chest_interaction_signal_wired() -> void:
 
 
 func test_save_point_signal_wired() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var sp = entities.get_node_or_null("TestSavePoint")
 	assert_not_null(sp, "test save point should exist in map")
@@ -113,7 +113,7 @@ func test_save_point_signal_wired() -> void:
 
 
 func test_transition_flag_blocks_interaction() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	# Use a real entity that has interact() — e.g., the NPC from the map
 	var entities = exp._current_map.get_node_or_null("Entities")
 	var npc = entities.get_node_or_null("TestNPC")
@@ -128,14 +128,14 @@ func test_transition_flag_blocks_interaction() -> void:
 
 
 func test_location_flash_sets_text() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	exp.flash_location_name("Test Location")
 	assert_eq(exp._location_label.text, "Test Location", "should set location text")
 	assert_true(exp._location_panel.visible, "location panel should be visible")
 
 
 func test_map_changed_signal() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	watch_signals(exp)
 	exp.load_map("test_room_2")
 	assert_signal_emitted(exp, "map_changed", "should emit map_changed")
@@ -145,7 +145,7 @@ func test_map_changed_signal() -> void:
 
 
 func test_chest_opened_adds_item_to_inventory() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	var prev_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
 	exp._on_chest_opened("test_chest_99", "potion", 1)
 	var new_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
@@ -156,7 +156,7 @@ func test_chest_opened_adds_item_to_inventory() -> void:
 
 
 func test_encounter_fallback_skipped_on_empty_floor_id() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	# After initial load_map the encounter config is set from the map.
 	# Load a map that has an empty floor_id but a dungeon_id that resolves.
 	# The test_room map has no floor_id metadata, so _current_floor_id = "".
@@ -177,7 +177,7 @@ func test_encounter_fallback_skipped_on_empty_floor_id() -> void:
 
 
 func test_npc_with_shop_id_opens_shop_overlay() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
@@ -193,7 +193,7 @@ func test_npc_with_shop_id_opens_shop_overlay() -> void:
 
 
 func test_inn_interaction_deducts_gold() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
@@ -206,7 +206,7 @@ func test_inn_interaction_deducts_gold() -> void:
 
 
 func test_inn_interaction_insufficient_gold_rejected() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
@@ -222,7 +222,7 @@ func test_inn_interaction_insufficient_gold_rejected() -> void:
 
 
 func test_ui_accept_blocked_when_input_disabled() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp._player, "player must exist")
 	exp._player.set_input_enabled(false)
 	watch_signals(exp._player)
@@ -238,7 +238,7 @@ func test_ui_accept_blocked_when_input_disabled() -> void:
 
 
 func test_ui_accept_allowed_when_input_enabled() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp._player, "player must exist")
 	exp._player.set_input_enabled(true)
 	watch_signals(exp._player)
@@ -256,7 +256,7 @@ func test_ui_accept_allowed_when_input_enabled() -> void:
 
 
 func test_ui_menu_blocked_when_input_disabled() -> void:
-	var exp = _create_exploration_test_room()
+	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp._player, "player must exist")
 	exp._player.set_input_enabled(false)
 	watch_signals(GameManager)
@@ -275,7 +275,7 @@ func test_ui_menu_blocked_when_input_disabled() -> void:
 
 
 func test_ritual_meter_value_stored_in_transition_data() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
 	# Manually set up the ritual meter on the exploration scene
 	exp._ritual_meter = RITUAL_METER_SCENE.instantiate()
@@ -298,7 +298,7 @@ func test_ritual_meter_value_stored_in_transition_data() -> void:
 
 
 func test_ritual_meter_restored_from_transition_data() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
 	# Simulate the state after returning from a cleansing wave battle:
 	# _ritual_meter is null (scene was recreated), transition_data has saved value.
@@ -328,7 +328,7 @@ func test_ritual_meter_restored_from_transition_data() -> void:
 
 
 func test_ritual_meter_defaults_to_100_when_missing() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
 	# When ritual_meter_value is not in transition data, defaults to 100.0.
 	# After drain of 15.0 (base, wave_num=0), final value = 85.0.
@@ -352,7 +352,7 @@ func test_ritual_meter_defaults_to_100_when_missing() -> void:
 
 
 func test_ritual_meter_different_saved_values() -> void:
-	var exp = _create_exploration()
+	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
 	# Verify different saved values produce different post-drain results.
 	# 80.0 - 15.0 = 65.0
