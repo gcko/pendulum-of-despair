@@ -15,7 +15,14 @@ const CLASS_TITLES: Dictionary = {
 }
 
 const STARTING_EQUIPMENT: Dictionary = {
-	"edren": {"weapon": "training_sword", "head": "", "body": "", "accessory": "", "crystal": ""},
+	"edren":
+	{
+		"weapon": "arcanite_sword_proto",
+		"head": "",
+		"body": "arcanite_mail_proto",
+		"accessory": "",
+		"crystal": ""
+	},
 	"cael": {"weapon": "recruits_claymore", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"lira": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
 	"sable": {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""},
@@ -425,6 +432,22 @@ func remove_key_item(item_id: String) -> void:
 		key_items.erase(item_id)
 		inventory["key_items"] = key_items
 		inventory_changed.emit()
+
+
+func break_arcanite_gear() -> void:
+	## Removes Edren's temporary arcanite equipment after Ember Vein escape.
+	for i: int in range(members.size()):
+		var member: Dictionary = members[i]
+		if member.get("character_id", "") != "edren":
+			continue
+		var equipment: Dictionary = member.get("equipment", {})
+		if equipment.get("weapon", "") == "arcanite_sword_proto":
+			equipment["weapon"] = ""
+		if equipment.get("body", "") == "arcanite_mail_proto":
+			equipment["body"] = ""
+		members[i]["equipment"] = equipment
+		break
+	inventory_changed.emit()
 
 
 func add_item(item_id: String, quantity: int) -> void:

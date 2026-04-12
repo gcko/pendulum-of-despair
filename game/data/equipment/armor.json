@@ -577,6 +577,22 @@
 			"description": "Plate reinforced with earthen minerals that absorb seismic force."
 		},
 		{
+			"id": "arcanite_mail_proto",
+			"name": "Arcanite Mail (Prototype)",
+			"slot": "body",
+			"armor_class": "heavy",
+			"tier": 1,
+			"equippable_by": ["edren"],
+			"def": 10,
+			"mdef": 4,
+			"bonus_stats": {},
+			"special": null,
+			"buy_price": null,
+			"sell_price": null,
+			"acquired": "Starting equipment (Edren) — breaks after Ember Vein",
+			"description": "Prototype Compact body armor. Arcanite-laced plates provide exceptional protection."
+		},
+		{
 			"id": "iron_plate",
 			"name": "Iron Plate",
 			"slot": "body",

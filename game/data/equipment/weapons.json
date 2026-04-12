@@ -16,6 +16,21 @@
 			"description": "A standard-issue Compact training blade."
 		},
 		{
+			"id": "arcanite_sword_proto",
+			"name": "Arcanite Sword (Prototype)",
+			"type": "sword",
+			"tier": 1,
+			"equippable_by": ["edren"],
+			"atk": 13,
+			"bonus_stats": {},
+			"element": null,
+			"special": null,
+			"buy_price": null,
+			"sell_price": null,
+			"acquired": "Starting equipment (Edren) — breaks after Ember Vein",
+			"description": "A confiscated Compact prototype. Arcanite-enhanced but unstable."
+		},
+		{
 			"id": "carradan_mining_pick",
 			"name": "Carradan Mining Pick",
 			"type": "sword",
