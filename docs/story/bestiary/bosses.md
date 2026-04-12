@@ -298,10 +298,10 @@ who fall are revived between waves at 25% HP.
     - 4 Marsh Serpents + 2 Polluted Elementals
 
   Wave 2 -- "She Remembers":
-    - 3 Ley Jellyfish + 3 Drowned Bones + 1 Polluted Elemental
+    - 3 Ley Jellyfish + 2 Drowned Bones + 1 Polluted Elemental
 
   Wave 3 -- "The Last Resistance":
-    - 2 Polluted Elementals + 4 Marsh Serpents + 2 Ley Jellyfish
+    - 2 Polluted Elementals + 3 Marsh Serpents + 1 Ley Jellyfish
 
   Wave 4 -- "Release":
     - 3 Corrupted Spawn (stronger variant, prioritize targeting Torren)

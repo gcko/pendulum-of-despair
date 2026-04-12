@@ -727,6 +727,7 @@ func _caden_complete(caden: Node2D, completion_flag: String) -> void:
 	PartyState.add_key_item("fenmothers_blessing")
 	flash_location_name("Received Fenmother's Blessing!")
 	EventFlags.set_flag(completion_flag, true)
+	EventFlags.set_flag("duskfen_alliance", true)
 	caden.queue_free()
 	var post_npc: Node = _current_map.get_node_or_null("Entities/CadenPostEvent")
 	if post_npc != null:

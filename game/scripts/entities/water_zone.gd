@@ -48,3 +48,4 @@ func refresh() -> void:
 		visible = all_met
 		if _collision != null:
 			_collision.disabled = true
+	zone_refreshed.emit()

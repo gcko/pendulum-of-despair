@@ -98,6 +98,16 @@ func test_initialize_new_game_clears_puzzle_state() -> void:
 	assert_true(PartyState.puzzle_state.is_empty(), "new game should clear puzzle_state")
 
 
+func test_remove_key_item_noop_for_missing_item() -> void:
+	PartyState.inventory["key_items"] = ["spirit_vessel"]
+	watch_signals(PartyState)
+	PartyState.remove_key_item("nonexistent_item")
+	var key_items: Array = PartyState.get_key_items()
+	assert_eq(key_items.size(), 1, "key_items should be unchanged")
+	assert_true("spirit_vessel" in key_items, "original item should remain")
+	assert_signal_not_emitted(PartyState, "inventory_changed", "should not emit for no-op")
+
+
 # --- Water Wheel ---
 
 

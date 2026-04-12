@@ -451,8 +451,8 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 ```gdscript
 const CLEANSING_WAVES: Array = [
     ["marsh_serpent","marsh_serpent","marsh_serpent","marsh_serpent","polluted_elemental","polluted_elemental"],
-    ["ley_jellyfish","ley_jellyfish","ley_jellyfish","drowned_bones","drowned_bones","drowned_bones","polluted_elemental"],
-    ["polluted_elemental","polluted_elemental","marsh_serpent","marsh_serpent","marsh_serpent","marsh_serpent","ley_jellyfish","ley_jellyfish"],
+    ["ley_jellyfish","ley_jellyfish","ley_jellyfish","drowned_bones","drowned_bones","polluted_elemental"],
+    ["polluted_elemental","polluted_elemental","marsh_serpent","marsh_serpent","marsh_serpent","ley_jellyfish"],
     ["corrupted_spawn","corrupted_spawn","corrupted_spawn"],
 ]
 
