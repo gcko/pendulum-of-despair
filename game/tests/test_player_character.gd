@@ -60,3 +60,34 @@ func test_get_facing_direction_returns_vector() -> void:
 	var player = _create_player()
 	var dir: Vector2 = player.get_facing_direction()
 	assert_eq(dir, Vector2.DOWN, "Should return facing direction")
+
+
+# --- Encapsulation: is_input_enabled() ---
+
+
+func test_input_enabled_default_true() -> void:
+	var player = _create_player()
+	assert_true(player.is_input_enabled(), "input should be enabled by default")
+
+
+func test_set_input_enabled_false() -> void:
+	var player = _create_player()
+	player.set_input_enabled(false)
+	assert_false(
+		player.is_input_enabled(), "input should be disabled after set_input_enabled(false)"
+	)
+
+
+func test_set_input_enabled_roundtrip() -> void:
+	var player = _create_player()
+	player.set_input_enabled(false)
+	player.set_input_enabled(true)
+	assert_true(player.is_input_enabled(), "input should be re-enabled after roundtrip")
+
+
+func test_input_disabled_blocks_movement() -> void:
+	var player = _create_player()
+	player.set_input_enabled(false)
+	player.position = Vector2(50, 50)
+	player._physics_process(0.016)
+	assert_eq(player.position, Vector2(50, 50), "player should not move when input disabled")
