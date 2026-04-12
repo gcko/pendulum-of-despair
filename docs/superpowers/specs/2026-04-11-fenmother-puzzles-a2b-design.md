@@ -62,7 +62,7 @@ Example runtime state:
         "wheel_1_high": false,
         "wheel_2_high": false,
         "wheel_3_high": false,
-        "plant_restored": false
+        "spirit_plant_1_restored": false
     }
 }
 ```
@@ -327,14 +327,14 @@ dungeon_id: "fenmothers_hollow"
 signal plant_restored(plant_id: String)
 
 func initialize(plant_id: String, dungeon_id: String) -> void
-    ## Read plant_restored from puzzle_state
+    ## Read {plant_id}_restored from puzzle_state
     ## Set visual + collision accordingly
 
 func interact() -> void
     ## If already restored: dialogue "The spirit-plant glows..."
     ## If spirit_vessel_filled in key_items:
     ##   remove spirit_vessel_filled, add spirit_vessel (empty)
-    ##   set puzzle_state plant_restored = true
+    ##   set puzzle_state {plant_id}_restored = true
     ##   tween sprite modulate grey → blue-white over 1.5s
     ##   disable StaticBody2D collision (passage opens)
     ##   emit plant_restored(plant_id)
@@ -358,7 +358,7 @@ trigger. Blocks path to Drowned Sentinel until restored.
 - plant interact with filled vessel → restores, swaps items
 - plant collision disabled after restore
 - plant visual changes on restore
-- puzzle_state persists plant_restored
+- puzzle_state persists {plant_id}_restored
 - re-initialize plant after restore → stays open
 - signal emitted on restore
 

@@ -328,8 +328,6 @@ func _initialize_entities(map_node: Node2D) -> void:
 			var conds: String = child.get_meta("active_when", "")
 			var zt: String = child.get_meta("zone_type", "block")
 			child.initialize(did, conds, zt)
-		elif child.has_signal("spring_filled"):
-			pass
 		elif child.has_signal("plant_restored"):
 			var pid: String = child.get_meta("plant_id", "")
 			var did: String = child.get_meta("dungeon_id", "")
