@@ -30,12 +30,19 @@ func test_non_cael_no_shimmer() -> void:
 	assert_eq(edren, generic, "Non-Cael characters should deal standard damage")
 
 
-func test_cael_magical_damage_unaffected() -> void:
+func test_cael_physical_shimmer_does_not_affect_magic() -> void:
+	# calculate_magic has no attacker_id parameter by design — Pallor Shimmer
+	# is physical-only. This test documents that architectural decision.
 	seed(42)
-	var base_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
+	var cael_phys: int = DamageCalc.calculate_physical(20, 10, 1.0, 1.0, [], [], "cael")
+	seed(42)
+	var generic_phys: int = DamageCalc.calculate_physical(20, 10, 1.0, 1.0, [], [], "edren")
+	assert_gt(cael_phys, generic_phys, "Cael physical should be boosted by shimmer")
 	seed(42)
 	var cael_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
-	assert_eq(base_mag, cael_mag, "Magical damage should be unaffected by shimmer")
+	seed(42)
+	var generic_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
+	assert_eq(cael_mag, generic_mag, "Magic has no attacker_id — shimmer cannot apply")
 
 
 func _get_edren_equipment() -> Dictionary:
