@@ -1,17 +1,20 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
-[ext_resource type="PackedScene" path="res://scenes/entities/treasure_chest.tscn" id="2_chest"]
 [ext_resource type="PackedScene" path="res://scenes/entities/save_point.tscn" id="3_save"]
+[ext_resource type="PackedScene" path="res://scenes/entities/damage_zone.tscn" id="4_damage_zone"]
 
 [sub_resource type="RectangleShape2D" id="Shape_transition"]
 size = Vector2(16, 32)
 
-[sub_resource type="RectangleShape2D" id="Shape_trigger"]
-size = Vector2(48, 48)
-
 [sub_resource type="RectangleShape2D" id="Shape_boss"]
 size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_dz_seepage_left"]
+size = Vector2(48, 96)
+
+[sub_resource type="RectangleShape2D" id="Shape_dz_seepage_right"]
+size = Vector2(48, 96)
 
 [node name="FenmothersHollowF3" type="Node2D"]
 metadata/map_id = "dungeons/fenmothers_hollow_f3"
@@ -43,12 +46,25 @@ metadata/flag = "fenmother_boss_defeated"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/CorruptedFenmother"]
 shape = SubResource("Shape_boss")
 
-[node name="Chest1" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(272, 304)
-metadata/chest_id = "fenmothers_hollow_blessing"
-metadata/item_id = "fenmothers_blessing"
-metadata/quantity = 1
-metadata/required_flag = "fenmother_cleansed"
+[node name="SeepageLeft" parent="Entities" instance=ExtResource("4_damage_zone")]
+position = Vector2(176, 160)
+metadata/zone_id = "f3_seepage_left"
+metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
+
+[node name="CollisionShape2D" parent="Entities/SeepageLeft" index="2"]
+shape = SubResource("Shape_dz_seepage_left")
+
+[node name="SeepageRight" parent="Entities" instance=ExtResource("4_damage_zone")]
+position = Vector2(368, 160)
+metadata/zone_id = "f3_seepage_right"
+metadata/damage_per_tick = 8
+metadata/tick_interval = 1.0
+metadata/status_effect = "poison"
+
+[node name="CollisionShape2D" parent="Entities/SeepageRight" index="2"]
+shape = SubResource("Shape_dz_seepage_right")
 
 [node name="Transitions" type="Node2D" parent="."]
 

@@ -6,6 +6,12 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_characte
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
 const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
+const RITUAL_METER_SCENE: PackedScene = preload("res://scenes/ui/ritual_meter.tscn")
+const WAVE_TURN_THRESHOLDS: Array[int] = [6, 8, 8, 5]
+const DAMAGE_ZONE_SCENE: PackedScene = preload("res://scenes/entities/damage_zone.tscn")
+const BOSS_ARENA_CENTER: Vector2 = Vector2(272, 208)
+const BOSS_ARENA_RADIUS: float = 80.0
+const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
 const CLEANSING_WAVES: Array = [
 	[
 		"marsh_serpent",
@@ -18,7 +24,7 @@ const CLEANSING_WAVES: Array = [
 	[
 		"ley_jellyfish",
 		"ley_jellyfish",
-		"drowned_bones",
+		"ley_jellyfish",
 		"drowned_bones",
 		"drowned_bones",
 		"polluted_elemental",
@@ -28,7 +34,7 @@ const CLEANSING_WAVES: Array = [
 		"polluted_elemental",
 		"marsh_serpent",
 		"marsh_serpent",
-		"ley_jellyfish",
+		"marsh_serpent",
 		"ley_jellyfish",
 	],
 	[
@@ -49,6 +55,11 @@ var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
 var _current_floor_id: String = ""
+var _ritual_meter: Node = null
+var _spawned_pool_count: int = 0
+var _key_item_chest_ids: Dictionary = {}
+var _auto_walk_tween: Tween = null
+var _arrival_tween: Tween = null
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -84,11 +95,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("ui_menu"):
+		if _player != null and not _player.is_input_enabled():
+			return
 		if GameManager.push_overlay(GameManager.OverlayState.MENU):
-			get_viewport().set_input_as_handled()
+			var vp: Viewport = get_viewport()
+			if vp != null:
+				vp.set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_accept") and _player != null:
-		get_viewport().set_input_as_handled()
+		if not _player.is_input_enabled():
+			return
+		var vp: Viewport = get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 		_player.try_interact()
 
 
@@ -145,7 +164,6 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
-	PartyState.is_at_save_point = false
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Map not found: %s" % map_path)
@@ -154,6 +172,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if not map_resource is PackedScene:
 		push_error("Exploration: Invalid map resource: %s" % map_path)
 		return
+	PartyState.is_at_save_point = false
 	if _current_map != null:
 		_disconnect_entity_signals(_current_map)
 		_current_map.queue_free()
@@ -188,6 +207,12 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
 	map_changed.emit(map_id)
+	if _current_map.get_meta("is_auto_walk", false) and _player != null:
+		_start_auto_walk()
+	var seq_id: String = _current_map.get_meta("auto_sequence", "")
+	var seq_flag: String = _current_map.get_meta("auto_sequence_flag", "")
+	if not seq_id.is_empty() and not EventFlags.get_flag(seq_flag):
+		call_deferred("_run_auto_sequence", seq_id, seq_flag)
 
 
 func flash_location_name(text: String) -> void:
@@ -276,13 +301,58 @@ func _initialize_entities(map_node: Node2D) -> void:
 			if chest_id.is_empty() or item_id.is_empty():
 				push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
 				continue
-			child.initialize(chest_id, item_id)
+			if child.get_meta("is_key_item", false):
+				_key_item_chest_ids[chest_id] = true
+			var qty: int = child.get_meta("quantity", 1)
+			child.initialize(chest_id, item_id, qty)
 		elif child.has_signal("save_point_activated"):
 			var sp_id: String = child.get_meta("save_point_id", "")
 			if sp_id.is_empty():
 				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
 				continue
 			child.initialize(sp_id)
+		elif child.has_signal("wheel_toggled"):
+			var wid: String = child.get_meta("wheel_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if wid.is_empty():
+				push_error("Exploration: WaterWheel '%s' missing wheel_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: WaterWheel '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(wid, did)
+		elif child.has_signal("zone_refreshed"):
+			var did: String = child.get_meta("dungeon_id", "")
+			var conds: String = child.get_meta("active_when", "")
+			var zt: String = child.get_meta("zone_type", "block")
+			child.initialize(did, conds, zt)
+		elif child.has_signal("plant_restored"):
+			var pid: String = child.get_meta("plant_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if pid.is_empty():
+				push_error("Exploration: SpiritPlant '%s' missing plant_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: SpiritPlant '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(pid, did)
+		elif child.has_signal("zone_damage_dealt"):
+			var zid: String = child.get_meta("zone_id", "")
+			var dpt: int = child.get_meta("damage_per_tick", 8)
+			var ti: float = child.get_meta("tick_interval", 1.0)
+			var se: String = child.get_meta("status_effect", "poison")
+			child.initialize(zid, dpt, ti, se)
+	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
+	if entities != null:
+		for child: Node in entities.get_children():
+			var vis_flag: String = child.get_meta("visible_when_flag", "")
+			if not vis_flag.is_empty():
+				child.visible = EventFlags.get_flag(vis_flag)
+	# Refresh water zones after all entities are initialized
+	if entities != null:
+		for child: Node in entities.get_children():
+			if child.has_method("refresh"):
+				child.refresh()
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
@@ -295,6 +365,16 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.chest_opened.connect(_on_chest_opened)
 			if child.has_signal("save_point_activated"):
 				child.save_point_activated.connect(_on_save_point_activated)
+			if child.has_signal("wheel_toggled"):
+				child.wheel_toggled.connect(_on_wheel_toggled)
+			if child.has_signal("spring_filled"):
+				child.spring_filled.connect(_on_spring_filled)
+			if child.has_signal("plant_restored"):
+				child.plant_restored.connect(_on_plant_restored)
+			if child.has_signal("zone_damage_dealt"):
+				child.zone_damage_dealt.connect(_on_zone_damage_dealt)
+			if child.has_signal("interaction_message"):
+				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
 				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
 			elif (
@@ -313,7 +393,12 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 	var sigs: Dictionary = {
 		"npc_interacted": _on_npc_interacted,
 		"chest_opened": _on_chest_opened,
-		"save_point_activated": _on_save_point_activated
+		"save_point_activated": _on_save_point_activated,
+		"wheel_toggled": _on_wheel_toggled,
+		"spring_filled": _on_spring_filled,
+		"plant_restored": _on_plant_restored,
+		"zone_damage_dealt": _on_zone_damage_dealt,
+		"interaction_message": _on_interaction_message,
 	}
 	for group: String in ["Entities", "Transitions"]:
 		var container: Node = map_node.get_node_or_null(group)
@@ -338,8 +423,15 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if not _transitioning and interactable.has_method("interact"):
-		interactable.interact()
+	if _transitioning:
+		return
+	var target: Node2D = interactable
+	if not target.has_method("interact"):
+		var p: Node = target.get_parent()
+		if p is Node2D and p.has_method("interact"):
+			target = p as Node2D
+	if target.has_method("interact"):
+		target.interact()
 
 
 func _find_entity_npc(npc_id: String) -> Node:
@@ -374,8 +466,11 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
-func _on_chest_opened(_chest_id: String, item_id: String) -> void:
-	PartyState.add_item(item_id, 1)
+func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
+	if _key_item_chest_ids.get(chest_id, false):
+		PartyState.add_key_item(item_id)
+	else:
+		PartyState.add_item(item_id, quantity)
 	flash_location_name("Found %s!" % item_id)
 
 
@@ -383,6 +478,38 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		GameManager.overlay_node.open_save_point()
+
+
+func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:
+	var status: String = "HIGH" if is_high else "LOW"
+	flash_location_name("Wheel set to %s" % status)
+	if _current_map != null:
+		var entities: Node = _current_map.get_node_or_null("Entities")
+		if entities != null:
+			for child: Node in entities.get_children():
+				if child.has_method("refresh"):
+					child.refresh()
+
+
+func _on_spring_filled() -> void:
+	flash_location_name("Filled the Spirit Vessel with pure water.")
+
+
+func _on_plant_restored(_plant_id: String) -> void:
+	flash_location_name("Passage Opened")
+	var scene_data: Dictionary = DataManager.load_dialogue("water_of_life")
+	var entries: Array = scene_data.get("entries", [])
+	if not entries.is_empty() and GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		GameManager.overlay_node.show_dialogue(entries)
+
+
+func _on_zone_damage_dealt(_zone_id: String, total_damage: int) -> void:
+	if total_damage > 0 and _player != null:
+		flash_location_name("-%d HP" % total_damage)
+
+
+func _on_interaction_message(text: String) -> void:
+	flash_location_name(text)
 
 
 func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
@@ -469,6 +596,18 @@ func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	_danger_counter = 0
 	_transitioning = true
+	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
+		_auto_walk_tween.kill()
+		_auto_walk_tween = null
+		if _player != null:
+			_player.set_input_enabled(true)
+	if _arrival_tween != null and _arrival_tween.is_valid():
+		_arrival_tween.kill()
+		_arrival_tween = null
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
+		_flash_tween = null
+		_location_panel.visible = false
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
 	_transition_tween = create_tween()
@@ -496,6 +635,103 @@ func _abort_transition() -> void:
 func _end_transition() -> void:
 	_fade_rect.visible = false
 	_transitioning = false
+
+
+# ---------- Auto-walk and auto-sequences ----------
+
+
+func _start_auto_walk() -> void:
+	if _player == null or _current_map == null:
+		return
+	_player.set_input_enabled(false)
+	var transitions: Node = _current_map.get_node_or_null("Transitions")
+	if transitions == null:
+		_player.set_input_enabled(true)
+		return
+	var target_pos: Vector2 = _player.position
+	for child: Node in transitions.get_children():
+		if child is Area2D:
+			target_pos = child.position
+			break
+	var direction: Vector2 = (target_pos - _player.position).normalized()
+	if absf(direction.x) > absf(direction.y):
+		_player.play_animation("walk_east" if direction.x > 0 else "walk_west")
+	else:
+		_player.play_animation("walk_south" if direction.y > 0 else "walk_north")
+	var distance: float = _player.position.distance_to(target_pos)
+	var duration: float = distance / 80.0
+	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
+		_auto_walk_tween.kill()
+	_auto_walk_tween = create_tween()
+	_auto_walk_tween.tween_property(_player, "position", target_pos, duration)
+	_auto_walk_tween.tween_callback(_player.set_input_enabled.bind(true))
+
+
+func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
+	match sequence_id:
+		"caden_binding":
+			_run_caden_binding(completion_flag)
+		_:
+			push_warning("Exploration: Unknown auto_sequence '%s'" % sequence_id)
+
+
+func _run_caden_binding(completion_flag: String) -> void:
+	await get_tree().create_timer(0.5).timeout
+	if not is_inside_tree():
+		return
+	var spawn: Node2D = _current_map.get_node_or_null("CadenSpawnPoint")
+	var center: Vector2 = Vector2(128, 80)
+	var start_pos: Vector2 = spawn.position if spawn != null else Vector2(288, 80)
+	var caden: Node2D = NPC_SCENE.instantiate()
+	var entities: Node = _current_map.get_node_or_null("Entities")
+	if entities != null:
+		entities.add_child(caden)
+	else:
+		_current_map.add_child(caden)
+	caden.position = start_pos
+	caden.modulate.a = 0.0
+	caden.initialize("caden_duskfen")
+	if _arrival_tween != null and _arrival_tween.is_valid():
+		_arrival_tween.kill()
+	_arrival_tween = create_tween()
+	_arrival_tween.set_parallel(true)
+	_arrival_tween.tween_property(caden, "modulate:a", 1.0, 0.5)
+	_arrival_tween.tween_property(caden, "position", center, 1.5)
+	_arrival_tween.chain().tween_callback(_caden_start_dialogue.bind(caden, completion_flag))
+
+
+func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
+	var scene_data: Dictionary = DataManager.load_dialogue("caden_binding")
+	var entries: Array = scene_data.get("entries", [])
+	if entries.is_empty():
+		_caden_complete(caden, completion_flag)
+		return
+	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		GameManager.overlay_node.show_dialogue(entries)
+		GameManager.overlay_state_changed.connect(
+			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
+		)
+	else:
+		_caden_complete(caden, completion_flag)
+
+
+func _on_caden_dialogue_closed(
+	state: GameManager.OverlayState, caden: Node2D, completion_flag: String
+) -> void:
+	if state != GameManager.OverlayState.NONE:
+		return
+	_caden_complete(caden, completion_flag)
+
+
+func _caden_complete(caden: Node2D, completion_flag: String) -> void:
+	PartyState.add_key_item("fenmothers_blessing")
+	flash_location_name("Received Fenmother's Blessing!")
+	EventFlags.set_flag(completion_flag, true)
+	EventFlags.set_flag("duskfen_alliance", true)
+	caden.queue_free()
+	var post_npc: Node = _current_map.get_node_or_null("Entities/CadenPostEvent")
+	if post_npc != null:
+		post_npc.visible = true
 
 
 # ---------- Crystal XP distribution ----------
@@ -537,6 +773,12 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 	if _player != null:
 		_player.position = data.get("position", Vector2(80, 90))
 	_move_torren_to_reserve()
+	if _ritual_meter != null:
+		_ritual_meter.queue_free()
+	_ritual_meter = RITUAL_METER_SCENE.instantiate()
+	add_child(_ritual_meter)
+	_ritual_meter.show_meter()
+	_spawned_pool_count = 0
 	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
 	var entries: Array = scene_data.get("entries", [])
 	if entries.is_empty():
@@ -548,6 +790,8 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_cleansing_dialogue_closed.bind(0, data), CONNECT_ONE_SHOT
 		)
+	else:
+		_launch_cleansing_wave(0, data)
 
 
 func _continue_cleansing_sequence(data: Dictionary) -> void:
@@ -561,17 +805,40 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 	_distribute_crystal_xp(rewards.get("xp", 0))
 	_danger_counter = 0
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
+	_spawned_pool_count = 0
 	if _player != null:
+		var fallback: Vector2 = data.get("position", Vector2(80, 90))
 		var origin: Variant = data.get("cleansing_origin_position", null)
-		if origin is Vector2:
-			_player.position = origin as Vector2
-		else:
-			_player.position = data.get("position", Vector2(80, 90))
+		_player.position = origin if origin is Vector2 else fallback
+	# Re-instantiate ritual meter lost during scene recreation
+	if _ritual_meter == null:
+		_ritual_meter = RITUAL_METER_SCENE.instantiate()
+		add_child(_ritual_meter)
+		var saved_val: float = data.get("ritual_meter_value", 100.0)
+		_ritual_meter.set_value(saved_val)
+		_ritual_meter.show_meter()
 	var next_wave: int = wave_num + 1
 	if next_wave > 3:
 		_complete_cleansing(data)
 		return
 	_revive_fallen_at_quarter_hp()
+	if _ritual_meter != null:
+		var turn_count: int = data.get("turn_count", 0)
+		var ko_count: int = data.get("ko_count", 0)
+		var threshold: int = (
+			WAVE_TURN_THRESHOLDS[wave_num] if wave_num < WAVE_TURN_THRESHOLDS.size() else 6
+		)
+		var has_recovery: bool = wave_num == 1
+		var drain_amount: float = _ritual_meter.calculate_drain(
+			wave_num, ko_count, turn_count, threshold, has_recovery
+		)
+		_ritual_meter.drain(drain_amount)
+		if _ritual_meter.is_failed():
+			_ritual_meter.reset_for_retry()
+			flash_location_name("The corruption surges back!")
+			_launch_cleansing_wave(wave_num, data)
+			return
+	_spawn_cleansing_poison_pools()
 	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
 	var entries: Array = scene_data.get("entries", [])
 	var entry_idx: int = next_wave
@@ -584,16 +851,18 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_cleansing_dialogue_closed.bind(next_wave, data), CONNECT_ONE_SHOT
 		)
+	else:
+		_launch_cleansing_wave(next_wave, data)
 
 
 func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
 	if wave_num < 0 or wave_num >= CLEANSING_WAVES.size():
 		_complete_cleansing(data)
 		return
-	var origin_pos: Vector2 = data.get(
-		"cleansing_origin_position", data.get("position", Vector2(80, 90))
-	)
+	var fb: Vector2 = data.get("position", Vector2(80, 90))
+	var origin_pos: Vector2 = data.get("cleansing_origin_position", fb)
 	var player_pos: Vector2 = _player.position if _player != null else origin_pos
+	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0
 	var transition: Dictionary = {
 		"encounter_group": CLEANSING_WAVES[wave_num],
 		"formation_type": "normal",
@@ -603,6 +872,7 @@ func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
 		"encounter_source": "cleansing_wave",
 		"wave_num": wave_num,
 		"cleansing_origin_position": origin_pos,
+		"ritual_meter_value": meter_val,
 	}
 	_transitioning = true
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
@@ -612,6 +882,10 @@ func _complete_cleansing(_data: Dictionary) -> void:
 	_restore_torren_to_active()
 	_revive_fallen_at_quarter_hp()
 	EventFlags.set_flag("fenmother_cleansed", true)
+	if _ritual_meter != null:
+		_ritual_meter.hide_meter()
+		_ritual_meter.queue_free()
+		_ritual_meter = null
 	var scene_data: Dictionary = DataManager.load_dialogue("fenmother_cleansing")
 	var entries: Array = scene_data.get("entries", [])
 	var final_idx: int = entries.size() - 1
@@ -620,7 +894,17 @@ func _complete_cleansing(_data: Dictionary) -> void:
 	var dialogue: Array = [entries[final_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(dialogue)
-		# No further action needed after final dialogue; player is already on F3.
+		GameManager.overlay_state_changed.connect(
+			_on_cleansing_complete_dialogue_closed, CONNECT_ONE_SHOT
+		)
+	else:
+		load_map("dungeons/fenmothers_hollow_spirit_path")
+
+
+func _on_cleansing_complete_dialogue_closed(state: GameManager.OverlayState) -> void:
+	if state != GameManager.OverlayState.NONE:
+		return
+	load_map("dungeons/fenmothers_hollow_spirit_path")
 
 
 func _on_cleansing_dialogue_closed(
@@ -631,15 +915,52 @@ func _on_cleansing_dialogue_closed(
 	_launch_cleansing_wave(wave_num, data)
 
 
+func _spawn_cleansing_poison_pools() -> void:
+	if _current_map == null or _spawned_pool_count >= 4:
+		return
+	var entities: Node = _current_map.get_node_or_null("Entities")
+	if entities == null:
+		return
+	var count: int = randi_range(1, 2)
+	for i: int in range(count):
+		if _spawned_pool_count >= 4:
+			break
+		var pool: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+		var pos: Vector2 = _random_arena_position()
+		pool.position = pos
+		entities.add_child(pool)
+		pool.initialize("cleansing_pool_%d" % _spawned_pool_count, 10, 1.0, "")
+		pool.zone_damage_dealt.connect(_on_zone_damage_dealt)
+		_spawned_pool_count += 1
+
+
+func _random_arena_position() -> Vector2:
+	var player_pos: Vector2 = _player.position if _player != null else BOSS_ARENA_CENTER
+	var pos: Vector2 = BOSS_ARENA_CENTER
+	for _attempt: int in range(10):
+		var x: float = randf_range(
+			BOSS_ARENA_CENTER.x - BOSS_ARENA_RADIUS, BOSS_ARENA_CENTER.x + BOSS_ARENA_RADIUS
+		)
+		var y: float = randf_range(
+			BOSS_ARENA_CENTER.y - BOSS_ARENA_RADIUS, BOSS_ARENA_CENTER.y + BOSS_ARENA_RADIUS
+		)
+		pos = Vector2(x, y).round()
+		if pos.distance_to(player_pos) > 32.0:
+			break
+	return pos
+
+
 func _move_torren_to_reserve() -> void:
 	var torren_idx: int = _find_member_index("torren")
 	if torren_idx < 0:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	var reserve: Array = PartyState.formation.get("reserve", [])
-	if torren_idx in active:
-		active.erase(torren_idx)
-		reserve.append(torren_idx)
+	for a: Variant in active:
+		if (a is int or a is float) and int(a) == torren_idx:
+			active.erase(a)
+			reserve.append(torren_idx)
+			return
 
 
 func _restore_torren_to_active() -> void:
@@ -648,12 +969,17 @@ func _restore_torren_to_active() -> void:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	var reserve: Array = PartyState.formation.get("reserve", [])
-	if torren_idx in reserve:
-		reserve.erase(torren_idx)
+	var found: Variant = null
+	for r: Variant in reserve:
+		if (r is int or r is float) and int(r) == torren_idx:
+			found = r
+			break
+	if found != null:
+		reserve.erase(found)
 		if active.size() < 4:
 			active.append(torren_idx)
 		else:
-			reserve.append(torren_idx)
+			push_warning("Exploration: cannot restore Torren — active party full")
 
 
 func _find_member_index(character_id: String) -> int:
@@ -664,12 +990,12 @@ func _find_member_index(character_id: String) -> int:
 
 
 func _revive_fallen_at_quarter_hp() -> void:
-	var active: Array = PartyState.formation.get("active", [])
-	for idx: Variant in active:
-		if not (idx is int) or (idx as int) >= PartyState.members.size():
+	for idx: Variant in PartyState.formation.get("active", []):
+		if not (idx is int or idx is float):
 			continue
-		var m: Dictionary = PartyState.members[idx as int]
-		var current_hp: int = m.get("current_hp", 0)
-		if current_hp <= 0:
-			var max_hp: int = m.get("max_hp", 1)
-			m["current_hp"] = maxi(1, int(max_hp / 4))
+		var mi: int = int(idx)
+		if mi < 0 or mi >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[mi]
+		if m.get("current_hp", 0) <= 0:
+			m["current_hp"] = maxi(1, int(m.get("max_hp", 1) / 4))

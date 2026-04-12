@@ -36,6 +36,7 @@ var _fm_spawned_adds: bool = false
 var _wave_num: int = -1
 var _cleansing_origin_position: Variant = null
 var _encounter_source: String = ""
+var _ritual_meter_value: float = 100.0
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -67,6 +68,7 @@ func _ready() -> void:
 	_wave_num = data.get("wave_num", -1)
 	_cleansing_origin_position = data.get("cleansing_origin_position", null)
 	_encounter_source = data.get("encounter_source", "")
+	_ritual_meter_value = data.get("ritual_meter_value", 100.0)
 	if _encounter_source == "cleansing_wave":
 		_is_boss = true
 	var encounter_group: Array = data.get("encounter_group", [])
@@ -155,6 +157,7 @@ func _on_ui_command(command: Dictionary) -> void:
 		return
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
+	_turn_counter += 1
 	_state.tick_statuses(actor_id.replace("party_", "").to_int())
 	_check_end_conditions()
 
@@ -309,14 +312,11 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 		action = BattleAI.get_drowned_sentinel_action(_state, _turn_counter)
 	elif _is_boss and enemy.enemy_data.get("id", "") == "corrupted_fenmother":
 		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		var active_adds: int = (
-			_enemies
-			. filter(
-				func(e: Node) -> bool:
-					return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
-			)
-			. size()
+		var alive_spawns: Array = _enemies.filter(
+			func(e: Node) -> bool:
+				return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
 		)
+		var active_adds: int = alive_spawns.size()
 		action = BattleAI.get_corrupted_fenmother_action(
 			_state,
 			_turn_counter,
@@ -434,6 +434,15 @@ func _check_end_conditions() -> void:
 		_exit_battle("faint")
 
 
+func _count_ko_party_members() -> int:
+	var count: int = 0
+	for i: int in range(4):
+		var m: Dictionary = _state.get_member(i)
+		if not m.is_empty() and not m.get("is_alive", true):
+			count += 1
+	return count
+
+
 func _exit_battle(result: String) -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
@@ -445,6 +454,8 @@ func _exit_battle(result: String) -> void:
 		"earned_gold": _earned_gold,
 		"earned_drops": _earned_drops,
 		"boss_flag": _boss_flag,
+		"turn_count": _turn_counter,
+		"ko_count": _count_ko_party_members(),
 	}
 	if _wave_num >= 0:
 		t["wave_num"] = _wave_num
@@ -452,6 +463,8 @@ func _exit_battle(result: String) -> void:
 		t["cleansing_origin_position"] = _cleansing_origin_position
 	if not _encounter_source.is_empty():
 		t["encounter_source"] = _encounter_source
+	if _encounter_source == "cleansing_wave":
+		t["ritual_meter_value"] = _ritual_meter_value
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0

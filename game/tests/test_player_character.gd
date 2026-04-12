@@ -7,27 +7,27 @@ extends GutTest
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 
 
-func _create_player():
-	var player = PLAYER_SCENE.instantiate()
+func _create_player() -> CharacterBody2D:
+	var player: CharacterBody2D = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)
 	return player
 
 
 func test_initialize_loads_character_data() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	player.initialize("edren")
 	assert_eq(player.character_id, "edren", "character_id should be set")
 	assert_false(player.character_data.is_empty(), "character_data should be loaded")
 
 
 func test_initialize_sets_character_id() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	player.initialize("maren")
 	assert_eq(player.character_id, "maren", "character_id should be maren")
 
 
 func test_get_stats_returns_base_stats() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	player.initialize("edren")
 	var stats: Dictionary = player.get_stats()
 	assert_has(stats, "hp", "stats should have hp")
@@ -38,18 +38,18 @@ func test_get_stats_returns_base_stats() -> void:
 
 
 func test_get_stats_empty_before_init() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	var stats: Dictionary = player.get_stats()
 	assert_true(stats.is_empty(), "stats should be empty before init")
 
 
 func test_default_facing_direction() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	assert_eq(player.facing_direction, Vector2.DOWN, "Default facing should be DOWN")
 
 
 func test_pixel_snapping() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	player.position = Vector2(10.5, 20.7)
 	# Simulate one physics frame
 	player._physics_process(0.016)
@@ -57,6 +57,37 @@ func test_pixel_snapping() -> void:
 
 
 func test_get_facing_direction_returns_vector() -> void:
-	var player = _create_player()
+	var player: CharacterBody2D = _create_player()
 	var dir: Vector2 = player.get_facing_direction()
 	assert_eq(dir, Vector2.DOWN, "Should return facing direction")
+
+
+# --- Encapsulation: is_input_enabled() ---
+
+
+func test_input_enabled_default_true() -> void:
+	var player: CharacterBody2D = _create_player()
+	assert_true(player.is_input_enabled(), "input should be enabled by default")
+
+
+func test_set_input_enabled_false() -> void:
+	var player: CharacterBody2D = _create_player()
+	player.set_input_enabled(false)
+	assert_false(
+		player.is_input_enabled(), "input should be disabled after set_input_enabled(false)"
+	)
+
+
+func test_set_input_enabled_roundtrip() -> void:
+	var player: CharacterBody2D = _create_player()
+	player.set_input_enabled(false)
+	player.set_input_enabled(true)
+	assert_true(player.is_input_enabled(), "input should be re-enabled after roundtrip")
+
+
+func test_input_disabled_blocks_movement() -> void:
+	var player: CharacterBody2D = _create_player()
+	player.set_input_enabled(false)
+	player.position = Vector2(50, 50)
+	player._physics_process(0.016)
+	assert_eq(player.position, Vector2(50, 50), "player should not move when input disabled")

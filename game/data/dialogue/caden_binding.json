@@ -1,0 +1,98 @@
+{
+  "scene_id": "caden_binding",
+  "entries": [
+    {
+      "id": "caden_binding_001",
+      "speaker": "caden",
+      "lines": [
+        "I felt it through the water. The old channels are open",
+        "again."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_002",
+      "speaker": "caden",
+      "lines": [
+        "She's free. Weakened, but free. The binding I'll place",
+        "will protect her while she heals."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_003",
+      "speaker": "torren",
+      "lines": [
+        "You came all the way from the Duskfen?"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_004",
+      "speaker": "caden",
+      "lines": [
+        "The spirits carried me. They remember the paths even",
+        "when the water forgets."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_005",
+      "speaker": "narrator",
+      "lines": [
+        "Caden kneels beside the shrine and traces a pattern in",
+        "the water. Light follows his fingertips."
+      ],
+      "condition": null,
+      "animations": [{"who": "caden", "anim": "head_down", "when": "before_line_0"}],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_006",
+      "speaker": "caden",
+      "lines": [
+        "It's done. Take this -- the Fenmother's Blessing. Her",
+        "domain is yours to pass through freely."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_007",
+      "speaker": "edren",
+      "lines": [
+        "Thank you, Caden."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "caden_binding_008",
+      "speaker": "caden",
+      "lines": [
+        "Don't thank me. Thank her. She chose to trust you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

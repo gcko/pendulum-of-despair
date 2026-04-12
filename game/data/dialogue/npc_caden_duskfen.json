@@ -1,0 +1,17 @@
+{
+  "scene_id": "npc_caden_duskfen",
+  "entries": [
+    {
+      "id": "npc_caden_duskfen_001",
+      "speaker": "caden",
+      "lines": [
+        "The Fenmother grows stronger each day.",
+        "The water remembers."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

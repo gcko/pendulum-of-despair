@@ -224,6 +224,8 @@ func _validate(data: Dictionary) -> bool:
 		"quests",
 		"completion"
 	]
+	# puzzle_state is optional for pre-A2b save compatibility — defaults to {}
+	# in PartyState.load_from_save() when absent.
 	for key: String in required:
 		if not data.has(key):
 			return false

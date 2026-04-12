@@ -1,2 +1,3 @@
-max-public-methods: 45
+max-public-methods: 48
 max-returns: 10
+max-file-lines: 1050

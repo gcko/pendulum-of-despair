@@ -193,10 +193,13 @@ func test_f2_chests() -> void:
 	assert_true(text.contains('metadata/item_id = "ancient_totem"'))
 
 
-func test_f3_chest_with_required_flag() -> void:
+func test_f3_blessing_chest_removed() -> void:
+	# Fenmother's Blessing is now given by Caden in Duskfen Spirit Shrine (Phase A2b)
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f3.tscn")
-	assert_true(text.contains('metadata/item_id = "fenmothers_blessing"'))
-	assert_true(text.contains('metadata/required_flag = "fenmother_cleansed"'))
+	assert_false(
+		text.contains('metadata/item_id = "fenmothers_blessing"'),
+		"blessing chest removed -- Caden gives it in shrine"
+	)
 
 
 # --- Save Points ---

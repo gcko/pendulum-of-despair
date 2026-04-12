@@ -129,10 +129,7 @@
 					"item_id": "scrap_metal",
 					"rate": 75
 				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
+				"rare": null
 			},
 			"drop": {
 				"item_id": "crystal_shard",
@@ -184,10 +181,7 @@
 					"rate": 100
 				}
 			},
-			"drop": {
-				"item_id": "fenmothers_blessing",
-				"rate": 100
-			},
+			"drop": null,
 			"locations": [
 				"fenmothers_hollow_f3"
 			],

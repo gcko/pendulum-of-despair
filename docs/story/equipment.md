@@ -279,7 +279,7 @@ theme reflecting Torren's role as spiritspeaker.
 |------|-----|-------|---------|---------|-------|------|----------|
 | Hunting Spear | 3 | — | — | — | — | 0 | Starting equipment |
 | Iron Lance | 8 | — | — | — | 250 | 1 | Thornmere shop |
-| Spirit-Bound Spear | 12 | — | Spirit | — | — | 1 | Fenmother boss reward |
+| Spirit-Bound Spear | 12 | — | Spirit | — | — | 1 | Fenmother's Hollow F2 chest |
 | Mythril Spear | 17 | — | — | — | 1,000 | 2 | Act II shop |
 | Thornwood Pike | 20 | — | Earth | — | 1,800 | 2 | Thornmere Wilds chest |
 | Thornspear | 30 | +3 SPD | — | Forged | — (Forged) | 3 | Lira forges (Act III) |
