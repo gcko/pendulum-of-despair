@@ -104,6 +104,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "overworld"
 metadata/target_spawn = "from_ironmouth"
+metadata/required_flag = "carradan_ambush_survived"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_exit")

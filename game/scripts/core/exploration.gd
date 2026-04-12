@@ -579,8 +579,12 @@ func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
 		return
 	_check_party_joining_flags()
-	if EventFlags.get_flag("ember_vein_1e_seen"):
+	if (
+		EventFlags.get_flag("ember_vein_1e_seen")
+		and not EventFlags.get_flag("arcanite_gear_broken")
+	):
 		PartyState.break_arcanite_gear()
+		EventFlags.set_flag("arcanite_gear_broken", true)
 
 
 func _check_party_joining_flags() -> void:
