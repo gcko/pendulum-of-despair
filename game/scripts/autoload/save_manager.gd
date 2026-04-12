@@ -220,11 +220,12 @@ func _validate(data: Dictionary) -> bool:
 		"owned_equipment",
 		"crafting",
 		"ley_crystals",
-		"puzzle_state",
 		"world",
 		"quests",
 		"completion"
 	]
+	# puzzle_state is optional for pre-A2b save compatibility — defaults to {}
+	# in PartyState.load_from_save() when absent.
 	for key: String in required:
 		if not data.has(key):
 			return false
