@@ -34,9 +34,13 @@ func test_cael_physical_shimmer_does_not_affect_magic() -> void:
 	# calculate_magic has no attacker_id parameter by design — Pallor Shimmer
 	# is physical-only. This test documents that architectural decision.
 	seed(42)
-	var cael_phys: int = DamageCalc.calculate_physical(20, 10, 1.0, 1.0, [], [], "cael")
+	var cael_phys: int = DamageCalc.calculate_physical(
+		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "cael"
+	)
 	seed(42)
-	var generic_phys: int = DamageCalc.calculate_physical(20, 10, 1.0, 1.0, [], [], "edren")
+	var generic_phys: int = DamageCalc.calculate_physical(
+		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "edren"
+	)
 	assert_gt(cael_phys, generic_phys, "Cael physical should be boosted by shimmer")
 	seed(42)
 	var cael_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
