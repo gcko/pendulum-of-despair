@@ -146,6 +146,8 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_current_map = (map_resource as PackedScene).instantiate()
 	_map_container.add_child(_current_map)
 	_current_map_id = map_id
+	_key_item_chest_ids = {}
+	_equipment_chest_ids = {}
 	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
