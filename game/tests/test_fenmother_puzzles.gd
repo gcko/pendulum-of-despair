@@ -67,7 +67,7 @@ func test_clear_puzzle_state() -> void:
 func test_puzzle_state_save_roundtrip() -> void:
 	PartyState.initialize_new_game()
 	PartyState.set_puzzle_state("fenmothers_hollow", "wheel_1_high", true)
-	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", false)
+	PartyState.set_puzzle_state("fenmothers_hollow", "spirit_plant_1_restored", false)
 	var save_data: Dictionary = PartyState.build_save_data()
 	assert_true(save_data.has("puzzle_state"), "save should include puzzle_state")
 	PartyState.puzzle_state.clear()
@@ -284,7 +284,7 @@ func test_plant_interact_without_vessel() -> void:
 
 
 func test_plant_persists_restored_state() -> void:
-	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	PartyState.set_puzzle_state("fenmothers_hollow", "spirit_plant_1_restored", true)
 	var plant: StaticBody2D = PLANT_SCENE.instantiate()
 	add_child_autofree(plant)
 	plant.initialize("spirit_plant_1", "fenmothers_hollow")
@@ -294,7 +294,7 @@ func test_plant_persists_restored_state() -> void:
 func test_plant_interact_already_restored() -> void:
 	PartyState.initialize_new_game()
 	PartyState.inventory["key_items"] = ["spirit_vessel_filled"]
-	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	PartyState.set_puzzle_state("fenmothers_hollow", "spirit_plant_1_restored", true)
 	var plant: StaticBody2D = PLANT_SCENE.instantiate()
 	add_child_autofree(plant)
 	plant.initialize("spirit_plant_1", "fenmothers_hollow")
@@ -339,12 +339,13 @@ func test_plant_puzzle_state_persists_after_restore() -> void:
 	add_child_autofree(plant)
 	plant.initialize("spirit_plant_1", "fenmothers_hollow")
 	plant.interact()
-	var val: Variant = PartyState.get_puzzle_state("fenmothers_hollow", "plant_restored", false)
-	assert_true(val, "plant_restored should be set in puzzle_state")
+	var key: String = "spirit_plant_1_restored"
+	var val: Variant = PartyState.get_puzzle_state("fenmothers_hollow", key, false)
+	assert_true(val, "spirit_plant_1_restored should be set in puzzle_state")
 
 
 func test_plant_reinitialize_after_restore_stays_open() -> void:
-	PartyState.set_puzzle_state("fenmothers_hollow", "plant_restored", true)
+	PartyState.set_puzzle_state("fenmothers_hollow", "spirit_plant_1_restored", true)
 	var plant: StaticBody2D = PLANT_SCENE.instantiate()
 	add_child_autofree(plant)
 	plant.initialize("spirit_plant_1", "fenmothers_hollow")

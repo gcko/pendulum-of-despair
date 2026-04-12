@@ -702,6 +702,8 @@ func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
 		)
+	else:
+		_caden_complete(caden, completion_flag)
 
 
 func _on_caden_dialogue_closed(
@@ -778,6 +780,8 @@ func _start_cleansing_sequence(data: Dictionary) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_cleansing_dialogue_closed.bind(0, data), CONNECT_ONE_SHOT
 		)
+	else:
+		_launch_cleansing_wave(0, data)
 
 
 func _continue_cleansing_sequence(data: Dictionary) -> void:
@@ -839,6 +843,8 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_cleansing_dialogue_closed.bind(next_wave, data), CONNECT_ONE_SHOT
 		)
+	else:
+		_launch_cleansing_wave(next_wave, data)
 
 
 func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
@@ -884,6 +890,8 @@ func _complete_cleansing(_data: Dictionary) -> void:
 		GameManager.overlay_state_changed.connect(
 			_on_cleansing_complete_dialogue_closed, CONNECT_ONE_SHOT
 		)
+	else:
+		load_map("dungeons/fenmothers_hollow_spirit_path")
 
 
 func _on_cleansing_complete_dialogue_closed(state: GameManager.OverlayState) -> void:

@@ -10,7 +10,6 @@ var _dungeon_id: String = ""
 
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _collision: CollisionShape2D = $CollisionShape2D
-@onready var _interaction_area: Area2D = $InteractionArea
 
 
 func initialize(p_plant_id: String, p_dungeon_id: String) -> void:
@@ -19,7 +18,7 @@ func initialize(p_plant_id: String, p_dungeon_id: String) -> void:
 		return
 	plant_id = p_plant_id
 	_dungeon_id = p_dungeon_id
-	is_restored = PartyState.get_puzzle_state(_dungeon_id, "plant_restored", false)
+	is_restored = PartyState.get_puzzle_state(_dungeon_id, "%s_restored" % plant_id, false)
 	_update_visual()
 
 
@@ -39,7 +38,7 @@ func interact() -> void:
 	key_items.append("spirit_vessel")
 	PartyState.inventory["key_items"] = key_items
 	is_restored = true
-	PartyState.set_puzzle_state(_dungeon_id, "plant_restored", true)
+	PartyState.set_puzzle_state(_dungeon_id, "%s_restored" % plant_id, true)
 	_update_visual()
 	plant_restored.emit(plant_id)
 

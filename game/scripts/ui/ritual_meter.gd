@@ -42,11 +42,11 @@ func set_value(new_value: float) -> void:
 
 
 func drain(amount: float) -> void:
-	set_value(meter_value - amount)
+	set_value(meter_value - absf(amount))
 
 
 func recover(amount: float) -> void:
-	set_value(meter_value + amount)
+	set_value(meter_value + absf(amount))
 
 
 func is_failed() -> bool:

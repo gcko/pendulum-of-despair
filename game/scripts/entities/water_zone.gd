@@ -10,6 +10,9 @@ var _zone_type: String = "block"
 
 
 func initialize(dungeon_id: String, conditions_str: String, zone_type: String) -> void:
+	if dungeon_id.is_empty():
+		push_error("WaterZone: empty dungeon_id")
+		return
 	_dungeon_id = dungeon_id
 	_zone_type = zone_type
 	_conditions = []
