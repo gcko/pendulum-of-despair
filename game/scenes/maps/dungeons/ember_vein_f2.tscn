@@ -126,9 +126,6 @@ position = Vector2(48, 48)
 [node name="from_ember_vein_f1" type="Marker2D" parent="."]
 position = Vector2(48, 48)
 
-[node name="from_ember_vein_f4" type="Marker2D" parent="."]
-position = Vector2(592, 432)
-
 [node name="from_pitfall" type="Marker2D" parent="."]
 position = Vector2(300, 80)
 
