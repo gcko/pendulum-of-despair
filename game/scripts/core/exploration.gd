@@ -312,6 +312,33 @@ func _initialize_entities(map_node: Node2D) -> void:
 			var ti: float = child.get_meta("tick_interval", 1.0)
 			var se: String = child.get_meta("status_effect", "poison")
 			child.initialize(zid, dpt, ti, se)
+		elif child.has_signal("plate_pressed"):
+			var pid: String = child.get_meta("plate_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if pid.is_empty():
+				push_error("Exploration: PressurePlate '%s' missing plate_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: PressurePlate '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(pid, did)
+		elif child.has_signal("crystal_cleared"):
+			var cid: String = child.get_meta("crystal_id", "")
+			var did: String = child.get_meta("dungeon_id", "")
+			if cid.is_empty():
+				push_error("Exploration: EmberCrystal '%s' missing crystal_id" % child.name)
+				continue
+			if did.is_empty():
+				push_error("Exploration: EmberCrystal '%s' missing dungeon_id" % child.name)
+				continue
+			child.initialize(cid, did)
+		elif child.has_signal("pitfall_triggered"):
+			var tmid: String = child.get_meta("target_map_id", "")
+			var tsp: String = child.get_meta("target_spawn", "")
+			if tmid.is_empty():
+				push_error("Exploration: PitfallZone '%s' missing target_map_id" % child.name)
+				continue
+			child.initialize(tmid, tsp)
 	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
 	if entities != null:
 		for child: Node in entities.get_children():
@@ -343,6 +370,12 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.plant_restored.connect(_on_plant_restored)
 			if child.has_signal("zone_damage_dealt"):
 				child.zone_damage_dealt.connect(_on_zone_damage_dealt)
+			if child.has_signal("plate_pressed"):
+				child.plate_pressed.connect(_on_plate_pressed)
+			if child.has_signal("crystal_cleared"):
+				child.crystal_cleared.connect(_on_crystal_cleared)
+			if child.has_signal("pitfall_triggered"):
+				child.pitfall_triggered.connect(_on_pitfall_triggered)
 			if child.has_signal("interaction_message"):
 				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
@@ -461,6 +494,25 @@ func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:
 			for child: Node in entities.get_children():
 				if child.has_method("refresh"):
 					child.refresh()
+
+
+func _on_plate_pressed(_plate_id: String) -> void:
+	# Refresh water zones — same pattern as wheel_toggled
+	if _current_map != null:
+		var entities: Node = _current_map.get_node_or_null("Entities")
+		if entities != null:
+			for child: Node in entities.get_children():
+				if child.has_method("refresh"):
+					child.refresh()
+
+
+func _on_crystal_cleared(_crystal_id: String) -> void:
+	flash_location_name("The crystal springs to life!")
+
+
+func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
+	flash_location_name("The floor gives way!")
+	call_deferred("load_map", target_map_id, target_spawn)
 
 
 func _on_spring_filled() -> void:
