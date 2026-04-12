@@ -175,8 +175,8 @@ collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/flag = "carradan_ambush_survived"
-metadata/required_flag = "vaelith_scene_complete"
+metadata/flag = "ironmouth_escape_seen"
+metadata/required_flag = "carradan_ambush_survived"
 metadata/dialogue_scene_id = "ironmouth_escape"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene3Trigger"]
