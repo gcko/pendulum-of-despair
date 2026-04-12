@@ -561,17 +561,16 @@ The combat is forced (flee disabled, `_is_boss = false` but
 metadata/enemy_ids = ["compact_patrol", "compact_patrol", "compact_scout"]
 metadata/flag = "carradan_ambush_survived"
 metadata/required_flag = "ironmouth_sable_seen"
-metadata/is_boss = true
+metadata/boss_id = "ironmouth_ambush"
+metadata/enemy_act = "act_i"
 ```
 
-**Note on flee disable:** The current battle system uses `_is_boss`
-to disable the flee command (see `battle_manager.gd` line 143).
-Setting `is_boss = true` on the encounter metadata is the simplest
-way to disable flee. This is technically not a boss fight, but the
-flag serves double duty as "flee disabled." No new metadata fields
-needed. The enemies use standard weighted-random AI, not boss AI
-routing — the `_is_boss` flag only affects flee and the boss
-victory/defeat flow.
+**Note on flee disable:** The battle system uses `boss_id` metadata
+to disable flee and route boss victory/defeat flow (see
+`exploration.gd` which derives `is_boss: true` from the presence
+of `boss_id`). This is technically not a boss fight, but the flag
+serves double duty as "flee disabled." The enemies use standard
+weighted-random AI, not boss AI routing.
 
 After victory:
 1. `carradan_ambush_survived` flag set

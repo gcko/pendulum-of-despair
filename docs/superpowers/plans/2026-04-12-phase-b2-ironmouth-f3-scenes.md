@@ -1283,11 +1283,12 @@ No `dungeon_id` or `floor_id` — encounters disabled.
 - Crate 2: TreasureChest, `chest_id = "ironmouth_crate_2"`, `item_id = "antidote"`, `quantity = 1`
 - Crate 3: TreasureChest, `chest_id = "ironmouth_crate_3"`, `item_id = "iron_bracelet"`, `is_equipment = true`
 - Sable dialogue trigger (mid): `dialogue_scene_id = "ironmouth_sable"`, `flag = "ironmouth_sable_seen"`, `required_flag = "ironmouth_lira_seen"`
-- Combat trigger (near exit): Area2D with `enemy_ids = ["compact_patrol", "compact_patrol", "compact_scout"]`, `flag = "carradan_ambush_survived"`, `required_flag = "ironmouth_sable_seen"`, `is_boss = true`
-- Post-combat dialogue trigger: `dialogue_scene_id = "ironmouth_post_combat"`, `required_flag = "carradan_ambush_survived"`
+- Combat trigger (near exit): Area2D with `enemy_ids = ["compact_patrol", "compact_patrol", "compact_scout"]`, `flag = "carradan_ambush_survived"`, `required_flag = "ironmouth_sable_seen"`, `boss_id = "ironmouth_ambush"`, `enemy_act = "act_i"`
+- Post-combat dialogue trigger: `dialogue_scene_id = "ironmouth_post_combat"`, `required_flag = "carradan_ambush_survived"`, `flag = "ironmouth_post_combat_seen"`
 
 **SpawnPoints:**
 - `from_overworld`: Position2D at left edge
+- `from_ember_vein`: Position2D at left edge (for F4 exit transition)
 
 **Transitions:**
 - ExitToOverworld: Area2D at right edge, `target_map = "overworld"`, `target_spawn = "from_ironmouth"`, gated by `required_flag = "carradan_ambush_survived"` or placed after the combat trigger zone

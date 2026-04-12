@@ -6,6 +6,7 @@ extends RefCounted
 ## via passed references.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const Enemy = preload("res://scripts/entities/enemy.gd")
 
 
 ## Map a UI cursor index (0..living-1) to an actual _enemies array index.
@@ -146,7 +147,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 
-	var is_crit: bool = DamageCalc.roll_crit(stats.get("lck", 0))
+	var is_crit: bool = randf() < Enemy.ENEMY_CRIT_RATE
 	var reduction: Array = []
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
