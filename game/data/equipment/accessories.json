@@ -4,9 +4,18 @@
 			"id": "power_ring",
 			"name": "Power Ring",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 ATK",
-			"bonus_stats": {"atk": 5},
+			"bonus_stats": {
+				"atk": 5
+			},
 			"special": null,
 			"buy_price": 300,
 			"sell_price": 150,
@@ -17,9 +26,18 @@
 			"id": "iron_bracelet",
 			"name": "Iron Bracelet",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 DEF",
-			"bonus_stats": {"def": 5},
+			"bonus_stats": {
+				"def": 5
+			},
 			"special": null,
 			"buy_price": 300,
 			"sell_price": 150,
@@ -30,9 +48,18 @@
 			"id": "miners_hardhat",
 			"name": "Miner's Hardhat",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+3 DEF, reduces pitfall stun duration",
-			"bonus_stats": {"def": 3},
+			"bonus_stats": {
+				"def": 3
+			},
 			"special": "Reduces pitfall stun duration",
 			"buy_price": null,
 			"sell_price": 75,
@@ -43,9 +70,19 @@
 			"id": "ember_ring",
 			"name": "Ember Ring",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+3 ATK, +2 MAG",
-			"bonus_stats": {"atk": 3, "mag": 2},
+			"bonus_stats": {
+				"atk": 3,
+				"mag": 2
+			},
 			"special": null,
 			"buy_price": null,
 			"sell_price": 150,
@@ -56,9 +93,18 @@
 			"id": "magic_earring",
 			"name": "Magic Earring",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 MAG",
-			"bonus_stats": {"mag": 5},
+			"bonus_stats": {
+				"mag": 5
+			},
 			"special": null,
 			"buy_price": 400,
 			"sell_price": 200,
@@ -69,9 +115,18 @@
 			"id": "warding_charm",
 			"name": "Warding Charm",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 MDEF",
-			"bonus_stats": {"mdef": 5},
+			"bonus_stats": {
+				"mdef": 5
+			},
 			"special": null,
 			"buy_price": 400,
 			"sell_price": 200,
@@ -82,9 +137,18 @@
 			"id": "sprint_shoes",
 			"name": "Sprint Shoes",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 SPD",
-			"bonus_stats": {"spd": 5},
+			"bonus_stats": {
+				"spd": 5
+			},
 			"special": null,
 			"buy_price": 500,
 			"sell_price": 250,
@@ -95,9 +159,18 @@
 			"id": "lucky_coin",
 			"name": "Lucky Coin",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 LCK",
-			"bonus_stats": {"lck": 5},
+			"bonus_stats": {
+				"lck": 5
+			},
 			"special": null,
 			"buy_price": 500,
 			"sell_price": 250,
@@ -108,9 +181,18 @@
 			"id": "life_pendant",
 			"name": "Life Pendant",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+300 HP",
-			"bonus_stats": {"hp": 300},
+			"bonus_stats": {
+				"hp": 300
+			},
 			"special": null,
 			"buy_price": 800,
 			"sell_price": 400,
@@ -121,9 +203,18 @@
 			"id": "mana_bead",
 			"name": "Mana Bead",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+50 MP",
-			"bonus_stats": {"mp": 50},
+			"bonus_stats": {
+				"mp": 50
+			},
 			"special": null,
 			"buy_price": 800,
 			"sell_price": 400,
@@ -134,7 +225,14 @@
 			"id": "antidote_charm",
 			"name": "Antidote Charm",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Poison immune",
 			"bonus_stats": {},
 			"special": null,
@@ -148,7 +246,14 @@
 			"id": "clarity_band",
 			"name": "Clarity Band",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Confusion immune",
 			"bonus_stats": {},
 			"special": null,
@@ -162,7 +267,14 @@
 			"id": "silence_ward",
 			"name": "Silence Ward",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Silence immune",
 			"bonus_stats": {},
 			"special": null,
@@ -176,7 +288,14 @@
 			"id": "stone_guard",
 			"name": "Stone Guard",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Petrify immune",
 			"bonus_stats": {},
 			"special": null,
@@ -190,7 +309,14 @@
 			"id": "berserk_collar",
 			"name": "Berserk Collar",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Berserk immune",
 			"bonus_stats": {},
 			"special": null,
@@ -204,7 +330,14 @@
 			"id": "despair_ward",
 			"name": "Despair Ward",
 			"subcategory": "status_immunity",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Despair immune",
 			"bonus_stats": {},
 			"special": null,
@@ -218,7 +351,14 @@
 			"id": "flame_ring",
 			"name": "Flame Ring",
 			"subcategory": "elemental_resistance",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Halve Flame damage",
 			"bonus_stats": {},
 			"special": null,
@@ -232,7 +372,14 @@
 			"id": "frost_amulet",
 			"name": "Frost Amulet",
 			"subcategory": "elemental_resistance",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Halve Frost damage",
 			"bonus_stats": {},
 			"special": null,
@@ -246,7 +393,14 @@
 			"id": "storm_pendant",
 			"name": "Storm Pendant",
 			"subcategory": "elemental_resistance",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Halve Storm damage",
 			"bonus_stats": {},
 			"special": null,
@@ -260,7 +414,14 @@
 			"id": "void_ward",
 			"name": "Void Ward",
 			"subcategory": "elemental_resistance",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Halve Void damage",
 			"bonus_stats": {},
 			"special": null,
@@ -274,7 +435,14 @@
 			"id": "haste_bangle",
 			"name": "Haste Bangle",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Auto-Haste 2 turns at battle start",
 			"bonus_stats": {},
 			"special": "Auto-Haste 2 turns at battle start",
@@ -287,7 +455,14 @@
 			"id": "counter_ring",
 			"name": "Counter Ring",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+15% counter-attack rate",
 			"bonus_stats": {},
 			"special": "+15% counter-attack rate",
@@ -300,7 +475,14 @@
 			"id": "preemptive_charm",
 			"name": "Preemptive Charm",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+25% preemptive strike rate",
 			"bonus_stats": {},
 			"special": "+25% preemptive strike rate",
@@ -313,7 +495,14 @@
 			"id": "ley_amplifier",
 			"name": "Ley Amplifier",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+20% spell damage",
 			"bonus_stats": {},
 			"special": "+20% spell damage",
@@ -326,7 +515,14 @@
 			"id": "pallor_bane_charm",
 			"name": "Pallor Bane Charm",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+25% damage vs Pallor-type",
 			"bonus_stats": {},
 			"special": "+25% damage vs Pallor-type",
@@ -339,7 +535,14 @@
 			"id": "mp_regen_ring",
 			"name": "MP Regen Ring",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Restore 3% max MP per turn",
 			"bonus_stats": {},
 			"special": "Restore 3% max MP per turn",
@@ -352,7 +555,14 @@
 			"id": "ward_talisman",
 			"name": "Ward Talisman",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Danger counter increment x0.5 (fewer encounters)",
 			"bonus_stats": {},
 			"special": "Danger counter increment x0.5 (fewer encounters)",
@@ -365,7 +575,14 @@
 			"id": "lure_talisman",
 			"name": "Lure Talisman",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Danger counter increment x2.0 (more encounters)",
 			"bonus_stats": {},
 			"special": "Danger counter increment x2.0 (more encounters)",
@@ -378,7 +595,14 @@
 			"id": "infiltrators_cloak",
 			"name": "Infiltrator's Cloak",
 			"subcategory": "combat_mechanic",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Danger counter increment x0.5 (fewer encounters)",
 			"bonus_stats": {},
 			"special": "Danger counter increment x0.5 (fewer encounters)",
@@ -391,9 +615,19 @@
 			"id": "colossus_shard",
 			"name": "Colossus Shard",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+10 ATK, +10 DEF, Ley affinity",
-			"bonus_stats": {"atk": 10, "def": 10},
+			"bonus_stats": {
+				"atk": 10,
+				"def": 10
+			},
 			"special": "Ley affinity",
 			"source": "ley_colossus",
 			"buy_price": null,
@@ -405,9 +639,19 @@
 			"id": "drayces_failsafe_core",
 			"name": "Drayce's Failsafe Core",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+12 DEF, +8 MDEF, auto-Shield Protocol (once per battle at 25% HP)",
-			"bonus_stats": {"def": 12, "mdef": 8},
+			"bonus_stats": {
+				"def": 12,
+				"mdef": 8
+			},
 			"special": "Auto-Shield Protocol (once per battle at 25% HP)",
 			"source": "forge_warden",
 			"buy_price": null,
@@ -419,7 +663,14 @@
 			"id": "wardens_binding",
 			"name": "Warden's Binding",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Auto-Protect and Auto-Shell at battle start",
 			"bonus_stats": {},
 			"special": "Auto-Protect and Auto-Shell at battle start",
@@ -433,9 +684,19 @@
 			"id": "crown_shard",
 			"name": "Crown Shard",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+10 ATK, +10 MAG, leadership aura (+5% party damage)",
-			"bonus_stats": {"atk": 10, "mag": 10},
+			"bonus_stats": {
+				"atk": 10,
+				"mag": 10
+			},
 			"special": "Leadership aura (+5% party damage)",
 			"source": "crowned_hollow",
 			"buy_price": null,
@@ -447,9 +708,13 @@
 			"id": "unfinished_ring",
 			"name": "Unfinished Ring",
 			"subcategory": "boss_drop",
-			"equippable_by": ["lira"],
+			"equippable_by": [
+				"lira"
+			],
 			"effect": "+15 MAG, Forgewright ability boost (Lira only)",
-			"bonus_stats": {"mag": 15},
+			"bonus_stats": {
+				"mag": 15
+			},
 			"special": "Forgewright ability boost",
 			"source": "perfect_machine",
 			"buy_price": null,
@@ -461,7 +726,14 @@
 			"id": "ashen_scholars_tome",
 			"name": "Ashen Scholar's Tome",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+15% party magic damage",
 			"bonus_stats": {},
 			"special": "+15% party magic damage",
@@ -475,9 +747,19 @@
 			"id": "titans_core",
 			"name": "Titan's Core",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+25 MAG, +25 MDEF, Ley affinity, MP Regen 2%/turn",
-			"bonus_stats": {"mag": 25, "mdef": 25},
+			"bonus_stats": {
+				"mag": 25,
+				"mdef": 25
+			},
 			"special": "Ley affinity, MP Regen 2%/turn",
 			"source": "ley_titan",
 			"buy_price": null,
@@ -489,9 +771,21 @@
 			"id": "nexus_crest",
 			"name": "Nexus Crest",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+25 ATK, +25 DEF, +25 MAG, +25 SPD, Builder's Resonance (halve ley damage, double healing received)",
-			"bonus_stats": {"atk": 25, "def": 25, "mag": 25, "spd": 25},
+			"bonus_stats": {
+				"atk": 25,
+				"def": 25,
+				"mag": 25,
+				"spd": 25
+			},
 			"special": "Builder's Resonance (halve ley damage, double healing received)",
 			"source": "wellspring_guardian",
 			"buy_price": null,
@@ -503,9 +797,18 @@
 			"id": "caels_knight_crest",
 			"name": "Cael's Knight Crest",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren"],
+			"equippable_by": [
+				"edren"
+			],
 			"effect": "+20 all stats (Edren only)",
-			"bonus_stats": {"atk": 20, "def": 20, "mag": 20, "mdef": 20, "spd": 20, "lck": 20},
+			"bonus_stats": {
+				"atk": 20,
+				"def": 20,
+				"mag": 20,
+				"mdef": 20,
+				"spd": 20,
+				"lck": 20
+			},
 			"special": null,
 			"source": "cael_phase_1",
 			"buy_price": null,
@@ -517,7 +820,14 @@
 			"id": "caels_memory",
 			"name": "Cael's Memory",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+10% damage vs Pallor, grief resonance",
 			"bonus_stats": {},
 			"special": "+10% damage vs Pallor, grief resonance",
@@ -531,9 +841,19 @@
 			"id": "scholars_codex",
 			"name": "Scholar's Codex",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+20 MAG, +10 SPD, spell cost -10%",
-			"bonus_stats": {"mag": 20, "spd": 10},
+			"bonus_stats": {
+				"mag": 20,
+				"spd": 10
+			},
 			"special": "Spell cost -10%",
 			"source": "first_scholar",
 			"buy_price": null,
@@ -545,7 +865,14 @@
 			"id": "queens_facet",
 			"name": "Queen's Facet",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Reflects 25% magic damage passively",
 			"bonus_stats": {},
 			"special": "Reflects 25% magic damage passively",
@@ -559,7 +886,14 @@
 			"id": "wardens_core",
 			"name": "Warden's Core",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Counter-attack on physical hit",
 			"bonus_stats": {},
 			"special": "Counter-attack on physical hit",
@@ -573,9 +907,18 @@
 			"id": "keepers_resolve",
 			"name": "Keeper's Resolve",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+15% Despair resistance, +5 MDEF",
-			"bonus_stats": {"mdef": 5},
+			"bonus_stats": {
+				"mdef": 5
+			},
 			"special": "+15% Despair resistance",
 			"source": "the_grey_keeper",
 			"buy_price": null,
@@ -587,9 +930,23 @@
 			"id": "the_pallors_last",
 			"name": "The Pallor's Last",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+40 all stats, 25% all incoming damage reduction",
-			"bonus_stats": {"atk": 40, "def": 40, "mag": 40, "mdef": 40, "spd": 40, "lck": 40},
+			"bonus_stats": {
+				"atk": 40,
+				"def": 40,
+				"mag": 40,
+				"mdef": 40,
+				"spd": 40,
+				"lck": 40
+			},
 			"special": "25% all incoming damage reduction",
 			"source": "the_lingering",
 			"buy_price": null,
@@ -601,7 +958,14 @@
 			"id": "dreamers_mark",
 			"name": "Dreamer's Mark",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "Immunity to all status effects",
 			"bonus_stats": {},
 			"special": "Immunity to all status effects",
@@ -615,9 +979,23 @@
 			"id": "dreamers_crest",
 			"name": "Dreamer's Crest",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+30 all stats",
-			"bonus_stats": {"atk": 30, "def": 30, "mag": 30, "mdef": 30, "spd": 30, "lck": 30},
+			"bonus_stats": {
+				"atk": 30,
+				"def": 30,
+				"mag": 30,
+				"mdef": 30,
+				"spd": 30,
+				"lck": 30
+			},
 			"special": null,
 			"source": "caels_echo",
 			"buy_price": null,
@@ -629,9 +1007,18 @@
 			"id": "warriors_memento",
 			"name": "Warrior's Memento",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "ATK +10",
-			"bonus_stats": {"atk": 10},
+			"bonus_stats": {
+				"atk": 10
+			},
 			"special": null,
 			"source": "boss_rush_tier_1",
 			"buy_price": null,
@@ -643,9 +1030,19 @@
 			"id": "survivors_memento",
 			"name": "Survivor's Memento",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "DEF +10, MDEF +10",
-			"bonus_stats": {"def": 10, "mdef": 10},
+			"bonus_stats": {
+				"def": 10,
+				"mdef": 10
+			},
 			"special": null,
 			"source": "boss_rush_tier_2",
 			"buy_price": null,
@@ -657,9 +1054,23 @@
 			"id": "pendulums_memento",
 			"name": "Pendulum's Memento",
 			"subcategory": "boss_drop",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "All stats +5",
-			"bonus_stats": {"atk": 5, "def": 5, "mag": 5, "mdef": 5, "spd": 5, "lck": 5},
+			"bonus_stats": {
+				"atk": 5,
+				"def": 5,
+				"mag": 5,
+				"mdef": 5,
+				"spd": 5,
+				"lck": 5
+			},
 			"special": null,
 			"source": "boss_rush_tier_3",
 			"buy_price": null,
@@ -671,9 +1082,19 @@
 			"id": "marsh_cloak",
 			"name": "Marsh Cloak",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+3 DEF, +3 MDEF",
-			"bonus_stats": {"def": 3, "mdef": 3},
+			"bonus_stats": {
+				"def": 3,
+				"mdef": 3
+			},
 			"special": null,
 			"buy_price": null,
 			"sell_price": 100,
@@ -684,9 +1105,18 @@
 			"id": "fenmothers_scale",
 			"name": "Fenmother's Scale",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+5 MDEF, water resistance",
-			"bonus_stats": {"mdef": 5},
+			"bonus_stats": {
+				"mdef": 5
+			},
 			"special": "Reduces water damage by 25%",
 			"buy_price": null,
 			"sell_price": 200,
@@ -697,14 +1127,47 @@
 			"id": "ancient_totem",
 			"name": "Ancient Totem",
 			"subcategory": "stat_boost",
-			"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
 			"effect": "+4 MAG, +2 MDEF",
-			"bonus_stats": {"mag": 4, "mdef": 2},
+			"bonus_stats": {
+				"mag": 4,
+				"mdef": 2
+			},
 			"special": null,
 			"buy_price": null,
 			"sell_price": 175,
 			"acquired": "Fenmother's Hollow chest (F2)",
 			"description": "A carved totem from the sunken temple, still humming with old magic."
+		},
+		{
+			"id": "ember_shard",
+			"name": "Ember Shard",
+			"subcategory": "stat_boost",
+			"type": "stat",
+			"equippable_by": [
+				"edren",
+				"cael",
+				"maren",
+				"sable",
+				"lira",
+				"torren"
+			],
+			"effect": "+5 MAG",
+			"bonus_stats": {
+				"mag": 5
+			},
+			"special": null,
+			"buy_price": null,
+			"sell_price": 200,
+			"acquired": "Ember Vein F3 (secret room)",
+			"description": "A crystallized shard of ley energy. Enhances magical ability."
 		}
 	]
 }

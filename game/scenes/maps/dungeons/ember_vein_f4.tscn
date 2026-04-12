@@ -93,3 +93,6 @@ position = Vector2(160, 32)
 
 [node name="from_ember_vein_f2" type="Marker2D" parent="."]
 position = Vector2(160, 32)
+
+[node name="from_f3" type="Marker2D" parent="."]
+position = Vector2(160, 32)

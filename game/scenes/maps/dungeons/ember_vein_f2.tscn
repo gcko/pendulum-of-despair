@@ -117,3 +117,6 @@ position = Vector2(592, 432)
 
 [node name="from_pitfall" type="Marker2D" parent="."]
 position = Vector2(300, 80)
+
+[node name="from_f3" type="Marker2D" parent="."]
+position = Vector2(352, 432)
