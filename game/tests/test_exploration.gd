@@ -277,18 +277,20 @@ func test_ui_menu_blocked_when_input_disabled() -> void:
 func test_ritual_meter_value_stored_in_transition_data() -> void:
 	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
-	# Manually set up the ritual meter on the exploration scene
-	exp._ritual_meter = RITUAL_METER_SCENE.instantiate()
-	exp.add_child(exp._ritual_meter)
-	exp._ritual_meter.set_value(62.5)
-	# _launch_cleansing_wave builds transition data with ritual_meter_value.
+	# Manually set up the ritual meter on the cleansing sequence
+	var cleansing: RefCounted = exp._get_cleansing()
+	cleansing._ritual_meter = RITUAL_METER_SCENE.instantiate()
+	exp.add_child(cleansing._ritual_meter)
+	cleansing._ritual_meter.set_value(62.5)
+	# _launch_wave builds transition data with ritual_meter_value.
 	# We cannot call it directly (it triggers GameManager.change_core_state),
 	# so we verify the code path by checking the meter value is read correctly.
-	var meter_val: float = exp._ritual_meter.meter_value
+	var meter_val: float = cleansing._ritual_meter.meter_value
 	assert_eq(meter_val, 62.5, "meter value should be 62.5")
-	# Build the transition dict the same way _launch_cleansing_wave does
+	# Build the transition dict the same way _launch_wave does
 	var transition: Dictionary = {
-		"ritual_meter_value": exp._ritual_meter.meter_value if exp._ritual_meter != null else 100.0,
+		"ritual_meter_value":
+		cleansing._ritual_meter.meter_value if cleansing._ritual_meter != null else 100.0,
 	}
 	assert_eq(
 		transition["ritual_meter_value"],
@@ -302,10 +304,11 @@ func test_ritual_meter_restored_from_transition_data() -> void:
 	PartyState.initialize_new_game()
 	# Simulate the state after returning from a cleansing wave battle:
 	# _ritual_meter is null (scene was recreated), transition_data has saved value.
-	# _continue_cleansing_sequence restores meter then applies drain.
+	# continue_sequence restores meter then applies drain.
 	# With wave_num=0, next_wave=1, drain = 15.0 (base, 0 KOs, 0 turns).
 	# So restored 42.0 - 15.0 = 27.0.
-	assert_null(exp._ritual_meter, "meter should be null before restoration")
+	var cleansing: RefCounted = exp._get_cleansing()
+	assert_null(cleansing._ritual_meter, "meter should be null before restoration")
 	var data: Dictionary = {
 		"wave_num": 0,
 		"ritual_meter_value": 42.0,
@@ -314,17 +317,17 @@ func test_ritual_meter_restored_from_transition_data() -> void:
 		"earned_gold": 0,
 		"earned_drops": [],
 	}
-	exp._continue_cleansing_sequence(data)
-	assert_not_null(exp._ritual_meter, "meter should be re-instantiated")
+	cleansing.continue_sequence(data)
+	assert_not_null(cleansing._ritual_meter, "meter should be re-instantiated")
 	# Verify meter was restored from transition data (42.0) then drained (15.0)
 	assert_eq(
-		exp._ritual_meter.meter_value,
+		cleansing._ritual_meter.meter_value,
 		27.0,
 		"meter should be restored value (42) minus base drain (15)",
 	)
-	if exp._ritual_meter != null:
-		exp._ritual_meter.queue_free()
-		exp._ritual_meter = null
+	if cleansing._ritual_meter != null:
+		cleansing._ritual_meter.queue_free()
+		cleansing._ritual_meter = null
 
 
 func test_ritual_meter_defaults_to_100_when_missing() -> void:
@@ -332,6 +335,7 @@ func test_ritual_meter_defaults_to_100_when_missing() -> void:
 	PartyState.initialize_new_game()
 	# When ritual_meter_value is not in transition data, defaults to 100.0.
 	# After drain of 15.0 (base, wave_num=0), final value = 85.0.
+	var cleansing: RefCounted = exp._get_cleansing()
 	var data: Dictionary = {
 		"wave_num": 0,
 		"map_id": "test_room",
@@ -339,16 +343,16 @@ func test_ritual_meter_defaults_to_100_when_missing() -> void:
 		"earned_gold": 0,
 		"earned_drops": [],
 	}
-	exp._continue_cleansing_sequence(data)
-	assert_not_null(exp._ritual_meter, "meter should be re-instantiated")
+	cleansing.continue_sequence(data)
+	assert_not_null(cleansing._ritual_meter, "meter should be re-instantiated")
 	assert_eq(
-		exp._ritual_meter.meter_value,
+		cleansing._ritual_meter.meter_value,
 		85.0,
 		"meter should default to 100 minus base drain (15)",
 	)
-	if exp._ritual_meter != null:
-		exp._ritual_meter.queue_free()
-		exp._ritual_meter = null
+	if cleansing._ritual_meter != null:
+		cleansing._ritual_meter.queue_free()
+		cleansing._ritual_meter = null
 
 
 func test_ritual_meter_different_saved_values() -> void:
@@ -356,6 +360,7 @@ func test_ritual_meter_different_saved_values() -> void:
 	PartyState.initialize_new_game()
 	# Verify different saved values produce different post-drain results.
 	# 80.0 - 15.0 = 65.0
+	var cleansing: RefCounted = exp._get_cleansing()
 	var data: Dictionary = {
 		"wave_num": 0,
 		"ritual_meter_value": 80.0,
@@ -364,12 +369,12 @@ func test_ritual_meter_different_saved_values() -> void:
 		"earned_gold": 0,
 		"earned_drops": [],
 	}
-	exp._continue_cleansing_sequence(data)
+	cleansing.continue_sequence(data)
 	assert_eq(
-		exp._ritual_meter.meter_value,
+		cleansing._ritual_meter.meter_value,
 		65.0,
 		"meter should be 80 - 15 = 65",
 	)
-	if exp._ritual_meter != null:
-		exp._ritual_meter.queue_free()
-		exp._ritual_meter = null
+	if cleansing._ritual_meter != null:
+		cleansing._ritual_meter.queue_free()
+		cleansing._ritual_meter = null

@@ -78,13 +78,13 @@ func test_corrupted_spawn_data() -> void:
 
 
 func test_drowned_sentinel_data() -> void:
-	var e: Dictionary = _find_enemy("drowned_sentinel", "act_i")
+	var e: Dictionary = _find_enemy("drowned_sentinel", "bosses")
 	assert_false(e.is_empty(), "drowned_sentinel should load")
 	assert_eq(e.get("hp", 0), 4000, "drowned_sentinel HP should be 4000")
 
 
 func test_corrupted_fenmother_data() -> void:
-	var e: Dictionary = _find_enemy("corrupted_fenmother", "act_i")
+	var e: Dictionary = _find_enemy("corrupted_fenmother", "bosses")
 	assert_false(e.is_empty(), "corrupted_fenmother should load")
 	assert_eq(e.get("hp", 0), 18000, "corrupted_fenmother HP should be 18000")
 
