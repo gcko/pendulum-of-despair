@@ -70,6 +70,31 @@ metadata/quantity = 1
 position = Vector2(150, 460)
 metadata/save_point_id = "ember_vein_f3_save"
 
+[node name="RuinsEntryDialogue" type="Area2D" parent="Entities"]
+position = Vector2(350, 60)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/dialogue_scene_id = "ember_vein_1c_ruins"
+metadata/flag = "ember_vein_1c_seen"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/RuinsEntryDialogue"]
+shape = SubResource("Shape_trigger")
+
+[node name="MuralsDialogue" type="Area2D" parent="Entities"]
+position = Vector2(350, 380)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/dialogue_scene_id = "ember_vein_1c_murals"
+metadata/flag = "ember_vein_1c_murals_seen"
+metadata/required_flag = "ember_vein_1c_seen"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/MuralsDialogue"]
+shape = SubResource("Shape_trigger")
+
 [node name="Transitions" type="Node2D" parent="."]
 
 [node name="StairsToF2" type="Area2D" parent="Transitions"]
