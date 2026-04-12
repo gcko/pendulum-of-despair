@@ -1,0 +1,43 @@
+{
+  "scene_id": "ironmouth_post_combat",
+  "entries": [
+    {
+      "id": "ironmouth_post_combat_001",
+      "speaker": "edren",
+      "lines": [
+        "Then we move. Stay together."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "alarm_bells"
+        }
+      ]
+    },
+    {
+      "id": "ironmouth_post_combat_002",
+      "speaker": "lira",
+      "lines": [
+        "More soldiers. We can't hold here."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_post_combat_003",
+      "speaker": "sable",
+      "lines": [
+        "Into the trees. Now."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}
