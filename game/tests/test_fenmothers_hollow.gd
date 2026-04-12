@@ -227,12 +227,20 @@ func test_f2_has_drowned_sentinel_boss() -> void:
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f2.tscn")
 	assert_true(text.contains('metadata/boss_id = "drowned_sentinel"'))
 	assert_true(text.contains('metadata/flag = "drowned_sentinel_defeated"'))
+	assert_true(
+		text.contains('metadata/enemy_act = "bosses"'),
+		"drowned_sentinel trigger must use bosses act (not act_i)",
+	)
 
 
 func test_f3_has_corrupted_fenmother_boss() -> void:
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f3.tscn")
 	assert_true(text.contains('metadata/boss_id = "corrupted_fenmother"'))
 	assert_true(text.contains('metadata/flag = "fenmother_boss_defeated"'))
+	assert_true(
+		text.contains('metadata/enemy_act = "bosses"'),
+		"corrupted_fenmother trigger must use bosses act (not act_i)",
+	)
 
 
 # --- Transitions ---
