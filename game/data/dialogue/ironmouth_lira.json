@@ -50,6 +50,17 @@
     },
     {
       "id": "ironmouth_lira_005",
+      "speaker": "cael",
+      "lines": [
+        "You defected."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_lira_006",
       "speaker": "lira",
       "lines": [
         "I found references to something called \"Project",
@@ -62,7 +73,7 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_lira_006",
+      "id": "ironmouth_lira_007",
       "speaker": "lira",
       "lines": [
         "Now. This way."
@@ -73,10 +84,10 @@
       "sfx": null
     },
     {
-      "id": "ironmouth_lira_007",
-      "speaker": "lira",
+      "id": "ironmouth_lira_008",
+      "speaker": "edren",
       "lines": [
-        "She's right. The forest is the only way."
+        "We're cut off."
       ],
       "condition": null,
       "animations": null,

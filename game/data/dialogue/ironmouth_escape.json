@@ -46,22 +46,6 @@
       "animations": null,
       "choice": null,
       "sfx": null
-    },
-    {
-      "id": "ironmouth_escape_005",
-      "speaker": "edren",
-      "lines": [
-        "Then we move. Stay together."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": [
-        {
-          "line": 0,
-          "id": "alarm_bells"
-        }
-      ]
     }
   ]
 }

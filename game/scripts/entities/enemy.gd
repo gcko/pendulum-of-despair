@@ -206,8 +206,8 @@ func has_status(status_name: String) -> bool:
 func take_damage(amount: int) -> void:
 	if not is_alive:
 		return
-	var clamped: int = max(0, amount)
-	current_hp = max(0, current_hp - clamped)
+	var clamped: int = maxi(0, amount)
+	current_hp = maxi(0, current_hp - clamped)
 	damage_taken.emit(clamped)
 	if current_hp <= 0:
 		is_alive = false
@@ -216,10 +216,10 @@ func take_damage(amount: int) -> void:
 
 ## Apply healing. Clamps amount >= 0 and HP to max. Restores is_alive. Emits healed.
 func heal(amount: int) -> void:
-	var clamped: int = max(0, amount)
+	var clamped: int = maxi(0, amount)
 	var max_hp: int = enemy_data.get("hp", 0)
 	var old_hp: int = current_hp
-	current_hp = min(max_hp, current_hp + clamped)
+	current_hp = mini(max_hp, current_hp + clamped)
 	if current_hp > 0:
 		is_alive = true
 	var actual_heal: int = current_hp - old_hp

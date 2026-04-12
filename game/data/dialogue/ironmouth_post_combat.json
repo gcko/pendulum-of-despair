@@ -3,6 +3,17 @@
   "entries": [
     {
       "id": "ironmouth_post_combat_001",
+      "speaker": "lira",
+      "lines": [
+        "She's right. The forest is the only way."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ironmouth_post_combat_002",
       "speaker": "edren",
       "lines": [
         "Then we move. Stay together."
