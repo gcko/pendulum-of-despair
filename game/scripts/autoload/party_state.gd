@@ -235,7 +235,7 @@ func get_collected_crystals() -> Array[String]:
 func set_puzzle_state(dungeon_id: String, key: String, value: Variant) -> void:
 	if dungeon_id.is_empty() or key.is_empty():
 		return
-	if not puzzle_state.has(dungeon_id):
+	if not puzzle_state.has(dungeon_id) or not puzzle_state[dungeon_id] is Dictionary:
 		puzzle_state[dungeon_id] = {}
 	puzzle_state[dungeon_id][key] = value
 
@@ -243,6 +243,9 @@ func set_puzzle_state(dungeon_id: String, key: String, value: Variant) -> void:
 ## Get a puzzle state value. Returns default_value if not set.
 func get_puzzle_state(dungeon_id: String, key: String, default_value: Variant = false) -> Variant:
 	if not puzzle_state.has(dungeon_id):
+		return default_value
+	if not puzzle_state[dungeon_id] is Dictionary:
+		puzzle_state[dungeon_id] = {}
 		return default_value
 	return puzzle_state[dungeon_id].get(key, default_value)
 

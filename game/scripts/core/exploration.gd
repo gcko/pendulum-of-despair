@@ -426,8 +426,15 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if not _transitioning and interactable.has_method("interact"):
-		interactable.interact()
+	if _transitioning:
+		return
+	var target: Node2D = interactable
+	if not target.has_method("interact"):
+		var p: Node = target.get_parent()
+		if p is Node2D and p.has_method("interact"):
+			target = p as Node2D
+	if target.has_method("interact"):
+		target.interact()
 
 
 func _find_entity_npc(npc_id: String) -> Node:
@@ -798,11 +805,9 @@ func _continue_cleansing_sequence(data: Dictionary) -> void:
 	load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	_spawned_pool_count = 0
 	if _player != null:
+		var fallback: Vector2 = data.get("position", Vector2(80, 90))
 		var origin: Variant = data.get("cleansing_origin_position", null)
-		if origin is Vector2:
-			_player.position = origin as Vector2
-		else:
-			_player.position = data.get("position", Vector2(80, 90))
+		_player.position = origin if origin is Vector2 else fallback
 	# Re-instantiate ritual meter lost during scene recreation
 	if _ritual_meter == null:
 		_ritual_meter = RITUAL_METER_SCENE.instantiate()
@@ -852,9 +857,8 @@ func _launch_cleansing_wave(wave_num: int, data: Dictionary) -> void:
 	if wave_num < 0 or wave_num >= CLEANSING_WAVES.size():
 		_complete_cleansing(data)
 		return
-	var origin_pos: Vector2 = data.get(
-		"cleansing_origin_position", data.get("position", Vector2(80, 90))
-	)
+	var fb: Vector2 = data.get("position", Vector2(80, 90))
+	var origin_pos: Vector2 = data.get("cleansing_origin_position", fb)
 	var player_pos: Vector2 = _player.position if _player != null else origin_pos
 	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0
 	var transition: Dictionary = {
@@ -984,15 +988,12 @@ func _find_member_index(character_id: String) -> int:
 
 
 func _revive_fallen_at_quarter_hp() -> void:
-	var active: Array = PartyState.formation.get("active", [])
-	for idx: Variant in active:
+	for idx: Variant in PartyState.formation.get("active", []):
 		if not (idx is int or idx is float):
 			continue
-		var member_index: int = int(idx)
-		if member_index < 0 or member_index >= PartyState.members.size():
+		var mi: int = int(idx)
+		if mi < 0 or mi >= PartyState.members.size():
 			continue
-		var m: Dictionary = PartyState.members[member_index]
-		var current_hp: int = m.get("current_hp", 0)
-		if current_hp <= 0:
-			var max_hp: int = m.get("max_hp", 1)
-			m["current_hp"] = maxi(1, int(max_hp / 4))
+		var m: Dictionary = PartyState.members[mi]
+		if m.get("current_hp", 0) <= 0:
+			m["current_hp"] = maxi(1, int(m.get("max_hp", 1) / 4))

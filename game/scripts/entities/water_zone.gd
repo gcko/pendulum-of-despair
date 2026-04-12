@@ -42,7 +42,7 @@ func refresh() -> void:
 		visible = all_met
 		if _collision != null:
 			_collision.disabled = not all_met
-	else:  # reveal
+	else:  # reveal — cosmetic only, never blocks
 		visible = all_met
 		if _collision != null:
-			_collision.disabled = all_met
+			_collision.disabled = true
