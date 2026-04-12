@@ -9,12 +9,18 @@ func before_each() -> void:
 	PartyState.initialize_new_game()
 
 
+func _make_mock_body() -> CharacterBody2D:
+	var body: CharacterBody2D = CharacterBody2D.new()
+	add_child_autoqfree(body)
+	return body
+
+
 func test_pressure_plate_sets_state_on_press() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autoqfree(plate)
 	plate.initialize("test_plate", "ember_vein")
 	assert_false(plate.is_pressed, "Plate should start unpressed")
-	plate._on_body_entered(null)
+	plate._on_body_entered(_make_mock_body())
 	assert_true(plate.is_pressed, "Plate should be pressed after body entered")
 	assert_true(
 		PartyState.get_puzzle_state("ember_vein", "test_plate_pressed", false),
@@ -26,9 +32,9 @@ func test_pressure_plate_stays_pressed() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autoqfree(plate)
 	plate.initialize("test_plate", "ember_vein")
-	plate._on_body_entered(null)
+	plate._on_body_entered(_make_mock_body())
 	assert_true(plate.is_pressed, "Plate should be pressed")
-	plate._on_body_exited(null)
+	plate._on_body_exited(_make_mock_body())
 	assert_true(plate.is_pressed, "Plate should remain pressed (one-shot)")
 
 
@@ -37,7 +43,7 @@ func test_pressure_plate_emits_signal() -> void:
 	add_child_autoqfree(plate)
 	plate.initialize("test_plate", "ember_vein")
 	watch_signals(plate)
-	plate._on_body_entered(null)
+	plate._on_body_entered(_make_mock_body())
 	assert_signal_emitted(plate, "plate_pressed")
 
 

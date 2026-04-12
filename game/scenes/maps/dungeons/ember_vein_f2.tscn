@@ -15,7 +15,7 @@ size = Vector2(32, 32)
 
 [node name="EmberVeinF2" type="Node2D"]
 metadata/map_id = "dungeons/ember_vein_f2"
-metadata/floor_id = "3"
+metadata/floor_id = "2"
 metadata/location_name = "Ember Vein - Lower Mine"
 metadata/dungeon_id = "ember_vein"
 
@@ -35,12 +35,14 @@ metadata/quantity = 2
 position = Vector2(200, 300)
 metadata/chest_id = "ember_vein_f2_chest_2"
 metadata/item_id = "miners_hardhat"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="Chest3" parent="Entities" instance=ExtResource("2_chest")]
 position = Vector2(550, 350)
 metadata/chest_id = "ember_vein_f2_chest_3"
 metadata/item_id = "ember_ring"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="MineWaterVialChest" parent="Entities" instance=ExtResource("2_chest")]
@@ -75,7 +77,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/flag = "ember_vein_miners_seen"
-metadata/dialogue_data = [{"speaker": "Cael", "lines": ["More of them. Six here."]}, {"speaker": "Edren", "lines": ["This one's clutching something. A letter -- half-written."]}, {"speaker": "Cael", "lines": ["He was trying to get back. Look -- his hand is reaching for the stairs."]}]
+metadata/dialogue_data = [{"speaker": "cael", "lines": ["More of them. Six here."]}, {"speaker": "edren", "lines": ["This one's clutching something. A letter -- half-written."]}, {"speaker": "cael", "lines": ["He was trying to get back. Look -- his hand is reaching for the stairs."]}]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/DialogueMiners"]
 shape = SubResource("Shape_trigger")
@@ -106,16 +108,16 @@ metadata/target_spawn = "from_ember_vein_f2"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/StairsToF1"]
 shape = SubResource("Shape_transition")
 
-[node name="StairsToF4" type="Area2D" parent="Transitions"]
+[node name="StairsToF3" type="Area2D" parent="Transitions"]
 position = Vector2(592, 448)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/target_map = "dungeons/ember_vein_f4"
-metadata/target_spawn = "from_ember_vein_f2"
+metadata/target_map = "dungeons/ember_vein_f3"
+metadata/target_spawn = "from_f2"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/StairsToF4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/StairsToF3"]
 shape = SubResource("Shape_transition")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]

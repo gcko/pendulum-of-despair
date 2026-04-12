@@ -45,7 +45,7 @@ static func execute_party_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
-	var character_id: String = member.get("character_data", {}).get("id", "")
+	var character_id: String = member.get("character_id", "")
 	var dmg: int = DamageCalc.calculate_physical(
 		atk,
 		1.0,
@@ -144,7 +144,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 
-	var is_crit: bool = randi() % 100 < 5  # Enemy fixed 5% crit
+	var is_crit: bool = DamageCalc.roll_crit(stats.get("lck", 0))
 	var reduction: Array = []
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:

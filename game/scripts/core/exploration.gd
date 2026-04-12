@@ -402,6 +402,9 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		"plant_restored": _on_plant_restored,
 		"zone_damage_dealt": _on_zone_damage_dealt,
 		"interaction_message": _on_interaction_message,
+		"plate_pressed": _on_plate_pressed,
+		"crystal_cleared": _on_crystal_cleared,
+		"pitfall_triggered": _on_pitfall_triggered,
 	}
 	for group: String in ["Entities", "Transitions"]:
 		var container: Node = map_node.get_node_or_null(group)

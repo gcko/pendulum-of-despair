@@ -14,7 +14,7 @@ size = Vector2(32, 32)
 
 [node name="EmberVeinF4" type="Node2D"]
 metadata/map_id = "dungeons/ember_vein_f4"
-metadata/floor_id = ""
+metadata/floor_id = "4"
 metadata/location_name = "Ember Vein - The Pendulum Chamber"
 metadata/dungeon_id = "ember_vein"
 
@@ -83,8 +83,8 @@ collision_layer = 0
 collision_mask = 2
 monitoring = true
 monitorable = false
-metadata/target_map = "test_room"
-metadata/target_spawn = "PlayerSpawn"
+metadata/target_map = "towns/ironmouth_docks"
+metadata/target_spawn = "from_ember_vein"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitTunnel"]
 shape = SubResource("Shape_transition")

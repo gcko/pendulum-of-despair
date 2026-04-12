@@ -38,6 +38,7 @@ metadata/quantity = 3
 position = Vector2(560, 160)
 metadata/chest_id = "ember_vein_f1_chest_3"
 metadata/item_id = "iron_bracelet"
+metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="SavePoint1" parent="Entities" instance=ExtResource("3_save")]

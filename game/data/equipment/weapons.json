@@ -1,904 +1,1090 @@
 {
-	"weapons": [
-		{
-			"id": "training_sword",
-			"name": "Training Sword",
-			"type": "sword",
-			"tier": 0,
-			"equippable_by": ["edren"],
-			"atk": 4,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A standard-issue Compact training blade."
-		},
-		{
-			"id": "arcanite_sword_proto",
-			"name": "Arcanite Sword (Prototype)",
-			"type": "sword",
-			"tier": 1,
-			"equippable_by": ["edren"],
-			"atk": 13,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment (Edren) — breaks after Ember Vein",
-			"description": "A confiscated Compact prototype. Arcanite-enhanced but unstable."
-		},
-		{
-			"id": "carradan_mining_pick",
-			"name": "Carradan Mining Pick",
-			"type": "sword",
-			"tier": 1,
-			"equippable_by": ["edren"],
-			"atk": 8,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": 100,
-			"acquired": "Ember Vein chest (Floor 1, cart-accessible room)",
-			"description": "A heavy Carradan mining pick repurposed as a weapon. Crude but effective."
-		},
-		{
-			"id": "valdris_blade",
-			"name": "Valdris Blade",
-			"type": "sword",
-			"tier": 1,
-			"equippable_by": ["edren"],
-			"atk": 10,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 300,
-			"sell_price": 150,
-			"acquired": "Valdris shop",
-			"description": "A reliable blade forged in the smithies of Valdris."
-		},
-		{
-			"id": "knights_edge",
-			"name": "Knight's Edge",
-			"type": "sword",
-			"tier": 1,
-			"equippable_by": ["edren"],
-			"atk": 12,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 500,
-			"sell_price": 250,
-			"acquired": "Ember Vein chest",
-			"description": "A keen-edged sword favored by Compact knights."
-		},
-		{
-			"id": "mythril_sword",
-			"name": "Mythril Sword",
-			"type": "sword",
-			"tier": 2,
-			"equippable_by": ["edren"],
-			"atk": 18,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 1200,
-			"sell_price": 600,
-			"acquired": "Act II shops",
-			"description": "A lightweight sword forged from mythril ore."
-		},
-		{
-			"id": "compact_saber",
-			"name": "Compact Saber",
-			"type": "sword",
-			"tier": 2,
-			"equippable_by": ["edren"],
-			"atk": 22,
-			"bonus_stats": {},
-			"element": null,
-			"special": "Stolen Compact design",
-			"buy_price": 2000,
-			"sell_price": 1000,
-			"acquired": "Ashmark chest",
-			"description": "A saber built from stolen Compact military blueprints."
-		},
-		{
-			"id": "arcanite_blade",
-			"name": "Arcanite Blade",
-			"type": "sword",
-			"tier": "forged",
-			"equippable_by": ["edren"],
-			"atk": 35,
-			"bonus_stats": {"mag": 5},
-			"element": null,
-			"special": "Forged",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Lira forges (Interlude)",
-			"description": "A sword infused with arcanite, resonating with magical energy."
-		},
-		{
-			"id": "crystal_sword",
-			"name": "Crystal Sword",
-			"type": "sword",
-			"tier": 3,
-			"equippable_by": ["edren"],
-			"atk": 33,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 4000,
-			"sell_price": 2000,
-			"acquired": "Interlude shop",
-			"description": "A translucent blade carved from crystallized ley energy."
-		},
-		{
-			"id": "ley_forged_longsword",
-			"name": "Ley-Forged Longsword",
-			"type": "sword",
-			"tier": 4,
-			"equippable_by": ["edren"],
-			"atk": 48,
-			"bonus_stats": {},
-			"element": "ley",
-			"special": null,
-			"buy_price": 8000,
-			"sell_price": 4000,
-			"acquired": "Act III shop",
-			"description": "A longsword forged in raw ley energy, humming with power."
-		},
-		{
-			"id": "pallor_bane",
-			"name": "Pallor Bane",
-			"type": "sword",
-			"tier": 4,
-			"equippable_by": ["edren"],
-			"atk": 52,
-			"bonus_stats": {},
-			"element": "spirit",
-			"special": "+25% vs Pallor",
-			"buy_price": 10000,
-			"sell_price": 5000,
-			"acquired": "Pallor Wastes chest",
-			"description": "A spirit-imbued blade that burns Pallor creatures on contact."
-		},
-		{
-			"id": "edrens_oath",
-			"name": "Edren's Oath",
-			"type": "sword",
-			"tier": 5,
-			"equippable_by": ["edren"],
-			"atk": 80,
-			"bonus_stats": {"def": 10},
-			"element": "spirit",
-			"special": "Auto-Protect 1 turn at battle start",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Edren sidequest",
-			"description": "The blade that seals Edren's unbreakable oath to protect the fallen."
-		},
-		{
-			"id": "recruits_claymore",
-			"name": "Recruit's Claymore",
-			"type": "greatsword",
-			"tier": 0,
-			"equippable_by": ["cael"],
-			"atk": 5,
-			"bonus_stats": {"spd": -2},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A heavy claymore issued to new recruits."
-		},
-		{
-			"id": "commanders_blade",
-			"name": "Commander's Blade",
-			"type": "greatsword",
-			"tier": 1,
-			"equippable_by": ["cael"],
-			"atk": 12,
-			"bonus_stats": {"spd": -2},
-			"element": null,
-			"special": null,
-			"buy_price": 400,
-			"sell_price": 200,
-			"acquired": "Valdris armory",
-			"description": "A broad blade befitting a Compact field commander."
-		},
-		{
-			"id": "war_cleaver",
-			"name": "War Cleaver",
-			"type": "greatsword",
-			"tier": 1,
-			"equippable_by": ["cael"],
-			"atk": 14,
-			"bonus_stats": {"spd": -3},
-			"element": null,
-			"special": null,
-			"buy_price": 600,
-			"sell_price": 300,
-			"acquired": "Fenmother chest",
-			"description": "A brutal cleaving blade recovered from a battlefield."
-		},
-		{
-			"id": "ironbound_greatsword",
-			"name": "Ironbound Greatsword",
-			"type": "greatsword",
-			"tier": 2,
-			"equippable_by": ["cael"],
-			"atk": 22,
-			"bonus_stats": {"spd": -3},
-			"element": null,
-			"special": null,
-			"buy_price": 1500,
-			"sell_price": 750,
-			"acquired": "Act II shop",
-			"description": "A massive greatsword reinforced with iron bands."
-		},
-		{
-			"id": "twilight_edge",
-			"name": "Twilight Edge",
-			"type": "greatsword",
-			"tier": 2,
-			"equippable_by": ["cael"],
-			"atk": 26,
-			"bonus_stats": {"spd": -3},
-			"element": null,
-			"special": "+10% crit rate",
-			"buy_price": 2500,
-			"sell_price": 1250,
-			"acquired": "Ley Line Depths chest",
-			"description": "A dark-hued greatsword that strikes with devastating precision."
-		},
-		{
-			"id": "dusk_reaver",
-			"name": "Dusk Reaver",
-			"type": "greatsword",
-			"tier": 3,
-			"equippable_by": ["cael"],
-			"atk": 40,
-			"bonus_stats": {"spd": -4},
-			"element": null,
-			"special": null,
-			"buy_price": 5000,
-			"sell_price": 2500,
-			"acquired": "Interlude shop (brief window)",
-			"description": "A fearsome greatsword available only briefly before Cael's departure."
-		},
-		{
-			"id": "scholars_rod",
-			"name": "Scholar's Rod",
-			"type": "staff",
-			"tier": 0,
-			"equippable_by": ["maren"],
-			"atk": 2,
-			"bonus_stats": {"mag": 3},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A simple rod carried by Archive scholars."
-		},
-		{
-			"id": "ley_wand",
-			"name": "Ley Wand",
-			"type": "staff",
-			"tier": 1,
-			"equippable_by": ["maren"],
-			"atk": 6,
-			"bonus_stats": {"mag": 5},
-			"element": null,
-			"special": null,
-			"buy_price": 250,
-			"sell_price": 125,
-			"acquired": "Valdris shop",
-			"description": "A wand attuned to ambient ley energy."
-		},
-		{
-			"id": "glyph_staff",
-			"name": "Glyph Staff",
-			"type": "staff",
-			"tier": 1,
-			"equippable_by": ["maren"],
-			"atk": 8,
-			"bonus_stats": {"mag": 7},
-			"element": null,
-			"special": null,
-			"buy_price": 500,
-			"sell_price": 250,
-			"acquired": "Archive of Ages chest",
-			"description": "A staff inscribed with ancient glyphs of power."
-		},
-		{
-			"id": "mythril_staff",
-			"name": "Mythril Staff",
-			"type": "staff",
-			"tier": 2,
-			"equippable_by": ["maren"],
-			"atk": 12,
-			"bonus_stats": {"mag": 10},
-			"element": null,
-			"special": null,
-			"buy_price": 1000,
-			"sell_price": 500,
-			"acquired": "Act II shop",
-			"description": "A mythril staff that amplifies the wielder's magical focus."
-		},
-		{
-			"id": "runic_focus",
-			"name": "Runic Focus",
-			"type": "staff",
-			"tier": 2,
-			"equippable_by": ["maren"],
-			"atk": 10,
-			"bonus_stats": {"mag": 12},
-			"element": "ley",
-			"special": "+5% spell crit",
-			"buy_price": 1800,
-			"sell_price": 900,
-			"acquired": "Ley Line Depths chest",
-			"description": "A staff etched with runic circuits that channel ley magic."
-		},
-		{
-			"id": "resonance_rod",
-			"name": "Resonance Rod",
-			"type": "staff",
-			"tier": "forged",
-			"equippable_by": ["maren"],
-			"atk": 15,
-			"bonus_stats": {"mag": 15},
-			"element": null,
-			"special": "Forged",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Lira forges (Act III)",
-			"description": "A rod that hums in resonance with the wielder's magical frequency."
-		},
-		{
-			"id": "arcane_conduit",
-			"name": "Arcane Conduit",
-			"type": "staff",
-			"tier": 3,
-			"equippable_by": ["maren"],
-			"atk": 18,
-			"bonus_stats": {"mag": 16},
-			"element": null,
-			"special": null,
-			"buy_price": 3500,
-			"sell_price": 1750,
-			"acquired": "Interlude shop",
-			"description": "A crystalline staff that serves as a direct conduit for arcane power."
-		},
-		{
-			"id": "ley_conduit",
-			"name": "Ley Conduit",
-			"type": "staff",
-			"tier": 4,
-			"equippable_by": ["maren"],
-			"atk": 25,
-			"bonus_stats": {"mag": 18},
-			"element": "ley",
-			"special": null,
-			"buy_price": 7000,
-			"sell_price": 3500,
-			"acquired": "Act III shop",
-			"description": "A staff that draws power directly from the ley lines themselves."
-		},
-		{
-			"id": "archive_staff",
-			"name": "Archive Staff",
-			"type": "staff",
-			"tier": 4,
-			"equippable_by": ["maren"],
-			"atk": 22,
-			"bonus_stats": {"mag": 20},
-			"element": null,
-			"special": "+10% healing",
-			"buy_price": 9000,
-			"sell_price": 4500,
-			"acquired": "Dry Well chest",
-			"description": "An ancient staff from the Archive's deepest vaults, attuned to restoration."
-		},
-		{
-			"id": "marens_requiem",
-			"name": "Maren's Requiem",
-			"type": "staff",
-			"tier": 5,
-			"equippable_by": ["maren"],
-			"atk": 40,
-			"bonus_stats": {"mag": 25},
-			"element": "ley",
-			"special": "MP cost -10%",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Crafted from Pallor Core",
-			"description": "A requiem given form, channeling Maren's grief into boundless magic."
-		},
-		{
-			"id": "street_knife",
-			"name": "Street Knife",
-			"type": "dagger",
-			"tier": 0,
-			"equippable_by": ["sable"],
-			"atk": 3,
-			"bonus_stats": {"spd": 1},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A worn knife from the back alleys of Bellhaven."
-		},
-		{
-			"id": "stiletto",
-			"name": "Stiletto",
-			"type": "dagger",
-			"tier": 1,
-			"equippable_by": ["sable"],
-			"atk": 8,
-			"bonus_stats": {"spd": 2},
-			"element": null,
-			"special": null,
-			"buy_price": 250,
-			"sell_price": 125,
-			"acquired": "Bellhaven shop",
-			"description": "A slender thrusting blade designed for swift strikes."
-		},
-		{
-			"id": "pickpockets_blade",
-			"name": "Pickpocket's Blade",
-			"type": "dagger",
-			"tier": 1,
-			"equippable_by": ["sable"],
-			"atk": 7,
-			"bonus_stats": {"lck": 2},
-			"element": null,
-			"special": "Steal rate +10%",
-			"buy_price": 400,
-			"sell_price": 200,
-			"acquired": "Sable sidequest",
-			"description": "A blade favored by Bellhaven's light-fingered professionals."
-		},
-		{
-			"id": "mythril_dagger",
-			"name": "Mythril Dagger",
-			"type": "dagger",
-			"tier": 2,
-			"equippable_by": ["sable"],
-			"atk": 15,
-			"bonus_stats": {"spd": 3},
-			"element": null,
-			"special": null,
-			"buy_price": 1000,
-			"sell_price": 500,
-			"acquired": "Act II shop",
-			"description": "A featherweight mythril dagger that strikes before the eye can follow."
-		},
-		{
-			"id": "trick_blade",
-			"name": "Trick Blade",
-			"type": "dagger",
-			"tier": 2,
-			"equippable_by": ["sable"],
-			"atk": 14,
-			"bonus_stats": {"lck": 3},
-			"element": null,
-			"special": "+5% crit rate",
-			"buy_price": 1500,
-			"sell_price": 750,
-			"acquired": "Bellhaven Tunnels chest",
-			"description": "A cleverly weighted blade that finds weak points with uncanny luck."
-		},
-		{
-			"id": "shadowsteel_knife",
-			"name": "Shadowsteel Knife",
-			"type": "dagger",
-			"tier": "forged",
-			"equippable_by": ["sable"],
-			"atk": 28,
-			"bonus_stats": {"spd": 4, "lck": 3},
-			"element": null,
-			"special": "Forged",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Lira forges (Act III)",
-			"description": "A knife forged from shadowsteel, nearly invisible in dim light."
-		},
-		{
-			"id": "whisper_edge",
-			"name": "Whisper Edge",
-			"type": "dagger",
-			"tier": 3,
-			"equippable_by": ["sable"],
-			"atk": 32,
-			"bonus_stats": {"spd": 5},
-			"element": null,
-			"special": null,
-			"buy_price": 4500,
-			"sell_price": 2250,
-			"acquired": "Interlude shop",
-			"description": "A blade so sharp its cuts arrive before the sound of the swing."
-		},
-		{
-			"id": "twilight_fang",
-			"name": "Twilight Fang",
-			"type": "dagger",
-			"tier": 4,
-			"equippable_by": ["sable"],
-			"atk": 42,
-			"bonus_stats": {"lck": 4},
-			"element": null,
-			"special": "10% Poison on hit",
-			"buy_price": 8000,
-			"sell_price": 4000,
-			"acquired": "Act III shop",
-			"description": "A venomous fang-shaped dagger that poisons with each cut."
-		},
-		{
-			"id": "shade_razor",
-			"name": "Shade Razor",
-			"type": "dagger",
-			"tier": 4,
-			"equippable_by": ["sable"],
-			"atk": 48,
-			"bonus_stats": {"spd": 6},
-			"element": "void",
-			"special": null,
-			"buy_price": 10000,
-			"sell_price": 5000,
-			"acquired": "Convergence chest",
-			"description": "A razor-thin blade suffused with void energy from the Convergence."
-		},
-		{
-			"id": "sables_thread",
-			"name": "Sable's Thread",
-			"type": "dagger",
-			"tier": 5,
-			"equippable_by": ["sable"],
-			"atk": 70,
-			"bonus_stats": {"spd": 8, "lck": 5},
-			"element": null,
-			"special": "Steal rate +25%, auto-Haste 1 turn",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Sable sidequest",
-			"description": "The thread that binds Sable to her past and cuts her path forward."
-		},
-		{
-			"id": "maintenance_wrench",
-			"name": "Maintenance Wrench",
-			"type": "hammer",
-			"tier": 0,
-			"equippable_by": ["lira"],
-			"atk": 4,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A heavy wrench from Lira's engineering toolkit."
-		},
-		{
-			"id": "iron_mallet",
-			"name": "Iron Mallet",
-			"type": "hammer",
-			"tier": 1,
-			"equippable_by": ["lira"],
-			"atk": 10,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 300,
-			"sell_price": 150,
-			"acquired": "Corrund shop",
-			"description": "A solid iron mallet suitable for both repair work and combat."
-		},
-		{
-			"id": "pipe_hammer",
-			"name": "Pipe Hammer",
-			"type": "hammer",
-			"tier": 1,
-			"equippable_by": ["lira"],
-			"atk": 12,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 500,
-			"sell_price": 250,
-			"acquired": "Rail Tunnels chest",
-			"description": "A length of heavy pipe repurposed as a crushing weapon."
-		},
-		{
-			"id": "compact_sledge",
-			"name": "Compact Sledge",
-			"type": "hammer",
-			"tier": 2,
-			"equippable_by": ["lira"],
-			"atk": 20,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 1200,
-			"sell_price": 600,
-			"acquired": "Act II shop",
-			"description": "A compact sledgehammer built to Compact military specifications."
-		},
-		{
-			"id": "forge_hammer",
-			"name": "Forge Hammer",
-			"type": "hammer",
-			"tier": 2,
-			"equippable_by": ["lira"],
-			"atk": 24,
-			"bonus_stats": {},
-			"element": "flame",
-			"special": null,
-			"buy_price": 2200,
-			"sell_price": 1100,
-			"acquired": "Ashmark Factory chest",
-			"description": "A hammer still radiating heat from the Ashmark forges."
-		},
-		{
-			"id": "forgewright_maul",
-			"name": "Forgewright Maul",
-			"type": "hammer",
-			"tier": "forged",
-			"equippable_by": ["lira"],
-			"atk": 40,
-			"bonus_stats": {},
-			"element": null,
-			"special": "Forged",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Lira forges (Interlude)",
-			"description": "A master-crafted maul that embodies Lira's forging expertise."
-		},
-		{
-			"id": "arcanite_maul",
-			"name": "Arcanite Maul",
-			"type": "hammer",
-			"tier": 3,
-			"equippable_by": ["lira"],
-			"atk": 38,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 5000,
-			"sell_price": 2500,
-			"acquired": "Interlude shop",
-			"description": "A maul forged from arcanite, devastatingly heavy."
-		},
-		{
-			"id": "piston_driver",
-			"name": "Piston Driver",
-			"type": "hammer",
-			"tier": 4,
-			"equippable_by": ["lira"],
-			"atk": 52,
-			"bonus_stats": {},
-			"element": null,
-			"special": "15% Stun chance",
-			"buy_price": 8500,
-			"sell_price": 4250,
-			"acquired": "Act III shop",
-			"description": "A pneumatic hammer that delivers bone-jarring impacts."
-		},
-		{
-			"id": "architects_hammer",
-			"name": "Architect's Hammer",
-			"type": "hammer",
-			"tier": 4,
-			"equippable_by": ["lira"],
-			"atk": 52,
-			"bonus_stats": {},
-			"element": "storm",
-			"special": "+25% vs Constructs",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "The Architect boss drop",
-			"description": "A hammer crackling with storm energy, taken from the Architect itself."
-		},
-		{
-			"id": "liras_masterwork",
-			"name": "Lira's Masterwork",
-			"type": "hammer",
-			"tier": 5,
-			"equippable_by": ["lira"],
-			"atk": 90,
-			"bonus_stats": {"def": 5},
-			"element": null,
-			"special": "Forgewright device uses +1",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Crafted from Grey Mist Essence + Arcanite Ingot",
-			"description": "Lira's ultimate creation, a hammer that defines the art of the forge."
-		},
-		{
-			"id": "caels_edge",
-			"name": "Cael's Edge",
-			"type": "hammer",
-			"tier": 5,
-			"equippable_by": ["lira"],
-			"atk": 72,
-			"bonus_stats": {},
-			"element": "spirit",
-			"special": "Sever Bond: 1-use 3.0x physical attack ignoring DEF (Vaelith fight only)",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "trial_lira_complete (Pallor Wastes trial, manifests at Vaelith fight)",
-			"description": "A weapon born from severed bonds, wielded to end what once was."
-		},
-		{
-			"id": "hunting_spear",
-			"name": "Hunting Spear",
-			"type": "spear",
-			"tier": 0,
-			"equippable_by": ["torren"],
-			"atk": 3,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Starting equipment",
-			"description": "A simple spear used for hunting game in the wilds."
-		},
-		{
-			"id": "iron_lance",
-			"name": "Iron Lance",
-			"type": "spear",
-			"tier": 1,
-			"equippable_by": ["torren"],
-			"atk": 8,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 250,
-			"sell_price": 125,
-			"acquired": "Thornmere shop",
-			"description": "A sturdy iron lance with a leaf-shaped blade."
-		},
-		{
-			"id": "spirit_bound_spear",
-			"name": "Spirit-Bound Spear",
-			"type": "spear",
-			"tier": 1,
-			"equippable_by": ["torren"],
-			"atk": 12,
-			"bonus_stats": {},
-			"element": "spirit",
-			"special": null,
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Fenmother boss reward",
-			"description": "A spear blessed by the Fenmother's departing spirit."
-		},
-		{
-			"id": "mythril_spear",
-			"name": "Mythril Spear",
-			"type": "spear",
-			"tier": 2,
-			"equippable_by": ["torren"],
-			"atk": 17,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 1000,
-			"sell_price": 500,
-			"acquired": "Act II shop",
-			"description": "A mythril-tipped spear that pierces through heavy armor."
-		},
-		{
-			"id": "thornwood_pike",
-			"name": "Thornwood Pike",
-			"type": "spear",
-			"tier": 2,
-			"equippable_by": ["torren"],
-			"atk": 20,
-			"bonus_stats": {},
-			"element": "earth",
-			"special": null,
-			"buy_price": 1800,
-			"sell_price": 900,
-			"acquired": "Thornmere Wilds chest",
-			"description": "A pike hewn from the ironwood thorns of Thornmere."
-		},
-		{
-			"id": "thornspear",
-			"name": "Thornspear",
-			"type": "spear",
-			"tier": "forged",
-			"equippable_by": ["torren"],
-			"atk": 30,
-			"bonus_stats": {"spd": 3},
-			"element": null,
-			"special": "Forged",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Lira forges (Act III)",
-			"description": "A spear forged from Thornmere wood and tempered steel."
-		},
-		{
-			"id": "wyrmbone_lance",
-			"name": "Wyrmbone Lance",
-			"type": "spear",
-			"tier": 3,
-			"equippable_by": ["torren"],
-			"atk": 35,
-			"bonus_stats": {},
-			"element": null,
-			"special": null,
-			"buy_price": 4500,
-			"sell_price": 2250,
-			"acquired": "Interlude shop",
-			"description": "A lance carved from the bones of an ancient wyrm."
-		},
-		{
-			"id": "ley_lance",
-			"name": "Ley Lance",
-			"type": "spear",
-			"tier": 4,
-			"equippable_by": ["torren"],
-			"atk": 45,
-			"bonus_stats": {},
-			"element": "ley",
-			"special": null,
-			"buy_price": 7500,
-			"sell_price": 3750,
-			"acquired": "Act III shop",
-			"description": "A lance infused with concentrated ley energy."
-		},
-		{
-			"id": "pallor_pike",
-			"name": "Pallor Pike",
-			"type": "spear",
-			"tier": 4,
-			"equippable_by": ["torren"],
-			"atk": 50,
-			"bonus_stats": {},
-			"element": "spirit",
-			"special": "+15% vs Pallor",
-			"buy_price": 9500,
-			"sell_price": 4750,
-			"acquired": "Pallor Wastes chest",
-			"description": "A spirit-wreathed pike that sears Pallor-tainted foes."
-		},
-		{
-			"id": "grey_cleaver_tainted",
-			"name": "Grey Cleaver (tainted)",
-			"type": "spear",
-			"tier": "cursed",
-			"equippable_by": ["torren"],
-			"atk": 15,
-			"bonus_stats": {"def": -10, "mdef": -10, "spd": -10},
-			"element": null,
-			"special": "Despair at battle start. Cursed weapon — purify through 100 Pallor encounters.",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "Grey Cleaver Unbound boss",
-			"description": "A cursed polearm tainted by the Grey, draining its wielder's will."
-		},
-		{
-			"id": "grey_cleaver_purified",
-			"name": "Grey Cleaver (purified)",
-			"type": "spear",
-			"tier": 5,
-			"equippable_by": ["torren"],
-			"atk": 55,
-			"bonus_stats": {},
-			"element": "spirit",
-			"special": "+50% vs Pallor, Despair immunity",
-			"buy_price": null,
-			"sell_price": null,
-			"acquired": "100 Pallor encounters",
-			"description": "The Grey Cleaver reborn, its curse lifted and spirit power unleashed."
-		}
-	]
+  "weapons": [
+    {
+      "id": "training_sword",
+      "name": "Training Sword",
+      "type": "sword",
+      "tier": 0,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 4,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A standard-issue Compact training blade."
+    },
+    {
+      "id": "arcanite_sword_proto",
+      "name": "Arcanite Sword (Prototype)",
+      "type": "sword",
+      "tier": 1,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 13,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment (Edren) — breaks after Ember Vein",
+      "description": "A confiscated Compact prototype. Arcanite-enhanced but unstable."
+    },
+    {
+      "id": "carradan_mining_pick",
+      "name": "Carradan Mining Pick",
+      "type": "sword",
+      "tier": 1,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 8,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": 100,
+      "acquired": "Ember Vein chest (Floor 1, cart-accessible room)",
+      "description": "A heavy Carradan mining pick repurposed as a weapon. Crude but effective."
+    },
+    {
+      "id": "valdris_blade",
+      "name": "Valdris Blade",
+      "type": "sword",
+      "tier": 1,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 10,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 300,
+      "sell_price": 150,
+      "acquired": "Valdris shop",
+      "description": "A reliable blade forged in the smithies of Valdris."
+    },
+    {
+      "id": "knights_edge",
+      "name": "Knight's Edge",
+      "type": "sword",
+      "tier": 1,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 12,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 500,
+      "sell_price": 250,
+      "acquired": "Ember Vein chest",
+      "description": "A keen-edged sword favored by Compact knights."
+    },
+    {
+      "id": "mythril_sword",
+      "name": "Mythril Sword",
+      "type": "sword",
+      "tier": 2,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 18,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 1200,
+      "sell_price": 600,
+      "acquired": "Act II shops",
+      "description": "A lightweight sword forged from mythril ore."
+    },
+    {
+      "id": "compact_saber",
+      "name": "Compact Saber",
+      "type": "sword",
+      "tier": 2,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 22,
+      "bonus_stats": {},
+      "element": null,
+      "special": "Stolen Compact design",
+      "buy_price": 2000,
+      "sell_price": 1000,
+      "acquired": "Ashmark chest",
+      "description": "A saber built from stolen Compact military blueprints."
+    },
+    {
+      "id": "arcanite_blade",
+      "name": "Arcanite Blade",
+      "type": "sword",
+      "tier": "forged",
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 35,
+      "bonus_stats": {
+        "mag": 5
+      },
+      "element": null,
+      "special": "Forged",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Lira forges (Interlude)",
+      "description": "A sword infused with arcanite, resonating with magical energy."
+    },
+    {
+      "id": "crystal_sword",
+      "name": "Crystal Sword",
+      "type": "sword",
+      "tier": 3,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 33,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 4000,
+      "sell_price": 2000,
+      "acquired": "Interlude shop",
+      "description": "A translucent blade carved from crystallized ley energy."
+    },
+    {
+      "id": "ley_forged_longsword",
+      "name": "Ley-Forged Longsword",
+      "type": "sword",
+      "tier": 4,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 48,
+      "bonus_stats": {},
+      "element": "ley",
+      "special": null,
+      "buy_price": 8000,
+      "sell_price": 4000,
+      "acquired": "Act III shop",
+      "description": "A longsword forged in raw ley energy, humming with power."
+    },
+    {
+      "id": "pallor_bane",
+      "name": "Pallor Bane",
+      "type": "sword",
+      "tier": 4,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 52,
+      "bonus_stats": {},
+      "element": "spirit",
+      "special": "+25% vs Pallor",
+      "buy_price": 10000,
+      "sell_price": 5000,
+      "acquired": "Pallor Wastes chest",
+      "description": "A spirit-imbued blade that burns Pallor creatures on contact."
+    },
+    {
+      "id": "edrens_oath",
+      "name": "Edren's Oath",
+      "type": "sword",
+      "tier": 5,
+      "equippable_by": [
+        "edren"
+      ],
+      "atk": 80,
+      "bonus_stats": {
+        "def": 10
+      },
+      "element": "spirit",
+      "special": "Auto-Protect 1 turn at battle start",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Edren sidequest",
+      "description": "The blade that seals Edren's unbreakable oath to protect the fallen."
+    },
+    {
+      "id": "recruits_claymore",
+      "name": "Recruit's Claymore",
+      "type": "greatsword",
+      "tier": 0,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 5,
+      "bonus_stats": {
+        "spd": -2
+      },
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A heavy claymore issued to new recruits."
+    },
+    {
+      "id": "commanders_blade",
+      "name": "Commander's Blade",
+      "type": "greatsword",
+      "tier": 1,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 12,
+      "bonus_stats": {
+        "spd": -2
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 400,
+      "sell_price": 200,
+      "acquired": "Valdris armory",
+      "description": "A broad blade befitting a Compact field commander."
+    },
+    {
+      "id": "war_cleaver",
+      "name": "War Cleaver",
+      "type": "greatsword",
+      "tier": 1,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 14,
+      "bonus_stats": {
+        "spd": -3
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 600,
+      "sell_price": 300,
+      "acquired": "Fenmother chest",
+      "description": "A brutal cleaving blade recovered from a battlefield."
+    },
+    {
+      "id": "ironbound_greatsword",
+      "name": "Ironbound Greatsword",
+      "type": "greatsword",
+      "tier": 2,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 22,
+      "bonus_stats": {
+        "spd": -3
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 1500,
+      "sell_price": 750,
+      "acquired": "Act II shop",
+      "description": "A massive greatsword reinforced with iron bands."
+    },
+    {
+      "id": "twilight_edge",
+      "name": "Twilight Edge",
+      "type": "greatsword",
+      "tier": 2,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 26,
+      "bonus_stats": {
+        "spd": -3
+      },
+      "element": null,
+      "special": "+10% crit rate",
+      "buy_price": 2500,
+      "sell_price": 1250,
+      "acquired": "Ley Line Depths chest",
+      "description": "A dark-hued greatsword that strikes with devastating precision."
+    },
+    {
+      "id": "dusk_reaver",
+      "name": "Dusk Reaver",
+      "type": "greatsword",
+      "tier": 3,
+      "equippable_by": [
+        "cael"
+      ],
+      "atk": 40,
+      "bonus_stats": {
+        "spd": -4
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 5000,
+      "sell_price": 2500,
+      "acquired": "Interlude shop (brief window)",
+      "description": "A fearsome greatsword available only briefly before Cael's departure."
+    },
+    {
+      "id": "scholars_rod",
+      "name": "Scholar's Rod",
+      "type": "staff",
+      "tier": 0,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 2,
+      "bonus_stats": {
+        "mag": 3
+      },
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A simple rod carried by Archive scholars."
+    },
+    {
+      "id": "ley_wand",
+      "name": "Ley Wand",
+      "type": "staff",
+      "tier": 1,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 6,
+      "bonus_stats": {
+        "mag": 5
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 250,
+      "sell_price": 125,
+      "acquired": "Valdris shop",
+      "description": "A wand attuned to ambient ley energy."
+    },
+    {
+      "id": "glyph_staff",
+      "name": "Glyph Staff",
+      "type": "staff",
+      "tier": 1,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 8,
+      "bonus_stats": {
+        "mag": 7
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 500,
+      "sell_price": 250,
+      "acquired": "Archive of Ages chest",
+      "description": "A staff inscribed with ancient glyphs of power."
+    },
+    {
+      "id": "mythril_staff",
+      "name": "Mythril Staff",
+      "type": "staff",
+      "tier": 2,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 12,
+      "bonus_stats": {
+        "mag": 10
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 1000,
+      "sell_price": 500,
+      "acquired": "Act II shop",
+      "description": "A mythril staff that amplifies the wielder's magical focus."
+    },
+    {
+      "id": "runic_focus",
+      "name": "Runic Focus",
+      "type": "staff",
+      "tier": 2,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 10,
+      "bonus_stats": {
+        "mag": 12
+      },
+      "element": "ley",
+      "special": "+5% spell crit",
+      "buy_price": 1800,
+      "sell_price": 900,
+      "acquired": "Ley Line Depths chest",
+      "description": "A staff etched with runic circuits that channel ley magic."
+    },
+    {
+      "id": "resonance_rod",
+      "name": "Resonance Rod",
+      "type": "staff",
+      "tier": "forged",
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 15,
+      "bonus_stats": {
+        "mag": 15
+      },
+      "element": null,
+      "special": "Forged",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Lira forges (Act III)",
+      "description": "A rod that hums in resonance with the wielder's magical frequency."
+    },
+    {
+      "id": "arcane_conduit",
+      "name": "Arcane Conduit",
+      "type": "staff",
+      "tier": 3,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 18,
+      "bonus_stats": {
+        "mag": 16
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 3500,
+      "sell_price": 1750,
+      "acquired": "Interlude shop",
+      "description": "A crystalline staff that serves as a direct conduit for arcane power."
+    },
+    {
+      "id": "ley_conduit",
+      "name": "Ley Conduit",
+      "type": "staff",
+      "tier": 4,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 25,
+      "bonus_stats": {
+        "mag": 18
+      },
+      "element": "ley",
+      "special": null,
+      "buy_price": 7000,
+      "sell_price": 3500,
+      "acquired": "Act III shop",
+      "description": "A staff that draws power directly from the ley lines themselves."
+    },
+    {
+      "id": "archive_staff",
+      "name": "Archive Staff",
+      "type": "staff",
+      "tier": 4,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 22,
+      "bonus_stats": {
+        "mag": 20
+      },
+      "element": null,
+      "special": "+10% healing",
+      "buy_price": 9000,
+      "sell_price": 4500,
+      "acquired": "Dry Well chest",
+      "description": "An ancient staff from the Archive's deepest vaults, attuned to restoration."
+    },
+    {
+      "id": "marens_requiem",
+      "name": "Maren's Requiem",
+      "type": "staff",
+      "tier": 5,
+      "equippable_by": [
+        "maren"
+      ],
+      "atk": 40,
+      "bonus_stats": {
+        "mag": 25
+      },
+      "element": "ley",
+      "special": "MP cost -10%",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Crafted from Pallor Core",
+      "description": "A requiem given form, channeling Maren's grief into boundless magic."
+    },
+    {
+      "id": "street_knife",
+      "name": "Street Knife",
+      "type": "dagger",
+      "tier": 0,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 3,
+      "bonus_stats": {
+        "spd": 1
+      },
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A worn knife from the back alleys of Bellhaven."
+    },
+    {
+      "id": "stiletto",
+      "name": "Stiletto",
+      "type": "dagger",
+      "tier": 1,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 8,
+      "bonus_stats": {
+        "spd": 2
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 250,
+      "sell_price": 125,
+      "acquired": "Bellhaven shop",
+      "description": "A slender thrusting blade designed for swift strikes."
+    },
+    {
+      "id": "pickpockets_blade",
+      "name": "Pickpocket's Blade",
+      "type": "dagger",
+      "tier": 1,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 7,
+      "bonus_stats": {
+        "lck": 2
+      },
+      "element": null,
+      "special": "Steal rate +10%",
+      "buy_price": 400,
+      "sell_price": 200,
+      "acquired": "Sable sidequest",
+      "description": "A blade favored by Bellhaven's light-fingered professionals."
+    },
+    {
+      "id": "mythril_dagger",
+      "name": "Mythril Dagger",
+      "type": "dagger",
+      "tier": 2,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 15,
+      "bonus_stats": {
+        "spd": 3
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 1000,
+      "sell_price": 500,
+      "acquired": "Act II shop",
+      "description": "A featherweight mythril dagger that strikes before the eye can follow."
+    },
+    {
+      "id": "trick_blade",
+      "name": "Trick Blade",
+      "type": "dagger",
+      "tier": 2,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 14,
+      "bonus_stats": {
+        "lck": 3
+      },
+      "element": null,
+      "special": "+5% crit rate",
+      "buy_price": 1500,
+      "sell_price": 750,
+      "acquired": "Bellhaven Tunnels chest",
+      "description": "A cleverly weighted blade that finds weak points with uncanny luck."
+    },
+    {
+      "id": "shadowsteel_knife",
+      "name": "Shadowsteel Knife",
+      "type": "dagger",
+      "tier": "forged",
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 28,
+      "bonus_stats": {
+        "spd": 4,
+        "lck": 3
+      },
+      "element": null,
+      "special": "Forged",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Lira forges (Act III)",
+      "description": "A knife forged from shadowsteel, nearly invisible in dim light."
+    },
+    {
+      "id": "whisper_edge",
+      "name": "Whisper Edge",
+      "type": "dagger",
+      "tier": 3,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 32,
+      "bonus_stats": {
+        "spd": 5
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 4500,
+      "sell_price": 2250,
+      "acquired": "Interlude shop",
+      "description": "A blade so sharp its cuts arrive before the sound of the swing."
+    },
+    {
+      "id": "twilight_fang",
+      "name": "Twilight Fang",
+      "type": "dagger",
+      "tier": 4,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 42,
+      "bonus_stats": {
+        "lck": 4
+      },
+      "element": null,
+      "special": "10% Poison on hit",
+      "buy_price": 8000,
+      "sell_price": 4000,
+      "acquired": "Act III shop",
+      "description": "A venomous fang-shaped dagger that poisons with each cut."
+    },
+    {
+      "id": "shade_razor",
+      "name": "Shade Razor",
+      "type": "dagger",
+      "tier": 4,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 48,
+      "bonus_stats": {
+        "spd": 6
+      },
+      "element": "void",
+      "special": null,
+      "buy_price": 10000,
+      "sell_price": 5000,
+      "acquired": "Convergence chest",
+      "description": "A razor-thin blade suffused with void energy from the Convergence."
+    },
+    {
+      "id": "sables_thread",
+      "name": "Sable's Thread",
+      "type": "dagger",
+      "tier": 5,
+      "equippable_by": [
+        "sable"
+      ],
+      "atk": 70,
+      "bonus_stats": {
+        "spd": 8,
+        "lck": 5
+      },
+      "element": null,
+      "special": "Steal rate +25%, auto-Haste 1 turn",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Sable sidequest",
+      "description": "The thread that binds Sable to her past and cuts her path forward."
+    },
+    {
+      "id": "maintenance_wrench",
+      "name": "Maintenance Wrench",
+      "type": "hammer",
+      "tier": 0,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 4,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A heavy wrench from Lira's engineering toolkit."
+    },
+    {
+      "id": "iron_mallet",
+      "name": "Iron Mallet",
+      "type": "hammer",
+      "tier": 1,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 10,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 300,
+      "sell_price": 150,
+      "acquired": "Corrund shop",
+      "description": "A solid iron mallet suitable for both repair work and combat."
+    },
+    {
+      "id": "pipe_hammer",
+      "name": "Pipe Hammer",
+      "type": "hammer",
+      "tier": 1,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 12,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 500,
+      "sell_price": 250,
+      "acquired": "Rail Tunnels chest",
+      "description": "A length of heavy pipe repurposed as a crushing weapon."
+    },
+    {
+      "id": "compact_sledge",
+      "name": "Compact Sledge",
+      "type": "hammer",
+      "tier": 2,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 20,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 1200,
+      "sell_price": 600,
+      "acquired": "Act II shop",
+      "description": "A compact sledgehammer built to Compact military specifications."
+    },
+    {
+      "id": "forge_hammer",
+      "name": "Forge Hammer",
+      "type": "hammer",
+      "tier": 2,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 24,
+      "bonus_stats": {},
+      "element": "flame",
+      "special": null,
+      "buy_price": 2200,
+      "sell_price": 1100,
+      "acquired": "Ashmark Factory chest",
+      "description": "A hammer still radiating heat from the Ashmark forges."
+    },
+    {
+      "id": "forgewright_maul",
+      "name": "Forgewright Maul",
+      "type": "hammer",
+      "tier": "forged",
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 40,
+      "bonus_stats": {},
+      "element": null,
+      "special": "Forged",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Lira forges (Interlude)",
+      "description": "A master-crafted maul that embodies Lira's forging expertise."
+    },
+    {
+      "id": "arcanite_maul",
+      "name": "Arcanite Maul",
+      "type": "hammer",
+      "tier": 3,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 38,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 5000,
+      "sell_price": 2500,
+      "acquired": "Interlude shop",
+      "description": "A maul forged from arcanite, devastatingly heavy."
+    },
+    {
+      "id": "piston_driver",
+      "name": "Piston Driver",
+      "type": "hammer",
+      "tier": 4,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 52,
+      "bonus_stats": {},
+      "element": null,
+      "special": "15% Stun chance",
+      "buy_price": 8500,
+      "sell_price": 4250,
+      "acquired": "Act III shop",
+      "description": "A pneumatic hammer that delivers bone-jarring impacts."
+    },
+    {
+      "id": "architects_hammer",
+      "name": "Architect's Hammer",
+      "type": "hammer",
+      "tier": 4,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 52,
+      "bonus_stats": {},
+      "element": "storm",
+      "special": "+25% vs Constructs",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "The Architect boss drop",
+      "description": "A hammer crackling with storm energy, taken from the Architect itself."
+    },
+    {
+      "id": "liras_masterwork",
+      "name": "Lira's Masterwork",
+      "type": "hammer",
+      "tier": 5,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 90,
+      "bonus_stats": {
+        "def": 5
+      },
+      "element": null,
+      "special": "Forgewright device uses +1",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Crafted from Grey Mist Essence + Arcanite Ingot",
+      "description": "Lira's ultimate creation, a hammer that defines the art of the forge."
+    },
+    {
+      "id": "caels_edge",
+      "name": "Cael's Edge",
+      "type": "hammer",
+      "tier": 5,
+      "equippable_by": [
+        "lira"
+      ],
+      "atk": 72,
+      "bonus_stats": {},
+      "element": "spirit",
+      "special": "Sever Bond: 1-use 3.0x physical attack ignoring DEF (Vaelith fight only)",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "trial_lira_complete (Pallor Wastes trial, manifests at Vaelith fight)",
+      "description": "A weapon born from severed bonds, wielded to end what once was."
+    },
+    {
+      "id": "hunting_spear",
+      "name": "Hunting Spear",
+      "type": "spear",
+      "tier": 0,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 3,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Starting equipment",
+      "description": "A simple spear used for hunting game in the wilds."
+    },
+    {
+      "id": "iron_lance",
+      "name": "Iron Lance",
+      "type": "spear",
+      "tier": 1,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 8,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 250,
+      "sell_price": 125,
+      "acquired": "Thornmere shop",
+      "description": "A sturdy iron lance with a leaf-shaped blade."
+    },
+    {
+      "id": "spirit_bound_spear",
+      "name": "Spirit-Bound Spear",
+      "type": "spear",
+      "tier": 1,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 12,
+      "bonus_stats": {},
+      "element": "spirit",
+      "special": null,
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Fenmother boss reward",
+      "description": "A spear blessed by the Fenmother's departing spirit."
+    },
+    {
+      "id": "mythril_spear",
+      "name": "Mythril Spear",
+      "type": "spear",
+      "tier": 2,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 17,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 1000,
+      "sell_price": 500,
+      "acquired": "Act II shop",
+      "description": "A mythril-tipped spear that pierces through heavy armor."
+    },
+    {
+      "id": "thornwood_pike",
+      "name": "Thornwood Pike",
+      "type": "spear",
+      "tier": 2,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 20,
+      "bonus_stats": {},
+      "element": "earth",
+      "special": null,
+      "buy_price": 1800,
+      "sell_price": 900,
+      "acquired": "Thornmere Wilds chest",
+      "description": "A pike hewn from the ironwood thorns of Thornmere."
+    },
+    {
+      "id": "thornspear",
+      "name": "Thornspear",
+      "type": "spear",
+      "tier": "forged",
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 30,
+      "bonus_stats": {
+        "spd": 3
+      },
+      "element": null,
+      "special": "Forged",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Lira forges (Act III)",
+      "description": "A spear forged from Thornmere wood and tempered steel."
+    },
+    {
+      "id": "wyrmbone_lance",
+      "name": "Wyrmbone Lance",
+      "type": "spear",
+      "tier": 3,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 35,
+      "bonus_stats": {},
+      "element": null,
+      "special": null,
+      "buy_price": 4500,
+      "sell_price": 2250,
+      "acquired": "Interlude shop",
+      "description": "A lance carved from the bones of an ancient wyrm."
+    },
+    {
+      "id": "ley_lance",
+      "name": "Ley Lance",
+      "type": "spear",
+      "tier": 4,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 45,
+      "bonus_stats": {},
+      "element": "ley",
+      "special": null,
+      "buy_price": 7500,
+      "sell_price": 3750,
+      "acquired": "Act III shop",
+      "description": "A lance infused with concentrated ley energy."
+    },
+    {
+      "id": "pallor_pike",
+      "name": "Pallor Pike",
+      "type": "spear",
+      "tier": 4,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 50,
+      "bonus_stats": {},
+      "element": "spirit",
+      "special": "+15% vs Pallor",
+      "buy_price": 9500,
+      "sell_price": 4750,
+      "acquired": "Pallor Wastes chest",
+      "description": "A spirit-wreathed pike that sears Pallor-tainted foes."
+    },
+    {
+      "id": "grey_cleaver_tainted",
+      "name": "Grey Cleaver (tainted)",
+      "type": "spear",
+      "tier": "cursed",
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 15,
+      "bonus_stats": {
+        "def": -10,
+        "mdef": -10,
+        "spd": -10
+      },
+      "element": null,
+      "special": "Despair at battle start. Cursed weapon — purify through 100 Pallor encounters.",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Grey Cleaver Unbound boss",
+      "description": "A cursed polearm tainted by the Grey, draining its wielder's will."
+    },
+    {
+      "id": "grey_cleaver_purified",
+      "name": "Grey Cleaver (purified)",
+      "type": "spear",
+      "tier": 5,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 55,
+      "bonus_stats": {},
+      "element": "spirit",
+      "special": "+50% vs Pallor, Despair immunity",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "100 Pallor encounters",
+      "description": "The Grey Cleaver reborn, its curse lifted and spirit power unleashed."
+    }
+  ]
 }

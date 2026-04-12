@@ -70,7 +70,7 @@ metadata/target_spawn = "from_overworld"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/EmberVeinEntrance"]
 shape = SubResource("Shape_ember")
 
-[node name="IrenmouthDocks" type="Area2D" parent="Transitions"]
+[node name="IronmouthDocks" type="Area2D" parent="Transitions"]
 position = Vector2(656, 464)
 collision_layer = 0
 collision_mask = 2
@@ -81,7 +81,7 @@ metadata/target_spawn = "from_overworld"
 metadata/required_flag = "vaelith_scene_complete"
 metadata/flag = "ironmouth_entered"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/IrenmouthDocks"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/IronmouthDocks"]
 shape = SubResource("Shape_ironmouth")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]

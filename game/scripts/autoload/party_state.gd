@@ -434,8 +434,8 @@ func remove_key_item(item_id: String) -> void:
 		inventory_changed.emit()
 
 
+## Removes Edren's temporary arcanite equipment after Ember Vein escape.
 func break_arcanite_gear() -> void:
-	## Removes Edren's temporary arcanite equipment after Ember Vein escape.
 	for i: int in range(members.size()):
 		var member: Dictionary = members[i]
 		if member.get("character_id", "") != "edren":

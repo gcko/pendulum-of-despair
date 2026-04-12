@@ -12,7 +12,7 @@ size = Vector2(32, 16)
 [sub_resource type="RectangleShape2D" id="Shape_exit"]
 size = Vector2(16, 96)
 
-[node name="IrenmouthDocks" type="Node2D"]
+[node name="IronmouthDocks" type="Node2D"]
 metadata/map_id = "towns/ironmouth_docks"
 metadata/location_name = "Ironmouth Docks"
 
@@ -88,6 +88,7 @@ collision_mask = 2
 monitoring = true
 monitorable = false
 metadata/dialogue_scene_id = "ironmouth_post_combat"
+metadata/flag = "ironmouth_post_combat_seen"
 metadata/required_flag = "carradan_ambush_survived"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/PostCombatDialogue"]
@@ -107,5 +108,11 @@ metadata/target_spawn = "from_ironmouth"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_exit")
 
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(32, 192)
+
 [node name="from_overworld" type="Marker2D" parent="."]
+position = Vector2(32, 192)
+
+[node name="from_ember_vein" type="Marker2D" parent="."]
 position = Vector2(32, 192)

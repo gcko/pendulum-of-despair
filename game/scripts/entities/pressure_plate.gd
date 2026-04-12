@@ -24,8 +24,10 @@ func initialize(p_plate_id: String, p_dungeon_id: String) -> void:
 	_update_visual()
 
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
 	if plate_id.is_empty() or is_pressed:
+		return
+	if not body is CharacterBody2D:
 		return
 	is_pressed = true
 	PartyState.set_puzzle_state(_dungeon_id, "%s_pressed" % plate_id, true)
