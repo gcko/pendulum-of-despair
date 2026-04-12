@@ -1003,16 +1003,17 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Integration tests (test_opening_sequence.gd, ~20 tests)
 - [x] Design spec: docs/superpowers/specs/2026-04-09-opening-sequence-b1-design.md
 
-**Phase B2: Ironmouth + F3 + Full Scenes (NOT STARTED)**
-- [ ] Ironmouth outpost map (.tscn with NPCs, Forgewright crates)
-- [ ] Ember Vein F3 (Ancient Ruin floor with geometric puzzles)
-- [ ] Full Scene 1 tutorial dialogue (all 1a-1e beats with combat)
-- [ ] Full Scene 3 Ironmouth escape (combat sequence with soldiers)
-- [ ] Opening credits visual sequence (title card, character names)
-- [ ] Dawn March forward-only walk mechanics
-- [ ] Arcanite gear preview (Edren's enhanced equipment that breaks)
-- [ ] Change new game start location from overworld to Ember Vein F1
-- [ ] Cael hidden stat spike (Pallor's first touch)
+**Phase B2: Ironmouth + F3 + Full Scenes (MOSTLY COMPLETE — 2026-04-12)**
+- [x] Ironmouth outpost map (linear escape corridor with 3 lootable crates, dialogue triggers, combat)
+- [x] Ember Vein F3 (Ancient Ruin floor: PressurePlate, EmberCrystal, PitfallZone puzzles, WaterZone hidden door, 3 chests, save point, encounters)
+- [x] Full Scene 1 tutorial dialogue (all 1a-1e beats across F1-F4, 6 new dialogue JSONs)
+- [x] Full Scene 3 Ironmouth escape (2x Compact Patrol + 1x Compact Scout, flee-disabled, Lira+Sable join)
+- [x] Arcanite gear preview (arcanite_sword_proto ATK 13, arcanite_mail_proto DEF 10, breaks after 1e escape)
+- [x] Change new game start location from overworld to Ember Vein F1
+- [x] Cael hidden stat spike (+10% physical damage via Pallor shimmer, permanent, hidden)
+- [ ] Opening credits visual sequence (title card, character names) — **deferred to gap 3.7 (Cutscene Overlay)**
+- [ ] Dawn March forward-only walk mechanics — **deferred to gap 3.7 (Cutscene Overlay)**
+- [ ] `opening_credits_seen` flag (39) — **deferred to gap 3.7 (Cutscene Overlay)**
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
@@ -1149,6 +1150,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-06 | 3.2 + 3.3 integration | Wired end-to-end encounter→battle→rewards loop. EncounterSystem static helper (5 methods), BattleManager drops in transition data, XP/level-up distribution, exploration danger counter + battle return handling. 1 new file, 4 modified, 2 test files. | — |
 | 2026-04-07 | 4.1 Ember Vein vertical slice | 3-floor dungeon (F1, F2, F4) with TileMapLayer pipeline, placeholder tileset, boss trigger zones, Vein Guardian 2-phase scripted AI, Ember Drake mini-boss, floor-specific encounters, PartyState battle integration, dialogue stubs, event flags, 9 treasure items. | — |
 | 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
+| 2026-04-12 | 4.4 Phase B2 | Ember Vein F3 (3 new puzzle entities, hidden door, encounters), Ironmouth escape (linear map, combat, Lira+Sable join), Scene 1 full dialogue (1a-1e, 6 new JSONs), Cael shimmer (+10% physical), Arcanite gear (break mechanic), start location → F1. Dawn March deferred to 3.7. ~20 new files, ~13 modified. | — |
 
 ---
 
@@ -1156,11 +1158,11 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 | Tier | Gaps | Status | Description |
 |------|------|--------|-------------|
-| 1: Data Foundation | 9 | 1/9 complete | JSON data from design docs |
-| 2: Entity Prefabs | 4 | 0/4 complete | .tscn prefabs with GDScript |
-| 3: Core Systems | 8 | 0/8 complete | Scenes and game systems |
-| 4: Content & Integration | 9 | 0/9 complete | Maps, content, polish |
-| **Total** | **30** | **1/30** | |
+| 1: Data Foundation | 9 | 9/9 complete | JSON data from design docs |
+| 2: Entity Prefabs | 4 | 4/4 complete | .tscn prefabs with GDScript |
+| 3: Core Systems | 8 | 4/8 complete (2 mostly) | Scenes and game systems |
+| 4: Content & Integration | 9 | 0/9 complete (4 mostly, 1 in progress) | Maps, content, polish |
+| **Total** | **30** | **17 complete, 6 mostly, 1 in progress, 6 not started** | |
 
 **Note on gap numbering:** This document uses D-prefixed IDs (D1.1, D1.2...)
 when disambiguation from `game-design-gaps.md` is needed. Within this
