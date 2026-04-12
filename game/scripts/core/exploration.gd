@@ -306,7 +306,8 @@ func _initialize_entities(map_node: Node2D) -> void:
 				continue
 			if child.get_meta("is_key_item", false):
 				_key_item_chest_ids[chest_id] = true
-			child.initialize(chest_id, item_id)
+			var qty: int = child.get_meta("quantity", 1)
+			child.initialize(chest_id, item_id, qty)
 		elif child.has_signal("save_point_activated"):
 			var sp_id: String = child.get_meta("save_point_id", "")
 			if sp_id.is_empty():
@@ -461,11 +462,11 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
-func _on_chest_opened(chest_id: String, item_id: String) -> void:
+func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
 	if _key_item_chest_ids.get(chest_id, false):
 		PartyState.add_key_item(item_id)
 	else:
-		PartyState.add_item(item_id, 1)
+		PartyState.add_item(item_id, quantity)
 	flash_location_name("Found %s!" % item_id)
 
 

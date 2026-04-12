@@ -147,7 +147,7 @@ func test_map_changed_signal() -> void:
 func test_chest_opened_adds_item_to_inventory() -> void:
 	var exp = _create_exploration()
 	var prev_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
-	exp._on_chest_opened("test_chest_99", "potion")
+	exp._on_chest_opened("test_chest_99", "potion", 1)
 	var new_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
 	assert_eq(new_qty, prev_qty + 1, "chest should add item to inventory")
 

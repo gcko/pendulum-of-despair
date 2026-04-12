@@ -36,6 +36,7 @@ var _fm_spawned_adds: bool = false
 var _wave_num: int = -1
 var _cleansing_origin_position: Variant = null
 var _encounter_source: String = ""
+var _ritual_meter_value: float = 100.0
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -67,6 +68,7 @@ func _ready() -> void:
 	_wave_num = data.get("wave_num", -1)
 	_cleansing_origin_position = data.get("cleansing_origin_position", null)
 	_encounter_source = data.get("encounter_source", "")
+	_ritual_meter_value = data.get("ritual_meter_value", 100.0)
 	if _encounter_source == "cleansing_wave":
 		_is_boss = true
 	var encounter_group: Array = data.get("encounter_group", [])
@@ -461,6 +463,8 @@ func _exit_battle(result: String) -> void:
 		t["cleansing_origin_position"] = _cleansing_origin_position
 	if not _encounter_source.is_empty():
 		t["encounter_source"] = _encounter_source
+	if _encounter_source == "cleansing_wave":
+		t["ritual_meter_value"] = _ritual_meter_value
 	_earned_drops = []
 	_earned_xp = 0
 	_earned_gold = 0

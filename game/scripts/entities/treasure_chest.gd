@@ -7,13 +7,16 @@ extends Area2D
 ## Usage: instance treasure_chest.tscn, call initialize("chest_01", "potion").
 
 ## Emitted when the chest is opened for the first time.
-signal chest_opened(chest_id: String, item_id: String)
+signal chest_opened(chest_id: String, item_id: String, quantity: int)
 
 ## Unique identifier for save tracking.
 var chest_id: String = ""
 
 ## Item ID to give when opened.
 var item_id: String = ""
+
+## How many of the item to give.
+var quantity: int = 1
 
 ## Whether this chest has already been opened.
 var is_opened: bool = false
@@ -23,12 +26,13 @@ var is_opened: bool = false
 
 
 ## Initialize the chest with an ID and item. Checks EventFlags for prior open.
-func initialize(p_chest_id: String, p_item_id: String) -> void:
+func initialize(p_chest_id: String, p_item_id: String, p_quantity: int = 1) -> void:
 	if p_chest_id == "" or p_item_id == "":
 		push_error("TreasureChest: empty chest_id or item_id")
 		return
 	chest_id = p_chest_id
 	item_id = p_item_id
+	quantity = maxi(1, p_quantity)
 	var flag_name: String = "chest_%s_opened" % chest_id
 	is_opened = EventFlags.get_flag(flag_name)
 	if is_opened:
@@ -47,7 +51,7 @@ func interact() -> void:
 	is_opened = true
 	EventFlags.set_flag("chest_%s_opened" % chest_id, true)
 	_set_open_sprite()
-	chest_opened.emit(chest_id, item_id)
+	chest_opened.emit(chest_id, item_id, quantity)
 
 
 func _set_open_sprite() -> void:
