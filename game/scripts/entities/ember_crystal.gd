@@ -18,7 +18,9 @@ func initialize(p_crystal_id: String, p_dungeon_id: String) -> void:
 		return
 	_crystal_id = p_crystal_id
 	_dungeon_id = p_dungeon_id
-	_is_cleared = PartyState.get_puzzle_state(_dungeon_id, "%s_cleared" % _crystal_id, false)
+	var key: String = "%s_cleared" % _crystal_id
+	var raw_state: Variant = PartyState.get_puzzle_state(_dungeon_id, key, false)
+	_is_cleared = raw_state as bool if raw_state is bool else false
 	_update_visual()
 
 

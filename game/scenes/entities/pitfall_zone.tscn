@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/entities/pitfall_zone.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/interactables/placeholder_pitfall.png" id="2_sprite"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pitfall"]
 size = Vector2(12, 12)
@@ -13,6 +14,7 @@ monitorable = false
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sprite")
 modulate = Color(0.6, 0.4, 0.2, 0.6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

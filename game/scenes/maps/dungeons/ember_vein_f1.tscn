@@ -81,6 +81,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "overworld"
 metadata/target_spawn = "from_ember_vein"
+metadata/required_flag = "ember_vein_1a_seen"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_transition")

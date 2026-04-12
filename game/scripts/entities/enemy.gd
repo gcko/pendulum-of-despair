@@ -60,7 +60,6 @@ var is_alive: bool = false
 
 ## Reference to child nodes.
 @onready var _sprite: Sprite2D = $Sprite2D
-@onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 
 ## Initialize the enemy with data from DataManager.
@@ -261,7 +260,11 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("Enemy: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var resource: Resource = load(sprite_path)
+	if not resource is Texture2D:
+		push_error("Enemy: Loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = resource as Texture2D
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture

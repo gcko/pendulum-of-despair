@@ -889,10 +889,7 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {
-        "common": {"item_id": null, "rate": 0},
-        "rare": {"item_id": null, "rate": 0}
-      },
+      "steal": {},
       "drop": {
         "item_id": "potion",
         "rate": 75
@@ -921,10 +918,7 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {
-        "common": {"item_id": null, "rate": 0},
-        "rare": {"item_id": null, "rate": 0}
-      },
+      "steal": {},
       "drop": {
         "item_id": "antidote",
         "rate": 50

@@ -20,7 +20,10 @@ func initialize(p_plate_id: String, p_dungeon_id: String) -> void:
 		return
 	_plate_id = p_plate_id
 	_dungeon_id = p_dungeon_id
-	_is_pressed = PartyState.get_puzzle_state(_dungeon_id, "%s_pressed" % _plate_id, false)
+	var raw_state: Variant = PartyState.get_puzzle_state(
+		_dungeon_id, "%s_pressed" % _plate_id, false
+	)
+	_is_pressed = raw_state as bool if raw_state is bool else false
 	_update_visual()
 
 

@@ -134,21 +134,21 @@ static func calculate_healing(mag: int, spell_power: int) -> int:
 ## Roll hit check. Returns true if attack hits.
 ## hit_rate = clamp(90 + (attacker_spd - target_spd) / 4, 20, 99)
 static func roll_hit(attacker_spd: int, target_spd: int) -> bool:
-	var hit_rate: int = clampi(90 + (attacker_spd - target_spd) / 4, 20, 99)
+	var hit_rate: int = clampi(90 + int((attacker_spd - target_spd) / 4), 20, 99)
 	return randi() % 100 < hit_rate
 
 
 ## Roll evasion check. Returns true if attack is evaded.
 ## evasion_rate = min(50, target_spd / 4)
 static func roll_evasion(target_spd: int) -> bool:
-	var evasion_rate: int = mini(50, target_spd / 4)
+	var evasion_rate: int = mini(50, int(target_spd / 4))
 	return randi() % 100 < evasion_rate
 
 
 ## Roll critical hit check. Physical only — magic never crits.
 ## crit_rate = min(50, attacker_lck / 4)
 static func roll_crit(attacker_lck: int) -> bool:
-	var crit_rate: int = mini(50, attacker_lck / 4)
+	var crit_rate: int = mini(50, int(attacker_lck / 4))
 	return randi() % 100 < crit_rate
 
 
@@ -164,7 +164,7 @@ static func roll_status(base_rate: int, caster_mag: int, target_mdef: int, targe
 	if randi() % 100 >= int(effective):
 		return false
 	# Stage 2: Magic Evasion
-	var meva_pct: int = mini(40, (target_mdef + target_spd) / 8)
+	var meva_pct: int = mini(40, int((target_mdef + target_spd) / 8))
 	return randi() % 100 >= meva_pct
 
 
