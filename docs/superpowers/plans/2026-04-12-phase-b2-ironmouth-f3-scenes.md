@@ -1298,7 +1298,7 @@ Modify `game/scenes/maps/overworld.tscn`:
 - Add transition trigger near Ember Vein exit area
 - `target_map = "towns/ironmouth_docks"`, `target_spawn = "from_overworld"`
 - `required_flag = "vaelith_scene_complete"` (gates entry to after Scene 2)
-- `flag = "ironmouth_entered"` (one-shot entry)
+- ~~`flag = "ironmouth_entered"`~~ (removed — transition handler doesn't set `flag` metadata)
 - Add `from_ironmouth` Position2D spawn point
 
 - [ ] **Step 4: Run tests**

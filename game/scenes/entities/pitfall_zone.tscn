@@ -12,9 +12,6 @@ monitoring = true
 monitorable = false
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.2, 0.2, 0.2, 0.6)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pitfall")
 

@@ -127,7 +127,7 @@ static func calculate_magic(
 ## Calculate healing per combat-formulas.md § Healing Resolution.
 ## No defense, no floor-of-1, no reduction.
 static func calculate_healing(mag: int, spell_power: int) -> int:
-	var raw: float = mag * spell_power * 0.8
+	var raw: float = maxi(0, mag) * maxi(0, spell_power) * 0.8
 	return mini(14999, int(raw * roll_variance()))
 
 

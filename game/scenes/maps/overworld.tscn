@@ -79,7 +79,6 @@ monitorable = false
 metadata/target_map = "towns/ironmouth_docks"
 metadata/target_spawn = "from_overworld"
 metadata/required_flag = "vaelith_scene_complete"
-metadata/flag = "ironmouth_entered"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/IronmouthDocks"]
 shape = SubResource("Shape_ironmouth")

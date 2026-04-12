@@ -16,7 +16,11 @@ func initialize(p_dungeon_id: String, p_conditions_str: String, p_zone_type: Str
 		push_error("WaterZone: empty dungeon_id")
 		return
 	_dungeon_id = p_dungeon_id
-	_zone_type = p_zone_type
+	if p_zone_type not in ["block", "reveal"]:
+		push_error("WaterZone: unknown zone_type '%s', defaulting to 'block'" % p_zone_type)
+		_zone_type = "block"
+	else:
+		_zone_type = p_zone_type
 	_conditions = []
 	for cond: String in p_conditions_str.split(","):
 		var trimmed: String = cond.strip_edges()

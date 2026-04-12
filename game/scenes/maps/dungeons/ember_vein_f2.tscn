@@ -15,7 +15,7 @@ size = Vector2(32, 32)
 
 [node name="EmberVeinF2" type="Node2D"]
 metadata/map_id = "dungeons/ember_vein_f2"
-metadata/floor_id = "2"
+metadata/floor_id = "1-2"
 metadata/location_name = "Ember Vein - Lower Mine"
 metadata/dungeon_id = "ember_vein"
 

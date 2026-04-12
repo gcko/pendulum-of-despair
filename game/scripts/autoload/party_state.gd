@@ -376,7 +376,7 @@ func optimize_equipment(character_id: String) -> void:
 			if val > best_val:
 				best = opt
 				best_val = val
-		equip_item(character_id, slot, best.get("id", ""))
+		equip_item(character_id, slot, best.get("equipment_id", ""))
 
 
 func get_consumables() -> Dictionary:
@@ -436,6 +436,7 @@ func remove_key_item(item_id: String) -> void:
 
 ## Removes Edren's temporary arcanite equipment after Ember Vein escape.
 func break_arcanite_gear() -> void:
+	var changed: bool = false
 	for i: int in range(members.size()):
 		var member: Dictionary = members[i]
 		if member.get("character_id", "") != "edren":
@@ -443,11 +444,14 @@ func break_arcanite_gear() -> void:
 		var equipment: Dictionary = member.get("equipment", {})
 		if equipment.get("weapon", "") == "arcanite_sword_proto":
 			equipment["weapon"] = ""
+			changed = true
 		if equipment.get("body", "") == "arcanite_mail_proto":
 			equipment["body"] = ""
+			changed = true
 		members[i]["equipment"] = equipment
 		break
-	inventory_changed.emit()
+	if changed:
+		inventory_changed.emit()
 
 
 func add_item(item_id: String, quantity: int) -> void:
