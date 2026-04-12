@@ -47,3 +47,27 @@ func test_pressure_plate_restores_state() -> void:
 	add_child_autoqfree(plate)
 	plate.initialize("test_plate", "ember_vein")
 	assert_true(plate.is_pressed, "Plate should restore pressed state from puzzle_state")
+
+
+func test_mine_water_vial_pickup_adds_key_item() -> void:
+	PartyState.initialize_new_game()
+	assert_false(
+		"mine_water_vial" in PartyState.get_key_items(), "Vial should not be in inventory at start"
+	)
+	PartyState.add_key_item("mine_water_vial")
+	assert_true(
+		"mine_water_vial" in PartyState.get_key_items(), "Vial should be in key_items after pickup"
+	)
+
+
+func test_mine_water_vial_consumed_by_crystal() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_key_item("mine_water_vial")
+	var crystal: Node = preload("res://scenes/entities/ember_crystal.tscn").instantiate()
+	add_child_autoqfree(crystal)
+	crystal.initialize("test_crystal", "ember_vein")
+	crystal.interact()
+	assert_false(
+		"mine_water_vial" in PartyState.get_key_items(), "Vial should be consumed after crystal use"
+	)
+	assert_true(crystal.is_cleared, "Crystal should be cleared")

@@ -43,6 +43,13 @@ metadata/chest_id = "ember_vein_f2_chest_3"
 metadata/item_id = "ember_ring"
 metadata/quantity = 1
 
+[node name="MineWaterVialChest" parent="Entities" instance=ExtResource("2_chest")]
+position = Vector2(300, 200)
+metadata/chest_id = "ember_vein_f2_vial"
+metadata/item_id = "mine_water_vial"
+metadata/is_key_item = true
+metadata/quantity = 1
+
 [node name="SavePoint1" parent="Entities" instance=ExtResource("3_save")]
 position = Vector2(80, 350)
 metadata/save_point_id = "ember_vein_f2_save"
@@ -107,3 +114,6 @@ position = Vector2(48, 48)
 
 [node name="from_ember_vein_f4" type="Marker2D" parent="."]
 position = Vector2(592, 432)
+
+[node name="from_pitfall" type="Marker2D" parent="."]
+position = Vector2(300, 80)
