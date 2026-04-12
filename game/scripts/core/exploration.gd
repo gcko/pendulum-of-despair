@@ -58,7 +58,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _transitioning:
+	if _transitioning or _in_auto_walk:
 		return
 	if event.is_action_pressed("ui_menu"):
 		if _player != null and not _player.is_input_enabled():
@@ -230,7 +230,7 @@ func _initialize_from_transition_data() -> void:
 				"drops": data.get("earned_drops", [])
 			}
 			PartyState.distribute_battle_rewards(rewards)
-			_distribute_crystal_xp(rewards.get("xp", 0))
+			distribute_crystal_xp(rewards.get("xp", 0))
 			var boss_flag: String = data.get("boss_flag", "")
 			if not boss_flag.is_empty():
 				EventFlags.set_flag(boss_flag, true)
@@ -569,6 +569,7 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
 		_auto_walk_tween.kill()
 		_auto_walk_tween = null
+		_in_auto_walk = false
 		if _player != null:
 			_player.set_input_enabled(true)
 	if _arrival_tween != null and _arrival_tween.is_valid():
@@ -711,10 +712,33 @@ func _caden_complete(caden: Node2D, completion_flag: String) -> void:
 		post_npc.visible = true
 
 
+# ---------- Public accessors for CleansingSequence ----------
+
+
+func get_player() -> Node2D:
+	return _player
+
+
+func get_current_map() -> Node2D:
+	return _current_map
+
+
+func reset_danger_counter() -> void:
+	_danger_counter = 0
+
+
+func set_transitioning(value: bool) -> void:
+	_transitioning = value
+
+
+func get_zone_damage_callback() -> Callable:
+	return _on_zone_damage_dealt
+
+
 # ---------- Crystal XP distribution ----------
 
 
-func _distribute_crystal_xp(xp_per_member: int) -> void:
+func distribute_crystal_xp(xp_per_member: int) -> void:
 	if xp_per_member <= 0:
 		return
 	var active: Array = PartyState.formation.get("active", [])
@@ -730,7 +754,7 @@ func _distribute_crystal_xp(xp_per_member: int) -> void:
 			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))
 
 
-func _get_cleansing() -> RefCounted:
+func _get_cleansing() -> RefCounted:  # Returns CleansingSequence
 	if _cleansing == null:
 		_cleansing = CleansingSequence.new(self)
 	return _cleansing

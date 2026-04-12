@@ -53,12 +53,12 @@ func start(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
-	_exploration._distribute_crystal_xp(rewards.get("xp", 0))
+	_exploration.distribute_crystal_xp(rewards.get("xp", 0))
 	EventFlags.set_flag("fenmother_boss_defeated", true)
-	_exploration._danger_counter = 0
+	_exploration.reset_danger_counter()
 	_exploration.load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
-	if _exploration._player != null:
-		_exploration._player.position = data.get("position", Vector2(80, 90))
+	if _exploration.get_player() != null:
+		_exploration.get_player().position = data.get("position", Vector2(80, 90))
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
@@ -89,14 +89,14 @@ func continue_sequence(data: Dictionary) -> void:
 		"drops": data.get("earned_drops", []),
 	}
 	PartyState.distribute_battle_rewards(rewards)
-	_exploration._distribute_crystal_xp(rewards.get("xp", 0))
-	_exploration._danger_counter = 0
+	_exploration.distribute_crystal_xp(rewards.get("xp", 0))
+	_exploration.reset_danger_counter()
 	_exploration.load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	_spawned_pool_count = 0
-	if _exploration._player != null:
+	if _exploration.get_player() != null:
 		var fallback: Vector2 = data.get("position", Vector2(80, 90))
 		var origin: Variant = data.get("cleansing_origin_position", null)
-		_exploration._player.position = origin if origin is Vector2 else fallback
+		_exploration.get_player().position = origin if origin is Vector2 else fallback
 	if _ritual_meter == null:
 		_ritual_meter = RITUAL_METER_SCENE.instantiate()
 		_exploration.add_child(_ritual_meter)
@@ -148,7 +148,7 @@ func _launch_wave(wave_num: int, data: Dictionary) -> void:
 	var fb: Vector2 = data.get("position", Vector2(80, 90))
 	var origin_pos: Vector2 = data.get("cleansing_origin_position", fb)
 	var player_pos: Vector2 = (
-		_exploration._player.position if _exploration._player != null else origin_pos
+		_exploration.get_player().position if _exploration.get_player() != null else origin_pos
 	)
 	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0
 	var transition: Dictionary = {
@@ -162,7 +162,7 @@ func _launch_wave(wave_num: int, data: Dictionary) -> void:
 		"cleansing_origin_position": origin_pos,
 		"ritual_meter_value": meter_val,
 	}
-	_exploration._transitioning = true
+	_exploration.set_transitioning(true)
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
 
@@ -200,9 +200,9 @@ func _on_dialogue_closed(state: GameManager.OverlayState, wave_num: int, data: D
 
 
 func _spawn_poison_pools() -> void:
-	if _exploration._current_map == null or _spawned_pool_count >= 4:
+	if _exploration.get_current_map() == null or _spawned_pool_count >= 4:
 		return
-	var entities: Node = _exploration._current_map.get_node_or_null("Entities")
+	var entities: Node = _exploration.get_current_map().get_node_or_null("Entities")
 	if entities == null:
 		return
 	var count: int = randi_range(1, 2)
@@ -214,13 +214,15 @@ func _spawn_poison_pools() -> void:
 		pool.position = pos
 		entities.add_child(pool)
 		pool.initialize("cleansing_pool_%d" % _spawned_pool_count, 10, 1.0, "")
-		pool.zone_damage_dealt.connect(_exploration._on_zone_damage_dealt)
+		pool.zone_damage_dealt.connect(_exploration.get_zone_damage_callback())
 		_spawned_pool_count += 1
 
 
 func _random_arena_position() -> Vector2:
 	var player_pos: Vector2 = (
-		_exploration._player.position if _exploration._player != null else BOSS_ARENA_CENTER
+		_exploration.get_player().position
+		if _exploration.get_player() != null
+		else BOSS_ARENA_CENTER
 	)
 	var pos: Vector2 = BOSS_ARENA_CENTER
 	for _attempt: int in range(10):
