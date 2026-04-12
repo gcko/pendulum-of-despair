@@ -450,6 +450,12 @@ func break_arcanite_gear() -> void:
 			changed = true
 		members[i]["equipment"] = equipment
 		break
+	# Also purge from owned_equipment in case player unequipped them
+	for proto_id: String in ["arcanite_sword_proto", "arcanite_mail_proto"]:
+		for i: int in range(owned_equipment.size() - 1, -1, -1):
+			if owned_equipment[i].get("equipment_id", "") == proto_id:
+				owned_equipment.remove_at(i)
+				changed = true
 	if changed:
 		equipment_changed.emit("edren")
 
