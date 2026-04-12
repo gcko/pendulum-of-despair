@@ -28,7 +28,8 @@ static func calculate_physical(
 	weapon_bypasses_row: bool,
 	reduction_sources: Array,
 	is_elemental: bool,
-	element_mod: float
+	element_mod: float,
+	attacker_id: String = ""
 ) -> int:
 	# Step 3-4: Base damage with floor
 	var raw: float = maxf(1.0, (atk * atk * ability_mult) / 6.0 - target_def)
@@ -39,6 +40,10 @@ static func calculate_physical(
 
 	# Step 6: Combat interaction modifiers
 	raw *= interaction_mult
+
+	# Cael's Pallor Shimmer: +10% physical damage (permanent, hidden)
+	if attacker_id == "cael":
+		raw *= 1.1
 
 	# Step 7: Variance
 	var result: float = raw * roll_variance()

@@ -45,6 +45,7 @@ static func execute_party_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
+	var character_id: String = member.get("character_data", {}).get("id", "")
 	var dmg: int = DamageCalc.calculate_physical(
 		atk,
 		1.0,
@@ -56,7 +57,8 @@ static func execute_party_attack(
 		false,
 		[],
 		false,
-		1.0
+		1.0,
+		character_id
 	)
 
 	enemy.take_damage(dmg)
