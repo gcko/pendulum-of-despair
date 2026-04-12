@@ -74,7 +74,7 @@ monitoring = true
 monitorable = false
 metadata/boss_id = "ironmouth_ambush"
 metadata/enemy_ids = ["compact_patrol", "compact_patrol", "compact_scout"]
-metadata/enemy_act = "bosses"
+metadata/enemy_act = "act_i"
 metadata/flag = "carradan_ambush_survived"
 metadata/required_flag = "ironmouth_sable_seen"
 

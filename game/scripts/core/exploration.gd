@@ -110,6 +110,9 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
 		return
+	var req_flag: String = area.get_meta("required_flag", "")
+	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
+		return
 	var eids: Variant = area.get_meta("enemy_ids", [])
 	var enemy_ids: Array = eids if eids is Array else []
 	if enemy_ids.is_empty():
