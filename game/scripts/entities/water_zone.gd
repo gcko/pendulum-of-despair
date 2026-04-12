@@ -26,9 +26,18 @@ func initialize(p_dungeon_id: String, p_conditions_str: String, p_zone_type: Str
 		if parts.size() < 2:
 			push_error("WaterZone: invalid condition format '%s'" % trimmed)
 			continue
-		var wheel_key: String = parts[0] + "_high"
-		var expected_high: bool = parts[1] == "high"
-		_conditions.append({"key": wheel_key, "expected_high": expected_high})
+		var suffix: String = parts[1]
+		if suffix == "high" or suffix == "low":
+			var wheel_key: String = parts[0] + "_high"
+			var expected_high: bool = suffix == "high"
+			_conditions.append({"key": wheel_key, "expected_high": expected_high})
+		elif suffix == "pressed" or suffix == "unpressed":
+			var plate_key: String = parts[0] + "_pressed"
+			var expected_pressed: bool = suffix == "pressed"
+			_conditions.append({"key": plate_key, "expected_high": expected_pressed})
+		else:
+			push_error("WaterZone: unknown suffix '%s' in condition '%s'" % [suffix, trimmed])
+			continue
 	refresh()
 
 

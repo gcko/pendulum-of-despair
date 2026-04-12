@@ -7,7 +7,7 @@ size = Vector2(6, 6)
 
 [node name="PitfallZone" type="Area2D"]
 collision_layer = 0
-collision_mask = 1
+collision_mask = 2
 monitoring = true
 monitorable = false
 script = ExtResource("1_script")

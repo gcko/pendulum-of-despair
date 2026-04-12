@@ -34,7 +34,7 @@ metadata/dungeon_id = "ember_vein"
 [node name="HiddenDoor1" parent="Entities" instance=ExtResource("5_waterzone")]
 position = Vector2(180, 260)
 metadata/dungeon_id = "ember_vein"
-metadata/active_when = "f3_plate_pressed"
+metadata/active_when = "f3_plate_unpressed"
 metadata/zone_type = "block"
 
 [node name="PitfallTrap1" parent="Entities" instance=ExtResource("6_pitfall")]

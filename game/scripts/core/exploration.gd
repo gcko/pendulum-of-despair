@@ -514,8 +514,10 @@ func _on_crystal_cleared(_crystal_id: String) -> void:
 
 
 func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
+	if _transitioning:
+		return
 	flash_location_name("The floor gives way!")
-	call_deferred("load_map", target_map_id, target_spawn)
+	_transition_to_map(target_map_id, target_spawn)
 
 
 func _on_spring_filled() -> void:

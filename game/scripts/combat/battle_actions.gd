@@ -117,6 +117,8 @@ static func execute_enemy_magic(
 	var target_spd: int = state.get_effective_stat(target_slot, "spd")
 	if not DamageCalc.roll_hit(spd, target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
+	if DamageCalc.roll_evasion(target_spd):
+		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	var reduction: Array = []
 	if dmg_mult < 1.0:

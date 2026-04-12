@@ -21,7 +21,7 @@ func initialize(p_target_map_id: String, p_target_spawn: String) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if _has_triggered or _target_map_id.is_empty():
 		return
-	if not body is CharacterBody2D:
+	if not body.is_in_group("player"):
 		return
 	_has_triggered = true
 	pitfall_triggered.emit(_target_map_id, _target_spawn)

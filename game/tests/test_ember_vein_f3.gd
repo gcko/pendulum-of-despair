@@ -11,6 +11,7 @@ func before_each() -> void:
 
 func _make_mock_body() -> CharacterBody2D:
 	var body: CharacterBody2D = CharacterBody2D.new()
+	body.add_to_group("player")
 	add_child_autoqfree(body)
 	return body
 
