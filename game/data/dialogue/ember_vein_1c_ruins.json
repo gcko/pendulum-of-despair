@@ -1,0 +1,27 @@
+{
+  "scene_id": "ember_vein_1c_ruins",
+  "entries": [
+    {
+      "id": "ember_vein_1c_001",
+      "speaker": "edren",
+      "lines": [
+        "This wasn't built by miners."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1c_002",
+      "speaker": "cael",
+      "lines": [
+        "This wasn't built by anyone we'd recognize."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "scene_id": "ember_vein_1a_bodies",
+  "entries": [
+    {
+      "id": "ember_vein_1a_001",
+      "speaker": "edren",
+      "lines": [
+        "Hold."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_002",
+      "speaker": "edren",
+      "lines": [
+        "No marks. No signs of a fight. They just... stopped."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_003",
+      "speaker": "cael",
+      "lines": [
+        "They didn't die fighting. They died feeling something."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_004",
+      "speaker": "edren",
+      "lines": [
+        "There'll be more."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_005",
+      "speaker": "cael",
+      "lines": [
+        "You say that like you've seen it before."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1a_006",
+      "speaker": "edren",
+      "lines": [
+        "I haven't. That's what worries me."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "scene_id": "ember_vein_1b_letter",
+  "entries": [
+    {
+      "id": "ember_vein_1b_001",
+      "speaker": "cael",
+      "lines": [
+        "This one was writing home."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1b_002",
+      "speaker": "cael",
+      "lines": [
+        "He didn't finish."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "head_down",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1b_003",
+      "speaker": "edren",
+      "lines": [
+        "They were trying to get out."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1b_004",
+      "speaker": "cael",
+      "lines": [
+        "Some of them. The ones by the Pendulum chamber weren't",
+        "trying to get anywhere. They just sat down and let it happen."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1b_005",
+      "speaker": "edren",
+      "lines": [
+        "\"The growths drink deep — even stale water wakes them",
+        "for a spell.\" Miners were using water on the ley crystals."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1b_006",
+      "speaker": "edren",
+      "lines": [
+        "Could be useful."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

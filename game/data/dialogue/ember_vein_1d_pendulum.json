@@ -1,0 +1,105 @@
+{
+  "scene_id": "ember_vein_1d_pendulum",
+  "entries": [
+    {
+      "id": "ember_vein_1d_001",
+      "speaker": "cael",
+      "lines": [
+        "Seven of them. Arranged like the mural."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_002",
+      "speaker": "edren",
+      "lines": [
+        "They arranged themselves. Look — no drag marks."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_003",
+      "speaker": "cael",
+      "lines": [
+        "They walked in, sat down, and gave up."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_004",
+      "speaker": "edren",
+      "lines": [
+        "We can't leave it here. If the Compact finds it—"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_005",
+      "speaker": "cael",
+      "lines": [
+        "Don't."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_006",
+      "speaker": "cael",
+      "lines": [
+        "Something about this place. I can feel it."
+      ],
+      "condition": null,
+      "animations": [
+        {
+          "who": "cael",
+          "anim": "bubble_exclaim",
+          "when": "before_line_0"
+        }
+      ],
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_007",
+      "speaker": "edren",
+      "lines": [
+        "We don't have a choice. We report to Valdris.",
+        "Whatever this is, the court needs to know."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "ember_vein_1d_008",
+      "speaker": "cael",
+      "lines": [
+        "Something heard that."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": [
+        {
+          "line": 0,
+          "id": "ley_surge"
+        }
+      ]
+    }
+  ]
+}
