@@ -60,6 +60,9 @@ func _on_tick() -> void:
 
 
 func _apply_tick() -> void:
+	if zone_id.is_empty():
+		push_error("DamageZone: _apply_tick called before initialize")
+		return
 	var active: Array[Dictionary] = PartyState.get_active_party()
 	var total: int = 0
 	for member: Dictionary in active:

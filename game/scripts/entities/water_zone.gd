@@ -9,14 +9,14 @@ var _zone_type: String = "block"
 @onready var _collision: CollisionShape2D = $CollisionShape2D
 
 
-func initialize(dungeon_id: String, conditions_str: String, zone_type: String) -> void:
-	if dungeon_id.is_empty():
+func initialize(p_dungeon_id: String, p_conditions_str: String, p_zone_type: String) -> void:
+	if p_dungeon_id.is_empty():
 		push_error("WaterZone: empty dungeon_id")
 		return
-	_dungeon_id = dungeon_id
-	_zone_type = zone_type
+	_dungeon_id = p_dungeon_id
+	_zone_type = p_zone_type
 	_conditions = []
-	for cond: String in conditions_str.split(","):
+	for cond: String in p_conditions_str.split(","):
 		var trimmed: String = cond.strip_edges()
 		if trimmed.is_empty():
 			continue

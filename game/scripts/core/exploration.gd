@@ -167,7 +167,6 @@ func _trigger_boss_encounter(area: Area2D) -> void:
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
-	PartyState.is_at_save_point = false
 	var map_path: String = MAP_BASE_PATH + map_id + ".tscn"
 	if not ResourceLoader.exists(map_path):
 		push_error("Exploration: Map not found: %s" % map_path)
@@ -176,6 +175,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if not map_resource is PackedScene:
 		push_error("Exploration: Invalid map resource: %s" % map_path)
 		return
+	PartyState.is_at_save_point = false
 	if _current_map != null:
 		_disconnect_entity_signals(_current_map)
 		_current_map.queue_free()
@@ -668,6 +668,8 @@ func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
 
 func _run_caden_binding(completion_flag: String) -> void:
 	await get_tree().create_timer(0.5).timeout
+	if not is_inside_tree():
+		return
 	var spawn: Node2D = _current_map.get_node_or_null("CadenSpawnPoint")
 	var center: Vector2 = Vector2(128, 80)
 	var start_pos: Vector2 = spawn.position if spawn != null else Vector2(288, 80)

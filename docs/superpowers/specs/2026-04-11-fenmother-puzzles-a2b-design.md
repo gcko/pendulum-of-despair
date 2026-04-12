@@ -257,21 +257,21 @@ Two new entries in `game/data/items/key_items.json`:
     "id": "spirit_vessel",
     "name": "Spirit Vessel",
     "category": "key_item",
-    "subcategory": "story_item",
+    "subcategory": "dungeon_access",
     "description": "An empty fenwood bowl lined with thin ley-crystal. It could hold sacred water.",
     "auto_use": false,
     "acquired_from": "Fenmother's Hollow F1 hidden alcove",
-    "plot_effect": "Can be filled at Pure Spring"
+    "quest_link": "fenmothers_hollow_spirit_plant"
 },
 {
     "id": "spirit_vessel_filled",
     "name": "Spirit Vessel (Filled)",
     "category": "key_item",
-    "subcategory": "story_item",
+    "subcategory": "dungeon_access",
     "description": "A fenwood bowl brimming with pure spring water. It glows faintly with spiritual energy.",
     "auto_use": false,
-    "acquired_from": "Pure Spring (Fenmother's Hollow F1)",
-    "plot_effect": "Restores spirit-plant on F2"
+    "acquired_from": "Pure Spring in Fenmother's Hollow F1",
+    "quest_link": "fenmothers_hollow_spirit_plant"
 }
 ```
 

@@ -48,7 +48,7 @@ metadata/quantity = 1
 position = Vector2(320, 400)
 metadata/chest_id = "fenmothers_hollow_spirit_tonic"
 metadata/item_id = "spirit_tonic"
-metadata/quantity = 1
+metadata/quantity = 3
 
 [node name="WaterWheel1" parent="Entities" instance=ExtResource("4_water_wheel")]
 position = Vector2(192, 256)
