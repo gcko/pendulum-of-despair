@@ -310,14 +310,11 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 		action = BattleAI.get_drowned_sentinel_action(_state, _turn_counter)
 	elif _is_boss and enemy.enemy_data.get("id", "") == "corrupted_fenmother":
 		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		var active_adds: int = (
-			_enemies
-			. filter(
-				func(e: Node) -> bool:
-					return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
-			)
-			. size()
+		var alive_spawns: Array = _enemies.filter(
+			func(e: Node) -> bool:
+				return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
 		)
+		var active_adds: int = alive_spawns.size()
 		action = BattleAI.get_corrupted_fenmother_action(
 			_state,
 			_turn_counter,
