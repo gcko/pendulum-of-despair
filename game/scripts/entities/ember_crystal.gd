@@ -4,8 +4,8 @@ extends StaticBody2D
 signal crystal_cleared(crystal_id: String)
 signal interaction_message(text: String)
 
-var crystal_id: String = ""
-var is_cleared: bool = false
+var _crystal_id: String = ""
+var _is_cleared: bool = false
 var _dungeon_id: String = ""
 
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -16,16 +16,16 @@ func initialize(p_crystal_id: String, p_dungeon_id: String) -> void:
 	if p_crystal_id.is_empty() or p_dungeon_id.is_empty():
 		push_error("EmberCrystal: empty crystal_id or dungeon_id")
 		return
-	crystal_id = p_crystal_id
+	_crystal_id = p_crystal_id
 	_dungeon_id = p_dungeon_id
-	is_cleared = PartyState.get_puzzle_state(_dungeon_id, "%s_cleared" % crystal_id, false)
+	_is_cleared = PartyState.get_puzzle_state(_dungeon_id, "%s_cleared" % _crystal_id, false)
 	_update_visual()
 
 
 func interact() -> void:
-	if crystal_id.is_empty():
+	if _crystal_id.is_empty():
 		return
-	if is_cleared:
+	if _is_cleared:
 		interaction_message.emit("The crystal glows warmly, its fronds unfurled.")
 		return
 	var key_items: Array = PartyState.get_key_items()
@@ -35,14 +35,14 @@ func interact() -> void:
 		)
 		return
 	PartyState.remove_key_item("mine_water_vial")
-	is_cleared = true
-	PartyState.set_puzzle_state(_dungeon_id, "%s_cleared" % crystal_id, true)
+	_is_cleared = true
+	PartyState.set_puzzle_state(_dungeon_id, "%s_cleared" % _crystal_id, true)
 	_update_visual()
-	crystal_cleared.emit(crystal_id)
+	crystal_cleared.emit(_crystal_id)
 
 
 func _update_visual() -> void:
 	if _sprite != null:
-		_sprite.modulate = Color("#ffaa44") if is_cleared else Color("#664400")
+		_sprite.modulate = Color("#ffaa44") if _is_cleared else Color("#664400")
 	if _collision != null:
-		_collision.disabled = is_cleared
+		_collision.disabled = _is_cleared

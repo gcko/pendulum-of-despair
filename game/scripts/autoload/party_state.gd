@@ -451,7 +451,7 @@ func break_arcanite_gear() -> void:
 		members[i]["equipment"] = equipment
 		break
 	if changed:
-		inventory_changed.emit()
+		equipment_changed.emit("edren")
 
 
 func add_item(item_id: String, quantity: int) -> void:

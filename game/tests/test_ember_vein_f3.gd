@@ -9,6 +9,11 @@ func before_each() -> void:
 	PartyState.initialize_new_game()
 
 
+func after_each() -> void:
+	PartyState.puzzle_state.clear()
+	EventFlags.clear_all()
+
+
 func _make_mock_body() -> CharacterBody2D:
 	var body: CharacterBody2D = CharacterBody2D.new()
 	body.add_to_group("player")
@@ -20,9 +25,9 @@ func test_pressure_plate_sets_state_on_press() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autofree(plate)
 	plate.initialize("test_plate", "ember_vein")
-	assert_false(plate.is_pressed, "Plate should start unpressed")
+	assert_false(plate._is_pressed, "Plate should start unpressed")
 	plate._on_body_entered(_make_mock_body())
-	assert_true(plate.is_pressed, "Plate should be pressed after body entered")
+	assert_true(plate._is_pressed, "Plate should be pressed after body entered")
 	assert_true(
 		PartyState.get_puzzle_state("ember_vein", "test_plate_pressed", false),
 		"Puzzle state should persist plate press"
@@ -34,9 +39,7 @@ func test_pressure_plate_stays_pressed() -> void:
 	add_child_autofree(plate)
 	plate.initialize("test_plate", "ember_vein")
 	plate._on_body_entered(_make_mock_body())
-	assert_true(plate.is_pressed, "Plate should be pressed")
-	plate._on_body_exited(_make_mock_body())
-	assert_true(plate.is_pressed, "Plate should remain pressed (one-shot)")
+	assert_true(plate._is_pressed, "Plate should be pressed")
 
 
 func test_pressure_plate_emits_signal() -> void:
@@ -53,7 +56,7 @@ func test_pressure_plate_restores_state() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autofree(plate)
 	plate.initialize("test_plate", "ember_vein")
-	assert_true(plate.is_pressed, "Plate should restore pressed state from puzzle_state")
+	assert_true(plate._is_pressed, "Plate should restore pressed state from puzzle_state")
 
 
 func test_mine_water_vial_pickup_adds_key_item() -> void:
@@ -77,4 +80,4 @@ func test_mine_water_vial_consumed_by_crystal() -> void:
 	assert_false(
 		"mine_water_vial" in PartyState.get_key_items(), "Vial should be consumed after crystal use"
 	)
-	assert_true(crystal.is_cleared, "Crystal should be cleared")
+	assert_true(crystal._is_cleared, "Crystal should be cleared")

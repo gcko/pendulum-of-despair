@@ -15,6 +15,7 @@ size = Vector2(16, 96)
 [node name="IronmouthDocks" type="Node2D"]
 metadata/map_id = "towns/ironmouth_docks"
 metadata/location_name = "Ironmouth Docks"
+metadata/encounter_enabled = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("1_tileset")

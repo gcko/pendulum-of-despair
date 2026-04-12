@@ -27,51 +27,51 @@ tile_map_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5,
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="PressurePlate1" parent="Entities" instance=ExtResource("4_plate")]
-position = Vector2(200, 300)
+position = Vector2(208, 304)
 metadata/plate_id = "f3_plate"
 metadata/dungeon_id = "ember_vein"
 
 [node name="HiddenDoor1" parent="Entities" instance=ExtResource("5_waterzone")]
-position = Vector2(180, 260)
+position = Vector2(176, 256)
 metadata/dungeon_id = "ember_vein"
 metadata/active_when = "f3_plate_unpressed"
 metadata/zone_type = "block"
 
 [node name="PitfallTrap1" parent="Entities" instance=ExtResource("6_pitfall")]
-position = Vector2(450, 280)
+position = Vector2(448, 288)
 metadata/target_map_id = "dungeons/ember_vein_f2"
 metadata/target_spawn = "from_pitfall"
 
 [node name="EmberCrystal1" parent="Entities" instance=ExtResource("7_crystal")]
-position = Vector2(350, 400)
+position = Vector2(352, 400)
 metadata/crystal_id = "f3_crystal"
 metadata/dungeon_id = "ember_vein"
 
 [node name="ChestPotion" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(300, 120)
+position = Vector2(304, 128)
 metadata/chest_id = "ember_vein_f3_potion"
 metadata/item_id = "potion"
 metadata/quantity = 2
 
 [node name="ChestEmberShard" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(120, 320)
+position = Vector2(128, 320)
 metadata/chest_id = "ember_vein_f3_shard"
 metadata/item_id = "ember_shard"
 metadata/is_equipment = true
 metadata/quantity = 1
 
 [node name="ChestPhoenixDown" parent="Entities" instance=ExtResource("2_chest")]
-position = Vector2(350, 500)
+position = Vector2(352, 496)
 metadata/chest_id = "ember_vein_f3_phoenix"
 metadata/item_id = "phoenix_down"
 metadata/quantity = 1
 
 [node name="SavePoint1" parent="Entities" instance=ExtResource("3_save")]
-position = Vector2(150, 460)
+position = Vector2(160, 464)
 metadata/save_point_id = "ember_vein_f3_save"
 
 [node name="RuinsEntryDialogue" type="Area2D" parent="Entities"]
-position = Vector2(350, 60)
+position = Vector2(352, 64)
 collision_layer = 0
 collision_mask = 2
 monitoring = true
@@ -83,7 +83,7 @@ metadata/flag = "ember_vein_1c_seen"
 shape = SubResource("Shape_trigger")
 
 [node name="MuralsDialogue" type="Area2D" parent="Entities"]
-position = Vector2(350, 380)
+position = Vector2(352, 384)
 collision_layer = 0
 collision_mask = 2
 monitoring = true

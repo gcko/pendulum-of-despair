@@ -101,4 +101,4 @@ func test_break_arcanite_gear_emits_signal() -> void:
 	PartyState.initialize_new_game()
 	watch_signals(PartyState)
 	PartyState.break_arcanite_gear()
-	assert_signal_emitted(PartyState, "inventory_changed")
+	assert_signal_emitted(PartyState, "equipment_changed")

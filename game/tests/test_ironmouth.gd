@@ -7,6 +7,11 @@ func before_each() -> void:
 	EventFlags.clear_all()
 
 
+func after_each() -> void:
+	PartyState.puzzle_state.clear()
+	EventFlags.clear_all()
+
+
 func test_ironmouth_lira_trigger_sets_flag() -> void:
 	EventFlags.set_flag("ironmouth_lira_seen", true)
 	assert_true(EventFlags.get_flag("ironmouth_lira_seen"))

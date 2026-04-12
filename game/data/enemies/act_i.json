@@ -890,8 +890,8 @@
       "absorb": [],
       "status_immunities": [],
       "steal": {
-        "common": null,
-        "rare": null
+        "common": {"item_id": null, "rate": 0},
+        "rare": {"item_id": null, "rate": 0}
       },
       "drop": {
         "item_id": "potion",
@@ -922,8 +922,8 @@
       "absorb": [],
       "status_immunities": [],
       "steal": {
-        "common": null,
-        "rare": null
+        "common": {"item_id": null, "rate": 0},
+        "rare": {"item_id": null, "rate": 0}
       },
       "drop": {
         "item_id": "antidote",

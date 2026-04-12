@@ -617,7 +617,7 @@ func _get_party_avg_level() -> int:
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
 		total += m.get("level", 1) as int
-	return maxi(1, int(total / PartyState.members.size()))
+	return maxi(1, floori(float(total) / float(PartyState.members.size())))
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
@@ -822,7 +822,7 @@ func distribute_crystal_xp(xp_per_member: int) -> void:
 			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))
 
 
-func _get_cleansing() -> RefCounted:  # Returns CleansingSequence
+func _get_cleansing() -> CleansingSequence:
 	if _cleansing == null:
 		_cleansing = CleansingSequence.new(self)
 	return _cleansing
