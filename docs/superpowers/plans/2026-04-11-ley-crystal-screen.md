@@ -351,29 +351,33 @@ add crystal XP distribution:
 ```
 
 Also add the same block after the two cleansing sequence reward distributions
-(`_start_cleansing_sequence` around line 509, `_continue_cleansing_sequence`
-around line 541). Or better: extract a helper `_distribute_crystal_xp(xp: int)`
-and call it from all three reward paths.
+(now in `cleansing_sequence.gd` via `start()` and `continue_sequence()`).
+The helper `distribute_crystal_xp(xp: int)` is a public method on
+`exploration.gd` and called from all three reward paths.
 
 - [ ] **Step 2: Extract helper and wire all reward paths**
 
-Add helper method:
+**DONE** -- `distribute_crystal_xp` is now a public method on `exploration.gd`.
+`CleansingSequence` calls it via `_exploration.distribute_crystal_xp(...)`.
 
 ```gdscript
-func _distribute_crystal_xp(xp_per_member: int) -> void:
+func distribute_crystal_xp(xp_per_member: int) -> void:
 	if xp_per_member <= 0:
 		return
 	var active: Array = PartyState.formation.get("active", [])
 	for idx: Variant in active:
-		if not (idx is int) or (idx as int) >= PartyState.members.size():
+		if not (idx is int or idx is float):
 			continue
-		var m: Dictionary = PartyState.members[idx as int]
+		var member_index: int = int(idx)
+		if member_index < 0 or member_index >= PartyState.members.size():
+			continue
+		var m: Dictionary = PartyState.members[member_index]
 		var cid: String = m.get("equipment", {}).get("crystal", "")
 		if not cid.is_empty():
 			PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))
 ```
 
-Call `_distribute_crystal_xp(rewards.get("xp", 0))` after each
+Call `distribute_crystal_xp(rewards.get("xp", 0))` after each
 `PartyState.distribute_battle_rewards(rewards)` call (3 locations).
 
 - [ ] **Step 3: Commit**

@@ -962,7 +962,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 **Phase A2: Fenmother's Hollow (MOSTLY COMPLETE — 2026-04-09)**
 - [x] 3 floor maps: F1 Flooded Entry (45x30), F2 Submerged Temple (50x35), F3 Sanctum (35x25)
 - [x] Swamp tileset: 4 new tiles (marsh floor, shallow water, stone wall, crystal root) at indices 10-13
-- [x] 9 enemy types verified in act_i.json (marsh_serpent through corrupted_fenmother)
+- [x] 7 regular enemy types in act_i.json (marsh_serpent through corrupted_spawn); 2 bosses in bosses.json (drowned_sentinel, corrupted_fenmother)
 - [x] Encounter data verified (fenmothers_hollow.json: floors "1-2" and "3")
 - [x] 3 dialogue files: fenmother_battle.json, water_of_life.json, fenmother_cleansing.json
 - [x] Drowned Sentinel mini-boss AI (Barnacle Shield/Frost Wave/Stone Slam cycle)

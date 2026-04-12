@@ -78,13 +78,13 @@ func test_corrupted_spawn_data() -> void:
 
 
 func test_drowned_sentinel_data() -> void:
-	var e: Dictionary = _find_enemy("drowned_sentinel", "act_i")
+	var e: Dictionary = _find_enemy("drowned_sentinel", "bosses")
 	assert_false(e.is_empty(), "drowned_sentinel should load")
 	assert_eq(e.get("hp", 0), 4000, "drowned_sentinel HP should be 4000")
 
 
 func test_corrupted_fenmother_data() -> void:
-	var e: Dictionary = _find_enemy("corrupted_fenmother", "act_i")
+	var e: Dictionary = _find_enemy("corrupted_fenmother", "bosses")
 	assert_false(e.is_empty(), "corrupted_fenmother should load")
 	assert_eq(e.get("hp", 0), 18000, "corrupted_fenmother HP should be 18000")
 
@@ -227,12 +227,20 @@ func test_f2_has_drowned_sentinel_boss() -> void:
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f2.tscn")
 	assert_true(text.contains('metadata/boss_id = "drowned_sentinel"'))
 	assert_true(text.contains('metadata/flag = "drowned_sentinel_defeated"'))
+	assert_true(
+		text.contains('metadata/enemy_act = "bosses"'),
+		"drowned_sentinel trigger must use bosses act (not act_i)",
+	)
 
 
 func test_f3_has_corrupted_fenmother_boss() -> void:
 	var text: String = _read_file("res://scenes/maps/dungeons/fenmothers_hollow_f3.tscn")
 	assert_true(text.contains('metadata/boss_id = "corrupted_fenmother"'))
 	assert_true(text.contains('metadata/flag = "fenmother_boss_defeated"'))
+	assert_true(
+		text.contains('metadata/enemy_act = "bosses"'),
+		"corrupted_fenmother trigger must use bosses act (not act_i)",
+	)
 
 
 # --- Transitions ---
