@@ -156,6 +156,9 @@ func walk_to(target: Vector2, speed: float) -> void:
 	_walk_tween = null
 	var distance: float = position.distance_to(target)
 	if distance < 1.0:
+		position = target
+		if _anim_player != null and _anim_player.has_animation("idle"):
+			_anim_player.play("idle")
 		walk_complete.emit()
 		return
 	if speed <= 0.0:

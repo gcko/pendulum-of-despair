@@ -81,7 +81,7 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 		GameManager.pop_overlay()
 		return
 
-	# Letterbox in for T1 (skip if bars not resolved — e.g. headless mode)
+	# Letterbox in for T1 (skip if the letterbox node or its bar references are unavailable)
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_in(0.5)
 		await _letterbox.letterbox_in_complete
