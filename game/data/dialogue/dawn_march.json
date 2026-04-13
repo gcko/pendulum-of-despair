@@ -1,5 +1,7 @@
 {
   "scene_id": "dawn_march",
+  "cutscene_id": "dawn_march",
+  "cutscene_tier": 1,
   "entries": [
     {
       "id": "dawn_march_001",
@@ -11,14 +13,20 @@
       "condition": null,
       "animations": null,
       "choice": null,
-      "sfx": null
+      "sfx": null,
+      "commands": [
+        {"type": "move", "who": "edren", "to": [400, 120], "speed": 60, "when": "before"},
+        {"type": "move", "who": "cael", "to": [384, 136], "speed": 60, "when": "before"},
+        {"type": "move", "who": "lira", "to": [352, 120], "speed": 60, "when": "before"},
+        {"type": "move", "who": "sable", "to": [336, 136], "speed": 60, "when": "before"},
+        {"type": "camera", "target": [240, 120], "duration": 5.0, "when": "before"},
+        {"type": "wait", "duration": 2.0, "when": "before"}
+      ]
     },
     {
       "id": "dawn_march_002",
       "speaker": "edren",
-      "lines": [
-        "We'll let the court decide what it is."
-      ],
+      "lines": ["We'll let the court decide what it is."],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -27,9 +35,7 @@
     {
       "id": "dawn_march_003",
       "speaker": "cael",
-      "lines": [
-        "And the stranger? You're not concerned?"
-      ],
+      "lines": ["And the stranger? You're not concerned?"],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -38,9 +44,7 @@
     {
       "id": "dawn_march_004",
       "speaker": "edren",
-      "lines": [
-        "I'm concerned about all of it."
-      ],
+      "lines": ["I'm concerned about all of it."],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -49,31 +53,36 @@
     {
       "id": "dawn_march_005",
       "speaker": "cael",
-      "lines": [
-        "I keep thinking about their faces."
-      ],
+      "lines": ["I keep thinking about their faces."],
       "condition": null,
       "animations": null,
       "choice": null,
-      "sfx": null
+      "sfx": null,
+      "commands": [
+        {"type": "wait", "duration": 1.5, "when": "after"}
+      ]
     },
     {
       "id": "dawn_march_006",
       "speaker": "sable",
-      "lines": [
-        "So. That thing in the satchel."
-      ],
+      "lines": ["So. That thing in the satchel."],
       "condition": null,
       "animations": null,
       "choice": null,
-      "sfx": null
+      "sfx": null,
+      "commands": [
+        {"type": "move", "who": "edren", "to": [700, 120], "speed": 60, "when": "before"},
+        {"type": "move", "who": "cael", "to": [684, 136], "speed": 60, "when": "before"},
+        {"type": "move", "who": "lira", "to": [652, 120], "speed": 60, "when": "before"},
+        {"type": "move", "who": "sable", "to": [636, 136], "speed": 60, "when": "before"},
+        {"type": "camera", "target": [620, 128], "duration": 1.5, "when": "before"},
+        {"type": "wait", "duration": 1.0, "when": "before"}
+      ]
     },
     {
       "id": "dawn_march_007",
       "speaker": "lira",
-      "lines": [
-        "Don't ask."
-      ],
+      "lines": ["Don't ask."],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -95,9 +104,7 @@
     {
       "id": "dawn_march_009",
       "speaker": "lira",
-      "lines": [
-        "He's not my — we just met."
-      ],
+      "lines": ["He's not my \u2014 we just met."],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -106,9 +113,7 @@
     {
       "id": "dawn_march_010",
       "speaker": "sable",
-      "lines": [
-        "Mhm. And I'm just a tourist."
-      ],
+      "lines": ["Mhm. And I'm just a tourist."],
       "condition": null,
       "animations": null,
       "choice": null,
@@ -118,7 +123,7 @@
       "id": "dawn_march_011",
       "speaker": "sable",
       "lines": [
-        "For what it's worth — whatever that thing is, the",
+        "For what it's worth \u2014 whatever that thing is, the",
         "Compact sent fifty soldiers to guard it. Fifty. They don't do",
         "that for mining equipment."
       ],
@@ -130,13 +135,67 @@
     {
       "id": "dawn_march_012",
       "speaker": "lira",
-      "lines": [
-        "I know. That's why I came."
-      ],
+      "lines": ["I know. That's why I came."],
       "condition": null,
       "animations": null,
       "choice": null,
-      "sfx": null
+      "sfx": null,
+      "commands": [
+        {"type": "fade", "direction": "out", "duration": 1.5, "when": "after"},
+        {"type": "wait", "duration": 0.5, "when": "after"}
+      ],
+      "flag_set": "opening_credits_seen"
+    },
+    {
+      "id": "dawn_march_013",
+      "speaker": "",
+      "lines": [],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": "title_reveal",
+      "commands": [
+        {"type": "title", "text": "PENDULUM OF DESPAIR", "fade_in": 1.0, "duration": 3.0, "fade_out": 1.0, "when": "before"},
+        {"type": "wait", "duration": 5.0, "when": "before"}
+      ]
+    },
+    {
+      "id": "dawn_march_014",
+      "speaker": "",
+      "lines": [],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "title", "text": "Edren  -  Cael  -  Maren", "fade_in": 0.5, "duration": 2.0, "fade_out": 0.5, "when": "before"},
+        {"type": "wait", "duration": 3.0, "when": "before"}
+      ]
+    },
+    {
+      "id": "dawn_march_015",
+      "speaker": "",
+      "lines": [],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "title", "text": "Sable  -  Lira  -  Torren", "fade_in": 0.5, "duration": 2.0, "fade_out": 0.5, "when": "before"},
+        {"type": "wait", "duration": 3.0, "when": "before"}
+      ]
+    },
+    {
+      "id": "dawn_march_016",
+      "speaker": "",
+      "lines": [],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "fade", "direction": "in", "duration": 1.0, "when": "before"}
+      ]
     }
   ]
 }
