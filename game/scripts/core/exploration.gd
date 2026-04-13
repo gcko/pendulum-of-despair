@@ -928,6 +928,13 @@ func _on_cutscene_finished() -> void:
 		_camera.offset = Vector2.ZERO
 	if _player != null and not _in_auto_walk:
 		_player.set_input_enabled(true)
+	if not _cutscene_return.is_empty():
+		var ret: Dictionary = _cutscene_return
+		_cutscene_return = {}
+		var ret_map: String = ret.get("map", "")
+		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
+		if ret_map != "":
+			_transition_to_map(ret_map, ret_spawn)
 
 
 func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
