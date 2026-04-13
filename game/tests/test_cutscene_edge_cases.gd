@@ -199,3 +199,22 @@ func test_empty_flag_name_rejected() -> void:
 	assert_false(
 		EventFlags.get_flag(""), "empty flag_name should be rejected and not stored in EventFlags"
 	)
+
+
+# --- 10. _in_cutscene stays true for one frame after cutscene finished (race guard) ---
+func test_in_cutscene_deferred_clear_blocks_transitions() -> void:
+	var exp_node: Node2D = _create_exploration_test_room()
+	# Simulate being in a cutscene
+	exp_node.set_in_cutscene(true)
+	# Call _on_cutscene_finished via the handler — this defers set_in_cutscene(false)
+	var handler: Variant = exp_node._get_cutscene_handler()
+	handler._on_cutscene_finished()
+	# BEFORE the deferred call fires, _in_cutscene should still be true
+	# This blocks any pending Area2D overlaps from triggering transitions
+	assert_true(
+		exp_node.is_in_cutscene(),
+		"_in_cutscene should stay true until deferred clear fires (race guard)"
+	)
+	# After processing one frame, the deferred call fires and clears the flag
+	await get_tree().process_frame
+	assert_false(exp_node.is_in_cutscene(), "_in_cutscene should be false after deferred clear")

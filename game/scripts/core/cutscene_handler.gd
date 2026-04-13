@@ -96,7 +96,11 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 
 
 func _on_cutscene_finished() -> void:
-	_exploration.set_in_cutscene(false)
+	# Defer clearing _in_cutscene so it stays true for one frame after unpause.
+	# pop_overlay emits overlay_state_changed(NONE) THEN sets paused=false.
+	# Without deferral, pending Area2D overlaps from cutscene move commands
+	# would fire immediately on unpause and pass the _in_cutscene guard.
+	_exploration.call_deferred("set_in_cutscene", false)
 	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
 		_cutscene_camera_tween.kill()
 	_cutscene_camera_tween = null
