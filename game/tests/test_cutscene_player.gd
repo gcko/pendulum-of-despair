@@ -27,8 +27,19 @@ func _entry(opts: Dictionary = {}) -> Dictionary:
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
+	DataManager.clear_cache()
+
+
+func after_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	EventFlags.clear_all()
+	GameManager.transition_data = {}
+	DataManager.clear_cache()
 
 
 # --- 1. Empty entries emits cutscene_finished ---

@@ -16,6 +16,10 @@ var _flags: Dictionary = {}
 
 ## Set a flag to a value. Emits flag_changed.
 func set_flag(flag_name: String, value: Variant) -> void:
+	if flag_name.is_empty():
+		if OS.is_debug_build():
+			push_warning("EventFlags: attempted to set empty flag_name")
+		return
 	_flags[flag_name] = value
 	flag_changed.emit(flag_name, value)
 

@@ -1,7 +1,7 @@
 extends RefCounted
 
-const RITUAL_METER_SCENE: PackedScene = preload("res://scenes/ui/ritual_meter.tscn")
-const DAMAGE_ZONE_SCENE: PackedScene = preload("res://scenes/entities/damage_zone.tscn")
+const RITUAL_METER_PATH: String = "res://scenes/ui/ritual_meter.tscn"
+const DAMAGE_ZONE_PATH: String = "res://scenes/entities/damage_zone.tscn"
 const WAVE_TURN_THRESHOLDS: Array[int] = [6, 8, 8, 5]
 const BOSS_ARENA_CENTER: Vector2 = Vector2(272, 208)
 const BOSS_ARENA_RADIUS: float = 80.0
@@ -62,7 +62,7 @@ func start(data: Dictionary) -> void:
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
-	_ritual_meter = RITUAL_METER_SCENE.instantiate()
+	_ritual_meter = (load(RITUAL_METER_PATH) as PackedScene).instantiate()
 	_exploration.add_child(_ritual_meter)
 	_ritual_meter.show_meter()
 	_spawned_pool_count = 0
@@ -98,7 +98,7 @@ func continue_sequence(data: Dictionary) -> void:
 		var origin: Variant = data.get("cleansing_origin_position", null)
 		_exploration.get_player().position = origin if origin is Vector2 else fallback
 	if _ritual_meter == null:
-		_ritual_meter = RITUAL_METER_SCENE.instantiate()
+		_ritual_meter = (load(RITUAL_METER_PATH) as PackedScene).instantiate()
 		_exploration.add_child(_ritual_meter)
 		var saved_val: float = data.get("ritual_meter_value", 100.0)
 		_ritual_meter.set_value(saved_val)
@@ -209,7 +209,7 @@ func _spawn_poison_pools() -> void:
 	for i: int in range(count):
 		if _spawned_pool_count >= 4:
 			break
-		var pool: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+		var pool: Area2D = (load(DAMAGE_ZONE_PATH) as PackedScene).instantiate()
 		var pos: Vector2 = _random_arena_position()
 		pool.position = pos
 		entities.add_child(pool)
