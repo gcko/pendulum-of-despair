@@ -95,16 +95,15 @@ A dedicated linear map that serves as the cutscene stage.
 - No dialogue is loaded on these NPCs — they are pure sprite actors
 
 **Spawn marker:**
-- `PlayerSpawn` Marker2D at (80, 120) — required by exploration.gd
-  but the "player" will be hidden immediately (see cutscene commands)
+- `PlayerSpawn` Marker2D at (-100, -100) — required by exploration.gd
+  but positioned off-screen so the auto-spawned player is invisible
 
 **Special handling — no player character:**
 - This map is loaded by exploration.gd which always instantiates a
   PlayerCharacter. Since all 4 party members are NPC actors on this
-  map, the player character must be hidden. The cutscene's first
-  command hides the player via a `hide_entity` approach.
-- Simplest approach: position PlayerSpawn off-screen at (-100, -100)
-  so the auto-spawned player is invisible. The NPC named "edren"
+  map, the player character must be hidden.
+- PlayerSpawn is positioned off-screen at (-100, -100) so the
+  auto-spawned player is invisible. The NPC named "edren"
   serves as the visible Edren on screen.
 
 ### 2. Enhanced Dialogue JSON

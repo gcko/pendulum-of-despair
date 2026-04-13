@@ -153,7 +153,7 @@
       "condition": null,
       "animations": null,
       "choice": null,
-      "sfx": "title_reveal",
+      "sfx": null,
       "commands": [
         {"type": "title", "text": "PENDULUM OF DESPAIR", "fade_in": 1.0, "duration": 3.0, "fade_out": 1.0, "when": "before"},
         {"type": "wait", "duration": 5.0, "when": "before"}
