@@ -186,6 +186,7 @@ func walk_to(target: Vector2, speed: float) -> void:
 	# Reuse existing _play_walk_animation (handles anim name mapping)
 	_play_walk_animation(facing_direction)
 	_walk_tween = create_tween()
+	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_walk_tween.tween_property(self, "position", target, duration)
 	_walk_tween.tween_callback(
 		func():

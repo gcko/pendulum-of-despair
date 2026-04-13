@@ -175,6 +175,7 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if _anim_player != null and _anim_player.has_animation(anim_name):
 		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
+	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_walk_tween.tween_property(self, "position", target, duration)
 	_walk_tween.tween_callback(
 		func():

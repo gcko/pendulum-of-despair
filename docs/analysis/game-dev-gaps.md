@@ -798,7 +798,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - Ley Line Rupture montage (Interlude Scene 20) deferred to gap 4.5
 - Boss-integrated cutscenes (dialogue at HP thresholds) handled by battle_manager.gd, not this overlay
 - cutscene_player.gd is root script on CanvasLayer — GameManager.overlay_node IS the cutscene player
-- Headless-safe: letterbox/fade/flash/title skip tweening in headless mode (avoids rp_target null errors)
+- Headless-safe: fade/flash/title skip tweening in headless mode (avoids rp_target null errors); letterbox still uses tweening
 - Design spec: `docs/superpowers/specs/2026-04-13-cutscene-overlay-design.md`
 
 **Blocking:** Story progression scenes, boss intros, key narrative moments

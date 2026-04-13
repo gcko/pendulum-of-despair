@@ -868,6 +868,7 @@ func _on_cutscene_camera(target: Vector2, duration: float) -> void:
 	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
 		_cutscene_camera_tween.kill()
 	_cutscene_camera_tween = create_tween()
+	_cutscene_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_cutscene_camera_tween.tween_property(_camera, "position", target, duration)
 
 
@@ -878,6 +879,7 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 		_cutscene_shake_tween.kill()
 	var original_offset: Vector2 = _camera.offset
 	_cutscene_shake_tween = create_tween()
+	_cutscene_shake_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	var steps: int = int(duration / 0.05)
 	for i in range(steps):
 		var offset := Vector2(

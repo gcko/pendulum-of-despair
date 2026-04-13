@@ -23,11 +23,11 @@ func _entry(opts: Dictionary = {}) -> Dictionary:
 
 ## Helper: start cutscene and wait for it to finish (or timeout).
 func _start_and_await(cs: Node, id: String, entries: Array, tier: int = 1) -> void:
-	cs.start_cutscene(id, entries, tier)
-	# Use a race: either the cutscene finishes or we timeout.
+	# Connect BEFORE starting to avoid missing synchronous emissions (e.g., skip flag).
 	var timer: SceneTreeTimer = get_tree().create_timer(TIMEOUT)
 	var finished := false
 	cs.cutscene_finished.connect(func(): finished = true, CONNECT_ONE_SHOT)
+	cs.start_cutscene(id, entries, tier)
 	while not finished:
 		await get_tree().process_frame
 		if timer.time_left <= 0.0:
