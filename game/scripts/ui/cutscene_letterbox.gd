@@ -31,8 +31,8 @@ func animate_in(duration: float = 0.5) -> void:
 	_tween = create_tween()
 	_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_tween.set_parallel(true)
-	_tween.tween_property(top_bar, "custom_minimum_size:y", float(BAR_HEIGHT), duration)
-	_tween.tween_property(bottom_bar, "custom_minimum_size:y", float(BAR_HEIGHT), duration)
+	_tween.tween_property(top_bar, "size:y", float(BAR_HEIGHT), duration)
+	_tween.tween_property(bottom_bar, "size:y", float(BAR_HEIGHT), duration)
 	_tween.tween_property(bottom_bar, "position:y", 720.0 - float(BAR_HEIGHT), duration)
 	_tween.chain().tween_callback(_on_in_complete)
 
@@ -45,8 +45,8 @@ func animate_out(duration: float = 0.5) -> void:
 	_tween = create_tween()
 	_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_tween.set_parallel(true)
-	_tween.tween_property(top_bar, "custom_minimum_size:y", 0.0, duration)
-	_tween.tween_property(bottom_bar, "custom_minimum_size:y", 0.0, duration)
+	_tween.tween_property(top_bar, "size:y", 0.0, duration)
+	_tween.tween_property(bottom_bar, "size:y", 0.0, duration)
 	_tween.tween_property(bottom_bar, "position:y", 720.0, duration)
 	_tween.chain().tween_callback(_on_out_complete)
 
@@ -56,8 +56,8 @@ func set_instant(visible: bool) -> void:
 	if top_bar == null or bottom_bar == null:
 		return
 	var height: float = float(BAR_HEIGHT) if visible else 0.0
-	top_bar.custom_minimum_size.y = height
-	bottom_bar.custom_minimum_size.y = height
+	top_bar.size.y = height
+	bottom_bar.size.y = height
 	if visible:
 		bottom_bar.position.y = 720.0 - height
 	else:
