@@ -56,7 +56,7 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if _player == null or _transitioning or _in_auto_walk:
+	if _player == null or _transitioning or _in_auto_walk or _in_cutscene:
 		return
 	var current_tile: Vector2i = Vector2i(_player.position) / 16
 	if current_tile == _last_player_tile:
@@ -66,7 +66,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _transitioning or _in_auto_walk:
+	if _transitioning or _in_auto_walk or _in_cutscene:
 		return
 	if event.is_action_pressed("ui_menu"):
 		if _player != null and not _player.is_input_enabled():
@@ -816,6 +816,8 @@ func _on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
 		if _player != null:
 			_player.set_input_enabled(false)
 		_connect_cutscene_signals()
+	elif new_state == GameManager.OverlayState.NONE and _in_cutscene:
+		_on_cutscene_finished()
 
 
 func _connect_cutscene_signals() -> void:
