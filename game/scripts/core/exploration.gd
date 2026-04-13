@@ -204,6 +204,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 			pc.get("id", ""),
 			pc.get("entries", []),
 			pc.get("tier", 1),
+			pc.get("flag", ""),
 		)
 
 
@@ -722,6 +723,8 @@ func _abort_transition() -> void:
 func _end_transition() -> void:
 	_fade_rect.visible = false
 	_transitioning = false
+	if _player != null and not _in_cutscene and not _in_auto_walk:
+		_player.set_input_enabled(true)
 
 
 # ---------- Auto-walk and auto-sequences ----------
@@ -956,7 +959,9 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 	pass
 
 
-func _start_pending_cutscene(cutscene_id: String, entries: Array, tier: int) -> void:
+func _start_pending_cutscene(
+	cutscene_id: String, entries: Array, tier: int, one_shot_flag: String = ""
+) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
 		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
 		if not _cutscene_return.is_empty():
@@ -968,6 +973,9 @@ func _start_pending_cutscene(cutscene_id: String, entries: Array, tier: int) -> 
 				return
 		_cutscene_return = {}
 		return
+	# Set one-shot flag only AFTER overlay push succeeds
+	if not one_shot_flag.is_empty():
+		EventFlags.set_flag(one_shot_flag, true)
 	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
 
 
@@ -995,19 +1003,16 @@ func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if entries.is_empty():
 		push_error("Exploration: Cutscene '%s' has no entries" % scene_id)
 		return
-	# Set one-shot flag AFTER validation (prevents burning flag on failure)
-	if not flag.is_empty():
-		EventFlags.set_flag(flag, true)
 	# Store return info only when a return map is specified
 	if return_map != "":
 		_cutscene_return = {"map": return_map, "spawn": return_spawn}
 	if map_id != "":
 		# Transition to cutscene map, then start cutscene after load
-		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
+		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier, "flag": flag}
 		_transition_to_map(map_id, "PlayerSpawn")
 	else:
-		# Start cutscene on current map
-		_start_pending_cutscene(cutscene_id, entries, tier)
+		# Start cutscene on current map (flag set inside after overlay push)
+		_start_pending_cutscene(cutscene_id, entries, tier, flag)
 
 
 # ---------- Public accessors for CleansingSequence ----------
