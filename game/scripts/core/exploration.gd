@@ -26,6 +26,8 @@ var _equipment_chest_ids: Dictionary = {}
 var _in_auto_walk: bool = false
 var _auto_walk_tween: Tween = null
 var _arrival_tween: Tween = null
+## Maps character_id/npc_id to entity Node for cutscene choreography.
+var _entities: Dictionary = {}
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -39,6 +41,7 @@ func _ready() -> void:
 	_location_panel.visible = false
 	_camera.zoom = Vector2(4, 4)
 	_spawn_player()
+	GameManager.overlay_state_changed.connect(_on_overlay_state_changed)
 	_initialize_from_transition_data()
 
 
@@ -353,6 +356,21 @@ func _initialize_entities(map_node: Node2D) -> void:
 		for child: Node in entities.get_children():
 			if child.has_method("refresh"):
 				child.refresh()
+	# Populate entity lookup for cutscene choreography
+	_entities.clear()
+	var entities_node: Node2D = map_node.get_node_or_null("Entities")
+	if entities_node != null:
+		for child in entities_node.get_children():
+			# NPCs store npc_id as metadata (set in editor)
+			var nid: String = child.get_meta("npc_id", "")
+			if nid != "":
+				_entities[nid] = child
+			# Characters use script variable character_id
+			elif "character_id" in child and child.character_id != "":
+				_entities[child.character_id] = child
+	# Player character stores character_id as a script variable
+	if _player != null and "character_id" in _player and _player.character_id != "":
+		_entities[_player.character_id] = _player
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
@@ -778,6 +796,86 @@ func _caden_complete(caden: Node2D, completion_flag: String) -> void:
 	var post_npc: Node = _current_map.get_node_or_null("Entities/CadenPostEvent")
 	if post_npc != null:
 		post_npc.visible = true
+
+
+# ---------- Cutscene overlay integration ----------
+
+
+func _on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
+	if new_state == GameManager.OverlayState.CUTSCENE:
+		_connect_cutscene_signals()
+
+
+func _connect_cutscene_signals() -> void:
+	var cs: Node = GameManager.overlay_node
+	if cs == null:
+		return
+	if cs.has_signal("cutscene_move_requested"):
+		cs.cutscene_move_requested.connect(_on_cutscene_move)
+	if cs.has_signal("cutscene_anim_requested"):
+		cs.cutscene_anim_requested.connect(_on_cutscene_anim)
+	if cs.has_signal("cutscene_camera_requested"):
+		cs.cutscene_camera_requested.connect(_on_cutscene_camera)
+	if cs.has_signal("cutscene_shake_requested"):
+		cs.cutscene_shake_requested.connect(_on_cutscene_shake)
+	if cs.has_signal("flag_set_requested"):
+		cs.flag_set_requested.connect(_on_cutscene_flag_set)
+	if cs.has_signal("sfx_requested"):
+		cs.sfx_requested.connect(_on_cutscene_sfx)
+
+
+func _on_cutscene_move(who: String, target: Vector2, speed: float) -> void:
+	var entity: Node = _entities.get(who, null)
+	if entity == null:
+		if OS.is_debug_build():
+			push_warning("Cutscene: entity not found: %s" % who)
+		return
+	if entity.has_method("walk_to"):
+		entity.walk_to(target, speed)
+
+
+func _on_cutscene_anim(who: String, anim: String) -> void:
+	var entity: Node = _entities.get(who, null)
+	if entity == null:
+		if OS.is_debug_build():
+			push_warning("Cutscene: entity not found for anim: %s" % who)
+		return
+	if entity.has_method("play_animation"):
+		entity.play_animation(anim)
+	elif entity.has_node("AnimationPlayer"):
+		var ap: AnimationPlayer = entity.get_node("AnimationPlayer")
+		if ap.has_animation(anim):
+			ap.play(anim)
+
+
+func _on_cutscene_camera(target: Vector2, duration: float) -> void:
+	if _camera == null:
+		return
+	var tween: Tween = create_tween()
+	tween.tween_property(_camera, "position", target, duration)
+
+
+func _on_cutscene_shake(intensity: int, duration: float) -> void:
+	if _camera == null:
+		return
+	var original_offset: Vector2 = _camera.offset
+	var tween: Tween = create_tween()
+	var steps: int = int(duration / 0.05)
+	for i in range(steps):
+		var offset := Vector2(
+			randf_range(-intensity, intensity), randf_range(-intensity, intensity)
+		)
+		tween.tween_property(_camera, "offset", offset, 0.05)
+	tween.tween_property(_camera, "offset", original_offset, 0.05)
+
+
+func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
+	EventFlags.set_flag(flag_name, value)
+
+
+func _on_cutscene_sfx(_sfx_id: String) -> void:
+	# Stub — AudioManager integration in gap 3.8
+	pass
 
 
 # ---------- Public accessors for CleansingSequence ----------
