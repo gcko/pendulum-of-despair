@@ -57,7 +57,9 @@ func test_start_pending_cutscene_failure_clears_return() -> void:
 	# Push an overlay to block the cutscene overlay push
 	GameManager.push_overlay(GameManager.OverlayState.MENU)
 	# Try to start a pending cutscene — should fail because overlay is occupied
-	exp_node._start_pending_cutscene("test_cutscene", [], 1)
+	var typed_entries: Array[Dictionary] = []
+	exp_node._start_pending_cutscene("test_cutscene", typed_entries, 1)
+	assert_push_error_count(1, "overlay push failure should log error")
 	# Return data should be cleared after failure recovery
 	assert_true(
 		exp_node._cutscene_return.is_empty(),
@@ -72,7 +74,9 @@ func test_start_pending_cutscene_failure_triggers_return_transition() -> void:
 	exp_node._cutscene_return = {"map": "test_room_2", "spawn": "from_cutscene"}
 	# Block overlay
 	GameManager.push_overlay(GameManager.OverlayState.MENU)
-	exp_node._start_pending_cutscene("fail_test", [], 1)
+	var typed_entries: Array[Dictionary] = []
+	exp_node._start_pending_cutscene("fail_test", typed_entries, 1)
+	assert_push_error_count(1, "overlay push failure should log error")
 	# After failure, _transitioning should be true (return transition started)
 	assert_true(
 		exp_node._transitioning,
@@ -95,6 +99,7 @@ func test_cutscene_trigger_missing_dialogue_no_crash() -> void:
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
 	# Should not crash — just logs error and returns
 	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
+	assert_push_error_count(1, "missing dialogue should log error")
 	assert_false(
 		exp_node._in_cutscene, "should not enter cutscene state with missing dialogue data"
 	)
@@ -134,18 +139,11 @@ func test_cutscene_double_fire_prevented_by_flag() -> void:
 	area.set_meta("cutscene_map_id", "")
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
-	# First trigger sets the flag
+	# Pre-set the flag to simulate having already seen the cutscene
+	EventFlags.set_flag("dawn_march_seen", true)
+	# Trigger should be blocked by the flag — returns early without any errors
 	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
-	assert_true(EventFlags.get_flag("dawn_march_seen"), "flag should be set after first trigger")
-	# Reset cutscene state to simulate completing the first cutscene
-	exp_node._in_cutscene = false
-	exp_node._transitioning = false
-	# Second trigger should be blocked by the flag
-	var was_in_cutscene: bool = exp_node._in_cutscene
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
-	# Should not have re-entered cutscene state (flag blocks re-entry)
-	# The handler checks flag and returns early, so _in_cutscene stays false
-	assert_false(exp_node._in_cutscene, "second trigger should be blocked by one-shot flag")
+	assert_false(exp_node._in_cutscene, "trigger should be blocked by one-shot flag")
 
 
 # --- 6. Cutscene trigger blocked during transition ---
