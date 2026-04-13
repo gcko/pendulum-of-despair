@@ -714,6 +714,8 @@ func _do_map_swap(target_map: String, target_spawn: String) -> void:
 func _abort_transition() -> void:
 	if _transition_tween != null and _transition_tween.is_valid():
 		_transition_tween.kill()
+	_pending_cutscene = {}
+	_cutscene_return = {}
 	_end_transition()
 
 
@@ -928,8 +930,6 @@ func _on_cutscene_finished() -> void:
 	if _camera != null and _player != null:
 		_camera.position = _player.position.round()
 		_camera.offset = Vector2.ZERO
-	if _player != null and not _in_auto_walk:
-		_player.set_input_enabled(true)
 	if not _cutscene_return.is_empty():
 		var ret: Dictionary = _cutscene_return
 		_cutscene_return = {}
@@ -937,6 +937,9 @@ func _on_cutscene_finished() -> void:
 		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
 		if ret_map != "":
 			_transition_to_map(ret_map, ret_spawn)
+			return
+	if _player != null and not _in_auto_walk:
+		_player.set_input_enabled(true)
 
 
 func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
@@ -956,6 +959,13 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 func _start_pending_cutscene(cutscene_id: String, entries: Array, tier: int) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
 		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
+		if not _cutscene_return.is_empty():
+			var ret: Dictionary = _cutscene_return
+			_cutscene_return = {}
+			var ret_map: String = ret.get("map", "")
+			if ret_map != "":
+				_transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
+				return
 		_cutscene_return = {}
 		return
 	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
