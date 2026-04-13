@@ -10,6 +10,8 @@ extends CharacterBody2D
 
 ## Emitted when the player presses interact and an interactable is nearby.
 signal interaction_requested(interactable: Node2D)
+## Emitted when walk_to() completes.
+signal walk_complete
 
 ## Movement speed in pixels per second.
 const MOVE_SPEED: float = 80.0
@@ -145,6 +147,31 @@ func play_animation(anim_name: String) -> void:
 func try_interact() -> void:
 	if _current_interactable != null:
 		interaction_requested.emit(_current_interactable)
+
+
+## Walk to target position at given speed (for cutscene choreography).
+## Emits walk_complete when arrived. Uses Tween, not physics movement.
+func walk_to(target: Vector2, speed: float) -> void:
+	var distance: float = position.distance_to(target)
+	if distance < 1.0:
+		walk_complete.emit()
+		return
+	var duration: float = distance / speed
+	# Face the walk direction using existing facing_direction var
+	var dir: Vector2 = (target - position).normalized()
+	if abs(dir.x) > abs(dir.y):
+		facing_direction = Vector2.RIGHT if dir.x > 0 else Vector2.LEFT
+	else:
+		facing_direction = Vector2.DOWN if dir.y > 0 else Vector2.UP
+	# Reuse existing _play_walk_animation (handles anim name mapping)
+	_play_walk_animation(facing_direction)
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "position", target, duration)
+	tween.tween_callback(
+		func():
+			_play_idle_animation()
+			walk_complete.emit()
+	)
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:

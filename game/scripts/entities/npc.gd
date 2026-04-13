@@ -10,6 +10,8 @@ extends Area2D
 
 ## Emitted when the player interacts. Carries resolved dialogue.
 signal npc_interacted(npc_id: String, dialogue_data: Dictionary)
+## Emitted when walk_to() completes.
+signal walk_complete
 
 ## NPC identifier used for dialogue lookup.
 var npc_id: String = ""
@@ -142,3 +144,29 @@ func _load_placeholder_sprite() -> void:
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
+
+
+## Walk to target position at given speed (for cutscene choreography).
+func walk_to(target: Vector2, speed: float) -> void:
+	var distance: float = position.distance_to(target)
+	if distance < 1.0:
+		walk_complete.emit()
+		return
+	var duration: float = distance / speed
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "position", target, duration)
+	tween.tween_callback(func(): walk_complete.emit())
+
+
+## Play a named animation on the NPC's AnimationPlayer.
+## Uses existing _anim_player @onready var (line 22).
+func play_animation(anim: String) -> void:
+	if _anim_player == null:
+		if OS.is_debug_build():
+			push_warning("NPC %s has no AnimationPlayer" % name)
+		return
+	if not _anim_player.has_animation(anim):
+		if OS.is_debug_build():
+			push_warning("NPC %s missing animation: %s" % [name, anim])
+		return
+	_anim_player.play(anim)
