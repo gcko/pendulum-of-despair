@@ -314,17 +314,12 @@ func test_skip_cutscene_sets_remaining_flags() -> void:
 	var cs: Node = await _create_cutscene()
 	var flags_emitted: Array = []
 	cs.flag_set_requested.connect(func(f: String, _v: Variant): flags_emitted.append(f))
-	(
-		cs
-		. _entries
-		. assign(
-			[
-				_entry({"flag_set": "a"}),
-				_entry({"flag_set": "b"}),
-				_entry({"flag_set": "c"}),
-			]
-		)
-	)
+	var skip_entries: Array[Dictionary] = [
+		_entry({"flag_set": "a"}),
+		_entry({"flag_set": "b"}),
+		_entry({"flag_set": "c"}),
+	]
+	cs._entries.assign(skip_entries)
 	cs._current_index = 1
 	cs._is_playing = true
 	cs._cutscene_id = "skip_flags_test"
