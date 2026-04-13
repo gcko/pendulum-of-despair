@@ -30,7 +30,7 @@ Scene organization and portability issues.
 - Wrong node type for purpose
 
 ### 4. Pixel Art Rendering
-320x180 viewport, nearest-neighbor, snap-to-pixel violations.
+1280x720 viewport (4x camera zoom, effective 320x180 game world), nearest-neighbor, snap-to-pixel violations.
 - Sub-pixel sprite positions
 - Non-integer camera zoom
 - Wrong texture filter (linear instead of nearest)

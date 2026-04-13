@@ -6,7 +6,7 @@ Instructions for AI coding agents working with this repository.
 
 Pendulum of Despair is a JRPG inspired by 16-bit golden age RPGs (FF4/VI, Chrono Trigger, Secret of Mana). The game will be built with **Godot Engine** as a locally-run desktop application.
 
-**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot 4.6 project is initialized in `game/` with directory structure, viewport settings, and 5 autoload singletons (PR #105). No scenes (.tscn) exist yet — editor opens cleanly but the game cannot be run.
+**Status:** All mechanical game design is complete (25 gaps closed across 4 tiers in `docs/story/`). The Godot 4.6 project is initialized in `game/` with directory structure, viewport settings, and 6 autoload singletons. No scenes (.tscn) exist yet — editor opens cleanly but the game cannot be run.
 
 ---
 
@@ -57,7 +57,7 @@ authorized push point in the entire pr-review-response workflow.
 | Directory | Purpose |
 |-----------|---------|
 | `game/` | **Godot 4.6 project root** (open this in the editor) |
-| `game/scripts/autoload/` | 5 autoload singletons (GameManager, DataManager, etc.) |
+| `game/scripts/autoload/` | 6 autoload singletons (GameManager, DataManager, AudioManager, SaveManager, EventFlags, PartyState) |
 | `game/scenes/` | Scene files (.tscn) — core, overlay, entities, maps |
 | `game/data/` | JSON game data (enemies, items, equipment, shops, etc.) |
 | `game/assets/` | Art and audio assets (sprites, tilesets, music, SFX) |

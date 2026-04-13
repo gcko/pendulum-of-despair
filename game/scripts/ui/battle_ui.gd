@@ -175,6 +175,7 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	add_child(label)
 
 	var tween: Tween = create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(label, "position:y", pos.y - 128, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)

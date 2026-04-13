@@ -122,11 +122,12 @@ Work from: [PROJECT_ROOT]
 
 ```
 You are reviewing Godot 4.6 game data and rendering settings for
-a pixel art JRPG at 320x180 resolution. Find every data error
-and rendering misconfiguration.
+a pixel art JRPG (1280x720 viewport, 4x camera zoom, effective
+320x180 game world). Find every data error and rendering misconfiguration.
 
 Focus on:
-1. **Pixel art rendering** -- viewport 320x180, integer scaling,
+1. **Pixel art rendering** -- viewport 1280x720 with 4x camera zoom
+   (effective 320x180 game world), integer scaling,
    nearest-neighbor filter, snap-to-pixel on transforms and
    vertices. No sub-pixel positions. No fractional camera zoom.
    Sprite sizes match spec (16x24 character, 16x16 tile).
@@ -355,8 +356,8 @@ trace these paths. Write the answer for each. "I didn't check" = bug.
    action name across ALL .gd files. Two handlers = double-fire bug.
 3. **Initialization:** Every entity with initialize() — is it called?
    With correct args? Trace from .tscn metadata → load code → initialize().
-4. **Dimensions:** Every size/position value — does it match viewport
-   (320x180)? Tile size (16x16)? Sprite size (16x24)?
+4. **Dimensions:** Every size/position value — does it match the effective
+   game world (320x180 at 4x zoom within 1280x720 viewport)? Tile size (16x16)? Sprite size (16x24)?
 5. **Cleanup:** Every test — does before_each clear ALL global state?
    (GameManager.transition_data, EventFlags, SaveManager slots)
 6. **Spec drift:** Re-read the spec after implementation. Grep for EVERY

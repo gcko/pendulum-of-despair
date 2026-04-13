@@ -27,7 +27,7 @@ swords: Despair is overcome through acceptance, not resistance.
 - **Genre:** Single-player JRPG with ATB combat
 - **Engine:** Godot Engine 4.x
 - **Platform:** Desktop (Windows, macOS, Linux)
-- **Resolution:** 320x180 native, integer-scaled (pixel art)
+- **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled (pixel art)
 
 ### Design Pillars
 
@@ -176,8 +176,7 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 
 ### Platform & Accessibility
 
-- **Resolution:** 320x180 native, integer-scaled to display (6x at
-  1080p, 12x at 4K). Nearest-neighbor, pixel-perfect.
+- **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled to display. Nearest-neighbor, pixel-perfect.
 - **Frame rate target:** 60 fps
 - **Engine:** Godot Engine 4.x
 - **Input:** Keyboard (fully rebindable) + gamepad (standard mapping)

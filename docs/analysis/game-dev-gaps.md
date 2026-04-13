@@ -26,9 +26,9 @@ adds a "Completed" date + commit reference.
 ## What Already Exists
 
 **PR #105 (merged 2026-04-02):** Godot project initialized with:
-- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 5 autoloads, 4x camera zoom in exploration
-- 5 autoload singletons in `game/scripts/autoload/` (GameManager,
-  DataManager, AudioManager, SaveManager, EventFlags) — all have
+- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 6 autoloads, 4x camera zoom in exploration
+- 6 autoload singletons in `game/scripts/autoload/` (GameManager,
+  DataManager, AudioManager, SaveManager, EventFlags, PartyState) — all have
   public API + defensive coding, stubs for game-state-dependent methods
 - Directory structure with `.gdkeep` placeholders
 - No scenes (.tscn), no JSON data files, no art/audio assets
@@ -1024,9 +1024,9 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Arcanite gear preview (arcanite_sword_proto ATK 13, arcanite_mail_proto DEF 10, breaks after 1e escape)
 - [x] Change new game start location from overworld to Ember Vein F1
 - [x] Cael hidden stat spike (+10% physical damage via Pallor shimmer, permanent, hidden)
-- [ ] Opening credits visual sequence (title card, character names) — **deferred to gap 3.7 (Cutscene Overlay)**
-- [ ] Dawn March forward-only walk mechanics — **deferred to gap 3.7 (Cutscene Overlay)**
-- [ ] `opening_credits_seen` flag (39) — **deferred to gap 3.7 (Cutscene Overlay)**
+- [ ] Opening credits visual sequence (title card, character names) — **unblocked by gap 3.7 (COMPLETE)**
+- [ ] Dawn March forward-only walk mechanics — **unblocked by gap 3.7 (COMPLETE)**
+- [ ] `opening_credits_seen` flag (39) — **unblocked by gap 3.7 (COMPLETE)**
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)

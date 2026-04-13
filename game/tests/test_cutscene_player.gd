@@ -424,3 +424,32 @@ func test_dialogue_box_flag_set_forwarded() -> void:
 	if db and db.has_signal("flag_set_requested"):
 		db.flag_set_requested.emit("test_flag", true)
 		assert_signal_emitted(cs, "flag_set_requested")
+
+
+# --- 30. _unhandled_input ui_cancel triggers skip ---
+func test_ui_cancel_input_triggers_skip() -> void:
+	var cs: Node = await _create_cutscene()
+	watch_signals(cs)
+	cs._entries.assign([_entry({"flag_set": "input_skip"})])
+	cs._current_index = 0
+	cs._is_playing = true
+	cs._cutscene_id = "input_skip_test"
+	cs._tier = cs.TIER_MICRO
+	var event: InputEventAction = InputEventAction.new()
+	event.action = "ui_cancel"
+	event.pressed = true
+	cs._unhandled_input(event)
+	assert_false(cs._is_playing, "_is_playing should be false after ui_cancel skip")
+	assert_signal_emitted(cs, "cutscene_finished")
+
+
+# --- 31. _unhandled_input ignored when not playing ---
+func test_ui_cancel_ignored_when_not_playing() -> void:
+	var cs: Node = await _create_cutscene()
+	watch_signals(cs)
+	cs._is_playing = false
+	var event: InputEventAction = InputEventAction.new()
+	event.action = "ui_cancel"
+	event.pressed = true
+	cs._unhandled_input(event)
+	assert_signal_not_emitted(cs, "cutscene_finished")

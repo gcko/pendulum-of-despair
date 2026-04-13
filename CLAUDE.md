@@ -23,9 +23,9 @@ This project uses `pnpm` for commitlint and husky tooling only.
 The Godot 4.6 project lives in `game/`. Open `game/` as the project
 directory in the Godot editor.
 
-- **Resolution:** 320x180 native, integer-scaled
+- **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled
 - **Language:** GDScript only
-- **Autoloads:** GameManager, DataManager, AudioManager, SaveManager, EventFlags
+- **Autoloads:** GameManager, DataManager, AudioManager, SaveManager, EventFlags, PartyState
 - **Game data:** JSON files in `game/data/`
 - **Architecture reference:** `docs/plans/technical-architecture.md`
 

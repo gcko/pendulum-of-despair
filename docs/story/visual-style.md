@@ -27,7 +27,7 @@ This document is the art director's bible for the visual identity of Pendulum of
 - **Tile size:** 16x16 pixels. All terrain, architecture, and environmental tiles are built on this grid.
 - **Palette constraint:** 256 colors per scene maximum. Each tileset uses a sub-palette of 16-32 colors. Biome palettes (defined in `biomes.md`) provide the 8-12 dominant tones; individual tiles add accent colors within the 256-color budget.
 - **Dithering:** Used for gradients and transparency effects. No smooth alpha blending. Two-color dithering patterns for shadows, fog, and water reflections.
-- **Resolution:** The game viewport targets 320x180 pixels (16:9 pixel art standard), integer-scaled to the game window. Clean integer scaling at 720p (4x), 1080p (6x), 1440p (8x), 4K (12x). All art is authored at native resolution. See [accessibility.md](accessibility.md) Section 1.
+- **Resolution:** The game viewport is 1280x720 with 4x camera zoom (effective 320x180 game world), integer-scaled to the display window. All art is authored at the effective 320x180 tile/sprite scale. See [accessibility.md](accessibility.md) Section 1.
 
 ### Character Sprites
 
