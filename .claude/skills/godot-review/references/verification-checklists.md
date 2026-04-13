@@ -12,6 +12,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] All variable declarations use `: Type` or `:= value` inference
 - [ ] No bare `var x = value` without type (use `var x: Type = value`)
 - [ ] No use of `Variant` where a concrete type is known
+- [ ] Scene scripts passed via constructor injection (e.g., `_init(exploration: Node2D)`) should use the concrete type if the script has `class_name`. If the script lacks `class_name`, consider adding one (non-autoload scripts only) so helpers like CutsceneHandler/CleansingSequence get full static type safety. (PR #145: `_exploration` typed as `Node2D` instead of concrete `Exploration`)
 
 ### Naming Conventions (per GDScript style guide)
 - [ ] Functions: snake_case (`func open_chest()`)
