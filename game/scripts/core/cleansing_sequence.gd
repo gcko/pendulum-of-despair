@@ -268,11 +268,14 @@ func _move_torren_to_reserve() -> void:
 		return
 	var active: Array = PartyState.formation["active"]
 	var reserve: Array = PartyState.formation["reserve"]
+	var found: Variant = null
 	for a: Variant in active:
 		if (a is int or a is float) and int(a) == torren_idx:
-			active.erase(a)
-			reserve.append(torren_idx)
-			return
+			found = a
+			break
+	if found != null:
+		active.erase(found)
+		reserve.append(torren_idx)
 
 
 func _restore_torren_to_active() -> void:
