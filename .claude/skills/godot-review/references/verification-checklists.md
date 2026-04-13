@@ -145,6 +145,9 @@ Reference for all review agents. Check every applicable item.
 - [ ] Sprite2D nodes MUST have a texture assigned — otherwise invisible even when set to visible. Assign a placeholder if no art exists.
 - [ ] UI panel colors (bg_color, border_color) must match ui-design.md Section 1.4 palette hex values
 - [ ] Full-viewport Control nodes (ColorRect, Label) that are hidden via `modulate.a = 0` MUST set `mouse_filter = IGNORE` (2) — otherwise they consume mouse/touch events while invisible, blocking input to nodes beneath. (PR #142: TitleLabel blocked clicks to embedded DialogueBox)
+- [ ] Controls as direct children of CanvasLayer must use anchors + explicit offsets (or explicit `size`) for layout. `custom_minimum_size` alone does NOT set the actual rendered size for free-standing Controls. (PR #142: letterbox/fade/title Controls had zero size under CanvasLayer)
+- [ ] For Control sizing animation outside a Container, tween `size:y` or offset properties — NOT `custom_minimum_size:y`, which only sets minimum without propagating to actual size on non-Container children. (PR #142: letterbox bars invisible because `custom_minimum_size:y` tween didn't affect rendered size)
+- [ ] Instanced sub-scenes that should start hidden (e.g., DialogueBox in cutscene.tscn) must set `visible = false` in the parent scene override — relying on the script to hide later can show a flash of the default-visible panel on first frames. (PR #142: dialogue panel visible during command-only cutscenes)
 
 ### Test Hygiene (from Copilot PR #119 gap analysis)
 - [ ] Tests that create persistent state (save files, config files) must have `after_each()` cleanup
