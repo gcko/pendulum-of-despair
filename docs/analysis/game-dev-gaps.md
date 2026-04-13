@@ -770,23 +770,36 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.7 Cutscene Overlay
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-13
 **Priority:** P2 — blocks scripted story sequences
-**Estimated Size:** M (1 .tscn + 2 .gd files)
-**Output:** `game/scenes/overlay/cutscene.tscn`, `game/scripts/core/cutscene_player.gd`
+**Estimated Size:** M (1 .tscn + 3 .gd files + 4 test files)
+**Output:** `game/scenes/overlay/cutscene.tscn`, `game/scripts/core/cutscene_player.gd`, `game/scripts/ui/cutscene_letterbox.gd`
 **Source Docs:** `dialogue-system.md` (cutscene vs dialogue distinction), `script/` (animation markers, timing cues), `events.md` (cutscene triggers)
 **Depends On:** 3.5 (Dialogue Overlay — reuses text box), 1.8 (Dialogue Data)
 
 **What's Needed:**
-- [ ] Cutscene sequencer: play dialogue entries in order with animation/camera control
-- [ ] Camera movement and framing control
-- [ ] Character movement scripting (walk to point, face direction)
-- [ ] Sprite emotion animations (14 types from dialogue-system.md)
-- [ ] Fade to black / screen effects
-- [ ] Music and SFX cue triggers
-- [ ] Flag setting at cutscene completion
-- [ ] Can force-close dialogue overlay (cutscene takes priority per GameManager)
-- [ ] Process mode: PROCESS_MODE_ALWAYS
+- [x] Cutscene sequencer: play entries in order with 10 command types (fade, move, camera, wait, shake, flash, title, music, hide/show_dialogue)
+- [x] Camera movement and framing control (signal-based via cutscene_camera_requested)
+- [x] Character movement scripting (walk_to on PlayerCharacter + NPC)
+- [x] Sprite emotion animations (14 types, forwarded from embedded dialogue_box)
+- [x] Fade to black / screen effects (fade, flash, title card)
+- [x] Music and SFX cue triggers (signals emitted, AudioManager wiring deferred to 3.8)
+- [x] Flag setting at cutscene completion (per-entry flag_set + cutscene_seen skip flags)
+- [x] Can force-close dialogue overlay (cutscene takes priority per GameManager)
+- [x] Process mode: PROCESS_MODE_ALWAYS
+- [x] T1 letterbox bars (animate in/out) + T4 micro-cutscene (no letterbox)
+- [x] Embedded dialogue_box mode (embedded_mode suppresses pop_overlay)
+- [x] Skip flag system (supports faint-and-reload persistence)
+- [x] ~55 tests across 4 test files (620/620 full suite)
+
+**Notes:**
+- T2 (Walk-and-Talk) and T3 (Playable Scene) deferred — they are exploration-mode behaviors, not overlays
+- Ley Line Rupture montage (Interlude Scene 20) deferred to gap 4.5
+- Boss-integrated cutscenes (dialogue at HP thresholds) handled by battle_manager.gd, not this overlay
+- cutscene_player.gd is root script on CanvasLayer — GameManager.overlay_node IS the cutscene player
+- Headless-safe: letterbox/fade/flash/title skip tweening in headless mode (avoids rp_target null errors)
+- Design spec: `docs/superpowers/specs/2026-04-13-cutscene-overlay-design.md`
 
 **Blocking:** Story progression scenes, boss intros, key narrative moments
 
@@ -1151,6 +1164,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-07 | 4.1 Ember Vein vertical slice | 3-floor dungeon (F1, F2, F4) with TileMapLayer pipeline, placeholder tileset, boss trigger zones, Vein Guardian 2-phase scripted AI, Ember Drake mini-boss, floor-specific encounters, PartyState battle integration, dialogue stubs, event flags, 9 treasure items. | — |
 | 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
 | 2026-04-12 | 4.4 Phase B2 | Ember Vein F3 (3 new puzzle entities, hidden door, encounters), Ironmouth escape (linear map, combat, Lira+Sable join), Scene 1 full dialogue (1a-1e, 6 new JSONs), Cael shimmer (+10% physical), Arcanite gear (break mechanic), start location → F1. Dawn March deferred to 3.7. ~20 new files, ~13 modified. | — |
+| 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 4 test files (~55 tests). 620/620 full suite. | — |
 
 ---
 
@@ -1160,9 +1174,9 @@ smallest vertical slice (Ember Vein) that exercises every system.
 |------|------|--------|-------------|
 | 1: Data Foundation | 9 | 9/9 complete | JSON data from design docs |
 | 2: Entity Prefabs | 4 | 4/4 complete | .tscn prefabs with GDScript |
-| 3: Core Systems | 8 | 4/8 complete (2 mostly) | Scenes and game systems |
+| 3: Core Systems | 8 | 5/8 complete (2 mostly) | Scenes and game systems |
 | 4: Content & Integration | 9 | 0/9 complete (4 mostly, 1 in progress) | Maps, content, polish |
-| **Total** | **30** | **17 complete, 6 mostly, 1 in progress, 6 not started** | |
+| **Total** | **30** | **18 complete, 6 mostly, 1 in progress, 5 not started** | |
 
 **Note on gap numbering:** This document uses D-prefixed IDs (D1.1, D1.2...)
 when disambiguation from `game-design-gaps.md` is needed. Within this
