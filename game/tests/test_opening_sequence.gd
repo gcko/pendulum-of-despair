@@ -181,6 +181,21 @@ func test_overworld_has_scene4_trigger() -> void:
 		"dawn_march",
 		"Scene4Trigger should reference dawn_march cutscene",
 	)
+	assert_eq(
+		str(trigger.get_meta("cutscene_map_id", "")),
+		"cutscenes/dawn_march_trail",
+		"Scene4Trigger should transition to dawn_march_trail map",
+	)
+	assert_eq(
+		str(trigger.get_meta("cutscene_return_map", "")),
+		"overworld",
+		"Scene4Trigger should return to overworld after cutscene",
+	)
+	assert_eq(
+		str(trigger.get_meta("required_flag", "")),
+		"ironmouth_escape_seen",
+		"Scene4Trigger should require ironmouth_escape_seen flag",
+	)
 	overworld.queue_free()
 
 

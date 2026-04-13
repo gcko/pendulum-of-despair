@@ -18,18 +18,22 @@ tile_map_data = {"format": 3, "tile_data": PackedInt32Array(0, 0, 1, 1, 0, 1, 2,
 [node name="Edren" parent="Entities" instance=ExtResource("2_npc")]
 position = Vector2(80, 120)
 metadata/npc_id = "edren"
+metadata/cutscene_actor = true
 
 [node name="Cael" parent="Entities" instance=ExtResource("2_npc")]
 position = Vector2(64, 136)
 metadata/npc_id = "cael"
+metadata/cutscene_actor = true
 
 [node name="Lira" parent="Entities" instance=ExtResource("2_npc")]
 position = Vector2(32, 120)
 metadata/npc_id = "lira"
+metadata/cutscene_actor = true
 
 [node name="Sable" parent="Entities" instance=ExtResource("2_npc")]
 position = Vector2(16, 136)
 metadata/npc_id = "sable"
+metadata/cutscene_actor = true
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(-100, -100)

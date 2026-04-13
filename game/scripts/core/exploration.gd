@@ -283,6 +283,8 @@ func _initialize_entities(map_node: Node2D) -> void:
 		if not child.has_method("initialize"):
 			continue
 		if child.has_signal("npc_interacted"):
+			if child.get_meta("cutscene_actor", false):
+				continue
 			var npc_id: String = child.get_meta("npc_id", "")
 			if npc_id.is_empty():
 				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
@@ -952,12 +954,15 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 
 
 func _start_pending_cutscene(cutscene_id: String, entries: Array, tier: int) -> void:
-	if GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
-		GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
+	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
+		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
+		_cutscene_return = {}
+		return
+	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
 
 
 func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene:
+	if body != _player or _transitioning or _in_auto_walk or _in_cutscene:
 		return
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
@@ -965,22 +970,27 @@ func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var required: String = area.get_meta("required_flag", "")
 	if not required.is_empty() and not EventFlags.get_flag(required):
 		return
-	# Set one-shot flag immediately (prevents re-trigger)
-	if not flag.is_empty():
-		EventFlags.set_flag(flag, true)
 	var scene_id: String = area.get_meta("cutscene_scene_id", "")
 	var map_id: String = area.get_meta("cutscene_map_id", "")
 	var return_map: String = area.get_meta("cutscene_return_map", "")
 	var return_spawn: String = area.get_meta("cutscene_return_spawn", "")
 	# Load cutscene data from dialogue JSON
 	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
+	if scene_data.is_empty():
+		push_error("Exploration: Failed to load cutscene dialogue '%s'" % scene_id)
+		return
 	var entries: Array = scene_data.get("entries", [])
 	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
 	var tier: int = scene_data.get("cutscene_tier", 1)
 	if entries.is_empty():
+		push_error("Exploration: Cutscene '%s' has no entries" % scene_id)
 		return
-	# Store return info (survives map swap)
-	_cutscene_return = {"map": return_map, "spawn": return_spawn}
+	# Set one-shot flag AFTER validation (prevents burning flag on failure)
+	if not flag.is_empty():
+		EventFlags.set_flag(flag, true)
+	# Store return info only when a return map is specified
+	if return_map != "":
+		_cutscene_return = {"map": return_map, "spawn": return_spawn}
 	if map_id != "":
 		# Transition to cutscene map, then start cutscene after load
 		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}

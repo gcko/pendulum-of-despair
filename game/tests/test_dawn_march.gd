@@ -5,6 +5,12 @@ extends GutTest
 func before_each() -> void:
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
+	DataManager.clear_cache()
+
+
+func after_each() -> void:
+	DataManager.clear_cache()
+	EventFlags.clear_all()
 
 
 # --- 1. dawn_march.json loads with cutscene metadata ---
@@ -29,6 +35,7 @@ func test_dawn_march_has_16_entries() -> void:
 func test_entry_012_has_flag_set() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
+	assert_gt(entries.size(), 11, "Should have at least 12 entries for entry 012")
 	var entry_12: Dictionary = entries[11]
 	assert_eq(
 		entry_12.get("flag_set", ""),
@@ -41,6 +48,7 @@ func test_entry_012_has_flag_set() -> void:
 func test_entry_013_has_title_command() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
+	assert_gt(entries.size(), 12, "Should have at least 13 entries for entry 013")
 	var entry_13: Dictionary = entries[12]
 	var commands: Array = entry_13.get("commands", [])
 	assert_gt(commands.size(), 0, "Entry 013 should have commands")
@@ -72,7 +80,7 @@ func test_entry_001_move_commands_use_to_field() -> void:
 func test_all_entries_have_required_fields() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
-	for i in range(entries.size()):
+	for i: int in range(entries.size()):
 		var entry: Dictionary = entries[i]
 		assert_true(entry.has("id"), "Entry %d missing 'id'" % i)
 		assert_true(entry.has("speaker"), "Entry %d missing 'speaker'" % i)
@@ -91,6 +99,7 @@ func test_trail_map_scene_exists() -> void:
 func test_entry_012_has_fade_out_command() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
+	assert_gt(entries.size(), 11, "Should have at least 12 entries for entry 012")
 	var entry_12: Dictionary = entries[11]
 	var commands: Array = entry_12.get("commands", [])
 	var has_fade_out: bool = false
@@ -106,6 +115,7 @@ func test_entry_012_has_fade_out_command() -> void:
 func test_entry_016_has_fade_in_command() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
+	assert_gt(entries.size(), 15, "Should have at least 16 entries for entry 016")
 	var entry_16: Dictionary = entries[15]
 	var commands: Array = entry_16.get("commands", [])
 	var has_fade_in: bool = false
