@@ -196,6 +196,15 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	var seq_flag: String = _current_map.get_meta("auto_sequence_flag", "")
 	if not seq_id.is_empty() and not EventFlags.get_flag(seq_flag):
 		call_deferred("_run_auto_sequence", seq_id, seq_flag)
+	if not _pending_cutscene.is_empty():
+		var pc: Dictionary = _pending_cutscene
+		_pending_cutscene = {}
+		call_deferred(
+			"_start_pending_cutscene",
+			pc.get("id", ""),
+			pc.get("entries", []),
+			pc.get("tier", 1),
+		)
 
 
 func flash_location_name(text: String) -> void:
