@@ -415,6 +415,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
 				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
+			elif child is Area2D and child.has_meta("cutscene_scene_id"):
+				child.body_entered.connect(_on_cutscene_trigger_entered.bind(child))
 			elif (
 				child is Area2D
 				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
