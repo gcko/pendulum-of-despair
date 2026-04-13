@@ -28,6 +28,7 @@ func _entry(opts: Dictionary = {}) -> Dictionary:
 
 func before_each() -> void:
 	EventFlags.clear_all()
+	GameManager.transition_data = {}
 
 
 # --- 1. Empty entries emits cutscene_finished ---

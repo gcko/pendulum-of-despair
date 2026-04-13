@@ -28,6 +28,9 @@ var facing_direction: Vector2 = Vector2.DOWN
 ## Whether player input is currently being processed.
 var _input_enabled: bool = true
 
+## Active walk tween (killed on new walk_to call).
+var _walk_tween: Tween = null
+
 ## Last interactable that entered the Area2D (not necessarily nearest).
 var _current_interactable: Node2D = null
 
@@ -131,15 +134,22 @@ func _load_placeholder_sprite() -> void:
 	var texture: Texture2D = load(sprite_path)
 	# @onready vars may not be resolved if initialize() is called before _ready.
 	# Fall back to get_node() if _sprite is null.
-	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
+	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
 
 
 ## Play a named animation if the AnimationPlayer has it.
 func play_animation(anim_name: String) -> void:
-	if _anim_player != null and _anim_player.has_animation(anim_name):
-		_anim_player.play(anim_name)
+	if _anim_player == null:
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter %s has no AnimationPlayer" % name)
+		return
+	if not _anim_player.has_animation(anim_name):
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter %s missing animation: %s" % [name, anim_name])
+		return
+	_anim_player.play(anim_name)
 
 
 ## Attempt to interact with the nearest interactable. Emits interaction_requested
@@ -152,8 +162,18 @@ func try_interact() -> void:
 ## Walk to target position at given speed (for cutscene choreography).
 ## Emits walk_complete when arrived. Uses Tween, not physics movement.
 func walk_to(target: Vector2, speed: float) -> void:
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
 	var distance: float = position.distance_to(target)
 	if distance < 1.0:
+		walk_complete.emit()
+		return
+	if speed <= 0.0:
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter walk_to: non-positive speed %s" % speed)
+		position = target
+		_play_idle_animation()
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
@@ -165,9 +185,9 @@ func walk_to(target: Vector2, speed: float) -> void:
 		facing_direction = Vector2.DOWN if dir.y > 0 else Vector2.UP
 	# Reuse existing _play_walk_animation (handles anim name mapping)
 	_play_walk_animation(facing_direction)
-	var tween: Tween = create_tween()
-	tween.tween_property(self, "position", target, duration)
-	tween.tween_callback(
+	_walk_tween = create_tween()
+	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_callback(
 		func():
 			_play_idle_animation()
 			walk_complete.emit()

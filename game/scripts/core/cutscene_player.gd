@@ -21,11 +21,12 @@ const TIER_FULL: int = 1
 const TIER_MICRO: int = 4
 
 var _cutscene_id: String = ""
-var _entries: Array = []
+var _entries: Array[Dictionary] = []
 var _current_index: int = 0
 var _tier: int = TIER_FULL
 var _is_playing: bool = false
 var _config: Dictionary = {}
+var _skipped: bool = false
 
 @onready var _dialogue_box: Node = $DialogueBox
 @onready var _fade_rect: ColorRect = $FadeRect
@@ -48,21 +49,27 @@ func _ready() -> void:
 
 
 func _load_config() -> void:
-	if ResourceLoader.exists("res://data/config/defaults.json"):
-		var json_text: String = FileAccess.get_file_as_string("res://data/config/defaults.json")
-		if json_text != "":
-			var json := JSON.new()
-			if json.parse(json_text) == OK:
-				_config = json.data
+	var data: Variant = DataManager.load_json("res://data/config/defaults.json")
+	if data is Dictionary:
+		_config = data
 
 
 ## Start a cutscene sequence.
 func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
+	if _is_playing:
+		if OS.is_debug_build():
+			push_warning("Cutscene already playing: %s" % _cutscene_id)
+		return
+	if cutscene_id == "":
+		push_error("CutscenePlayer: empty cutscene_id")
+		cutscene_finished.emit()
+		return
 	_cutscene_id = cutscene_id
-	_entries = entries
+	_entries.assign(entries)
 	_tier = tier
 	_current_index = 0
 	_is_playing = true
+	_skipped = false
 
 	# Check skip flag
 	var skip_flag: String = "cutscene_seen_%s" % cutscene_id
@@ -79,6 +86,10 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 
 	# Process entries
 	await _process_entries()
+
+	# If skip_cutscene() already handled cleanup, bail out
+	if _skipped:
+		return
 
 	# Letterbox out for T1
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
@@ -101,13 +112,15 @@ func skip_cutscene() -> void:
 		var entry: Dictionary = _entries[i]
 		var flag: String = entry.get("flag_set", "")
 		if flag != "":
+			EventFlags.set_flag(flag, true)
 			flag_set_requested.emit(flag, true)
 	if _tier == TIER_FULL and _letterbox != null:
 		_letterbox.set_instant(false)
 	var skip_flag: String = "cutscene_seen_%s" % _cutscene_id
 	EventFlags.set_flag(skip_flag, true)
-	_entries = []
+	_entries.clear()
 	_is_playing = false
+	_skipped = true
 	cutscene_finished.emit()
 	GameManager.pop_overlay()
 
@@ -261,14 +274,15 @@ func _cmd_move(cmd: Dictionary) -> void:
 	var who: String = cmd.get("who", "")
 	var to: Array = cmd.get("to", [0, 0])
 	var speed: float = cmd.get("speed", 80.0)
-	if who != "":
+	if who != "" and to.size() >= 2:
 		cutscene_move_requested.emit(who, Vector2(to[0], to[1]), speed)
 
 
 func _cmd_camera(cmd: Dictionary) -> void:
 	var target: Array = cmd.get("target", [0, 0])
 	var duration: float = cmd.get("duration", 1.0)
-	cutscene_camera_requested.emit(Vector2(target[0], target[1]), duration)
+	if target.size() >= 2:
+		cutscene_camera_requested.emit(Vector2(target[0], target[1]), duration)
 
 
 func _cmd_shake(cmd: Dictionary) -> void:

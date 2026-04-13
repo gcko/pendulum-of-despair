@@ -6,17 +6,21 @@ const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
 
 
 func _create_player() -> Node2D:
-	var player = PLAYER_SCENE.instantiate()
+	var player: Node2D = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)
 	player.position = Vector2(0, 0)
 	return player
 
 
 func _create_npc() -> Node2D:
-	var npc_node = NPC_SCENE.instantiate()
+	var npc_node: Node2D = NPC_SCENE.instantiate()
 	add_child_autofree(npc_node)
 	npc_node.position = Vector2(0, 0)
 	return npc_node
+
+
+func before_each() -> void:
+	EventFlags.clear_all()
 
 
 func test_player_walk_to_emits_walk_complete() -> void:

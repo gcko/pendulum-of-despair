@@ -19,6 +19,9 @@ var npc_id: String = ""
 ## All dialogue entries loaded from DataManager (ordered by priority).
 var dialogue_entries: Array = []
 
+## Active walk tween (killed on new walk_to call).
+var _walk_tween: Tween = null
+
 ## Child node references.
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
@@ -57,7 +60,7 @@ func interact() -> void:
 func get_current_dialogue() -> Dictionary:
 	var fallback: Dictionary = {}
 	for entry: Dictionary in dialogue_entries:
-		var condition = entry.get("condition")
+		var condition: Variant = entry.get("condition")
 		if condition == null or condition == "":
 			fallback = entry
 			continue
@@ -69,7 +72,7 @@ func get_current_dialogue() -> Dictionary:
 ## Evaluate a condition expression against current game state.
 ## Supports: null (always true), binary flags, numeric comparisons,
 ## party_has() (stubbed), and AND combinations.
-func _evaluate_condition(condition) -> bool:
+func _evaluate_condition(condition: Variant) -> bool:
 	# Null or empty = always true (default/fallback entry).
 	if condition == null or condition == "":
 		return true
@@ -107,7 +110,7 @@ func _evaluate_condition(condition) -> bool:
 
 ## Compare a flag value against an expected value using an operator.
 func _compare_flag(flag_name: String, op: String, value_str: String) -> bool:
-	var flag_val = EventFlags.get_flag(flag_name)
+	var flag_val: Variant = EventFlags.get_flag(flag_name)
 	var result: bool = false
 	if value_str.is_valid_int():
 		var expected: int = value_str.to_int()
@@ -148,14 +151,23 @@ func _load_placeholder_sprite() -> void:
 
 ## Walk to target position at given speed (for cutscene choreography).
 func walk_to(target: Vector2, speed: float) -> void:
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
 	var distance: float = position.distance_to(target)
 	if distance < 1.0:
 		walk_complete.emit()
 		return
+	if speed <= 0.0:
+		if OS.is_debug_build():
+			push_warning("NPC %s walk_to: non-positive speed %s" % [name, speed])
+		position = target
+		walk_complete.emit()
+		return
 	var duration: float = distance / speed
-	var tween: Tween = create_tween()
-	tween.tween_property(self, "position", target, duration)
-	tween.tween_callback(func(): walk_complete.emit())
+	_walk_tween = create_tween()
+	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_callback(func(): walk_complete.emit())
 
 
 ## Play a named animation on the NPC's AnimationPlayer.

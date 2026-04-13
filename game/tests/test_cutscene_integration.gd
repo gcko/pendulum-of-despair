@@ -36,25 +36,26 @@ func _start_and_await(cs: Node, id: String, entries: Array, tier: int = 1) -> vo
 
 func before_each() -> void:
 	EventFlags.clear_all()
+	GameManager.transition_data = {}
 
 
 # --- Scene structure tests (no start_cutscene needed) ---
 
 
 func test_cutscene_scene_loads() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	assert_not_null(cs, "cutscene scene should instantiate")
 
 
 func test_cutscene_has_process_mode_always() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	assert_eq(cs.process_mode, Node.PROCESS_MODE_ALWAYS)
 
 
 func test_cutscene_has_required_children() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	assert_not_null(cs.get_node_or_null("LetterboxTop"))
 	assert_not_null(cs.get_node_or_null("LetterboxBottom"))
@@ -65,7 +66,7 @@ func test_cutscene_has_required_children() -> void:
 
 
 func test_dialogue_box_is_embedded() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	var dlg: Node = cs.get_node_or_null("DialogueBox")
 	assert_true(dlg.embedded_mode)
@@ -75,7 +76,7 @@ func test_dialogue_box_is_embedded() -> void:
 
 
 func test_cutscene_finished_emitted() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	await _start_and_await(cs, "int_test_finish", [])
@@ -83,7 +84,7 @@ func test_cutscene_finished_emitted() -> void:
 
 
 func test_flag_set_via_cutscene() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	cs.flag_set_requested.connect(func(f: String, v: Variant): EventFlags.set_flag(f, v))
 	var entries := [_entry({"flag_set": "test_integration_flag"})]
@@ -92,7 +93,7 @@ func test_flag_set_via_cutscene() -> void:
 
 
 func test_t1_full_sequence() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	var entries := [
@@ -108,7 +109,7 @@ func test_t1_full_sequence() -> void:
 
 
 func test_t4_micro_sequence() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	var entries := [
@@ -151,7 +152,7 @@ func test_sequential_cutscenes() -> void:
 
 
 func test_move_signal_emitted_to_listener() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	var entries := [
@@ -167,7 +168,7 @@ func test_move_signal_emitted_to_listener() -> void:
 
 
 func test_unknown_entity_does_not_crash() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	var entries := [
@@ -191,7 +192,7 @@ func test_unknown_entity_does_not_crash() -> void:
 
 
 func test_music_signal_not_crash_when_unconnected() -> void:
-	var cs = CUTSCENE_SCENE.instantiate()
+	var cs: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs)
 	watch_signals(cs)
 	var entries := [
