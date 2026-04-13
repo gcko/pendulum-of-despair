@@ -35,6 +35,8 @@ func _on_body_entered(_body: Node2D) -> void:
 		return
 	if has_fired:
 		return
+	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+		return
 	if condition_flag != "" and not EventFlags.get_flag(condition_flag):
 		return
 	has_fired = true

@@ -45,6 +45,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if zone_id.is_empty():
 		return
 	if body.is_in_group("player"):
+		if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+			return
 		_player_inside = true
 		_status_applied = false
 		_timer.start()

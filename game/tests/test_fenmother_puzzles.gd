@@ -421,6 +421,19 @@ func test_damage_zone_signal_emitted() -> void:
 	assert_signal_emitted(zone, "zone_damage_dealt")
 
 
+func test_damage_zone_blocked_during_cutscene() -> void:
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 10, 1.0, "")
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	var body: CharacterBody2D = CharacterBody2D.new()
+	body.add_to_group("player")
+	add_child_autofree(body)
+	zone._on_body_entered(body)
+	assert_false(zone._player_inside, "Player should not register inside during cutscene")
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+
+
 func test_damage_zone_no_damage_after_exit() -> void:
 	PartyState.initialize_new_game()
 	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()

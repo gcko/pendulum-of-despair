@@ -32,6 +32,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if not body.is_in_group("player"):
 		return
+	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+		return
 	_is_pressed = true
 	PartyState.set_puzzle_state(_dungeon_id, "%s_pressed" % _plate_id, true)
 	_update_visual()

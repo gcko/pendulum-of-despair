@@ -189,3 +189,26 @@ func test_save_point_body_before_init_blocked() -> void:
 	watch_signals(sp)
 	sp._on_body_entered(Node2D.new())
 	assert_signal_not_emitted(sp, "save_point_entered", "body enter before init should not emit")
+
+
+func test_save_point_blocked_during_cutscene() -> void:
+	var sp = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	sp.initialize("test_sp_cs")
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	watch_signals(sp)
+	sp._on_body_entered(Node2D.new())
+	assert_signal_not_emitted(sp, "save_point_entered", "should not emit during cutscene")
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+
+
+func test_trigger_blocked_during_cutscene() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	trigger.initialize("cs_trigger", "")
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	watch_signals(trigger)
+	trigger._on_body_entered(Node2D.new())
+	assert_signal_not_emitted(trigger, "triggered", "should not fire during cutscene")
+	assert_false(trigger.has_fired, "should not be marked as fired during cutscene")
+	GameManager.current_overlay = GameManager.OverlayState.NONE
