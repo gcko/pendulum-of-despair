@@ -201,6 +201,7 @@ func flash_location_name(text: String) -> void:
 	_location_panel.visible = true
 	_location_panel.modulate = Color(1, 1, 1, 0)
 	_flash_tween = create_tween()
+	_flash_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_flash_tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
 	_flash_tween.tween_interval(2.0)
 	_flash_tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
@@ -730,6 +731,7 @@ func _start_auto_walk() -> void:
 	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
 		_auto_walk_tween.kill()
 	_auto_walk_tween = create_tween()
+	_auto_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_auto_walk_tween.tween_property(_player, "position", target_pos, duration)
 	_auto_walk_tween.tween_callback(_end_auto_walk)
 
@@ -883,7 +885,7 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 	var steps: int = int(duration / 0.05)
 	for i in range(steps):
 		var offset := Vector2(
-			randf_range(-intensity, intensity), randf_range(-intensity, intensity)
+			float(randi_range(-intensity, intensity)), float(randi_range(-intensity, intensity))
 		)
 		_cutscene_shake_tween.tween_property(_camera, "offset", offset, 0.05)
 	_cutscene_shake_tween.tween_property(_camera, "offset", original_offset, 0.05)

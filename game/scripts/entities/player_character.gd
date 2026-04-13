@@ -71,6 +71,9 @@ func set_input_enabled(enabled: bool) -> void:
 ## Initialize the character with data from DataManager.
 ## Call after adding to the scene tree.
 func initialize(p_character_id: String) -> void:
+	if p_character_id == "":
+		push_error("PlayerCharacter: empty character_id")
+		return
 	character_id = p_character_id
 	character_data = DataManager.load_character(character_id)
 	if character_data.is_empty():
@@ -131,7 +134,11 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("PlayerCharacter: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var loaded: Resource = load(sprite_path)
+	if not (loaded is Texture2D):
+		push_error("PlayerCharacter: loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = loaded as Texture2D
 	# @onready vars may not be resolved if initialize() is called before _ready.
 	# Fall back to get_node() if _sprite is null.
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")

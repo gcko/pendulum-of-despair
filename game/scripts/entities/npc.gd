@@ -143,7 +143,11 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("NPC: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var loaded: Resource = load(sprite_path)
+	if not (loaded is Texture2D):
+		push_error("NPC: loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = loaded as Texture2D
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture

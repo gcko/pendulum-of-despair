@@ -256,6 +256,8 @@ func _select_choice() -> void:
 	choice_made.emit(_choice_index)
 
 	# Emit flag_set if the selected option has flag/score data
+	if _current_index >= _entries.size():
+		return
 	var entry: Dictionary = _entries[_current_index]
 	var choices: Variant = entry.get("choice")
 	if choices is Array and _choice_index < choices.size():
