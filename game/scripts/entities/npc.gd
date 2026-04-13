@@ -10,12 +10,17 @@ extends Area2D
 
 ## Emitted when the player interacts. Carries resolved dialogue.
 signal npc_interacted(npc_id: String, dialogue_data: Dictionary)
+## Emitted when walk_to() completes.
+signal walk_complete
 
 ## NPC identifier used for dialogue lookup.
 var npc_id: String = ""
 
 ## All dialogue entries loaded from DataManager (ordered by priority).
 var dialogue_entries: Array = []
+
+## Active walk tween (killed on new walk_to call).
+var _walk_tween: Tween = null
 
 ## Child node references.
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -55,7 +60,7 @@ func interact() -> void:
 func get_current_dialogue() -> Dictionary:
 	var fallback: Dictionary = {}
 	for entry: Dictionary in dialogue_entries:
-		var condition = entry.get("condition")
+		var condition: Variant = entry.get("condition")
 		if condition == null or condition == "":
 			fallback = entry
 			continue
@@ -67,7 +72,7 @@ func get_current_dialogue() -> Dictionary:
 ## Evaluate a condition expression against current game state.
 ## Supports: null (always true), binary flags, numeric comparisons,
 ## party_has() (stubbed), and AND combinations.
-func _evaluate_condition(condition) -> bool:
+func _evaluate_condition(condition: Variant) -> bool:
 	# Null or empty = always true (default/fallback entry).
 	if condition == null or condition == "":
 		return true
@@ -105,7 +110,7 @@ func _evaluate_condition(condition) -> bool:
 
 ## Compare a flag value against an expected value using an operator.
 func _compare_flag(flag_name: String, op: String, value_str: String) -> bool:
-	var flag_val = EventFlags.get_flag(flag_name)
+	var flag_val: Variant = EventFlags.get_flag(flag_name)
 	var result: bool = false
 	if value_str.is_valid_int():
 		var expected: int = value_str.to_int()
@@ -138,7 +143,77 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("NPC: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var loaded: Resource = load(sprite_path)
+	if not (loaded is Texture2D):
+		push_error("NPC: loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = loaded as Texture2D
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
+
+
+## Walk to target position at given speed (for cutscene choreography).
+func walk_to(target: Vector2, speed: float) -> void:
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
+	var distance: float = position.distance_to(target)
+	if distance < 1.0:
+		position = target
+		if _anim_player != null and _anim_player.has_animation("idle"):
+			_anim_player.play("idle")
+		walk_complete.emit()
+		return
+	if speed <= 0.0:
+		if OS.is_debug_build():
+			push_warning("NPC %s walk_to: non-positive speed %s" % [name, speed])
+		position = target
+		walk_complete.emit()
+		return
+	var duration: float = distance / speed
+	# Play walk animation if available
+	var dir: Vector2 = (target - position).normalized()
+	var anim_name: String = "idle"
+	if abs(dir.x) > abs(dir.y):
+		anim_name = "walk_east" if dir.x > 0 else "walk_west"
+	else:
+		anim_name = "walk_south" if dir.y > 0 else "walk_north"
+	if _anim_player != null and _anim_player.has_animation(anim_name):
+		_anim_player.play(anim_name)
+	_walk_tween = create_tween()
+	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_callback(
+		func():
+			if _anim_player != null and _anim_player.has_animation("idle"):
+				_anim_player.play("idle")
+			walk_complete.emit()
+	)
+
+
+## Cancel any in-progress walk tween (e.g., on cutscene end).
+## Emits walk_complete to maintain signal contract.
+func cancel_walk() -> void:
+	var was_walking: bool = _walk_tween != null and _walk_tween.is_valid()
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
+	if _anim_player != null and _anim_player.has_animation("idle"):
+		_anim_player.play("idle")
+	if was_walking:
+		walk_complete.emit()
+
+
+## Play a named animation on the NPC's AnimationPlayer.
+## Uses existing _anim_player @onready var (line 22).
+func play_animation(anim: String) -> void:
+	if _anim_player == null:
+		if OS.is_debug_build():
+			push_warning("NPC %s has no AnimationPlayer" % name)
+		return
+	if not _anim_player.has_animation(anim):
+		if OS.is_debug_build():
+			push_warning("NPC %s missing animation: %s" % [name, anim])
+		return
+	_anim_player.play(anim)

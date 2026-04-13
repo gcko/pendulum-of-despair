@@ -10,6 +10,8 @@ extends CharacterBody2D
 
 ## Emitted when the player presses interact and an interactable is nearby.
 signal interaction_requested(interactable: Node2D)
+## Emitted when walk_to() completes.
+signal walk_complete
 
 ## Movement speed in pixels per second.
 const MOVE_SPEED: float = 80.0
@@ -25,6 +27,9 @@ var facing_direction: Vector2 = Vector2.DOWN
 
 ## Whether player input is currently being processed.
 var _input_enabled: bool = true
+
+## Active walk tween (killed on new walk_to call).
+var _walk_tween: Tween = null
 
 ## Last interactable that entered the Area2D (not necessarily nearest).
 var _current_interactable: Node2D = null
@@ -66,6 +71,9 @@ func set_input_enabled(enabled: bool) -> void:
 ## Initialize the character with data from DataManager.
 ## Call after adding to the scene tree.
 func initialize(p_character_id: String) -> void:
+	if p_character_id == "":
+		push_error("PlayerCharacter: empty character_id")
+		return
 	character_id = p_character_id
 	character_data = DataManager.load_character(character_id)
 	if character_data.is_empty():
@@ -126,18 +134,29 @@ func _load_placeholder_sprite() -> void:
 	if not ResourceLoader.exists(sprite_path):
 		push_error("PlayerCharacter: Placeholder sprite not found: %s" % sprite_path)
 		return
-	var texture: Texture2D = load(sprite_path)
+	var loaded: Resource = load(sprite_path)
+	if not (loaded is Texture2D):
+		push_error("PlayerCharacter: loaded resource is not Texture2D: %s" % sprite_path)
+		return
+	var texture: Texture2D = loaded as Texture2D
 	# @onready vars may not be resolved if initialize() is called before _ready.
 	# Fall back to get_node() if _sprite is null.
-	var sprite: Sprite2D = _sprite if _sprite != null else get_node("Sprite2D")
+	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
 		sprite.texture = texture
 
 
 ## Play a named animation if the AnimationPlayer has it.
 func play_animation(anim_name: String) -> void:
-	if _anim_player != null and _anim_player.has_animation(anim_name):
-		_anim_player.play(anim_name)
+	if _anim_player == null:
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter %s has no AnimationPlayer" % name)
+		return
+	if not _anim_player.has_animation(anim_name):
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter %s missing animation: %s" % [name, anim_name])
+		return
+	_anim_player.play(anim_name)
 
 
 ## Attempt to interact with the nearest interactable. Emits interaction_requested
@@ -145,6 +164,56 @@ func play_animation(anim_name: String) -> void:
 func try_interact() -> void:
 	if _current_interactable != null:
 		interaction_requested.emit(_current_interactable)
+
+
+## Walk to target position at given speed (for cutscene choreography).
+## Emits walk_complete when arrived. Uses Tween, not physics movement.
+func walk_to(target: Vector2, speed: float) -> void:
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
+	var distance: float = position.distance_to(target)
+	if distance < 1.0:
+		position = target
+		_play_idle_animation()
+		walk_complete.emit()
+		return
+	if speed <= 0.0:
+		if OS.is_debug_build():
+			push_warning("PlayerCharacter walk_to: non-positive speed %s" % speed)
+		position = target
+		_play_idle_animation()
+		walk_complete.emit()
+		return
+	var duration: float = distance / speed
+	# Face the walk direction using existing facing_direction var
+	var dir: Vector2 = (target - position).normalized()
+	if abs(dir.x) > abs(dir.y):
+		facing_direction = Vector2.RIGHT if dir.x > 0 else Vector2.LEFT
+	else:
+		facing_direction = Vector2.DOWN if dir.y > 0 else Vector2.UP
+	# Reuse existing _play_walk_animation (handles anim name mapping)
+	_play_walk_animation(facing_direction)
+	_walk_tween = create_tween()
+	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_callback(
+		func():
+			_play_idle_animation()
+			walk_complete.emit()
+	)
+
+
+## Cancel any in-progress walk tween (e.g., on cutscene end).
+## Emits walk_complete to maintain signal contract.
+func cancel_walk() -> void:
+	var was_walking: bool = _walk_tween != null and _walk_tween.is_valid()
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
+	_play_idle_animation()
+	if was_walking:
+		walk_complete.emit()
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:

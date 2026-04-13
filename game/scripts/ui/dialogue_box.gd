@@ -28,6 +28,10 @@ const MAX_VISIBLE_LINES: int = 3
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 
+## When true, dialogue_finished does NOT call GameManager.pop_overlay().
+## Used when dialogue_box is embedded inside another overlay (e.g., cutscene).
+var embedded_mode: bool = false
+
 ## Current dialogue entries being processed.
 var _entries: Array = []
 
@@ -102,11 +106,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_choice_input(event)
 		return
 	if event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		if _text_complete:
 			_advance()
 		else:
 			_complete_text()
-		get_viewport().set_input_as_handled()
 
 
 ## Start displaying a sequence of dialogue entries.
@@ -115,7 +119,8 @@ func show_dialogue(entries: Array) -> void:
 	_current_index = 0
 	if _entries.is_empty():
 		dialogue_finished.emit()
-		GameManager.pop_overlay()
+		if not embedded_mode:
+			GameManager.pop_overlay()
 		return
 	_show_entry(_current_index)
 
@@ -124,13 +129,15 @@ func show_dialogue(entries: Array) -> void:
 func close() -> void:
 	_entries = []
 	dialogue_finished.emit()
-	GameManager.pop_overlay()
+	if not embedded_mode:
+		GameManager.pop_overlay()
 
 
 func _show_entry(index: int) -> void:
 	if index >= _entries.size():
 		dialogue_finished.emit()
-		GameManager.pop_overlay()
+		if not embedded_mode:
+			GameManager.pop_overlay()
 		return
 
 	var entry: Dictionary = _entries[index]
@@ -233,13 +240,13 @@ func _handle_choice_input(event: InputEvent) -> void:
 		_update_choice_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		_select_choice()
 		get_viewport().set_input_as_handled()
+		_select_choice()
 	elif event.is_action_pressed("ui_cancel"):
 		# Cancel selects bottom option per ui-design.md Section 12.4
 		_choice_index = _choice_count - 1
-		_select_choice()
 		get_viewport().set_input_as_handled()
+		_select_choice()
 
 
 func _select_choice() -> void:
@@ -249,6 +256,8 @@ func _select_choice() -> void:
 	choice_made.emit(_choice_index)
 
 	# Emit flag_set if the selected option has flag/score data
+	if _current_index >= _entries.size():
+		return
 	var entry: Dictionary = _entries[_current_index]
 	var choices: Variant = entry.get("choice")
 	if choices is Array and _choice_index < choices.size():
@@ -279,7 +288,7 @@ func _update_choice_display() -> void:
 		var target: Label = _choice_labels[_choice_index]
 		_choice_cursor.global_position = Vector2(
 			target.global_position.x - 64,
-			target.global_position.y + target.size.y / 2.0,
+			target.global_position.y + floori(target.size.y / 2.0),
 		)
 
 

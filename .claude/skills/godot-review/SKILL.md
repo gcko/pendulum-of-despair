@@ -178,3 +178,8 @@ Copilot catches (PRs #114-117 proved this).
   to a canonical source in `docs/story/`.
 - **Be specific.** Report file:line for every finding.
 - **No false positives.** If you're unsure, read the source doc before flagging.
+- **File issues for skipped findings.** Every finding marked SKIP,
+  out-of-scope, or cosmetic MUST be captured as a `bd create` issue
+  before the review is considered complete. Reviews that identify
+  problems but don't file them are incomplete — the findings will be
+  forgotten. Include the PR number in the issue description.
