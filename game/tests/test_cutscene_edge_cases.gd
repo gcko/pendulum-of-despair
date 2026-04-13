@@ -38,13 +38,6 @@ func after_each() -> void:
 	DataManager.clear_cache()
 
 
-func _create_exploration() -> Node2D:
-	GameManager.transition_data = {}
-	var exp_node: Node2D = EXPLORATION_SCENE.instantiate()
-	add_child_autofree(exp_node)
-	return exp_node
-
-
 func _create_exploration_test_room() -> Node2D:
 	GameManager.transition_data = {}
 	var exp_node: Node2D = EXPLORATION_SCENE.instantiate()
@@ -112,24 +105,18 @@ func test_cutscene_trigger_missing_dialogue_no_crash() -> void:
 # --- 4. Cutscene trigger with empty entries does not crash ---
 func test_cutscene_trigger_empty_entries_no_crash() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
-	# Create test dialogue data with no entries
-	var test_data: Dictionary = {
-		"scene_id": "empty_cutscene",
-		"cutscene_id": "empty_cutscene",
-		"cutscene_tier": 1,
-		"entries": [],
-	}
-	# We cannot easily inject data into DataManager.load_dialogue,
-	# but we can test the handler directly with the empty entries path.
-	# The trigger handler calls DataManager.load_dialogue which returns {}
-	# for unknown scene_ids — already covered by test 3 above.
-	# Here we verify the pending cutscene path with empty entries.
+	# Set pending cutscene with empty entries, then load a map to consume it.
+	# The deferred _start_pending_cutscene fires with empty entries — verify
+	# the pending dict is consumed synchronously during load_map and that
+	# the deferred call handles empty entries without crashing.
 	exp_node._pending_cutscene = {"id": "empty_test", "entries": [], "tier": 1}
 	exp_node.load_map("test_room")
 	# Pending cutscene should be consumed (cleared) even with empty entries
 	assert_true(
 		exp_node._pending_cutscene.is_empty(), "pending cutscene should be consumed after load_map"
 	)
+	# Flush the deferred _start_pending_cutscene call so it doesn't leak
+	await get_tree().process_frame
 
 
 # --- 5. Cutscene double-fire prevention via flag ---

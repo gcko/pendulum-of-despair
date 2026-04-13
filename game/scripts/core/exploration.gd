@@ -28,7 +28,7 @@ var _in_auto_walk: bool = false
 var _auto_walk_tween: Tween = null
 var _arrival_tween: Tween = null
 var _in_cutscene: bool = false
-var _cutscene_handler: RefCounted = null
+var _cutscene_handler: CutsceneHandler = null
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
 ## Pending cutscene data (set by trigger, consumed after map load).
