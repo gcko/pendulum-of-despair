@@ -203,12 +203,16 @@ func _complete(_data: Dictionary) -> void:
 
 func _on_complete_dialogue_closed(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(_on_complete_dialogue_closed, CONNECT_ONE_SHOT)
 		return
 	_exploration.load_map("dungeons/fenmothers_hollow_spirit_path")
 
 
 func _on_dialogue_closed(state: GameManager.OverlayState, wave_num: int, data: Dictionary) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(
+			_on_dialogue_closed.bind(wave_num, data), CONNECT_ONE_SHOT
+		)
 		return
 	_launch_wave(wave_num, data)
 
