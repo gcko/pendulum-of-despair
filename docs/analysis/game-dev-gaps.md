@@ -26,9 +26,9 @@ adds a "Completed" date + commit reference.
 ## What Already Exists
 
 **PR #105 (merged 2026-04-02):** Godot project initialized with:
-- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 5 autoloads, 4x camera zoom in exploration
-- 5 autoload singletons in `game/scripts/autoload/` (GameManager,
-  DataManager, AudioManager, SaveManager, EventFlags) — all have
+- `game/project.godot` — viewport 1280x720 (was 320x180), integer scaling, 6 autoloads, 4x camera zoom in exploration
+- 6 autoload singletons in `game/scripts/autoload/` (GameManager,
+  DataManager, AudioManager, SaveManager, EventFlags, PartyState) — all have
   public API + defensive coding, stubs for game-state-dependent methods
 - Directory structure with `.gdkeep` placeholders
 - No scenes (.tscn), no JSON data files, no art/audio assets

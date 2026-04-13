@@ -54,7 +54,8 @@ res://
 │   │   ├── data_manager.gd    # JSON data loading and caching
 │   │   ├── audio_manager.gd   # Music, SFX, ambient (per audio.md)
 │   │   ├── save_manager.gd    # Save/load, auto-save, migration
-│   │   └── event_flags.gd     # Global event flag state
+│   │   ├── event_flags.gd     # Global event flag state
+│   │   └── party_state.gd     # Party composition, formation, stats
 │   ├── core/                  # Core system scripts
 │   ├── entities/              # Entity behavior scripts
 │   ├── combat/                # Battle system scripts
