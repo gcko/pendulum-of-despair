@@ -8,6 +8,7 @@ const RITUAL_METER_SCENE: PackedScene = preload("res://scenes/ui/ritual_meter.ts
 func before_each() -> void:
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
+	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
 	PartyState.owned_equipment.clear()
@@ -21,6 +22,7 @@ func before_each() -> void:
 func after_each() -> void:
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
+	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
 	PartyState.owned_equipment.clear()
@@ -56,7 +58,7 @@ func test_exploration_scene_loads() -> void:
 
 func test_load_map_creates_children() -> void:
 	var exp: Node2D = _create_exploration()
-	var map_container = exp.get_node("CurrentMap")
+	var map_container: Node = exp.get_node("CurrentMap")
 	assert_gt(map_container.get_child_count(), 0, "map should be loaded as child")
 
 
@@ -70,7 +72,7 @@ func test_camera_follows_player() -> void:
 	var exp: Node2D = _create_exploration()
 	exp._player.position = Vector2(100, 50)
 	exp._process(0.016)
-	var cam = exp.get_node("Camera2D")
+	var cam: Camera2D = exp.get_node("Camera2D")
 	assert_eq(cam.position, Vector2(100, 50), "camera should follow player")
 
 
@@ -79,9 +81,9 @@ func test_camera_follows_player() -> void:
 
 func test_npc_interaction_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
 	assert_not_null(entities, "entities node should exist")
-	var npc = entities.get_node_or_null("TestNPC")
+	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC should exist in map")
 	assert_true(
 		npc.npc_interacted.is_connected(exp._on_npc_interacted), "NPC signal should be connected"
@@ -90,8 +92,8 @@ func test_npc_interaction_signal_wired() -> void:
 
 func test_chest_interaction_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities = exp._current_map.get_node_or_null("Entities")
-	var chest = entities.get_node_or_null("TestChest")
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var chest: Node = entities.get_node_or_null("TestChest")
 	assert_not_null(chest, "test chest should exist in map")
 	assert_true(
 		chest.chest_opened.is_connected(exp._on_chest_opened), "chest signal should be connected"
@@ -100,8 +102,8 @@ func test_chest_interaction_signal_wired() -> void:
 
 func test_save_point_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities = exp._current_map.get_node_or_null("Entities")
-	var sp = entities.get_node_or_null("TestSavePoint")
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var sp: Node = entities.get_node_or_null("TestSavePoint")
 	assert_not_null(sp, "test save point should exist in map")
 	assert_true(
 		sp.save_point_activated.is_connected(exp._on_save_point_activated),
@@ -115,8 +117,8 @@ func test_save_point_signal_wired() -> void:
 func test_transition_flag_blocks_interaction() -> void:
 	var exp: Node2D = _create_exploration_test_room()
 	# Use a real entity that has interact() — e.g., the NPC from the map
-	var entities = exp._current_map.get_node_or_null("Entities")
-	var npc = entities.get_node_or_null("TestNPC")
+	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC must exist for this test")
 	watch_signals(npc)
 	exp.set_transitioning(true)
@@ -278,7 +280,7 @@ func test_ritual_meter_value_stored_in_transition_data() -> void:
 	var exp: Node2D = _create_exploration()
 	PartyState.initialize_new_game()
 	# Manually set up the ritual meter on the cleansing sequence
-	var cleansing: RefCounted = exp._get_cleansing()
+	var cleansing: CleansingSequence = exp._get_cleansing()
 	cleansing._ritual_meter = RITUAL_METER_SCENE.instantiate()
 	exp.add_child(cleansing._ritual_meter)
 	cleansing._ritual_meter.set_value(62.5)
@@ -307,7 +309,7 @@ func test_ritual_meter_restored_from_transition_data() -> void:
 	# continue_sequence restores meter then applies drain.
 	# With wave_num=0, next_wave=1, drain = 15.0 (base, 0 KOs, 0 turns).
 	# So restored 42.0 - 15.0 = 27.0.
-	var cleansing: RefCounted = exp._get_cleansing()
+	var cleansing: CleansingSequence = exp._get_cleansing()
 	assert_null(cleansing._ritual_meter, "meter should be null before restoration")
 	var data: Dictionary = {
 		"wave_num": 0,
@@ -335,7 +337,7 @@ func test_ritual_meter_defaults_to_100_when_missing() -> void:
 	PartyState.initialize_new_game()
 	# When ritual_meter_value is not in transition data, defaults to 100.0.
 	# After drain of 15.0 (base, wave_num=0), final value = 85.0.
-	var cleansing: RefCounted = exp._get_cleansing()
+	var cleansing: CleansingSequence = exp._get_cleansing()
 	var data: Dictionary = {
 		"wave_num": 0,
 		"map_id": "test_room",
@@ -360,7 +362,7 @@ func test_ritual_meter_different_saved_values() -> void:
 	PartyState.initialize_new_game()
 	# Verify different saved values produce different post-drain results.
 	# 80.0 - 15.0 = 65.0
-	var cleansing: RefCounted = exp._get_cleansing()
+	var cleansing: CleansingSequence = exp._get_cleansing()
 	var data: Dictionary = {
 		"wave_num": 0,
 		"ritual_meter_value": 80.0,

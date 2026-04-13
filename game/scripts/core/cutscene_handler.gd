@@ -86,12 +86,12 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 	_cutscene_shake_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	var step_duration: float = 0.05
 	var steps: int = maxi(int(duration / step_duration) - 1, 0)
-	for i in range(steps):
-		var offset := Vector2(
+	for i: int in range(steps):
+		var offset: Vector2 = Vector2(
 			float(randi_range(-intensity, intensity)), float(randi_range(-intensity, intensity))
 		)
 		_cutscene_shake_tween.tween_property(camera, "offset", offset, step_duration)
-	var reset_duration: float = duration - (float(steps) * step_duration)
+	var reset_duration: float = maxf(0.001, duration - (float(steps) * step_duration))
 	_cutscene_shake_tween.tween_property(camera, "offset", Vector2.ZERO, reset_duration)
 
 

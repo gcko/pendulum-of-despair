@@ -62,6 +62,9 @@ func start(data: Dictionary) -> void:
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
+	if not ResourceLoader.exists(RITUAL_METER_PATH):
+		push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+		return
 	var meter_res: Resource = load(RITUAL_METER_PATH)
 	if not meter_res is PackedScene:
 		push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
@@ -102,6 +105,9 @@ func continue_sequence(data: Dictionary) -> void:
 		var origin: Variant = data.get("cleansing_origin_position", null)
 		_exploration.get_player().position = origin if origin is Vector2 else fallback
 	if _ritual_meter == null:
+		if not ResourceLoader.exists(RITUAL_METER_PATH):
+			push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+			return
 		var meter_res: Resource = load(RITUAL_METER_PATH)
 		if not meter_res is PackedScene:
 			push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
@@ -213,15 +219,18 @@ func _spawn_poison_pools() -> void:
 	var entities: Node = _exploration.get_current_map().get_node_or_null("Entities")
 	if entities == null:
 		return
+	if not ResourceLoader.exists(DAMAGE_ZONE_PATH):
+		push_error("CleansingSequence: Damage zone resource missing: %s" % DAMAGE_ZONE_PATH)
+		return
+	var zone_scene: Resource = load(DAMAGE_ZONE_PATH)
+	if not zone_scene is PackedScene:
+		push_error("CleansingSequence: Failed to load damage zone: %s" % DAMAGE_ZONE_PATH)
+		return
 	var count: int = randi_range(1, 2)
 	for i: int in range(count):
 		if _spawned_pool_count >= 4:
 			break
-		var zone_res: Resource = load(DAMAGE_ZONE_PATH)
-		if not zone_res is PackedScene:
-			push_error("CleansingSequence: Failed to load damage zone: %s" % DAMAGE_ZONE_PATH)
-			break
-		var pool: Area2D = (zone_res as PackedScene).instantiate()
+		var pool: Area2D = (zone_scene as PackedScene).instantiate()
 		var pos: Vector2 = _random_arena_position()
 		pool.position = pos
 		entities.add_child(pool)
@@ -254,8 +263,11 @@ func _move_torren_to_reserve() -> void:
 	var torren_idx: int = _find_member_index("torren")
 	if torren_idx < 0:
 		return
-	var active: Array = PartyState.formation.get("active", [])
-	var reserve: Array = PartyState.formation.get("reserve", [])
+	if not PartyState.formation.has("active") or not PartyState.formation.has("reserve"):
+		push_warning("CleansingSequence: formation missing active/reserve keys")
+		return
+	var active: Array = PartyState.formation["active"]
+	var reserve: Array = PartyState.formation["reserve"]
 	for a: Variant in active:
 		if (a is int or a is float) and int(a) == torren_idx:
 			active.erase(a)
@@ -267,8 +279,11 @@ func _restore_torren_to_active() -> void:
 	var torren_idx: int = _find_member_index("torren")
 	if torren_idx < 0:
 		return
-	var active: Array = PartyState.formation.get("active", [])
-	var reserve: Array = PartyState.formation.get("reserve", [])
+	if not PartyState.formation.has("active") or not PartyState.formation.has("reserve"):
+		push_warning("CleansingSequence: formation missing active/reserve keys")
+		return
+	var active: Array = PartyState.formation["active"]
+	var reserve: Array = PartyState.formation["reserve"]
 	var found: Variant = null
 	for r: Variant in reserve:
 		if (r is int or r is float) and int(r) == torren_idx:
@@ -290,7 +305,10 @@ func _find_member_index(character_id: String) -> int:
 
 
 func _revive_fallen_at_quarter_hp() -> void:
-	for idx: Variant in PartyState.formation.get("active", []):
+	var active_list: Array = []
+	if PartyState.formation.has("active"):
+		active_list = PartyState.formation["active"]
+	for idx: Variant in active_list:
 		if not (idx is int or idx is float):
 			continue
 		var mi: int = int(idx)
