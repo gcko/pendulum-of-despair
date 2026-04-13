@@ -391,3 +391,36 @@ func test_unknown_command_no_crash() -> void:
 	cs.start_cutscene("unknown_test", [entry], cs.TIER_MICRO)
 	await get_tree().create_timer(0.3).timeout
 	assert_signal_emitted(cs, "cutscene_finished")
+
+
+# --- 28. skip_cutscene resets visual state ---
+func test_skip_cutscene_resets_visual_state() -> void:
+	var cs: Node = await _create_cutscene()
+	var fade: ColorRect = cs.get_node_or_null("FadeRect")
+	var title: Label = cs.get_node_or_null("TitleLabel")
+	# Simulate mid-fade state
+	if fade:
+		fade.modulate.a = 0.8
+	if title:
+		title.modulate.a = 0.6
+	cs._entries.assign([_entry({"flag_set": "a"})])
+	cs._current_index = 0
+	cs._is_playing = true
+	cs._cutscene_id = "visual_reset_test"
+	cs._tier = cs.TIER_MICRO
+	cs.skip_cutscene()
+	if fade:
+		assert_eq(fade.modulate.a, 0.0, "FadeRect alpha should reset to 0 on skip")
+	if title:
+		assert_eq(title.modulate.a, 0.0, "TitleLabel alpha should reset to 0 on skip")
+
+
+# --- 29. dialogue_box flag_set_requested is forwarded ---
+func test_dialogue_box_flag_set_forwarded() -> void:
+	var cs: Node = await _create_cutscene()
+	watch_signals(cs)
+	var db: Node = cs.get_node_or_null("DialogueBox")
+	assert_not_null(db, "DialogueBox should exist")
+	if db and db.has_signal("flag_set_requested"):
+		db.flag_set_requested.emit("test_flag", true)
+		assert_signal_emitted(cs, "flag_set_requested")

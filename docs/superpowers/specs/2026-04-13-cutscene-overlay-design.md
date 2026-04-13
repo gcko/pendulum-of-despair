@@ -48,6 +48,7 @@ bars animate.
 Cutscene (CanvasLayer, layer 10, PROCESS_MODE_ALWAYS, script: cutscene_player.gd)
 +-- LetterboxTop (ColorRect, black, anchored top, height 0 initially)
 +-- LetterboxBottom (ColorRect, black, anchored bottom, height 0 initially)
++-- Letterbox (Node, script: cutscene_letterbox.gd, @export top_bar/bottom_bar)
 +-- DialogueBox (embedded instance of dialogue_box scene/script, embedded_mode = true)
 +-- FadeRect (ColorRect, full-screen 1280x720, black, modulate.a = 0, mouse_filter IGNORE)
 +-- TitleLabel (Label, centered, white text, hidden by default)
@@ -151,14 +152,20 @@ func skip_cutscene() -> void  # Debug/accessibility: jump to end, set all flags
 
 ```gdscript
 var _cutscene_id: String = ""
-var _entries: Array = []
+var _entries: Array[Dictionary] = []
 var _current_index: int = 0
-var _tier: int = 1
+var _tier: int = TIER_FULL
 var _is_playing: bool = false
-var _letterbox: CutsceneLetterbox
-var _dialogue_box: Node
-var _fade_rect: ColorRect
-var _title_label: Label
+var _config: Dictionary = {}
+var _skipped: bool = false
+var _fade_tween: Tween = null
+var _flash_tween: Tween = null
+var _title_tween: Tween = null
+
+@onready var _dialogue_box: Node = $DialogueBox
+@onready var _fade_rect: ColorRect = $FadeRect
+@onready var _title_label: Label = $TitleLabel
+@onready var _letterbox: Node = $Letterbox
 ```
 
 ### Sequencer Flow
@@ -183,8 +190,9 @@ start_cutscene(id, entries, tier):
         - During dialogue: dialogue_box emits animation_requested /
           sfx_requested per its existing logic. cutscene_player forwards
           these by connecting dialogue_box.animation_requested to
-          cutscene_anim_requested and dialogue_box.sfx_requested to
-          sfx_requested (connected once in _ready).
+          cutscene_anim_requested, dialogue_box.sfx_requested to
+          sfx_requested, and dialogue_box.flag_set_requested to
+          flag_set_requested (all connected once in _ready).
      d. Process entry animations where when starts with "after_line"
         (emit cutscene_anim_requested)
      e. Collect commands where when == "after", execute them

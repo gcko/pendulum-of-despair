@@ -791,7 +791,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] T1 letterbox bars (animate in/out) + T4 micro-cutscene (no letterbox)
 - [x] Embedded dialogue_box mode (embedded_mode suppresses pop_overlay)
 - [x] Skip flag system (supports faint-and-reload persistence)
-- [x] ~55 tests across 4 test files (620/620 full suite)
+- [x] ~50 tests across 4 test files (620/620 full suite)
 
 **Notes:**
 - T2 (Walk-and-Talk) and T3 (Playable Scene) deferred — they are exploration-mode behaviors, not overlays
