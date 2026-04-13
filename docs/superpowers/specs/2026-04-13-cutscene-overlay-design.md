@@ -20,10 +20,11 @@ bars animate.
 | `game/scenes/overlay/cutscene.tscn` | CanvasLayer with letterbox bars, embedded dialogue box, fade rect, title label |
 | `game/scripts/core/cutscene_player.gd` | Sequencer: processes cutscene entries in order, emits choreography signals |
 | `game/scripts/ui/cutscene_letterbox.gd` | Letterbox bar animation (slide in/out) |
-| `game/tests/test_cutscene_player.gd` | Unit tests (~31 tests) |
-| `game/tests/test_cutscene_integration.gd` | Integration tests (~17 tests) |
+| `game/tests/test_cutscene_player.gd` | Unit tests (~29 tests) |
+| `game/tests/test_cutscene_integration.gd` | Integration tests (~13 tests) |
 | `game/tests/test_cutscene_letterbox.gd` | Letterbox unit tests (~5 tests) |
 | `game/tests/test_dialogue_box_embedded.gd` | Dialogue box embedded mode tests (~4 tests) |
+| `game/tests/test_entity_walk_to.gd` | Entity walk_to choreography tests (~6 tests) |
 
 ### Files Modified
 
@@ -304,18 +305,26 @@ Debug/accessibility shortcut. Jumps to end of the sequence:
 
 ## Exploration Integration
 
-When the cutscene overlay is pushed, `exploration.gd` connects to its
-signals:
+When the cutscene overlay is pushed, `exploration.gd` detects the state
+change via `GameManager.overlay_state_changed` and connects to the
+cutscene node's choreography signals:
 
 ```gdscript
-func _on_cutscene_overlay_pushed() -> void:
-    var cutscene := GameManager.overlay_node as Node
-    cutscene.cutscene_move_requested.connect(_on_cutscene_move)
-    cutscene.cutscene_anim_requested.connect(_on_cutscene_anim)
-    cutscene.cutscene_camera_requested.connect(_on_cutscene_camera)
-    cutscene.cutscene_shake_requested.connect(_on_cutscene_shake)
-    cutscene.flag_set_requested.connect(_on_cutscene_flag_set)
-    cutscene.sfx_requested.connect(_on_cutscene_sfx)
+func _on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
+    if new_state == GameManager.OverlayState.CUTSCENE:
+        _in_cutscene = true
+        _player.set_input_enabled(false)
+        _connect_cutscene_signals()
+
+func _connect_cutscene_signals() -> void:
+    var cs: Node = GameManager.overlay_node
+    _safe_connect(cs, "cutscene_move_requested", _on_cutscene_move)
+    _safe_connect(cs, "cutscene_anim_requested", _on_cutscene_anim)
+    _safe_connect(cs, "cutscene_camera_requested", _on_cutscene_camera)
+    _safe_connect(cs, "cutscene_shake_requested", _on_cutscene_shake)
+    _safe_connect(cs, "cutscene_music_requested", _on_cutscene_music)
+    _safe_connect(cs, "flag_set_requested", _on_cutscene_flag_set)
+    _safe_connect(cs, "sfx_requested", _on_cutscene_sfx)
 ```
 
 ### Signal Handler Routing
@@ -340,8 +349,9 @@ If a `character_id` is not found, log a warning and skip the command
 
 ### Note on `cutscene_music_requested`
 
-This signal is intentionally NOT connected in exploration.gd. It will
-be wired to AudioManager when gap 3.8 (Audio Integration) is implemented.
+This signal IS connected in exploration.gd to a stub handler
+(`_on_cutscene_music`). It will be wired to AudioManager when gap 3.8
+(Audio Integration) is implemented.
 
 ---
 

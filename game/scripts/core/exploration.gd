@@ -111,7 +111,7 @@ func _trigger_random_encounter() -> void:
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning or _player == null:
+	if _transitioning or _player == null or _in_cutscene:
 		return
 	if area.get_meta("boss_id", "").is_empty():
 		return
@@ -545,7 +545,7 @@ func _on_crystal_cleared(_crystal_id: String) -> void:
 
 
 func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
-	if _transitioning:
+	if _transitioning or _in_cutscene:
 		return
 	flash_location_name("The floor gives way!")
 	_transition_to_map(target_map_id, target_spawn)
@@ -649,7 +649,7 @@ func _get_party_avg_level() -> int:
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning or body != _player:
+	if _transitioning or body != _player or _in_cutscene:
 		return
 	var req_flag: String = area.get_meta("required_flag", "")
 	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
@@ -879,7 +879,6 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 		return
 	if _cutscene_shake_tween != null and _cutscene_shake_tween.is_valid():
 		_cutscene_shake_tween.kill()
-	var original_offset: Vector2 = _camera.offset
 	_cutscene_shake_tween = create_tween()
 	_cutscene_shake_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	var steps: int = int(duration / 0.05)
@@ -888,7 +887,7 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 			float(randi_range(-intensity, intensity)), float(randi_range(-intensity, intensity))
 		)
 		_cutscene_shake_tween.tween_property(_camera, "offset", offset, 0.05)
-	_cutscene_shake_tween.tween_property(_camera, "offset", original_offset, 0.05)
+	_cutscene_shake_tween.tween_property(_camera, "offset", Vector2.ZERO, 0.05)
 
 
 func _on_cutscene_finished() -> void:

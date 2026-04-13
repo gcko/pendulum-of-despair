@@ -791,7 +791,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] T1 letterbox bars (animate in/out) + T4 micro-cutscene (no letterbox)
 - [x] Embedded dialogue_box mode (embedded_mode suppresses pop_overlay)
 - [x] Skip flag system (supports faint-and-reload persistence)
-- [x] ~51 tests across 5 test files (620/620 full suite)
+- [x] ~57 tests across 5 test files (620/620 full suite)
 
 **Notes:**
 - T2 (Walk-and-Talk) and T3 (Playable Scene) deferred — they are exploration-mode behaviors, not overlays
@@ -1164,7 +1164,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-07 | 4.1 Ember Vein vertical slice | 3-floor dungeon (F1, F2, F4) with TileMapLayer pipeline, placeholder tileset, boss trigger zones, Vein Guardian 2-phase scripted AI, Ember Drake mini-boss, floor-specific encounters, PartyState battle integration, dialogue stubs, event flags, 9 treasure items. | — |
 | 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
 | 2026-04-12 | 4.4 Phase B2 | Ember Vein F3 (3 new puzzle entities, hidden door, encounters), Ironmouth escape (linear map, combat, Lira+Sable join), Scene 1 full dialogue (1a-1e, 6 new JSONs), Cael shimmer (+10% physical), Arcanite gear (break mechanic), start location → F1. Dawn March deferred to 3.7. ~20 new files, ~13 modified. | — |
-| 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 5 test files (~51 tests). 620/620 full suite. | — |
+| 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 5 test files (~57 tests). 620/620 full suite. | — |
 
 ---
 
