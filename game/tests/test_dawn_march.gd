@@ -31,16 +31,14 @@ func test_dawn_march_has_16_entries() -> void:
 	assert_eq(entries.size(), 16, "Should have 16 entries (12 dialogue + 4 credits)")
 
 
-# --- 3. Entry 012 has flag_set ---
-func test_entry_012_has_flag_set() -> void:
+# --- 3. Entry 012 no longer has flag_set (flag set by trigger handler) ---
+func test_entry_012_no_flag_set() -> void:
 	var data: Dictionary = DataManager.load_dialogue("dawn_march")
 	var entries: Array = data.get("entries", [])
 	assert_gt(entries.size(), 11, "Should have at least 12 entries for entry 012")
 	var entry_12: Dictionary = entries[11]
-	assert_eq(
-		entry_12.get("flag_set", ""),
-		"opening_credits_seen",
-		"Entry 012 should set opening_credits_seen flag"
+	assert_false(
+		entry_12.has("flag_set"), "Entry 012 should NOT have flag_set (flag set by trigger handler)"
 	)
 
 

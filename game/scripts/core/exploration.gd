@@ -115,7 +115,7 @@ func _trigger_random_encounter() -> void:
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning or _player == null or _in_cutscene:
+	if _transitioning or _player == null or _in_cutscene or _in_auto_walk:
 		return
 	if area.get_meta("boss_id", "").is_empty():
 		return
@@ -204,7 +204,6 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 			pc.get("id", ""),
 			pc.get("entries", []),
 			pc.get("tier", 1),
-			pc.get("flag", ""),
 		)
 
 
@@ -959,9 +958,7 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 	pass
 
 
-func _start_pending_cutscene(
-	cutscene_id: String, entries: Array, tier: int, one_shot_flag: String = ""
-) -> void:
+func _start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
 		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
 		if not _cutscene_return.is_empty():
@@ -973,9 +970,6 @@ func _start_pending_cutscene(
 				return
 		_cutscene_return = {}
 		return
-	# Set one-shot flag only AFTER overlay push succeeds
-	if not one_shot_flag.is_empty():
-		EventFlags.set_flag(one_shot_flag, true)
 	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
 
 
@@ -991,13 +985,16 @@ func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var scene_id: String = area.get_meta("cutscene_scene_id", "")
 	var map_id: String = area.get_meta("cutscene_map_id", "")
 	var return_map: String = area.get_meta("cutscene_return_map", "")
-	var return_spawn: String = area.get_meta("cutscene_return_spawn", "")
+	var return_spawn: String = area.get_meta("cutscene_return_spawn", "PlayerSpawn")
 	# Load cutscene data from dialogue JSON
 	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
 	if scene_data.is_empty():
 		push_error("Exploration: Failed to load cutscene dialogue '%s'" % scene_id)
 		return
-	var entries: Array = scene_data.get("entries", [])
+	var entries: Array[Dictionary] = []
+	for e: Variant in scene_data.get("entries", []):
+		if e is Dictionary:
+			entries.append(e as Dictionary)
 	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
 	var tier: int = scene_data.get("cutscene_tier", 1)
 	if entries.is_empty():
@@ -1006,13 +1003,16 @@ func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	# Store return info only when a return map is specified
 	if return_map != "":
 		_cutscene_return = {"map": return_map, "spawn": return_spawn}
+	# Set one-shot flag now so re-entry is blocked even during transition
+	if not flag.is_empty():
+		EventFlags.set_flag(flag, true)
 	if map_id != "":
 		# Transition to cutscene map, then start cutscene after load
-		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier, "flag": flag}
+		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
 		_transition_to_map(map_id, "PlayerSpawn")
 	else:
-		# Start cutscene on current map (flag set inside after overlay push)
-		_start_pending_cutscene(cutscene_id, entries, tier, flag)
+		# Start cutscene on current map
+		_start_pending_cutscene(cutscene_id, entries, tier)
 
 
 # ---------- Public accessors for CleansingSequence ----------
