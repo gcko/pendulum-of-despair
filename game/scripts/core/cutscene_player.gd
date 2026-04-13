@@ -60,6 +60,8 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _is_playing:
 		if OS.is_debug_build():
 			push_warning("Cutscene already playing: %s" % _cutscene_id)
+		cutscene_finished.emit()
+		GameManager.pop_overlay()
 		return
 	if cutscene_id == "":
 		push_error("CutscenePlayer: empty cutscene_id")
@@ -281,6 +283,7 @@ func _cmd_fade(cmd: Dictionary) -> Variant:
 	if _fade_tween != null and _fade_tween.is_valid():
 		_fade_tween.kill()
 	_fade_tween = create_tween()
+	_fade_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_fade_tween.tween_property(_fade_rect, "modulate:a", target_alpha, duration)
 	return _fade_tween.finished
 
@@ -330,6 +333,7 @@ func _cmd_flash(cmd: Dictionary) -> Variant:
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
 	_flash_tween = create_tween()
+	_flash_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.8, duration * 0.3)
 	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.0, duration * 0.7)
 	return _flash_tween.finished
@@ -349,6 +353,7 @@ func _cmd_title(cmd: Dictionary) -> Variant:
 	if _title_tween != null and _title_tween.is_valid():
 		_title_tween.kill()
 	_title_tween = create_tween()
+	_title_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_title_tween.tween_property(_title_label, "modulate:a", 1.0, fade_in)
 	_title_tween.tween_interval(duration)
 	_title_tween.tween_property(_title_label, "modulate:a", 0.0, fade_out)

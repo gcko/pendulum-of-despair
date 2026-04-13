@@ -29,6 +29,7 @@ func animate_in(duration: float = 0.5) -> void:
 		return
 	_kill_tween()
 	_tween = create_tween()
+	_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_tween.set_parallel(true)
 	_tween.tween_property(top_bar, "custom_minimum_size:y", float(BAR_HEIGHT), duration)
 	_tween.tween_property(bottom_bar, "custom_minimum_size:y", float(BAR_HEIGHT), duration)
@@ -42,6 +43,7 @@ func animate_out(duration: float = 0.5) -> void:
 		return
 	_kill_tween()
 	_tween = create_tween()
+	_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_tween.set_parallel(true)
 	_tween.tween_property(top_bar, "custom_minimum_size:y", 0.0, duration)
 	_tween.tween_property(bottom_bar, "custom_minimum_size:y", 0.0, duration)
