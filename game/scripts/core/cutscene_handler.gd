@@ -36,7 +36,7 @@ func _connect_cutscene_signals() -> void:
 	_safe_connect(cs, "sfx_requested", _on_cutscene_sfx)
 
 
-func _safe_connect(src: Node, sig: String, handler: Callable) -> void:
+func _safe_connect(src: Node, sig: StringName, handler: Callable) -> void:
 	if src.has_signal(sig) and not src.is_connected(sig, handler):
 		src.connect(sig, handler)
 
@@ -131,6 +131,10 @@ func _on_cutscene_finished() -> void:
 
 
 func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
+	if flag_name.is_empty():
+		if OS.is_debug_build():
+			push_warning("Cutscene: flag_set_requested with empty flag_name")
+		return
 	EventFlags.set_flag(flag_name, value)
 
 

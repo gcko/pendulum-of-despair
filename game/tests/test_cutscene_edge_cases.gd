@@ -7,6 +7,8 @@ const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.ts
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	PartyState.members.clear()
@@ -21,6 +23,8 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	PartyState.members.clear()
