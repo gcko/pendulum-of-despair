@@ -161,9 +161,8 @@ func _launch_wave(wave_num: int, data: Dictionary) -> void:
 		return
 	var fb: Vector2 = data.get("position", Vector2(80, 90))
 	var origin_pos: Vector2 = data.get("cleansing_origin_position", fb)
-	var player_pos: Vector2 = (
-		_exploration.get_player().position if _exploration.get_player() != null else origin_pos
-	)
+	var player: Node2D = _exploration.get_player()
+	var player_pos: Vector2 = player.position if player != null else origin_pos
 	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0
 	var transition: Dictionary = {
 		"encounter_group": CLEANSING_WAVES[wave_num],
@@ -244,11 +243,8 @@ func _spawn_poison_pools() -> void:
 
 
 func _random_arena_position() -> Vector2:
-	var player_pos: Vector2 = (
-		_exploration.get_player().position
-		if _exploration.get_player() != null
-		else BOSS_ARENA_CENTER
-	)
+	var p: Node2D = _exploration.get_player()
+	var player_pos: Vector2 = p.position if p != null else BOSS_ARENA_CENTER
 	var pos: Vector2 = BOSS_ARENA_CENTER
 	for _attempt: int in range(10):
 		var x: float = randf_range(

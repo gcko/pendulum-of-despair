@@ -39,7 +39,9 @@ func interact() -> void:
 	save_point_activated.emit(save_point_id)
 
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
 	if save_point_id == "":
 		return
 	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:

@@ -127,8 +127,9 @@ func _on_cutscene_finished() -> void:
 			# Cover screen before transition to prevent void flash from
 			# cutscene map player position
 			var fade: ColorRect = _exploration.get_fade_rect()
-			fade.visible = true
-			fade.color = Color(0, 0, 0, 1)
+			if fade != null:
+				fade.visible = true
+				fade.color = Color(0, 0, 0, 1)
 			_exploration.transition_to_map(ret_map, ret_spawn)
 			return
 	if player != null and not _exploration.is_in_auto_walk():

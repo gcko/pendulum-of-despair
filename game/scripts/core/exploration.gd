@@ -628,6 +628,7 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 
 func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(_on_dialogue_closed_check_party, CONNECT_ONE_SHOT)
 		return
 	_check_party_joining_flags()
 	if (
@@ -825,6 +826,9 @@ func _on_caden_dialogue_closed(
 	state: GameManager.OverlayState, caden: Node2D, completion_flag: String
 ) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(
+			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
+		)
 		return
 	_caden_complete(caden, completion_flag)
 
