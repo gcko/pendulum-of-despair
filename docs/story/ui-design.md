@@ -16,9 +16,8 @@
 The UI is built as if running on SNES hardware. Every visual element
 is pixel art by default:
 
-- **Rendering:** Game viewport is 320×180 (16:9 pixel art standard) scaled using
-  the largest integer factor that fits the game window (6× = 1920×1080
-  at 1080p). Clean integer scaling at 720p (4×), 1080p (6×), 1440p (8×), 4K (12×). Nearest-neighbor interpolation, no bilinear
+- **Rendering:** Game viewport is 1280×720 with 4× camera zoom (effective 320×180 game world). Window scaled using
+  the largest integer factor that fits the display. Clean integer scaling at 720p (1×), 1080p (1.5× — letterboxed), 1440p (2×), 4K (3×). Nearest-neighbor interpolation, no bilinear
   filtering. Letterbox with black bars if the window exceeds the scaled
   area. All UI elements designed on the native pixel grid.
 - **Borders:** 2px pixel-art window borders, no anti-aliasing, sharp

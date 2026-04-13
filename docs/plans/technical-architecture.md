@@ -6,7 +6,7 @@
 >
 > **Engine:** Godot 4.6+ (stable)
 > **Language:** GDScript only (no C#, no .NET dependency)
-> **Resolution:** 320x180 native, integer-scaled (per [accessibility.md](../story/accessibility.md))
+> **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled (per [accessibility.md](../story/accessibility.md))
 > **Frame rate:** 60 fps locked
 >
 > **Cross-references:** [save-system.md](../story/save-system.md) |
@@ -96,7 +96,7 @@ res://
 
 ### 1.3 Autoload Singletons
 
-Five persistent managers, always available via global name:
+Six persistent managers, always available via global name:
 
 | Singleton | Global Name | Responsibility |
 |-----------|-------------|---------------|
@@ -105,14 +105,15 @@ Five persistent managers, always available via global name:
 | `audio_manager.gd` | `AudioManager` | Music, SFX, ambient per [audio.md](../story/audio.md) rules |
 | `save_manager.gd` | `SaveManager` | Save/load, auto-save, migration per [save-system.md](../story/save-system.md) |
 | `event_flags.gd` | `EventFlags` | Global event flag dictionary, flag checks |
+| `party_state.gd` | `PartyState` | Party composition, formation, character stats |
 
 ### 1.4 Viewport Settings
 
 ```
 # project.godot
 [display]
-window/size/viewport_width = 320
-window/size/viewport_height = 180
+window/size/viewport_width = 1280
+window/size/viewport_height = 720
 window/size/window_width_override = 1920
 window/size/window_height_override = 1080
 window/stretch/mode = "viewport"
@@ -935,7 +936,7 @@ Section 2. All 17 settings per
 | Battle | no tilemap | 4 party + 6 enemy | enemy stats, abilities | 1 music | ~10-15 MB |
 | Menu overlay | no tilemap | UI sprites | inventory, equipment | none (music continues) | ~5-10 MB |
 
-These are generous estimates for a 320x180 pixel-art game. Modern
+These are generous estimates for a pixel-art game (1280x720 viewport, 4x zoom). Modern
 hardware has 8-16 GB RAM — memory is not a constraint for this project.
 The budgets exist to catch accidental asset bloat (e.g., uncompressed
 textures, unoptimized spritesheets).

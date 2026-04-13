@@ -23,9 +23,9 @@
 
 ### Base Resolution
 
-**320x180 (16:9).** This replaces the original 256x224 (SNES 8:7)
-specification. 320x180 is the industry standard for modern pixel-art
-games and provides clean integer scaling at every common display size.
+**1280x720 viewport with 4x camera zoom (effective 320x180 game world, 16:9).** This replaces the original 256x224 (SNES 8:7)
+specification. The effective 320x180 visible area is the industry standard for modern pixel-art
+games. The 1280x720 viewport provides direct pixel mapping at 720p displays.
 
 | Display | Scale Factor | Result |
 |---------|-------------|--------|
@@ -49,14 +49,14 @@ preserves the same visual density and aesthetic.
 - **Integer scaling enforced** -- Godot viewport stretch mode with
   integer scale. Letterboxes the remainder (minimal at standard
   resolutions).
-- **Bitmap pixel font** as default -- rendered at 320x180, scales
+- **Bitmap pixel font** as default -- rendered at 1280x720 viewport (4x zoom), scales
   with the game world. Preserves the FF6 text aesthetic.
 
 ### High-Res Text Toggle
 
 Config option. When enabled:
 
-- Game world remains at 320x180, integer-scaled (unchanged).
+- Game world remains at 1280x720 viewport with 4x camera zoom (effective 320x180), integer-scaled (unchanged).
 - UI text renders at the display's native resolution (1080p, 4K, etc.)
   via a second Godot Viewport node layered over the game viewport.
 - The font is pixel-styled (retro aesthetic intact) but rendered at

@@ -55,6 +55,14 @@ func _ready() -> void:
 			)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not _is_playing:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		skip_cutscene()
+
+
 ## Start a cutscene sequence.
 func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
 	if _is_playing:

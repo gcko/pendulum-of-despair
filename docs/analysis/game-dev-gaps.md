@@ -1024,9 +1024,9 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Arcanite gear preview (arcanite_sword_proto ATK 13, arcanite_mail_proto DEF 10, breaks after 1e escape)
 - [x] Change new game start location from overworld to Ember Vein F1
 - [x] Cael hidden stat spike (+10% physical damage via Pallor shimmer, permanent, hidden)
-- [ ] Opening credits visual sequence (title card, character names) — **deferred to gap 3.7 (Cutscene Overlay)**
-- [ ] Dawn March forward-only walk mechanics — **deferred to gap 3.7 (Cutscene Overlay)**
-- [ ] `opening_credits_seen` flag (39) — **deferred to gap 3.7 (Cutscene Overlay)**
+- [ ] Opening credits visual sequence (title card, character names) — **unblocked by gap 3.7 (COMPLETE)**
+- [ ] Dawn March forward-only walk mechanics — **unblocked by gap 3.7 (COMPLETE)**
+- [ ] `opening_credits_seen` flag (39) — **unblocked by gap 3.7 (COMPLETE)**
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
