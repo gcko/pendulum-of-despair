@@ -829,6 +829,7 @@ func _connect_cutscene_signals() -> void:
 	_safe_connect(cs, "cutscene_camera_requested", _on_cutscene_camera)
 	_safe_connect(cs, "cutscene_shake_requested", _on_cutscene_shake)
 	_safe_connect(cs, "cutscene_finished", _on_cutscene_finished)
+	_safe_connect(cs, "cutscene_music_requested", _on_cutscene_music)
 	_safe_connect(cs, "flag_set_requested", _on_cutscene_flag_set)
 	_safe_connect(cs, "sfx_requested", _on_cutscene_sfx)
 
@@ -904,6 +905,11 @@ func _on_cutscene_finished() -> void:
 
 func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
 	EventFlags.set_flag(flag_name, value)
+
+
+func _on_cutscene_music(_track_id: String, _action: String) -> void:
+	# Stub — AudioManager integration in gap 3.8
+	pass
 
 
 func _on_cutscene_sfx(_sfx_id: String) -> void:
