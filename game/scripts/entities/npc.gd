@@ -193,12 +193,16 @@ func walk_to(target: Vector2, speed: float) -> void:
 
 
 ## Cancel any in-progress walk tween (e.g., on cutscene end).
+## Emits walk_complete to maintain signal contract.
 func cancel_walk() -> void:
+	var was_walking: bool = _walk_tween != null and _walk_tween.is_valid()
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
 	if _anim_player != null and _anim_player.has_animation("idle"):
 		_anim_player.play("idle")
+	if was_walking:
+		walk_complete.emit()
 
 
 ## Play a named animation on the NPC's AnimationPlayer.

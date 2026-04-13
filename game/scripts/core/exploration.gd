@@ -770,6 +770,7 @@ func _run_caden_binding(completion_flag: String) -> void:
 	if _arrival_tween != null and _arrival_tween.is_valid():
 		_arrival_tween.kill()
 	_arrival_tween = create_tween()
+	_arrival_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_arrival_tween.set_parallel(true)
 	_arrival_tween.tween_property(caden, "modulate:a", 1.0, 0.5)
 	_arrival_tween.tween_property(caden, "position", center, 1.5)
@@ -903,9 +904,9 @@ func _on_cutscene_finished() -> void:
 	_cutscene_shake_tween = null
 	# Kill any in-flight entity walk tweens from cutscene move commands
 	for entity: Node in _entities.values():
-		if entity.has_method("cancel_walk"):
+		if is_instance_valid(entity) and entity.has_method("cancel_walk"):
 			entity.cancel_walk()
-	if _player != null and _player.has_method("cancel_walk"):
+	if _player != null and is_instance_valid(_player) and _player.has_method("cancel_walk"):
 		_player.cancel_walk()
 	if _camera != null and _player != null:
 		_camera.position = _player.position.round()

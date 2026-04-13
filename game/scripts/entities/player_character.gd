@@ -205,11 +205,15 @@ func walk_to(target: Vector2, speed: float) -> void:
 
 
 ## Cancel any in-progress walk tween (e.g., on cutscene end).
+## Emits walk_complete to maintain signal contract.
 func cancel_walk() -> void:
+	var was_walking: bool = _walk_tween != null and _walk_tween.is_valid()
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
 	_play_idle_animation()
+	if was_walking:
+		walk_complete.emit()
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
