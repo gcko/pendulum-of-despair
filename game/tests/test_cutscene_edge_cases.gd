@@ -190,7 +190,7 @@ func test_cutscene_trigger_blocked_by_required_flag() -> void:
 func test_empty_flag_name_rejected() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
 	# Directly invoke the cutscene handler's flag_set callback with empty name
-	var handler: RefCounted = exp_node._get_cutscene_handler()
+	var handler: Variant = exp_node._get_cutscene_handler()
 	handler._on_cutscene_flag_set("", true)
 	# EventFlags should NOT contain an empty-string key
 	assert_false(

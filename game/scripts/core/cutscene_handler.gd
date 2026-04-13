@@ -14,12 +14,12 @@ func _init(exploration: Node2D) -> void:
 
 func on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
 	if new_state == GameManager.OverlayState.CUTSCENE:
-		_exploration._in_cutscene = true
+		_exploration.set_in_cutscene(true)
 		var player: Node2D = _exploration.get_player()
 		if player != null:
 			player.set_input_enabled(false)
 		_connect_cutscene_signals()
-	elif new_state == GameManager.OverlayState.NONE and _exploration._in_cutscene:
+	elif new_state == GameManager.OverlayState.NONE and _exploration.is_in_cutscene():
 		_on_cutscene_finished()
 
 
@@ -42,7 +42,7 @@ func _safe_connect(src: Node, sig: StringName, handler: Callable) -> void:
 
 
 func _on_cutscene_move(who: String, target: Vector2, speed: float) -> void:
-	var entity: Node = _exploration._entities.get(who, null)
+	var entity: Node = _exploration.get_entities().get(who, null)
 	if entity == null:
 		if OS.is_debug_build():
 			push_warning("Cutscene: entity not found: %s" % who)
@@ -52,7 +52,7 @@ func _on_cutscene_move(who: String, target: Vector2, speed: float) -> void:
 
 
 func _on_cutscene_anim(who: String, anim: String) -> void:
-	var entity: Node = _exploration._entities.get(who, null)
+	var entity: Node = _exploration.get_entities().get(who, null)
 	if entity == null:
 		if OS.is_debug_build():
 			push_warning("Cutscene: entity not found for anim: %s" % who)
@@ -66,7 +66,7 @@ func _on_cutscene_anim(who: String, anim: String) -> void:
 
 
 func _on_cutscene_camera(target: Vector2, duration: float) -> void:
-	var camera: Camera2D = _exploration._camera
+	var camera: Camera2D = _exploration.get_camera()
 	if camera == null:
 		return
 	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
@@ -77,7 +77,7 @@ func _on_cutscene_camera(target: Vector2, duration: float) -> void:
 
 
 func _on_cutscene_shake(intensity: int, duration: float) -> void:
-	var camera: Camera2D = _exploration._camera
+	var camera: Camera2D = _exploration.get_camera()
 	if camera == null:
 		return
 	if _cutscene_shake_tween != null and _cutscene_shake_tween.is_valid():
@@ -96,7 +96,7 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 
 
 func _on_cutscene_finished() -> void:
-	_exploration._in_cutscene = false
+	_exploration.set_in_cutscene(false)
 	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
 		_cutscene_camera_tween.kill()
 	_cutscene_camera_tween = null
@@ -104,29 +104,30 @@ func _on_cutscene_finished() -> void:
 		_cutscene_shake_tween.kill()
 	_cutscene_shake_tween = null
 	# Kill any in-flight entity walk tweens from cutscene move commands
-	for entity: Node in _exploration._entities.values():
+	for entity: Node in _exploration.get_entities().values():
 		if is_instance_valid(entity) and entity.has_method("cancel_walk"):
 			entity.cancel_walk()
 	var player: Node2D = _exploration.get_player()
 	if player != null and is_instance_valid(player) and player.has_method("cancel_walk"):
 		player.cancel_walk()
-	var camera: Camera2D = _exploration._camera
+	var camera: Camera2D = _exploration.get_camera()
 	if camera != null and player != null:
 		camera.position = player.position.round()
 		camera.offset = Vector2.ZERO
-	if not _exploration._cutscene_return.is_empty():
-		var ret: Dictionary = _exploration._cutscene_return
-		_exploration._cutscene_return = {}
+	if not _exploration.get_cutscene_return().is_empty():
+		var ret: Dictionary = _exploration.get_cutscene_return()
+		_exploration.set_cutscene_return({})
 		var ret_map: String = ret.get("map", "")
 		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
 		if ret_map != "":
 			# Cover screen before transition to prevent void flash from
 			# cutscene map player position
-			_exploration._fade_rect.visible = true
-			_exploration._fade_rect.color = Color(0, 0, 0, 1)
-			_exploration._transition_to_map(ret_map, ret_spawn)
+			var fade: ColorRect = _exploration.get_fade_rect()
+			fade.visible = true
+			fade.color = Color(0, 0, 0, 1)
+			_exploration.transition_to_map(ret_map, ret_spawn)
 			return
-	if player != null and not _exploration._in_auto_walk:
+	if player != null and not _exploration.is_in_auto_walk():
 		player.set_input_enabled(true)
 
 
@@ -151,14 +152,14 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 func start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
 		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
-		if not _exploration._cutscene_return.is_empty():
-			var ret: Dictionary = _exploration._cutscene_return
-			_exploration._cutscene_return = {}
+		if not _exploration.get_cutscene_return().is_empty():
+			var ret: Dictionary = _exploration.get_cutscene_return()
+			_exploration.set_cutscene_return({})
 			var ret_map: String = ret.get("map", "")
 			if ret_map != "":
-				_exploration._transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
+				_exploration.transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
 				return
-		_exploration._cutscene_return = {}
+		_exploration.set_cutscene_return({})
 		return
 	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
 
@@ -167,9 +168,9 @@ func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var player: Node2D = _exploration.get_player()
 	var blocked: bool = (
 		body != player
-		or _exploration._transitioning
-		or _exploration._in_auto_walk
-		or _exploration._in_cutscene
+		or _exploration.is_transitioning()
+		or _exploration.is_in_auto_walk()
+		or _exploration.is_in_cutscene()
 	)
 	if blocked:
 		return
@@ -199,14 +200,14 @@ func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 		return
 	# Store return info only when a return map is specified
 	if return_map != "":
-		_exploration._cutscene_return = {"map": return_map, "spawn": return_spawn}
+		_exploration.set_cutscene_return({"map": return_map, "spawn": return_spawn})
 	# Set one-shot flag now so re-entry is blocked even during transition
 	if not flag.is_empty():
 		EventFlags.set_flag(flag, true)
 	if map_id != "":
 		# Transition to cutscene map, then start cutscene after load
-		_exploration._pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
-		_exploration._transition_to_map(map_id, "PlayerSpawn")
+		_exploration.set_pending_cutscene({"id": cutscene_id, "entries": entries, "tier": tier})
+		_exploration.transition_to_map(map_id, "PlayerSpawn")
 	else:
 		# Start cutscene on current map
 		start_pending_cutscene(cutscene_id, entries, tier)

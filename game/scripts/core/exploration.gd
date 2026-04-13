@@ -21,7 +21,7 @@ var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
 var _current_floor_id: String = ""
-var _cleansing: RefCounted = null
+var _cleansing: CleansingSequence = null
 var _key_item_chest_ids: Dictionary = {}
 var _equipment_chest_ids: Dictionary = {}
 var _in_auto_walk: bool = false
@@ -882,6 +882,50 @@ func set_transitioning(value: bool) -> void:
 
 func get_zone_damage_callback() -> Callable:
 	return _on_zone_damage_dealt
+
+
+func get_entities() -> Dictionary:
+	return _entities
+
+
+func get_camera() -> Camera2D:
+	return _camera
+
+
+func get_fade_rect() -> ColorRect:
+	return _fade_rect
+
+
+func is_in_auto_walk() -> bool:
+	return _in_auto_walk
+
+
+func is_in_cutscene() -> bool:
+	return _in_cutscene
+
+
+func set_in_cutscene(value: bool) -> void:
+	_in_cutscene = value
+
+
+func get_cutscene_return() -> Dictionary:
+	return _cutscene_return
+
+
+func set_cutscene_return(value: Dictionary) -> void:
+	_cutscene_return = value
+
+
+func is_transitioning() -> bool:
+	return _transitioning
+
+
+func set_pending_cutscene(value: Dictionary) -> void:
+	_pending_cutscene = value
+
+
+func transition_to_map(target_map: String, target_spawn: String) -> void:
+	_transition_to_map(target_map, target_spawn)
 
 
 # ---------- Crystal XP distribution ----------

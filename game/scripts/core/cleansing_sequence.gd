@@ -62,7 +62,11 @@ func start(data: Dictionary) -> void:
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
-	_ritual_meter = (load(RITUAL_METER_PATH) as PackedScene).instantiate()
+	var meter_res: Resource = load(RITUAL_METER_PATH)
+	if not meter_res is PackedScene:
+		push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+		return
+	_ritual_meter = (meter_res as PackedScene).instantiate()
 	_exploration.add_child(_ritual_meter)
 	_ritual_meter.show_meter()
 	_spawned_pool_count = 0
@@ -98,7 +102,11 @@ func continue_sequence(data: Dictionary) -> void:
 		var origin: Variant = data.get("cleansing_origin_position", null)
 		_exploration.get_player().position = origin if origin is Vector2 else fallback
 	if _ritual_meter == null:
-		_ritual_meter = (load(RITUAL_METER_PATH) as PackedScene).instantiate()
+		var meter_res: Resource = load(RITUAL_METER_PATH)
+		if not meter_res is PackedScene:
+			push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+			return
+		_ritual_meter = (meter_res as PackedScene).instantiate()
 		_exploration.add_child(_ritual_meter)
 		var saved_val: float = data.get("ritual_meter_value", 100.0)
 		_ritual_meter.set_value(saved_val)
@@ -209,7 +217,11 @@ func _spawn_poison_pools() -> void:
 	for i: int in range(count):
 		if _spawned_pool_count >= 4:
 			break
-		var pool: Area2D = (load(DAMAGE_ZONE_PATH) as PackedScene).instantiate()
+		var zone_res: Resource = load(DAMAGE_ZONE_PATH)
+		if not zone_res is PackedScene:
+			push_error("CleansingSequence: Failed to load damage zone: %s" % DAMAGE_ZONE_PATH)
+			break
+		var pool: Area2D = (zone_res as PackedScene).instantiate()
 		var pos: Vector2 = _random_arena_position()
 		pool.position = pos
 		entities.add_child(pool)
