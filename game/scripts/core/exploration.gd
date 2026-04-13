@@ -288,6 +288,8 @@ func _initialize_entities(map_node: Node2D) -> void:
 			continue
 		if child.has_signal("npc_interacted"):
 			if child.get_meta("cutscene_actor", false):
+				if child.has_method("initialize_as_actor"):
+					child.initialize_as_actor()
 				continue
 			var npc_id: String = child.get_meta("npc_id", "")
 			if npc_id.is_empty():
@@ -395,11 +397,12 @@ func _initialize_entities(map_node: Node2D) -> void:
 				var child_character_id: Variant = child.get("character_id")
 				if child_character_id is String and not child_character_id.is_empty():
 					_entities[child_character_id] = child
-	# Player character stores character_id as a script variable
+	# Register player only if no cutscene actor already owns the same ID
 	if _player != null:
 		var player_character_id: Variant = _player.get("character_id")
 		if player_character_id is String and not player_character_id.is_empty():
-			_entities[player_character_id] = _player
+			if not _entities.has(player_character_id):
+				_entities[player_character_id] = _player
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
