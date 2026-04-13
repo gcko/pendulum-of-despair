@@ -165,9 +165,23 @@ func walk_to(target: Vector2, speed: float) -> void:
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
+	# Play walk animation if available
+	var dir: Vector2 = (target - position).normalized()
+	var anim_name: String = "idle"
+	if abs(dir.x) > abs(dir.y):
+		anim_name = "walk_east" if dir.x > 0 else "walk_west"
+	else:
+		anim_name = "walk_south" if dir.y > 0 else "walk_north"
+	if _anim_player != null and _anim_player.has_animation(anim_name):
+		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
 	_walk_tween.tween_property(self, "position", target, duration)
-	_walk_tween.tween_callback(func(): walk_complete.emit())
+	_walk_tween.tween_callback(
+		func():
+			if _anim_player != null and _anim_player.has_animation("idle"):
+				_anim_player.play("idle")
+			walk_complete.emit()
+	)
 
 
 ## Play a named animation on the NPC's AnimationPlayer.

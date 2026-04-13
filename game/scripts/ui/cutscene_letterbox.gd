@@ -18,11 +18,9 @@ var _tween: Tween = null
 
 
 func _ready() -> void:
-	# Resolve @export NodePaths that Godot may not auto-resolve in headless.
-	if top_bar == null:
-		top_bar = get_node_or_null("../LetterboxTop")
-	if bottom_bar == null:
-		bottom_bar = get_node_or_null("../LetterboxBottom")
+	# @export NodePath vars are resolved by the scene loader.
+	# If null after _ready, animate_in/animate_out emit signals immediately.
+	pass
 
 
 func animate_in(duration: float = 0.5) -> void:

@@ -365,7 +365,7 @@ func _initialize_entities(map_node: Node2D) -> void:
 	_entities.clear()
 	var entities_node: Node2D = map_node.get_node_or_null("Entities")
 	if entities_node != null:
-		for child in entities_node.get_children():
+		for child: Node in entities_node.get_children():
 			# NPCs store npc_id as metadata (set in editor)
 			var nid: String = child.get_meta("npc_id", "")
 			if nid != "":
@@ -828,7 +828,6 @@ func _connect_cutscene_signals() -> void:
 	_safe_connect(cs, "cutscene_anim_requested", _on_cutscene_anim)
 	_safe_connect(cs, "cutscene_camera_requested", _on_cutscene_camera)
 	_safe_connect(cs, "cutscene_shake_requested", _on_cutscene_shake)
-	_safe_connect(cs, "cutscene_finished", _on_cutscene_finished)
 	_safe_connect(cs, "cutscene_music_requested", _on_cutscene_music)
 	_safe_connect(cs, "flag_set_requested", _on_cutscene_flag_set)
 	_safe_connect(cs, "sfx_requested", _on_cutscene_sfx)

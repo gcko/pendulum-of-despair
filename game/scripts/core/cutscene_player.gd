@@ -27,6 +27,9 @@ var _tier: int = TIER_FULL
 var _is_playing: bool = false
 var _config: Dictionary = {}
 var _skipped: bool = false
+var _fade_tween: Tween = null
+var _flash_tween: Tween = null
+var _title_tween: Tween = null
 
 @onready var _dialogue_box: Node = $DialogueBox
 @onready var _fade_rect: ColorRect = $FadeRect
@@ -46,16 +49,14 @@ func _ready() -> void:
 			)
 		if _dialogue_box.has_signal("sfx_requested"):
 			_dialogue_box.sfx_requested.connect(func(sfx_id: String): sfx_requested.emit(sfx_id))
-
-
-func _load_config() -> void:
-	var data: Variant = DataManager.load_json("res://data/config/defaults.json")
-	if data is Dictionary:
-		_config = data
+		if _dialogue_box.has_signal("flag_set_requested"):
+			_dialogue_box.flag_set_requested.connect(
+				func(f: String, v: Variant): flag_set_requested.emit(f, v)
+			)
 
 
 ## Start a cutscene sequence.
-func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
+func start_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int = TIER_FULL) -> void:
 	if _is_playing:
 		if OS.is_debug_build():
 			push_warning("Cutscene already playing: %s" % _cutscene_id)
@@ -63,6 +64,7 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if cutscene_id == "":
 		push_error("CutscenePlayer: empty cutscene_id")
 		cutscene_finished.emit()
+		GameManager.pop_overlay()
 		return
 	_cutscene_id = cutscene_id
 	_entries.assign(entries)
@@ -114,6 +116,11 @@ func skip_cutscene() -> void:
 		if flag != "":
 			EventFlags.set_flag(flag, true)
 			flag_set_requested.emit(flag, true)
+	_kill_visual_tweens()
+	if _fade_rect != null:
+		_fade_rect.modulate.a = 0.0
+	if _title_label != null:
+		_title_label.modulate.a = 0.0
 	if _tier == TIER_FULL and _letterbox != null:
 		_letterbox.set_instant(false)
 	var skip_flag: String = "cutscene_seen_%s" % _cutscene_id
@@ -123,6 +130,12 @@ func skip_cutscene() -> void:
 	_skipped = true
 	cutscene_finished.emit()
 	GameManager.pop_overlay()
+
+
+func _load_config() -> void:
+	var data: Variant = DataManager.load_json("res://data/config/defaults.json")
+	if data is Dictionary:
+		_config = data
 
 
 func _process_entries() -> void:
@@ -160,7 +173,7 @@ func _fire_entry_animations(entry: Dictionary, prefix: String) -> void:
 	var anims: Variant = entry.get("animations", null)
 	if anims == null or not (anims is Array):
 		return
-	for anim_data in anims:
+	for anim_data: Variant in anims:
 		if not (anim_data is Dictionary):
 			continue
 		var when: String = anim_data.get("when", "")
@@ -176,10 +189,10 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 	if commands == null or not (commands is Array):
 		return
 
-	var parallel_cmds: Array = []
-	var ordered_groups: Array = []
+	var parallel_cmds: Array[Dictionary] = []
+	var ordered_groups: Array[Array] = []
 
-	for cmd in commands:
+	for cmd: Variant in commands:
 		if not (cmd is Dictionary):
 			continue
 		var when: String = cmd.get("when", "")
@@ -197,18 +210,18 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 	if parallel_cmds.size() > 0:
 		ordered_groups.append(parallel_cmds)
 
-	for group in ordered_groups:
+	for group: Array in ordered_groups:
 		if group.size() == 1 and group[0].get("type", "") == "wait":
 			var duration: float = group[0].get("duration", 0.0)
 			if duration > 0.0:
 				await get_tree().create_timer(duration).timeout
 		else:
-			var blocking_tasks: Array = []
-			for cmd in group:
+			var blocking_tasks: Array[Signal] = []
+			for cmd: Dictionary in group:
 				var result: Variant = _execute_command(cmd)
 				if result is Signal:
 					blocking_tasks.append(result)
-			for sig in blocking_tasks:
+			for sig: Signal in blocking_tasks:
 				await sig
 
 
@@ -265,9 +278,11 @@ func _cmd_fade(cmd: Dictionary) -> Variant:
 	if _is_headless():
 		_fade_rect.modulate.a = target_alpha
 		return null
-	var tween: Tween = create_tween()
-	tween.tween_property(_fade_rect, "modulate:a", target_alpha, duration)
-	return tween.finished
+	if _fade_tween != null and _fade_tween.is_valid():
+		_fade_tween.kill()
+	_fade_tween = create_tween()
+	_fade_tween.tween_property(_fade_rect, "modulate:a", target_alpha, duration)
+	return _fade_tween.finished
 
 
 func _cmd_move(cmd: Dictionary) -> void:
@@ -286,7 +301,7 @@ func _cmd_camera(cmd: Dictionary) -> void:
 
 
 func _cmd_shake(cmd: Dictionary) -> void:
-	var reduce_motion: Variant = _config.get("reduce_motion", false)
+	var reduce_motion: bool = bool(_config.get("reduce_motion", false))
 	if reduce_motion:
 		return
 	var intensity: int = cmd.get("intensity", 2)
@@ -295,7 +310,7 @@ func _cmd_shake(cmd: Dictionary) -> void:
 
 
 func _cmd_flash(cmd: Dictionary) -> Variant:
-	var flash_intensity: Variant = _config.get("flash_intensity", "full")
+	var flash_intensity: String = str(_config.get("flash_intensity", "full"))
 	if flash_intensity == "off":
 		return null
 	if _fade_rect == null:
@@ -312,10 +327,12 @@ func _cmd_flash(cmd: Dictionary) -> Variant:
 	if _is_headless():
 		_fade_rect.modulate.a = 0.0
 		return null
-	var tween: Tween = create_tween()
-	tween.tween_property(_fade_rect, "modulate:a", 0.8, duration * 0.3)
-	tween.tween_property(_fade_rect, "modulate:a", 0.0, duration * 0.7)
-	return tween.finished
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
+	_flash_tween = create_tween()
+	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.8, duration * 0.3)
+	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.0, duration * 0.7)
+	return _flash_tween.finished
 
 
 func _cmd_title(cmd: Dictionary) -> Variant:
@@ -329,17 +346,31 @@ func _cmd_title(cmd: Dictionary) -> Variant:
 	if _is_headless():
 		_title_label.modulate.a = 0.0
 		return null
-	var tween: Tween = create_tween()
-	tween.tween_property(_title_label, "modulate:a", 1.0, fade_in)
-	tween.tween_interval(duration)
-	tween.tween_property(_title_label, "modulate:a", 0.0, fade_out)
-	return tween.finished
+	if _title_tween != null and _title_tween.is_valid():
+		_title_tween.kill()
+	_title_tween = create_tween()
+	_title_tween.tween_property(_title_label, "modulate:a", 1.0, fade_in)
+	_title_tween.tween_interval(duration)
+	_title_tween.tween_property(_title_label, "modulate:a", 0.0, fade_out)
+	return _title_tween.finished
 
 
 func _cmd_music(cmd: Dictionary) -> void:
 	var track_id: String = cmd.get("track_id", "")
 	var action: String = cmd.get("action", "play")
 	cutscene_music_requested.emit(track_id, action)
+
+
+func _kill_visual_tweens() -> void:
+	if _fade_tween != null and _fade_tween.is_valid():
+		_fade_tween.kill()
+	_fade_tween = null
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
+	_flash_tween = null
+	if _title_tween != null and _title_tween.is_valid():
+		_title_tween.kill()
+	_title_tween = null
 
 
 func _is_headless() -> bool:

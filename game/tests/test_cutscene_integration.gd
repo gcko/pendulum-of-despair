@@ -127,11 +127,11 @@ func test_t4_micro_sequence() -> void:
 
 
 func test_skip_flag_persists() -> void:
-	var cs1 = CUTSCENE_SCENE.instantiate()
+	var cs1: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs1)
 	await _start_and_await(cs1, "int_persist", [])
 	assert_true(EventFlags.get_flag("cutscene_seen_int_persist"))
-	var cs2 = CUTSCENE_SCENE.instantiate()
+	var cs2: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs2)
 	watch_signals(cs2)
 	await _start_and_await(cs2, "int_persist", [_entry({"lines": ["Should skip"]})])
@@ -139,12 +139,12 @@ func test_skip_flag_persists() -> void:
 
 
 func test_sequential_cutscenes() -> void:
-	var cs1 = CUTSCENE_SCENE.instantiate()
+	var cs1: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs1)
 	watch_signals(cs1)
 	await _start_and_await(cs1, "int_seq_1", [])
 	assert_signal_emitted(cs1, "cutscene_finished")
-	var cs2 = CUTSCENE_SCENE.instantiate()
+	var cs2: Node = CUTSCENE_SCENE.instantiate()
 	add_child_autofree(cs2)
 	watch_signals(cs2)
 	await _start_and_await(cs2, "int_seq_2", [])
