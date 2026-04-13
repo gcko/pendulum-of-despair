@@ -33,7 +33,7 @@ const COLOR_NORMAL: Color = Color("#ccddff")
 var embedded_mode: bool = false
 
 ## Current dialogue entries being processed.
-var _entries: Array[Dictionary] = []
+var _entries: Array = []
 
 ## Current entry index.
 var _current_index: int = 0
@@ -115,7 +115,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Start displaying a sequence of dialogue entries.
 func show_dialogue(entries: Array) -> void:
-	_entries.assign(entries)
+	_entries = entries
 	_current_index = 0
 	if _entries.is_empty():
 		dialogue_finished.emit()

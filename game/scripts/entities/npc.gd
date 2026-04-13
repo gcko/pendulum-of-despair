@@ -17,7 +17,7 @@ signal walk_complete
 var npc_id: String = ""
 
 ## All dialogue entries loaded from DataManager (ordered by priority).
-var dialogue_entries: Array[Dictionary] = []
+var dialogue_entries: Array = []
 
 ## Active walk tween (killed on new walk_to call).
 var _walk_tween: Tween = null
