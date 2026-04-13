@@ -247,9 +247,36 @@ done
    - Calculate pre-Copilot catch rate: (issues agents found independently) / (total Copilot comments)
    - If catch rate < 80%, investigate root cause and update agent prompts
 
+## File Issues for Skipped Findings (MANDATORY)
+
+After all rounds complete but BEFORE pushing, review every finding
+that was classified as SKIP / out-of-scope / cosmetic / not-in-PR.
+**Every skipped finding MUST be captured** so it is not lost:
+
+1. **Create a bd issue** for each skipped finding using `bd create`:
+   ```bash
+   bd create --title="<concise title>" \
+     --description="<file:line, what the issue is, why it was skipped>" \
+     --type=bug|task|feature --priority=2-3 --json
+   ```
+2. Group related findings into a single issue where appropriate
+   (e.g., all stale doc references in one issue).
+3. Include the PR number in the description so future sessions
+   can trace back to the review that found it.
+
+**Why this is mandatory:** Review rounds surface real issues that
+aren't in the PR's scope. If they aren't filed, they are forgotten.
+This has happened repeatedly — the review identifies problems, says
+"not fixing", and nobody ever comes back to them.
+
+**The same rule applies to `/godot-review`.** Any finding marked
+SKIP or out-of-scope must be filed as an issue before the review
+is considered complete.
+
 ## Push and Summary
 
-After all rounds complete, Copilot comments replied to, and gap analysis done:
+After all rounds complete, Copilot comments replied to, gap analysis
+done, and skipped findings filed as issues:
 
 ```bash
 git push
