@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 [node name="CurrentMap" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
 position_smoothing_enabled = false
 
 [node name="FadeOverlay" type="CanvasLayer" parent="."]
