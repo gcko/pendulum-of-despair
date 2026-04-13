@@ -119,7 +119,7 @@ func test_transition_flag_blocks_interaction() -> void:
 	var npc = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC must exist for this test")
 	watch_signals(npc)
-	exp._transitioning = true
+	exp.set_transitioning(true)
 	exp._on_interaction_requested(npc)
 	# NPC.interact() emits npc_interacted — if blocked, signal should NOT emit
 	assert_signal_not_emitted(

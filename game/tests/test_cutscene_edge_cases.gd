@@ -50,7 +50,7 @@ func _create_exploration_test_room() -> Node2D:
 func test_start_pending_cutscene_failure_clears_return() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
 	# Set up cutscene return data
-	exp_node._cutscene_return = {"map": "test_room", "spawn": "PlayerSpawn"}
+	exp_node.set_cutscene_return({"map": "test_room", "spawn": "PlayerSpawn"})
 	# Push an overlay to block the cutscene overlay push
 	GameManager.push_overlay(GameManager.OverlayState.MENU)
 	# Try to start a pending cutscene — should fail because overlay is occupied
@@ -59,7 +59,7 @@ func test_start_pending_cutscene_failure_clears_return() -> void:
 	assert_push_error_count(1, "overlay push failure should log error")
 	# Return data should be cleared after failure recovery
 	assert_true(
-		exp_node._cutscene_return.is_empty(),
+		exp_node.get_cutscene_return().is_empty(),
 		"cutscene_return should be cleared after overlay push failure"
 	)
 	GameManager.pop_overlay()
@@ -68,7 +68,7 @@ func test_start_pending_cutscene_failure_clears_return() -> void:
 # --- 2. _start_pending_cutscene failure with return map triggers transition ---
 func test_start_pending_cutscene_failure_triggers_return_transition() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
-	exp_node._cutscene_return = {"map": "test_room_2", "spawn": "from_cutscene"}
+	exp_node.set_cutscene_return({"map": "test_room_2", "spawn": "from_cutscene"})
 	# Block overlay
 	GameManager.push_overlay(GameManager.OverlayState.MENU)
 	var typed_entries: Array[Dictionary] = []
@@ -76,7 +76,7 @@ func test_start_pending_cutscene_failure_triggers_return_transition() -> void:
 	assert_push_error_count(1, "overlay push failure should log error")
 	# After failure, _transitioning should be true (return transition started)
 	assert_true(
-		exp_node._transitioning,
+		exp_node.is_transitioning(),
 		"should start return transition after overlay push failure with return map"
 	)
 	GameManager.pop_overlay()
@@ -95,10 +95,10 @@ func test_cutscene_trigger_missing_dialogue_no_crash() -> void:
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
 	# Should not crash — just logs error and returns
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
+	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
 	assert_push_error_count(1, "missing dialogue should log error")
 	assert_false(
-		exp_node._in_cutscene, "should not enter cutscene state with missing dialogue data"
+		exp_node.is_in_cutscene(), "should not enter cutscene state with missing dialogue data"
 	)
 
 
@@ -109,11 +109,12 @@ func test_cutscene_trigger_empty_entries_no_crash() -> void:
 	# The deferred _start_pending_cutscene fires with empty entries — verify
 	# the pending dict is consumed synchronously during load_map and that
 	# the deferred call handles empty entries without crashing.
-	exp_node._pending_cutscene = {"id": "empty_test", "entries": [], "tier": 1}
+	exp_node.set_pending_cutscene({"id": "empty_test", "entries": [], "tier": 1})
 	exp_node.load_map("test_room")
 	# Pending cutscene should be consumed (cleared) even with empty entries
 	assert_true(
-		exp_node._pending_cutscene.is_empty(), "pending cutscene should be consumed after load_map"
+		exp_node.get_pending_cutscene().is_empty(),
+		"pending cutscene should be consumed after load_map"
 	)
 	# Flush the deferred _start_pending_cutscene call so it doesn't leak
 	await get_tree().process_frame
@@ -133,14 +134,14 @@ func test_cutscene_double_fire_prevented_by_flag() -> void:
 	# Pre-set the flag to simulate having already seen the cutscene
 	EventFlags.set_flag("dawn_march_seen", true)
 	# Trigger should be blocked by the flag — returns early without any errors
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
-	assert_false(exp_node._in_cutscene, "trigger should be blocked by one-shot flag")
+	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	assert_false(exp_node.is_in_cutscene(), "trigger should be blocked by one-shot flag")
 
 
 # --- 6. Cutscene trigger blocked during transition ---
 func test_cutscene_trigger_blocked_during_transition() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
-	exp_node._transitioning = true
+	exp_node.set_transitioning(true)
 	var area: Area2D = Area2D.new()
 	add_child_autofree(area)
 	area.set_meta("cutscene_scene_id", "dawn_march")
@@ -149,14 +150,14 @@ func test_cutscene_trigger_blocked_during_transition() -> void:
 	area.set_meta("cutscene_map_id", "")
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
-	assert_false(exp_node._in_cutscene, "cutscene trigger should be blocked during transition")
+	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	assert_false(exp_node.is_in_cutscene(), "cutscene trigger should be blocked during transition")
 
 
 # --- 7. Cutscene trigger blocked while already in cutscene ---
 func test_cutscene_trigger_blocked_while_in_cutscene() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
-	exp_node._in_cutscene = true
+	exp_node.set_in_cutscene(true)
 	var area: Area2D = Area2D.new()
 	add_child_autofree(area)
 	area.set_meta("cutscene_scene_id", "dawn_march")
@@ -165,9 +166,9 @@ func test_cutscene_trigger_blocked_while_in_cutscene() -> void:
 	area.set_meta("cutscene_map_id", "")
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
+	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
 	# Should remain in the existing cutscene state, not start another
-	assert_true(exp_node._in_cutscene, "should stay in existing cutscene")
+	assert_true(exp_node.is_in_cutscene(), "should stay in existing cutscene")
 
 
 # --- 8. Cutscene trigger with required_flag not set is blocked ---
@@ -182,8 +183,10 @@ func test_cutscene_trigger_blocked_by_required_flag() -> void:
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
 	# required_flag not set — should block
-	exp_node._on_cutscene_trigger_entered(exp_node._player, area)
-	assert_false(exp_node._in_cutscene, "cutscene should be blocked when required_flag is not set")
+	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	assert_false(
+		exp_node.is_in_cutscene(), "cutscene should be blocked when required_flag is not set"
+	)
 
 
 # --- 9. Empty flag_name in flag_set_requested is rejected ---

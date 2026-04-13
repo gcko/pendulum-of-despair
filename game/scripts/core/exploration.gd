@@ -861,7 +861,7 @@ func _get_cutscene_handler() -> CutsceneHandler:
 	return _cutscene_handler
 
 
-# ---------- Public accessors for CleansingSequence ----------
+# ---------- Public accessors for delegated handlers ----------
 
 
 func get_player() -> Node2D:
@@ -918,6 +918,10 @@ func set_cutscene_return(value: Dictionary) -> void:
 
 func is_transitioning() -> bool:
 	return _transitioning
+
+
+func get_pending_cutscene() -> Dictionary:
+	return _pending_cutscene
 
 
 func set_pending_cutscene(value: Dictionary) -> void:

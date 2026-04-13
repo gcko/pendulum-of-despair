@@ -114,8 +114,8 @@ func _on_cutscene_finished() -> void:
 	if camera != null and player != null:
 		camera.position = player.position.round()
 		camera.offset = Vector2.ZERO
-	if not _exploration.get_cutscene_return().is_empty():
-		var ret: Dictionary = _exploration.get_cutscene_return()
+	var ret: Dictionary = _exploration.get_cutscene_return()
+	if not ret.is_empty():
 		_exploration.set_cutscene_return({})
 		var ret_map: String = ret.get("map", "")
 		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
@@ -152,14 +152,12 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 func start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
 		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
-		if not _exploration.get_cutscene_return().is_empty():
-			var ret: Dictionary = _exploration.get_cutscene_return()
-			_exploration.set_cutscene_return({})
-			var ret_map: String = ret.get("map", "")
-			if ret_map != "":
-				_exploration.transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
-				return
+		var ret: Dictionary = _exploration.get_cutscene_return()
 		_exploration.set_cutscene_return({})
+		var ret_map: String = ret.get("map", "")
+		if ret_map != "":
+			_exploration.transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
+			return
 		return
 	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
 
