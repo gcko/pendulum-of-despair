@@ -144,6 +144,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] NinePatchRect nodes MUST have a texture assigned — otherwise invisible. Prefer PanelContainer + StyleBoxFlat for UI windows without art assets.
 - [ ] Sprite2D nodes MUST have a texture assigned — otherwise invisible even when set to visible. Assign a placeholder if no art exists.
 - [ ] UI panel colors (bg_color, border_color) must match ui-design.md Section 1.4 palette hex values
+- [ ] Full-viewport Control nodes (ColorRect, Label) that are hidden via `modulate.a = 0` MUST set `mouse_filter = IGNORE` (2) — otherwise they consume mouse/touch events while invisible, blocking input to nodes beneath. (PR #142: TitleLabel blocked clicks to embedded DialogueBox)
 
 ### Test Hygiene (from Copilot PR #119 gap analysis)
 - [ ] Tests that create persistent state (save files, config files) must have `after_each()` cleanup
@@ -180,6 +181,10 @@ cannot point to the exact line that handles the case, it's a bug.
 ### Tween Pause Mode (from Copilot PR #142 gap analysis)
 - [ ] **Tween pause behavior during overlays:** For every tween created on a PAUSABLE node (exploration entities, player, NPCs) that runs during an overlay (CUTSCENE, DIALOGUE), verify `set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)` is called. GameManager.push_overlay sets `get_tree().paused = true`, which freezes all PAUSABLE tweens. Cutscene choreography tweens (camera, shake, walk_to) must use TWEEN_PAUSE_PROCESS to animate while paused. (PR #142: camera/shake/walk_to tweens were frozen during cutscenes)
 - [ ] **Signal connect-before-start ordering:** For every test helper that starts an async operation and awaits a completion signal, connect the signal BEFORE starting the operation. Synchronous signal emissions (e.g., skip-flag early exit) fire before the await point, causing the signal to be missed and the test to timeout. (PR #142: _start_and_await connected after start_cutscene, missed synchronous cutscene_finished)
+
+### Cutscene Choreography Safety (from Copilot PR #142 batch 3 gap analysis)
+- [ ] **Physics trigger gating during cutscenes:** For every `body_entered` / `area_entered` signal handler in exploration.gd (boss triggers, map transitions, pitfalls, dialogue triggers), verify the handler checks `_in_cutscene` before processing. Cutscene `move` commands walk the player's CharacterBody2D, which triggers Area2D overlaps. `_unhandled_input` gating is NOT sufficient — physics signals bypass input handlers. (PR #142: boss/transition/pitfall handlers lacked _in_cutscene guard)
+- [ ] **Tween duration budget accuracy:** For every tween that builds a sequence of steps (shake, typewriter, multi-phase animation), verify the total tween duration equals the requested duration. Extra reset/cleanup steps at the end can overshoot. Budget the reset within the requested duration by reducing steps or computing remaining time. (PR #142: shake reset step added +50ms beyond requested duration)
 
 ### Transition Exit Gating (from Copilot PR #141 gap analysis)
 - [ ] **Exit transition gating:** For every map with a scripted sequence (boss fight, story event), verify the exit transition has `required_flag` gating. Without it, the player can walk out before completing the sequence. Check BOTH map exits AND teleport/warp transitions. (PR #141: Ironmouth ExitToOverworld had no required_flag)
