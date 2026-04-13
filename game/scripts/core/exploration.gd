@@ -579,7 +579,7 @@ func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
 
 
 func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning:
+	if body != _player or _transitioning or _in_cutscene:
 		return
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
@@ -678,6 +678,7 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
 	_transition_tween = create_tween()
+	_transition_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_transition_tween.tween_property(_fade_rect, "color:a", 1.0, FADE_DURATION)
 	_transition_tween.tween_callback(_do_map_swap.bind(target_map, target_spawn))
 	_transition_tween.tween_property(_fade_rect, "color:a", 0.0, FADE_DURATION)
@@ -900,6 +901,12 @@ func _on_cutscene_finished() -> void:
 	if _cutscene_shake_tween != null and _cutscene_shake_tween.is_valid():
 		_cutscene_shake_tween.kill()
 	_cutscene_shake_tween = null
+	# Kill any in-flight entity walk tweens from cutscene move commands
+	for entity: Node in _entities.values():
+		if entity.has_method("cancel_walk"):
+			entity.cancel_walk()
+	if _player != null and _player.has_method("cancel_walk"):
+		_player.cancel_walk()
 	if _camera != null and _player != null:
 		_camera.position = _player.position.round()
 		_camera.offset = Vector2.ZERO

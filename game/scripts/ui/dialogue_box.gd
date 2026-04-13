@@ -106,11 +106,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_choice_input(event)
 		return
 	if event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		if _text_complete:
 			_advance()
 		else:
 			_complete_text()
-		get_viewport().set_input_as_handled()
 
 
 ## Start displaying a sequence of dialogue entries.
@@ -240,13 +240,13 @@ func _handle_choice_input(event: InputEvent) -> void:
 		_update_choice_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		_select_choice()
 		get_viewport().set_input_as_handled()
+		_select_choice()
 	elif event.is_action_pressed("ui_cancel"):
 		# Cancel selects bottom option per ui-design.md Section 12.4
 		_choice_index = _choice_count - 1
-		_select_choice()
 		get_viewport().set_input_as_handled()
+		_select_choice()
 
 
 func _select_choice() -> void:
@@ -288,7 +288,7 @@ func _update_choice_display() -> void:
 		var target: Label = _choice_labels[_choice_index]
 		_choice_cursor.global_position = Vector2(
 			target.global_position.x - 64,
-			target.global_position.y + target.size.y / 2.0,
+			target.global_position.y + floori(target.size.y / 2.0),
 		)
 
 

@@ -17,7 +17,7 @@ signal walk_complete
 var npc_id: String = ""
 
 ## All dialogue entries loaded from DataManager (ordered by priority).
-var dialogue_entries: Array = []
+var dialogue_entries: Array[Dictionary] = []
 
 ## Active walk tween (killed on new walk_to call).
 var _walk_tween: Tween = null
@@ -190,6 +190,15 @@ func walk_to(target: Vector2, speed: float) -> void:
 				_anim_player.play("idle")
 			walk_complete.emit()
 	)
+
+
+## Cancel any in-progress walk tween (e.g., on cutscene end).
+func cancel_walk() -> void:
+	if _walk_tween != null and _walk_tween.is_valid():
+		_walk_tween.kill()
+	_walk_tween = null
+	if _anim_player != null and _anim_player.has_animation("idle"):
+		_anim_player.play("idle")
 
 
 ## Play a named animation on the NPC's AnimationPlayer.
