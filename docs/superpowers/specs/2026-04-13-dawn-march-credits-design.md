@@ -191,16 +191,14 @@ Entry 012 (Lira — "I know. That's why I came."):
     {"type": "fade", "direction": "out", "duration": 1.5, "when": "after"},
     {"type": "wait", "duration": 0.5, "when": "after"}
   ],
-  "flag_set": "opening_credits_seen"
 }
 ```
-(Fade to black after final line. Flag 39 set.)
+(Fade to black after final line.)
 
-**Note on double flag-set:** The trigger handler (Deliverable 3) sets
-`opening_credits_seen` immediately to prevent re-entry if the player
-somehow re-triggers the zone. The `flag_set` on entry 012 is the
-canonical story-progression set point. Both are intentional — the
-trigger guard is defensive, the entry flag is narrative.
+**Flag timing:** The trigger handler (Deliverable 3) sets
+`opening_credits_seen` immediately upon trigger entry to prevent
+re-entry. The JSON entry 012 does NOT have `flag_set` — the flag
+is set once, by the trigger, before the cutscene starts.
 
 **Title card entry (new entry 013, after entry 012):**
 ```json
@@ -452,7 +450,7 @@ the player spawns here and continues exploring toward Thornmere Wilds.
 - Test cutscene trigger detection in exploration (mock Area2D with
   cutscene metadata)
 - Test dawn_march.json loads and has valid structure (16 entries,
-  commands arrays, flag_set on entry 012)
+  commands arrays, no flag_set on entries)
 - Test `_pending_cutscene` state machine (set on trigger, cleared on
   map load, return on finish)
 

@@ -199,10 +199,14 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if not _pending_cutscene.is_empty():
 		var pc: Dictionary = _pending_cutscene
 		_pending_cutscene = {}
+		var typed_entries: Array[Dictionary] = []
+		for e: Variant in pc.get("entries", []):
+			if e is Dictionary:
+				typed_entries.append(e as Dictionary)
 		call_deferred(
 			"_start_pending_cutscene",
 			pc.get("id", ""),
-			pc.get("entries", []),
+			typed_entries,
 			pc.get("tier", 1),
 		)
 
@@ -938,6 +942,10 @@ func _on_cutscene_finished() -> void:
 		var ret_map: String = ret.get("map", "")
 		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
 		if ret_map != "":
+			# Cover screen before transition to prevent void flash from
+			# cutscene map player position
+			_fade_rect.visible = true
+			_fade_rect.color = Color(0, 0, 0, 1)
 			_transition_to_map(ret_map, ret_spawn)
 			return
 	if _player != null and not _in_auto_walk:

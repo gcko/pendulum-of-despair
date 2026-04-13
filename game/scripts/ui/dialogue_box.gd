@@ -263,7 +263,8 @@ func _select_choice() -> void:
 	if choices is Array and _choice_index < choices.size():
 		var opt: Variant = choices[_choice_index]
 		if opt is Dictionary:
-			var flag: String = opt.get("flag_set", "")
+			var flag_val: Variant = opt.get("flag_set", "")
+			var flag: String = flag_val if flag_val is String else ""
 			if flag != "":
 				flag_set_requested.emit(flag, true)
 			var score_name: String = opt.get("score_name", "")

@@ -120,9 +120,9 @@ func skip_cutscene() -> void:
 		return
 	for i in range(_current_index, _entries.size()):
 		var entry: Dictionary = _entries[i]
-		var flag: String = entry.get("flag_set", "")
+		var flag_val: Variant = entry.get("flag_set", "")
+		var flag: String = flag_val if flag_val is String else ""
 		if flag != "":
-			EventFlags.set_flag(flag, true)
 			flag_set_requested.emit(flag, true)
 	_kill_visual_tweens()
 	if _fade_rect != null:
@@ -169,8 +169,9 @@ func _process_entries() -> void:
 		# Run "after" commands
 		await _run_commands(entry, "after")
 
-		# Emit flag_set if present
-		var flag: String = entry.get("flag_set", "")
+		# Emit flag_set if present (guard against JSON null values)
+		var flag_val: Variant = entry.get("flag_set", "")
+		var flag: String = flag_val if flag_val is String else ""
 		if flag != "":
 			flag_set_requested.emit(flag, true)
 

@@ -1026,7 +1026,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Cael hidden stat spike (+10% physical damage via Pallor shimmer, permanent, hidden)
 - [x] Opening credits visual sequence (title card, character names) — T1 cutscene with title command (2026-04-13)
 - [x] Dawn March forward-only walk mechanics — dedicated trail map + cutscene trigger system (2026-04-13)
-- [x] `opening_credits_seen` flag (39) — set via flag_set on entry 012 + cutscene skip flag (2026-04-13)
+- [x] `opening_credits_seen` flag (39) — set by cutscene trigger handler on entry (2026-04-13)
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
