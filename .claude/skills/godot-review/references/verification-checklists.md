@@ -166,7 +166,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] **Repeatability:** For every entity used in maps — can it happen twice? Doors/transitions MUST be repeatable (use Area2D, NOT one-shot TriggerZone). Story triggers are one-shot.
 - [ ] **Input ownership:** Grep for each input action (ui_accept, ui_cancel, etc.) across ALL .gd files. Exactly ONE handler per action per active scene. Two handlers = double-fire bug.
 - [ ] **Initialization chain:** For every entity in a .tscn map — trace: metadata set -> exploration reads metadata -> calls initialize(). If any link is missing, entity silently does nothing.
-- [ ] **Viewport dimensions:** Every ColorRect, background, panel size must match viewport (320x180). Every tile position must align to 16x16 grid. Every sprite must match spec sizes.
+- [ ] **Viewport dimensions:** Every ColorRect, background, panel size must match the effective game world (320x180 at 4x camera zoom within 1280x720 viewport). Every tile position must align to 16x16 grid. Every sprite must match spec sizes.
 - [ ] **Global state cleanup:** Every test file must clear ALL singletons in before_each: GameManager.transition_data, EventFlags.clear_all(), SaveManager.delete_slot(0-3).
 - [ ] **Spec-implementation sync:** After implementation, grep spec for EVERY changed concept name. Update ALL occurrences, not just the first one you find.
 - [ ] **Return path completeness:** After every overlay push or sub-state change, trace the cancel/return path. Are panels shown/hidden correctly? Is cursor visible/hidden correctly?
@@ -225,10 +225,10 @@ cannot point to the exact line that handles the case, it's a bug.
 
 ---
 
-## 3. Pixel Art Specific (320x180 Viewport)
+## 3. Pixel Art Specific (1280x720 Viewport, 4x Camera Zoom)
 
 ### Viewport Configuration
-- [ ] Viewport size is 320x180
+- [ ] Viewport size is 1280x720
 - [ ] Stretch mode is "viewport"
 - [ ] Stretch aspect is "keep"
 - [ ] Scale mode is `"integer"` (Godot 4.x string format in project.godot)

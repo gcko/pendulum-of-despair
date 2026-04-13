@@ -66,7 +66,7 @@ Check `.gd` and `.tscn` files for:
 ### Pass C: Pixel Art Rendering
 
 Check project settings and scene files for:
-- Viewport 320x180 with integer scaling
+- Viewport 1280x720 with 4x camera zoom (effective 320x180), integer scaling
 - Nearest-neighbor texture filter everywhere
 - Snap-to-pixel enabled (transforms and vertices)
 - No sub-pixel positions in scene files

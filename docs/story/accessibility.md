@@ -29,10 +29,10 @@ games. The 1280x720 viewport provides direct pixel mapping at 720p displays.
 
 | Display | Scale Factor | Result |
 |---------|-------------|--------|
-| 720p (1280x720) | 4x | Clean |
-| 1080p (1920x1080) | 6x | Clean |
-| 1440p (2560x1440) | 8x | Clean |
-| 4K (3840x2160) | 12x | Clean |
+| 720p (1280x720) | 1x | Clean |
+| 1080p (1920x1080) | 1x | Letterboxed (1.5x non-integer) |
+| 1440p (2560x1440) | 2x | Clean |
+| 4K (3840x2160) | 3x | Clean |
 
 ### Tile Viewport
 
