@@ -16,22 +16,22 @@ tile_map_data = {"format": 3, "tile_data": PackedInt32Array(0, 0, 1, 1, 0, 1, 2,
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Edren" parent="Entities" instance=ExtResource("2_npc")]
-position = Vector2(80, 120)
+position = Vector2(80, 128)
 metadata/npc_id = "edren"
 metadata/cutscene_actor = true
 
 [node name="Cael" parent="Entities" instance=ExtResource("2_npc")]
-position = Vector2(64, 136)
+position = Vector2(64, 144)
 metadata/npc_id = "cael"
 metadata/cutscene_actor = true
 
 [node name="Lira" parent="Entities" instance=ExtResource("2_npc")]
-position = Vector2(32, 120)
+position = Vector2(32, 128)
 metadata/npc_id = "lira"
 metadata/cutscene_actor = true
 
 [node name="Sable" parent="Entities" instance=ExtResource("2_npc")]
-position = Vector2(16, 136)
+position = Vector2(16, 144)
 metadata/npc_id = "sable"
 metadata/cutscene_actor = true
 
