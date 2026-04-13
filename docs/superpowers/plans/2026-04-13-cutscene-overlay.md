@@ -1716,7 +1716,7 @@ Expected: ~17 tests PASS
 - [ ] **Step 5: Run ALL cutscene-related tests together**
 
 Run: `cd game && godot --headless --script addons/gut/gut_cmdln.gd -gdir=res://tests/ -ginclude_subdirs -gprefix=test_cutscene,test_dialogue_box_embedded,test_entity_walk_to -gexit 2>&1 | head -80`
-Expected: All ~57 tests PASS
+Expected: All ~51 tests PASS
 
 - [ ] **Step 6: Run existing exploration + entity tests for regression**
 
@@ -1780,7 +1780,7 @@ In `docs/analysis/game-dev-gaps.md`, update gap 3.7:
 - [x] T1 letterbox bars (animate in/out)
 - [x] T4 micro-cutscene (no letterbox)
 - [x] Embedded dialogue_box mode (embedded_mode suppresses pop_overlay)
-- [x] ~57 tests across 4 test files
+- [x] ~51 tests across 4 test files
 
 **Notes:**
 - T2 (Walk-and-Talk) and T3 (Playable Scene) deferred — they are exploration-mode behaviors, not overlays
@@ -1798,7 +1798,7 @@ Update the Summary table: change 3.7 from "not started" to "complete" and update
 
 Add a row to Progress Tracking:
 ```
-| 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 4 test files (~57 tests). | — |
+| 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 4 test files (~51 tests). | — |
 ```
 
 - [ ] **Step 4: Commit gap tracker update**
