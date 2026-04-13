@@ -60,8 +60,6 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _is_playing:
 		if OS.is_debug_build():
 			push_warning("Cutscene already playing: %s" % _cutscene_id)
-		cutscene_finished.emit()
-		GameManager.pop_overlay()
 		return
 	if cutscene_id == "":
 		push_error("CutscenePlayer: empty cutscene_id")

@@ -448,7 +448,7 @@ Full overlay lifecycle with exploration scene:
 - **Requires (complete):** Gap 3.5 (Dialogue Overlay -- reuses
   dialogue_box.gd), Gap 1.8 (Dialogue Data)
 - **Modifies:** exploration.gd, player_character.gd, npc.gd
-- **Does NOT modify:** GameManager, DataManager, dialogue_box.gd
+- **Does NOT modify:** GameManager, DataManager
 
 ---
 
