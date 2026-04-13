@@ -28,6 +28,10 @@ const MAX_VISIBLE_LINES: int = 3
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 
+## When true, dialogue_finished does NOT call GameManager.pop_overlay().
+## Used when dialogue_box is embedded inside another overlay (e.g., cutscene).
+var embedded_mode: bool = false
+
 ## Current dialogue entries being processed.
 var _entries: Array = []
 
@@ -115,7 +119,8 @@ func show_dialogue(entries: Array) -> void:
 	_current_index = 0
 	if _entries.is_empty():
 		dialogue_finished.emit()
-		GameManager.pop_overlay()
+		if not embedded_mode:
+			GameManager.pop_overlay()
 		return
 	_show_entry(_current_index)
 
@@ -124,13 +129,15 @@ func show_dialogue(entries: Array) -> void:
 func close() -> void:
 	_entries = []
 	dialogue_finished.emit()
-	GameManager.pop_overlay()
+	if not embedded_mode:
+		GameManager.pop_overlay()
 
 
 func _show_entry(index: int) -> void:
 	if index >= _entries.size():
 		dialogue_finished.emit()
-		GameManager.pop_overlay()
+		if not embedded_mode:
+			GameManager.pop_overlay()
 		return
 
 	var entry: Dictionary = _entries[index]
