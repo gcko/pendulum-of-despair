@@ -31,6 +31,10 @@ var _cutscene_shake_tween: Tween = null
 var _in_cutscene: bool = false
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
+## Pending cutscene data (set by trigger, consumed after map load).
+var _pending_cutscene: Dictionary = {}
+## Return destination after a cutscene map finishes.
+var _cutscene_return: Dictionary = {}
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
