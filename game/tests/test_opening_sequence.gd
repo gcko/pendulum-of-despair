@@ -177,9 +177,9 @@ func test_overworld_has_scene4_trigger() -> void:
 		"Scene4Trigger should set opening_credits_seen flag",
 	)
 	assert_eq(
-		str(trigger.get_meta("dialogue_scene_id", "")),
+		str(trigger.get_meta("cutscene_scene_id", "")),
 		"dawn_march",
-		"Scene4Trigger should reference dawn_march dialogue",
+		"Scene4Trigger should reference dawn_march cutscene",
 	)
 	overworld.queue_free()
 

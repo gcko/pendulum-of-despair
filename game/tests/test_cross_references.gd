@@ -108,6 +108,9 @@ func test_all_npc_dialogue_files_exist() -> void:
 	var scene_files: Array[String] = _collect_tscn_files(MAPS_DIR)
 	var checked: int = 0
 	for scene_path: String in scene_files:
+		# Cutscene maps use NPC instances as choreography actors, not dialogue NPCs
+		if scene_path.contains("/cutscenes/"):
+			continue
 		var lines: PackedStringArray = _read_tscn_lines(scene_path)
 		for npc_id: String in _extract_metadata(lines, "npc_id"):
 			var dialogue_path: String = "res://data/dialogue/npc_%s.json" % npc_id
