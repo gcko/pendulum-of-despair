@@ -935,6 +935,45 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 	pass
 
 
+func _start_pending_cutscene(cutscene_id: String, entries: Array, tier: int) -> void:
+	if GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
+		GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
+
+
+func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
+	if body != _player or _transitioning or _in_cutscene:
+		return
+	var flag: String = area.get_meta("flag", "")
+	if not flag.is_empty() and EventFlags.get_flag(flag):
+		return
+	var required: String = area.get_meta("required_flag", "")
+	if not required.is_empty() and not EventFlags.get_flag(required):
+		return
+	# Set one-shot flag immediately (prevents re-trigger)
+	if not flag.is_empty():
+		EventFlags.set_flag(flag, true)
+	var scene_id: String = area.get_meta("cutscene_scene_id", "")
+	var map_id: String = area.get_meta("cutscene_map_id", "")
+	var return_map: String = area.get_meta("cutscene_return_map", "")
+	var return_spawn: String = area.get_meta("cutscene_return_spawn", "")
+	# Load cutscene data from dialogue JSON
+	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
+	var entries: Array = scene_data.get("entries", [])
+	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
+	var tier: int = scene_data.get("cutscene_tier", 1)
+	if entries.is_empty():
+		return
+	# Store return info (survives map swap)
+	_cutscene_return = {"map": return_map, "spawn": return_spawn}
+	if map_id != "":
+		# Transition to cutscene map, then start cutscene after load
+		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
+		_transition_to_map(map_id, "PlayerSpawn")
+	else:
+		# Start cutscene on current map
+		_start_pending_cutscene(cutscene_id, entries, tier)
+
+
 # ---------- Public accessors for CleansingSequence ----------
 
 
