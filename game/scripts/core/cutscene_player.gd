@@ -72,8 +72,8 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 		GameManager.pop_overlay()
 		return
 
-	# Letterbox in for T1
-	if _tier == TIER_FULL and _letterbox != null:
+	# Letterbox in for T1 (skip if bars not resolved — e.g. headless mode)
+	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_in(0.5)
 		await _letterbox.letterbox_in_complete
 
@@ -81,7 +81,7 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	await _process_entries()
 
 	# Letterbox out for T1
-	if _tier == TIER_FULL and _letterbox != null:
+	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_out(0.5)
 		await _letterbox.letterbox_out_complete
 
@@ -248,6 +248,10 @@ func _cmd_fade(cmd: Dictionary) -> Variant:
 		_:
 			_fade_rect.color = Color.BLACK
 	var target_alpha: float = 1.0 if direction == "out" else 0.0
+	# Headless mode: set directly, no tween (avoids rp_target null error).
+	if _is_headless():
+		_fade_rect.modulate.a = target_alpha
+		return null
 	var tween: Tween = create_tween()
 	tween.tween_property(_fade_rect, "modulate:a", target_alpha, duration)
 	return tween.finished
@@ -291,6 +295,9 @@ func _cmd_flash(cmd: Dictionary) -> Variant:
 			_fade_rect.color = Color.RED
 		_:
 			_fade_rect.color = Color.WHITE
+	if _is_headless():
+		_fade_rect.modulate.a = 0.0
+		return null
 	var tween: Tween = create_tween()
 	tween.tween_property(_fade_rect, "modulate:a", 0.8, duration * 0.3)
 	tween.tween_property(_fade_rect, "modulate:a", 0.0, duration * 0.7)
@@ -305,6 +312,9 @@ func _cmd_title(cmd: Dictionary) -> Variant:
 	var fade_in: float = cmd.get("fade_in", 0.5)
 	var fade_out: float = cmd.get("fade_out", 0.5)
 	_title_label.text = text
+	if _is_headless():
+		_title_label.modulate.a = 0.0
+		return null
 	var tween: Tween = create_tween()
 	tween.tween_property(_title_label, "modulate:a", 1.0, fade_in)
 	tween.tween_interval(duration)
@@ -316,3 +326,7 @@ func _cmd_music(cmd: Dictionary) -> void:
 	var track_id: String = cmd.get("track_id", "")
 	var action: String = cmd.get("action", "play")
 	cutscene_music_requested.emit(track_id, action)
+
+
+func _is_headless() -> bool:
+	return DisplayServer.window_get_size() == Vector2i.ZERO

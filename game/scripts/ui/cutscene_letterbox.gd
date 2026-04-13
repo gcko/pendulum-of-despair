@@ -9,6 +9,7 @@ signal letterbox_out_complete
 const BAR_HEIGHT: int = 90
 
 ## Reference to the top letterbox bar (ColorRect).
+## Set via @export in editor or manually in tests.
 @export var top_bar: ColorRect
 ## Reference to the bottom letterbox bar (ColorRect).
 @export var bottom_bar: ColorRect
@@ -16,7 +17,18 @@ const BAR_HEIGHT: int = 90
 var _tween: Tween = null
 
 
+func _ready() -> void:
+	# Resolve @export NodePaths that Godot may not auto-resolve in headless.
+	if top_bar == null:
+		top_bar = get_node_or_null("../LetterboxTop")
+	if bottom_bar == null:
+		bottom_bar = get_node_or_null("../LetterboxBottom")
+
+
 func animate_in(duration: float = 0.5) -> void:
+	if top_bar == null or bottom_bar == null:
+		letterbox_in_complete.emit()
+		return
 	_kill_tween()
 	_tween = create_tween()
 	_tween.set_parallel(true)
@@ -27,6 +39,9 @@ func animate_in(duration: float = 0.5) -> void:
 
 
 func animate_out(duration: float = 0.5) -> void:
+	if top_bar == null or bottom_bar == null:
+		letterbox_out_complete.emit()
+		return
 	_kill_tween()
 	_tween = create_tween()
 	_tween.set_parallel(true)
@@ -38,6 +53,8 @@ func animate_out(duration: float = 0.5) -> void:
 
 func set_instant(visible: bool) -> void:
 	_kill_tween()
+	if top_bar == null or bottom_bar == null:
+		return
 	var height: float = float(BAR_HEIGHT) if visible else 0.0
 	top_bar.custom_minimum_size.y = height
 	bottom_bar.custom_minimum_size.y = height
