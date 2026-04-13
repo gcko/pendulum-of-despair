@@ -1016,7 +1016,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Integration tests (test_opening_sequence.gd, ~20 tests)
 - [x] Design spec: docs/superpowers/specs/2026-04-09-opening-sequence-b1-design.md
 
-**Phase B2: Ironmouth + F3 + Full Scenes (MOSTLY COMPLETE — 2026-04-12)**
+**Phase B2: Ironmouth + F3 + Full Scenes (COMPLETE — 2026-04-13)**
 - [x] Ironmouth outpost map (linear escape corridor with 3 lootable crates, dialogue triggers, combat)
 - [x] Ember Vein F3 (Ancient Ruin floor: PressurePlate, EmberCrystal, PitfallZone puzzles, WaterZone hidden door, 3 chests, save point, encounters)
 - [x] Full Scene 1 tutorial dialogue (all 1a-1e beats across F1-F4, 6 new dialogue JSONs)
@@ -1024,9 +1024,9 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Arcanite gear preview (arcanite_sword_proto ATK 13, arcanite_mail_proto DEF 10, breaks after 1e escape)
 - [x] Change new game start location from overworld to Ember Vein F1
 - [x] Cael hidden stat spike (+10% physical damage via Pallor shimmer, permanent, hidden)
-- [ ] Opening credits visual sequence (title card, character names) — **unblocked by gap 3.7 (COMPLETE)**
-- [ ] Dawn March forward-only walk mechanics — **unblocked by gap 3.7 (COMPLETE)**
-- [ ] `opening_credits_seen` flag (39) — **unblocked by gap 3.7 (COMPLETE)**
+- [x] Opening credits visual sequence (title card, character names) — T1 cutscene with title command (2026-04-13)
+- [x] Dawn March forward-only walk mechanics — dedicated trail map + cutscene trigger system (2026-04-13)
+- [x] `opening_credits_seen` flag (39) — set by cutscene trigger handler on entry (2026-04-13)
 
 **Phase C: Capital Completion (NOT STARTED)**
 - [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
@@ -1165,6 +1165,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
 | 2026-04-12 | 4.4 Phase B2 | Ember Vein F3 (3 new puzzle entities, hidden door, encounters), Ironmouth escape (linear map, combat, Lira+Sable join), Scene 1 full dialogue (1a-1e, 6 new JSONs), Cael shimmer (+10% physical), Arcanite gear (break mechanic), start location → F1. Dawn March deferred to 3.7. ~20 new files, ~13 modified. | — |
 | 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 5 test files (~57 tests). 620/620 full suite. | — |
+| 2026-04-13 | 4.4 Phase B2F | Dawn March T1 cutscene: trail map scene, 16-entry choreographed dialogue with move/camera/fade/title commands, "PENDULUM OF DESPAIR" title card + character credits, cutscene trigger system in exploration.gd (_pending_cutscene + _cutscene_return state machine), opening_credits_seen flag (39). Phase B2 now COMPLETE. 634/634 tests. | — |
 
 ---
 

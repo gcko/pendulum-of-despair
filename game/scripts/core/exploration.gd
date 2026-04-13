@@ -31,6 +31,10 @@ var _cutscene_shake_tween: Tween = null
 var _in_cutscene: bool = false
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
+## Pending cutscene data (set by trigger, consumed after map load).
+var _pending_cutscene: Dictionary = {}
+## Return destination after a cutscene map finishes.
+var _cutscene_return: Dictionary = {}
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -111,7 +115,7 @@ func _trigger_random_encounter() -> void:
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning or _player == null or _in_cutscene:
+	if _transitioning or _player == null or _in_cutscene or _in_auto_walk:
 		return
 	if area.get_meta("boss_id", "").is_empty():
 		return
@@ -192,6 +196,19 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	var seq_flag: String = _current_map.get_meta("auto_sequence_flag", "")
 	if not seq_id.is_empty() and not EventFlags.get_flag(seq_flag):
 		call_deferred("_run_auto_sequence", seq_id, seq_flag)
+	if not _pending_cutscene.is_empty():
+		var pc: Dictionary = _pending_cutscene
+		_pending_cutscene = {}
+		var typed_entries: Array[Dictionary] = []
+		for e: Variant in pc.get("entries", []):
+			if e is Dictionary:
+				typed_entries.append(e as Dictionary)
+		call_deferred(
+			"_start_pending_cutscene",
+			pc.get("id", ""),
+			typed_entries,
+			pc.get("tier", 1),
+		)
 
 
 func flash_location_name(text: String) -> void:
@@ -270,6 +287,10 @@ func _initialize_entities(map_node: Node2D) -> void:
 		if not child.has_method("initialize"):
 			continue
 		if child.has_signal("npc_interacted"):
+			if child.get_meta("cutscene_actor", false):
+				if child.has_method("initialize_as_actor"):
+					child.initialize_as_actor()
+				continue
 			var npc_id: String = child.get_meta("npc_id", "")
 			if npc_id.is_empty():
 				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
@@ -376,11 +397,12 @@ func _initialize_entities(map_node: Node2D) -> void:
 				var child_character_id: Variant = child.get("character_id")
 				if child_character_id is String and not child_character_id.is_empty():
 					_entities[child_character_id] = child
-	# Player character stores character_id as a script variable
+	# Register player only if no cutscene actor already owns the same ID
 	if _player != null:
 		var player_character_id: Variant = _player.get("character_id")
 		if player_character_id is String and not player_character_id.is_empty():
-			_entities[player_character_id] = _player
+			if not _entities.has(player_character_id):
+				_entities[player_character_id] = _player
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
@@ -411,6 +433,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
 				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
+			elif child is Area2D and child.has_meta("cutscene_scene_id"):
+				child.body_entered.connect(_on_cutscene_trigger_entered.bind(child))
 			elif (
 				child is Area2D
 				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
@@ -697,12 +721,16 @@ func _do_map_swap(target_map: String, target_spawn: String) -> void:
 func _abort_transition() -> void:
 	if _transition_tween != null and _transition_tween.is_valid():
 		_transition_tween.kill()
+	_pending_cutscene = {}
+	_cutscene_return = {}
 	_end_transition()
 
 
 func _end_transition() -> void:
 	_fade_rect.visible = false
 	_transitioning = false
+	if _player != null and not _in_cutscene and not _in_auto_walk:
+		_player.set_input_enabled(true)
 
 
 # ---------- Auto-walk and auto-sequences ----------
@@ -911,6 +939,18 @@ func _on_cutscene_finished() -> void:
 	if _camera != null and _player != null:
 		_camera.position = _player.position.round()
 		_camera.offset = Vector2.ZERO
+	if not _cutscene_return.is_empty():
+		var ret: Dictionary = _cutscene_return
+		_cutscene_return = {}
+		var ret_map: String = ret.get("map", "")
+		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
+		if ret_map != "":
+			# Cover screen before transition to prevent void flash from
+			# cutscene map player position
+			_fade_rect.visible = true
+			_fade_rect.color = Color(0, 0, 0, 1)
+			_transition_to_map(ret_map, ret_spawn)
+			return
 	if _player != null and not _in_auto_walk:
 		_player.set_input_enabled(true)
 
@@ -927,6 +967,63 @@ func _on_cutscene_music(_track_id: String, _action: String) -> void:
 func _on_cutscene_sfx(_sfx_id: String) -> void:
 	# Stub — AudioManager integration in gap 3.8
 	pass
+
+
+func _start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
+	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
+		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
+		if not _cutscene_return.is_empty():
+			var ret: Dictionary = _cutscene_return
+			_cutscene_return = {}
+			var ret_map: String = ret.get("map", "")
+			if ret_map != "":
+				_transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
+				return
+		_cutscene_return = {}
+		return
+	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
+
+
+func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
+	if body != _player or _transitioning or _in_auto_walk or _in_cutscene:
+		return
+	var flag: String = area.get_meta("flag", "")
+	if not flag.is_empty() and EventFlags.get_flag(flag):
+		return
+	var required: String = area.get_meta("required_flag", "")
+	if not required.is_empty() and not EventFlags.get_flag(required):
+		return
+	var scene_id: String = area.get_meta("cutscene_scene_id", "")
+	var map_id: String = area.get_meta("cutscene_map_id", "")
+	var return_map: String = area.get_meta("cutscene_return_map", "")
+	var return_spawn: String = area.get_meta("cutscene_return_spawn", "PlayerSpawn")
+	# Load cutscene data from dialogue JSON
+	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
+	if scene_data.is_empty():
+		push_error("Exploration: Failed to load cutscene dialogue '%s'" % scene_id)
+		return
+	var entries: Array[Dictionary] = []
+	for e: Variant in scene_data.get("entries", []):
+		if e is Dictionary:
+			entries.append(e as Dictionary)
+	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
+	var tier: int = scene_data.get("cutscene_tier", 1)
+	if entries.is_empty():
+		push_error("Exploration: Cutscene '%s' has no entries" % scene_id)
+		return
+	# Store return info only when a return map is specified
+	if return_map != "":
+		_cutscene_return = {"map": return_map, "spawn": return_spawn}
+	# Set one-shot flag now so re-entry is blocked even during transition
+	if not flag.is_empty():
+		EventFlags.set_flag(flag, true)
+	if map_id != "":
+		# Transition to cutscene map, then start cutscene after load
+		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
+		_transition_to_map(map_id, "PlayerSpawn")
+	else:
+		# Start cutscene on current map
+		_start_pending_cutscene(cutscene_id, entries, tier)
 
 
 # ---------- Public accessors for CleansingSequence ----------

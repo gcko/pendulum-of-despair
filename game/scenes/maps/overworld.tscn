@@ -190,7 +190,10 @@ monitoring = true
 monitorable = false
 metadata/flag = "opening_credits_seen"
 metadata/required_flag = "ironmouth_escape_seen"
-metadata/dialogue_scene_id = "dawn_march"
+metadata/cutscene_scene_id = "dawn_march"
+metadata/cutscene_map_id = "cutscenes/dawn_march_trail"
+metadata/cutscene_return_map = "overworld"
+metadata/cutscene_return_spawn = "Scene4Return"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene4Trigger"]
 shape = SubResource("Shape_scene4")
@@ -242,3 +245,6 @@ offset_right = 440
 offset_bottom = 552
 text = "Fenmother's Hollow"
 horizontal_alignment = 1
+
+[node name="Scene4Return" type="Marker2D" parent="."]
+position = Vector2(576, 496)

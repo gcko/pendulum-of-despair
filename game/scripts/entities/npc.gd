@@ -138,6 +138,11 @@ func _compare_flag(flag_name: String, op: String, value_str: String) -> bool:
 	return result
 
 
+## Lightweight init for cutscene actors — loads sprite but skips dialogue.
+func initialize_as_actor() -> void:
+	_load_placeholder_sprite()
+
+
 func _load_placeholder_sprite() -> void:
 	var sprite_path: String = "res://assets/sprites/npcs/placeholder_npc.png"
 	if not ResourceLoader.exists(sprite_path):

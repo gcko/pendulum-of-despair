@@ -364,7 +364,7 @@ bells begin to ring. [SFX: alarm_bells])*
 
 ## Scene 4: The Dawn March
 
-<!-- Scene: dawn_march | Tier: 2 | Trigger: carradan_ambush_survived (flag 3) -->
+<!-- Scene: dawn_march | Tier: 1 | Trigger: ironmouth_escape_seen -->
 <!-- Location: Trail from Ironmouth toward Thornmere Wilds | Party: Edren, Cael, Lira, Sable -->
 <!-- Variants: none -->
 <!-- Cross-ref: outline.md § Act I The Dawn March, events.md flag 39 -->
