@@ -249,3 +249,30 @@ func test_save_point_ignores_non_player_body() -> void:
 	add_child_autofree(npc)
 	sp._on_body_entered(npc)
 	assert_signal_not_emitted(sp, "save_point_entered", "non-player body should not emit")
+
+
+# --- PitfallZone tests ---
+
+
+func test_pitfall_blocked_during_cutscene() -> void:
+	var pitfall: Area2D = preload("res://scenes/entities/pitfall_zone.tscn").instantiate()
+	add_child_autofree(pitfall)
+	pitfall.initialize("dungeons/ember_vein_f2", "from_pitfall")
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	watch_signals(pitfall)
+	pitfall._on_body_entered(_make_player_body())
+	assert_signal_not_emitted(pitfall, "pitfall_triggered", "should not trigger during cutscene")
+
+
+func test_pop_overlay_silent_skips_signal() -> void:
+	watch_signals(GameManager)
+	GameManager.push_overlay(GameManager.OverlayState.DIALOGUE)
+	GameManager.pop_overlay(true)
+	assert_signal_not_emitted(
+		GameManager, "overlay_state_changed", "silent pop should not emit NONE"
+	)
+	assert_eq(
+		GameManager.current_overlay,
+		GameManager.OverlayState.NONE,
+		"overlay should be NONE after silent pop",
+	)
