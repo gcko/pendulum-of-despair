@@ -6,8 +6,23 @@ const TRIGGER_SCENE: PackedScene = preload("res://scenes/entities/trigger_zone.t
 const SAVE_SCENE: PackedScene = preload("res://scenes/entities/save_point.tscn")
 
 
+func before_each() -> void:
+	EventFlags.clear_all()
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+	GameManager.transition_data = {}
+
+
 func after_each() -> void:
 	EventFlags.clear_all()
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+	GameManager.transition_data = {}
+
+
+func _make_player_body() -> CharacterBody2D:
+	var body: CharacterBody2D = CharacterBody2D.new()
+	body.add_to_group("player")
+	add_child_autofree(body)
+	return body
 
 
 # --- TreasureChest tests ---
@@ -95,7 +110,7 @@ func test_trigger_fires_signal() -> void:
 	add_child_autofree(trigger)
 	trigger.initialize("test_trigger", "")
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(_make_player_body())
 	assert_signal_emitted(trigger, "triggered", "should emit triggered")
 	assert_true(trigger.has_fired, "should be marked as fired")
 
@@ -104,9 +119,10 @@ func test_trigger_one_time_fire() -> void:
 	var trigger = TRIGGER_SCENE.instantiate()
 	add_child_autofree(trigger)
 	trigger.initialize("test_trigger_once", "")
-	trigger._on_body_entered(Node2D.new())
+	var player_body: CharacterBody2D = _make_player_body()
+	trigger._on_body_entered(player_body)
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(player_body)
 	assert_signal_not_emitted(trigger, "triggered", "second entry should not re-fire")
 
 
@@ -115,7 +131,7 @@ func test_trigger_condition_blocks() -> void:
 	add_child_autofree(trigger)
 	trigger.initialize("cond_trigger", "key_needed")
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(trigger, "triggered", "unmet condition should block firing")
 	assert_false(trigger.has_fired, "should not be marked as fired")
 
@@ -126,7 +142,7 @@ func test_trigger_condition_met_fires() -> void:
 	EventFlags.set_flag("key_found", true)
 	trigger.initialize("cond_met_trigger", "key_found")
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(_make_player_body())
 	assert_signal_emitted(trigger, "triggered", "met condition should allow firing")
 
 
@@ -134,7 +150,7 @@ func test_trigger_before_init_blocked() -> void:
 	var trigger = TRIGGER_SCENE.instantiate()
 	add_child_autofree(trigger)
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(trigger, "triggered", "body enter before init should not fire")
 
 
@@ -171,7 +187,7 @@ func test_save_point_entered_signal() -> void:
 	add_child_autofree(sp)
 	sp.initialize("test_sp_prox")
 	watch_signals(sp)
-	sp._on_body_entered(Node2D.new())
+	sp._on_body_entered(_make_player_body())
 	assert_signal_emitted(sp, "save_point_entered", "should emit save_point_entered")
 
 
@@ -187,7 +203,7 @@ func test_save_point_body_before_init_blocked() -> void:
 	var sp = SAVE_SCENE.instantiate()
 	add_child_autofree(sp)
 	watch_signals(sp)
-	sp._on_body_entered(Node2D.new())
+	sp._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(sp, "save_point_entered", "body enter before init should not emit")
 
 
@@ -197,9 +213,8 @@ func test_save_point_blocked_during_cutscene() -> void:
 	sp.initialize("test_sp_cs")
 	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
 	watch_signals(sp)
-	sp._on_body_entered(Node2D.new())
+	sp._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(sp, "save_point_entered", "should not emit during cutscene")
-	GameManager.current_overlay = GameManager.OverlayState.NONE
 
 
 func test_trigger_blocked_during_cutscene() -> void:
@@ -208,7 +223,29 @@ func test_trigger_blocked_during_cutscene() -> void:
 	trigger.initialize("cs_trigger", "")
 	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
 	watch_signals(trigger)
-	trigger._on_body_entered(Node2D.new())
+	trigger._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(trigger, "triggered", "should not fire during cutscene")
 	assert_false(trigger.has_fired, "should not be marked as fired during cutscene")
-	GameManager.current_overlay = GameManager.OverlayState.NONE
+
+
+func test_trigger_ignores_non_player_body() -> void:
+	var trigger = TRIGGER_SCENE.instantiate()
+	add_child_autofree(trigger)
+	trigger.initialize("npc_trigger", "")
+	watch_signals(trigger)
+	var npc: Node2D = Node2D.new()
+	add_child_autofree(npc)
+	trigger._on_body_entered(npc)
+	assert_signal_not_emitted(trigger, "triggered", "non-player body should not fire trigger")
+	assert_false(trigger.has_fired, "should not be marked as fired for non-player")
+
+
+func test_save_point_ignores_non_player_body() -> void:
+	var sp = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	sp.initialize("test_sp_npc")
+	watch_signals(sp)
+	var npc: Node2D = Node2D.new()
+	add_child_autofree(npc)
+	sp._on_body_entered(npc)
+	assert_signal_not_emitted(sp, "save_point_entered", "non-player body should not emit")
