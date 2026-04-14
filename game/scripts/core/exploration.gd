@@ -6,10 +6,7 @@ signal map_changed(map_id: String)
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
-const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
 const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
-const CleansingSequence = preload("res://scripts/core/cleansing_sequence.gd")
-const CutsceneHandler = preload("res://scripts/core/cutscene_handler.gd")
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null

@@ -1,3 +1,4 @@
+class_name EncounterHandler
 extends RefCounted
 
 const EncounterSystem = preload("res://scripts/combat/encounter_system.gd")

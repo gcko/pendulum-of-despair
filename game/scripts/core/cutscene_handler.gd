@@ -1,3 +1,4 @@
+class_name CutsceneHandler
 extends RefCounted
 ## Handles cutscene overlay integration for exploration mode.
 ## Manages cutscene triggers, choreography signal routing, and return transitions.

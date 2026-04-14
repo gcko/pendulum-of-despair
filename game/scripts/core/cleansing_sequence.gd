@@ -1,3 +1,4 @@
+class_name CleansingSequence
 extends RefCounted
 
 const RITUAL_METER_PATH: String = "res://scenes/ui/ritual_meter.tscn"
