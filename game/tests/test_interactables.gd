@@ -265,8 +265,8 @@ func test_pitfall_blocked_during_cutscene() -> void:
 
 
 func test_pop_overlay_silent_skips_signal() -> void:
-	watch_signals(GameManager)
 	GameManager.push_overlay(GameManager.OverlayState.DIALOGUE)
+	watch_signals(GameManager)
 	GameManager.pop_overlay(true)
 	assert_signal_not_emitted(
 		GameManager, "overlay_state_changed", "silent pop should not emit NONE"
