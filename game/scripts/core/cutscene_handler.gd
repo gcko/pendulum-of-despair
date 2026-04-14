@@ -3,12 +3,12 @@ extends RefCounted
 ## Manages cutscene triggers, choreography signal routing, and return transitions.
 ## Extracted from exploration.gd to keep the main script focused on map/entity logic.
 
-var _exploration: Node2D
+var _exploration: Exploration
 var _cutscene_camera_tween: Tween = null
 var _cutscene_shake_tween: Tween = null
 
 
-func _init(exploration: Node2D) -> void:
+func _init(exploration: Exploration) -> void:
 	_exploration = exploration
 
 

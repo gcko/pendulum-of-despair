@@ -1,3 +1,4 @@
+class_name Exploration
 extends Node2D
 
 signal map_changed(map_id: String)
@@ -46,7 +47,6 @@ var _cutscene_return: Dictionary = {}
 func _ready() -> void:
 	_fade_rect.visible = false
 	_location_panel.visible = false
-	_camera.zoom = Vector2(4, 4)
 	_spawn_player()
 	GameManager.overlay_state_changed.connect(_on_overlay_state_changed)
 	_initialize_from_transition_data()
@@ -372,6 +372,13 @@ func _initialize_entities(map_node: Node2D) -> void:
 				push_error("Exploration: PitfallZone '%s' missing target_map_id" % child.name)
 				continue
 			child.initialize(tmid, tsp)
+		elif child.has_signal("triggered"):
+			var tid: String = child.get_meta("trigger_id", "")
+			var cond: String = child.get_meta("condition_flag", "")
+			if tid.is_empty():
+				push_error("Exploration: TriggerZone '%s' missing trigger_id" % child.name)
+				continue
+			child.initialize(tid, cond)
 	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
 	if entities != null:
 		for child: Node in entities.get_children():
@@ -417,6 +424,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.chest_opened.connect(_on_chest_opened)
 			if child.has_signal("save_point_activated"):
 				child.save_point_activated.connect(_on_save_point_activated)
+			if child.has_signal("save_point_entered"):
+				child.save_point_entered.connect(_on_save_point_entered)
 			if child.has_signal("wheel_toggled"):
 				child.wheel_toggled.connect(_on_wheel_toggled)
 			if child.has_signal("spring_filled"):
@@ -431,6 +440,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.crystal_cleared.connect(_on_crystal_cleared)
 			if child.has_signal("pitfall_triggered"):
 				child.pitfall_triggered.connect(_on_pitfall_triggered)
+			if child.has_signal("triggered"):
+				child.triggered.connect(_on_trigger_fired)
 			if child.has_signal("interaction_message"):
 				child.interaction_message.connect(_on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
@@ -454,6 +465,7 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		"npc_interacted": _on_npc_interacted,
 		"chest_opened": _on_chest_opened,
 		"save_point_activated": _on_save_point_activated,
+		"save_point_entered": _on_save_point_entered,
 		"wheel_toggled": _on_wheel_toggled,
 		"spring_filled": _on_spring_filled,
 		"plant_restored": _on_plant_restored,
@@ -462,6 +474,7 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		"plate_pressed": _on_plate_pressed,
 		"crystal_cleared": _on_crystal_cleared,
 		"pitfall_triggered": _on_pitfall_triggered,
+		"triggered": _on_trigger_fired,
 	}
 	for group: String in ["Entities", "Transitions"]:
 		var container: Node = map_node.get_node_or_null(group)
@@ -540,6 +553,14 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		GameManager.overlay_node.open_save_point()
+
+
+func _on_save_point_entered(_save_point_id: String) -> void:
+	AudioManager.play_sfx("save_point_proximity")
+
+
+func _on_trigger_fired(_trigger_id: String) -> void:
+	pass
 
 
 func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:

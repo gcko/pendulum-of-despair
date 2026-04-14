@@ -37,12 +37,12 @@ const CLEANSING_WAVES: Array = [
 	],
 ]
 
-var _exploration: Node2D
+var _exploration: Exploration
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
 
 
-func _init(exploration: Node2D) -> void:
+func _init(exploration: Exploration) -> void:
 	_exploration = exploration
 
 

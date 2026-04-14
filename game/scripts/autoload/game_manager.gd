@@ -8,6 +8,9 @@ extends Node
 signal core_state_changed(new_state: CoreState)
 signal overlay_state_changed(new_state: OverlayState)
 
+enum CoreState { TITLE, EXPLORATION, BATTLE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
+
 ## Scene file paths for core states.
 const CORE_SCENES: Dictionary = {
 	CoreState.TITLE: "res://scenes/core/title.tscn",
@@ -23,9 +26,6 @@ const OVERLAY_SCENES: Dictionary = {
 	OverlayState.CUTSCENE: "res://scenes/overlay/cutscene.tscn",
 	OverlayState.SHOP: "res://scenes/overlay/shop_overlay.tscn",
 }
-
-enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
 
 ## Current active states.
 var current_core: CoreState = CoreState.TITLE
@@ -76,7 +76,7 @@ func push_overlay(state: OverlayState) -> bool:
 
 	if current_overlay != OverlayState.NONE:
 		if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
-			pop_overlay()  # Cutscene takes priority over dialogue
+			pop_overlay(true)  # Silent pop — CUTSCENE emission replaces NONE
 		else:
 			return false
 
@@ -100,12 +100,16 @@ func push_overlay(state: OverlayState) -> bool:
 
 
 ## Remove the active overlay and unpause the core state.
-func pop_overlay() -> void:
+## When silent is true, skips the NONE signal emission (used during
+## force-replacement so the replacement state signal is the only one
+## listeners see, preventing premature completion logic).
+func pop_overlay(silent: bool = false) -> void:
 	if overlay_node:
 		overlay_node.queue_free()
 		overlay_node = null
 	current_overlay = OverlayState.NONE
-	overlay_state_changed.emit(OverlayState.NONE)
+	if not silent:
+		overlay_state_changed.emit(OverlayState.NONE)
 	get_tree().paused = false
 
 
