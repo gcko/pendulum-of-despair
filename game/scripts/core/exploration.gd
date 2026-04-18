@@ -500,7 +500,7 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if _transitioning:
+	if _transitioning or _in_cutscene:
 		return
 	var target: Node2D = interactable
 	if not target.has_method("interact"):
