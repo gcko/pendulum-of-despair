@@ -163,7 +163,8 @@ func _launch_wave(wave_num: int, data: Dictionary) -> void:
 		_complete(data)
 		return
 	var fb: Vector2 = data.get("position", Vector2(80, 90))
-	var origin_pos: Vector2 = data.get("cleansing_origin_position", fb)
+	var raw_origin: Variant = data.get("cleansing_origin_position", fb)
+	var origin_pos: Vector2 = raw_origin if raw_origin is Vector2 else fb
 	var player: Node2D = _exploration.get_player()
 	var player_pos: Vector2 = player.position if player != null else origin_pos
 	var meter_val: float = _ritual_meter.meter_value if _ritual_meter != null else 100.0

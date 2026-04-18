@@ -165,7 +165,7 @@ test_room (Node2D)
 │   └── TestSavePoint (SavePoint) — metadata/save_point_id
 ├── Transitions (Node2D)
 │   └── ExitEast (Area2D)         — metadata/target_map="test_room_2", collision_mask=2
-└── PlayerSpawn (Marker2D)        — position (80, 90)
+└── PlayerSpawn (Marker2D)        — position (80, 96)
 ```
 
 A second test room for map transitions:

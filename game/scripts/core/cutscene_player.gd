@@ -64,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Start a cutscene sequence.
-func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
+func start_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int = TIER_FULL) -> void:
 	if _is_playing:
 		if OS.is_debug_build():
 			push_warning("Cutscene already playing: %s" % _cutscene_id)
@@ -118,7 +118,7 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 func skip_cutscene() -> void:
 	if not _is_playing:
 		return
-	for i in range(_current_index, _entries.size()):
+	for i: int in range(_current_index, _entries.size()):
 		var entry: Dictionary = _entries[i]
 		var flag_val: Variant = entry.get("flag_set", "")
 		var flag: String = flag_val if flag_val is String else ""

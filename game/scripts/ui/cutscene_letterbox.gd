@@ -5,8 +5,8 @@ extends Node
 signal letterbox_in_complete
 signal letterbox_out_complete
 
-## Bar height in pixels (~12.5% of 720px viewport).
-const BAR_HEIGHT: int = 90
+## Bar height in viewport pixels (88px = 22 game-world pixels at 4x zoom).
+const BAR_HEIGHT: int = 88
 
 ## Reference to the top letterbox bar (ColorRect).
 ## Set via @export in editor or manually in tests.

@@ -30,11 +30,11 @@ border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_speaker"]
-bg_color = Color(0, 0, 0.188, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [node name="Dialogue" type="CanvasLayer"]

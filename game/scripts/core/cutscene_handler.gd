@@ -107,7 +107,9 @@ func _on_cutscene_finished() -> void:
 	# pop_overlay emits overlay_state_changed(NONE) then unpauses the tree.
 	# Without deferral, pending Area2D overlaps from cutscene move commands
 	# would fire immediately on unpause and pass the _in_cutscene guard.
-	_exploration.call_deferred("set_in_cutscene", false)
+	# Use a lambda to re-check _cutscene_active — a back-to-back cutscene
+	# may have set it to true again before this deferred call runs.
+	_exploration.call_deferred("_deferred_clear_cutscene_flag", self)
 	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
 		_cutscene_camera_tween.kill()
 	_cutscene_camera_tween = null

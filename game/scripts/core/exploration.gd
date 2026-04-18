@@ -187,7 +187,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
 	map_changed.emit(map_id)
-	if _current_map.get_meta("is_auto_walk", false) and _player != null:
+	if _current_map.get_meta("is_auto_walk", false) and _player != null and not _in_cutscene:
 		_start_auto_walk()
 	var seq_id: String = _current_map.get_meta("auto_sequence", "")
 	var seq_flag: String = _current_map.get_meta("auto_sequence_flag", "")
@@ -694,7 +694,7 @@ func _get_party_avg_level() -> int:
 		return 1
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
-		total += m.get("level", 1) as int
+		total += int(m.get("level", 1))
 	return maxi(1, floori(float(total) / float(PartyState.members.size())))
 
 
@@ -937,6 +937,15 @@ func is_in_cutscene() -> bool:
 
 func set_in_cutscene(value: bool) -> void:
 	_in_cutscene = value
+
+
+## Deferred callback for cutscene handler — only clears _in_cutscene if
+## the handler that requested the clear is still inactive (no back-to-back
+## cutscene has started since the deferred call was scheduled).
+func _deferred_clear_cutscene_flag(handler: RefCounted) -> void:
+	if handler != null and handler.get("_cutscene_active") == true:
+		return
+	_in_cutscene = false
 
 
 func get_cutscene_return() -> Dictionary:
