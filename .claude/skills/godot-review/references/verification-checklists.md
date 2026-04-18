@@ -161,6 +161,8 @@ Reference for all review agents. Check every applicable item.
 - [ ] Every local variable declared in a test must be used — `var x = ...` with no subsequent reference is dead code.
 - [ ] Tests that call `call_deferred()` indirectly (via `load_map` which schedules deferred calls) must flush the deferred queue with `await get_tree().process_frame` before test ends, or the deferred call leaks into cleanup/next test.
 - [ ] RefCounted helper fields stored on the owning class should use the concrete type (e.g., `var _handler: MyHandler`), not `RefCounted`, to preserve static type safety.
+- [ ] Test before_each/after_each must use lifecycle methods (e.g., `GameManager.pop_overlay()`) instead of directly assigning singleton fields (e.g., `current_overlay = NONE`) — direct assignment skips cleanup logic (freeing overlay_node, unpausing tree).
+- [ ] Test assertions must use the method that matches test intent — `has_flag()` to prove a flag was never stored, `get_flag()` to check value. Using the wrong method can produce false passes (e.g., `get_flag("")` returns `false` default even when the key exists with a falsey value).
 
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 
