@@ -157,10 +157,10 @@ Reference for all review agents. Check every applicable item.
 - [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
 - [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
 - [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
-- [ ] Every helper function in a test file must be called by at least one test — unused helpers are dead code. Run `grep -n "func _" <file>` then verify each is referenced. (PR #145: _create_exploration() helper unused)
-- [ ] Every local variable declared in a test must be used — `var x = ...` with no subsequent reference is dead code. (PR #145: test_data declared but never used)
-- [ ] Tests that call `call_deferred()` indirectly (via `load_map` which schedules deferred calls) must flush the deferred queue with `await get_tree().process_frame` before test ends, or the deferred call leaks into cleanup/next test. (PR #145: _start_pending_cutscene deferred during load_map)
-- [ ] RefCounted helper fields stored on the owning class should use the concrete type (e.g., `var _handler: MyHandler`), not `RefCounted`, to preserve static type safety. (PR #145: _cutscene_handler typed as RefCounted instead of CutsceneHandler)
+- [ ] Every helper function in a test file must be called by at least one test — unused helpers are dead code. Run `grep -n "func _" <file>` then verify each is referenced.
+- [ ] Every local variable declared in a test must be used — `var x = ...` with no subsequent reference is dead code.
+- [ ] Tests that call `call_deferred()` indirectly (via `load_map` which schedules deferred calls) must flush the deferred queue with `await get_tree().process_frame` before test ends, or the deferred call leaks into cleanup/next test.
+- [ ] RefCounted helper fields stored on the owning class should use the concrete type (e.g., `var _handler: MyHandler`), not `RefCounted`, to preserve static type safety.
 
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 

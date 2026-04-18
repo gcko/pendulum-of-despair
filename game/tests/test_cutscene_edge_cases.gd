@@ -197,7 +197,7 @@ func test_empty_flag_name_rejected() -> void:
 	handler._on_cutscene_flag_set("", true)
 	# EventFlags should NOT contain an empty-string key
 	assert_false(
-		EventFlags.get_flag(""), "empty flag_name should be rejected and not stored in EventFlags"
+		EventFlags.has_flag(""), "empty flag_name should be rejected and not stored in EventFlags"
 	)
 
 
