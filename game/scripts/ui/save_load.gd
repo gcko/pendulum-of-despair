@@ -20,6 +20,9 @@ const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
 
+## Rest option item IDs — must match consumables.json.
+const REST_ITEM_IDS: Array[String] = ["sleeping_bag", "tent", "pavilion"]
+
 ## Current mode.
 var _mode: Mode = Mode.SAVE
 
@@ -215,7 +218,27 @@ func _handle_rest_input(event: InputEvent) -> void:
 		_update_rest_display()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		push_warning("SaveLoad: Rest item consumption not yet implemented")
+		if not _has_rest_item(_rest_selection):
+			get_viewport().set_input_as_handled()
+			return
+		var item_id: String = REST_ITEM_IDS[_rest_selection]
+		var restore_pct: float = [0.25, 0.50, 1.0][_rest_selection]
+		# Consume the item
+		var consumables: Dictionary = PartyState.get_consumables()
+		var qty: int = consumables.get(item_id, 0)
+		if qty > 0:
+			consumables[item_id] = qty - 1
+			if consumables[item_id] <= 0:
+				consumables.erase(item_id)
+			PartyState.inventory["consumables"] = consumables
+		# Restore HP/MP to all party members
+		for m: Dictionary in PartyState.members:
+			if m.is_empty():
+				continue
+			var max_hp: int = m.get("max_hp", m.get("base_stats", {}).get("hp", 1))
+			var max_mp: int = m.get("max_mp", m.get("base_stats", {}).get("mp", 0))
+			m["current_hp"] = mini(m.get("current_hp", max_hp) + int(max_hp * restore_pct), max_hp)
+			m["current_mp"] = mini(m.get("current_mp", max_mp) + int(max_mp * restore_pct), max_mp)
 		_rest_menu.visible = false
 		if _rest_after_save:
 			_rest_after_save = false
@@ -391,9 +414,24 @@ func _update_save_point_display() -> void:
 		)
 
 
+func _has_rest_item(index: int) -> bool:
+	if index < 0 or index >= REST_ITEM_IDS.size():
+		return false
+	var consumables: Dictionary = PartyState.get_consumables()
+	return consumables.get(REST_ITEM_IDS[index], 0) > 0
+
+
 func _update_rest_display() -> void:
+	var consumables: Dictionary = PartyState.get_consumables()
 	for i: int in range(3):
-		_rest_options[i].modulate = (COLOR_SELECTED if i == _rest_selection else COLOR_NORMAL)
+		var item_id: String = REST_ITEM_IDS[i]
+		var qty: int = consumables.get(item_id, 0)
+		if qty <= 0:
+			_rest_options[i].modulate = COLOR_DISABLED
+		elif i == _rest_selection:
+			_rest_options[i].modulate = COLOR_SELECTED
+		else:
+			_rest_options[i].modulate = COLOR_NORMAL
 
 
 func _update_confirm_display() -> void:
