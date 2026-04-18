@@ -171,7 +171,7 @@ func _on_cutscene_sfx(_sfx_id: String) -> void:
 
 func start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
 	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
-		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
+		push_error("CutsceneHandler: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
 		var ret: Dictionary = _exploration.get_cutscene_return()
 		_exploration.set_cutscene_return({})
 		var ret_map: String = ret.get("map", "")
@@ -205,7 +205,7 @@ func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	# Load cutscene data from dialogue JSON
 	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
 	if scene_data.is_empty():
-		push_error("Exploration: Failed to load cutscene dialogue '%s'" % scene_id)
+		push_error("CutsceneHandler: Failed to load cutscene dialogue '%s'" % scene_id)
 		return
 	var entries: Array[Dictionary] = []
 	for e: Variant in scene_data.get("entries", []):
@@ -214,7 +214,7 @@ func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
 	var tier: int = scene_data.get("cutscene_tier", 1)
 	if entries.is_empty():
-		push_error("Exploration: Cutscene '%s' has no entries" % scene_id)
+		push_error("CutsceneHandler: Cutscene '%s' has no entries" % scene_id)
 		return
 	# Store return info only when a return map is specified
 	if return_map != "":

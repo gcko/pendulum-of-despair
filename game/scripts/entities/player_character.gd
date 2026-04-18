@@ -174,7 +174,7 @@ func _get_nearest_interactable() -> Node2D:
 	for node: Node2D in _interactables_in_range:
 		if not is_instance_valid(node):
 			continue
-		var d: float = position.distance_squared_to(node.global_position)
+		var d: float = global_position.distance_squared_to(node.global_position)
 		if d < best_dist:
 			best_dist = d
 			best = node
