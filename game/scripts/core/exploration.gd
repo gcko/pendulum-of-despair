@@ -836,7 +836,11 @@ func _run_caden_binding(completion_flag: String) -> void:
 
 func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
 	var scene_data: Dictionary = DataManager.load_dialogue("caden_binding")
-	var entries: Array = scene_data.get("entries", [])
+	var raw_entries: Array = scene_data.get("entries", [])
+	var entries: Array[Dictionary] = []
+	for e: Variant in raw_entries:
+		if e is Dictionary:
+			entries.append(e as Dictionary)
 	if entries.is_empty():
 		_caden_complete(caden, completion_flag)
 		return
@@ -942,8 +946,8 @@ func set_in_cutscene(value: bool) -> void:
 ## Deferred callback for cutscene handler — only clears _in_cutscene if
 ## the handler that requested the clear is still inactive (no back-to-back
 ## cutscene has started since the deferred call was scheduled).
-func _deferred_clear_cutscene_flag(handler: RefCounted) -> void:
-	if handler != null and handler.get("_cutscene_active") == true:
+func _deferred_clear_cutscene_flag(handler: CutsceneHandler) -> void:
+	if handler != null and handler._cutscene_active:
 		return
 	_in_cutscene = false
 

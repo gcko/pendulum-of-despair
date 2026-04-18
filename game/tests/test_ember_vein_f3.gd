@@ -17,6 +17,8 @@ func before_each() -> void:
 func after_each() -> void:
 	if GameManager.current_overlay != GameManager.OverlayState.NONE:
 		GameManager.pop_overlay()
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+	get_tree().paused = false
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	DataManager.clear_cache()
