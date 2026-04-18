@@ -17,7 +17,7 @@ signal walk_complete
 var npc_id: String = ""
 
 ## All dialogue entries loaded from DataManager (ordered by priority).
-var dialogue_entries: Array = []
+var dialogue_entries: Array[Dictionary] = []
 
 ## Active walk tween (killed on new walk_to call).
 var _walk_tween: Tween = null
@@ -38,7 +38,10 @@ func initialize(p_npc_id: String) -> void:
 	if data.is_empty():
 		push_error("NPC: Failed to load dialogue for '%s'" % dialogue_key)
 		return
-	dialogue_entries = data.get("entries", [])
+	dialogue_entries = []
+	for e: Variant in data.get("entries", []):
+		if e is Dictionary:
+			dialogue_entries.append(e as Dictionary)
 	_load_placeholder_sprite()
 
 
@@ -165,7 +168,7 @@ func walk_to(target: Vector2, speed: float) -> void:
 	_walk_tween = null
 	var distance: float = position.distance_to(target)
 	if distance < 1.0:
-		position = target
+		position = target.round()
 		if _anim_player != null and _anim_player.has_animation("idle"):
 			_anim_player.play("idle")
 		walk_complete.emit()
@@ -173,7 +176,7 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if speed <= 0.0:
 		if OS.is_debug_build():
 			push_warning("NPC %s walk_to: non-positive speed %s" % [name, speed])
-		position = target
+		position = target.round()
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
@@ -188,9 +191,10 @@ func walk_to(target: Vector2, speed: float) -> void:
 		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_property(self, "position", target.round(), duration)
 	_walk_tween.tween_callback(
 		func():
+			position = position.round()
 			if _anim_player != null and _anim_player.has_animation("idle"):
 				_anim_player.play("idle")
 			walk_complete.emit()
@@ -204,6 +208,7 @@ func cancel_walk() -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
+	position = position.round()
 	if _anim_player != null and _anim_player.has_animation("idle"):
 		_anim_player.play("idle")
 	if was_walking:

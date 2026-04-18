@@ -31,8 +31,8 @@ var _input_enabled: bool = true
 ## Active walk tween (killed on new walk_to call).
 var _walk_tween: Tween = null
 
-## Last interactable that entered the Area2D (not necessarily nearest).
-var _current_interactable: Node2D = null
+## All interactables currently overlapping the interaction Area2D.
+var _interactables_in_range: Array[Node2D] = []
 
 ## Reference to child nodes (cached in _ready).
 @onready var _sprite: Sprite2D = $Sprite2D
@@ -162,8 +162,23 @@ func play_animation(anim_name: String) -> void:
 ## Attempt to interact with the nearest interactable. Emits interaction_requested
 ## if an interactable is in range. Called by exploration scene on confirm press.
 func try_interact() -> void:
-	if _current_interactable != null:
-		interaction_requested.emit(_current_interactable)
+	var nearest: Node2D = _get_nearest_interactable()
+	if nearest != null:
+		interaction_requested.emit(nearest)
+
+
+## Return the nearest valid interactable from those currently in range.
+func _get_nearest_interactable() -> Node2D:
+	var best: Node2D = null
+	var best_dist: float = INF
+	for node: Node2D in _interactables_in_range:
+		if not is_instance_valid(node):
+			continue
+		var d: float = position.distance_squared_to(node.global_position)
+		if d < best_dist:
+			best_dist = d
+			best = node
+	return best
 
 
 ## Walk to target position at given speed (for cutscene choreography).
@@ -174,14 +189,14 @@ func walk_to(target: Vector2, speed: float) -> void:
 	_walk_tween = null
 	var distance: float = position.distance_to(target)
 	if distance < 1.0:
-		position = target
+		position = target.round()
 		_play_idle_animation()
 		walk_complete.emit()
 		return
 	if speed <= 0.0:
 		if OS.is_debug_build():
 			push_warning("PlayerCharacter walk_to: non-positive speed %s" % speed)
-		position = target
+		position = target.round()
 		_play_idle_animation()
 		walk_complete.emit()
 		return
@@ -196,9 +211,10 @@ func walk_to(target: Vector2, speed: float) -> void:
 	_play_walk_animation(facing_direction)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_property(self, "position", target.round(), duration)
 	_walk_tween.tween_callback(
 		func():
+			position = position.round()
 			_play_idle_animation()
 			walk_complete.emit()
 	)
@@ -211,24 +227,25 @@ func cancel_walk() -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
+	position = position.round()
 	_play_idle_animation()
 	if was_walking:
 		walk_complete.emit()
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
-	_current_interactable = body
+	if body not in _interactables_in_range:
+		_interactables_in_range.append(body)
 
 
 func _on_interaction_area_body_exited(body: Node2D) -> void:
-	if _current_interactable == body:
-		_current_interactable = null
+	_interactables_in_range.erase(body)
 
 
 func _on_interaction_area_area_entered(area: Area2D) -> void:
-	_current_interactable = area
+	if area not in _interactables_in_range:
+		_interactables_in_range.append(area)
 
 
 func _on_interaction_area_area_exited(area: Area2D) -> void:
-	if _current_interactable == area:
-		_current_interactable = null
+	_interactables_in_range.erase(area)
