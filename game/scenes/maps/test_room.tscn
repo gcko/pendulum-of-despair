@@ -72,10 +72,10 @@ metadata/target_spawn = "from_test_room"
 shape = SubResource("Shape_north_valdris")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(80, 90)
+position = Vector2(80, 96)
 
 [node name="from_ember_vein" type="Marker2D" parent="."]
-position = Vector2(32, 90)
+position = Vector2(32, 96)
 
 [node name="from_valdris" type="Marker2D" parent="."]
 position = Vector2(160, 32)

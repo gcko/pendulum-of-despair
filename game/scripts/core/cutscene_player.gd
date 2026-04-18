@@ -125,6 +125,8 @@ func skip_cutscene() -> void:
 		if flag != "":
 			flag_set_requested.emit(flag, true)
 	_kill_visual_tweens()
+	if _dialogue_box != null:
+		_dialogue_box.visible = false
 	if _fade_rect != null:
 		_fade_rect.modulate.a = 0.0
 	if _title_label != null:

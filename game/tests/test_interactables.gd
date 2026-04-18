@@ -210,6 +210,33 @@ func test_save_point_body_before_init_blocked() -> void:
 	assert_signal_not_emitted(sp, "save_point_entered", "body enter before init should not emit")
 
 
+func test_save_point_body_exited_clears_at_save_point() -> void:
+	var sp: Node = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	sp.initialize("test_sp_exit")
+	var player: CharacterBody2D = _make_player_body()
+	sp._on_body_entered(player)
+	PartyState.is_at_save_point = true
+	sp._on_body_exited(player)
+	assert_false(
+		PartyState.is_at_save_point,
+		"is_at_save_point should be cleared when player exits save point area"
+	)
+
+
+func test_save_point_body_exited_ignores_non_player() -> void:
+	var sp: Node = SAVE_SCENE.instantiate()
+	add_child_autofree(sp)
+	sp.initialize("test_sp_exit_npc")
+	PartyState.is_at_save_point = true
+	var npc: Node2D = Node2D.new()
+	add_child_autofree(npc)
+	sp._on_body_exited(npc)
+	assert_true(
+		PartyState.is_at_save_point, "is_at_save_point should not be cleared by non-player body"
+	)
+
+
 func test_save_point_blocked_during_cutscene() -> void:
 	var sp: Node = SAVE_SCENE.instantiate()
 	add_child_autofree(sp)

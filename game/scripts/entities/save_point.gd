@@ -47,3 +47,11 @@ func _on_body_entered(body: Node2D) -> void:
 	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
 		return
 	save_point_entered.emit(save_point_id)
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
+	if save_point_id == "":
+		return
+	PartyState.is_at_save_point = false

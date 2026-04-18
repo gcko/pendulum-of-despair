@@ -466,3 +466,41 @@ func test_ui_cancel_ignored_when_not_playing() -> void:
 	event.pressed = true
 	cs._unhandled_input(event)
 	assert_signal_not_emitted(cs, "cutscene_finished")
+
+
+# --- 32. skip_cutscene hides dialogue_box ---
+func test_skip_cutscene_hides_dialogue_box() -> void:
+	var cs: Node = await _create_cutscene()
+	var db: Node = cs.get_node_or_null("DialogueBox")
+	assert_not_null(db, "DialogueBox should exist")
+	if db:
+		db.visible = true
+	cs._entries.assign([_entry({"lines": ["Test line"]})])
+	cs._current_index = 0
+	cs._is_playing = true
+	cs._cutscene_id = "hide_db_test"
+	cs._tier = cs.TIER_MICRO
+	cs.skip_cutscene()
+	if db:
+		assert_false(db.visible, "DialogueBox should be hidden after skip")
+
+
+# --- 33. letterbox set_instant emits signals ---
+func test_letterbox_set_instant_emits_out_signal() -> void:
+	var cs: Node = await _create_cutscene()
+	var lb: Node = cs.get_node_or_null("Letterbox")
+	assert_not_null(lb, "Letterbox should exist")
+	if lb:
+		watch_signals(lb)
+		lb.set_instant(false)
+		assert_signal_emitted(lb, "letterbox_out_complete")
+
+
+func test_letterbox_set_instant_emits_in_signal() -> void:
+	var cs: Node = await _create_cutscene()
+	var lb: Node = cs.get_node_or_null("Letterbox")
+	assert_not_null(lb, "Letterbox should exist")
+	if lb:
+		watch_signals(lb)
+		lb.set_instant(true)
+		assert_signal_emitted(lb, "letterbox_in_complete")

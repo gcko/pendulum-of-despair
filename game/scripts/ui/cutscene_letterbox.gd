@@ -54,14 +54,20 @@ func animate_out(duration: float = 0.5) -> void:
 func set_instant(visible: bool) -> void:
 	_kill_tween()
 	if top_bar == null or bottom_bar == null:
+		if visible:
+			letterbox_in_complete.emit()
+		else:
+			letterbox_out_complete.emit()
 		return
 	var height: float = float(BAR_HEIGHT) if visible else 0.0
 	top_bar.size.y = height
 	bottom_bar.size.y = height
 	if visible:
 		bottom_bar.position.y = 720.0 - height
+		letterbox_in_complete.emit()
 	else:
 		bottom_bar.position.y = 720.0
+		letterbox_out_complete.emit()
 
 
 func _kill_tween() -> void:
