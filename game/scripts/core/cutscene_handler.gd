@@ -7,6 +7,7 @@ extends RefCounted
 var _exploration: Exploration
 var _cutscene_camera_tween: Tween = null
 var _cutscene_shake_tween: Tween = null
+var _cutscene_active: bool = false
 
 
 func _init(exploration: Exploration) -> void:
@@ -15,12 +16,13 @@ func _init(exploration: Exploration) -> void:
 
 func on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
 	if new_state == GameManager.OverlayState.CUTSCENE:
+		_cutscene_active = true
 		_exploration.set_in_cutscene(true)
 		var player: Node2D = _exploration.get_player()
 		if player != null:
 			player.set_input_enabled(false)
 		_connect_cutscene_signals()
-	elif new_state == GameManager.OverlayState.NONE and _exploration.is_in_cutscene():
+	elif new_state == GameManager.OverlayState.NONE and _cutscene_active:
 		_on_cutscene_finished()
 
 
@@ -98,6 +100,9 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 
 
 func _on_cutscene_finished() -> void:
+	# Clear handler-level flag immediately to prevent double-fire if another
+	# overlay pops before the deferred set_in_cutscene(false) runs.
+	_cutscene_active = false
 	# Defer clearing _in_cutscene so it stays true for one frame after unpause.
 	# pop_overlay emits overlay_state_changed(NONE) then unpauses the tree.
 	# Without deferral, pending Area2D overlaps from cutscene move commands
