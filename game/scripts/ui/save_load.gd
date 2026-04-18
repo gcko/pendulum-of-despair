@@ -235,10 +235,14 @@ func _handle_rest_input(event: InputEvent) -> void:
 		for m: Dictionary in PartyState.members:
 			if m.is_empty():
 				continue
-			var max_hp: int = m.get("max_hp", m.get("base_stats", {}).get("hp", 1))
-			var max_mp: int = m.get("max_mp", m.get("base_stats", {}).get("mp", 0))
-			m["current_hp"] = mini(m.get("current_hp", max_hp) + int(max_hp * restore_pct), max_hp)
-			m["current_mp"] = mini(m.get("current_mp", max_mp) + int(max_mp * restore_pct), max_mp)
+			var max_hp: int = int(m.get("max_hp", m.get("base_stats", {}).get("hp", 1)))
+			var max_mp: int = int(m.get("max_mp", m.get("base_stats", {}).get("mp", 0)))
+			m["current_hp"] = mini(
+				int(m.get("current_hp", max_hp)) + int(max_hp * restore_pct), max_hp
+			)
+			m["current_mp"] = mini(
+				int(m.get("current_mp", max_mp)) + int(max_mp * restore_pct), max_mp
+			)
 		_rest_menu.visible = false
 		if _rest_after_save:
 			_rest_after_save = false
