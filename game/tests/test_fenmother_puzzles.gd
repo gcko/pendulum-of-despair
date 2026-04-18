@@ -10,6 +10,9 @@ const RITUAL_METER_SCRIPT: GDScript = preload("res://scripts/ui/ritual_meter.gd"
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	GameManager.transition_data = {}
 	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
@@ -23,6 +26,9 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	GameManager.transition_data = {}
 	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
