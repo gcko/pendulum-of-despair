@@ -36,4 +36,4 @@ metadata/npc_id = "sable"
 metadata/cutscene_actor = true
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(-100, -100)
+position = Vector2(-96, -96)

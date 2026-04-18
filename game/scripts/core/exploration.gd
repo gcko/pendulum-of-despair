@@ -548,6 +548,8 @@ func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
 
 
 func _on_save_point_activated(_save_point_id: String) -> void:
+	if _transitioning or _in_cutscene:
+		return
 	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		GameManager.overlay_node.open_save_point()
@@ -601,7 +603,11 @@ func _on_spring_filled() -> void:
 func _on_plant_restored(_plant_id: String) -> void:
 	flash_location_name("Passage Opened")
 	var scene_data: Dictionary = DataManager.load_dialogue("water_of_life")
-	var entries: Array = scene_data.get("entries", [])
+	var raw_entries: Array = scene_data.get("entries", [])
+	var entries: Array[Dictionary] = []
+	for e: Variant in raw_entries:
+		if e is Dictionary:
+			entries.append(e as Dictionary)
 	if not entries.is_empty() and GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(entries)
 

@@ -100,8 +100,9 @@ func push_overlay(state: OverlayState) -> bool:
 
 
 ## Remove the active overlay and unpause the core state.
-## When silent is true, skips the NONE signal emission (used during
-## force-replacement so the replacement state signal is the only one
+## When silent is true, skips BOTH the NONE signal emission AND the
+## unpause (used during force-replacement so the tree stays paused
+## continuously and the replacement state signal is the only one
 ## listeners see, preventing premature completion logic).
 func pop_overlay(silent: bool = false) -> void:
 	if overlay_node:
@@ -110,7 +111,7 @@ func pop_overlay(silent: bool = false) -> void:
 	current_overlay = OverlayState.NONE
 	if not silent:
 		overlay_state_changed.emit(OverlayState.NONE)
-	get_tree().paused = false
+		get_tree().paused = false
 
 
 ## Deferred helper: push save overlay after the menu overlay is freed.

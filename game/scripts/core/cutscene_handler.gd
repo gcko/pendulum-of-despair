@@ -99,7 +99,7 @@ func _on_cutscene_shake(intensity: int, duration: float) -> void:
 
 func _on_cutscene_finished() -> void:
 	# Defer clearing _in_cutscene so it stays true for one frame after unpause.
-	# pop_overlay emits overlay_state_changed(NONE) THEN sets paused=false.
+	# pop_overlay emits overlay_state_changed(NONE) then unpauses the tree.
 	# Without deferral, pending Area2D overlaps from cutscene move commands
 	# would fire immediately on unpause and pass the _in_cutscene guard.
 	_exploration.call_deferred("set_in_cutscene", false)
