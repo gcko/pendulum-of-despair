@@ -59,7 +59,7 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_tick() -> void:
-	if _player_inside:
+	if _player_inside and GameManager.current_overlay != GameManager.OverlayState.CUTSCENE:
 		_apply_tick()
 
 

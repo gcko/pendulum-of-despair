@@ -557,6 +557,7 @@ func _on_save_point_entered(_save_point_id: String) -> void:
 
 
 func _on_trigger_fired(_trigger_id: String) -> void:
+	# Stub — trigger behavior dispatched per-map in future gaps.
 	pass
 
 
@@ -586,7 +587,7 @@ func _on_crystal_cleared(_crystal_id: String) -> void:
 
 
 func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
-	if _transitioning or _in_cutscene:
+	if _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	flash_location_name("The floor gives way!")
 	_transition_to_map(target_map_id, target_spawn)
@@ -620,7 +621,7 @@ func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
 
 
 func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene:
+	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
@@ -691,7 +692,7 @@ func _get_party_avg_level() -> int:
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning or body != _player or _in_cutscene:
+	if _transitioning or body != _player or _in_cutscene or _in_auto_walk:
 		return
 	var req_flag: String = area.get_meta("required_flag", "")
 	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):

@@ -193,7 +193,7 @@ func test_cutscene_trigger_blocked_by_required_flag() -> void:
 func test_empty_flag_name_rejected() -> void:
 	var exp_node: Node2D = _create_exploration_test_room()
 	# Directly invoke the cutscene handler's flag_set callback with empty name
-	var handler: Variant = exp_node._get_cutscene_handler()
+	var handler: CutsceneHandler = exp_node._get_cutscene_handler()
 	handler._on_cutscene_flag_set("", true)
 	# EventFlags should NOT contain an empty-string key
 	assert_false(
@@ -207,7 +207,7 @@ func test_in_cutscene_deferred_clear_blocks_transitions() -> void:
 	# Simulate being in a cutscene
 	exp_node.set_in_cutscene(true)
 	# Call _on_cutscene_finished via the handler — this defers set_in_cutscene(false)
-	var handler: Variant = exp_node._get_cutscene_handler()
+	var handler: CutsceneHandler = exp_node._get_cutscene_handler()
 	handler._on_cutscene_finished()
 	# BEFORE the deferred call fires, _in_cutscene should still be true
 	# This blocks any pending Area2D overlaps from triggering transitions

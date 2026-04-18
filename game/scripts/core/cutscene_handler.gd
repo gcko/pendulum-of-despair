@@ -27,6 +27,7 @@ func on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
 func _connect_cutscene_signals() -> void:
 	var cs: Node = GameManager.overlay_node
 	if cs == null:
+		push_error("CutsceneHandler: overlay_node is null when CUTSCENE state fired")
 		return
 	_safe_connect(cs, "cutscene_move_requested", _on_cutscene_move)
 	_safe_connect(cs, "cutscene_anim_requested", _on_cutscene_anim)
@@ -133,7 +134,11 @@ func _on_cutscene_finished() -> void:
 				fade.color = Color(0, 0, 0, 1)
 			_exploration.transition_to_map(ret_map, ret_spawn)
 			return
-	if player != null and not _exploration.is_in_auto_walk():
+	if (
+		player != null
+		and not _exploration.is_in_auto_walk()
+		and not _exploration.is_transitioning()
+	):
 		player.set_input_enabled(true)
 
 

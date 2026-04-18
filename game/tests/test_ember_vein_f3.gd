@@ -12,6 +12,7 @@ func before_each() -> void:
 func after_each() -> void:
 	PartyState.puzzle_state.clear()
 	EventFlags.clear_all()
+	GameManager.current_overlay = GameManager.OverlayState.NONE
 
 
 func _make_mock_body() -> CharacterBody2D:
