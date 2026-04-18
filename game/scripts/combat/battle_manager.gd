@@ -259,7 +259,11 @@ func _do_item(command: Dictionary) -> void:
 	message.emit("Used %s!" % item.get("name", "Item"))
 	match item.get("effect_type", ""):
 		"restore_hp":
-			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100))
+			var can_revive: bool = item.get("can_revive", false)
+			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
+			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
+		"revive":
+			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
 			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))

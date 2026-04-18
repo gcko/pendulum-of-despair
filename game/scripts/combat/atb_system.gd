@@ -8,13 +8,16 @@ signal combatant_ready(combatant_id: String)
 
 const GAUGE_MAX: int = 16000
 
+## Speed factors per battle speed setting.
+## Tuned so average SPD (~20) fills the gauge in ~6-8 seconds at speed 3,
+## matching FF6 ATB pacing (SNES: gauge 0-255, ~60fps, increment ~1/tick).
 const SPEED_FACTORS: Dictionary = {
-	1: 6.0,
-	2: 5.0,
-	3: 3.0,
-	4: 2.0,
-	5: 1.5,
-	6: 1.0,
+	1: 1.5,
+	2: 1.0,
+	3: 0.7,
+	4: 0.5,
+	5: 0.35,
+	6: 0.25,
 }
 
 ## Per-combatant data: {id: {gauge, spd, is_enemy, frozen, status_mods}}

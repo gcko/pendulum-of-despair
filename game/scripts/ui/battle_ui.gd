@@ -19,6 +19,7 @@ var _manager: Node = null
 var _message_timer: float = 0.0
 var _enemy_positions: Array[Vector2] = []
 var _results_showing: bool = false
+var _target_arrow: Label = null
 
 @onready var _party_panel: PanelContainer = $PartyPanel
 @onready var _command_menu: PanelContainer = $CommandMenu
@@ -40,11 +41,19 @@ func initialize(manager: Node) -> void:
 
 
 func _ready() -> void:
+	# Create target arrow indicator
+	_target_arrow = Label.new()
+	_target_arrow.text = ">"
+	_target_arrow.modulate = Color("#ffff88")
+	_target_arrow.visible = false
+	add_child(_target_arrow)
+
 	if _command_menu != null:
 		_command_menu.command_selected.connect(_on_command_selected)
 		_command_menu.command_cancelled.connect(_on_command_cancelled)
 		_command_menu.submenu_opened.connect(_on_submenu_opened)
 		_command_menu.submenu_closed.connect(_on_submenu_closed)
+		_command_menu.target_changed.connect(_on_target_changed)
 
 	if _message_area != null:
 		_message_area.visible = false
@@ -105,6 +114,22 @@ func _on_submenu_opened() -> void:
 
 func _on_submenu_closed() -> void:
 	submenu_state_changed.emit(false)
+
+
+func _on_target_changed(index: int, is_enemy: bool) -> void:
+	if _target_arrow == null:
+		return
+	if index < 0:
+		_target_arrow.visible = false
+		return
+	if is_enemy and index < _enemy_positions.size():
+		_target_arrow.visible = true
+		_target_arrow.position = _enemy_positions[index] - Vector2(32, 8)
+	elif not is_enemy:
+		_target_arrow.visible = true
+		_target_arrow.position = Vector2(40, 480 + index * 60)
+	else:
+		_target_arrow.visible = false
 
 
 func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> void:

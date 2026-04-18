@@ -5,12 +5,13 @@ signal command_selected(command: Dictionary)
 signal command_cancelled
 signal submenu_opened
 signal submenu_closed
+signal target_changed(index: int, is_enemy: bool)
+
+enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-
-enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 var _state: MenuState = MenuState.HIDDEN
 var _cursor: int = 0
@@ -112,6 +113,7 @@ func _handle_submenu_input(event: InputEvent) -> void:
 
 
 func _handle_target_input(event: InputEvent) -> void:
+	var old_cursor: int = _target_cursor
 	if _target_is_enemy:
 		if event.is_action_pressed("ui_left"):
 			_target_cursor = (_target_cursor - 1 + _target_count) % _target_count
@@ -123,11 +125,16 @@ func _handle_target_input(event: InputEvent) -> void:
 		elif event.is_action_pressed("ui_down"):
 			_target_cursor = (_target_cursor + 1) % _target_count
 
+	if _target_cursor != old_cursor:
+		target_changed.emit(_target_cursor, _target_is_enemy)
+
 	if event.is_action_pressed("ui_accept"):
 		_pending_command["target"] = _target_cursor
+		target_changed.emit(-1, _target_is_enemy)  # Hide arrow
 		command_selected.emit(_pending_command)
 		hide_menu()
 	elif event.is_action_pressed("ui_cancel"):
+		target_changed.emit(-1, _target_is_enemy)  # Hide arrow
 		if _pending_command.get("type", "") == "attack":
 			_state = MenuState.COMMAND
 			submenu_closed.emit()
@@ -166,6 +173,7 @@ func _start_target_selection(is_enemy: bool, count: int = 0) -> void:
 	_target_count = maxi(1, count if count > 0 else _target_count)
 	_state = MenuState.TARGET
 	submenu_opened.emit()
+	target_changed.emit(0, is_enemy)
 
 
 func _show_submenu() -> void:

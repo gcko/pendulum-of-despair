@@ -101,11 +101,21 @@ func test_heal_clamps_to_max() -> void:
 	assert_eq(_state.get_member(0)["current_hp"], 95)
 
 
-func test_heal_revives_dead_member() -> void:
+func test_heal_does_not_revive_dead_member() -> void:
 	_state.add_member(0, _make_char_data())
 	_state.take_damage(0, 200)
 	assert_false(_state.get_member(0)["is_alive"])
-	_state.heal(0, 50)
+	var actual: int = _state.heal(0, 50)
+	assert_eq(actual, 0, "regular heal should not affect KO'd member")
+	assert_false(_state.get_member(0)["is_alive"])
+
+
+func test_heal_with_revive_flag_revives_dead_member() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.take_damage(0, 200)
+	assert_false(_state.get_member(0)["is_alive"])
+	var actual: int = _state.heal(0, 50, true)
+	assert_true(actual > 0, "revive heal should restore HP")
 	assert_true(_state.get_member(0)["is_alive"])
 
 
