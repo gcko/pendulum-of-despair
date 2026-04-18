@@ -574,12 +574,14 @@ func push_overlay(state: OverlayState) -> bool:
     overlay_node = scene
     return true
 
-func pop_overlay() -> void:
+func pop_overlay(silent: bool = false) -> void:
     # Remove overlay, unpause core
     if overlay_node:
         overlay_node.queue_free()
         overlay_node = null
     current_overlay = OverlayState.NONE
+    if not silent:
+        overlay_state_changed.emit(OverlayState.NONE)
     get_tree().paused = false
 ```
 
@@ -615,7 +617,7 @@ NPC (Area2D)
 ├── AnimationPlayer (idle, emotion animations per dialogue-system.md)
 └── npc.gd
     -> loads dialogue from JSON via DataManager
-    -> on interact: GameManager.push_overlay(DIALOGUE)
+    -> on interact: emits npc_interacted signal (exploration handles overlay)
     -> flag-gated dialogue (checks EventFlags)
 ```
 

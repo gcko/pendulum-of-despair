@@ -89,7 +89,7 @@ var _last_flash_id: String = ""
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
-@onready var _location_flash: CanvasLayer = $LocationFlash
+@onready var _location_panel: PanelContainer = $LocationFlash/LocationLabel
 @onready var _location_label: Label = $LocationFlash/LocationLabel/NameLabel
 ```
 

@@ -95,7 +95,7 @@ res://
 
 ### 1.3 Autoload Singletons
 
-Five persistent managers, always available via global name:
+Six persistent managers, always available via global name:
 
 | Singleton | Global Name | Responsibility |
 |-----------|-------------|---------------|
@@ -104,6 +104,7 @@ Five persistent managers, always available via global name:
 | `audio_manager.gd` | `AudioManager` | Music, SFX, ambient per audio.md rules |
 | `save_manager.gd` | `SaveManager` | Save/load, auto-save, migration per save-system.md |
 | `event_flags.gd` | `EventFlags` | Global event flag dictionary, flag checks |
+| `party_state.gd` | `PartyState` | Party members, formation, inventory, equipment, flags |
 
 ### 1.4 Viewport Settings
 
@@ -537,7 +538,7 @@ func push_overlay(state: OverlayState) -> bool:
     # Reject if overlay already active (except cutscene overriding dialogue)
     if current_overlay != OverlayState.NONE:
         if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
-            pop_overlay()  # Cutscene takes priority over dialogue
+            pop_overlay(true)  # Silent pop — CUTSCENE emission replaces NONE
         else:
             return false
     # Add overlay scene on top, pause core underneath
@@ -550,12 +551,14 @@ func push_overlay(state: OverlayState) -> bool:
     overlay_node = scene
     return true
 
-func pop_overlay() -> void:
+func pop_overlay(silent: bool = false) -> void:
     # Remove overlay, unpause core
     if overlay_node:
         overlay_node.queue_free()
         overlay_node = null
     current_overlay = OverlayState.NONE
+    if not silent:
+        overlay_state_changed.emit(OverlayState.NONE)
     get_tree().paused = false
 ```
 
