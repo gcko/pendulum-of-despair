@@ -72,10 +72,10 @@ A dedicated linear map that serves as the cutscene stage.
 
 **Entities (under Entities node):**
 - 4 NPC instances of `npc.tscn`, positioned at trail start (left side):
-  - `Edren` — position (80, 120), metadata `npc_id = "edren"`
-  - `Cael` — position (64, 136), metadata `npc_id = "cael"`
-  - `Lira` — position (32, 120), metadata `npc_id = "lira"`
-  - `Sable` — position (16, 136), metadata `npc_id = "sable"`
+  - `Edren` — position (80, 128), metadata `npc_id = "edren"`
+  - `Cael` — position (64, 144), metadata `npc_id = "cael"`
+  - `Lira` — position (32, 128), metadata `npc_id = "lira"`
+  - `Sable` — position (16, 144), metadata `npc_id = "sable"`
 - Use NPC instances (not PlayerCharacter) for all 4 — the player has
   no input during this cutscene. NPCs have `walk_to()`, `cancel_walk()`,
   and `play_animation()` which is everything the cutscene choreography
@@ -95,14 +95,14 @@ A dedicated linear map that serves as the cutscene stage.
 - No dialogue is loaded on these NPCs — they are pure sprite actors
 
 **Spawn marker:**
-- `PlayerSpawn` Marker2D at (-100, -100) — required by exploration.gd
+- `PlayerSpawn` Marker2D at (-96, -96) — required by exploration.gd
   but positioned off-screen so the auto-spawned player is invisible
 
 **Special handling — no player character:**
 - This map is loaded by exploration.gd which always instantiates a
   PlayerCharacter. Since all 4 party members are NPC actors on this
   map, the player character must be hidden.
-- PlayerSpawn is positioned off-screen at (-100, -100) so the
+- PlayerSpawn is positioned off-screen at (-96, -96) so the
   auto-spawned player is invisible. The NPC named "edren"
   serves as the visible Edren on screen.
 
