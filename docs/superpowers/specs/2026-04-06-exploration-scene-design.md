@@ -139,7 +139,7 @@ When entities are placed in a map, exploration.gd connects their signals:
 - Follows player position every frame
 - `position_smoothing_enabled = false` (pixel-perfect, no interpolation)
 - Snaps to pixel grid: `position = player.position.round()`
-- No zoom (integer 1x only at 320x180)
+- 4x zoom set in exploration.tscn (effective 320x180 game world within 1280x720 viewport)
 - No camera limits in MVP (deferred to gap 4.1 with real TileMapLayer maps)
 
 ### Location Name Flash
