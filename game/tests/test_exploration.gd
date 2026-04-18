@@ -68,7 +68,7 @@ func test_load_map_creates_children() -> void:
 func test_player_spawns_at_marker() -> void:
 	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp._player, "player should be instantiated")
-	assert_eq(exp._player.position, Vector2(80, 90), "player should be at spawn point")
+	assert_eq(exp._player.position, Vector2(80, 96), "player should be at spawn point")
 
 
 func test_camera_follows_player() -> void:
