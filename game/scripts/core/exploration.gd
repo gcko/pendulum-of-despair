@@ -268,7 +268,8 @@ func _initialize_from_transition_data() -> void:
 		_danger_counter = 0
 		load_map(data.get("map_id", "overworld"))
 		if _player != null:
-			_player.position = data.get("position", Vector2(80, 90))
+			var pos: Variant = data.get("position", Vector2(80, 90))
+			_player.position = pos.round() if pos is Vector2 else Vector2(80, 90)
 	else:
 		load_map("overworld")
 	# Safety net: if a party-joining flag was set but the member was never
@@ -615,7 +616,7 @@ func _on_interaction_message(text: String) -> void:
 
 
 func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player:
+	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	_trigger_boss_encounter(area)
 
@@ -789,6 +790,7 @@ func _start_auto_walk() -> void:
 func _end_auto_walk() -> void:
 	_in_auto_walk = false
 	if _player != null:
+		_player.position = _player.position.round()
 		_player.set_input_enabled(true)
 
 

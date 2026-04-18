@@ -59,7 +59,8 @@ func start(data: Dictionary) -> void:
 	_exploration.reset_danger_counter()
 	_exploration.load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	if _exploration.get_player() != null:
-		_exploration.get_player().position = data.get("position", Vector2(80, 90))
+		var pos: Variant = data.get("position", Vector2(80, 90))
+		_exploration.get_player().position = pos.round() if pos is Vector2 else Vector2(80, 90)
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
@@ -104,7 +105,8 @@ func continue_sequence(data: Dictionary) -> void:
 	if _exploration.get_player() != null:
 		var fallback: Vector2 = data.get("position", Vector2(80, 90))
 		var origin: Variant = data.get("cleansing_origin_position", null)
-		_exploration.get_player().position = origin if origin is Vector2 else fallback
+		var pos: Vector2 = origin if origin is Vector2 else fallback
+		_exploration.get_player().position = pos.round()
 	if _ritual_meter == null:
 		if not ResourceLoader.exists(RITUAL_METER_PATH):
 			push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
@@ -320,4 +322,4 @@ func _revive_fallen_at_quarter_hp() -> void:
 			continue
 		var m: Dictionary = PartyState.members[mi]
 		if m.get("current_hp", 0) <= 0:
-			m["current_hp"] = maxi(1, int(m.get("max_hp", 1) / 4))
+			m["current_hp"] = maxi(1, int(m.get("max_hp", 1)) / 4)

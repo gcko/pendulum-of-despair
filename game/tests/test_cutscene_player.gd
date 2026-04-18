@@ -32,6 +32,7 @@ func before_each() -> void:
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
 	DataManager.clear_cache()
+	PartyState.initialize_new_game()
 
 
 func after_each() -> void:
@@ -40,6 +41,7 @@ func after_each() -> void:
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
 	DataManager.clear_cache()
+	PartyState.initialize_new_game()
 
 
 # --- 1. Empty entries emits cutscene_finished ---
