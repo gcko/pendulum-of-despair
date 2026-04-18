@@ -55,8 +55,8 @@ func test_gauge_fills_by_fill_rate() -> void:
 	_atb.add_combatant("party_0", 10, false)
 	_atb.set_battle_speed(3)
 	_atb.tick(1.0 / 60.0)
-	# fill_rate = floor((10+25)*3) = 105
-	assert_eq(_atb.get_gauge("party_0"), 105, "gauge fills by fill rate")
+	# fill_rate = floor((10+25)*0.7) = 24
+	assert_eq(_atb.get_gauge("party_0"), 24, "gauge fills by fill rate")
 
 
 func test_gauge_caps_at_max() -> void:
