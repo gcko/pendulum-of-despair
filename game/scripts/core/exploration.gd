@@ -424,6 +424,8 @@ func _connect_entity_signals(map_node: Node2D) -> void:
 				child.save_point_activated.connect(_on_save_point_activated)
 			if child.has_signal("save_point_entered"):
 				child.save_point_entered.connect(_on_save_point_entered)
+			if child.has_signal("save_point_exited"):
+				child.save_point_exited.connect(_on_save_point_exited)
 			if child.has_signal("wheel_toggled"):
 				child.wheel_toggled.connect(_on_wheel_toggled)
 			if child.has_signal("spring_filled"):
@@ -464,6 +466,7 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 		"chest_opened": _on_chest_opened,
 		"save_point_activated": _on_save_point_activated,
 		"save_point_entered": _on_save_point_entered,
+		"save_point_exited": _on_save_point_exited,
 		"wheel_toggled": _on_wheel_toggled,
 		"spring_filled": _on_spring_filled,
 		"plant_restored": _on_plant_restored,
@@ -557,6 +560,10 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 
 func _on_save_point_entered(_save_point_id: String) -> void:
 	AudioManager.play_sfx("save_point_proximity")
+
+
+func _on_save_point_exited(_save_point_id: String) -> void:
+	PartyState.is_at_save_point = false
 
 
 func _on_trigger_fired(_trigger_id: String) -> void:
@@ -947,7 +954,7 @@ func set_in_cutscene(value: bool) -> void:
 ## the handler that requested the clear is still inactive (no back-to-back
 ## cutscene has started since the deferred call was scheduled).
 func _deferred_clear_cutscene_flag(handler: CutsceneHandler) -> void:
-	if handler != null and handler._cutscene_active:
+	if handler != null and handler.is_cutscene_active():
 		return
 	_in_cutscene = false
 

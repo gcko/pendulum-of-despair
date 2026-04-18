@@ -61,10 +61,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		skip_cutscene()
+		return
 
 
 ## Start a cutscene sequence.
-func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
+func start_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int = TIER_FULL) -> void:
 	if _is_playing:
 		if OS.is_debug_build():
 			push_warning("Cutscene already playing: %s" % _cutscene_id)

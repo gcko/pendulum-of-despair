@@ -66,3 +66,4 @@
 {"id":"int-f1a92481","kind":"field_change","created_at":"2026-04-18T08:36:56.795225Z","actor":"Jared Scott","issue_id":"pendulum-of-despair-7mt","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-3380cd92","kind":"field_change","created_at":"2026-04-18T08:36:56.820507Z","actor":"Jared Scott","issue_id":"pendulum-of-despair-ea3","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-4f784efd","kind":"field_change","created_at":"2026-04-18T09:14:40.430837Z","actor":"Jared Scott","issue_id":"pendulum-of-despair-swh","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Fixed all 4 bugs"}}
+{"id":"int-320f21af","kind":"field_change","created_at":"2026-04-18T14:09:49.43085Z","actor":"Jared Scott","issue_id":"pendulum-of-despair-wws","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Fixed all 4 bugs"}}

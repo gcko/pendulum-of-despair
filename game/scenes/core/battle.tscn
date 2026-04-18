@@ -8,11 +8,11 @@
 [ext_resource type="Script" path="res://scripts/ui/battle_command_menu.gd" id="6_cmd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
-bg_color = Color(0, 0, 0.15, 0.9)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 content_margin_left = 16.0
 content_margin_top = 8.0
@@ -20,11 +20,11 @@ content_margin_right = 16.0
 content_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_msg"]
-bg_color = Color(0, 0, 0.15, 0.9)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 content_margin_left = 16.0
 content_margin_top = 4.0

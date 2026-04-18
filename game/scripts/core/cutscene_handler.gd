@@ -10,6 +10,11 @@ var _cutscene_shake_tween: Tween = null
 var _cutscene_active: bool = false
 
 
+## Returns whether a cutscene is currently active in this handler.
+func is_cutscene_active() -> bool:
+	return _cutscene_active
+
+
 func _init(exploration: Exploration) -> void:
 	_exploration = exploration
 

@@ -12,6 +12,9 @@ signal save_point_activated(save_point_id: String)
 ## Emitted when the player enters proximity (for SFX by exploration scene).
 signal save_point_entered(save_point_id: String)
 
+## Emitted when the player leaves proximity.
+signal save_point_exited(save_point_id: String)
+
 ## Unique identifier for this save point location.
 var save_point_id: String = ""
 
@@ -54,4 +57,4 @@ func _on_body_exited(body: Node2D) -> void:
 		return
 	if save_point_id == "":
 		return
-	PartyState.is_at_save_point = false
+	save_point_exited.emit(save_point_id)

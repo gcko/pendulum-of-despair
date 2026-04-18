@@ -88,7 +88,7 @@ func test_t4_no_letterbox() -> void:
 	var top: ColorRect = cs.get_node_or_null("LetterboxTop")
 	assert_not_null(top, "LetterboxTop should exist")
 	if top:
-		assert_eq(top.custom_minimum_size.y, 0.0, "T4 should not animate letterbox")
+		assert_eq(top.size.y, 0.0, "T4 should not animate letterbox")
 
 
 # --- 6. Move command emits cutscene_move_requested ---

@@ -56,13 +56,15 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 		return
 
 	var old_data: Dictionary = transition_data
+	var old_core: CoreState = current_core
 	transition_data = data
+	current_core = new_state
 	var err: Error = get_tree().change_scene_to_file(scene_path)
 	if err != OK:
 		push_error("GameManager: Failed to change scene to %s (error %d)" % [scene_path, err])
 		transition_data = old_data
+		current_core = old_core
 		return
-	current_core = new_state
 	core_state_changed.emit(new_state)
 
 
@@ -89,8 +91,11 @@ func push_overlay(state: OverlayState) -> bool:
 		push_error("GameManager: Failed to load overlay: %s" % scene_path)
 		return false
 
-	current_overlay = state
 	var scene: Node = (resource as PackedScene).instantiate()
+	if scene == null:
+		push_error("GameManager: Failed to instantiate overlay: %s" % scene_path)
+		return false
+	current_overlay = state
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(scene)
 	overlay_node = scene
