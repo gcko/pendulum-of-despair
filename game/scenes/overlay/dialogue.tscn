@@ -93,22 +93,27 @@ offset_left = 64.0
 offset_top = 8.0
 offset_right = 448.0
 offset_bottom = 184.0
+mouse_filter = 2
 
 [node name="Choice0" type="Label" parent="ChoiceBox/ChoiceContainer"]
 layout_mode = 2
+mouse_filter = 2
 text = "Option 1"
 
 [node name="Choice1" type="Label" parent="ChoiceBox/ChoiceContainer"]
 layout_mode = 2
+mouse_filter = 2
 text = "Option 2"
 
 [node name="Choice2" type="Label" parent="ChoiceBox/ChoiceContainer"]
 layout_mode = 2
+mouse_filter = 2
 text = "Option 3"
 visible = false
 
 [node name="Choice3" type="Label" parent="ChoiceBox/ChoiceContainer"]
 layout_mode = 2
+mouse_filter = 2
 text = "Option 4"
 visible = false
 

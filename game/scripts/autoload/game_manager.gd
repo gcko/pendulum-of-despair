@@ -94,6 +94,7 @@ func push_overlay(state: OverlayState) -> bool:
 	var scene: Node = (resource as PackedScene).instantiate()
 	if scene == null:
 		push_error("GameManager: Failed to instantiate overlay: %s" % scene_path)
+		get_tree().paused = false
 		return false
 	current_overlay = state
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS

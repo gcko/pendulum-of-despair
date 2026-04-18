@@ -110,7 +110,7 @@ func set_command_menu_open(is_open: bool) -> void:
 ## Calculate fill rate for given SPD, battle speed, and status modifiers.
 ## Public for testing. Used internally by tick().
 func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array) -> int:
-	var factor: float = SPEED_FACTORS.get(battle_speed, 3.0)
+	var factor: float = SPEED_FACTORS.get(battle_speed, 0.7)
 	var mod_product: float = 1.0
 	for mod: float in status_mods:
 		mod_product *= mod

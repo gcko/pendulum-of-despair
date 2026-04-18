@@ -10,13 +10,13 @@ var _cutscene_shake_tween: Tween = null
 var _cutscene_active: bool = false
 
 
+func _init(exploration: Exploration) -> void:
+	_exploration = exploration
+
+
 ## Returns whether a cutscene is currently active in this handler.
 func is_cutscene_active() -> bool:
 	return _cutscene_active
-
-
-func _init(exploration: Exploration) -> void:
-	_exploration = exploration
 
 
 func on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
@@ -108,6 +108,8 @@ func _on_cutscene_finished() -> void:
 	# Clear handler-level flag immediately to prevent double-fire if another
 	# overlay pops before the deferred set_in_cutscene(false) runs.
 	_cutscene_active = false
+	if not is_instance_valid(_exploration):
+		return
 	# Defer clearing _in_cutscene so it stays true for one frame after unpause.
 	# pop_overlay emits overlay_state_changed(NONE) then unpauses the tree.
 	# Without deferral, pending Area2D overlaps from cutscene move commands
@@ -154,6 +156,7 @@ func _on_cutscene_finished() -> void:
 		player != null
 		and not _exploration.is_in_auto_walk()
 		and not _exploration.is_transitioning()
+		and GameManager.current_overlay == GameManager.OverlayState.NONE
 	):
 		player.set_input_enabled(true)
 

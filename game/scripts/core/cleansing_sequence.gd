@@ -195,6 +195,7 @@ func _complete(_data: Dictionary) -> void:
 	var entries: Array = scene_data.get("entries", [])
 	var final_idx: int = entries.size() - 1
 	if final_idx < 0:
+		_exploration.load_map("dungeons/fenmothers_hollow_spirit_path")
 		return
 	var dialogue: Array = [entries[final_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
@@ -323,4 +324,4 @@ func _revive_fallen_at_quarter_hp() -> void:
 			continue
 		var m: Dictionary = PartyState.members[mi]
 		if m.get("current_hp", 0) <= 0:
-			m["current_hp"] = maxi(1, int(m.get("max_hp", 1)) / 4)
+			m["current_hp"] = maxi(1, floori(float(m.get("max_hp", 1)) / 4.0))
