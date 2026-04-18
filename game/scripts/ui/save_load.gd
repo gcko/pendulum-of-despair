@@ -44,9 +44,9 @@ var _slot_previews: Array[Dictionary] = []
 @onready var _rest_menu: PanelContainer = $RestMenu
 @onready var _rest_options: Array[Label] = []
 @onready var _confirm_dialog: PanelContainer = $ConfirmDialog
-@onready var _confirm_label: Label = $ConfirmDialog/ConfirmLabel
-@onready var _confirm_yes: Label = $ConfirmDialog/YesOption
-@onready var _confirm_no: Label = $ConfirmDialog/NoOption
+@onready var _confirm_label: Label = $ConfirmDialog/ConfirmLayout/ConfirmLabel
+@onready var _confirm_yes: Label = $ConfirmDialog/ConfirmLayout/YesOption
+@onready var _confirm_no: Label = $ConfirmDialog/ConfirmLayout/NoOption
 @onready var _cursor: Sprite2D = $Cursor
 
 
@@ -62,9 +62,9 @@ func _ready() -> void:
 		$SlotContainer/Slot3,
 	]
 	_rest_options = [
-		$RestMenu/SleepingBagOption,
-		$RestMenu/TentOption,
-		$RestMenu/PavilionOption,
+		$RestMenu/Options/SleepingBagOption,
+		$RestMenu/Options/TentOption,
+		$RestMenu/Options/PavilionOption,
 	]
 	_hide_all()
 	_slot_previews = SaveManager.get_slot_previews()

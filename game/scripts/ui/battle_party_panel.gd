@@ -13,8 +13,10 @@ var _active_slot: int = -1
 
 
 func _ready() -> void:
+	var rows_container: VBoxContainer = get_node_or_null("Rows")
 	for i: int in range(4):
-		var row: HBoxContainer = get_node_or_null("Row%d" % i)
+		var path: String = "Rows/Row%d" % i if rows_container != null else "Row%d" % i
+		var row: HBoxContainer = get_node_or_null(path)
 		_rows[i] = row
 
 

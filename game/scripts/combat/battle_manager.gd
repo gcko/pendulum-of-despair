@@ -103,6 +103,9 @@ func _process(delta: float) -> void:
 	_check_end_conditions()
 	if not _battle_active:
 		return
+	# Process one action per frame to respect ATB pacing.
+	# Party members get input prompt; only one enemy acts per frame.
+	var enemy_acted: bool = false
 	for id: String in _atb.get_ready_queue():
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			_awaiting_input_for = id
@@ -115,12 +118,14 @@ func _process(delta: float) -> void:
 			var char_data: Dictionary = member.get("character_data", {})
 			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
 			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
-		elif id.begins_with("enemy_"):
+			break
+		elif id.begins_with("enemy_") and not enemy_acted:
 			_execute_enemy_turn(id)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
 			if not _battle_active:
 				return
+			enemy_acted = true
 
 
 func _on_ui_command(command: Dictionary) -> void:
@@ -446,6 +451,8 @@ func _count_ko_party_members() -> int:
 func _exit_battle(result: String) -> void:
 	_battle_active = false
 	_awaiting_input_for = ""
+	# Sync battle damage/healing back to PartyState
+	_sync_party_hp_mp()
 	var t: Dictionary = {
 		"result": result,
 		"map_id": _return_map_id,
@@ -469,6 +476,16 @@ func _exit_battle(result: String) -> void:
 	_earned_xp = 0
 	_earned_gold = 0
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, t)
+
+
+func _sync_party_hp_mp() -> void:
+	var active: Array[Dictionary] = PartyState.get_active_party()
+	for i: int in range(mini(active.size(), 4)):
+		var battle_member: Dictionary = _state.get_member(i)
+		if battle_member.is_empty() or active[i].is_empty():
+			continue
+		active[i]["current_hp"] = battle_member.get("current_hp", active[i].get("current_hp", 0))
+		active[i]["current_mp"] = battle_member.get("current_mp", active[i].get("current_mp", 0))
 
 
 func _setup_party() -> void:

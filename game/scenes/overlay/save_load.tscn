@@ -208,25 +208,20 @@ offset_bottom = 400.0
 theme_override_styles/panel = SubResource("StyleBox_menu")
 visible = false
 
-[node name="SleepingBagOption" type="Label" parent="RestMenu"]
-offset_left = 32.0
-offset_top = 16.0
-offset_right = 608.0
-offset_bottom = 72.0
+[node name="Options" type="VBoxContainer" parent="RestMenu"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SleepingBagOption" type="Label" parent="RestMenu/Options"]
+layout_mode = 2
 text = "Sleeping Bag (25%)"
 
-[node name="TentOption" type="Label" parent="RestMenu"]
-offset_left = 32.0
-offset_top = 88.0
-offset_right = 608.0
-offset_bottom = 144.0
+[node name="TentOption" type="Label" parent="RestMenu/Options"]
+layout_mode = 2
 text = "Tent (50%)"
 
-[node name="PavilionOption" type="Label" parent="RestMenu"]
-offset_left = 32.0
-offset_top = 160.0
-offset_right = 608.0
-offset_bottom = 216.0
+[node name="PavilionOption" type="Label" parent="RestMenu/Options"]
+layout_mode = 2
 text = "Pavilion (100%)"
 
 [node name="ConfirmDialog" type="PanelContainer" parent="."]
@@ -237,25 +232,20 @@ offset_bottom = 480.0
 theme_override_styles/panel = SubResource("StyleBox_menu")
 visible = false
 
-[node name="ConfirmLabel" type="Label" parent="ConfirmDialog"]
-offset_left = 32.0
-offset_top = 16.0
-offset_right = 448.0
-offset_bottom = 72.0
+[node name="ConfirmLayout" type="VBoxContainer" parent="ConfirmDialog"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ConfirmLabel" type="Label" parent="ConfirmDialog/ConfirmLayout"]
+layout_mode = 2
 text = "Overwrite?"
 
-[node name="YesOption" type="Label" parent="ConfirmDialog"]
-offset_left = 32.0
-offset_top = 88.0
-offset_right = 448.0
-offset_bottom = 144.0
+[node name="YesOption" type="Label" parent="ConfirmDialog/ConfirmLayout"]
+layout_mode = 2
 text = "Yes"
 
-[node name="NoOption" type="Label" parent="ConfirmDialog"]
-offset_left = 32.0
-offset_top = 144.0
-offset_right = 448.0
-offset_bottom = 200.0
+[node name="NoOption" type="Label" parent="ConfirmDialog/ConfirmLayout"]
+layout_mode = 2
 text = "No"
 
 [node name="Cursor" type="Sprite2D" parent="."]
