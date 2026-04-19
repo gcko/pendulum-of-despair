@@ -60,4 +60,9 @@ func _on_body_exited(body: Node2D) -> void:
 		return
 	if save_point_id == "":
 		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
+		return
 	save_point_exited.emit(save_point_id)

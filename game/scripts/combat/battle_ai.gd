@@ -94,7 +94,7 @@ static func pick_alive_target(state: Node) -> int:
 	for i: int in range(4):
 		if state.get_member(i).get("is_alive", false):
 			alive.append(i)
-	return alive[randi() % alive.size()] if not alive.is_empty() else 0
+	return alive[randi() % alive.size()] if not alive.is_empty() else -1
 
 
 ## Vein Guardian scripted AI (hardcoded, tech debt).

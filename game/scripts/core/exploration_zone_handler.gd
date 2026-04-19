@@ -33,12 +33,15 @@ func process_encounter_step() -> void:
 func trigger_random_encounter() -> void:
 	if _exploration.is_transitioning():
 		return
+	var player: Node2D = _exploration.get_player()
+	if player == null:
+		return
 	var transition: Dictionary = (
 		EncounterHandler
 		. build_random_encounter(
 			_exploration._encounter_config,
 			_exploration._current_map_id,
-			_exploration.get_player().position,
+			player.position,
 		)
 	)
 	if transition.is_empty():

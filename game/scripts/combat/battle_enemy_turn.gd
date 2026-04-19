@@ -216,6 +216,8 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 			)
 	else:
 		var tgt: int = action.get("target_slot", 0)
+		if tgt < 0:
+			return turn_counter
 		var tgt_name: String = _state.get_member(tgt).get("character_data", {}).get("name", "???")
 		_manager.message.emit("%s attacks %s!" % [enemy.get_display_name(), tgt_name])
 		var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, tgt)

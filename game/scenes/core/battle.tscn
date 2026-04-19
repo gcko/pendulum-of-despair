@@ -43,7 +43,8 @@ script = ExtResource("3_state")
 [node name="EnemyArea" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(640, 360)
+position = Vector2(160, 90)
+zoom = Vector2(4, 4)
 
 [node name="BattleUI" type="CanvasLayer" parent="."]
 layer = 10
