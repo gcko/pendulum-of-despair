@@ -27,6 +27,8 @@ var _auto_walk_tween: Tween = null
 var _arrival_tween: Tween = null
 var _in_cutscene: bool = false
 var _cutscene_handler: CutsceneHandler = null
+var _entity_manager: ExplorationEntityManager = null
+var _zone_handler: ExplorationZoneHandler = null
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
 ## Pending cutscene data (set by trigger, consumed after map load).
@@ -87,58 +89,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process_encounter_step() -> void:
-	if _encounter_config.is_empty():
-		return
-	var result: int = EncounterHandler.process_step(
-		_encounter_config, _danger_counter, PartyState.get_active_party()
-	)
-	if result == -1:
-		_trigger_random_encounter()
-	else:
-		_danger_counter = result
-
-
-func _trigger_random_encounter() -> void:
-	if _transitioning:
-		return
-	var transition: Dictionary = EncounterHandler.build_random_encounter(
-		_encounter_config, _current_map_id, _player.position
-	)
-	if transition.is_empty():
-		return
-	_danger_counter = 0
-	_transitioning = true
-	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+	_get_zone_handler().process_encounter_step()
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning or _player == null or _in_cutscene or _in_auto_walk:
-		return
-	if area.get_meta("boss_id", "").is_empty():
-		return
-	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.get_flag(flag):
-		return
-	var req_flag: String = area.get_meta("required_flag", "")
-	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
-		return
-	var eids: Variant = area.get_meta("enemy_ids", [])
-	var enemy_ids: Array = eids if eids is Array else []
-	if enemy_ids.is_empty():
-		return
-	_danger_counter = 0
-	_transitioning = true
-	var transition: Dictionary = {
-		"encounter_group": enemy_ids,
-		"formation_type": "normal",
-		"return_map_id": _current_map_id,
-		"return_position": _player.position,
-		"enemy_act": area.get_meta("enemy_act", "act_i"),
-		"encounter_source": "boss",
-		"is_boss": true,
-		"boss_flag": flag,
-	}
-	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
@@ -278,217 +233,15 @@ func _initialize_from_transition_data() -> void:
 
 
 func _initialize_entities(map_node: Node2D) -> void:
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities == null:
-		return
-	for child: Node in entities.get_children():
-		if not child.has_method("initialize"):
-			continue
-		if child.has_signal("npc_interacted"):
-			if child.get_meta("cutscene_actor", false):
-				if child.has_method("initialize_as_actor"):
-					child.initialize_as_actor()
-				continue
-			var npc_id: String = child.get_meta("npc_id", "")
-			if npc_id.is_empty():
-				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
-				continue
-			child.initialize(npc_id)
-		elif child.has_signal("chest_opened"):
-			var chest_id: String = child.get_meta("chest_id", "")
-			var item_id: String = child.get_meta("item_id", "")
-			if chest_id.is_empty() or item_id.is_empty():
-				push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
-				continue
-			if child.get_meta("is_key_item", false):
-				_key_item_chest_ids[chest_id] = true
-			if child.get_meta("is_equipment", false):
-				_equipment_chest_ids[chest_id] = true
-			var qty: int = child.get_meta("quantity", 1)
-			child.initialize(chest_id, item_id, qty)
-		elif child.has_signal("save_point_activated"):
-			var sp_id: String = child.get_meta("save_point_id", "")
-			if sp_id.is_empty():
-				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
-				continue
-			child.initialize(sp_id)
-		elif child.has_signal("wheel_toggled"):
-			var wid: String = child.get_meta("wheel_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if wid.is_empty():
-				push_error("Exploration: WaterWheel '%s' missing wheel_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: WaterWheel '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(wid, did)
-		elif child.has_signal("zone_refreshed"):
-			var did: String = child.get_meta("dungeon_id", "")
-			var conds: String = child.get_meta("active_when", "")
-			var zt: String = child.get_meta("zone_type", "block")
-			child.initialize(did, conds, zt)
-		elif child.has_signal("plant_restored"):
-			var pid: String = child.get_meta("plant_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if pid.is_empty():
-				push_error("Exploration: SpiritPlant '%s' missing plant_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: SpiritPlant '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(pid, did)
-		elif child.has_signal("zone_damage_dealt"):
-			var zid: String = child.get_meta("zone_id", "")
-			var dpt: int = child.get_meta("damage_per_tick", 8)
-			var ti: float = child.get_meta("tick_interval", 1.0)
-			var se: String = child.get_meta("status_effect", "poison")
-			child.initialize(zid, dpt, ti, se)
-		elif child.has_signal("plate_pressed"):
-			var pid: String = child.get_meta("plate_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if pid.is_empty():
-				push_error("Exploration: PressurePlate '%s' missing plate_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: PressurePlate '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(pid, did)
-		elif child.has_signal("crystal_cleared"):
-			var cid: String = child.get_meta("crystal_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if cid.is_empty():
-				push_error("Exploration: EmberCrystal '%s' missing crystal_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: EmberCrystal '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(cid, did)
-		elif child.has_signal("pitfall_triggered"):
-			var tmid: String = child.get_meta("target_map_id", "")
-			var tsp: String = child.get_meta("target_spawn", "")
-			if tmid.is_empty():
-				push_error("Exploration: PitfallZone '%s' missing target_map_id" % child.name)
-				continue
-			child.initialize(tmid, tsp)
-		elif child.has_signal("triggered"):
-			var tid: String = child.get_meta("trigger_id", "")
-			var cond: String = child.get_meta("condition_flag", "")
-			if tid.is_empty():
-				push_error("Exploration: TriggerZone '%s' missing trigger_id" % child.name)
-				continue
-			child.initialize(tid, cond)
-	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
-	if entities != null:
-		for child: Node in entities.get_children():
-			var vis_flag: String = child.get_meta("visible_when_flag", "")
-			if not vis_flag.is_empty():
-				child.visible = EventFlags.get_flag(vis_flag)
-	# Refresh water zones after all entities are initialized
-	if entities != null:
-		for child: Node in entities.get_children():
-			if child.has_method("refresh"):
-				child.refresh()
-	# Populate entity lookup for cutscene choreography
-	_entities.clear()
-	var entities_node: Node2D = map_node.get_node_or_null("Entities")
-	if entities_node != null:
-		for child: Node in entities_node.get_children():
-			# NPCs store npc_id as metadata (set in editor)
-			var nid: String = child.get_meta("npc_id", "")
-			if nid != "":
-				_entities[nid] = child
-			# Characters use script variable character_id
-			else:
-				var child_character_id: Variant = child.get("character_id")
-				if child_character_id is String and not child_character_id.is_empty():
-					_entities[child_character_id] = child
-	# Register player only if no cutscene actor already owns the same ID
-	if _player != null:
-		var player_character_id: Variant = _player.get("character_id")
-		if player_character_id is String and not player_character_id.is_empty():
-			if not _entities.has(player_character_id):
-				_entities[player_character_id] = _player
+	_get_entity_manager().initialize_entities(map_node)
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities != null:
-		for child: Node in entities.get_children():
-			if child.has_signal("npc_interacted"):
-				if child.get_meta("cutscene_actor", false):
-					continue
-				child.npc_interacted.connect(_on_npc_interacted)
-			if child.has_signal("chest_opened"):
-				child.chest_opened.connect(_on_chest_opened)
-			if child.has_signal("save_point_activated"):
-				child.save_point_activated.connect(_on_save_point_activated)
-			if child.has_signal("save_point_entered"):
-				child.save_point_entered.connect(_on_save_point_entered)
-			if child.has_signal("save_point_exited"):
-				child.save_point_exited.connect(_on_save_point_exited)
-			if child.has_signal("wheel_toggled"):
-				child.wheel_toggled.connect(_on_wheel_toggled)
-			if child.has_signal("spring_filled"):
-				child.spring_filled.connect(_on_spring_filled)
-			if child.has_signal("plant_restored"):
-				child.plant_restored.connect(_on_plant_restored)
-			if child.has_signal("zone_damage_dealt"):
-				child.zone_damage_dealt.connect(_on_zone_damage_dealt)
-			if child.has_signal("plate_pressed"):
-				child.plate_pressed.connect(_on_plate_pressed)
-			if child.has_signal("crystal_cleared"):
-				child.crystal_cleared.connect(_on_crystal_cleared)
-			if child.has_signal("pitfall_triggered"):
-				child.pitfall_triggered.connect(_on_pitfall_triggered)
-			if child.has_signal("triggered"):
-				child.triggered.connect(_on_trigger_fired)
-			if child.has_signal("interaction_message"):
-				child.interaction_message.connect(_on_interaction_message)
-			if child is Area2D and child.has_meta("boss_id"):
-				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
-			elif child is Area2D and child.has_meta("cutscene_scene_id"):
-				child.body_entered.connect(_on_cutscene_trigger_entered.bind(child))
-			elif (
-				child is Area2D
-				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
-			):
-				child.body_entered.connect(_on_dialogue_trigger_entered.bind(child))
-	var transitions: Node = map_node.get_node_or_null("Transitions")
-	if transitions != null:
-		for child: Node in transitions.get_children():
-			if child is Area2D and child.has_meta("target_map"):
-				child.body_entered.connect(_on_transition_body_entered.bind(child))
+	_get_entity_manager().connect_entity_signals(map_node)
 
 
 func _disconnect_entity_signals(map_node: Node2D) -> void:
-	var sigs: Dictionary = {
-		"npc_interacted": _on_npc_interacted,
-		"chest_opened": _on_chest_opened,
-		"save_point_activated": _on_save_point_activated,
-		"save_point_entered": _on_save_point_entered,
-		"save_point_exited": _on_save_point_exited,
-		"wheel_toggled": _on_wheel_toggled,
-		"spring_filled": _on_spring_filled,
-		"plant_restored": _on_plant_restored,
-		"zone_damage_dealt": _on_zone_damage_dealt,
-		"interaction_message": _on_interaction_message,
-		"plate_pressed": _on_plate_pressed,
-		"crystal_cleared": _on_crystal_cleared,
-		"pitfall_triggered": _on_pitfall_triggered,
-		"triggered": _on_trigger_fired,
-	}
-	for group: String in ["Entities", "Transitions"]:
-		var container: Node = map_node.get_node_or_null(group)
-		if container == null:
-			continue
-		for child: Node in container.get_children():
-			for sig: String in sigs:
-				if child.has_signal(sig) and child.is_connected(sig, sigs[sig]):
-					child.disconnect(sig, sigs[sig])
-			if child is Area2D:
-				for conn: Dictionary in child.body_entered.get_connections():
-					if conn["callable"].get_object() == self:
-						child.body_entered.disconnect(conn["callable"])
+	_get_entity_manager().disconnect_entity_signals(map_node)
 
 
 func _position_player_at_spawn(spawn_name: String) -> void:
@@ -573,57 +326,32 @@ func _on_trigger_fired(_trigger_id: String) -> void:
 	pass
 
 
-func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:
-	var status: String = "HIGH" if is_high else "LOW"
-	flash_location_name("Wheel set to %s" % status)
-	if _current_map != null:
-		var entities: Node = _current_map.get_node_or_null("Entities")
-		if entities != null:
-			for child: Node in entities.get_children():
-				if child.has_method("refresh"):
-					child.refresh()
+func _on_wheel_toggled(wheel_id: String, is_high: bool) -> void:
+	_get_zone_handler().on_wheel_toggled(wheel_id, is_high)
 
 
-func _on_plate_pressed(_plate_id: String) -> void:
-	# Refresh water zones — same pattern as wheel_toggled
-	if _current_map != null:
-		var entities: Node = _current_map.get_node_or_null("Entities")
-		if entities != null:
-			for child: Node in entities.get_children():
-				if child.has_method("refresh"):
-					child.refresh()
+func _on_plate_pressed(plate_id: String) -> void:
+	_get_zone_handler().on_plate_pressed(plate_id)
 
 
-func _on_crystal_cleared(_crystal_id: String) -> void:
-	flash_location_name("The crystal springs to life!")
+func _on_crystal_cleared(crystal_id: String) -> void:
+	_get_zone_handler().on_crystal_cleared(crystal_id)
 
 
 func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
-	if _transitioning or _in_cutscene or _in_auto_walk:
-		return
-	flash_location_name("The floor gives way!")
-	_transition_to_map(target_map_id, target_spawn)
+	_get_zone_handler().on_pitfall_triggered(target_map_id, target_spawn)
 
 
 func _on_spring_filled() -> void:
-	flash_location_name("Filled the Spirit Vessel with pure water.")
+	_get_zone_handler().on_spring_filled()
 
 
-func _on_plant_restored(_plant_id: String) -> void:
-	flash_location_name("Passage Opened")
-	var scene_data: Dictionary = DataManager.load_dialogue("water_of_life")
-	var raw_entries: Array = scene_data.get("entries", [])
-	var entries: Array[Dictionary] = []
-	for e: Variant in raw_entries:
-		if e is Dictionary:
-			entries.append(e as Dictionary)
-	if not entries.is_empty() and GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		GameManager.overlay_node.show_dialogue(entries)
+func _on_plant_restored(plant_id: String) -> void:
+	_get_zone_handler().on_plant_restored(plant_id)
 
 
-func _on_zone_damage_dealt(_zone_id: String, total_damage: int) -> void:
-	if total_damage > 0 and _player != null:
-		flash_location_name("-%d HP" % total_damage)
+func _on_zone_damage_dealt(zone_id: String, total_damage: int) -> void:
+	_get_zone_handler().on_zone_damage_dealt(zone_id, total_damage)
 
 
 func _on_interaction_message(text: String) -> void:
@@ -633,7 +361,7 @@ func _on_interaction_message(text: String) -> void:
 func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
-	_trigger_boss_encounter(area)
+	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
@@ -903,6 +631,18 @@ func _get_cutscene_handler() -> CutsceneHandler:
 	if _cutscene_handler == null:
 		_cutscene_handler = CutsceneHandler.new(self)
 	return _cutscene_handler
+
+
+func _get_entity_manager() -> ExplorationEntityManager:
+	if _entity_manager == null:
+		_entity_manager = ExplorationEntityManager.new(self)
+	return _entity_manager
+
+
+func _get_zone_handler() -> ExplorationZoneHandler:
+	if _zone_handler == null:
+		_zone_handler = ExplorationZoneHandler.new(self)
+	return _zone_handler
 
 
 # ---------- Public accessors for delegated handlers ----------

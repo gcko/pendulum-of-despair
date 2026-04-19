@@ -1,43 +1,28 @@
 extends CanvasLayer
-## Save/Load overlay: save point menu, slot display, rest stubs. Modes: SAVE_POINT, SAVE, LOAD.
+## Save/Load overlay: save point menu, slot display, rest stubs.
+## Display rendering delegated to SaveLoadDisplay.
 
 signal save_completed(slot: int)
 signal load_completed(slot: int)
 
-## Operating modes.
 enum Mode { SAVE_POINT, SAVE, LOAD }
-
-## Sub-states for navigation.
 enum SubState { SAVE_POINT_MENU, REST_MENU, SLOT_SELECT, CONFIRM }
-
-## Save point menu options.
 enum SavePointOption { REST, REST_SAVE, SAVE }
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
-
-## Colors from ui-design.md Section 1.4.
-const COLOR_SELECTED: Color = Color("#ffff88")
-const COLOR_NORMAL: Color = Color("#ccddff")
-const COLOR_DISABLED: Color = Color("#666688")
-
-## Rest option item IDs — must match consumables.json.
 const REST_ITEM_IDS: Array[String] = ["sleeping_bag", "tent", "pavilion"]
 
-## Current mode.
 var _mode: Mode = Mode.SAVE
-
-## Current sub-state.
 var _sub_state: SubState = SubState.SLOT_SELECT
-
 var _selected_slot: int = 1
 var _save_point_selection: int = 0
 var _rest_selection: int = 0
-var _confirm_selection: int = 1  # Default to "No"
+var _confirm_selection: int = 1
 var _pending_operation: String = ""
 var _pending_slot: int = -1
 var _copy_source_slot: int = -1
 var _rest_after_save: bool = false
 var _slot_previews: Array[Dictionary] = []
+var _display: SaveLoadDisplay
 
 @onready var _save_point_menu: PanelContainer = $SavePointMenu
 @onready var _save_point_options: Array[Label] = []
@@ -54,6 +39,7 @@ var _slot_previews: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	_display = SaveLoadDisplay.new(self)
 	_save_point_options = [
 		$SavePointMenu/OptionList/RestOption,
 		$SavePointMenu/OptionList/RestSaveOption,
@@ -91,7 +77,7 @@ func open_save_point() -> void:
 	_save_point_selection = 0
 	_save_point_menu.visible = true
 	_slot_container.visible = false
-	_update_save_point_display()
+	_refresh_save_point()
 
 
 func open_save() -> void:
@@ -109,6 +95,15 @@ func open_load() -> void:
 	_show_slots(true)
 
 
+## Delegate so tests can call _update_slot_panel directly.
+func _update_slot_panel(
+	panel: PanelContainer,
+	data: Dictionary,
+	is_auto: bool = false,
+) -> void:
+	_display.update_slot_panel(panel, data, is_auto)
+
+
 func _hide_all() -> void:
 	_save_point_menu.visible = false
 	_slot_container.visible = false
@@ -120,55 +115,38 @@ func _show_slots(show_auto: bool) -> void:
 	_slot_container.visible = true
 	_auto_slot.visible = show_auto
 	_refresh_slot_display()
-	_update_slot_selection()
+	_refresh_slot_selection()
 
 
 func _refresh_slot_display() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
-	for i: int in range(3):
-		_update_slot_panel(_manual_slots[i], _slot_previews[i + 1])
-	if _auto_slot.visible:
-		_update_slot_panel(_auto_slot, _slot_previews[0], true)
+	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
-func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
-	var header: Label = panel.get_node_or_null("SlotLayout/HeaderRow/HeaderLabel")
-	var playtime_lbl: Label = panel.get_node_or_null("SlotLayout/HeaderRow/PlaytimeLabel")
-	var gold_lbl: Label = panel.get_node_or_null("SlotLayout/HeaderRow/GoldLabel")
-	var party: Label = panel.get_node_or_null("SlotLayout/PartyLabel")
-	if header == null or party == null:
-		return
-	var prefix: String = "AUTO - " if is_auto else ""
-	if data.is_empty():
-		header.text = prefix + "Empty"
-		header.modulate = COLOR_DISABLED
-		if playtime_lbl:
-			playtime_lbl.text = ""
-		if gold_lbl:
-			gold_lbl.text = ""
-		party.text = ""
-	elif data.has("error"):
-		header.text = prefix + "Corrupted"
-		header.modulate = Color("#ff4444")
-		if playtime_lbl:
-			playtime_lbl.text = ""
-		if gold_lbl:
-			gold_lbl.text = ""
-		party.text = ""
-	else:
-		var world: Dictionary = data.get("world", {})
-		var raw_loc: String = world.get("current_location", "")
-		var loc: String = raw_loc if raw_loc != "" else "Unknown"
-		var pt: int = data.get("meta", {}).get("playtime", 0)
-		header.text = "%s%s" % [prefix, loc]
-		header.modulate = COLOR_NORMAL
-		if playtime_lbl:
-			playtime_lbl.text = "%d:%02d" % [int(pt / 3600), int((pt % 3600) / 60)]
-			playtime_lbl.modulate = COLOR_NORMAL
-		if gold_lbl:
-			gold_lbl.text = "%dg" % world.get("gold", 0)
-			gold_lbl.modulate = COLOR_NORMAL
-		party.text = Helpers.format_active_party_names(data)
+func _refresh_save_point() -> void:
+	_display.update_save_point_display(_save_point_options, _save_point_selection)
+
+
+func _refresh_rest() -> void:
+	_display.update_rest_display(_rest_options, REST_ITEM_IDS, _rest_selection)
+
+
+func _refresh_confirm() -> void:
+	_display.update_confirm_display(_confirm_yes, _confirm_no, _confirm_selection)
+
+
+func _refresh_slot_selection() -> void:
+	var selectable: bool = _is_slot_selectable(_selected_slot)
+	(
+		_display
+		. update_slot_selection(
+			_auto_slot,
+			_manual_slots,
+			_selected_slot,
+			selectable,
+			_cursor,
+		)
+	)
 
 
 func _select_first_populated_slot() -> void:
@@ -194,11 +172,11 @@ func _is_slot_selectable(slot: int) -> bool:
 func _handle_save_point_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_save_point_selection = (_save_point_selection + 1) % 3
-		_update_save_point_display()
+		_refresh_save_point()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
-		_save_point_selection = (_save_point_selection - 1 + 3) % 3
-		_update_save_point_display()
+		_save_point_selection = ((_save_point_selection - 1 + 3) % 3)
+		_refresh_save_point()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		_confirm_save_point()
@@ -211,40 +189,42 @@ func _handle_save_point_input(event: InputEvent) -> void:
 func _handle_rest_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_rest_selection = (_rest_selection + 1) % 3
-		_update_rest_display()
+		_refresh_rest()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_rest_selection = (_rest_selection - 1 + 3) % 3
-		_update_rest_display()
+		_refresh_rest()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
-		if not _has_rest_item(_rest_selection):
-			get_viewport().set_input_as_handled()
-			return
-		var item_id: String = REST_ITEM_IDS[_rest_selection]
-		# Load item data for restore_percent and clears_status
-		var item_data: Dictionary = _find_consumable(item_id)
-		var restore_pct: float = float(item_data.get("restore_percent", 25)) / 100.0
-		var clears_status: bool = item_data.get("clears_status", false)
-		PartyState.consume_item(item_id)
-		PartyState.rest_party(restore_pct, clears_status)
-		_rest_menu.visible = false
-		if _rest_after_save:
-			_rest_after_save = false
-			_save_point_menu.visible = false
-			_sub_state = SubState.SLOT_SELECT
-			_selected_slot = 1
-			_show_slots(false)
-		else:
-			_sub_state = SubState.SAVE_POINT_MENU
-			_save_point_menu.visible = true
-		get_viewport().set_input_as_handled()
+		_accept_rest_item()
 	elif event.is_action_pressed("ui_cancel"):
 		_rest_menu.visible = false
 		_rest_after_save = false
 		_sub_state = SubState.SAVE_POINT_MENU
 		_save_point_menu.visible = true
 		get_viewport().set_input_as_handled()
+
+
+func _accept_rest_item() -> void:
+	if not _has_rest_item(_rest_selection):
+		get_viewport().set_input_as_handled()
+		return
+	var item_id: String = REST_ITEM_IDS[_rest_selection]
+	var item_data: Dictionary = _find_consumable(item_id)
+	var pct: float = float(item_data.get("restore_percent", 25)) / 100.0
+	PartyState.consume_item(item_id)
+	PartyState.rest_party(pct, item_data.get("clears_status", false))
+	_rest_menu.visible = false
+	if _rest_after_save:
+		_rest_after_save = false
+		_save_point_menu.visible = false
+		_sub_state = SubState.SLOT_SELECT
+		_selected_slot = 1
+		_show_slots(false)
+	else:
+		_sub_state = SubState.SAVE_POINT_MENU
+		_save_point_menu.visible = true
+	get_viewport().set_input_as_handled()
 
 
 func _handle_slot_input(event: InputEvent) -> void:
@@ -265,7 +245,7 @@ func _handle_slot_input(event: InputEvent) -> void:
 func _handle_confirm_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
 		_confirm_selection = 1 - _confirm_selection
-		_update_confirm_display()
+		_refresh_confirm()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
@@ -276,26 +256,29 @@ func _handle_confirm_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+# --- State transitions ---
+
+
 func _confirm_save_point() -> void:
 	match _save_point_selection:
 		SavePointOption.REST:
-			_save_point_menu.visible = false
-			_sub_state = SubState.REST_MENU
-			_rest_selection = 0
-			_rest_menu.visible = true
-			_update_rest_display()
+			_open_rest_menu(false)
 		SavePointOption.REST_SAVE:
-			_save_point_menu.visible = false
-			_rest_after_save = true
-			_sub_state = SubState.REST_MENU
-			_rest_selection = 0
-			_rest_menu.visible = true
-			_update_rest_display()
+			_open_rest_menu(true)
 		SavePointOption.SAVE:
 			_save_point_menu.visible = false
 			_sub_state = SubState.SLOT_SELECT
 			_selected_slot = 1
 			_show_slots(false)
+
+
+func _open_rest_menu(rest_after: bool) -> void:
+	_save_point_menu.visible = false
+	_rest_after_save = rest_after
+	_sub_state = SubState.REST_MENU
+	_rest_selection = 0
+	_rest_menu.visible = true
+	_refresh_rest()
 
 
 func _move_slot_cursor(direction: int) -> void:
@@ -312,14 +295,13 @@ func _move_slot_cursor(direction: int) -> void:
 		attempts += 1
 		if _mode != Mode.LOAD or _is_slot_selectable(new_slot):
 			_selected_slot = new_slot
-			_update_slot_selection()
+			_refresh_slot_selection()
 			return
 
 
 func _confirm_slot() -> void:
 	if not _is_slot_selectable(_selected_slot) and _mode == Mode.LOAD:
 		return
-
 	if _mode == Mode.SAVE or _mode == Mode.SAVE_POINT:
 		var preview: Dictionary = _slot_previews[_selected_slot]
 		if not preview.is_empty() and not preview.has("error"):
@@ -347,7 +329,7 @@ func _show_confirm(message: String, operation: String) -> void:
 	_pending_operation = operation
 	_pending_slot = _selected_slot
 	_confirm_dialog.visible = true
-	_update_confirm_display()
+	_refresh_confirm()
 
 
 func _execute_confirm() -> void:
@@ -363,9 +345,11 @@ func _execute_confirm() -> void:
 	_sub_state = SubState.SLOT_SELECT
 
 
+# --- Operations ---
+
+
 func _do_save(slot: int) -> void:
-	var success: bool = SaveManager.save_game(slot)
-	if success:
+	if SaveManager.save_game(slot):
 		save_completed.emit(slot)
 		_refresh_slot_display()
 
@@ -376,12 +360,15 @@ func _do_load(slot: int) -> void:
 		push_warning("SaveLoad: Failed to load slot %d" % slot)
 		return
 	if not ResourceLoader.exists("res://scenes/core/exploration.tscn"):
-		push_warning("SaveLoad: Exploration scene not found, cannot load")
+		push_warning("SaveLoad: Exploration scene not found")
 		return
 	load_completed.emit(slot)
-	var transition: Dictionary = {"save_slot": slot, "save_data": data}
-	# Defer state change so the overlay (self) isn't queue_free'd mid-call.
-	GameManager.call_deferred("change_core_state", GameManager.CoreState.EXPLORATION, transition)
+	var args: Array = [
+		"change_core_state",
+		GameManager.CoreState.EXPLORATION,
+		{"save_slot": slot, "save_data": data},
+	]
+	GameManager.call_deferred(args[0], args[1], args[2])
 
 
 func _do_delete(slot: int) -> void:
@@ -394,14 +381,7 @@ func _do_copy(source: int, dest: int) -> void:
 	_refresh_slot_display()
 
 
-# --- Display updates ---
-
-
-func _update_save_point_display() -> void:
-	for i: int in range(3):
-		_save_point_options[i].modulate = (
-			COLOR_SELECTED if i == _save_point_selection else COLOR_NORMAL
-		)
+# --- Data helpers ---
 
 
 func _find_consumable(item_id: String) -> Dictionary:
@@ -417,34 +397,3 @@ func _has_rest_item(index: int) -> bool:
 		return false
 	var consumables: Dictionary = PartyState.get_consumables()
 	return consumables.get(REST_ITEM_IDS[index], 0) > 0
-
-
-func _update_rest_display() -> void:
-	var consumables: Dictionary = PartyState.get_consumables()
-	for i: int in range(3):
-		var item_id: String = REST_ITEM_IDS[i]
-		var qty: int = consumables.get(item_id, 0)
-		if qty <= 0:
-			_rest_options[i].modulate = COLOR_DISABLED
-		elif i == _rest_selection:
-			_rest_options[i].modulate = COLOR_SELECTED
-		else:
-			_rest_options[i].modulate = COLOR_NORMAL
-
-
-func _update_confirm_display() -> void:
-	_confirm_yes.modulate = COLOR_SELECTED if _confirm_selection == 0 else COLOR_NORMAL
-	_confirm_no.modulate = COLOR_SELECTED if _confirm_selection == 1 else COLOR_NORMAL
-
-
-func _update_slot_selection() -> void:
-	var has_selectable: bool = _is_slot_selectable(_selected_slot)
-	var panels: Array = [_auto_slot] + _manual_slots
-	for i: int in range(4):
-		var panel: PanelContainer = panels[i]
-		panel.modulate = Color("#ffcc44") if i == _selected_slot and has_selectable else Color.WHITE
-	_cursor.visible = has_selectable
-	if not has_selectable:
-		return
-	var target: PanelContainer = panels[_selected_slot]
-	_cursor.global_position = Vector2(16, target.global_position.y + target.size.y / 2.0)
