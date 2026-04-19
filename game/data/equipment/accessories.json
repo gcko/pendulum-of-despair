@@ -1015,7 +1015,7 @@
         "lira",
         "torren"
       ],
-      "effect": "+5% Storm resist, AGI +2",
+      "effect": "+5% Storm resist, SPD +2",
       "bonus_stats": {"spd": 2},
       "element_resist": "storm",
       "special": null,

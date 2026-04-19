@@ -966,7 +966,7 @@
 				}
 			},
 			"drop": {
-				"item_id": "royal_signet",
+				"item_id": "royal_signet_material",
 				"rate": 25
 			},
 			"locations": [

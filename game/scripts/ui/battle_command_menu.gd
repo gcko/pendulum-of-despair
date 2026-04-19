@@ -78,7 +78,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			handled = _handle_target_input(event)
 
 	if handled:
-		get_viewport().set_input_as_handled()
+		var vp: Viewport = get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 
 
 func _handle_command_input(event: InputEvent) -> bool:

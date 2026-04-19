@@ -642,7 +642,7 @@
 			"crafting_use": "Vendor trash (accessory in Gap 1.5?)"
 		},
 		{
-			"id": "royal_signet",
+			"id": "royal_signet_material",
 			"name": "Royal Signet",
 			"category": "material",
 			"tier": 3,
