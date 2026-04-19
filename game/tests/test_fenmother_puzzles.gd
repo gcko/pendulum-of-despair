@@ -42,6 +42,11 @@ func after_each() -> void:
 	EventFlags.clear_all()
 
 
+func _simulate_cutscene_state() -> void:
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	get_tree().paused = true
+
+
 # --- Puzzle State API ---
 
 
@@ -432,13 +437,12 @@ func test_damage_zone_blocked_during_cutscene() -> void:
 	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
 	add_child_autofree(zone)
 	zone.initialize("test_pool", 10, 1.0, "")
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	_simulate_cutscene_state()
 	var body: CharacterBody2D = CharacterBody2D.new()
 	body.add_to_group("player")
 	add_child_autofree(body)
 	zone._on_body_entered(body)
 	assert_false(zone._player_inside, "Player should not register inside during cutscene")
-	GameManager.current_overlay = GameManager.OverlayState.NONE
 
 
 func test_damage_zone_no_damage_after_exit() -> void:

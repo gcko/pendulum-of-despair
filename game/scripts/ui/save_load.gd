@@ -222,7 +222,10 @@ func _handle_rest_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		var item_id: String = REST_ITEM_IDS[_rest_selection]
-		var restore_pct: float = [0.25, 0.50, 1.0][_rest_selection]
+		# Load item data from consumables.json for restore_percent and clears_status
+		var item_data: Dictionary = _find_consumable(item_id)
+		var restore_pct: float = float(item_data.get("restore_percent", 25)) / 100.0
+		var clears_status: bool = item_data.get("clears_status", false)
 		# Consume the item
 		var consumables: Dictionary = PartyState.get_consumables()
 		var qty: int = consumables.get(item_id, 0)
@@ -243,6 +246,8 @@ func _handle_rest_input(event: InputEvent) -> void:
 			m["current_mp"] = mini(
 				int(m.get("current_mp", max_mp)) + int(max_mp * restore_pct), max_mp
 			)
+			if clears_status:
+				m["status_effects"] = []
 		_rest_menu.visible = false
 		if _rest_after_save:
 			_rest_after_save = false
@@ -416,6 +421,14 @@ func _update_save_point_display() -> void:
 		_save_point_options[i].modulate = (
 			COLOR_SELECTED if i == _save_point_selection else COLOR_NORMAL
 		)
+
+
+func _find_consumable(item_id: String) -> Dictionary:
+	var items: Array = DataManager.load_items("consumables")
+	for item: Variant in items:
+		if item is Dictionary and item.get("id", "") == item_id:
+			return item as Dictionary
+	return {}
 
 
 func _has_rest_item(index: int) -> bool:

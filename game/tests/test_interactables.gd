@@ -28,6 +28,14 @@ func _make_player_body() -> CharacterBody2D:
 	return body
 
 
+## Simulate cutscene overlay state for entity guard tests.
+## Sets current_overlay and pauses tree to match push_overlay behavior
+## without requiring overlay scene loading.
+func _simulate_cutscene_state() -> void:
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	get_tree().paused = true
+
+
 # --- TreasureChest tests ---
 
 
@@ -235,7 +243,7 @@ func test_save_point_blocked_during_cutscene() -> void:
 	var sp: Node = SAVE_SCENE.instantiate()
 	add_child_autofree(sp)
 	sp.initialize("test_sp_cs")
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	_simulate_cutscene_state()
 	watch_signals(sp)
 	sp._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(sp, "save_point_entered", "should not emit during cutscene")
@@ -245,7 +253,7 @@ func test_trigger_blocked_during_cutscene() -> void:
 	var trigger: Node = TRIGGER_SCENE.instantiate()
 	add_child_autofree(trigger)
 	trigger.initialize("cs_trigger", "")
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	_simulate_cutscene_state()
 	watch_signals(trigger)
 	trigger._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(trigger, "triggered", "should not fire during cutscene")
@@ -282,10 +290,20 @@ func test_pitfall_blocked_during_cutscene() -> void:
 	var pitfall: Area2D = preload("res://scenes/entities/pitfall_zone.tscn").instantiate()
 	add_child_autofree(pitfall)
 	pitfall.initialize("dungeons/ember_vein_f2", "from_pitfall")
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	_simulate_cutscene_state()
 	watch_signals(pitfall)
 	pitfall._on_body_entered(_make_player_body())
 	assert_signal_not_emitted(pitfall, "pitfall_triggered", "should not trigger during cutscene")
+
+
+func test_simulate_cutscene_sets_overlay_and_pauses() -> void:
+	_simulate_cutscene_state()
+	assert_eq(
+		GameManager.current_overlay,
+		GameManager.OverlayState.CUTSCENE,
+		"overlay should be CUTSCENE after simulate",
+	)
+	assert_true(get_tree().paused, "tree should be paused after simulate")
 
 
 func test_pop_overlay_silent_skips_signal() -> void:

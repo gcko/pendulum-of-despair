@@ -31,6 +31,11 @@ func _make_mock_body() -> CharacterBody2D:
 	return body
 
 
+func _simulate_cutscene_state() -> void:
+	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	get_tree().paused = true
+
+
 func test_pressure_plate_sets_state_on_press() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autofree(plate)
@@ -73,12 +78,11 @@ func test_pressure_plate_blocked_during_cutscene() -> void:
 	var plate: Node = PLATE_SCENE.instantiate()
 	add_child_autofree(plate)
 	plate.initialize("test_plate", "ember_vein")
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
+	_simulate_cutscene_state()
 	watch_signals(plate)
 	plate._on_body_entered(_make_mock_body())
 	assert_false(plate._is_pressed, "Plate should not press during cutscene")
 	assert_signal_not_emitted(plate, "plate_pressed", "Signal should not emit during cutscene")
-	GameManager.current_overlay = GameManager.OverlayState.NONE
 
 
 func test_mine_water_vial_pickup_adds_key_item() -> void:

@@ -36,7 +36,8 @@ res://
 │   │   ├── menu.tscn
 │   │   ├── dialogue.tscn
 │   │   ├── save_load.tscn
-│   │   └── cutscene.tscn
+│   │   ├── cutscene.tscn
+│   │   └── shop_overlay.tscn
 │   ├── entities/              # Reusable entity prefabs
 │   │   ├── player_character.tscn
 │   │   ├── npc.tscn

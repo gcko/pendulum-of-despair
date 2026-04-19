@@ -180,3 +180,32 @@ func test_load_initial_selection() -> void:
 	# With no saves, should default to slot 1
 	sl.open_load()
 	assert_eq(sl._selected_slot, 1, "should default to slot 1 when no saves")
+
+
+# --- Rest item data-driven effects ---
+
+
+func test_find_consumable_returns_item_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("sleeping_bag")
+	assert_eq(data.get("id", ""), "sleeping_bag", "should find sleeping_bag by id")
+	assert_eq(int(data.get("restore_percent", 0)), 25, "sleeping_bag restores 25%")
+	assert_true(data.get("clears_status", false), "sleeping_bag clears status")
+
+
+func test_find_consumable_tent_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("tent")
+	assert_eq(int(data.get("restore_percent", 0)), 50, "tent restores 50%")
+
+
+func test_find_consumable_pavilion_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("pavilion")
+	assert_eq(int(data.get("restore_percent", 0)), 100, "pavilion restores 100%")
+
+
+func test_find_consumable_missing_returns_empty() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("nonexistent_item")
+	assert_true(data.is_empty(), "missing item should return empty dict")
