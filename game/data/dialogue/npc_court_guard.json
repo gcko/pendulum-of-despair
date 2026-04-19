@@ -1,0 +1,16 @@
+{
+	"scene_id": "npc_court_guard",
+	"entries": [
+		{
+			"id": "npc_court_guard_001",
+			"speaker": "court_guard",
+			"lines": [
+				"The Court Quarter is open to visitors. Keep your business respectful."
+			],
+			"condition": null,
+			"animations": null,
+			"choice": null,
+			"sfx": null
+		}
+	]
+}

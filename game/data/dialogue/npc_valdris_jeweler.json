@@ -1,0 +1,16 @@
+{
+	"scene_id": "npc_valdris_jeweler",
+	"entries": [
+		{
+			"id": "npc_valdris_jeweler_001",
+			"speaker": "valdris_jeweler",
+			"lines": [
+				"Pact-charms, rings, and pendants. Each one carries a piece of the old magic."
+			],
+			"condition": null,
+			"animations": null,
+			"choice": null,
+			"sfx": null
+		}
+	]
+}

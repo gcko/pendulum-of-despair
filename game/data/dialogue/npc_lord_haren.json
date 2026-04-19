@@ -1,0 +1,17 @@
+{
+	"scene_id": "npc_lord_haren",
+	"entries": [
+		{
+			"id": "npc_lord_haren_001",
+			"speaker": "lord_haren",
+			"lines": [
+				"The king values your counsel, Edren.",
+				"But value and action are separated by a council vote."
+			],
+			"condition": null,
+			"animations": null,
+			"choice": null,
+			"sfx": null
+		}
+	]
+}
