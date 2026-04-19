@@ -35,4 +35,4 @@ shape = SubResource("Shape_staircase")
 position = Vector2(160, 128)
 
 [node name="from_downstairs" type="Marker2D" parent="."]
-position = Vector2(160, 128)
+position = Vector2(160, 96)

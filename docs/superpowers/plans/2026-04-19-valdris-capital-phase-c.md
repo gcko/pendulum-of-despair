@@ -380,28 +380,28 @@ Create `game/data/shops/valdris_crown_weaponsmith.json`:
 				"buy_price": 400,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			},
 			{
 				"item_id": "glyph_staff",
 				"buy_price": 500,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			},
 			{
 				"item_id": "pickpockets_blade",
 				"buy_price": 400,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			},
 			{
 				"item_id": "pipe_hammer",
 				"buy_price": 500,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			}
 		]
 	}

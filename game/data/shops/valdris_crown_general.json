@@ -94,21 +94,21 @@
 				"buy_price": 800,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			},
 			{
 				"item_id": "smelling_salts",
 				"buy_price": 75,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			},
 			{
 				"item_id": "chronos_dust",
 				"buy_price": 150,
 				"available_act": 2,
 				"stock_limit": null,
-				"restock_event": "diplomatic_mission_begins"
+				"restock_event": "diplomatic_mission_start"
 			}
 		]
 	}

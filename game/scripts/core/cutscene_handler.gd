@@ -211,7 +211,10 @@ func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var required_multi: String = area.get_meta("required_flags", "")
 	if not required_multi.is_empty():
 		for rf: String in required_multi.split(","):
-			if not EventFlags.get_flag(rf.strip_edges()):
+			var trimmed: String = rf.strip_edges()
+			if trimmed.is_empty():
+				continue
+			if not EventFlags.get_flag(trimmed):
 				return
 	var scene_id: String = area.get_meta("cutscene_scene_id", "")
 	var map_id: String = area.get_meta("cutscene_map_id", "")

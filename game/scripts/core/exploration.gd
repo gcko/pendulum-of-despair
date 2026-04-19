@@ -376,7 +376,10 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	var required_multi: String = area.get_meta("required_flags", "")
 	if not required_multi.is_empty():
 		for rf: String in required_multi.split(","):
-			if not EventFlags.get_flag(rf.strip_edges()):
+			var trimmed: String = rf.strip_edges()
+			if trimmed.is_empty():
+				continue
+			if not EventFlags.get_flag(trimmed):
 				return
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
 	var scene_id: String = area.get_meta("dialogue_scene_id", "")
