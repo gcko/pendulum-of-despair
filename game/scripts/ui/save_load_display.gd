@@ -95,6 +95,21 @@ func update_slot_sel(
 	cursor.global_position = Vector2(16, target.global_position.y + target.size.y / 2.0)
 
 
+func find_consumable(item_id: String) -> Dictionary:
+	var items: Array = DataManager.load_items("consumables")
+	for item: Variant in items:
+		if item is Dictionary and item.get("id", "") == item_id:
+			return item as Dictionary
+	return {}
+
+
+func has_rest_item(index: int, rest_item_ids: Array[String]) -> bool:
+	if index < 0 or index >= rest_item_ids.size():
+		return false
+	var consumables: Dictionary = PartyState.get_consumables()
+	return consumables.get(rest_item_ids[index], 0) > 0
+
+
 # --- Private helpers ---
 
 

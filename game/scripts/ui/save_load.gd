@@ -1,6 +1,5 @@
 extends CanvasLayer
-## Save/Load overlay: save point menu, slot display, rest stubs.
-## Display rendering delegated to SaveLoadDisplay.
+## Save/Load overlay. Display rendering delegated to SaveLoadDisplay.
 
 signal save_completed(slot: int)
 signal load_completed(slot: int)
@@ -94,11 +93,15 @@ func open_load() -> void:
 	_mode = Mode.LOAD
 	_sub_state = SubState.SLOT_SELECT
 	_slot_previews = SaveManager.get_slot_previews()
-	_select_first_populated_slot()
+	_selected_slot = 1
+	for slot: int in [0, 1, 2, 3]:
+		var preview: Dictionary = _slot_previews[slot]
+		if not preview.is_empty() and not preview.has("error"):
+			_selected_slot = slot
+			break
 	_show_slots(true)
 
 
-## Delegate so tests can call _update_slot_panel directly.
 func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
 	_display.update_slot_panel(panel, data, is_auto)
 
@@ -111,21 +114,6 @@ func _show_slots(show_auto: bool) -> void:
 	var ok: bool = _is_slot_selectable(_selected_slot)
 	var d: SaveLoadDisplay = _display
 	d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, ok, _cursor)
-
-
-func _refresh_after_change() -> void:
-	_slot_previews = SaveManager.get_slot_previews()
-	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
-
-
-func _select_first_populated_slot() -> void:
-	if _mode == Mode.LOAD:
-		for slot: int in [0, 1, 2, 3]:
-			var preview: Dictionary = _slot_previews[slot]
-			if not preview.is_empty() and not preview.has("error"):
-				_selected_slot = slot
-				return
-	_selected_slot = 1
 
 
 func _is_slot_selectable(slot: int) -> bool:
@@ -299,9 +287,11 @@ func _execute_confirm() -> void:
 
 
 func _do_save(slot: int) -> void:
-	if SaveManager.save_game(slot):
-		save_completed.emit(slot)
-		_refresh_after_change()
+	if not SaveManager.save_game(slot):
+		return
+	save_completed.emit(slot)
+	_slot_previews = SaveManager.get_slot_previews()
+	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
 func _do_load(slot: int) -> void:
@@ -320,24 +310,19 @@ func _do_load(slot: int) -> void:
 
 func _do_delete(slot: int) -> void:
 	SaveManager.delete_slot(slot)
-	_refresh_after_change()
+	_slot_previews = SaveManager.get_slot_previews()
+	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
 func _do_copy(source: int, dest: int) -> void:
 	SaveManager.copy_slot(source, dest)
-	_refresh_after_change()
+	_slot_previews = SaveManager.get_slot_previews()
+	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
 func _find_consumable(item_id: String) -> Dictionary:
-	var items: Array = DataManager.load_items("consumables")
-	for item: Variant in items:
-		if item is Dictionary and item.get("id", "") == item_id:
-			return item as Dictionary
-	return {}
+	return _display.find_consumable(item_id)
 
 
 func _has_rest_item(index: int) -> bool:
-	if index < 0 or index >= REST_ITEM_IDS.size():
-		return false
-	var consumables: Dictionary = PartyState.get_consumables()
-	return consumables.get(REST_ITEM_IDS[index], 0) > 0
+	return _display.has_rest_item(index, REST_ITEM_IDS)
