@@ -1,3 +1,4 @@
+class_name PlayerCharacter
 extends CharacterBody2D
 ## Player character entity for exploration scenes.
 ##
@@ -187,22 +188,22 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
-	var distance: float = position.distance_to(target)
+	var distance: float = global_position.distance_to(target)
 	if distance < 1.0:
-		position = target.round()
+		global_position = target.round()
 		_play_idle_animation()
 		walk_complete.emit()
 		return
 	if speed <= 0.0:
 		if OS.is_debug_build():
 			push_warning("PlayerCharacter walk_to: non-positive speed %s" % speed)
-		position = target.round()
+		global_position = target.round()
 		_play_idle_animation()
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
 	# Face the walk direction using existing facing_direction var
-	var dir: Vector2 = (target - position).normalized()
+	var dir: Vector2 = (target - global_position).normalized()
 	if abs(dir.x) > abs(dir.y):
 		facing_direction = Vector2.RIGHT if dir.x > 0 else Vector2.LEFT
 	else:
@@ -211,10 +212,10 @@ func walk_to(target: Vector2, speed: float) -> void:
 	_play_walk_animation(facing_direction)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "position", target.round(), duration)
+	_walk_tween.tween_property(self, "global_position", target.round(), duration)
 	_walk_tween.tween_callback(
 		func():
-			position = position.round()
+			global_position = global_position.round()
 			_play_idle_animation()
 			walk_complete.emit()
 	)

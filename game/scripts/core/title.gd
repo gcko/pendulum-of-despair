@@ -110,5 +110,8 @@ func _is_option_disabled(index: int) -> bool:
 		MenuOption.CONTINUE:
 			return not _has_save
 		MenuOption.CONFIG:
-			return true
+			var menu_path: String = GameManager.OVERLAY_SCENES.get(
+				GameManager.OverlayState.MENU, ""
+			)
+			return not ResourceLoader.exists(menu_path)
 	return false

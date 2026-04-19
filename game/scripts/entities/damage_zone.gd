@@ -1,3 +1,4 @@
+class_name DamageZone
 extends Area2D
 ## Poison damage zone — deals periodic damage to party while player stands in it.
 

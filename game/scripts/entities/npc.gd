@@ -1,3 +1,4 @@
+class_name NPC
 extends Area2D
 ## NPC entity with flag-gated dialogue priority stack.
 ##
@@ -168,9 +169,9 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
-	var distance: float = position.distance_to(target)
+	var distance: float = global_position.distance_to(target)
 	if distance < 1.0:
-		position = target.round()
+		global_position = target.round()
 		if _anim_player != null and _anim_player.has_animation("idle"):
 			_anim_player.play("idle")
 		walk_complete.emit()
@@ -178,12 +179,12 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if speed <= 0.0:
 		if OS.is_debug_build():
 			push_warning("NPC %s walk_to: non-positive speed %s" % [name, speed])
-		position = target.round()
+		global_position = target.round()
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
 	# Play walk animation if available
-	var dir: Vector2 = (target - position).normalized()
+	var dir: Vector2 = (target - global_position).normalized()
 	var anim_name: String = "idle"
 	if abs(dir.x) > abs(dir.y):
 		anim_name = "walk_east" if dir.x > 0 else "walk_west"
@@ -193,10 +194,10 @@ func walk_to(target: Vector2, speed: float) -> void:
 		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "position", target.round(), duration)
+	_walk_tween.tween_property(self, "global_position", target.round(), duration)
 	_walk_tween.tween_callback(
 		func():
-			position = position.round()
+			global_position = global_position.round()
 			if _anim_player != null and _anim_player.has_animation("idle"):
 				_anim_player.play("idle")
 			walk_complete.emit()

@@ -1,3 +1,4 @@
+class_name PitfallZone
 extends Area2D
 ## Pitfall zone — triggers map transition when player steps on cracked tile.
 ## One-shot per visit (runtime only, not persisted).

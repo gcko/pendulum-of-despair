@@ -1,3 +1,4 @@
+class_name TriggerZone
 extends Area2D
 ## Invisible trigger zone that fires once when the player enters.
 ##

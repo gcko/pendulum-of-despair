@@ -1,3 +1,4 @@
+class_name EmberCrystal
 extends StaticBody2D
 ## Dying ember crystal — blocks passage until revived with Mine Water Vial.
 

@@ -1,3 +1,4 @@
+class_name WaterZone
 extends StaticBody2D
 ## Water level zone — blocks or reveals paths based on water wheel state.
 

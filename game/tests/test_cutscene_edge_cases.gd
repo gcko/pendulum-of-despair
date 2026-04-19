@@ -2,40 +2,21 @@ extends GutTest
 ## Tests for cutscene failure and edge case paths.
 ## Covers: overlay push failure recovery, missing dialogue data,
 ## and cutscene double-fire prevention.
+##
+## Note: Tests intentionally access internal methods (_start_pending_cutscene,
+## _get_cutscene_handler, etc.) to verify edge case recovery paths that are
+## not reachable through the public API alone.
 
 const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	PartyState.is_at_save_point = false
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	GameManager.cutscene_active = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	PartyState.is_at_save_point = false
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 

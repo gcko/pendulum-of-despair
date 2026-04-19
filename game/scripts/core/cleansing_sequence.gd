@@ -41,6 +41,7 @@ const CLEANSING_WAVES: Array = [
 var _exploration: Exploration
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
+var _damage_zone_scene: PackedScene = null
 
 
 func _init(exploration: Exploration) -> void:
@@ -233,18 +234,20 @@ func _spawn_poison_pools() -> void:
 	var entities: Node = _exploration.get_current_map().get_node_or_null("Entities")
 	if entities == null:
 		return
-	if not ResourceLoader.exists(DAMAGE_ZONE_PATH):
-		push_error("CleansingSequence: Damage zone resource missing: %s" % DAMAGE_ZONE_PATH)
-		return
-	var zone_scene: Resource = load(DAMAGE_ZONE_PATH)
-	if not zone_scene is PackedScene:
-		push_error("CleansingSequence: Failed to load damage zone: %s" % DAMAGE_ZONE_PATH)
-		return
+	if _damage_zone_scene == null:
+		if not ResourceLoader.exists(DAMAGE_ZONE_PATH):
+			push_error("CleansingSequence: Damage zone resource missing: %s" % DAMAGE_ZONE_PATH)
+			return
+		var zone_res: Resource = load(DAMAGE_ZONE_PATH)
+		if not zone_res is PackedScene:
+			push_error("CleansingSequence: Failed to load damage zone: %s" % DAMAGE_ZONE_PATH)
+			return
+		_damage_zone_scene = zone_res as PackedScene
 	var count: int = randi_range(1, 2)
 	for i: int in range(count):
 		if _spawned_pool_count >= 4:
 			break
-		var pool: Area2D = (zone_scene as PackedScene).instantiate()
+		var pool: Area2D = _damage_zone_scene.instantiate()
 		var pos: Vector2 = _random_arena_position()
 		pool.position = pos
 		entities.add_child(pool)

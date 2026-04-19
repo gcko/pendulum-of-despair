@@ -1,3 +1,4 @@
+class_name SavePoint
 extends Area2D
 ## Save point (ley crystal) that emits signals for proximity and interaction.
 ##

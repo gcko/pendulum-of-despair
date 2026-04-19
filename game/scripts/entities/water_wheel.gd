@@ -1,3 +1,4 @@
+class_name WaterWheel
 extends Area2D
 ## Water wheel interactable — toggles HIGH/LOW state for water level puzzles.
 

@@ -459,7 +459,7 @@ the player spawns here and continues exploring toward Thornmere Wilds.
 | File | Action | Description |
 |------|--------|-------------|
 | `game/scenes/maps/cutscenes/dawn_march_trail.tscn` | NEW | Linear trail map (cutscene stage) |
-| `game/data/dialogue/dawn_march.json` | UPDATE | Add commands, title entries, flag_set |
+| `game/data/dialogue/dawn_march.json` | UPDATE | Add commands, title entries (no flag_set on entries -- flag set by trigger) |
 | `game/scripts/core/exploration.gd` | UPDATE | Add cutscene trigger handler + pending state |
 | `game/scenes/maps/overworld.tscn` | UPDATE | Convert trigger metadata, add return spawn |
 | `game/tests/test_dawn_march.gd` | NEW | GUT tests for trigger + data validation |

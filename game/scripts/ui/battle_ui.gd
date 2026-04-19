@@ -132,7 +132,10 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 		return
 	if is_enemy and index < _enemy_positions.size():
 		_target_arrow.visible = true
-		_target_arrow.position = _enemy_positions[index] - Vector2(32, 8)
+		var vp: Viewport = get_viewport()
+		var world_pos: Vector2 = _enemy_positions[index]
+		var arrow_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
+		_target_arrow.position = arrow_pos - Vector2(32, 8)
 	elif not is_enemy:
 		_target_arrow.visible = true
 		_target_arrow.position = Vector2(40, 480 + index * 60)
@@ -199,13 +202,15 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	label.modulate = color
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
-	var pos: Vector2 = _get_target_position(target_id)
-	label.position = pos - Vector2(80, 64)
+	var world_pos: Vector2 = _get_target_position(target_id)
+	var vp: Viewport = get_viewport()
+	var screen_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
+	label.position = screen_pos - Vector2(80, 64)
 	add_child(label)
 
 	var tween: Tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(label, "position:y", pos.y - 128, 0.5)
+	tween.tween_property(label, "position:y", screen_pos.y - 128, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)
 

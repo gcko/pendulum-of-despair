@@ -1,3 +1,4 @@
+class_name Enemy
 extends Node2D
 ## Battle enemy entity with runtime state tracking.
 ##

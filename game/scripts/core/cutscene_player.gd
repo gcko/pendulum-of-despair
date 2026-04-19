@@ -94,9 +94,13 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_in(0.5)
 		await _letterbox.letterbox_in_complete
+		if not is_inside_tree():
+			return
 
 	# Process entries
 	await _process_entries()
+	if not is_inside_tree():
+		return
 
 	# If skip_cutscene() already handled cleanup, bail out
 	if _skipped:
@@ -106,6 +110,8 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_out(0.5)
 		await _letterbox.letterbox_out_complete
+		if not is_inside_tree():
+			return
 
 	# Set skip flag
 	EventFlags.set_flag(skip_flag, true)
@@ -227,6 +233,8 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 			var duration: float = group[0].get("duration", 0.0)
 			if duration > 0.0:
 				await get_tree().create_timer(duration).timeout
+				if not is_inside_tree():
+					return
 		else:
 			var blocking_tasks: Array[Signal] = []
 			for cmd: Dictionary in group:
@@ -235,6 +243,8 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 					blocking_tasks.append(result)
 			for sig: Signal in blocking_tasks:
 				await sig
+				if not is_inside_tree():
+					return
 
 
 func _execute_command(cmd: Dictionary) -> Variant:

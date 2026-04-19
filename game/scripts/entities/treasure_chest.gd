@@ -1,3 +1,4 @@
+class_name TreasureChest
 extends Area2D
 ## Treasure chest that gives an item on first interaction.
 ##

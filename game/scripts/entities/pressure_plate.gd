@@ -1,3 +1,4 @@
+class_name PressurePlate
 extends Area2D
 ## Pressure plate — one-shot toggle on body_entered. Opens connected WaterZone doors.
 

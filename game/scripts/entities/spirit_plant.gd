@@ -1,3 +1,4 @@
+class_name SpiritPlant
 extends StaticBody2D
 ## Spirit-plant — blocks passage until restored with filled Spirit Vessel.
 

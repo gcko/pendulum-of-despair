@@ -5,15 +5,11 @@ extends GutTest
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
+	TestHelpers.teardown_overlay()
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
+	TestHelpers.teardown_overlay()
 
 
 # --- Silent pop recovery: tree must unpause after failed replacement ---

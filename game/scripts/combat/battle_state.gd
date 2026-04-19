@@ -245,6 +245,16 @@ func is_party_wiped() -> bool:
 	return true
 
 
+## Check if a member is a valid heal target (alive for normal heal, any for revive).
+func is_valid_heal_target(slot: int, can_revive: bool = false) -> bool:
+	var m: Dictionary = get_member(slot)
+	if m.is_empty():
+		return false
+	if not m["is_alive"] and not can_revive:
+		return false
+	return true
+
+
 ## Get average SPD of living party members.
 func get_avg_party_spd() -> float:
 	var total: float = 0.0
