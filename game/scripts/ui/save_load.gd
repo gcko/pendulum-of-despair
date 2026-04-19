@@ -55,7 +55,10 @@ func _ready() -> void:
 		$RestMenu/Options/TentOption,
 		$RestMenu/Options/PavilionOption,
 	]
-	_hide_all()
+	_save_point_menu.visible = false
+	_slot_container.visible = false
+	_rest_menu.visible = false
+	_confirm_dialog.visible = false
 	_slot_previews = SaveManager.get_slot_previews()
 
 
@@ -77,7 +80,7 @@ func open_save_point() -> void:
 	_save_point_selection = 0
 	_save_point_menu.visible = true
 	_slot_container.visible = false
-	_refresh_save_point()
+	_display.update_save_point(_save_point_options, _save_point_selection)
 
 
 func open_save() -> void:
@@ -96,57 +99,30 @@ func open_load() -> void:
 
 
 ## Delegate so tests can call _update_slot_panel directly.
-func _update_slot_panel(
-	panel: PanelContainer,
-	data: Dictionary,
-	is_auto: bool = false,
-) -> void:
+func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool = false) -> void:
 	_display.update_slot_panel(panel, data, is_auto)
-
-
-func _hide_all() -> void:
-	_save_point_menu.visible = false
-	_slot_container.visible = false
-	_rest_menu.visible = false
-	_confirm_dialog.visible = false
 
 
 func _show_slots(show_auto: bool) -> void:
 	_slot_container.visible = true
 	_auto_slot.visible = show_auto
-	_refresh_slot_display()
-	_refresh_slot_selection()
-
-
-func _refresh_slot_display() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
 	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
-
-
-func _refresh_save_point() -> void:
-	_display.update_save_point_display(_save_point_options, _save_point_selection)
-
-
-func _refresh_rest() -> void:
-	_display.update_rest_display(_rest_options, REST_ITEM_IDS, _rest_selection)
-
-
-func _refresh_confirm() -> void:
-	_display.update_confirm_display(_confirm_yes, _confirm_no, _confirm_selection)
-
-
-func _refresh_slot_selection() -> void:
-	var selectable: bool = _is_slot_selectable(_selected_slot)
 	(
 		_display
-		. update_slot_selection(
+		. update_slot_sel(
 			_auto_slot,
 			_manual_slots,
 			_selected_slot,
-			selectable,
+			_is_slot_selectable(_selected_slot),
 			_cursor,
 		)
 	)
+
+
+func _refresh_after_change() -> void:
+	_slot_previews = SaveManager.get_slot_previews()
+	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
 func _select_first_populated_slot() -> void:
@@ -166,17 +142,14 @@ func _is_slot_selectable(slot: int) -> bool:
 	return true
 
 
-# --- Input handlers ---
-
-
 func _handle_save_point_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_save_point_selection = (_save_point_selection + 1) % 3
-		_refresh_save_point()
+		_display.update_save_point(_save_point_options, _save_point_selection)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_save_point_selection = ((_save_point_selection - 1 + 3) % 3)
-		_refresh_save_point()
+		_display.update_save_point(_save_point_options, _save_point_selection)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		_confirm_save_point()
@@ -189,11 +162,11 @@ func _handle_save_point_input(event: InputEvent) -> void:
 func _handle_rest_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_rest_selection = (_rest_selection + 1) % 3
-		_refresh_rest()
+		_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_up"):
 		_rest_selection = (_rest_selection - 1 + 3) % 3
-		_refresh_rest()
+		_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		_accept_rest_item()
@@ -245,7 +218,7 @@ func _handle_slot_input(event: InputEvent) -> void:
 func _handle_confirm_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
 		_confirm_selection = 1 - _confirm_selection
-		_refresh_confirm()
+		_display.update_confirm(_confirm_yes, _confirm_no, _confirm_selection)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
@@ -254,9 +227,6 @@ func _handle_confirm_input(event: InputEvent) -> void:
 		_confirm_dialog.visible = false
 		_sub_state = SubState.SLOT_SELECT
 		get_viewport().set_input_as_handled()
-
-
-# --- State transitions ---
 
 
 func _confirm_save_point() -> void:
@@ -278,7 +248,7 @@ func _open_rest_menu(rest_after: bool) -> void:
 	_sub_state = SubState.REST_MENU
 	_rest_selection = 0
 	_rest_menu.visible = true
-	_refresh_rest()
+	_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
 
 
 func _move_slot_cursor(direction: int) -> void:
@@ -295,7 +265,16 @@ func _move_slot_cursor(direction: int) -> void:
 		attempts += 1
 		if _mode != Mode.LOAD or _is_slot_selectable(new_slot):
 			_selected_slot = new_slot
-			_refresh_slot_selection()
+			(
+				_display
+				. update_slot_sel(
+					_auto_slot,
+					_manual_slots,
+					_selected_slot,
+					_is_slot_selectable(_selected_slot),
+					_cursor,
+				)
+			)
 			return
 
 
@@ -329,7 +308,7 @@ func _show_confirm(message: String, operation: String) -> void:
 	_pending_operation = operation
 	_pending_slot = _selected_slot
 	_confirm_dialog.visible = true
-	_refresh_confirm()
+	_display.update_confirm(_confirm_yes, _confirm_no, _confirm_selection)
 
 
 func _execute_confirm() -> void:
@@ -345,13 +324,10 @@ func _execute_confirm() -> void:
 	_sub_state = SubState.SLOT_SELECT
 
 
-# --- Operations ---
-
-
 func _do_save(slot: int) -> void:
 	if SaveManager.save_game(slot):
 		save_completed.emit(slot)
-		_refresh_slot_display()
+		_refresh_after_change()
 
 
 func _do_load(slot: int) -> void:
@@ -363,25 +339,19 @@ func _do_load(slot: int) -> void:
 		push_warning("SaveLoad: Exploration scene not found")
 		return
 	load_completed.emit(slot)
-	var args: Array = [
-		"change_core_state",
-		GameManager.CoreState.EXPLORATION,
-		{"save_slot": slot, "save_data": data},
-	]
-	GameManager.call_deferred(args[0], args[1], args[2])
+	var trans: Dictionary = {"save_slot": slot, "save_data": data}
+	var state: int = GameManager.CoreState.EXPLORATION
+	GameManager.call_deferred("change_core_state", state, trans)
 
 
 func _do_delete(slot: int) -> void:
 	SaveManager.delete_slot(slot)
-	_refresh_slot_display()
+	_refresh_after_change()
 
 
 func _do_copy(source: int, dest: int) -> void:
 	SaveManager.copy_slot(source, dest)
-	_refresh_slot_display()
-
-
-# --- Data helpers ---
+	_refresh_after_change()
 
 
 func _find_consumable(item_id: String) -> Dictionary:

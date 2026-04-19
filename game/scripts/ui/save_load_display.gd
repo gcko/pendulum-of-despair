@@ -49,12 +49,12 @@ func refresh_slot_display(
 		update_slot_panel(auto_slot, slot_previews[0], true)
 
 
-func update_save_point_display(options: Array[Label], selection: int) -> void:
+func update_save_point(options: Array[Label], selection: int) -> void:
 	for i: int in range(3):
 		options[i].modulate = (COLOR_SELECTED if i == selection else COLOR_NORMAL)
 
 
-func update_rest_display(
+func update_rest(
 	rest_options: Array[Label],
 	rest_item_ids: Array[String],
 	selection: int,
@@ -71,12 +71,12 @@ func update_rest_display(
 			rest_options[i].modulate = COLOR_NORMAL
 
 
-func update_confirm_display(confirm_yes: Label, confirm_no: Label, selection: int) -> void:
+func update_confirm(confirm_yes: Label, confirm_no: Label, selection: int) -> void:
 	confirm_yes.modulate = (COLOR_SELECTED if selection == 0 else COLOR_NORMAL)
 	confirm_no.modulate = (COLOR_SELECTED if selection == 1 else COLOR_NORMAL)
 
 
-func update_slot_selection(
+func update_slot_sel(
 	auto_slot: PanelContainer,
 	manual_slots: Array[PanelContainer],
 	selected_slot: int,
