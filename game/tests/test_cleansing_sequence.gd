@@ -11,10 +11,9 @@ const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.ts
 class BadPathSequence:
 	extends CleansingSequence
 
-	const RITUAL_METER_PATH: String = "res://nonexistent/bad_path.tscn"
-
 	func _init(exploration: Exploration) -> void:
 		super._init(exploration)
+		_ritual_meter_path = "res://nonexistent/bad_path.tscn"
 
 
 func before_each() -> void:

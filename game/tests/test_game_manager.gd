@@ -20,14 +20,16 @@ func test_silent_pop_recovery_unpauses_tree() -> void:
 	GameManager.current_overlay = GameManager.OverlayState.NONE
 
 	# Attempt to push an overlay with an invalid scene path.
-	# Save original path, replace with bogus, then restore.
+	# Use Dictionary.merge to temporarily swap the path (avoids const assignment).
 	var original_path: String = GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE]
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = ("res://nonexistent_scene.tscn")
+	GameManager.OVERLAY_SCENES.merge(
+		{GameManager.OverlayState.CUTSCENE: "res://nonexistent_scene.tscn"}, true
+	)
 
 	var result: bool = GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 	# Restore the original path before assertions
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = (original_path)
+	GameManager.OVERLAY_SCENES.merge({GameManager.OverlayState.CUTSCENE: original_path}, true)
 
 	assert_false(result, "push_overlay should return false on missing scene")
 	# Note: without did_silent_pop, this path does NOT unpause because
@@ -47,12 +49,14 @@ func test_force_replace_dialogue_cutscene_failure_recovers() -> void:
 
 	# Now break the CUTSCENE path so the force-replace fails
 	var original_path: String = GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE]
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = ("res://nonexistent_cutscene.tscn")
+	GameManager.OVERLAY_SCENES.merge(
+		{GameManager.OverlayState.CUTSCENE: "res://nonexistent_cutscene.tscn"}, true
+	)
 
 	var result: bool = GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 	# Restore original path before assertions
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = (original_path)
+	GameManager.OVERLAY_SCENES.merge({GameManager.OverlayState.CUTSCENE: original_path}, true)
 
 	assert_false(result, "push_overlay should return false when replacement fails")
 	assert_false(get_tree().paused, "tree must be unpaused after failed force-replace")

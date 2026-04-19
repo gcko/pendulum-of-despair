@@ -1,7 +1,6 @@
 class_name CleansingSequence
 extends RefCounted
 
-const RITUAL_METER_PATH: String = "res://scenes/ui/ritual_meter.tscn"
 const DAMAGE_ZONE_PATH: String = "res://scenes/entities/damage_zone.tscn"
 const WAVE_TURN_THRESHOLDS: Array[int] = [6, 8, 8, 5]
 const BOSS_ARENA_CENTER: Vector2 = Vector2(272, 208)
@@ -38,6 +37,7 @@ const CLEANSING_WAVES: Array = [
 	],
 ]
 
+var _ritual_meter_path: String = "res://scenes/ui/ritual_meter.tscn"
 var _exploration: Exploration
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
@@ -50,12 +50,12 @@ func _init(exploration: Exploration) -> void:
 
 func start(data: Dictionary) -> void:
 	# Validate resources before any state mutation
-	if not ResourceLoader.exists(RITUAL_METER_PATH):
-		push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+	if not ResourceLoader.exists(_ritual_meter_path):
+		push_error("CleansingSequence: Ritual meter resource missing: %s" % _ritual_meter_path)
 		return
-	var meter_res: Resource = load(RITUAL_METER_PATH)
+	var meter_res: Resource = load(_ritual_meter_path)
 	if not meter_res is PackedScene:
-		push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+		push_error("CleansingSequence: Failed to load ritual meter: %s" % _ritual_meter_path)
 		return
 
 	var rewards: Dictionary = {
@@ -98,12 +98,12 @@ func continue_sequence(data: Dictionary) -> void:
 	# Pre-validate ritual meter resource before any state mutation
 	var meter_res: Resource = null
 	if _ritual_meter == null:
-		if not ResourceLoader.exists(RITUAL_METER_PATH):
-			push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+		if not ResourceLoader.exists(_ritual_meter_path):
+			push_error("CleansingSequence: Ritual meter resource missing: %s" % _ritual_meter_path)
 			return
-		meter_res = load(RITUAL_METER_PATH)
+		meter_res = load(_ritual_meter_path)
 		if not meter_res is PackedScene:
-			push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+			push_error("CleansingSequence: Failed to load ritual meter: %s" % _ritual_meter_path)
 			return
 
 	var rewards: Dictionary = {

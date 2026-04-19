@@ -348,9 +348,11 @@ func test_push_overlay_silent_pop_recovery_unpauses() -> void:
 	GameManager.current_overlay = GameManager.OverlayState.DIALOGUE
 	get_tree().paused = true
 	var original: String = GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE]
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = ("res://nonexistent.tscn")
+	GameManager.OVERLAY_SCENES.merge(
+		{GameManager.OverlayState.CUTSCENE: "res://nonexistent.tscn"}, true
+	)
 	var result: bool = GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
-	GameManager.OVERLAY_SCENES[GameManager.OverlayState.CUTSCENE] = original
+	GameManager.OVERLAY_SCENES.merge({GameManager.OverlayState.CUTSCENE: original}, true)
 	assert_false(result, "should fail with nonexistent scene")
 	assert_false(
 		get_tree().paused,
@@ -462,7 +464,7 @@ func test_party_state_rest_party_uses_api() -> void:
 
 func test_cleansing_validates_before_side_effects() -> void:
 	var source: String = CleansingScript.source_code
-	var validate_pos: int = source.find("ResourceLoader.exists(RITUAL_METER_PATH)")
+	var validate_pos: int = source.find("ResourceLoader.exists(_ritual_meter_path)")
 	var side_effect_pos: int = source.find("distribute_battle_rewards")
 	assert_gt(
 		side_effect_pos,
