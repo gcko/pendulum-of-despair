@@ -540,7 +540,7 @@ The calling code must check the return value of `push_overlay()`.
 ```gdscript
 # game_manager.gd (Autoload)
 enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
 
 var current_core: CoreState = CoreState.TITLE
 var current_overlay: OverlayState = OverlayState.NONE

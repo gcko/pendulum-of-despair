@@ -22,6 +22,7 @@ var _boss_flag: String = ""
 var _formation_type: String = "normal"
 var _enemies: Array[Node] = []
 var _battle_active: bool = false
+var _battle_resolved: bool = false
 var _awaiting_input_for: String = ""
 var _earned_xp: int = 0
 var _earned_gold: int = 0
@@ -92,14 +93,14 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not _battle_active:
+	if not _battle_active or _battle_resolved:
 		return
 	if not _atb.should_pause_timers():
 		for i: int in range(4):
 			_state.tick_realtime_statuses(i, delta)
 	_atb.tick(delta)
 	_check_end_conditions()
-	if not _battle_active:
+	if _battle_resolved:
 		return
 	# Process one action per frame to respect ATB pacing.
 	# Party members get input prompt; only one enemy acts per frame.
@@ -121,7 +122,7 @@ func _process(delta: float) -> void:
 			_turn_counter = _enemy_turn.execute(id, _enemies, _is_boss, _turn_counter)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
-			if not _battle_active:
+			if _battle_resolved:
 				return
 			enemy_acted = true
 			break
@@ -315,7 +316,7 @@ func _do_flee() -> void:
 
 func _check_end_conditions() -> void:
 	if _enemies.all(func(e: Node) -> bool: return not e.is_alive):
-		_battle_active = false
+		_battle_resolved = true
 		_awaiting_input_for = ""
 		_earned_drops = []
 		for e: Node in _enemies:

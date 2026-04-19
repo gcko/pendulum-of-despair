@@ -190,7 +190,7 @@ static func get_corrupted_fenmother_action(
 
 ## Pick the living party member with the lowest current HP.
 static func _pick_lowest_hp_target(state: Node) -> int:
-	var best_slot: int = 0
+	var best_slot: int = -1
 	var best_hp: int = 999999
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)
