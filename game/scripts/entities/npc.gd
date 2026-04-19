@@ -77,7 +77,7 @@ func get_current_dialogue() -> Dictionary:
 
 ## Evaluate a condition expression against current game state.
 ## Supports: null (always true), binary flags, numeric comparisons,
-## party_has() (stubbed), and AND combinations.
+## party_has(), and AND combinations.
 func _evaluate_condition(condition: Variant) -> bool:
 	# Null or empty = always true (default/fallback entry).
 	if condition == null or condition == "":
@@ -97,9 +97,13 @@ func _evaluate_condition(condition: Variant) -> bool:
 				return false
 		return true
 
-	# party_has(character) — stubbed until GameManager.party exists.
+	# party_has(character) — check if character is in active party.
 	if cond_str.begins_with("party_has("):
-		return false
+		var end_idx: int = cond_str.find(")")
+		if end_idx < 0:
+			return false
+		var char_id: String = cond_str.substr(10, end_idx - 10).strip_edges()
+		return PartyState.has_member(char_id)
 
 	# Numeric/string comparison operators.
 	var operators: Array[String] = [">=", "<=", "==", "!=", ">", "<"]

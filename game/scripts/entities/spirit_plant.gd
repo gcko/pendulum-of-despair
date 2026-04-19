@@ -19,7 +19,10 @@ func initialize(p_plant_id: String, p_dungeon_id: String) -> void:
 		return
 	plant_id = p_plant_id
 	_dungeon_id = p_dungeon_id
-	is_restored = PartyState.get_puzzle_state(_dungeon_id, "%s_restored" % plant_id, false)
+	var raw_state: Variant = PartyState.get_puzzle_state(
+		_dungeon_id, "%s_restored" % plant_id, false
+	)
+	is_restored = raw_state as bool if raw_state is bool else false
 	_update_visual()
 
 

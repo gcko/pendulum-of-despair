@@ -62,5 +62,8 @@ func _set_open_sprite() -> void:
 		return
 	var sprite: Sprite2D = _sprite if _sprite != null else get_node_or_null("Sprite2D")
 	if sprite != null:
-		var texture: Texture2D = load(open_path)
-		sprite.texture = texture
+		var res: Resource = load(open_path)
+		if res is Texture2D:
+			sprite.texture = res as Texture2D
+		else:
+			push_error("TreasureChest: Failed to load open sprite as Texture2D")
