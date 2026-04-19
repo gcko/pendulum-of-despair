@@ -84,10 +84,10 @@ func _ready() -> void:
 			if not _state.get_member(i).is_empty():
 				_state.swap_row(i)
 	_battle_active = true
-	var ps: Array[Dictionary] = []
+	var ps: Array = []
 	for i: int in range(4):
 		ps.append(_state.get_member(i))
-	var es: Array[Dictionary] = []
+	var es: Array = []
 	var pos: Array[Vector2] = []
 	for e: Node in _enemies:
 		es.append({"name": e.get_display_name(), "hp": e.current_hp})

@@ -76,8 +76,8 @@ func _process(delta: float) -> void:
 
 
 func _on_battle_started(
-	_party: Array[Dictionary],
-	_enemies: Array[Dictionary],
+	_party: Array,
+	_enemies: Array,
 	enemy_positions: Array,
 ) -> void:
 	_enemy_positions = []

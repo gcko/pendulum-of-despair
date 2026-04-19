@@ -51,7 +51,7 @@ func add_combatant(id: String, spd: int, is_enemy: bool) -> void:
 		"spd": spd,
 		"is_enemy": is_enemy,
 		"frozen": false,
-		"status_mods": [] as Array[float],
+		"status_mods": [] as Array,
 	}
 
 
@@ -86,7 +86,7 @@ func set_spd(id: String, spd: int) -> void:
 
 
 ## Set status modifiers (e.g., [1.5] for Haste, [0.5] for Slow).
-func set_status_mods(id: String, mods: Array[float]) -> void:
+func set_status_mods(id: String, mods: Array) -> void:
 	if _combatants.has(id):
 		_combatants[id]["status_mods"] = mods
 
@@ -109,7 +109,7 @@ func set_command_menu_open(is_open: bool) -> void:
 
 ## Calculate fill rate for given SPD, battle speed, and status modifiers.
 ## Public for testing. Used internally by tick().
-func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array[float]) -> int:
+func calculate_fill_rate(spd: int, battle_speed: int, status_mods: Array) -> int:
 	var factor: float = SPEED_FACTORS.get(battle_speed, 0.7)
 	var mod_product: float = 1.0
 	for mod: float in status_mods:
