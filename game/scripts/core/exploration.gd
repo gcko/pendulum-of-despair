@@ -513,6 +513,7 @@ func _start_auto_walk() -> void:
 	_player.set_input_enabled(false)
 	var transitions: Node = _current_map.get_node_or_null("Transitions")
 	if transitions == null:
+		_in_auto_walk = false
 		_player.set_input_enabled(true)
 		return
 	var target_pos: Vector2 = _player.position
@@ -539,7 +540,8 @@ func _end_auto_walk() -> void:
 	_in_auto_walk = false
 	if _player != null:
 		_player.position = _player.position.round()
-		_player.set_input_enabled(true)
+		if not _in_cutscene:
+			_player.set_input_enabled(true)
 
 
 func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:

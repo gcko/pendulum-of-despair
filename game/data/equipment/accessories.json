@@ -1005,8 +1005,8 @@
     },
     {
       "id": "pact_charm_wind",
-      "name": "Pact-Charm (Wind)",
-      "subcategory": "elemental_resist",
+      "name": "Pact-Charm (Storm)",
+      "subcategory": "elemental_resistance",
       "equippable_by": [
         "edren",
         "cael",
@@ -1015,9 +1015,9 @@
         "lira",
         "torren"
       ],
-      "effect": "+5% Wind resist, AGI +2",
+      "effect": "+5% Storm resist, AGI +2",
       "bonus_stats": {"spd": 2},
-      "element_resist": {"wind": 0.05},
+      "element_resist": "storm",
       "special": null,
       "buy_price": 600,
       "sell_price": 300,
@@ -1027,7 +1027,7 @@
     {
       "id": "pact_charm_earth",
       "name": "Pact-Charm (Earth)",
-      "subcategory": "elemental_resist",
+      "subcategory": "elemental_resistance",
       "equippable_by": [
         "edren",
         "cael",
@@ -1038,7 +1038,7 @@
       ],
       "effect": "+5% Earth resist, DEF +2",
       "bonus_stats": {"def": 2},
-      "element_resist": {"earth": 0.05},
+      "element_resist": "earth",
       "special": null,
       "buy_price": 600,
       "sell_price": 300,
@@ -1068,7 +1068,7 @@
     {
       "id": "guardian_pendant",
       "name": "Guardian Pendant",
-      "subcategory": "combat_utility",
+      "subcategory": "combat_mechanic",
       "equippable_by": [
         "edren",
         "cael",
