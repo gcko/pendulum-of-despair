@@ -1,17 +1,59 @@
 {
-	"shop": {
-		"shop_id": "valdris_crown_armorsmith",
-		"town": "valdris_crown",
-		"type": "armorsmith",
-		"markup": 1.0,
-		"inventory": [
-			{"item_id": "iron_helm", "buy_price": 200, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "travelers_hood", "buy_price": 250, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "ember_circlet", "buy_price": 350, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "chain_mail", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "iron_plate", "buy_price": 400, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "silk_robe", "buy_price": 300, "available_act": 1, "stock_limit": null, "restock_event": null},
-			{"item_id": "reinforced_vest", "buy_price": 500, "available_act": 1, "stock_limit": null, "restock_event": null}
-		]
-	}
+  "shop": {
+    "shop_id": "valdris_crown_armorsmith",
+    "town": "valdris_crown",
+    "type": "armorsmith",
+    "markup": 1.0,
+    "inventory": [
+      {
+        "item_id": "iron_helm",
+        "buy_price": 200,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "travelers_hood",
+        "buy_price": 250,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "ember_circlet",
+        "buy_price": 350,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "chain_mail",
+        "buy_price": 300,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "iron_plate",
+        "buy_price": 400,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "silk_robe",
+        "buy_price": 300,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "reinforced_vest",
+        "buy_price": 500,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      }
+    ]
+  }
 }
