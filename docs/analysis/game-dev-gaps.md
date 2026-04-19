@@ -184,7 +184,7 @@ transformation that can be validated line-by-line against source docs.
 **Depends On:** 1.3 (Items & Equipment — item IDs must exist)
 
 **What's Needed:**
-- [x] Per-shop JSON following Section 2.4 schema (24 files, one per shop)
+- [x] Per-shop JSON following Section 2.4 schema (26 files, one per shop; originally 24, +2 from Phase C armorer split + jeweler)
 - [x] All 10 town inventories from economy.md (102 unique item_ids across all shops)
 - [x] Event-gated restock entries (available_act, restock_event)
 - [x] Caldera 150% inflation pricing per economy.md (markup: 1.5 on Company shops)
@@ -192,7 +192,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Verify prices match economy.md tables
 
 **Notes:**
-- 24 shop files (multiple shops per town: general, armorer, specialty, etc.; includes Roothollow herbalist from gap 4.4)
+- 26 shop files (multiple shops per town; includes Roothollow herbalist from gap 4.4 and Phase C additions: weaponsmith, armorsmith, jeweler replacing single armorer)
 - Caldera Company Store/Armorer have markup: 1.5 with pre-multiplied prices
 - Caldera Black Market has markup: 1.0 (standard prices)
 - Interlude scarcity handled at runtime, not in static data
