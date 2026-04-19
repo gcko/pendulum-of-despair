@@ -78,7 +78,7 @@ func handle_input(event: InputEvent) -> bool:
 	if _showing_feedback:
 		if event.is_action_pressed("ui_cancel"):
 			_showing_feedback = false
-			return false
+			return true
 		return true
 	match _state:
 		MagicState.BROWSING:
