@@ -604,6 +604,22 @@
 			"usable_in_battle": false,
 			"usable_in_field": true,
 			"availability": "Chests, hidden passages, quest rewards (10 total)"
+		},
+		{
+			"id": "spirit_incense",
+			"name": "Spirit Incense",
+			"category": "consumable",
+			"subcategory": "mp_restoration",
+			"effect": "restore_mp",
+			"value": 80,
+			"buy_price": null,
+			"sell_price": 200,
+			"stack_limit": 99,
+			"description": "Fragrant incense that restores 80 MP to one ally.",
+			"target": "single_ally",
+			"usable_in_battle": true,
+			"usable_in_field": true,
+			"availability": "Chests, quest rewards"
 		}
 	]
 }
