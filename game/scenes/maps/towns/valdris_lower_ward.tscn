@@ -1,14 +1,24 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
 [ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="2_npc"]
 [ext_resource type="PackedScene" path="res://scenes/entities/save_point.tscn" id="3_save"]
+[ext_resource type="PackedScene" path="res://scenes/entities/treasure_chest.tscn" id="4_chest"]
 
 [sub_resource type="RectangleShape2D" id="Shape_south_gate"]
 size = Vector2(32, 16)
 
 [sub_resource type="RectangleShape2D" id="Shape_tavern_door"]
 size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_citizens_walk_ramp"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_barracks_door"]
+size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_scene_7a_trigger"]
+size = Vector2(64, 16)
 
 [node name="ValdrisLowerWard" type="Node2D"]
 metadata/map_id = "towns/valdris_lower_ward"
@@ -60,6 +70,24 @@ metadata/shop_id = "valdris_crown_weaponsmith"
 position = Vector2(96, 160)
 metadata/save_point_id = "valdris_chapel_save"
 
+[node name="Scene7aTrigger" type="Area2D" parent="Entities"]
+position = Vector2(80, 520)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/flag = "valdris_arrived"
+metadata/required_flag = "maren_warning"
+metadata/dialogue_scene_id = "scene_7a_the_gates"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene7aTrigger"]
+shape = SubResource("Shape_scene_7a_trigger")
+
+[node name="BarracksChest" parent="Entities" instance=ExtResource("4_chest")]
+position = Vector2(304, 64)
+metadata/chest_id = "barracks_phoenix_pinion"
+metadata/item_id = "phoenix_pinion"
+
 [node name="Transitions" type="Node2D" parent="."]
 
 [node name="SouthGate" type="Area2D" parent="Transitions"]
@@ -86,6 +114,30 @@ metadata/target_spawn = "from_exterior"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/TavernDoor"]
 shape = SubResource("Shape_tavern_door")
 
+[node name="CitizensWalkRamp" type="Area2D" parent="Transitions"]
+position = Vector2(320, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_citizens_walk"
+metadata/target_spawn = "from_lower_ward"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/CitizensWalkRamp"]
+shape = SubResource("Shape_citizens_walk_ramp")
+
+[node name="BarracksDoor" type="Area2D" parent="Transitions"]
+position = Vector2(288, 48)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_barracks"
+metadata/target_spawn = "from_exterior"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/BarracksDoor"]
+shape = SubResource("Shape_barracks_door")
+
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(80, 528)
 
@@ -97,3 +149,9 @@ position = Vector2(80, 528)
 
 [node name="from_overworld" type="Marker2D" parent="."]
 position = Vector2(80, 528)
+
+[node name="from_citizens_walk" type="Marker2D" parent="."]
+position = Vector2(320, 32)
+
+[node name="from_barracks" type="Marker2D" parent="."]
+position = Vector2(288, 64)
