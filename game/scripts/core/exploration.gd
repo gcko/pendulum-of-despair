@@ -504,9 +504,9 @@ func _on_interaction_requested(interactable: Node2D) -> void:
 		return
 	var target: Node2D = interactable
 	if not target.has_method("interact"):
-		var p: Node = target.get_parent()
-		if p is Node2D and p.has_method("interact"):
-			target = p as Node2D
+		var owner_node: Node = target.owner
+		if owner_node is Node2D and owner_node.has_method("interact"):
+			target = owner_node as Node2D
 	if target.has_method("interact"):
 		target.interact()
 

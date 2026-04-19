@@ -222,32 +222,12 @@ func _handle_rest_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		var item_id: String = REST_ITEM_IDS[_rest_selection]
-		# Load item data from consumables.json for restore_percent and clears_status
+		# Load item data for restore_percent and clears_status
 		var item_data: Dictionary = _find_consumable(item_id)
 		var restore_pct: float = float(item_data.get("restore_percent", 25)) / 100.0
 		var clears_status: bool = item_data.get("clears_status", false)
-		# Consume the item
-		var consumables: Dictionary = PartyState.get_consumables()
-		var qty: int = consumables.get(item_id, 0)
-		if qty > 0:
-			consumables[item_id] = qty - 1
-			if consumables[item_id] <= 0:
-				consumables.erase(item_id)
-			PartyState.inventory["consumables"] = consumables
-		# Restore HP/MP to all party members
-		for m: Dictionary in PartyState.members:
-			if m.is_empty():
-				continue
-			var max_hp: int = int(m.get("max_hp", m.get("base_stats", {}).get("hp", 1)))
-			var max_mp: int = int(m.get("max_mp", m.get("base_stats", {}).get("mp", 0)))
-			m["current_hp"] = mini(
-				int(m.get("current_hp", max_hp)) + int(max_hp * restore_pct), max_hp
-			)
-			m["current_mp"] = mini(
-				int(m.get("current_mp", max_mp)) + int(max_mp * restore_pct), max_mp
-			)
-			if clears_status:
-				m["status_effects"] = []
+		PartyState.consume_item(item_id)
+		PartyState.rest_party(restore_pct, clears_status)
 		_rest_menu.visible = false
 		if _rest_after_save:
 			_rest_after_save = false
@@ -400,7 +380,8 @@ func _do_load(slot: int) -> void:
 		return
 	load_completed.emit(slot)
 	var transition: Dictionary = {"save_slot": slot, "save_data": data}
-	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, transition)
+	# Defer state change so the overlay (self) isn't queue_free'd mid-call.
+	GameManager.call_deferred("change_core_state", GameManager.CoreState.EXPLORATION, transition)
 
 
 func _do_delete(slot: int) -> void:

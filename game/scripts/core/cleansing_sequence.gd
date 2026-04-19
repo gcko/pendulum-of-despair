@@ -48,6 +48,15 @@ func _init(exploration: Exploration) -> void:
 
 
 func start(data: Dictionary) -> void:
+	# Validate resources before any state mutation
+	if not ResourceLoader.exists(RITUAL_METER_PATH):
+		push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+		return
+	var meter_res: Resource = load(RITUAL_METER_PATH)
+	if not meter_res is PackedScene:
+		push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+		return
+
 	var rewards: Dictionary = {
 		"xp": data.get("earned_xp", 0),
 		"gold": data.get("earned_gold", 0),
@@ -60,17 +69,10 @@ func start(data: Dictionary) -> void:
 	_exploration.load_map(data.get("map_id", "dungeons/fenmothers_hollow_f3"))
 	if _exploration.get_player() != null:
 		var pos: Variant = data.get("position", Vector2(80, 90))
-		_exploration.get_player().position = pos.round() if pos is Vector2 else Vector2(80, 90)
+		_exploration.get_player().position = (pos.round() if pos is Vector2 else Vector2(80, 90))
 	_move_torren_to_reserve()
 	if _ritual_meter != null:
 		_ritual_meter.queue_free()
-	if not ResourceLoader.exists(RITUAL_METER_PATH):
-		push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
-		return
-	var meter_res: Resource = load(RITUAL_METER_PATH)
-	if not meter_res is PackedScene:
-		push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
-		return
 	_ritual_meter = (meter_res as PackedScene).instantiate()
 	_exploration.add_child(_ritual_meter)
 	_ritual_meter.show_meter()
@@ -92,6 +94,17 @@ func start(data: Dictionary) -> void:
 
 func continue_sequence(data: Dictionary) -> void:
 	var wave_num: int = data.get("wave_num", 0)
+	# Pre-validate ritual meter resource before any state mutation
+	var meter_res: Resource = null
+	if _ritual_meter == null:
+		if not ResourceLoader.exists(RITUAL_METER_PATH):
+			push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
+			return
+		meter_res = load(RITUAL_METER_PATH)
+		if not meter_res is PackedScene:
+			push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
+			return
+
 	var rewards: Dictionary = {
 		"xp": data.get("earned_xp", 0),
 		"gold": data.get("earned_gold", 0),
@@ -107,14 +120,7 @@ func continue_sequence(data: Dictionary) -> void:
 		var origin: Variant = data.get("cleansing_origin_position", null)
 		var pos: Vector2 = origin if origin is Vector2 else fallback
 		_exploration.get_player().position = pos.round()
-	if _ritual_meter == null:
-		if not ResourceLoader.exists(RITUAL_METER_PATH):
-			push_error("CleansingSequence: Ritual meter resource missing: %s" % RITUAL_METER_PATH)
-			return
-		var meter_res: Resource = load(RITUAL_METER_PATH)
-		if not meter_res is PackedScene:
-			push_error("CleansingSequence: Failed to load ritual meter: %s" % RITUAL_METER_PATH)
-			return
+	if _ritual_meter == null and meter_res != null:
 		_ritual_meter = (meter_res as PackedScene).instantiate()
 		_exploration.add_child(_ritual_meter)
 		var saved_val: float = data.get("ritual_meter_value", 100.0)
@@ -265,63 +271,12 @@ func _random_arena_position() -> Vector2:
 
 
 func _move_torren_to_reserve() -> void:
-	var torren_idx: int = _find_member_index("torren")
-	if torren_idx < 0:
-		return
-	if not PartyState.formation.has("active") or not PartyState.formation.has("reserve"):
-		push_warning("CleansingSequence: formation missing active/reserve keys")
-		return
-	var active: Array = PartyState.formation["active"]
-	var reserve: Array = PartyState.formation["reserve"]
-	var found: Variant = null
-	for a: Variant in active:
-		if (a is int or a is float) and int(a) == torren_idx:
-			found = a
-			break
-	if found != null:
-		active.erase(found)
-		reserve.append(torren_idx)
+	PartyState.move_member_to_reserve("torren")
 
 
 func _restore_torren_to_active() -> void:
-	var torren_idx: int = _find_member_index("torren")
-	if torren_idx < 0:
-		return
-	if not PartyState.formation.has("active") or not PartyState.formation.has("reserve"):
-		push_warning("CleansingSequence: formation missing active/reserve keys")
-		return
-	var active: Array = PartyState.formation["active"]
-	var reserve: Array = PartyState.formation["reserve"]
-	var found: Variant = null
-	for r: Variant in reserve:
-		if (r is int or r is float) and int(r) == torren_idx:
-			found = r
-			break
-	if found != null:
-		reserve.erase(found)
-		if active.size() < 4:
-			active.append(torren_idx)
-		else:
-			push_warning("CleansingSequence: cannot restore Torren — active party full")
-
-
-func _find_member_index(character_id: String) -> int:
-	for i: int in range(PartyState.members.size()):
-		if PartyState.members[i].get("character_id", "") == character_id:
-			return i
-	return -1
+	PartyState.move_member_to_active("torren")
 
 
 func _revive_fallen_at_quarter_hp() -> void:
-	var active_list: Array = []
-	if PartyState.formation.has("active"):
-		active_list = PartyState.formation["active"]
-	for idx: Variant in active_list:
-		if not (idx is int or idx is float):
-			continue
-		var mi: int = int(idx)
-		if mi < 0 or mi >= PartyState.members.size():
-			continue
-		var m: Dictionary = PartyState.members[mi]
-		if m.get("current_hp", 0) <= 0:
-			m["current_hp"] = maxi(1, floori(float(m.get("max_hp", 1)) / 4.0))
+	PartyState.revive_active_at_fraction(0.25)

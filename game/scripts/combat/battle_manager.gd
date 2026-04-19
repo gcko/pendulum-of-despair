@@ -128,6 +128,7 @@ func _process(delta: float) -> void:
 			if not _battle_active:
 				return
 			enemy_acted = true
+			break
 
 
 func _on_ui_command(command: Dictionary) -> void:
@@ -226,7 +227,13 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		if target_type == "single_ally":
 			var tgt: int = command.get("target", 0)
-			damage_dealt.emit("party_%d" % tgt, _state.heal(tgt, heal_amt), "heal")
+			var tm: Dictionary = _state.get_member(tgt)
+			if tm.is_empty() or not tm.get("is_alive", false):
+				message.emit("No effect!")
+				return true
+			var healed: int = _state.heal(tgt, heal_amt)
+			if healed > 0:
+				damage_dealt.emit("party_%d" % tgt, healed, "heal")
 		else:
 			for i: int in range(4):
 				var m: Dictionary = _state.get_member(i)
@@ -262,8 +269,13 @@ func _do_item(command: Dictionary) -> void:
 	match item.get("effect_type", ""):
 		"restore_hp":
 			var can_revive: bool = item.get("can_revive", false)
+			var tgt_m: Dictionary = _state.get_member(target_slot)
+			if not tgt_m.get("is_alive", true) and not can_revive:
+				message.emit("No effect!")
+				return
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
-			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
+			if actual > 0:
+				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"revive":
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
 			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
@@ -508,6 +520,7 @@ func _setup_party() -> void:
 			_atb.add_combatant("party_%d" % i, effective_spd, false)
 
 
+## @param encounter_group Array[String] — enemy IDs from JSON encounter data.
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 	_vg_last_action = ""
 	_vg_reconstructed = false

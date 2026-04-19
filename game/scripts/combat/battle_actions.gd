@@ -11,7 +11,7 @@ const Enemy = preload("res://scripts/entities/enemy.gd")
 
 ## Map a UI cursor index (0..living-1) to an actual _enemies array index.
 ## Returns -1 if no living enemies.
-static func resolve_enemy_target(cursor: int, enemies: Array) -> int:
+static func resolve_enemy_target(cursor: int, enemies: Array[Node]) -> int:
 	var living: Array[int] = []
 	for i: int in range(enemies.size()):
 		if enemies[i].is_alive and not enemies[i].get_meta("untargetable", false):
@@ -122,7 +122,7 @@ static func execute_enemy_magic(
 	if DamageCalc.roll_evasion(target_spd):
 		return {"hit": false, "damage": 0, "type": "miss"}
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
-	var reduction: Array = []
+	var reduction: Array[float] = []
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)
 	# element_mod 1.0 until party resistances are implemented
@@ -149,7 +149,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = randf() < Enemy.ENEMY_CRIT_RATE
-	var reduction: Array = []
+	var reduction: Array[float] = []
 	var dmg_mult: float = member.get("damage_taken_mult", 1.0)
 	if dmg_mult < 1.0:
 		reduction.append(1.0 - dmg_mult)  # Convert mult to reduction source

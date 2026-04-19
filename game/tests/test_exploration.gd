@@ -387,3 +387,48 @@ func test_ritual_meter_different_saved_values() -> void:
 	if cleansing._ritual_meter != null:
 		cleansing._ritual_meter.queue_free()
 		cleansing._ritual_meter = null
+
+
+# --- Owner-based interaction resolution ---
+
+
+func test_interaction_resolves_via_owner_node() -> void:
+	var exp: Node2D = _create_exploration_test_room()
+	# Build a mock interactable entity: parent has interact(), child does not.
+	var script: GDScript = GDScript.new()
+	script.source_code = (
+		"extends Node2D\n"
+		+ "var interact_called: bool = false\n"
+		+ "func interact() -> void:\n"
+		+ "\tinteract_called = true\n"
+	)
+	script.reload()
+	var parent_entity: Node2D = Node2D.new()
+	parent_entity.set_script(script)
+	add_child_autofree(parent_entity)
+
+	# Create a child Area2D whose owner is the parent entity.
+	var child_area: Area2D = Area2D.new()
+	parent_entity.add_child(child_area)
+	child_area.owner = parent_entity
+
+	# Request interaction on the child — should resolve to parent.
+	exp._on_interaction_requested(child_area)
+	assert_true(
+		parent_entity.interact_called,
+		"interact() should be called on owner node",
+	)
+
+
+func test_interaction_blocked_when_owner_has_no_interact() -> void:
+	var exp: Node2D = _create_exploration_test_room()
+	# Parent without interact(); child without interact().
+	var parent_entity: Node2D = Node2D.new()
+	add_child_autofree(parent_entity)
+	var child_area: Area2D = Area2D.new()
+	parent_entity.add_child(child_area)
+	child_area.owner = parent_entity
+
+	# Should not crash — just silently skip.
+	exp._on_interaction_requested(child_area)
+	pass_test("no crash when owner lacks interact()")

@@ -366,3 +366,238 @@ func test_add_member_negative_level_clamped() -> void:
 	_state.add_member("torren", -5)
 	var m: Dictionary = _state.get_member("torren")
 	assert_eq(m.get("level", 0), 1, "negative level should be clamped to 1")
+
+
+# --- find_member_index ---
+
+
+func test_find_member_index() -> void:
+	_state.initialize_new_game()
+	assert_eq(_state.find_member_index("edren"), 0, "edren is index 0")
+	assert_eq(_state.find_member_index("cael"), 1, "cael is index 1")
+	assert_eq(
+		_state.find_member_index("nonexistent"),
+		-1,
+		"missing character returns -1",
+	)
+
+
+# --- move_member_to_reserve ---
+
+
+func test_move_member_to_reserve() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 1)
+	var active_before: Array = _state.formation["active"].duplicate()
+	assert_true(active_before.has(2), "torren idx in active before move")
+	var ok: bool = _state.move_member_to_reserve("torren")
+	assert_true(ok, "move should succeed")
+	assert_false(
+		_state.formation["active"].has(2),
+		"torren idx removed from active",
+	)
+	assert_true(
+		_state.formation["reserve"].has(2),
+		"torren idx added to reserve",
+	)
+
+
+func test_move_member_to_reserve_not_in_active() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 1)
+	_state.move_member_to_reserve("torren")
+	# Second call should return false — already in reserve
+	var ok: bool = _state.move_member_to_reserve("torren")
+	assert_false(ok, "cannot move if not in active")
+
+
+func test_move_member_to_reserve_unknown_character() -> void:
+	_state.initialize_new_game()
+	var ok: bool = _state.move_member_to_reserve("nobody")
+	assert_false(ok, "unknown character returns false")
+
+
+# --- move_member_to_active ---
+
+
+func test_move_member_to_active() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 1)
+	_state.move_member_to_reserve("torren")
+	assert_true(
+		_state.formation["reserve"].has(2),
+		"torren in reserve before restore",
+	)
+	var ok: bool = _state.move_member_to_active("torren")
+	assert_true(ok, "move should succeed")
+	assert_true(
+		_state.formation["active"].has(2),
+		"torren idx back in active",
+	)
+	assert_false(
+		_state.formation["reserve"].has(2),
+		"torren idx removed from reserve",
+	)
+
+
+func test_move_member_to_active_party_full() -> void:
+	_state.initialize_new_game()
+	_state.add_member("lira", 1)
+	_state.add_member("sable", 1)
+	_state.add_member("torren", 1)
+	# torren overflowed to reserve (active already has 4)
+	assert_true(
+		_state.formation["reserve"].has(4),
+		"torren in reserve",
+	)
+	var ok: bool = _state.move_member_to_active("torren")
+	assert_false(ok, "cannot move to active when full")
+
+
+func test_move_member_to_active_not_in_reserve() -> void:
+	_state.initialize_new_game()
+	# edren is in active, not reserve
+	var ok: bool = _state.move_member_to_active("edren")
+	assert_false(ok, "cannot move if not in reserve")
+
+
+# --- revive_active_at_fraction ---
+
+
+func test_revive_active_at_fraction() -> void:
+	_state.initialize_new_game()
+	# KO both members
+	for m: Dictionary in _state.members:
+		m["current_hp"] = 0
+	_state.revive_active_at_fraction(0.25)
+	for m: Dictionary in _state.members:
+		var cid: String = m.get("character_id", "")
+		var expected: int = maxi(1, floori(float(m.get("max_hp", 1)) * 0.25))
+		assert_eq(
+			m.get("current_hp", 0),
+			expected,
+			"%s should be revived at 25%% max HP" % cid,
+		)
+
+
+func test_revive_active_at_fraction_skips_alive() -> void:
+	_state.initialize_new_game()
+	var edren: Dictionary = _state.get_member("edren")
+	var original_hp: int = edren.get("current_hp", 0)
+	# edren is alive, cael is KO'd
+	var cael: Dictionary = _state.get_member("cael")
+	cael["current_hp"] = 0
+	_state.revive_active_at_fraction(0.25)
+	assert_eq(
+		edren.get("current_hp", 0),
+		original_hp,
+		"alive member HP unchanged",
+	)
+	assert_gt(cael.get("current_hp", 0), 0, "KO'd member revived")
+
+
+func test_revive_active_at_fraction_skips_reserve() -> void:
+	_state.initialize_new_game()
+	_state.add_member("torren", 1)
+	_state.move_member_to_reserve("torren")
+	var torren: Dictionary = _state.get_member("torren")
+	torren["current_hp"] = 0
+	_state.revive_active_at_fraction(0.25)
+	assert_eq(
+		torren.get("current_hp", 0),
+		0,
+		"reserve member should not be revived",
+	)
+
+
+# --- rest_party ---
+
+
+func test_rest_party() -> void:
+	_state.initialize_new_game()
+	for m: Dictionary in _state.members:
+		m["current_hp"] = 1
+		m["current_mp"] = 0
+	_state.rest_party(0.5, false)
+	for m: Dictionary in _state.members:
+		var cid: String = m.get("character_id", "")
+		assert_gt(
+			m.get("current_hp", 0),
+			1,
+			"%s HP should increase" % cid,
+		)
+
+
+func test_rest_party_clears_status() -> void:
+	_state.initialize_new_game()
+	for m: Dictionary in _state.members:
+		m["status_effects"] = ["poison"]
+	_state.rest_party(0.25, true)
+	for m: Dictionary in _state.members:
+		var cid: String = m.get("character_id", "")
+		assert_true(
+			m.get("status_effects", []).is_empty(),
+			"%s status should be cleared" % cid,
+		)
+
+
+func test_rest_party_no_clear_status() -> void:
+	_state.initialize_new_game()
+	for m: Dictionary in _state.members:
+		m["status_effects"] = ["poison"]
+	_state.rest_party(0.25, false)
+	for m: Dictionary in _state.members:
+		assert_false(
+			m.get("status_effects", []).is_empty(),
+			"status should remain when clears_status=false",
+		)
+
+
+func test_rest_party_does_not_exceed_max() -> void:
+	_state.initialize_new_game()
+	# Members start at full HP/MP
+	_state.rest_party(1.0, false)
+	for m: Dictionary in _state.members:
+		var cid: String = m.get("character_id", "")
+		assert_eq(
+			m.get("current_hp", 0),
+			m.get("max_hp", 0),
+			"%s HP should not exceed max" % cid,
+		)
+		assert_eq(
+			m.get("current_mp", 0),
+			m.get("max_mp", 0),
+			"%s MP should not exceed max" % cid,
+		)
+
+
+# --- consume_item ---
+
+
+func test_consume_item() -> void:
+	_state.initialize_new_game()
+	assert_eq(_state.get_consumables().get("potion", 0), 5)
+	var ok: bool = _state.consume_item("potion")
+	assert_true(ok, "consume should succeed")
+	assert_eq(
+		_state.get_consumables().get("potion", 0),
+		4,
+		"quantity decremented",
+	)
+
+
+func test_consume_item_last_one_erases() -> void:
+	_state.initialize_new_game()
+	_state.add_item("ether", 1)
+	var ok: bool = _state.consume_item("ether")
+	assert_true(ok, "consume should succeed")
+	assert_false(
+		_state.get_consumables().has("ether"),
+		"item erased at zero",
+	)
+
+
+func test_consume_item_not_owned() -> void:
+	_state.initialize_new_game()
+	var ok: bool = _state.consume_item("nonexistent_item")
+	assert_false(ok, "cannot consume item not in inventory")

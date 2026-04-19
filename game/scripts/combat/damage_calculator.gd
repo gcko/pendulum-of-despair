@@ -17,6 +17,7 @@ static func roll_variance() -> float:
 ##
 ## Returns: positive int for damage, 0 for immunity.
 ## For absorb (element_mod < 0): returns positive int (healing amount for target).
+## @param reduction_sources Array[float] — multiplicative reduction values (e.g., 0.25 for 25%).
 static func calculate_physical(
 	atk: int,
 	ability_mult: float,
@@ -82,6 +83,8 @@ static func calculate_physical(
 ## Caller must perform hit/evasion checks BEFORE calling this.
 ##
 ## [param buff_mults] — array of multiplicative buffs (e.g., [1.3] for Resonance).
+## @param buff_mults Array[float] — multiplicative buff values.
+## @param reduction_sources Array[float] — multiplicative reduction values.
 ## Returns: positive int for damage, 0 for immunity.
 ## For absorb: returns positive int (healing amount for target).
 static func calculate_magic(

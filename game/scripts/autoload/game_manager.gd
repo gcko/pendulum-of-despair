@@ -81,25 +81,35 @@ func push_overlay(state: OverlayState) -> bool:
 		push_error("GameManager: Invalid overlay state: %s" % state)
 		return false
 
+	var did_silent_pop: bool = false
 	if current_overlay != OverlayState.NONE:
 		if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
-			pop_overlay(true)  # Silent pop — CUTSCENE emission replaces NONE
+			pop_overlay(true)  # Silent pop — CUTSCENE replaces NONE
+			did_silent_pop = true
 		else:
 			return false
 
 	var scene_path: String = OVERLAY_SCENES[state]
 	if not ResourceLoader.exists(scene_path):
 		push_error("GameManager: Overlay scene not found: %s" % scene_path)
+		if did_silent_pop:
+			get_tree().paused = false
+			overlay_state_changed.emit(OverlayState.NONE)
 		return false
 	var resource: Resource = load(scene_path)
 	if not resource is PackedScene:
 		push_error("GameManager: Failed to load overlay: %s" % scene_path)
+		if did_silent_pop:
+			get_tree().paused = false
+			overlay_state_changed.emit(OverlayState.NONE)
 		return false
 
 	var scene: Node = (resource as PackedScene).instantiate()
 	if scene == null:
 		push_error("GameManager: Failed to instantiate overlay: %s" % scene_path)
 		get_tree().paused = false
+		if did_silent_pop:
+			overlay_state_changed.emit(OverlayState.NONE)
 		return false
 	current_overlay = state
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
