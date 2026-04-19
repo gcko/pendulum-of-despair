@@ -481,8 +481,8 @@ Append 4 new entries to the `accessories` array in `game/data/equipment/accessor
 ```json
 {
 	"id": "pact_charm_wind",
-	"name": "Pact-Charm (Wind)",
-	"subcategory": "elemental_resist",
+	"name": "Pact-Charm (Storm)",
+	"subcategory": "elemental_resistance",
 	"equippable_by": ["edren", "cael", "maren", "sable", "lira", "torren"],
 	"effect": "+5% Wind resist, AGI +2",
 	"bonus_stats": {"spd": 2},

@@ -210,7 +210,7 @@ Per city-valdris.md jeweler inventory:
 
 | Item | Price | Notes |
 |------|-------|-------|
-| Pact-Charm (Wind) | 600 | +5% Wind resist, AGI +2 |
+| Pact-Charm (Storm) | 600 | +5% Storm resist, AGI +2 |
 | Pact-Charm (Earth) | 600 | +5% Earth resist, DEF +2 |
 | Silver Ring | 200 | MAG +3 |
 | Guardian Pendant | 400 | Auto-Protect at <25% HP |
