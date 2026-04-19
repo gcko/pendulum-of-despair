@@ -951,7 +951,7 @@ PV = Provisioner                 t  = Thornmere treeline
 |------|--------------|----------------|------------|-------|
 | Steel Longsword | 400 | 480 | ATK +14 | Military issue; solid upgrade from iron |
 | Soldier's Halberd | 550 | 660 | ATK +18 | Two-handed; garrison standard |
-| Composite Shortbow | 450 | 540 | ATK +12, AGI +3 | Ranger-grade; good for Torren |
+| Composite Shortbow | 450 | 540 | ATK +12, SPD +3 | Ranger-grade; good for Torren |
 | Border Mail | 500 | 600 | DEF +12 | Medium armor; the garrison standard |
 | Iron Helm | 200 | 240 | DEF +4 | Head slot |
 | Tower Shield | 350 | 420 | DEF +6, Block 15% | Heavy shield |

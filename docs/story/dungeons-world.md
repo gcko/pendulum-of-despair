@@ -3065,7 +3065,7 @@ This floor is where "The Third Door" sidequest reaches its critical revelation. 
 - `^` (top): Stairs from Floor 5. The first gravity shift hits within three steps of the stairs. The room tilts 90 degrees to the right. What was a wall is now the floor. A treasure chest that appeared to be mounted high on the wall is now sitting on the ground.
 - `%` (two locations): Gravity anomaly zones. Entering these rooms triggers a 180-degree gravity flip (ceiling becomes floor). Treasure and enemies that were previously unreachable (on the ceiling) are now accessible, but the exit door has moved to the ceiling. The player must find a secondary exit or trigger a switch that reverses the flip.
 - `T` (left): Chest -- Gravity Shard (accessory, +12 all stats, negates gravity-based status effects). Only reachable after a gravity flip reverses the room orientation. The chest is on the ceiling when the player first enters the room.
-- `T` (center-right): Chest -- Warp Walker's Boots (accessory, +20 AGI, movement speed increase in gravity-shifted rooms). Found in a room where gravity is perpendicular -- the party walks on the wall. The chest sits on what should be the floor but is currently the far wall.
+- `T` (center-right): Chest -- Warp Walker's Boots (accessory, +20 SPD, movement speed increase in gravity-shifted rooms). Found in a room where gravity is perpendicular -- the party walks on the wall. The chest sits on what should be the floor but is currently the far wall.
 - `@` (center-left): Echo Vision tile. Vision: The builders walk through this space without disorientation. They step from floor to wall to ceiling as naturally as walking down a hallway. Children run along the walls, laughing. The gravity warping is not a hazard -- it is architecture. They designed it. They lived in it.
 - `@` (lower-center): Echo Vision tile. The final vision before the Wellspring. All builders gathered in a large chamber (the Wellspring, visible below). They are solemn. One builder holds a geometric crystal -- a nexus key. They begin to descend.
 - `!` (three zones): Encounter zones. The enemies here are the strongest yet: Ley-Warped Constructs that exploit the gravity anomalies (they attack from walls and ceilings, requiring the party to adapt positioning). Warp Sentinels that can flip the room's gravity mid-combat (disorienting, rearranges party formation).
@@ -3131,7 +3131,7 @@ Gravity is stable here. The warping from Floor 6 is gone -- the Wellspring's ley
 - `!` (one zone): A single encounter zone in the approach corridor. The enemies are Ley-Born Echoes -- impressions of the builders given temporary form by the nexus's energy. They do not attack with malice. They test, like the Archive's guardians. Defeating them releases a pulse of amber light that feeds back into the nexus.
 - `S` (center): Save point. The nexus crystal itself serves as the save point -- the most powerful ley crystal in the dungeon. Resting here restores the party fully (unique save point effect, only location in the game with this property).
 - `B` (bottom): **Boss arena: The Wellspring Guardian.** (See boss description below.)
-- `T` (behind boss): Chest -- Nexus Crest (accessory, ultimate tier: +25 ATK, +25 DEF, +25 MAG, +25 AGI. Grants "Builder's Resonance" passive: all ley-based damage is halved, all healing received is doubled). The most powerful non-post-game accessory. It is the builders' final gift.
+- `T` (behind boss): Chest -- Nexus Crest (accessory, ultimate tier: +25 ATK, +25 DEF, +25 MAG, +25 SPD. Grants "Builder's Resonance" passive: all ley-based damage is halved, all healing received is doubled). The most powerful non-post-game accessory. It is the builders' final gift.
 - `X` (bottom): Exit. A spirit-path activates after the boss is defeated -- identical to the one in the Archive of Ages. It deposits the party at Aelhart's well. The well is flowing. Clear water, cold and bright, pouring from the stone for the first time in a generation. Villagers are gathering. No one understands. Edren does.
 
 ### Boss: The Wellspring Guardian
@@ -3234,7 +3234,7 @@ The Dry Well's enemies follow a progression that mirrors the dungeon's narrative
 | Harmonic Shard Fragment | Floor 5, chest | Key item (combines with sidequest reward) |
 | Keeper's Index | Floor 5, mini-boss drop | Key item (complete pictograph dictionary) |
 | Gravity Shard | Floor 6, chest | Accessory (+12 all stats) |
-| Warp Walker's Boots | Floor 6, chest | Accessory (+20 AGI) |
+| Warp Walker's Boots | Floor 6, chest | Accessory (+20 SPD) |
 | Wellspring's Tear | Floor 7, chest | Consumable (full party restore, unique) |
 | Builder's Testament | Floor 7, tablet | Lore item |
 | Nexus Crest | Floor 7, post-boss | Accessory (+25 all stats, Builder's Resonance passive) |
