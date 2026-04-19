@@ -108,16 +108,9 @@ func _show_slots(show_auto: bool) -> void:
 	_auto_slot.visible = show_auto
 	_slot_previews = SaveManager.get_slot_previews()
 	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
-	(
-		_display
-		. update_slot_sel(
-			_auto_slot,
-			_manual_slots,
-			_selected_slot,
-			_is_slot_selectable(_selected_slot),
-			_cursor,
-		)
-	)
+	var ok: bool = _is_slot_selectable(_selected_slot)
+	var d: SaveLoadDisplay = _display
+	d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, ok, _cursor)
 
 
 func _refresh_after_change() -> void:
@@ -212,7 +205,13 @@ func _handle_slot_input(event: InputEvent) -> void:
 		_confirm_slot()
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
-		_cancel_from_slots()
+		_cursor.visible = false
+		if _mode == Mode.SAVE_POINT:
+			_slot_container.visible = false
+			_sub_state = SubState.SAVE_POINT_MENU
+			_save_point_menu.visible = true
+		else:
+			GameManager.pop_overlay()
 
 
 func _handle_confirm_input(event: InputEvent) -> void:
@@ -230,25 +229,18 @@ func _handle_confirm_input(event: InputEvent) -> void:
 
 
 func _confirm_save_point() -> void:
+	_save_point_menu.visible = false
 	match _save_point_selection:
-		SavePointOption.REST:
-			_open_rest_menu(false)
-		SavePointOption.REST_SAVE:
-			_open_rest_menu(true)
+		SavePointOption.REST, SavePointOption.REST_SAVE:
+			_rest_after_save = _save_point_selection == SavePointOption.REST_SAVE
+			_sub_state = SubState.REST_MENU
+			_rest_selection = 0
+			_rest_menu.visible = true
+			_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
 		SavePointOption.SAVE:
-			_save_point_menu.visible = false
 			_sub_state = SubState.SLOT_SELECT
 			_selected_slot = 1
 			_show_slots(false)
-
-
-func _open_rest_menu(rest_after: bool) -> void:
-	_save_point_menu.visible = false
-	_rest_after_save = rest_after
-	_sub_state = SubState.REST_MENU
-	_rest_selection = 0
-	_rest_menu.visible = true
-	_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
 
 
 func _move_slot_cursor(direction: int) -> void:
@@ -265,16 +257,8 @@ func _move_slot_cursor(direction: int) -> void:
 		attempts += 1
 		if _mode != Mode.LOAD or _is_slot_selectable(new_slot):
 			_selected_slot = new_slot
-			(
-				_display
-				. update_slot_sel(
-					_auto_slot,
-					_manual_slots,
-					_selected_slot,
-					_is_slot_selectable(_selected_slot),
-					_cursor,
-				)
-			)
+			var d: SaveLoadDisplay = _display
+			d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, true, _cursor)
 			return
 
 
@@ -289,16 +273,6 @@ func _confirm_slot() -> void:
 			_do_save(_selected_slot)
 	elif _mode == Mode.LOAD:
 		_do_load(_selected_slot)
-
-
-func _cancel_from_slots() -> void:
-	_cursor.visible = false
-	if _mode == Mode.SAVE_POINT:
-		_slot_container.visible = false
-		_sub_state = SubState.SAVE_POINT_MENU
-		_save_point_menu.visible = true
-	else:
-		GameManager.pop_overlay()
 
 
 func _show_confirm(message: String, operation: String) -> void:
