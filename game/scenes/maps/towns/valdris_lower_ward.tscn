@@ -139,16 +139,16 @@ metadata/target_spawn = "from_exterior"
 shape = SubResource("Shape_barracks_door")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(80, 528)
+position = Vector2(80, 496)
 
 [node name="from_tavern" type="Marker2D" parent="."]
 position = Vector2(512, 288)
 
 [node name="from_test_room" type="Marker2D" parent="."]
-position = Vector2(80, 528)
+position = Vector2(80, 496)
 
 [node name="from_overworld" type="Marker2D" parent="."]
-position = Vector2(80, 528)
+position = Vector2(80, 496)
 
 [node name="from_citizens_walk" type="Marker2D" parent="."]
 position = Vector2(320, 32)

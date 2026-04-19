@@ -260,6 +260,11 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | 4 | `torren_joined` | Party reaches Roothollow; Torren agrees to guide them to Maren | Torren joins the party. Deep Path route to Maren's Refuge opens. Vessa's dialogue changes to warn about the Pendulum. | Torren (joins), Vessa (new dialogue) |
 | 5 | `maren_warning` | Maren examines the Pendulum at her refuge | Maren joins the party. Return Road to Valdris Crown opens. Maren's Refuge becomes a revisitable rest point. The party decides to bring the Pendulum to the capital. | Maren (joins) |
 | 6 | `pendulum_to_capital` | Party arrives at Valdris Crown with the Pendulum | Act I ends. Act II begins. King Aldren appears in the throne hall. Cael's quarters become restricted. Multiple NPC dialogues update (Aldis assigned to research, Cordwyn on alert). Court Quarter political NPCs activate. | King Aldren, Scholar Aldis, Dame Cordwyn, Lord Chancellor Haren |
+| 6a | `valdris_arrived` | Scene 7a: Party reaches Valdris Lower Ward gates | Implementation-level ordering flag. Gates entry to the Throne Hall (court quarter NorthEntrance transition). Gate guard dialogue fires. Must have `maren_warning` set. | Gate guard |
+| 6b | `pendulum_presented` | Scene 7b: Party presents the Pendulum in the Throne Hall | Implementation-level ordering flag. Unlocks Scene 7c sidequests (Aldis, Cordwyn, Renn). NPC ambient dialogues update to post-presentation variants. | King Aldren, Lord Haren |
+| 6c | `scene_7c_aldis` | Scene 7c: Party speaks with Scholar Aldis at the Royal Library | Implementation-level ordering flag. One of three sidequests required for Scene 7d. | Scholar Aldis |
+| 6d | `scene_7c_cordwyn` | Scene 7c: Party speaks with Dame Cordwyn at the Barracks | Implementation-level ordering flag. One of three sidequests required for Scene 7d. | Dame Cordwyn |
+| 6e | `scene_7c_renn` | Scene 7c: Party speaks with Renn at the Anchor & Oar | Implementation-level ordering flag. One of three sidequests required for Scene 7d. | Renn |
 
 ### Act II Flags
 
