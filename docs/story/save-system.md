@@ -94,7 +94,7 @@ slot.
 
 ## 3. Save Data Schema
 
-Nine top-level groups. All IDs are strings. Quantities are integers.
+Ten top-level groups. All IDs are strings. Quantities are integers.
 
 ### 3.1 party
 
@@ -153,7 +153,20 @@ inventory: {
 }
 ```
 
-### 3.4 crafting
+### 3.4 owned_equipment
+
+Tracks all equipment the party has ever acquired, including currently
+equipped pieces. Used by the equipment screen to show the full
+collection and by shop logic to prevent duplicate purchases.
+
+```
+owned_equipment: {
+  itemId: string,
+  qty:    integer
+}[]
+```
+
+### 3.5 crafting
 
 Arcanite Forging system state. See [crafting.md](crafting.md) for the
 full interaction model.
@@ -167,7 +180,7 @@ crafting: {
 }
 ```
 
-### 3.5 leyCrystals
+### 3.6 leyCrystals
 
 Crystal collection and progression. Assignment to characters is stored
 in `party[].equipment.leyCrystal`.
@@ -182,7 +195,7 @@ leyCrystals: {
 }
 ```
 
-### 3.6 world
+### 3.7 world
 
 World state, progression flags, and player location.
 
@@ -200,7 +213,7 @@ world: {
 }
 ```
 
-### 3.7 quests
+### 3.8 quests
 
 Quest tracking. Active quests carry a step counter for multi-stage
 progression.
@@ -212,7 +225,7 @@ quests: {
 }
 ```
 
-### 3.8 completion
+### 3.9 completion
 
 Post-game completion tracking (4 categories per
 [postgame.md](postgame.md)). Displayed at Pendulum tavern via Sable.
@@ -226,7 +239,7 @@ completion: {
 }
 ```
 
-### 3.9 meta
+### 3.10 meta
 
 Save file metadata. Not game state — used by the save/load system
 itself.

@@ -2,11 +2,21 @@ extends GutTest
 
 
 func before_each() -> void:
+	DataManager.clear_cache()
 	EventFlags.clear_all()
+	PartyState.members.clear()
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.owned_equipment = []
+	PartyState.gold = 0
 
 
 func after_each() -> void:
+	DataManager.clear_cache()
 	EventFlags.clear_all()
+	PartyState.members.clear()
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.owned_equipment = []
+	PartyState.gold = 0
 
 
 func test_scene_7a_requires_maren_warning() -> void:

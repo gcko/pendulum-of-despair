@@ -118,7 +118,8 @@ func _process(delta: float) -> void:
 			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
 			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
 			break
-		elif id.begins_with("enemy_") and not enemy_acted:
+		# Fix: skip enemy processing while a party member is awaiting input
+		elif id.begins_with("enemy_") and not enemy_acted and _awaiting_input_for == "":
 			_turn_counter = _enemy_turn.execute(id, _enemies, _is_boss, _turn_counter)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
@@ -225,9 +226,11 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		if target_type == "single_ally":
 			var tgt: int = command.get("target", 0)
 			var tm: Dictionary = _state.get_member(tgt)
+			# Fix: reject non-revive heals on KO'd members — refund MP, re-prompt
 			if tm.is_empty() or not tm.get("is_alive", false):
+				_state.restore_mp(slot, spell.get("mp_cost", 0))
 				message.emit("No effect!")
-				return true
+				return false
 			var healed: int = _state.heal(tgt, heal_amt)
 			if healed > 0:
 				damage_dealt.emit("party_%d" % tgt, healed, "heal")
@@ -235,7 +238,10 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 			for i: int in range(4):
 				var m: Dictionary = _state.get_member(i)
 				if not m.is_empty() and m.get("is_alive", false):
-					damage_dealt.emit("party_%d" % i, _state.heal(i, heal_amt), "heal")
+					# Fix: only show heal popup if healed > 0 (skip full-HP members)
+					var healed_amt: int = _state.heal(i, heal_amt)
+					if healed_amt > 0:
+						damage_dealt.emit("party_%d" % i, healed_amt, "heal")
 	return true
 
 

@@ -6,50 +6,29 @@
     "markup": 1.0,
     "inventory": [
       {
-        "item_id": "power_ring",
+        "item_id": "starbloom_tea",
+        "buy_price": 150,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "whetstone",
+        "buy_price": 100,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "spirit_incense",
+        "buy_price": 200,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "waystone",
         "buy_price": 300,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "iron_bracelet",
-        "buy_price": 300,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "magic_earring",
-        "buy_price": 400,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "warding_charm",
-        "buy_price": 400,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "sprint_shoes",
-        "buy_price": 500,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "lucky_coin",
-        "buy_price": 500,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "antidote_charm",
-        "buy_price": 600,
         "available_act": 1,
         "stock_limit": null,
         "restock_event": null

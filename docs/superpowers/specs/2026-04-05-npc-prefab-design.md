@@ -21,7 +21,7 @@ The exploration scene needs NPC entities that display on maps, respond to player
 - Dialogue overlay rendering → gap 3.5
 - Emotion animation playback during dialogue → gap 3.5
 - Choice consequence handling → gap 3.5
-- `party_has()` runtime check → stubbed until GameManager.party exists (gap 3.2)
+- `party_has()` runtime check → implemented via PartyState.has_member()
 
 ---
 
@@ -220,7 +220,7 @@ Tests use `after_each()` with `EventFlags.clear_all()` per PR #117 pattern.
 - [ ] interact() returns early if uninitialized
 - [ ] get_current_dialogue() resolves priority stack correctly
 - [ ] _evaluate_condition() handles null, empty, binary flag, AND
-- [ ] party_has() stubbed to return false
+- [ ] party_has() implemented via PartyState.has_member()
 - [ ] All code passes gdlint + gdformat
 - [ ] load_steps in .tscn matches ext_resource + sub_resource count
 - [ ] Tests cover every if-branch (dual-pass verified)

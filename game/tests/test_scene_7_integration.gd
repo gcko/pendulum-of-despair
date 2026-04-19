@@ -2,13 +2,21 @@ extends GutTest
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
 	DataManager.clear_cache()
+	EventFlags.clear_all()
+	PartyState.members.clear()
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.owned_equipment = []
+	PartyState.gold = 0
 
 
 func after_each() -> void:
-	EventFlags.clear_all()
 	DataManager.clear_cache()
+	EventFlags.clear_all()
+	PartyState.members.clear()
+	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
+	PartyState.owned_equipment = []
+	PartyState.gold = 0
 
 
 func _read_file(path: String) -> String:

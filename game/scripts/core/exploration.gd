@@ -737,6 +737,42 @@ func transition_to_map(target_map: String, target_spawn: String) -> void:
 	_transition_to_map(target_map, target_spawn)
 
 
+func get_current_map_id() -> String:
+	return _current_map_id
+
+
+func get_encounter_config() -> Dictionary:
+	return _encounter_config
+
+
+func get_danger_counter() -> int:
+	return _danger_counter
+
+
+func set_danger_counter(value: int) -> void:
+	_danger_counter = value
+
+
+func clear_entities() -> void:
+	_entities.clear()
+
+
+func set_entity(entity_id: String, entity: Node) -> void:
+	_entities[entity_id] = entity
+
+
+func has_entity(entity_id: String) -> bool:
+	return _entities.has(entity_id)
+
+
+func register_key_item_chest(chest_id: String) -> void:
+	_key_item_chest_ids[chest_id] = true
+
+
+func register_equipment_chest(chest_id: String) -> void:
+	_equipment_chest_ids[chest_id] = true
+
+
 # ---------- Crystal XP distribution ----------
 
 

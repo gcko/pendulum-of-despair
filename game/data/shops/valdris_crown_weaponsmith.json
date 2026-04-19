@@ -13,13 +13,6 @@
         "restock_event": null
       },
       {
-        "item_id": "knights_edge",
-        "buy_price": 500,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
         "item_id": "ley_wand",
         "buy_price": 250,
         "available_act": 1,
@@ -50,27 +43,6 @@
       {
         "item_id": "commanders_blade",
         "buy_price": 400,
-        "available_act": 2,
-        "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
-      },
-      {
-        "item_id": "glyph_staff",
-        "buy_price": 500,
-        "available_act": 2,
-        "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
-      },
-      {
-        "item_id": "pickpockets_blade",
-        "buy_price": 400,
-        "available_act": 2,
-        "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
-      },
-      {
-        "item_id": "pipe_hammer",
-        "buy_price": 500,
         "available_act": 2,
         "stock_limit": null,
         "restock_event": "diplomatic_mission_start"

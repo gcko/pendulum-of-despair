@@ -322,11 +322,12 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Iron Longsword | 300 | 360 | ATK +12 | Edren's first upgrade |
-| Steel Halberd | 450 | 540 | ATK +16 | Two-handed |
-| Ley-Touched Dagger | 500 | 600 | ATK +8, MAG +4 | Faint ley glow; Sable or Cael |
-| Reinforced Shortbow | 350 | 420 | ATK +10, AGI +2 | Torren's weapon class |
-| Knight's Blade | -- | 800 | ATK +22 | Available Act II only |
+| Valdris Blade | 300 | 360 | ATK +10 | Edren's first upgrade |
+| Ley Wand | 250 | 300 | ATK +6, MAG +5 | Maren's staff |
+| Stiletto | 250 | 300 | ATK +8, SPD +2 | Sable's dagger |
+| Iron Mallet | 300 | 360 | ATK +10 | Lira's hammer |
+| Iron Lance | 250 | 300 | ATK +8 | Torren's spear |
+| Commander's Blade | -- | 400 | ATK +12 | Act II; restock: diplomatic_mission_start |
 | Interlude: Black Market Blade | -- | -- | ATK +28, LUCK -5 | Sold by Renn's contact, 1500g |
 
 *Interlude:* Shop is closed. Renn sells a limited selection from the Anchor & Oar at 200% markup. One black market weapon available.
@@ -335,11 +336,11 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Chain Hauberk | 400 | 480 | DEF +10 | Standard medium armor |
-| Ley-Woven Robe | 550 | 660 | DEF +5, MAG DEF +12 | Mage armor |
-| Iron Buckler | 200 | 240 | DEF +4, Block 10% | Shield |
-| Knight's Plate | -- | 1000 | DEF +18 | Act II only; heavy |
-| Highland Cloak | 300 | 360 | MAG DEF +6, resist Cold | Valdris specialty |
+| Iron Helm | 200 | 240 | DEF +6, MDEF +3 | Head armor |
+| Traveler's Hood | 250 | 300 | DEF +5, MDEF +5 | Head armor |
+| Chain Mail | 300 | 360 | DEF +10, MDEF +5 | Body armor |
+| Iron Plate | 400 | 480 | DEF +15, MDEF +3 | Body armor; heavy |
+| Silk Robe | 300 | 360 | DEF +6, MDEF +10 | Body armor; robe |
 | Interlude: Salvaged Plate | -- | -- | DEF +14 | Found stock, 800g, scratched |
 
 *Interlude:* Limited to leftover stock at 150% markup. No new shipments.
@@ -352,11 +353,10 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Mana Tincture | 80 | 100 | 160 | Restore 50 MP |
 | Antidote | 30 | 40 | 60 | Cure Poison |
 | Smelling Salts | 40 | 50 | 80 | Cure Sleep/Confuse |
-| Phoenix Pinion | 300 | 360 | 600 | Revive with 25% HP |
+| Phoenix Feather | 500 | 600 | 1000 | Revive with 25% HP |
 | Ley-Lantern | 60 | 75 | -- | Light source for dungeons |
-| Warding Charm | -- | 150 | -- | Reduce encounter rate |
 
-*Interlude:* Single vendor in the market square. Phoenix Pinions sold out. Ley-Lanterns unavailable (no ley energy to charge them).
+*Interlude:* Single vendor in the market square. Phoenix Feather sold out. Ley-Lanterns unavailable (no ley energy to charge them).
 
 #### Jeweler & Accessory Shop (Citizen's Walk)
 
@@ -374,10 +374,10 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Effect | Notes |
 |------|--------------|----------------|--------|-------|
-| Starbloom Tea | 150 | 200 | Full HP restore, cures all status | Brewed from Nella's flowers |
+| Starbloom Tea | 150 | 200 | Full HP restore + cures all status | Brewed from Nella's flowers |
 | Whetstone | 100 | 120 | +10% ATK for one battle | Consumable |
 | Spirit Incense | 200 | 250 | +15% MAG for one battle | Valdris ritual item |
-| Waystone | 500 | -- | Return to last save point | Rare; limited stock |
+| Waystone | 300 | 360 | Return to dungeon entrance | Dungeon use only |
 | Interlude: Pallor Antidote | -- | -- | Cures Despair status | 400g, sold by the lone vendor |
 
 ### 1.5 Points of Interest
@@ -388,7 +388,7 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 - Throne Hall antechamber (Royal Keep) -- Act II onward
 
 **Treasure chests:**
-- Behind the Barracks: 1x Phoenix Pinion (hidden by building shadow)
+- Behind the Barracks: 1x Phoenix Feather (hidden by building shadow)
 - Royal Library basement stacks: 1x Spirit Incense (requires examining specific bookshelf)
 - Eastern Wall watchtower (northernmost): 1x Whetstone
 - Maren's Old Study (Royal Keep): Maren's Staff Fragment (key item, Act II)

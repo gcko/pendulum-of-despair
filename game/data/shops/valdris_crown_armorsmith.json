@@ -20,13 +20,6 @@
         "restock_event": null
       },
       {
-        "item_id": "ember_circlet",
-        "buy_price": 350,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
         "item_id": "chain_mail",
         "buy_price": 300,
         "available_act": 1,
@@ -43,13 +36,6 @@
       {
         "item_id": "silk_robe",
         "buy_price": 300,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
-        "item_id": "reinforced_vest",
-        "buy_price": 500,
         "available_act": 1,
         "stock_limit": null,
         "restock_event": null

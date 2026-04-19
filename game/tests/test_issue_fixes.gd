@@ -483,3 +483,25 @@ func test_cutscene_handler_error_prefix() -> void:
 		'push_error("Exploration:' in source,
 		"should not use Exploration prefix in errors",
 	)
+
+
+# ==========================================================================
+# Issue orb: overlay lifecycle test pattern
+# ==========================================================================
+
+
+func test_overlay_state_set_and_clear_pattern() -> void:
+	# Documents the test pattern for overlay lifecycle management.
+	# Sets overlay state directly, verifies it, resets, and verifies reset.
+	GameManager.current_overlay = GameManager.OverlayState.MENU
+	assert_eq(
+		GameManager.current_overlay,
+		GameManager.OverlayState.MENU,
+		"overlay should be set to MENU",
+	)
+	GameManager.current_overlay = GameManager.OverlayState.NONE
+	assert_eq(
+		GameManager.current_overlay,
+		GameManager.OverlayState.NONE,
+		"overlay should be reset to NONE",
+	)

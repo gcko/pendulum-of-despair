@@ -59,24 +59,24 @@ func initialize_entities(map_node: Node2D) -> void:
 			if child.has_method("refresh"):
 				child.refresh()
 	# Populate entity lookup for cutscene choreography
-	_exploration._entities.clear()
+	_exploration.clear_entities()
 	var entities_node: Node2D = map_node.get_node_or_null("Entities")
 	if entities_node != null:
 		for child: Node in entities_node.get_children():
 			var nid: String = child.get_meta("npc_id", "")
 			if nid != "":
-				_exploration._entities[nid] = child
+				_exploration.set_entity(nid, child)
 			else:
 				var cid: Variant = child.get("character_id")
 				if cid is String and not cid.is_empty():
-					_exploration._entities[cid] = child
+					_exploration.set_entity(cid, child)
 	# Register player only if no cutscene actor already owns the ID
 	var player: Node2D = _exploration.get_player()
 	if player != null:
 		var pid: Variant = player.get("character_id")
 		if pid is String and not pid.is_empty():
-			if not _exploration._entities.has(pid):
-				_exploration._entities[pid] = player
+			if not _exploration.has_entity(pid):
+				_exploration.set_entity(pid, player)
 
 
 func _initialize_chest(child: Node) -> void:
@@ -86,9 +86,9 @@ func _initialize_chest(child: Node) -> void:
 		push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
 		return
 	if child.get_meta("is_key_item", false):
-		_exploration._key_item_chest_ids[chest_id] = true
+		_exploration.register_key_item_chest(chest_id)
 	if child.get_meta("is_equipment", false):
-		_exploration._equipment_chest_ids[chest_id] = true
+		_exploration.register_equipment_chest(chest_id)
 	var qty: int = child.get_meta("quantity", 1)
 	child.initialize(chest_id, item_id, qty)
 

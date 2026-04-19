@@ -82,6 +82,7 @@
 | Megalixir | Restore 100% HP and MP to all party | — | — | 3 total (Convergence, Dreamer's Fault) |
 | Sleeping Bag | Restore 25% HP/MP/AC to all party, clear status ailments (save point only) | 250 | 125 | Act I shops |
 | Tent | Restore 50% HP/MP/AC to all party, clear status ailments (save point only) | 500 | 250 | Act I shops |
+| Starbloom Tea | Restore 100% HP + cure all status | 150 | 75 | Valdris specialty shop |
 | Pavilion | Restore 100% HP/MP/AC to all party, clear status ailments (save point only) | 1,200 | 600 | Act II shops |
 
 > **Rest item stack limit:** Sleeping Bag, Tent, and Pavilion stack to **99** (not 199 like other HP/MP items). Their full-party out-of-town utility warrants a lower cap. See [economy.md](economy.md) for pricing and availability details.
@@ -91,6 +92,8 @@
 | Item | Effect | Buy | Sell | Availability |
 |------|--------|-----|------|--------------|
 | Ether | Restore 30 MP | 200 | 100 | Act I shops |
+| Spirit Tonic | Restore 50 MP | — | 150 | Fenmother's Hollow chest F1 |
+| Ember Tonic | Restore 50 MP | 300 | 150 | Ember Vein chest |
 | Hi-Ether | Restore 100 MP | 800 | 400 | Act II shops |
 | X-Ether | Restore 100% MP | 2,000 | 1,000 | Act III shops (limited) |
 
@@ -99,6 +102,7 @@
 | Item | Effect | Buy | Sell | Availability |
 |------|--------|-----|------|--------------|
 | Phoenix Feather | Revive at 25% HP | 500 | 250 | Act I shops |
+| Phoenix Down | Revive at 25% HP | — | 250 | Ember Vein chest F3 |
 | Phoenix Pinion | Revive at 100% HP | 3,000 | 1,500 | Act III shops (limited) |
 
 ### Status Cures
@@ -135,6 +139,8 @@ Status effect definitions and spell-based cures: see [magic.md](magic.md#status-
 |------|--------|-----|------|--------------|
 | Smoke Bomb | Flee from non-boss battles (100%) | 100 | 50 | Act I shops |
 | Waystone | Teleport to dungeon entrance (dungeon use only) | 300 | 150 | Act II shops |
+| Spirit Incense | +15% MAG for one battle | 200 | 100 | Valdris specialty shop |
+| Whetstone | +10% ATK for one battle | 100 | 50 | Valdris specialty shop |
 | Sable's Coin | Guaranteed preemptive next battle | — | — | Quest reward, rare chests |
 
 ### Stat Capsules
@@ -156,13 +162,13 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 | Category | Count |
 |----------|-------|
-| HP Healing | 9 |
-| MP Restoration | 3 |
-| Revival | 2 |
+| HP Healing | 10 |
+| MP Restoration | 5 |
+| Revival | 3 |
 | Status Cure | 10 |
-| Battle Utility | 3 |
+| Battle Utility | 5 |
 | Stat Capsules | 6 types |
-| **Total** | **33** |
+| **Total** | **39** |
 
 ---
 

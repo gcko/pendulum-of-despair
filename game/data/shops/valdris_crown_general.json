@@ -83,13 +83,6 @@
         "restock_event": null
       },
       {
-        "item_id": "waystone",
-        "buy_price": 300,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
         "item_id": "hi_ether",
         "buy_price": 800,
         "available_act": 2,

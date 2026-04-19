@@ -7,6 +7,8 @@ var _shop: Node
 
 
 func before_each() -> void:
+	DataManager.clear_cache()
+	EventFlags.clear_all()
 	PartyState.inventory = {
 		"consumables": {} as Dictionary,
 		"materials": {} as Dictionary,
@@ -22,6 +24,8 @@ func after_each() -> void:
 		_shop.queue_free()
 		_shop = null
 	GameManager.transition_data = {}
+	DataManager.clear_cache()
+	EventFlags.clear_all()
 
 
 func _create_shop(shop_id: String) -> Node:
