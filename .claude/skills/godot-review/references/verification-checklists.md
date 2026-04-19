@@ -163,8 +163,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] RefCounted helper fields stored on the owning class should use the concrete type (e.g., `var _handler: MyHandler`), not `RefCounted`, to preserve static type safety.
 - [ ] Test before_each/after_each must use lifecycle methods (e.g., `GameManager.pop_overlay()`) instead of directly assigning singleton fields (e.g., `current_overlay = NONE`) — direct assignment skips cleanup logic (freeing overlay_node, unpausing tree).
 - [ ] Test assertions must use the method that matches test intent — `has_flag()` to prove a flag was never stored, `get_flag()` to check value. Using the wrong method can produce false passes (e.g., `get_flag("")` returns `false` default even when the key exists with a falsey value).
-- [ ] Test BODY setup that needs overlay state (e.g., simulating CUTSCENE) should use `GameManager.push_overlay()` / `pop_overlay()` rather than directly assigning `GameManager.current_overlay`. Direct assignment bypasses overlay lifecycle (pause state, overlay_node creation/free, overlay_state_changed signal), making tests diverge from production behavior. If push_overlay has unwanted side effects for a unit test, create a test helper that wraps the setup/teardown pattern. (PR #145: 10+ Copilot comments on this pattern across 3 test files)
-
+- [ ] Test BODY setup that needs overlay state (e.g., simulating CUTSCENE) should use `GameManager.push_overlay()` / `pop_overlay()` rather than directly assigning `GameManager.current_overlay`. Direct assignment bypasses overlay lifecycle (pause state, overlay_node creation/free, overlay_state_changed signal), making tests diverge from production behavior. If push_overlay has unwanted side effects for a unit test, create a test helper that wraps the setup/teardown pattern.
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 
 **HOW TO USE:** For each item, write the file:line and your answer. Do NOT
