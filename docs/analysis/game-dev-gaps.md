@@ -177,7 +177,7 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P1 — blocks town implementation
-**Estimated Size:** M (24 JSON files, one per shop across 11 towns)
+**Estimated Size:** M (26 JSON files, one per shop across 11 towns)
 **Output:** `game/data/shops/{shop_id}.json`
 **Source Docs:** `economy.md` (complete shop inventories per town with event-gated restocking)
 **Architecture Ref:** `technical-architecture.md` Section 2.4

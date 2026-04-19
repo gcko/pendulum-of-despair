@@ -1,17 +1,17 @@
 {
-	"scene_id": "npc_mirren",
-	"entries": [
-		{
-			"id": "npc_mirren_001",
-			"speaker": "mirren",
-			"lines": [
-				"Maren took my document. Didn't ask. Didn't sign for it.",
-				"Just took it and vanished."
-			],
-			"condition": null,
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		}
-	]
+  "scene_id": "npc_mirren",
+  "entries": [
+    {
+      "id": "npc_mirren_001",
+      "speaker": "mirren",
+      "lines": [
+        "Maren took my document. Didn't ask. Didn't sign for it.",
+        "Just took it and vanished."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
 }

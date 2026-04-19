@@ -1,29 +1,29 @@
 {
-	"scene_id": "npc_dame_cordwyn",
-	"entries": [
-		{
-			"id": "npc_dame_cordwyn_scene7c",
-			"speaker": "dame_cordwyn",
-			"lines": [
-				"Edren. It's good to see you.",
-				"Haren is already planning to use the Pendulum as a bargaining chip with the Compact.",
-				"Keep an eye on Cael. He's brilliant, but he carries more than he lets on."
-			],
-			"condition": "pendulum_presented AND !scene_7c_cordwyn",
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		},
-		{
-			"id": "npc_dame_cordwyn_001",
-			"speaker": "dame_cordwyn",
-			"lines": [
-				"Cael was the best of us. I don't mean the strongest -- I mean the kindest."
-			],
-			"condition": null,
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		}
-	]
+  "scene_id": "npc_dame_cordwyn",
+  "entries": [
+    {
+      "id": "npc_dame_cordwyn_scene7c",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Edren. It's good to see you.",
+        "Haren is already planning to use the Pendulum as a bargaining chip with the Compact.",
+        "Keep an eye on Cael. He's brilliant, but he carries more than he lets on."
+      ],
+      "condition": "pendulum_presented AND !scene_7c_cordwyn",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_dame_cordwyn_001",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Cael was the best of us. I don't mean the strongest -- I mean the kindest."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
 }

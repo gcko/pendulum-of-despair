@@ -1,16 +1,16 @@
 {
-	"scene_id": "npc_valdris_armorsmith",
-	"entries": [
-		{
-			"id": "npc_valdris_armorsmith_001",
-			"speaker": "valdris_armorsmith",
-			"lines": [
-				"Valdris steel. Best protection this side of the Wilds."
-			],
-			"condition": null,
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		}
-	]
+  "scene_id": "npc_valdris_armorsmith",
+  "entries": [
+    {
+      "id": "npc_valdris_armorsmith_001",
+      "speaker": "valdris_armorsmith",
+      "lines": [
+        "Valdris steel. Best protection this side of the Wilds."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
 }

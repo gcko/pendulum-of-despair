@@ -1,17 +1,17 @@
 {
-	"scene_id": "npc_jorin_ashvale",
-	"entries": [
-		{
-			"id": "npc_jorin_ashvale_001",
-			"speaker": "jorin_ashvale",
-			"lines": [
-				"The crown sends me letters of concern.",
-				"I could paper my walls with royal concern."
-			],
-			"condition": null,
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		}
-	]
+  "scene_id": "npc_jorin_ashvale",
+  "entries": [
+    {
+      "id": "npc_jorin_ashvale_001",
+      "speaker": "jorin_ashvale",
+      "lines": [
+        "The crown sends me letters of concern.",
+        "I could paper my walls with royal concern."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
 }

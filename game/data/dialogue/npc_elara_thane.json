@@ -1,17 +1,17 @@
 {
-	"scene_id": "npc_elara_thane",
-	"entries": [
-		{
-			"id": "npc_elara_thane_001",
-			"speaker": "elara_thane",
-			"lines": [
-				"My grandmother could call a storm that lasted three days.",
-				"I called one last month that lasted three minutes."
-			],
-			"condition": null,
-			"animations": null,
-			"choice": null,
-			"sfx": null
-		}
-	]
+  "scene_id": "npc_elara_thane",
+  "entries": [
+    {
+      "id": "npc_elara_thane_001",
+      "speaker": "elara_thane",
+      "lines": [
+        "My grandmother could call a storm that lasted three days.",
+        "I called one last month that lasted three minutes."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
 }
