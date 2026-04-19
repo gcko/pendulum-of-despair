@@ -1,0 +1,142 @@
+{
+  "scene_id": "scene_7b_throne_hall",
+  "entries": [
+    {
+      "id": "scene_7b_001",
+      "speaker": "",
+      "lines": [
+        "The throne hall is smaller than expected -- built for function, not grandeur."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_002",
+      "speaker": "",
+      "lines": [
+        "King Aldren sits on a plain stone chair. He is older than he should be.",
+        "Lord Chancellor Haren stands to his left."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_003",
+      "speaker": "edren",
+      "lines": [
+        "Your Majesty. We recovered this from the Ember Vein."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_004",
+      "speaker": "",
+      "lines": [
+        "Edren places the Pendulum on the table."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_005",
+      "speaker": "king_aldren",
+      "lines": [
+        "It doesn't look like much."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_006",
+      "speaker": "maren",
+      "lines": [
+        "It's a conduit -- a focal point for something beyond it.",
+        "The miners who found it are dead. Not from violence. From despair."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_007",
+      "speaker": "haren",
+      "lines": [
+        "You've been away from court for some time, Maren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_008",
+      "speaker": "maren",
+      "lines": [
+        "Not by choice, Chancellor."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_009",
+      "speaker": "king_aldren",
+      "lines": [
+        "Every morning I ask the court mages for a report on the ley lines.",
+        "Every morning, the number is lower."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_010",
+      "speaker": "king_aldren",
+      "lines": [
+        "There is nothing safe left in Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_011",
+      "speaker": "king_aldren",
+      "lines": [
+        "Maren -- I want an assessment in writing by morning.",
+        "Cael -- you'll work with Maren on the Pendulum. Whatever this thing is, I need to understand it."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7b_012",
+      "speaker": "",
+      "lines": [
+        "This is the moment the trap closes.",
+        "The Pallor's mark answers the king's request before Cael can think twice."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "scene_id": "scene_7a_the_gates",
+  "entries": [
+    {
+      "id": "scene_7a_001",
+      "speaker": "gate_guard",
+      "lines": [
+        "Commander Edren. You've been expected.",
+        "The king received word from Thornwatch. Commander Halda sent a rider two days ahead."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_002",
+      "speaker": "gate_guard",
+      "lines": [
+        "A Forgewright, a Wilds ranger, a woman who looks like she hasn't left a library in years...",
+        "...and a young woman who is very carefully not making eye contact."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_003",
+      "speaker": "gate_guard",
+      "lines": [
+        "You'll need to register at the inner gate. All of you."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_004",
+      "speaker": "sable",
+      "lines": [
+        "Of course. I love registering."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_005",
+      "speaker": "edren",
+      "lines": [
+        "We have business with the king. The Pendulum --"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_006",
+      "speaker": "gate_guard",
+      "lines": [
+        "I know. The whole court knows.",
+        "Straight through the Lower Ward, up through the districts. The throne hall is at the top."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_007",
+      "speaker": "maren",
+      "lines": [
+        "It's been a long time since I walked these streets."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7a_008",
+      "speaker": "cael",
+      "lines": [
+        "Let's not keep the king waiting."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

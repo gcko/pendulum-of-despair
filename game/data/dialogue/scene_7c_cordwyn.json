@@ -1,0 +1,95 @@
+{
+  "scene_id": "scene_7c_cordwyn",
+  "entries": [
+    {
+      "id": "scene_7c_cordwyn_001",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Edren."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_002",
+      "speaker": "",
+      "lines": [
+        "She clasps Edren's arm."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_003",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Haren is already planning to use the Pendulum as a bargaining chip.",
+        "He wants to offer it to the Compact in exchange for a border ceasefire."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_004",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Keep an eye on Cael.",
+        "He's brilliant, but he carries more than he lets on."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_torren",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Spirit-speaker. You're a long way from the Wilds."
+      ],
+      "condition": "party_has(torren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_torren_reply",
+      "speaker": "torren",
+      "lines": [
+        "The Wilds follow where they're needed."
+      ],
+      "condition": "party_has(torren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_sable",
+      "speaker": "dame_cordwyn",
+      "lines": [
+        "Touch nothing, thief."
+      ],
+      "condition": "party_has(sable)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_cordwyn_sable_reply",
+      "speaker": "sable",
+      "lines": [
+        "I was admiring. There's a difference."
+      ],
+      "condition": "party_has(sable)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

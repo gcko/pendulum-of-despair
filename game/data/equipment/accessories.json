@@ -1004,6 +1004,88 @@
       "description": "A crest born from echoes of the dreamer, elevating all attributes."
     },
     {
+      "id": "pact_charm_wind",
+      "name": "Pact-Charm (Storm)",
+      "subcategory": "elemental_resistance",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+5% Storm resist, AGI +2",
+      "bonus_stats": {"spd": 2},
+      "element_resist": "storm",
+      "special": null,
+      "buy_price": 600,
+      "sell_price": 300,
+      "acquired": "Valdris Crown jeweler",
+      "description": "A charm blessed by the wind spirits of old Valdris."
+    },
+    {
+      "id": "pact_charm_earth",
+      "name": "Pact-Charm (Earth)",
+      "subcategory": "elemental_resistance",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+5% Earth resist, DEF +2",
+      "bonus_stats": {"def": 2},
+      "element_resist": "earth",
+      "special": null,
+      "buy_price": 600,
+      "sell_price": 300,
+      "acquired": "Valdris Crown jeweler",
+      "description": "A charm blessed by the earth spirits of old Valdris."
+    },
+    {
+      "id": "silver_ring",
+      "name": "Silver Ring",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "MAG +3",
+      "bonus_stats": {"mag": 3},
+      "special": null,
+      "buy_price": 200,
+      "sell_price": 100,
+      "acquired": "Valdris Crown jeweler",
+      "description": "A polished silver ring that enhances magical focus."
+    },
+    {
+      "id": "guardian_pendant",
+      "name": "Guardian Pendant",
+      "subcategory": "combat_mechanic",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "Auto-Protect at <25% HP",
+      "bonus_stats": {},
+      "special": "auto_protect_low_hp",
+      "buy_price": 400,
+      "sell_price": 200,
+      "acquired": "Valdris Crown jeweler",
+      "description": "A pendant that shields the wearer when gravely wounded."
+    },
+    {
       "id": "warriors_memento",
       "name": "Warrior's Memento",
       "subcategory": "boss_drop",

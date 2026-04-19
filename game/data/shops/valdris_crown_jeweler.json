@@ -1,0 +1,38 @@
+{
+  "shop": {
+    "shop_id": "valdris_crown_jeweler",
+    "town": "valdris_crown",
+    "type": "jeweler",
+    "markup": 1.0,
+    "inventory": [
+      {
+        "item_id": "pact_charm_wind",
+        "buy_price": 600,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "pact_charm_earth",
+        "buy_price": 600,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "silver_ring",
+        "buy_price": 200,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "guardian_pendant",
+        "buy_price": 400,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      }
+    ]
+  }
+}

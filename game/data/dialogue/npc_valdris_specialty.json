@@ -1,0 +1,16 @@
+{
+  "scene_id": "npc_valdris_specialty",
+  "entries": [
+    {
+      "id": "npc_valdris_specialty_001",
+      "speaker": "valdris_specialty",
+      "lines": [
+        "Rare goods for the discerning adventurer. You won't find these at the general store."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

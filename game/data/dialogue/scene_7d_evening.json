@@ -1,0 +1,84 @@
+{
+  "scene_id": "scene_7d_evening",
+  "cutscene_id": "scene_7d_evening",
+  "cutscene_tier": 1,
+  "entries": [
+    {
+      "id": "scene_7d_001",
+      "speaker": "",
+      "lines": [
+        "Night falls over Valdris Crown."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "fade", "direction": "in", "duration": 1.0, "when": "before"}
+      ]
+    },
+    {
+      "id": "scene_7d_002",
+      "speaker": "",
+      "lines": [
+        "The Pendulum sits in a sealed chamber in the lower Keep.",
+        "Containment wards glow blue around the glass case."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7d_003",
+      "speaker": "",
+      "lines": [
+        "Cael stands alone before it.",
+        "His hand hovers near the glass."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7d_004",
+      "speaker": "",
+      "lines": [
+        "For a single frame -- his reflection's eyes are grey."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "flash", "color": [180, 180, 180], "duration": 0.1, "when": "before"}
+      ]
+    },
+    {
+      "id": "scene_7d_005",
+      "speaker": "",
+      "lines": [
+        "He leaves."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7d_006",
+      "speaker": "",
+      "lines": [
+        "The Pendulum's needle shifts one degree, then stops."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null,
+      "commands": [
+        {"type": "fade", "direction": "out", "duration": 1.5, "when": "after"}
+      ]
+    }
+  ]
+}

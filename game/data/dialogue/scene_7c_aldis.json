@@ -1,0 +1,63 @@
+{
+  "scene_id": "scene_7c_aldis",
+  "entries": [
+    {
+      "id": "scene_7c_aldis_001",
+      "speaker": "scholar_aldis",
+      "lines": [
+        "The ley lines beneath the capital have lost twelve percent capacity in the last year alone.",
+        "I've been mapping the decline. The pattern is... unsettling."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_aldis_002",
+      "speaker": "scholar_aldis",
+      "lines": [
+        "I'd like to compare my readings with the Pendulum's resonance.",
+        "If it truly is a focal point, the interference pattern could tell us where the energy is going."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_aldis_lira",
+      "speaker": "scholar_aldis",
+      "lines": [
+        "Wait -- you. I've read your paper on suppressed conduit efficiency.",
+        "It was classified, but I'm a researcher. Finding classified documents is half the job."
+      ],
+      "condition": "party_has(lira)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_aldis_maren",
+      "speaker": "scholar_aldis",
+      "lines": [
+        "Maren? You're... back?"
+      ],
+      "condition": "party_has(maren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_aldis_maren_reply",
+      "speaker": "maren",
+      "lines": [
+        "Don't rearrange my study while I'm here, Aldis."
+      ],
+      "condition": "party_has(maren)",
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

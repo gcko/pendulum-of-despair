@@ -62,8 +62,8 @@ func test_buy_consumable_adds_to_inventory() -> void:
 
 func test_buy_equipment_adds_to_owned_equipment() -> void:
 	PartyState.gold = 500
-	# valdris_crown_armorer has valdris_blade at 300G as first item
-	var shop: Node = _create_shop("valdris_crown_armorer")
+	# valdris_crown_weaponsmith has valdris_blade at 300G as first item
+	var shop: Node = _create_shop("valdris_crown_weaponsmith")
 	shop._try_buy()
 	var found: bool = false
 	for entry: Dictionary in PartyState.owned_equipment:

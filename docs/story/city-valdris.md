@@ -362,7 +362,7 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Pact-Charm (Wind) | 600 | 720 | +5% Wind resist, AGI +2 | Spirit-touched |
+| Pact-Charm (Storm) | 600 | 720 | +5% Storm resist, AGI +2 | Spirit-touched |
 | Pact-Charm (Earth) | 600 | 720 | +5% Earth resist, DEF +2 | Spirit-touched |
 | Silver Ring | 200 | 240 | MAG +3 | Basic mage accessory |
 | Guardian Pendant | 400 | 480 | Auto-Protect at <25% HP | Unique to Valdris |
