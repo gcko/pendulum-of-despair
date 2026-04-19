@@ -951,7 +951,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 
 ### 4.4 Remaining Act I Content
 
-**Status:** IN PROGRESS
+**Status:** MOSTLY COMPLETE
 **Priority:** P1 — completes Act I
 **Estimated Size:** XL (multiple phases)
 **Output:** Additional dungeon/town maps, story scenes
@@ -1028,11 +1028,42 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [x] Dawn March forward-only walk mechanics — dedicated trail map + cutscene trigger system (2026-04-13)
 - [x] `opening_credits_seen` flag (39) — set by cutscene trigger handler on entry (2026-04-13)
 
-**Phase C: Capital Completion (NOT STARTED)**
-- [ ] Remaining Valdris districts (Citizen's Walk, Court Quarter, Royal Keep, Eastern Wall)
-- [ ] Scene 7 (throne hall, court free-roam, Cael's grey eyes moment)
-- [ ] Thornwatch garrison rest stop
-- [ ] Act I finale flag: pendulum_to_capital
+**Phase C: Capital Completion (COMPLETE — 2026-04-19)**
+- [x] Citizen's Walk outdoor district (45x40, 3 shops, 5 NPCs, library entrance)
+- [x] Court Quarter outdoor district (35x30, Elara Thane, court guard, throne hall entrance)
+- [x] Throne Hall interior (20x18, King Aldren, Lord Haren, Scene 7b/7d triggers)
+- [x] Royal Library interior (16x14, Scholar Aldis, Mirren, save point, Scene 7c trigger, treasure chest)
+- [x] Knight's Barracks interior (14x12, Dame Cordwyn, Sgt. Marek, Scene 7c trigger)
+- [x] Anchor & Oar Upper Floor interior (12x10, guest rooms, staircase)
+- [x] Shop split: armorer → weaponsmith (Lower Ward) + armorsmith (Citizen's Walk)
+- [x] Jeweler shop with 4 new accessories (pact charms, silver ring, guardian pendant)
+- [x] Specialty shop NPC placed in Citizen's Walk (data already existed)
+- [x] 11 NPC ambient dialogue files (king, chancellor, knight, scholar, archivist, mage, noble, 3 shop greetings, guard)
+- [x] Scene 7 narrative: FF6 Vector-style free-roam with required NPC conversations
+- [x] Scene 7a gate arrival dialogue (8 entries, maren_warning gated)
+- [x] Scene 7b throne hall presentation (12 entries, valdris_arrived gated)
+- [x] Scene 7c Aldis/Cordwyn/Renn conversations (5+8+4 entries, party_has branches)
+- [x] Scene 7d evening cutscene (T1, grey eyes moment, pendulum_to_capital flag)
+- [x] required_flags (plural) AND-condition support in cutscene_handler.gd and exploration.gd
+- [x] 6 new event flags: valdris_arrived, pendulum_presented, scene_7c_aldis/cordwyn/renn, pendulum_to_capital
+- [x] Lower Ward updated: north ramp, barracks door, Scene 7a trigger, Phoenix Pinion chest
+- [x] Anchor & Oar updated: staircase to upper floor, Scene 7c Renn trigger
+- [x] Tileset extended with 4 capital tiles (limestone, carpet, platform, columns)
+- [x] ~120 tests across 9 test files (districts, shops, dialogue, flags, integration, regression, cross-refs)
+- [x] Design spec: docs/superpowers/specs/2026-04-19-valdris-capital-phase-c-design.md
+
+**Phase C Deferred (captured for gap 4.5):**
+- [ ] Eastern Wall & Battlements district (Act II siege breach — no Act I gameplay)
+- [ ] Tower Tutorial district (Seven Towers magic mini-dungeon — separate system)
+- [ ] Thornwatch garrison rest stop (separate location per locations.md — new sub-gap)
+- [ ] Aelhart starting town (Act I location #1 — new sub-gap)
+- [ ] Chapel, Cael's Quarters, Haren's Estate, Council Chambers, Court Mage Tower interiors
+- [ ] Maren's Old Study, Pendulum Research Room, Servants' Passage, Royal Bedchamber
+- [ ] Library Stacks Wing + Basement Archive (Act II quest: Mirren's hidden archive)
+- [ ] Act II shop restocking (diplomatic_mission_start event)
+- [ ] Anchor & Oar black market (Interlude, via Renn)
+- [ ] Eastern Wall Breach Alcove (Act II, Oathkeeper Buckler)
+- [ ] Royal Signet accessory (Act II, requires court favor)
 
 **Notes:**
 - Party assembly now works: Edren+Cael at new game, Lira+Sable join via carradan_ambush_survived flag (Phase B1, PR #132), Torren joins at Roothollow (Scene 5), Maren joins at Refuge (Scene 6).
@@ -1061,6 +1092,16 @@ smallest vertical slice (Ember Vein) that exercises every system.
 - [ ] All shop inventory updates per act progression
 - [ ] Dynamic world changes per dynamic-world.md
 - [ ] All sidequests per sidequests.md
+
+**Deferred from Phase C (Valdris capital):**
+- [ ] Eastern Wall & Battlements district (Act II siege breach)
+- [ ] Tower Tutorial district (Seven Towers magic mini-dungeon)
+- [ ] Valdris interiors: Chapel, Cael's Quarters, Haren's Estate, Council Chambers, Court Mage Tower, Maren's Old Study, Pendulum Research Room, Servants' Passage, Royal Bedchamber, Library Stacks + Basement
+- [ ] Act II shop restocking, Anchor & Oar black market, Eastern Wall Breach Alcove, Royal Signet
+
+**New sub-gaps (not yet in this document):**
+- [ ] Thornwatch garrison rest stop (Act I location #2 — separate map, Commander Halda, armory shop, border patrol quests)
+- [ ] Aelhart starting town (Act I location #1 — tutorial town, not yet built)
 
 **Blocking:** Complete game experience
 
@@ -1165,7 +1206,8 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-11 | 4.4 Phase A2b | Fenmother puzzles: water wheels (3), spirit vessel fetch, water zones, poison damage zones, ritual meter, spirit-path auto-walk, Duskfen shrine + Caden binding. puzzle_state system on PartyState. 16 new files, 10 modified, ~53 tests. | — |
 | 2026-04-12 | 4.4 Phase B2 | Ember Vein F3 (3 new puzzle entities, hidden door, encounters), Ironmouth escape (linear map, combat, Lira+Sable join), Scene 1 full dialogue (1a-1e, 6 new JSONs), Cael shimmer (+10% physical), Arcanite gear (break mechanic), start location → F1. Dawn March deferred to 3.7. ~20 new files, ~13 modified. | — |
 | 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 5 test files (~57 tests). 620/620 full suite. | — |
-| 2026-04-13 | 4.4 Phase B2F | Dawn March T1 cutscene: trail map scene, 16-entry choreographed dialogue with move/camera/fade/title commands, "PENDULUM OF DESPAIR" title card + character credits, cutscene trigger system in exploration.gd (_pending_cutscene + _cutscene_return state machine), opening_credits_seen flag (39). Phase B2 now COMPLETE. 634/634 tests. | — |
+| 2026-04-13 | 4.4 Phase B2F | Dawn March T1 cutscene: trail map scene, 16-entry choreographed dialogue with move/camera/fade/title commands, "PENDULUM OF DESPAIR" title card + character credits, cutscene trigger system in exploration.gd (_pending_cutscene + _cutscene_return state machine), opening_credits_seen flag (39). Phase B2 now COMPLETE. 634/634 tests. |
+| 2026-04-19 | 4.4 Phase C | Capital Completion: 3 outdoor districts (Citizen's Walk, Court Quarter), 4 interiors (Throne Hall, Library, Barracks, Tavern Upper), Scene 7 FF6 Vector-style free-roam narrative, shop split (weaponsmith/armorsmith/jeweler), 17 dialogue files, required_flags AND-condition system, 6 new event flags, ~120 tests across 9 test files. Phase C COMPLETE. | — |
 
 ---
 
@@ -1176,8 +1218,10 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 1: Data Foundation | 9 | 9/9 complete | JSON data from design docs |
 | 2: Entity Prefabs | 4 | 4/4 complete | .tscn prefabs with GDScript |
 | 3: Core Systems | 8 | 5/8 complete (2 mostly) | Scenes and game systems |
-| 4: Content & Integration | 9 | 0/9 complete (4 mostly, 1 in progress) | Maps, content, polish |
-| **Total** | **30** | **18 complete, 6 mostly, 1 in progress, 5 not started** | |
+| 4: Content & Integration | 9 | 0/9 complete (4 mostly, 1 mostly*) | Maps, content, polish |
+| **Total** | **30** | **18 complete, 7 mostly, 5 not started** | |
+
+*Gap 4.4 is MOSTLY COMPLETE: Phases A, A2, A2b, B1, B2, C all done. Only Phase C deferred items and potential Phase D (Thornwatch, Aelhart) remain.
 
 **Note on gap numbering:** This document uses D-prefixed IDs (D1.1, D1.2...)
 when disambiguation from `game-design-gaps.md` is needed. Within this
