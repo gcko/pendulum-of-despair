@@ -67,6 +67,7 @@ func test_start_invalid_resource_does_not_set_flags() -> void:
 	EventFlags.set_flag("fenmother_boss_defeated", false)
 	var data: Dictionary = {"earned_xp": 100, "earned_gold": 50}
 	seq.start(data)
+	assert_push_error_count(1, "should push_error for missing resource")
 	assert_false(
 		EventFlags.get_flag("fenmother_boss_defeated"),
 		"flag should not be set when resource validation fails"
@@ -79,6 +80,7 @@ func test_start_invalid_resource_does_not_distribute_rewards() -> void:
 	PartyState.gold = 100
 	var data: Dictionary = {"earned_gold": 50}
 	seq.start(data)
+	assert_push_error_count(1, "should push_error for missing resource")
 	assert_eq(PartyState.gold, 100, "gold should be unchanged when resource validation fails")
 
 
@@ -88,4 +90,5 @@ func test_continue_invalid_resource_does_not_distribute_rewards() -> void:
 	PartyState.gold = 200
 	var data: Dictionary = {"wave_num": 0, "earned_gold": 75}
 	seq.continue_sequence(data)
+	assert_push_error_count(1, "should push_error for missing resource")
 	assert_eq(PartyState.gold, 200, "gold should be unchanged when resource validation fails")

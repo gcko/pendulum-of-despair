@@ -22,6 +22,7 @@ func test_silent_pop_recovery_unpauses_tree() -> void:
 	# Pushing an invalid overlay state should be rejected
 	# (OverlayState.NONE is not in OVERLAY_SCENES)
 	var result: bool = GameManager.push_overlay(GameManager.OverlayState.NONE)
+	assert_push_error_count(1, "should push_error for invalid state")
 	assert_false(result, "push_overlay should return false for NONE state")
 
 

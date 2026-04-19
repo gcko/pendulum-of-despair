@@ -407,7 +407,10 @@ func test_game_manager_overlay_enum_has_shop() -> void:
 
 
 func test_battle_camera_zoom_matches_exploration() -> void:
-	GameManager.transition_data = {"encounter_group": [], "enemy_act": "act_i"}
+	GameManager.transition_data = {
+		"encounter_group": ["ley_vermin"],
+		"enemy_act": "act_i",
+	}
 	var battle: Node = BATTLE_SCENE.instantiate()
 	add_child_autofree(battle)
 	var cam: Camera2D = battle.get_node_or_null("Camera2D")
