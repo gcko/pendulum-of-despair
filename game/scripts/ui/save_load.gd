@@ -95,8 +95,7 @@ func open_load() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
 	_selected_slot = 1
 	for slot: int in [0, 1, 2, 3]:
-		var preview: Dictionary = _slot_previews[slot]
-		if not preview.is_empty() and not preview.has("error"):
+		if _is_slot_selectable(slot):
 			_selected_slot = slot
 			break
 	_show_slots(true)
@@ -109,11 +108,8 @@ func _update_slot_panel(panel: PanelContainer, data: Dictionary, is_auto: bool =
 func _show_slots(show_auto: bool) -> void:
 	_slot_container.visible = true
 	_auto_slot.visible = show_auto
-	_slot_previews = SaveManager.get_slot_previews()
-	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
-	var ok: bool = _is_slot_selectable(_selected_slot)
-	var d: SaveLoadDisplay = _display
-	d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, ok, _cursor)
+	_reload_previews()
+	_update_slot_sel()
 
 
 func _is_slot_selectable(slot: int) -> bool:
@@ -121,6 +117,12 @@ func _is_slot_selectable(slot: int) -> bool:
 		var preview: Dictionary = _slot_previews[slot]
 		return not preview.is_empty() and not preview.has("error")
 	return true
+
+
+func _update_slot_sel() -> void:
+	var ok: bool = _is_slot_selectable(_selected_slot)
+	var d: SaveLoadDisplay = _display
+	d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, ok, _cursor)
 
 
 func _handle_save_point_input(event: InputEvent) -> void:
@@ -160,7 +162,7 @@ func _handle_rest_input(event: InputEvent) -> void:
 
 
 func _accept_rest_item() -> void:
-	if not _has_rest_item(_rest_selection):
+	if not _display.has_rest_item(_rest_selection, REST_ITEM_IDS):
 		get_viewport().set_input_as_handled()
 		return
 	var item_id: String = REST_ITEM_IDS[_rest_selection]
@@ -231,22 +233,15 @@ func _confirm_save_point() -> void:
 			_show_slots(false)
 
 
-func _move_slot_cursor(direction: int) -> void:
-	var min_slot: int = 0 if _mode == Mode.LOAD else 1
-	var max_slot: int = 3
-	var attempts: int = 0
-	var new_slot: int = _selected_slot
-	while attempts <= max_slot - min_slot:
-		new_slot += direction
-		if new_slot > max_slot:
-			new_slot = min_slot
-		elif new_slot < min_slot:
-			new_slot = max_slot
-		attempts += 1
-		if _mode != Mode.LOAD or _is_slot_selectable(new_slot):
-			_selected_slot = new_slot
-			var d: SaveLoadDisplay = _display
-			d.update_slot_sel(_auto_slot, _manual_slots, _selected_slot, true, _cursor)
+func _move_slot_cursor(dir: int) -> void:
+	var lo: int = 0 if _mode == Mode.LOAD else 1
+	var cnt: int = 4 - lo
+	var pos: int = _selected_slot
+	for _i: int in range(cnt):
+		pos = lo + wrapi(pos - lo + dir, 0, cnt)
+		if _mode != Mode.LOAD or _is_slot_selectable(pos):
+			_selected_slot = pos
+			_update_slot_sel()
 			return
 
 
@@ -290,39 +285,34 @@ func _do_save(slot: int) -> void:
 	if not SaveManager.save_game(slot):
 		return
 	save_completed.emit(slot)
-	_slot_previews = SaveManager.get_slot_previews()
-	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
+	_reload_previews()
 
 
 func _do_load(slot: int) -> void:
 	var data: Dictionary = SaveManager.load_game(slot)
-	if data.is_empty() or data.has("error"):
-		push_warning("SaveLoad: Failed to load slot %d" % slot)
-		return
-	if not ResourceLoader.exists("res://scenes/core/exploration.tscn"):
-		push_warning("SaveLoad: Exploration scene not found")
+	var bad: bool = data.is_empty() or data.has("error")
+	if bad or not ResourceLoader.exists("res://scenes/core/exploration.tscn"):
+		push_warning("SaveLoad: cannot load slot %d" % slot)
 		return
 	load_completed.emit(slot)
-	var trans: Dictionary = {"save_slot": slot, "save_data": data}
 	var state: int = GameManager.CoreState.EXPLORATION
-	GameManager.call_deferred("change_core_state", state, trans)
+	GameManager.call_deferred("change_core_state", state, {"save_slot": slot, "save_data": data})
 
 
 func _do_delete(slot: int) -> void:
 	SaveManager.delete_slot(slot)
-	_slot_previews = SaveManager.get_slot_previews()
-	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
+	_reload_previews()
 
 
 func _do_copy(source: int, dest: int) -> void:
 	SaveManager.copy_slot(source, dest)
+	_reload_previews()
+
+
+func _reload_previews() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
 	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
 
 
 func _find_consumable(item_id: String) -> Dictionary:
 	return _display.find_consumable(item_id)
-
-
-func _has_rest_item(index: int) -> bool:
-	return _display.has_rest_item(index, REST_ITEM_IDS)
