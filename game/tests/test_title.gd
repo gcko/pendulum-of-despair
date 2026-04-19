@@ -57,6 +57,13 @@ func test_continue_disabled_no_saves() -> void:
 	)
 
 
-func test_config_disabled() -> void:
+func test_config_enabled_when_menu_scene_exists() -> void:
 	var title = _create_title()
-	assert_true(title._is_option_disabled(title.MenuOption.CONFIG), "config should be disabled")
+	# Config is enabled when the menu overlay scene exists
+	var menu_path: String = GameManager.OVERLAY_SCENES.get(GameManager.OverlayState.MENU, "")
+	var expected_disabled: bool = not ResourceLoader.exists(menu_path)
+	assert_eq(
+		title._is_option_disabled(title.MenuOption.CONFIG),
+		expected_disabled,
+		"config disabled state should match menu scene availability",
+	)
