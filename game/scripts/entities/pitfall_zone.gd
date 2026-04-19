@@ -23,7 +23,10 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if not body.is_in_group("player"):
 		return
-	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
 		return
 	_has_triggered = true
 	pitfall_triggered.emit(_target_map_id, _target_spawn)

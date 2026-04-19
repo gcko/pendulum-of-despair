@@ -46,7 +46,10 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if not body.is_in_group("player"):
 		return
-	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
 		return
 	_player_inside = true
 	_status_applied = false
@@ -60,8 +63,13 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_tick() -> void:
-	if _player_inside and GameManager.current_overlay != GameManager.OverlayState.CUTSCENE:
-		_apply_tick()
+	if not _player_inside:
+		return
+	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+		return
+	if GameManager.cutscene_active:
+		return
+	_apply_tick()
 
 
 func _apply_tick() -> void:

@@ -71,7 +71,7 @@ func _ready() -> void:
 	_ritual_meter_value = data.get("ritual_meter_value", 100.0)
 	if _encounter_source == "cleansing_wave":
 		_is_boss = true
-	var encounter_group: Array = data.get("encounter_group", [])
+	var encounter_group: Array = data.get("encounter_group", [])  # Variant from JSON
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
 		call_deferred("_exit_battle", "flee")
@@ -84,8 +84,10 @@ func _ready() -> void:
 			if not _state.get_member(i).is_empty():
 				_state.swap_row(i)
 	_battle_active = true
-	var ps: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
-	var es: Array = []
+	var ps: Array[Dictionary] = []
+	for i: int in range(4):
+		ps.append(_state.get_member(i))
+	var es: Array[Dictionary] = []
 	var pos: Array[Vector2] = []
 	for e: Node in _enemies:
 		es.append({"name": e.get_display_name(), "hp": e.current_hp})
@@ -284,7 +286,10 @@ func _do_defend(actor_id: String) -> void:
 
 
 func _do_flee() -> void:
-	var alive_enemies: Array = _enemies.filter(func(e: Node) -> bool: return e.is_alive)
+	var alive_enemies: Array[Node] = []
+	for e: Node in _enemies:
+		if e.is_alive:
+			alive_enemies.append(e)
 	var enemy_spd_sum: float = alive_enemies.reduce(
 		func(acc: float, e: Node) -> float: return acc + e.get_stats().get("spd", 10), 0.0
 	)
@@ -361,7 +366,7 @@ func _execute_enemy_turn(enemy_id: String) -> void:
 	_turn_counter += 1
 	var atype: String = action.get("type", "")
 	if atype == "spawn":
-		var spawn_ids: Array = action.get("enemies", [])
+		var spawn_ids: Array = action.get("enemies", [])  # Variant from JSON
 		var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
 		for sid: String in spawn_ids:
 			var new_enemy: Node = ENEMY_SCENE.instantiate()
@@ -453,6 +458,8 @@ func _count_ko_party_members() -> int:
 
 
 func _exit_battle(result: String) -> void:
+	if not _battle_active:
+		return
 	_battle_active = false
 	_awaiting_input_for = ""
 	# Sync battle damage/healing back to PartyState

@@ -75,7 +75,11 @@ func _process(delta: float) -> void:
 	_update_party_panel()
 
 
-func _on_battle_started(_party: Array, _enemies: Array, enemy_positions: Array) -> void:
+func _on_battle_started(
+	_party: Array[Dictionary],
+	_enemies: Array[Dictionary],
+	enemy_positions: Array,
+) -> void:
 	_enemy_positions = []
 	for pos: Variant in enemy_positions:
 		_enemy_positions.append(pos as Vector2)

@@ -18,6 +18,7 @@ func after_each() -> void:
 	while GameManager.current_overlay != GameManager.OverlayState.NONE:
 		GameManager.pop_overlay()
 	get_tree().paused = false
+	GameManager.cutscene_active = false
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	DataManager.clear_cache()
@@ -32,8 +33,7 @@ func _make_mock_body() -> CharacterBody2D:
 
 
 func _simulate_cutscene_state() -> void:
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
-	get_tree().paused = true
+	GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 
 func test_pressure_plate_sets_state_on_press() -> void:

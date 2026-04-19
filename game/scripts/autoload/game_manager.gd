@@ -34,6 +34,11 @@ var current_overlay: OverlayState = OverlayState.NONE
 ## Reference to the active overlay scene node (null if no overlay).
 var overlay_node: Node = null
 
+## True while a cutscene sequence is running, including the deferred frame
+## after the cutscene overlay pops. Entities should check this rather than
+## current_overlay to avoid physics trigger gaps during cutscene wind-down.
+var cutscene_active: bool = false
+
 ## Data passed between state transitions.
 ## Overwritten on each change_core_state call. Receiving scene reads in _ready().
 ## Keys vary by transition — see technical-architecture.md Section 3.3.

@@ -17,6 +17,7 @@ func after_each() -> void:
 	if GameManager.current_overlay != GameManager.OverlayState.NONE:
 		GameManager.pop_overlay()
 	get_tree().paused = false
+	GameManager.cutscene_active = false
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
 
@@ -29,11 +30,8 @@ func _make_player_body() -> CharacterBody2D:
 
 
 ## Simulate cutscene overlay state for entity guard tests.
-## Sets current_overlay and pauses tree to match push_overlay behavior
-## without requiring overlay scene loading.
 func _simulate_cutscene_state() -> void:
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
-	get_tree().paused = true
+	GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 
 # --- TreasureChest tests ---

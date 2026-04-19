@@ -75,6 +75,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		MenuState.TARGET:
 			_handle_target_input(event)
 
+	get_viewport().set_input_as_handled()
+
 
 func _handle_command_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_up"):

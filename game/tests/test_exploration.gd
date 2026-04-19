@@ -6,6 +6,9 @@ const RITUAL_METER_SCENE: PackedScene = preload("res://scenes/ui/ritual_meter.ts
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	get_tree().paused = false
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	DataManager.clear_cache()
@@ -23,6 +26,7 @@ func after_each() -> void:
 	if GameManager.current_overlay != GameManager.OverlayState.NONE:
 		GameManager.pop_overlay()
 	get_tree().paused = false
+	GameManager.cutscene_active = false
 	GameManager.transition_data = {}
 	EventFlags.clear_all()
 	DataManager.clear_cache()

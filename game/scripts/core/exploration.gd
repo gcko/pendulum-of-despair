@@ -950,6 +950,7 @@ func is_in_cutscene() -> bool:
 
 func set_in_cutscene(value: bool) -> void:
 	_in_cutscene = value
+	GameManager.cutscene_active = value
 
 
 ## Deferred callback for cutscene handler — only clears _in_cutscene if
@@ -959,6 +960,7 @@ func _deferred_clear_cutscene_flag(handler: CutsceneHandler) -> void:
 	if handler != null and handler.is_cutscene_active():
 		return
 	_in_cutscene = false
+	GameManager.cutscene_active = false
 
 
 func get_cutscene_return() -> Dictionary:

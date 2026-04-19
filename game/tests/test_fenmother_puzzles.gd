@@ -29,6 +29,7 @@ func after_each() -> void:
 	while GameManager.current_overlay != GameManager.OverlayState.NONE:
 		GameManager.pop_overlay()
 	get_tree().paused = false
+	GameManager.cutscene_active = false
 	GameManager.transition_data = {}
 	DataManager.clear_cache()
 	PartyState.members.clear()
@@ -43,8 +44,7 @@ func after_each() -> void:
 
 
 func _simulate_cutscene_state() -> void:
-	GameManager.current_overlay = GameManager.OverlayState.CUTSCENE
-	get_tree().paused = true
+	GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 
 # --- Puzzle State API ---
