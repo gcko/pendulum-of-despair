@@ -13,18 +13,18 @@ border_color = Color(0.333, 0.4, 0.667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_slot"]
 bg_color = Color(0, 0, 0.188, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_auto"]
 bg_color = Color(0, 0, 0.188, 1)
 border_width_left = 12
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.533, 0.667, 1.0, 1)
 
 [node name="SaveLoad" type="CanvasLayer"]
