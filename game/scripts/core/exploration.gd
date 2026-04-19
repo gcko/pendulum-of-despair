@@ -318,8 +318,6 @@ func _on_save_point_entered(_save_point_id: String) -> void:
 
 
 func _on_save_point_exited(_save_point_id: String) -> void:
-	if _in_cutscene:
-		return
 	PartyState.is_at_save_point = false
 
 
