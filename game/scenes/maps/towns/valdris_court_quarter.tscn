@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0urtqu4rt3r9x"]
+
+[ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
+[ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="2_npc"]
+
+[sub_resource type="RectangleShape2D" id="Shape_south_road"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_north_entrance"]
+size = Vector2(64, 16)
+
+[node name="ValdrisCourtQuarter" type="Node2D"]
+metadata/map_id = "towns/valdris_court_quarter"
+metadata/location_name = "Valdris Crown - Court Quarter"
+metadata/dungeon_id = ""
+metadata/floor_id = ""
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_tileset")
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="ElaraThane" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(160, 160)
+metadata/npc_id = "elara_thane"
+
+[node name="CourtGuard" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(320, 240)
+metadata/npc_id = "court_guard"
+
+[node name="Transitions" type="Node2D" parent="."]
+
+[node name="SouthRoad" type="Area2D" parent="Transitions"]
+position = Vector2(280, 464)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_citizens_walk"
+metadata/target_spawn = "from_court_quarter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/SouthRoad"]
+shape = SubResource("Shape_south_road")
+
+[node name="NorthEntrance" type="Area2D" parent="Transitions"]
+position = Vector2(280, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_throne_hall"
+metadata/target_spawn = "from_court_quarter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/NorthEntrance"]
+shape = SubResource("Shape_north_entrance")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(280, 440)
+
+[node name="from_citizens_walk" type="Marker2D" parent="."]
+position = Vector2(280, 440)
+
+[node name="from_throne_hall" type="Marker2D" parent="."]
+position = Vector2(280, 40)

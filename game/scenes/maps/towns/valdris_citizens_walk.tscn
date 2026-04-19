@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1t1z3nsw4lk9x"]
+
+[ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
+[ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="2_npc"]
+
+[sub_resource type="RectangleShape2D" id="Shape_south_ramp"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_north_road"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_library_door"]
+size = Vector2(32, 16)
+
+[node name="ValdrisCitizensWalk" type="Node2D"]
+metadata/map_id = "towns/valdris_citizens_walk"
+metadata/location_name = "Valdris Crown - Citizen's Walk"
+metadata/dungeon_id = ""
+metadata/floor_id = ""
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_tileset")
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Armorsmith" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(200, 160)
+metadata/npc_id = "valdris_armorsmith"
+metadata/shop_id = "valdris_crown_armorsmith"
+
+[node name="Jeweler" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(400, 160)
+metadata/npc_id = "valdris_jeweler"
+metadata/shop_id = "valdris_crown_jeweler"
+
+[node name="Specialty" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(560, 160)
+metadata/npc_id = "valdris_specialty"
+metadata/shop_id = "valdris_crown_specialty"
+
+[node name="JorinAshvale" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(480, 320)
+metadata/npc_id = "jorin_ashvale"
+
+[node name="ScholarAldisExterior" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(320, 400)
+metadata/npc_id = "scholar_aldis"
+
+[node name="Transitions" type="Node2D" parent="."]
+
+[node name="SouthRamp" type="Area2D" parent="Transitions"]
+position = Vector2(360, 624)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_lower_ward"
+metadata/target_spawn = "from_citizens_walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/SouthRamp"]
+shape = SubResource("Shape_south_ramp")
+
+[node name="NorthRoad" type="Area2D" parent="Transitions"]
+position = Vector2(360, 16)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_court_quarter"
+metadata/target_spawn = "from_citizens_walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/NorthRoad"]
+shape = SubResource("Shape_north_road")
+
+[node name="LibraryDoor" type="Area2D" parent="Transitions"]
+position = Vector2(320, 384)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_royal_library"
+metadata/target_spawn = "from_exterior"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/LibraryDoor"]
+shape = SubResource("Shape_library_door")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(360, 600)
+
+[node name="from_lower_ward" type="Marker2D" parent="."]
+position = Vector2(360, 600)
+
+[node name="from_court_quarter" type="Marker2D" parent="."]
+position = Vector2(360, 40)
+
+[node name="from_library" type="Marker2D" parent="."]
+position = Vector2(320, 400)
