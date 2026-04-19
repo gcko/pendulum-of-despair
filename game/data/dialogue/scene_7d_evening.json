@@ -14,7 +14,7 @@
       "choice": null,
       "sfx": null,
       "commands": [
-        {"type": "fade", "direction": "in", "duration": 1.0}
+        {"type": "fade", "direction": "in", "duration": 1.0, "when": "before"}
       ]
     },
     {
@@ -52,7 +52,7 @@
       "choice": null,
       "sfx": null,
       "commands": [
-        {"type": "flash", "color": [180, 180, 180], "duration": 0.1}
+        {"type": "flash", "color": [180, 180, 180], "duration": 0.1, "when": "before"}
       ]
     },
     {
@@ -77,7 +77,7 @@
       "choice": null,
       "sfx": null,
       "commands": [
-        {"type": "fade", "direction": "out", "duration": 1.5}
+        {"type": "fade", "direction": "out", "duration": 1.5, "when": "after"}
       ]
     }
   ]
