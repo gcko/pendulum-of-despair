@@ -54,7 +54,7 @@ metadata/shop_id = "valdris_crown_general"
 [node name="Weaponsmith" parent="Entities" instance=ExtResource("2_npc")]
 position = Vector2(400, 416)
 metadata/npc_id = "valdris_weaponsmith"
-metadata/shop_id = "valdris_crown_armorer"
+metadata/shop_id = "valdris_crown_weaponsmith"
 
 [node name="ChapelSave" parent="Entities" instance=ExtResource("3_save")]
 position = Vector2(96, 160)
