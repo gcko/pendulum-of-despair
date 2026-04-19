@@ -10,7 +10,9 @@ func after_each() -> void:
 
 
 func test_7b_blocked_without_7a() -> void:
-	assert_false(EventFlags.get_flag("valdris_arrived"))
+	# Verify valdris_arrived defaults to false (unset), which blocks
+	# the Scene7bTrigger via its required_flag = "valdris_arrived" metadata.
+	assert_false(EventFlags.get_flag("valdris_arrived"), "valdris_arrived should default false")
 
 
 func test_7d_blocked_with_only_two_flags() -> void:

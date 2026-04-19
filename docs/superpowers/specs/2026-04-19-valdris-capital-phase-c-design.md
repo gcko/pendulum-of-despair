@@ -23,7 +23,7 @@ dialogue line traces to `docs/story/`.
 |----------|---------|
 | `city-valdris.md` | District layouts, buildings, NPCs, shops, save points, treasure |
 | `interiors.md` | Throne hall, library, tavern upper floor tile layouts |
-| `script/act-i.md` Scene 7 | Gate arrival, throne presentation, court free-roam, evening scene |
+| `script/act-i.md` | Scene 7: Gate arrival, throne presentation, court free-roam, evening scene |
 | `events.md` | Act I flags, `pendulum_to_capital` (flag 6) |
 | `npcs.md` | NPC roles, dialogue, presence per act |
 | `economy.md` | Shop inventories, prices |

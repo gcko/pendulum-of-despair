@@ -8,7 +8,7 @@
         "The ley lines beneath the capital have lost twelve percent capacity in the last year alone.",
         "I'd like to compare readings with the Pendulum's resonance. I'll work with Cael on it."
       ],
-      "condition": "pendulum_presented AND !scene_7c_aldis",
+      "condition": "pendulum_presented AND scene_7c_aldis == 0",
       "animations": null,
       "choice": null,
       "sfx": null

@@ -13,7 +13,9 @@ func _read_file(path: String) -> String:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		return ""
-	return file.get_as_text()
+	var text: String = file.get_as_text()
+	file.close()
+	return text
 
 
 func test_existing_npcs_still_present() -> void:
