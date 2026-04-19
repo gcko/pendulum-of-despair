@@ -76,8 +76,8 @@ var character_data: Dictionary = {}
 ## Current facing direction (for animation).
 var facing_direction: Vector2 = Vector2.DOWN
 
-## Last interactable that entered the Area2D (not necessarily nearest).
-var _current_interactable: Node2D = null
+## All interactables currently overlapping the interaction Area2D.
+var _interactables_in_range: Array[Node2D] = []
 ```
 
 ### Signals
@@ -121,12 +121,13 @@ func get_facing_direction() -> Vector2
 ### Interaction Logic
 
 ```
-InteractionArea body_entered → store reference as _current_interactable
-InteractionArea body_exited  → clear _current_interactable if it matches
+InteractionArea body_entered → append to _interactables_in_range
+InteractionArea body_exited  → erase from _interactables_in_range
 
 On interact input (ui_accept):
-  if _current_interactable != null:
-    emit signal interaction_requested(_current_interactable)
+  find nearest valid node in _interactables_in_range by distance
+  if nearest != null:
+    emit signal interaction_requested(nearest)
 ```
 
 ---

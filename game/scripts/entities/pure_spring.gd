@@ -1,3 +1,4 @@
+class_name PureSpring
 extends Area2D
 ## Pure spring — fills an empty Spirit Vessel with sacred water.
 

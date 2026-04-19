@@ -5,12 +5,13 @@ signal command_selected(command: Dictionary)
 signal command_cancelled
 signal submenu_opened
 signal submenu_closed
+signal target_changed(index: int, is_enemy: bool)
+
+enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-
-enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 var _state: MenuState = MenuState.HIDDEN
 var _cursor: int = 0
@@ -66,68 +67,95 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _state == MenuState.HIDDEN:
 		return
 
+	var handled: bool = false
 	match _state:
 		MenuState.COMMAND:
-			_handle_command_input(event)
+			handled = _handle_command_input(event)
 		MenuState.SUBMENU:
-			_handle_submenu_input(event)
+			handled = _handle_submenu_input(event)
 		MenuState.TARGET:
-			_handle_target_input(event)
+			handled = _handle_target_input(event)
+
+	if handled:
+		get_viewport().set_input_as_handled()
 
 
-func _handle_command_input(event: InputEvent) -> void:
+func _handle_command_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("ui_up"):
 		_cursor = (_cursor - 1 + _commands.size()) % _commands.size()
 		_update_command_display()
-	elif event.is_action_pressed("ui_down"):
+		return true
+	if event.is_action_pressed("ui_down"):
 		_cursor = (_cursor + 1) % _commands.size()
 		_update_command_display()
-	elif event.is_action_pressed("ui_accept"):
+		return true
+	if event.is_action_pressed("ui_accept"):
 		_confirm_command()
-	elif event.is_action_pressed("ui_cancel"):
+		return true
+	if event.is_action_pressed("ui_cancel"):
 		command_cancelled.emit()
+		return true
+	return false
 
 
-func _handle_submenu_input(event: InputEvent) -> void:
+func _handle_submenu_input(event: InputEvent) -> bool:
 	if _submenu_items.is_empty():
 		if event.is_action_pressed("ui_cancel"):
 			_state = MenuState.COMMAND
 			if _submenu != null:
 				_submenu.visible = false
 			submenu_closed.emit()
-		return
+			return true
+		return false
 	if event.is_action_pressed("ui_up"):
 		_submenu_cursor = (_submenu_cursor - 1 + _submenu_items.size()) % _submenu_items.size()
 		_update_submenu_display()
-	elif event.is_action_pressed("ui_down"):
+		return true
+	if event.is_action_pressed("ui_down"):
 		_submenu_cursor = (_submenu_cursor + 1) % _submenu_items.size()
 		_update_submenu_display()
-	elif event.is_action_pressed("ui_accept"):
+		return true
+	if event.is_action_pressed("ui_accept"):
 		_confirm_submenu()
-	elif event.is_action_pressed("ui_cancel"):
+		return true
+	if event.is_action_pressed("ui_cancel"):
 		_state = MenuState.COMMAND
 		if _submenu != null:
 			_submenu.visible = false
 		submenu_closed.emit()
+		return true
+	return false
 
 
-func _handle_target_input(event: InputEvent) -> void:
+func _handle_target_input(event: InputEvent) -> bool:
+	var old_cursor: int = _target_cursor
+	var handled: bool = false
 	if _target_is_enemy:
 		if event.is_action_pressed("ui_left"):
 			_target_cursor = (_target_cursor - 1 + _target_count) % _target_count
+			handled = true
 		elif event.is_action_pressed("ui_right"):
 			_target_cursor = (_target_cursor + 1) % _target_count
+			handled = true
 	else:
 		if event.is_action_pressed("ui_up"):
 			_target_cursor = (_target_cursor - 1 + _target_count) % _target_count
+			handled = true
 		elif event.is_action_pressed("ui_down"):
 			_target_cursor = (_target_cursor + 1) % _target_count
+			handled = true
+
+	if _target_cursor != old_cursor:
+		target_changed.emit(_target_cursor, _target_is_enemy)
 
 	if event.is_action_pressed("ui_accept"):
 		_pending_command["target"] = _target_cursor
+		target_changed.emit(-1, _target_is_enemy)  # Hide arrow
 		command_selected.emit(_pending_command)
 		hide_menu()
-	elif event.is_action_pressed("ui_cancel"):
+		return true
+	if event.is_action_pressed("ui_cancel"):
+		target_changed.emit(-1, _target_is_enemy)  # Hide arrow
 		if _pending_command.get("type", "") == "attack":
 			_state = MenuState.COMMAND
 			submenu_closed.emit()
@@ -135,6 +163,8 @@ func _handle_target_input(event: InputEvent) -> void:
 			_state = MenuState.SUBMENU
 			if _submenu != null:
 				_submenu.visible = true
+		return true
+	return handled
 
 
 func _confirm_command() -> void:
@@ -166,6 +196,7 @@ func _start_target_selection(is_enemy: bool, count: int = 0) -> void:
 	_target_count = maxi(1, count if count > 0 else _target_count)
 	_state = MenuState.TARGET
 	submenu_opened.emit()
+	target_changed.emit(0, is_enemy)
 
 
 func _show_submenu() -> void:

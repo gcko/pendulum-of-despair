@@ -1,3 +1,4 @@
+class_name PitfallZone
 extends Area2D
 ## Pitfall zone — triggers map transition when player steps on cracked tile.
 ## One-shot per visit (runtime only, not persisted).
@@ -22,6 +23,11 @@ func _on_body_entered(body: Node2D) -> void:
 	if _has_triggered or _target_map_id.is_empty():
 		return
 	if not body.is_in_group("player"):
+		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
 		return
 	_has_triggered = true
 	pitfall_triggered.emit(_target_map_id, _target_spawn)

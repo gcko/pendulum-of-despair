@@ -1,3 +1,4 @@
+class_name PressurePlate
 extends Area2D
 ## Pressure plate — one-shot toggle on body_entered. Opens connected WaterZone doors.
 
@@ -31,6 +32,11 @@ func _on_body_entered(body: Node2D) -> void:
 	if _plate_id.is_empty() or _is_pressed:
 		return
 	if not body.is_in_group("player"):
+		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
 		return
 	_is_pressed = true
 	PartyState.set_puzzle_state(_dungeon_id, "%s_pressed" % _plate_id, true)

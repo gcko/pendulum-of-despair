@@ -16,9 +16,12 @@ const COLOR_MISS: Color = Color("#888888")
 const COLOR_CRIT: Color = Color("#ffff44")
 
 var _manager: Node = null
+var _battle_state: Node = null
+var _atb_system: Node = null
 var _message_timer: float = 0.0
 var _enemy_positions: Array[Vector2] = []
 var _results_showing: bool = false
+var _target_arrow: Label = null
 
 @onready var _party_panel: PanelContainer = $PartyPanel
 @onready var _command_menu: PanelContainer = $CommandMenu
@@ -30,6 +33,8 @@ var _results_showing: bool = false
 ## Called by battle_manager to inject itself — "call down" pattern.
 func initialize(manager: Node) -> void:
 	_manager = manager
+	_battle_state = manager.get_node_or_null("BattleState")
+	_atb_system = manager.get_node_or_null("ATBSystem")
 	manager.battle_started.connect(_on_battle_started)
 	manager.turn_ready.connect(_on_turn_ready)
 	manager.damage_dealt.connect(_on_damage_dealt)
@@ -40,11 +45,19 @@ func initialize(manager: Node) -> void:
 
 
 func _ready() -> void:
+	# Create target arrow indicator
+	_target_arrow = Label.new()
+	_target_arrow.text = ">"
+	_target_arrow.modulate = Color("#ffff88")
+	_target_arrow.visible = false
+	add_child(_target_arrow)
+
 	if _command_menu != null:
 		_command_menu.command_selected.connect(_on_command_selected)
 		_command_menu.command_cancelled.connect(_on_command_cancelled)
 		_command_menu.submenu_opened.connect(_on_submenu_opened)
 		_command_menu.submenu_closed.connect(_on_submenu_closed)
+		_command_menu.target_changed.connect(_on_target_changed)
 
 	if _message_area != null:
 		_message_area.visible = false
@@ -62,7 +75,11 @@ func _process(delta: float) -> void:
 	_update_party_panel()
 
 
-func _on_battle_started(_party: Array, _enemies: Array, enemy_positions: Array) -> void:
+func _on_battle_started(
+	_party: Array,
+	_enemies: Array,
+	enemy_positions: Array,
+) -> void:
 	_enemy_positions = []
 	for pos: Variant in enemy_positions:
 		_enemy_positions.append(pos as Vector2)
@@ -105,6 +122,25 @@ func _on_submenu_opened() -> void:
 
 func _on_submenu_closed() -> void:
 	submenu_state_changed.emit(false)
+
+
+func _on_target_changed(index: int, is_enemy: bool) -> void:
+	if _target_arrow == null:
+		return
+	if index < 0:
+		_target_arrow.visible = false
+		return
+	if is_enemy and index < _enemy_positions.size():
+		_target_arrow.visible = true
+		var vp: Viewport = get_viewport()
+		var world_pos: Vector2 = _enemy_positions[index]
+		var arrow_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
+		_target_arrow.position = arrow_pos - Vector2(32, 8)
+	elif not is_enemy:
+		_target_arrow.visible = true
+		_target_arrow.position = Vector2(40, 480 + index * 60)
+	else:
+		_target_arrow.visible = false
 
 
 func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> void:
@@ -150,17 +186,13 @@ func _on_combatant_died(_combatant_id: String) -> void:
 
 
 func _update_party_panel() -> void:
-	if _party_panel == null or _manager == null:
-		return
-	var state: Node = _manager.get_node_or_null("BattleState")
-	var atb: Node = _manager.get_node_or_null("ATBSystem")
-	if state == null or atb == null:
+	if _party_panel == null or _battle_state == null or _atb_system == null:
 		return
 	var m: Array = []
 	var g: Dictionary = {}
 	for i: int in range(4):
-		m.append(state.get_member(i))
-		g["party_%d" % i] = atb.get_gauge("party_%d" % i)
+		m.append(_battle_state.get_member(i))
+		g["party_%d" % i] = _atb_system.get_gauge("party_%d" % i)
 	_party_panel.update_party(m, g)
 
 
@@ -170,13 +202,15 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	label.modulate = color
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
-	var pos: Vector2 = _get_target_position(target_id)
-	label.position = pos - Vector2(80, 64)
+	var world_pos: Vector2 = _get_target_position(target_id)
+	var vp: Viewport = get_viewport()
+	var screen_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
+	label.position = screen_pos - Vector2(80, 64)
 	add_child(label)
 
 	var tween: Tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(label, "position:y", pos.y - 128, 0.5)
+	tween.tween_property(label, "position:y", screen_pos.y - 128, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)
 
@@ -211,7 +245,9 @@ func _show_results(rewards: Dictionary) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _results_showing and event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		var vp: Viewport = get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 		_results_panel.visible = false
 		_results_showing = false
 		results_dismissed.emit()

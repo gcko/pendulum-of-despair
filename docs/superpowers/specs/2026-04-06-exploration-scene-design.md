@@ -89,7 +89,7 @@ var _last_flash_id: String = ""
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
-@onready var _location_flash: CanvasLayer = $LocationFlash
+@onready var _location_panel: PanelContainer = $LocationFlash/LocationLabel
 @onready var _location_label: Label = $LocationFlash/LocationLabel/NameLabel
 ```
 
@@ -139,7 +139,7 @@ When entities are placed in a map, exploration.gd connects their signals:
 - Follows player position every frame
 - `position_smoothing_enabled = false` (pixel-perfect, no interpolation)
 - Snaps to pixel grid: `position = player.position.round()`
-- No zoom (integer 1x only at 320x180)
+- 4x zoom set in exploration.tscn (effective 320x180 game world within 1280x720 viewport)
 - No camera limits in MVP (deferred to gap 4.1 with real TileMapLayer maps)
 
 ### Location Name Flash
@@ -165,7 +165,7 @@ test_room (Node2D)
 │   └── TestSavePoint (SavePoint) — metadata/save_point_id
 ├── Transitions (Node2D)
 │   └── ExitEast (Area2D)         — metadata/target_map="test_room_2", collision_mask=2
-└── PlayerSpawn (Marker2D)        — position (80, 90)
+└── PlayerSpawn (Marker2D)        — position (80, 96)
 ```
 
 A second test room for map transitions:

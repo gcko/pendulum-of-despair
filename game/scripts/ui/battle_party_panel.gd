@@ -13,8 +13,10 @@ var _active_slot: int = -1
 
 
 func _ready() -> void:
+	var rows_container: VBoxContainer = get_node_or_null("Rows")
 	for i: int in range(4):
-		var row: HBoxContainer = get_node_or_null("Row%d" % i)
+		var path: String = "Rows/Row%d" % i if rows_container != null else "Row%d" % i
+		var row: HBoxContainer = get_node_or_null(path)
 		_rows[i] = row
 
 
@@ -56,7 +58,7 @@ func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
 	var atb_bar: ColorRect = row.get_node_or_null("ATBBar")
 	if atb_bar != null:
 		var fill_ratio: float = clampf(float(atb_gauge) / 16000.0, 0.0, 1.0)
-		atb_bar.custom_minimum_size.x = fill_ratio * 20.0
+		atb_bar.custom_minimum_size.x = fill_ratio * 80.0
 		atb_bar.color = COLOR_ATB_FILL
 
 

@@ -12,7 +12,6 @@ signal flee_result(success: bool)
 signal message(text: String)
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
-const BattleAI = preload("res://scripts/combat/battle_ai.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
@@ -23,16 +22,13 @@ var _boss_flag: String = ""
 var _formation_type: String = "normal"
 var _enemies: Array[Node] = []
 var _battle_active: bool = false
+var _battle_resolved: bool = false
 var _awaiting_input_for: String = ""
 var _earned_xp: int = 0
 var _earned_gold: int = 0
 var _earned_drops: Array[Dictionary] = []
-var _vg_last_action: String = ""
-var _vg_reconstructed: bool = false
 var _turn_counter: int = 0
-var _fm_surface_count: int = 0
-var _fm_diving: bool = false
-var _fm_spawned_adds: bool = false
+var _enemy_turn: BattleEnemyTurn
 var _wave_num: int = -1
 var _cleansing_origin_position: Variant = null
 var _encounter_source: String = ""
@@ -45,6 +41,7 @@ var _ritual_meter_value: float = 100.0
 
 
 func _ready() -> void:
+	_enemy_turn = BattleEnemyTurn.new(self, _state, _atb, _enemy_area)
 	if _ui == null:
 		push_error("BattleManager: BattleUI not found")
 		call_deferred("_exit_battle", "flee")
@@ -71,7 +68,7 @@ func _ready() -> void:
 	_ritual_meter_value = data.get("ritual_meter_value", 100.0)
 	if _encounter_source == "cleansing_wave":
 		_is_boss = true
-	var encounter_group: Array = data.get("encounter_group", [])
+	var encounter_group: Array = data.get("encounter_group", [])  # Variant from JSON
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
 		call_deferred("_exit_battle", "flee")
@@ -84,7 +81,9 @@ func _ready() -> void:
 			if not _state.get_member(i).is_empty():
 				_state.swap_row(i)
 	_battle_active = true
-	var ps: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
+	var ps: Array = []
+	for i: int in range(4):
+		ps.append(_state.get_member(i))
 	var es: Array = []
 	var pos: Array[Vector2] = []
 	for e: Node in _enemies:
@@ -94,15 +93,18 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if not _battle_active:
+	if not _battle_active or _battle_resolved:
 		return
 	if not _atb.should_pause_timers():
 		for i: int in range(4):
 			_state.tick_realtime_statuses(i, delta)
 	_atb.tick(delta)
 	_check_end_conditions()
-	if not _battle_active:
+	if _battle_resolved:
 		return
+	# Process one action per frame to respect ATB pacing.
+	# Party members get input prompt; only one enemy acts per frame.
+	var enemy_acted: bool = false
 	for id: String in _atb.get_ready_queue():
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			_awaiting_input_for = id
@@ -115,12 +117,15 @@ func _process(delta: float) -> void:
 			var char_data: Dictionary = member.get("character_data", {})
 			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
 			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
-		elif id.begins_with("enemy_"):
-			_execute_enemy_turn(id)
+			break
+		elif id.begins_with("enemy_") and not enemy_acted:
+			_turn_counter = _enemy_turn.execute(id, _enemies, _is_boss, _turn_counter)
 			_atb.reset_gauge(id)
 			_check_end_conditions()
-			if not _battle_active:
+			if _battle_resolved:
 				return
+			enemy_acted = true
+			break
 
 
 func _on_ui_command(command: Dictionary) -> void:
@@ -219,7 +224,13 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		if target_type == "single_ally":
 			var tgt: int = command.get("target", 0)
-			damage_dealt.emit("party_%d" % tgt, _state.heal(tgt, heal_amt), "heal")
+			var tm: Dictionary = _state.get_member(tgt)
+			if tm.is_empty() or not tm.get("is_alive", false):
+				message.emit("No effect!")
+				return true
+			var healed: int = _state.heal(tgt, heal_amt)
+			if healed > 0:
+				damage_dealt.emit("party_%d" % tgt, healed, "heal")
 		else:
 			for i: int in range(4):
 				var m: Dictionary = _state.get_member(i)
@@ -254,7 +265,16 @@ func _do_item(command: Dictionary) -> void:
 	message.emit("Used %s!" % item.get("name", "Item"))
 	match item.get("effect_type", ""):
 		"restore_hp":
-			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100))
+			var can_revive: bool = item.get("can_revive", false)
+			var tgt_m: Dictionary = _state.get_member(target_slot)
+			if not tgt_m.get("is_alive", true) and not can_revive:
+				message.emit("No effect!")
+				return
+			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
+			if actual > 0:
+				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
+		"revive":
+			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
 			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))
@@ -275,7 +295,10 @@ func _do_defend(actor_id: String) -> void:
 
 
 func _do_flee() -> void:
-	var alive_enemies: Array = _enemies.filter(func(e: Node) -> bool: return e.is_alive)
+	var alive_enemies: Array[Node] = []
+	for e: Node in _enemies:
+		if e.is_alive:
+			alive_enemies.append(e)
 	var enemy_spd_sum: float = alive_enemies.reduce(
 		func(acc: float, e: Node) -> float: return acc + e.get_stats().get("spd", 10), 0.0
 	)
@@ -291,130 +314,9 @@ func _do_flee() -> void:
 		flee_result.emit(false)
 
 
-func _execute_enemy_turn(enemy_id: String) -> void:
-	var idx: int = enemy_id.replace("enemy_", "").to_int()
-	if idx < 0 or idx >= _enemies.size():
-		return
-	var enemy: Node = _enemies[idx]
-	if not enemy.is_alive:
-		return
-	var pm: Array = range(4).map(func(i: int) -> Dictionary: return _state.get_member(i))
-	var pr: Array = pm.map(
-		func(m: Dictionary) -> String: return m.get("row", "front") if not m.is_empty() else "front"
-	)
-	var action: Dictionary
-	if _is_boss and enemy.enemy_data.get("id", "") == "vein_guardian":
-		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		action = BattleAI.get_vein_guardian_action(
-			_state, _turn_counter, hp_ratio, _vg_last_action, _vg_reconstructed
-		)
-	elif _is_boss and enemy.enemy_data.get("id", "") == "drowned_sentinel":
-		action = BattleAI.get_drowned_sentinel_action(_state, _turn_counter)
-	elif _is_boss and enemy.enemy_data.get("id", "") == "corrupted_fenmother":
-		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		var alive_spawns: Array = _enemies.filter(
-			func(e: Node) -> bool:
-				return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
-		)
-		var active_adds: int = alive_spawns.size()
-		action = BattleAI.get_corrupted_fenmother_action(
-			_state,
-			_turn_counter,
-			hp_ratio,
-			_fm_surface_count,
-			_fm_diving,
-			_fm_spawned_adds,
-			active_adds
-		)
-	elif enemy.enemy_data.get("is_mini_boss", false) or not _is_boss:
-		action = BattleAI.select_action(enemy.enemy_data, pm, pr)
-	else:
-		action = BattleAI.select_boss_action(enemy.enemy_data, enemy.current_hp, pm, pr)
-	if enemy.enemy_data.get("id", "") == "vein_guardian":
-		_vg_last_action = action.get("id", "")
-		if action.get("id", "") == "reconstruct":
-			_vg_reconstructed = true
-	if enemy.enemy_data.get("id", "") == "corrupted_fenmother":
-		var aid: String = action.get("id", "")
-		if aid == "spawn_adds":
-			_fm_spawned_adds = true
-			_fm_surface_count += 1
-		elif aid == "start_dive":
-			_fm_diving = true
-			_fm_surface_count = 0
-		elif aid == "dive":
-			_fm_surface_count += 1
-		elif aid == "resurface":
-			_fm_diving = false
-			_fm_surface_count = 0
-		else:
-			_fm_surface_count += 1
-	_turn_counter += 1
-	var atype: String = action.get("type", "")
-	if atype == "spawn":
-		var spawn_ids: Array = action.get("enemies", [])
-		var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
-		for sid: String in spawn_ids:
-			var new_enemy: Node = ENEMY_SCENE.instantiate()
-			_enemy_area.add_child(new_enemy)
-			new_enemy.initialize(sid, act)
-			new_enemy.position = Vector2(randi() % 200 + 50, randi() % 100 + 20)
-			_enemies.append(new_enemy)
-			var eid: String = "enemy_%d" % (_enemies.size() - 1)
-			_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
-		message.emit("Corrupted Spawns emerge from the depths!")
-		enemy.tick_statuses()
-		return
-	if atype == "skip":
-		var skip_id: String = action.get("id", "")
-		if skip_id == "start_dive":
-			message.emit("The Fenmother dives beneath the surface!")
-			enemy.set_meta("untargetable", true)
-		elif skip_id == "resurface":
-			message.emit("The Fenmother resurfaces!")
-			enemy.set_meta("untargetable", false)
-		enemy.tick_statuses()
-		return
-	if atype == "ability" and action.get("target", "") == "self":
-		message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
-		enemy.tick_statuses()
-		return
-	if atype == "heal" and action.get("target", "") == "self":
-		var heal_amount: int = action.get("value", 0)
-		enemy.current_hp = mini(enemy.current_hp + heal_amount, enemy.enemy_data.get("hp", 1))
-		damage_dealt.emit("enemy_%d" % idx, heal_amount, "heal")
-	elif atype in ["attack", "ability"]:
-		if atype == "ability":
-			_state.gain_weave_gauge_for_maren(15)
-		var elem: String = action.get("element", "")
-		if action.get("target", "") == "all":
-			message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "ability")])
-			for i: int in range(4):
-				var m: Dictionary = _state.get_member(i)
-				if not m.is_empty() and m.get("is_alive", false):
-					var result: Dictionary
-					if not elem.is_empty():
-						var pwr: int = action.get("power", 10)
-						result = BattleActions.execute_enemy_magic(_state, enemy, i, elem, pwr)
-					else:
-						result = BattleActions.execute_enemy_attack(_state, enemy, i)
-					damage_dealt.emit(
-						"party_%d" % i, result.get("damage", 0), result.get("type", "miss")
-					)
-		else:
-			var tgt: int = action.get("target_slot", 0)
-			var tgt_name: String = _state.get_member(tgt).get("character_data", {}).get(
-				"name", "???"
-			)
-			message.emit("%s attacks %s!" % [enemy.get_display_name(), tgt_name])
-			var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, tgt)
-			damage_dealt.emit("party_%d" % tgt, result.get("damage", 0), result.get("type", "miss"))
-	enemy.tick_statuses()
-
-
 func _check_end_conditions() -> void:
 	if _enemies.all(func(e: Node) -> bool: return not e.is_alive):
-		_battle_active = false
+		_battle_resolved = true
 		_awaiting_input_for = ""
 		_earned_drops = []
 		for e: Node in _enemies:
@@ -444,8 +346,12 @@ func _count_ko_party_members() -> int:
 
 
 func _exit_battle(result: String) -> void:
+	if not _battle_active:
+		return
 	_battle_active = false
 	_awaiting_input_for = ""
+	# Sync battle damage/healing back to PartyState
+	_sync_party_hp_mp()
 	var t: Dictionary = {
 		"result": result,
 		"map_id": _return_map_id,
@@ -471,6 +377,16 @@ func _exit_battle(result: String) -> void:
 	GameManager.change_core_state(GameManager.CoreState.EXPLORATION, t)
 
 
+func _sync_party_hp_mp() -> void:
+	var active: Array[Dictionary] = PartyState.get_active_party()
+	for i: int in range(mini(active.size(), 4)):
+		var battle_member: Dictionary = _state.get_member(i)
+		if battle_member.is_empty() or active[i].is_empty():
+			continue
+		active[i]["current_hp"] = battle_member.get("current_hp", active[i].get("current_hp", 0))
+		active[i]["current_mp"] = battle_member.get("current_mp", active[i].get("current_mp", 0))
+
+
 func _setup_party() -> void:
 	var active: Array[Dictionary] = PartyState.get_active_party()
 	for i: int in range(active.size()):
@@ -480,13 +396,10 @@ func _setup_party() -> void:
 			_atb.add_combatant("party_%d" % i, effective_spd, false)
 
 
+## @param encounter_group Array[String] — enemy IDs from JSON encounter data.
 func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
-	_vg_last_action = ""
-	_vg_reconstructed = false
 	_turn_counter = 0
-	_fm_surface_count = 0
-	_fm_diving = false
-	_fm_spawned_adds = false
+	_enemy_turn.reset()
 	for i: int in range(mini(6, encounter_group.size())):
 		var e: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(e)

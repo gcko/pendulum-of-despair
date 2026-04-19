@@ -101,11 +101,21 @@ func test_heal_clamps_to_max() -> void:
 	assert_eq(_state.get_member(0)["current_hp"], 95)
 
 
-func test_heal_revives_dead_member() -> void:
+func test_heal_does_not_revive_dead_member() -> void:
 	_state.add_member(0, _make_char_data())
 	_state.take_damage(0, 200)
 	assert_false(_state.get_member(0)["is_alive"])
-	_state.heal(0, 50)
+	var actual: int = _state.heal(0, 50)
+	assert_eq(actual, 0, "regular heal should not affect KO'd member")
+	assert_false(_state.get_member(0)["is_alive"])
+
+
+func test_heal_with_revive_flag_revives_dead_member() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.take_damage(0, 200)
+	assert_false(_state.get_member(0)["is_alive"])
+	var actual: int = _state.heal(0, 50, true)
+	assert_true(actual > 0, "revive heal should restore HP")
 	assert_true(_state.get_member(0)["is_alive"])
 
 
@@ -376,3 +386,27 @@ func test_defend_buff_cycle() -> void:
 	assert_eq(_state.get_member(0).get("damage_taken_mult", 1.0), 0.5, "set to 0.5")
 	_state.set_buff(0, "damage_taken_mult", 1.0)
 	assert_eq(_state.get_member(0).get("damage_taken_mult", 1.0), 1.0, "cleared to 1.0")
+
+
+# --- Heal on KO'd Member (v35) ---
+
+
+func test_heal_on_kod_member_returns_zero_no_signal() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.take_damage(0, 999)
+	assert_false(_state.get_member(0)["is_alive"], "member is KO'd")
+	watch_signals(_state)
+	var actual: int = _state.heal(0, 50)
+	assert_eq(actual, 0, "heal on KO'd without revive returns 0")
+	assert_signal_not_emitted(_state, "member_healed", "no healed signal for KO'd target")
+
+
+func test_heal_on_kod_member_with_revive_heals() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.take_damage(0, 999)
+	assert_false(_state.get_member(0)["is_alive"])
+	watch_signals(_state)
+	var actual: int = _state.heal(0, 50, true)
+	assert_gt(actual, 0, "revive heal restores HP")
+	assert_true(_state.get_member(0)["is_alive"], "member revived")
+	assert_signal_emitted(_state, "member_revived", "revive signal emitted")

@@ -5,13 +5,24 @@ const PLATE_SCENE: PackedScene = preload("res://scenes/entities/pressure_plate.t
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	GameManager.transition_data = {}
+	EventFlags.clear_all()
+	DataManager.clear_cache()
 	PartyState.puzzle_state.clear()
 	PartyState.initialize_new_game()
 
 
 func after_each() -> void:
-	PartyState.puzzle_state.clear()
+	while GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	get_tree().paused = false
+	GameManager.cutscene_active = false
+	GameManager.transition_data = {}
 	EventFlags.clear_all()
+	DataManager.clear_cache()
+	PartyState.puzzle_state.clear()
 
 
 func _make_mock_body() -> CharacterBody2D:
@@ -19,6 +30,10 @@ func _make_mock_body() -> CharacterBody2D:
 	body.add_to_group("player")
 	add_child_autofree(body)
 	return body
+
+
+func _simulate_cutscene_state() -> void:
+	GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 
 func test_pressure_plate_sets_state_on_press() -> void:
@@ -57,6 +72,17 @@ func test_pressure_plate_restores_state() -> void:
 	add_child_autofree(plate)
 	plate.initialize("test_plate", "ember_vein")
 	assert_true(plate._is_pressed, "Plate should restore pressed state from puzzle_state")
+
+
+func test_pressure_plate_blocked_during_cutscene() -> void:
+	var plate: Node = PLATE_SCENE.instantiate()
+	add_child_autofree(plate)
+	plate.initialize("test_plate", "ember_vein")
+	_simulate_cutscene_state()
+	watch_signals(plate)
+	plate._on_body_entered(_make_mock_body())
+	assert_false(plate._is_pressed, "Plate should not press during cutscene")
+	assert_signal_not_emitted(plate, "plate_pressed", "Signal should not emit during cutscene")
 
 
 func test_mine_water_vial_pickup_adds_key_item() -> void:

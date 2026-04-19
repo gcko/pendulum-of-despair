@@ -8,6 +8,9 @@ extends Node
 signal core_state_changed(new_state: CoreState)
 signal overlay_state_changed(new_state: OverlayState)
 
+enum CoreState { TITLE, EXPLORATION, BATTLE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
+
 ## Scene file paths for core states.
 const CORE_SCENES: Dictionary = {
 	CoreState.TITLE: "res://scenes/core/title.tscn",
@@ -24,15 +27,17 @@ const OVERLAY_SCENES: Dictionary = {
 	OverlayState.SHOP: "res://scenes/overlay/shop_overlay.tscn",
 }
 
-enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
-
 ## Current active states.
 var current_core: CoreState = CoreState.TITLE
 var current_overlay: OverlayState = OverlayState.NONE
 
 ## Reference to the active overlay scene node (null if no overlay).
 var overlay_node: Node = null
+
+## True while a cutscene sequence is running, including the deferred frame
+## after the cutscene overlay pops. Entities should check this rather than
+## current_overlay to avoid physics trigger gaps during cutscene wind-down.
+var cutscene_active: bool = false
 
 ## Data passed between state transitions.
 ## Overwritten on each change_core_state call. Receiving scene reads in _ready().
@@ -56,13 +61,15 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 		return
 
 	var old_data: Dictionary = transition_data
+	var old_core: CoreState = current_core
 	transition_data = data
+	current_core = new_state
 	var err: Error = get_tree().change_scene_to_file(scene_path)
 	if err != OK:
 		push_error("GameManager: Failed to change scene to %s (error %d)" % [scene_path, err])
 		transition_data = old_data
+		current_core = old_core
 		return
-	current_core = new_state
 	core_state_changed.emit(new_state)
 
 
@@ -74,23 +81,37 @@ func push_overlay(state: OverlayState) -> bool:
 		push_error("GameManager: Invalid overlay state: %s" % state)
 		return false
 
+	var did_silent_pop: bool = false
 	if current_overlay != OverlayState.NONE:
 		if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
-			pop_overlay()  # Cutscene takes priority over dialogue
+			pop_overlay(true)  # Silent pop — CUTSCENE replaces NONE
+			did_silent_pop = true
 		else:
 			return false
 
 	var scene_path: String = OVERLAY_SCENES[state]
 	if not ResourceLoader.exists(scene_path):
 		push_error("GameManager: Overlay scene not found: %s" % scene_path)
+		if did_silent_pop:
+			get_tree().paused = false
+			overlay_state_changed.emit(OverlayState.NONE)
 		return false
 	var resource: Resource = load(scene_path)
 	if not resource is PackedScene:
 		push_error("GameManager: Failed to load overlay: %s" % scene_path)
+		if did_silent_pop:
+			get_tree().paused = false
+			overlay_state_changed.emit(OverlayState.NONE)
 		return false
 
-	current_overlay = state
 	var scene: Node = (resource as PackedScene).instantiate()
+	if scene == null:
+		push_error("GameManager: Failed to instantiate overlay: %s" % scene_path)
+		get_tree().paused = false
+		if did_silent_pop:
+			overlay_state_changed.emit(OverlayState.NONE)
+		return false
+	current_overlay = state
 	scene.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(scene)
 	overlay_node = scene
@@ -100,13 +121,18 @@ func push_overlay(state: OverlayState) -> bool:
 
 
 ## Remove the active overlay and unpause the core state.
-func pop_overlay() -> void:
+## When silent is true, skips BOTH the NONE signal emission AND the
+## unpause (used during force-replacement so the tree stays paused
+## continuously and the replacement state signal is the only one
+## listeners see, preventing premature completion logic).
+func pop_overlay(silent: bool = false) -> void:
 	if overlay_node:
 		overlay_node.queue_free()
 		overlay_node = null
 	current_overlay = OverlayState.NONE
-	overlay_state_changed.emit(OverlayState.NONE)
-	get_tree().paused = false
+	if not silent:
+		overlay_state_changed.emit(OverlayState.NONE)
+		get_tree().paused = false
 
 
 ## Deferred helper: push save overlay after the menu overlay is freed.

@@ -10,6 +10,9 @@ const RITUAL_METER_SCRIPT: GDScript = preload("res://scripts/ui/ritual_meter.gd"
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	GameManager.transition_data = {}
 	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
@@ -23,6 +26,11 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	while GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	get_tree().paused = false
+	GameManager.cutscene_active = false
+	GameManager.transition_data = {}
 	DataManager.clear_cache()
 	PartyState.members.clear()
 	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
@@ -33,6 +41,10 @@ func after_each() -> void:
 	PartyState.ley_crystals.clear()
 	PartyState.puzzle_state.clear()
 	EventFlags.clear_all()
+
+
+func _simulate_cutscene_state() -> void:
+	GameManager.push_overlay(GameManager.OverlayState.CUTSCENE)
 
 
 # --- Puzzle State API ---
@@ -419,6 +431,18 @@ func test_damage_zone_signal_emitted() -> void:
 	watch_signals(zone)
 	zone._apply_tick()
 	assert_signal_emitted(zone, "zone_damage_dealt")
+
+
+func test_damage_zone_blocked_during_cutscene() -> void:
+	var zone: Area2D = DAMAGE_ZONE_SCENE.instantiate()
+	add_child_autofree(zone)
+	zone.initialize("test_pool", 10, 1.0, "")
+	_simulate_cutscene_state()
+	var body: CharacterBody2D = CharacterBody2D.new()
+	body.add_to_group("player")
+	add_child_autofree(body)
+	zone._on_body_entered(body)
+	assert_false(zone._player_inside, "Player should not register inside during cutscene")
 
 
 func test_damage_zone_no_damage_after_exit() -> void:

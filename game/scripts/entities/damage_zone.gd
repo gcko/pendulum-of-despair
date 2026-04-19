@@ -1,3 +1,4 @@
+class_name DamageZone
 extends Area2D
 ## Poison damage zone — deals periodic damage to party while player stands in it.
 
@@ -44,10 +45,16 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if zone_id.is_empty():
 		return
-	if body.is_in_group("player"):
-		_player_inside = true
-		_status_applied = false
-		_timer.start()
+	if not body.is_in_group("player"):
+		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
+		return
+	_player_inside = true
+	_status_applied = false
+	_timer.start()
 
 
 func _on_body_exited(body: Node2D) -> void:
@@ -57,8 +64,13 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_tick() -> void:
-	if _player_inside:
-		_apply_tick()
+	if not _player_inside:
+		return
+	if GameManager.current_overlay == GameManager.OverlayState.CUTSCENE:
+		return
+	if GameManager.cutscene_active:
+		return
+	_apply_tick()
 
 
 func _apply_tick() -> void:

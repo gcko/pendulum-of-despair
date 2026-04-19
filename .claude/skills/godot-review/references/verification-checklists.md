@@ -12,6 +12,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] All variable declarations use `: Type` or `:= value` inference
 - [ ] No bare `var x = value` without type (use `var x: Type = value`)
 - [ ] No use of `Variant` where a concrete type is known
+- [ ] Scene scripts passed via constructor injection (e.g., `_init(exploration: Node2D)`) should use the concrete type if the script has `class_name`. If the script lacks `class_name`, consider adding one (non-autoload scripts only) so helpers like CutsceneHandler/CleansingSequence get full static type safety instead of `Node2D`.
 
 ### Naming Conventions (per GDScript style guide)
 - [ ] Functions: snake_case (`func open_chest()`)
@@ -156,7 +157,13 @@ Reference for all review agents. Check every applicable item.
 - [ ] Destructive test operations (delete) must assert preconditions (file exists) before testing deletion
 - [ ] Tests must use BOTH `before_each()` AND `after_each()` cleanup — after_each alone doesn't protect against pre-existing state from previous test runs
 - [ ] After gdformat runs, re-read the output for `(obj\n. method(...))` line continuations — extract inline data into helpers to keep calls on one line
-
+- [ ] Every helper function in a test file must be called by at least one test — unused helpers are dead code. Run `grep -n "func _" <file>` then verify each is referenced.
+- [ ] Every local variable declared in a test must be used — `var x = ...` with no subsequent reference is dead code.
+- [ ] Tests that call `call_deferred()` indirectly (via `load_map` which schedules deferred calls) must flush the deferred queue with `await get_tree().process_frame` before test ends, or the deferred call leaks into cleanup/next test.
+- [ ] RefCounted helper fields stored on the owning class should use the concrete type (e.g., `var _handler: MyHandler`), not `RefCounted`, to preserve static type safety.
+- [ ] Test before_each/after_each must use lifecycle methods (e.g., `GameManager.pop_overlay()`) instead of directly assigning singleton fields (e.g., `current_overlay = NONE`) — direct assignment skips cleanup logic (freeing overlay_node, unpausing tree).
+- [ ] Test assertions must use the method that matches test intent — `has_flag()` to prove a flag was never stored, `get_flag()` to check value. Using the wrong method can produce false passes (e.g., `get_flag("")` returns `false` default even when the key exists with a falsey value).
+- [ ] Test BODY setup that needs overlay state (e.g., simulating CUTSCENE) should use `GameManager.push_overlay()` / `pop_overlay()` rather than directly assigning `GameManager.current_overlay`. Direct assignment bypasses overlay lifecycle (pause state, overlay_node creation/free, overlay_state_changed signal), making tests diverge from production behavior. If push_overlay has unwanted side effects for a unit test, create a test helper that wraps the setup/teardown pattern.
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 
 **HOW TO USE:** For each item, write the file:line and your answer. Do NOT

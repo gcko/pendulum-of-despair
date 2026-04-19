@@ -7,6 +7,8 @@ extends RefCounted
 
 ## Select an action for a regular enemy.
 ## Returns: {type: "attack"|"ability"|"defend", target_slot: int, ability_id: String}
+## @param party_members Array[Dictionary] — party member data dicts (may be null for empty slots).
+## @param party_rows Array[String] — "front" or "back" per slot.
 static func select_action(
 	enemy_data: Dictionary, party_members: Array, party_rows: Array
 ) -> Dictionary:
@@ -38,6 +40,8 @@ static func select_action(
 
 
 ## Select boss action (stub — returns basic attack).
+## @param party_members Array[Dictionary] — party member data dicts (may be null for empty slots).
+## @param party_rows Array[String] — "front" or "back" per slot.
 static func select_boss_action(
 	enemy_data: Dictionary, current_hp: int, party_members: Array, party_rows: Array
 ) -> Dictionary:
@@ -56,6 +60,8 @@ static func select_boss_action(
 
 
 ## Pick a physical attack target. Prefers front row (75/25 split).
+## @param living_slots Array[int] — indices of living party members.
+## @param party_rows Array[String] — "front" or "back" per slot.
 static func _pick_physical_target(living_slots: Array, party_rows: Array) -> int:
 	var front: Array[int] = []
 	var back: Array[int] = []
@@ -88,7 +94,7 @@ static func pick_alive_target(state: Node) -> int:
 	for i: int in range(4):
 		if state.get_member(i).get("is_alive", false):
 			alive.append(i)
-	return alive[randi() % alive.size()] if not alive.is_empty() else 0
+	return alive[randi() % alive.size()] if not alive.is_empty() else -1
 
 
 ## Vein Guardian scripted AI (hardcoded, tech debt).
@@ -184,7 +190,7 @@ static func get_corrupted_fenmother_action(
 
 ## Pick the living party member with the lowest current HP.
 static func _pick_lowest_hp_target(state: Node) -> int:
-	var best_slot: int = 0
+	var best_slot: int = -1
 	var best_hp: int = 999999
 	for i: int in range(4):
 		var m: Dictionary = state.get_member(i)

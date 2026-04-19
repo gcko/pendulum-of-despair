@@ -1,3 +1,4 @@
+class_name SavePoint
 extends Area2D
 ## Save point (ley crystal) that emits signals for proximity and interaction.
 ##
@@ -11,6 +12,9 @@ signal save_point_activated(save_point_id: String)
 
 ## Emitted when the player enters proximity (for SFX by exploration scene).
 signal save_point_entered(save_point_id: String)
+
+## Emitted when the player leaves proximity.
+signal save_point_exited(save_point_id: String)
 
 ## Unique identifier for this save point location.
 var save_point_id: String = ""
@@ -39,7 +43,22 @@ func interact() -> void:
 	save_point_activated.emit(save_point_id)
 
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
 	if save_point_id == "":
 		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
+		return
 	save_point_entered.emit(save_point_id)
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
+	if save_point_id == "":
+		return
+	save_point_exited.emit(save_point_id)

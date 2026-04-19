@@ -27,10 +27,15 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 	var max_mp: int = char_data.get("max_mp", stats.get("mp", 0))
 	var current_mp: int = char_data.get("current_mp", max_mp)
 	var cid: String = char_data.get("character_id", char_data.get("id", ""))
+	# Enrich character_data with display name from DataManager if missing
+	var enriched_data: Dictionary = char_data.duplicate()
+	if not enriched_data.has("name") and cid != "":
+		var template: Dictionary = DataManager.load_character(cid)
+		enriched_data["name"] = template.get("name", cid.capitalize())
 	var effective: Dictionary = _compute_effective_stats(cid, stats)
 	_members[slot] = {
 		"character_id": cid,
-		"character_data": char_data,
+		"character_data": enriched_data,
 		"effective_stats": effective,
 		"current_hp": current_hp,
 		"max_hp": max_hp,
@@ -88,9 +93,12 @@ func take_damage(slot: int, amount: int) -> void:
 
 
 ## Heal a party member. Returns actual HP restored (clamped to max).
-func heal(slot: int, amount: int) -> int:
+func heal(slot: int, amount: int, can_revive: bool = false) -> int:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
+		return 0
+	# Regular healing cannot target KO'd members — only revive items can
+	if not m["is_alive"] and not can_revive:
 		return 0
 	var clamped: int = maxi(0, amount)
 	var old_hp: int = m["current_hp"]
@@ -234,6 +242,16 @@ func is_party_wiped() -> bool:
 	for m: Variant in _members:
 		if m != null and m["is_alive"]:
 			return false
+	return true
+
+
+## Check if a member is a valid heal target (alive for normal heal, any for revive).
+func is_valid_heal_target(slot: int, can_revive: bool = false) -> bool:
+	var m: Dictionary = get_member(slot)
+	if m.is_empty():
+		return false
+	if not m["is_alive"] and not can_revive:
+		return false
 	return true
 
 

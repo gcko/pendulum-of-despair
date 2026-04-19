@@ -36,7 +36,8 @@ res://
 │   │   ├── menu.tscn
 │   │   ├── dialogue.tscn
 │   │   ├── save_load.tscn
-│   │   └── cutscene.tscn
+│   │   ├── cutscene.tscn
+│   │   └── shop_overlay.tscn
 │   ├── entities/              # Reusable entity prefabs
 │   │   ├── player_character.tscn
 │   │   ├── npc.tscn
@@ -539,7 +540,7 @@ The calling code must check the return value of `push_overlay()`.
 ```gdscript
 # game_manager.gd (Autoload)
 enum CoreState { TITLE, EXPLORATION, BATTLE }
-enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE }
+enum OverlayState { NONE, MENU, DIALOGUE, SAVE_LOAD, CUTSCENE, SHOP }
 
 var current_core: CoreState = CoreState.TITLE
 var current_overlay: OverlayState = OverlayState.NONE
@@ -574,12 +575,14 @@ func push_overlay(state: OverlayState) -> bool:
     overlay_node = scene
     return true
 
-func pop_overlay() -> void:
+func pop_overlay(silent: bool = false) -> void:
     # Remove overlay, unpause core
     if overlay_node:
         overlay_node.queue_free()
         overlay_node = null
     current_overlay = OverlayState.NONE
+    if not silent:
+        overlay_state_changed.emit(OverlayState.NONE)
     get_tree().paused = false
 ```
 
@@ -615,7 +618,7 @@ NPC (Area2D)
 ├── AnimationPlayer (idle, emotion animations per dialogue-system.md)
 └── npc.gd
     -> loads dialogue from JSON via DataManager
-    -> on interact: GameManager.push_overlay(DIALOGUE)
+    -> on interact: emits npc_interacted signal (exploration handles overlay)
     -> flag-gated dialogue (checks EventFlags)
 ```
 

@@ -64,5 +64,10 @@ func test_set_instant_false_removes_bars() -> void:
 	assert_eq(lb.top_bar.size.y, 0.0, "top bar should snap to 0")
 
 
-func test_bar_height_proportional_to_viewport() -> void:
-	assert_eq(CutsceneLetterbox.BAR_HEIGHT, 90, "BAR_HEIGHT should be 90 (~12.5% of 720px)")
+func test_bar_height_pixel_grid_aligned() -> void:
+	assert_eq(
+		CutsceneLetterbox.BAR_HEIGHT, 88, "BAR_HEIGHT should be 88 (22 game-world px at 4x zoom)"
+	)
+	assert_eq(
+		CutsceneLetterbox.BAR_HEIGHT % 4, 0, "BAR_HEIGHT divisible by 4 for pixel-grid alignment"
+	)

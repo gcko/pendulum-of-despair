@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/entities/npc.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/sprites/npcs/placeholder_npc.png" id="2_sprite"]
@@ -68,6 +68,26 @@ length = 0.4
 resource_name = "step_back"
 length = 0.3
 
+[sub_resource type="Animation" id="Anim_walk_north"]
+resource_name = "walk_north"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Anim_walk_south"]
+resource_name = "walk_south"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Anim_walk_east"]
+resource_name = "walk_east"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="Animation" id="Anim_walk_west"]
+resource_name = "walk_west"
+length = 0.4
+loop_mode = 1
+
 [sub_resource type="AnimationLibrary" id="AnimLib_main"]
 _data = {
 "arms_up": SubResource("Anim_arms_up"),
@@ -84,7 +104,11 @@ _data = {
 "shake": SubResource("Anim_shake"),
 "step_back": SubResource("Anim_step_back"),
 "sweat_drop": SubResource("Anim_sweat_drop"),
-"turn_away": SubResource("Anim_turn_away")
+"turn_away": SubResource("Anim_turn_away"),
+"walk_east": SubResource("Anim_walk_east"),
+"walk_north": SubResource("Anim_walk_north"),
+"walk_south": SubResource("Anim_walk_south"),
+"walk_west": SubResource("Anim_walk_west")
 }
 
 [node name="NPC" type="Area2D"]

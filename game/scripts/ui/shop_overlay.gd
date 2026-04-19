@@ -91,7 +91,7 @@ func _load_shop(shop_id: String) -> void:
 		if not entry is Dictionary:
 			continue
 		var req_act: int = entry.get("available_act", 1)
-		if req_act > 1:
+		if req_act > _get_current_act():
 			continue
 		var item_id: String = entry.get("item_id", "")
 		var buy_price: int = entry.get("buy_price", 0)
@@ -171,6 +171,15 @@ func _show_feedback(msg: String) -> void:
 	_desc_label.text = msg
 	_feedback_timer = FEEDBACK_CLEAR_DELAY
 	_showing_feedback = true
+
+
+## Determine current act from event flags progression.
+func _get_current_act() -> int:
+	if EventFlags.get_flag("act_iii_started"):
+		return 3
+	if EventFlags.get_flag("act_ii_started"):
+		return 2
+	return 1
 
 
 ## Close the overlay. MUST be last — scene teardown follows immediately.

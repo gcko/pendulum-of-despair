@@ -61,6 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		skip_cutscene()
+		return
 
 
 ## Start a cutscene sequence.
@@ -93,9 +94,13 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_in(0.5)
 		await _letterbox.letterbox_in_complete
+		if not is_inside_tree():
+			return
 
 	# Process entries
 	await _process_entries()
+	if not is_inside_tree():
+		return
 
 	# If skip_cutscene() already handled cleanup, bail out
 	if _skipped:
@@ -105,6 +110,8 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	if _tier == TIER_FULL and _letterbox != null and _letterbox.top_bar != null:
 		_letterbox.animate_out(0.5)
 		await _letterbox.letterbox_out_complete
+		if not is_inside_tree():
+			return
 
 	# Set skip flag
 	EventFlags.set_flag(skip_flag, true)
@@ -118,13 +125,15 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 func skip_cutscene() -> void:
 	if not _is_playing:
 		return
-	for i in range(_current_index, _entries.size()):
+	for i: int in range(_current_index, _entries.size()):
 		var entry: Dictionary = _entries[i]
 		var flag_val: Variant = entry.get("flag_set", "")
 		var flag: String = flag_val if flag_val is String else ""
 		if flag != "":
 			flag_set_requested.emit(flag, true)
 	_kill_visual_tweens()
+	if _dialogue_box != null:
+		_dialogue_box.visible = false
 	if _fade_rect != null:
 		_fade_rect.modulate.a = 0.0
 	if _title_label != null:
@@ -224,6 +233,8 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 			var duration: float = group[0].get("duration", 0.0)
 			if duration > 0.0:
 				await get_tree().create_timer(duration).timeout
+				if not is_inside_tree():
+					return
 		else:
 			var blocking_tasks: Array[Signal] = []
 			for cmd: Dictionary in group:
@@ -232,6 +243,8 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 					blocking_tasks.append(result)
 			for sig: Signal in blocking_tasks:
 				await sig
+				if not is_inside_tree():
+					return
 
 
 func _execute_command(cmd: Dictionary) -> Variant:

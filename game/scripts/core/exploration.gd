@@ -1,3 +1,4 @@
+class_name Exploration
 extends Node2D
 
 signal map_changed(map_id: String)
@@ -5,9 +6,7 @@ signal map_changed(map_id: String)
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
-const EncounterHandler = preload("res://scripts/core/encounter_handler.gd")
 const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
-const CleansingSequence = preload("res://scripts/core/cleansing_sequence.gd")
 
 var _current_map_id: String = ""
 var _current_map: Node2D = null
@@ -20,15 +19,16 @@ var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
 var _current_floor_id: String = ""
-var _cleansing: RefCounted = null
+var _cleansing: CleansingSequence = null
 var _key_item_chest_ids: Dictionary = {}
 var _equipment_chest_ids: Dictionary = {}
 var _in_auto_walk: bool = false
 var _auto_walk_tween: Tween = null
 var _arrival_tween: Tween = null
-var _cutscene_camera_tween: Tween = null
-var _cutscene_shake_tween: Tween = null
 var _in_cutscene: bool = false
+var _cutscene_handler: CutsceneHandler = null
+var _entity_manager: ExplorationEntityManager = null
+var _zone_handler: ExplorationZoneHandler = null
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
 ## Pending cutscene data (set by trigger, consumed after map load).
@@ -46,7 +46,6 @@ var _cutscene_return: Dictionary = {}
 func _ready() -> void:
 	_fade_rect.visible = false
 	_location_panel.visible = false
-	_camera.zoom = Vector2(4, 4)
 	_spawn_player()
 	GameManager.overlay_state_changed.connect(_on_overlay_state_changed)
 	_initialize_from_transition_data()
@@ -90,58 +89,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process_encounter_step() -> void:
-	if _encounter_config.is_empty():
-		return
-	var result: int = EncounterHandler.process_step(
-		_encounter_config, _danger_counter, PartyState.get_active_party()
-	)
-	if result == -1:
-		_trigger_random_encounter()
-	else:
-		_danger_counter = result
-
-
-func _trigger_random_encounter() -> void:
-	if _transitioning:
-		return
-	var transition: Dictionary = EncounterHandler.build_random_encounter(
-		_encounter_config, _current_map_id, _player.position
-	)
-	if transition.is_empty():
-		return
-	_danger_counter = 0
-	_transitioning = true
-	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+	_get_zone_handler().process_encounter_step()
 
 
 func _trigger_boss_encounter(area: Area2D) -> void:
-	if _transitioning or _player == null or _in_cutscene or _in_auto_walk:
-		return
-	if area.get_meta("boss_id", "").is_empty():
-		return
-	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.get_flag(flag):
-		return
-	var req_flag: String = area.get_meta("required_flag", "")
-	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
-		return
-	var eids: Variant = area.get_meta("enemy_ids", [])
-	var enemy_ids: Array = eids if eids is Array else []
-	if enemy_ids.is_empty():
-		return
-	_danger_counter = 0
-	_transitioning = true
-	var transition: Dictionary = {
-		"encounter_group": enemy_ids,
-		"formation_type": "normal",
-		"return_map_id": _current_map_id,
-		"return_position": _player.position,
-		"enemy_act": area.get_meta("enemy_act", "act_i"),
-		"encounter_source": "boss",
-		"is_boss": true,
-		"boss_flag": flag,
-	}
-	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
+	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func load_map(map_id: String, spawn_name: String = "") -> void:
@@ -190,7 +142,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
 	map_changed.emit(map_id)
-	if _current_map.get_meta("is_auto_walk", false) and _player != null:
+	if _current_map.get_meta("is_auto_walk", false) and _player != null and not _in_cutscene:
 		_start_auto_walk()
 	var seq_id: String = _current_map.get_meta("auto_sequence", "")
 	var seq_flag: String = _current_map.get_meta("auto_sequence_flag", "")
@@ -271,7 +223,8 @@ func _initialize_from_transition_data() -> void:
 		_danger_counter = 0
 		load_map(data.get("map_id", "overworld"))
 		if _player != null:
-			_player.position = data.get("position", Vector2(80, 90))
+			var pos: Variant = data.get("position", Vector2(80, 90))
+			_player.position = pos.round() if pos is Vector2 else Vector2(80, 90)
 	else:
 		load_map("overworld")
 	# Safety net: if a party-joining flag was set but the member was never
@@ -280,199 +233,15 @@ func _initialize_from_transition_data() -> void:
 
 
 func _initialize_entities(map_node: Node2D) -> void:
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities == null:
-		return
-	for child: Node in entities.get_children():
-		if not child.has_method("initialize"):
-			continue
-		if child.has_signal("npc_interacted"):
-			if child.get_meta("cutscene_actor", false):
-				if child.has_method("initialize_as_actor"):
-					child.initialize_as_actor()
-				continue
-			var npc_id: String = child.get_meta("npc_id", "")
-			if npc_id.is_empty():
-				push_error("Exploration: NPC '%s' missing npc_id metadata" % child.name)
-				continue
-			child.initialize(npc_id)
-		elif child.has_signal("chest_opened"):
-			var chest_id: String = child.get_meta("chest_id", "")
-			var item_id: String = child.get_meta("item_id", "")
-			if chest_id.is_empty() or item_id.is_empty():
-				push_error("Exploration: Chest '%s' missing chest_id/item_id" % child.name)
-				continue
-			if child.get_meta("is_key_item", false):
-				_key_item_chest_ids[chest_id] = true
-			if child.get_meta("is_equipment", false):
-				_equipment_chest_ids[chest_id] = true
-			var qty: int = child.get_meta("quantity", 1)
-			child.initialize(chest_id, item_id, qty)
-		elif child.has_signal("save_point_activated"):
-			var sp_id: String = child.get_meta("save_point_id", "")
-			if sp_id.is_empty():
-				push_error("Exploration: SavePoint '%s' missing metadata" % child.name)
-				continue
-			child.initialize(sp_id)
-		elif child.has_signal("wheel_toggled"):
-			var wid: String = child.get_meta("wheel_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if wid.is_empty():
-				push_error("Exploration: WaterWheel '%s' missing wheel_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: WaterWheel '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(wid, did)
-		elif child.has_signal("zone_refreshed"):
-			var did: String = child.get_meta("dungeon_id", "")
-			var conds: String = child.get_meta("active_when", "")
-			var zt: String = child.get_meta("zone_type", "block")
-			child.initialize(did, conds, zt)
-		elif child.has_signal("plant_restored"):
-			var pid: String = child.get_meta("plant_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if pid.is_empty():
-				push_error("Exploration: SpiritPlant '%s' missing plant_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: SpiritPlant '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(pid, did)
-		elif child.has_signal("zone_damage_dealt"):
-			var zid: String = child.get_meta("zone_id", "")
-			var dpt: int = child.get_meta("damage_per_tick", 8)
-			var ti: float = child.get_meta("tick_interval", 1.0)
-			var se: String = child.get_meta("status_effect", "poison")
-			child.initialize(zid, dpt, ti, se)
-		elif child.has_signal("plate_pressed"):
-			var pid: String = child.get_meta("plate_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if pid.is_empty():
-				push_error("Exploration: PressurePlate '%s' missing plate_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: PressurePlate '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(pid, did)
-		elif child.has_signal("crystal_cleared"):
-			var cid: String = child.get_meta("crystal_id", "")
-			var did: String = child.get_meta("dungeon_id", "")
-			if cid.is_empty():
-				push_error("Exploration: EmberCrystal '%s' missing crystal_id" % child.name)
-				continue
-			if did.is_empty():
-				push_error("Exploration: EmberCrystal '%s' missing dungeon_id" % child.name)
-				continue
-			child.initialize(cid, did)
-		elif child.has_signal("pitfall_triggered"):
-			var tmid: String = child.get_meta("target_map_id", "")
-			var tsp: String = child.get_meta("target_spawn", "")
-			if tmid.is_empty():
-				push_error("Exploration: PitfallZone '%s' missing target_map_id" % child.name)
-				continue
-			child.initialize(tmid, tsp)
-	# Apply flag-driven visibility (e.g., NPCs visible only after story events)
-	if entities != null:
-		for child: Node in entities.get_children():
-			var vis_flag: String = child.get_meta("visible_when_flag", "")
-			if not vis_flag.is_empty():
-				child.visible = EventFlags.get_flag(vis_flag)
-	# Refresh water zones after all entities are initialized
-	if entities != null:
-		for child: Node in entities.get_children():
-			if child.has_method("refresh"):
-				child.refresh()
-	# Populate entity lookup for cutscene choreography
-	_entities.clear()
-	var entities_node: Node2D = map_node.get_node_or_null("Entities")
-	if entities_node != null:
-		for child: Node in entities_node.get_children():
-			# NPCs store npc_id as metadata (set in editor)
-			var nid: String = child.get_meta("npc_id", "")
-			if nid != "":
-				_entities[nid] = child
-			# Characters use script variable character_id
-			else:
-				var child_character_id: Variant = child.get("character_id")
-				if child_character_id is String and not child_character_id.is_empty():
-					_entities[child_character_id] = child
-	# Register player only if no cutscene actor already owns the same ID
-	if _player != null:
-		var player_character_id: Variant = _player.get("character_id")
-		if player_character_id is String and not player_character_id.is_empty():
-			if not _entities.has(player_character_id):
-				_entities[player_character_id] = _player
+	_get_entity_manager().initialize_entities(map_node)
 
 
 func _connect_entity_signals(map_node: Node2D) -> void:
-	var entities: Node = map_node.get_node_or_null("Entities")
-	if entities != null:
-		for child: Node in entities.get_children():
-			if child.has_signal("npc_interacted"):
-				child.npc_interacted.connect(_on_npc_interacted)
-			if child.has_signal("chest_opened"):
-				child.chest_opened.connect(_on_chest_opened)
-			if child.has_signal("save_point_activated"):
-				child.save_point_activated.connect(_on_save_point_activated)
-			if child.has_signal("wheel_toggled"):
-				child.wheel_toggled.connect(_on_wheel_toggled)
-			if child.has_signal("spring_filled"):
-				child.spring_filled.connect(_on_spring_filled)
-			if child.has_signal("plant_restored"):
-				child.plant_restored.connect(_on_plant_restored)
-			if child.has_signal("zone_damage_dealt"):
-				child.zone_damage_dealt.connect(_on_zone_damage_dealt)
-			if child.has_signal("plate_pressed"):
-				child.plate_pressed.connect(_on_plate_pressed)
-			if child.has_signal("crystal_cleared"):
-				child.crystal_cleared.connect(_on_crystal_cleared)
-			if child.has_signal("pitfall_triggered"):
-				child.pitfall_triggered.connect(_on_pitfall_triggered)
-			if child.has_signal("interaction_message"):
-				child.interaction_message.connect(_on_interaction_message)
-			if child is Area2D and child.has_meta("boss_id"):
-				child.body_entered.connect(_on_boss_trigger_entered.bind(child))
-			elif child is Area2D and child.has_meta("cutscene_scene_id"):
-				child.body_entered.connect(_on_cutscene_trigger_entered.bind(child))
-			elif (
-				child is Area2D
-				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
-			):
-				child.body_entered.connect(_on_dialogue_trigger_entered.bind(child))
-	var transitions: Node = map_node.get_node_or_null("Transitions")
-	if transitions != null:
-		for child: Node in transitions.get_children():
-			if child is Area2D and child.has_meta("target_map"):
-				child.body_entered.connect(_on_transition_body_entered.bind(child))
+	_get_entity_manager().connect_entity_signals(map_node)
 
 
 func _disconnect_entity_signals(map_node: Node2D) -> void:
-	var sigs: Dictionary = {
-		"npc_interacted": _on_npc_interacted,
-		"chest_opened": _on_chest_opened,
-		"save_point_activated": _on_save_point_activated,
-		"wheel_toggled": _on_wheel_toggled,
-		"spring_filled": _on_spring_filled,
-		"plant_restored": _on_plant_restored,
-		"zone_damage_dealt": _on_zone_damage_dealt,
-		"interaction_message": _on_interaction_message,
-		"plate_pressed": _on_plate_pressed,
-		"crystal_cleared": _on_crystal_cleared,
-		"pitfall_triggered": _on_pitfall_triggered,
-	}
-	for group: String in ["Entities", "Transitions"]:
-		var container: Node = map_node.get_node_or_null(group)
-		if container == null:
-			continue
-		for child: Node in container.get_children():
-			for sig: String in sigs:
-				if child.has_signal(sig) and child.is_connected(sig, sigs[sig]):
-					child.disconnect(sig, sigs[sig])
-			if child is Area2D:
-				for conn: Dictionary in child.body_entered.get_connections():
-					if conn["callable"].get_object() == self:
-						child.body_entered.disconnect(conn["callable"])
+	_get_entity_manager().disconnect_entity_signals(map_node)
 
 
 func _position_player_at_spawn(spawn_name: String) -> void:
@@ -484,24 +253,21 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if _transitioning:
+	if _transitioning or _in_cutscene:
 		return
 	var target: Node2D = interactable
 	if not target.has_method("interact"):
-		var p: Node = target.get_parent()
-		if p is Node2D and p.has_method("interact"):
-			target = p as Node2D
+		var owner_node: Node = target.owner
+		if owner_node is Node2D and owner_node.has_method("interact"):
+			target = owner_node as Node2D
 	if target.has_method("interact"):
 		target.interact()
 
 
 func _find_entity_npc(npc_id: String) -> Node:
-	var ents: Node = _current_map.get_node_or_null("Entities")
-	if ents == null:
-		return null
-	for c: Node in ents.get_children():
-		if c.has_signal("npc_interacted") and c.get("npc_id") == npc_id:
-			return c
+	var entity: Variant = _entities.get(npc_id, null)
+	if entity is Node and is_instance_valid(entity) and entity.has_signal("npc_interacted"):
+		return entity
 	return null
 
 
@@ -538,58 +304,54 @@ func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
 
 
 func _on_save_point_activated(_save_point_id: String) -> void:
+	if _transitioning or _in_cutscene:
+		return
 	PartyState.is_at_save_point = true
 	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
 		GameManager.overlay_node.open_save_point()
 
 
-func _on_wheel_toggled(_wheel_id: String, is_high: bool) -> void:
-	var status: String = "HIGH" if is_high else "LOW"
-	flash_location_name("Wheel set to %s" % status)
-	if _current_map != null:
-		var entities: Node = _current_map.get_node_or_null("Entities")
-		if entities != null:
-			for child: Node in entities.get_children():
-				if child.has_method("refresh"):
-					child.refresh()
+func _on_save_point_entered(_save_point_id: String) -> void:
+	if _transitioning or _in_cutscene or _in_auto_walk:
+		return
+	AudioManager.play_sfx("save_point_proximity")
 
 
-func _on_plate_pressed(_plate_id: String) -> void:
-	# Refresh water zones — same pattern as wheel_toggled
-	if _current_map != null:
-		var entities: Node = _current_map.get_node_or_null("Entities")
-		if entities != null:
-			for child: Node in entities.get_children():
-				if child.has_method("refresh"):
-					child.refresh()
+func _on_save_point_exited(_save_point_id: String) -> void:
+	PartyState.is_at_save_point = false
 
 
-func _on_crystal_cleared(_crystal_id: String) -> void:
-	flash_location_name("The crystal springs to life!")
+func _on_trigger_fired(_trigger_id: String) -> void:
+	# Stub — trigger behavior dispatched per-map in future gaps.
+	pass
+
+
+func _on_wheel_toggled(wheel_id: String, is_high: bool) -> void:
+	_get_zone_handler().on_wheel_toggled(wheel_id, is_high)
+
+
+func _on_plate_pressed(plate_id: String) -> void:
+	_get_zone_handler().on_plate_pressed(plate_id)
+
+
+func _on_crystal_cleared(crystal_id: String) -> void:
+	_get_zone_handler().on_crystal_cleared(crystal_id)
 
 
 func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
-	if _transitioning or _in_cutscene:
-		return
-	flash_location_name("The floor gives way!")
-	_transition_to_map(target_map_id, target_spawn)
+	_get_zone_handler().on_pitfall_triggered(target_map_id, target_spawn)
 
 
 func _on_spring_filled() -> void:
-	flash_location_name("Filled the Spirit Vessel with pure water.")
+	_get_zone_handler().on_spring_filled()
 
 
-func _on_plant_restored(_plant_id: String) -> void:
-	flash_location_name("Passage Opened")
-	var scene_data: Dictionary = DataManager.load_dialogue("water_of_life")
-	var entries: Array = scene_data.get("entries", [])
-	if not entries.is_empty() and GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		GameManager.overlay_node.show_dialogue(entries)
+func _on_plant_restored(plant_id: String) -> void:
+	_get_zone_handler().on_plant_restored(plant_id)
 
 
-func _on_zone_damage_dealt(_zone_id: String, total_damage: int) -> void:
-	if total_damage > 0 and _player != null:
-		flash_location_name("-%d HP" % total_damage)
+func _on_zone_damage_dealt(zone_id: String, total_damage: int) -> void:
+	_get_zone_handler().on_zone_damage_dealt(zone_id, total_damage)
 
 
 func _on_interaction_message(text: String) -> void:
@@ -597,13 +359,13 @@ func _on_interaction_message(text: String) -> void:
 
 
 func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player:
+	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
-	_trigger_boss_encounter(area)
+	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene:
+	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
@@ -629,6 +391,7 @@ func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 
 func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(_on_dialogue_closed_check_party, CONNECT_ONE_SHOT)
 		return
 	_check_party_joining_flags()
 	if (
@@ -668,12 +431,12 @@ func _get_party_avg_level() -> int:
 		return 1
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
-		total += m.get("level", 1) as int
+		total += int(m.get("level", 1))
 	return maxi(1, floori(float(total) / float(PartyState.members.size())))
 
 
 func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning or body != _player or _in_cutscene:
+	if _transitioning or body != _player or _in_cutscene or _in_auto_walk:
 		return
 	var req_flag: String = area.get_meta("required_flag", "")
 	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
@@ -701,6 +464,8 @@ func _transition_to_map(target_map: String, target_spawn: String) -> void:
 		_location_panel.visible = false
 	_fade_rect.visible = true
 	_fade_rect.color = Color(0, 0, 0, 0)
+	if _transition_tween != null and _transition_tween.is_valid():
+		_transition_tween.kill()
 	_transition_tween = create_tween()
 	_transition_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_transition_tween.tween_property(_fade_rect, "color:a", 1.0, FADE_DURATION)
@@ -768,6 +533,7 @@ func _start_auto_walk() -> void:
 func _end_auto_walk() -> void:
 	_in_auto_walk = false
 	if _player != null:
+		_player.position = _player.position.round()
 		_player.set_input_enabled(true)
 
 
@@ -807,7 +573,11 @@ func _run_caden_binding(completion_flag: String) -> void:
 
 func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
 	var scene_data: Dictionary = DataManager.load_dialogue("caden_binding")
-	var entries: Array = scene_data.get("entries", [])
+	var raw_entries: Array = scene_data.get("entries", [])
+	var entries: Array[Dictionary] = []
+	for e: Variant in raw_entries:
+		if e is Dictionary:
+			entries.append(e as Dictionary)
 	if entries.is_empty():
 		_caden_complete(caden, completion_flag)
 		return
@@ -824,6 +594,9 @@ func _on_caden_dialogue_closed(
 	state: GameManager.OverlayState, caden: Node2D, completion_flag: String
 ) -> void:
 	if state != GameManager.OverlayState.NONE:
+		GameManager.overlay_state_changed.connect(
+			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
+		)
 		return
 	_caden_complete(caden, completion_flag)
 
@@ -839,194 +612,40 @@ func _caden_complete(caden: Node2D, completion_flag: String) -> void:
 		post_npc.visible = true
 
 
-# ---------- Cutscene overlay integration ----------
+# ---------- Cutscene overlay integration (delegated to CutsceneHandler) ----------
 
 
 func _on_overlay_state_changed(new_state: GameManager.OverlayState) -> void:
-	if new_state == GameManager.OverlayState.CUTSCENE:
-		_in_cutscene = true
-		if _player != null:
-			_player.set_input_enabled(false)
-		_connect_cutscene_signals()
-	elif new_state == GameManager.OverlayState.NONE and _in_cutscene:
-		_on_cutscene_finished()
-
-
-func _connect_cutscene_signals() -> void:
-	var cs: Node = GameManager.overlay_node
-	if cs == null:
-		return
-	_safe_connect(cs, "cutscene_move_requested", _on_cutscene_move)
-	_safe_connect(cs, "cutscene_anim_requested", _on_cutscene_anim)
-	_safe_connect(cs, "cutscene_camera_requested", _on_cutscene_camera)
-	_safe_connect(cs, "cutscene_shake_requested", _on_cutscene_shake)
-	_safe_connect(cs, "cutscene_music_requested", _on_cutscene_music)
-	_safe_connect(cs, "flag_set_requested", _on_cutscene_flag_set)
-	_safe_connect(cs, "sfx_requested", _on_cutscene_sfx)
-
-
-func _safe_connect(src: Node, sig: String, handler: Callable) -> void:
-	if src.has_signal(sig) and not src.is_connected(sig, handler):
-		src.connect(sig, handler)
-
-
-func _on_cutscene_move(who: String, target: Vector2, speed: float) -> void:
-	var entity: Node = _entities.get(who, null)
-	if entity == null:
-		if OS.is_debug_build():
-			push_warning("Cutscene: entity not found: %s" % who)
-		return
-	if entity.has_method("walk_to"):
-		entity.walk_to(target, speed)
-
-
-func _on_cutscene_anim(who: String, anim: String) -> void:
-	var entity: Node = _entities.get(who, null)
-	if entity == null:
-		if OS.is_debug_build():
-			push_warning("Cutscene: entity not found for anim: %s" % who)
-		return
-	if entity.has_method("play_animation"):
-		entity.play_animation(anim)
-	elif entity.has_node("AnimationPlayer"):
-		var ap: AnimationPlayer = entity.get_node("AnimationPlayer")
-		if ap.has_animation(anim):
-			ap.play(anim)
-
-
-func _on_cutscene_camera(target: Vector2, duration: float) -> void:
-	if _camera == null:
-		return
-	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
-		_cutscene_camera_tween.kill()
-	_cutscene_camera_tween = create_tween()
-	_cutscene_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_cutscene_camera_tween.tween_property(_camera, "position", target, duration)
-
-
-func _on_cutscene_shake(intensity: int, duration: float) -> void:
-	if _camera == null:
-		return
-	if _cutscene_shake_tween != null and _cutscene_shake_tween.is_valid():
-		_cutscene_shake_tween.kill()
-	_cutscene_shake_tween = create_tween()
-	_cutscene_shake_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	var step_duration: float = 0.05
-	var steps: int = maxi(int(duration / step_duration) - 1, 0)
-	for i in range(steps):
-		var offset := Vector2(
-			float(randi_range(-intensity, intensity)), float(randi_range(-intensity, intensity))
-		)
-		_cutscene_shake_tween.tween_property(_camera, "offset", offset, step_duration)
-	var reset_duration: float = duration - (float(steps) * step_duration)
-	_cutscene_shake_tween.tween_property(_camera, "offset", Vector2.ZERO, reset_duration)
-
-
-func _on_cutscene_finished() -> void:
-	_in_cutscene = false
-	if _cutscene_camera_tween != null and _cutscene_camera_tween.is_valid():
-		_cutscene_camera_tween.kill()
-	_cutscene_camera_tween = null
-	if _cutscene_shake_tween != null and _cutscene_shake_tween.is_valid():
-		_cutscene_shake_tween.kill()
-	_cutscene_shake_tween = null
-	# Kill any in-flight entity walk tweens from cutscene move commands
-	for entity: Node in _entities.values():
-		if is_instance_valid(entity) and entity.has_method("cancel_walk"):
-			entity.cancel_walk()
-	if _player != null and is_instance_valid(_player) and _player.has_method("cancel_walk"):
-		_player.cancel_walk()
-	if _camera != null and _player != null:
-		_camera.position = _player.position.round()
-		_camera.offset = Vector2.ZERO
-	if not _cutscene_return.is_empty():
-		var ret: Dictionary = _cutscene_return
-		_cutscene_return = {}
-		var ret_map: String = ret.get("map", "")
-		var ret_spawn: String = ret.get("spawn", "PlayerSpawn")
-		if ret_map != "":
-			# Cover screen before transition to prevent void flash from
-			# cutscene map player position
-			_fade_rect.visible = true
-			_fade_rect.color = Color(0, 0, 0, 1)
-			_transition_to_map(ret_map, ret_spawn)
-			return
-	if _player != null and not _in_auto_walk:
-		_player.set_input_enabled(true)
-
-
-func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
-	EventFlags.set_flag(flag_name, value)
-
-
-func _on_cutscene_music(_track_id: String, _action: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
-
-
-func _on_cutscene_sfx(_sfx_id: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
+	_get_cutscene_handler().on_overlay_state_changed(new_state)
 
 
 func _start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
-	if not GameManager.push_overlay(GameManager.OverlayState.CUTSCENE):
-		push_error("Exploration: Failed to push CUTSCENE overlay for '%s'" % cutscene_id)
-		if not _cutscene_return.is_empty():
-			var ret: Dictionary = _cutscene_return
-			_cutscene_return = {}
-			var ret_map: String = ret.get("map", "")
-			if ret_map != "":
-				_transition_to_map(ret_map, ret.get("spawn", "PlayerSpawn"))
-				return
-		_cutscene_return = {}
-		return
-	GameManager.overlay_node.start_cutscene(cutscene_id, entries, tier)
+	_get_cutscene_handler().start_pending_cutscene(cutscene_id, entries, tier)
 
 
 func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_auto_walk or _in_cutscene:
-		return
-	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.get_flag(flag):
-		return
-	var required: String = area.get_meta("required_flag", "")
-	if not required.is_empty() and not EventFlags.get_flag(required):
-		return
-	var scene_id: String = area.get_meta("cutscene_scene_id", "")
-	var map_id: String = area.get_meta("cutscene_map_id", "")
-	var return_map: String = area.get_meta("cutscene_return_map", "")
-	var return_spawn: String = area.get_meta("cutscene_return_spawn", "PlayerSpawn")
-	# Load cutscene data from dialogue JSON
-	var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
-	if scene_data.is_empty():
-		push_error("Exploration: Failed to load cutscene dialogue '%s'" % scene_id)
-		return
-	var entries: Array[Dictionary] = []
-	for e: Variant in scene_data.get("entries", []):
-		if e is Dictionary:
-			entries.append(e as Dictionary)
-	var cutscene_id: String = scene_data.get("cutscene_id", scene_id)
-	var tier: int = scene_data.get("cutscene_tier", 1)
-	if entries.is_empty():
-		push_error("Exploration: Cutscene '%s' has no entries" % scene_id)
-		return
-	# Store return info only when a return map is specified
-	if return_map != "":
-		_cutscene_return = {"map": return_map, "spawn": return_spawn}
-	# Set one-shot flag now so re-entry is blocked even during transition
-	if not flag.is_empty():
-		EventFlags.set_flag(flag, true)
-	if map_id != "":
-		# Transition to cutscene map, then start cutscene after load
-		_pending_cutscene = {"id": cutscene_id, "entries": entries, "tier": tier}
-		_transition_to_map(map_id, "PlayerSpawn")
-	else:
-		# Start cutscene on current map
-		_start_pending_cutscene(cutscene_id, entries, tier)
+	_get_cutscene_handler().on_cutscene_trigger_entered(body, area)
 
 
-# ---------- Public accessors for CleansingSequence ----------
+func _get_cutscene_handler() -> CutsceneHandler:
+	if _cutscene_handler == null:
+		_cutscene_handler = CutsceneHandler.new(self)
+	return _cutscene_handler
+
+
+func _get_entity_manager() -> ExplorationEntityManager:
+	if _entity_manager == null:
+		_entity_manager = ExplorationEntityManager.new(self)
+	return _entity_manager
+
+
+func _get_zone_handler() -> ExplorationZoneHandler:
+	if _zone_handler == null:
+		_zone_handler = ExplorationZoneHandler.new(self)
+	return _zone_handler
+
+
+# ---------- Public accessors for delegated handlers ----------
 
 
 func get_player() -> Node2D:
@@ -1047,6 +666,65 @@ func set_transitioning(value: bool) -> void:
 
 func get_zone_damage_callback() -> Callable:
 	return _on_zone_damage_dealt
+
+
+func get_entities() -> Dictionary:
+	return _entities
+
+
+func get_camera() -> Camera2D:
+	return _camera
+
+
+func get_fade_rect() -> ColorRect:
+	return _fade_rect
+
+
+func is_in_auto_walk() -> bool:
+	return _in_auto_walk
+
+
+func is_in_cutscene() -> bool:
+	return _in_cutscene
+
+
+func set_in_cutscene(value: bool) -> void:
+	_in_cutscene = value
+	GameManager.cutscene_active = value
+
+
+## Deferred callback for cutscene handler — only clears _in_cutscene if
+## the handler that requested the clear is still inactive (no back-to-back
+## cutscene has started since the deferred call was scheduled).
+func _deferred_clear_cutscene_flag(handler: CutsceneHandler) -> void:
+	if handler != null and handler.is_cutscene_active():
+		return
+	_in_cutscene = false
+	GameManager.cutscene_active = false
+
+
+func get_cutscene_return() -> Dictionary:
+	return _cutscene_return
+
+
+func set_cutscene_return(value: Dictionary) -> void:
+	_cutscene_return = value
+
+
+func is_transitioning() -> bool:
+	return _transitioning
+
+
+func get_pending_cutscene() -> Dictionary:
+	return _pending_cutscene
+
+
+func set_pending_cutscene(value: Dictionary) -> void:
+	_pending_cutscene = value
+
+
+func transition_to_map(target_map: String, target_spawn: String) -> void:
+	_transition_to_map(target_map, target_spawn)
 
 
 # ---------- Crystal XP distribution ----------

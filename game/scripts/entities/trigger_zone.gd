@@ -1,3 +1,4 @@
+class_name TriggerZone
 extends Area2D
 ## Invisible trigger zone that fires once when the player enters.
 ##
@@ -27,13 +28,20 @@ func initialize(p_trigger_id: String, p_condition_flag: String = "") -> void:
 	trigger_id = p_trigger_id
 	condition_flag = p_condition_flag
 	var fired_flag: String = "trigger_%s_fired" % trigger_id
-	has_fired = EventFlags.get_flag(fired_flag)
+	has_fired = bool(EventFlags.get_flag(fired_flag))
 
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
 	if trigger_id == "":
 		return
 	if has_fired:
+		return
+	if (
+		GameManager.current_overlay == GameManager.OverlayState.CUTSCENE
+		or GameManager.cutscene_active
+	):
 		return
 	if condition_flag != "" and not EventFlags.get_flag(condition_flag):
 		return

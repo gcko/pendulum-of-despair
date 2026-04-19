@@ -35,8 +35,22 @@ func _start_and_await(cs: Node, id: String, entries: Array, tier: int = 1) -> vo
 
 
 func before_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
 	EventFlags.clear_all()
 	GameManager.transition_data = {}
+	DataManager.clear_cache()
+	PartyState.initialize_new_game()
+
+
+func after_each() -> void:
+	if GameManager.current_overlay != GameManager.OverlayState.NONE:
+		GameManager.pop_overlay()
+	GameManager.cutscene_active = false
+	EventFlags.clear_all()
+	GameManager.transition_data = {}
+	DataManager.clear_cache()
+	PartyState.initialize_new_game()
 
 
 # --- Scene structure tests (no start_cutscene needed) ---
@@ -123,7 +137,7 @@ func test_t4_micro_sequence() -> void:
 	await _start_and_await(cs, "int_test_t4", entries, 4)
 	assert_signal_emitted(cs, "cutscene_finished")
 	var top: ColorRect = cs.get_node_or_null("LetterboxTop")
-	assert_eq(top.custom_minimum_size.y, 0.0, "T4 should not show letterbox")
+	assert_eq(top.size.y, 0.0, "T4 should not show letterbox")
 
 
 func test_skip_flag_persists() -> void:

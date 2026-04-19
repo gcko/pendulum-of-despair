@@ -311,8 +311,8 @@ A 20x11 tile room with walls, a floor, an NPC, a chest, a save point, and an exi
   - Entities/TestNPC: NPC instance, meta npc_id="bren", position (64, 48)
   - Entities/TestChest: TreasureChest instance, meta chest_id="test_chest_01", item_id="potion", position (128, 48)
   - Entities/TestSavePoint: SavePoint instance, meta save_point_id="test_save", position (192, 48)
-  - Transitions/ExitTrigger: TriggerZone instance, meta trigger_id="exit_east", target_map="test_room_2", target_spawn="EntryWest", position (304, 90)
-  - PlayerSpawn (Marker2D), position (80, 90)
+  - Transitions/ExitTrigger: TriggerZone instance, meta trigger_id="exit_east", target_map="test_room_2", target_spawn="EntryWest", position (304, 96)
+  - PlayerSpawn (Marker2D), position (80, 96)
   - Metadata: location_name = "Test Room"
 
 - [ ] **Step 2:** Verify all entity positions are integer pixels
@@ -329,7 +329,7 @@ Minimal second room for transition testing.
 - [ ] **Step 1:** Write test_room_2.tscn with:
   - TileMapLayer with 20x11 floor
   - Transitions/ReturnTrigger: meta trigger_id="exit_west", target_map="test_room", target_spawn="PlayerSpawn"
-  - PlayerSpawn named "EntryWest" at (16, 90)
+  - PlayerSpawn named "EntryWest" at (16, 96)
   - Metadata: location_name = "Test Room 2"
 
 ---

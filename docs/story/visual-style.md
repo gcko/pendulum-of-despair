@@ -20,7 +20,7 @@ This document is the art director's bible for the visual identity of Pendulum of
 
 ### The Golden Rule
 
-**If it would not work on a Super Nintendo, it does not belong.** Complexity comes from clever palette use, dithering, and careful detail -- not from resolution, layer count, or shader effects. We are building within the aesthetic of 1994, not the technology. The browser renders at higher resolution, but the art itself obeys the old constraints.
+**If it would not work on a Super Nintendo, it does not belong.** Complexity comes from clever palette use, dithering, and careful detail -- not from resolution, layer count, or shader effects. We are building within the aesthetic of 1994, not the technology. The engine renders at higher resolution, but the art itself obeys the old constraints.
 
 ### Pixel Density and Tile Grid
 

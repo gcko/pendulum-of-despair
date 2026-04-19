@@ -76,6 +76,9 @@ func close() -> void:
 ## Handle input, return true if consumed.
 func handle_input(event: InputEvent) -> bool:
 	if _showing_feedback:
+		if event.is_action_pressed("ui_cancel"):
+			_showing_feedback = false
+			return true
 		return true
 	match _state:
 		MagicState.BROWSING:
@@ -98,13 +101,16 @@ func _process(delta: float) -> void:
 func _handle_browse_input(event: InputEvent) -> bool:
 	if _spells.is_empty():
 		return false
-	var visible_count: int = mini(_spells.size() - _scroll_offset, GRID_SIZE)
+	var total: int = _spells.size() - _scroll_offset
+	var visible_count: int = mini(total, GRID_SIZE)
 	if visible_count <= 0:
 		return false
 	if event.is_action_pressed("ui_down"):
 		var new_cursor: int = _cursor + GRID_COLS
 		if new_cursor < visible_count:
 			_cursor = new_cursor
+		elif _scroll_offset + GRID_SIZE < _spells.size():
+			_scroll_offset += GRID_COLS
 		_update_grid()
 		_update_desc()
 		return true
@@ -112,6 +118,8 @@ func _handle_browse_input(event: InputEvent) -> bool:
 		var new_cursor: int = _cursor - GRID_COLS
 		if new_cursor >= 0:
 			_cursor = new_cursor
+		elif _scroll_offset > 0:
+			_scroll_offset -= GRID_COLS
 		_update_grid()
 		_update_desc()
 		return true

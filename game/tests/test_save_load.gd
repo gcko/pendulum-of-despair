@@ -180,3 +180,53 @@ func test_load_initial_selection() -> void:
 	# With no saves, should default to slot 1
 	sl.open_load()
 	assert_eq(sl._selected_slot, 1, "should default to slot 1 when no saves")
+
+
+# --- Rest item data-driven effects ---
+
+
+func test_find_consumable_returns_item_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("sleeping_bag")
+	assert_eq(data.get("id", ""), "sleeping_bag", "should find sleeping_bag by id")
+	assert_eq(int(data.get("restore_percent", 0)), 25, "sleeping_bag restores 25%")
+	assert_true(data.get("clears_status", false), "sleeping_bag clears status")
+
+
+func test_find_consumable_tent_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("tent")
+	assert_eq(int(data.get("restore_percent", 0)), 50, "tent restores 50%")
+
+
+func test_find_consumable_pavilion_data() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("pavilion")
+	assert_eq(int(data.get("restore_percent", 0)), 100, "pavilion restores 100%")
+
+
+func test_find_consumable_missing_returns_empty() -> void:
+	var sl: Node = _create_save_load()
+	var data: Dictionary = sl._find_consumable("nonexistent_item")
+	assert_true(data.is_empty(), "missing item should return empty dict")
+
+
+# --- Load flow deferred state change ---
+
+
+func test_load_defers_state_change() -> void:
+	var sl: Node = _create_save_load()
+	# Save current state so we can restore it after the test.
+	var original_state: int = GameManager.current_core
+	# Create a save file to load from.
+	SaveManager.save_game(1)
+	sl.open_load()
+	sl._selected_slot = 1
+	# Trigger the load path. change_core_state is deferred, so
+	# current_core should NOT have changed yet on this frame.
+	sl._do_load(1)
+	assert_eq(
+		GameManager.current_core, original_state, "state should not change immediately (deferred)"
+	)
+	# Restore original state to avoid side-effects on other tests.
+	GameManager.current_core = original_state

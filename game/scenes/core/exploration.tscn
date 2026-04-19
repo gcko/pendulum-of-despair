@@ -4,15 +4,15 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_location"]
 bg_color = Color(0, 0, 0.251, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
-content_margin_left = 4.0
-content_margin_top = 2.0
-content_margin_right = 4.0
-content_margin_bottom = 2.0
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
 
 [node name="Exploration" type="Node2D"]
 script = ExtResource("1_script")
@@ -20,6 +20,7 @@ script = ExtResource("1_script")
 [node name="CurrentMap" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
 position_smoothing_enabled = false
 
 [node name="FadeOverlay" type="CanvasLayer" parent="."]
@@ -30,6 +31,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 1)
+mouse_filter = 2
 visible = false
 
 [node name="LocationFlash" type="CanvasLayer" parent="."]
@@ -41,6 +43,7 @@ offset_top = 16.0
 offset_right = 960.0
 offset_bottom = 80.0
 theme_override_styles/panel = SubResource("StyleBox_location")
+mouse_filter = 2
 visible = false
 
 [node name="NameLabel" type="Label" parent="LocationFlash/LocationLabel"]

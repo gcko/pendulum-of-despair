@@ -526,6 +526,113 @@ func heal_member(character_id: String, amount: int) -> int:
 	return m["current_hp"] - old
 
 
+## Find the members array index for a character by ID. Returns -1 if not found.
+func find_member_index(character_id: String) -> int:
+	for i: int in range(members.size()):
+		if members[i].get("character_id", "") == character_id:
+			return i
+	return -1
+
+
+## Move a character from active formation to reserve by ID.
+## Returns true if the character was moved, false otherwise.
+func move_member_to_reserve(character_id: String) -> bool:
+	var idx: int = find_member_index(character_id)
+	if idx < 0:
+		return false
+	if not formation.has("active") or not formation.has("reserve"):
+		push_warning("PartyState: formation missing active/reserve keys")
+		return false
+	var active: Array = formation["active"]
+	var reserve: Array = formation["reserve"]
+	var found: Variant = null
+	for a: Variant in active:
+		if (a is int or a is float) and int(a) == idx:
+			found = a
+			break
+	if found == null:
+		return false
+	active.erase(found)
+	reserve.append(idx)
+	return true
+
+
+## Move a character from reserve back to active formation by ID.
+## Returns true if the character was moved, false otherwise.
+func move_member_to_active(character_id: String) -> bool:
+	var idx: int = find_member_index(character_id)
+	if idx < 0:
+		return false
+	if not formation.has("active") or not formation.has("reserve"):
+		push_warning("PartyState: formation missing active/reserve keys")
+		return false
+	var active: Array = formation["active"]
+	var reserve: Array = formation["reserve"]
+	var found: Variant = null
+	for r: Variant in reserve:
+		if (r is int or r is float) and int(r) == idx:
+			found = r
+			break
+	if found == null:
+		return false
+	reserve.erase(found)
+	if active.size() < 4:
+		active.append(idx)
+		return true
+	push_warning("PartyState: cannot move to active — party full")
+	return false
+
+
+## Revive all KO'd active party members at a fraction of max HP.
+func revive_active_at_fraction(fraction: float) -> void:
+	var active_list: Array = []
+	if formation.has("active"):
+		active_list = formation["active"]
+	for idx: Variant in active_list:
+		if not (idx is int or idx is float):
+			continue
+		var mi: int = int(idx)
+		if mi < 0 or mi >= members.size():
+			continue
+		var m: Dictionary = members[mi]
+		if m.get("current_hp", 0) <= 0:
+			m["current_hp"] = maxi(1, floori(float(m.get("max_hp", 1)) * fraction))
+
+
+## Apply rest item effects: restore HP/MP by percentage, optionally
+## clear status. Applies to ALL party members (active + reserve).
+func rest_party(restore_pct: float, clears_status: bool) -> void:
+	for m: Dictionary in members:
+		if m.is_empty():
+			continue
+		var max_hp: int = int(m.get("max_hp", m.get("base_stats", {}).get("hp", 1)))
+		var max_mp: int = int(m.get("max_mp", m.get("base_stats", {}).get("mp", 0)))
+		m["current_hp"] = mini(
+			int(m.get("current_hp", max_hp)) + int(max_hp * restore_pct),
+			max_hp,
+		)
+		m["current_mp"] = mini(
+			int(m.get("current_mp", max_mp)) + int(max_mp * restore_pct),
+			max_mp,
+		)
+		if clears_status:
+			m["status_effects"] = []
+
+
+## Consume one unit of a consumable item. Returns true if consumed.
+func consume_item(item_id: String) -> bool:
+	var consumables: Dictionary = inventory.get("consumables", {})
+	var qty: int = consumables.get(item_id, 0)
+	if qty <= 0:
+		return false
+	consumables[item_id] = qty - 1
+	if consumables[item_id] <= 0:
+		consumables.erase(item_id)
+	inventory["consumables"] = consumables
+	inventory_changed.emit()
+	return true
+
+
 func get_row(cid: String) -> String:
 	return formation.get("rows", {}).get(cid, "front")
 

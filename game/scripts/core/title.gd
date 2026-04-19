@@ -49,6 +49,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept"):
 		if not _is_option_disabled(_selected):
 			_confirm_selection()
+	else:
+		return
+	get_viewport().set_input_as_handled()
 
 
 func _move_cursor(direction: int) -> void:
@@ -107,5 +110,8 @@ func _is_option_disabled(index: int) -> bool:
 		MenuOption.CONTINUE:
 			return not _has_save
 		MenuOption.CONFIG:
-			return true
+			var menu_path: String = GameManager.OVERLAY_SCENES.get(
+				GameManager.OverlayState.MENU, ""
+			)
+			return not ResourceLoader.exists(menu_path)
 	return false

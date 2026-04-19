@@ -1,3 +1,4 @@
+class_name WaterWheel
 extends Area2D
 ## Water wheel interactable — toggles HIGH/LOW state for water level puzzles.
 
@@ -20,7 +21,8 @@ func initialize(p_wheel_id: String, p_dungeon_id: String) -> void:
 		return
 	wheel_id = p_wheel_id
 	_dungeon_id = p_dungeon_id
-	is_high = PartyState.get_puzzle_state(_dungeon_id, "%s_high" % wheel_id, false)
+	var raw_state: Variant = PartyState.get_puzzle_state(_dungeon_id, "%s_high" % wheel_id, false)
+	is_high = raw_state as bool if raw_state is bool else false
 	_update_visual()
 
 

@@ -1,3 +1,4 @@
+class_name NPC
 extends Area2D
 ## NPC entity with flag-gated dialogue priority stack.
 ##
@@ -17,6 +18,8 @@ signal walk_complete
 var npc_id: String = ""
 
 ## All dialogue entries loaded from DataManager (ordered by priority).
+## Typed as Array (not Array[Dictionary]) because GDScript rejects
+## assigning untyped array literals to typed arrays at runtime.
 var dialogue_entries: Array = []
 
 ## Active walk tween (killed on new walk_to call).
@@ -38,7 +41,10 @@ func initialize(p_npc_id: String) -> void:
 	if data.is_empty():
 		push_error("NPC: Failed to load dialogue for '%s'" % dialogue_key)
 		return
-	dialogue_entries = data.get("entries", [])
+	dialogue_entries = []
+	for e: Variant in data.get("entries", []):
+		if e is Dictionary:
+			dialogue_entries.append(e as Dictionary)
 	_load_placeholder_sprite()
 
 
@@ -71,7 +77,7 @@ func get_current_dialogue() -> Dictionary:
 
 ## Evaluate a condition expression against current game state.
 ## Supports: null (always true), binary flags, numeric comparisons,
-## party_has() (stubbed), and AND combinations.
+## party_has(), and AND combinations.
 func _evaluate_condition(condition: Variant) -> bool:
 	# Null or empty = always true (default/fallback entry).
 	if condition == null or condition == "":
@@ -91,9 +97,13 @@ func _evaluate_condition(condition: Variant) -> bool:
 				return false
 		return true
 
-	# party_has(character) — stubbed until GameManager.party exists.
+	# party_has(character) — check if character is in active party.
 	if cond_str.begins_with("party_has("):
-		return false
+		var end_idx: int = cond_str.find(")")
+		if end_idx < 0:
+			return false
+		var char_id: String = cond_str.substr(10, end_idx - 10).strip_edges()
+		return PartyState.has_member(char_id)
 
 	# Numeric/string comparison operators.
 	var operators: Array[String] = [">=", "<=", "==", "!=", ">", "<"]
@@ -163,9 +173,9 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
-	var distance: float = position.distance_to(target)
+	var distance: float = global_position.distance_to(target)
 	if distance < 1.0:
-		position = target
+		global_position = target.round()
 		if _anim_player != null and _anim_player.has_animation("idle"):
 			_anim_player.play("idle")
 		walk_complete.emit()
@@ -173,12 +183,12 @@ func walk_to(target: Vector2, speed: float) -> void:
 	if speed <= 0.0:
 		if OS.is_debug_build():
 			push_warning("NPC %s walk_to: non-positive speed %s" % [name, speed])
-		position = target
+		global_position = target.round()
 		walk_complete.emit()
 		return
 	var duration: float = distance / speed
 	# Play walk animation if available
-	var dir: Vector2 = (target - position).normalized()
+	var dir: Vector2 = (target - global_position).normalized()
 	var anim_name: String = "idle"
 	if abs(dir.x) > abs(dir.y):
 		anim_name = "walk_east" if dir.x > 0 else "walk_west"
@@ -188,9 +198,10 @@ func walk_to(target: Vector2, speed: float) -> void:
 		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "position", target, duration)
+	_walk_tween.tween_property(self, "global_position", target.round(), duration)
 	_walk_tween.tween_callback(
 		func():
+			global_position = global_position.round()
 			if _anim_player != null and _anim_player.has_animation("idle"):
 				_anim_player.play("idle")
 			walk_complete.emit()
@@ -204,6 +215,7 @@ func cancel_walk() -> void:
 	if _walk_tween != null and _walk_tween.is_valid():
 		_walk_tween.kill()
 	_walk_tween = null
+	position = position.round()
 	if _anim_player != null and _anim_player.has_animation("idle"):
 		_anim_player.play("idle")
 	if was_walking:

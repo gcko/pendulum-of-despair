@@ -14,7 +14,7 @@ working Godot project.
 
 **Engine:** Godot 4.6+ (stable)
 **Language:** GDScript only (no C#, no .NET dependency)
-**Resolution:** 320x180 native, integer-scaled (per accessibility.md)
+**Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled (per accessibility.md)
 **Frame rate:** 60 fps locked
 
 ---
@@ -53,7 +53,8 @@ res://
 │   │   ├── data_manager.gd    # JSON data loading and caching
 │   │   ├── audio_manager.gd   # Music, SFX, ambient (per audio.md)
 │   │   ├── save_manager.gd    # Save/load, auto-save, migration
-│   │   └── event_flags.gd     # Global event flag state
+│   │   ├── event_flags.gd     # Global event flag state
+│   │   └── party_state.gd    # Party members, formation, inventory
 │   ├── core/                  # Core system scripts
 │   ├── entities/              # Entity behavior scripts
 │   ├── combat/                # Battle system scripts
@@ -95,7 +96,7 @@ res://
 
 ### 1.3 Autoload Singletons
 
-Five persistent managers, always available via global name:
+Six persistent managers, always available via global name:
 
 | Singleton | Global Name | Responsibility |
 |-----------|-------------|---------------|
@@ -104,19 +105,20 @@ Five persistent managers, always available via global name:
 | `audio_manager.gd` | `AudioManager` | Music, SFX, ambient per audio.md rules |
 | `save_manager.gd` | `SaveManager` | Save/load, auto-save, migration per save-system.md |
 | `event_flags.gd` | `EventFlags` | Global event flag dictionary, flag checks |
+| `party_state.gd` | `PartyState` | Party members, formation, inventory, equipment, flags |
 
 ### 1.4 Viewport Settings
 
 ```
 # project.godot
 [display]
-window/size/viewport_width = 320
-window/size/viewport_height = 180
+window/size/viewport_width = 1280
+window/size/viewport_height = 720
 window/size/window_width_override = 1920
 window/size/window_height_override = 1080
 window/stretch/mode = "viewport"
 window/stretch/aspect = "keep"
-window/stretch/scale_mode = 1  # 1 = integer scaling
+window/stretch/scale_mode = "integer"
 
 [rendering]
 textures/canvas_textures/default_texture_filter = 0  # Nearest
@@ -537,7 +539,7 @@ func push_overlay(state: OverlayState) -> bool:
     # Reject if overlay already active (except cutscene overriding dialogue)
     if current_overlay != OverlayState.NONE:
         if state == OverlayState.CUTSCENE and current_overlay == OverlayState.DIALOGUE:
-            pop_overlay()  # Cutscene takes priority over dialogue
+            pop_overlay(true)  # Silent pop — CUTSCENE emission replaces NONE
         else:
             return false
     # Add overlay scene on top, pause core underneath
@@ -550,12 +552,14 @@ func push_overlay(state: OverlayState) -> bool:
     overlay_node = scene
     return true
 
-func pop_overlay() -> void:
+func pop_overlay(silent: bool = false) -> void:
     # Remove overlay, unpause core
     if overlay_node:
         overlay_node.queue_free()
         overlay_node = null
     current_overlay = OverlayState.NONE
+    if not silent:
+        overlay_state_changed.emit(OverlayState.NONE)
     get_tree().paused = false
 ```
 
@@ -591,7 +595,7 @@ NPC (Area2D)
 ├── AnimationPlayer (idle, emotion animations per dialogue-system.md)
 └── npc.gd
     → loads dialogue from JSON via DataManager
-    → on interact: GameManager.push_overlay(DIALOGUE)
+    → on interact: emits npc_interacted signal (exploration handles overlay)
     → flag-gated dialogue (checks EventFlags)
 ```
 
@@ -666,7 +670,7 @@ cycle, 15-20 fps battle animations).
 
 ### 5.3 Audio Assets
 
-Per audio.md Section 3.6:
+Per audio.md Section 3.1:
 
 | Type | Format | Sample Rate | Bit Depth | Naming |
 |------|--------|-------------|-----------|--------|
@@ -724,7 +728,7 @@ user://
 
 ### 6.2 Save File Format
 
-JSON matching save-system.md Section 3 schema (9 groups):
+JSON matching save-system.md Section 3 schema (10 groups):
 
 ```json
 {
@@ -737,6 +741,7 @@ JSON matching save-system.md Section 3 schema (9 groups):
   "party": [...],
   "formation": { "active": [...], "reserve": [...], "guests": [...] },
   "inventory": { "consumables": [...], "equipment": [...], "materials": [...], "key_items": [...] },
+  "owned_equipment": [...],
   "crafting": { "arcanite_charges": 12, "device_loadout": [...], ... },
   "ley_crystals": { "collected": [...] },
   "world": { "event_flags": {...}, "act": "1", "current_location": "...", ... },
@@ -793,7 +798,7 @@ func _migrate(data: Dictionary) -> Dictionary:
 
 func _validate(data: Dictionary) -> bool:
     # Check required top-level keys exist
-    var required = ["meta", "party", "formation", "inventory",
+    var required = ["meta", "party", "formation", "inventory", "owned_equipment",
                     "crafting", "ley_crystals", "world", "quests", "completion"]
     for key in required:
         if not data.has(key):

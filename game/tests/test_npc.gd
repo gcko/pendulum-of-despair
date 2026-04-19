@@ -155,12 +155,21 @@ func test_evaluate_condition_and_one_false() -> void:
 	)
 
 
-func test_evaluate_condition_party_has_stubbed() -> void:
+func test_evaluate_condition_party_has() -> void:
 	var npc = _create_npc()
 	assert_false(
 		npc._evaluate_condition("party_has(torren)"),
-		"party_has should return false (stubbed)",
+		"party_has should return false when member not in party",
 	)
+	var saved_members: Array[Dictionary] = PartyState.members.duplicate(true)
+	PartyState.add_member("torren")
+	assert_true(
+		npc._evaluate_condition("party_has(torren)"),
+		"party_has should return true when member is in party",
+	)
+	PartyState.members.clear()
+	for m: Dictionary in saved_members:
+		PartyState.members.append(m)
 
 
 func test_evaluate_condition_numeric_comparison() -> void:

@@ -17,30 +17,30 @@ func after_each() -> void:
 
 
 func test_fill_rate_maren_lv1_speed3() -> void:
-	# SPD 8, battle speed 3 (factor 3.0), no status mods
-	# fill_rate = floor((8 + 25) * 3.0 * 1.0) = floor(99) = 99
+	# SPD 8, battle speed 3 (factor 0.7), no status mods
+	# fill_rate = floor((8 + 25) * 0.7 * 1.0) = floor(23.1) = 23
 	var rate: int = _atb.calculate_fill_rate(8, 3, [])
-	assert_eq(rate, 99, "Maren Lv1 at speed 3")
+	assert_eq(rate, 23, "Maren Lv1 at speed 3")
 
 
 func test_fill_rate_sable_lv1_speed3() -> void:
-	# SPD 18, speed 3 → floor((18+25)*3) = floor(129) = 129
+	# SPD 18, speed 3 → floor((18+25)*0.7) = floor(30.1) = 30
 	var rate: int = _atb.calculate_fill_rate(18, 3, [])
-	assert_eq(rate, 129, "Sable Lv1 at speed 3")
+	assert_eq(rate, 30, "Sable Lv1 at speed 3")
 
 
 func test_fill_rate_with_haste() -> void:
 	# SPD 10, speed 3, haste (1.5x)
-	# floor((10+25)*3*1.5) = floor(157.5) = 157
+	# floor((10+25)*0.7*1.5) = floor(36.75) = 36
 	var rate: int = _atb.calculate_fill_rate(10, 3, [1.5])
-	assert_eq(rate, 157, "haste increases fill rate")
+	assert_eq(rate, 36, "haste increases fill rate")
 
 
 func test_fill_rate_haste_and_despair() -> void:
 	# SPD 10, speed 3, haste (1.5) + despair (0.75)
-	# floor((10+25)*3*1.5*0.75) = floor(118.125) = 118
+	# floor((10+25)*0.7*1.5*0.75) = floor(27.5625) = 27
 	var rate: int = _atb.calculate_fill_rate(10, 3, [1.5, 0.75])
-	assert_eq(rate, 118, "haste + despair stack multiplicatively")
+	assert_eq(rate, 27, "haste + despair stack multiplicatively")
 
 
 # --- Gauge Mechanics ---
@@ -55,8 +55,8 @@ func test_gauge_fills_by_fill_rate() -> void:
 	_atb.add_combatant("party_0", 10, false)
 	_atb.set_battle_speed(3)
 	_atb.tick(1.0 / 60.0)
-	# fill_rate = floor((10+25)*3) = 105
-	assert_eq(_atb.get_gauge("party_0"), 105, "gauge fills by fill rate")
+	# fill_rate = floor((10+25)*0.7) = 24
+	assert_eq(_atb.get_gauge("party_0"), 24, "gauge fills by fill rate")
 
 
 func test_gauge_caps_at_max() -> void:
