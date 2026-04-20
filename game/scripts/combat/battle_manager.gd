@@ -158,6 +158,8 @@ func _on_ui_command(command: Dictionary) -> void:
 			actor_id, true, s, lc, _is_boss, _state.get_member(s).get("character_data", {})
 		)
 		return
+	if not _battle_active:
+		return
 	var cmd_slot: int = actor_id.replace("party_", "").to_int()
 	if _state.get_member(cmd_slot).get("is_defending", false):
 		_state.set_defending(cmd_slot, false)
