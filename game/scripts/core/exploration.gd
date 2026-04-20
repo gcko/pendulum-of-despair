@@ -35,6 +35,9 @@ var _entities: Dictionary = {}
 var _pending_cutscene: Dictionary = {}
 ## Return destination after a cutscene map finishes.
 var _cutscene_return: Dictionary = {}
+## Tracks the bound Callable for _on_caden_dialogue_closed so _exit_tree
+## can disconnect it (bound Callables are distinct from the base method).
+var _caden_dialogue_callable: Callable
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -49,6 +52,25 @@ func _ready() -> void:
 	_spawn_player()
 	GameManager.overlay_state_changed.connect(_on_overlay_state_changed)
 	_initialize_from_transition_data()
+
+
+func _exit_tree() -> void:
+	_disconnect_pending_signals()
+	if _cleansing != null:
+		_cleansing.cleanup()
+	if GameManager.overlay_state_changed.is_connected(_on_overlay_state_changed):
+		GameManager.overlay_state_changed.disconnect(_on_overlay_state_changed)
+
+
+func _disconnect_pending_signals() -> void:
+	if GameManager.overlay_state_changed.is_connected(_on_dialogue_closed_check_party):
+		GameManager.overlay_state_changed.disconnect(_on_dialogue_closed_check_party)
+	if (
+		_caden_dialogue_callable.is_valid()
+		and GameManager.overlay_state_changed.is_connected(_caden_dialogue_callable)
+	):
+		GameManager.overlay_state_changed.disconnect(_caden_dialogue_callable)
+		_caden_dialogue_callable = Callable()
 
 
 func _process(_delta: float) -> void:
@@ -279,7 +301,7 @@ func _handle_inn(node: Node) -> void:
 	flash_location_name("Rested at the inn.")
 
 
-func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
+func on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 	var npc_node: Node = _find_entity_npc(npc_id)
 	if npc_node != null:
 		if npc_node.has_meta("shop_id"):
@@ -293,7 +315,7 @@ func _on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
-func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
+func on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
 	if _key_item_chest_ids.get(chest_id, false):
 		PartyState.add_key_item(item_id)
 	elif _equipment_chest_ids.get(chest_id, false):
@@ -303,7 +325,7 @@ func _on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
 	flash_location_name("Found %s!" % item_id)
 
 
-func _on_save_point_activated(_save_point_id: String) -> void:
+func on_save_point_activated(_save_point_id: String) -> void:
 	if _transitioning or _in_cutscene:
 		return
 	PartyState.is_at_save_point = true
@@ -311,60 +333,60 @@ func _on_save_point_activated(_save_point_id: String) -> void:
 		GameManager.overlay_node.open_save_point()
 
 
-func _on_save_point_entered(_save_point_id: String) -> void:
+func on_save_point_entered(_save_point_id: String) -> void:
 	if _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	AudioManager.play_sfx("save_point_proximity")
 
 
-func _on_save_point_exited(_save_point_id: String) -> void:
+func on_save_point_exited(_save_point_id: String) -> void:
 	PartyState.is_at_save_point = false
 
 
-func _on_trigger_fired(_trigger_id: String) -> void:
+func on_trigger_fired(_trigger_id: String) -> void:
 	# Stub — trigger behavior dispatched per-map in future gaps.
 	pass
 
 
-func _on_wheel_toggled(wheel_id: String, is_high: bool) -> void:
+func on_wheel_toggled(wheel_id: String, is_high: bool) -> void:
 	_get_zone_handler().on_wheel_toggled(wheel_id, is_high)
 
 
-func _on_plate_pressed(plate_id: String) -> void:
+func on_plate_pressed(plate_id: String) -> void:
 	_get_zone_handler().on_plate_pressed(plate_id)
 
 
-func _on_crystal_cleared(crystal_id: String) -> void:
+func on_crystal_cleared(crystal_id: String) -> void:
 	_get_zone_handler().on_crystal_cleared(crystal_id)
 
 
-func _on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
+func on_pitfall_triggered(target_map_id: String, target_spawn: String) -> void:
 	_get_zone_handler().on_pitfall_triggered(target_map_id, target_spawn)
 
 
-func _on_spring_filled() -> void:
+func on_spring_filled() -> void:
 	_get_zone_handler().on_spring_filled()
 
 
-func _on_plant_restored(plant_id: String) -> void:
+func on_plant_restored(plant_id: String) -> void:
 	_get_zone_handler().on_plant_restored(plant_id)
 
 
-func _on_zone_damage_dealt(zone_id: String, total_damage: int) -> void:
+func on_zone_damage_dealt(zone_id: String, total_damage: int) -> void:
 	_get_zone_handler().on_zone_damage_dealt(zone_id, total_damage)
 
 
-func _on_interaction_message(text: String) -> void:
+func on_interaction_message(text: String) -> void:
 	flash_location_name(text)
 
 
-func _on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
+func on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	_get_zone_handler().trigger_boss_encounter(area)
 
 
-func _on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
+func on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
 		return
 	var flag: String = area.get_meta("flag", "")
@@ -443,7 +465,7 @@ func _get_party_avg_level() -> int:
 	return maxi(1, floori(float(total) / float(PartyState.members.size())))
 
 
-func _on_transition_body_entered(body: Node2D, area: Area2D) -> void:
+func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 	if _transitioning or body != _player or _in_cutscene or _in_auto_walk:
 		return
 	var req_flag: String = area.get_meta("required_flag", "")
@@ -593,9 +615,8 @@ func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
 		return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(entries)
-		GameManager.overlay_state_changed.connect(
-			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
-		)
+		_caden_dialogue_callable = _on_caden_dialogue_closed.bind(caden, completion_flag)
+		GameManager.overlay_state_changed.connect(_caden_dialogue_callable, CONNECT_ONE_SHOT)
 	else:
 		_caden_complete(caden, completion_flag)
 
@@ -604,10 +625,10 @@ func _on_caden_dialogue_closed(
 	state: GameManager.OverlayState, caden: Node2D, completion_flag: String
 ) -> void:
 	if state != GameManager.OverlayState.NONE:
-		GameManager.overlay_state_changed.connect(
-			_on_caden_dialogue_closed.bind(caden, completion_flag), CONNECT_ONE_SHOT
-		)
+		_caden_dialogue_callable = _on_caden_dialogue_closed.bind(caden, completion_flag)
+		GameManager.overlay_state_changed.connect(_caden_dialogue_callable, CONNECT_ONE_SHOT)
 		return
+	_caden_dialogue_callable = Callable()
 	_caden_complete(caden, completion_flag)
 
 
@@ -633,7 +654,7 @@ func _start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], ti
 	_get_cutscene_handler().start_pending_cutscene(cutscene_id, entries, tier)
 
 
-func _on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
+func on_cutscene_trigger_entered(body: Node2D, area: Area2D) -> void:
 	_get_cutscene_handler().on_cutscene_trigger_entered(body, area)
 
 
@@ -675,7 +696,7 @@ func set_transitioning(value: bool) -> void:
 
 
 func get_zone_damage_callback() -> Callable:
-	return _on_zone_damage_dealt
+	return on_zone_damage_dealt
 
 
 func get_entities() -> Dictionary:
