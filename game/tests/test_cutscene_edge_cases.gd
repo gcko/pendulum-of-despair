@@ -77,7 +77,7 @@ func test_cutscene_trigger_missing_dialogue_no_crash() -> void:
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
 	# Should not crash — just logs error and returns
-	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	exp_node.on_cutscene_trigger_entered(exp_node.get_player(), area)
 	assert_push_error_count(1, "missing dialogue should log error")
 	assert_false(
 		exp_node.is_in_cutscene(), "should not enter cutscene state with missing dialogue data"
@@ -116,7 +116,7 @@ func test_cutscene_double_fire_prevented_by_flag() -> void:
 	# Pre-set the flag to simulate having already seen the cutscene
 	EventFlags.set_flag("dawn_march_seen", true)
 	# Trigger should be blocked by the flag — returns early without any errors
-	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	exp_node.on_cutscene_trigger_entered(exp_node.get_player(), area)
 	assert_false(exp_node.is_in_cutscene(), "trigger should be blocked by one-shot flag")
 
 
@@ -132,7 +132,7 @@ func test_cutscene_trigger_blocked_during_transition() -> void:
 	area.set_meta("cutscene_map_id", "")
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
-	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	exp_node.on_cutscene_trigger_entered(exp_node.get_player(), area)
 	assert_false(exp_node.is_in_cutscene(), "cutscene trigger should be blocked during transition")
 
 
@@ -148,7 +148,7 @@ func test_cutscene_trigger_blocked_while_in_cutscene() -> void:
 	area.set_meta("cutscene_map_id", "")
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
-	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	exp_node.on_cutscene_trigger_entered(exp_node.get_player(), area)
 	# Should remain in the existing cutscene state, not start another
 	assert_true(exp_node.is_in_cutscene(), "should stay in existing cutscene")
 
@@ -165,7 +165,7 @@ func test_cutscene_trigger_blocked_by_required_flag() -> void:
 	area.set_meta("cutscene_return_map", "")
 	area.set_meta("cutscene_return_spawn", "PlayerSpawn")
 	# required_flag not set — should block
-	exp_node._on_cutscene_trigger_entered(exp_node.get_player(), area)
+	exp_node.on_cutscene_trigger_entered(exp_node.get_player(), area)
 	assert_false(
 		exp_node.is_in_cutscene(), "cutscene should be blocked when required_flag is not set"
 	)

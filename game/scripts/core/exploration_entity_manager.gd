@@ -189,65 +189,65 @@ func connect_entity_signals(map_node: Node2D) -> void:
 			if child.has_signal("npc_interacted"):
 				if child.get_meta("cutscene_actor", false):
 					continue
-				child.npc_interacted.connect(_exploration._on_npc_interacted)
+				child.npc_interacted.connect(_exploration.on_npc_interacted)
 			if child.has_signal("chest_opened"):
-				child.chest_opened.connect(_exploration._on_chest_opened)
+				child.chest_opened.connect(_exploration.on_chest_opened)
 			if child.has_signal("save_point_activated"):
-				child.save_point_activated.connect(_exploration._on_save_point_activated)
+				child.save_point_activated.connect(_exploration.on_save_point_activated)
 			if child.has_signal("save_point_entered"):
-				child.save_point_entered.connect(_exploration._on_save_point_entered)
+				child.save_point_entered.connect(_exploration.on_save_point_entered)
 			if child.has_signal("save_point_exited"):
-				child.save_point_exited.connect(_exploration._on_save_point_exited)
+				child.save_point_exited.connect(_exploration.on_save_point_exited)
 			if child.has_signal("wheel_toggled"):
-				child.wheel_toggled.connect(_exploration._on_wheel_toggled)
+				child.wheel_toggled.connect(_exploration.on_wheel_toggled)
 			if child.has_signal("spring_filled"):
-				child.spring_filled.connect(_exploration._on_spring_filled)
+				child.spring_filled.connect(_exploration.on_spring_filled)
 			if child.has_signal("plant_restored"):
-				child.plant_restored.connect(_exploration._on_plant_restored)
+				child.plant_restored.connect(_exploration.on_plant_restored)
 			if child.has_signal("zone_damage_dealt"):
-				child.zone_damage_dealt.connect(_exploration._on_zone_damage_dealt)
+				child.zone_damage_dealt.connect(_exploration.on_zone_damage_dealt)
 			if child.has_signal("plate_pressed"):
-				child.plate_pressed.connect(_exploration._on_plate_pressed)
+				child.plate_pressed.connect(_exploration.on_plate_pressed)
 			if child.has_signal("crystal_cleared"):
-				child.crystal_cleared.connect(_exploration._on_crystal_cleared)
+				child.crystal_cleared.connect(_exploration.on_crystal_cleared)
 			if child.has_signal("pitfall_triggered"):
-				child.pitfall_triggered.connect(_exploration._on_pitfall_triggered)
+				child.pitfall_triggered.connect(_exploration.on_pitfall_triggered)
 			if child.has_signal("triggered"):
-				child.triggered.connect(_exploration._on_trigger_fired)
+				child.triggered.connect(_exploration.on_trigger_fired)
 			if child.has_signal("interaction_message"):
-				child.interaction_message.connect(_exploration._on_interaction_message)
+				child.interaction_message.connect(_exploration.on_interaction_message)
 			if child is Area2D and child.has_meta("boss_id"):
-				child.body_entered.connect(_exploration._on_boss_trigger_entered.bind(child))
+				child.body_entered.connect(_exploration.on_boss_trigger_entered.bind(child))
 			elif child is Area2D and child.has_meta("cutscene_scene_id"):
-				child.body_entered.connect(_exploration._on_cutscene_trigger_entered.bind(child))
+				child.body_entered.connect(_exploration.on_cutscene_trigger_entered.bind(child))
 			elif (
 				child is Area2D
 				and (child.has_meta("dialogue_data") or child.has_meta("dialogue_scene_id"))
 			):
-				child.body_entered.connect(_exploration._on_dialogue_trigger_entered.bind(child))
+				child.body_entered.connect(_exploration.on_dialogue_trigger_entered.bind(child))
 	var transitions: Node = map_node.get_node_or_null("Transitions")
 	if transitions != null:
 		for child: Node in transitions.get_children():
 			if child is Area2D and child.has_meta("target_map"):
-				child.body_entered.connect(_exploration._on_transition_body_entered.bind(child))
+				child.body_entered.connect(_exploration.on_transition_body_entered.bind(child))
 
 
 func disconnect_entity_signals(map_node: Node2D) -> void:
 	var sigs: Dictionary = {
-		"npc_interacted": _exploration._on_npc_interacted,
-		"chest_opened": _exploration._on_chest_opened,
-		"save_point_activated": _exploration._on_save_point_activated,
-		"save_point_entered": _exploration._on_save_point_entered,
-		"save_point_exited": _exploration._on_save_point_exited,
-		"wheel_toggled": _exploration._on_wheel_toggled,
-		"spring_filled": _exploration._on_spring_filled,
-		"plant_restored": _exploration._on_plant_restored,
-		"zone_damage_dealt": _exploration._on_zone_damage_dealt,
-		"interaction_message": _exploration._on_interaction_message,
-		"plate_pressed": _exploration._on_plate_pressed,
-		"crystal_cleared": _exploration._on_crystal_cleared,
-		"pitfall_triggered": _exploration._on_pitfall_triggered,
-		"triggered": _exploration._on_trigger_fired,
+		"npc_interacted": _exploration.on_npc_interacted,
+		"chest_opened": _exploration.on_chest_opened,
+		"save_point_activated": _exploration.on_save_point_activated,
+		"save_point_entered": _exploration.on_save_point_entered,
+		"save_point_exited": _exploration.on_save_point_exited,
+		"wheel_toggled": _exploration.on_wheel_toggled,
+		"spring_filled": _exploration.on_spring_filled,
+		"plant_restored": _exploration.on_plant_restored,
+		"zone_damage_dealt": _exploration.on_zone_damage_dealt,
+		"interaction_message": _exploration.on_interaction_message,
+		"plate_pressed": _exploration.on_plate_pressed,
+		"crystal_cleared": _exploration.on_crystal_cleared,
+		"pitfall_triggered": _exploration.on_pitfall_triggered,
+		"triggered": _exploration.on_trigger_fired,
 	}
 	for group: String in ["Entities", "Transitions"]:
 		var container: Node = map_node.get_node_or_null(group)
