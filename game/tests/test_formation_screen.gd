@@ -8,6 +8,11 @@ func before_each() -> void:
 	PartyState.initialize_new_game()
 
 
+func after_each() -> void:
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
+
+
 # --- Row tests ---
 
 

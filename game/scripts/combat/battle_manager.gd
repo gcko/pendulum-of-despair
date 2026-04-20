@@ -219,11 +219,10 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	var element: String = spell.get("element", "non_elemental")
 	var caster_name: String = member.get("character_data", {}).get("name", "???")
 	message.emit("%s casts %s!" % [caster_name, spell.get("name", "Spell")])
-	_state.gain_weave_gauge(slot, 5)
-	if member.get("character_id", "") != "maren":
-		_state.gain_weave_gauge_for_maren(10)
 	if target_type == "single_enemy":
 		var etgt: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
+		if etgt < 0:
+			return true
 		_do_magic_on_enemy(slot, mag, power, element, etgt)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
@@ -244,6 +243,10 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 					var healed_amt: int = _state.heal(i, heal_amt)
 					if healed_amt > 0:
 						damage_dealt.emit("party_%d" % i, healed_amt, "heal")
+	# Gain Weave Gauge AFTER target validation to prevent gauge farming
+	_state.gain_weave_gauge(slot, 5)
+	if member.get("character_id", "") != "maren":
+		_state.gain_weave_gauge_for_maren(10)
 	return true
 
 
