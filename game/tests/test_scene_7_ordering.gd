@@ -2,13 +2,13 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 func test_7b_blocked_without_7a() -> void:

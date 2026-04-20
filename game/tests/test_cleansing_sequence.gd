@@ -17,37 +17,13 @@ class BadPathSequence:
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	PartyState.is_at_save_point = false
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.cutscene_active = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
 	PartyState.is_at_save_point = false
 
 

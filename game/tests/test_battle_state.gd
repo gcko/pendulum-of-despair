@@ -7,20 +7,14 @@ var _state: Node
 func before_each() -> void:
 	_state = preload("res://scripts/combat/battle_state.gd").new()
 	add_child_autofree(_state)
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.ley_crystals.clear()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
 
 
 func after_each() -> void:
 	_state = null
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.ley_crystals.clear()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
 
 
 func _make_char_data() -> Dictionary:

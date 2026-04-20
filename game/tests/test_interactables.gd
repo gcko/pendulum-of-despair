@@ -7,19 +7,11 @@ const SAVE_SCENE: PackedScene = preload("res://scenes/entities/save_point.tscn")
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	EventFlags.clear_all()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.cutscene_active = false
-	EventFlags.clear_all()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 
 
 func _make_player_body() -> CharacterBody2D:

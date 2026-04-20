@@ -3,14 +3,13 @@ extends GutTest
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 # --- 1. dawn_march.json loads with cutscene metadata ---

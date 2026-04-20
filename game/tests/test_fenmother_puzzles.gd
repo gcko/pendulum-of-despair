@@ -10,37 +10,13 @@ const RITUAL_METER_SCRIPT: GDScript = preload("res://scripts/ui/ritual_meter.gd"
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.gold = 0
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.is_at_save_point = false
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	EventFlags.clear_all()
 
 
 func after_each() -> void:
-	while GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.cutscene_active = false
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.gold = 0
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.is_at_save_point = false
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	EventFlags.clear_all()
 
 
 func _simulate_cutscene_state() -> void:
