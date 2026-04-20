@@ -521,6 +521,9 @@ func _scan_for_bare_viewport_calls(path: String, results: Array[String]) -> void
 	dir.list_dir_begin()
 	var file_name: String = dir.get_next()
 	while file_name != "":
+		if file_name == "." or file_name == "..":
+			file_name = dir.get_next()
+			continue
 		var full_path: String = path.path_join(file_name)
 		if dir.current_is_dir():
 			_scan_for_bare_viewport_calls(full_path, results)

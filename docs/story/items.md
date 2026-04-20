@@ -138,7 +138,7 @@ Status effect definitions and spell-based cures: see [magic.md](magic.md#status-
 | Item | Effect | Buy | Sell | Availability |
 |------|--------|-----|------|--------------|
 | Smoke Bomb | Flee from non-boss battles (100%) | 100 | 50 | Act I shops |
-| Waystone | Teleport to dungeon entrance (dungeon use only) | 300 | 150 | Act II shops |
+| Waystone | Teleport to dungeon entrance (dungeon use only) | 300 | 150 | Valdris specialty shop, Bellhaven general shop |
 | Spirit Incense | +15% MAG for one battle | 200 | 100 | Valdris specialty shop |
 | Whetstone | +10% ATK for one battle | 100 | 50 | Valdris specialty shop |
 | Sable's Coin | Guaranteed preemptive next battle | — | — | Quest reward, rare chests |

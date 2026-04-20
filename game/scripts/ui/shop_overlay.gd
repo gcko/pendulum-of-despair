@@ -182,12 +182,12 @@ func _get_current_act() -> int:
 	return 1
 
 
-## Close the overlay. MUST be last — scene teardown follows immediately.
 func _consume_input() -> void:
 	var vp: Viewport = get_viewport()
 	if vp != null:
 		vp.set_input_as_handled()
 
 
+## Close the overlay. MUST be last — scene teardown follows immediately.
 func _close() -> void:
 	GameManager.pop_overlay()

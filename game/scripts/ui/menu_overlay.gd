@@ -269,7 +269,8 @@ func _open_save() -> void:
 	# Pop menu silently (keeps tree paused, no NONE signal) then immediately
 	# push save overlay — no one-frame gap where tree unpauses.
 	GameManager.pop_overlay(true)
-	GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD)
+	if not GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
+		return
 	if GameManager.overlay_node != null and GameManager.overlay_node.has_method("open_save"):
 		GameManager.overlay_node.open_save()
 
