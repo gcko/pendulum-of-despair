@@ -85,6 +85,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Data field values used in COMPUTATION, not just existence checks — if a field is `restore_percent: 25`, the code must multiply by 0.25, not treat it as a boolean flag
 - [ ] Configurable values in data (e.g., revive HP fraction) must flow through to the formula — hardcoded fallbacks (e.g., always `max_hp / 4`) bypass the data
 - [ ] For every item/skill effect: trace the data value from JSON -> code -> actual game effect. If the value doesn't change the output, it's a semantic bug
+- [ ] Side effects (resource spend, gauge gain, message emission) must happen AFTER target/condition validation, not before. If a function can return false/re-prompt, verify no irreversible side effects occurred before the validation point. (PR #147: _do_magic gained Weave Gauge before validating KO target, enabling gauge farming)
 
 ### Constraint Propagation (from Copilot PR #122 gap analysis)
 - [ ] Every constraint in JSON data (e.g., `requires_save_point`, `usable_in_battle`, `target_type`) must be enforced at ALL layers: backend logic, selection/confirmation UI, and display (greying/hiding)
