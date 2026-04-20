@@ -111,9 +111,6 @@ func _process(delta: float) -> void:
 			_atb.set_command_menu_open(true)
 			var slot: int = id.replace("party_", "").to_int()
 			var member: Dictionary = _state.get_member(slot)
-			if member.get("is_defending", false):
-				_state.set_defending(slot, false)
-				_state.set_buff(slot, "damage_taken_mult", 1.0)
 			var char_data: Dictionary = member.get("character_data", {})
 			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
 			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
@@ -142,7 +139,7 @@ func _on_ui_command(command: Dictionary) -> void:
 		"magic":
 			ok = _do_magic(actor_id, command)
 		"item":
-			_do_item(command)
+			ok = _do_item(command)
 		"defend":
 			_do_defend(actor_id)
 		"flee":
@@ -161,6 +158,10 @@ func _on_ui_command(command: Dictionary) -> void:
 			actor_id, true, s, lc, _is_boss, _state.get_member(s).get("character_data", {})
 		)
 		return
+	var cmd_slot: int = actor_id.replace("party_", "").to_int()
+	if _state.get_member(cmd_slot).get("is_defending", false):
+		_state.set_defending(cmd_slot, false)
+		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
 	_turn_counter += 1
@@ -266,31 +267,38 @@ func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String,
 		damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 
 
-func _do_item(command: Dictionary) -> void:
+func _do_item(command: Dictionary) -> bool:
 	var item: Dictionary = command.get("item", {})
 	var target_slot: int = command.get("target", 0)
-	message.emit("Used %s!" % item.get("name", "Item"))
 	match item.get("effect_type", ""):
 		"restore_hp":
 			var can_revive: bool = item.get("can_revive", false)
 			var tgt_m: Dictionary = _state.get_member(target_slot)
 			if not tgt_m.get("is_alive", true) and not can_revive:
 				message.emit("No effect!")
-				return
+				return false
+			message.emit("Used %s!" % item.get("name", "Item"))
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
 			if actual > 0:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"revive":
+			message.emit("Used %s!" % item.get("name", "Item"))
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
 			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
+			message.emit("Used %s!" % item.get("name", "Item"))
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))
 		"cure_status":
+			message.emit("Used %s!" % item.get("name", "Item"))
 			for sname: String in item.get("cures", []):
 				_state.remove_status(target_slot, sname)
 		"smoke_bomb":
-			if not _is_boss:
-				_exit_battle("flee")
+			if _is_boss:
+				message.emit("Can't use that here!")
+				return false
+			message.emit("Used %s!" % item.get("name", "Item"))
+			_exit_battle("flee")
+	return true
 
 
 func _do_defend(actor_id: String) -> void:
