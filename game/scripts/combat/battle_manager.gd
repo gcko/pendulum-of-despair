@@ -202,6 +202,14 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	if member.is_empty():
 		return false
 	var spell: Dictionary = command.get("spell", {})
+	var target_type: String = spell.get("target", "single_enemy")
+	# Validate single_ally target before spending MP or gaining gauge
+	if target_type == "single_ally":
+		var tgt: int = command.get("target", 0)
+		var tm: Dictionary = _state.get_member(tgt)
+		if tm.is_empty() or not tm.get("is_alive", false):
+			message.emit("No effect!")
+			return false
 	if not _state.spend_mp(slot, spell.get("mp_cost", 0)):
 		message.emit("Not enough MP!")
 		return false
@@ -213,7 +221,6 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	_state.gain_weave_gauge(slot, 5)
 	if member.get("character_id", "") != "maren":
 		_state.gain_weave_gauge_for_maren(10)
-	var target_type: String = spell.get("target", "single_enemy")
 	if target_type == "single_enemy":
 		var etgt: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
 		_do_magic_on_enemy(slot, mag, power, element, etgt)
@@ -225,12 +232,6 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		if target_type == "single_ally":
 			var tgt: int = command.get("target", 0)
-			var tm: Dictionary = _state.get_member(tgt)
-			# Fix: reject non-revive heals on KO'd members — refund MP, re-prompt
-			if tm.is_empty() or not tm.get("is_alive", false):
-				_state.restore_mp(slot, spell.get("mp_cost", 0))
-				message.emit("No effect!")
-				return false
 			var healed: int = _state.heal(tgt, heal_amt)
 			if healed > 0:
 				damage_dealt.emit("party_%d" % tgt, healed, "heal")

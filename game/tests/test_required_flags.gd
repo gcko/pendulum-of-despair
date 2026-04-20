@@ -17,28 +17,12 @@ func after_each() -> void:
 	DataManager.clear_cache()
 
 
-func _create_exploration() -> Node2D:
-	GameManager.transition_data = {}
-	var exp: Node2D = EXPLORATION_SCENE.instantiate()
-	add_child_autofree(exp)
-	return exp
-
-
 func _create_exploration_test_room() -> Node2D:
 	GameManager.transition_data = {}
 	var exp: Node2D = EXPLORATION_SCENE.instantiate()
 	add_child_autofree(exp)
 	exp.load_map("test_room")
 	return exp
-
-
-## Create a mock Area2D with metadata for trigger testing.
-func _make_trigger_area(meta: Dictionary) -> Area2D:
-	var area: Area2D = Area2D.new()
-	add_child_autofree(area)
-	for key: String in meta:
-		area.set_meta(key, meta[key])
-	return area
 
 
 # ==========================================================================
