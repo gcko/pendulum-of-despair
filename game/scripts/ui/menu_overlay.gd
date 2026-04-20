@@ -93,16 +93,16 @@ func _handle_command_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_command_index = (_command_index + 1) % COMMANDS.size()
 		_update_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_command_index = (_command_index - 1 + COMMANDS.size()) % COMMANDS.size()
 		_update_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_confirm_command()
 	elif event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		GameManager.pop_overlay()
 
 
@@ -111,24 +111,24 @@ func _handle_char_select_input(event: InputEvent) -> void:
 		if event.is_action_pressed("ui_cancel"):
 			_clear_char_highlight()
 			_state = MenuState.COMMAND
-			get_viewport().set_input_as_handled()
+			_consume_input()
 		return
 	if event.is_action_pressed("ui_down"):
 		_char_index = (_char_index + 1) % _active_party.size()
 		_update_char_highlight()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_char_index = (_char_index - 1 + _active_party.size()) % _active_party.size()
 		_update_char_highlight()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
 		_clear_char_highlight()
 		_open_sub_screen_for_character()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_cancel"):
 		_clear_char_highlight()
 		_state = MenuState.COMMAND
-		get_viewport().set_input_as_handled()
+		_consume_input()
 
 
 func _handle_sub_screen_input(event: InputEvent) -> void:
@@ -136,10 +136,10 @@ func _handle_sub_screen_input(event: InputEvent) -> void:
 	if _active_sub_screen != null and _active_sub_screen.has_method("handle_input"):
 		var handled: bool = _active_sub_screen.handle_input(event)
 		if handled:
-			get_viewport().set_input_as_handled()
+			_consume_input()
 			return
 	if event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_close_sub_screen()
 
 
@@ -221,7 +221,7 @@ func _close_sub_screen() -> void:
 	_stub_label.visible = false
 	if _config_direct:
 		_config_direct = false
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		GameManager.pop_overlay()
 		return
 	_main_panel.visible = true
@@ -266,11 +266,12 @@ func _show_stub_message() -> void:
 func _open_save() -> void:
 	if not PartyState.is_at_save_point:
 		return  # Save command is disabled (greyed out)
-	# Schedule save overlay push on GameManager (autoload, never freed) before
-	# popping this overlay. call_deferred runs after the current frame's
-	# queue_free processing, so GameManager.push_save_overlay executes safely.
-	GameManager.call_deferred("push_save_overlay")
-	GameManager.pop_overlay()
+	# Pop menu silently (keeps tree paused, no NONE signal) then immediately
+	# push save overlay — no one-frame gap where tree unpauses.
+	GameManager.pop_overlay(true)
+	GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD)
+	if GameManager.overlay_node != null and GameManager.overlay_node.has_method("open_save"):
+		GameManager.overlay_node.open_save()
 
 
 func _refresh_party_data() -> void:
@@ -363,6 +364,12 @@ func _is_command_disabled(index: int) -> bool:
 	if cmd.get("name", "") == "Save":
 		return not PartyState.is_at_save_point
 	return cmd.get("stubbed", false)
+
+
+func _consume_input() -> void:
+	var vp: Viewport = get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
 
 
 func _format_number(value: int) -> String:

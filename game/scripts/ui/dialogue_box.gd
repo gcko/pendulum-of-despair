@@ -106,7 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_choice_input(event)
 		return
 	if event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		if _text_complete:
 			_advance()
 		else:
@@ -234,18 +234,18 @@ func _handle_choice_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_choice_index = (_choice_index + 1) % _choice_count
 		_update_choice_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_choice_index = (_choice_index - 1 + _choice_count) % _choice_count
 		_update_choice_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_select_choice()
 	elif event.is_action_pressed("ui_cancel"):
 		# Cancel selects bottom option per ui-design.md Section 12.4
 		_choice_index = _choice_count - 1
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_select_choice()
 
 
@@ -319,6 +319,12 @@ func _fire_sfx(entry: Dictionary) -> void:
 		var sfx_id: String = sfx.get("id", "")
 		if sfx_id != "":
 			sfx_requested.emit(sfx_id)
+
+
+func _consume_input() -> void:
+	var vp: Viewport = get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
 
 
 func _load_text_speed() -> void:

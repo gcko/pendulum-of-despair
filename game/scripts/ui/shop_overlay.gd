@@ -52,23 +52,23 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if _inventory.is_empty():
 		if event.is_action_pressed("ui_cancel"):
-			get_viewport().set_input_as_handled()
+			_consume_input()
 			_close()
 		return
 
 	if event.is_action_pressed("ui_up"):
 		_selected = (_selected - 1 + _inventory.size()) % _inventory.size()
 		_update_selection()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_down"):
 		_selected = (_selected + 1) % _inventory.size()
 		_update_selection()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
 		_try_buy()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_close()
 
 
@@ -183,5 +183,11 @@ func _get_current_act() -> int:
 
 
 ## Close the overlay. MUST be last — scene teardown follows immediately.
+func _consume_input() -> void:
+	var vp: Viewport = get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
+
+
 func _close() -> void:
 	GameManager.pop_overlay()
