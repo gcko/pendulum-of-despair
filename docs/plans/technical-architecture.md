@@ -136,11 +136,9 @@ All game data lives in `res://data/` as JSON files. Design doc tables
 are the source of truth; JSON files are the runtime representation.
 
 **Key naming convention:** All JSON keys use `snake_case` (matching
-GDScript convention). [save-system.md](../story/save-system.md)'s
-pseudo-schema used camelCase for readability (`eventFlags`,
-`leyCrystals`), but the runtime JSON format uses snake_case
-(`event_flags`, `ley_crystals`). This applies to all JSON files — game
-data and save files alike.
+GDScript convention). This applies to all JSON files — game data,
+save files, and the pseudo-schema in
+[save-system.md](../story/save-system.md) alike.
 
 ### 2.1 Enemy Data
 
@@ -238,15 +236,17 @@ data and save files alike.
 
 ```json
 {
-  "shop_id": "valdris_crown_general",
-  "town": "valdris_crown",
-  "type": "general",
-  "inventory": [
-    { "item_id": "potion", "available_act": 1 },
-    { "item_id": "hi_potion", "available_act": 1 },
-    { "item_id": "antidote", "available_act": 1 }
-  ],
-  "restock_events": ["diplomatic_mission_start"]
+  "shop": {
+    "shop_id": "valdris_crown_general",
+    "town": "valdris_crown",
+    "type": "general",
+    "markup": 1.0,
+    "inventory": [
+      { "item_id": "potion", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null },
+      { "item_id": "hi_potion", "buy_price": 300, "available_act": 2, "stock_limit": null, "restock_event": null },
+      { "item_id": "antidote", "buy_price": 50, "available_act": 1, "stock_limit": null, "restock_event": null }
+    ]
+  }
 }
 ```
 

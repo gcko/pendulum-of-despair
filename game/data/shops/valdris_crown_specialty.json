@@ -32,6 +32,13 @@
         "available_act": 2,
         "stock_limit": null,
         "restock_event": null
+      },
+      {
+        "item_id": "pallor_antidote",
+        "buy_price": 400,
+        "available_act": 2,
+        "stock_limit": null,
+        "restock_event": "interlude_start"
       }
     ]
   }

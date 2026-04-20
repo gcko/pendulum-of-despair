@@ -1269,6 +1269,55 @@
       "sell_price": 200,
       "acquired": "Ember Vein F3 (secret room)",
       "description": "A crystallized shard of ley energy. Enhances magical ability."
+    },
+    {
+      "id": "warp_walker_boots",
+      "name": "Warp Walker's Boots",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+20 SPD, movement speed increase in gravity-shifted rooms",
+      "bonus_stats": {
+        "spd": 20
+      },
+      "special": "Movement speed increase in gravity-shifted rooms",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Dry Well of Aelhart Floor 6 chest",
+      "description": "Boots found where gravity runs perpendicular. Grants extraordinary speed and sure footing in warped spaces."
+    },
+    {
+      "id": "gravity_shard",
+      "name": "Gravity Shard",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+12 all stats, negates gravity-based status effects",
+      "bonus_stats": {
+        "atk": 12,
+        "def": 12,
+        "mag": 12,
+        "mdef": 12,
+        "spd": 12,
+        "lck": 12
+      },
+      "special": "Negates gravity-based status effects",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Dry Well of Aelhart Floor 6 chest",
+      "description": "A shard of compressed gravity from the builders' inverted halls. Bolsters all attributes and grounds the wearer against spatial distortion."
     }
   ]
 }

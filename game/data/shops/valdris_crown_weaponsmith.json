@@ -46,6 +46,13 @@
         "available_act": 2,
         "stock_limit": null,
         "restock_event": "diplomatic_mission_start"
+      },
+      {
+        "item_id": "composite_shortbow",
+        "buy_price": 450,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
       }
     ]
   }

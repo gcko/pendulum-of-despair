@@ -6,10 +6,12 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
@@ -38,13 +40,14 @@ func test_weaponsmith_has_only_weapon_items() -> void:
 		"iron_mallet",
 		"iron_lance",
 		"commanders_blade",
+		"composite_shortbow",
 	]
 	var shop: Dictionary = DataManager.load_shop("valdris_crown_weaponsmith")
 	var inventory: Array = shop.get("shop", {}).get("inventory", [])
 	var item_ids: Array[String] = []
 	for entry: Variant in inventory:
 		item_ids.append((entry as Dictionary).get("item_id", ""))
-	assert_eq(item_ids.size(), expected_items.size(), "weaponsmith should have exactly 6 items")
+	assert_eq(item_ids.size(), expected_items.size(), "weaponsmith should have exactly 7 items")
 	for expected: String in expected_items:
 		assert_true(item_ids.has(expected), "weaponsmith should have item: %s" % expected)
 
@@ -192,11 +195,11 @@ func test_jeweler_no_duplicate_items() -> void:
 # ── Specialty (regression) ───────────────────────────────────────────────
 
 
-func test_specialty_shop_still_loads_with_4_items() -> void:
+func test_specialty_shop_still_loads_with_5_items() -> void:
 	var shop: Dictionary = DataManager.load_shop("valdris_crown_specialty")
 	assert_false(shop.is_empty(), "specialty shop should still load")
 	var inventory: Array = shop.get("shop", {}).get("inventory", [])
-	assert_eq(inventory.size(), 4, "specialty shop should have 4 items")
+	assert_eq(inventory.size(), 5, "specialty shop should have 5 items")
 
 
 # ── Old armorer no longer exists ─────────────────────────────────────────

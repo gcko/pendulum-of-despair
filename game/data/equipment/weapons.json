@@ -1085,6 +1085,25 @@
       "sell_price": null,
       "acquired": "100 Pallor encounters",
       "description": "The Grey Cleaver reborn, its curse lifted and spirit power unleashed."
+    },
+    {
+      "id": "composite_shortbow",
+      "name": "Composite Shortbow",
+      "type": "bow",
+      "tier": 1,
+      "equippable_by": [
+        "torren"
+      ],
+      "atk": 12,
+      "bonus_stats": {
+        "spd": 3
+      },
+      "element": null,
+      "special": null,
+      "buy_price": 450,
+      "sell_price": 225,
+      "acquired": "Thornmere armory",
+      "description": "A ranger-grade composite shortbow. Good for hitting fast and hard from the back row."
     }
   ]
 }

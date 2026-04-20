@@ -102,6 +102,13 @@
         "available_act": 2,
         "stock_limit": null,
         "restock_event": "diplomatic_mission_start"
+      },
+      {
+        "item_id": "ley_lantern",
+        "buy_price": 60,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
       }
     ]
   }

@@ -654,6 +654,39 @@
       "usable_in_battle": true,
       "usable_in_field": true,
       "availability": "Valdris specialty shop"
+    },
+    {
+      "id": "ley_lantern",
+      "name": "Ley-Lantern",
+      "category": "consumable",
+      "subcategory": "battle_utility",
+      "effect": "light_source",
+      "value": null,
+      "buy_price": 60,
+      "sell_price": 30,
+      "stack_limit": 99,
+      "description": "Light source for dungeons. Charged with ley energy.",
+      "target": "all_allies",
+      "usable_in_battle": false,
+      "usable_in_field": true,
+      "availability": "Valdris Lower Ward item shop"
+    },
+    {
+      "id": "pallor_antidote",
+      "name": "Pallor Antidote",
+      "category": "consumable",
+      "subcategory": "status_cure",
+      "effect": "cure_status",
+      "value": null,
+      "cures": ["despair"],
+      "buy_price": 400,
+      "sell_price": 200,
+      "stack_limit": 99,
+      "description": "Cures Despair status on one ally.",
+      "target": "single_ally",
+      "usable_in_battle": true,
+      "usable_in_field": true,
+      "availability": "Valdris specialty shop (Interlude only)"
     }
   ]
 }

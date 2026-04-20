@@ -113,11 +113,11 @@ party[]: {
     head:          string|null
     body:          string|null
     accessory:     string|null
-    leyCrystal:    string|null  -- crystal ID (links to leyCrystals.collected)
+    ley_crystal:   string|null  -- crystal ID (links to ley_crystals.collected)
   }
   row:             string    -- "front" | "back"
-  abilityLoadout:  string[]  -- equipped ability IDs (subset of level-unlocked)
-  statusAilments:  string[]  -- active persistent ailments (e.g., ["poison", "blind"])
+  ability_loadout: string[]  -- equipped ability IDs (subset of level-unlocked)
+  status_ailments: string[]  -- active persistent ailments (e.g., ["poison", "blind"])
 }
 ```
 
@@ -146,10 +146,10 @@ only unequipped gear.
 
 ```
 inventory: {
-  consumables:  { itemId: string, qty: integer }[]
-  equipment:    { itemId: string, qty: integer }[]  -- unequipped gear
-  materials:    { itemId: string, qty: integer }[]  -- crafting materials
-  keyItems:     string[]                            -- unique, no quantities
+  consumables:  { item_id: string, qty: integer }[]
+  equipment:    { item_id: string, qty: integer }[]  -- unequipped gear
+  materials:    { item_id: string, qty: integer }[]  -- crafting materials
+  key_items:    string[]                             -- unique, no quantities
 }
 ```
 
@@ -161,8 +161,8 @@ collection and by shop logic to prevent duplicate purchases.
 
 ```
 owned_equipment: {
-  itemId: string,
-  qty:    integer
+  item_id: string,
+  qty:     integer
 }[]
 ```
 
@@ -173,22 +173,22 @@ full interaction model.
 
 ```
 crafting: {
-  arcaniteCharges:     integer       -- current AC pool (max 12)
-  deviceLoadout:       (string|null)[5]  -- 5 device slots, null = empty
-  discoveredSynergies: string[]      -- synergy IDs the player has found
-  unlockedRecipes:     string[]      -- recipe IDs (gated by schematic key items)
+  arcanite_charges:      integer       -- current AC pool (max 12)
+  device_loadout:        (string|null)[5]  -- 5 device slots, null = empty
+  discovered_synergies:  string[]      -- synergy IDs the player has found
+  unlocked_recipes:      string[]      -- recipe IDs (gated by schematic key items)
 }
 ```
 
-### 3.6 leyCrystals
+### 3.6 ley_crystals
 
 Crystal collection and progression. Assignment to characters is stored
-in `party[].equipment.leyCrystal`.
+in `party[].equipment.ley_crystal`.
 
 ```
-leyCrystals: {
+ley_crystals: {
   collected: {
-    crystalId: string,
+    crystal_id: string,
     xp:        integer,
     level:     integer   -- 1–5
   }[]                    -- up to 18 crystals
@@ -201,14 +201,14 @@ World state, progression flags, and player location.
 
 ```
 world: {
-  eventFlags:      Record<string, boolean|integer|string>
+  event_flags:     Record<string, boolean|integer|string>
                    -- 58 numbered flags (per events.md) plus an unbounded set
                    -- of parameterized boss_cutscene_seen_<boss_id> flags.
                    -- Mixed types: most are boolean, council_result is integer,
                    -- reunion_order_1..4 are string.
   act:             string   -- "1", "2", "interlude", "3", "4", "epilogue", "postgame"
-  currentLocation: string   -- map/scene identifier
-  currentPosition: { x: integer, y: integer }
+  current_location: string   -- map/scene identifier
+  current_position: { x: integer, y: integer }
   gold:            integer
 }
 ```
@@ -220,7 +220,7 @@ progression.
 
 ```
 quests: {
-  active:    { questId: string, step: integer }[]
+  active:    { quest_id: string, step: integer }[]
   completed: string[]  -- quest IDs
 }
 ```
@@ -234,7 +234,7 @@ Post-game completion tracking (4 categories per
 completion: {
   bestiary:   string[]  -- enemy IDs encountered (out of 235)
   treasures:  string[]  -- chest IDs opened
-  itemsFound: string[]  -- item IDs ever obtained
+  items_found: string[]  -- item IDs ever obtained
   -- quest completion tracked via quests.completed
 }
 ```
@@ -247,9 +247,9 @@ itself.
 ```
 meta: {
   version:   integer   -- save format version (starts at 1)
-  playtime:  integer   -- total seconds played
-  savedAt:   string    -- ISO 8601 timestamp
-  slotType:  string    -- "manual" | "auto"
+  play_time: integer   -- total seconds played
+  saved_at:  string    -- ISO 8601 timestamp
+  slot_type: string    -- "manual" | "auto"
 }
 ```
 
@@ -536,7 +536,7 @@ Every save file carries an integer `version` in its `meta` block
 
 | Change Type | Migration Needed? | Example |
 |-------------|-------------------|---------|
-| New field added | Yes — add with default | New `spiritFavor` tracking system |
+| New field added | Yes — add with default | New `spirit_favor` tracking system |
 | Field renamed | Yes — map old to new | `gp` to `gold` |
 | Field removed | Yes — strip old field | System removed from game |
 | Balance retuned | No | Tent heals 60% instead of 50% |
