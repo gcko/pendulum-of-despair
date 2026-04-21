@@ -178,8 +178,6 @@ func _do_skip(action: Dictionary, enemy: Node) -> void:
 
 func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 	var atype: String = action.get("type", "")
-	if atype == "ability":
-		_state.gain_weave_gauge_for_maren(15)
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
 		(
@@ -230,3 +228,6 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 				result.get("type", "miss"),
 			)
 		)
+	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
+	if atype == "ability":
+		_state.gain_weave_gauge_for_maren(15)

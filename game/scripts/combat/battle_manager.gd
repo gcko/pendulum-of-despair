@@ -206,12 +206,20 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		return false
 	var spell: Dictionary = command.get("spell", {})
 	var target_type: String = spell.get("target", "single_enemy")
-	# Validate single_ally target before spending MP or gaining gauge
+	# Validate targets before spending MP or gaining gauge
 	if target_type == "single_ally":
 		var tgt: int = command.get("target", 0)
 		var tm: Dictionary = _state.get_member(tgt)
 		if tm.is_empty() or not tm.get("is_alive", false):
 			message.emit("No effect!")
+			return false
+	var resolved_enemy_target: int = -1
+	if target_type == "single_enemy":
+		resolved_enemy_target = BattleActions.resolve_enemy_target(
+			command.get("target", 0), _enemies
+		)
+		if resolved_enemy_target < 0:
+			message.emit("No target!")
 			return false
 	if not _state.spend_mp(slot, spell.get("mp_cost", 0)):
 		message.emit("Not enough MP!")
@@ -222,11 +230,7 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	var caster_name: String = member.get("character_data", {}).get("name", "???")
 	message.emit("%s casts %s!" % [caster_name, spell.get("name", "Spell")])
 	if target_type == "single_enemy":
-		var etgt: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
-		if etgt < 0:
-			message.emit("No target!")
-			return false
-		_do_magic_on_enemy(slot, mag, power, element, etgt)
+		_do_magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
 			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
