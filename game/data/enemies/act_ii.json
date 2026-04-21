@@ -1379,6 +1379,271 @@
 				"deep_forest"
 			],
 			"ko_sound": "ko_elemental"
+		},
+		{
+			"id": "corrupted_boring_engine",
+			"name": "Corrupted Boring Engine",
+			"type": "construct",
+			"threat": "dangerous",
+			"level": 22,
+			"hp": 6000,
+			"mp": 0,
+			"atk": 43,
+			"def": 35,
+			"mag": 36,
+			"mdef": 26,
+			"spd": 19,
+			"gold": 1250,
+			"exp": 116,
+			"weaknesses": [
+				"storm"
+			],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"poison",
+				"sleep",
+				"confusion",
+				"berserk",
+				"despair"
+			],
+			"steal": {
+				"common": {
+					"item_id": "arcanite_core",
+					"rate": 75
+				},
+				"rare": {
+					"item_id": "elemental_core",
+					"rate": 25
+				}
+			},
+			"drop": {
+				"item_id": "drill_fragment",
+				"rate": 25
+			},
+			"locations": [
+				"rail_tunnels_west_tunnel"
+			],
+			"ko_sound": "ko_construct",
+			"is_boss": false,
+			"is_mini_boss": true,
+			"phases": 1,
+			"phase_hp_thresholds": [],
+			"boss_group": null
+		},
+		{
+			"id": "the_ironbound",
+			"name": "The Ironbound",
+			"type": "boss",
+			"threat": "boss",
+			"level": 24,
+			"hp": 22000,
+			"mp": 84,
+			"atk": 69,
+			"def": 42,
+			"mag": 70,
+			"mdef": 42,
+			"spd": 32,
+			"gold": 2500,
+			"exp": 8000,
+			"weaknesses": [
+				{
+					"element": "storm",
+					"multiplier": 1.5
+				},
+				{
+					"element": "void",
+					"multiplier": 1.25
+				}
+			],
+			"resistances": [
+				{
+					"element": "earth",
+					"multiplier": 0.5
+				},
+				{
+					"element": "flame",
+					"multiplier": 0.75
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "reinforced_drill_bit",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "operators_badge",
+				"rate": 100
+			},
+			"locations": [
+				"rail_tunnels"
+			],
+			"ko_sound": "ko_construct",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 2,
+			"phase_hp_thresholds": [
+				0.5
+			],
+			"boss_group": null
+		},
+		{
+			"id": "the_undying_warden",
+			"name": "The Undying Warden",
+			"type": "boss",
+			"threat": "boss",
+			"level": 25,
+			"hp": 8000,
+			"mp": 87,
+			"atk": 72,
+			"def": 45,
+			"mag": 73,
+			"mdef": 43,
+			"spd": 33,
+			"gold": 500,
+			"exp": 3500,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "catacomb_map",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "wardens_binding",
+				"rate": 100
+			},
+			"locations": [
+				"valdris_catacombs_catacomb_heart"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 2,
+			"phase_hp_thresholds": [
+				0.5
+			],
+			"boss_group": null
+		},
+		{
+			"id": "pallor_nest_mother",
+			"name": "Pallor Nest Mother",
+			"type": "boss",
+			"threat": "boss",
+			"level": 25,
+			"hp": 6000,
+			"mp": 87,
+			"atk": 72,
+			"def": 45,
+			"mag": 73,
+			"mdef": 43,
+			"spd": 33,
+			"gold": 87,
+			"exp": 3000,
+			"weaknesses": [
+				"flame",
+				"spirit"
+			],
+			"resistances": [
+				"frost"
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "broodchamber_map",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "nest_mothers_core",
+				"rate": 100
+			},
+			"locations": [
+				"caldera_undercity_deepest_junction"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 1,
+			"phase_hp_thresholds": [],
+			"boss_group": null
+		},
+		{
+			"id": "general_vassar_kole",
+			"name": "General Vassar Kole",
+			"type": "boss",
+			"threat": "boss",
+			"level": 28,
+			"hp": 30000,
+			"mp": 98,
+			"atk": 78,
+			"def": 49,
+			"mag": 81,
+			"mdef": 48,
+			"spd": 36,
+			"gold": 7500,
+			"exp": 12000,
+			"weaknesses": [],
+			"resistances": [],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion"
+			],
+			"steal": {
+				"common": null,
+				"rare": {
+					"item_id": "koles_epaulettes",
+					"rate": 100
+				}
+			},
+			"drop": {
+				"item_id": "map_to_the_convergence",
+				"rate": 100
+			},
+			"locations": [
+				"ironmark_citadel_command_chamber"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 2,
+			"phase_hp_thresholds": [
+				0.5
+			],
+			"boss_group": null
 		}
 	]
 }

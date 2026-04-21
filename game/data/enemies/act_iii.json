@@ -3109,6 +3109,153 @@
 				"oasis_c"
 			],
 			"ko_sound": "ko_boss"
+		},
+		{
+			"id": "the_lingering_phase_1",
+			"name": "The Lingering (Phase 1)",
+			"type": "boss",
+			"threat": "boss",
+			"level": 95,
+			"hp": 100000,
+			"mp": 500,
+			"atk": 240,
+			"def": 154,
+			"mag": 250,
+			"mdef": 148,
+			"spd": 100,
+			"gold": 0,
+			"exp": 0,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": null,
+			"drop": null,
+			"locations": [
+				"convergence_meadow"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 1,
+			"phase_hp_thresholds": [],
+			"boss_group": "the_lingering"
+		},
+		{
+			"id": "the_lingering_phase_2",
+			"name": "The Lingering (Phase 2)",
+			"type": "boss",
+			"threat": "boss",
+			"level": 100,
+			"hp": 140000,
+			"mp": 600,
+			"atk": 252,
+			"def": 162,
+			"mag": 262,
+			"mdef": 156,
+			"spd": 105,
+			"gold": 0,
+			"exp": 0,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": null,
+			"drop": null,
+			"locations": [
+				"convergence_meadow"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 1,
+			"phase_hp_thresholds": [],
+			"boss_group": "the_lingering"
+		},
+		{
+			"id": "the_lingering_phase_3",
+			"name": "The Lingering (Phase 3)",
+			"type": "boss",
+			"threat": "boss",
+			"level": 105,
+			"hp": 175000,
+			"mp": 700,
+			"atk": 264,
+			"def": 170,
+			"mag": 275,
+			"mdef": 163,
+			"spd": 110,
+			"gold": 5000,
+			"exp": 30000,
+			"weaknesses": [
+				{
+					"element": "spirit",
+					"multiplier": 1.5
+				}
+			],
+			"resistances": [
+				{
+					"element": "void",
+					"multiplier": 0.5
+				}
+			],
+			"absorb": [],
+			"status_immunities": [
+				"death",
+				"petrify",
+				"stop",
+				"sleep",
+				"confusion",
+				"despair"
+			],
+			"steal": null,
+			"drop": {
+				"item_id": "the_pallors_last",
+				"rate": 100
+			},
+			"locations": [
+				"convergence_meadow"
+			],
+			"ko_sound": "ko_boss",
+			"is_boss": true,
+			"is_mini_boss": false,
+			"phases": 1,
+			"phase_hp_thresholds": [],
+			"boss_group": "the_lingering"
 		}
 	]
 }
