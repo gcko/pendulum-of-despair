@@ -29,7 +29,7 @@
       {
         "item_id": "waystone",
         "buy_price": 300,
-        "available_act": 2,
+        "available_act": 1,
         "stock_limit": null,
         "restock_event": null
       },

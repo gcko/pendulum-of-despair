@@ -229,12 +229,14 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	var element: String = spell.get("element", "non_elemental")
 	var caster_name: String = member.get("character_data", {}).get("name", "???")
 	message.emit("%s casts %s!" % [caster_name, spell.get("name", "Spell")])
+	var had_effect: bool = false
 	if target_type == "single_enemy":
-		_do_magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
+		had_effect = _do_magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
 			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
-				_do_magic_on_enemy(slot, mag, power, element, i)
+				if _do_magic_on_enemy(slot, mag, power, element, i):
+					had_effect = true
 	elif target_type in ["single_ally", "all_allies"]:
 		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
 		if target_type == "single_ally":
@@ -242,39 +244,44 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 			var healed: int = _state.heal(tgt, heal_amt)
 			if healed > 0:
 				damage_dealt.emit("party_%d" % tgt, healed, "heal")
+				had_effect = true
 		else:
 			for i: int in range(4):
 				var m: Dictionary = _state.get_member(i)
 				if not m.is_empty() and m.get("is_alive", false):
-					# Fix: only show heal popup if healed > 0 (skip full-HP members)
 					var healed_amt: int = _state.heal(i, heal_amt)
 					if healed_amt > 0:
 						damage_dealt.emit("party_%d" % i, healed_amt, "heal")
-	# Gain Weave Gauge AFTER target validation to prevent gauge farming
-	_state.gain_weave_gauge(slot, 5)
-	if member.get("character_id", "") != "maren":
-		_state.gain_weave_gauge_for_maren(10)
+						had_effect = true
+	# Only gain Weave Gauge if the spell actually affected at least one target
+	if had_effect:
+		_state.gain_weave_gauge(slot, 5)
+		if member.get("character_id", "") != "maren":
+			_state.gain_weave_gauge_for_maren(10)
 	return true
 
 
-func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, idx: int) -> void:
+func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, idx: int) -> bool:
 	if idx < 0 or idx >= _enemies.size():
-		return
+		return false
 	var result: Dictionary = BattleActions.apply_magic_to_enemy(
 		_state, caster_slot, mag, power, element, _enemies[idx], idx
 	)
 	var dtype: String = result.get("type", "miss")
 	if dtype == "immune":
 		damage_dealt.emit("enemy_%d" % idx, 0, "immune")
-	elif dtype == "absorb":
+		return false
+	if dtype == "absorb":
 		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
-	elif result.get("hit", false):
+		return true
+	if result.get("hit", false):
 		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "magic")
 		if result.get("killed", false):
 			combatant_died.emit("enemy_%d" % idx)
 			_atb.remove_combatant("enemy_%d" % idx)
-	else:
-		damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+		return true
+	damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+	return false
 
 
 func _do_item(command: Dictionary) -> bool:

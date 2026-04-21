@@ -421,7 +421,7 @@
 					"rate": 75
 				},
 				"rare": {
-					"item_id": "ley_crystal_fragment",
+					"item_id": "spirit_essence",
 					"rate": 25
 				}
 			},
@@ -684,7 +684,7 @@
 					"rate": 75
 				},
 				"rare": {
-					"item_id": "ley_crystal_fragment",
+					"item_id": "spirit_essence",
 					"rate": 25
 				}
 			},
@@ -1245,7 +1245,7 @@
 					"rate": 75
 				},
 				"rare": {
-					"item_id": "ley_crystal_fragment",
+					"item_id": "spirit_essence",
 					"rate": 25
 				}
 			},

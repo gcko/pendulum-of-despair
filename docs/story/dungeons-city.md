@@ -99,7 +99,7 @@ KEY:  ### = limestone wall   [...] = alcove/room   === = passage
 - Burial Alcove A: Royal Funeral Urn (sell for 800g, or keep -- Mirren will identify it as belonging to Queen Verath, third dynasty, for lore)
 - Burial Alcove C: Ley-Etched Shield (equipment -- DEF +14, MAG DEF +8, faint glow in dark areas)
 - Sealed Tomb (Interlude only, collapsed wall reveals after earthquake from the assault): Founder's Circlet (accessory -- +all stats +3, inscription reads "The crown is the burden, not the jewel")
-- Flooded Chamber: Chest on a dry ledge -- 3x Healing Draught, 1x Phoenix Pinion
+- Flooded Chamber: Chest on a dry ledge -- 3x Potion, 1x Phoenix Pinion
 - Spirit Shrine: Examine the pact tablet for lore about the original spirit-pact that founded Valdris. If Torren is present, he translates the full text and the party receives a permanent +5% spirit magic resistance.
 
 #### Floor 2: Royal Tombs
@@ -162,7 +162,7 @@ KEY:  ### = limestone wall   [===] = sarcophagus   === = passage
 - Queen Verath's Tomb: Verath's Diadem (accessory -- +MAG +8, +MAG DEF +6, "She ruled for forty years and never raised her voice")
 - Knight Commander Crypt: Commander's Oath (weapon -- longsword, ATK +20, grants counterattack when HP < 50%. Dame Cordwyn: "I knew these names. Every one of them. They'd be ashamed of what we've become.")
 - Dynasty Hall, 2nd sarcophagus: 1000g pouch hidden in a false bottom
-- Maren's Secret Cache: Maren's Early Research Journal (key item -- provides additional dialogue options during "The Third Door" quest), 2x Mana Tincture, 1x Starbloom Tea
+- Maren's Secret Cache: Maren's Early Research Journal (key item -- provides additional dialogue options during "The Third Door" quest), 2x Ether, 1x Starbloom Tea
 
 **Lore:** The murals on Queen Verath's tomb walls depict the "Grey Seasons" -- a period predating the current understanding of the Pallor. Figures with hollow eyes stand in fields of ash. A woman with a crown holds a door closed with both hands. Maren recognizes the imagery: "This is older than my research. Much older. They knew. They always knew."
 
@@ -227,7 +227,7 @@ KEY:  ### = rough stone (older construction)   === = passage
 **Treasure:**
 - Ley Crystal Vein: Harvest 2x Ley Crystal Fragment (crafting material — used in Lira's advanced recipes)
 - Ritual Chamber: Examining the pact-circle with Maren or Torren reveals the original Seven Tower binding ritual. Lore entry unlocked. If all seven candle positions are lit (requires 7x Ley-Lanterns or the Bioluminescent Lantern from Roothollow), a hidden compartment opens: the Pact-Keeper's Rod (weapon -- staff, MAG +24, "The first sorcerers spoke to the ley lines. The ley lines spoke back.")
-- Spirit Well: 1x Mana Tincture (the well is dry, but a residue of ley energy remains)
+- Spirit Well: 1x Ether (the well is dry, but a residue of ley energy remains)
 
 ---
 
@@ -299,7 +299,7 @@ KEY:  ### = brick wall   ~~~ = sewer water (waist deep)
 | 4 | 1x Forge-Smoke Creature + 1x Service Automata + 2x Sewer Rat (rare) | 6.25% |
 
 **Treasure:**
-- Supply Cache A: 800 gold, 3x Standard Ration, 1x Repair Kit
+- Supply Cache A: 800 gold, 3x Potion, 1x Tent
 - Valve Room (after solving puzzle): Forgewright Prototype Gauntlet (equipment -- DEF +8, grants +15% damage to mechanical enemies)
 - Hidden in the sewer water near the Junction Platform (requires wading): Corrund Sewer Ring (accessory -- poison immunity, "Whoever made this spent too much time down here")
 
@@ -349,7 +349,7 @@ KEY:  ### = brick/iron wall   === = conduit pipe (glowing blue)
 
 **Treasure:**
 - Supply Cache B: Compact Military Intelligence Documents (key item -- reveals patrol routes, used in "The Commissar's Confession" side quest), 1,200 gold
-- Old Foreman's Office hidden compartment: Ironmark Tunnel Map (key item -- required to navigate the Ironmark passage without getting lost; without it, the tunnel has random dead ends that loop back), 1x Arcanite Torch
+- Old Foreman's Office hidden compartment: Ironmark Tunnel Map (key item -- required to navigate the Ironmark passage without getting lost; without it, the tunnel has random dead ends that loop back), 1x Ley-Lantern
 - Resistance Waypoint: Bedroll rest (restore 50% HP/MP to all party, once per visit; not a save point, no AC restore), resistance graffiti reads "WE REMEMBER WHAT WE WERE"
 - Resistance Waypoint (wall): A beautiful tapestry hanging on the brick wall, donated by "a kind traveler" according to the resistance fighters who cannot remember exactly when it appeared. Depicts a pastoral scene -- rolling hills, a village, figures at rest. Fine grey thread embroidery, exquisite craftsmanship. If examined after the Doma moment cutscene (flag: vaelith_doma_moment), the party notices the pastoral figures have grey eyes. Sable: "Those eyes. I have seen those eyes." Maren: "The thread is grey. Not dyed grey -- the material itself. I do not know what fiber this is." The tapestry cannot be removed without destroying it. The resistance fighters consider it good luck.
 - Abandoned Service Bay: Salvaged Automaton Core (crafting material -- used in Lira's Forgewright recipes)
@@ -497,7 +497,7 @@ KEY:  ### = volcanic stone wall   *** = old forge-channel (warm glow)
 **Treasure:**
 - Smuggler's Cache: 3x Smuggled Arcanite Core, 1x Pallor Ward (jury-rigged), 1,500 gold
 - Forge Channel (hidden chest in a dead-end branch): Molten Gear (crafting material), Ember Ring (accessory -- fire resist +25%, "Caldera remembers when the forge-channels ran with light")
-- Escape Tunnel entrance: Survival Pack (3x Standard Ration, 2x Healing Draught, 1x Smoke Capsule)
+- Escape Tunnel entrance: Survival Pack (3x Potion, 2x Hi-Potion, 1x Smoke Bomb)
 
 ### Sidequest Boss: The Pallor Nest Mother (6000 HP)
 
@@ -883,7 +883,7 @@ KEY:  ### = stone/coral wall   ~~~ = tidal water (rises and falls)
 **Treasure:**
 - Sable's Hideaway: Tin Box (examine for Sable character scene -- contains a copper coin, blue fabric scrap, and a child's drawing. "I hid here when the world got too loud. Guess some things don't change.")
 - Old Smuggler Stash: 500 gold (old Compact coins, pre-reformation), Corroded Dagger (weapon -- low ATK, but Sable: "My first real blade. I stole it from a drunk. I was nine.")
-- Smuggler's Den: Sea Chart Collection (key item -- reveals hidden coastal locations on the overworld map), 3x Smoke Capsule, 1x Grappling Line
+- Smuggler's Den: Sea Chart Collection (key item -- reveals hidden coastal locations on the overworld map), 3x Smoke Bomb, 1x Grappling Line
 - Sea Caves: Tidecaller's Horn (unique item -- summons a water elemental once per battle, as referenced in city-carradan.md)
 - Dock Tunnel (hidden behind crate stack, push puzzle): Merchant Prince's Private Ledger (key item -- evidence of dual arms sales, used in "The Honest Thief" side quest)
 
@@ -908,7 +908,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Barracks storage room (Lower Ward) -- the back wall behind the weapon racks
 **Discovery method:** Dame Cordwyn reveals this passage during the Interlude escape sequence. She learned it from a previous commander: "Every barracks has a bolt-hole. This one goes deep."
 **Where it leads:** A steep stairway descending to the Ossuary level of the Valdris Crown Catacombs (Floor 1, near Burial Alcove A).
-**Contents:** The passage itself contains a weapons cache -- 2x Iron Longsword, 1x Knight's Blade, 3x Healing Draught. Emergency supplies for exactly this situation.
+**Contents:** The passage itself contains a weapons cache -- 2x Iron Longsword, 1x Knight's Blade, 3x Potion. Emergency supplies for exactly this situation.
 **Availability:** Interlude onward. Story-triggered by Cordwyn.
 
 #### SP-V3: Chapel of the Old Pacts to Spirit Shrine
@@ -942,7 +942,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Abandoned Pump Station (Undercroft) -- behind a rusted panel on the back wall
 **Discovery method:** The panel is visible but appears to be just another piece of failing infrastructure. Sable can identify the concealed passage: "That's not rust. That's camouflage." Alternatively, purchasing the Tunnel Map from Tash's Black Market reveals the entrance on the minimap.
 **Where it leads:** A long maintenance tunnel (2 screens) that passes beneath the Corrund River and connects to the Ironmark Citadel tunnel network. This is the primary approach route for the Interlude's Ironmark sequence.
-**Contents:** Screen 1: Empty except for resistance markings on the walls and a supply cache (3x Standard Ration, 1x Arcanite Torch). Screen 2: A junction where the tunnel branches -- one path leads to Ironmark, the other to a dead end containing a collapsed section with a chest: Compact Engineering Manual (key item -- Lira can study it for a permanent +5% damage with Forgewright weapons).
+**Contents:** Screen 1: Empty except for resistance markings on the walls and a supply cache (3x Potion, 1x Ley-Lantern). Screen 2: A junction where the tunnel branches -- one path leads to Ironmark, the other to a dead end containing a collapsed section with a chest: Compact Engineering Manual (key item -- Lira can study it for a permanent +5% damage with Forgewright weapons).
 **Availability:** Interlude. The panel was sealed from the Ironmark side; Brant loosened it as part of his defection.
 
 #### SP-C2: Canalside Inn Secret Room
@@ -1064,7 +1064,7 @@ Every secret passage follows the same design rules: (1) there is always a discov
 **Entrance location:** Greyvale -- the burned-out house on the east side of town, beneath a collapsed floor
 **Discovery method:** Examine the rubble in the burned house. A section of floor gives way, revealing a cellar. In Act II, a Valdris loyalist NPC standing nearby hints: "My father kept things in the cellar. Important things. I haven't been able to get down there."
 **Where it leads:** A single-room cellar beneath the house.
-**Contents:** Valdris Intelligence Cache (key item -- Carradan troop movements from the border war, useful in Act II diplomatic scenes), a Valdris regimental banner (sellable or keepable -- Edren comments: "Third Regiment. Good soldiers. They deserved better."), 800g, 2x Healing Draught. In the Interlude, the cellar also contains a Pallor Antidote (the loyalist NPC is catatonic above -- the antidote cannot help him).
+**Contents:** Valdris Intelligence Cache (key item -- Carradan troop movements from the border war, useful in Act II diplomatic scenes), a Valdris regimental banner (sellable or keepable -- Edren comments: "Third Regiment. Good soldiers. They deserved better."), 800g, 2x Potion. In the Interlude, the cellar also contains a Pallor Antidote (the loyalist NPC is catatonic above -- the antidote cannot help him).
 **Availability:** Act II onward.
 
 ---
@@ -1126,7 +1126,7 @@ These areas within cities only become accessible when a specific side quest is a
 **Quest:** "The Third Door" (Major Side Quest #3)
 **Trigger:** Mirren grants access after the quest begins
 **Location:** Royal Library (Citizen's Walk) -- a locked iron gate at the back of the basement archives
-**What the player finds:** The Restricted Stacks contain the oldest documents in Valdris -- pre-dynasty records written on stone tablets and preserved bark. The fragmentary text referencing the Pallor's previous cycles is stored here. Mirren guides the party to the specific shelf. The room also contains: Archivist's Seal (accessory -- +lore entries revealed when examining objects throughout the game), 2x Mana Tincture, and a Stone Tablet Fragment (key item -- used in the quest to confirm the existence of the Third Door).
+**What the player finds:** The Restricted Stacks contain the oldest documents in Valdris -- pre-dynasty records written on stone tablets and preserved bark. The fragmentary text referencing the Pallor's previous cycles is stored here. Mirren guides the party to the specific shelf. The room also contains: Archivist's Seal (accessory -- +lore entries revealed when examining objects throughout the game), 2x Ether, and a Stone Tablet Fragment (key item -- used in the quest to confirm the existence of the Third Door).
 
 ### Valdris Crown: Cael's Quarters (Interior)
 
@@ -1389,7 +1389,7 @@ HEIST ROUTE -- Bellhaven (The Honest Thief Quest)
 [4] MERCHANT PRINCE DISTRICT APPROACH
     Stealth navigation through the upper city streets
     at night. Guard patrols follow fixed routes.
-    Sable can use Smoke Capsules to create distractions.
+    Sable can use Smoke Bombs to create distractions.
     Lira can disable Forgewright alarm tripwires.
     Torren can sense guards through walls (spirit-sense).
     |

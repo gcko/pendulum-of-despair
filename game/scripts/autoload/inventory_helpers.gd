@@ -94,17 +94,9 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 						remaining.append(s)
 			target["status_effects"] = remaining
 		"buff_atk":
-			var boost: int = item_data.get("value", 0)
-			if boost > 0:
-				var pct: float = float(boost) / 100.0
-				var base_atk: int = target.get("atk", 0)
-				target["atk"] = base_atk + int(float(base_atk) * pct)
+			push_warning("InventoryHelpers: buff_atk is battle-only (use BattleManager)")
 		"buff_mag":
-			var boost: int = item_data.get("value", 0)
-			if boost > 0:
-				var pct: float = float(boost) / 100.0
-				var base_mag: int = target.get("mag", 0)
-				target["mag"] = base_mag + int(float(base_mag) * pct)
+			push_warning("InventoryHelpers: buff_mag is battle-only (use BattleManager)")
 		"light_source":
 			EventFlags.set_flag("light_source_active", true)
 		"stat_boost":

@@ -77,7 +77,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -280,7 +280,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -634,7 +634,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -677,7 +677,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ancient_glyph",
+          "item_id": "bone_dust",
           "rate": 25
         }
       },
@@ -850,7 +850,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
