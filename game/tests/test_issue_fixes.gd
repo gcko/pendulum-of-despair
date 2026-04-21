@@ -750,22 +750,22 @@ func test_restore_hp_keeps_status_when_not_flagged() -> void:
 
 
 # ==========================================================================
-# Bug fix: buff_atk and buff_mag effects must be implemented
+# Bug fix: buff_atk and buff_mag are battle-only (field use is a no-op)
 # ==========================================================================
 
 
-func test_buff_atk_effect_increases_attack() -> void:
+func test_buff_atk_effect_is_noop_in_field() -> void:
 	var target: Dictionary = {"atk": 100}
 	var item: Dictionary = {"effect": "buff_atk", "value": 10}
 	InventoryHelpers.apply_item_effect(item, target)
-	assert_eq(target["atk"], 110, "ATK should increase by 10%")
+	assert_eq(target["atk"], 100, "ATK should not change — buff_atk is battle-only")
 
 
-func test_buff_mag_effect_increases_magic() -> void:
+func test_buff_mag_effect_is_noop_in_field() -> void:
 	var target: Dictionary = {"mag": 80}
 	var item: Dictionary = {"effect": "buff_mag", "value": 15}
 	InventoryHelpers.apply_item_effect(item, target)
-	assert_eq(target["mag"], 92, "MAG should increase by 15% (80 + 12)")
+	assert_eq(target["mag"], 80, "MAG should not change — buff_mag is battle-only")
 
 
 # ==========================================================================
