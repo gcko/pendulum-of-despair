@@ -33,6 +33,7 @@ var _showing_feedback: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process(false)
 	var shop_id: String = GameManager.transition_data.get("shop_id", "")
 	_load_shop(shop_id)
 	_build_list()
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 	if _feedback_timer <= 0.0:
 		_showing_feedback = false
 		_desc_label.text = ""
+		set_process(false)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -196,6 +198,7 @@ func _show_feedback(msg: String) -> void:
 	_desc_label.text = msg
 	_feedback_timer = FEEDBACK_CLEAR_DELAY
 	_showing_feedback = true
+	set_process(true)
 
 
 ## Determine current act from event flags progression.

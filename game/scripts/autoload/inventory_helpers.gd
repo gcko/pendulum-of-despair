@@ -164,9 +164,9 @@ static func calculate_stats_at_level(
 ## Compute derived stats (evasion, magic evasion, crit) from effective stat values.
 static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
 	return {
-		"eva_pct": clampi(spd / 4, 0, 50),
-		"meva_pct": clampi((mdef + spd) / 8, 0, 40),
-		"crit_pct": clampi(lck / 4, 0, 50),
+		"eva_pct": clampi(int(spd / 4), 0, 50),
+		"meva_pct": clampi(int((mdef + spd) / 8), 0, 40),
+		"crit_pct": clampi(int(lck / 4), 0, 50),
 	}
 
 

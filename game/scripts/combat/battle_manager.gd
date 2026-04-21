@@ -280,7 +280,7 @@ func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String,
 func _do_item(command: Dictionary) -> bool:
 	var item: Dictionary = command.get("item", {})
 	var target_slot: int = command.get("target", 0)
-	match item.get("effect_type", ""):
+	match item.get("effect", ""):
 		"restore_hp":
 			var can_revive: bool = item.get("can_revive", false)
 			var tgt_m: Dictionary = _state.get_member(target_slot)
@@ -291,6 +291,10 @@ func _do_item(command: Dictionary) -> bool:
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
 			if actual > 0:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
+			if item.get("clears_status", false):
+				var statuses: Array = tgt_m.get("active_statuses", [])
+				for i: int in range(statuses.size() - 1, -1, -1):
+					_state.remove_status(target_slot, statuses[i].get("name", ""))
 		"revive":
 			var rev_m: Dictionary = _state.get_member(target_slot)
 			if rev_m.get("is_alive", true):
@@ -303,11 +307,41 @@ func _do_item(command: Dictionary) -> bool:
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))
+		"restore_hp_mp":
+			var tgt_m: Dictionary = _state.get_member(target_slot)
+			if tgt_m.is_empty():
+				message.emit("No effect!")
+				return false
+			message.emit("Used %s!" % item.get("name", "Item"))
+			var hp_amt: int = item.get("restore_amount", 9999)
+			if item.has("restore_percent"):
+				var pct: int = item.get("restore_percent", 100)
+				hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
+			var mp_amt: int = hp_amt
+			if item.has("restore_percent"):
+				var pct: int = item.get("restore_percent", 100)
+				mp_amt = int(float(tgt_m.get("max_mp", 1)) * float(pct) / 100.0)
+			var healed: int = _state.heal(target_slot, hp_amt)
+			if healed > 0:
+				damage_dealt.emit("party_%d" % target_slot, healed, "heal")
+			_state.restore_mp(target_slot, mp_amt)
+			if item.get("clears_status", false):
+				var hp_mp_statuses: Array = tgt_m.get("active_statuses", [])
+				for i: int in range(hp_mp_statuses.size() - 1, -1, -1):
+					_state.remove_status(target_slot, hp_mp_statuses[i].get("name", ""))
 		"cure_status":
 			message.emit("Used %s!" % item.get("name", "Item"))
 			for sname: String in item.get("cures", []):
 				_state.remove_status(target_slot, sname)
-		"smoke_bomb":
+		"buff_atk":
+			message.emit("Used %s!" % item.get("name", "Item"))
+			var atk_boost: int = item.get("value", 10)
+			_state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
+		"buff_mag":
+			message.emit("Used %s!" % item.get("name", "Item"))
+			var mag_boost: int = item.get("value", 15)
+			_state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
+		"flee":
 			if _is_boss:
 				message.emit("Can't use that here!")
 				return false
