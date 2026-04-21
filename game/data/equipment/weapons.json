@@ -576,7 +576,7 @@
       "special": null,
       "buy_price": 250,
       "sell_price": 125,
-      "acquired": "Bellhaven shop",
+      "acquired": "Valdris Crown weaponsmith, Bellhaven shop",
       "description": "A slender thrusting blade designed for swift strikes.",
       "is_forged": false
     },
@@ -774,7 +774,7 @@
       "special": null,
       "buy_price": 300,
       "sell_price": 150,
-      "acquired": "Corrund shop",
+      "acquired": "Valdris Crown weaponsmith, Corrund shop",
       "description": "A solid iron mallet suitable for both repair work and combat.",
       "is_forged": false
     },
@@ -1162,7 +1162,7 @@
       "special": null,
       "buy_price": 450,
       "sell_price": 225,
-      "acquired": "Thornmere armory",
+      "acquired": "Valdris Crown weaponsmith, Thornmere armory",
       "description": "A ranger-grade composite shortbow. Good for hitting fast and hard from the back row.",
       "is_forged": false
     }

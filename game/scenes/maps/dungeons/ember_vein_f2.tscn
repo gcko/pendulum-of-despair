@@ -116,6 +116,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "dungeons/ember_vein_f3"
 metadata/target_spawn = "from_f2"
+metadata/required_flag = "ember_drake_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/StairsToF3"]
 shape = SubResource("Shape_transition")

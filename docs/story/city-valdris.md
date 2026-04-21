@@ -349,12 +349,14 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Interlude | Effect |
 |------|--------------|----------------|-----------|--------|
-| Healing Draught | 50 | 65 | 100 | Restore 200 HP |
-| Mana Tincture | 80 | 100 | 160 | Restore 50 MP |
-| Antidote | 30 | 40 | 60 | Cure Poison |
-| Smelling Salts | 40 | 50 | 80 | Cure Confusion |
-| Phoenix Feather | 500 | 600 | 1000 | Revive with 25% HP |
-| Ley-Lantern | 60 | 75 | -- | Light source for dungeons |
+| Potion | 50 | 50 | 100 | Restore 100 HP |
+| Hi-Potion | -- | 300 | 600 | Restore 300 HP |
+| Ether | 200 | 200 | 400 | Restore 30 MP |
+| Antidote | 50 | 50 | 100 | Cure Poison |
+| Smelling Salts | 75 | 75 | 150 | Cure Confusion |
+| Phoenix Feather | 500 | 500 | 1000 | Revive with 25% HP |
+| Ley-Lantern | 60 | 60 | -- | Light source for dungeons |
+| Smoke Bomb | 100 | 100 | 200 | Flee from non-boss battle |
 
 *Interlude:* Single vendor in the market square. Phoenix Feather sold out. Ley-Lanterns unavailable (no ley energy to charge them).
 
@@ -392,7 +394,7 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 - Royal Library basement stacks: 1x Spirit Incense (requires examining specific bookshelf)
 - Eastern Wall watchtower (northernmost): 1x Whetstone
 - Maren's Old Study (Royal Keep): Maren's Staff Fragment (key item, Act II)
-- Servants' Passage: 1x Healing Draught, 1x 500g pouch (Interlude only)
+- Servants' Passage: 1x Potion, 1x 500g pouch (Interlude only)
 
 **Environmental storytelling:**
 - The child's chalk drawing on the Lower Ward wall: one tower drawn dark in Act II, "HELP US" added in Interlude
@@ -577,12 +579,13 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
-| Herb Poultice | 25 | Restore 100 HP | Cheapest heal |
-| Antidote | 30 | Cure Poison | Basic status cure |
-| Wooden Shield | 80 | DEF +2 | Starter gear if not already equipped |
-| Traveler's Cloak | 60 | MAG DEF +2 | Starter accessory |
-| Torch | 15 | Light source (short duration) | For the Ember Vein later |
-| Bread Loaf | 10 | Restore 30 HP | Flavor item from Bren's regional supply |
+| Potion | 50 | Restore 100 HP | Basic heal |
+| Antidote | 50 | Cure Poison | Basic status cure |
+| Eye Drops | 50 | Cure Blindness | Basic status cure |
+| Smoke Bomb | 100 | Flee from non-boss battle | Escape tool |
+| Phoenix Feather | 500 | Revive with 25% HP | Available after Ember Vein |
+| Sleeping Bag | 250 | Rest heal outside dungeons | Available after Ember Vein |
+| Tent | 500 | Full rest heal outside dungeons | Available after Ember Vein |
 
 #### Carradan Trader's Stall
 
@@ -598,7 +601,7 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 **Save point:** Inside The Hearthstone Inn (the bed serves as save point).
 
 **Treasure chests:**
-- Behind the Watermill: 1x Herb Poultice (teaches players to look behind buildings)
+- Behind the Watermill: 1x Potion (teaches players to look behind buildings)
 - Inside Farmhouse 1 (after completing the spooked animal quest): 1x 100g reward pouch
 
 **Environmental storytelling:**
@@ -788,22 +791,22 @@ AR    = Armory                  BT = Bell Tower Base
 |------|-------|--------|-------|
 | Alpine Remedy | 60 | Restore 250 HP | Local herb blend |
 | Frostbane Tea | 80 | +10% Frost resist 1 battle | Alpine specialty |
-| Antidote | 30 | Cure Poison | Standard |
-| Smelling Salts | 40 | Cure Confusion | Standard |
+| Antidote | 50 | Cure Poison | Standard |
+| Smelling Salts | 75 | Cure Confusion | Standard |
 
 #### Provisioner
 
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
-| Healing Draught | 65 | Restore 200 HP | 30% markup over capital (remote location) |
-| Mana Tincture | 100 | Restore 50 MP | Marked up |
+| Potion | 65 | Restore 100 HP | 30% markup over capital (remote location) |
+| Ether | 260 | Restore 30 MP | Marked up |
 | Torch | 20 | Light source | For monastery dungeon |
 | Rope | 30 | Dungeon utility item | Interlude puzzle use |
 | Trail Rations | 15 | Restore 50 HP | Cheap, weak |
 
 *Interlude:* Provisioner stock is very limited. Prices rise 50%. Some items sold out (no supply caravans reaching the highlands).
 
-*Act III:* Monks provide supplies freely (a blessing) -- 3x Alpine Remedy, 2x Frostbane Tea, 1x Mana Tincture. One-time gift.
+*Act III:* Monks provide supplies freely (a blessing) -- 3x Alpine Remedy, 2x Frostbane Tea, 1x Ether. One-time gift.
 
 ### 3.5 Points of Interest
 
@@ -812,7 +815,7 @@ AR    = Armory                  BT = Bell Tower Base
 **Treasure chests:**
 - Armory: Vigil's Edge (unique sword, ATK +20, +15% vs. Pallor manifestations)
 - Bell Tower upper floor (optional climb): 1x Phoenix Pinion, 1x Highland Cloak
-- Dormitory East (behind a collapsed bed): 1x Mana Tincture
+- Dormitory East (behind a collapsed bed): 1x Ether
 
 **Environmental storytelling:**
 - Prayer stones in the courtyard: grey frost creeping up their surfaces in Interlude. The frost never melts.
@@ -967,10 +970,10 @@ PV = Provisioner                 t  = Thornmere treeline
 
 | Item | Price (Act I) | Price (Act II) | Effect | Notes |
 |------|--------------|----------------|--------|-------|
-| Healing Draught | 50 | 60 | Restore 200 HP | Standard price |
-| Mana Tincture | 80 | 95 | Restore 50 MP | Slight markup |
-| Antidote | 30 | 35 | Cure Poison | Stocked for Wilds travel |
-| Smelling Salts | 40 | 45 | Cure Confusion | |
+| Potion | 50 | 60 | Restore 100 HP | Standard price |
+| Ether | 200 | 240 | Restore 30 MP | Slight markup |
+| Antidote | 50 | 60 | Cure Poison | Stocked for Wilds travel |
+| Smelling Salts | 75 | 90 | Cure Confusion | |
 | Phoenix Pinion | 300 | 350 | Revive 25% HP | Military supply |
 | Field Rations | 20 | 25 | Restore 75 HP | Military food; better than Aelhart bread |
 | Torch (x3 pack) | 35 | 40 | Light source | Bundle deal |
@@ -1140,7 +1143,7 @@ Greyvale has no functioning shops. The economy is dead.
 
 **Act II scavenging:**
 - The Abandoned Compact Outpost contains lootable crates:
-  - 1x Compact Field Kit (Healing Draught x2, Antidote x1)
+  - 1x Compact Field Kit (Potion x2, Antidote x1)
   - 1x Forgewright Schematics (key item, used in a Lira side quest)
   - 1x Arcanite Dagger (ATK +10, MAG +6; Compact design, better than anything available in Valdris shops at this point)
   - 200g in Compact currency (auto-converted)

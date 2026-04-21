@@ -76,6 +76,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "dungeons/fenmothers_hollow_f2"
 metadata/target_spawn = "from_f3"
+metadata/required_flag = "fenmother_boss_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ToF2"]
 shape = SubResource("Shape_transition")
@@ -88,6 +89,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "overworld"
 metadata/target_spawn = "from_fenmothers_hollow"
+metadata/required_flag = "fenmother_boss_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_transition")

@@ -86,6 +86,7 @@ func _ready() -> void:
 	_choice_cursor.visible = false
 	_advance_arrow.visible = false
 	_load_text_speed()
+	set_process(false)
 
 
 func _process(delta: float) -> void:
@@ -122,12 +123,14 @@ func show_dialogue(entries: Array) -> void:
 		if not embedded_mode:
 			GameManager.pop_overlay()
 		return
+	set_process(true)
 	_show_entry(_current_index)
 
 
 ## Force-close dialogue (for cutscene override).
 func close() -> void:
 	_entries = []
+	set_process(false)
 	dialogue_finished.emit()
 	if not embedded_mode:
 		GameManager.pop_overlay()
@@ -135,6 +138,7 @@ func close() -> void:
 
 func _show_entry(index: int) -> void:
 	if index >= _entries.size():
+		set_process(false)
 		dialogue_finished.emit()
 		if not embedded_mode:
 			GameManager.pop_overlay()

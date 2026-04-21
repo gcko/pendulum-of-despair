@@ -288,7 +288,11 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var actual: int = _state.heal(target_slot, item.get("restore_amount", 100), can_revive)
+			var hp_amt: int = item.get("value", 0)
+			if item.has("restore_percent"):
+				var pct: int = item.get("restore_percent", 100)
+				hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
+			var actual: int = _state.heal(target_slot, hp_amt, can_revive)
 			if actual > 0:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 			if item.get("clears_status", false):
@@ -301,19 +305,30 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
+			var revive_pct: int = item.get("value", 25)
+			var revived_hp: int = int(
+				ceil(float(rev_m.get("max_hp", 1)) * float(revive_pct) / 100.0)
+			)
+			var actual: int = _state.heal(
+				target_slot, clampi(revived_hp, 1, rev_m.get("max_hp", 1)), true
+			)
 			if actual > 0:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
-			_state.restore_mp(target_slot, item.get("restore_amount", 30))
+			var mp_amt: int = item.get("value", 0)
+			if item.has("restore_percent"):
+				var pct: int = item.get("restore_percent", 100)
+				var tgt_m: Dictionary = _state.get_member(target_slot)
+				mp_amt = int(float(tgt_m.get("max_mp", 1)) * float(pct) / 100.0)
+			_state.restore_mp(target_slot, mp_amt)
 		"restore_hp_mp":
 			var tgt_m: Dictionary = _state.get_member(target_slot)
 			if tgt_m.is_empty():
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var hp_amt: int = item.get("restore_amount", 9999)
+			var hp_amt: int = item.get("value", 9999)
 			if item.has("restore_percent"):
 				var pct: int = item.get("restore_percent", 100)
 				hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)

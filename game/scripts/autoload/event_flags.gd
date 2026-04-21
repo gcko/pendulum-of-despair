@@ -45,8 +45,10 @@ func load_from_save(save_flags: Dictionary) -> void:
 
 
 ## Check a comma-separated list of required flags. Returns true only when
-## every non-empty flag in [param flags_csv] is truthy.  An empty string
-## is treated as "no requirements" and returns true.
+## every non-empty flag in [param flags_csv] has been set (exists in the
+## flags dictionary).  An empty string is treated as "no requirements" and
+## returns true.  Uses explicit existence check so int-valued flags like
+## council_result=0 are not treated as unset.
 func check_required_flags(flags_csv: String) -> bool:
 	if flags_csv.is_empty():
 		return true
@@ -54,7 +56,7 @@ func check_required_flags(flags_csv: String) -> bool:
 		var trimmed: String = rf.strip_edges()
 		if trimmed.is_empty():
 			continue
-		if not get_flag(trimmed):
+		if not has_flag(trimmed):
 			return false
 	return true
 
