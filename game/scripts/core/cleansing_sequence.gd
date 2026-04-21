@@ -42,7 +42,7 @@ var _exploration: Exploration
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
 var _damage_zone_scene: PackedScene = null
-var _pending_callable: Callable
+var _pending_callable: Callable = Callable()
 
 
 func _init(exploration: Exploration) -> void:

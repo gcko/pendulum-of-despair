@@ -37,7 +37,7 @@ var _pending_cutscene: Dictionary = {}
 var _cutscene_return: Dictionary = {}
 ## Tracks the bound Callable for _on_caden_dialogue_closed so _exit_tree
 ## can disconnect it (bound Callables are distinct from the base method).
-var _caden_dialogue_callable: Callable
+var _caden_dialogue_callable: Callable = Callable()
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap

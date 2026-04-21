@@ -306,7 +306,9 @@ func _do_load(slot: int) -> void:
 		_load_in_progress = false
 		return
 	load_completed.emit(slot)
-	_load_in_progress = false
+	# Keep _load_in_progress true — cleared when this scene is freed by the
+	# deferred change_core_state below.  Clearing it here allowed a second
+	# accept press to queue a duplicate scene transition.
 	var state: int = GameManager.CoreState.EXPLORATION
 	GameManager.call_deferred("change_core_state", state, {"save_slot": slot, "save_data": data})
 
