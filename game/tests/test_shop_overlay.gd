@@ -117,6 +117,7 @@ func test_restock_event_filters_locked_items() -> void:
 func test_restock_event_shows_items_when_flag_set() -> void:
 	PartyState.gold = 10000
 	EventFlags.set_flag("ember_vein_complete", true)
+	EventFlags.set_flag("act_ii_started", true)  # hi_potion also requires act 2
 	var shop: Node = _create_shop("aelhart_general")
 	var has_gated_item: bool = false
 	for entry: Dictionary in shop._inventory:
