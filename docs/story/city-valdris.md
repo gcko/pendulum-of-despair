@@ -789,7 +789,7 @@ AR    = Armory                  BT = Bell Tower Base
 | Alpine Remedy | 60 | Restore 250 HP | Local herb blend |
 | Frostbane Tea | 80 | +10% Frost resist 1 battle | Alpine specialty |
 | Antidote | 30 | Cure Poison | Standard |
-| Smelling Salts | 40 | Cure Sleep/Confuse | Standard |
+| Smelling Salts | 40 | Cure Confusion | Standard |
 
 #### Provisioner
 
@@ -970,7 +970,7 @@ PV = Provisioner                 t  = Thornmere treeline
 | Healing Draught | 50 | 60 | Restore 200 HP | Standard price |
 | Mana Tincture | 80 | 95 | Restore 50 MP | Slight markup |
 | Antidote | 30 | 35 | Cure Poison | Stocked for Wilds travel |
-| Smelling Salts | 40 | 45 | Cure Sleep/Confuse | |
+| Smelling Salts | 40 | 45 | Cure Confusion | |
 | Phoenix Pinion | 300 | 350 | Revive 25% HP | Military supply |
 | Field Rations | 20 | 25 | Restore 75 HP | Military food; better than Aelhart bread |
 | Torch (x3 pack) | 35 | 40 | Light source | Bundle deal |

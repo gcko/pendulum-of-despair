@@ -80,8 +80,8 @@
 | Ley Tonic | Restore 300 HP to all party | 800 | 400 | Act II shops (limited stock) |
 | Elixir | Restore 100% HP and MP | — | — | Chests, boss drops only |
 | Megalixir | Restore 100% HP and MP to all party | — | — | 3 total (Convergence, Dreamer's Fault) |
-| Sleeping Bag | Restore 25% HP/MP/AC to all party, clear status ailments (save point only) | 250 | 125 | Act I shops |
-| Tent | Restore 50% HP/MP/AC to all party, clear status ailments (save point only) | 500 | 250 | Act I shops |
+| Sleeping Bag | Restore 25% HP/MP/AC to all party, clear status ailments (save point only) | 250 | 125 | Aelhart shop (after Ember Vein), Valdris Crown shop |
+| Tent | Restore 50% HP/MP/AC to all party, clear status ailments (save point only) | 500 | 250 | Aelhart shop (after Ember Vein), Valdris Crown shop |
 | Starbloom Tea | Restore 100% HP + cure all status | 150 | 75 | Valdris specialty shop |
 | Pavilion | Restore 100% HP/MP/AC to all party, clear status ailments (save point only) | 1,200 | 600 | Act II shops |
 
@@ -94,14 +94,14 @@
 | Ether | Restore 30 MP | 200 | 100 | Act I shops |
 | Spirit Tonic | Restore 50 MP | — | 150 | Fenmother's Hollow chest F1 |
 | Ember Tonic | Restore 50 MP | 300 | 150 | Ember Vein chest |
-| Hi-Ether | Restore 100 MP | 800 | 400 | Act II shops |
+| Hi-Ether | Restore 100 MP | 800 | 400 | Act II shops; Valdris Crown (after Diplomatic Mission) |
 | X-Ether | Restore 100% MP | 2,000 | 1,000 | Act III shops (limited) |
 
 ### Revival
 
 | Item | Effect | Buy | Sell | Availability |
 |------|--------|-----|------|--------------|
-| Phoenix Feather | Revive at 25% HP | 500 | 250 | Act I shops |
+| Phoenix Feather | Revive at 25% HP | 500 | 250 | Aelhart shop (after Ember Vein), Valdris Crown shop |
 | Phoenix Down | Revive at 25% HP | — | 250 | Ember Vein chest F3 |
 | Phoenix Pinion | Revive at 100% HP | 3,000 | 1,500 | Act III shops (limited) |
 
@@ -115,7 +115,7 @@
 | Eye Drops | Blind | 50 | 25 | Act I shops |
 | Smelling Salts | Confusion | 75 | 37 | Act I shops |
 | Soft Stone | Petrify | 200 | 100 | Act II shops |
-| Chronos Dust | Slow | 150 | 75 | Act II shops |
+| Chronos Dust | Slow | 150 | 75 | Valdris Crown shop (after Diplomatic Mission) |
 | Remedy | All except Stop, Berserk, Despair, Faint | 800 | 400 | Act II shops |
 | Pallor Salve | Despair (instant cure) | 2,500 | 1,250 | Act II (Bellhaven, limited 3/visit), Interlude (Ironmark, limited 2/visit), Act III Oases. Also craftable. |
 | Pallor Antidote | Despair (instant cure) | 400 | 200 | Valdris specialty shop (Interlude only) |
@@ -167,10 +167,10 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 | HP Healing | 10 |
 | MP Restoration | 5 |
 | Revival | 3 |
-| Status Cure | 10 |
-| Battle Utility | 5 |
+| Status Cure | 11 |
+| Battle Utility | 6 |
 | Stat Capsules | 6 types |
-| **Total** | **39** |
+| **Total** | **41** |
 
 ---
 
@@ -364,7 +364,7 @@ Materials are organized into four rarity tiers that govern drop rates, steal cha
 
 ### Complete Material List
 
-> **72 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
+> **87 materials total.** Every material in the game is listed below. For enemy-specific drop tables, see [bestiary/](bestiary/).
 
 | Name | Source Category | Tier | Sell Price (g) | Primary Crafting Use |
 |------|----------------|------|---------------|---------------------|

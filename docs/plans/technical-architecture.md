@@ -166,7 +166,10 @@ save files, and the pseudo-schema in
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": { "item_id": "beast_hide", "rate": 75 },
+      "steal": {
+        "common": { "item_id": "beast_hide", "rate": 75 },
+        "rare": { "item_id": "sharp_fang", "rate": 25 }
+      },
       "drop": { "item_id": "sharp_fang", "rate": 25 },
       "ko_sound": "ko_beast"
     }
