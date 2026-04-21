@@ -352,7 +352,7 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Healing Draught | 50 | 65 | 100 | Restore 200 HP |
 | Mana Tincture | 80 | 100 | 160 | Restore 50 MP |
 | Antidote | 30 | 40 | 60 | Cure Poison |
-| Smelling Salts | 40 | 50 | 80 | Cure Sleep/Confuse |
+| Smelling Salts | 40 | 50 | 80 | Cure Confusion |
 | Phoenix Feather | 500 | 600 | 1000 | Revive with 25% HP |
 | Ley-Lantern | 60 | 75 | -- | Light source for dungeons |
 

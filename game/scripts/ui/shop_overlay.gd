@@ -188,6 +188,7 @@ func _consume_input() -> void:
 		vp.set_input_as_handled()
 
 
-## Close the overlay. MUST be last — scene teardown follows immediately.
+## Close the overlay. MUST be last -- scene teardown follows immediately.
+## WARNING: Do not add code after pop_overlay() in this method.
 func _close() -> void:
 	GameManager.pop_overlay()

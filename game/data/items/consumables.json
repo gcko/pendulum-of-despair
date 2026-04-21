@@ -485,7 +485,7 @@
       "target": "all_allies",
       "usable_in_battle": false,
       "usable_in_field": true,
-      "availability": "Act II shops"
+      "availability": "Valdris specialty shop, Bellhaven general shop"
     },
     {
       "id": "sables_coin",
