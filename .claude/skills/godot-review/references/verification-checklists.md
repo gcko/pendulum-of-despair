@@ -86,6 +86,7 @@ Reference for all review agents. Check every applicable item.
 - [ ] Configurable values in data (e.g., revive HP fraction) must flow through to the formula — hardcoded fallbacks (e.g., always `max_hp / 4`) bypass the data
 - [ ] For every item/skill effect: trace the data value from JSON -> code -> actual game effect. If the value doesn't change the output, it's a semantic bug
 - [ ] Side effects (resource spend, gauge gain, message emission) must happen AFTER target/condition validation, not before. If a function can return false/re-prompt, verify no irreversible side effects occurred before the validation point. (PR #147: _do_magic gained Weave Gauge before validating KO target, enabling gauge farming)
+- [ ] Every consumable use function must CONSUME the item from inventory after successful application. Verify: validation -> effect -> consumption -> return true. If the item is never deducted, it is infinite. (PR #147: _do_item applied effects but never called consume_item)
 
 ### Constraint Propagation (from Copilot PR #122 gap analysis)
 - [ ] Every constraint in JSON data (e.g., `requires_save_point`, `usable_in_battle`, `target_type`) must be enforced at ALL layers: backend logic, selection/confirmation UI, and display (greying/hiding)
