@@ -224,7 +224,8 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 	if target_type == "single_enemy":
 		var etgt: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
 		if etgt < 0:
-			return true
+			message.emit("No target!")
+			return false
 		_do_magic_on_enemy(slot, mag, power, element, etgt)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
@@ -287,9 +288,14 @@ func _do_item(command: Dictionary) -> bool:
 			if actual > 0:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"revive":
+			var rev_m: Dictionary = _state.get_member(target_slot)
+			if rev_m.get("is_alive", true):
+				message.emit("No effect!")
+				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
 			var actual: int = _state.heal(target_slot, item.get("restore_amount", 1), true)
-			damage_dealt.emit("party_%d" % target_slot, actual, "heal")
+			if actual > 0:
+				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
 			_state.restore_mp(target_slot, item.get("restore_amount", 30))
@@ -303,6 +309,9 @@ func _do_item(command: Dictionary) -> bool:
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
 			_exit_battle("flee")
+		_:
+			message.emit("No effect!")
+			return false
 	return true
 
 

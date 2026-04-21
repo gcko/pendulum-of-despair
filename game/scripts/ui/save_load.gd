@@ -306,6 +306,7 @@ func _do_load(slot: int) -> void:
 		_load_in_progress = false
 		return
 	load_completed.emit(slot)
+	_load_in_progress = false
 	var state: int = GameManager.CoreState.EXPLORATION
 	GameManager.call_deferred("change_core_state", state, {"save_slot": slot, "save_data": data})
 

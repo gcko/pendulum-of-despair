@@ -771,7 +771,7 @@ func get_danger_counter() -> int:
 
 
 func set_danger_counter(value: int) -> void:
-	_danger_counter = value
+	_danger_counter = maxi(0, value)
 
 
 func clear_entities() -> void:
