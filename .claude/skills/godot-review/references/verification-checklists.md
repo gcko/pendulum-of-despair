@@ -88,6 +88,14 @@ Reference for all review agents. Check every applicable item.
 - [ ] Side effects (resource spend, gauge gain, message emission) must happen AFTER target/condition validation, not before. If a function can return false/re-prompt, verify no irreversible side effects occurred before the validation point. (PR #147: _do_magic gained Weave Gauge before validating KO target, enabling gauge farming)
 - [ ] Every consumable use function must CONSUME the item from inventory after successful application. Verify: validation -> effect -> consumption -> return true. If the item is never deducted, it is infinite. (PR #147: _do_item applied effects but never called consume_item)
 
+### Callable Initialization (from Copilot PR #147 gap analysis)
+- [ ] Every `Callable` variable declaration must be initialized to `Callable()` — uninitialized Callables crash on `.is_valid()` if cleanup/disconnect runs before the callable is ever assigned. (PR #147: _pending_callable and _caden_dialogue_callable crashed on early cleanup)
+- [ ] After adding `call_deferred()` that triggers scene transition, verify the guard flag (e.g., `_load_in_progress`) stays true until the deferred call runs — clearing it immediately allows double-fire from rapid input. (PR #147: save_load.gd _load_in_progress cleared before deferred change_core_state)
+
+### Effect Handler Completeness (from Copilot PR #147 gap analysis)
+- [ ] Every `effect` value in consumables.json must have a matching handler in BOTH `InventoryHelpers.apply_item_effect()` (field use) and `BattleManager._do_item()` (battle use, if `usable_in_battle: true`). Grep for all unique effect values and verify each has a handler. (PR #147: buff_atk, buff_mag, light_source had no handlers)
+- [ ] Every boolean modifier field on a consumable (e.g., `clears_status`, `can_revive`) must be checked in ALL effect branches that the item could use, not just one. (PR #147: clears_status only checked in restore_hp_mp, not restore_hp — starbloom_tea silently skipped status clearing)
+
 ### Constraint Propagation (from Copilot PR #122 gap analysis)
 - [ ] Every constraint in JSON data (e.g., `requires_save_point`, `usable_in_battle`, `target_type`) must be enforced at ALL layers: backend logic, selection/confirmation UI, and display (greying/hiding)
 - [ ] After adding a new data constraint field, grep for every call site that reads the parent entity and verify the constraint is checked
