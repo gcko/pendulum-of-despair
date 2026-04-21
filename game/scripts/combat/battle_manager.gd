@@ -316,6 +316,9 @@ func _do_item(command: Dictionary) -> bool:
 		_:
 			message.emit("No effect!")
 			return false
+	var item_id: String = item.get("id", "")
+	if not item_id.is_empty():
+		PartyState.consume_item(item_id)
 	return true
 
 

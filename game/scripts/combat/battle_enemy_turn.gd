@@ -40,8 +40,8 @@ func reset() -> void:
 	fm_spawned_adds = false
 
 
+## Run one enemy turn.  Returns the new turn_counter value.
 func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter: int) -> int:
-	## Run one enemy turn.  Returns the new turn_counter value.
 	var idx: int = enemy_id.replace("enemy_", "").to_int()
 	if idx < 0 or idx >= enemies.size():
 		return turn_counter
@@ -157,7 +157,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 		var new_enemy: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(new_enemy)
 		new_enemy.initialize(sid, act)
-		new_enemy.position = Vector2(randi() % 200 + 50, randi() % 100 + 20)
+		new_enemy.position = Vector2(randi_range(50, 249), randi_range(20, 119))
 		enemies.append(new_enemy)
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)

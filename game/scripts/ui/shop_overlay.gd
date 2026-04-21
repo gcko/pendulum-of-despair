@@ -93,6 +93,10 @@ func _load_shop(shop_id: String) -> void:
 		var req_act: int = entry.get("available_act", 1)
 		if req_act > _get_current_act():
 			continue
+		var restock_val: Variant = entry.get("restock_event", null)
+		if restock_val is String and not (restock_val as String).is_empty():
+			if not EventFlags.get_flag(restock_val as String):
+				continue
 		var item_id: String = entry.get("item_id", "")
 		var buy_price: int = entry.get("buy_price", 0)
 		if item_id == "":
@@ -138,7 +142,7 @@ func _build_list() -> void:
 
 ## Highlight selected row and clear stale feedback.
 func _update_selection() -> void:
-	var children: Array = _item_list_container.get_children()
+	var children: Array[Node] = _item_list_container.get_children()
 	for i: int in range(children.size()):
 		var lbl: Node = children[i]
 		if lbl is Label:
