@@ -54,6 +54,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 				var pct: int = item_data.get("restore_percent", 0)
 				value = int(float(max_hp) * float(pct) / 100.0)
 			target["current_hp"] = mini(target.get("current_hp", 0) + value, max_hp)
+			if item_data.get("clears_status", false):
+				target["status_effects"] = [] as Array
 		"restore_mp":
 			var max_mp: int = target.get("max_mp", 1)
 			var value: int = item_data.get("value", 0)
@@ -91,6 +93,20 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 					if status_name not in cures:
 						remaining.append(s)
 			target["status_effects"] = remaining
+		"buff_atk":
+			var boost: int = item_data.get("value", 0)
+			if boost > 0:
+				var pct: float = float(boost) / 100.0
+				var base_atk: int = target.get("atk", 0)
+				target["atk"] = base_atk + int(float(base_atk) * pct)
+		"buff_mag":
+			var boost: int = item_data.get("value", 0)
+			if boost > 0:
+				var pct: float = float(boost) / 100.0
+				var base_mag: int = target.get("mag", 0)
+				target["mag"] = base_mag + int(float(base_mag) * pct)
+		"light_source":
+			EventFlags.set_flag("light_source_active", true)
 		"stat_boost":
 			var stat_key: String = item_data.get("stat", "")
 			var boost: int = item_data.get("value", 0)

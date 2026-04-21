@@ -31,6 +31,7 @@ const DialogueScript: GDScript = preload("res://scripts/ui/dialogue_box.gd")
 const MenuOverlayScript: GDScript = preload("res://scripts/ui/menu_overlay.gd")
 const SaveLoadScript: GDScript = preload("res://scripts/ui/save_load.gd")
 const BattleMgrScript: GDScript = preload("res://scripts/combat/battle_manager.gd")
+const InventoryHelpers: GDScript = preload("res://scripts/autoload/inventory_helpers.gd")
 
 
 func before_each() -> void:
@@ -688,6 +689,83 @@ func test_valid_item_returns_true() -> void:
 		"ok = _do_item" in cmd_body,
 		"_on_ui_command should capture _do_item return value",
 	)
+
+
+# ==========================================================================
+# Bug fix: _do_item must consume the item from inventory after use
+# ==========================================================================
+
+
+func test_do_item_consumes_item_after_use() -> void:
+	# Structural: _do_item should call PartyState.consume_item
+	var source: String = BattleMgrScript.source_code
+	var item_pos: int = source.find("func _do_item(")
+	assert_gt(item_pos, 0, "_do_item should exist")
+	var next_func: int = source.find("\nfunc ", item_pos + 1)
+	var item_body: String = source.substr(item_pos, next_func - item_pos)
+	assert_true(
+		"consume_item" in item_body,
+		"_do_item should call PartyState.consume_item after successful use",
+	)
+	# Verify consume is after the match block, near return true
+	var consume_pos: int = item_body.find("consume_item")
+	var return_true_pos: int = item_body.rfind("return true")
+	assert_gt(return_true_pos, consume_pos, "consume_item should come before final return true")
+
+
+# ==========================================================================
+# Bug fix: restore_hp effect must honor clears_status field
+# ==========================================================================
+
+
+func test_restore_hp_clears_status_when_flagged() -> void:
+	var target: Dictionary = {
+		"current_hp": 50,
+		"max_hp": 200,
+		"status_effects": [{"name": "poison", "duration": 3}],
+	}
+	var item: Dictionary = {
+		"effect": "restore_hp",
+		"restore_percent": 100,
+		"clears_status": true,
+	}
+	InventoryHelpers.apply_item_effect(item, target)
+	assert_eq(target["current_hp"], 200, "HP should be fully restored")
+	assert_eq(target["status_effects"].size(), 0, "status_effects should be cleared")
+
+
+func test_restore_hp_keeps_status_when_not_flagged() -> void:
+	var target: Dictionary = {
+		"current_hp": 50,
+		"max_hp": 200,
+		"status_effects": [{"name": "poison", "duration": 3}],
+	}
+	var item: Dictionary = {
+		"effect": "restore_hp",
+		"restore_percent": 100,
+	}
+	InventoryHelpers.apply_item_effect(item, target)
+	assert_eq(target["current_hp"], 200, "HP should be fully restored")
+	assert_eq(target["status_effects"].size(), 1, "status_effects should remain when flag absent")
+
+
+# ==========================================================================
+# Bug fix: buff_atk and buff_mag effects must be implemented
+# ==========================================================================
+
+
+func test_buff_atk_effect_increases_attack() -> void:
+	var target: Dictionary = {"atk": 100}
+	var item: Dictionary = {"effect": "buff_atk", "value": 10}
+	InventoryHelpers.apply_item_effect(item, target)
+	assert_eq(target["atk"], 110, "ATK should increase by 10%")
+
+
+func test_buff_mag_effect_increases_magic() -> void:
+	var target: Dictionary = {"mag": 80}
+	var item: Dictionary = {"effect": "buff_mag", "value": 15}
+	InventoryHelpers.apply_item_effect(item, target)
+	assert_eq(target["mag"], 92, "MAG should increase by 15% (80 + 12)")
 
 
 # ==========================================================================

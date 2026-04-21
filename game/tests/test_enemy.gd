@@ -211,3 +211,61 @@ func test_roll_drop_guaranteed_fail() -> void:
 	var result: Dictionary = enemy.roll_drop()
 	assert_false(result.get("success"), "0% rate should always fail")
 	assert_eq(result.get("item_id"), "", "Failed drop should return empty")
+
+
+# --- Elemental multiplier: mixed format support ---
+
+
+func test_weakness_string_format() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"weaknesses": ["storm", "void"],
+		"resistances": [],
+		"immunities": [],
+		"absorb": [],
+	}
+	assert_true(enemy.is_weak_to("storm"), "should detect string weakness")
+	assert_eq(enemy.get_element_multiplier("storm"), 1.5, "string weakness should return 1.5")
+
+
+func test_weakness_object_format() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"weaknesses": [{"element": "storm", "multiplier": 1.25}],
+		"resistances": [],
+		"immunities": [],
+		"absorb": [],
+	}
+	assert_true(enemy.is_weak_to("storm"), "should detect object weakness")
+	assert_eq(
+		enemy.get_element_multiplier("storm"),
+		1.25,
+		"object weakness should use custom multiplier",
+	)
+
+
+func test_resistance_object_format() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"weaknesses": [],
+		"resistances": [{"element": "flame", "multiplier": 0.5}],
+		"immunities": [],
+		"absorb": [],
+	}
+	assert_true(enemy.is_resistant_to("flame"), "should detect object resistance")
+	assert_eq(
+		enemy.get_element_multiplier("flame"),
+		0.5,
+		"object resistance should use custom multiplier",
+	)
+
+
+func test_mixed_format_neutral_element() -> void:
+	var enemy = _create_enemy()
+	enemy.enemy_data = {
+		"weaknesses": [{"element": "storm", "multiplier": 1.5}],
+		"resistances": ["flame"],
+		"immunities": [],
+		"absorb": [],
+	}
+	assert_eq(enemy.get_element_multiplier("earth"), 1.0, "neutral element should return 1.0")

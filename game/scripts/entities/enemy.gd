@@ -118,37 +118,65 @@ func get_display_name() -> String:
 	return enemy_data.get("name", enemy_id)
 
 
+## Check if an element appears in an array that may contain plain strings
+## or objects with {"element": "...", "multiplier": ...}.
+static func _element_in_list(element: String, list: Array) -> bool:
+	for entry: Variant in list:
+		if entry is String and entry == element:
+			return true
+		if entry is Dictionary and (entry as Dictionary).get("element", "") == element:
+			return true
+	return false
+
+
+## Get the custom multiplier for an element from a mixed-format array.
+## Returns the object multiplier if found, otherwise the provided default.
+static func _get_list_multiplier(element: String, list: Array, default_mult: float) -> float:
+	for entry: Variant in list:
+		if entry is String and entry == element:
+			return default_mult
+		if entry is Dictionary:
+			var d: Dictionary = entry as Dictionary
+			if d.get("element", "") == element:
+				return d.get("multiplier", default_mult)
+	return 0.0  # not in list
+
+
 ## Check if the enemy is weak to an element.
 func is_weak_to(element: String) -> bool:
-	return element in enemy_data.get("weaknesses", [])
+	return _element_in_list(element, enemy_data.get("weaknesses", []))
 
 
 ## Check if the enemy is resistant to an element.
 func is_resistant_to(element: String) -> bool:
-	return element in enemy_data.get("resistances", [])
+	return _element_in_list(element, enemy_data.get("resistances", []))
 
 
 ## Check if the enemy is immune to an element.
 func is_immune_to(element: String) -> bool:
-	return element in enemy_data.get("immunities", [])
+	return _element_in_list(element, enemy_data.get("immunities", []))
 
 
 ## Check if the enemy absorbs an element.
 func absorbs(element: String) -> bool:
-	return element in enemy_data.get("absorb", [])
+	return _element_in_list(element, enemy_data.get("absorb", []))
 
 
 ## Get the damage multiplier for an element.
-## Returns: -1.0 (absorb), 0.0 (immune), 0.75 (resist), 1.5 (weak), 1.0 (neutral).
+## Supports both string arrays (uses default 0.75/1.5) and object arrays
+## with custom multipliers (e.g., {"element": "storm", "multiplier": 1.25}).
+## Returns: -1.0 (absorb), 0.0 (immune), <1.0 (resist), >1.0 (weak), 1.0 (neutral).
 func get_element_multiplier(element: String) -> float:
 	if absorbs(element):
 		return -1.0
 	if is_immune_to(element):
 		return 0.0
-	if is_resistant_to(element):
-		return 0.75
-	if is_weak_to(element):
-		return 1.5
+	var resist_mult: float = _get_list_multiplier(element, enemy_data.get("resistances", []), 0.75)
+	if resist_mult > 0.0:
+		return resist_mult
+	var weak_mult: float = _get_list_multiplier(element, enemy_data.get("weaknesses", []), 1.5)
+	if weak_mult > 0.0:
+		return weak_mult
 	return 1.0
 
 

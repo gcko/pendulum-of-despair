@@ -235,7 +235,7 @@
       "target": "single_ally",
       "usable_in_battle": true,
       "usable_in_field": true,
-      "availability": "Ember Vein chest (Floor 4)"
+      "availability": "Ember Vein chest"
     },
     {
       "id": "phoenix_feather",
@@ -292,7 +292,10 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["poison", "burn"],
+      "cures": [
+        "poison",
+        "burn"
+      ],
       "buy_price": 50,
       "sell_price": 25,
       "stack_limit": 99,
@@ -309,7 +312,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["sleep"],
+      "cures": [
+        "sleep"
+      ],
       "buy_price": 75,
       "sell_price": 37,
       "stack_limit": 99,
@@ -326,7 +331,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["silence"],
+      "cures": [
+        "silence"
+      ],
       "buy_price": 75,
       "sell_price": 37,
       "stack_limit": 99,
@@ -343,7 +350,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["blind"],
+      "cures": [
+        "blind"
+      ],
       "buy_price": 50,
       "sell_price": 25,
       "stack_limit": 99,
@@ -360,7 +369,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["confusion"],
+      "cures": [
+        "confusion"
+      ],
       "buy_price": 75,
       "sell_price": 37,
       "stack_limit": 99,
@@ -377,7 +388,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["petrify"],
+      "cures": [
+        "petrify"
+      ],
       "buy_price": 200,
       "sell_price": 100,
       "stack_limit": 99,
@@ -394,7 +407,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["slow"],
+      "cures": [
+        "slow"
+      ],
       "buy_price": 150,
       "sell_price": 75,
       "stack_limit": 99,
@@ -411,7 +426,16 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["poison", "burn", "sleep", "silence", "blind", "confusion", "slow", "petrify"],
+      "cures": [
+        "poison",
+        "burn",
+        "sleep",
+        "silence",
+        "blind",
+        "confusion",
+        "slow",
+        "petrify"
+      ],
       "buy_price": 800,
       "sell_price": 400,
       "stack_limit": 99,
@@ -428,7 +452,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["despair"],
+      "cures": [
+        "despair"
+      ],
       "buy_price": 2500,
       "sell_price": 1250,
       "stack_limit": 99,
@@ -445,7 +471,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["despair"],
+      "cures": [
+        "despair"
+      ],
       "buy_price": null,
       "sell_price": null,
       "stack_limit": 99,
@@ -678,7 +706,9 @@
       "subcategory": "status_cure",
       "effect": "cure_status",
       "value": null,
-      "cures": ["despair"],
+      "cures": [
+        "despair"
+      ],
       "buy_price": 400,
       "sell_price": 200,
       "stack_limit": 99,

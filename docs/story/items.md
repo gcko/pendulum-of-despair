@@ -118,6 +118,7 @@
 | Chronos Dust | Slow | 150 | 75 | Act II shops |
 | Remedy | All except Stop, Berserk, Despair, Faint | 800 | 400 | Act II shops |
 | Pallor Salve | Despair (instant cure) | 2,500 | 1,250 | Act II (Bellhaven, limited 3/visit), Interlude (Ironmark, limited 2/visit), Act III Oases. Also craftable. |
+| Pallor Antidote | Despair (instant cure) | 400 | 200 | Valdris specialty shop (Interlude only) |
 | Hope Shard | Despair (instant cure) | — | — | Rare chests/quest rewards only |
 
 > **Despair** is the signature status of the Pallor — a creeping hopelessness
@@ -142,6 +143,7 @@ Status effect definitions and spell-based cures: see [magic.md](magic.md#status-
 | Spirit Incense | +15% MAG for one battle | 200 | 100 | Valdris specialty shop |
 | Whetstone | +10% ATK for one battle | 100 | 50 | Valdris specialty shop |
 | Sable's Coin | Guaranteed preemptive next battle | — | — | Quest reward, rare chests |
+| Ley-Lantern | Light source for dungeons | 60 | 30 | Valdris Lower Ward item shop |
 
 ### Stat Capsules
 

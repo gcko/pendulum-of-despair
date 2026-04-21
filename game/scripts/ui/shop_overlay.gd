@@ -14,7 +14,7 @@ const COLOR_SELECTED: Color = Color("#ffff88")
 ## Normal row color.
 const COLOR_NORMAL: Color = Color("#ccddff")
 
-## Resolved inventory: array of {item_id, name, buy_price}.
+## Resolved inventory: array of {item_id, name, buy_price, stock_limit, purchased}.
 var _inventory: Array = []
 ## Set of equipment item_ids (buy routes to owned_equipment, not consumables).
 var _equipment_ids: Dictionary = {}
@@ -101,8 +101,21 @@ func _load_shop(shop_id: String) -> void:
 		var buy_price: int = entry.get("buy_price", 0)
 		if item_id == "":
 			continue
+		var stock_val: Variant = entry.get("stock_limit", null)
+		var stock_limit: int = int(stock_val) if stock_val is int or stock_val is float else -1
 		var display_name: String = name_map.get(item_id, item_id)
-		_inventory.append({"item_id": item_id, "name": display_name, "buy_price": buy_price})
+		(
+			_inventory
+			. append(
+				{
+					"item_id": item_id,
+					"name": display_name,
+					"buy_price": buy_price,
+					"stock_limit": stock_limit,
+					"purchased": 0,
+				}
+			)
+		)
 
 
 ## Build item_id -> name map from all known data sources.
@@ -154,6 +167,10 @@ func _try_buy() -> void:
 	if _inventory.is_empty():
 		return
 	var entry: Dictionary = _inventory[_selected]
+	var limit: int = entry.get("stock_limit", -1)
+	if limit >= 0 and entry.get("purchased", 0) >= limit:
+		_show_feedback("Sold out.")
+		return
 	var price: int = entry["buy_price"]
 	if PartyState.spend_gold(price):
 		var iid: String = entry["item_id"]
@@ -161,8 +178,12 @@ func _try_buy() -> void:
 			PartyState.add_equipment(iid)
 		else:
 			PartyState.add_item(iid, 1)
+		entry["purchased"] = entry.get("purchased", 0) + 1
 		_refresh_gold()
-		_show_feedback("Purchased!")
+		if limit >= 0 and entry.get("purchased", 0) >= limit:
+			_show_feedback("Purchased! (Sold out)")
+		else:
+			_show_feedback("Purchased!")
 	else:
 		_show_feedback("Not enough gold.")
 
@@ -178,10 +199,12 @@ func _show_feedback(msg: String) -> void:
 
 
 ## Determine current act from event flags progression.
+## Returns 1 (Act I), 2 (Act II or Interlude), 3 (Act III).
+## Interlude-only items should use restock_event gating, not available_act.
 func _get_current_act() -> int:
 	if EventFlags.get_flag("act_iii_started"):
 		return 3
-	if EventFlags.get_flag("act_ii_started"):
+	if EventFlags.get_flag("interlude_start") or EventFlags.get_flag("act_ii_started"):
 		return 2
 	return 1
 
