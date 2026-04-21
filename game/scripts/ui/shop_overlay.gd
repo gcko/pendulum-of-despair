@@ -106,18 +106,14 @@ func _load_shop(shop_id: String) -> void:
 		var stock_val: Variant = entry.get("stock_limit", null)
 		var stock_limit: int = int(stock_val) if stock_val is int or stock_val is float else -1
 		var display_name: String = name_map.get(item_id, item_id)
-		(
-			_inventory
-			. append(
-				{
-					"item_id": item_id,
-					"name": display_name,
-					"buy_price": buy_price,
-					"stock_limit": stock_limit,
-					"purchased": 0,
-				}
-			)
-		)
+		var shop_entry: Dictionary = {
+			"item_id": item_id,
+			"name": display_name,
+			"buy_price": buy_price,
+			"stock_limit": stock_limit,
+			"purchased": 0,
+		}
+		_inventory.append(shop_entry)
 
 
 ## Build item_id -> name map from all known data sources.
