@@ -406,6 +406,11 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After removing UI elements (sprites, labels): verify no @onready references remain and no .visible toggles reference the removed node
 - [ ] Verify filenames in spec/plan file maps match actual filenames in the repo (PR #131: menu_equipment.gd vs menu_equip.gd caused 5 Copilot comments)
 - [ ] Test assertions must be specific enough to not false-positive on unrelated content (PR #131: 'text = "Config"' matched CommandPanel label too)
+- [ ] After changing item/consumable effects, descriptions, or cure lists: grep ALL city docs (`docs/story/city-*.md`) for shop tables that list item effects. City shop tables duplicate items.md data and become stale when the canonical source changes. (PR #147: Smelling Salts cure list in city-valdris.md diverged from consumables.json)
+- [ ] After changing item availability (shop inventory, available_act, restock_event): grep ALL city docs AND items.md availability columns for stale references. (PR #147: Waystone availability text in items.md didn't match actual shop data)
+
+### Overlay Push Failure Recovery (from Copilot PR #147 gap analysis)
+- [ ] Every `push_overlay()` call that is preceded by a silent `pop_overlay(true)` must handle the case where `push_overlay` returns `false`. A failed push after silent pop leaves the tree paused with `current_overlay = NONE` and no signal, soft-locking input. Restore a usable state: unpause, re-push the prior overlay, or avoid the silent pop pattern. (PR #147: menu_overlay._open_save() used silent pop + push without failure handling)
 
 ### Default State Safety
 - [ ] Boolean state vars (`is_alive`, `is_ready`, etc.) default to the SAFE state (false/inactive), not the active state
