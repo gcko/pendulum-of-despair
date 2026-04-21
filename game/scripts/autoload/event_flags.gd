@@ -44,6 +44,21 @@ func load_from_save(save_flags: Dictionary) -> void:
 	_flags = save_flags.duplicate(true)
 
 
+## Check a comma-separated list of required flags. Returns true only when
+## every non-empty flag in [param flags_csv] is truthy.  An empty string
+## is treated as "no requirements" and returns true.
+func check_required_flags(flags_csv: String) -> bool:
+	if flags_csv.is_empty():
+		return true
+	for rf: String in flags_csv.split(","):
+		var trimmed: String = rf.strip_edges()
+		if trimmed.is_empty():
+			continue
+		if not get_flag(trimmed):
+			return false
+	return true
+
+
 ## Export flags for save data.
 func to_save_data() -> Dictionary:
 	return _flags.duplicate(true)

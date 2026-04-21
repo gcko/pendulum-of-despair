@@ -396,13 +396,8 @@ func on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if not required.is_empty() and not EventFlags.get_flag(required):
 		return
 	var required_multi: String = area.get_meta("required_flags", "")
-	if not required_multi.is_empty():
-		for rf: String in required_multi.split(","):
-			var trimmed: String = rf.strip_edges()
-			if trimmed.is_empty():
-				continue
-			if not EventFlags.get_flag(trimmed):
-				return
+	if not required_multi.is_empty() and not EventFlags.check_required_flags(required_multi):
+		return
 	var dialogue: Variant = area.get_meta("dialogue_data", [])
 	var scene_id: String = area.get_meta("dialogue_scene_id", "")
 	if scene_id != "":

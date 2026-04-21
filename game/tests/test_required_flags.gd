@@ -1,6 +1,9 @@
 extends GutTest
 ## Regression tests for required_flags AND-condition gating (issues vuh/25q),
 ## auto_walk guard behavior (issue 25q), and overlay lifecycle (issue orb).
+##
+## Flag-checking tests exercise EventFlags.check_required_flags() — the same
+## utility that exploration.gd and cutscene_handler.gd call at runtime.
 
 const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
 const ExplorationScript: GDScript = preload("res://scripts/core/exploration.gd")
@@ -31,48 +34,27 @@ func _create_exploration_test_room() -> Node2D:
 
 
 func test_required_flags_blocks_when_partial_flags_set() -> void:
-	# The flag-checking logic in exploration.gd lines 376-383:
-	# When required_flags = "flag_a,flag_b", ALL must be set.
-	# With only flag_a set, the check should fail (not all met).
 	EventFlags.set_flag("flag_a", true)
-	var flags_str: String = "flag_a,flag_b"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_false(all_met, "should block when only flag_a is set but flag_b is not")
+	assert_false(
+		EventFlags.check_required_flags("flag_a,flag_b"),
+		"should block when only flag_a is set but flag_b is not",
+	)
 
 
 func test_required_flags_passes_when_all_flags_set() -> void:
 	EventFlags.set_flag("flag_a", true)
 	EventFlags.set_flag("flag_b", true)
-	var flags_str: String = "flag_a,flag_b"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_true(all_met, "should pass when both flag_a and flag_b are set")
+	assert_true(
+		EventFlags.check_required_flags("flag_a,flag_b"),
+		"should pass when both flag_a and flag_b are set",
+	)
 
 
 func test_required_flags_blocks_when_no_flags_set() -> void:
-	var flags_str: String = "flag_a,flag_b"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_false(all_met, "should block when no flags are set")
+	assert_false(
+		EventFlags.check_required_flags("flag_a,flag_b"),
+		"should block when no flags are set",
+	)
 
 
 # ==========================================================================
@@ -81,33 +63,20 @@ func test_required_flags_blocks_when_no_flags_set() -> void:
 
 
 func test_cutscene_required_flags_blocks_partial() -> void:
-	# Same AND-condition logic exists in cutscene_handler.gd lines 211-218.
 	EventFlags.set_flag("quest_started", true)
-	var flags_str: String = "quest_started,boss_defeated"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_false(all_met, "cutscene should block when boss_defeated is not set")
+	assert_false(
+		EventFlags.check_required_flags("quest_started,boss_defeated"),
+		"cutscene should block when boss_defeated is not set",
+	)
 
 
 func test_cutscene_required_flags_passes_all_set() -> void:
 	EventFlags.set_flag("quest_started", true)
 	EventFlags.set_flag("boss_defeated", true)
-	var flags_str: String = "quest_started,boss_defeated"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_true(all_met, "cutscene should pass when all flags are set")
+	assert_true(
+		EventFlags.check_required_flags("quest_started,boss_defeated"),
+		"cutscene should pass when all flags are set",
+	)
 
 
 # ==========================================================================
@@ -116,39 +85,27 @@ func test_cutscene_required_flags_passes_all_set() -> void:
 
 
 func test_required_flags_skips_empty_entries() -> void:
-	# "flag_a,,flag_b" should only check flag_a and flag_b, skipping the
-	# empty string between the two commas.
 	EventFlags.set_flag("flag_a", true)
 	EventFlags.set_flag("flag_b", true)
-	var flags_str: String = "flag_a,,flag_b"
-	var all_met: bool = true
-	var checked_count: int = 0
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		checked_count += 1
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_true(all_met, "should pass — empty entries are skipped")
-	assert_eq(checked_count, 2, "should only check 2 non-empty flags")
+	assert_true(
+		EventFlags.check_required_flags("flag_a,,flag_b"),
+		"should pass — empty entries between commas are skipped",
+	)
 
 
 func test_required_flags_empty_entry_does_not_block() -> void:
-	# Only flag_a is set. "flag_a,,flag_b" should fail because flag_b is missing,
-	# NOT because of the empty entry.
 	EventFlags.set_flag("flag_a", true)
-	var flags_str: String = "flag_a,,flag_b"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_false(all_met, "should fail due to missing flag_b, not due to empty entry")
+	assert_false(
+		EventFlags.check_required_flags("flag_a,,flag_b"),
+		"should fail due to missing flag_b, not due to empty entry",
+	)
+
+
+func test_required_flags_empty_string_passes() -> void:
+	assert_true(
+		EventFlags.check_required_flags(""),
+		"empty flags_csv means no requirements — should pass",
+	)
 
 
 # ==========================================================================
@@ -157,58 +114,46 @@ func test_required_flags_empty_entry_does_not_block() -> void:
 
 
 func test_required_flags_single_flag_blocks_when_unset() -> void:
-	var flags_str: String = "flag_a"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_false(all_met, "single flag should block when unset")
+	assert_false(
+		EventFlags.check_required_flags("flag_a"),
+		"single flag should block when unset",
+	)
 
 
 func test_required_flags_single_flag_passes_when_set() -> void:
 	EventFlags.set_flag("flag_a", true)
-	var flags_str: String = "flag_a"
-	var all_met: bool = true
-	for rf: String in flags_str.split(","):
-		var trimmed: String = rf.strip_edges()
-		if trimmed.is_empty():
-			continue
-		if not EventFlags.get_flag(trimmed):
-			all_met = false
-			break
-	assert_true(all_met, "single flag should pass when set")
+	assert_true(
+		EventFlags.check_required_flags("flag_a"),
+		"single flag should pass when set",
+	)
 
 
 # ==========================================================================
-# Issue vuh: structural verification — code pattern exists in both files
+# Issue vuh: structural verification — handlers delegate to utility
 # ==========================================================================
 
 
-func test_exploration_has_required_flags_logic() -> void:
+func test_exploration_uses_check_required_flags() -> void:
 	var source: String = ExplorationScript.source_code
 	assert_true(
 		'get_meta("required_flags"' in source,
 		"exploration.gd should read required_flags metadata",
 	)
 	assert_true(
-		"required_multi.split" in source or 'split(",")' in source,
-		"exploration.gd should split required_flags by comma",
+		"check_required_flags" in source,
+		"exploration.gd should delegate to EventFlags.check_required_flags()",
 	)
 
 
-func test_cutscene_handler_has_required_flags_logic() -> void:
+func test_cutscene_handler_uses_check_required_flags() -> void:
 	var source: String = CutsceneHandlerScript.source_code
 	assert_true(
 		'get_meta("required_flags"' in source,
 		"cutscene_handler.gd should read required_flags metadata",
 	)
 	assert_true(
-		"required_multi.split" in source or 'split(",")' in source,
-		"cutscene_handler.gd should split required_flags by comma",
+		"check_required_flags" in source,
+		"cutscene_handler.gd should delegate to EventFlags.check_required_flags()",
 	)
 
 
