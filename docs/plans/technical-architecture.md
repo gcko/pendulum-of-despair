@@ -701,9 +701,9 @@ Per [audio.md](../story/audio.md) Section 3.1 — 24 channels total
 
 | Type | Format | Sample Rate | Bit Depth | Naming |
 |------|--------|-------------|-----------|--------|
-| Music | OGG Vorbis | 44.1 kHz | 16-bit | `music/{name}.ogg` (e.g., `title_theme.ogg`) |
-| SFX | OGG Vorbis | 44.1 kHz | 16-bit | `sfx/{name}.ogg` (e.g., `hit_physical.ogg`) |
-| Ambient | OGG Vorbis | 44.1 kHz | 16-bit | `ambient/{biome}.ogg` (e.g., `valdris_highlands.ogg`) |
+| Music | OGG Vorbis | 44.1 kHz | 16-bit | `music/{name}.ogg` (e.g., `music/title_theme.ogg`) |
+| SFX | OGG Vorbis | 44.1 kHz | 16-bit | `sfx/{name}.ogg` (e.g., `sfx/hit_physical.ogg`) |
+| Ambient | OGG Vorbis | 44.1 kHz | 16-bit | `ambient/{biome}.ogg` (e.g., `ambient/valdris_highlands.ogg`) |
 
 **Godot import settings:** Loop mode set per track in import dialog.
 Music and ambient loop seamlessly. SFX do not loop (except specified
