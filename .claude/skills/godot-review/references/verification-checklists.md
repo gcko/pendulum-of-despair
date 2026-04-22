@@ -424,6 +424,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Pre-transition snapshot fields (e.g., `_pre_battle_mix_context`) must guard against double-entry: only store the snapshot when NOT already in the target state. Second entry without exit permanently loses the original state. (PR #148: double enter_battle overwrote pre-battle snapshot)
 - [ ] Failure paths in state transitions must leave ALL channels in the target state, not just some. If battle music file is missing, both music AND ambient must be silenced — not just ambient. (PR #148: enter_battle failure path silenced ambient but left exploration music playing)
 - [ ] `stop_music()`/`stop_ambient()` default fade duration should match spec (typically 1.0s), not biome crossfade (3.0s). Using biome crossfade as default makes all non-parameterized stops 3x slower than intended. (PR #148: stop_music defaulted to CROSSFADE_BIOME=3.0 instead of 1.0)
+- [ ] Tool/generator scripts that produce media files must use the codec/format specified in the design docs. Verify ffmpeg/sox flags match audio.md Section 3.6 (OGG Vorbis, 44.1kHz, 16-bit). Docstrings must match actual flags (mono vs stereo, codec name). (PR #148: generator used libopus instead of vorbis, docstring said mono but flags said stereo)
 
 ### Signal Safety
 - [ ] State-transition signals emit only ONCE per transition (guard against double-fire)
