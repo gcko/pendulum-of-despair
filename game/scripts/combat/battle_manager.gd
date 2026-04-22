@@ -293,7 +293,14 @@ func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String,
 func _do_item(command: Dictionary) -> bool:
 	var item: Dictionary = command.get("item", {})
 	var target_slot: int = command.get("target", 0)
-	match item.get("effect", ""):
+	var effect: String = item.get("effect", "")
+	# Pre-validate: effects that require a living target
+	if effect in ["restore_mp", "restore_hp_mp", "cure_status", "buff_atk", "buff_mag"]:
+		var pre_tgt: Dictionary = _state.get_member(target_slot)
+		if pre_tgt.is_empty() or not pre_tgt.get("is_alive", false):
+			message.emit("No effect!")
+			return false
+	match effect:
 		"restore_hp":
 			var can_revive: bool = item.get("can_revive", false)
 			var tgt_m: Dictionary = _state.get_member(target_slot)
@@ -315,7 +322,7 @@ func _do_item(command: Dictionary) -> bool:
 					_state.remove_status(target_slot, statuses[i].get("name", ""))
 		"revive":
 			var rev_m: Dictionary = _state.get_member(target_slot)
-			if rev_m.get("is_alive", true):
+			if rev_m.is_empty() or rev_m.get("is_alive", true):
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
@@ -331,18 +338,15 @@ func _do_item(command: Dictionary) -> bool:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var mp_tgt: Dictionary = _state.get_member(target_slot)
 			var raw_mp: Variant = item.get("value")
 			var mp_amt: int = int(raw_mp) if raw_mp != null else 0
 			if item.has("restore_percent"):
 				var pct: int = item.get("restore_percent", 100)
-				var tgt_m: Dictionary = _state.get_member(target_slot)
-				mp_amt = int(float(tgt_m.get("max_mp", 1)) * float(pct) / 100.0)
+				mp_amt = int(float(mp_tgt.get("max_mp", 1)) * float(pct) / 100.0)
 			_state.restore_mp(target_slot, mp_amt)
 		"restore_hp_mp":
 			var tgt_m: Dictionary = _state.get_member(target_slot)
-			if tgt_m.is_empty():
-				message.emit("No effect!")
-				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
 			var raw_hpmp: Variant = item.get("value")
 			var hp_amt: int = int(raw_hpmp) if raw_hpmp != null else 9999

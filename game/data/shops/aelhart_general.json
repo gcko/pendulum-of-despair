@@ -1,66 +1,66 @@
 {
-	"shop": {
-		"shop_id": "aelhart_general",
-		"town": "aelhart",
-		"type": "general",
-		"markup": 1.0,
-		"inventory": [
-			{
-				"item_id": "potion",
-				"buy_price": 50,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": null
-			},
-			{
-				"item_id": "antidote",
-				"buy_price": 50,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": null
-			},
-			{
-				"item_id": "eye_drops",
-				"buy_price": 50,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": null
-			},
-			{
-				"item_id": "smoke_bomb",
-				"buy_price": 100,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": null
-			},
-			{
-				"item_id": "hi_potion",
-				"buy_price": 300,
-				"available_act": 2,
-				"stock_limit": null,
-				"restock_event": "ember_vein_complete"
-			},
-			{
-				"item_id": "phoenix_feather",
-				"buy_price": 500,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": "ember_vein_complete"
-			},
-			{
-				"item_id": "sleeping_bag",
-				"buy_price": 250,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": "ember_vein_complete"
-			},
-			{
-				"item_id": "tent",
-				"buy_price": 500,
-				"available_act": 1,
-				"stock_limit": null,
-				"restock_event": "ember_vein_complete"
-			}
-		]
-	}
+  "shop": {
+    "shop_id": "aelhart_general",
+    "town": "aelhart",
+    "type": "general",
+    "markup": 1.0,
+    "inventory": [
+      {
+        "item_id": "potion",
+        "buy_price": 50,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "antidote",
+        "buy_price": 50,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "eye_drops",
+        "buy_price": 50,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "smoke_bomb",
+        "buy_price": 100,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "hi_potion",
+        "buy_price": 300,
+        "available_act": 2,
+        "stock_limit": null,
+        "restock_event": "ember_vein_complete"
+      },
+      {
+        "item_id": "phoenix_feather",
+        "buy_price": 500,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": "ember_vein_complete"
+      },
+      {
+        "item_id": "sleeping_bag",
+        "buy_price": 250,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": "ember_vein_complete"
+      },
+      {
+        "item_id": "tent",
+        "buy_price": 500,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": "ember_vein_complete"
+      }
+    ]
+  }
 }

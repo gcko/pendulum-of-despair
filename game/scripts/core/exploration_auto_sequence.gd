@@ -7,13 +7,13 @@ const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
 
 var in_auto_walk: bool = false
 
-var _exploration: Node2D
+var _exploration: Exploration
 var _auto_walk_tween: Tween = null
 var _arrival_tween: Tween = null
 var _caden_dialogue_callable: Callable = Callable()
 
 
-func _init(exploration: Node2D) -> void:
+func _init(exploration: Exploration) -> void:
 	_exploration = exploration
 
 

@@ -354,12 +354,17 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Hi-Potion | -- | 300 | 600 | Restore 500 HP |
 | Ether | 200 | 200 | 400 | Restore 30 MP |
 | Antidote | 50 | 50 | 100 | Cure Poison |
+| Alarm Clock | 75 | 75 | 150 | Cure Sleep |
+| Echo Drop | 75 | 75 | 150 | Cure Silence |
+| Eye Drops | 50 | 50 | 100 | Cure Blind |
 | Smelling Salts | 75 | 75 | 150 | Cure Confusion |
 | Phoenix Feather | 500 | 500 | 1000 | Revive with 25% HP |
+| Sleeping Bag | 250 | 250 | 500 | Restore 30% HP/MP out of battle |
+| Tent | 500 | 500 | 1000 | Restore 100% HP/MP out of battle |
 | Ley-Lantern | 60 | 60 | -- | Light source for dungeons |
 | Smoke Bomb | 100 | 100 | 200 | Flee from non-boss battle |
-| Hi-Ether | -- | 600 | -- | Restore 100 MP; restock: diplomatic_mission_start |
-| Chronos Dust | -- | 400 | -- | Cure Slow, grant Haste (1 turn); restock: diplomatic_mission_start |
+| Hi-Ether | -- | 800 | -- | Restore 100 MP; restock: diplomatic_mission_start |
+| Chronos Dust | -- | 150 | -- | Cure Slow; restock: diplomatic_mission_start |
 
 *Interlude:* Single vendor in the market square. Phoenix Feather sold out. Ley-Lanterns unavailable (no ley energy to charge them).
 

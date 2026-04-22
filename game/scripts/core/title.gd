@@ -51,9 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_confirm_selection()
 	else:
 		return
-	var vp: Viewport = get_viewport()
-	if vp != null:
-		vp.set_input_as_handled()
+	InputUtil.consume(self)
 
 
 func _move_cursor(direction: int) -> void:
