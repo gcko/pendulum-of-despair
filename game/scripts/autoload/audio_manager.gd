@@ -84,8 +84,10 @@ var _pre_battle_ambient: String = ""
 var _pre_battle_mix_context: String = ""
 
 # --- State: active tween tracking ---
-var _music_tween: Tween = null
-var _ambient_tween: Tween = null
+var _music_active_tween: Tween = null
+var _music_fade_tween: Tween = null
+var _ambient_active_tween: Tween = null
+var _ambient_fade_tween: Tween = null
 
 
 func _ready() -> void:
@@ -136,8 +138,68 @@ func _make_player(player_name: String, bus: String) -> AudioStreamPlayer:
 
 
 ## Play a music track with optional crossfade.
-func play_music(_track_id: String, _crossfade_duration: float = CROSSFADE_BIOME) -> void:
-	pass
+func play_music(track_id: String, crossfade_duration: float = CROSSFADE_BIOME) -> void:
+	if track_id == _current_music:
+		return
+	var path: String = "res://assets/music/%s.ogg" % track_id
+	if not ResourceLoader.exists(path):
+		push_warning("AudioManager: Music file not found: %s" % path)
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		return
+	_play_music_with_stream(stream, track_id, crossfade_duration)
+
+
+## Internal: play a stream directly into the music players (used by tests and play_music).
+func _play_music_with_stream(
+	stream: AudioStream, track_id: String, crossfade_duration: float
+) -> void:
+	if track_id == _current_music:
+		return
+
+	# Kill any in-progress tweens on both music players
+	_kill_tween(_music_active_tween)
+	_kill_tween(_music_fade_tween)
+
+	# If the active player is currently playing, swap roles
+	if _music_active.playing:
+		# Old active becomes fade, swap the player references
+		var old_active: AudioStreamPlayer = _music_active
+		_music_active = _music_fade
+		_music_fade = old_active
+
+		# Fade out (or cut) the outgoing track in _music_fade
+		if crossfade_duration > 0.0:
+			_music_fade_tween = create_tween()
+			_music_fade_tween.tween_property(
+				_music_fade, "volume_db", SILENT_DB, crossfade_duration / 2.0
+			)
+			_music_fade_tween.tween_callback(_music_fade.stop)
+		else:
+			_music_fade.stop()
+			_music_fade.volume_db = SILENT_DB
+	else:
+		# Nothing playing — reset fade slot so it's silent and stopped
+		_music_fade.stop()
+		_music_fade.volume_db = SILENT_DB
+
+	# Start new track on _music_active
+	_music_active.stream = stream
+	if crossfade_duration > 0.0:
+		_music_active.volume_db = SILENT_DB
+		_music_active.play()
+		_music_active_tween = create_tween()
+		_music_active_tween.tween_property(
+			_music_active, "volume_db", 0.0, crossfade_duration / 2.0
+		)
+	else:
+		_music_active.volume_db = 0.0
+		_music_active.play()
+
+	_current_music = track_id
+	if OS.is_debug_build():
+		print("AudioManager: playing music '%s' (crossfade=%.2f)" % [track_id, crossfade_duration])
 
 
 ## Play a sound effect from the SFX pool.
@@ -224,8 +286,25 @@ func play_ambient(_ambient_id: String, _crossfade_duration: float = CROSSFADE_BI
 
 
 ## Stop all music with an optional fade out.
-func stop_music(_fade_duration: float = CROSSFADE_BIOME) -> void:
-	pass
+func stop_music(fade_duration: float = CROSSFADE_BIOME) -> void:
+	if not _music_active.playing:
+		_current_music = ""
+		return
+	_kill_tween(_music_active_tween)
+	if fade_duration > 0.0:
+		_music_active_tween = create_tween()
+		_music_active_tween.tween_property(_music_active, "volume_db", SILENT_DB, fade_duration)
+		_music_active_tween.tween_callback(_music_active.stop)
+	else:
+		_music_active.stop()
+		_music_active.volume_db = SILENT_DB
+	_current_music = ""
+
+
+## Kill a tween safely if it is still valid.
+func _kill_tween(tween: Tween) -> void:
+	if tween != null and tween.is_valid():
+		tween.kill()
 
 
 ## Silence all audio immediately (for narrative silence moments).

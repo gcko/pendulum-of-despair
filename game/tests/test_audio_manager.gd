@@ -99,3 +99,26 @@ func test_pan_stored_in_meta() -> void:
 			found_pan = true
 			break
 	assert_true(found_pan, "Should find the panned SFX in meta")
+
+
+func test_play_music_sets_current_track() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "track_a", 0.0)
+	assert_eq(_am._current_music, "track_a", "Current music should be track_a")
+
+
+func test_play_music_same_track_no_restart() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "track_a", 0.0)
+	_am._music_active.volume_db = -10.0
+	_am._play_music_with_stream(stream, "track_a", 0.0)
+	assert_almost_eq(_am._music_active.volume_db, -10.0, 0.01, "Same track should not restart")
+
+
+func test_play_music_crossfade_swaps_to_fade() -> void:
+	var stream_a: AudioStreamWAV = AudioStreamWAV.new()
+	var stream_b: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream_a, "track_a", 0.0)
+	_am._play_music_with_stream(stream_b, "track_b", 0.0)
+	assert_eq(_am._current_music, "track_b", "Current should be track_b")
+	assert_eq(_am._music_fade.stream, stream_a, "Fade slot should hold track_a's stream")
