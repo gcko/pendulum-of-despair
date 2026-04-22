@@ -152,23 +152,25 @@ def main() -> int:
         if silence_path and os.path.exists(silence_path):
             os.unlink(silence_path)
 
-    # Verify counts
-    errors = []
+    # Verify all required IDs exist (extras are OK — real assets may coexist)
+    missing = []
     for directory, ids in TARGETS:
-        ogg_files = [f for f in os.listdir(directory) if f.endswith(".ogg")]
-        if len(ogg_files) != len(ids):
-            errors.append(
-                f"  {directory}: expected {len(ids)}, got {len(ogg_files)}"
-            )
-    if errors:
-        print("\nWARNING: Count mismatches:")
-        for e in errors:
-            print(e)
+        for asset_id in ids:
+            dest = os.path.join(directory, f"{asset_id}.ogg")
+            if not os.path.exists(dest):
+                missing.append(f"  MISSING: {dest}")
+    if missing:
+        print("\nERROR: Required audio files missing:")
+        for m in missing:
+            print(m)
         return 1
 
-    print("\nVerification passed:")
+    print("\nVerification passed (all required IDs present):")
     for directory, ids in TARGETS:
-        print(f"  {os.path.relpath(directory, REPO_ROOT)}: {len(ids)} files OK")
+        ogg_count = len([f for f in os.listdir(directory) if f.endswith(".ogg")])
+        extra = ogg_count - len(ids)
+        suffix = f" (+{extra} extra)" if extra > 0 else ""
+        print(f"  {os.path.relpath(directory, REPO_ROOT)}: {len(ids)} required OK{suffix}")
     return 0
 
 
