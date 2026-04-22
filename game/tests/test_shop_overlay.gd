@@ -102,6 +102,8 @@ func test_navigation_wraps() -> void:
 
 func test_restock_event_filters_locked_items() -> void:
 	PartyState.gold = 10000
+	# Satisfy available_act so the ONLY filter is restock_event
+	EventFlags.set_flag("act_ii_started", true)
 	# aelhart_general has items gated by restock_event: "ember_vein_complete"
 	# Without the flag set, those items should be filtered out
 	EventFlags.set_flag("ember_vein_complete", false)
