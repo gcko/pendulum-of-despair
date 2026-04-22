@@ -359,8 +359,8 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Eye Drops | 50 | 50 | 100 | Cure Blind |
 | Smelling Salts | 75 | 75 | 150 | Cure Confusion |
 | Phoenix Feather | 500 | 500 | 1000 | Revive with 25% HP |
-| Sleeping Bag | 250 | 250 | 500 | Restore 30% HP/MP out of battle |
-| Tent | 500 | 500 | 1000 | Restore 100% HP/MP out of battle |
+| Sleeping Bag | 250 | 250 | 500 | Restore 25% HP/MP/AC out of battle |
+| Tent | 500 | 500 | 1000 | Restore 50% HP/MP/AC out of battle |
 | Ley-Lantern | 60 | 60 | -- | Light source for dungeons |
 | Smoke Bomb | 100 | 100 | 200 | Flee from non-boss battle |
 | Hi-Ether | -- | 800 | -- | Restore 100 MP; restock: diplomatic_mission_start |

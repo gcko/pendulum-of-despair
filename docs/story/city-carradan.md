@@ -1003,7 +1003,7 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 | Forgewright Blade | Weapon | 1400 | Yes | Yes | Standard issue |
 | Iron-Brass Shield | Armor | 1000 | Yes | Yes | Compact standard |
 | Smoke Bomb | Consumable | 100 | Yes | Yes | Flee from non-boss battle |
-| Chronos Dust | Consumable | 400 | Yes | Yes | Cure Slow, grant Haste (1 turn) |
+| Chronos Dust | Consumable | 150 | Yes | Yes | Cure Slow |
 | Ley-Lantern | Tool | 60 | Yes | No | Light source for dungeons |
 
 ### Points of Interest
