@@ -175,7 +175,7 @@ func _on_cutscene_music(track_id: String, action: String) -> void:
 			if OS.is_debug_build():
 				push_warning("CutsceneHandler: cutscene_music_requested 'play' with empty track_id")
 			return
-		AudioManager.play_music(track_id)
+		AudioManager.play_music(track_id, AudioManager.CROSSFADE_TOWN)
 	elif action == "stop":
 		AudioManager.stop_music()
 	else:

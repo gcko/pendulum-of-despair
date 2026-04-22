@@ -136,7 +136,7 @@ creating a new one. Prevents overlapping tweens from rapid calls.
 ### Algorithm
 
 1. Look up `MIX_*` dictionary by context string: "overworld", "town",
-   "dungeon", "narrative_dungeon", "pallor", "battle".
+   "dungeon", "narrative_dungeon", "pallor", "battle", "cutscene".
 2. Read player config: `music_volume` (0-10), `sfx_volume` (0-10).
 3. Convert: `linear_to_db(config_value / 10.0 * mix_ratio)`.
 4. Apply to "Music" and "Ambient" bus volumes via
@@ -152,6 +152,7 @@ creating a new one. Prevents overlapping tweens from rapid calls.
 | `"narrative_dungeon"` | `MIX_NARRATIVE_DUNGEON` |
 | `"pallor"` | `MIX_PALLOR` |
 | `"battle"` | `MIX_BATTLE` |
+| `"cutscene"` | `MIX_CUTSCENE` |
 
 ### Runtime Config Updates
 
@@ -184,6 +185,9 @@ Tracked as `_current_mix_context: String`.
 | `stop_music` | `(fade_duration: float = 1.0) -> void` | Fade music to silence (Pallor Wastes 0% music) |
 | `get_current_music` | `() -> String` | Returns `_current_music` |
 | `get_current_ambient` | `() -> String` | Returns `_current_ambient` |
+| `stop_ambient` | `(fade_duration: float = 1.0) -> void` | Fade ambient to silence |
+| `get_pre_battle_music` | `() -> String` | Returns `_pre_battle_music` for callers to pass to exit_battle |
+| `get_pre_battle_ambient` | `() -> String` | Returns `_pre_battle_ambient` for callers to pass to exit_battle |
 
 ### API Change
 

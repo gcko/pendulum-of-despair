@@ -322,8 +322,8 @@ func test_double_enter_battle_preserves_original_snapshot() -> void:
 	_am._pre_battle_mix_context = _am._current_mix_context
 	_am._enter_battle_with_stream(stream, "battle_standard")
 	# Second enter — _current_mix_context is now "battle", so the public
-	# enter_battle guard (line 438) would skip the snapshot. Verify by
-	# checking that _pre_battle_music still holds the original value.
+	# enter_battle guard would skip the snapshot. Verify by checking that
+	# _pre_battle_music still holds the original value.
 	assert_eq(_am._current_mix_context, "battle", "Should be in battle context")
 	_am._enter_battle_with_stream(stream, "battle_boss")
 	assert_eq(_am._pre_battle_music, "overworld", "Original pre-battle music should be preserved")
@@ -390,6 +390,49 @@ func test_enter_battle_empty_string_silences_all() -> void:
 	assert_eq(_am._current_mix_context, "battle", "Mix context should be battle")
 	assert_false(_am._music_active.playing, "Music should be silenced")
 	assert_false(_am._ambient_active.playing, "Ambient should be silenced")
+
+
+func test_enter_battle_empty_string_preserves_snapshot() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am._current_mix_context = "overworld"
+	_am.enter_battle("")
+	assert_eq(
+		_am._pre_battle_music, "overworld", "Pre-battle music should be stored on empty track"
+	)
+	assert_eq(
+		_am._pre_battle_ambient, "highlands", "Pre-battle ambient should be stored on empty track"
+	)
+	assert_eq(
+		_am._pre_battle_mix_context,
+		"overworld",
+		"Pre-battle mix context should be stored on empty track",
+	)
+
+
+func test_enter_battle_missing_file_preserves_snapshot() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am._current_mix_context = "overworld"
+	_am.enter_battle("totally_nonexistent_battle_track_12345")
+	assert_eq(
+		_am._pre_battle_music, "overworld", "Pre-battle music should be stored on missing file"
+	)
+	assert_eq(
+		_am._pre_battle_ambient, "highlands", "Pre-battle ambient should be stored on missing file"
+	)
+
+
+func test_play_music_with_stream_null_noop() -> void:
+	_am._play_music_with_stream(null, "track", 0.0)
+	assert_eq(_am._current_music, "", "Null stream should not change current music")
+
+
+func test_play_ambient_with_stream_null_noop() -> void:
+	_am._play_ambient_with_stream(null, "ambient", 0.0)
+	assert_eq(_am._current_ambient, "", "Null stream should not change current ambient")
 
 
 func test_enter_battle_missing_file_silences_all() -> void:

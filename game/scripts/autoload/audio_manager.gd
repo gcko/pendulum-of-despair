@@ -99,6 +99,7 @@ var _ambient_fade_tween: Tween = null
 func _ready() -> void:
 	_ensure_audio_buses()
 	_create_players()
+	_apply_bus_volumes()
 
 
 ## Ensure Music, SFX, and Ambient buses exist (adds them if missing).
@@ -165,6 +166,8 @@ func play_music(track_id: String, crossfade_duration: float = CROSSFADE_BIOME) -
 func _play_music_with_stream(
 	stream: AudioStream, track_id: String, crossfade_duration: float
 ) -> void:
+	if stream == null:
+		return
 	if track_id == _current_music:
 		return
 
@@ -315,6 +318,8 @@ func play_ambient(ambient_id: String, crossfade_duration: float = CROSSFADE_BIOM
 func _play_ambient_with_stream(
 	stream: AudioStream, ambient_id: String, crossfade_duration: float
 ) -> void:
+	if stream == null:
+		return
 	if ambient_id == _current_ambient:
 		return
 
@@ -455,15 +460,9 @@ func set_mix_context(context: String) -> void:
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
 func enter_battle(battle_track: String) -> void:
-	if battle_track.is_empty():
-		if OS.is_debug_build():
-			push_warning("AudioManager: enter_battle called with empty track ID")
-		_silence_music_and_ambient_for_battle()
-		set_mix_context("battle")
-		return
-	# Only snapshot pre-battle state if we are NOT already in battle.
-	# A second enter_battle without an exit_battle would otherwise overwrite
-	# the original exploration state, losing it permanently.
+	# Snapshot pre-battle state FIRST, before any failure path can return.
+	# All paths (empty track, missing file, null stream, success) need the
+	# snapshot stored so exit_battle can restore the exploration audio state.
 	if _current_mix_context != "battle":
 		_pre_battle_music = _current_music
 		_pre_battle_ambient = _current_ambient
@@ -471,6 +470,13 @@ func enter_battle(battle_track: String) -> void:
 			_music_active.get_playback_position() if _music_active.playing else 0.0
 		)
 		_pre_battle_mix_context = _current_mix_context
+
+	if battle_track.is_empty():
+		if OS.is_debug_build():
+			push_warning("AudioManager: enter_battle called with empty track ID")
+		_silence_music_and_ambient_for_battle()
+		set_mix_context("battle")
+		return
 
 	var path: String = "res://assets/music/%s.ogg" % battle_track
 	if not ResourceLoader.exists(path):
@@ -517,18 +523,20 @@ func _enter_battle_with_stream(stream: AudioStream, battle_track: String) -> voi
 
 ## Fade back to exploration music + ambient after battle.
 func exit_battle(music_track: String, ambient_track: String) -> void:
-	var music_path: String = "res://assets/music/%s.ogg" % music_track
-	var ambient_path: String = "res://assets/ambient/%s.ogg" % ambient_track
 	var music_stream: AudioStream = null
 	var ambient_stream: AudioStream = null
-	if ResourceLoader.exists(music_path):
-		music_stream = load(music_path)
-	elif OS.is_debug_build():
-		push_warning("AudioManager: Music file not found: %s" % music_path)
-	if ResourceLoader.exists(ambient_path):
-		ambient_stream = load(ambient_path)
-	elif OS.is_debug_build():
-		push_warning("AudioManager: Ambient file not found: %s" % ambient_path)
+	if not music_track.is_empty():
+		var music_path: String = "res://assets/music/%s.ogg" % music_track
+		if ResourceLoader.exists(music_path):
+			music_stream = load(music_path)
+		elif OS.is_debug_build():
+			push_warning("AudioManager: Music file not found: %s" % music_path)
+	if not ambient_track.is_empty():
+		var ambient_path: String = "res://assets/ambient/%s.ogg" % ambient_track
+		if ResourceLoader.exists(ambient_path):
+			ambient_stream = load(ambient_path)
+		elif OS.is_debug_build():
+			push_warning("AudioManager: Ambient file not found: %s" % ambient_path)
 	_exit_battle_with_streams(music_stream, ambient_stream, music_track, ambient_track)
 
 

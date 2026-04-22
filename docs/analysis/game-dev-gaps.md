@@ -834,7 +834,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - Wired: cutscene_handler.gd (music + sfx signals), exploration.gd (save_point_chime), menu_config.gd (update_volumes on setting change)
 - 68 placeholder .ogg files (0.1s silence, vorbis): 51 SFX + 12 ambient + 5 music
 - Generator script: tools/generate_placeholder_audio.py
-- 37 GUT tests in test_audio_manager.gd
+- 53 GUT tests in test_audio_manager.gd
 - Design spec: `docs/superpowers/specs/2026-04-22-audio-integration-design.md`
 
 **Blocking:** Audio feedback for combat, exploration, menus, story scenes
