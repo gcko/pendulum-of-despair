@@ -1004,7 +1004,7 @@
       "description": "A crest born from echoes of the dreamer, elevating all attributes."
     },
     {
-      "id": "pact_charm_wind",
+      "id": "pact_charm_storm",
       "name": "Pact-Charm (Storm)",
       "subcategory": "elemental_resistance",
       "equippable_by": [
@@ -1015,7 +1015,7 @@
         "lira",
         "torren"
       ],
-      "effect": "+5% Storm resist, AGI +2",
+      "effect": "+5% Storm resist, SPD +2",
       "bonus_stats": {"spd": 2},
       "element_resist": "storm",
       "special": null,
@@ -1084,6 +1084,26 @@
       "sell_price": 200,
       "acquired": "Valdris Crown jeweler",
       "description": "A pendant that shields the wearer when gravely wounded."
+    },
+    {
+      "id": "royal_signet",
+      "name": "Royal Signet",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "All stats +2",
+      "bonus_stats": {"atk": 2, "def": 2, "mag": 2, "mdef": 2, "spd": 2, "lck": 2},
+      "special": null,
+      "buy_price": 1200,
+      "sell_price": 600,
+      "acquired": "Valdris Crown jeweler (Act II, requires court favor)",
+      "description": "A signet ring bearing the Valdris royal crest. Grants favor across all attributes."
     },
     {
       "id": "warriors_memento",
@@ -1249,6 +1269,55 @@
       "sell_price": 200,
       "acquired": "Ember Vein F3 (secret room)",
       "description": "A crystallized shard of ley energy. Enhances magical ability."
+    },
+    {
+      "id": "warp_walker_boots",
+      "name": "Warp Walker's Boots",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+20 SPD, movement speed increase in gravity-shifted rooms",
+      "bonus_stats": {
+        "spd": 20
+      },
+      "special": "Movement speed increase in gravity-shifted rooms",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Dry Well of Aelhart Floor 6 chest",
+      "description": "Boots found where gravity runs perpendicular. Grants extraordinary speed and sure footing in warped spaces."
+    },
+    {
+      "id": "gravity_shard",
+      "name": "Gravity Shard",
+      "subcategory": "stat_boost",
+      "equippable_by": [
+        "edren",
+        "cael",
+        "maren",
+        "sable",
+        "lira",
+        "torren"
+      ],
+      "effect": "+12 all stats, negates gravity-based status effects",
+      "bonus_stats": {
+        "atk": 12,
+        "def": 12,
+        "mag": 12,
+        "mdef": 12,
+        "spd": 12,
+        "lck": 12
+      },
+      "special": "Negates gravity-based status effects",
+      "buy_price": null,
+      "sell_price": null,
+      "acquired": "Dry Well of Aelhart Floor 6 chest",
+      "description": "A shard of compressed gravity from the builders' inverted halls. Bolsters all attributes and grounds the wearer against spatial distortion."
     }
   ]
 }

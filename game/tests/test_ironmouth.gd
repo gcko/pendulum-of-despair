@@ -3,13 +3,12 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	PartyState.initialize_new_game()
-	EventFlags.clear_all()
 
 
 func after_each() -> void:
-	PartyState.puzzle_state.clear()
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 
 
 func test_ironmouth_lira_trigger_sets_flag() -> void:

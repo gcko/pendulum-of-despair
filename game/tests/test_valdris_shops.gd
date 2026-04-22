@@ -6,10 +6,12 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
@@ -33,22 +35,19 @@ func test_weaponsmith_town_and_markup() -> void:
 func test_weaponsmith_has_only_weapon_items() -> void:
 	var expected_items: Array[String] = [
 		"valdris_blade",
-		"knights_edge",
 		"ley_wand",
 		"stiletto",
 		"iron_mallet",
 		"iron_lance",
 		"commanders_blade",
-		"glyph_staff",
-		"pickpockets_blade",
-		"pipe_hammer",
+		"composite_shortbow",
 	]
 	var shop: Dictionary = DataManager.load_shop("valdris_crown_weaponsmith")
 	var inventory: Array = shop.get("shop", {}).get("inventory", [])
 	var item_ids: Array[String] = []
 	for entry: Variant in inventory:
 		item_ids.append((entry as Dictionary).get("item_id", ""))
-	assert_eq(item_ids.size(), expected_items.size(), "weaponsmith should have exactly 10 items")
+	assert_eq(item_ids.size(), expected_items.size(), "weaponsmith should have exactly 7 items")
 	for expected: String in expected_items:
 		assert_true(item_ids.has(expected), "weaponsmith should have item: %s" % expected)
 
@@ -94,18 +93,16 @@ func test_armorsmith_has_only_armor_items() -> void:
 	var expected_items: Array[String] = [
 		"iron_helm",
 		"travelers_hood",
-		"ember_circlet",
 		"chain_mail",
 		"iron_plate",
 		"silk_robe",
-		"reinforced_vest",
 	]
 	var shop: Dictionary = DataManager.load_shop("valdris_crown_armorsmith")
 	var inventory: Array = shop.get("shop", {}).get("inventory", [])
 	var item_ids: Array[String] = []
 	for entry: Variant in inventory:
 		item_ids.append((entry as Dictionary).get("item_id", ""))
-	assert_eq(item_ids.size(), expected_items.size(), "armorsmith should have exactly 7 items")
+	assert_eq(item_ids.size(), expected_items.size(), "armorsmith should have exactly 5 items")
 	for expected: String in expected_items:
 		assert_true(item_ids.has(expected), "armorsmith should have item: %s" % expected)
 
@@ -172,7 +169,9 @@ func test_jeweler_prices_match_expected() -> void:
 		var d: Dictionary = entry as Dictionary
 		price_map[d.get("item_id", "")] = d.get("buy_price", -1)
 
-	assert_eq(int(price_map.get("pact_charm_wind", -1)), 600, "pact_charm_wind price should be 600")
+	assert_eq(
+		int(price_map.get("pact_charm_storm", -1)), 600, "pact_charm_storm price should be 600"
+	)
 	assert_eq(
 		int(price_map.get("pact_charm_earth", -1)), 600, "pact_charm_earth price should be 600"
 	)
@@ -180,6 +179,7 @@ func test_jeweler_prices_match_expected() -> void:
 	assert_eq(
 		int(price_map.get("guardian_pendant", -1)), 400, "guardian_pendant price should be 400"
 	)
+	assert_eq(int(price_map.get("royal_signet", -1)), 1200, "royal_signet price should be 1200")
 
 
 func test_jeweler_no_duplicate_items() -> void:
@@ -195,11 +195,11 @@ func test_jeweler_no_duplicate_items() -> void:
 # ── Specialty (regression) ───────────────────────────────────────────────
 
 
-func test_specialty_shop_still_loads_with_7_items() -> void:
+func test_specialty_shop_still_loads_with_5_items() -> void:
 	var shop: Dictionary = DataManager.load_shop("valdris_crown_specialty")
 	assert_false(shop.is_empty(), "specialty shop should still load")
 	var inventory: Array = shop.get("shop", {}).get("inventory", [])
-	assert_eq(inventory.size(), 7, "specialty shop should still have 7 items")
+	assert_eq(inventory.size(), 5, "specialty shop should have 5 items")
 
 
 # ── Old armorer no longer exists ─────────────────────────────────────────

@@ -425,12 +425,12 @@ GDScript loads data from Tier 1 JSON via DataManager.
 - [x] GDScript: load dialogue from DataManager by NPC ID
 - [x] ~~GDScript: on interact, call GameManager.push_overlay(DIALOGUE)~~ → signal-only: emits npc_interacted(npc_id, dialogue_data)
 - [x] GDScript: flag-gated dialogue (priority stack with condition evaluator)
-- [x] ~~GDScript: party-aware dialogue~~ → party_has() stubbed, returns false until GameManager.party exists
+- [x] ~~GDScript: party-aware dialogue~~ → party_has() implemented via PartyState.has_member()
 
 **Notes:**
 - Signal-only design: NPC emits npc_interacted, exploration scene handles overlay push
 - Priority stack: first-match-wins, walks entries top-to-bottom
-- Condition evaluator: binary flags, numeric comparisons (>=, <, ==), AND combos, party_has (stubbed)
+- Condition evaluator: binary flags, numeric comparisons (>=, <, ==), AND combos, party_has (implemented via PartyState.has_member())
 - 15 stub animations (idle + 14 emotions per dialogue-system.md Section 2.1)
 - GUT tests in test_npc.gd, all code passes gdlint + gdformat
 - **This completes ALL Tier 2 Entity Prefabs (4/4). Exploration scene (3.2) is fully unblocked.**

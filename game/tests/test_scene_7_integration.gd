@@ -2,12 +2,12 @@ extends GutTest
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 
 func after_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 
 

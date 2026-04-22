@@ -248,36 +248,31 @@ done
    - Calculate pre-Copilot catch rate: (issues agents found independently) / (total Copilot comments)
    - If catch rate < 80%, investigate root cause and update agent prompts
 
-## File Issues for Skipped Findings (MANDATORY)
+## Fix ALL Findings (MANDATORY)
 
 After all rounds complete but BEFORE pushing, review every finding
-that was classified as SKIP / out-of-scope / cosmetic / not-in-PR.
-**Every skipped finding MUST be captured** so it is not lost:
+from the review agents. **Every finding MUST be fixed**, regardless
+of whether it was introduced by this PR or is pre-existing. There
+is no "out-of-scope" or "SKIP" category.
 
-1. **Create a bd issue** for each skipped finding using `bd create`:
-   ```bash
-   bd create --title="<concise title>" \
-     --description="<file:line, what the issue is, why it was skipped>" \
-     --type=bug|task|feature --priority=2-3 --json
-   ```
-2. Group related findings into a single issue where appropriate
-   (e.g., all stale doc references in one issue).
-3. Include the PR number in the description so future sessions
-   can trace back to the review that found it.
+1. **Fix the code/data/docs** for every finding. If a finding
+   touches pre-existing code, fix it — this PR owns the fix.
+2. **Run propagation sweep** after each fix: grep for related
+   references, update callers, tests, and docs.
+3. **Commit locally** after fixing each batch.
 
-**Why this is mandatory:** Review rounds surface real issues that
-aren't in the PR's scope. If they aren't filed, they are forgotten.
-This has happened repeatedly — the review identifies problems, says
-"not fixing", and nobody ever comes back to them.
+**Why this is mandatory:** Review rounds surface real issues. Filing
+them as issues instead of fixing them just defers work that is right
+in front of you. Every finding you see is worth fixing NOW. The cost
+of fixing in-context is far lower than rediscovering the issue later.
 
-**The same rule applies to `/godot-review`.** Any finding marked
-SKIP or out-of-scope must be filed as an issue before the review
-is considered complete.
+**The same rule applies to `/godot-review`.** Fix all findings before
+the review is considered complete.
 
 ## Push and Summary
 
-After all rounds complete, Copilot comments replied to, gap analysis
-done, and skipped findings filed as issues:
+After all rounds complete, all findings fixed, Copilot comments
+replied to, and gap analysis done:
 
 ```bash
 git push

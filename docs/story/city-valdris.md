@@ -322,11 +322,13 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Iron Longsword | 300 | 360 | ATK +12 | Edren's first upgrade |
-| Steel Halberd | 450 | 540 | ATK +16 | Two-handed |
-| Ley-Touched Dagger | 500 | 600 | ATK +8, MAG +4 | Faint ley glow; Sable or Cael |
-| Reinforced Shortbow | 350 | 420 | ATK +10, AGI +2 | Torren's weapon class |
-| Knight's Blade | -- | 800 | ATK +22 | Available Act II only |
+| Valdris Blade | 300 | 360 | ATK +10 | Edren's first upgrade |
+| Ley Wand | 250 | 300 | ATK +6, MAG +5 | Maren's staff |
+| Stiletto | 250 | 300 | ATK +8, SPD +2 | Sable's dagger |
+| Iron Mallet | 300 | 360 | ATK +10 | Lira's hammer |
+| Iron Lance | 250 | 300 | ATK +8 | Torren's spear |
+| Composite Shortbow | 450 | 540 | ATK +12, SPD +3 | Torren's ranged option |
+| Commander's Blade | -- | 400 | ATK +12 | Act II; restock: diplomatic_mission_start |
 | Interlude: Black Market Blade | -- | -- | ATK +28, LUCK -5 | Sold by Renn's contact, 1500g |
 
 *Interlude:* Shop is closed. Renn sells a limited selection from the Anchor & Oar at 200% markup. One black market weapon available.
@@ -335,11 +337,11 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Chain Hauberk | 400 | 480 | DEF +10 | Standard medium armor |
-| Ley-Woven Robe | 550 | 660 | DEF +5, MAG DEF +12 | Mage armor |
-| Iron Buckler | 200 | 240 | DEF +4, Block 10% | Shield |
-| Knight's Plate | -- | 1000 | DEF +18 | Act II only; heavy |
-| Highland Cloak | 300 | 360 | MAG DEF +6, resist Cold | Valdris specialty |
+| Iron Helm | 200 | 240 | DEF +6, MDEF +3 | Head armor |
+| Traveler's Hood | 250 | 300 | DEF +5, MDEF +5 | Head armor |
+| Chain Mail | 300 | 360 | DEF +10, MDEF +5 | Body armor |
+| Iron Plate | 400 | 480 | DEF +15, MDEF +3 | Body armor; heavy |
+| Silk Robe | 300 | 360 | DEF +6, MDEF +10 | Body armor; robe |
 | Interlude: Salvaged Plate | -- | -- | DEF +14 | Found stock, 800g, scratched |
 
 *Interlude:* Limited to leftover stock at 150% markup. No new shipments.
@@ -348,21 +350,29 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Interlude | Effect |
 |------|--------------|----------------|-----------|--------|
-| Healing Draught | 50 | 65 | 100 | Restore 200 HP |
-| Mana Tincture | 80 | 100 | 160 | Restore 50 MP |
-| Antidote | 30 | 40 | 60 | Cure Poison |
-| Smelling Salts | 40 | 50 | 80 | Cure Sleep/Confuse |
-| Phoenix Pinion | 300 | 360 | 600 | Revive with 25% HP |
-| Ley-Lantern | 60 | 75 | -- | Light source for dungeons |
-| Warding Charm | -- | 150 | -- | Reduce encounter rate |
+| Potion | 50 | 50 | 100 | Restore 100 HP |
+| Hi-Potion | -- | 300 | 600 | Restore 500 HP |
+| Ether | 200 | 200 | 400 | Restore 30 MP |
+| Antidote | 50 | 50 | 100 | Cure Poison |
+| Alarm Clock | 75 | 75 | 150 | Cure Sleep |
+| Echo Drop | 75 | 75 | 150 | Cure Silence |
+| Eye Drops | 50 | 50 | 100 | Cure Blind |
+| Smelling Salts | 75 | 75 | 150 | Cure Confusion |
+| Phoenix Feather | 500 | 500 | 1000 | Revive with 25% HP |
+| Sleeping Bag | 250 | 250 | 500 | Restore 25% HP/MP/AC out of battle |
+| Tent | 500 | 500 | 1000 | Restore 50% HP/MP/AC out of battle |
+| Ley-Lantern | 60 | 60 | -- | Light source for dungeons |
+| Smoke Bomb | 100 | 100 | 200 | Flee from non-boss battle |
+| Hi-Ether | -- | 800 | -- | Restore 100 MP; restock: diplomatic_mission_start |
+| Chronos Dust | -- | 150 | -- | Cure Slow; restock: diplomatic_mission_start |
 
-*Interlude:* Single vendor in the market square. Phoenix Pinions sold out. Ley-Lanterns unavailable (no ley energy to charge them).
+*Interlude:* Single vendor in the market square. Phoenix Feather sold out. Ley-Lanterns unavailable (no ley energy to charge them).
 
 #### Jeweler & Accessory Shop (Citizen's Walk)
 
 | Item | Price (Act I) | Price (Act II) | Stats Hint | Notes |
 |------|--------------|----------------|------------|-------|
-| Pact-Charm (Storm) | 600 | 720 | +5% Storm resist, AGI +2 | Spirit-touched |
+| Pact-Charm (Storm) | 600 | 720 | +5% Storm resist, SPD +2 | Spirit-touched |
 | Pact-Charm (Earth) | 600 | 720 | +5% Earth resist, DEF +2 | Spirit-touched |
 | Silver Ring | 200 | 240 | MAG +3 | Basic mage accessory |
 | Guardian Pendant | 400 | 480 | Auto-Protect at <25% HP | Unique to Valdris |
@@ -374,10 +384,10 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 
 | Item | Price (Act I) | Price (Act II) | Effect | Notes |
 |------|--------------|----------------|--------|-------|
-| Starbloom Tea | 150 | 200 | Full HP restore, cures all status | Brewed from Nella's flowers |
+| Starbloom Tea | 150 | 200 | Full HP restore + cures all status | Brewed from Nella's flowers |
 | Whetstone | 100 | 120 | +10% ATK for one battle | Consumable |
 | Spirit Incense | 200 | 250 | +15% MAG for one battle | Valdris ritual item |
-| Waystone | 500 | -- | Return to last save point | Rare; limited stock |
+| Waystone | 300 | 360 | Return to dungeon entrance | Dungeon use only |
 | Interlude: Pallor Antidote | -- | -- | Cures Despair status | 400g, sold by the lone vendor |
 
 ### 1.5 Points of Interest
@@ -388,11 +398,11 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 - Throne Hall antechamber (Royal Keep) -- Act II onward
 
 **Treasure chests:**
-- Behind the Barracks: 1x Phoenix Pinion (hidden by building shadow)
+- Behind the Barracks: 1x Phoenix Feather (hidden by building shadow)
 - Royal Library basement stacks: 1x Spirit Incense (requires examining specific bookshelf)
 - Eastern Wall watchtower (northernmost): 1x Whetstone
 - Maren's Old Study (Royal Keep): Maren's Staff Fragment (key item, Act II)
-- Servants' Passage: 1x Healing Draught, 1x 500g pouch (Interlude only)
+- Servants' Passage: 1x Potion, 1x 500g pouch (Interlude only)
 
 **Environmental storytelling:**
 - The child's chalk drawing on the Lower Ward wall: one tower drawn dark in Act II, "HELP US" added in Interlude
@@ -577,12 +587,13 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
-| Herb Poultice | 25 | Restore 100 HP | Cheapest heal |
-| Antidote | 30 | Cure Poison | Basic status cure |
-| Wooden Shield | 80 | DEF +2 | Starter gear if not already equipped |
-| Traveler's Cloak | 60 | MAG DEF +2 | Starter accessory |
-| Torch | 15 | Light source (short duration) | For the Ember Vein later |
-| Bread Loaf | 10 | Restore 30 HP | Flavor item from Bren's regional supply |
+| Potion | 50 | Restore 100 HP | Basic heal |
+| Antidote | 50 | Cure Poison | Basic status cure |
+| Eye Drops | 50 | Cure Blindness | Basic status cure |
+| Smoke Bomb | 100 | Flee from non-boss battle | Escape tool |
+| Phoenix Feather | 500 | Revive with 25% HP | Available after Ember Vein |
+| Sleeping Bag | 250 | Rest heal outside dungeons | Available after Ember Vein |
+| Tent | 500 | Full rest heal outside dungeons | Available after Ember Vein |
 
 #### Carradan Trader's Stall
 
@@ -598,7 +609,7 @@ W   = Dry Well                 L*  = Ley-lamp post (dim)
 **Save point:** Inside The Hearthstone Inn (the bed serves as save point).
 
 **Treasure chests:**
-- Behind the Watermill: 1x Herb Poultice (teaches players to look behind buildings)
+- Behind the Watermill: 1x Potion (teaches players to look behind buildings)
 - Inside Farmhouse 1 (after completing the spooked animal quest): 1x 100g reward pouch
 
 **Environmental storytelling:**
@@ -788,22 +799,22 @@ AR    = Armory                  BT = Bell Tower Base
 |------|-------|--------|-------|
 | Alpine Remedy | 60 | Restore 250 HP | Local herb blend |
 | Frostbane Tea | 80 | +10% Frost resist 1 battle | Alpine specialty |
-| Antidote | 30 | Cure Poison | Standard |
-| Smelling Salts | 40 | Cure Sleep/Confuse | Standard |
+| Antidote | 50 | Cure Poison | Standard |
+| Smelling Salts | 75 | Cure Confusion | Standard |
 
 #### Provisioner
 
 | Item | Price | Effect | Notes |
 |------|-------|--------|-------|
-| Healing Draught | 65 | Restore 200 HP | 30% markup over capital (remote location) |
-| Mana Tincture | 100 | Restore 50 MP | Marked up |
+| Potion | 65 | Restore 100 HP | 30% markup over capital (remote location) |
+| Ether | 260 | Restore 30 MP | Marked up |
 | Torch | 20 | Light source | For monastery dungeon |
 | Rope | 30 | Dungeon utility item | Interlude puzzle use |
 | Trail Rations | 15 | Restore 50 HP | Cheap, weak |
 
 *Interlude:* Provisioner stock is very limited. Prices rise 50%. Some items sold out (no supply caravans reaching the highlands).
 
-*Act III:* Monks provide supplies freely (a blessing) -- 3x Alpine Remedy, 2x Frostbane Tea, 1x Mana Tincture. One-time gift.
+*Act III:* Monks provide supplies freely (a blessing) -- 3x Alpine Remedy, 2x Frostbane Tea, 1x Ether. One-time gift.
 
 ### 3.5 Points of Interest
 
@@ -811,8 +822,8 @@ AR    = Armory                  BT = Bell Tower Base
 
 **Treasure chests:**
 - Armory: Vigil's Edge (unique sword, ATK +20, +15% vs. Pallor manifestations)
-- Bell Tower upper floor (optional climb): 1x Phoenix Pinion, 1x Highland Cloak
-- Dormitory East (behind a collapsed bed): 1x Mana Tincture
+- Bell Tower upper floor (optional climb): 1x Phoenix Feather, 1x Highland Cloak
+- Dormitory East (behind a collapsed bed): 1x Ether
 
 **Environmental storytelling:**
 - Prayer stones in the courtyard: grey frost creeping up their surfaces in Interlude. The frost never melts.
@@ -951,7 +962,7 @@ PV = Provisioner                 t  = Thornmere treeline
 |------|--------------|----------------|------------|-------|
 | Steel Longsword | 400 | 480 | ATK +14 | Military issue; solid upgrade from iron |
 | Soldier's Halberd | 550 | 660 | ATK +18 | Two-handed; garrison standard |
-| Composite Shortbow | 450 | 540 | ATK +12, AGI +3 | Ranger-grade; good for Torren |
+| Composite Shortbow | 450 | 540 | ATK +12, SPD +3 | Ranger-grade; good for Torren |
 | Border Mail | 500 | 600 | DEF +12 | Medium armor; the garrison standard |
 | Iron Helm | 200 | 240 | DEF +4 | Head slot |
 | Tower Shield | 350 | 420 | DEF +6, Block 15% | Heavy shield |
@@ -967,11 +978,11 @@ PV = Provisioner                 t  = Thornmere treeline
 
 | Item | Price (Act I) | Price (Act II) | Effect | Notes |
 |------|--------------|----------------|--------|-------|
-| Healing Draught | 50 | 60 | Restore 200 HP | Standard price |
-| Mana Tincture | 80 | 95 | Restore 50 MP | Slight markup |
-| Antidote | 30 | 35 | Cure Poison | Stocked for Wilds travel |
-| Smelling Salts | 40 | 45 | Cure Sleep/Confuse | |
-| Phoenix Pinion | 300 | 350 | Revive 25% HP | Military supply |
+| Potion | 50 | 60 | Restore 100 HP | Standard price |
+| Ether | 200 | 240 | Restore 30 MP | Slight markup |
+| Antidote | 50 | 60 | Cure Poison | Stocked for Wilds travel |
+| Smelling Salts | 75 | 90 | Cure Confusion | |
+| Phoenix Feather | 500 | 600 | Revive 25% HP | Military supply |
 | Field Rations | 20 | 25 | Restore 75 HP | Military food; better than Aelhart bread |
 | Torch (x3 pack) | 35 | 40 | Light source | Bundle deal |
 
@@ -1140,7 +1151,7 @@ Greyvale has no functioning shops. The economy is dead.
 
 **Act II scavenging:**
 - The Abandoned Compact Outpost contains lootable crates:
-  - 1x Compact Field Kit (Healing Draught x2, Antidote x1)
+  - 1x Compact Field Kit (Potion x2, Antidote x1)
   - 1x Forgewright Schematics (key item, used in a Lira side quest)
   - 1x Arcanite Dagger (ATK +10, MAG +6; Compact design, better than anything available in Valdris shops at this point)
   - 200g in Compact currency (auto-converted)

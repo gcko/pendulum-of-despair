@@ -59,7 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not _is_playing:
 		return
 	if event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		skip_cutscene()
 		return
 
@@ -147,6 +147,10 @@ func skip_cutscene() -> void:
 	_skipped = true
 	cutscene_finished.emit()
 	GameManager.pop_overlay()
+
+
+func _consume_input() -> void:
+	InputUtil.consume(self)
 
 
 func _load_config() -> void:

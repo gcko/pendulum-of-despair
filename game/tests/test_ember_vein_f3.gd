@@ -5,24 +5,14 @@ const PLATE_SCENE: PackedScene = preload("res://scenes/entities/pressure_plate.t
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.puzzle_state.clear()
 	PartyState.initialize_new_game()
 
 
 func after_each() -> void:
-	while GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.cutscene_active = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.puzzle_state.clear()
 
 
 func _make_mock_body() -> CharacterBody2D:

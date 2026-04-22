@@ -35,22 +35,14 @@ func _start_and_await(cs: Node, id: String, entries: Array, tier: int = 1) -> vo
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	EventFlags.clear_all()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 	PartyState.initialize_new_game()
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	GameManager.cutscene_active = false
-	EventFlags.clear_all()
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.initialize_new_game()
 
 
 # --- Scene structure tests (no start_cutscene needed) ---

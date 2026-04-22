@@ -1,6 +1,16 @@
 extends GutTest
 
 
+func before_each() -> void:
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
+
+
+func after_each() -> void:
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
+
+
 func _read_file(path: String) -> String:
 	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	if file == null:

@@ -2,11 +2,13 @@ extends GutTest
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func after_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func test_scene_7a_requires_maren_warning() -> void:
@@ -77,12 +79,7 @@ func test_check_required_flags_all_set() -> void:
 	EventFlags.set_flag("scene_7c_renn", true)
 	EventFlags.set_flag("pendulum_presented", true)
 	var flags_str: String = "scene_7c_aldis,scene_7c_cordwyn,scene_7c_renn,pendulum_presented"
-	var all_met: bool = true
-	for f: String in flags_str.split(","):
-		if not EventFlags.get_flag(f.strip_edges()):
-			all_met = false
-			break
-	assert_true(all_met)
+	assert_true(EventFlags.check_required_flags(flags_str))
 
 
 func test_check_required_flags_one_missing() -> void:
@@ -90,9 +87,4 @@ func test_check_required_flags_one_missing() -> void:
 	EventFlags.set_flag("scene_7c_cordwyn", true)
 	EventFlags.set_flag("pendulum_presented", true)
 	var flags_str: String = "scene_7c_aldis,scene_7c_cordwyn,scene_7c_renn,pendulum_presented"
-	var all_met: bool = true
-	for f: String in flags_str.split(","):
-		if not EventFlags.get_flag(f.strip_edges()):
-			all_met = false
-			break
-	assert_false(all_met)
+	assert_false(EventFlags.check_required_flags(flags_str))

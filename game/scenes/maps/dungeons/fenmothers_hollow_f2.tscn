@@ -141,7 +141,7 @@ monitoring = true
 monitorable = false
 metadata/boss_id = "drowned_sentinel"
 metadata/enemy_ids = ["drowned_sentinel"]
-metadata/enemy_act = "bosses"
+metadata/enemy_act = "act_i"
 metadata/flag = "drowned_sentinel_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/DrownedSentinel"]

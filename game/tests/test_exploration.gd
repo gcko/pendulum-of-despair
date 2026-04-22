@@ -6,38 +6,13 @@ const RITUAL_METER_SCENE: PackedScene = preload("res://scenes/ui/ritual_meter.ts
 
 
 func before_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	PartyState.is_at_save_point = false
 
 
 func after_each() -> void:
-	if GameManager.current_overlay != GameManager.OverlayState.NONE:
-		GameManager.pop_overlay()
-	get_tree().paused = false
-	GameManager.cutscene_active = false
-	GameManager.transition_data = {}
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.gold = 0
-	PartyState.ley_crystals.clear()
-	PartyState.puzzle_state.clear()
-	PartyState.is_at_save_point = false
 
 
 func _create_exploration() -> Node2D:
@@ -93,7 +68,7 @@ func test_npc_interaction_signal_wired() -> void:
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC should exist in map")
 	assert_true(
-		npc.npc_interacted.is_connected(exp._on_npc_interacted), "NPC signal should be connected"
+		npc.npc_interacted.is_connected(exp.on_npc_interacted), "NPC signal should be connected"
 	)
 
 
@@ -103,7 +78,7 @@ func test_chest_interaction_signal_wired() -> void:
 	var chest: Node = entities.get_node_or_null("TestChest")
 	assert_not_null(chest, "test chest should exist in map")
 	assert_true(
-		chest.chest_opened.is_connected(exp._on_chest_opened), "chest signal should be connected"
+		chest.chest_opened.is_connected(exp.on_chest_opened), "chest signal should be connected"
 	)
 
 
@@ -113,7 +88,7 @@ func test_save_point_signal_wired() -> void:
 	var sp: Node = entities.get_node_or_null("TestSavePoint")
 	assert_not_null(sp, "test save point should exist in map")
 	assert_true(
-		sp.save_point_activated.is_connected(exp._on_save_point_activated),
+		sp.save_point_activated.is_connected(exp.on_save_point_activated),
 		"save point signal should be connected",
 	)
 
@@ -156,7 +131,7 @@ func test_map_changed_signal() -> void:
 func test_chest_opened_adds_item_to_inventory() -> void:
 	var exp: Node2D = _create_exploration()
 	var prev_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
-	exp._on_chest_opened("test_chest_99", "potion", 1)
+	exp.on_chest_opened("test_chest_99", "potion", 1)
 	var new_qty: int = PartyState.inventory.get("consumables", {}).get("potion", 0)
 	assert_eq(new_qty, prev_qty + 1, "chest should add item to inventory")
 
@@ -194,7 +169,7 @@ func test_npc_with_shop_id_opens_shop_overlay() -> void:
 	# Add shop_id metadata to the NPC so the handler routes to shop overlay.
 	npc.set_meta("shop_id", "aelhart_general")
 	watch_signals(GameManager)
-	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	exp.on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
 	# push_overlay emits overlay_state_changed with SHOP
 	assert_signal_emitted(GameManager, "overlay_state_changed", "should open shop overlay")
 	# Clean up the overlay so it does not leak into the next test
@@ -210,7 +185,7 @@ func test_inn_interaction_deducts_gold() -> void:
 	npc.set_meta("inn_id", "test_inn")
 	npc.set_meta("inn_cost", 150)
 	PartyState.gold = 500
-	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	exp.on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
 	assert_eq(PartyState.gold, 350, "gold should decrease by inn cost")
 
 
@@ -223,7 +198,7 @@ func test_inn_interaction_insufficient_gold_rejected() -> void:
 	npc.set_meta("inn_id", "test_inn")
 	npc.set_meta("inn_cost", 150)
 	PartyState.gold = 50
-	exp._on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
+	exp.on_npc_interacted(npc.get("npc_id"), {"speaker": "test", "text": "hello"})
 	assert_eq(PartyState.gold, 50, "gold should be unchanged when insufficient")
 
 

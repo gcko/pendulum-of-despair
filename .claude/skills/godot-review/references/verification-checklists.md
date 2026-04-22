@@ -85,6 +85,16 @@ Reference for all review agents. Check every applicable item.
 - [ ] Data field values used in COMPUTATION, not just existence checks — if a field is `restore_percent: 25`, the code must multiply by 0.25, not treat it as a boolean flag
 - [ ] Configurable values in data (e.g., revive HP fraction) must flow through to the formula — hardcoded fallbacks (e.g., always `max_hp / 4`) bypass the data
 - [ ] For every item/skill effect: trace the data value from JSON -> code -> actual game effect. If the value doesn't change the output, it's a semantic bug
+- [ ] Side effects (resource spend, gauge gain, message emission) must happen AFTER target/condition validation, not before. If a function can return false/re-prompt, verify no irreversible side effects occurred before the validation point. (PR #147: _do_magic gained Weave Gauge before validating KO target, enabling gauge farming)
+- [ ] Every consumable use function must CONSUME the item from inventory after successful application. Verify: validation -> effect -> consumption -> return true. If the item is never deducted, it is infinite. (PR #147: _do_item applied effects but never called consume_item)
+
+### Callable Initialization (from Copilot PR #147 gap analysis)
+- [ ] Every `Callable` variable declaration must be initialized to `Callable()` — uninitialized Callables crash on `.is_valid()` if cleanup/disconnect runs before the callable is ever assigned. (PR #147: _pending_callable and _caden_dialogue_callable crashed on early cleanup)
+- [ ] After adding `call_deferred()` that triggers scene transition, verify the guard flag (e.g., `_load_in_progress`) stays true until the deferred call runs — clearing it immediately allows double-fire from rapid input. (PR #147: save_load.gd _load_in_progress cleared before deferred change_core_state)
+
+### Effect Handler Completeness (from Copilot PR #147 gap analysis)
+- [ ] Every `effect` value in consumables.json must have a matching handler in BOTH `InventoryHelpers.apply_item_effect()` (field use) and `BattleManager._do_item()` (battle use, if `usable_in_battle: true`). Grep for all unique effect values and verify each has a handler. (PR #147: buff_atk, buff_mag, light_source had no handlers)
+- [ ] Every boolean modifier field on a consumable (e.g., `clears_status`, `can_revive`) must be checked in ALL effect branches that the item could use, not just one. (PR #147: clears_status only checked in restore_hp_mp, not restore_hp — starbloom_tea silently skipped status clearing)
 
 ### Constraint Propagation (from Copilot PR #122 gap analysis)
 - [ ] Every constraint in JSON data (e.g., `requires_save_point`, `usable_in_battle`, `target_type`) must be enforced at ALL layers: backend logic, selection/confirmation UI, and display (greying/hiding)
@@ -166,6 +176,10 @@ Reference for all review agents. Check every applicable item.
 - [ ] NPC dialogue `condition` strings must use syntax supported by `npc.gd:_evaluate_condition`: bare flag names, `flag == 0` comparisons, `AND` conjunctions, `party_has(id)`. The `!` negation prefix is NOT supported — use `flag == 0` instead. (PR #146: `!scene_7c_cordwyn` silently failed)
 - [ ] Test assertions must use the method that matches test intent — `has_flag()` to prove a flag was never stored, `get_flag()` to check value. Using the wrong method can produce false passes (e.g., `get_flag("")` returns `false` default even when the key exists with a falsey value).
 - [ ] Test BODY setup that needs overlay state (e.g., simulating CUTSCENE) should use `GameManager.push_overlay()` / `pop_overlay()` rather than directly assigning `GameManager.current_overlay`. Direct assignment bypasses overlay lifecycle (pause state, overlay_node creation/free, overlay_state_changed signal), making tests diverge from production behavior. If push_overlay has unwanted side effects for a unit test, create a test helper that wraps the setup/teardown pattern.
+- [ ] Tests that re-implement internal logic (e.g., comma-splitting flag strings, damage formulas) instead of calling the actual handler code paths can pass even when the real handlers regress. Prefer exercising the real code path (e.g., creating an Area2D with metadata and calling the handler) over duplicating the logic inline. (PR #147: required_flags tests duplicated split logic instead of calling _on_dialogue_trigger_entered)
+- [ ] `DirAccess.list_dir_begin()` yields "." and ".." entries. Any recursive directory scan MUST filter these out before recursing, or the function will stack overflow by recursing into the same directory infinitely. Use `if file_name == "." or file_name == "..": continue`. (PR #147: _scan_for_bare_viewport_calls lacked this filter)
+- [ ] Doc comments (`##`) must be placed directly above the function they describe. When inserting new functions above existing documented functions, verify the doc comment still precedes the correct function. (PR #147: _consume_input inserted above _close, stealing its doc comment)
+
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 
 **HOW TO USE:** For each item, write the file:line and your answer. Do NOT
@@ -392,6 +406,11 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] After removing UI elements (sprites, labels): verify no @onready references remain and no .visible toggles reference the removed node
 - [ ] Verify filenames in spec/plan file maps match actual filenames in the repo (PR #131: menu_equipment.gd vs menu_equip.gd caused 5 Copilot comments)
 - [ ] Test assertions must be specific enough to not false-positive on unrelated content (PR #131: 'text = "Config"' matched CommandPanel label too)
+- [ ] After changing item/consumable effects, descriptions, or cure lists: grep ALL city docs (`docs/story/city-*.md`) for shop tables that list item effects. City shop tables duplicate items.md data and become stale when the canonical source changes. (PR #147: Smelling Salts cure list in city-valdris.md diverged from consumables.json)
+- [ ] After changing item availability (shop inventory, available_act, restock_event): grep ALL city docs AND items.md availability columns for stale references. (PR #147: Waystone availability text in items.md didn't match actual shop data)
+
+### Overlay Push Failure Recovery (from Copilot PR #147 gap analysis)
+- [ ] Every `push_overlay()` call that is preceded by a silent `pop_overlay(true)` must handle the case where `push_overlay` returns `false`. A failed push after silent pop leaves the tree paused with `current_overlay = NONE` and no signal, soft-locking input. Restore a usable state: unpause, re-push the prior overlay, or avoid the silent pop pattern. (PR #147: menu_overlay._open_save() used silent pop + push without failure handling)
 
 ### Default State Safety
 - [ ] Boolean state vars (`is_alive`, `is_ready`, etc.) default to the SAFE state (false/inactive), not the active state

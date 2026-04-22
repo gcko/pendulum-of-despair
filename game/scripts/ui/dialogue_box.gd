@@ -86,6 +86,7 @@ func _ready() -> void:
 	_choice_cursor.visible = false
 	_advance_arrow.visible = false
 	_load_text_speed()
+	set_process(false)
 
 
 func _process(delta: float) -> void:
@@ -106,7 +107,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_choice_input(event)
 		return
 	if event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		if _text_complete:
 			_advance()
 		else:
@@ -122,12 +123,14 @@ func show_dialogue(entries: Array) -> void:
 		if not embedded_mode:
 			GameManager.pop_overlay()
 		return
+	set_process(true)
 	_show_entry(_current_index)
 
 
 ## Force-close dialogue (for cutscene override).
 func close() -> void:
 	_entries = []
+	set_process(false)
 	dialogue_finished.emit()
 	if not embedded_mode:
 		GameManager.pop_overlay()
@@ -135,6 +138,7 @@ func close() -> void:
 
 func _show_entry(index: int) -> void:
 	if index >= _entries.size():
+		set_process(false)
 		dialogue_finished.emit()
 		if not embedded_mode:
 			GameManager.pop_overlay()
@@ -234,18 +238,18 @@ func _handle_choice_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_choice_index = (_choice_index + 1) % _choice_count
 		_update_choice_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_choice_index = (_choice_index - 1 + _choice_count) % _choice_count
 		_update_choice_display()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_select_choice()
 	elif event.is_action_pressed("ui_cancel"):
 		# Cancel selects bottom option per ui-design.md Section 12.4
 		_choice_index = _choice_count - 1
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_select_choice()
 
 
@@ -319,6 +323,10 @@ func _fire_sfx(entry: Dictionary) -> void:
 		var sfx_id: String = sfx.get("id", "")
 		if sfx_id != "":
 			sfx_requested.emit(sfx_id)
+
+
+func _consume_input() -> void:
+	InputUtil.consume(self)
 
 
 func _load_text_speed() -> void:

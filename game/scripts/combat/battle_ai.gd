@@ -134,18 +134,18 @@ static func get_corrupted_fenmother_action(
 	state: Node,
 	turn: int,
 	hp_ratio: float,
-	surface_count: int,
+	phase_turns: int,
 	is_diving: bool,
 	spawned_adds: bool,
 	active_adds: int
 ) -> Dictionary:
 	# Dive/surface cycle: surface 3 turns, dive 2 turns
 	if is_diving:
-		if surface_count >= 2:
+		if phase_turns >= 2:
 			return {"type": "skip", "id": "resurface"}
 		return {"type": "skip", "id": "dive"}
 
-	if surface_count >= 3:
+	if phase_turns >= 3:
 		return {"type": "skip", "id": "start_dive"}
 
 	# Phase 2: <= 50% HP

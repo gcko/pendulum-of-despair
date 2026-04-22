@@ -49,14 +49,18 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 	match effect:
 		"restore_hp":
 			var max_hp: int = target.get("max_hp", 1)
-			var value: int = item_data.get("value", 0)
+			var raw_val: Variant = item_data.get("value")
+			var value: int = int(raw_val) if raw_val != null else 0
 			if item_data.has("restore_percent"):
 				var pct: int = item_data.get("restore_percent", 0)
 				value = int(float(max_hp) * float(pct) / 100.0)
 			target["current_hp"] = mini(target.get("current_hp", 0) + value, max_hp)
+			if item_data.get("clears_status", false):
+				target["status_effects"] = [] as Array
 		"restore_mp":
 			var max_mp: int = target.get("max_mp", 1)
-			var value: int = item_data.get("value", 0)
+			var raw_mp: Variant = item_data.get("value")
+			var value: int = int(raw_mp) if raw_mp != null else 0
 			if item_data.has("restore_percent"):
 				var pct: int = item_data.get("restore_percent", 0)
 				value = int(float(max_mp) * float(pct) / 100.0)
@@ -78,7 +82,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 		"revive":
 			if target.get("current_hp", 0) <= 0:
 				var max_hp: int = target.get("max_hp", 1)
-				var revive_pct: int = item_data.get("value", 25)
+				var raw_rev: Variant = item_data.get("value")
+				var revive_pct: int = int(raw_rev) if raw_rev != null else 25
 				var revived_hp: int = int(ceil(float(max_hp) * float(revive_pct) / 100.0))
 				target["current_hp"] = clampi(revived_hp, 1, max_hp)
 		"cure_status":
@@ -91,6 +96,12 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 					if status_name not in cures:
 						remaining.append(s)
 			target["status_effects"] = remaining
+		"buff_atk":
+			push_warning("InventoryHelpers: buff_atk is battle-only (use BattleManager)")
+		"buff_mag":
+			push_warning("InventoryHelpers: buff_mag is battle-only (use BattleManager)")
+		"light_source":
+			EventFlags.set_flag("light_source_active", true)
 		"stat_boost":
 			var stat_key: String = item_data.get("stat", "")
 			var boost: int = item_data.get("value", 0)
@@ -148,9 +159,9 @@ static func calculate_stats_at_level(
 ## Compute derived stats (evasion, magic evasion, crit) from effective stat values.
 static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
 	return {
-		"eva_pct": clampi(spd / 4, 0, 50),
-		"meva_pct": clampi((mdef + spd) / 8, 0, 40),
-		"crit_pct": clampi(lck / 4, 0, 50),
+		"eva_pct": clampi(int(spd / 4), 0, 50),
+		"meva_pct": clampi(int((mdef + spd) / 8), 0, 40),
+		"crit_pct": clampi(int(lck / 4), 0, 50),
 	}
 
 

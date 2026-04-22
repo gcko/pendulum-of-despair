@@ -2,11 +2,13 @@ extends GutTest
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func after_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func test_7b_blocked_without_7a() -> void:
@@ -20,12 +22,7 @@ func test_7d_blocked_with_only_two_flags() -> void:
 	EventFlags.set_flag("scene_7c_aldis", true)
 	EventFlags.set_flag("scene_7c_cordwyn", true)
 	var flags_str: String = "scene_7c_aldis,scene_7c_cordwyn,scene_7c_renn,pendulum_presented"
-	var all_met: bool = true
-	for f: String in flags_str.split(","):
-		if not EventFlags.get_flag(f.strip_edges()):
-			all_met = false
-			break
-	assert_false(all_met, "7d blocked with 2/3 flags")
+	assert_false(EventFlags.check_required_flags(flags_str), "7d blocked with 2/3 flags")
 
 
 func test_7c_any_order_works() -> void:

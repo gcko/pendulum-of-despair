@@ -40,7 +40,7 @@ monitoring = true
 monitorable = false
 metadata/boss_id = "corrupted_fenmother"
 metadata/enemy_ids = ["corrupted_fenmother"]
-metadata/enemy_act = "bosses"
+metadata/enemy_act = "act_i"
 metadata/flag = "fenmother_boss_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/CorruptedFenmother"]
@@ -88,6 +88,7 @@ monitoring = true
 monitorable = false
 metadata/target_map = "overworld"
 metadata/target_spawn = "from_fenmothers_hollow"
+metadata/required_flag = "fenmother_boss_defeated"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/ExitToOverworld"]
 shape = SubResource("Shape_transition")

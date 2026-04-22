@@ -386,11 +386,10 @@ Scene 7c dialogues use the existing NPC priority-stack condition system:
 - Otherwise → show ambient dialogue
 
 The `party_has()` conditional branches within Scene 7c entries use the
-existing condition evaluator in `npc.gd` (stubbed — returns false until
-GameManager.party exists). Since PartyState tracks party members and
-the party is always full by Scene 7, we need to verify `party_has()`
-works with PartyState. If it's still stubbed, wire it to
-`PartyState.has_member()`.
+existing condition evaluator in `npc.gd`, which is implemented via
+`PartyState.has_member()`. Since PartyState tracks party members and
+the party is always full by Scene 7, `party_has()` will correctly
+resolve all conditional branches.
 
 ---
 
@@ -699,7 +698,7 @@ The Anchor & Oar is getting a staircase transition to the upper floor:
 7. Lower Ward modifications (new transitions, shop rename)
 8. Anchor & Oar modifications (staircase to upper floor)
 9. Scene 7 trigger wiring (flags, conditions, cutscene)
-10. `party_has()` wiring to PartyState (if still stubbed)
+10. `party_has()` wiring to PartyState (already implemented)
 11. Unit tests (districts, shops, dialogue, flags)
 12. Integration tests (navigation, NPCs, Scene 7 e2e)
 13. Regression tests (Lower Ward, Anchor & Oar)
@@ -750,7 +749,7 @@ The Anchor & Oar is getting a staircase transition to the upper floor:
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| `party_has()` still stubbed in npc.gd | Scene 7c conditional branches won't show | Wire to PartyState.has_member() as part of this gap |
+| `party_has()` implementation issues | Scene 7c conditional branches won't show | Already wired to PartyState.has_member() — verify in integration tests |
 | Multi-flag condition for 7d trigger | No existing precedent for AND conditions on Area2D triggers | May need small exploration.gd enhancement for multi-flag triggers |
 | Shop split breaks existing saves | Players with save data referencing `valdris_crown_armorer` | SaveManager should handle missing shop_id gracefully (it's overlay state, not persisted) |
 | Large number of new dialogue files | Risk of typos, wrong speaker tags, broken conditions | Dialogue unit tests validate every file structurally |

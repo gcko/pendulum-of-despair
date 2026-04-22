@@ -64,7 +64,8 @@ func hide_menu() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _state == MenuState.HIDDEN:
+	# Fix: only consume input when the menu is both active and visible
+	if _state == MenuState.HIDDEN or not visible:
 		return
 
 	var handled: bool = false
@@ -77,7 +78,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			handled = _handle_target_input(event)
 
 	if handled:
-		get_viewport().set_input_as_handled()
+		InputUtil.consume(self)
 
 
 func _handle_command_input(event: InputEvent) -> bool:

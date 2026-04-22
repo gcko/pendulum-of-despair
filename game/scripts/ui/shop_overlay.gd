@@ -14,7 +14,7 @@ const COLOR_SELECTED: Color = Color("#ffff88")
 ## Normal row color.
 const COLOR_NORMAL: Color = Color("#ccddff")
 
-## Resolved inventory: array of {item_id, name, buy_price}.
+## Resolved inventory: array of {item_id, name, buy_price, stock_limit, purchased}.
 var _inventory: Array = []
 ## Set of equipment item_ids (buy routes to owned_equipment, not consumables).
 var _equipment_ids: Dictionary = {}
@@ -33,6 +33,7 @@ var _showing_feedback: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process(false)
 	var shop_id: String = GameManager.transition_data.get("shop_id", "")
 	_load_shop(shop_id)
 	_build_list()
@@ -47,28 +48,29 @@ func _process(delta: float) -> void:
 	if _feedback_timer <= 0.0:
 		_showing_feedback = false
 		_desc_label.text = ""
+		set_process(false)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _inventory.is_empty():
 		if event.is_action_pressed("ui_cancel"):
-			get_viewport().set_input_as_handled()
+			_consume_input()
 			_close()
 		return
 
 	if event.is_action_pressed("ui_up"):
 		_selected = (_selected - 1 + _inventory.size()) % _inventory.size()
 		_update_selection()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_down"):
 		_selected = (_selected + 1) % _inventory.size()
 		_update_selection()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
 		_try_buy()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_close()
 
 
@@ -93,12 +95,25 @@ func _load_shop(shop_id: String) -> void:
 		var req_act: int = entry.get("available_act", 1)
 		if req_act > _get_current_act():
 			continue
+		var restock_val: Variant = entry.get("restock_event", null)
+		if restock_val is String and not (restock_val as String).is_empty():
+			if not EventFlags.get_flag(restock_val as String):
+				continue
 		var item_id: String = entry.get("item_id", "")
 		var buy_price: int = entry.get("buy_price", 0)
 		if item_id == "":
 			continue
+		var stock_val: Variant = entry.get("stock_limit", null)
+		var stock_limit: int = int(stock_val) if stock_val is int or stock_val is float else -1
 		var display_name: String = name_map.get(item_id, item_id)
-		_inventory.append({"item_id": item_id, "name": display_name, "buy_price": buy_price})
+		var shop_entry: Dictionary = {
+			"item_id": item_id,
+			"name": display_name,
+			"buy_price": buy_price,
+			"stock_limit": stock_limit,
+			"purchased": 0,
+		}
+		_inventory.append(shop_entry)
 
 
 ## Build item_id -> name map from all known data sources.
@@ -138,7 +153,7 @@ func _build_list() -> void:
 
 ## Highlight selected row and clear stale feedback.
 func _update_selection() -> void:
-	var children: Array = _item_list_container.get_children()
+	var children: Array[Node] = _item_list_container.get_children()
 	for i: int in range(children.size()):
 		var lbl: Node = children[i]
 		if lbl is Label:
@@ -150,6 +165,10 @@ func _try_buy() -> void:
 	if _inventory.is_empty():
 		return
 	var entry: Dictionary = _inventory[_selected]
+	var limit: int = entry.get("stock_limit", -1)
+	if limit >= 0 and entry.get("purchased", 0) >= limit:
+		_show_feedback("Sold out.")
+		return
 	var price: int = entry["buy_price"]
 	if PartyState.spend_gold(price):
 		var iid: String = entry["item_id"]
@@ -157,8 +176,12 @@ func _try_buy() -> void:
 			PartyState.add_equipment(iid)
 		else:
 			PartyState.add_item(iid, 1)
+		entry["purchased"] = entry.get("purchased", 0) + 1
 		_refresh_gold()
-		_show_feedback("Purchased!")
+		if limit >= 0 and entry.get("purchased", 0) >= limit:
+			_show_feedback("Purchased! (Sold out)")
+		else:
+			_show_feedback("Purchased!")
 	else:
 		_show_feedback("Not enough gold.")
 
@@ -171,17 +194,25 @@ func _show_feedback(msg: String) -> void:
 	_desc_label.text = msg
 	_feedback_timer = FEEDBACK_CLEAR_DELAY
 	_showing_feedback = true
+	set_process(true)
 
 
 ## Determine current act from event flags progression.
+## Returns 1 (Act I), 2 (Act II or Interlude), 3 (Act III).
+## Interlude-only items should use restock_event gating, not available_act.
 func _get_current_act() -> int:
 	if EventFlags.get_flag("act_iii_started"):
 		return 3
-	if EventFlags.get_flag("act_ii_started"):
+	if EventFlags.get_flag("interlude_start") or EventFlags.get_flag("act_ii_started"):
 		return 2
 	return 1
 
 
-## Close the overlay. MUST be last — scene teardown follows immediately.
+func _consume_input() -> void:
+	InputUtil.consume(self)
+
+
+## Close the overlay. MUST be last -- scene teardown follows immediately.
+## WARNING: Do not add code after pop_overlay() in this method.
 func _close() -> void:
 	GameManager.pop_overlay()

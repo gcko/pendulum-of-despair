@@ -13,13 +13,6 @@
         "restock_event": null
       },
       {
-        "item_id": "knights_edge",
-        "buy_price": 500,
-        "available_act": 1,
-        "stock_limit": null,
-        "restock_event": null
-      },
-      {
         "item_id": "ley_wand",
         "buy_price": 250,
         "available_act": 1,
@@ -55,25 +48,11 @@
         "restock_event": "diplomatic_mission_start"
       },
       {
-        "item_id": "glyph_staff",
-        "buy_price": 500,
-        "available_act": 2,
+        "item_id": "composite_shortbow",
+        "buy_price": 450,
+        "available_act": 1,
         "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
-      },
-      {
-        "item_id": "pickpockets_blade",
-        "buy_price": 400,
-        "available_act": 2,
-        "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
-      },
-      {
-        "item_id": "pipe_hammer",
-        "buy_price": 500,
-        "available_act": 2,
-        "stock_limit": null,
-        "restock_event": "diplomatic_mission_start"
+        "restock_event": null
       }
     ]
   }

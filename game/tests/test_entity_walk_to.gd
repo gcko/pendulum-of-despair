@@ -20,7 +20,7 @@ func _create_npc() -> Node2D:
 
 
 func before_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 
 
 func test_player_walk_to_emits_walk_complete() -> void:

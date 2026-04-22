@@ -7,21 +7,16 @@ var _shop: Node
 
 
 func before_each() -> void:
-	PartyState.inventory = {
-		"consumables": {} as Dictionary,
-		"materials": {} as Dictionary,
-		"key_items": [] as Array[String],
-	}
-	PartyState.owned_equipment = []
-	PartyState.gold = 0
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func after_each() -> void:
 	if _shop != null:
 		_shop.queue_free()
 		_shop = null
-	GameManager.transition_data = {}
+	TestHelpers.reset_game_state()
+	DataManager.clear_cache()
 
 
 func _create_shop(shop_id: String) -> Node:
@@ -100,3 +95,56 @@ func test_navigation_wraps() -> void:
 	for i: int in range(item_count):
 		shop._selected = (shop._selected + 1) % shop._inventory.size()
 	assert_eq(shop._selected, 0, "selection should wrap back to 0")
+
+
+# --- Restock event filtering ---
+
+
+func test_restock_event_filters_locked_items() -> void:
+	PartyState.gold = 10000
+	# Satisfy available_act so the ONLY filter is restock_event
+	EventFlags.set_flag("act_ii_started", true)
+	# aelhart_general has items gated by restock_event: "ember_vein_complete"
+	# Without the flag set, those items should be filtered out
+	EventFlags.set_flag("ember_vein_complete", false)
+	var shop: Node = _create_shop("aelhart_general")
+	var has_gated_item: bool = false
+	for entry: Dictionary in shop._inventory:
+		# hi_potion is gated by ember_vein_complete in aelhart_general
+		if entry.get("item_id", "") == "hi_potion":
+			has_gated_item = true
+	assert_false(has_gated_item, "restock-gated items should not appear when flag is unset")
+
+
+func test_restock_event_shows_items_when_flag_set() -> void:
+	PartyState.gold = 10000
+	EventFlags.set_flag("ember_vein_complete", true)
+	EventFlags.set_flag("act_ii_started", true)  # hi_potion also requires act 2
+	var shop: Node = _create_shop("aelhart_general")
+	var has_gated_item: bool = false
+	for entry: Dictionary in shop._inventory:
+		if entry.get("item_id", "") == "hi_potion":
+			has_gated_item = true
+	assert_true(has_gated_item, "restock-gated items should appear when flag is set")
+
+
+# --- Stock limit ---
+
+
+func test_stock_limit_prevents_excess_purchases() -> void:
+	PartyState.gold = 100000
+	# Create shop and find an item — buy it more than stock_limit allows
+	var shop: Node = _create_shop("aelhart_general")
+	if shop._inventory.is_empty():
+		pass_test("no items to test")
+		return
+	# Manually set a stock_limit on the first item for testing
+	shop._inventory[0]["stock_limit"] = 2
+	shop._inventory[0]["purchased"] = 0
+	shop._selected = 0
+	shop._try_buy()
+	shop._try_buy()
+	# Third buy should fail
+	var gold_before: int = PartyState.gold
+	shop._try_buy()
+	assert_eq(PartyState.gold, gold_before, "gold should not decrease when stock limit reached")

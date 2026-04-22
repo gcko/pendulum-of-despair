@@ -4,13 +4,13 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 # --- Scene Existence ---
