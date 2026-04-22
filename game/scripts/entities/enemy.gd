@@ -130,7 +130,8 @@ static func _element_in_list(element: String, list: Array) -> bool:
 
 
 ## Get the custom multiplier for an element from a mixed-format array.
-## Returns the object multiplier if found, otherwise the provided default.
+## Returns the object multiplier if found, otherwise -1.0 (not in list).
+## Uses -1.0 as sentinel because legitimate multipliers are >= 0.0.
 static func _get_list_multiplier(element: String, list: Array, default_mult: float) -> float:
 	for entry: Variant in list:
 		if entry is String and entry == element:
@@ -139,7 +140,7 @@ static func _get_list_multiplier(element: String, list: Array, default_mult: flo
 			var d: Dictionary = entry as Dictionary
 			if d.get("element", "") == element:
 				return d.get("multiplier", default_mult)
-	return 0.0  # not in list
+	return -1.0  # not in list
 
 
 ## Check if the enemy is weak to an element.
@@ -165,17 +166,17 @@ func absorbs(element: String) -> bool:
 ## Get the damage multiplier for an element.
 ## Supports both string arrays (uses default 0.75/1.5) and object arrays
 ## with custom multipliers (e.g., {"element": "storm", "multiplier": 1.25}).
-## Returns: -1.0 (absorb), 0.0 (immune), <1.0 (resist), >1.0 (weak), 1.0 (neutral).
+## Returns: -1.0 (absorb), 0.0 (immune), 0.0-0.99 (resist), >1.0 (weak), 1.0 (neutral).
 func get_element_multiplier(element: String) -> float:
 	if absorbs(element):
 		return -1.0
 	if is_immune_to(element):
 		return 0.0
 	var resist_mult: float = _get_list_multiplier(element, enemy_data.get("resistances", []), 0.75)
-	if resist_mult > 0.0:
+	if resist_mult >= 0.0:
 		return resist_mult
 	var weak_mult: float = _get_list_multiplier(element, enemy_data.get("weaknesses", []), 1.5)
-	if weak_mult > 0.0:
+	if weak_mult >= 0.0:
 		return weak_mult
 	return 1.0
 

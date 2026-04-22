@@ -375,9 +375,7 @@ func _is_command_disabled(index: int) -> bool:
 
 
 func _consume_input() -> void:
-	var vp: Viewport = get_viewport()
-	if vp != null:
-		vp.set_input_as_handled()
+	InputUtil.consume(self)
 
 
 func _format_number(value: int) -> String:

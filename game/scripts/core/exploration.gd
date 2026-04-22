@@ -6,8 +6,6 @@ signal map_changed(map_id: String)
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
 const FADE_DURATION: float = 0.3
-const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
-
 var _current_map_id: String = ""
 var _current_map: Node2D = null
 var _player: Node2D = null
@@ -22,22 +20,17 @@ var _current_floor_id: String = ""
 var _cleansing: CleansingSequence = null
 var _key_item_chest_ids: Dictionary = {}
 var _equipment_chest_ids: Dictionary = {}
-var _in_auto_walk: bool = false
-var _auto_walk_tween: Tween = null
-var _arrival_tween: Tween = null
 var _in_cutscene: bool = false
 var _cutscene_handler: CutsceneHandler = null
 var _entity_manager: ExplorationEntityManager = null
 var _zone_handler: ExplorationZoneHandler = null
+var _auto_seq: ExplorationAutoSequence = null
 ## Maps character_id/npc_id to entity Node for cutscene choreography.
 var _entities: Dictionary = {}
 ## Pending cutscene data (set by trigger, consumed after map load).
 var _pending_cutscene: Dictionary = {}
 ## Return destination after a cutscene map finishes.
 var _cutscene_return: Dictionary = {}
-## Tracks the bound Callable for _on_caden_dialogue_closed so _exit_tree
-## can disconnect it (bound Callables are distinct from the base method).
-var _caden_dialogue_callable: Callable = Callable()
 
 @onready var _camera: Camera2D = $Camera2D
 @onready var _map_container: Node2D = $CurrentMap
@@ -65,12 +58,7 @@ func _exit_tree() -> void:
 func _disconnect_pending_signals() -> void:
 	if GameManager.overlay_state_changed.is_connected(_on_dialogue_closed_check_party):
 		GameManager.overlay_state_changed.disconnect(_on_dialogue_closed_check_party)
-	if (
-		_caden_dialogue_callable.is_valid()
-		and GameManager.overlay_state_changed.is_connected(_caden_dialogue_callable)
-	):
-		GameManager.overlay_state_changed.disconnect(_caden_dialogue_callable)
-		_caden_dialogue_callable = Callable()
+	_get_auto_seq().disconnect_pending_signals()
 
 
 func _process(_delta: float) -> void:
@@ -81,7 +69,7 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if _player == null or _transitioning or _in_auto_walk or _in_cutscene:
+	if _player == null or _transitioning or _get_auto_seq().in_auto_walk or _in_cutscene:
 		return
 	var current_tile: Vector2i = Vector2i(_player.position) / 16
 	if current_tile == _last_player_tile:
@@ -91,7 +79,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _transitioning or _in_auto_walk or _in_cutscene:
+	if _transitioning or _get_auto_seq().in_auto_walk or _in_cutscene:
 		return
 	if event.is_action_pressed("ui_menu"):
 		if _player != null and not _player.is_input_enabled():
@@ -334,7 +322,7 @@ func on_save_point_activated(_save_point_id: String) -> void:
 
 
 func on_save_point_entered(_save_point_id: String) -> void:
-	if _transitioning or _in_cutscene or _in_auto_walk:
+	if _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
 		return
 	AudioManager.play_sfx("save_point_proximity")
 
@@ -381,13 +369,13 @@ func on_interaction_message(text: String) -> void:
 
 
 func on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
+	if body != _player or _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
 		return
 	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene or _in_auto_walk:
+	if body != _player or _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
 		return
 	var flag: String = area.get_meta("flag", "")
 	if not flag.is_empty() and EventFlags.get_flag(flag):
@@ -461,7 +449,7 @@ func _get_party_avg_level() -> int:
 
 
 func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning or body != _player or _in_cutscene or _in_auto_walk:
+	if _transitioning or body != _player or _in_cutscene or _get_auto_seq().in_auto_walk:
 		return
 	var req_flag: String = area.get_meta("required_flag", "")
 	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
@@ -474,15 +462,8 @@ func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
 func _transition_to_map(target_map: String, target_spawn: String) -> void:
 	_danger_counter = 0
 	_transitioning = true
-	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
-		_auto_walk_tween.kill()
-		_auto_walk_tween = null
-		_in_auto_walk = false
-		if _player != null:
-			_player.set_input_enabled(true)
-	if _arrival_tween != null and _arrival_tween.is_valid():
-		_arrival_tween.kill()
-		_arrival_tween = null
+	_get_auto_seq().kill_auto_walk_tween()
+	_get_auto_seq().kill_arrival_tween()
 	if _flash_tween != null and _flash_tween.is_valid():
 		_flash_tween.kill()
 		_flash_tween = null
@@ -519,123 +500,23 @@ func _abort_transition() -> void:
 func _end_transition() -> void:
 	_fade_rect.visible = false
 	_transitioning = false
-	if _player != null and not _in_cutscene and not _in_auto_walk:
+	if _player != null and not _in_cutscene and not _get_auto_seq().in_auto_walk:
 		_player.set_input_enabled(true)
 
 
-# ---------- Auto-walk and auto-sequences ----------
+# ---------- Auto-walk and auto-sequences (delegated to ExplorationAutoSequence) ----------
 
 
 func _start_auto_walk() -> void:
-	if _player == null or _current_map == null:
-		return
-	_in_auto_walk = true
-	_player.set_input_enabled(false)
-	var transitions: Node = _current_map.get_node_or_null("Transitions")
-	if transitions == null:
-		_in_auto_walk = false
-		_player.set_input_enabled(true)
-		return
-	var target_pos: Vector2 = _player.position
-	for child: Node in transitions.get_children():
-		if child is Area2D:
-			target_pos = child.position
-			break
-	var direction: Vector2 = (target_pos - _player.position).normalized()
-	if absf(direction.x) > absf(direction.y):
-		_player.play_animation("walk_east" if direction.x > 0 else "walk_west")
-	else:
-		_player.play_animation("walk_south" if direction.y > 0 else "walk_north")
-	var distance: float = _player.position.distance_to(target_pos)
-	var duration: float = distance / 80.0
-	if _auto_walk_tween != null and _auto_walk_tween.is_valid():
-		_auto_walk_tween.kill()
-	_auto_walk_tween = create_tween()
-	_auto_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_auto_walk_tween.tween_property(_player, "position", target_pos, duration)
-	_auto_walk_tween.tween_callback(_end_auto_walk)
+	_get_auto_seq().start_auto_walk()
 
 
 func _end_auto_walk() -> void:
-	_in_auto_walk = false
-	if _player != null:
-		_player.position = _player.position.round()
-		if not _in_cutscene:
-			_player.set_input_enabled(true)
+	_get_auto_seq().end_auto_walk()
 
 
 func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
-	match sequence_id:
-		"caden_binding":
-			_run_caden_binding(completion_flag)
-		_:
-			push_warning("Exploration: Unknown auto_sequence '%s'" % sequence_id)
-
-
-func _run_caden_binding(completion_flag: String) -> void:
-	await get_tree().create_timer(0.5).timeout
-	if not is_inside_tree():
-		return
-	var spawn: Node2D = _current_map.get_node_or_null("CadenSpawnPoint")
-	var center: Vector2 = Vector2(128, 80)
-	var start_pos: Vector2 = spawn.position if spawn != null else Vector2(288, 80)
-	var caden: Node2D = NPC_SCENE.instantiate()
-	var entities: Node = _current_map.get_node_or_null("Entities")
-	if entities != null:
-		entities.add_child(caden)
-	else:
-		_current_map.add_child(caden)
-	caden.position = start_pos
-	caden.modulate.a = 0.0
-	caden.initialize("caden_duskfen")
-	if _arrival_tween != null and _arrival_tween.is_valid():
-		_arrival_tween.kill()
-	_arrival_tween = create_tween()
-	_arrival_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_arrival_tween.set_parallel(true)
-	_arrival_tween.tween_property(caden, "modulate:a", 1.0, 0.5)
-	_arrival_tween.tween_property(caden, "position", center, 1.5)
-	_arrival_tween.chain().tween_callback(_caden_start_dialogue.bind(caden, completion_flag))
-
-
-func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
-	var scene_data: Dictionary = DataManager.load_dialogue("caden_binding")
-	var raw_entries: Array = scene_data.get("entries", [])
-	var entries: Array[Dictionary] = []
-	for e: Variant in raw_entries:
-		if e is Dictionary:
-			entries.append(e as Dictionary)
-	if entries.is_empty():
-		_caden_complete(caden, completion_flag)
-		return
-	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		GameManager.overlay_node.show_dialogue(entries)
-		_caden_dialogue_callable = _on_caden_dialogue_closed.bind(caden, completion_flag)
-		GameManager.overlay_state_changed.connect(_caden_dialogue_callable, CONNECT_ONE_SHOT)
-	else:
-		_caden_complete(caden, completion_flag)
-
-
-func _on_caden_dialogue_closed(
-	state: GameManager.OverlayState, caden: Node2D, completion_flag: String
-) -> void:
-	if state != GameManager.OverlayState.NONE:
-		_caden_dialogue_callable = _on_caden_dialogue_closed.bind(caden, completion_flag)
-		GameManager.overlay_state_changed.connect(_caden_dialogue_callable, CONNECT_ONE_SHOT)
-		return
-	_caden_dialogue_callable = Callable()
-	_caden_complete(caden, completion_flag)
-
-
-func _caden_complete(caden: Node2D, completion_flag: String) -> void:
-	PartyState.add_key_item("fenmothers_blessing")
-	flash_location_name("Received Fenmother's Blessing!")
-	EventFlags.set_flag(completion_flag, true)
-	EventFlags.set_flag("duskfen_alliance", true)
-	caden.queue_free()
-	var post_npc: Node = _current_map.get_node_or_null("Entities/CadenPostEvent")
-	if post_npc != null:
-		post_npc.visible = true
+	_get_auto_seq().run_auto_sequence(sequence_id, completion_flag)
 
 
 # ---------- Cutscene overlay integration (delegated to CutsceneHandler) ----------
@@ -669,6 +550,12 @@ func _get_zone_handler() -> ExplorationZoneHandler:
 	if _zone_handler == null:
 		_zone_handler = ExplorationZoneHandler.new(self)
 	return _zone_handler
+
+
+func _get_auto_seq() -> ExplorationAutoSequence:
+	if _auto_seq == null:
+		_auto_seq = ExplorationAutoSequence.new(self)
+	return _auto_seq
 
 
 # ---------- Public accessors for delegated handlers ----------
@@ -707,7 +594,7 @@ func get_fade_rect() -> ColorRect:
 
 
 func is_in_auto_walk() -> bool:
-	return _in_auto_walk
+	return _get_auto_seq().in_auto_walk
 
 
 func is_in_cutscene() -> bool:

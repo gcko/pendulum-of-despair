@@ -326,9 +326,7 @@ func _fire_sfx(entry: Dictionary) -> void:
 
 
 func _consume_input() -> void:
-	var vp: Viewport = get_viewport()
-	if vp != null:
-		vp.set_input_as_handled()
+	InputUtil.consume(self)
 
 
 func _load_text_speed() -> void:

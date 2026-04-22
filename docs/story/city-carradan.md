@@ -190,7 +190,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 | Potion | Consumable | 50 | Yes | Yes | Restore 100 HP |
 | Sleeping Bag | Consumable | 250 | Yes | Yes | Rest heal outside dungeons |
 | Smoke Bomb | Consumable | 100 | Yes | No | Flee from non-boss battle |
-| Arcanite Torch | Tool | 150 | Yes | Yes | Illuminates dark areas |
+| Ley-Lantern | Tool | 60 | Yes | Yes | Illuminates dark areas |
 | Surplus Helm | Armor | 600 | Yes | Yes | Basic head protection |
 | Surplus Shield | Armor | 800 | Yes | Yes | +DEF, military issue |
 
@@ -864,7 +864,7 @@ KEY:  ooo = Millglow pit (glowing)   |P| = pumping station
 | Potion | Consumable | 100 | **Double normal price** -- company markup |
 | Extraction Mask | Accessory | 600 | Reduces ley-exposure damage; workers cannot afford this |
 | Tremor Tonic | Consumable | 200 | Temporarily stops tremors; does not cure |
-| Repair Kit | Consumable | 150 | Equipment maintenance |
+| Repair Kit | Material | 150 | Equipment maintenance |
 | Pickaxe | Weapon | 400 | Worker's tool, low ATK |
 | Work Lamp | Tool | 250 | Required for Ley Line Depths |
 | Ley-Shielded Gloves | Accessory | 800 | +resist ley exposure; management price |
@@ -1002,9 +1002,9 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 |------|------|---------------|--------|-----------|-------|
 | Forgewright Blade | Weapon | 1400 | Yes | Yes | Standard issue |
 | Iron-Brass Shield | Armor | 1000 | Yes | Yes | Compact standard |
-| Smoke Bomb | Consumable | 100 | Yes | Yes | AoE blind |
-| Flash Capsule | Consumable | 150 | Yes | Yes | Stun chance |
-| Signal Flare | Consumable | 60 | Yes | No | Overworld summon |
+| Smoke Bomb | Consumable | 100 | Yes | Yes | Flee from non-boss battle |
+| Chronos Dust | Consumable | 400 | Yes | Yes | Cure Slow, grant Haste (1 turn) |
+| Ley-Lantern | Tool | 60 | Yes | No | Light source for dungeons |
 
 ### Points of Interest
 
@@ -1228,7 +1228,7 @@ No formal shops. The Supply Shed contains lootable crates:
 |------|------|-------|
 | Iron Short Sword | Weapon | Basic starting upgrade |
 | Compact Ration x3 | Consumable | HP restore |
-| Repair Kit | Consumable | Equipment condition |
+| Repair Kit | Material | Equipment condition |
 | Mining Lamp | Tool | Required for Ember Vein |
 | Arcanite Flare x2 | Consumable | Lights dark areas for 30 seconds |
 | Survey Tags | Key item | Lore: Compact mining claims on Wilds territory |

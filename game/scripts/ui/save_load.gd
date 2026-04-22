@@ -63,6 +63,13 @@ func _ready() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
 
 
+func _exit_tree() -> void:
+	# Safety net: clear the load guard when this overlay is freed (normal path
+	# after the deferred change_core_state succeeds).  Without this, a failed
+	# deferred call would leave _load_in_progress stuck permanently.
+	_load_in_progress = false
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	match _sub_state:
 		SubState.SAVE_POINT_MENU:
@@ -329,9 +336,7 @@ func _reload_previews() -> void:
 
 
 func _consume_input() -> void:
-	var vp: Viewport = get_viewport()
-	if vp != null:
-		vp.set_input_as_handled()
+	InputUtil.consume(self)
 
 
 func _find_consumable(item_id: String) -> Dictionary:

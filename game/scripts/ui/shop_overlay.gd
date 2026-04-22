@@ -209,9 +209,7 @@ func _get_current_act() -> int:
 
 
 func _consume_input() -> void:
-	var vp: Viewport = get_viewport()
-	if vp != null:
-		vp.set_input_as_handled()
+	InputUtil.consume(self)
 
 
 ## Close the overlay. MUST be last -- scene teardown follows immediately.
