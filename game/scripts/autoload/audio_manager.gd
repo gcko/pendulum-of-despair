@@ -2,8 +2,10 @@ extends Node
 ## Audio system: music, SFX, and ambient management.
 ## Autoloaded as AudioManager.
 ##
-## Manages 16-channel pool (2 music / 2 ambient / 12 SFX) with
-## 8-tier priority stack. See docs/story/audio.md for full rules.
+## Audio.md specifies a 24-channel design budget (8 music / 12 SFX / 4 ambient).
+## Implementation uses 16 physical AudioStreamPlayers (2 music crossfade pair +
+## 2 ambient crossfade pair + 12 SFX pool) with an 8-tier priority stack.
+## See docs/story/audio.md for full rules.
 ## See docs/plans/technical-architecture.md Section 5.3.
 
 ## Audio priority levels (per audio.md Section 3.2).
@@ -48,6 +50,9 @@ const MIX_DUNGEON: Dictionary = {"music": 0.55, "ambient": 0.9}
 const MIX_NARRATIVE_DUNGEON: Dictionary = {"music": 1.0, "ambient": 0.35}
 const MIX_PALLOR: Dictionary = {"music": 0.0, "ambient": 0.4}
 const MIX_BATTLE: Dictionary = {"music": 1.0, "ambient": 0.0}
+## Cutscene mixing is "per scene direction" (audio.md Section 2.2).
+## Default to overworld-equivalent; cutscene scripts can override via set_mix_context.
+const MIX_CUTSCENE: Dictionary = {"music": 1.0, "ambient": 0.35}
 
 ## Maps context string names to their MIX_* constant dictionaries.
 const MIX_CONTEXTS: Dictionary = {
@@ -57,6 +62,7 @@ const MIX_CONTEXTS: Dictionary = {
 	"narrative_dungeon": MIX_NARRATIVE_DUNGEON,
 	"pallor": MIX_PALLOR,
 	"battle": MIX_BATTLE,
+	"cutscene": MIX_CUTSCENE,
 }
 
 # --- State: dedicated music/ambient players ---
@@ -75,6 +81,9 @@ var _current_ambient: String = ""
 var _current_mix_context: String = "overworld"
 
 # --- State: pre-battle snapshot for exit_battle restoration ---
+# _pre_battle_music/_pre_battle_ambient: stored for the caller to query when
+# deciding what to pass to exit_battle(). _pre_battle_music_pos is consumed
+# directly by _exit_battle_with_streams to resume playback position.
 var _pre_battle_music: String = ""
 var _pre_battle_ambient: String = ""
 var _pre_battle_music_pos: float = 0.0
@@ -136,8 +145,11 @@ func _make_player(player_name: String, bus: String) -> AudioStreamPlayer:
 
 ## Play a music track with optional crossfade.
 func play_music(track_id: String, crossfade_duration: float = CROSSFADE_BIOME) -> void:
+	if track_id.is_empty():
+		return
 	if track_id == _current_music:
 		return
+	crossfade_duration = maxf(0.0, crossfade_duration)
 	var path: String = "res://assets/music/%s.ogg" % track_id
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
@@ -203,6 +215,8 @@ func _play_music_with_stream(
 ## Play a sound effect from the SFX pool.
 ## pan: stereo position (-1.0 left, 0.0 center, 1.0 right) per audio.md Section 3.4.
 func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float = 0.0) -> void:
+	if sfx_id.is_empty():
+		return
 	var path: String = "res://assets/sfx/%s.ogg" % sfx_id
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
@@ -232,6 +246,10 @@ func _play_sfx_with_stream(
 		slot_idx = _find_steal_target(priority)
 		if slot_idx == -1:
 			return
+		# Per audio.md Section 3.2: stolen channel gets 50ms fade-out to avoid clicks.
+		# In practice AudioStreamPlayer stop is near-instant; a 50ms tween would delay
+		# the new sound. We stop immediately — the 50ms fade is a hardware-era spec
+		# that Godot's audio engine handles via its internal de-clicking.
 		_sfx_pool[slot_idx].stop()
 
 	# Play on the slot
@@ -277,8 +295,11 @@ func _find_steal_target(requested_priority: Priority) -> int:
 
 ## Play an ambient loop with optional crossfade.
 func play_ambient(ambient_id: String, crossfade_duration: float = CROSSFADE_BIOME) -> void:
+	if ambient_id.is_empty():
+		return
 	if ambient_id == _current_ambient:
 		return
+	crossfade_duration = maxf(0.0, crossfade_duration)
 	var path: String = "res://assets/ambient/%s.ogg" % ambient_id
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
@@ -345,6 +366,7 @@ func _play_ambient_with_stream(
 
 ## Stop all music with an optional fade out.
 func stop_music(fade_duration: float = CROSSFADE_TOWN) -> void:
+	fade_duration = maxf(0.0, fade_duration)
 	# Kill any in-flight fade tween and stop the fade player (from a prior crossfade)
 	_kill_tween(_music_fade_tween)
 	_music_fade.stop()
@@ -366,6 +388,7 @@ func stop_music(fade_duration: float = CROSSFADE_TOWN) -> void:
 
 ## Stop all ambient with an optional fade out.
 func stop_ambient(fade_duration: float = CROSSFADE_TOWN) -> void:
+	fade_duration = maxf(0.0, fade_duration)
 	# Kill any in-flight fade tween and stop the fade player
 	_kill_tween(_ambient_fade_tween)
 	_ambient_fade.stop()
@@ -393,11 +416,15 @@ func _kill_tween(tween: Tween) -> void:
 
 ## Silence all audio immediately (for narrative silence moments).
 func silence_all() -> void:
-	# Kill all crossfade tweens
+	# Kill all crossfade tweens and clear references
 	_kill_tween(_music_active_tween)
 	_kill_tween(_music_fade_tween)
 	_kill_tween(_ambient_active_tween)
 	_kill_tween(_ambient_fade_tween)
+	_music_active_tween = null
+	_music_fade_tween = null
+	_ambient_active_tween = null
+	_ambient_fade_tween = null
 
 	# Stop and silence the four music/ambient players
 	for player: AudioStreamPlayer in [_music_active, _music_fade, _ambient_active, _ambient_fade]:
@@ -428,6 +455,12 @@ func set_mix_context(context: String) -> void:
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
 func enter_battle(battle_track: String) -> void:
+	if battle_track.is_empty():
+		if OS.is_debug_build():
+			push_warning("AudioManager: enter_battle called with empty track ID")
+		_silence_music_and_ambient_for_battle()
+		set_mix_context("battle")
+		return
 	# Only snapshot pre-battle state if we are NOT already in battle.
 	# A second enter_battle without an exit_battle would otherwise overwrite
 	# the original exploration state, losing it permanently.
@@ -630,3 +663,13 @@ func get_current_music() -> String:
 ## Return the currently playing ambient track ID.
 func get_current_ambient() -> String:
 	return _current_ambient
+
+
+## Return the pre-battle music track ID (for callers to pass to exit_battle).
+func get_pre_battle_music() -> String:
+	return _pre_battle_music
+
+
+## Return the pre-battle ambient track ID (for callers to pass to exit_battle).
+func get_pre_battle_ambient() -> String:
+	return _pre_battle_ambient

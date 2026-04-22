@@ -1306,7 +1306,7 @@ Update the total:
 
 Add to the Progress Tracking table:
 ```
-| 2026-04-22 | 3.8 Audio Integration | NOT STARTED → COMPLETE. 16-channel AudioManager: dual-track crossfade (music + ambient), 12-slot SFX pool with 8-tier priority stealing, 3 AudioBuses (Music/SFX/Ambient) with context-aware mixing model, battle enter/exit with state resume. Wired cutscene_handler, exploration, and config screen. 68 placeholder .ogg files (silent). 11 GUT tests. | — |
+| 2026-04-22 | 3.8 Audio Integration | NOT STARTED → COMPLETE. 16-player AudioManager (24-channel design budget): dual-track crossfade (music + ambient), 12-slot SFX pool with 8-tier priority stealing, 7 mix contexts, 3 AudioBuses (Music/SFX/Ambient) with context-aware mixing model, battle enter/exit with state resume. Wired cutscene_handler, exploration, and config screen. 68 placeholder .ogg files (silent). 49 GUT tests. | — |
 ```
 
 - [ ] **Step 4: Commit**

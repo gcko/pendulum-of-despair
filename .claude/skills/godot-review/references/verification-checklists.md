@@ -331,7 +331,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] OGG Vorbis format
 - [ ] 44.1 kHz sample rate
 - [ ] 16-bit depth
-- [ ] Naming: `{category}_{name}.ogg`
+- [ ] Naming: `{category}/{name}.ogg` (e.g., `sfx/hit_physical.ogg`)
 
 ---
 

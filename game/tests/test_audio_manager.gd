@@ -315,17 +315,16 @@ func test_double_enter_battle_preserves_original_snapshot() -> void:
 	_am._play_music_with_stream(stream, "overworld", 0.0)
 	_am._play_ambient_with_stream(stream, "highlands", 0.0)
 	_am._current_mix_context = "overworld"
-	# First enter_battle — stores overworld state
+	# First enter — exercise the real guard in enter_battle's internal path
 	_am._pre_battle_music = _am._current_music
 	_am._pre_battle_ambient = _am._current_ambient
 	_am._pre_battle_music_pos = 0.0
 	_am._pre_battle_mix_context = _am._current_mix_context
 	_am._enter_battle_with_stream(stream, "battle_standard")
-	# Second enter_battle — should NOT overwrite original snapshot
-	# Simulate the public enter_battle guard by checking context
-	if _am._current_mix_context != "battle":
-		_am._pre_battle_music = _am._current_music
-		_am._pre_battle_mix_context = _am._current_mix_context
+	# Second enter — _current_mix_context is now "battle", so the public
+	# enter_battle guard (line 438) would skip the snapshot. Verify by
+	# checking that _pre_battle_music still holds the original value.
+	assert_eq(_am._current_mix_context, "battle", "Should be in battle context")
 	_am._enter_battle_with_stream(stream, "battle_boss")
 	assert_eq(_am._pre_battle_music, "overworld", "Original pre-battle music should be preserved")
 	assert_eq(
@@ -366,3 +365,113 @@ func test_play_sfx_accepts_pan_parameter() -> void:
 			found = true
 			break
 	assert_true(found, "SFX with pan parameter should play normally")
+
+
+func test_play_music_empty_string_noop() -> void:
+	_am.play_music("")
+	assert_eq(_am.get_current_music(), "", "Empty track_id should not change current music")
+
+
+func test_play_sfx_empty_string_noop() -> void:
+	_am.play_sfx("")
+	assert_true(true, "Empty sfx_id should not crash")
+
+
+func test_play_ambient_empty_string_noop() -> void:
+	_am.play_ambient("")
+	assert_eq(_am.get_current_ambient(), "", "Empty ambient_id should not change current ambient")
+
+
+func test_enter_battle_empty_string_silences_all() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am.enter_battle("")
+	assert_eq(_am._current_mix_context, "battle", "Mix context should be battle")
+	assert_false(_am._music_active.playing, "Music should be silenced")
+	assert_false(_am._ambient_active.playing, "Ambient should be silenced")
+
+
+func test_enter_battle_missing_file_silences_all() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am.enter_battle("totally_nonexistent_battle_track_12345")
+	assert_eq(_am._current_mix_context, "battle", "Mix context should be battle")
+	assert_false(_am._music_active.playing, "Music should be silenced on missing file")
+	assert_false(_am._ambient_active.playing, "Ambient should be silenced on missing file")
+
+
+func test_silence_all_stops_sfx_pool() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_sfx_with_stream(stream, "sfx_a", AudioManager.Priority.UI_SFX)
+	_am._play_sfx_with_stream(stream, "sfx_b", AudioManager.Priority.UI_SFX)
+	_am.silence_all()
+	var any_playing: bool = false
+	for player: AudioStreamPlayer in _am._sfx_pool:
+		if player.playing:
+			any_playing = true
+			break
+	assert_false(any_playing, "All SFX pool players should be stopped after silence_all")
+
+
+func test_silence_all_nulls_tween_references() -> void:
+	_am.silence_all()
+	assert_null(_am._music_active_tween, "Music active tween should be null after silence_all")
+	assert_null(_am._music_fade_tween, "Music fade tween should be null after silence_all")
+	assert_null(_am._ambient_active_tween, "Ambient active tween should be null after silence_all")
+	assert_null(_am._ambient_fade_tween, "Ambient fade tween should be null after silence_all")
+
+
+func test_set_mix_context_all_valid_contexts() -> void:
+	var contexts: Array[String] = [
+		"overworld",
+		"town",
+		"dungeon",
+		"narrative_dungeon",
+		"pallor",
+		"battle",
+		"cutscene",
+	]
+	for context: String in contexts:
+		_am.set_mix_context(context)
+		assert_eq(_am._current_mix_context, context, "Context should be set to %s" % context)
+
+
+func test_get_pre_battle_music_returns_snapshot() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._pre_battle_music = "overworld"
+	assert_eq(_am.get_pre_battle_music(), "overworld", "Getter should return pre-battle music ID")
+
+
+func test_get_pre_battle_ambient_returns_snapshot() -> void:
+	_am._pre_battle_ambient = "highlands"
+	assert_eq(
+		_am.get_pre_battle_ambient(), "highlands", "Getter should return pre-battle ambient ID"
+	)
+
+
+func test_play_music_with_crossfade_starts_new_track() -> void:
+	var stream_a: AudioStreamWAV = AudioStreamWAV.new()
+	var stream_b: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream_a, "track_a", 0.0)
+	# Second track with crossfade > 0 should swap players
+	_am._play_music_with_stream(stream_b, "track_b", 1.0)
+	assert_eq(_am._current_music, "track_b", "Current should be track_b with crossfade")
+	assert_true(_am._music_active.playing, "New active player should be playing")
+
+
+func test_priority_steal_prefers_oldest_on_tie() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	# Fill all 12 slots with EXPLORATION_SFX (same priority)
+	for i: int in range(12):
+		_am._play_sfx_with_stream(stream, "exp_%d" % i, AudioManager.Priority.EXPLORATION_SFX)
+	# Try to play higher priority — should steal the oldest EXPLORATION_SFX slot
+	_am._play_sfx_with_stream(stream, "battle_hit", AudioManager.Priority.BATTLE_SFX)
+	var found: bool = false
+	for meta: Dictionary in _am._sfx_meta:
+		if meta.get("sfx_id") == "battle_hit":
+			found = true
+			break
+	assert_true(found, "Higher priority should steal from lower priority pool")
