@@ -81,6 +81,7 @@ var _current_mix_context: String = ""
 # --- State: pre-battle snapshot for exit_battle restoration ---
 var _pre_battle_music: String = ""
 var _pre_battle_ambient: String = ""
+var _pre_battle_music_pos: float = 0.0
 var _pre_battle_mix_context: String = ""
 
 # --- State: active tween tracking ---
@@ -405,13 +406,121 @@ func set_mix_context(context: String) -> void:
 
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
-func enter_battle(_battle_track: String) -> void:
-	pass
+func enter_battle(battle_track: String) -> void:
+	var path: String = "res://assets/music/%s.ogg" % battle_track
+	if not ResourceLoader.exists(path):
+		push_warning("AudioManager: Battle music file not found: %s" % path)
+		_silence_ambient_immediate()
+		set_mix_context("battle")
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		return
+	_enter_battle_with_stream(stream, battle_track)
+
+
+## Internal: hard cut to battle track (used by tests and enter_battle).
+func _enter_battle_with_stream(stream: AudioStream, battle_track: String) -> void:
+	# Store pre-battle state
+	_pre_battle_music = _current_music
+	_pre_battle_ambient = _current_ambient
+	_pre_battle_music_pos = _music_active.get_playback_position() if _music_active.playing else 0.0
+	_pre_battle_mix_context = _current_mix_context
+
+	# Kill all 4 crossfade tweens
+	_kill_tween(_music_active_tween)
+	_kill_tween(_music_fade_tween)
+	_kill_tween(_ambient_active_tween)
+	_kill_tween(_ambient_fade_tween)
+
+	# Silence ambient immediately
+	_silence_ambient_immediate()
+
+	# Hard cut music: stop both players, load battle track on active at 0 dB
+	_music_active.stop()
+	_music_active.volume_db = SILENT_DB
+	_music_fade.stop()
+	_music_fade.volume_db = SILENT_DB
+
+	_music_active.stream = stream
+	_music_active.volume_db = 0.0
+	_music_active.play()
+
+	_current_music = battle_track
+	set_mix_context("battle")
+	if OS.is_debug_build():
+		print("AudioManager: enter_battle '%s'" % battle_track)
 
 
 ## Fade back to exploration music + ambient after battle.
-func exit_battle(_music_track: String, _ambient_track: String) -> void:
-	pass
+func exit_battle(music_track: String, ambient_track: String) -> void:
+	var music_path: String = "res://assets/music/%s.ogg" % music_track
+	var ambient_path: String = "res://assets/ambient/%s.ogg" % ambient_track
+	var music_stream: AudioStream = null
+	var ambient_stream: AudioStream = null
+	if ResourceLoader.exists(music_path):
+		music_stream = load(music_path)
+	else:
+		push_warning("AudioManager: Music file not found: %s" % music_path)
+	if ResourceLoader.exists(ambient_path):
+		ambient_stream = load(ambient_path)
+	else:
+		push_warning("AudioManager: Ambient file not found: %s" % ambient_path)
+	_exit_battle_with_streams(music_stream, ambient_stream, music_track, ambient_track)
+
+
+## Internal: fade out battle music and restore pre-battle state (used by tests and exit_battle).
+func _exit_battle_with_streams(
+	music_stream: AudioStream, ambient_stream: AudioStream, music_id: String, ambient_id: String
+) -> void:
+	# Kill music and ambient active tweens
+	_kill_tween(_music_active_tween)
+	_kill_tween(_ambient_active_tween)
+
+	# If battle music is playing, swap to fade slot and tween out
+	if _music_active.playing:
+		var old_active: AudioStreamPlayer = _music_active
+		_music_active = _music_fade
+		_music_fade = old_active
+		_kill_tween(_music_fade_tween)
+		_music_fade_tween = create_tween()
+		_music_fade_tween.tween_property(_music_fade, "volume_db", SILENT_DB, CROSSFADE_BATTLE_EXIT)
+		_music_fade_tween.tween_callback(_music_fade.stop)
+
+	# Fade in restored music track
+	if music_stream != null:
+		_music_active.stream = music_stream
+		_music_active.volume_db = SILENT_DB
+		_music_active.play(_pre_battle_music_pos)
+		_music_active_tween = create_tween()
+		_music_active_tween.tween_property(_music_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT)
+
+	_current_music = music_id
+
+	# Fade in restored ambient track
+	if ambient_stream != null:
+		_kill_tween(_ambient_fade_tween)
+		_ambient_active.stream = ambient_stream
+		_ambient_active.volume_db = SILENT_DB
+		_ambient_active.play()
+		_ambient_active_tween = create_tween()
+		_ambient_active_tween.tween_property(
+			_ambient_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT
+		)
+
+	_current_ambient = ambient_id
+	set_mix_context(_pre_battle_mix_context)
+	if OS.is_debug_build():
+		print("AudioManager: exit_battle -> music='%s' ambient='%s'" % [music_id, ambient_id])
+
+
+## Stop both ambient players immediately and clear current ambient ID.
+func _silence_ambient_immediate() -> void:
+	_ambient_active.stop()
+	_ambient_active.volume_db = SILENT_DB
+	_ambient_fade.stop()
+	_ambient_fade.volume_db = SILENT_DB
+	_current_ambient = ""
 
 
 ## Apply current mix context volumes to all players.
