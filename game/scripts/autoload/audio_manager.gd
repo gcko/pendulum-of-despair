@@ -141,8 +141,81 @@ func play_music(_track_id: String, _crossfade_duration: float = CROSSFADE_BIOME)
 
 
 ## Play a sound effect from the SFX pool.
-func play_sfx(_sfx_id: String, _priority: Priority = Priority.UI_SFX, _pan: float = 0.0) -> void:
-	pass
+func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float = 0.0) -> void:
+	var path: String = "res://assets/sfx/%s.ogg" % sfx_id
+	if not ResourceLoader.exists(path):
+		if OS.is_debug_build():
+			push_warning("AudioManager: SFX file not found: %s" % path)
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		return
+	_play_sfx_with_stream(stream, sfx_id, priority, pan)
+
+
+## Internal: play a stream directly into the SFX pool (used by tests and play_sfx).
+func _play_sfx_with_stream(
+	stream: AudioStream, sfx_id: String, priority: Priority, pan: float
+) -> void:
+	# Check mono config — force pan to center
+	var config: Dictionary = PartyState.get_config()
+	var actual_pan: float = pan
+	if config.get("sound_mode", "stereo") == "mono":
+		actual_pan = 0.0
+
+	# Same-ID limit check
+	var same_count: int = 0
+	for meta: Dictionary in _sfx_meta:
+		if meta.get("sfx_id") == sfx_id:
+			same_count += 1
+	if same_count >= MAX_SAME_SFX:
+		return
+
+	# Find free slot
+	var slot_idx: int = _find_free_sfx_slot()
+	if slot_idx == -1:
+		slot_idx = _find_steal_target(priority)
+		if slot_idx == -1:
+			return
+		_sfx_pool[slot_idx].stop()
+
+	# Play on the slot
+	_sfx_pool[slot_idx].stream = stream
+	_sfx_pool[slot_idx].volume_db = 0.0
+	_sfx_pool[slot_idx].play()
+	_sfx_meta[slot_idx] = {
+		"sfx_id": sfx_id,
+		"priority": priority,
+		"start_time": Time.get_ticks_msec(),
+		"pan": actual_pan,
+	}
+
+
+## Find the first idle SFX pool slot. Returns -1 if all are busy.
+func _find_free_sfx_slot() -> int:
+	for i: int in range(SFX_POOL_SIZE):
+		if not _sfx_pool[i].playing:
+			_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0}
+			return i
+	return -1
+
+
+## Find the lowest-priority (then oldest) slot that can be stolen by requested_priority.
+## Returns -1 if no slot has lower priority than requested.
+func _find_steal_target(requested_priority: Priority) -> int:
+	var lowest_priority: int = int(requested_priority)
+	var lowest_idx: int = -1
+	for i: int in range(SFX_POOL_SIZE):
+		var slot_priority: int = int(_sfx_meta[i].get("priority", Priority.CUTSCENE_SFX))
+		if slot_priority < lowest_priority:
+			lowest_priority = slot_priority
+			lowest_idx = i
+		elif slot_priority == lowest_priority and lowest_idx != -1:
+			var slot_time: int = _sfx_meta[i].get("start_time", 0)
+			var lowest_time: int = _sfx_meta[lowest_idx].get("start_time", 0)
+			if slot_time < lowest_time:
+				lowest_idx = i
+	return lowest_idx
 
 
 ## Play an ambient loop with optional crossfade.
