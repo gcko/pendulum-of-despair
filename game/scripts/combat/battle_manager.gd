@@ -135,7 +135,7 @@ func _on_ui_command(command: Dictionary) -> void:
 	var ok: bool = true
 	match command.get("type", ""):
 		"attack":
-			_do_attack(actor_id, command)
+			ok = _do_attack(actor_id, command)
 		"magic":
 			ok = _do_magic(actor_id, command)
 		"item":
@@ -149,7 +149,7 @@ func _on_ui_command(command: Dictionary) -> void:
 			else:
 				_do_flee()
 		"ability":
-			_do_attack(actor_id, command)
+			ok = _do_attack(actor_id, command)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var s: int = actor_id.replace("party_", "").to_int()
@@ -161,7 +161,11 @@ func _on_ui_command(command: Dictionary) -> void:
 	if not _battle_active:
 		return
 	var cmd_slot: int = actor_id.replace("party_", "").to_int()
-	if _state.get_member(cmd_slot).get("is_defending", false):
+	# Clear defending from a PREVIOUS turn — skip if this action IS defend
+	if (
+		command.get("type", "") != "defend"
+		and _state.get_member(cmd_slot).get("is_defending", false)
+	):
 		_state.set_defending(cmd_slot, false)
 		_state.set_buff(cmd_slot, "damage_taken_mult", 1.0)
 	_awaiting_input_for = ""
@@ -183,11 +187,12 @@ func _on_party_member_died(slot: int) -> void:
 		_atb.set_command_menu_open(false)
 
 
-func _do_attack(actor_id: String, command: Dictionary) -> void:
+func _do_attack(actor_id: String, command: Dictionary) -> bool:
 	var slot: int = actor_id.replace("party_", "").to_int()
 	var target_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
 	if target_idx < 0:
-		return
+		message.emit("No target!")
+		return false
 	var member: Dictionary = _state.get_member(slot)
 	message.emit("%s attacks!" % member.get("character_data", {}).get("name", "???"))
 	var result: Dictionary = BattleActions.execute_party_attack(
@@ -197,6 +202,7 @@ func _do_attack(actor_id: String, command: Dictionary) -> void:
 	if result.get("killed", false):
 		combatant_died.emit("enemy_%d" % target_idx)
 		_atb.remove_combatant("enemy_%d" % target_idx)
+	return true
 
 
 func _do_magic(actor_id: String, command: Dictionary) -> bool:
@@ -295,7 +301,8 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var hp_amt: int = item.get("value", 0)
+			var raw_val: Variant = item.get("value")
+			var hp_amt: int = int(raw_val) if raw_val != null else 0
 			if item.has("restore_percent"):
 				var pct: int = item.get("restore_percent", 100)
 				hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
@@ -312,7 +319,8 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var revive_pct: int = item.get("value", 25)
+			var raw_rev: Variant = item.get("value")
+			var revive_pct: int = int(raw_rev) if raw_rev != null else 25
 			var revived_hp: int = int(
 				ceil(float(rev_m.get("max_hp", 1)) * float(revive_pct) / 100.0)
 			)
@@ -323,7 +331,8 @@ func _do_item(command: Dictionary) -> bool:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var mp_amt: int = item.get("value", 0)
+			var raw_mp: Variant = item.get("value")
+			var mp_amt: int = int(raw_mp) if raw_mp != null else 0
 			if item.has("restore_percent"):
 				var pct: int = item.get("restore_percent", 100)
 				var tgt_m: Dictionary = _state.get_member(target_slot)
@@ -335,7 +344,8 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var hp_amt: int = item.get("value", 9999)
+			var raw_hpmp: Variant = item.get("value")
+			var hp_amt: int = int(raw_hpmp) if raw_hpmp != null else 9999
 			if item.has("restore_percent"):
 				var pct: int = item.get("restore_percent", 100)
 				hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
@@ -357,18 +367,25 @@ func _do_item(command: Dictionary) -> bool:
 				_state.remove_status(target_slot, sname)
 		"buff_atk":
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var atk_boost: int = item.get("value", 10)
+			var raw_atk: Variant = item.get("value")
+			var atk_boost: int = int(raw_atk) if raw_atk != null else 10
 			_state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
 		"buff_mag":
 			message.emit("Used %s!" % item.get("name", "Item"))
-			var mag_boost: int = item.get("value", 15)
+			var raw_mag: Variant = item.get("value")
+			var mag_boost: int = int(raw_mag) if raw_mag != null else 15
 			_state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
 		"flee":
 			if _is_boss:
 				message.emit("Can't use that here!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
+			# Consume before exit — _exit_battle triggers scene transition
+			var flee_item_id: String = item.get("id", "")
+			if not flee_item_id.is_empty():
+				PartyState.consume_item(flee_item_id)
 			_exit_battle("flee")
+			return true
 		_:
 			message.emit("No effect!")
 			return false

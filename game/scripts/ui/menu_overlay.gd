@@ -266,6 +266,8 @@ func _show_stub_message() -> void:
 func _open_save() -> void:
 	if not PartyState.is_at_save_point:
 		return  # Save command is disabled (greyed out)
+	# Cache tree ref before pop — after pop_overlay this node may be freed.
+	var tree: SceneTree = get_tree()
 	# Pop menu silently (keeps tree paused, no NONE signal) then immediately
 	# push save overlay — no one-frame gap where tree unpauses.
 	GameManager.pop_overlay(true)
@@ -273,7 +275,8 @@ func _open_save() -> void:
 		# Recovery: re-push the menu overlay so the game doesn't soft-lock
 		# with the tree paused and no overlay to accept input.
 		if not GameManager.push_overlay(GameManager.OverlayState.MENU):
-			get_tree().paused = false
+			if tree != null:
+				tree.paused = false
 		return
 	if GameManager.overlay_node != null and GameManager.overlay_node.has_method("open_save"):
 		GameManager.overlay_node.open_save()

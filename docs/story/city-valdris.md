@@ -327,6 +327,7 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Stiletto | 250 | 300 | ATK +8, SPD +2 | Sable's dagger |
 | Iron Mallet | 300 | 360 | ATK +10 | Lira's hammer |
 | Iron Lance | 250 | 300 | ATK +8 | Torren's spear |
+| Composite Shortbow | 450 | 540 | ATK +12, SPD +3 | Torren's ranged option |
 | Commander's Blade | -- | 400 | ATK +12 | Act II; restock: diplomatic_mission_start |
 | Interlude: Black Market Blade | -- | -- | ATK +28, LUCK -5 | Sold by Renn's contact, 1500g |
 
@@ -350,13 +351,15 @@ Two of the Seven Towers serve as the magic tutorial dungeon in Act I. Each is a 
 | Item | Price (Act I) | Price (Act II) | Interlude | Effect |
 |------|--------------|----------------|-----------|--------|
 | Potion | 50 | 50 | 100 | Restore 100 HP |
-| Hi-Potion | -- | 300 | 600 | Restore 300 HP |
+| Hi-Potion | -- | 300 | 600 | Restore 500 HP |
 | Ether | 200 | 200 | 400 | Restore 30 MP |
 | Antidote | 50 | 50 | 100 | Cure Poison |
 | Smelling Salts | 75 | 75 | 150 | Cure Confusion |
 | Phoenix Feather | 500 | 500 | 1000 | Revive with 25% HP |
 | Ley-Lantern | 60 | 60 | -- | Light source for dungeons |
 | Smoke Bomb | 100 | 100 | 200 | Flee from non-boss battle |
+| Hi-Ether | -- | 600 | -- | Restore 100 MP; restock: diplomatic_mission_start |
+| Chronos Dust | -- | 400 | -- | Cure Slow, grant Haste (1 turn); restock: diplomatic_mission_start |
 
 *Interlude:* Single vendor in the market square. Phoenix Feather sold out. Ley-Lanterns unavailable (no ley energy to charge them).
 
@@ -814,7 +817,7 @@ AR    = Armory                  BT = Bell Tower Base
 
 **Treasure chests:**
 - Armory: Vigil's Edge (unique sword, ATK +20, +15% vs. Pallor manifestations)
-- Bell Tower upper floor (optional climb): 1x Phoenix Pinion, 1x Highland Cloak
+- Bell Tower upper floor (optional climb): 1x Phoenix Feather, 1x Highland Cloak
 - Dormitory East (behind a collapsed bed): 1x Ether
 
 **Environmental storytelling:**
@@ -974,7 +977,7 @@ PV = Provisioner                 t  = Thornmere treeline
 | Ether | 200 | 240 | Restore 30 MP | Slight markup |
 | Antidote | 50 | 60 | Cure Poison | Stocked for Wilds travel |
 | Smelling Salts | 75 | 90 | Cure Confusion | |
-| Phoenix Pinion | 300 | 350 | Revive 25% HP | Military supply |
+| Phoenix Feather | 500 | 600 | Revive 25% HP | Military supply |
 | Field Rations | 20 | 25 | Restore 75 HP | Military food; better than Aelhart bread |
 | Torch (x3 pack) | 35 | 40 | Light source | Bundle deal |
 

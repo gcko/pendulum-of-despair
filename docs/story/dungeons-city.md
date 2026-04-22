@@ -99,7 +99,7 @@ KEY:  ### = limestone wall   [...] = alcove/room   === = passage
 - Burial Alcove A: Royal Funeral Urn (sell for 800g, or keep -- Mirren will identify it as belonging to Queen Verath, third dynasty, for lore)
 - Burial Alcove C: Ley-Etched Shield (equipment -- DEF +14, MAG DEF +8, faint glow in dark areas)
 - Sealed Tomb (Interlude only, collapsed wall reveals after earthquake from the assault): Founder's Circlet (accessory -- +all stats +3, inscription reads "The crown is the burden, not the jewel")
-- Flooded Chamber: Chest on a dry ledge -- 3x Potion, 1x Phoenix Pinion
+- Flooded Chamber: Chest on a dry ledge -- 3x Potion, 1x Phoenix Feather
 - Spirit Shrine: Examine the pact tablet for lore about the original spirit-pact that founded Valdris. If Torren is present, he translates the full text and the party receives a permanent +5% spirit magic resistance.
 
 #### Floor 2: Royal Tombs

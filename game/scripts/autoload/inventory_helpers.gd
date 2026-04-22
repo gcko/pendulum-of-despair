@@ -49,7 +49,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 	match effect:
 		"restore_hp":
 			var max_hp: int = target.get("max_hp", 1)
-			var value: int = item_data.get("value", 0)
+			var raw_val: Variant = item_data.get("value")
+			var value: int = int(raw_val) if raw_val != null else 0
 			if item_data.has("restore_percent"):
 				var pct: int = item_data.get("restore_percent", 0)
 				value = int(float(max_hp) * float(pct) / 100.0)
@@ -58,7 +59,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 				target["status_effects"] = [] as Array
 		"restore_mp":
 			var max_mp: int = target.get("max_mp", 1)
-			var value: int = item_data.get("value", 0)
+			var raw_mp: Variant = item_data.get("value")
+			var value: int = int(raw_mp) if raw_mp != null else 0
 			if item_data.has("restore_percent"):
 				var pct: int = item_data.get("restore_percent", 0)
 				value = int(float(max_mp) * float(pct) / 100.0)
@@ -80,7 +82,8 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 		"revive":
 			if target.get("current_hp", 0) <= 0:
 				var max_hp: int = target.get("max_hp", 1)
-				var revive_pct: int = item_data.get("value", 25)
+				var raw_rev: Variant = item_data.get("value")
+				var revive_pct: int = int(raw_rev) if raw_rev != null else 25
 				var revived_hp: int = int(ceil(float(max_hp) * float(revive_pct) / 100.0))
 				target["current_hp"] = clampi(revived_hp, 1, max_hp)
 		"cure_status":

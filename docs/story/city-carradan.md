@@ -1338,7 +1338,7 @@ KEY:  TTT = forest (Thornmere)   ### = stone bridge
 | Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
 | Potion | Consumable | 60 | Yes | Yes | Border markup |
-| Hi-Potion | Consumable | 360 | Yes | Yes | Restore 300 HP |
+| Hi-Potion | Consumable | 360 | Yes | Yes | Restore 500 HP |
 | Antidote | Consumable | 50 | Yes | Yes | Cures poison |
 | Travel Rope | Tool | 100 | Yes | No | Traversal item |
 | Iron Dagger | Weapon | 400 | Yes | No | Basic sidearm |
