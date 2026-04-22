@@ -122,3 +122,38 @@ func test_play_music_crossfade_swaps_to_fade() -> void:
 	_am._play_music_with_stream(stream_b, "track_b", 0.0)
 	assert_eq(_am._current_music, "track_b", "Current should be track_b")
 	assert_eq(_am._music_fade.stream, stream_a, "Fade slot should hold track_a's stream")
+
+
+func test_play_ambient_sets_current_track() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_ambient_with_stream(stream, "forest", 0.0)
+	assert_eq(_am._current_ambient, "forest", "Current ambient should be forest")
+
+
+func test_play_ambient_crossfade_swaps() -> void:
+	var stream_a: AudioStreamWAV = AudioStreamWAV.new()
+	var stream_b: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_ambient_with_stream(stream_a, "forest", 0.0)
+	_am._play_ambient_with_stream(stream_b, "cave", 0.0)
+	assert_eq(_am._current_ambient, "cave", "Current should be cave")
+	assert_eq(_am._ambient_fade.stream, stream_a, "Fade slot should hold forest stream")
+
+
+func test_set_mix_context_battle() -> void:
+	_am.set_mix_context("battle")
+	var ambient_idx: int = AudioServer.get_bus_index("Ambient")
+	var ambient_db: float = AudioServer.get_bus_volume_db(ambient_idx)
+	assert_le(ambient_db, -60.0, "Ambient bus should be near-silent in battle context")
+	assert_eq(_am._current_mix_context, "battle", "Mix context should be stored")
+
+
+func test_silence_all_stops_everything() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "music", 0.0)
+	_am._play_ambient_with_stream(stream, "ambient", 0.0)
+	_am._play_sfx_with_stream(stream, "sfx", AudioManager.Priority.UI_SFX, 0.0)
+	_am.silence_all()
+	assert_false(_am._music_active.playing, "Music should be stopped")
+	assert_false(_am._ambient_active.playing, "Ambient should be stopped")
+	assert_eq(_am._current_music, "", "Music ID should be cleared")
+	assert_eq(_am._current_ambient, "", "Ambient ID should be cleared")

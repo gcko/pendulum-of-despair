@@ -281,8 +281,70 @@ func _find_steal_target(requested_priority: Priority) -> int:
 
 
 ## Play an ambient loop with optional crossfade.
-func play_ambient(_ambient_id: String, _crossfade_duration: float = CROSSFADE_BIOME) -> void:
-	pass
+func play_ambient(ambient_id: String, crossfade_duration: float = CROSSFADE_BIOME) -> void:
+	if ambient_id == _current_ambient:
+		return
+	var path: String = "res://assets/ambient/%s.ogg" % ambient_id
+	if not ResourceLoader.exists(path):
+		push_warning("AudioManager: Ambient file not found: %s" % path)
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		return
+	_play_ambient_with_stream(stream, ambient_id, crossfade_duration)
+
+
+## Internal: play a stream directly into the ambient players (used by tests and play_ambient).
+func _play_ambient_with_stream(
+	stream: AudioStream, ambient_id: String, crossfade_duration: float
+) -> void:
+	if ambient_id == _current_ambient:
+		return
+
+	# Kill any in-progress tweens on both ambient players
+	_kill_tween(_ambient_active_tween)
+	_kill_tween(_ambient_fade_tween)
+
+	# If the active player is currently playing, swap roles
+	if _ambient_active.playing:
+		# Old active becomes fade, swap the player references
+		var old_active: AudioStreamPlayer = _ambient_active
+		_ambient_active = _ambient_fade
+		_ambient_fade = old_active
+
+		# Fade out (or cut) the outgoing track in _ambient_fade
+		if crossfade_duration > 0.0:
+			_ambient_fade_tween = create_tween()
+			_ambient_fade_tween.tween_property(
+				_ambient_fade, "volume_db", SILENT_DB, crossfade_duration / 2.0
+			)
+			_ambient_fade_tween.tween_callback(_ambient_fade.stop)
+		else:
+			_ambient_fade.stop()
+			_ambient_fade.volume_db = SILENT_DB
+	else:
+		# Nothing playing — reset fade slot so it's silent and stopped
+		_ambient_fade.stop()
+		_ambient_fade.volume_db = SILENT_DB
+
+	# Start new track on _ambient_active
+	_ambient_active.stream = stream
+	if crossfade_duration > 0.0:
+		_ambient_active.volume_db = SILENT_DB
+		_ambient_active.play()
+		_ambient_active_tween = create_tween()
+		_ambient_active_tween.tween_property(
+			_ambient_active, "volume_db", 0.0, crossfade_duration / 2.0
+		)
+	else:
+		_ambient_active.volume_db = 0.0
+		_ambient_active.play()
+
+	_current_ambient = ambient_id
+	if OS.is_debug_build():
+		print(
+			"AudioManager: playing ambient '%s' (crossfade=%.2f)" % [ambient_id, crossfade_duration]
+		)
 
 
 ## Stop all music with an optional fade out.
@@ -309,12 +371,37 @@ func _kill_tween(tween: Tween) -> void:
 
 ## Silence all audio immediately (for narrative silence moments).
 func silence_all() -> void:
-	pass
+	# Kill all crossfade tweens
+	_kill_tween(_music_active_tween)
+	_kill_tween(_music_fade_tween)
+	_kill_tween(_ambient_active_tween)
+	_kill_tween(_ambient_fade_tween)
+
+	# Stop and silence the four music/ambient players
+	for player: AudioStreamPlayer in [_music_active, _music_fade, _ambient_active, _ambient_fade]:
+		player.stop()
+		player.volume_db = SILENT_DB
+
+	# Stop all SFX pool players and reset their meta
+	for i: int in range(SFX_POOL_SIZE):
+		_sfx_pool[i].stop()
+		_sfx_meta[i] = {}
+
+	_current_music = ""
+	_current_ambient = ""
+	if OS.is_debug_build():
+		print("AudioManager: silence_all()")
 
 
 ## Set the mixing context (changes music/ambient volume ratio).
-func set_mix_context(_context: String) -> void:
-	pass
+func set_mix_context(context: String) -> void:
+	if not MIX_CONTEXTS.has(context):
+		push_warning("AudioManager: Unknown mix context: %s" % context)
+		return
+	_current_mix_context = context
+	_apply_bus_volumes()
+	if OS.is_debug_build():
+		print("AudioManager: mix context set to '%s'" % context)
 
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
@@ -329,7 +416,41 @@ func exit_battle(_music_track: String, _ambient_track: String) -> void:
 
 ## Apply current mix context volumes to all players.
 func update_volumes() -> void:
-	pass
+	_apply_bus_volumes()
+
+
+## Internal: apply bus volumes from current mix context and player config.
+func _apply_bus_volumes() -> void:
+	var config: Dictionary = PartyState.get_config()
+	var music_vol: int = config.get("music_volume", 8)
+	var sfx_vol: int = config.get("sfx_volume", 8)
+
+	var mix: Dictionary = MIX_CONTEXTS.get(_current_mix_context, MIX_OVERWORLD)
+	var music_ratio: float = mix.get("music", 1.0)
+	var ambient_ratio: float = mix.get("ambient", 0.35)
+
+	var music_linear: float = (music_vol / 10.0) * music_ratio
+	var ambient_linear: float = (sfx_vol / 10.0) * ambient_ratio
+	var sfx_linear: float = sfx_vol / 10.0
+
+	var music_idx: int = AudioServer.get_bus_index("Music")
+	if music_idx != -1:
+		AudioServer.set_bus_volume_db(music_idx, _safe_linear_to_db(music_linear))
+
+	var ambient_idx: int = AudioServer.get_bus_index("Ambient")
+	if ambient_idx != -1:
+		AudioServer.set_bus_volume_db(ambient_idx, _safe_linear_to_db(ambient_linear))
+
+	var sfx_idx: int = AudioServer.get_bus_index("SFX")
+	if sfx_idx != -1:
+		AudioServer.set_bus_volume_db(sfx_idx, _safe_linear_to_db(sfx_linear))
+
+
+## Convert a linear volume value to dB, returning SILENT_DB for near-zero values.
+func _safe_linear_to_db(linear: float) -> float:
+	if linear <= 0.001:
+		return SILENT_DB
+	return linear_to_db(linear)
 
 
 # ---------------------------------------------------------------------------
