@@ -132,8 +132,18 @@ def main() -> int:
 
             for asset_id in ids:
                 dest = os.path.join(directory, f"{asset_id}.ogg")
-                if os.path.exists(dest) and not force:
-                    continue
+                if os.path.exists(dest):
+                    if not force:
+                        continue
+                    # Guard: warn when overwriting files larger than a placeholder
+                    # (likely real audio assets, not 0.1s silence stubs)
+                    existing_size = os.path.getsize(dest)
+                    placeholder_size = os.path.getsize(silence_path)
+                    if existing_size > placeholder_size * 2:
+                        print(
+                            f"  WARNING: Overwriting {dest} "
+                            f"({existing_size} bytes > placeholder {placeholder_size} bytes)"
+                        )
                 shutil.copy2(silence_path, dest)
                 total += 1
 

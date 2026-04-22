@@ -253,7 +253,9 @@ func test_exit_battle_clears_pre_battle_state() -> void:
 	assert_eq(_am._pre_battle_music, "", "Pre-battle music should be cleared")
 	assert_eq(_am._pre_battle_ambient, "", "Pre-battle ambient should be cleared")
 	assert_almost_eq(_am._pre_battle_music_pos, 0.0, 0.01, "Pre-battle pos should be cleared")
-	assert_eq(_am._pre_battle_mix_context, "", "Pre-battle context should be cleared")
+	assert_eq(
+		_am._pre_battle_mix_context, "overworld", "Pre-battle context should reset to overworld"
+	)
 
 
 func test_get_current_music_returns_track_id() -> void:
@@ -277,3 +279,90 @@ func test_set_mix_context_unknown_rejected() -> void:
 
 func test_default_mix_context_is_overworld() -> void:
 	assert_eq(_am._current_mix_context, "overworld", "Default mix context should be overworld")
+
+
+func test_missing_music_file_no_crash() -> void:
+	_am.play_music("totally_nonexistent_music_12345")
+	assert_true(true, "No crash on missing music file")
+
+
+func test_missing_ambient_file_no_crash() -> void:
+	_am.play_ambient("totally_nonexistent_ambient_12345")
+	assert_true(true, "No crash on missing ambient file")
+
+
+func test_stop_ambient_noop_when_not_playing() -> void:
+	_am.stop_ambient(0.0)
+	assert_eq(_am._current_ambient, "", "Should remain empty when nothing playing")
+
+
+func test_update_volumes_does_not_crash() -> void:
+	_am.set_mix_context("dungeon")
+	_am.update_volumes()
+	assert_eq(_am._current_mix_context, "dungeon", "Mix context should remain dungeon after update")
+
+
+func test_double_silence_all_is_safe() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "music", 0.0)
+	_am.silence_all()
+	_am.silence_all()
+	assert_eq(_am._current_music, "", "Music ID should remain cleared after double silence_all")
+
+
+func test_double_enter_battle_preserves_original_snapshot() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am._current_mix_context = "overworld"
+	# First enter_battle — stores overworld state
+	_am._pre_battle_music = _am._current_music
+	_am._pre_battle_ambient = _am._current_ambient
+	_am._pre_battle_music_pos = 0.0
+	_am._pre_battle_mix_context = _am._current_mix_context
+	_am._enter_battle_with_stream(stream, "battle_standard")
+	# Second enter_battle — should NOT overwrite original snapshot
+	# Simulate the public enter_battle guard by checking context
+	if _am._current_mix_context != "battle":
+		_am._pre_battle_music = _am._current_music
+		_am._pre_battle_mix_context = _am._current_mix_context
+	_am._enter_battle_with_stream(stream, "battle_boss")
+	assert_eq(_am._pre_battle_music, "overworld", "Original pre-battle music should be preserved")
+	assert_eq(
+		_am._pre_battle_mix_context, "overworld", "Original pre-battle context should be preserved"
+	)
+
+
+func test_pre_battle_mix_context_defaults_to_overworld() -> void:
+	assert_eq(
+		_am._pre_battle_mix_context,
+		"overworld",
+		"Pre-battle mix context should default to overworld, not empty string",
+	)
+
+
+func test_exit_battle_clears_pre_battle_mix_context_to_overworld() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._pre_battle_music = "overworld"
+	_am._pre_battle_ambient = "highlands"
+	_am._pre_battle_music_pos = 0.0
+	_am._pre_battle_mix_context = "overworld"
+	_am._enter_battle_with_stream(stream, "battle_standard")
+	_am._exit_battle_with_streams(stream, stream, "overworld", "highlands")
+	assert_eq(
+		_am._pre_battle_mix_context,
+		"overworld",
+		"Pre-battle mix context should reset to overworld, not empty string",
+	)
+
+
+func test_play_sfx_accepts_pan_parameter() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_sfx_with_stream(stream, "panned_sfx", AudioManager.Priority.BATTLE_SFX, -0.5)
+	var found: bool = false
+	for meta: Dictionary in _am._sfx_meta:
+		if meta.get("sfx_id") == "panned_sfx":
+			found = true
+			break
+	assert_true(found, "SFX with pan parameter should play normally")

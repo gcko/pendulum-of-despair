@@ -421,6 +421,9 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] String vars used as enum-like selectors (context names, mode strings) must default to a VALID value from their lookup table, not empty string. Empty string causes lookup misses and silent fallback behavior. (PR #148: _current_mix_context defaulted to "" causing bus volumes to use fallback instead of intended overworld context)
 - [ ] Collection counting loops must check the CURRENT state of each element (e.g., `player.playing`), not just stored metadata. Metadata persists after the condition it describes has ended. (PR #148: SFX same-ID count included stopped players because meta wasn't cleared on stop)
 - [ ] Generator/tool scripts that write files should guard against overwriting non-placeholder content. Use `--force` flag or check file size/content before overwriting. (PR #148: placeholder generator overwrote all files unconditionally)
+- [ ] Pre-transition snapshot fields (e.g., `_pre_battle_mix_context`) must guard against double-entry: only store the snapshot when NOT already in the target state. Second entry without exit permanently loses the original state. (PR #148: double enter_battle overwrote pre-battle snapshot)
+- [ ] Failure paths in state transitions must leave ALL channels in the target state, not just some. If battle music file is missing, both music AND ambient must be silenced — not just ambient. (PR #148: enter_battle failure path silenced ambient but left exploration music playing)
+- [ ] `stop_music()`/`stop_ambient()` default fade duration should match spec (typically 1.0s), not biome crossfade (3.0s). Using biome crossfade as default makes all non-parameterized stops 3x slower than intended. (PR #148: stop_music defaulted to CROSSFADE_BIOME=3.0 instead of 1.0)
 
 ### Signal Safety
 - [ ] State-transition signals emit only ONCE per transition (guard against double-fire)

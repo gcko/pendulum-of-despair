@@ -24,7 +24,7 @@
 | `game/assets/sfx/*.ogg` | Create (51) | Placeholder SFX files |
 | `game/assets/music/*.ogg` | Create (5) | Placeholder music files |
 | `game/assets/ambient/*.ogg` | Create (12) | Placeholder ambient files |
-| `game/tests/test_audio_manager.gd` | Create | 11 GUT test cases |
+| `game/tests/test_audio_manager.gd` | Create | 37 GUT test cases |
 | `docs/analysis/game-dev-gaps.md` | Edit | Update 3.8 status |
 
 ---

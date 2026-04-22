@@ -78,7 +78,7 @@ var _current_mix_context: String = "overworld"
 var _pre_battle_music: String = ""
 var _pre_battle_ambient: String = ""
 var _pre_battle_music_pos: float = 0.0
-var _pre_battle_mix_context: String = ""
+var _pre_battle_mix_context: String = "overworld"
 
 # --- State: active tween tracking ---
 var _music_active_tween: Tween = null
@@ -201,7 +201,8 @@ func _play_music_with_stream(
 
 
 ## Play a sound effect from the SFX pool.
-func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX) -> void:
+## pan: stereo position (-1.0 left, 0.0 center, 1.0 right) per audio.md Section 3.4.
+func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float = 0.0) -> void:
 	var path: String = "res://assets/sfx/%s.ogg" % sfx_id
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
@@ -210,11 +211,13 @@ func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX) -> void:
 	var stream: AudioStream = load(path)
 	if stream == null:
 		return
-	_play_sfx_with_stream(stream, sfx_id, priority)
+	_play_sfx_with_stream(stream, sfx_id, priority, pan)
 
 
 ## Internal: play a stream directly into the SFX pool (used by tests and play_sfx).
-func _play_sfx_with_stream(stream: AudioStream, sfx_id: String, priority: Priority) -> void:
+func _play_sfx_with_stream(
+	stream: AudioStream, sfx_id: String, priority: Priority, _pan: float = 0.0
+) -> void:
 	# Same-ID limit check — only count slots that are still playing
 	var same_count: int = 0
 	for i: int in range(SFX_POOL_SIZE):
@@ -232,6 +235,9 @@ func _play_sfx_with_stream(stream: AudioStream, sfx_id: String, priority: Priori
 		_sfx_pool[slot_idx].stop()
 
 	# Play on the slot
+	# NOTE: pan parameter is accepted for API completeness (audio.md Section 3.4)
+	# but AudioStreamPlayer has no built-in pan property. Stereo panning requires
+	# migrating the SFX pool to AudioStreamPlayer2D (future gap).
 	_sfx_pool[slot_idx].stream = stream
 	_sfx_pool[slot_idx].volume_db = 0.0
 	_sfx_pool[slot_idx].play()
@@ -338,7 +344,7 @@ func _play_ambient_with_stream(
 
 
 ## Stop all music with an optional fade out.
-func stop_music(fade_duration: float = CROSSFADE_BIOME) -> void:
+func stop_music(fade_duration: float = CROSSFADE_TOWN) -> void:
 	# Kill any in-flight fade tween and stop the fade player (from a prior crossfade)
 	_kill_tween(_music_fade_tween)
 	_music_fade.stop()
@@ -359,7 +365,7 @@ func stop_music(fade_duration: float = CROSSFADE_BIOME) -> void:
 
 
 ## Stop all ambient with an optional fade out.
-func stop_ambient(fade_duration: float = CROSSFADE_BIOME) -> void:
+func stop_ambient(fade_duration: float = CROSSFADE_TOWN) -> void:
 	# Kill any in-flight fade tween and stop the fade player
 	_kill_tween(_ambient_fade_tween)
 	_ambient_fade.stop()
@@ -422,22 +428,27 @@ func set_mix_context(context: String) -> void:
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
 func enter_battle(battle_track: String) -> void:
-	# Always store pre-battle state before any mutation so exit_battle can restore.
-	_pre_battle_music = _current_music
-	_pre_battle_ambient = _current_ambient
-	_pre_battle_music_pos = _music_active.get_playback_position() if _music_active.playing else 0.0
-	_pre_battle_mix_context = _current_mix_context
+	# Only snapshot pre-battle state if we are NOT already in battle.
+	# A second enter_battle without an exit_battle would otherwise overwrite
+	# the original exploration state, losing it permanently.
+	if _current_mix_context != "battle":
+		_pre_battle_music = _current_music
+		_pre_battle_ambient = _current_ambient
+		_pre_battle_music_pos = (
+			_music_active.get_playback_position() if _music_active.playing else 0.0
+		)
+		_pre_battle_mix_context = _current_mix_context
 
 	var path: String = "res://assets/music/%s.ogg" % battle_track
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
 			push_warning("AudioManager: Battle music file not found: %s" % path)
-		_silence_ambient_immediate()
+		_silence_music_and_ambient_for_battle()
 		set_mix_context("battle")
 		return
 	var stream: AudioStream = load(path)
 	if stream == null:
-		_silence_ambient_immediate()
+		_silence_music_and_ambient_for_battle()
 		set_mix_context("battle")
 		return
 	_enter_battle_with_stream(stream, battle_track)
@@ -531,11 +542,13 @@ func _exit_battle_with_streams(
 	else:
 		_current_ambient = ""
 	set_mix_context(_pre_battle_mix_context)
-	# Clear pre-battle snapshot to prevent stale restore on double exit_battle
+	# Clear pre-battle snapshot to prevent stale restore on double exit_battle.
+	# Reset _pre_battle_mix_context to "overworld" (valid default) rather than
+	# empty string, which would fail the MIX_CONTEXTS lookup on double exit.
 	_pre_battle_music = ""
 	_pre_battle_ambient = ""
 	_pre_battle_music_pos = 0.0
-	_pre_battle_mix_context = ""
+	_pre_battle_mix_context = "overworld"
 	if OS.is_debug_build():
 		print("AudioManager: exit_battle -> music='%s' ambient='%s'" % [music_id, ambient_id])
 
@@ -547,6 +560,22 @@ func _silence_ambient_immediate() -> void:
 	_ambient_fade.stop()
 	_ambient_fade.volume_db = SILENT_DB
 	_current_ambient = ""
+
+
+## Silence both music and ambient immediately for battle failure paths
+## (missing audio file). Without this, exploration music would continue
+## playing during battle.
+func _silence_music_and_ambient_for_battle() -> void:
+	_kill_tween(_music_active_tween)
+	_kill_tween(_music_fade_tween)
+	_kill_tween(_ambient_active_tween)
+	_kill_tween(_ambient_fade_tween)
+	_music_active.stop()
+	_music_active.volume_db = SILENT_DB
+	_music_fade.stop()
+	_music_fade.volume_db = SILENT_DB
+	_silence_ambient_immediate()
+	_current_music = ""
 
 
 ## Apply current mix context volumes to all players.
