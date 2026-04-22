@@ -417,6 +417,9 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Uninitialized entities return empty/safe values from getters (not defaults that look valid)
 - [ ] `initialize()` methods reset ALL mutable state before loading (safe for re-init)
 - [ ] `@onready` vars guarded with null checks when accessed from methods that may run before `_ready()`
+- [ ] String vars used as enum-like selectors (context names, mode strings) must default to a VALID value from their lookup table, not empty string. Empty string causes lookup misses and silent fallback behavior. (PR #148: _current_mix_context defaulted to "" causing bus volumes to use fallback instead of intended overworld context)
+- [ ] Collection counting loops must check the CURRENT state of each element (e.g., `player.playing`), not just stored metadata. Metadata persists after the condition it describes has ended. (PR #148: SFX same-ID count included stopped players because meta wasn't cleared on stop)
+- [ ] Generator/tool scripts that write files should guard against overwriting non-placeholder content. Use `--force` flag or check file size/content before overwriting. (PR #148: placeholder generator overwrote all files unconditionally)
 
 ### Signal Safety
 - [ ] State-transition signals emit only ONCE per transition (guard against double-fire)
