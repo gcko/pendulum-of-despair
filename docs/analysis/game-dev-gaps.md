@@ -807,7 +807,8 @@ These are the core .tscn scenes and their orchestrating GDScript.
 
 ### 3.8 Audio Integration
 
-**Status:** NOT STARTED
+**Status:** COMPLETE
+**Completed:** 2026-04-22
 **Priority:** P2 — blocks audio feedback for all systems
 **Estimated Size:** M (updates to AudioManager + placeholder audio files)
 **Output:** Updates to `game/scripts/autoload/audio_manager.gd`, placeholder .ogg files in `game/assets/`
@@ -815,15 +816,26 @@ These are the core .tscn scenes and their orchestrating GDScript.
 **Depends On:** AudioManager autoload (already exists — stubs need real implementation)
 
 **What's Needed:**
-- [ ] Implement AudioStreamPlayer pool (8 music / 12 SFX / 4 ambient channels)
-- [ ] Priority-based channel allocation (8-tier stack per audio.md Section 3.2)
-- [ ] Same-SFX instance limit (max 2 per audio.md Section 3.4)
-- [ ] Crossfade implementation (biome 3s, town 1s, battle exit 1s, Pallor music 5s/ambient 3s)
-- [ ] Mixing model per context (overworld, town, dungeon, narrative dungeon, Pallor, battle)
-- [ ] Hard cut for battle entry (no crossfade, ambient cuts to 0)
-- [ ] Placeholder .ogg files (silence or simple tones) for all ~51 SFX IDs from audio.md
-- [ ] Placeholder music tracks for major contexts (title, overworld, battle, town, dungeon)
-- [ ] Debug logging gated behind OS.is_debug_build() (already done in stubs)
+- [x] Implement AudioStreamPlayer pool (2 music + 2 ambient + 12 SFX = 16 players)
+- [x] Priority-based channel allocation (8-tier stack per audio.md Section 3.2)
+- [x] Same-SFX instance limit (max 2 per audio.md Section 3.4)
+- [x] Crossfade implementation (biome 3s, town 1s, battle exit 1s, Pallor music 5s/ambient 3s)
+- [x] Mixing model per context (overworld, town, dungeon, narrative dungeon, Pallor, battle)
+- [x] Hard cut for battle entry (no crossfade, ambient cuts to 0)
+- [x] Placeholder .ogg files (silence) for all ~51 SFX IDs from audio.md
+- [x] Placeholder music tracks for major contexts (title, overworld, battle, boss, ember_vein)
+- [x] Debug logging gated behind OS.is_debug_build()
+
+**Notes:**
+- 16 physical AudioStreamPlayers: 2 music (active+fade), 2 ambient (active+fade), 12 SFX pool
+- Dual-track crossfade model: active player plays current, fade player holds outgoing track during transition
+- 3 AudioBuses (Music, SFX, Ambient) with context-aware volume ratios via set_mix_context()
+- Battle enter/exit stores and restores pre-battle music position, ambient, and mix context
+- Wired: cutscene_handler.gd (music + sfx signals), exploration.gd (save_point_chime), menu_config.gd (update_volumes on setting change)
+- 68 placeholder .ogg files (0.1s silence, libopus): 51 SFX + 12 ambient + 5 music
+- Generator script: tools/generate_placeholder_audio.py
+- 17 GUT tests in test_audio_manager.gd
+- Design spec: `docs/superpowers/specs/2026-04-22-audio-integration-design.md`
 
 **Blocking:** Audio feedback for combat, exploration, menus, story scenes
 
@@ -1208,6 +1220,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 | 2026-04-13 | 3.7 Cutscene Overlay | NOT STARTED → COMPLETE. T1/T4 cutscene overlay with letterbox, command sequencer (10 types), embedded dialogue_box, signal-based choreography, skip flags. 1 .tscn, 3 scripts, 5 test files (~57 tests). 620/620 full suite. | — |
 | 2026-04-13 | 4.4 Phase B2F | Dawn March T1 cutscene: trail map scene, 16-entry choreographed dialogue with move/camera/fade/title commands, "PENDULUM OF DESPAIR" title card + character credits, cutscene trigger system in exploration.gd (_pending_cutscene + _cutscene_return state machine), opening_credits_seen flag (39). Phase B2 now COMPLETE. 634/634 tests. |
 | 2026-04-19 | 4.4 Phase C | Capital Completion: 3 outdoor districts (Citizen's Walk, Court Quarter), 4 interiors (Throne Hall, Library, Barracks, Tavern Upper), Scene 7 FF6 Vector-style free-roam narrative, shop split (weaponsmith/armorsmith/jeweler), 17 dialogue files, required_flags AND-condition system, 6 new event flags, ~120 tests across 9 test files. Phase C COMPLETE. | — |
+| 2026-04-22 | 3.8 Audio Integration | NOT STARTED → COMPLETE. 16-channel AudioManager: dual-track crossfade (music + ambient), 12-slot SFX pool with 8-tier priority stealing, 3 AudioBuses (Music/SFX/Ambient) with context-aware mixing model, battle enter/exit with state resume. Wired cutscene_handler, exploration, and config screen. 68 placeholder .ogg files (silent). 17 GUT tests. | — |
 
 ---
 
@@ -1217,9 +1230,9 @@ smallest vertical slice (Ember Vein) that exercises every system.
 |------|------|--------|-------------|
 | 1: Data Foundation | 9 | 9/9 complete | JSON data from design docs |
 | 2: Entity Prefabs | 4 | 4/4 complete | .tscn prefabs with GDScript |
-| 3: Core Systems | 8 | 5/8 complete (2 mostly) | Scenes and game systems |
+| 3: Core Systems | 8 | 6/8 complete (2 mostly) | Scenes and game systems |
 | 4: Content & Integration | 9 | 0/9 complete (4 mostly, 1 mostly*) | Maps, content, polish |
-| **Total** | **30** | **18 complete, 7 mostly, 5 not started** | |
+| **Total** | **30** | **19 complete, 6 mostly, 5 not started** | |
 
 *Gap 4.4 is MOSTLY COMPLETE: Phases A, A2, A2b, B1, B2, C all done. Only Phase C deferred items and potential Phase D (Thornwatch, Aelhart) remain.
 
