@@ -66,8 +66,8 @@ var _pre_reduce_transition: String = "classic"
 var _patience_was_on: bool = false
 var _reduce_was_on: bool = false
 
-@onready var _setting_labels: Array[Label] = []
-@onready var _value_labels: Array[Label] = []
+var _setting_labels: Array[Label] = []
+var _value_labels: Array[Label] = []
 @onready var _preview_rect: ColorRect = $Layout/PreviewRect
 @onready var _scroll: ScrollContainer = $Layout/SettingsPanel/ScrollContainer
 
@@ -149,12 +149,12 @@ func _adjust(direction: int) -> void:
 
 	# Apply cascades
 	_apply_cascades()
+	AudioManager.update_volumes()
 	_update_display()
 
 
 func _adjust_range(key: String, direction: int, setting: Dictionary) -> void:
 	# Window color is stored as nested object
-	var actual_key: String = key
 	var is_window_color: bool = key.begins_with("window_color_")
 	var current: int = 0
 	if is_window_color:
@@ -162,7 +162,7 @@ func _adjust_range(key: String, direction: int, setting: Dictionary) -> void:
 		var wc: Dictionary = _config.get("window_color", {"r": 0, "g": 0, "b": 8})
 		current = wc.get(channel, 0)
 	else:
-		current = _config.get(actual_key, setting.get("min", 0))
+		current = _config.get(key, setting.get("min", 0))
 
 	var new_val: int = clampi(current + direction, setting.get("min", 0), setting.get("max", 10))
 
@@ -173,8 +173,8 @@ func _adjust_range(key: String, direction: int, setting: Dictionary) -> void:
 		_config["window_color"] = wc
 		PartyState.set_config("window_color", wc)
 	else:
-		_config[actual_key] = new_val
-		PartyState.set_config(actual_key, new_val)
+		_config[key] = new_val
+		PartyState.set_config(key, new_val)
 
 
 func _adjust_cycle(key: String, direction: int, setting: Dictionary) -> void:

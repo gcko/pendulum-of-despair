@@ -331,7 +331,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] OGG Vorbis format
 - [ ] 44.1 kHz sample rate
 - [ ] 16-bit depth
-- [ ] Naming: `{category}_{name}.ogg`
+- [ ] Naming: `{category}/{name}.ogg` (e.g., `sfx/hit_physical.ogg`)
 
 ---
 
@@ -408,6 +408,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Test assertions must be specific enough to not false-positive on unrelated content (PR #131: 'text = "Config"' matched CommandPanel label too)
 - [ ] After changing item/consumable effects, descriptions, or cure lists: grep ALL city docs (`docs/story/city-*.md`) for shop tables that list item effects. City shop tables duplicate items.md data and become stale when the canonical source changes. (PR #147: Smelling Salts cure list in city-valdris.md diverged from consumables.json)
 - [ ] After changing item availability (shop inventory, available_act, restock_event): grep ALL city docs AND items.md availability columns for stale references. (PR #147: Waystone availability text in items.md didn't match actual shop data)
+- [ ] After adding/removing tests during review rounds: update the PR description test count AND gap tracker count. Both surfaces can go stale independently. (PR #148: PR body said 17 tests, actual count was 28 after review iterations)
 
 ### Overlay Push Failure Recovery (from Copilot PR #147 gap analysis)
 - [ ] Every `push_overlay()` call that is preceded by a silent `pop_overlay(true)` must handle the case where `push_overlay` returns `false`. A failed push after silent pop leaves the tree paused with `current_overlay = NONE` and no signal, soft-locking input. Restore a usable state: unpause, re-push the prior overlay, or avoid the silent pop pattern. (PR #147: menu_overlay._open_save() used silent pop + push without failure handling)
@@ -417,6 +418,17 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Uninitialized entities return empty/safe values from getters (not defaults that look valid)
 - [ ] `initialize()` methods reset ALL mutable state before loading (safe for re-init)
 - [ ] `@onready` vars guarded with null checks when accessed from methods that may run before `_ready()`
+- [ ] String vars used as enum-like selectors (context names, mode strings) must default to a VALID value from their lookup table, not empty string. Empty string causes lookup misses and silent fallback behavior. (PR #148: _current_mix_context defaulted to "" causing bus volumes to use fallback instead of intended overworld context)
+- [ ] Collection counting loops must check the CURRENT state of each element (e.g., `player.playing`), not just stored metadata. Metadata persists after the condition it describes has ended. (PR #148: SFX same-ID count included stopped players because meta wasn't cleared on stop)
+- [ ] Generator/tool scripts that write files should guard against overwriting non-placeholder content. Use `--force` flag or check file size/content before overwriting. (PR #148: placeholder generator overwrote all files unconditionally)
+- [ ] Pre-transition snapshot fields (e.g., `_pre_battle_mix_context`) must guard against double-entry: only store the snapshot when NOT already in the target state. Second entry without exit permanently loses the original state. (PR #148: double enter_battle overwrote pre-battle snapshot)
+- [ ] Failure paths in state transitions must leave ALL channels in the target state, not just some. If battle music file is missing, both music AND ambient must be silenced — not just ambient. (PR #148: enter_battle failure path silenced ambient but left exploration music playing)
+- [ ] `stop_music()`/`stop_ambient()` default fade duration should match spec (typically 1.0s), not biome crossfade (3.0s). Using biome crossfade as default makes all non-parameterized stops 3x slower than intended. (PR #148: stop_music defaulted to CROSSFADE_BIOME=3.0 instead of 1.0)
+- [ ] Tool/generator scripts that produce media files must use the codec/format specified in the design docs. Verify ffmpeg/sox flags match audio.md Section 3.6 (OGG Vorbis, 44.1kHz, 16-bit). Docstrings must match actual flags (mono vs stereo, codec name). (PR #148: generator used libopus instead of vorbis, docstring said mono but flags said stereo)
+- [ ] Pre-transition snapshot logic must execute BEFORE any early-return failure path. If the snapshot is below the failure guard, all failure paths lose the pre-transition state permanently. Move snapshot to the top of the function. (PR #148 round 2: enter_battle failure paths skipped snapshot, losing exploration audio state)
+- [ ] Autoload `_ready()` must apply initial configuration state, not just create nodes. If `_apply_bus_volumes()` is not called in `_ready()`, buses start at raw 0 dB until the first explicit context set. (PR #148 round 2: AudioManager buses had wrong volumes until first set_mix_context)
+- [ ] Internal `_with_stream` methods that accept nullable stream parameters must null-check the stream before use. Public callers guard against null, but tests call internal methods directly. (PR #148 round 2: _play_music_with_stream and _play_ambient_with_stream lacked null guard)
+- [ ] Cutscene music transitions should use a faster crossfade (1.0s) than the biome default (3.0s). Pass explicit duration to `play_music()` from cutscene handlers. (PR #148 round 2: cutscene_handler used 3.0s default for dramatic music changes)
 
 ### Signal Safety
 - [ ] State-transition signals emit only ONCE per transition (guard against double-fire)
