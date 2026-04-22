@@ -87,7 +87,7 @@ def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
             tool_path,
             "-y",                          # overwrite without asking
             "-f", "lavfi",
-            "-i", "anullsrc=r=44100:cl=stereo",
+            "-i", "anullsrc=r=44100:cl=mono",
             "-t", "0.1",
             "-c:a", "vorbis",
             "-strict", "-2",
@@ -118,6 +118,7 @@ def main() -> int:
     print(f"Using {tool_name} at {tool_path}")
 
     # Generate one master silence file then copy it
+    silence_path: str = ""
     with tempfile.NamedTemporaryFile(suffix=".ogg", delete=False) as tmp:
         silence_path = tmp.name
 
@@ -148,7 +149,8 @@ def main() -> int:
         print(f"\nDone. Generated {total} placeholder .ogg files.")
 
     finally:
-        os.unlink(silence_path)
+        if silence_path and os.path.exists(silence_path):
+            os.unlink(silence_path)
 
     # Verify counts
     errors = []

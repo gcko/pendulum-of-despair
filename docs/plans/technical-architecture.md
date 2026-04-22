@@ -94,7 +94,7 @@ res://
 | Signals | snake_case, past tense | `signal chest_opened` |
 | Constants | UPPER_SNAKE_CASE | `const MAX_PARTY_SIZE = 4` |
 | JSON keys | snake_case | `"atk_growth": 3` |
-| Asset files | snake_case with category prefix | `sfx_hit_physical.ogg`, `music_valdris_overworld.ogg` |
+| Asset files | snake_case, organized by category directory | `sfx/hit_physical.ogg`, `music/title_theme.ogg` |
 
 ### 1.3 Autoload Singletons
 
@@ -701,9 +701,9 @@ Per [audio.md](../story/audio.md) Section 3.1 — 24 channels total
 
 | Type | Format | Sample Rate | Bit Depth | Naming |
 |------|--------|-------------|-----------|--------|
-| Music | OGG Vorbis | 44.1 kHz | 16-bit | `music_{context}_{name}.ogg` |
-| SFX | OGG Vorbis | 44.1 kHz | 16-bit | `sfx_{category}_{name}.ogg` |
-| Ambient | OGG Vorbis | 44.1 kHz | 16-bit | `ambient_{biome}.ogg` |
+| Music | OGG Vorbis | 44.1 kHz | 16-bit | `music/{name}.ogg` (e.g., `title_theme.ogg`) |
+| SFX | OGG Vorbis | 44.1 kHz | 16-bit | `sfx/{name}.ogg` (e.g., `hit_physical.ogg`) |
+| Ambient | OGG Vorbis | 44.1 kHz | 16-bit | `ambient/{biome}.ogg` (e.g., `valdris_highlands.ogg`) |
 
 **Godot import settings:** Loop mode set per track in import dialog.
 Music and ambient loop seamlessly. SFX do not loop (except specified

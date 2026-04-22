@@ -492,16 +492,17 @@ func exit_battle(music_track: String, ambient_track: String) -> void:
 func _exit_battle_with_streams(
 	music_stream: AudioStream, ambient_stream: AudioStream, music_id: String, ambient_id: String
 ) -> void:
-	# Kill music and ambient active tweens
+	# Kill all 4 crossfade tweens to prevent orphaned animations
 	_kill_tween(_music_active_tween)
+	_kill_tween(_music_fade_tween)
 	_kill_tween(_ambient_active_tween)
+	_kill_tween(_ambient_fade_tween)
 
 	# If battle music is playing, swap to fade slot and tween out
 	if _music_active.playing:
 		var old_active: AudioStreamPlayer = _music_active
 		_music_active = _music_fade
 		_music_fade = old_active
-		_kill_tween(_music_fade_tween)
 		_music_fade_tween = create_tween()
 		_music_fade_tween.tween_property(_music_fade, "volume_db", SILENT_DB, CROSSFADE_BATTLE_EXIT)
 		_music_fade_tween.tween_callback(_music_fade.stop)
@@ -519,7 +520,6 @@ func _exit_battle_with_streams(
 
 	# Fade in restored ambient track — only update current ID if stream is valid
 	if ambient_stream != null:
-		_kill_tween(_ambient_fade_tween)
 		_ambient_active.stream = ambient_stream
 		_ambient_active.volume_db = SILENT_DB
 		_ambient_active.play()

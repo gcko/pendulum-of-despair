@@ -56,9 +56,10 @@ func test_same_id_limit_blocks_third_instance() -> void:
 	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
 	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
 	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
+	# Count only slots that are still playing (matches production same-ID check)
 	var count: int = 0
-	for meta: Dictionary in _am._sfx_meta:
-		if meta.get("sfx_id") == "same_sfx":
+	for i: int in range(_am._sfx_pool.size()):
+		if _am._sfx_pool[i].playing and _am._sfx_meta[i].get("sfx_id") == "same_sfx":
 			count += 1
 	assert_le(count, 2, "Max 2 instances of the same SFX ID")
 
@@ -152,31 +153,33 @@ func test_silence_all_stops_everything() -> void:
 	assert_eq(_am._current_ambient, "", "Ambient ID should be cleared")
 
 
-func test_enter_battle_stores_pre_battle_state() -> void:
+func test_enter_battle_with_stream_silences_ambient_and_plays_battle() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	_am._play_music_with_stream(stream, "overworld", 0.0)
 	_am._play_ambient_with_stream(stream, "highlands", 0.0)
 	_am._current_mix_context = "overworld"
-	# Store pre-battle state as enter_battle() would before calling internal method
+	# Manually store pre-battle state (enter_battle does this before calling internal method)
 	_am._pre_battle_music = _am._current_music
 	_am._pre_battle_ambient = _am._current_ambient
 	var pos: float = _am._music_active.get_playback_position()
 	_am._pre_battle_music_pos = pos if _am._music_active.playing else 0.0
 	_am._pre_battle_mix_context = _am._current_mix_context
 	_am._enter_battle_with_stream(stream, "battle_standard")
-	assert_eq(_am._pre_battle_music, "overworld", "Should store pre-battle music")
-	assert_eq(_am._pre_battle_ambient, "highlands", "Should store pre-battle ambient")
-	assert_eq(_am._pre_battle_mix_context, "overworld", "Should store pre-battle mix context")
+	assert_eq(_am._pre_battle_music, "overworld", "Pre-battle music should be preserved")
+	assert_eq(_am._pre_battle_ambient, "highlands", "Pre-battle ambient should be preserved")
+	assert_eq(
+		_am._pre_battle_mix_context, "overworld", "Pre-battle mix context should be preserved"
+	)
 	assert_false(_am._ambient_active.playing, "Ambient should be silenced")
 	assert_eq(_am._current_music, "battle_standard", "Current music should be battle track")
 
 
-func test_exit_battle_restores_state() -> void:
+func test_exit_battle_with_streams_restores_music_and_ambient() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	_am._play_music_with_stream(stream, "overworld", 0.0)
 	_am._play_ambient_with_stream(stream, "highlands", 0.0)
 	_am._current_mix_context = "overworld"
-	# Store pre-battle state as enter_battle() would
+	# Manually store pre-battle state (enter_battle does this before calling internal method)
 	_am._pre_battle_music = _am._current_music
 	_am._pre_battle_ambient = _am._current_ambient
 	var pos: float = _am._music_active.get_playback_position()
