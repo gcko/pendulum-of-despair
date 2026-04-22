@@ -72,7 +72,7 @@ var _sfx_meta: Array[Dictionary] = []
 # --- State: track IDs ---
 var _current_music: String = ""
 var _current_ambient: String = ""
-var _current_mix_context: String = ""
+var _current_mix_context: String = "overworld"
 
 # --- State: pre-battle snapshot for exit_battle restoration ---
 var _pre_battle_music: String = ""
@@ -116,7 +116,7 @@ func _create_players() -> void:
 	for i: int in range(SFX_POOL_SIZE):
 		var player: AudioStreamPlayer = _make_player("sfx_%d" % i, "SFX")
 		_sfx_pool.append(player)
-		_sfx_meta.append({"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0})
+		_sfx_meta.append({"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0})
 
 
 ## Helper to create and register an AudioStreamPlayer child.
@@ -201,7 +201,7 @@ func _play_music_with_stream(
 
 
 ## Play a sound effect from the SFX pool.
-func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float = 0.0) -> void:
+func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX) -> void:
 	var path: String = "res://assets/sfx/%s.ogg" % sfx_id
 	if not ResourceLoader.exists(path):
 		if OS.is_debug_build():
@@ -210,23 +210,15 @@ func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float =
 	var stream: AudioStream = load(path)
 	if stream == null:
 		return
-	_play_sfx_with_stream(stream, sfx_id, priority, pan)
+	_play_sfx_with_stream(stream, sfx_id, priority)
 
 
 ## Internal: play a stream directly into the SFX pool (used by tests and play_sfx).
-func _play_sfx_with_stream(
-	stream: AudioStream, sfx_id: String, priority: Priority, pan: float
-) -> void:
-	# Check mono config — force pan to center
-	var config: Dictionary = PartyState.get_config()
-	var actual_pan: float = pan
-	if config.get("sound_mode", "stereo") == "mono":
-		actual_pan = 0.0
-
-	# Same-ID limit check
+func _play_sfx_with_stream(stream: AudioStream, sfx_id: String, priority: Priority) -> void:
+	# Same-ID limit check — only count slots that are still playing
 	var same_count: int = 0
-	for meta: Dictionary in _sfx_meta:
-		if meta.get("sfx_id") == sfx_id:
+	for i: int in range(SFX_POOL_SIZE):
+		if _sfx_pool[i].playing and _sfx_meta[i].get("sfx_id") == sfx_id:
 			same_count += 1
 	if same_count >= MAX_SAME_SFX:
 		return
@@ -247,7 +239,6 @@ func _play_sfx_with_stream(
 		"sfx_id": sfx_id,
 		"priority": priority,
 		"start_time": Time.get_ticks_msec(),
-		"pan": actual_pan,
 	}
 
 
@@ -255,7 +246,7 @@ func _play_sfx_with_stream(
 func _find_free_sfx_slot() -> int:
 	for i: int in range(SFX_POOL_SIZE):
 		if not _sfx_pool[i].playing:
-			_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0}
+			_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0}
 			return i
 	return -1
 
@@ -410,7 +401,7 @@ func silence_all() -> void:
 	# Stop all SFX pool players and reset their meta
 	for i: int in range(SFX_POOL_SIZE):
 		_sfx_pool[i].stop()
-		_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0}
+		_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0}
 
 	_current_music = ""
 	_current_ambient = ""

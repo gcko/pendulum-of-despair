@@ -43,7 +43,7 @@ func test_ambient_bus_exists() -> void:
 
 func test_play_sfx_occupies_pool_slot() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
-	_am._play_sfx_with_stream(stream, "test_sfx", AudioManager.Priority.UI_SFX, 0.0)
+	_am._play_sfx_with_stream(stream, "test_sfx", AudioManager.Priority.UI_SFX)
 	var occupied: int = 0
 	for player: AudioStreamPlayer in _am._sfx_pool:
 		if player.playing:
@@ -53,9 +53,9 @@ func test_play_sfx_occupies_pool_slot() -> void:
 
 func test_same_id_limit_blocks_third_instance() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
-	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX, 0.0)
-	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX, 0.0)
-	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX, 0.0)
+	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
+	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
+	_am._play_sfx_with_stream(stream, "same_sfx", AudioManager.Priority.UI_SFX)
 	var count: int = 0
 	for meta: Dictionary in _am._sfx_meta:
 		if meta.get("sfx_id") == "same_sfx":
@@ -66,8 +66,8 @@ func test_same_id_limit_blocks_third_instance() -> void:
 func test_priority_steal_replaces_lowest() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	for i: int in range(12):
-		_am._play_sfx_with_stream(stream, "low_%d" % i, AudioManager.Priority.AMBIENT, 0.0)
-	_am._play_sfx_with_stream(stream, "high", AudioManager.Priority.CUTSCENE_SFX, 0.0)
+		_am._play_sfx_with_stream(stream, "low_%d" % i, AudioManager.Priority.AMBIENT)
+	_am._play_sfx_with_stream(stream, "high", AudioManager.Priority.CUTSCENE_SFX)
 	var found_high: bool = false
 	for meta: Dictionary in _am._sfx_meta:
 		if meta.get("sfx_id") == "high":
@@ -79,8 +79,8 @@ func test_priority_steal_replaces_lowest() -> void:
 func test_priority_steal_rejected_when_all_higher() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	for i: int in range(12):
-		_am._play_sfx_with_stream(stream, "top_%d" % i, AudioManager.Priority.CUTSCENE_SFX, 0.0)
-	_am._play_sfx_with_stream(stream, "rejected", AudioManager.Priority.AMBIENT, 0.0)
+		_am._play_sfx_with_stream(stream, "top_%d" % i, AudioManager.Priority.CUTSCENE_SFX)
+	_am._play_sfx_with_stream(stream, "rejected", AudioManager.Priority.AMBIENT)
 	var found: bool = false
 	for meta: Dictionary in _am._sfx_meta:
 		if meta.get("sfx_id") == "rejected":
@@ -92,18 +92,6 @@ func test_priority_steal_rejected_when_all_higher() -> void:
 func test_missing_sfx_file_no_crash() -> void:
 	_am.play_sfx("totally_nonexistent_sfx_id_12345")
 	assert_true(true, "No crash on missing SFX file")
-
-
-func test_pan_stored_in_meta() -> void:
-	var stream: AudioStreamWAV = AudioStreamWAV.new()
-	_am._play_sfx_with_stream(stream, "panned", AudioManager.Priority.UI_SFX, -0.75)
-	var found_pan: bool = false
-	for meta: Dictionary in _am._sfx_meta:
-		if meta.get("sfx_id") == "panned":
-			assert_almost_eq(meta.get("pan", 0.0), -0.75, 0.01, "Pan should be stored")
-			found_pan = true
-			break
-	assert_true(found_pan, "Should find the panned SFX in meta")
 
 
 func test_play_music_sets_current_track() -> void:
@@ -156,7 +144,7 @@ func test_silence_all_stops_everything() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	_am._play_music_with_stream(stream, "music", 0.0)
 	_am._play_ambient_with_stream(stream, "ambient", 0.0)
-	_am._play_sfx_with_stream(stream, "sfx", AudioManager.Priority.UI_SFX, 0.0)
+	_am._play_sfx_with_stream(stream, "sfx", AudioManager.Priority.UI_SFX)
 	_am.silence_all()
 	assert_false(_am._music_active.playing, "Music should be stopped")
 	assert_false(_am._ambient_active.playing, "Ambient should be stopped")
@@ -225,9 +213,9 @@ func test_stop_ambient_clears_current_track() -> void:
 
 func test_silence_all_then_play_sfx_works() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
-	_am._play_sfx_with_stream(stream, "first", AudioManager.Priority.UI_SFX, 0.0)
+	_am._play_sfx_with_stream(stream, "first", AudioManager.Priority.UI_SFX)
 	_am.silence_all()
-	_am._play_sfx_with_stream(stream, "second", AudioManager.Priority.UI_SFX, 0.0)
+	_am._play_sfx_with_stream(stream, "second", AudioManager.Priority.UI_SFX)
 	var found: bool = false
 	for meta: Dictionary in _am._sfx_meta:
 		if meta.get("sfx_id") == "second":
@@ -279,4 +267,10 @@ func test_get_current_ambient_returns_track_id() -> void:
 
 func test_set_mix_context_unknown_rejected() -> void:
 	_am.set_mix_context("nonexistent")
-	assert_eq(_am._current_mix_context, "", "Unknown context should not be stored")
+	assert_eq(
+		_am._current_mix_context, "overworld", "Unknown context should not change stored value"
+	)
+
+
+func test_default_mix_context_is_overworld() -> void:
+	assert_eq(_am._current_mix_context, "overworld", "Default mix context should be overworld")

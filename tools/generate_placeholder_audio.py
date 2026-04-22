@@ -2,7 +2,10 @@
 """
 Generate minimal silent .ogg placeholder files for all required audio assets.
 
-Usage: python3 tools/generate_placeholder_audio.py
+Usage: python3 tools/generate_placeholder_audio.py [--force]
+
+Pass --force to overwrite existing .ogg files. Without it, only missing
+files are created (safe to re-run after real assets are added).
 
 Requires ffmpeg (brew install ffmpeg) or sox (brew install sox).
 Removes .gdkeep files from directories that receive real .ogg files.
@@ -110,6 +113,7 @@ def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
 
 
 def main() -> int:
+    force = "--force" in sys.argv
     tool_name, tool_path = find_tool()
     print(f"Using {tool_name} at {tool_path}")
 
@@ -127,6 +131,8 @@ def main() -> int:
 
             for asset_id in ids:
                 dest = os.path.join(directory, f"{asset_id}.ogg")
+                if os.path.exists(dest) and not force:
+                    continue
                 shutil.copy2(silence_path, dest)
                 total += 1
 
