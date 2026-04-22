@@ -84,10 +84,11 @@ def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
             tool_path,
             "-y",                          # overwrite without asking
             "-f", "lavfi",
-            "-i", "anullsrc=r=44100:cl=mono",
+            "-i", "anullsrc=r=44100:cl=stereo",
             "-t", "0.1",
-            "-c:a", "libopus",
-            "-b:a", "32k",
+            "-c:a", "vorbis",
+            "-strict", "-2",
+            "-q:a", "0",
             dest_path,
         ]
     else:  # sox

@@ -285,10 +285,15 @@ silence.
 | Format | OGG Vorbis (.ogg) |
 | Sample rate | 44.1 kHz |
 | Bit depth | 16-bit |
-| Naming convention | `category_name.ogg` |
+| Naming convention | `{id}.ogg` in category directory |
 
-**Examples:** `combat_hit_physical.ogg`, `ambient_thornmere_forest.ogg`,
-`ui_cursor_move.ogg`, `narrative_pallor_surge.ogg`
+**Directory layout:** Files are organized by category directory (`sfx/`,
+`ambient/`, `music/`) with the SFX ID as the filename. The directory
+provides category context, so category prefixes are not repeated in
+filenames.
+
+**Examples:** `sfx/hit_physical.ogg`, `ambient/thornmere_forest.ogg`,
+`sfx/cursor_move.ogg`, `sfx/pallor_surge.ogg`, `music/title_theme.ogg`
 
 ---
 

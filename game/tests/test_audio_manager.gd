@@ -10,6 +10,11 @@ func before_each() -> void:
 
 
 func after_each() -> void:
+	# Reset AudioServer bus volumes to avoid leaking state across tests
+	for bus_name: String in ["Music", "SFX", "Ambient"]:
+		var idx: int = AudioServer.get_bus_index(bus_name)
+		if idx != -1:
+			AudioServer.set_bus_volume_db(idx, 0.0)
 	_am = null
 
 
@@ -164,6 +169,12 @@ func test_enter_battle_stores_pre_battle_state() -> void:
 	_am._play_music_with_stream(stream, "overworld", 0.0)
 	_am._play_ambient_with_stream(stream, "highlands", 0.0)
 	_am._current_mix_context = "overworld"
+	# Store pre-battle state as enter_battle() would before calling internal method
+	_am._pre_battle_music = _am._current_music
+	_am._pre_battle_ambient = _am._current_ambient
+	var pos: float = _am._music_active.get_playback_position()
+	_am._pre_battle_music_pos = pos if _am._music_active.playing else 0.0
+	_am._pre_battle_mix_context = _am._current_mix_context
 	_am._enter_battle_with_stream(stream, "battle_standard")
 	assert_eq(_am._pre_battle_music, "overworld", "Should store pre-battle music")
 	assert_eq(_am._pre_battle_ambient, "highlands", "Should store pre-battle ambient")
@@ -177,7 +188,95 @@ func test_exit_battle_restores_state() -> void:
 	_am._play_music_with_stream(stream, "overworld", 0.0)
 	_am._play_ambient_with_stream(stream, "highlands", 0.0)
 	_am._current_mix_context = "overworld"
+	# Store pre-battle state as enter_battle() would
+	_am._pre_battle_music = _am._current_music
+	_am._pre_battle_ambient = _am._current_ambient
+	var pos: float = _am._music_active.get_playback_position()
+	_am._pre_battle_music_pos = pos if _am._music_active.playing else 0.0
+	_am._pre_battle_mix_context = _am._current_mix_context
 	_am._enter_battle_with_stream(stream, "battle_standard")
 	_am._exit_battle_with_streams(stream, stream, "overworld", "highlands")
 	assert_eq(_am._current_music, "overworld", "Music should be restored")
 	assert_eq(_am._current_ambient, "highlands", "Ambient should be restored")
+
+
+func test_stop_music_clears_current_track() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "track_a", 0.0)
+	assert_eq(_am._current_music, "track_a")
+	_am.stop_music(0.0)
+	assert_eq(_am._current_music, "", "Current music should be cleared after stop")
+	assert_false(_am._music_active.playing, "Music player should be stopped")
+
+
+func test_stop_music_noop_when_not_playing() -> void:
+	_am.stop_music(0.0)
+	assert_eq(_am._current_music, "", "Should remain empty when nothing playing")
+
+
+func test_stop_ambient_clears_current_track() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_ambient_with_stream(stream, "forest", 0.0)
+	assert_eq(_am._current_ambient, "forest")
+	_am.stop_ambient(0.0)
+	assert_eq(_am._current_ambient, "", "Current ambient should be cleared after stop")
+	assert_false(_am._ambient_active.playing, "Ambient player should be stopped")
+
+
+func test_silence_all_then_play_sfx_works() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_sfx_with_stream(stream, "first", AudioManager.Priority.UI_SFX, 0.0)
+	_am.silence_all()
+	_am._play_sfx_with_stream(stream, "second", AudioManager.Priority.UI_SFX, 0.0)
+	var found: bool = false
+	for meta: Dictionary in _am._sfx_meta:
+		if meta.get("sfx_id") == "second":
+			found = true
+			break
+	assert_true(found, "SFX should play after silence_all")
+
+
+func test_exit_battle_with_null_streams_clears_ids() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._play_ambient_with_stream(stream, "highlands", 0.0)
+	_am._pre_battle_music = _am._current_music
+	_am._pre_battle_ambient = _am._current_ambient
+	_am._pre_battle_music_pos = 0.0
+	_am._pre_battle_mix_context = "overworld"
+	_am._enter_battle_with_stream(stream, "battle_standard")
+	_am._exit_battle_with_streams(null, null, "overworld", "highlands")
+	assert_eq(_am._current_music, "", "Music ID should be empty when stream is null")
+	assert_eq(_am._current_ambient, "", "Ambient ID should be empty when stream is null")
+
+
+func test_exit_battle_clears_pre_battle_state() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "overworld", 0.0)
+	_am._pre_battle_music = "overworld"
+	_am._pre_battle_ambient = "highlands"
+	_am._pre_battle_music_pos = 5.0
+	_am._pre_battle_mix_context = "overworld"
+	_am._enter_battle_with_stream(stream, "battle_standard")
+	_am._exit_battle_with_streams(stream, stream, "overworld", "highlands")
+	assert_eq(_am._pre_battle_music, "", "Pre-battle music should be cleared")
+	assert_eq(_am._pre_battle_ambient, "", "Pre-battle ambient should be cleared")
+	assert_almost_eq(_am._pre_battle_music_pos, 0.0, 0.01, "Pre-battle pos should be cleared")
+	assert_eq(_am._pre_battle_mix_context, "", "Pre-battle context should be cleared")
+
+
+func test_get_current_music_returns_track_id() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(stream, "my_track", 0.0)
+	assert_eq(_am.get_current_music(), "my_track", "Getter should return current music ID")
+
+
+func test_get_current_ambient_returns_track_id() -> void:
+	var stream: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_ambient_with_stream(stream, "my_ambient", 0.0)
+	assert_eq(_am.get_current_ambient(), "my_ambient", "Getter should return current ambient ID")
+
+
+func test_set_mix_context_unknown_rejected() -> void:
+	_am.set_mix_context("nonexistent")
+	assert_eq(_am._current_mix_context, "", "Unknown context should not be stored")

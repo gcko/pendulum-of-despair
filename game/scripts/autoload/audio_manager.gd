@@ -19,11 +19,10 @@ enum Priority {
 	CUTSCENE_SFX = 7,
 }
 
-## Channel budget constants (per audio.md Section 3.1).
-const MUSIC_CHANNELS: int = 8
-const SFX_CHANNELS: int = 12
-const AMBIENT_CHANNELS: int = 4
-const TOTAL_CHANNELS: int = 24
+## Audio.md Section 3.1 budget: 8 music + 12 SFX + 4 ambient = 24 channels.
+## Implementation uses 16 physical AudioStreamPlayers (2 music crossfade pair +
+## 2 ambient crossfade pair + 12 SFX pool). The 24-channel budget is a design
+## guideline for sound density, not a 1:1 player count.
 
 ## Max simultaneous instances of the same SFX ID (per audio.md Section 3.4).
 const MAX_SAME_SFX: int = 2
@@ -38,11 +37,8 @@ const CROSSFADE_PALLOR_AMBIENT: float = 3.0
 ## Silence level in decibels (effectively muted).
 const SILENT_DB: float = -80.0
 
-## Number of SFX pool slots.
+## Number of SFX pool slots (matches audio.md Section 3.1 SFX budget).
 const SFX_POOL_SIZE: int = 12
-
-## Fast fade duration used when stealing an SFX slot.
-const STEAL_FADE_DURATION: float = 0.05
 
 ## Mixing model: music vs ambient volume ratios (per audio.md Section 2.2).
 ## Values are percentage multipliers applied to the player's config volume.
@@ -120,7 +116,7 @@ func _create_players() -> void:
 	for i: int in range(SFX_POOL_SIZE):
 		var player: AudioStreamPlayer = _make_player("sfx_%d" % i, "SFX")
 		_sfx_pool.append(player)
-		_sfx_meta.append({})
+		_sfx_meta.append({"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0})
 
 
 ## Helper to create and register an AudioStreamPlayer child.
@@ -144,7 +140,8 @@ func play_music(track_id: String, crossfade_duration: float = CROSSFADE_BIOME) -
 		return
 	var path: String = "res://assets/music/%s.ogg" % track_id
 	if not ResourceLoader.exists(path):
-		push_warning("AudioManager: Music file not found: %s" % path)
+		if OS.is_debug_build():
+			push_warning("AudioManager: Music file not found: %s" % path)
 		return
 	var stream: AudioStream = load(path)
 	if stream == null:
@@ -269,7 +266,7 @@ func _find_steal_target(requested_priority: Priority) -> int:
 	var lowest_priority: int = int(requested_priority)
 	var lowest_idx: int = -1
 	for i: int in range(SFX_POOL_SIZE):
-		var slot_priority: int = int(_sfx_meta[i].get("priority", Priority.CUTSCENE_SFX))
+		var slot_priority: int = int(_sfx_meta[i].get("priority", Priority.AMBIENT))
 		if slot_priority < lowest_priority:
 			lowest_priority = slot_priority
 			lowest_idx = i
@@ -287,7 +284,8 @@ func play_ambient(ambient_id: String, crossfade_duration: float = CROSSFADE_BIOM
 		return
 	var path: String = "res://assets/ambient/%s.ogg" % ambient_id
 	if not ResourceLoader.exists(path):
-		push_warning("AudioManager: Ambient file not found: %s" % path)
+		if OS.is_debug_build():
+			push_warning("AudioManager: Ambient file not found: %s" % path)
 		return
 	var stream: AudioStream = load(path)
 	if stream == null:
@@ -350,6 +348,11 @@ func _play_ambient_with_stream(
 
 ## Stop all music with an optional fade out.
 func stop_music(fade_duration: float = CROSSFADE_BIOME) -> void:
+	# Kill any in-flight fade tween and stop the fade player (from a prior crossfade)
+	_kill_tween(_music_fade_tween)
+	_music_fade.stop()
+	_music_fade.volume_db = SILENT_DB
+
 	if not _music_active.playing:
 		_current_music = ""
 		return
@@ -362,6 +365,27 @@ func stop_music(fade_duration: float = CROSSFADE_BIOME) -> void:
 		_music_active.stop()
 		_music_active.volume_db = SILENT_DB
 	_current_music = ""
+
+
+## Stop all ambient with an optional fade out.
+func stop_ambient(fade_duration: float = CROSSFADE_BIOME) -> void:
+	# Kill any in-flight fade tween and stop the fade player
+	_kill_tween(_ambient_fade_tween)
+	_ambient_fade.stop()
+	_ambient_fade.volume_db = SILENT_DB
+
+	if not _ambient_active.playing:
+		_current_ambient = ""
+		return
+	_kill_tween(_ambient_active_tween)
+	if fade_duration > 0.0:
+		_ambient_active_tween = create_tween()
+		_ambient_active_tween.tween_property(_ambient_active, "volume_db", SILENT_DB, fade_duration)
+		_ambient_active_tween.tween_callback(_ambient_active.stop)
+	else:
+		_ambient_active.stop()
+		_ambient_active.volume_db = SILENT_DB
+	_current_ambient = ""
 
 
 ## Kill a tween safely if it is still valid.
@@ -386,7 +410,7 @@ func silence_all() -> void:
 	# Stop all SFX pool players and reset their meta
 	for i: int in range(SFX_POOL_SIZE):
 		_sfx_pool[i].stop()
-		_sfx_meta[i] = {}
+		_sfx_meta[i] = {"sfx_id": "", "priority": Priority.AMBIENT, "start_time": 0, "pan": 0.0}
 
 	_current_music = ""
 	_current_ambient = ""
@@ -407,26 +431,30 @@ func set_mix_context(context: String) -> void:
 
 ## Hard cut to battle music (no crossfade, ambient cuts to 0).
 func enter_battle(battle_track: String) -> void:
-	var path: String = "res://assets/music/%s.ogg" % battle_track
-	if not ResourceLoader.exists(path):
-		push_warning("AudioManager: Battle music file not found: %s" % path)
-		_silence_ambient_immediate()
-		set_mix_context("battle")
-		return
-	var stream: AudioStream = load(path)
-	if stream == null:
-		return
-	_enter_battle_with_stream(stream, battle_track)
-
-
-## Internal: hard cut to battle track (used by tests and enter_battle).
-func _enter_battle_with_stream(stream: AudioStream, battle_track: String) -> void:
-	# Store pre-battle state
+	# Always store pre-battle state before any mutation so exit_battle can restore.
 	_pre_battle_music = _current_music
 	_pre_battle_ambient = _current_ambient
 	_pre_battle_music_pos = _music_active.get_playback_position() if _music_active.playing else 0.0
 	_pre_battle_mix_context = _current_mix_context
 
+	var path: String = "res://assets/music/%s.ogg" % battle_track
+	if not ResourceLoader.exists(path):
+		if OS.is_debug_build():
+			push_warning("AudioManager: Battle music file not found: %s" % path)
+		_silence_ambient_immediate()
+		set_mix_context("battle")
+		return
+	var stream: AudioStream = load(path)
+	if stream == null:
+		_silence_ambient_immediate()
+		set_mix_context("battle")
+		return
+	_enter_battle_with_stream(stream, battle_track)
+
+
+## Internal: hard cut to battle track (used by tests and enter_battle).
+## Pre-battle state must already be stored by the caller before invoking this.
+func _enter_battle_with_stream(stream: AudioStream, battle_track: String) -> void:
 	# Kill all 4 crossfade tweens
 	_kill_tween(_music_active_tween)
 	_kill_tween(_music_fade_tween)
@@ -460,11 +488,11 @@ func exit_battle(music_track: String, ambient_track: String) -> void:
 	var ambient_stream: AudioStream = null
 	if ResourceLoader.exists(music_path):
 		music_stream = load(music_path)
-	else:
+	elif OS.is_debug_build():
 		push_warning("AudioManager: Music file not found: %s" % music_path)
 	if ResourceLoader.exists(ambient_path):
 		ambient_stream = load(ambient_path)
-	else:
+	elif OS.is_debug_build():
 		push_warning("AudioManager: Ambient file not found: %s" % ambient_path)
 	_exit_battle_with_streams(music_stream, ambient_stream, music_track, ambient_track)
 
@@ -487,17 +515,18 @@ func _exit_battle_with_streams(
 		_music_fade_tween.tween_property(_music_fade, "volume_db", SILENT_DB, CROSSFADE_BATTLE_EXIT)
 		_music_fade_tween.tween_callback(_music_fade.stop)
 
-	# Fade in restored music track
+	# Fade in restored music track — only update current ID if stream is valid
 	if music_stream != null:
 		_music_active.stream = music_stream
 		_music_active.volume_db = SILENT_DB
 		_music_active.play(_pre_battle_music_pos)
 		_music_active_tween = create_tween()
 		_music_active_tween.tween_property(_music_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT)
+		_current_music = music_id
+	else:
+		_current_music = ""
 
-	_current_music = music_id
-
-	# Fade in restored ambient track
+	# Fade in restored ambient track — only update current ID if stream is valid
 	if ambient_stream != null:
 		_kill_tween(_ambient_fade_tween)
 		_ambient_active.stream = ambient_stream
@@ -507,9 +536,15 @@ func _exit_battle_with_streams(
 		_ambient_active_tween.tween_property(
 			_ambient_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT
 		)
-
-	_current_ambient = ambient_id
+		_current_ambient = ambient_id
+	else:
+		_current_ambient = ""
 	set_mix_context(_pre_battle_mix_context)
+	# Clear pre-battle snapshot to prevent stale restore on double exit_battle
+	_pre_battle_music = ""
+	_pre_battle_ambient = ""
+	_pre_battle_music_pos = 0.0
+	_pre_battle_mix_context = ""
 	if OS.is_debug_build():
 		print("AudioManager: exit_battle -> music='%s' ambient='%s'" % [music_id, ambient_id])
 

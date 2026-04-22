@@ -171,12 +171,23 @@ func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
 
 func _on_cutscene_music(track_id: String, action: String) -> void:
 	if action == "play":
+		if track_id.is_empty():
+			if OS.is_debug_build():
+				push_warning("CutsceneHandler: cutscene_music_requested 'play' with empty track_id")
+			return
 		AudioManager.play_music(track_id)
 	elif action == "stop":
 		AudioManager.stop_music()
+	else:
+		if OS.is_debug_build():
+			push_warning("CutsceneHandler: unknown cutscene_music_requested action: '%s'" % action)
 
 
 func _on_cutscene_sfx(sfx_id: String) -> void:
+	if sfx_id.is_empty():
+		if OS.is_debug_build():
+			push_warning("CutsceneHandler: sfx_requested with empty sfx_id")
+		return
 	AudioManager.play_sfx(sfx_id, AudioManager.Priority.CUTSCENE_SFX)
 
 
