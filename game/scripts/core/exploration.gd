@@ -324,7 +324,7 @@ func on_save_point_activated(_save_point_id: String) -> void:
 func on_save_point_entered(_save_point_id: String) -> void:
 	if _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
 		return
-	AudioManager.play_sfx("save_point_proximity")
+	AudioManager.play_sfx("save_point_chime", AudioManager.Priority.EXPLORATION_SFX)
 
 
 func on_save_point_exited(_save_point_id: String) -> void:

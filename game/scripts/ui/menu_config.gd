@@ -149,6 +149,7 @@ func _adjust(direction: int) -> void:
 
 	# Apply cascades
 	_apply_cascades()
+	AudioManager.update_volumes()
 	_update_display()
 
 

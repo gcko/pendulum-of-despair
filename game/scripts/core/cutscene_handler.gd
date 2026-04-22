@@ -169,14 +169,15 @@ func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
 	EventFlags.set_flag(flag_name, value)
 
 
-func _on_cutscene_music(_track_id: String, _action: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
+func _on_cutscene_music(track_id: String, action: String) -> void:
+	if action == "play":
+		AudioManager.play_music(track_id)
+	elif action == "stop":
+		AudioManager.stop_music()
 
 
-func _on_cutscene_sfx(_sfx_id: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
+func _on_cutscene_sfx(sfx_id: String) -> void:
+	AudioManager.play_sfx(sfx_id, AudioManager.Priority.CUTSCENE_SFX)
 
 
 func start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:
