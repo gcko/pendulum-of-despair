@@ -408,6 +408,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Test assertions must be specific enough to not false-positive on unrelated content (PR #131: 'text = "Config"' matched CommandPanel label too)
 - [ ] After changing item/consumable effects, descriptions, or cure lists: grep ALL city docs (`docs/story/city-*.md`) for shop tables that list item effects. City shop tables duplicate items.md data and become stale when the canonical source changes. (PR #147: Smelling Salts cure list in city-valdris.md diverged from consumables.json)
 - [ ] After changing item availability (shop inventory, available_act, restock_event): grep ALL city docs AND items.md availability columns for stale references. (PR #147: Waystone availability text in items.md didn't match actual shop data)
+- [ ] After adding/removing tests during review rounds: update the PR description test count AND gap tracker count. Both surfaces can go stale independently. (PR #148: PR body said 17 tests, actual count was 28 after review iterations)
 
 ### Overlay Push Failure Recovery (from Copilot PR #147 gap analysis)
 - [ ] Every `push_overlay()` call that is preceded by a silent `pop_overlay(true)` must handle the case where `push_overlay` returns `false`. A failed push after silent pop leaves the tree paused with `current_overlay = NONE` and no signal, soft-locking input. Restore a usable state: unpause, re-push the prior overlay, or avoid the silent pop pattern. (PR #147: menu_overlay._open_save() used silent pop + push without failure handling)
