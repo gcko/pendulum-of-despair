@@ -534,6 +534,8 @@ content. Not sold in any shop.
 | Warrior's Memento | ATK +10 | Boss Rush Tier 1 | Post |
 | Survivor's Memento | DEF +10, MDEF +10 | Boss Rush Tier 2 | Post |
 | Pendulum's Memento | All stats +5 | Boss Rush Tier 3 | Post |
+| Gravity Shard | +12 all stats, negates gravity-based status effects | Dry Well of Aelhart Floor 6 chest | III |
+| Warp Walker's Boots | +20 SPD, movement speed increase in gravity-shifted rooms | Dry Well of Aelhart Floor 6 chest | III |
 
 > **Memento accessories** are earned from the boss rush mode (per
 > [postgame.md](postgame.md)). They are meaningful but intentionally
