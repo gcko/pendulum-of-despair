@@ -1149,7 +1149,7 @@
     {
       "id": "composite_shortbow",
       "name": "Composite Shortbow",
-      "type": "bow",
+      "type": "spear",
       "tier": 1,
       "equippable_by": [
         "torren"
