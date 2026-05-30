@@ -46,13 +46,13 @@ func test_load_map_creates_children() -> void:
 
 func test_player_spawns_at_marker() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player should be instantiated")
-	assert_eq(exp._player.position, Vector2(80, 96), "player should be at spawn point")
+	assert_not_null(exp.get_player(), "player should be instantiated")
+	assert_eq(exp.get_player().position, Vector2(80, 96), "player should be at spawn point")
 
 
 func test_camera_follows_player() -> void:
 	var exp: Node2D = _create_exploration()
-	exp._player.position = Vector2(100, 50)
+	exp.get_player().position = Vector2(100, 50)
 	exp._process(0.016)
 	var cam: Camera2D = exp.get_node("Camera2D")
 	assert_eq(cam.position, Vector2(100, 50), "camera should follow player")
@@ -63,7 +63,7 @@ func test_camera_follows_player() -> void:
 
 func test_npc_interaction_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	assert_not_null(entities, "entities node should exist")
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC should exist in map")
@@ -74,7 +74,7 @@ func test_npc_interaction_signal_wired() -> void:
 
 func test_chest_interaction_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	var chest: Node = entities.get_node_or_null("TestChest")
 	assert_not_null(chest, "test chest should exist in map")
 	assert_true(
@@ -84,7 +84,7 @@ func test_chest_interaction_signal_wired() -> void:
 
 func test_save_point_signal_wired() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	var sp: Node = entities.get_node_or_null("TestSavePoint")
 	assert_not_null(sp, "test save point should exist in map")
 	assert_true(
@@ -99,7 +99,7 @@ func test_save_point_signal_wired() -> void:
 func test_transition_flag_blocks_interaction() -> void:
 	var exp: Node2D = _create_exploration_test_room()
 	# Use a real entity that has interact() — e.g., the NPC from the map
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC must exist for this test")
 	watch_signals(npc)
@@ -162,7 +162,7 @@ func test_encounter_fallback_skipped_on_empty_floor_id() -> void:
 
 func test_npc_with_shop_id_opens_shop_overlay() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC required")
@@ -178,7 +178,7 @@ func test_npc_with_shop_id_opens_shop_overlay() -> void:
 
 func test_inn_interaction_deducts_gold() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC required")
@@ -191,7 +191,7 @@ func test_inn_interaction_deducts_gold() -> void:
 
 func test_inn_interaction_insufficient_gold_rejected() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	var entities: Node = exp._current_map.get_node_or_null("Entities")
+	var entities: Node = exp.get_current_map().get_node_or_null("Entities")
 	assert_not_null(entities, "entities node required")
 	var npc: Node = entities.get_node_or_null("TestNPC")
 	assert_not_null(npc, "test NPC required")
@@ -207,15 +207,15 @@ func test_inn_interaction_insufficient_gold_rejected() -> void:
 
 func test_ui_accept_blocked_when_input_disabled() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
-	exp._player.set_input_enabled(false)
-	watch_signals(exp._player)
+	assert_not_null(exp.get_player(), "player must exist")
+	exp.get_player().set_input_enabled(false)
+	watch_signals(exp.get_player())
 	var event: InputEventAction = InputEventAction.new()
 	event.action = "ui_accept"
 	event.pressed = true
 	exp._unhandled_input(event)
 	assert_signal_not_emitted(
-		exp._player,
+		exp.get_player(),
 		"interaction_requested",
 		"ui_accept should be blocked when input is disabled",
 	)
@@ -223,9 +223,9 @@ func test_ui_accept_blocked_when_input_disabled() -> void:
 
 func test_ui_accept_allowed_when_input_enabled() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
-	exp._player.set_input_enabled(true)
-	watch_signals(exp._player)
+	assert_not_null(exp.get_player(), "player must exist")
+	exp.get_player().set_input_enabled(true)
+	watch_signals(exp.get_player())
 	var event: InputEventAction = InputEventAction.new()
 	event.action = "ui_accept"
 	event.pressed = true
@@ -234,15 +234,15 @@ func test_ui_accept_allowed_when_input_enabled() -> void:
 	# the key assertion is that the code path is NOT blocked by the guard.
 	# We verify by checking the event was consumed (viewport handled).
 	assert_true(
-		exp._player.is_input_enabled(),
+		exp.get_player().is_input_enabled(),
 		"input should still be enabled (not toggled off by the handler)",
 	)
 
 
 func test_ui_menu_blocked_when_input_disabled() -> void:
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
-	exp._player.set_input_enabled(false)
+	assert_not_null(exp.get_player(), "player must exist")
+	exp.get_player().set_input_enabled(false)
 	watch_signals(GameManager)
 	var event: InputEventAction = InputEventAction.new()
 	event.action = "ui_menu"
