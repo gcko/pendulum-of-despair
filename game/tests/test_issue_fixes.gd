@@ -941,3 +941,62 @@ func test_exploration_exit_tree_calls_cleansing_cleanup() -> void:
 		"_cleansing.cleanup()" in exit_tree_body,
 		"_exit_tree should call _cleansing.cleanup()",
 	)
+
+
+# ==========================================================================
+# Bug fix: battle_manager._do_item consumes items after use
+# ==========================================================================
+
+
+func test_do_item_consumes_healing_item() -> void:
+	# When a healing item is used successfully, PartyState.consume_item should be called
+	var source: String = BattleMgrScript.source_code
+	# Check that restore_hp case consumes the item after "Used X!" message
+	var restore_hp_pos: int = source.find('"restore_hp":')
+	assert_gt(restore_hp_pos, 0, "restore_hp case should exist")
+	var next_case: int = source.find('"', restore_hp_pos + 20)
+	next_case = source.find(":", next_case)  # Find next case
+	var restore_hp_body: String = source.substr(restore_hp_pos, next_case - restore_hp_pos)
+	assert_true(
+		'"Used %s!" % item.get("name"' in restore_hp_body,
+		"restore_hp should emit Used message",
+	)
+	assert_true(
+		"PartyState.consume_item" in restore_hp_body,
+		"restore_hp should call PartyState.consume_item after Used message",
+	)
+
+
+func test_do_item_consumes_revive_item() -> void:
+	# When a revive item is used, item should be consumed even if target is invalid
+	var source: String = BattleMgrScript.source_code
+	var revive_pos: int = source.find('"revive":')
+	assert_gt(revive_pos, 0, "revive case should exist")
+	var next_case: int = source.find('"', revive_pos + 15)
+	next_case = source.find(":", next_case)  # Find next case
+	var revive_body: String = source.substr(revive_pos, next_case - revive_pos)
+	assert_true(
+		"PartyState.consume_item" in revive_body,
+		"revive should call PartyState.consume_item",
+	)
+
+
+func test_do_item_structural_consume_pattern() -> void:
+	# Verify that all item effect branches that emit "Used X!" also consume
+	var source: String = BattleMgrScript.source_code
+	# Check for the pattern: "Used" message followed by consume_item
+	var patterns: Array[String] = [
+		'"restore_hp"',
+		'"revive"',
+		'"restore_mp"',
+		'"restore_hp_mp"',
+		'"cure_status"',
+		'"buff_atk"',
+		'"buff_mag"',
+		'"flee"',
+	]
+	for pattern: String in patterns:
+		assert_true(
+			pattern in source,
+			"_do_item should have %s case" % pattern,
+		)

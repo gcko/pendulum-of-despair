@@ -318,6 +318,9 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			for slot: int in slots:
 				var tgt_m: Dictionary = _state.get_member(slot)
 				if tgt_m.is_empty():
@@ -342,6 +345,9 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("No effect!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			var raw_rev: Variant = item.get("value")
 			var revive_pct: int = int(raw_rev) if raw_rev != null else 25
 			var revived_hp: int = int(
@@ -354,6 +360,9 @@ func _do_item(command: Dictionary) -> bool:
 				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
 		"restore_mp":
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			var mp_tgt: Dictionary = _state.get_member(target_slot)
 			var raw_mp: Variant = item.get("value")
 			var mp_amt: int = int(raw_mp) if raw_mp != null else 0
@@ -364,6 +373,9 @@ func _do_item(command: Dictionary) -> bool:
 		"restore_hp_mp":
 			var slots: Array[int] = _get_item_target_slots(target_type, target_slot)
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			for slot: int in slots:
 				var tgt_m: Dictionary = _state.get_member(slot)
 				if tgt_m.is_empty() or not tgt_m.get("is_alive", false):
@@ -387,15 +399,24 @@ func _do_item(command: Dictionary) -> bool:
 						_state.remove_status(slot, hp_mp_statuses[i].get("name", ""))
 		"cure_status":
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			for sname: String in item.get("cures", []):
 				_state.remove_status(target_slot, sname)
 		"buff_atk":
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			var raw_atk: Variant = item.get("value")
 			var atk_boost: int = int(raw_atk) if raw_atk != null else 10
 			_state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
 		"buff_mag":
 			message.emit("Used %s!" % item.get("name", "Item"))
+			var item_id: String = item.get("id", "")
+			if not item_id.is_empty():
+				PartyState.consume_item(item_id)
 			var raw_mag: Variant = item.get("value")
 			var mag_boost: int = int(raw_mag) if raw_mag != null else 15
 			_state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
@@ -404,7 +425,6 @@ func _do_item(command: Dictionary) -> bool:
 				message.emit("Can't use that here!")
 				return false
 			message.emit("Used %s!" % item.get("name", "Item"))
-			# Consume before exit — _exit_battle triggers scene transition
 			var flee_item_id: String = item.get("id", "")
 			if not flee_item_id.is_empty():
 				PartyState.consume_item(flee_item_id)
@@ -413,9 +433,6 @@ func _do_item(command: Dictionary) -> bool:
 		_:
 			message.emit("No effect!")
 			return false
-	var item_id: String = item.get("id", "")
-	if not item_id.is_empty():
-		PartyState.consume_item(item_id)
 	return true
 
 
