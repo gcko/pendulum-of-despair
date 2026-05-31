@@ -458,6 +458,21 @@ Basic stat accessories available from shops in Acts I–II.
 | Life Pendant | +300 HP | 800 | II | Act II shops |
 | Mana Bead | +50 MP | 800 | II | Act II shops |
 
+#### Supplemental Stat Boost Accessories (Interlude–Act III)
+
+Found in chests or purchased from specialty shops.
+
+| Name | Effect | Price | Act | Acquired |
+|------|--------|-------|-----|----------|
+| Silver Ring | +3 MAG | 200 | II | Valdris Crown jeweler |
+| Royal Signet | +2 all stats | 1,200 | II | Valdris Crown jeweler (requires court favor) |
+| Ember Ring | +3 ATK, +2 MAG | — | II | Ember Vein chest (Floor 2, behind mini-boss) |
+| Ember Shard | +5 MAG | — | II | Ember Vein F3 (secret room) |
+| Miner's Hardhat | +3 DEF, reduces pitfall stun | — | II | Ember Vein chest (Floor 2) |
+| Marsh Cloak | +3 DEF, +3 MDEF | — | Int | Fenmother's Hollow chest (Floor 1) |
+| Ancient Totem | +4 MAG, +2 MDEF | — | Int | Fenmother's Hollow chest (Floor 2) |
+| Fenmother's Scale | +5 MDEF, water resistance (25%) | — | Int | Fenmother's Hollow chest (Floor 2) |
+
 ### Status Immunity Accessories
 
 Prevent specific status ailments. Available mid- to late-game as
@@ -483,6 +498,8 @@ when elemental-heavy encounters become routine.
 | Frost Amulet | Halve Frost damage | 3,000 | III | Act III shop |
 | Storm Pendant | Halve Storm damage | 3,000 | III | Pallor Wastes chest |
 | Void Ward | Halve Void damage | 4,000 | III | Convergence chest |
+| Pact-Charm (Earth) | +5% Earth resist, +2 DEF | 600 | II | Valdris Crown jeweler |
+| Pact-Charm (Storm) | +5% Storm resist, +2 SPD | 600 | II | Valdris Crown jeweler |
 
 ### Combat Mechanic Accessories
 
@@ -501,6 +518,7 @@ Preemptive Charm, Infiltrator's Cloak).
 | Ward Talisman | Danger counter increment ×0.5 (fewer encounters) | 1,500 | II | Bellhaven, Corrund shops |
 | Lure Talisman | Danger counter increment ×2.0 (more encounters) | 800 | II | Corrund, Ironmark shops |
 | Infiltrator's Cloak | Danger counter increment ×0.5 (fewer encounters) | — | Int | Axis Tower F2 treasure |
+| Guardian Pendant | Auto-Protect when HP < 25% | 400 | II | Valdris Crown jeweler |
 
 > **Encounter rate accessories:** See [combat-formulas.md](combat-formulas.md)
 > (Encounter System section) for the danger counter model, stacking
@@ -548,12 +566,12 @@ content. Not sold in any shop.
 
 | Category | Count |
 |----------|-------|
-| Stat Boost | 8 |
+| Stat Boost | 16 |
 | Status Immunity | 6 |
-| Elemental Resistance | 4 |
-| Combat Mechanic | 9 |
+| Elemental Resistance | 6 |
+| Combat Mechanic | 10 |
 | Character-Specific / Boss Drop | 15 |
-| **Total** | **42** |
+| **Total** | **53** |
 
 ---
 
