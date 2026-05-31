@@ -948,44 +948,59 @@ func test_exploration_exit_tree_calls_cleansing_cleanup() -> void:
 # ==========================================================================
 
 
-func test_do_item_consumes_healing_item() -> void:
-	# When a healing item is used successfully, PartyState.consume_item should be called
+func test_do_item_consumes_items_in_all_cases() -> void:
+	# Verify consume_item is called in all item effect types
 	var source: String = BattleMgrScript.source_code
-	# Check that restore_hp case consumes the item after "Used X!" message
+	# Count how many times PartyState.consume_item appears in _do_item method
+	var do_item_start: int = source.find("func _do_item(")
+	assert_gt(do_item_start, 0, "_do_item method should exist")
+	var next_func: int = source.find("\nfunc ", do_item_start + 1)
+	var do_item_body: String = source.substr(do_item_start, next_func - do_item_start)
+
+	# Count occurrences of consume_item in the method
+	var consume_count: int = 0
+	var search_pos: int = 0
+	while true:
+		var found: int = do_item_body.find("PartyState.consume_item", search_pos)
+		if found == -1:
+			break
+		consume_count += 1
+		search_pos = found + 1
+
+	# Should have multiple consume_item calls (one per effect type that uses items)
+	assert_gt(
+		consume_count,
+		5,
+		"should call consume_item in at least 5 effect cases (restore_hp, revive, restore_mp, etc)",
+	)
+
+
+func test_do_item_uses_consumed_message_before_effect() -> void:
+	# Verify that "Used X!" message comes before the effect is executed
+	var source: String = BattleMgrScript.source_code
 	var restore_hp_pos: int = source.find('"restore_hp":')
 	assert_gt(restore_hp_pos, 0, "restore_hp case should exist")
-	var next_case: int = source.find('"', restore_hp_pos + 20)
-	next_case = source.find(":", next_case)  # Find next case
-	var restore_hp_body: String = source.substr(restore_hp_pos, next_case - restore_hp_pos)
-	assert_true(
-		'"Used %s!" % item.get("name"' in restore_hp_body,
-		"restore_hp should emit Used message",
-	)
-	assert_true(
-		"PartyState.consume_item" in restore_hp_body,
-		"restore_hp should call PartyState.consume_item after Used message",
+
+	# Find the Used message and consume_item within restore_hp block
+	var next_match_case: int = source.find('"revive":', restore_hp_pos)
+	var restore_hp_section: String = source.substr(restore_hp_pos, next_match_case - restore_hp_pos)
+
+	var used_msg_pos: int = restore_hp_section.find('"Used %s!"')
+	var consume_pos: int = restore_hp_section.find("PartyState.consume_item")
+
+	assert_gt(used_msg_pos, 0, "restore_hp should emit Used message")
+	assert_gt(consume_pos, 0, "restore_hp should consume item")
+	assert_lt(
+		used_msg_pos,
+		consume_pos,
+		"Used message should come before consume_item call",
 	)
 
 
-func test_do_item_consumes_revive_item() -> void:
-	# When a revive item is used, item should be consumed even if target is invalid
+func test_do_item_has_all_effect_types() -> void:
+	# Verify all item effect types are handled
 	var source: String = BattleMgrScript.source_code
-	var revive_pos: int = source.find('"revive":')
-	assert_gt(revive_pos, 0, "revive case should exist")
-	var next_case: int = source.find('"', revive_pos + 15)
-	next_case = source.find(":", next_case)  # Find next case
-	var revive_body: String = source.substr(revive_pos, next_case - revive_pos)
-	assert_true(
-		"PartyState.consume_item" in revive_body,
-		"revive should call PartyState.consume_item",
-	)
-
-
-func test_do_item_structural_consume_pattern() -> void:
-	# Verify that all item effect branches that emit "Used X!" also consume
-	var source: String = BattleMgrScript.source_code
-	# Check for the pattern: "Used" message followed by consume_item
-	var patterns: Array[String] = [
+	var effect_types: Array[String] = [
 		'"restore_hp"',
 		'"revive"',
 		'"restore_mp"',
@@ -995,8 +1010,8 @@ func test_do_item_structural_consume_pattern() -> void:
 		'"buff_mag"',
 		'"flee"',
 	]
-	for pattern: String in patterns:
+	for effect_type: String in effect_types:
 		assert_true(
-			pattern in source,
-			"_do_item should have %s case" % pattern,
+			effect_type in source,
+			"_do_item should handle %s effect type" % effect_type,
 		)
