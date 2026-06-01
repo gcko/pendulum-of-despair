@@ -1,4 +1,7 @@
+class_name CutscenePlayer
+
 extends CanvasLayer
+
 ## Cutscene sequencer overlay. Processes entries in order: run before-commands,
 ## show dialogue via embedded dialogue_box, run after-commands.
 ## Attached to the root CanvasLayer of cutscene.tscn.
@@ -31,10 +34,10 @@ var _fade_tween: Tween = null
 var _flash_tween: Tween = null
 var _title_tween: Tween = null
 
-@onready var _dialogue_box: Node = $DialogueBox
+@onready var _dialogue_box: DialogueBox = $DialogueBox
 @onready var _fade_rect: ColorRect = $FadeRect
 @onready var _title_label: Label = $TitleLabel
-@onready var _letterbox: Node = $Letterbox
+@onready var _letterbox: CutsceneLetterbox = $Letterbox
 
 
 func _ready() -> void:

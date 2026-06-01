@@ -1,4 +1,7 @@
+class_name DialogueBox
+
 extends CanvasLayer
+
 ## Dialogue overlay with typewriter text, speaker names, and choice prompts.
 ## Processes dialogue entries sequentially. Emits dialogue_finished when done.
 ##
