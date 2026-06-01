@@ -60,6 +60,34 @@
         "available_act": 1,
         "stock_limit": null,
         "restock_event": "ember_vein_complete"
+      },
+      {
+        "item_id": "power_ring",
+        "buy_price": 300,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "iron_bracelet",
+        "buy_price": 300,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "magic_earring",
+        "buy_price": 400,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
+      },
+      {
+        "item_id": "warding_charm",
+        "buy_price": 400,
+        "available_act": 1,
+        "stock_limit": null,
+        "restock_event": null
       }
     ]
   }
