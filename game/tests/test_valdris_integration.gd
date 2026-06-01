@@ -66,6 +66,8 @@ func test_location_names_correct() -> void:
 	for map_id: String in expected:
 		var path: String = "res://scenes/maps/%s.tscn" % map_id
 		var scene: PackedScene = load(path) as PackedScene
+		assert_not_null(scene, "Failed to load scene: %s" % path)
+		assert_true(scene is PackedScene, "Scene is not a PackedScene: %s" % path)
 		var node: Node2D = scene.instantiate() as Node2D
 		add_child_autofree(node)
 		var loc: String = node.get_meta("location_name", "")
