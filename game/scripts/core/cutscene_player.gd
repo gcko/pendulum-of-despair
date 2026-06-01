@@ -64,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 
-## Start a cutscene sequence.
+## Start a cutscene sequence. ASYNC: must be awaited.
 func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
 	if _is_playing:
 		if OS.is_debug_build():
@@ -125,26 +125,38 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 func skip_cutscene() -> void:
 	if not _is_playing:
 		return
+
+	# Set skipped early so any running coroutines bail out
+	_is_playing = false
+	_skipped = true
+
+	# Emit remaining flags
 	for i: int in range(_current_index, _entries.size()):
 		var entry: Dictionary = _entries[i]
 		var flag_val: Variant = entry.get("flag_set", "")
 		var flag: String = flag_val if flag_val is String else ""
 		if flag != "":
 			flag_set_requested.emit(flag, true)
-	_kill_visual_tweens()
+
+	# Close dialogue if open (emits dialogue_finished to unstick awaits)
 	if _dialogue_box != null:
-		_dialogue_box.visible = false
+		_dialogue_box.close()
+
+	# Kill all active tweens
+	_kill_visual_tweens()
+
+	# Reset visual state
 	if _fade_rect != null:
 		_fade_rect.modulate.a = 0.0
 	if _title_label != null:
 		_title_label.modulate.a = 0.0
 	if _tier == TIER_FULL and _letterbox != null:
 		_letterbox.set_instant(false)
+
+	# Mark as seen and clean up
 	var skip_flag: String = "cutscene_seen_%s" % _cutscene_id
 	EventFlags.set_flag(skip_flag, true)
 	_entries.clear()
-	_is_playing = false
-	_skipped = true
 	cutscene_finished.emit()
 	GameManager.pop_overlay()
 
@@ -159,12 +171,15 @@ func _load_config() -> void:
 		_config = data
 
 
+## Process all entries in sequence. ASYNC: must be awaited.
 func _process_entries() -> void:
 	while _current_index < _entries.size() and _is_playing:
 		var entry: Dictionary = _entries[_current_index]
 
 		# Run "before" commands
 		await _run_commands(entry, "before")
+		if _skipped or not _is_playing:
+			return
 
 		# Process "before_line" animations from entry
 		_fire_entry_animations(entry, "before_line")
@@ -175,12 +190,16 @@ func _process_entries() -> void:
 			_dialogue_box.visible = true
 			_dialogue_box.show_dialogue([entry])
 			await _dialogue_box.dialogue_finished
+			if _skipped or not _is_playing:
+				return
 
 		# Process "after_line" animations from entry
 		_fire_entry_animations(entry, "after_line")
 
 		# Run "after" commands
 		await _run_commands(entry, "after")
+		if _skipped or not _is_playing:
+			return
 
 		# Emit flag_set if present (guard against JSON null values)
 		var flag_val: Variant = entry.get("flag_set", "")
@@ -206,6 +225,7 @@ func _fire_entry_animations(entry: Dictionary, prefix: String) -> void:
 				cutscene_anim_requested.emit(who, anim)
 
 
+## Run commands for an entry (before/after). ASYNC: must be awaited.
 func _run_commands(entry: Dictionary, when_filter: String) -> void:
 	var commands: Variant = entry.get("commands", null)
 	if commands == null or not (commands is Array):

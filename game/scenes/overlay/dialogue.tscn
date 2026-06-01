@@ -38,7 +38,7 @@ border_width_bottom = 8
 border_color = Color(0.333, 0.4, 0.667, 1)
 
 [node name="Dialogue" type="CanvasLayer"]
-layer = 10
+layer = 11
 process_mode = 3
 script = ExtResource("1_script")
 

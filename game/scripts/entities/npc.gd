@@ -84,7 +84,7 @@ func _evaluate_condition(condition: Variant) -> bool:
 		return true
 
 	# Must be a string to parse further.
-	if not condition is String:
+	if not (condition is String):
 		return false
 
 	var cond_str: String = condition
