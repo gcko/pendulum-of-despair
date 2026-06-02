@@ -134,6 +134,7 @@ func show_dialogue(entries: Array) -> void:
 func close() -> void:
 	_entries = []
 	set_process(false)
+	visible = false
 	dialogue_finished.emit()
 	if not embedded_mode:
 		GameManager.pop_overlay()
@@ -149,9 +150,8 @@ func _show_entry(index: int) -> void:
 
 	var entry: Dictionary = _entries[index]
 
-	# Fire "before" animations (skip if embedded in cutscene — cutscene_player handles it)
-	if not embedded_mode:
-		_fire_animations(entry, "before_line_0")
+	# Fire "before" animations
+	_fire_animations(entry, "before_line_0")
 
 	# Fire SFX markers
 	_fire_sfx(entry)
