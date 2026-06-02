@@ -67,7 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 
-## Start a cutscene sequence. ASYNC: must be awaited.
+## Start a cutscene sequence. Internally async but does not need to be awaited by caller.
 func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) -> void:
 	if _is_playing:
 		if OS.is_debug_build():
@@ -260,7 +260,7 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 			var duration: float = group[0].get("duration", 0.0)
 			if duration > 0.0:
 				await get_tree().create_timer(duration).timeout
-				if not is_inside_tree():
+				if _skipped or not _is_playing or not is_inside_tree():
 					return
 		else:
 			var blocking_tasks: Array[Signal] = []
@@ -270,7 +270,7 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 					blocking_tasks.append(result)
 			for sig: Signal in blocking_tasks:
 				await sig
-				if not is_inside_tree():
+				if _skipped or not _is_playing or not is_inside_tree():
 					return
 
 
