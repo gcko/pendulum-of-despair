@@ -700,7 +700,7 @@ for save system in battle-dialogue.md.
   - [x] High-Res Text toggle (native-resolution text layer) + always-on corruption texture/particle cues for visual distinction
   - [x] Screen shake / flash intensity options (Reduce Motion toggle controls all effects)
 - [x] Text accessibility:
-  - [x] Addressed by 320×180 base resolution (clean integer scaling at all standard resolutions) + High-Res Text toggle for accessibility
+  - [x] Addressed by 1280x720 viewport with 4x camera zoom (effective 320x180 game world, integer-scaled at all standard resolutions) + High-Res Text toggle for accessibility
   - [x] Text speed options (instant, fast, normal, slow)
 - [x] Cognitive accessibility:
   - [x] ATB Wait mode as default recommendation for accessibility

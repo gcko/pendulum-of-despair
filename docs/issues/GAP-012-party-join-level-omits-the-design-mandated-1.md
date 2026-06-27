@@ -1,0 +1,55 @@
+# GAP-012: Party join level omits the design-mandated '-1'
+
+| Field | Value |
+|-------|-------|
+| **ID** | GAP-012 |
+| **Area** | Progression |
+| **Severity** | MEDIUM |
+| **Type** | bug |
+| **Effort** | S |
+| **Epic** | No |
+| **Status** | RESOLVED — fixed in commit d06a566 |
+| **GitHub Issue** | _(set during migration)_ |
+| **Source domains** | progression |
+
+## Summary
+
+_get_party_avg_level returns max(1, floor(avg)); the canonical formula is max(1, floor(avg) - 1), so every recruit joins one level higher than designed.
+
+## Current state (implementation)
+
+Lira/Sable/Torren/Maren join at the full party average level.
+
+## Desired state (per design)
+
+Recruits join at max(1, floor(party_average) - 1).
+
+## Proposed approach
+
+Change the return to maxi(1, floori(avg) - 1); add a unit test for a known average.
+
+## Acceptance criteria
+
+- [ ] Recruits join at floor(avg)-1 (min 1)
+- [ ] A unit test asserts join level for a sample party average
+
+## Design references
+
+- docs/story/progression.md:154-156,248
+
+## Code references
+
+- game/scripts/core/exploration.gd:444-450,425,428,437,440
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** yes (code)
+- **Evidence:** exploration.gd:444-450 `_get_party_avg_level()` returns `maxi(1, floori(float(total) / float(PartyState.members.size())))` with no -1. It is the level passed to PartyState.add_member at exploration.gd:425,428,437,440 for Lira/Sable/Torren/Maren. Design progression.md:156 and :248 mandate `join_level = max(1, floor(party_average_level) - 1)`.
+- **Notes:** Bounded, safe. No GUT test asserts the resulting join level — test_ironmouth.gd:31-38 calls add_member with its own avg_level constant and never checks the returned level, so the change cannot break the suite. The -1 narrative rationale (catch-up feel) is documented at progression.md:168.
+
+---
+
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._

@@ -1,10 +1,10 @@
 # Technical Architecture
 
-> Developer implementation reference for the Godot 4.6 project.
+> Developer implementation reference for the Godot 4.7 project.
 > Self-contained — everything needed to start building Pendulum of
 > Despair in Godot, in one file.
 >
-> **Engine:** Godot 4.6+ (stable)
+> **Engine:** Godot 4.7+ (stable)
 > **Language:** GDScript only (no C#, no .NET dependency)
 > **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled (per [accessibility.md](../story/accessibility.md))
 > **Frame rate:** 60 fps locked

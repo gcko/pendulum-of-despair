@@ -20,7 +20,7 @@ This project uses `pnpm` for commitlint and husky tooling only.
 
 ## Godot Project
 
-The Godot 4.6 project lives in `game/`. Open `game/` as the project
+The Godot 4.7 project lives in `game/`. Open `game/` as the project
 directory in the Godot editor.
 
 - **Resolution:** 1280x720 viewport with 4x camera zoom (effective 320x180 game world), integer-scaled
