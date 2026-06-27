@@ -30,9 +30,15 @@ enum Priority {
 const MAX_SAME_SFX: int = 2
 
 ## Crossfade durations in seconds (per audio.md Section 3.3).
-const CROSSFADE_BIOME: float = 3.0  # 1.5s out + 1.5s in
+## Fades run concurrently over the full duration (out + in), so CROSSFADE_BIOME
+## produces a 3s transition — matching audio.md §3.3 and the exit_battle convention.
+const CROSSFADE_BIOME: float = 3.0
 const CROSSFADE_TOWN: float = 1.0
 const CROSSFADE_BATTLE_EXIT: float = 1.0
+# Pallor transition is a hard cut to silence with a drone fading in on the
+# ambient channel (audio.md §3.3). These constants are reserved for the gap 4.5
+# enter_pallor() transition; do NOT route them through play_music/play_ambient
+# (those crossfade and would not honor the documented Pallor behavior).
 const CROSSFADE_PALLOR_MUSIC: float = 5.0
 const CROSSFADE_PALLOR_AMBIENT: float = 3.0
 
@@ -87,6 +93,7 @@ var _current_mix_context: String = "overworld"
 var _pre_battle_music: String = ""
 var _pre_battle_ambient: String = ""
 var _pre_battle_music_pos: float = 0.0
+var _pre_battle_ambient_pos: float = 0.0
 var _pre_battle_mix_context: String = "overworld"
 
 # --- State: active tween tracking ---
@@ -99,7 +106,10 @@ var _ambient_fade_tween: Tween = null
 func _ready() -> void:
 	_ensure_audio_buses()
 	_create_players()
-	_apply_bus_volumes()
+	# Defer volume application: AudioManager loads before PartyState in the
+	# autoload order (project.godot), so PartyState.get_config() is unavailable
+	# during _ready(). Deferring runs it after all autoloads enter the tree.
+	_apply_bus_volumes.call_deferred()
 
 
 ## Ensure Music, SFX, and Ambient buses exist (adds them if missing).
@@ -140,7 +150,7 @@ func _make_player(player_name: String, bus: String) -> AudioStreamPlayer:
 
 
 # ---------------------------------------------------------------------------
-# Public API (stubs — full implementation in subsequent tasks)
+# Public API — music / SFX / ambient playback and mix-context control
 # ---------------------------------------------------------------------------
 
 
@@ -186,7 +196,7 @@ func _play_music_with_stream(
 		if crossfade_duration > 0.0:
 			_music_fade_tween = create_tween()
 			_music_fade_tween.tween_property(
-				_music_fade, "volume_db", SILENT_DB, crossfade_duration / 2.0
+				_music_fade, "volume_db", SILENT_DB, crossfade_duration
 			)
 			_music_fade_tween.tween_callback(_music_fade.stop)
 		else:
@@ -197,15 +207,16 @@ func _play_music_with_stream(
 		_music_fade.stop()
 		_music_fade.volume_db = SILENT_DB
 
-	# Start new track on _music_active
+	# Start new track on _music_active. Stop first in case this slot is a
+	# still-playing fade left over from an interrupted (3rd+) crossfade —
+	# reassigning .stream on a playing player would hard-cut/click.
+	_music_active.stop()
 	_music_active.stream = stream
 	if crossfade_duration > 0.0:
 		_music_active.volume_db = SILENT_DB
 		_music_active.play()
 		_music_active_tween = create_tween()
-		_music_active_tween.tween_property(
-			_music_active, "volume_db", 0.0, crossfade_duration / 2.0
-		)
+		_music_active_tween.tween_property(_music_active, "volume_db", 0.0, crossfade_duration)
 	else:
 		_music_active.volume_db = 0.0
 		_music_active.play()
@@ -235,6 +246,8 @@ func play_sfx(sfx_id: String, priority: Priority = Priority.UI_SFX, pan: float =
 func _play_sfx_with_stream(
 	stream: AudioStream, sfx_id: String, priority: Priority, _pan: float = 0.0
 ) -> void:
+	if stream == null:
+		return
 	# Same-ID limit check — only count slots that are still playing
 	var same_count: int = 0
 	for i: int in range(SFX_POOL_SIZE):
@@ -338,7 +351,7 @@ func _play_ambient_with_stream(
 		if crossfade_duration > 0.0:
 			_ambient_fade_tween = create_tween()
 			_ambient_fade_tween.tween_property(
-				_ambient_fade, "volume_db", SILENT_DB, crossfade_duration / 2.0
+				_ambient_fade, "volume_db", SILENT_DB, crossfade_duration
 			)
 			_ambient_fade_tween.tween_callback(_ambient_fade.stop)
 		else:
@@ -349,15 +362,15 @@ func _play_ambient_with_stream(
 		_ambient_fade.stop()
 		_ambient_fade.volume_db = SILENT_DB
 
-	# Start new track on _ambient_active
+	# Start new track on _ambient_active. Stop first in case this slot is a
+	# still-playing fade left over from an interrupted (3rd+) crossfade.
+	_ambient_active.stop()
 	_ambient_active.stream = stream
 	if crossfade_duration > 0.0:
 		_ambient_active.volume_db = SILENT_DB
 		_ambient_active.play()
 		_ambient_active_tween = create_tween()
-		_ambient_active_tween.tween_property(
-			_ambient_active, "volume_db", 0.0, crossfade_duration / 2.0
-		)
+		_ambient_active_tween.tween_property(_ambient_active, "volume_db", 0.0, crossfade_duration)
 	else:
 		_ambient_active.volume_db = 0.0
 		_ambient_active.play()
@@ -469,6 +482,9 @@ func enter_battle(battle_track: String) -> void:
 		_pre_battle_music_pos = (
 			_music_active.get_playback_position() if _music_active.playing else 0.0
 		)
+		_pre_battle_ambient_pos = (
+			_ambient_active.get_playback_position() if _ambient_active.playing else 0.0
+		)
 		_pre_battle_mix_context = _current_mix_context
 
 	if battle_track.is_empty():
@@ -559,22 +575,29 @@ func _exit_battle_with_streams(
 		_music_fade_tween.tween_property(_music_fade, "volume_db", SILENT_DB, CROSSFADE_BATTLE_EXIT)
 		_music_fade_tween.tween_callback(_music_fade.stop)
 
-	# Fade in restored music track — only update current ID if stream is valid
+	# Fade in restored music track — only update current ID if stream is valid.
+	# Resume from the snapshot position only when restoring the SAME track that
+	# was playing pre-battle; a different track starts from 0.
 	if music_stream != null:
+		var music_pos: float = _pre_battle_music_pos if music_id == _pre_battle_music else 0.0
 		_music_active.stream = music_stream
 		_music_active.volume_db = SILENT_DB
-		_music_active.play(_pre_battle_music_pos)
+		_music_active.play(music_pos)
 		_music_active_tween = create_tween()
 		_music_active_tween.tween_property(_music_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT)
 		_current_music = music_id
 	else:
 		_current_music = ""
 
-	# Fade in restored ambient track — only update current ID if stream is valid
+	# Fade in restored ambient track — resume position only for the same track
+	# (audio.md §3.3: exploration music + ambient resume from where they left off).
 	if ambient_stream != null:
+		var ambient_pos: float = (
+			_pre_battle_ambient_pos if ambient_id == _pre_battle_ambient else 0.0
+		)
 		_ambient_active.stream = ambient_stream
 		_ambient_active.volume_db = SILENT_DB
-		_ambient_active.play()
+		_ambient_active.play(ambient_pos)
 		_ambient_active_tween = create_tween()
 		_ambient_active_tween.tween_property(
 			_ambient_active, "volume_db", 0.0, CROSSFADE_BATTLE_EXIT
@@ -589,6 +612,7 @@ func _exit_battle_with_streams(
 	_pre_battle_music = ""
 	_pre_battle_ambient = ""
 	_pre_battle_music_pos = 0.0
+	_pre_battle_ambient_pos = 0.0
 	_pre_battle_mix_context = "overworld"
 	if OS.is_debug_build():
 		print("AudioManager: exit_battle -> music='%s' ambient='%s'" % [music_id, ambient_id])
@@ -634,6 +658,9 @@ func _apply_bus_volumes() -> void:
 	var music_ratio: float = mix.get("music", 1.0)
 	var ambient_ratio: float = mix.get("ambient", 0.35)
 
+	# Ambient is intentionally governed by the SFX Volume slider: audio.md §2.2
+	# defines only Music and SFX player sliders, so ambient (an environmental SFX
+	# bed) scales off SFX rather than introducing a third, undocumented slider.
 	var music_linear: float = (music_vol / 10.0) * music_ratio
 	var ambient_linear: float = (sfx_vol / 10.0) * ambient_ratio
 	var sfx_linear: float = sfx_vol / 10.0

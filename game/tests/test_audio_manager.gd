@@ -70,6 +70,13 @@ func test_priority_steal_replaces_lowest() -> void:
 	var stream: AudioStreamWAV = AudioStreamWAV.new()
 	for i: int in range(12):
 		_am._play_sfx_with_stream(stream, "low_%d" % i, AudioManager.Priority.AMBIENT)
+	# Precondition: the pool must actually be full, otherwise the steal path is
+	# never exercised and the test would falsely pass via a free slot.
+	var occupied: int = 0
+	for player: AudioStreamPlayer in _am._sfx_pool:
+		if player.playing:
+			occupied += 1
+	assert_eq(occupied, 12, "All 12 SFX slots should be occupied before the steal")
 	_am._play_sfx_with_stream(stream, "high", AudioManager.Priority.CUTSCENE_SFX)
 	var found_high: bool = false
 	for meta: Dictionary in _am._sfx_meta:
@@ -77,6 +84,20 @@ func test_priority_steal_replaces_lowest() -> void:
 			found_high = true
 			break
 	assert_true(found_high, "High-priority SFX should steal a slot")
+
+
+func test_rapid_music_switch_keeps_newest_active() -> void:
+	# Interrupted (3rd+) crossfade: the newest track must end up on the active
+	# player, with active/fade distinct — guards the stop-before-reassign fix.
+	var a: AudioStreamWAV = AudioStreamWAV.new()
+	var b: AudioStreamWAV = AudioStreamWAV.new()
+	var c: AudioStreamWAV = AudioStreamWAV.new()
+	_am._play_music_with_stream(a, "track_a", 1.0)
+	_am._play_music_with_stream(b, "track_b", 1.0)
+	_am._play_music_with_stream(c, "track_c", 1.0)
+	assert_eq(_am._current_music, "track_c", "Newest track should be current")
+	assert_eq(_am._music_active.stream, c, "Active player should hold the newest stream")
+	assert_ne(_am._music_active, _am._music_fade, "Active and fade must be distinct players")
 
 
 func test_priority_steal_rejected_when_all_higher() -> void:

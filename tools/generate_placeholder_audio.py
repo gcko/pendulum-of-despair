@@ -2,10 +2,14 @@
 """
 Generate minimal silent .ogg placeholder files for all required audio assets.
 
-Usage: python3 tools/generate_placeholder_audio.py [--force]
+Usage: python3 tools/generate_placeholder_audio.py [--force] [--overwrite-real]
 
-Pass --force to overwrite existing .ogg files. Without it, only missing
-files are created (safe to re-run after real assets are added).
+These are throwaway 0.1s silent stubs so the project imports and tests run
+before real audio exists; replace them with real assets over time.
+
+Without flags, only missing files are created (safe to re-run). --force also
+replaces existing placeholder-sized stubs but SKIPS files that look like real
+assets (larger than a placeholder); pass --overwrite-real to replace those too.
 
 Requires ffmpeg (brew install ffmpeg) or sox (brew install sox).
 Removes .gdkeep files from directories that receive real .ogg files.
@@ -81,13 +85,18 @@ def find_tool():
 
 
 def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
-    """Generate a 0.1-second silent mono .ogg file at dest_path."""
+    """Generate a 0.1-second silent stereo OGG Vorbis file at dest_path.
+
+    Stereo is required: ffmpeg's native (experimental) Vorbis encoder only
+    supports 2 channels and errors out on mono input. This also matches the
+    committed placeholder assets (2-channel Vorbis).
+    """
     if tool_name == "ffmpeg":
         cmd = [
             tool_path,
             "-y",                          # overwrite without asking
             "-f", "lavfi",
-            "-i", "anullsrc=r=44100:cl=mono",
+            "-i", "anullsrc=r=44100:cl=stereo",
             "-t", "0.1",
             "-c:a", "vorbis",
             "-strict", "-2",
@@ -99,7 +108,7 @@ def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
             tool_path,
             "-n",                          # null input
             "-r", "44100",
-            "-c", "1",
+            "-c", "2",
             dest_path,
             "trim", "0.0", "0.1",
         ]
@@ -110,10 +119,17 @@ def make_silence_ogg(tool_name: str, tool_path: str, dest_path: str) -> None:
             f"  stdout: {result.stdout.decode()}\n"
             f"  stderr: {result.stderr.decode()}"
         )
+    # The native Vorbis encoder can exit 0 while writing nothing (e.g. on a
+    # rejected channel layout), so verify the file is actually non-empty.
+    if not os.path.exists(dest_path) or os.path.getsize(dest_path) == 0:
+        raise RuntimeError(
+            f"Generated {dest_path} but it is empty — the encoder wrote no audio."
+        )
 
 
 def main() -> int:
     force = "--force" in sys.argv
+    overwrite_real = "--overwrite-real" in sys.argv
     tool_name, tool_path = find_tool()
     print(f"Using {tool_name} at {tool_path}")
 
@@ -135,15 +151,18 @@ def main() -> int:
                 if os.path.exists(dest):
                     if not force:
                         continue
-                    # Guard: warn when overwriting files larger than a placeholder
-                    # (likely real audio assets, not 0.1s silence stubs)
+                    # Guard: skip files larger than a placeholder (likely REAL
+                    # audio assets, not 0.1s silence stubs) so --force cannot
+                    # clobber real audio. Require explicit --overwrite-real.
                     existing_size = os.path.getsize(dest)
                     placeholder_size = os.path.getsize(silence_path)
-                    if existing_size > placeholder_size * 2:
+                    if existing_size > placeholder_size * 2 and not overwrite_real:
                         print(
-                            f"  WARNING: Overwriting {dest} "
-                            f"({existing_size} bytes > placeholder {placeholder_size} bytes)"
+                            f"  SKIP (looks like a real asset): {dest} "
+                            f"({existing_size} bytes > placeholder {placeholder_size} bytes). "
+                            f"Pass --overwrite-real to replace it."
                         )
+                        continue
                 shutil.copy2(silence_path, dest)
                 total += 1
 

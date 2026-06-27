@@ -82,8 +82,14 @@ debug-gated `push_warning()` and return silently.
 ### Stereo Panning
 
 `play_sfx()` accepts optional `pan: float = 0.0` (-1.0 left to 1.0
-right). Battle SFX pass pan values based on source position. When
-config `sound_mode == "mono"`, pan is forced to 0.0.
+right) as a forward-compatible API.
+
+**Status — DEFERRED (not yet implemented).** `AudioStreamPlayer` has no
+pan property, so the parameter is currently a no-op; the SFX pool must be
+migrated to a panning-capable node (e.g. `AudioStreamPlayer2D` or a per-slot
+stereo-panner bus effect) to honor it. The `sound_mode == "mono"` collapse to
+center is part of that same follow-up. Tracked as a GitHub issue (see the gap
+3.8 follow-ups). Until then, battle SFX play centered.
 
 ---
 
@@ -294,7 +300,7 @@ GUT tests in `game/tests/test_audio_manager.gd`:
 | 8 | Mix context | Bus volumes match `MIX_BATTLE` after `set_mix_context("battle")` |
 | 9 | Silence all | All players stopped, IDs cleared |
 | 10 | Missing file | `play_sfx("nonexistent")` — no crash, warning printed |
-| 11 | Pan / mono | Pan applied to player; forced 0.0 in mono mode |
+| 11 | Pan param accepted | `play_sfx` accepts the `pan` arg without error (no-op until panning is implemented — see Stereo Panning DEFERRED note) |
 
 ### Not Tested (manual verification)
 

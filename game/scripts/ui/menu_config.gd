@@ -149,7 +149,9 @@ func _adjust(direction: int) -> void:
 
 	# Apply cascades
 	_apply_cascades()
-	AudioManager.update_volumes()
+	# Only re-apply audio bus volumes when an audio setting changed.
+	if key == "music_volume" or key == "sfx_volume":
+		AudioManager.update_volumes()
 	_update_display()
 
 
