@@ -9,15 +9,6 @@ if [ "$BRANCH" = "main" ]; then
   exit 1
 fi
 
-# --- Beads (bd) pre-commit hook ---
-# Run bd's pre-commit logic (flush pending issue changes, etc.)
-# before quality checks. Failures here are non-fatal.
-if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
-    BD_GIT_HOOK=1 bd hooks run pre-commit "$@" || true
-    # Stage any changes bd made to the issue database
-    git diff --quiet .beads/ 2>/dev/null || git add .beads/ 2>/dev/null || true
-fi
-
 # === QUALITY GATE A: GDScript linting (gdtoolkit) ===
 # Lint only staged .gd files (excludes addons/).
 if command -v gdlint >/dev/null 2>&1; then

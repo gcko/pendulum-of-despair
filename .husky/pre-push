@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# --- Beads (bd) pre-push hook ---
-if command -v bd >/dev/null 2>&1 && [ -d .beads ]; then
-    BD_GIT_HOOK=1 bd hooks run pre-push "$@" || true
-fi
-
 GATE_DIR="scripts/quality-gates"
 
 # === QUALITY GATE D: Cross-file ID uniqueness scan ===
