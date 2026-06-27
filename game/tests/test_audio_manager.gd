@@ -61,7 +61,9 @@ func test_same_id_limit_blocks_third_instance() -> void:
 	for i: int in range(_am._sfx_pool.size()):
 		if _am._sfx_pool[i].playing and _am._sfx_meta[i].get("sfx_id") == "same_sfx":
 			count += 1
-	assert_le(count, 2, "Max 2 instances of the same SFX ID")
+	# Exactly 2 should remain — the third same-ID play is rejected (same
+	# priority cannot steal), so a weaker <= 2 check would also pass for 0/1.
+	assert_eq(count, 2, "Exactly 2 instances of the same SFX ID (third rejected)")
 
 
 func test_priority_steal_replaces_lowest() -> void:
@@ -137,7 +139,7 @@ func test_set_mix_context_battle() -> void:
 	_am.set_mix_context("battle")
 	var ambient_idx: int = AudioServer.get_bus_index("Ambient")
 	var ambient_db: float = AudioServer.get_bus_volume_db(ambient_idx)
-	assert_le(ambient_db, -60.0, "Ambient bus should be near-silent in battle context")
+	assert_lte(ambient_db, -60.0, "Ambient bus should be near-silent in battle context")
 	assert_eq(_am._current_mix_context, "battle", "Mix context should be stored")
 
 
