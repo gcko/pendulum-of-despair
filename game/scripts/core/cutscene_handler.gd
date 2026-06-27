@@ -169,14 +169,26 @@ func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
 	EventFlags.set_flag(flag_name, value)
 
 
-func _on_cutscene_music(_track_id: String, _action: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
+func _on_cutscene_music(track_id: String, action: String) -> void:
+	if action == "play":
+		if track_id.is_empty():
+			if OS.is_debug_build():
+				push_warning("CutsceneHandler: cutscene_music_requested 'play' with empty track_id")
+			return
+		AudioManager.play_music(track_id, AudioManager.CROSSFADE_TOWN)
+	elif action == "stop":
+		AudioManager.stop_music()
+	else:
+		if OS.is_debug_build():
+			push_warning("CutsceneHandler: unknown cutscene_music_requested action: '%s'" % action)
 
 
-func _on_cutscene_sfx(_sfx_id: String) -> void:
-	# Stub — AudioManager integration in gap 3.8
-	pass
+func _on_cutscene_sfx(sfx_id: String) -> void:
+	if sfx_id.is_empty():
+		if OS.is_debug_build():
+			push_warning("CutsceneHandler: sfx_requested with empty sfx_id")
+		return
+	AudioManager.play_sfx(sfx_id, AudioManager.Priority.CUTSCENE_SFX)
 
 
 func start_pending_cutscene(cutscene_id: String, entries: Array[Dictionary], tier: int) -> void:

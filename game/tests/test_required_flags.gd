@@ -166,19 +166,19 @@ func test_start_auto_walk_no_transitions_node() -> void:
 	# When _current_map has no "Transitions" node, _start_auto_walk should
 	# gracefully exit: set _in_auto_walk back to false and re-enable input.
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
+	assert_not_null(exp.get_player(), "player must exist")
 	# Ensure there is no Transitions node on the current map.
-	var transitions: Node = exp._current_map.get_node_or_null("Transitions")
+	var transitions: Node = exp.get_current_map().get_node_or_null("Transitions")
 	if transitions != null:
-		exp._current_map.remove_child(transitions)
+		exp.get_current_map().remove_child(transitions)
 		transitions.queue_free()
 	# Enable player input before calling _start_auto_walk.
-	exp._player.set_input_enabled(true)
+	exp.get_player().set_input_enabled(true)
 	exp._start_auto_walk()
 	# After the guard, auto_walk should be false and input re-enabled.
 	assert_false(exp.is_in_auto_walk(), "auto_walk should be false after guard")
 	assert_true(
-		exp._player.is_input_enabled(),
+		exp.get_player().is_input_enabled(),
 		"player input should be re-enabled after guard",
 	)
 
@@ -204,15 +204,15 @@ func test_start_auto_walk_guard_structural() -> void:
 func test_end_auto_walk_does_not_enable_input_during_cutscene() -> void:
 	# When _in_cutscene is true, _end_auto_walk should NOT re-enable player input.
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
+	assert_not_null(exp.get_player(), "player must exist")
 	# Simulate auto_walk in progress during a cutscene.
 	exp._get_auto_seq().in_auto_walk = true
 	exp.set_in_cutscene(true)
-	exp._player.set_input_enabled(false)
+	exp.get_player().set_input_enabled(false)
 	exp._end_auto_walk()
 	assert_false(exp.is_in_auto_walk(), "auto_walk should be cleared")
 	assert_false(
-		exp._player.is_input_enabled(),
+		exp.get_player().is_input_enabled(),
 		"input should remain disabled when in cutscene",
 	)
 
@@ -220,14 +220,14 @@ func test_end_auto_walk_does_not_enable_input_during_cutscene() -> void:
 func test_end_auto_walk_enables_input_when_not_in_cutscene() -> void:
 	# When _in_cutscene is false, _end_auto_walk SHOULD re-enable player input.
 	var exp: Node2D = _create_exploration_test_room()
-	assert_not_null(exp._player, "player must exist")
+	assert_not_null(exp.get_player(), "player must exist")
 	exp._get_auto_seq().in_auto_walk = true
 	exp.set_in_cutscene(false)
-	exp._player.set_input_enabled(false)
+	exp.get_player().set_input_enabled(false)
 	exp._end_auto_walk()
 	assert_false(exp.is_in_auto_walk(), "auto_walk should be cleared")
 	assert_true(
-		exp._player.is_input_enabled(),
+		exp.get_player().is_input_enabled(),
 		"input should be re-enabled when not in cutscene",
 	)
 

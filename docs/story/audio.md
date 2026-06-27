@@ -184,6 +184,9 @@ dungeons and interiors.
 All percentages are relative to the player's Music Volume and SFX
 Volume config settings (see [save-system.md](save-system.md) and
 [accessibility.md](accessibility.md) Section 7), not absolute values.
+The **Ambient** channel is governed by the **SFX Volume** slider (ambient is
+an environmental SFX bed); there is no separate ambient slider. The Music
+channel is governed by the Music Volume slider.
 
 **Narrative dungeon exception:** Some dungeons have musically intense
 scores that should not be suppressed. These use overworld-style mixing
@@ -229,6 +232,12 @@ When channels are full, higher-priority sounds steal from lower.
 Channel steal rule: when a higher-priority sound needs a channel and
 none are free, the lowest-priority currently-playing sound is cut with
 a 50ms fade-out to avoid clicks.
+
+> **Implementation note:** AudioManager stops the stolen SFX slot
+> immediately rather than running an explicit 50ms tween — Godot's audio
+> engine applies internal de-click ramping on stop, so the 50ms figure is a
+> hardware-era guideline, not a literally-tweened value. Revisit if audible
+> clicks appear on channel steals.
 
 | Priority | Category | Examples |
 |----------|----------|----------|
@@ -285,10 +294,15 @@ silence.
 | Format | OGG Vorbis (.ogg) |
 | Sample rate | 44.1 kHz |
 | Bit depth | 16-bit |
-| Naming convention | `category_name.ogg` |
+| Naming convention | `{id}.ogg` in category directory |
 
-**Examples:** `combat_hit_physical.ogg`, `ambient_thornmere_forest.ogg`,
-`ui_cursor_move.ogg`, `narrative_pallor_surge.ogg`
+**Directory layout:** Files are organized by category directory (`sfx/`,
+`ambient/`, `music/`) with the SFX ID as the filename. The directory
+provides category context, so category prefixes are not repeated in
+filenames.
+
+**Examples:** `sfx/hit_physical.ogg`, `ambient/thornmere_forest.ogg`,
+`sfx/cursor_move.ogg`, `sfx/pallor_surge.ogg`, `music/title_theme.ogg`
 
 ---
 

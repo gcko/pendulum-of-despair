@@ -486,3 +486,36 @@ byte-for-byte upstream match, scope out library internals, disposition
 Copilot findings on vendored files as "keep pristine / report upstream"
 rather than patching. Disposition applied to PR #153: addon kept
 pristine, all 7 threads replied + resolved, no code patched.
+
+### PR #148 (2026-06-27) — 21 Copilot comments, 8 real / 13 already-fixed, 2 new gaps
+
+**Context:** AudioManager audio system (gap 3.8), reviewed via a 2-round
+godot-review-loop (6 agents) + Copilot verification workflow.
+
+**Dispositions:** 13 ALREADY_FIXED (Copilot reviewed older commits across
+the PR's long life — mix-context default, stop_music fade player,
+enter_battle null path, SFX stale-meta, generator codec/overwrite/verify,
+several doc counts), 8 REAL_UNFIXED.
+
+**The 8 real issues — pre-Copilot catch rate 8/8 (100%).** Our review agents
+independently surfaced every real Copilot finding:
+- Autoload init order (AudioManager._ready -> PartyState.get_config before
+  PartyState loads) — agents flagged BLOCKER independently.
+- Stale "stubs" API header; 49->53 GUT test count; music + ambient
+  interrupted-crossfade hazard; out-of-scope equipment rows.
+
+**New patterns identified (2 new checklist sections added to godot-review):**
+1. **Autoload Initialization Order** — a singleton's `_ready()` calling a
+   later-loading autoload crashes on boot; GUT can't catch it (all autoloads
+   live in the harness). Reorder or `call_deferred`.
+2. **Tooling / Generator Scripts** — committed generators must be RUN and
+   verified to emit non-empty valid output, and must agree with the assets
+   they produce (the generator was silently broken: mono input + ffmpeg
+   native Vorbis = zero files; committed assets were stereo).
+
+**Outcome:** all 8 real issues fixed in commit (autoload defer, generator
+stereo, crossfade stop-before-reassign + full-duration, exit_battle ambient
+resume, sfx null guard, docs). 13 already-fixed comments replied with current
+state. Deferred feature work (runtime wiring, panning/mono, ambient spot
+effects) filed as GitHub issues #154/#155/#156 — first PR using GitHub Issues
+after the beads removal.
