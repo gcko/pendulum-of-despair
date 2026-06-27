@@ -334,7 +334,9 @@ func _consume_input() -> void:
 
 
 func _load_text_speed() -> void:
-	var config: Variant = DataManager.load_json("res://data/config/defaults.json")
+	# Read the player's live config (defaults merged with their saved settings),
+	# not the bundled defaults, so the Text Speed accessibility option takes effect.
+	var config: Variant = PartyState.get_config()
 	var speed_name: String = "normal"
 	if config is Dictionary:
 		speed_name = config.get("text_speed", "normal")

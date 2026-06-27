@@ -169,7 +169,9 @@ func _consume_input() -> void:
 
 
 func _load_config() -> void:
-	var data: Variant = DataManager.load_json("res://data/config/defaults.json")
+	# Read the player's live config (defaults merged with saved settings) so
+	# accessibility options (text speed, reduce-motion, etc.) apply in cutscenes.
+	var data: Variant = PartyState.get_config()
 	if data is Dictionary:
 		_config = data
 

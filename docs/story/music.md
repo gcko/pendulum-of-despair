@@ -523,6 +523,6 @@ per the rules in Motif Layering Rules.
 | Dungeon themes (city) | ~6 unique + rule | Unique city dungeons + "parent theme darkened" rule for secret passages |
 | Battle themes | 4 tiers | Standard (3 faction variants + corrupted), Boss, Vaelith, Final (3 phases) |
 | Narrative moment themes | ~17 | Event-driven overrides |
-| System/UI cues | ~8 | Title, victory, level up, item, save, inn, game over, shop (rule-based) |
+| System/UI cues | ~8 | Title, victory, level up, item, save, inn, party wipe, shop (rule-based) |
 | Character leitmotifs | 7 | Woven throughout, not standalone tracks |
 | **Total unique tracks** | **~70-80** | Plus corruption variants and rule-based derivatives |

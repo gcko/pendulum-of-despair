@@ -422,10 +422,10 @@ func _check_party_joining_flags() -> void:
 		var added_lira: bool = false
 		var added_sable: bool = false
 		if not PartyState.has_member("lira"):
-			PartyState.add_member("lira", _get_party_avg_level())
+			PartyState.add_member("lira", _get_join_level())
 			added_lira = true
 		if not PartyState.has_member("sable"):
-			PartyState.add_member("sable", _get_party_avg_level())
+			PartyState.add_member("sable", _get_join_level())
 			added_sable = true
 		if added_lira and added_sable:
 			flash_location_name("Lira and Sable joined the party!")
@@ -434,20 +434,22 @@ func _check_party_joining_flags() -> void:
 		elif added_sable:
 			flash_location_name("Sable joined the party!")
 	if EventFlags.get_flag("torren_joined") and not PartyState.has_member("torren"):
-		PartyState.add_member("torren", _get_party_avg_level())
+		PartyState.add_member("torren", _get_join_level())
 		flash_location_name("Torren joined the party!")
 	if EventFlags.get_flag("maren_warning") and not PartyState.has_member("maren"):
-		PartyState.add_member("maren", _get_party_avg_level())
+		PartyState.add_member("maren", _get_join_level())
 		flash_location_name("Maren joined the party!")
 
 
-func _get_party_avg_level() -> int:
+## Level a newly-joining party member starts at: max(1, floor(party average) - 1)
+## per progression.md "Party Join Rules" (joiners arrive slightly under the average).
+func _get_join_level() -> int:
 	if PartyState.members.is_empty():
 		return 1
 	var total: int = 0
 	for m: Dictionary in PartyState.members:
 		total += int(m.get("level", 1))
-	return maxi(1, floori(float(total) / float(PartyState.members.size())))
+	return maxi(1, floori(float(total) / float(PartyState.members.size())) - 1)
 
 
 func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
