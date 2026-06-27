@@ -456,3 +456,24 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] Flag names match events.md
 - [ ] Animation IDs match dialogue-system.md catalog (14 animations + clear)
 - [ ] Accessibility features match accessibility.md
+
+## 10. Vendored Dependencies (from Copilot PR #153 gap analysis)
+
+When a PR adds or updates a third-party addon under `game/addons/` (e.g.
+the GUT testing framework), the review scope changes — we do NOT audit
+library internals as if they were authored code.
+
+- [ ] Verify the vendored addon matches its upstream release byte-for-byte
+      (`diff -rq <release>/addons/<name> game/addons/<name>` is empty). The
+      copy must be pristine, not a local fork.
+- [ ] Confirm `plugin.cfg` `version=` matches the intended upstream tag.
+- [ ] Scope OUT library internals from review findings. Copilot reviews the
+      full diff and WILL flag bugs/typos inside vendored files — these are
+      pre-existing upstream issues, not introduced by the PR.
+- [ ] Disposition for any Copilot finding on a vendored file: **keep
+      pristine, report upstream** (file an issue at the addon's repo). Do
+      NOT patch the vendored copy — a local fork is silently lost on the
+      next dependency bump and complicates future updates.
+- [ ] The only authored-code concern is *how the project consumes* the
+      addon (CI invocation, autoload wiring, version pins) — review that,
+      not the library's own source.
