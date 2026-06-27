@@ -13,21 +13,21 @@ func _init(exploration: Exploration) -> void:
 
 
 func process_encounter_step() -> void:
-	var config: Dictionary = _exploration._encounter_config
+	var config: Dictionary = _exploration.get_encounter_config()
 	if config.is_empty():
 		return
 	var result: int = (
 		EncounterHandler
 		. process_step(
 			config,
-			_exploration._danger_counter,
+			_exploration.get_danger_counter(),
 			PartyState.get_active_party(),
 		)
 	)
 	if result == -1:
 		trigger_random_encounter()
 	else:
-		_exploration._danger_counter = result
+		_exploration.set_danger_counter(result)
 
 
 func trigger_random_encounter() -> void:
@@ -39,14 +39,14 @@ func trigger_random_encounter() -> void:
 	var transition: Dictionary = (
 		EncounterHandler
 		. build_random_encounter(
-			_exploration._encounter_config,
-			_exploration._current_map_id,
+			_exploration.get_encounter_config(),
+			_exploration.get_current_map_id(),
 			player.position,
 		)
 	)
 	if transition.is_empty():
 		return
-	_exploration._danger_counter = 0
+	_exploration.set_danger_counter(0)
 	_exploration.set_transitioning(true)
 	GameManager.change_core_state(GameManager.CoreState.BATTLE, transition)
 
@@ -72,12 +72,12 @@ func trigger_boss_encounter(area: Area2D) -> void:
 	var enemy_ids: Array = eids if eids is Array else []
 	if enemy_ids.is_empty():
 		return
-	_exploration._danger_counter = 0
+	_exploration.set_danger_counter(0)
 	_exploration.set_transitioning(true)
 	var transition: Dictionary = {
 		"encounter_group": enemy_ids,
 		"formation_type": "normal",
-		"return_map_id": _exploration._current_map_id,
+		"return_map_id": _exploration.get_current_map_id(),
 		"return_position": player.position,
 		"enemy_act": area.get_meta("enemy_act", "act_i"),
 		"encounter_source": "boss",

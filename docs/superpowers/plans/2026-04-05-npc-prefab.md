@@ -66,7 +66,7 @@ Key components:
 **_evaluate_condition(condition) -> bool:**
 - null or "" → return true
 - Contains " AND " → split and recursively evaluate all parts
-- Starts with "party_has(" → return false (stub)
+- Starts with "party_has(" → extract char_id, return PartyState.has_member(char_id)
 - Contains operator (>=, <=, ==, !=, >, <) → parse flag name + value, compare via EventFlags
 - Otherwise → treat as binary flag: `EventFlags.get_flag(condition)`
 - Wrap get_flag result in bool() for type safety

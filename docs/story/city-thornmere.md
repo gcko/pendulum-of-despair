@@ -434,7 +434,7 @@ Ashgrove is not a village. It is a clearing -- the largest open space in the Wil
 | Ashgrove Ember | Accessory | Fire resistance +30%, faint warmth in cold areas | 40 tokens |
 | Spirit-Crafted Bow | Weapon | ATK +28, chance to inflict Spirit Burn | 50 tokens |
 | First Ash Pendant | Accessory | +5% all elemental resistance, lore flavor text | 35 tokens |
-| Canopy Scout's Cloak | Equipment | AGI +8, reduces encounter rate in forests | 30 tokens |
+| Canopy Scout's Cloak | Equipment | SPD +8, reduces encounter rate in forests | 30 tokens |
 | Duskfen Spirit Totem (charged) | Accessory | Temporary: +25% magic damage for 5 battles | 20 tokens |
 | Greywood Longbow | Weapon | ATK +24, range advantage in back row | 35 tokens |
 
@@ -576,9 +576,9 @@ Canopy Reach is two hundred feet above the forest floor, built entirely in the u
 | Item | Type | Effect | Price |
 |------|------|--------|-------|
 | Canopy Scout's Bow | Weapon | ATK +22, +15% accuracy | 30 tokens |
-| Wind-Chime Charm | Accessory | AGI +5, alerts to ambush (prevents surprise attacks) | 25 tokens |
+| Wind-Chime Charm | Accessory | SPD +5, alerts to ambush (prevents surprise attacks) | 25 tokens |
 | Vine-Rope (50 ft) | Key item | Required for certain Wilds traversal puzzles | 5 tokens |
-| Skyberry Tonic | Consumable | Restores 400 HP + AGI +3 for 1 battle | 6 tokens |
+| Skyberry Tonic | Consumable | Restores 400 HP + SPD +3 for 1 battle | 6 tokens |
 | Featherleaf Cloak | Equipment | DEF +8, wind resistance +20%, fall damage reduction | 35 tokens |
 | Eagle-Eye Salve | Consumable | +25% accuracy for 3 battles | 4 tokens |
 

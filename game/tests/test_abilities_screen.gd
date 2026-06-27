@@ -5,9 +5,9 @@ const AbilityHelpers = preload("res://scripts/ui/ability_helpers.gd")
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
 	PartyState.initialize_new_game()
-	EventFlags.clear_all()
 
 
 # --- Ability resolution ---

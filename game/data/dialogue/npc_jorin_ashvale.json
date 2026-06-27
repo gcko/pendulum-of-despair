@@ -3,53 +3,12 @@
   "entries": [
     {
       "id": "npc_jorin_ashvale_001",
-      "speaker": "jorin",
+      "speaker": "jorin_ashvale",
       "lines": [
-        "The Ashvale estate is three generations of careful",
-        "management. My grandfather bought the land. My father built the",
-        "walls. I... maintain them. Poorly."
+        "The crown sends me letters of concern.",
+        "I could paper my walls with royal concern."
       ],
       "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "npc_jorin_ashvale_002",
-      "speaker": "jorin",
-      "lines": [
-        "The ley-powered irrigation system failed last month.",
-        "The gardens are dying. My wife says we should sell. Sell to whom,",
-        "I ask her. Everyone's selling. Nobody's buying."
-      ],
-      "condition": null,
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "npc_jorin_ashvale_003",
-      "speaker": "jorin",
-      "lines": [
-        "We lost the estate. Moved into the Lower Ward. My",
-        "wife took the children to her sister's in Bellhaven. I stayed",
-        "because someone has to watch the empty house. I don't know why.",
-        "It just feels like someone should."
-      ],
-      "condition": "interlude_begins",
-      "animations": null,
-      "choice": null,
-      "sfx": null
-    },
-    {
-      "id": "npc_jorin_ashvale_004",
-      "speaker": "jorin",
-      "lines": [
-        "The gardens are coming back. Not the ley-powered ones",
-        "— real gardens. Dirt and water and work. My daughter helped me",
-        "plant them. She said it was boring. She's right. It's wonderful."
-      ],
-      "condition": "epilogue_complete",
       "animations": null,
       "choice": null,
       "sfx": null

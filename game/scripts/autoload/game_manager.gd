@@ -48,10 +48,7 @@ var transition_data: Dictionary = {}
 ## Swap to a new core state (full scene replacement).
 ## [param data] is stored in [member transition_data] for the new scene.
 func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
-	# Clear any active overlay first
-	if current_overlay != OverlayState.NONE:
-		pop_overlay()
-
+	# Validate new scene BEFORE destroying old state (ordering rule)
 	if not CORE_SCENES.has(new_state):
 		push_error("GameManager: Unknown core state: %s" % new_state)
 		return
@@ -59,6 +56,10 @@ func change_core_state(new_state: CoreState, data: Dictionary = {}) -> void:
 	if not ResourceLoader.exists(scene_path):
 		push_error("GameManager: Scene not found: %s" % scene_path)
 		return
+
+	# Clear any active overlay after validation succeeds
+	if current_overlay != OverlayState.NONE:
+		pop_overlay()
 
 	var old_data: Dictionary = transition_data
 	var old_core: CoreState = current_core

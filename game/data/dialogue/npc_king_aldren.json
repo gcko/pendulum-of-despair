@@ -1,0 +1,28 @@
+{
+  "scene_id": "npc_king_aldren",
+  "entries": [
+    {
+      "id": "npc_king_aldren_001",
+      "speaker": "king_aldren",
+      "lines": [
+        "Every morning I ask the court mages for a report on the ley lines.",
+        "Every morning, the number is lower."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "npc_king_aldren_002",
+      "speaker": "king_aldren",
+      "lines": [
+        "There is nothing safe left in Valdris."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

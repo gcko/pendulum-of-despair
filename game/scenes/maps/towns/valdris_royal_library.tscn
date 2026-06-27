@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://dr0y4ll1br4ryk"]
+
+[ext_resource type="TileSet" path="res://assets/tilesets/placeholder_dungeon.tres" id="1_tileset"]
+[ext_resource type="PackedScene" path="res://scenes/entities/npc.tscn" id="2_npc"]
+[ext_resource type="PackedScene" path="res://scenes/entities/save_point.tscn" id="3_save"]
+[ext_resource type="PackedScene" path="res://scenes/entities/treasure_chest.tscn" id="4_chest"]
+
+[sub_resource type="RectangleShape2D" id="Shape_front_door"]
+size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_scene7c_aldis"]
+size = Vector2(48, 16)
+
+[node name="ValdrisRoyalLibrary" type="Node2D"]
+metadata/map_id = "towns/valdris_royal_library"
+metadata/location_name = "Royal Library"
+metadata/dungeon_id = ""
+metadata/floor_id = ""
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_tileset")
+tile_map_data = {"format": 3, "tile_data": PackedInt32Array(0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 4, 0, 1, 5, 0, 1, 6, 0, 1, 7, 0, 1, 8, 0, 1, 9, 0, 1, 10, 0, 1, 11, 0, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 65536, 0, 1, 65537, 0, 5, 65538, 0, 5, 65539, 0, 5, 65540, 0, 5, 65541, 0, 5, 65542, 0, 5, 65543, 0, 5, 65544, 0, 5, 65545, 0, 5, 65546, 0, 5, 65547, 0, 5, 65548, 0, 5, 65549, 0, 5, 65550, 0, 5, 65551, 0, 1, 131072, 0, 1, 131073, 0, 5, 131074, 0, 5, 131075, 0, 5, 131076, 0, 5, 131077, 0, 5, 131078, 0, 5, 131079, 0, 5, 131080, 0, 5, 131081, 0, 5, 131082, 0, 5, 131083, 0, 5, 131084, 0, 5, 131085, 0, 5, 131086, 0, 5, 131087, 0, 1, 196608, 0, 1, 196609, 0, 5, 196610, 0, 5, 196611, 0, 5, 196612, 0, 5, 196613, 0, 5, 196614, 0, 5, 196615, 0, 5, 196616, 0, 5, 196617, 0, 5, 196618, 0, 5, 196619, 0, 5, 196620, 0, 5, 196621, 0, 5, 196622, 0, 5, 196623, 0, 1, 262144, 0, 1, 262145, 0, 5, 262146, 0, 5, 262147, 0, 5, 262148, 0, 5, 262149, 0, 5, 262150, 0, 5, 262151, 0, 5, 262152, 0, 5, 262153, 0, 5, 262154, 0, 5, 262155, 0, 5, 262156, 0, 5, 262157, 0, 5, 262158, 0, 5, 262159, 0, 1, 327680, 0, 1, 327681, 0, 5, 327682, 0, 5, 327683, 0, 5, 327684, 0, 5, 327685, 0, 5, 327686, 0, 5, 327687, 0, 5, 327688, 0, 5, 327689, 0, 5, 327690, 0, 5, 327691, 0, 5, 327692, 0, 5, 327693, 0, 5, 327694, 0, 5, 327695, 0, 1, 393216, 0, 1, 393217, 0, 5, 393218, 0, 5, 393219, 0, 5, 393220, 0, 5, 393221, 0, 5, 393222, 0, 5, 393223, 0, 5, 393224, 0, 5, 393225, 0, 5, 393226, 0, 5, 393227, 0, 5, 393228, 0, 5, 393229, 0, 5, 393230, 0, 5, 393231, 0, 1, 458752, 0, 1, 458753, 0, 5, 458754, 0, 5, 458755, 0, 5, 458756, 0, 5, 458757, 0, 5, 458758, 0, 5, 458759, 0, 5, 458760, 0, 5, 458761, 0, 5, 458762, 0, 5, 458763, 0, 5, 458764, 0, 5, 458765, 0, 5, 458766, 0, 5, 458767, 0, 1, 524288, 0, 1, 524289, 0, 5, 524290, 0, 5, 524291, 0, 5, 524292, 0, 5, 524293, 0, 5, 524294, 0, 5, 524295, 0, 5, 524296, 0, 5, 524297, 0, 5, 524298, 0, 5, 524299, 0, 5, 524300, 0, 5, 524301, 0, 5, 524302, 0, 5, 524303, 0, 1, 589824, 0, 1, 589825, 0, 5, 589826, 0, 5, 589827, 0, 5, 589828, 0, 5, 589829, 0, 5, 589830, 0, 5, 589831, 0, 5, 589832, 0, 5, 589833, 0, 5, 589834, 0, 5, 589835, 0, 5, 589836, 0, 5, 589837, 0, 5, 589838, 0, 5, 589839, 0, 1, 655360, 0, 1, 655361, 0, 5, 655362, 0, 5, 655363, 0, 5, 655364, 0, 5, 655365, 0, 5, 655366, 0, 5, 655367, 0, 5, 655368, 0, 5, 655369, 0, 5, 655370, 0, 5, 655371, 0, 5, 655372, 0, 5, 655373, 0, 5, 655374, 0, 5, 655375, 0, 1, 720896, 0, 1, 720897, 0, 5, 720898, 0, 5, 720899, 0, 5, 720900, 0, 5, 720901, 0, 5, 720902, 0, 5, 720903, 0, 5, 720904, 0, 5, 720905, 0, 5, 720906, 0, 5, 720907, 0, 5, 720908, 0, 5, 720909, 0, 5, 720910, 0, 5, 720911, 0, 1, 786432, 0, 1, 786433, 0, 5, 786434, 0, 5, 786435, 0, 5, 786436, 0, 5, 786437, 0, 5, 786438, 0, 5, 786439, 0, 5, 786440, 0, 5, 786441, 0, 5, 786442, 0, 5, 786443, 0, 5, 786444, 0, 5, 786445, 0, 5, 786446, 0, 5, 786447, 0, 1, 851968, 0, 1, 851969, 0, 1, 851970, 0, 1, 851971, 0, 1, 851972, 0, 1, 851973, 0, 1, 851974, 0, 1, 851975, 0, 3, 851976, 0, 3, 851977, 0, 1, 851978, 0, 1, 851979, 0, 1, 851980, 0, 1, 851981, 0, 1, 851982, 0, 1, 851983, 0, 1)}
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="ScholarAldis" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(128, 112)
+metadata/npc_id = "scholar_aldis"
+
+[node name="Mirren" parent="Entities" instance=ExtResource("2_npc")]
+position = Vector2(208, 80)
+metadata/npc_id = "mirren"
+
+[node name="LibrarySave" parent="Entities" instance=ExtResource("3_save")]
+position = Vector2(48, 96)
+metadata/save_point_id = "valdris_library_save"
+
+[node name="Scene7cAldisTrigger" type="Area2D" parent="Entities"]
+position = Vector2(128, 128)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/flag = "scene_7c_aldis"
+metadata/required_flag = "pendulum_presented"
+metadata/dialogue_scene_id = "scene_7c_aldis"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Scene7cAldisTrigger"]
+shape = SubResource("Shape_scene7c_aldis")
+
+[node name="LibraryChest" parent="Entities" instance=ExtResource("4_chest")]
+position = Vector2(224, 64)
+metadata/chest_id = "library_spirit_incense"
+metadata/item_id = "spirit_incense"
+
+[node name="Transitions" type="Node2D" parent="."]
+
+[node name="FrontDoor" type="Area2D" parent="Transitions"]
+position = Vector2(128, 208)
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+monitorable = false
+metadata/target_map = "towns/valdris_citizens_walk"
+metadata/target_spawn = "from_library"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions/FrontDoor"]
+shape = SubResource("Shape_front_door")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(128, 200)
+
+[node name="from_exterior" type="Marker2D" parent="."]
+position = Vector2(128, 200)

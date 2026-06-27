@@ -1,1384 +1,1649 @@
 {
-	"enemies": [
-		{
-			"id": "extraction_drone",
-			"name": "Extraction Drone",
-			"type": "construct",
-			"threat": "low",
-			"level": 16,
-			"hp": 672,
-			"mp": 0,
-			"atk": 33,
-			"def": 24,
-			"mag": 28,
-			"mdef": 20,
-			"spd": 20,
-			"gold": 14,
-			"exp": 26,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"sleep",
-				"confusion",
-				"berserk",
-				"despair"
-			],
-			"steal": {
-				"common": {
-					"item_id": "scrap_metal",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crystal_shard",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f1",
-				"ley_line_depths_f2"
-			],
-			"ko_sound": "ko_construct"
-		},
-		{
-			"id": "cave_vermin",
-			"name": "Cave Vermin",
-			"type": "beast",
-			"threat": "low",
-			"level": 16,
-			"hp": 470,
-			"mp": 0,
-			"atk": 29,
-			"def": 24,
-			"mag": 28,
-			"mdef": 20,
-			"spd": 20,
-			"gold": 14,
-			"exp": 26,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "vermin_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "vermin_fang",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f1",
-				"ley_line_depths_f2"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "cave_crawler",
-			"name": "Cave Crawler",
-			"type": "beast",
-			"threat": "standard",
-			"level": 17,
-			"hp": 818,
-			"mp": 0,
-			"atk": 35,
-			"def": 28,
-			"mag": 29,
-			"mdef": 21,
-			"spd": 17,
-			"gold": 25,
-			"exp": 49,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "crawler_shell",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crawler_shell",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f1",
-				"ley_line_depths_f2"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "prism_moth",
-			"name": "Prism Moth",
-			"type": "elemental",
-			"threat": "low",
-			"level": 18,
-			"hp": 573,
-			"mp": 63,
-			"atk": 28,
-			"def": 26,
-			"mag": 35,
-			"mdef": 24,
-			"spd": 22,
-			"gold": 16,
-			"exp": 30,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [
-				"ley"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f1",
-				"ley_line_depths_f2",
-				"ley_line_depths_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "ley_wisp",
-			"name": "Ley Wisp",
-			"type": "elemental",
-			"threat": "standard",
-			"level": 18,
-			"hp": 819,
-			"mp": 63,
-			"atk": 28,
-			"def": 26,
-			"mag": 35,
-			"mdef": 24,
-			"spd": 22,
-			"gold": 27,
-			"exp": 52,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [
-				"flame"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f2",
-				"ley_line_depths_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "deep_serpent",
-			"name": "Deep Serpent",
-			"type": "beast",
-			"threat": "standard",
-			"level": 19,
-			"hp": 807,
-			"mp": 0,
-			"atk": 43,
-			"def": 20,
-			"mag": 32,
-			"mdef": 23,
-			"spd": 23,
-			"gold": 30,
-			"exp": 56,
-			"weaknesses": [
-				"frost"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "serpent_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "serpent_fang",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f2",
-				"ley_line_depths_f3"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "crystal_sentry",
-			"name": "Crystal Sentry",
-			"type": "elemental",
-			"threat": "standard",
-			"level": 20,
-			"hp": 1078,
-			"mp": 70,
-			"atk": 40,
-			"def": 33,
-			"mag": 34,
-			"mdef": 24,
-			"spd": 19,
-			"gold": 32,
-			"exp": 60,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [
-				"earth"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"ley_line_depths_f2",
-				"ley_line_depths_f3"
-			],
-			"ko_sound": "ko_elemental"
-		},
-		{
-			"id": "ley_colossus",
-			"name": "Ley Colossus",
-			"type": "elemental",
-			"threat": "dangerous",
-			"level": 22,
-			"hp": 7000,
-			"mp": 77,
-			"atk": 43,
-			"def": 31,
-			"mag": 36,
-			"mdef": 26,
-			"spd": 25,
-			"gold": 150,
-			"exp": 116,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [
-				"flame",
-				"frost",
-				"storm",
-				"earth",
-				"ley",
-				"spirit",
-				"void"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "colossus_shard",
-				"rate": 100
-			},
-			"locations": [
-				"ley_line_depths_f3"
-			],
-			"ko_sound": "ko_elemental",
-			"is_boss": false,
-			"is_mini_boss": true,
-			"phases": 2
-		},
-		{
-			"id": "forge_roach",
-			"name": "Forge Roach",
-			"type": "beast",
-			"threat": "low",
-			"level": 18,
-			"hp": 573,
-			"mp": 0,
-			"atk": 32,
-			"def": 26,
-			"mag": 31,
-			"mdef": 22,
-			"spd": 22,
-			"gold": 16,
-			"exp": 30,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "roach_wing",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "roach_wing",
-				"rate": 25
-			},
-			"locations": [
-				"ashmark_factory_depths"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "pipe_wraith",
-			"name": "Pipe Wraith",
-			"type": "spirit",
-			"threat": "standard",
-			"level": 19,
-			"hp": 897,
-			"mp": 66,
-			"atk": 30,
-			"def": 27,
-			"mag": 36,
-			"mdef": 25,
-			"spd": 23,
-			"gold": 30,
-			"exp": 56,
-			"weaknesses": [
-				"ley"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"ashmark_factory_depths"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "overclocked_automata",
-			"name": "Overclocked Automata",
-			"type": "construct",
-			"threat": "standard",
-			"level": 20,
-			"hp": 882,
-			"mp": 0,
-			"atk": 46,
-			"def": 21,
-			"mag": 34,
-			"mdef": 24,
-			"spd": 24,
-			"gold": 32,
-			"exp": 60,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"sleep",
-				"confusion",
-				"berserk",
-				"despair"
-			],
-			"steal": {
-				"common": {
-					"item_id": "scrap_metal",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crystal_shard",
-				"rate": 25
-			},
-			"locations": [
-				"ashmark_factory_depths"
-			],
-			"ko_sound": "ko_construct"
-		},
-		{
-			"id": "pallor_touched_worker",
-			"name": "Pallor-Touched Worker",
-			"type": "humanoid",
-			"threat": "dangerous",
-			"level": 20,
-			"hp": 980,
-			"mp": 0,
-			"atk": 40,
-			"def": 29,
-			"mag": 34,
-			"mdef": 24,
-			"spd": 24,
-			"gold": 0,
-			"exp": 0,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": null
-			},
-			"drop": null,
-			"locations": [
-				"ashmark_factory_depths"
-			],
-			"ko_sound": "ko_humanoid",
-			"non_lethal": true
-		},
-		{
-			"id": "the_forge_warden",
-			"name": "The Forge Warden",
-			"type": "boss",
-			"threat": "boss",
-			"level": 24,
-			"hp": 8500,
-			"mp": 84,
-			"atk": 69,
-			"def": 42,
-			"mag": 70,
-			"mdef": 42,
-			"spd": 32,
-			"gold": 1500,
-			"exp": 3500,
-			"weaknesses": [
-				{
-					"element": "storm",
-					"multiplier": 1.5
-				},
-				{
-					"element": "spirit",
-					"multiplier": 1.25
-				}
-			],
-			"resistances": [
-				{
-					"element": "flame",
-					"multiplier": 0.5
-				},
-				{
-					"element": "earth",
-					"multiplier": 0.75
-				}
-			],
-			"absorb": [],
-			"status_immunities": [
-				"death",
-				"petrify",
-				"stop",
-				"sleep",
-				"confusion",
-				"poison"
-			],
-			"steal": {
-				"common": null,
-				"rare": {
-					"item_id": "corrupted_tuning_fork",
-					"rate": 100
-				}
-			},
-			"drop": {
-				"item_id": "drayces_failsafe_core",
-				"rate": 100
-			},
-			"locations": [
-				"ashmark_factory_depths"
-			],
-			"ko_sound": "ko_construct",
-			"is_boss": true,
-			"is_mini_boss": false,
-			"phases": 2
-		},
-		{
-			"id": "smuggler_thug",
-			"name": "Smuggler Thug",
-			"type": "humanoid",
-			"threat": "low",
-			"level": 17,
-			"hp": 744,
-			"mp": 0,
-			"atk": 35,
-			"def": 25,
-			"mag": 29,
-			"mdef": 21,
-			"spd": 21,
-			"gold": 15,
-			"exp": 28,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "smoke_bomb",
-				"rate": 25
-			},
-			"locations": [
-				"bellhaven_smuggler_tunnels"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "sea_crawler",
-			"name": "Sea Crawler",
-			"type": "beast",
-			"threat": "standard",
-			"level": 18,
-			"hp": 900,
-			"mp": 0,
-			"atk": 36,
-			"def": 29,
-			"mag": 31,
-			"mdef": 22,
-			"spd": 18,
-			"gold": 27,
-			"exp": 52,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "crawler_shell",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crawler_shell",
-				"rate": 25
-			},
-			"locations": [
-				"bellhaven_smuggler_tunnels"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "tide_wraith",
-			"name": "Tide Wraith",
-			"type": "spirit",
-			"threat": "standard",
-			"level": 19,
-			"hp": 897,
-			"mp": 66,
-			"atk": 30,
-			"def": 27,
-			"mag": 36,
-			"mdef": 25,
-			"spd": 23,
-			"gold": 30,
-			"exp": 56,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"bellhaven_smuggler_tunnels"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "compact_soldier",
-			"name": "Compact Soldier",
-			"type": "humanoid",
-			"threat": "low",
-			"level": 18,
-			"hp": 819,
-			"mp": 0,
-			"atk": 36,
-			"def": 26,
-			"mag": 31,
-			"mdef": 22,
-			"spd": 22,
-			"gold": 16,
-			"exp": 30,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "compact_insignia",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "compact_engineer",
-			"name": "Compact Engineer",
-			"type": "humanoid",
-			"threat": "standard",
-			"level": 19,
-			"hp": 897,
-			"mp": 66,
-			"atk": 38,
-			"def": 27,
-			"mag": 32,
-			"mdef": 23,
-			"spd": 23,
-			"gold": 30,
-			"exp": 56,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "repair_kit",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "siege_ballista_crew",
-			"name": "Siege Ballista Crew",
-			"type": "humanoid",
-			"threat": "standard",
-			"level": 20,
-			"hp": 980,
-			"mp": 0,
-			"atk": 40,
-			"def": 29,
-			"mag": 34,
-			"mdef": 24,
-			"spd": 24,
-			"gold": 32,
-			"exp": 60,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "ballista_bolt",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "compact_gyrocopter",
-			"name": "Compact Gyrocopter",
-			"type": "construct",
-			"threat": "standard",
-			"level": 20,
-			"hp": 980,
-			"mp": 0,
-			"atk": 40,
-			"def": 29,
-			"mag": 34,
-			"mdef": 24,
-			"spd": 24,
-			"gold": 32,
-			"exp": 60,
-			"weaknesses": [
-				"storm"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"sleep",
-				"confusion",
-				"berserk",
-				"despair"
-			],
-			"steal": {
-				"common": {
-					"item_id": "scrap_metal",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crystal_shard",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_construct"
-		},
-		{
-			"id": "downed_pilot",
-			"name": "Downed Pilot",
-			"type": "humanoid",
-			"threat": "low",
-			"level": 18,
-			"hp": 819,
-			"mp": 0,
-			"atk": 36,
-			"def": 26,
-			"mag": 31,
-			"mdef": 22,
-			"spd": 22,
-			"gold": 16,
-			"exp": 30,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "pilots_goggles",
-				"rate": 25
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "the_ashen_ram",
-			"name": "The Ashen Ram",
-			"type": "boss",
-			"threat": "boss",
-			"level": 22,
-			"hp": 25000,
-			"mp": 77,
-			"atk": 64,
-			"def": 40,
-			"mag": 64,
-			"mdef": 39,
-			"spd": 30,
-			"gold": 2250,
-			"exp": 8000,
-			"weaknesses": [
-				"storm",
-				"flame"
-			],
-			"resistances": [
-				"frost"
-			],
-			"absorb": [
-				"earth"
-			],
-			"status_immunities": [
-				"death",
-				"petrify",
-				"stop",
-				"sleep",
-				"confusion"
-			],
-			"steal": {
-				"common": null,
-				"rare": {
-					"item_id": "pallor_laced_iron",
-					"rate": 100
-				}
-			},
-			"drop": {
-				"item_id": "compact_battle_standard",
-				"rate": 100
-			},
-			"locations": [
-				"valdris_siege"
-			],
-			"ko_sound": "ko_construct",
-			"is_boss": true,
-			"is_mini_boss": false,
-			"phases": 3
-		},
-		{
-			"id": "tunnel_mite",
-			"name": "Tunnel Mite",
-			"type": "beast",
-			"threat": "low",
-			"level": 14,
-			"hp": 378,
-			"mp": 0,
-			"atk": 27,
-			"def": 21,
-			"mag": 25,
-			"mdef": 18,
-			"spd": 19,
-			"gold": 11,
-			"exp": 23,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "mite_husk",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "mite_husk",
-				"rate": 25
-			},
-			"locations": [
-				"mountain_caves"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "coastal_crab",
-			"name": "Coastal Crab",
-			"type": "beast",
-			"threat": "low",
-			"level": 14,
-			"hp": 594,
-			"mp": 0,
-			"atk": 30,
-			"def": 24,
-			"mag": 25,
-			"mdef": 18,
-			"spd": 15,
-			"gold": 11,
-			"exp": 23,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "crab_claw",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "crab_claw",
-				"rate": 25
-			},
-			"locations": [
-				"bellhaven_coast"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "road_viper",
-			"name": "Road Viper",
-			"type": "beast",
-			"threat": "standard",
-			"level": 15,
-			"hp": 544,
-			"mp": 0,
-			"atk": 36,
-			"def": 17,
-			"mag": 27,
-			"mdef": 19,
-			"spd": 20,
-			"gold": 12,
-			"exp": 24,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "viper_fang",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "viper_fang",
-				"rate": 25
-			},
-			"locations": [
-				"roads",
-				"grassland"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "sewer_leech",
-			"name": "Sewer Leech",
-			"type": "beast",
-			"threat": "low",
-			"level": 15,
-			"hp": 605,
-			"mp": 0,
-			"atk": 32,
-			"def": 23,
-			"mag": 27,
-			"mdef": 19,
-			"spd": 20,
-			"gold": 12,
-			"exp": 24,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "leech_ichor",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "leech_ichor",
-				"rate": 25
-			},
-			"locations": [
-				"coastal",
-				"swamp"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "highwayman",
-			"name": "Highwayman",
-			"type": "humanoid",
-			"threat": "standard",
-			"level": 15,
-			"hp": 605,
-			"mp": 0,
-			"atk": 32,
-			"def": 23,
-			"mag": 27,
-			"mdef": 19,
-			"spd": 20,
-			"gold": 22,
-			"exp": 42,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "potion",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "gold_pouch",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "stolen_purse",
-				"rate": 25
-			},
-			"locations": [
-				"roads_between_cities"
-			],
-			"ko_sound": "ko_humanoid"
-		},
-		{
-			"id": "iron_beetle",
-			"name": "Iron Beetle",
-			"type": "beast",
-			"threat": "low",
-			"level": 16,
-			"hp": 739,
-			"mp": 0,
-			"atk": 33,
-			"def": 27,
-			"mag": 28,
-			"mdef": 20,
-			"spd": 16,
-			"gold": 14,
-			"exp": 26,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "beetle_carapace",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "beetle_carapace",
-				"rate": 25
-			},
-			"locations": [
-				"mountain_paths"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "dire_wolf",
-			"name": "Dire Wolf",
-			"type": "beast",
-			"threat": "standard",
-			"level": 16,
-			"hp": 672,
-			"mp": 0,
-			"atk": 33,
-			"def": 24,
-			"mag": 28,
-			"mdef": 20,
-			"spd": 20,
-			"gold": 24,
-			"exp": 45,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "wolf_pelt",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "wolf_pelt",
-				"rate": 25
-			},
-			"locations": [
-				"forest",
-				"mountain"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "meadow_sprite",
-			"name": "Meadow Sprite",
-			"type": "spirit",
-			"threat": "standard",
-			"level": 16,
-			"hp": 672,
-			"mp": 56,
-			"atk": 26,
-			"def": 24,
-			"mag": 32,
-			"mdef": 22,
-			"spd": 20,
-			"gold": 24,
-			"exp": 45,
-			"weaknesses": [
-				"ley"
-			],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [
-				"poison",
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "ether_wisp",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "ley_crystal_fragment",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "spirit_essence",
-				"rate": 25
-			},
-			"locations": [
-				"grassland",
-				"forest"
-			],
-			"ko_sound": "ko_spirit"
-		},
-		{
-			"id": "mountain_hawk",
-			"name": "Mountain Hawk",
-			"type": "beast",
-			"threat": "standard",
-			"level": 17,
-			"hp": 669,
-			"mp": 0,
-			"atk": 40,
-			"def": 18,
-			"mag": 29,
-			"mdef": 21,
-			"spd": 21,
-			"gold": 25,
-			"exp": 49,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "hawk_feather",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "hawk_feather",
-				"rate": 25
-			},
-			"locations": [
-				"mountain",
-				"highland"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "razorback",
-			"name": "Razorback",
-			"type": "beast",
-			"threat": "standard",
-			"level": 17,
-			"hp": 669,
-			"mp": 0,
-			"atk": 40,
-			"def": 18,
-			"mag": 29,
-			"mdef": 21,
-			"spd": 21,
-			"gold": 25,
-			"exp": 49,
-			"weaknesses": [],
-			"resistances": [],
-			"absorb": [],
-			"status_immunities": [],
-			"steal": {
-				"common": {
-					"item_id": "beast_hide",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "boar_tusk",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "boar_tusk",
-				"rate": 25
-			},
-			"locations": [
-				"grassland"
-			],
-			"ko_sound": "ko_beast"
-		},
-		{
-			"id": "thornwood_treant",
-			"name": "Thornwood Treant",
-			"type": "elemental",
-			"threat": "dangerous",
-			"level": 19,
-			"hp": 986,
-			"mp": 66,
-			"atk": 38,
-			"def": 31,
-			"mag": 32,
-			"mdef": 23,
-			"spd": 18,
-			"gold": 50,
-			"exp": 94,
-			"weaknesses": [
-				"flame"
-			],
-			"resistances": [],
-			"absorb": [
-				"earth"
-			],
-			"status_immunities": [
-				"petrify"
-			],
-			"steal": {
-				"common": {
-					"item_id": "element_shard",
-					"rate": 75
-				},
-				"rare": {
-					"item_id": "elemental_core",
-					"rate": 25
-				}
-			},
-			"drop": {
-				"item_id": "elemental_core",
-				"rate": 25
-			},
-			"locations": [
-				"deep_forest"
-			],
-			"ko_sound": "ko_elemental"
-		}
-	]
+  "enemies": [
+    {
+      "id": "extraction_drone",
+      "name": "Extraction Drone",
+      "type": "construct",
+      "threat": "low",
+      "level": 16,
+      "hp": 672,
+      "mp": 0,
+      "atk": 33,
+      "def": 24,
+      "mag": 28,
+      "mdef": 20,
+      "spd": 20,
+      "gold": 14,
+      "exp": 26,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "scrap_metal",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crystal_shard",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f1",
+        "ley_line_depths_f2"
+      ],
+      "ko_sound": "ko_construct"
+    },
+    {
+      "id": "cave_vermin",
+      "name": "Cave Vermin",
+      "type": "beast",
+      "threat": "low",
+      "level": 16,
+      "hp": 470,
+      "mp": 0,
+      "atk": 29,
+      "def": 24,
+      "mag": 28,
+      "mdef": 20,
+      "spd": 20,
+      "gold": 14,
+      "exp": 26,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "vermin_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "vermin_fang",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f1",
+        "ley_line_depths_f2"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "cave_crawler",
+      "name": "Cave Crawler",
+      "type": "beast",
+      "threat": "standard",
+      "level": 17,
+      "hp": 818,
+      "mp": 0,
+      "atk": 35,
+      "def": 28,
+      "mag": 29,
+      "mdef": 21,
+      "spd": 17,
+      "gold": 25,
+      "exp": 49,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "crawler_shell",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crawler_shell",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f1",
+        "ley_line_depths_f2"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "prism_moth",
+      "name": "Prism Moth",
+      "type": "elemental",
+      "threat": "low",
+      "level": 18,
+      "hp": 573,
+      "mp": 63,
+      "atk": 28,
+      "def": 26,
+      "mag": 35,
+      "mdef": 24,
+      "spd": 22,
+      "gold": 16,
+      "exp": 30,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [
+        "ley"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f1",
+        "ley_line_depths_f2",
+        "ley_line_depths_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "ley_wisp",
+      "name": "Ley Wisp",
+      "type": "elemental",
+      "threat": "standard",
+      "level": 18,
+      "hp": 819,
+      "mp": 63,
+      "atk": 28,
+      "def": 26,
+      "mag": 35,
+      "mdef": 24,
+      "spd": 22,
+      "gold": 27,
+      "exp": 52,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [
+        "flame"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f2",
+        "ley_line_depths_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "deep_serpent",
+      "name": "Deep Serpent",
+      "type": "beast",
+      "threat": "standard",
+      "level": 19,
+      "hp": 807,
+      "mp": 0,
+      "atk": 43,
+      "def": 20,
+      "mag": 32,
+      "mdef": 23,
+      "spd": 23,
+      "gold": 30,
+      "exp": 56,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "serpent_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "serpent_fang",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f2",
+        "ley_line_depths_f3"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "crystal_sentry",
+      "name": "Crystal Sentry",
+      "type": "elemental",
+      "threat": "standard",
+      "level": 20,
+      "hp": 1078,
+      "mp": 70,
+      "atk": 40,
+      "def": 33,
+      "mag": 34,
+      "mdef": 24,
+      "spd": 19,
+      "gold": 32,
+      "exp": 60,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [
+        "earth"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "ley_line_depths_f2",
+        "ley_line_depths_f3"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "ley_colossus",
+      "name": "Ley Colossus",
+      "type": "elemental",
+      "threat": "dangerous",
+      "level": 22,
+      "hp": 7000,
+      "mp": 77,
+      "atk": 43,
+      "def": 31,
+      "mag": 36,
+      "mdef": 26,
+      "spd": 25,
+      "gold": 150,
+      "exp": 116,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [
+        "flame",
+        "frost",
+        "storm",
+        "earth",
+        "ley",
+        "spirit",
+        "void"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ley_crystal_fragment",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "colossus_shard",
+        "rate": 100
+      },
+      "locations": [
+        "ley_line_depths_f3"
+      ],
+      "ko_sound": "ko_elemental",
+      "is_boss": false,
+      "is_mini_boss": true,
+      "phases": 2
+    },
+    {
+      "id": "forge_roach",
+      "name": "Forge Roach",
+      "type": "beast",
+      "threat": "low",
+      "level": 18,
+      "hp": 573,
+      "mp": 0,
+      "atk": 32,
+      "def": 26,
+      "mag": 31,
+      "mdef": 22,
+      "spd": 22,
+      "gold": 16,
+      "exp": 30,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "roach_wing",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "roach_wing",
+        "rate": 25
+      },
+      "locations": [
+        "ashmark_factory_depths"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "pipe_wraith",
+      "name": "Pipe Wraith",
+      "type": "spirit",
+      "threat": "standard",
+      "level": 19,
+      "hp": 897,
+      "mp": 66,
+      "atk": 30,
+      "def": 27,
+      "mag": 36,
+      "mdef": 25,
+      "spd": 23,
+      "gold": 30,
+      "exp": 56,
+      "weaknesses": [
+        "ley"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "spirit_essence",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "ashmark_factory_depths"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "overclocked_automata",
+      "name": "Overclocked Automata",
+      "type": "construct",
+      "threat": "standard",
+      "level": 20,
+      "hp": 882,
+      "mp": 0,
+      "atk": 46,
+      "def": 21,
+      "mag": 34,
+      "mdef": 24,
+      "spd": 24,
+      "gold": 32,
+      "exp": 60,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "scrap_metal",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crystal_shard",
+        "rate": 25
+      },
+      "locations": [
+        "ashmark_factory_depths"
+      ],
+      "ko_sound": "ko_construct"
+    },
+    {
+      "id": "pallor_touched_worker",
+      "name": "Pallor-Touched Worker",
+      "type": "humanoid",
+      "threat": "dangerous",
+      "level": 20,
+      "hp": 980,
+      "mp": 0,
+      "atk": 40,
+      "def": 29,
+      "mag": 34,
+      "mdef": 24,
+      "spd": 24,
+      "gold": 0,
+      "exp": 0,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": null
+      },
+      "drop": null,
+      "locations": [
+        "ashmark_factory_depths"
+      ],
+      "ko_sound": "ko_humanoid",
+      "non_lethal": true
+    },
+    {
+      "id": "the_forge_warden",
+      "name": "The Forge Warden",
+      "type": "boss",
+      "threat": "boss",
+      "level": 24,
+      "hp": 8500,
+      "mp": 84,
+      "atk": 69,
+      "def": 42,
+      "mag": 70,
+      "mdef": 42,
+      "spd": 32,
+      "gold": 1500,
+      "exp": 3500,
+      "weaknesses": [
+        {
+          "element": "storm",
+          "multiplier": 1.5
+        },
+        {
+          "element": "spirit",
+          "multiplier": 1.25
+        }
+      ],
+      "resistances": [
+        {
+          "element": "flame",
+          "multiplier": 0.5
+        },
+        {
+          "element": "earth",
+          "multiplier": 0.75
+        }
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion",
+        "poison"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "corrupted_tuning_fork",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "drayces_failsafe_core",
+        "rate": 100
+      },
+      "locations": [
+        "ashmark_factory_depths"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 2
+    },
+    {
+      "id": "smuggler_thug",
+      "name": "Smuggler Thug",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 17,
+      "hp": 744,
+      "mp": 0,
+      "atk": 35,
+      "def": 25,
+      "mag": 29,
+      "mdef": 21,
+      "spd": 21,
+      "gold": 15,
+      "exp": 28,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "smoke_bomb",
+        "rate": 25
+      },
+      "locations": [
+        "bellhaven_smuggler_tunnels"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "sea_crawler",
+      "name": "Sea Crawler",
+      "type": "beast",
+      "threat": "standard",
+      "level": 18,
+      "hp": 900,
+      "mp": 0,
+      "atk": 36,
+      "def": 29,
+      "mag": 31,
+      "mdef": 22,
+      "spd": 18,
+      "gold": 27,
+      "exp": 52,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "crawler_shell",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crawler_shell",
+        "rate": 25
+      },
+      "locations": [
+        "bellhaven_smuggler_tunnels"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "tide_wraith",
+      "name": "Tide Wraith",
+      "type": "spirit",
+      "threat": "standard",
+      "level": 19,
+      "hp": 897,
+      "mp": 66,
+      "atk": 30,
+      "def": 27,
+      "mag": 36,
+      "mdef": 25,
+      "spd": 23,
+      "gold": 30,
+      "exp": 56,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "spirit_essence",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "bellhaven_smuggler_tunnels"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "compact_soldier",
+      "name": "Compact Soldier",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 18,
+      "hp": 819,
+      "mp": 0,
+      "atk": 36,
+      "def": 26,
+      "mag": 31,
+      "mdef": 22,
+      "spd": 22,
+      "gold": 16,
+      "exp": 30,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "compact_insignia",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "compact_engineer",
+      "name": "Compact Engineer",
+      "type": "humanoid",
+      "threat": "standard",
+      "level": 19,
+      "hp": 897,
+      "mp": 66,
+      "atk": 38,
+      "def": 27,
+      "mag": 32,
+      "mdef": 23,
+      "spd": 23,
+      "gold": 30,
+      "exp": 56,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "repair_kit",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "siege_ballista_crew",
+      "name": "Siege Ballista Crew",
+      "type": "humanoid",
+      "threat": "standard",
+      "level": 20,
+      "hp": 980,
+      "mp": 0,
+      "atk": 40,
+      "def": 29,
+      "mag": 34,
+      "mdef": 24,
+      "spd": 24,
+      "gold": 32,
+      "exp": 60,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "ballista_bolt",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "compact_gyrocopter",
+      "name": "Compact Gyrocopter",
+      "type": "construct",
+      "threat": "standard",
+      "level": 20,
+      "hp": 980,
+      "mp": 0,
+      "atk": 40,
+      "def": 29,
+      "mag": 34,
+      "mdef": 24,
+      "spd": 24,
+      "gold": 32,
+      "exp": 60,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "scrap_metal",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crystal_shard",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_construct"
+    },
+    {
+      "id": "downed_pilot",
+      "name": "Downed Pilot",
+      "type": "humanoid",
+      "threat": "low",
+      "level": 18,
+      "hp": 819,
+      "mp": 0,
+      "atk": 36,
+      "def": 26,
+      "mag": 31,
+      "mdef": 22,
+      "spd": 22,
+      "gold": 16,
+      "exp": 30,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "pilots_goggles",
+        "rate": 25
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "the_ashen_ram",
+      "name": "The Ashen Ram",
+      "type": "boss",
+      "threat": "boss",
+      "level": 22,
+      "hp": 25000,
+      "mp": 77,
+      "atk": 64,
+      "def": 40,
+      "mag": 64,
+      "mdef": 39,
+      "spd": 30,
+      "gold": 2250,
+      "exp": 8000,
+      "weaknesses": [
+        "storm",
+        "flame"
+      ],
+      "resistances": [
+        "frost"
+      ],
+      "absorb": [
+        "earth"
+      ],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "pallor_laced_iron",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "compact_battle_standard",
+        "rate": 100
+      },
+      "locations": [
+        "valdris_siege"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 3
+    },
+    {
+      "id": "tunnel_mite",
+      "name": "Tunnel Mite",
+      "type": "beast",
+      "threat": "low",
+      "level": 14,
+      "hp": 378,
+      "mp": 0,
+      "atk": 27,
+      "def": 21,
+      "mag": 25,
+      "mdef": 18,
+      "spd": 19,
+      "gold": 11,
+      "exp": 23,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "mite_husk",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "mite_husk",
+        "rate": 25
+      },
+      "locations": [
+        "mountain_caves"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "coastal_crab",
+      "name": "Coastal Crab",
+      "type": "beast",
+      "threat": "low",
+      "level": 14,
+      "hp": 594,
+      "mp": 0,
+      "atk": 30,
+      "def": 24,
+      "mag": 25,
+      "mdef": 18,
+      "spd": 15,
+      "gold": 11,
+      "exp": 23,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "crab_claw",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "crab_claw",
+        "rate": 25
+      },
+      "locations": [
+        "bellhaven_coast"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "road_viper",
+      "name": "Road Viper",
+      "type": "beast",
+      "threat": "standard",
+      "level": 15,
+      "hp": 544,
+      "mp": 0,
+      "atk": 36,
+      "def": 17,
+      "mag": 27,
+      "mdef": 19,
+      "spd": 20,
+      "gold": 12,
+      "exp": 24,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "viper_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "viper_fang",
+        "rate": 25
+      },
+      "locations": [
+        "roads",
+        "grassland"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "sewer_leech",
+      "name": "Sewer Leech",
+      "type": "beast",
+      "threat": "low",
+      "level": 15,
+      "hp": 605,
+      "mp": 0,
+      "atk": 32,
+      "def": 23,
+      "mag": 27,
+      "mdef": 19,
+      "spd": 20,
+      "gold": 12,
+      "exp": 24,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "leech_ichor",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "leech_ichor",
+        "rate": 25
+      },
+      "locations": [
+        "coastal",
+        "swamp"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "highwayman",
+      "name": "Highwayman",
+      "type": "humanoid",
+      "threat": "standard",
+      "level": 15,
+      "hp": 605,
+      "mp": 0,
+      "atk": 32,
+      "def": 23,
+      "mag": 27,
+      "mdef": 19,
+      "spd": 20,
+      "gold": 22,
+      "exp": 42,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "stolen_purse",
+        "rate": 25
+      },
+      "locations": [
+        "roads_between_cities"
+      ],
+      "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "iron_beetle",
+      "name": "Iron Beetle",
+      "type": "beast",
+      "threat": "low",
+      "level": 16,
+      "hp": 739,
+      "mp": 0,
+      "atk": 33,
+      "def": 27,
+      "mag": 28,
+      "mdef": 20,
+      "spd": 16,
+      "gold": 14,
+      "exp": 26,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "beetle_carapace",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "beetle_carapace",
+        "rate": 25
+      },
+      "locations": [
+        "mountain_paths"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "dire_wolf",
+      "name": "Dire Wolf",
+      "type": "beast",
+      "threat": "standard",
+      "level": 16,
+      "hp": 672,
+      "mp": 0,
+      "atk": 33,
+      "def": 24,
+      "mag": 28,
+      "mdef": 20,
+      "spd": 20,
+      "gold": 24,
+      "exp": 45,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "wolf_pelt",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "wolf_pelt",
+        "rate": 25
+      },
+      "locations": [
+        "forest",
+        "mountain"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "meadow_sprite",
+      "name": "Meadow Sprite",
+      "type": "spirit",
+      "threat": "standard",
+      "level": 16,
+      "hp": 672,
+      "mp": 56,
+      "atk": 26,
+      "def": 24,
+      "mag": 32,
+      "mdef": 22,
+      "spd": 20,
+      "gold": 24,
+      "exp": 45,
+      "weaknesses": [
+        "ley"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "ether_wisp",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "spirit_essence",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "spirit_essence",
+        "rate": 25
+      },
+      "locations": [
+        "grassland",
+        "forest"
+      ],
+      "ko_sound": "ko_spirit"
+    },
+    {
+      "id": "mountain_hawk",
+      "name": "Mountain Hawk",
+      "type": "beast",
+      "threat": "standard",
+      "level": 17,
+      "hp": 669,
+      "mp": 0,
+      "atk": 40,
+      "def": 18,
+      "mag": 29,
+      "mdef": 21,
+      "spd": 21,
+      "gold": 25,
+      "exp": 49,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "hawk_feather",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "hawk_feather",
+        "rate": 25
+      },
+      "locations": [
+        "mountain",
+        "highland"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "razorback",
+      "name": "Razorback",
+      "type": "beast",
+      "threat": "standard",
+      "level": 17,
+      "hp": 669,
+      "mp": 0,
+      "atk": 40,
+      "def": 18,
+      "mag": 29,
+      "mdef": 21,
+      "spd": 21,
+      "gold": 25,
+      "exp": 49,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "beast_hide",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "boar_tusk",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "boar_tusk",
+        "rate": 25
+      },
+      "locations": [
+        "grassland"
+      ],
+      "ko_sound": "ko_beast"
+    },
+    {
+      "id": "thornwood_treant",
+      "name": "Thornwood Treant",
+      "type": "elemental",
+      "threat": "dangerous",
+      "level": 19,
+      "hp": 986,
+      "mp": 66,
+      "atk": 38,
+      "def": 31,
+      "mag": 32,
+      "mdef": 23,
+      "spd": 18,
+      "gold": 50,
+      "exp": 94,
+      "weaknesses": [
+        "flame"
+      ],
+      "resistances": [],
+      "absorb": [
+        "earth"
+      ],
+      "status_immunities": [
+        "petrify"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "element_shard",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "elemental_core",
+        "rate": 25
+      },
+      "locations": [
+        "deep_forest"
+      ],
+      "ko_sound": "ko_elemental"
+    },
+    {
+      "id": "corrupted_boring_engine",
+      "name": "Corrupted Boring Engine",
+      "type": "construct",
+      "threat": "dangerous",
+      "level": 22,
+      "hp": 6000,
+      "mp": 0,
+      "atk": 43,
+      "def": 35,
+      "mag": 36,
+      "mdef": 26,
+      "spd": 19,
+      "gold": 1250,
+      "exp": 116,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "arcanite_core",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "elemental_core",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "drill_fragment",
+        "rate": 25
+      },
+      "locations": [
+        "rail_tunnels_west_tunnel"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": false,
+      "is_mini_boss": true,
+      "phases": 1,
+      "phase_hp_thresholds": [],
+      "boss_group": null
+    },
+    {
+      "id": "the_ironbound",
+      "name": "The Ironbound",
+      "type": "boss",
+      "threat": "boss",
+      "level": 24,
+      "hp": 22000,
+      "mp": 84,
+      "atk": 69,
+      "def": 42,
+      "mag": 70,
+      "mdef": 42,
+      "spd": 32,
+      "gold": 2500,
+      "exp": 8000,
+      "weaknesses": [
+        {
+          "element": "storm",
+          "multiplier": 1.5
+        },
+        {
+          "element": "void",
+          "multiplier": 1.25
+        }
+      ],
+      "resistances": [
+        {
+          "element": "earth",
+          "multiplier": 0.5
+        },
+        {
+          "element": "flame",
+          "multiplier": 0.75
+        }
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "reinforced_drill_bit",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "operators_badge",
+        "rate": 100
+      },
+      "locations": [
+        "rail_tunnels"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 2,
+      "phase_hp_thresholds": [
+        0.5
+      ],
+      "boss_group": null
+    },
+    {
+      "id": "the_undying_warden",
+      "name": "The Undying Warden",
+      "type": "boss",
+      "threat": "boss",
+      "level": 25,
+      "hp": 8000,
+      "mp": 87,
+      "atk": 72,
+      "def": 45,
+      "mag": 73,
+      "mdef": 43,
+      "spd": 33,
+      "gold": 500,
+      "exp": 3500,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "catacomb_map",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "wardens_binding",
+        "rate": 100
+      },
+      "locations": [
+        "valdris_catacombs_catacomb_heart"
+      ],
+      "ko_sound": "ko_boss",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 2,
+      "phase_hp_thresholds": [
+        0.5
+      ],
+      "boss_group": null
+    },
+    {
+      "id": "pallor_nest_mother",
+      "name": "Pallor Nest Mother",
+      "type": "boss",
+      "threat": "boss",
+      "level": 25,
+      "hp": 6000,
+      "mp": 87,
+      "atk": 72,
+      "def": 45,
+      "mag": 73,
+      "mdef": 43,
+      "spd": 33,
+      "gold": 87,
+      "exp": 3000,
+      "weaknesses": [
+        "flame",
+        "spirit"
+      ],
+      "resistances": [
+        "frost"
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion",
+        "despair"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "broodchamber_map",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "nest_mothers_core",
+        "rate": 100
+      },
+      "locations": [
+        "caldera_undercity_deepest_junction"
+      ],
+      "ko_sound": "ko_boss",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 1,
+      "phase_hp_thresholds": [],
+      "boss_group": null
+    },
+    {
+      "id": "general_vassar_kole",
+      "name": "General Vassar Kole",
+      "type": "boss",
+      "threat": "boss",
+      "level": 28,
+      "hp": 30000,
+      "mp": 98,
+      "atk": 78,
+      "def": 49,
+      "mag": 81,
+      "mdef": 48,
+      "spd": 36,
+      "gold": 7500,
+      "exp": 12000,
+      "weaknesses": [],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "koles_epaulettes",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "map_to_the_convergence",
+        "rate": 100
+      },
+      "locations": [
+        "ironmark_citadel_command_chamber"
+      ],
+      "ko_sound": "ko_boss",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 2,
+      "phase_hp_thresholds": [
+        0.5
+      ],
+      "boss_group": null
+    }
+  ]
 }

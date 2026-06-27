@@ -177,7 +177,7 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 |------|------|---------------|--------|-----------|-------|
 | Identity Papers (Grade 3) | Key item | 1500 | Yes | Yes | Allows passage in restricted areas |
 | Stolen Arcanite Core | Material | 800 | Yes | Yes | Crafting component |
-| Smoke Capsule | Consumable | 150 | Yes | Yes | Guaranteed escape from battle |
+| Smoke Bomb | Consumable | 150 | Yes | Yes | Guaranteed escape from battle |
 | Blacklist Ledger | Key item | 2000 | No | Yes | Side quest item; exposes Guild corruption |
 | Pallor Ward (crude) | Accessory | 3000 | No | Yes | Reduces Pallor status buildup |
 | Tunnel Map | Key item | 500 | No | Yes | Reveals sewer/tunnel shortcuts |
@@ -187,10 +187,10 @@ KEY:  ~~~ = canal water   === = rail line   ### = bridge (iron)
 
 | Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
-| Standard Ration | Consumable | 40 | Yes | Yes | Moderate HP restore |
-| Repair Kit | Consumable | 100 | Yes | Yes | Restores equipment condition |
-| Signal Flare | Consumable | 60 | Yes | No | Summons NPC escort (overworld) |
-| Arcanite Torch | Tool | 150 | Yes | Yes | Illuminates dark areas |
+| Potion | Consumable | 50 | Yes | Yes | Restore 100 HP |
+| Sleeping Bag | Consumable | 250 | Yes | Yes | Rest heal outside dungeons |
+| Smoke Bomb | Consumable | 100 | Yes | No | Flee from non-boss battle |
+| Ley-Lantern | Tool | 60 | Yes | Yes | Illuminates dark areas |
 | Surplus Helm | Armor | 600 | Yes | Yes | Basic head protection |
 | Surplus Shield | Armor | 800 | Yes | Yes | +DEF, military issue |
 
@@ -562,9 +562,9 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 | Forgewright Hammer | Weapon | 1400 | Yes | Yes | Heavy, forge-built |
 | Soot-Hardened Mail | Armor | 1200 | Yes | Yes | Blackite-treated iron |
 | Ash Mask | Accessory | 400 | Yes | Yes | Reduces smoke hazard damage |
-| Standard Ration | Consumable | 40 | Yes | Yes | Moderate HP restore |
-| Forge Salve | Consumable | 100 | Yes | Yes | Cures burn status |
-| Arcanite Lantern | Tool | 180 | Yes | Yes | Light source |
+| Potion | Consumable | 50 | Yes | Yes | Restore 100 HP |
+| Antidote | Consumable | 50 | Yes | Yes | Cure Poison |
+| Ley-Lantern | Consumable | 60 | Yes | Yes | Light source |
 | Blackite Gauntlet | Armor | 800 | No | Yes | Interlude stock; +fire resist |
 
 **The Soot (tavern -- under the counter)**
@@ -574,7 +574,7 @@ KEY:  ### = conveyor bridge   ~~~ = cooling canal   === = rail line
 | Bootleg Tonic | Consumable | 80 | Yes | Yes | HP restore, slight random effect |
 | Worker's Manifesto | Key item | 200 | No | Yes | Dael's writings; side quest trigger |
 | Blacklist Record | Key item | 500 | No | Yes | Exposes Guild corruption |
-| Smoke Capsule | Consumable | 120 | Yes | Yes | Guaranteed battle escape |
+| Smoke Bomb | Consumable | 120 | Yes | Yes | Guaranteed battle escape |
 
 ### Points of Interest
 
@@ -861,10 +861,10 @@ KEY:  ooo = Millglow pit (glowing)   |P| = pumping station
 
 | Item | Type | Price (gold) | Notes |
 |------|------|---------------|-------|
-| Standard Ration | Consumable | 80 | **Double normal price** -- company markup |
+| Potion | Consumable | 100 | **Double normal price** -- company markup |
 | Extraction Mask | Accessory | 600 | Reduces ley-exposure damage; workers cannot afford this |
 | Tremor Tonic | Consumable | 200 | Temporarily stops tremors; does not cure |
-| Repair Kit | Consumable | 150 | Equipment maintenance |
+| Repair Kit | Material | 150 | Equipment maintenance |
 | Pickaxe | Weapon | 400 | Worker's tool, low ATK |
 | Work Lamp | Tool | 250 | Required for Ley Line Depths |
 | Ley-Shielded Gloves | Accessory | 800 | +resist ley exposure; management price |
@@ -1002,9 +1002,9 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 |------|------|---------------|--------|-----------|-------|
 | Forgewright Blade | Weapon | 1400 | Yes | Yes | Standard issue |
 | Iron-Brass Shield | Armor | 1000 | Yes | Yes | Compact standard |
-| Smoke Bomb | Consumable | 100 | Yes | Yes | AoE blind |
-| Flash Capsule | Consumable | 150 | Yes | Yes | Stun chance |
-| Signal Flare | Consumable | 60 | Yes | No | Overworld summon |
+| Smoke Bomb | Consumable | 100 | Yes | Yes | Flee from non-boss battle |
+| Chronos Dust | Consumable | 150 | Yes | Yes | Cure Slow |
+| Ley-Lantern | Tool | 60 | Yes | No | Light source for dungeons |
 
 ### Points of Interest
 
@@ -1228,7 +1228,7 @@ No formal shops. The Supply Shed contains lootable crates:
 |------|------|-------|
 | Iron Short Sword | Weapon | Basic starting upgrade |
 | Compact Ration x3 | Consumable | HP restore |
-| Repair Kit | Consumable | Equipment condition |
+| Repair Kit | Material | Equipment condition |
 | Mining Lamp | Tool | Required for Ember Vein |
 | Arcanite Flare x2 | Consumable | Lights dark areas for 30 seconds |
 | Survey Tags | Key item | Lore: Compact mining claims on Wilds territory |
@@ -1337,8 +1337,8 @@ KEY:  TTT = forest (Thornmere)   ### = stone bridge
 
 | Item | Type | Price (gold) | Act II | Interlude | Notes |
 |------|------|---------------|--------|-----------|-------|
-| Standard Ration | Consumable | 60 | Yes | Yes | Border markup |
-| Healing Draught | Consumable | 120 | Yes | Yes | Moderate HP restore |
+| Potion | Consumable | 60 | Yes | Yes | Border markup |
+| Hi-Potion | Consumable | 360 | Yes | Yes | Restore 500 HP |
 | Antidote | Consumable | 50 | Yes | Yes | Cures poison |
 | Travel Rope | Tool | 100 | Yes | No | Traversal item |
 | Iron Dagger | Weapon | 400 | Yes | No | Basic sidearm |

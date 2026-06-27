@@ -56,7 +56,7 @@ monitoring = true
 monitorable = false
 metadata/boss_id = "vein_guardian"
 metadata/enemy_ids = ["vein_guardian"]
-metadata/enemy_act = "bosses"
+metadata/enemy_act = "act_i"
 metadata/flag = "vaelith_ember_vein"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/VeinGuardianBoss"]

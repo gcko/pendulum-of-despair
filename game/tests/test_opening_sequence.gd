@@ -4,14 +4,14 @@ extends GutTest
 
 
 func before_each() -> void:
-	PartyState.initialize_new_game()
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
+	PartyState.initialize_new_game()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	EventFlags.clear_all()
 
 
 # --- Party Assembly ---

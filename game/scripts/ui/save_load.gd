@@ -20,6 +20,8 @@ var _pending_operation: String = ""
 var _pending_slot: int = -1
 var _copy_source_slot: int = -1
 var _rest_after_save: bool = false
+var _save_in_progress: bool = false
+var _load_in_progress: bool = false
 var _slot_previews: Array[Dictionary] = []
 var _display: SaveLoadDisplay
 
@@ -59,6 +61,13 @@ func _ready() -> void:
 	_rest_menu.visible = false
 	_confirm_dialog.visible = false
 	_slot_previews = SaveManager.get_slot_previews()
+
+
+func _exit_tree() -> void:
+	# Safety net: clear the load guard when this overlay is freed (normal path
+	# after the deferred change_core_state succeeds).  Without this, a failed
+	# deferred call would leave _load_in_progress stuck permanently.
+	_load_in_progress = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -129,16 +138,16 @@ func _handle_save_point_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_save_point_selection = (_save_point_selection + 1) % 3
 		_display.update_save_point(_save_point_options, _save_point_selection)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_save_point_selection = ((_save_point_selection - 1 + 3) % 3)
 		_display.update_save_point(_save_point_options, _save_point_selection)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
 		_confirm_save_point()
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		GameManager.pop_overlay()
 
 
@@ -146,11 +155,11 @@ func _handle_rest_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_rest_selection = (_rest_selection + 1) % 3
 		_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_rest_selection = (_rest_selection - 1 + 3) % 3
 		_display.update_rest(_rest_options, REST_ITEM_IDS, _rest_selection)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
 		_accept_rest_item()
 	elif event.is_action_pressed("ui_cancel"):
@@ -158,12 +167,12 @@ func _handle_rest_input(event: InputEvent) -> void:
 		_rest_after_save = false
 		_sub_state = SubState.SAVE_POINT_MENU
 		_save_point_menu.visible = true
-		get_viewport().set_input_as_handled()
+		_consume_input()
 
 
 func _accept_rest_item() -> void:
 	if not _display.has_rest_item(_rest_selection, REST_ITEM_IDS):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		return
 	var item_id: String = REST_ITEM_IDS[_rest_selection]
 	var item_data: Dictionary = _find_consumable(item_id)
@@ -180,21 +189,21 @@ func _accept_rest_item() -> void:
 	else:
 		_sub_state = SubState.SAVE_POINT_MENU
 		_save_point_menu.visible = true
-	get_viewport().set_input_as_handled()
+	_consume_input()
 
 
 func _handle_slot_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		_move_slot_cursor(1)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_move_slot_cursor(-1)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_confirm_slot()
 	elif event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_cursor.visible = false
 		if _mode == Mode.SAVE_POINT:
 			_slot_container.visible = false
@@ -208,14 +217,14 @@ func _handle_confirm_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
 		_confirm_selection = 1 - _confirm_selection
 		_display.update_confirm(_confirm_yes, _confirm_no, _confirm_selection)
-		get_viewport().set_input_as_handled()
+		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		get_viewport().set_input_as_handled()
+		_consume_input()
 		_execute_confirm()
 	elif event.is_action_pressed("ui_cancel"):
 		_confirm_dialog.visible = false
 		_sub_state = SubState.SLOT_SELECT
-		get_viewport().set_input_as_handled()
+		_consume_input()
 
 
 func _confirm_save_point() -> void:
@@ -282,19 +291,31 @@ func _execute_confirm() -> void:
 
 
 func _do_save(slot: int) -> void:
+	if _save_in_progress:
+		return
+	_save_in_progress = true
 	if not SaveManager.save_game(slot):
+		_save_in_progress = false
 		return
 	save_completed.emit(slot)
 	_reload_previews()
+	_save_in_progress = false
 
 
 func _do_load(slot: int) -> void:
+	if _load_in_progress:
+		return
+	_load_in_progress = true
 	var data: Dictionary = SaveManager.load_game(slot)
 	var bad: bool = data.is_empty() or data.has("error")
 	if bad or not ResourceLoader.exists("res://scenes/core/exploration.tscn"):
 		push_warning("SaveLoad: cannot load slot %d" % slot)
+		_load_in_progress = false
 		return
 	load_completed.emit(slot)
+	# Keep _load_in_progress true — cleared when this scene is freed by the
+	# deferred change_core_state below.  Clearing it here allowed a second
+	# accept press to queue a duplicate scene transition.
 	var state: int = GameManager.CoreState.EXPLORATION
 	GameManager.call_deferred("change_core_state", state, {"save_slot": slot, "save_data": data})
 
@@ -312,6 +333,10 @@ func _do_copy(source: int, dest: int) -> void:
 func _reload_previews() -> void:
 	_slot_previews = SaveManager.get_slot_previews()
 	_display.refresh_slot_display(_manual_slots, _auto_slot, _slot_previews)
+
+
+func _consume_input() -> void:
+	InputUtil.consume(self)
 
 
 func _find_consumable(item_id: String) -> Dictionary:

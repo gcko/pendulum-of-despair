@@ -127,9 +127,11 @@ func test_all_shop_files_valid_json() -> void:
 		"oasis_c",
 		"thornmere_craftsman",
 		"thornmere_provisioner",
-		"valdris_crown_armorer",
+		"valdris_crown_armorsmith",
 		"valdris_crown_general",
+		"valdris_crown_jeweler",
 		"valdris_crown_specialty",
+		"valdris_crown_weaponsmith",
 	]
 	for shop_id: String in shop_ids:
 		var data: Dictionary = DataManager.load_shop(shop_id)

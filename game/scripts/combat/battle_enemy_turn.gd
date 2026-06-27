@@ -14,7 +14,7 @@ var vg_last_action: String = ""
 var vg_reconstructed: bool = false
 
 ## Boss AI state — Corrupted Fenmother
-var fm_surface_count: int = 0
+var fm_phase_turns: int = 0
 var fm_diving: bool = false
 var fm_spawned_adds: bool = false
 
@@ -35,13 +35,13 @@ func _init(manager: Node2D, state: Node, atb: Node, enemy_area: Node2D) -> void:
 func reset() -> void:
 	vg_last_action = ""
 	vg_reconstructed = false
-	fm_surface_count = 0
+	fm_phase_turns = 0
 	fm_diving = false
 	fm_spawned_adds = false
 
 
+## Run one enemy turn.  Returns the new turn_counter value.
 func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter: int) -> int:
-	## Run one enemy turn.  Returns the new turn_counter value.
 	var idx: int = enemy_id.replace("enemy_", "").to_int()
 	if idx < 0 or idx >= enemies.size():
 		return turn_counter
@@ -92,7 +92,7 @@ func _select_action(
 				_state,
 				turn_counter,
 				hp_ratio,
-				fm_surface_count,
+				fm_phase_turns,
 				fm_diving,
 				fm_spawned_adds,
 				alive_spawns.size(),
@@ -113,17 +113,17 @@ func _track_boss_state(enemy: Node, action: Dictionary) -> void:
 		var aid: String = action.get("id", "")
 		if aid == "spawn_adds":
 			fm_spawned_adds = true
-			fm_surface_count += 1
+			fm_phase_turns += 1
 		elif aid == "start_dive":
 			fm_diving = true
-			fm_surface_count = 0
+			fm_phase_turns = 0
 		elif aid == "dive":
-			fm_surface_count += 1
+			fm_phase_turns += 1
 		elif aid == "resurface":
 			fm_diving = false
-			fm_surface_count = 0
+			fm_phase_turns = 0
 		else:
-			fm_surface_count += 1
+			fm_phase_turns += 1
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
@@ -157,7 +157,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 		var new_enemy: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(new_enemy)
 		new_enemy.initialize(sid, act)
-		new_enemy.position = Vector2(randi() % 200 + 50, randi() % 100 + 20)
+		new_enemy.position = Vector2(randi_range(50, 249), randi_range(20, 119))
 		enemies.append(new_enemy)
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
@@ -178,8 +178,6 @@ func _do_skip(action: Dictionary, enemy: Node) -> void:
 
 func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 	var atype: String = action.get("type", "")
-	if atype == "ability":
-		_state.gain_weave_gauge_for_maren(15)
 	var elem: String = action.get("element", "")
 	if action.get("target", "") == "all":
 		(
@@ -230,3 +228,6 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 				result.get("type", "miss"),
 			)
 		)
+	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
+	if atype == "ability":
+		_state.gain_weave_gauge_for_maren(15)

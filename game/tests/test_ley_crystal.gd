@@ -4,27 +4,13 @@ extends GutTest
 
 
 func before_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.ley_crystals.clear()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.gold = 0
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.is_at_save_point = false
-	EventFlags.clear_all()
 
 
 func after_each() -> void:
+	TestHelpers.reset_game_state()
 	DataManager.clear_cache()
-	PartyState.ley_crystals.clear()
-	PartyState.members.clear()
-	PartyState.formation = {"active": [], "reserve": [], "rows": {}}
-	PartyState.owned_equipment.clear()
-	PartyState.gold = 0
-	PartyState.inventory = {"consumables": {}, "materials": {}, "key_items": []}
-	PartyState.is_at_save_point = false
-	EventFlags.clear_all()
 
 
 # --- Crystal Data ---

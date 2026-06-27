@@ -44,6 +44,27 @@ func load_from_save(save_flags: Dictionary) -> void:
 	_flags = save_flags.duplicate(true)
 
 
+## Check a comma-separated list of required flags. Returns true only when
+## every non-empty flag in [param flags_csv] is satisfied.  An empty string
+## is treated as "no requirements" and returns true.
+## Boolean flags must be truthy (set_flag("x", false) does NOT satisfy).
+## Non-boolean flags (int, String) satisfy if the key exists, so
+## council_result=0 and reunion_order_1="edren" both pass.
+func check_required_flags(flags_csv: String) -> bool:
+	if flags_csv.is_empty():
+		return true
+	for rf: String in flags_csv.split(","):
+		var trimmed: String = rf.strip_edges()
+		if trimmed.is_empty():
+			continue
+		if not has_flag(trimmed):
+			return false
+		var val: Variant = get_flag(trimmed)
+		if val is bool and not val:
+			return false
+	return true
+
+
 ## Export flags for save data.
 func to_save_data() -> Dictionary:
 	return _flags.duplicate(true)

@@ -1,0 +1,51 @@
+{
+  "scene_id": "scene_7c_renn",
+  "entries": [
+    {
+      "id": "scene_7c_renn_001",
+      "speaker": "",
+      "lines": [
+        "Sable peels off toward the Lower Ward. She enters the tavern with practiced familiarity."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_renn_002",
+      "speaker": "renn",
+      "lines": [
+        "I don't sell secrets, love. I sell certainty."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_renn_003",
+      "speaker": "renn",
+      "lines": [
+        "The Compact found something unexpected in the mine.",
+        "Three courier birds to Corrund in one day. That's not a report -- that's a panic."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "scene_7c_renn_004",
+      "speaker": "renn",
+      "lines": [
+        "Forgewright steel price dropped last week. The generals are spending on something other than weapons.",
+        "Whatever you've gotten yourself into, Sable -- it's bigger than a mine."
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    }
+  ]
+}

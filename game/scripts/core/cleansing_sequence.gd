@@ -42,10 +42,22 @@ var _exploration: Exploration
 var _ritual_meter: Node = null
 var _spawned_pool_count: int = 0
 var _damage_zone_scene: PackedScene = null
+var _pending_callable: Callable = Callable()
 
 
 func _init(exploration: Exploration) -> void:
 	_exploration = exploration
+
+
+## Disconnect any pending one-shot signal from GameManager.
+## Called by Exploration._exit_tree() to prevent signal leaks.
+func cleanup() -> void:
+	if (
+		_pending_callable.is_valid()
+		and GameManager.overlay_state_changed.is_connected(_pending_callable)
+	):
+		GameManager.overlay_state_changed.disconnect(_pending_callable)
+		_pending_callable = Callable()
 
 
 func start(data: Dictionary) -> void:
@@ -86,9 +98,8 @@ func start(data: Dictionary) -> void:
 	var dialogue: Array = [entries[0]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(dialogue)
-		GameManager.overlay_state_changed.connect(
-			_on_dialogue_closed.bind(0, data), CONNECT_ONE_SHOT
-		)
+		_pending_callable = _on_dialogue_closed.bind(0, data)
+		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
 	else:
 		_launch_wave(0, data)
 
@@ -158,9 +169,8 @@ func continue_sequence(data: Dictionary) -> void:
 	var dialogue: Array = [entries[entry_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(dialogue)
-		GameManager.overlay_state_changed.connect(
-			_on_dialogue_closed.bind(next_wave, data), CONNECT_ONE_SHOT
-		)
+		_pending_callable = _on_dialogue_closed.bind(next_wave, data)
+		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
 	else:
 		_launch_wave(next_wave, data)
 
@@ -207,24 +217,27 @@ func _complete(_data: Dictionary) -> void:
 	var dialogue: Array = [entries[final_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
 		GameManager.overlay_node.show_dialogue(dialogue)
-		GameManager.overlay_state_changed.connect(_on_complete_dialogue_closed, CONNECT_ONE_SHOT)
+		_pending_callable = _on_complete_dialogue_closed
+		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
 	else:
 		_exploration.load_map("dungeons/fenmothers_hollow_spirit_path")
 
 
 func _on_complete_dialogue_closed(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
-		GameManager.overlay_state_changed.connect(_on_complete_dialogue_closed, CONNECT_ONE_SHOT)
+		_pending_callable = _on_complete_dialogue_closed
+		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
 		return
+	_pending_callable = Callable()
 	_exploration.load_map("dungeons/fenmothers_hollow_spirit_path")
 
 
 func _on_dialogue_closed(state: GameManager.OverlayState, wave_num: int, data: Dictionary) -> void:
 	if state != GameManager.OverlayState.NONE:
-		GameManager.overlay_state_changed.connect(
-			_on_dialogue_closed.bind(wave_num, data), CONNECT_ONE_SHOT
-		)
+		_pending_callable = _on_dialogue_closed.bind(wave_num, data)
+		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
 		return
+	_pending_callable = Callable()
 	_launch_wave(wave_num, data)
 
 

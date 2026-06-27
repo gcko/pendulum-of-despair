@@ -108,7 +108,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ancient_glyph",
+          "item_id": "bone_dust",
           "rate": 25
         }
       },
@@ -199,7 +199,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -243,7 +243,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ancient_glyph",
+          "item_id": "bone_dust",
           "rate": 25
         }
       },
@@ -331,7 +331,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -453,7 +453,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ancient_glyph",
+          "item_id": "bone_dust",
           "rate": 25
         }
       },
@@ -779,7 +779,7 @@
           "rate": 75
         },
         "rare": {
-          "item_id": "ley_crystal_fragment",
+          "item_id": "spirit_essence",
           "rate": 25
         }
       },
@@ -927,6 +927,201 @@
         "ironmouth_docks"
       ],
       "ko_sound": "ko_humanoid"
+    },
+    {
+      "id": "ember_drake",
+      "name": "Ember Drake",
+      "type": "beast",
+      "threat": "dangerous",
+      "level": 8,
+      "hp": 1500,
+      "mp": 0,
+      "atk": 23,
+      "def": 11,
+      "mag": 17,
+      "mdef": 12,
+      "spd": 14,
+      "gold": 50,
+      "exp": 44,
+      "weaknesses": [
+        "frost"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [],
+      "steal": {
+        "common": {
+          "item_id": "drake_scale",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "drake_fang",
+          "rate": 25
+        }
+      },
+      "drop": {
+        "item_id": "drake_fang",
+        "rate": 100
+      },
+      "locations": [
+        "ember_vein_f2"
+      ],
+      "ko_sound": "ko_beast",
+      "is_boss": false,
+      "is_mini_boss": true,
+      "phases": 1,
+      "phase_hp_thresholds": [],
+      "boss_group": null
+    },
+    {
+      "id": "vein_guardian",
+      "name": "Vein Guardian",
+      "type": "boss",
+      "threat": "boss",
+      "level": 12,
+      "hp": 6000,
+      "mp": 42,
+      "atk": 40,
+      "def": 24,
+      "mag": 39,
+      "mdef": 24,
+      "spd": 20,
+      "gold": 50,
+      "exp": 800,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [
+        "flame"
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "vein_shard",
+          "rate": 100
+        }
+      },
+      "drop": {
+        "item_id": "vein_guardians_core",
+        "rate": 100
+      },
+      "locations": [
+        "ember_vein_f4"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 2,
+      "phase_hp_thresholds": [
+        0.5
+      ],
+      "boss_group": null
+    },
+    {
+      "id": "drowned_sentinel",
+      "name": "Drowned Sentinel",
+      "type": "construct",
+      "threat": "dangerous",
+      "level": 10,
+      "hp": 4000,
+      "mp": 0,
+      "atk": 24,
+      "def": 19,
+      "mag": 20,
+      "mdef": 14,
+      "spd": 14,
+      "gold": 250,
+      "exp": 50,
+      "weaknesses": [
+        "storm"
+      ],
+      "resistances": [],
+      "absorb": [],
+      "status_immunities": [
+        "poison",
+        "sleep",
+        "confusion",
+        "berserk",
+        "despair"
+      ],
+      "steal": {
+        "common": {
+          "item_id": "scrap_metal",
+          "rate": 75
+        },
+        "rare": null
+      },
+      "drop": {
+        "item_id": "crystal_shard",
+        "rate": 25
+      },
+      "locations": [
+        "fenmothers_hollow_f2"
+      ],
+      "ko_sound": "ko_construct",
+      "is_boss": false,
+      "is_mini_boss": true,
+      "phases": 1,
+      "phase_hp_thresholds": [],
+      "boss_group": null
+    },
+    {
+      "id": "corrupted_fenmother",
+      "name": "Corrupted Fenmother",
+      "type": "boss",
+      "threat": "boss",
+      "level": 12,
+      "hp": 18000,
+      "mp": 42,
+      "atk": 40,
+      "def": 24,
+      "mag": 39,
+      "mdef": 24,
+      "spd": 20,
+      "gold": 150,
+      "exp": 2500,
+      "weaknesses": [
+        "flame"
+      ],
+      "resistances": [
+        "frost"
+      ],
+      "absorb": [],
+      "status_immunities": [
+        "death",
+        "petrify",
+        "stop",
+        "sleep",
+        "confusion"
+      ],
+      "steal": {
+        "common": null,
+        "rare": {
+          "item_id": "fenmothers_tear",
+          "rate": 100
+        }
+      },
+      "drop": null,
+      "locations": [
+        "fenmothers_hollow_f3"
+      ],
+      "ko_sound": "ko_boss",
+      "is_boss": true,
+      "is_mini_boss": false,
+      "phases": 3,
+      "phase_hp_thresholds": [
+        0.5,
+        0.0
+      ],
+      "boss_group": null
     }
   ]
 }
