@@ -134,11 +134,3 @@ func pop_overlay(silent: bool = false) -> void:
 	if not silent:
 		overlay_state_changed.emit(OverlayState.NONE)
 		get_tree().paused = false
-
-
-## Deferred helper: push save overlay after the menu overlay is freed.
-## Called via call_deferred from menu_overlay._open_save().
-func push_save_overlay() -> void:
-	if push_overlay(OverlayState.SAVE_LOAD):
-		if overlay_node != null and overlay_node.has_method("open_save"):
-			overlay_node.open_save()
