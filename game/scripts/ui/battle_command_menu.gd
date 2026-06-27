@@ -28,9 +28,11 @@ var _target_count: int = 0
 var _character_data: Dictionary = {}
 var _current_mp: int = 0
 
-@onready var _command_list: VBoxContainer = $CommandList
-@onready var _submenu: PanelContainer = $SubMenu
-@onready var _submenu_list: VBoxContainer = $SubMenu/SubMenuList
+# get_node_or_null (not $) so unit tests can instantiate the menu via .new()
+# without a scene tree; every use of these refs is already null-guarded.
+@onready var _command_list: VBoxContainer = get_node_or_null("CommandList")
+@onready var _submenu: PanelContainer = get_node_or_null("SubMenu")
+@onready var _submenu_list: VBoxContainer = get_node_or_null("SubMenu/SubMenuList")
 
 
 func _ready() -> void:
