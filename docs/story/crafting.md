@@ -373,11 +373,16 @@ materials, forges, and schematics. Device recipes are detailed in
 Arcanite Ingots are Tier 4 materials obtained from fixed placements
 (dungeon chests, quest rewards). Four recipes require them: Arcanite
 Blade (1), Forgewright Maul (1), Arcanite Helm (1), and Lira's
-Masterwork (1). All four can be crafted in a single playthrough: **9 Arcanite Ingots are available from fixed placements (Rails Tunnels, Ironmark Citadel) and 'The Fading Shifts' sidequest, leaving a 5-ingot surplus.**
-See [items.md](items.md) for placement locations and
+Masterwork (1). All four can be crafted in a single playthrough:
+**9 Arcanite Ingots are available from fixed placements (Rail Tunnels,
+Ironmark Citadel) and 'The Fading Shifts' sidequest, leaving a 5-ingot
+surplus.** See [items.md](items.md) for placement locations and
 [sidequests.md](sidequests.md) for quest-reward sources.
 
-**Quest reward overflow behavior:** Quest rewards containing materials (e.g., 3x Arcanite Ingot) are dropped to the ground if the inventory stack limit (99) is exceeded; excess items must be manually picked up from the floor (per [items.md](items.md) stack limits).
+**Quest reward overflow behavior:** Quest rewards containing materials
+(e.g., 3x Arcanite Ingot) are dropped to the ground if the inventory
+stack limit (99) is exceeded; excess items must be manually picked up
+from the floor (per [items.md](items.md) stack limits).
 
 ### Schematic Items
 
