@@ -1,4 +1,7 @@
+class_name CutsceneLetterbox
+
 extends Node
+
 ## Controls letterbox bar animation for cutscene overlay.
 ## Tweens top/bottom ColorRects to create cinematic letterbox effect.
 

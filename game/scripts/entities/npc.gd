@@ -84,7 +84,7 @@ func _evaluate_condition(condition: Variant) -> bool:
 		return true
 
 	# Must be a string to parse further.
-	if not condition is String:
+	if not (condition is String):
 		return false
 
 	var cond_str: String = condition
@@ -198,10 +198,19 @@ func walk_to(target: Vector2, speed: float) -> void:
 		_anim_player.play(anim_name)
 	_walk_tween = create_tween()
 	_walk_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_walk_tween.tween_property(self, "global_position", target.round(), duration)
+	# Tween with rounding to maintain pixel-perfect movement
+	var start_pos: Vector2 = global_position
+	_walk_tween.tween_method(
+		func(progress: float):
+			var interpolated: Vector2 = start_pos.lerp(target, progress)
+			global_position = interpolated.round(),
+		0.0,
+		1.0,
+		duration
+	)
 	_walk_tween.tween_callback(
 		func():
-			global_position = global_position.round()
+			global_position = target.round()
 			if _anim_player != null and _anim_player.has_animation("idle"):
 				_anim_player.play("idle")
 			walk_complete.emit()

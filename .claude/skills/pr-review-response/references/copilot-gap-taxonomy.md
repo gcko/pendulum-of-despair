@@ -456,3 +456,33 @@ from PR #105: 32 new checklist items across 6 Copilot rounds.
 **Outcome:** No new checklist items. First round where all Copilot
 comments were false positives. Cumulative from PR #105: 32 checklist
 items across 7 rounds. Comments converging toward zero real issues.
+
+### PR #153 (2026-06-27) — 7 Copilot comments, 0 authored-code gaps, 1 process note
+
+**Context:** Dependency/tooling PR — Godot 4.6.2 → 4.7, GUT addon
+9.6.0 → 9.7.0, pnpm/commitlint bumps, `actions/checkout` v4 → v6.
+
+**All 7 comments landed on vendored upstream GUT 9.7.0 code**
+(`game/addons/gut/**`), verified byte-for-byte identical to the
+official bitwes/Gut v9.7.0 release:
+- check_for_update.gd: double `_mouse_down` assignment (bool then float)
+- update_detector.gd: `fetch_remote_file()` hang-on-failure; objects
+  used as dict keys; "lastest" typo
+- gut_plugin.gd: `_exit_tree()` unconditional `queue_free()` null deref
+- method_maker.gd: abstract-method template depends on `__gutdbl`
+- gut_cmdln.gd: `Laoder` variable typo
+
+**New pattern identified:** Vendored dependency review scope. Copilot
+reviews the full diff including third-party addon source; our
+godot-review agents (correctly) scope to authored code and do not audit
+library internals. This was the first PR to vendor/update an addon, so
+the checklist had no guidance for it.
+
+**Outcome:** 0 new authored-code checklist items (these are not agent
+misses — auditing vendored internals would produce noise on every
+dependency bump). 1 new section added to godot-review
+verification-checklists.md ("10. Vendored Dependencies"): verify
+byte-for-byte upstream match, scope out library internals, disposition
+Copilot findings on vendored files as "keep pristine / report upstream"
+rather than patching. Disposition applied to PR #153: addon kept
+pristine, all 7 threads replied + resolved, no code patched.

@@ -1,4 +1,7 @@
+class_name DialogueBox
+
 extends CanvasLayer
+
 ## Dialogue overlay with typewriter text, speaker names, and choice prompts.
 ## Processes dialogue entries sequentially. Emits dialogue_finished when done.
 ##
@@ -131,6 +134,7 @@ func show_dialogue(entries: Array) -> void:
 func close() -> void:
 	_entries = []
 	set_process(false)
+	visible = false
 	dialogue_finished.emit()
 	if not embedded_mode:
 		GameManager.pop_overlay()
