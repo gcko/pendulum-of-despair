@@ -62,6 +62,14 @@ Reference for all review agents. Check every applicable item.
 - [ ] Docstrings match actual return behavior (if func returns error dicts AND empty dicts, document both)
 - [ ] Docstrings and specs for stubbed methods describe behavior as "when implemented" or "stubbed" — not as if currently functional
 - [ ] `print()` debug statements gated behind `OS.is_debug_build()` or use `print_debug()` — never bare `print()` in autoload methods called frequently
+
+### Autoload Initialization Order (from Copilot PR #148 gap analysis)
+- [ ] When an autoload's `_ready()` (or anything it calls) accesses ANOTHER autoload (e.g. `PartyState.get_config()`), verify that autoload appears EARLIER in the project.godot `[autoload]` order. Godot fires each autoload's `_ready()` as it is added, so a later autoload is still null. (PR #148: AudioManager `_ready()` -> `_apply_bus_volumes()` -> `PartyState.get_config()` crashed on boot because AudioManager loads before PartyState.)
+- [ ] If the dependency cannot be reordered (cross-dependencies), defer the cross-autoload call with `call_deferred()` so it runs after all autoloads enter the tree, or null-guard it. GUT tests CANNOT catch this — the harness builds singletons via `.new()` with all autoloads already live, so a boot-order bug is a false green.
+
+### Tooling / Generator Scripts (from Copilot PR #148 gap analysis)
+- [ ] Any committed generator/build/tool script (e.g. asset generators) must be EXECUTED and verified to produce non-empty, valid output — never assume it works from reading it. (PR #148: generate_placeholder_audio.py used ffmpeg's native Vorbis encoder with mono input, which ffmpeg rejects, so the script produced zero files while the committed assets — stereo — matched neither code path.)
+- [ ] A generator must agree with the assets it claims to produce (codec, channel count, sample rate). Spot-check a committed asset with `ffprobe`/equivalent against the generator's parameters.
 - [ ] Migration/upgrade functions fail explicitly on missing steps rather than silently skipping
 - [ ] `save_game()` or similar write methods must use the ACTUAL data being written, not rebuild from scratch (FFR merged data bug)
 - [ ] JSON parse result (`json.data`) must be type-checked before typed assignment (`is Dictionary`)
