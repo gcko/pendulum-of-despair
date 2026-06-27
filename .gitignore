@@ -34,3 +34,6 @@ docs/references/menus/
 .superpowers/
 __pycache__/
 tools/__pycache__/
+
+# beads (bd) removed — keep any local re-creation out of git
+.beads/

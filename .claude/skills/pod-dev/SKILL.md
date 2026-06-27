@@ -58,8 +58,8 @@ knows and loves this genre deeply.
 
 ## Project Status Tracking
 
-Use `bd ready` and `bd list` to check project status. Issues are tracked with
-beads (`bd`), not markdown files or PROGRESS.md.
+Use `gh issue list` to check project status. Issues are tracked with
+GitHub Issues, not beads/bd, markdown files, or PROGRESS.md.
 
 Suggested build order (confirm with user before starting each phase):
 
@@ -172,7 +172,7 @@ Screenshots are in [`references/ff6_screenshots/`](references/ff6_screenshots/).
 ## How to Start a New Session
 
 1. Read this SKILL.md
-2. Run `bd ready` and `bd list --status=in_progress` to see current work
+2. Run `gh issue list` (and `gh issue list --label in-progress`) to see current work
 3. Confirm what the user wants to work on today before touching any code
 4. Reference the relevant section of `systems.md`, `tech-stack.md`, or `docs/story/` as needed
 
