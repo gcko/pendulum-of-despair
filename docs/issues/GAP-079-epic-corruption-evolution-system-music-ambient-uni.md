@@ -1,0 +1,48 @@
+# GAP-079: EPIC: Corruption Evolution System (music + ambient) unimplemented in AudioManager
+
+| Field | Value |
+|-------|-------|
+| **ID** | GAP-079 |
+| **Area** | Audio |
+| **Severity** | MEDIUM |
+| **Type** | missing-feature |
+| **Effort** | L |
+| **Epic** | Yes |
+| **Status** | open |
+| **GitHub Issue** | _(set during migration)_ |
+| **Source domains** | audio |
+
+## Summary
+
+AudioManager has no corruption-stage concept or DSP path for detuning, drone, tempo drop, ambient volume scaling, or Pallor-motif substitution; no call site references staging.
+
+## Current state (implementation)
+
+Only play/enter/exit/mix APIs exist. Act-I is Stage 0 so not blocked, but the system (music.md Rule #4) is required Act II+ and untracked beyond the COMPLETE-marked gap 3.8.
+
+## Desired state (per design)
+
+set_corruption_stage(stage) applies Stages 0-4 to current music/ambient (detune, drone, tempo, volume scaling, motif substitution) per the doc tables.
+
+## Proposed approach
+
+Add a corruption API routing music/ambient buses through AudioEffect chains (pitch-shift, low-sine drone, volume scaling) and optionally swapping to corruption-variant stems; file as its own engine gap.
+
+## Acceptance criteria
+
+- [ ] set_corruption_stage applies the documented per-stage effects
+- [ ] Ambient volume/sub-bass scale by stage
+- [ ] A GUT test asserts stage effects apply
+
+## Design references
+
+- docs/story/music.md:370-413
+- docs/story/audio.md:204-213
+
+## Code references
+
+- game/scripts/autoload/audio_manager.gd (no corruption/stage API)
+
+---
+
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
