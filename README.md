@@ -27,7 +27,6 @@ pendulum-of-despair/
 │   ├── references/         # SNES-era reference data (FF4/FF6/CT/SoM)
 │   ├── plans/              # Architecture decisions
 │   └── superpowers/        # Design specs and implementation plans
-├── .beads/                 # Issue tracking database (bd)
 ├── .github/                # CI workflows (Claude review, SAST)
 ├── .husky/                 # Git hooks (conventional commits, branch protection)
 ├── package.json            # Commitlint + Husky tooling only
@@ -100,4 +99,4 @@ docs(scope): documentation changes
 
 All commits require a PR targeting `main`. Direct commits to main are blocked by a pre-commit hook.
 
-Issue tracking uses **bd** (beads): `bd ready` to find available work, `bd show <id>` for details.
+Issue tracking uses **GitHub Issues**: `gh issue list` to find available work, `gh issue view <number>` for details.

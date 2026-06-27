@@ -39,9 +39,9 @@ directory in the Godot editor.
 
 ## Pre-Commit Hook Behavior
 
-The pre-commit hook blocks direct commits to main and runs beads (bd) flush logic. Godot-specific quality checks (GDScript linting, tests) have not yet been added to the pre-commit hook.
+The pre-commit hook blocks direct commits to main and runs GDScript quality gates (gdlint, JSON validation, gdformat check). The pre-push hook runs the data-integrity scans and the full GUT test suite.
 
-**Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`). bd integration is embedded in these user hooks.
+**Hook architecture:** Husky v9 uses `core.hooksPath = .husky/_`. The `_/` directory is regenerated — never edit it. User hooks live in `.husky/` (e.g., `pre-commit`).
 
 **Recovery:** `pnpm install` reinstalls husky and verifies `core.hooksPath`.
 
@@ -54,19 +54,16 @@ When addressing PR review comments, after fixing code and pushing, always reply 
 **Work is NOT complete until `git push` succeeds.**
 
 **Mandatory steps:**
-1. File issues for remaining work
+1. File GitHub Issues for remaining work (`gh issue create`)
 2. Run quality gates (when applicable)
-3. Update issue status
+3. Update issue status (`gh issue close`, comments, labels)
 4. Push to remote:
    ```bash
    git pull --rebase
-   command -v bd >/dev/null && bd sync  # If using Beads
    git push
    git status  # Must show "up to date with origin"
    ```
 5. Clean up stashes, prune branches
 6. Hand off context for next session
-
-**Beads (`bd sync`):** Optional for contributors. If sync fails, proceed with `git push` and document in handoff notes.
 
 **Critical:** Never stop before pushing. Never say "ready to push when you are" — YOU must push.
