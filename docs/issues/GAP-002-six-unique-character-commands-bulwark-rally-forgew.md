@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-002 |
 | **Area** | Combat |
-| **Severity** | BLOCKER |
+| **Severity** | BLOCKER (verified: HIGH) |
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat |
 
@@ -44,6 +44,15 @@ Build per-command executor modules reading/writing battle_state resource fields,
 - game/scripts/combat/battle_manager.gd:151-152 ('ability' -> _do_attack)
 - game/scripts/ui/battle_command_menu.gd:182-184
 - game/scripts/combat/battle_state.gd:55-63 (resource fields unused)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_manager.gd:154 'ability': ok = _do_attack(actor_id, command) — the unique command routes to basic attack. battle_command_menu.gd:182-183 'ability' branch calls _show_submenu() with an unpopulated list (same set_submenu_items gap). battle_state.gd:55-63 allocates ap/ac(=12)/wg/favor/stolen_goods/active_rally/active_stance; only wg has helpers (gain_weave_gauge 271-280) and no stance/device/steal/rally executor exists.
+- **Notes:** XL epic, depends on GAP-001 submenu wiring. Severity refined BLOCKER->HIGH: it degrades to a working basic attack rather than crashing, but six characters' core identity mechanics are absent. Not fixNow.
 
 ---
 

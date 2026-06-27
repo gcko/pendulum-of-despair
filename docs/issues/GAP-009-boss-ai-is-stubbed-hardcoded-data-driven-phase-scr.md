@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat, enemies, tracker |
 
@@ -44,6 +44,15 @@ Build boss_ai.gd interpreting phase triggers + scripted actions from bosses JSON
 
 - game/scripts/combat/battle_ai.gd:45-59,82-88,103-188
 - game/scripts/combat/battle_enemy_turn.gd:69,101
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_ai.gd:42 'Select boss action (stub — returns basic attack)'; select_boss_action (lines 45-60) calls _get_boss_phase then '_get_boss_phase(...)  # TODO: use for scripted AI' (line ~58) discarding the phase and returns {type:'attack'}. battle_enemy_turn.gd:69-83 hardcodes is_boss && eid=='vein_guardian'/'drowned_sentinel'/'corrupted_fenmother' branches; all other bosses fall to select_boss_action stub. grep 'ember|drake|telegraph|charge' in scripts/combat found no Ember Drake kit, telegraph, or charge mechanic.
+- **Notes:** Confirmed. Only 3 bosses hardcoded; data-driven phase interpreter, telegraphs, highest-threat targeting, and Ember Drake kit all missing. Severity MEDIUM (Act-I slice has the 3 implemented bosses working). Not fixNow — large subsystem.
 
 ---
 

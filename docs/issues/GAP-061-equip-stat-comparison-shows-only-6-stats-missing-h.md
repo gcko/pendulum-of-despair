@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -42,6 +42,15 @@ Extend STAT_NAMES + .tscn rows and populate _info_label from equipment element/s
 
 - game/scripts/ui/menu_equip.gd:15-16,222-223
 - game/scenes/overlay/menu.tscn:407-422
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu_equip.gd:15 STAT_NAMES = ['atk','def','mag','mdef','spd','lck'] (6 entries); menu.tscn:407-422 has Stat0-Stat5 only (ATK/DEF/MAG/MDEF/SPD/LCK). No EVA%/MEVA%/CRIT% rows, no conditional HP/MP rows. menu_equip.gd:222-223 _info_label.text = '' hardcoded empty. Design ui-design.md:5.6 (lines 521-525) specifies '8 core stats + 3 derived... HP, MP, ATK, DEF, MAG, MDEF, SPD, LCK, EVA%, MEVA%, CRIT%' with HP/MP conditional, and 5.7 (536-539) an element/status info line with inline icons.
+- **Notes:** Confirmed. Info-line population is partly blocked on GAP-059 inline icons. Not fixNow.
 
 ---
 

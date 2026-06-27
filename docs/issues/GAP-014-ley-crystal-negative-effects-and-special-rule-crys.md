@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | progression |
 
@@ -44,6 +44,15 @@ Add a negative_effect/special_rule handler keyed off the equipped crystal; hook 
 - game/data/ley_crystals.json:352-462,567-573
 - game/scripts/ui/menu_ley_crystal.gd:215-223
 - game/scripts/combat/ (no negative_effect refs)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** ley_crystals.json negative_effect blocks are non-mechanical: frost_veil -> {description:'Wearer SPD -15% in battle', type:'spd_penalty'}, grey_remnant -> {description:'HP -40 per level-up. +25% Pallor damage in combat.', type:'hp_loss_and_vulnerability'} (flame_heart/storm_eye similar). menu_ley_crystal.gd:215-223 only renders the description as a warning string. No combat/progression code references these crystals. null_crystal has empty level_bonuses ([{},{},{},{},{}]) and only an invocation-based temporary 'despair_immune' (turns:3) — the design's passive while-equipped immunity (progression.md:351) is absent. caels_echo level_bonuses carry no Lira/Edren conditional bonuses (progression.md:352).
+- **Notes:** Substantively confirmed. Minor wording nit: the issue says 'description-only' but the JSON also carries a `type` discriminator (e.g. spd_penalty) — still no handler consumes it, so the no-mechanics claim holds. Each effect (SPD penalty, Pallor-damage amp, HP-loss-per-level, passive Despair immunity, character-conditional bonuses) is a distinct combat/progression feature, mostly Act III/post-game scope. Not bounded.
 
 ---
 

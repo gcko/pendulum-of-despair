@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | enemies |
 
@@ -40,6 +40,15 @@ Add the two enemies with derived stats/threat/family to the correct bestiary fil
 ## Code references
 
 - game/data/enemies/act_i.json:873-901,902-930
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** act_i.json:873-901 (compact_patrol) and 902-930 (compact_scout) both have type 'humanoid' and locations ['ironmouth_docks']. docs/story/bestiary/act-i.md:8 and :93 declare 'Total: 25 enemies (20 regular + 1 unique + 2 mini-bosses + 2 bosses)' across Ember Vein / Fenmother's Hollow / Overworld Act I; grep for 'compact' and 'ironmouth' in act-i.md returns 0 matches — neither enemy nor the Ironmouth Docks zone is documented. A game/scenes/maps/towns/ironmouth_docks.tscn scene does exist, so the enemies are real content, not stray data.
+- **Notes:** Genuine doc-inconsistency. Doc-only, zero test risk, but the correct resolution is ambiguous per the issue itself (document the two enemies + add an Ironmouth Docks bestiary zone and bump the total to 27, OR relocate/remove them) and requires design judgment on threat/family classification and whether Ironmouth Docks is an Act I bestiary zone. Because the fix direction is not obvious, not fixNow; recommend filing as a bestiary documentation task. Stats to document already exist in act_i.json (patrol: lv5/180hp/16atk; scout: lv6/140hp/14atk/14spd).
 
 ---
 

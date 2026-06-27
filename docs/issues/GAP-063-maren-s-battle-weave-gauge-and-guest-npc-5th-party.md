@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -42,6 +42,15 @@ Add a conditional WeaveBar for Maren and a 5th compact Row visible when a guest 
 
 - game/scripts/ui/battle_party_panel.gd:11
 - game/scenes/core/battle.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_party_panel.gd:11 var _rows = [null, null, null, null]; _ready (15-20) wires exactly Row0-3. battle.tscn defines only Row0-Row3, each with NameLabel/HPLabel/MPLabel/ATBBar (ColorRect grep shows ATBBar at 83,106,129,152) — no WeaveBar node and no 5th row. Design ui-design.md:2.9 (lines 310-318) 'Maren's party panel row includes a third gauge below her MP bar: a thin Weave Gauge bar (purple #aa44ff)'.
+- **Notes:** Confirmed missing. LOW: niche per-character/guest UI. Not fixNow.
 
 ---
 

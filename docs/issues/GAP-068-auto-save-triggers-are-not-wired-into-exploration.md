@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save, tracker |
 
@@ -42,6 +42,15 @@ Hook auto-save at flagged floor/town transitions, at boss trigger zones before f
 ## Code references
 
 - game/scripts/autoload/save_manager.gd:97-99
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** save_manager.gd:97-99 defines auto_save(); repo-wide grep for `auto_save` across scripts/ and scenes/ returns ONLY the definition — zero callers. save-system.md §6 (referenced) defines floor/town/boss/quest triggers.
+- **Notes:** Confirmed no callers. Wiring into scene transitions + quest completion with mid-floor/boss-rush suppression is new cross-system logic needing tests. Not bounded. fixNow=false.
 
 ---
 

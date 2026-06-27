@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | progression |
 
@@ -43,6 +43,15 @@ Add a spikes data file and an apply hook in PartyState triggered by EventFlags; 
 
 - game/scripts/ (no milestone/spike application)
 - game/scripts/combat/damage_calculator.gd:45-47 (only spike, divergent)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** Repo-wide search for spike/milestone application finds only damage_calculator.gd:45-47 `# Cael's Pallor Shimmer: +10% physical damage ... if attacker_id == "cael": raw *= 1.1` — a live combat multiplier, not a one-time permanent base_stats spike. No spike data file and no EventFlags-driven apply hook exist in game/scripts. Design progression.md:380-407 lists 12 one-time permanent boosts (incl. Torren's MAG +8/SPD +4/HP -15% and the campfire All stats +2).
+- **Notes:** 11 of 12 spikes absent; the lone Cael implementation is divergent (combat hack rather than the hidden permanent ATK+2/MAG+2/SPD+1 spike at progression.md:388). Building this is a data-driven framework with idempotency, percent/negative deltas, and save persistence — a feature, not a bounded fix. Issue notes it absorbs GAP-010.
 
 ---
 

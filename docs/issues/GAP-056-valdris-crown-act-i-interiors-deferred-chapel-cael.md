@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — OVERSTATED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | world |
 
@@ -43,6 +43,15 @@ Prioritize Chapel + Cael's Quarters for Act-I narrative completeness; verify/rem
 ## Code references
 
 - game/scenes/maps/towns/valdris_lower_ward.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** OVERSTATED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** TRUE parts: valdris_lower_ward.tscn has only ChapelSave (save_point_id 'valdris_chapel_save') with no chapel-interior transition, and no Cael's Quarters node/scene exists (no chapel/cael interior in towns/). FALSE part: the issue calls the 'OldHarren' node (npc_id 'old_harren') 'unexpected... not in the design directory', but the design explicitly places him there — docs/story/npcs.md:354 'Old Harren', events.md:986 'Old Harren | Valdris Crown (Lower Ward, Crown's Rest inn)', and script/npc-ambient.md:100 'Old Harren (Crown's Rest Inn)'.
+- **Notes:** The core partial-impl gap (Chapel + Cael's Quarters interiors deferred) is real and MEDIUM. But the OldHarren accusation is factually wrong — the node correctly implements a designed Lower Ward NPC — so the issue is overstated and acceptance criterion #3 should be removed. Building the interiors is feature work; fixNow false.
 
 ---
 

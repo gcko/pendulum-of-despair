@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat, enemies |
 
@@ -45,6 +45,15 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 - game/scripts/combat/battle_actions.gd:51-64,94-104
 - game/scripts/combat/damage_calculator.gd:21-79
 - game/scripts/entities/enemy.gd:29-39,247-256
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_actions.gd:60 calculate_physical called with interaction_mult=1.0 and reduction_sources=[] (lines 51-64); battle_actions.gd:99 calculate_magic(mag,power,mdef,element_mod,1.0,[],[]) — interaction_mult=1.0, buff_mults=[], reduction=[]. damage_calculator.gd:21-79/90-127 accept these params but callers always pass neutral. enemy.gd type handling derives only status immunities; heal() heals rather than damaging Undead.
+- **Notes:** Confirmed neutral-multiplier wiring; no Tier 1-3 interactions, resonance, or enemy type traits applied. Severity MEDIUM appropriate. Depends on status/ability subsystems (GAP-003). Not fixNow.
 
 ---
 

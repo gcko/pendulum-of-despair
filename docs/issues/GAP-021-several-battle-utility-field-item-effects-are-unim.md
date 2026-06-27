@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items |
 
@@ -43,6 +43,15 @@ Implement teleport/preemptive via EventFlags + exploration/battle hooks; route b
 
 - game/scripts/autoload/inventory_helpers.gd:99-114
 - game/data/items/consumables.json:487-700
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** inventory_helpers.gd apply_item_effect: 'teleport' (line ~111) and 'preemptive' (~113) are push_warning('...not yet implemented') stubs; 'buff_atk'/'buff_mag' (99-101) push_warning '...battle-only (use BattleManager)' with no battle impl; there is no 'flee' match arm at all. data/items/consumables.json confirms the affected items: waystone(teleport), sables_coin(preemptive), smoke_bomb(flee), whetstone(buff_atk), spirit_incense(buff_mag).
+- **Notes:** Confirmed. M-effort needing EventFlags/exploration hooks plus BattleManager integration. Not bounded.
 
 ---
 

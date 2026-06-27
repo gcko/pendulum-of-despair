@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -43,6 +43,15 @@ Build a map-variant resolution layer (map_id + act/flag -> scene/overlay) plus a
 
 - game/scenes/maps/towns/* (single static scenes)
 - game/scripts/ (no corruption_stage/biome logic)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** No act-based map-variant or corruption-overlay logic in scripts. grep corruption_stage/corruption/pallor/biome in scripts/ returns only thematic UI strings (ritual_meter.gd:11/14, cleansing_sequence.gd:159) and a combat comment (damage_calculator.gd:45 'Pallor Shimmer'); no world-state switching. dynamic-world.md is 1156 lines; biomes.md:864 'Pallor Corruption Overlay System'. Town scenes are single static .tscn files.
+- **Notes:** Confirmed. XL epic spanning Acts II+. fixKind code, not fixable now.
 
 ---
 

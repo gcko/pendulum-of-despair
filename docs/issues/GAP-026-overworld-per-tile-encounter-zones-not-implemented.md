@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -44,6 +44,15 @@ Add a TileMapLayer terrain-tag -> zone_id map and update the current zone on til
 - game/data/encounters/overworld.json (13 zones)
 - game/scripts/core/exploration.gd:131,136-149
 - game/scenes/maps/overworld.tscn:38
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** overworld.json defines 13 zones (zone_ids: valdris_highlands, aelhart_valley, compact_industrial, ley_scarred_plains, bellhaven_coast, ashport_coast, thornmere_wilds, deep_thornmere, wilds_edge, duskfen_marshland, frostcap_foothills, pallor_wastes_approach, roads). exploration.gd:131 reads a single _current_floor_id = get_meta('floor_id',''); overworld.tscn line 38 sets metadata/floor_id = 'valdris_highlands'. The zone-match loop exploration.gd:143-149 matches that one id against zone_id, so only valdris_highlands is ever selected; on no-match it falls back to entries[0] (also valdris_highlands). The other 12 zones are unreachable.
+- **Notes:** Confirmed partial-impl / false-completion. Authored zone data is dead. Fix needs a per-tile TileMapLayer terrain-tag -> zone_id classifier updated on tile change, plus a test — new logic, not a bounded change. Not fixNow.
 
 ---
 

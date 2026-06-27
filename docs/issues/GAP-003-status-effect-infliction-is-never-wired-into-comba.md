@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat, tracker |
 
@@ -45,6 +45,15 @@ Add a status-application step to spell/ability/enemy resolution; map status name
 - game/scripts/combat/damage_calculator.gd:160 (roll_status uncalled)
 - game/scripts/combat/battle_state.gd:136 (apply_status uncalled)
 - game/scripts/combat/battle_actions.gd (no status path)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** damage_calculator.gd:160 roll_status() has zero callers (grep found only the definition). battle_state.gd:136 apply_status() and enemy.gd:196 apply_status() both have zero call sites (grep for '.apply_status(' excluding defs returned nothing). battle_actions.gd magic/physical paths never invoke a status step. ATB frozen/status_mods setters exist (atb_system.gd:77,89) but nothing in combat feeds them.
+- **Notes:** Confirmed dead-ended status pipeline. Not fixNow: needs status-application step across spell/ability/enemy resolution plus ATB modifier mapping and ticks — feature work with new tests.
 
 ---
 

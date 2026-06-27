@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-006 |
 | **Area** | Combat |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat |
 
@@ -42,6 +42,15 @@ Decide with design owner: adopt doc constants and verify pacing in-engine, or up
 
 - game/scripts/combat/atb_system.gd:14-21 (SPEED_FACTORS)
 - game/scripts/combat/atb_system.gd:112-117
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** atb_system.gd:14-21 SPEED_FACTORS = {1:1.5,2:1.0,3:0.7,4:0.5,5:0.35,6:0.25}. combat-formulas.md 'Battle Speed Config' table = {1:6,2:5,3:3,4:2,5:1.5,6:1}. Formula shape matches: atb_system.gd:117 (spd+25)*factor*mods vs doc line 644 floor((SPD+25)*factor*mods); GAUGE_MAX=16000 matches doc. At speed 3, Maren SPD 8: doc (8+25)*3=99 -> 2.7s (matches doc table); code (8+25)*0.7=23 -> 16000/23/60=11.6s. Code comment (atb_system.gd:12-13) admits a deliberate retune to ~6-8s.
+- **Notes:** Confirmed ~4x divergence. Not fixNow despite being a small constant change: it is a design decision (adopt doc constants vs canonicalize the retune), and changing SPEED_FACTORS would alter ATB pacing assertions in the GUT suite. Severity HIGH->MEDIUM: functionally playable, divergence is from documented pacing milestones, needs owner sign-off.
 
 ---
 

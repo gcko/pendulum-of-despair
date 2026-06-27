@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | progression |
 
@@ -40,6 +40,15 @@ Change the return to maxi(1, floori(avg) - 1); add a unit test for a known avera
 ## Code references
 
 - game/scripts/core/exploration.gd:444-450,425,428,437,440
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** yes (code)
+- **Evidence:** exploration.gd:444-450 `_get_party_avg_level()` returns `maxi(1, floori(float(total) / float(PartyState.members.size())))` with no -1. It is the level passed to PartyState.add_member at exploration.gd:425,428,437,440 for Lira/Sable/Torren/Maren. Design progression.md:156 and :248 mandate `join_level = max(1, floor(party_average_level) - 1)`.
+- **Notes:** Bounded, safe. No GUT test asserts the resulting join level — test_ironmouth.gd:31-38 calls add_member with its own avg_level constant and never checks the returned level, so the change cannot break the suite. The -1 narrative rationale (catch-up feel) is documented at progression.md:168.
 
 ---
 

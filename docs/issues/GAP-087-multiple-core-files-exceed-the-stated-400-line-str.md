@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | arch |
 
@@ -44,6 +44,15 @@ Continue the extraction pattern: split PartyState into composition/stats/invento
 - game/scripts/core/exploration.gd (719)
 - game/scripts/autoload/audio_manager.gd (710)
 - game/scripts/combat/battle_manager.gd (550)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** wc -l confirms exact figures: party_state.gd 751, exploration.gd 719, audio_manager.gd 710, battle_manager.gd 550, inventory_helpers.gd 453, menu_ley_crystal.gd 451, cutscene_player.gd 429. The 400-line goal is self-stated in inventory_helpers.gd:3 ('to keep files under 400 lines'), yet inventory_helpers.gd itself (453) and PartyState (751) exceed it.
+- **Notes:** Facts accurate; this is genuine maintainability debt requiring a multi-module refactor (Effort L). fixNow=FALSE — decomposing core autoloads is exactly the kind of large change that risks the test suite.
 
 ---
 

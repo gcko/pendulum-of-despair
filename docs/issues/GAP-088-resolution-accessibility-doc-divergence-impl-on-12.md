@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | tracker |
 
@@ -43,6 +43,15 @@ Reconcile the resolution model across the docs and re-justify or drop the High-R
 ## Code references
 
 - game/project.godot (1280x720 viewport, 4x zoom)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** OVERSTATED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** yes (doc)
+- **Evidence:** The issue claims accessibility.md/visual-style.md still assume 320x180 — FALSE. accessibility.md:26-28 already states '1280x720 viewport with 4x camera zoom (effective 320x180 game world)... This replaces the original spec', and :59 repeats it; visual-style.md:30 '...viewport is 1280x720 with 4x camera zoom (effective 320x180 game world), integer-sc...'. The only residual stale reference is game-design-gaps.md:703 which still cites '320×180 base resolution' as the accessibility foundation.
+- **Notes:** Two of three named docs are already reconciled; only one tracker line lags, and it is arguably still accurate since the effective game world remains 320x180. Minor doc clarification at most.
 
 ---
 

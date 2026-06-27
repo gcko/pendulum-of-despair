@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-042 |
 | **Area** | Story |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | bug |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | story |
 
@@ -45,6 +45,15 @@ Decide semantics (group consecutive same-condition entries as a sequence, or cyc
 - game/scripts/entities/npc.gd:66-75
 - game/data/dialogue/npc_bren.json
 - game/data/dialogue/npc_grandmother_seyth.json
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/scripts/entities/npc.gd:66-75 get_current_dialogue() reassigns `fallback = entry` and `continue`s on every null/empty-condition entry, so only the LAST default survives. game/data/dialogue/npc_bren.json has 3 null-condition entries (npc_bren_001/002/003 — distinct topics) plus conditioned ones; npc_grandmother_seyth.json has 5 null-condition entries (001-005). In the Act-I case (act flags unset) only npc_bren_003 and seyth_005 are reachable. Confirmed: Bren 3->1, Seyth 5->1.
+- **Notes:** Real content loss across many ambient NPCs. Not fixNow: dialogue-system.md §3.2 (docs/story/dialogue-system.md:135-170) only models a SINGLE [default] entry ('the [default] entry fires'), so multi-default semantics (sequential vs per-NPC cycling index) is an UNSPECIFIED design decision the issue itself flags. Implementing cycling/sequencing plus a regression test is a non-trivial change against the 916-test suite. Severity refined HIGH->MEDIUM: ambient flavor, non-progression-blocking, but genuinely widespread.
 
 ---
 

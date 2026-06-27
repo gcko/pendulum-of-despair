@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -41,6 +41,15 @@ Extend _validate with per-group type assertions (party Array, formation/inventor
 ## Code references
 
 - game/scripts/autoload/save_manager.gd:214-237
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** save_manager.gd:214-237 _validate: checks all 10 required keys exist (229-231) but type-asserts ONLY data['meta'] (233) and data['world'] (236). party/formation/inventory/owned_equipment/crafting/ley_crystals/quests/completion types are unchecked — a save with party as a String passes.
+- **Notes:** Confirmed partial-impl. Fix itself is small but stricter validation risks rejecting existing minimal GUT save fixtures (exact expected per-group types must be confirmed against fixtures first) and the acceptance criteria requires a new rejection test. Not a clearly safe bounded change against the 916-test suite. fixNow=false.
 
 ---
 

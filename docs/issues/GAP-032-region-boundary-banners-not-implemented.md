@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -42,6 +42,15 @@ Once continental region boundaries exist, detect crossings in the move step and 
 ## Code references
 
 - game/scripts/core/exploration.gd:176-187
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** Only flash_location_name exists (exploration.gd:176-187, a per-map-load fade panel). No region-detection or banner/crossfade code. Design overworld.md:235 'Region Boundary Banners — Plus Enhancement', overworld.md:248 '3-second' music crossfade; geography.md:524-528 region banners on boundary crossing.
+- **Notes:** Confirmed. Effort S but hard-blocked by GAP-029 (no continental regions exist to cross). Not fixable now.
 
 ---
 

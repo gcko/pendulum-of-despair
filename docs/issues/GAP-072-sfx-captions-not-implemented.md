@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -41,6 +41,15 @@ Add a global caption CanvasLayer with a timed label; emit caption requests from 
 ## Code references
 
 - game/scripts/ui/menu_config.gd:53
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu_config.gd:53 defines sfx_captions toggle. Repo-wide grep for `sfx_captions` outside menu_config.gd returns nothing — no caption CanvasLayer/label, no emitters.
+- **Notes:** Confirmed missing feature. Needs a global caption layer + emit points on 8 SFX events. Not bounded. fixNow=false.
 
 ---
 

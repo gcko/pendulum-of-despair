@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -44,6 +44,15 @@ Add SavePoint entities at designed coords and set Camera2D limit_* from the acti
 - game/scenes/maps/overworld.tscn (no SavePoint)
 - game/scenes/core/exploration.tscn:22-24
 - game/scripts/core/exploration.gd:67-68
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** overworld.tscn has 0 SavePoint nodes (grep -c SavePoint = 0; node list shows only Transitions/Entities/Labels/Markers). Shared Camera2D defines only zoom and position_smoothing in exploration.tscn:22-24. exploration.gd:67-68 '_camera.position = _player.position.round()' — unclamped, no limit_*. Design overworld.md:139 overworld save points; geography.md:523-524 'camera stops at map edges — ocean tiles fill'.
+- **Notes:** Confirmed partial-impl. Although effort S, camera limits depend on final continental map bounds (GAP-029) and adding clamping/save-point risks GUT camera/exploration tests; not a safe bounded fix on the placeholder 60x40 map. Not fixable now.
 
 ---
 

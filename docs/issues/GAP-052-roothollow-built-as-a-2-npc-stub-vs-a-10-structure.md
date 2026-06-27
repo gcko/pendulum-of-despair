@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | world |
 
@@ -41,6 +41,15 @@ Add minimum Act-I structures (Guest Hollow inn, Trader's Nook, Hunter weapon cac
 ## Code references
 
 - game/scenes/maps/towns/roothollow.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/scenes/maps/towns/roothollow.tscn Entities contain only Vessa (npc_id 'vessa'), Herbalist (npc_id/shop_id 'roothollow_herbalist'), RoothollowSave save point, ExitToOverworld, and Scene5Trigger (the party-join scene). Design city-thornmere.md:131-205 specifies ~10 structures, Root Chambers interior, hidden Root-Weaver's Workshop, Great Tree Canopy, and a spirit-token barter economy — all absent.
+- **Notes:** Partial-impl gap accurately described (issue calls Scene5Trigger the 'Torren-join trigger', a harmless label nuance). Expanding to the full structure set is feature work.
 
 ---
 

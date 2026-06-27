@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-005 |
 | **Area** | Combat |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | combat, tracker |
 
@@ -43,6 +43,15 @@ Add a Combo command querying ATB for full-gauge allies, cross-reference combos.j
 
 - game/data/abilities/combos.json (unloaded)
 - game/scripts/ui/battle_command_menu.gd:45-52 (no Combo option)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** grep -rni 'combo|dual_tech' over scripts/ and scenes/ returned nothing. combos.json exists (game/data/abilities/combos.json, 6.3K) but is referenced nowhere in code (grep 'combos' in scripts/scenes found no loader). battle_command_menu.gd:45-52 offers only Attack/Magic/<Ability>/Item/Defend/Flee — no Combo option.
+- **Notes:** Confirmed unimplemented. Severity refined HIGH->MEDIUM: it is missing content but not blocking the slice's core loop; depends on GAP-002 subsystems. Not fixNow.
 
 ---
 

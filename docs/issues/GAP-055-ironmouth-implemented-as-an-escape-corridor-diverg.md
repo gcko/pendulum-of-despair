@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | world |
 
@@ -41,6 +41,15 @@ Rename/namespace the corridor; update design docs if Ironmouth-as-city is being 
 ## Code references
 
 - game/scenes/maps/towns/ironmouth_docks.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/scenes/maps/towns/ironmouth_docks.tscn (location_name 'Ironmouth Docks', encounter_enabled=false) is a linear corridor: LiraDialogue, three crate chests (ironmouth_crate_1/2/3), SableDialogue, BossTrigger, PostCombatDialogue (ironmouth_post_combat), and from_overworld/from_ember_vein markers. No shops/buildings/city layout. Design city-carradan.md:1168-1270 defines Ironmouth as a full Carradan port city.
+- **Notes:** Accurate design-divergence. Renaming/namespacing the scene (e.g. ironmouth_escape) is the suggested fix but would require updating all res:// path references and load_map targets, so not a safe bounded change without verifying every reference; fixNow false. Full city tracked under GAP-049.
 
 ---
 

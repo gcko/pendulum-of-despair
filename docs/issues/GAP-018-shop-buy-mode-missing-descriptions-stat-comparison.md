@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-018 |
 | **Area** | Items/Economy |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -43,6 +43,15 @@ Extend shop_overlay.tscn with a selection-bound description line, an equipment c
 
 - game/scripts/ui/shop_overlay.gd:138-186
 - game/scenes/overlay/shop_overlay.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** _build_list (shop_overlay.gd:148-151) emits plain labels: lbl.text = '%s  %dG' % [entry['name'], entry['buy_price']]. _show_feedback (193-198) reuses _desc_label ($Panel/VBox/DescLabel) for transient feedback. _try_buy (164-191) always purchases quantity 1. No stat-comparison panel, compat icons, affordability greying, or owned-qty exist.
+- **Notes:** All sub-claims confirmed. Refined HIGH->MEDIUM: buying functions correctly; these are UX/polish enhancements, not a blocking defect. L-effort UI work.
 
 ---
 

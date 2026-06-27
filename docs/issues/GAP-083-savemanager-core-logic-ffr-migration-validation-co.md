@@ -8,7 +8,7 @@
 | **Type** | test-gap |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | arch |
 
@@ -43,6 +43,15 @@ Add game/tests/test_save_manager.gd with GUT cases for _migrate, _validate, load
 
 - game/scripts/autoload/save_manager.gd:60-92,191-237,133-176
 - game/tests/test_save_load.gd
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/tests/test_save_load.gd (232 lines) only has overlay-UI and happy-path tests (test_save_load_scene_loads, test_save_writes_file, test_copy_slot, test_load_defers_state_change, etc.). grep across tests/ for _migrate/_validate/cannot_open/"invalid"/faint_and_fast returns ZERO save-related matches (the 'corrupted' hits are enemy data in test_fenmothers_hollow.gd). save_manager.gd has untested logic: error branches load_game (cannot_open:70, corrupted:78, invalid:82,90), _migrate:191, _validate:214, faint_and_fast_reload:133.
+- **Notes:** Core claim accurate: no unit tests for _migrate, _validate rejection, load error branches, or FFR. faint_and_fast_reload IS already implemented (line 133) so it is testable now, contrary to the 'once implemented' caveat. fixNow=FALSE: this is net-new test authoring (a full new GUT file), not a bounded one-line fix.
 
 ---
 

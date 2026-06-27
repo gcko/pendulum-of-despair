@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | tracker |
 
@@ -43,6 +43,15 @@ Last content epic after the main game; lowest priority.
 ## Code references
 
 - (none — no post-game scenes)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** No post-game scaffolding exists: grep for dreamer/boss_rush/'boss rush'/'the lingering' across game/scripts returns nothing (the earlier 'completion'/'lingering' hits were unrelated generic words). scenes/ tree has only maps, ui, core, overlay, entities (no postgame dir). Optional enemy data exists (game/data/enemies/optional.json) but nothing consumes it for a boss rush/superboss. Design docs exist: docs/story/postgame.md, dungeons-world.md (Dreamer's Fault), sidequests.md (The Lingering).
+- **Notes:** Genuine unbuilt EPIC, correctly flagged lowest priority and dependent on the Acts II-IV epic. Not actionable now.
 
 ---
 

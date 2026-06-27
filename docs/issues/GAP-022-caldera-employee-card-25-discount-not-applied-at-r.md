@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items |
 
@@ -43,6 +43,15 @@ In shop_overlay, when shop.markup>1.0 and PartyState has caldera_employee_card, 
 
 - game/scripts/ui/shop_overlay.gd:164-187
 - game/data/shops/caldera_company_store.json:6
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** data/shops/caldera_company_store.json:6 sets markup:1.5 with pre-multiplied buy_price values (e.g. hi_potion 450). shop_overlay.gd _try_buy (164-191) charges entry['buy_price'] directly via spend_gold(price); no employee_card / markup-discount reference exists anywhere in the file.
+- **Notes:** Confirmed. Although S-effort, it is a missing-feature (gameplay behavior change to shop pricing gated on a key item) — needs new logic and a regression test. Per the guardrail against feature implementation, fixNow FALSE.
 
 ---
 

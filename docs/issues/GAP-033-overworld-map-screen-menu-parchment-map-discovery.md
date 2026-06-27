@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -43,6 +43,15 @@ Add a discovered-locations set to save/world state set on map entry, and a menu 
 
 - game/scripts/ (no map-screen logic)
 - game/scenes/overlay/menu.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** No map-screen or location-discovery state. grep discover/map_screen/parchment/continent in scripts/+scenes/overlay/ found only inventory_helpers.gd:307 'discovered_synergies' (combat synergies, unrelated). Design overworld.md:77 'Map Screen (Menu-Accessed)'; geography.md:524 map screen overview.
+- **Notes:** Confirmed. Effort M feature requiring new save/world state + menu overlay. Not fixable now.
 
 ---
 

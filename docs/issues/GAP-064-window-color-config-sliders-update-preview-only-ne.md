@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -41,6 +41,15 @@ Drive a shared theme StyleBoxFlat bg_color (or a global window-color singleton) 
 ## Code references
 
 - game/scripts/ui/menu_config.gd:295-301
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu_config.gd:294-300 _update_display only sets _preview_rect.color from window_color; nothing propagates window_color to a shared theme. menu_overlay.gd:14 COLOR_WINDOW_BG = Color('#000040') is a static const never driven by config. No StyleBoxFlat bg_color or global window-color singleton is updated from window_color (grep confirms window_color is only read in menu_config.gd). Design ui-design.md:10.3.
+- **Notes:** Confirmed: sliders affect preview only. Live tinting across all menu/dialogue chrome + persistence = moderate cross-cutting change; not a bounded safe fix. Not fixNow.
 
 ---
 

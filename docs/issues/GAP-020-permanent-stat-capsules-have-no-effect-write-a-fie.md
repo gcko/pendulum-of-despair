@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items |
 
@@ -42,6 +42,15 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 
 - game/scripts/autoload/inventory_helpers.gd:105-110,217-220
 - game/scripts/autoload/party_state.gd:287
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** inventory_helpers.gd stat_boost (104-110) writes target[stat_key]=current+boost (a top-level member field). party_state.gd get_effective_stat (283-292) reads m.get('base_stats',{}).get(stat,0)+equipment_bonus — never the top-level field. add_xp_to_member level-up (inventory_helpers.gd) calls calculate_stats_at_level then sets member['base_stats']=new_stats and member[stat_key]=new_stats.get(...), overwriting any capsule gain. Capsules are therefore inert and wiped on level-up.
+- **Notes:** Confirmed bug. Although S-effort, the fix introduces a new persistent stat_capsules field that must be added into get_effective_stat, re-applied after level-up recalculation, and round-tripped through save — new logic with real risk to the stat/level/save test paths. fixNow FALSE.
 
 ---
 

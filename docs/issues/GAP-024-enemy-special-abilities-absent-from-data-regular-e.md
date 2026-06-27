@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | enemies |
 
@@ -45,6 +45,15 @@ Add an abilities schema to enemy JSON (Act I families first), populate from pale
 - game/data/enemies/act_i.json (no 'abilities' field in any of 28 entries)
 - game/scripts/combat/battle_ai.gd:31-39
 - game/scripts/combat/battle_actions.gd (no apply_status path)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** grep '"abilities"' game/data/enemies/act_i.json returns 0 matches across all 27 entries. battle_ai.gd:30-36 — the 20% ability branch reads enemy_data.get('abilities', []) and, when empty, falls through to the 10% defend branch (line 38-39), so regular enemies are effectively 70% attack / 30% defend. battle_actions.gd has 0 matches for apply_status/roll_status, so enemy actions never inflict status. Scripted boss AI (Vein Guardian, Drowned Sentinel, Corrupted Fenmother) is hardcoded in battle_ai.gd:103-188 and does not use a data-driven ability schema. Design ref docs/story/bestiary/palette-families.md confirms per-family ability kits are designed.
+- **Notes:** Real and significant. Large feature: requires a new JSON ability schema, data population from the bestiary, and wiring apply_status/roll_status + AoE-on-death + pack buffs into battle_actions — clear new logic and new tests, would meaningfully touch the GUT suite. Not safe to fix now. Issue notes a dependency on GAP-003.
 
 ---
 

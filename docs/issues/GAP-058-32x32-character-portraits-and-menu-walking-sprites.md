@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -43,6 +43,15 @@ Add portrait/sprite TextureRect placeholders to each screen .tscn and a characte
 - game/scenes/overlay/menu.tscn
 - game/scripts/ui/menu_formation.gd:118-136
 - game/scripts/ui/save_load_display.gd:148-170
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu.tscn references only cursor textures (ext_resource cursor_hand.png id 10_cursor; nodes Cursor/CharCursor Sprite2D); grep for Portrait/TextureRect/sprite finds no portrait or walking-sprite nodes. assets/sprites/ui/ contains only cursor_hand.png. menu_formation.gd:_refresh_labels (lines ~118-136) renders text-only rows; save_load_display.gd:_show_populated_slot (148-170) is text-only. Design ui-design.md:37 '32x32 pixel-art face portraits', :369-370 formation rows specify '32x32 pixel-art face portrait'.
+- **Notes:** Confirmed absent. Depends on art epic (GAP-082) for actual textures; placeholder nodes alone would be incomplete. Effort L, not a bounded safe fix.
 
 ---
 

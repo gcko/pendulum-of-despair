@@ -8,7 +8,7 @@
 | **Type** | data-error |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | story |
 
@@ -44,6 +44,15 @@ Make npc_lord_chancellor_haren.json canonical, repoint the placed NPC (or rename
 - game/data/dialogue/npc_lord_haren.json
 - game/data/dialogue/npc_lord_chancellor_haren.json
 - game/scenes/maps/towns/valdris_throne_hall.tscn:33
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** yes (data)
+- **Evidence:** ls: npc_lord_haren.json 356B / 1 entry (npc_lord_haren_001, condition null); npc_lord_chancellor_haren.json 1.5K / 4 entries (001 default, 002 cael_betrayal_complete, 003 interlude_begins, 004 epilogue_complete). First lines are near-identical paraphrases ('The king values your counsel, Edren...'). `grep -rln lord_chancellor_haren game/scenes` returns nothing — the rich file is orphaned. valdris_throne_hall.tscn:33 npc_id="lord_haren".
+- **Notes:** fixNow-safe: pure JSON data, no test references, loader key preserved. Caveat: merged entries 002/003 are gated on cael_betrayal_complete/interlude_begins which are never set in the slice (GAP-045), so they remain dormant for now — identical to the rich file's current dormant state — but the orphan is removed and the act-state progression becomes available once those flags fire. Alternative (repoint npc_id to lord_chancellor_haren + delete stub) is equally valid but requires a .tscn edit.
 
 ---
 

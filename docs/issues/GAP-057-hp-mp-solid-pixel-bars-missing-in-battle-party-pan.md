@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-057 |
 | **Area** | UI |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -43,6 +43,15 @@ Add HPBar/MPBar ColorRect (bg + fill) to each battle and menu Row; compute fill_
 - game/scripts/ui/battle_party_panel.gd:46-56
 - game/scenes/core/battle.tscn:73-78
 - game/scripts/ui/menu_overlay.gd:326-336
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_party_panel.gd:46-56 renders HPLabel/MPLabel as text with modulate only; the only ColorRect in a battle row is ATBBar (battle.tscn:83,106,129,152). menu_overlay.gd:326-336 renders HP/MP as text labels with modulate. grep for ColorRect in menu.tscn/battle.tscn shows NO HP/MP fill bars (only Background, PreviewRect, CrystalScreen XPBar, and ATBBars). Design ui-design.md:8 '/One modern addition: HP/MP bars alongside numeric values', :31-32 'Bars: Solid pixel fills...HP/MP/ATB bars are rectangles', :214/:216 'HP/MP label + solid pixel bar + numeric value', :370 menu rows 'HP bar + numeric | MP bar + numeric'.
+- **Notes:** Real divergence. Refined HIGH->MEDIUM: it is a cosmetic enhancement with no functional/gameplay impact in the vertical slice, though design explicitly flags it as the single intended modern addition. Not fixNow: requires adding ColorRect bg/fill nodes to 4 battle rows + 4 menu rows across two .tscn files plus fill-ratio logic in two scripts — a feature implementation, not a bounded data/doc fix.
 
 ---
 

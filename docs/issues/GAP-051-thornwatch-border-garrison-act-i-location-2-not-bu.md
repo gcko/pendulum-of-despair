@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | world |
 
@@ -41,6 +41,15 @@ Build Thornwatch in the Act-I content completion pass.
 ## Code references
 
 - game/scenes/maps/towns/ (no thornwatch scene)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** No thornwatch scene exists in game/scenes/maps/towns/ (grep 'thornwatch' in game/ returns only dialogue references in data/dialogue/scene_7a_the_gates.json:9 and scene_7_the_capital.json:9: 'received word from Thornwatch. Commander Halda...'). Design city-valdris.md:877-1060 defines Thornwatch (Act I location #2) with Garrison Barracks, Armory, Commander Halda, Watchtower, Border Rest Inn.
+- **Notes:** Accurate missing-feature gap. Building a town scene with shops/quest-giver/save is feature work, not a bounded fix.
 
 ---
 

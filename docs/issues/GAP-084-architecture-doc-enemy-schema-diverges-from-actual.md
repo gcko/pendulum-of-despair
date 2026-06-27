@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-084 |
 | **Area** | Docs |
-| **Severity** | MEDIUM |
+| **Severity** | MEDIUM (verified: LOW) |
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — OVERSTATED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | arch |
 
@@ -42,6 +42,15 @@ Update §2.1 example and remove/replace the stale §2.8 note; add threat and loc
 
 - game/data/enemies/act_i.json
 - game/scripts/entities/enemy.gd:259-271
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** OVERSTATED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** yes (doc)
+- **Evidence:** technical-architecture.md:169-170 already shows '"steal": { "common": {...}, "rare": {...} }' (nested two-tier) — so the issue's claim that §2.1 'documents a single-tier steal object' is FALSE. BUT §2.8 lines 419-424 ARE stale: 'The enemy JSON uses a single steal field... should be extended with steal_common and steal_rare fields.' enemy.gd:260-262 reads steal_data.get(tier) with common/rare. act_i.json ley_vermin (lines 4-41) has nested steal, plus 'threat' (line 7) and 'locations' (line 36) which the §2.1 example omits.
+- **Notes:** Mixed: the §2.1 single-tier claim is wrong (it is already nested), but the §2.8 stale note and missing threat/locations are real. Net a small safe doc cleanup.
 
 ---
 

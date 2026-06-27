@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-043 |
 | **Area** | Story |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: MEDIUM) |
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | story |
 
@@ -43,6 +43,15 @@ Add required_flag=diplomatic_mission_start (with its setter when Act II's dispat
 - game/scenes/maps/overworld.tscn:125,137
 - game/scripts/core/exploration_auto_sequence.gd:144-145
 - game/scripts/core/cleansing_sequence.gd:80,206
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/scenes/maps/overworld.tscn:119-126 (FenmothersHollow Area2D, target_map dungeons/fenmothers_hollow_f1) has NO metadata/required_flag, unlike DuskfenShrineEntry at :131-139 which has required_flag=caden_binding_complete. So Fenmother's Hollow (Act-II diplomatic dungeon) is enterable immediately. `diplomatic_mission_start` is the canonical Act-I->II prerequisite (events.md:274 flag 8, events.md:856) but is NEVER set via set_flag anywhere — only appears as `restock_event` in two shop JSONs and in events.md. exploration_auto_sequence.gd:145 sets duskfen_alliance with no diplomatic_mission_start prerequisite.
+- **Notes:** Confirmed divergence, but it is an intentional vertical-slice artifact (Act II content surfaced in the Act-I slice because later acts aren't built). Severity refined HIGH->MEDIUM. Not fixNow: adding required_flag=diplomatic_mission_start would make the dungeon unreachable in the slice (no setter exists) and could break exploration/cleansing tests; the alternative (documenting the deviation) requires a design-intent call on canonical wording/location. Likely resolution is a doc note in events.md/tracker.
 
 ---
 

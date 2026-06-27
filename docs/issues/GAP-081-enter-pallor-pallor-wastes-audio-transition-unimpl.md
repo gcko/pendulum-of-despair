@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | audio |
 
@@ -42,6 +42,15 @@ Implement enter_pallor() using the constants (silence music, fade-in sub-bass dr
 ## Code references
 
 - game/scripts/autoload/audio_manager.gd:38-43
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** audio_manager.gd:42-43 declares CROSSFADE_PALLOR_MUSIC=5.0 and CROSSFADE_PALLOR_AMBIENT=3.0. grep 'CROSSFADE_PALLOR' across scripts/tests finds only the two declarations (no consumers). grep 'enter_pallor' finds only the comment at line 40 — no method definition. Constants are genuinely dead code.
+- **Notes:** Accurate. Although effort S, implementing enter_pallor() requires new audio transition logic + a GUT test (a feature, not a doc/data tweak), and Pallor Wastes is Act III so it's non-blocking. Per the fixNow safety rule this is FALSE — implementing it touches the audio suite. Removing the dead constants instead would contradict the documented design intent, so no safe no-op fix exists.
 
 ---
 

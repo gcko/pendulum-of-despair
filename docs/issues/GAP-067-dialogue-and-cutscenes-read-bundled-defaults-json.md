@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -44,6 +44,15 @@ Replace the defaults.json loads with PartyState.get_config(); reload on open() s
 - game/scripts/ui/dialogue_box.gd:336-341
 - game/scripts/core/cutscene_player.gd:171-174
 - game/scripts/autoload/inventory_helpers.gd:269-282
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** yes (code)
+- **Evidence:** dialogue_box.gd:336-341 reads res://data/config/defaults.json for text_speed; cutscene_player.gd:171-174 reads same path into _config, which then feeds reduce_motion (cutscene_player.gd:354) and flash_intensity (363). Meanwhile AudioManager._apply_bus_volumes (audio_manager.gd:653) and menu_config.open (90) correctly use PartyState.get_config(). So Text Speed / Reduce Motion / Flash Intensity changes never reach dialogue/cutscenes.
+- **Notes:** Genuine bug: two consumers bypass the merged-config path. Fix is a 2-line source swap, isolated and obviously correct; grep found no tests asserting the defaults.json path (no test references text_speed/get_config/_load_config). Safe and bounded.
 
 ---
 

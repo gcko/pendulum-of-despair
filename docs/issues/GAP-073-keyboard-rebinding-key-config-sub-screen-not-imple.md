@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save, ui |
 
@@ -42,6 +42,15 @@ Add a Key Config sub-scene using InputMap.action_erase_events/action_add_event w
 ## Code references
 
 - game/scripts/ui/menu_config.gd:9-54
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu_config.gd SETTINGS (9-54) has no key_config entry. Repo-wide grep for `key_config` and `InputMap` across scripts/ returns nothing — no remap/conflict logic.
+- **Notes:** Confirmed missing feature. Rebinding sub-screen with capture-next-key + conflict detection + persistence is substantial. fixNow=false.
 
 ---
 

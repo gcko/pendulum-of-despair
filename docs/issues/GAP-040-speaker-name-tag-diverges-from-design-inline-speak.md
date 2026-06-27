@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | dialogue |
 
@@ -41,6 +41,15 @@ Make a design call and reconcile dialogue-system.md §1 and ui-design.md §12; r
 ## Code references
 
 - game/scripts/ui/dialogue_box.gd:160-167,71-73
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** dialogue_box.gd:71-73 loads _speaker_container ($DialogueBox/SpeakerLabel) and _speaker_label, but _show_entry sets _speaker_container.visible = false (line 161) and instead prepends an uppercased inline prefix: _current_lines[0] = speaker.to_upper()+': '+_current_lines[0] (165) / [speaker.to_upper()+':'] (167), with the comment 'FF6 inline style' (159). Design dialogue-system.md §1 line 29 ('Speaker name in small inset tag at top-left corner') and ui-design.md §12.1 line 833 ('Character name label in a small inset tag at the top-left corner') both specify an inset tag. The SpeakerLabel nodes are therefore dead code and the inline prefix consumes one of the 3 visible text lines.
+- **Notes:** Confirmed design-vs-code divergence. fixNow is false because resolution requires a deliberate design call (implement inset tag in code vs. canonicalize inline in two design docs and delete dead nodes) — not a unilateral safe edit, and changing DialogueBox text composition risks the GUT suite. Cheapest path is a doc reconciliation but the direction must be chosen by the maintainer.
 
 ---
 

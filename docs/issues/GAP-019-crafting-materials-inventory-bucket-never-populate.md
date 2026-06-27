@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items |
 
@@ -44,6 +44,15 @@ Classify add_item by category/source (or add add_material) and route to the corr
 - game/scripts/autoload/party_state.gd:41,463-469
 - game/scripts/autoload/inventory_helpers.gd:381-395
 - game/scripts/ui/menu_items.gd:4
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** party_state.gd add_item (463-469) unconditionally routes into the consumables bucket: consumables[item_id]=consumables.get(item_id,0)+quantity; inventory['materials'] (declared line 41) is never written. menu_items.gd:4 enum ItemTab {USE, ARRANGE, KEY} has no Materials tab. data/items/materials.json has 87 entries including drake_fang (battle_usable:true, battle_effect:fixed_damage, battle_value:500) which is unreachable.
+- **Notes:** Real bug. M-effort: requires add_item categorization/routing, a new Materials tab, and battle wiring for Drake Fang. Not a bounded one-liner.
 
 ---
 

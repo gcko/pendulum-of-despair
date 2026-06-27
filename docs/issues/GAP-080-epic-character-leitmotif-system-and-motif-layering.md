@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | audio |
 
@@ -41,6 +41,15 @@ Composition + adaptive-audio epic: author per-character motif stems and a layeri
 ## Code references
 
 - game/scripts/autoload/audio_manager.gd (no motif/layering)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** grep -i for 'motif|leitmotif' across game/scripts returns nothing. AudioManager plays whole pre-baked .ogg tracks via play_music; no motif stems exist in game/assets/music (only the 5 full-track placeholders). No layering controller or per-character motif data model.
+- **Notes:** Confirmed. XL adaptive-audio + composition epic, mostly Act II+. Not a bounded fix.
 
 ---
 

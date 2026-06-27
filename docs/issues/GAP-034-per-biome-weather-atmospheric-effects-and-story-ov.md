@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration |
 
@@ -42,6 +42,15 @@ Add a reusable atmospheric overlay node (particles + CanvasModulate) configured 
 ## Code references
 
 - game/scripts/ (only audio_manager CROSSFADE_BIOME constant)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** Only an audio-side biome crossfade constant exists: audio_manager.gd:35 'const CROSSFADE_BIOME: float = 3.0'. No weather/particle/CanvasModulate atmosphere system in scripts. Design overworld.md §4 and biomes.md atmospheric/time-of-day effects.
+- **Notes:** Confirmed. Effort M feature (overlay nodes + per-map meta + flag override). Not fixable now.
 
 ---
 

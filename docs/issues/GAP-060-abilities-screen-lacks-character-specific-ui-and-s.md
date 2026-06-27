@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -42,6 +42,15 @@ Add per-command rendering branches (pips/gauge/highlight) and source live values
 
 - game/scripts/ui/menu_abilities.gd:108-126
 - game/scripts/ui/ability_helpers.gd:4-11
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** ability_helpers.gd:4-11 RESOURCE_LABELS contains literal strings 'AP 0/10','AC 12/12','WG 0/100' (only the 'MP' entries are live-resolved via member current_mp/max_mp at lines 64-70). menu_abilities.gd:108-126 _update_grid only formats name + cost ('%-12s %6s'); no per-character branches for Edren stance highlight, Torren Favor pips, Sable cooldown/front-row icon, Maren Weave gauge, or Lira device qty. Design ui-design.md:7.3 table lists each character's unique UI element.
+- **Notes:** Confirmed partial-impl with hardcoded headers. Depends on GAP-002 (live resource state). Not fixNow.
 
 ---
 

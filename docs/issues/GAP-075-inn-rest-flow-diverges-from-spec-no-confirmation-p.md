@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -42,6 +42,15 @@ Route inn interaction through a confirm prompt and Rest & Save; add a conditiona
 
 - game/scripts/core/exploration.gd:284-289
 - game/scripts/ui/save_load.gd:7-9,230-243
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** exploration.gd:284-289 _handle_inn spends gold and calls PartyState.rest_at_inn() unconditionally — no confirm, no Rest & Save. save-system.md §4 specifies inns show a single 'Rest for Xg?' confirmation prompt and offer Rest or Rest & Save, and §4 Device Reconfiguration lets Lira reconfigure at any save point. save_load.gd:9 SavePointOption has only REST/REST_SAVE/SAVE — no device-reconfiguration entry.
+- **Notes:** Confirmed design-divergence. Note save points DO offer Rest & Save (REST_SAVE); the divergence is specifically the Inn flow (no confirm / no Rest & Save) plus missing Lira device reconfiguration. Needs UI prompt wiring + tests. fixNow=false.
 
 ---
 

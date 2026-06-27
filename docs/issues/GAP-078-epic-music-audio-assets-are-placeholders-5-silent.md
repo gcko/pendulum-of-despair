@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | audio, tracker |
 
@@ -44,6 +44,15 @@ Content-production epic: first produce the Act-I-slice subset (Valdris Crown, Ro
 
 - game/assets/music/ (5 silent .ogg)
 - game/assets/sfx/, game/assets/ambient/ (silent placeholders)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/assets/music/ contains exactly 5 .ogg files (title_theme, overworld_act_i, battle_standard, battle_boss, ember_vein), all 0.100136s duration and ~0 bps per ffprobe/file(1) — confirmed silent placeholders. game/assets/sfx/ = 51 .ogg files, game/assets/ambient/ = 12 .ogg files, all 3.5K placeholders matching the silent-music size. Design (docs/story/music.md) calls for ~70-80 tracks; only 5 exist. Slice locations Valdris Crown/Roothollow/Fenmother's Hollow have no themes.
+- **Notes:** Real gap. Title wording 'missing' is slightly imprecise — the 51 SFX + 12 ambient files DO exist on disk as silent placeholders rather than being absent; the actual gap is that none are real audio, which the acceptance criteria correctly capture. This is an XL content-production epic, not a safe bounded fix.
 
 ---
 

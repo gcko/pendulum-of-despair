@@ -4,11 +4,11 @@
 |-------|-------|
 | **ID** | GAP-004 |
 | **Area** | Combat |
-| **Severity** | HIGH |
+| **Severity** | HIGH (verified: LOW) |
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — already implemented (verification found no gap) |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | tracker, combat |
 
@@ -43,6 +43,15 @@ In battle_state combatant construction, pull PartyState equipped IDs, look up bo
 ## Code references
 
 - game/scripts/combat/battle_state.gd (no 'equip' references)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** ALREADY_DONE
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_state.gd:35 add_member calls _compute_effective_stats; battle_state.gd:285-291 _compute_effective_stats loops atk/def/mag/mdef/spd/lck and adds PartyState.get_equipment_bonus(character_id, stat) to base. party_state.gd:295-313 get_equipment_bonus sums weapon/head/body/accessory bonus_stats AND crystal bonuses. get_effective_stat (battle_state.gd:206-213) reads effective_stats for all combat math. The issue's premise ("grep for 'equip' in battle_state.gd returns nothing") is FALSE — battle_state.gd has 'equip' references at lines 18-19,205,283-290.
+- **Notes:** Stale/wrong issue. Equipment AND crystal bonuses are baked into combat stats at battle start. Only caveat: I did not see an explicit progression.md stat-cap enforcement in this path, but the bonus-application gap claimed is already implemented. Recommend closing as already-done; optionally file a tiny follow-up if stat caps are required.
 
 ---
 

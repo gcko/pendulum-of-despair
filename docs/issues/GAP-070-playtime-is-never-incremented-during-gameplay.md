@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -43,6 +43,15 @@ Add a _process(delta) accumulator in PartyState/GameManager that increments whil
 - game/scripts/autoload/party_state.gd:44,77,128
 - game/scripts/autoload/save_manager.gd:305-306
 - game/scripts/ui/save_load_display.gd:159-165
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** party_state.gd:44 `var playtime: int = 0`; reset to 0 at 77; loaded from save at 128; written via save_manager.gd:305-306. Repo-wide grep finds NO `playtime +=` and no _process accumulator in party_state.gd or game_manager.gd. menu_overlay.gd:362 and save_load_display.gd:159-165 only read/format it.
+- **Notes:** Confirmed never incremented. A _process accumulator needs gameplay-vs-paused state gating + tests (excluding paused menus). Small but introduces runtime state logic; not a trivially safe doc/data change. fixNow=false.
 
 ---
 

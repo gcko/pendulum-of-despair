@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | arch |
 
@@ -41,6 +41,15 @@ One-line doc updates across the four references (or pin the project to 4.6 if in
 ## Code references
 
 - game/project.godot:15
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** yes (doc)
+- **Evidence:** game/project.godot:15 config/features=PackedStringArray("4.7", "GL Compatibility"). Docs say 4.6: technical-architecture.md:3,7; AGENTS.md:9,51,59; CLAUDE.md:23; game-design/dev-gaps game-dev-gaps.md:10 'Engine: Godot 4.6+'.
+- **Notes:** Confirmed mismatch. Minor direction judgment (update docs to 4.7 vs pin project to 4.6); updating docs to match the actual project is the safe choice.
 
 ---
 

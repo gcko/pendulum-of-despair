@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | tracker, exploration |
 
@@ -45,6 +45,15 @@ Single art-production epic; coordinate palette-family sprite sharing to reduce e
 - game/assets/sprites/ (22 placeholder PNGs)
 - game/assets/tilesets/ (placeholder_dungeon.png, tileset_test.png)
 - game/scenes/maps/overworld.tscn:3-33
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/assets/sprites/ holds 20 placeholder PNGs (characters: 6 placeholder_*.png; enemies: 1 placeholder_enemy.png; npcs: 1 placeholder_npc.png; ui: 1 cursor_hand.png; interactables: 11 placeholder_*.png) — all tiny 83-145 byte placeholders. game/assets/tilesets/ has placeholder_dungeon.png (256B) + tileset_test.png (152B), 2 PNGs. Combined = 22 placeholder art PNGs. No real biome tilesets, UI frames, or status icons.
+- **Notes:** Confirmed. Minor imprecision: the issue says '22 sprites' but the sprites/ dir has 20 PNGs; the 22 count only holds if the 2 tileset PNGs are included. Substance (everything is placeholder art) is fully accurate. XL art-production epic — polish, not a blocker, and not a safe bounded fix.
 
 ---
 

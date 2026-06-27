@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | arch |
 
@@ -43,6 +43,15 @@ Add SaveManager.save_config/load_config delegating to the JSON helper; have Part
 - game/scripts/autoload/save_manager.gd:14
 - game/scripts/autoload/party_state.gd:664,698
 - game/scripts/autoload/inventory_helpers.gd:269
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** save_manager.gd:14 declares CONFIG_PATH but SaveManager never reads/writes it (grep shows it's referenced only externally). Config I/O lives in party_state.gd:664-668 save_config (writes SaveManager.CONFIG_PATH) and inventory_helpers.gd:269-282 load_config_from_disk (reads SaveManager.CONFIG_PATH). Persistence is split across three files.
+- **Notes:** Confirmed responsibility split / design-divergence (LOW). Resolving it means moving config I/O into SaveManager and updating PartyState/inventory_helpers callers + tests — a refactor touching 3 autoloads. Not bounded. fixNow=false.
 
 ---
 

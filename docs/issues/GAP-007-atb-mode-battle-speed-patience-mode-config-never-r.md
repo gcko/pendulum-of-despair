@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save, combat |
 
@@ -45,6 +45,15 @@ In battle_manager._ready/init, read config and configure the ATB node; also paus
 - game/scripts/combat/atb_system.gd:94-99,182-187
 - game/scripts/combat/battle_manager.gd:37,53,111,133,154
 - game/scripts/ui/menu_config.gd:203-254
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** battle_manager.gd _ready (lines 42-89) wires submenu_open (line 53 set_submenu_open) but never calls set_atb_mode or set_battle_speed and never reads PartyState config (grep 'set_atb_mode|set_battle_speed|get_config' in battle_manager.gd found only should_pause_timers at line 98). atb_system defaults stay _atb_mode='active' (line 30) and _battle_speed=3 (line 27). Because mode is 'active', _should_pause (atb_system.gd:181-187) always returns false, so wait/patience never pause and the player's Battle Speed setting never changes pacing.
+- **Notes:** Confirmed: config never reaches ATB. Not fixNow: requires reading PartyState.get_config in battle init plus verifying pause behavior with tests — bounded but feature-shaped, touching battle init that the GUT suite exercises.
 
 ---
 

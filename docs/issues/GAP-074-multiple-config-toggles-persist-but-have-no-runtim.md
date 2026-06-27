@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -45,6 +45,15 @@ Wire each consumer: read screen_shake in shake emitters; branch transitions on t
 - game/scripts/ui/menu_config.gd:24,27,39,48-52
 - game/scripts/autoload/audio_manager.gd:651-674
 - game/scripts/core/cutscene_player.gd:353-359
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** Grep across scripts/ (excluding menu_config.gd) for high_res_text, sound_mode, transition_style, screen_shake all return nothing. cutscene_player.gd:353-359 (_cmd_shake) gates ONLY on reduce_motion (354) with no screen_shake check, confirming Screen Shake off alone has no effect. audio_manager.gd:651-678 (_apply_bus_volumes) has no mono/pan down-mix. No high-res SubViewport, no transition_style branch, no HP-bar shape cue.
+- **Notes:** Confirmed: all listed toggles persist (menu_config.gd:24,27,39,48-52) with no consumers. Multiple separate runtime wirings — feature work. fixNow=false.
 
 ---
 

@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items, ui, tracker |
 
@@ -43,6 +43,15 @@ Add an entry-mode state machine then a Sell sub-mode reading PartyState consumab
 ## Code references
 
 - game/scripts/ui/shop_overlay.gd:1-2,164-187
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** shop_overlay.gd is buy-only: _build_list (138-151) opens straight to a buy list, _try_buy (164-191) always calls add_item(iid,1)/add_equipment with no sell path. No 'sell' logic, no Buy/Sell/Exit entry menu, no quantity selector. Tracker game-dev-gaps.md:668 marks '[x] Shop buy/sell interface — buy-only via shop_overlay.gd' (false-completion: checkbox ticked despite buy-only).
+- **Notes:** L-effort feature requiring a new entry-mode state machine and sell sub-mode. Not bounded for a safe in-place fix.
 
 ---
 

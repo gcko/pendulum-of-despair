@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | world |
 
@@ -42,6 +42,15 @@ Add the basement sub-map and ground-floor lore interactables; wire the Pendulum-
 ## Code references
 
 - game/scenes/maps/towns/marens_refuge.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** game/scenes/maps/towns/marens_refuge.tscn is a single room: Maren (npc_id 'maren_refuge'), Scene6Trigger (dialogue_scene_id 'scene_6_marens_warning'), and ExitToOverworld. No basement transition, bookshelf/lore interactables, Pendulum Work Desk, or named POIs. Design city-thornmere.md:965-1123 and interiors.md:195-276 specify exterior + ground-floor lore + Basement Library (ley-line tap, Artifact Vault, Specimen Jar).
+- **Notes:** Accurate partial-impl gap. Adding a basement sub-map and wiring a cutscene is feature work, not a bounded fix.
 
 ---
 

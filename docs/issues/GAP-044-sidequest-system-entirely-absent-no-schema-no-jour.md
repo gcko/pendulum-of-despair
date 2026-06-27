@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | story |
 
@@ -46,6 +46,15 @@ Design quest data/runtime as a dedicated gap; build schema in game/data/quests/,
 - game/scenes/maps/towns/valdris_barracks.tscn
 - game/scenes/maps/towns/valdris_royal_library.tscn
 - game/scenes/maps/towns/roothollow.tscn
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** `find game/data -iname '*quest*'` returns 0 files; no quest/journal scripts (find game/scripts -iname '*quest*' empty); no QuestState autoload (absent from project.godot). docs/story/sidequests.md exists (644 lines, 79.2K). Reward IDs only live in the design doc: sidequests.md:343 'Hadley's Bell', sidequests.md:383 "Marek's Discipline" — neither resolves to any game/data item/ability. Quest-giver NPCs ARE placed: valdris_barracks.tscn:26 npc_id=dame_cordwyn, :30 npc_id=sergeant_marek (ambient dialogue only).
+- **Notes:** Genuine XL epic / missing-feature. 0 of 26 sidequests wired; no schema, journal, or QuestState. Not fixNow (full subsystem). Severity HIGH appropriate.
 
 ---
 

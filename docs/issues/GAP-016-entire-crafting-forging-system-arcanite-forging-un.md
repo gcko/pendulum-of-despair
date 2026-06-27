@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | XL |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | items |
 
@@ -46,6 +46,15 @@ Phase 1: AC pool + device crafting field menu + tiered rest AC restoration + sav
 - game/data/crafting/devices.json|recipes.json|synergies.json
 - game/scripts/autoload/inventory_helpers.gd:303-309 (dead crafting stub)
 - game/scripts/autoload/party_state.gd:604
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** Data exists: game/data/crafting/devices.json (13 devices), recipes.json (9 forging_recipes), synergies.json (7 synergies). The only script references are non-gameplay strings: spell_helpers.gd:4 TRADITIONS includes 'forgewright', ability_helpers.gd:7 'forgewright':'AC 12/12', and a dead save stub inventory_helpers.gd:305-306 ('arcanite_charges':12, 'device_loadout':[null x5]). party_state.gd rest_party (604) restores HP/MP only, no AC; rest_at_inn (500-507) hardcodes current_ac=12 with no tiered restoration. No device/forge/infusion/synergy gameplay exists.
+- **Notes:** Genuine XL epic. The dead crafting block is written into every save (inventory_helpers.gd:303-309) but read by nothing. Issue says '7 infusions' but no infusions.json exists (only devices/recipes/synergies) — minor count imprecision, does not affect the gap.
 
 ---
 

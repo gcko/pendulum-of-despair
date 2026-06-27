@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | ui |
 
@@ -42,6 +42,15 @@ Convert ItemContainer to a 2-column GridContainer with icon TextureRects per cel
 
 - game/scenes/overlay/menu.tscn:280-300
 - game/scripts/ui/menu_items.gd:202-237
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu.tscn:280 ItemContainer is a VBoxContainer holding single-column Label nodes Item0,Item1,... (text=''). menu_items.gd:217-220 renders '%s %s' % [name, ':qty'] text with no icons. Design ui-design.md:4.5 (lines 446-451) 'Two-column scrollable grid. Each entry: 8x8 pixel-art item icon + name + quantity (right-aligned)'.
+- **Notes:** Confirmed single-column text list vs specified two-column icon grid. Depends on item icon atlas (relates to GAP-059). Not fixNow.
 
 ---
 

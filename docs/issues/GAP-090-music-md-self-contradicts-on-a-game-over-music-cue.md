@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | RESOLVED — fixed in commit d06a566 |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | audio |
 
@@ -41,6 +41,15 @@ Edit music.md:526 to remove 'game over' (or relabel as 'party wipe — reuses sa
 ## Code references
 
 - game/assets/sfx/ (no game_over.ogg)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** LOW
+- **Safe to fix immediately:** yes (doc)
+- **Evidence:** music.md:526 'System/UI cues | ~8 | Title, victory, level up, item, save, inn, game over, shop (rule-based)'. But the detailed cue table has NO game-over track — music.md:467 'Party Wipe / Reload ... then save point jingle on reload. | No "Game Over" screen or unique game-over theme.' Implementation confirms: no game_over/gameover asset in game/assets/sfx/.
+- **Notes:** Direct in-document contradiction. Clean, safe one-token doc fix.
 
 ---
 

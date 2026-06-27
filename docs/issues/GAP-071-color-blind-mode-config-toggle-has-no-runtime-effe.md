@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | save |
 
@@ -41,6 +41,15 @@ Centralize palette lookup keyed on color_blind_mode and route HP bar/status icon
 ## Code references
 
 - game/scripts/ui/menu_config.gd:33-38
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** menu_config.gd:33-38 defines the color_blind_mode setting (off/deutan_protan/tritan). Repo-wide grep for `color_blind_mode` across scripts/ excluding menu_config.gd returns nothing — no palette consumer, no preview panel.
+- **Notes:** Confirmed: setting persists, no runtime effect. Palette-swap system + live preview is a feature (effort L). fixNow=false.
 
 ---
 

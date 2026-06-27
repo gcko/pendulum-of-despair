@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | dialogue |
 
@@ -43,6 +43,15 @@ Add EventFlags.increment_score(name, delta, min, max) with clamp and a distinct 
 - game/scripts/ui/dialogue_box.gd:278-281
 - game/scripts/core/cutscene_handler.gd:164-169
 - game/scripts/autoload/event_flags.gd:18-24
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** dialogue_box.gd:278-281 emits flag_set_requested(score_name, score_delta) for score choices. The only handler, cutscene_handler.gd:164-169 _on_cutscene_flag_set, calls EventFlags.set_flag(flag_name, value) — an overwrite. event_flags.gd:18-24 set_flag does _flags[name]=value with no add/clamp; the file has no increment/clamp method anywhere (only set/get/has/clear/load/check_required_flags). Design dialogue-system.md §3.3 (lines 197-202) requires 'Scores are clamped... the engine enforces clamp(score,min,max) after each increment' and §3.4 (215-220) describes additive increments. thornmere_council.json council_savanh_approval reaches 3 only via a base question (max +2) PLUS the Grandmother Seyth bonus option (+1) — impossible under overwrite.
+- **Notes:** Confirmed missing feature. Even within cutscenes the score overwrites instead of accumulating. Fix needs new EventFlags.increment_score with clamp, min/max sourced from events.md, a distinct score signal path, plus accumulation+clamp tests — not bounded/safe now.
 
 ---
 

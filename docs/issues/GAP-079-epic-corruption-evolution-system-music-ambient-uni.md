@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | audio |
 
@@ -42,6 +42,15 @@ Add a corruption API routing music/ambient buses through AudioEffect chains (pit
 ## Code references
 
 - game/scripts/autoload/audio_manager.gd (no corruption/stage API)
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** MEDIUM
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** grep for 'corruption_stage|set_corruption' across game/scripts and game/tests returns ZERO matches. audio_manager.gd has no stage/detune/drone/tempo API — only the documented play/enter/exit/mix constants and MIX_* dictionaries (lines 51-71). No call site references staging.
+- **Notes:** Confirmed absent. Act-I is Stage 0 so the slice isn't blocked. This is an L-effort engine feature (AudioEffect chains + new GUT test) — not a safe bounded fix.
 
 ---
 

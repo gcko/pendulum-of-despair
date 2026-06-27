@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | L |
 | **Epic** | Yes |
-| **Status** | open |
+| **Status** | open — CONFIRMED |
 | **GitHub Issue** | _(set during migration)_ |
 | **Source domains** | exploration, story |
 
@@ -44,6 +44,15 @@ Implement after the continental overworld; add mount/vehicle state in PartyState
 - game/scripts/ (no transport logic)
 - game/data/dialogue/ley_stag_bonding.json (orphaned)
 - game/scenes/maps/towns/roothollow.tscn:58
+
+
+## Verification (fresh-eyes adversarial pass)
+
+- **Verdict:** CONFIRMED
+- **Verified severity:** HIGH
+- **Safe to fix immediately:** no — tracked as development work
+- **Evidence:** No transport identifiers in scripts (grep for transport/ley_stag/stag_bonded/linewalk/ferry/rail in scripts/ = 0 hits). stag_bonded appears ONLY as a read condition: data/dialogue/scene_25_finding_torren.json:235 '"condition": "stag_bonded"' — set in 0 places. ley_stag_bonding.json exists (game/data/dialogue/ley_stag_bonding.json) but is referenced only by itself = orphaned. events.md:278/304/312 define flags 54 stag_bonded / 55 stag_lost / 56 stag_returned, none implemented.
+- **Notes:** Claim accurate. Note: roothollow.tscn:58 cited in gap is actually metadata/flag="torren_joined" / torren_encounter, not a bonding trigger — gap cites it only as the proposed insertion point, which is fine. L-effort epic.
 
 ---
 
