@@ -32,7 +32,10 @@ func test_animate_in_sets_bar_height() -> void:
 	var lb := _create_letterbox()
 	watch_signals(lb)
 	lb.animate_in(0.01)
-	await get_tree().create_timer(0.1).timeout
+	# Await the actual completion signal rather than a fixed timer — under
+	# full-suite load the tween needs more process frames than a 0.1s wait
+	# guarantees, causing flaky failures on Godot 4.7/macOS.
+	await wait_for_signal(lb.letterbox_in_complete, 1.0)
 	assert_eq(
 		lb.top_bar.size.y, float(CutsceneLetterbox.BAR_HEIGHT), "top bar should reach BAR_HEIGHT"
 	)
@@ -44,7 +47,7 @@ func test_animate_out_sets_bar_height_zero() -> void:
 	lb.set_instant(true)
 	watch_signals(lb)
 	lb.animate_out(0.01)
-	await get_tree().create_timer(0.1).timeout
+	await wait_for_signal(lb.letterbox_out_complete, 1.0)
 	assert_eq(lb.top_bar.size.y, 0.0, "top bar should return to 0")
 	assert_signal_emitted(lb, "letterbox_out_complete")
 
