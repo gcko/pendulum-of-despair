@@ -71,21 +71,21 @@
       {
         "item_id": "sprint_shoes",
         "buy_price": 500,
-        "available_act": 1,
+        "available_act": 2,
         "stock_limit": null,
         "restock_event": null
       },
       {
         "item_id": "lucky_coin",
         "buy_price": 500,
-        "available_act": 1,
+        "available_act": 2,
         "stock_limit": null,
         "restock_event": null
       },
       {
         "item_id": "antidote_charm",
         "buy_price": 600,
-        "available_act": 1,
+        "available_act": 2,
         "stock_limit": null,
         "restock_event": null
       }
