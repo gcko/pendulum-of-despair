@@ -9,7 +9,7 @@
 | **Effort** | L |
 | **Epic** | No |
 | **Status** | open — CONFIRMED |
-| **GitHub Issue** | _(set during migration)_ |
+| **GitHub Issue** | [#176](https://github.com/gcko/pendulum-of-despair/issues/176) |
 | **Source domains** | combat, tracker |
 
 ## Summary

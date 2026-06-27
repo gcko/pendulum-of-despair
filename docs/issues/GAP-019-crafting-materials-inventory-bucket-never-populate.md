@@ -9,7 +9,7 @@
 | **Effort** | M |
 | **Epic** | No |
 | **Status** | open — CONFIRMED |
-| **GitHub Issue** | _(set during migration)_ |
+| **GitHub Issue** | [#164](https://github.com/gcko/pendulum-of-despair/issues/164) |
 | **Source domains** | items |
 
 ## Summary

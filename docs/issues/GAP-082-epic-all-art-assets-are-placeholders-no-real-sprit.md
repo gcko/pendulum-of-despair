@@ -9,7 +9,7 @@
 | **Effort** | XL |
 | **Epic** | Yes |
 | **Status** | open — CONFIRMED |
-| **GitHub Issue** | _(set during migration)_ |
+| **GitHub Issue** | [#217](https://github.com/gcko/pendulum-of-despair/issues/217) |
 | **Source domains** | tracker, exploration |
 
 ## Summary

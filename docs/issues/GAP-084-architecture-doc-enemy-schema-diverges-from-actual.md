@@ -9,7 +9,7 @@
 | **Effort** | S |
 | **Epic** | No |
 | **Status** | open — OVERSTATED |
-| **GitHub Issue** | _(set during migration)_ |
+| **GitHub Issue** | [#235](https://github.com/gcko/pendulum-of-despair/issues/235) |
 | **Source domains** | arch |
 
 ## Summary
