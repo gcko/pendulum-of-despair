@@ -114,6 +114,7 @@ requires a forge. Per [equipment.md](equipment.md).
 ### Pool Mechanics
 
 Lira has a **12 AC pool** (per [abilities.md](abilities.md): "Max 12 AC").
+**Other party members cannot use devices or AC; AC is Lira-exclusive.**
 AC is restored at save points via rest items — Sleeping Bag (25%),
 Tent (50%), Pavilion (100%) — and fully at inns. Without a rest item,
 AC is not restored (see [save-system.md](save-system.md)). AC serves two
@@ -372,10 +373,16 @@ materials, forges, and schematics. Device recipes are detailed in
 Arcanite Ingots are Tier 4 materials obtained from fixed placements
 (dungeon chests, quest rewards). Four recipes require them: Arcanite
 Blade (1), Forgewright Maul (1), Arcanite Helm (1), and Lira's
-Masterwork (1). Total available ingots across the game exceed the 4
-needed — the constraint is finding them, not choosing between recipes.
-See [items.md](items.md) for placement locations and
+Masterwork (1). All four can be crafted in a single playthrough:
+**9 Arcanite Ingots are available from fixed placements (Rail Tunnels,
+Ironmark Citadel) and 'The Fading Shifts' sidequest, leaving a 5-ingot
+surplus.** See [items.md](items.md) for placement locations and
 [sidequests.md](sidequests.md) for quest-reward sources.
+
+**Quest reward overflow behavior:** Quest rewards containing materials
+(e.g., 3x Arcanite Ingot) are dropped to the ground if the inventory
+stack limit (99) is exceeded; excess items must be manually picked up
+from the floor (per [items.md](items.md) stack limits).
 
 ### Schematic Items
 
@@ -385,7 +392,7 @@ exploration and cannot be purchased:
 | Schematic | Location | Effect |
 |-----------|----------|--------|
 | Boring Engine Schematic | Rail Tunnels — East Tunnel secret room (hidden door, "Lighting" junction) | Unlocks advanced Forgewright weapon component recipe |
-| Forge Schematic | **STEAL from The Architect** (Forgotten Forge F5 boss) | Prerequisite for Arcanite Lance recipe |
+| Forge Schematic | **STEAL from The Architect** (Forgotten Forge F5 boss) [Note: Requires Filch or Ransack ability. Ransack becomes available at Level 19+ (post-Interlude). Ensure party is Level 19+ before attempting The Architect boss fight if stealing is required for playthrough completion.] | Prerequisite for Arcanite Lance recipe |
 
 > **Forge Schematic is missable.** It is the only steal-only crafting
 > schematic in the game. If Sable does not steal it during The
