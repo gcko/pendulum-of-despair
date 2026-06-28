@@ -26,6 +26,8 @@ signal died
 ## Fixed critical hit rate for all enemies (per combat-formulas.md).
 const ENEMY_CRIT_RATE: float = 0.05
 
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+
 ## Type-based default status immunities (per bestiary/README.md).
 const TYPE_IMMUNITIES: Dictionary = {
 	"beast": [],
@@ -214,8 +216,12 @@ func remove_status(status_name: String) -> void:
 ## Tick all status durations down by 1. Removes expired statuses.
 ## Call at END of turn so duration=1 means "lasts 1 full turn."
 ## Calling at turn start would make duration=1 expire immediately (0 turns).
+## A negative remaining_turns means "until cured" (Poison/Sleep/Petrify) and
+## is never decremented (StatusEffects.UNTIL_CURED).
 func tick_statuses() -> void:
 	for i: int in range(active_statuses.size() - 1, -1, -1):
+		if active_statuses[i].get("remaining_turns", 0) < 0:
+			continue
 		active_statuses[i]["remaining_turns"] -= 1
 		if active_statuses[i]["remaining_turns"] <= 0:
 			var expired_name: String = active_statuses[i].get("name", "")
@@ -238,9 +244,22 @@ func take_damage(amount: int) -> void:
 	var clamped: int = maxi(0, amount)
 	current_hp = maxi(0, current_hp - clamped)
 	damage_taken.emit(clamped)
+	if clamped > 0:
+		_cure_wake_on_damage_statuses()
 	if current_hp <= 0:
 		is_alive = false
 		died.emit()
+
+
+## Remove statuses cured by taking damage (Sleep, Confusion). Emits
+## status_removed for each so the battle layer can resync the ATB gauge.
+func _cure_wake_on_damage_statuses() -> void:
+	var to_remove: Array[String] = []
+	for s: Dictionary in active_statuses:
+		if StatusEffects.wakes_on_damage(s.get("name", "")):
+			to_remove.append(s.get("name", ""))
+	for status_name: String in to_remove:
+		remove_status(status_name)
 
 
 ## Apply healing. Clamps amount >= 0 and HP to max. Restores is_alive. Emits healed.
