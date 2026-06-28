@@ -8,7 +8,7 @@
 
 | File | Contents |
 |------|----------|
-| [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I (25 enemies) |
+| [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I, Ironmouth Docks (27 enemies) |
 | [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
 | [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Ley Scar, Overworld (69 enemies) |

@@ -1,11 +1,12 @@
 # Act I Bestiary
 
 Enemies encountered during Act I: Ember Vein, Fenmother's Hollow,
-and the Overworld between Valdris and the Hollow. See
+the Overworld between Valdris and the Hollow, and the Ironmouth outpost
+(the Act I opening / Scene 3 escape on the Carradan border). See
 [README.md](README.md) for type rules, stat formulas, and reward
 calculations.
 
-**Total:** 25 enemies (20 regular + 1 unique + 2 mini-bosses + 2 bosses)
+**Total:** 27 enemies (22 regular + 1 unique + 2 mini-bosses + 2 bosses)
 
 ---
 
@@ -88,18 +89,44 @@ generally less dangerous than dungeon enemies at the same level.
 
 ---
 
+## Ironmouth Docks (Act I — Scene 3 Escape)
+
+> **Zone note:** Ironmouth is the story's opening setting — a Carradan
+> Compact mining outpost on the southern border of the Thornmere Wilds
+> ([locations.md](../locations.md): "This is where the story begins").
+> The party's first destination; a Carradan ambush forces the escape that
+> drives them into the Wilds. These two enemies are the Compact soldiers of
+> that ambush (the forced Scene 3 encounter is 2× Compact Patrol + 1× Compact
+> Scout, flee-disabled, with Lira and Sable joining). They are **early
+> deployments of the Soldier / Compact family** (base: Compact Soldier Lv 18,
+> documented in [act-ii.md](act-ii.md) / [palette-families.md](palette-families.md)),
+> appearing far below their projected level per the README "early deployment"
+> rule. Stats are transcribed as-shipped from `game/data/enemies/act_i.json`;
+> their reward/HP-curve anomalies are tracked as a separate balance follow-up.
+
+Recommended party level: 5–6.
+
+| Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
+|------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
+| Compact Patrol | Humanoid | 5 | 180 | 0 | 16 | 14 | 8 | 10 | 10 | 30 | 18 | — | Potion (75%) | — | — | — | — | Ironmouth Docks |
+| Compact Scout | Humanoid | 6 | 140 | 0 | 14 | 10 | 8 | 8 | 14 | 35 | 20 | — | Antidote (50%) | — | — | — | — | Ironmouth Docks |
+
+---
+
 ## Act I Summary
 
-- **Total:** 25 enemies (20 regular + 1 unique + 2 mini-bosses + 2 bosses)
+- **Total:** 27 enemies (22 regular + 1 unique + 2 mini-bosses + 2 bosses)
 - **Type coverage:** Beast (11), Undead (3), Construct (1), Spirit (3),
-  Elemental (4), Humanoid (1), Boss (2)
-- **Threat spread:** Trivial (4), Low (10), Standard (6), Dangerous (3),
+  Elemental (4), Humanoid (3), Boss (2)
+- **Threat spread:** Trivial (4), Low (12), Standard (6), Dangerous (3),
   Boss (2)
 - **Level range:** 1–12
 - **Families started:** 19 (see [palette-families.md](palette-families.md))
   - Vermin, Mite, Dead, Crystal, Shade, Warden, Wisp, Drake, Serpent,
     Leech, Lurker, Jellyfish, Elemental, Hare, Beetle, Bandit, Sprite,
     Boar, Wolf
+  - Compact Patrol / Compact Scout are early deployments of the Soldier
+    family (base appears Act II), not a new Act I family.
 - **Unique:** The Flickering (1)
 - **Mechanics introduced:** Basic combat, swarm encounters, undead rules
   (heal-to-damage), elemental weaknesses, physical resistance (Spirit type),
