@@ -44,6 +44,60 @@ static func apply_status_to_enemy(
 	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 
+## Resolve an enemy offensive status against a party member (GAP-024).
+## Mirror of apply_status_to_enemy, enemy->party: the enemy's MAG drives the
+## two-stage roll's Stage 1, the member's MDEF/SPD drive resistance. Reuses
+## DamageCalc.roll_status + StatusEffects.resolve_duration (no duplication).
+## Returns {hit, inflicted, type, status}; type is
+## "status" | "resisted" | "no_effect".
+static func execute_enemy_status(
+	state: Node,
+	enemy: Node,
+	target_slot: int,
+	base_rate: int,
+	status_name: String,
+	explicit_duration: Variant
+) -> Dictionary:
+	var member: Dictionary = state.get_member(target_slot)
+	var alive: bool = not member.is_empty() and member.get("is_alive", false)
+	if not alive or not StatusEffects.is_known(status_name):
+		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
+	var caster_mag: int = enemy.get_stats().get("mag", 0)
+	var target_mdef: int = state.get_effective_stat(target_slot, "mdef")
+	var target_spd: int = state.get_effective_stat(target_slot, "spd")
+	if not DamageCalc.roll_status(base_rate, caster_mag, target_mdef, target_spd):
+		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
+	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
+	state.apply_status(target_slot, status_name, "turns", float(duration))
+	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
+
+
+## Return the enemy's aoe_on_death ability dict, or {} if it has none.
+## (e.g. Unstable Crystal's Shard Burst, per enemy-ability-conventions.md §2.6).
+static func enemy_aoe_on_death_ability(enemy: Node) -> Dictionary:
+	for ab: Dictionary in enemy.enemy_data.get("abilities", []):
+		if ab.get("aoe_on_death", false):
+			return ab
+	return {}
+
+
+## Fire an aoe_on_death ability against the whole living party when its bearer
+## dies. Resolves through execute_enemy_magic (non-elemental by default; element
+## is cosmetic until party resistances exist). Returns per-slot
+## [{slot, damage, type}] so the battle layer can emit damage signals.
+static func execute_aoe_on_death(state: Node, enemy: Node, ability: Dictionary) -> Array:
+	var results: Array = []
+	var element: String = ability.get("element", "")
+	var power: int = int(ability.get("spell_power", ability.get("power", 0)))
+	for i: int in range(4):
+		var m: Dictionary = state.get_member(i)
+		if m.is_empty() or not m.get("is_alive", false):
+			continue
+		var r: Dictionary = execute_enemy_magic(state, enemy, i, element, power)
+		results.append({"slot": i, "damage": r.get("damage", 0), "type": r.get("type", "miss")})
+	return results
+
+
 ## Map a UI cursor index (0..living-1) to an actual _enemies array index.
 ## Returns -1 if no living enemies.
 static func resolve_enemy_target(cursor: int, enemies: Array[Node]) -> int:
@@ -161,7 +215,11 @@ static func execute_enemy_magic(
 
 
 ## Execute an enemy physical attack against a party member.
-static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> Dictionary:
+## [param ability_mult] scales base power (1.0 = basic attack; ability kits set
+## higher per enemy-ability-conventions.md §2.1).
+static func execute_enemy_attack(
+	state: Node, enemy: Node, target_slot: int, ability_mult: float = 1.0
+) -> Dictionary:
 	var stats: Dictionary = enemy.get_stats()
 	var atk: int = stats.get("atk", 10)
 	var spd: int = stats.get("spd", 10)
@@ -187,7 +245,7 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 		DamageCalc
 		. calculate_physical(
 			atk,
-			1.0,
+			ability_mult,
 			target_def,
 			is_crit,
 			1.0,
@@ -202,3 +260,23 @@ static func execute_enemy_attack(state: Node, enemy: Node, target_slot: int) -> 
 	state.take_damage(target_slot, dmg)
 	var dtype: String = "critical" if is_crit else "physical"
 	return {"hit": true, "damage": dmg, "type": dtype}
+
+
+## Resolve a possibly multi-hit enemy physical ability against one member.
+## Each hit rolls its own hit/evasion/crit (per enemy-ability-conventions.md
+## §2.7). Returns the aggregate {hit, damage, type, hits_landed}. No Act I
+## production enemy sets hits > 1 (first is the Act II Cave Vermin); the engine
+## supports it and this path is test-covered.
+static func execute_enemy_physical_ability(
+	state: Node, enemy: Node, target_slot: int, ability_mult: float = 1.0, hits: int = 1
+) -> Dictionary:
+	var total: int = 0
+	var landed: int = 0
+	var dtype: String = "physical"
+	for _h: int in range(maxi(1, hits)):
+		var r: Dictionary = execute_enemy_attack(state, enemy, target_slot, ability_mult)
+		if r.get("hit", false):
+			landed += 1
+			total += int(r.get("damage", 0))
+			dtype = r.get("type", "physical")
+	return {"hit": landed > 0, "damage": total, "type": dtype, "hits_landed": landed}

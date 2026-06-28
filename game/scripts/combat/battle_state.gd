@@ -11,6 +11,8 @@ signal member_revived(slot: int)
 signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
 
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
 
@@ -170,20 +172,39 @@ func has_status(slot: int, status_name: String) -> bool:
 	return false
 
 
-## Tick turn-based statuses at END of a combatant's turn.
+## Tick turn-based statuses at END of a combatant's turn. Applies Poison/Burn
+## HP ticks first, then decrements durations. UNTIL_CURED (negative) durations
+## persist — they are cured by remove_status, never by countdown.
 func tick_statuses(slot: int) -> void:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
 		return
+	_apply_dot(slot, m)
 	for i: int in range(m["active_statuses"].size() - 1, -1, -1):
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
+			continue
+		# Negative remaining_turns = UNTIL_CURED (Poison): never decremented.
+		if int(s.get("remaining_turns", 0)) < 0:
 			continue
 		s["remaining_turns"] -= 1
 		if s["remaining_turns"] <= 0:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+
+
+## Apply damage-over-time (Poison 8%/turn magic.md:1392, Burn 5%/turn) to a
+## member. Mirrors the enemy-side tick: floor(max_hp * tick_pct), min 1. DoT does
+## not wake-cure here (party has no Sleep/Confusion infliction yet).
+func _apply_dot(slot: int, m: Dictionary) -> void:
+	if not m.get("is_alive", false):
+		return
+	var max_hp: int = m.get("max_hp", 0)
+	for s: Dictionary in (m["active_statuses"] as Array).duplicate():
+		var pct: float = StatusEffects.tick_pct(s.get("name", ""))
+		if pct > 0.0 and m.get("is_alive", false):
+			take_damage(slot, maxi(1, int(max_hp * pct)))
 
 
 ## Tick real-time statuses (Stop). Called from _process with delta.

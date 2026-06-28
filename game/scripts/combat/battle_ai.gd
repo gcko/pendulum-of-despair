@@ -27,16 +27,43 @@ static func select_action(
 		var target: int = _pick_physical_target(living, party_rows)
 		return {"type": "attack", "target_slot": target, "ability_id": ""}
 
-	# 20% ability (if enemy has any)
+	# 20% ability (if enemy has any). A chosen-but-empty ability list falls
+	# through to defend (the pre-GAP-024 behavior when no enemy had abilities).
 	if roll < 90:
 		var abilities: Array = enemy_data.get("abilities", [])
 		if not abilities.is_empty():
 			var ab: Dictionary = abilities[randi() % abilities.size()]
-			var target: int = living[randi() % living.size()]
-			return {"type": "ability", "target_slot": target, "ability_id": ab.get("id", "")}
+			return _build_ability_action(ab, living, party_rows)
 
 	# 10% defend / do nothing
 	return {"type": "defend", "target_slot": -1, "ability_id": ""}
+
+
+## Build a turn action from an enemy ability dict (GAP-024). Propagates the full
+## ability metadata (target shape, element/power, status, multi-hit, buff) so the
+## turn driver can resolve it — not just the id. See
+## docs/story/bestiary/enemy-ability-conventions.md for the schema.
+static func _build_ability_action(ab: Dictionary, living: Array, party_rows: Array) -> Dictionary:
+	var shape: String = ab.get("target", "single")
+	var action: Dictionary = {
+		"type": "ability",
+		"id": ab.get("id", ""),
+		"ability_id": ab.get("id", ""),
+		"target": shape,
+		"atk_type": ab.get("type", "attack"),
+		"element": ab.get("element", ""),
+		"power": int(ab.get("spell_power", 0)),
+		"ability_mult": float(ab.get("ability_mult", 1.0)),
+		"status": ab.get("status", ""),
+		"status_rate": int(ab.get("status_rate", 0)),
+		"status_duration": ab.get("status_duration", null),
+		"hits": int(ab.get("hits", 1)),
+		"buff": ab.get("buff", {}),
+		"aoe_on_death": bool(ab.get("aoe_on_death", false)),
+	}
+	# Only single-target abilities resolve a concrete slot; all/self do not.
+	action["target_slot"] = _pick_physical_target(living, party_rows) if shape == "single" else -1
+	return action
 
 
 ## Select boss action (stub — returns basic attack).
