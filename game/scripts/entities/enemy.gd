@@ -58,6 +58,10 @@ var current_mp: int = 0
 ## Active status effects: [{name: String, remaining_turns: int}].
 var active_statuses: Array[Dictionary] = []
 
+## Active stat buffs (GAP-024): [{stat: String, mult: float, remaining_turns: int}].
+## Applied multiplicatively in get_stats(); ticked down at end of turn.
+var active_buffs: Array[Dictionary] = []
+
 ## Whether the enemy is still alive. Defaults false until initialize().
 var is_alive: bool = false
 
@@ -73,6 +77,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	current_hp = 0
 	current_mp = 0
 	active_statuses.clear()
+	active_buffs.clear()
 	is_alive = false
 
 	enemy_id = p_enemy_id
@@ -106,8 +111,36 @@ func get_stats() -> Dictionary:
 	]
 	var stats: Dictionary = {}
 	for key: String in stat_keys:
-		stats[key] = enemy_data.get(key, 0)
+		var base: int = enemy_data.get(key, 0)
+		var mult: float = buff_mult(key)
+		stats[key] = int(base * mult) if mult != 1.0 else base
 	return stats
+
+
+## Apply a stat buff (GAP-024). Replaces any existing buff on the same stat
+## (refresh, no stacking), per enemy-ability-conventions.md §2.4.
+func apply_buff(stat: String, mult: float, duration: int) -> void:
+	for i: int in range(active_buffs.size() - 1, -1, -1):
+		if active_buffs[i].get("stat", "") == stat:
+			active_buffs.remove_at(i)
+	active_buffs.append({"stat": stat, "mult": mult, "remaining_turns": duration})
+
+
+## Combined multiplier for a stat from active buffs (1.0 when none).
+func buff_mult(stat: String) -> float:
+	var product: float = 1.0
+	for b: Dictionary in active_buffs:
+		if b.get("stat", "") == stat:
+			product *= float(b.get("mult", 1.0))
+	return product
+
+
+## Tick buff durations down by 1 at END of the enemy's turn; remove expired.
+func tick_buffs() -> void:
+	for i: int in range(active_buffs.size() - 1, -1, -1):
+		active_buffs[i]["remaining_turns"] -= 1
+		if active_buffs[i]["remaining_turns"] <= 0:
+			active_buffs.remove_at(i)
 
 
 ## Get the enemy type (beast, undead, construct, etc.).

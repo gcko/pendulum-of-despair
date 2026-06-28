@@ -179,7 +179,7 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 | File | Purpose |
 |------|---------|
 | `docs/story/bestiary/README.md` | Canonical rules, formulas, types |
-| `docs/story/bestiary/act-i.md` | Completed Act I (25 enemies) |
+| `docs/story/bestiary/act-i.md` | Completed Act I (27 enemies) |
 | `docs/story/bestiary/palette-families.md` | 32 families with tier projections |
 | `docs/story/dungeons-world.md` | World dungeon layouts, boss descriptions, enemy names |
 | `docs/story/dungeons-city.md` | City dungeon layouts, enemy names |

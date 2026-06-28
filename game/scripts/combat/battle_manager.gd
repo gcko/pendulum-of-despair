@@ -188,7 +188,12 @@ func _on_ui_command(command: Dictionary) -> void:
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
 	_turn_counter += 1
-	_state.tick_statuses(actor_id.replace("party_", "").to_int())
+	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
+	# floating number, mirroring the enemy-side tick.
+	for ev: Dictionary in _state.tick_statuses(cmd_slot):
+		damage_dealt.emit(
+			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
+		)
 	_check_end_conditions()
 
 
@@ -202,6 +207,19 @@ func _on_party_member_died(slot: int) -> void:
 	if _awaiting_input_for == "party_%d" % slot:
 		_awaiting_input_for = ""
 		_atb.set_command_menu_open(false)
+
+
+## AoE-on-death hook (GAP-024). When an enemy with an aoe_on_death ability dies
+## — by player attack, spell, or DoT — it bursts against the whole party.
+func _on_enemy_died(enemy: Node) -> void:
+	var ability: Dictionary = BattleActions.enemy_aoe_on_death_ability(enemy)
+	if ability.is_empty():
+		return
+	message.emit("%s bursts apart!" % enemy.get_display_name())
+	for r: Dictionary in BattleActions.execute_aoe_on_death(_state, enemy, ability):
+		damage_dealt.emit(
+			"party_%d" % int(r.get("slot", 0)), int(r.get("damage", 0)), r.get("type", "miss")
+		)
 
 
 func _do_attack(actor_id: String, command: Dictionary) -> bool:
@@ -624,3 +642,5 @@ func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
 		e.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
 		_enemies.append(e)
 		_atb.add_combatant("enemy_%d" % i, e.get_stats().get("spd", 10), true)
+		# AoE-on-death (Shard Burst): fire when this enemy dies, by any cause.
+		e.died.connect(_on_enemy_died.bind(e))

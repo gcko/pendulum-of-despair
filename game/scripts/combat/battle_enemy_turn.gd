@@ -136,7 +136,7 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 		_do_skip(action, enemy, idx)
 		return
 	if atype == "ability" and action.get("target", "") == "self":
-		_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
+		_do_self_ability(action, enemy, enemies)
 		_tick_enemy_statuses(enemy, idx)
 		return
 	if atype == "heal" and action.get("target", "") == "self":
@@ -169,6 +169,31 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 				_manager.combatant_died.emit(eid)
 				_atb.remove_combatant(eid)
 	enemy.tick_statuses()
+	enemy.tick_buffs()
+
+
+## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
+## buffs every living enemy of the caster's own kind (same enemy id — Pack Howl
+## across all Wayward Wolves, palette-families.md:435); "self" buffs only the
+## caster.
+func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
+	_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
+	var buff: Dictionary = action.get("buff", {})
+	if buff.is_empty():
+		return
+	var stat: String = buff.get("stat", "")
+	var mult: float = float(buff.get("mult", 1.0))
+	var duration: int = int(buff.get("duration", 5))
+	if buff.get("scope", "self") == "pack":
+		# "pack" = the caster's own kind (same enemy id), e.g. all Wayward Wolves
+		# in the encounter (palette-families.md:435 "all wolves") — NOT every
+		# same-type beast, which would buff boars/serpents sharing the fight.
+		var pack_id: String = enemy.enemy_data.get("id", "")
+		for e: Node in enemies:
+			if e.is_alive and e.enemy_data.get("id", "") == pack_id:
+				e.apply_buff(stat, mult, duration)
+	else:
+		enemy.apply_buff(stat, mult, duration)
 
 
 func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
@@ -182,6 +207,7 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		enemies.append(new_enemy)
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
+		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
 	_manager.message.emit("Corrupted Spawns emerge from the depths!")
 	_tick_enemy_statuses(enemy, idx)
 
@@ -214,16 +240,12 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 				)
 			)
 		)
+		var status_name: String = action.get("status", "")
 		for i: int in range(4):
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
-			var result: Dictionary
-			if not elem.is_empty():
-				var pwr: int = action.get("power", 10)
-				result = BattleActions.execute_enemy_magic(_state, enemy, i, elem, pwr)
-			else:
-				result = BattleActions.execute_enemy_attack(_state, enemy, i)
+			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
 			(
 				_manager
 				. damage_dealt
@@ -233,22 +255,76 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 					result.get("type", "miss"),
 				)
 			)
+			if not status_name.is_empty() and result.get("hit", false):
+				(
+					BattleActions
+					. execute_enemy_status(
+						_state,
+						enemy,
+						i,
+						int(action.get("status_rate", 0)),
+						status_name,
+						action.get("status_duration"),
+					)
+				)
 	else:
 		var tgt: int = action.get("target_slot", 0)
 		if tgt < 0:
 			return
 		var tgt_name: String = _state.get_member(tgt).get("character_data", {}).get("name", "???")
 		_manager.message.emit("%s attacks %s!" % [enemy.get_display_name(), tgt_name])
-		var result: Dictionary = BattleActions.execute_enemy_attack(_state, enemy, tgt)
-		(
-			_manager
-			. damage_dealt
-			. emit(
-				"party_%d" % tgt,
-				result.get("damage", 0),
-				result.get("type", "miss"),
+		var result: Dictionary
+		# Magic abilities (atk_type "magic") use the MAG formula; everything else
+		# (basic attacks, physical abilities, legacy boss abilities) is physical.
+		# A plain attack is execute_enemy_physical_ability(mult 1.0, hits 1).
+		if action.get("atk_type", "attack") == "magic":
+			result = BattleActions.execute_enemy_magic(
+				_state, enemy, tgt, elem, int(action.get("power", 0))
 			)
+		else:
+			result = (
+				BattleActions
+				. execute_enemy_physical_ability(
+					_state,
+					enemy,
+					tgt,
+					float(action.get("ability_mult", 1.0)),
+					int(action.get("hits", 1)),
+				)
+			)
+		_manager.damage_dealt.emit(
+			"party_%d" % tgt, result.get("damage", 0), result.get("type", "miss")
 		)
+		# Offensive status infliction on a landed hit (GAP-024, Venom Spit -> Poison).
+		var status_name: String = action.get("status", "")
+		if not status_name.is_empty() and result.get("hit", false):
+			(
+				BattleActions
+				. execute_enemy_status(
+					_state,
+					enemy,
+					tgt,
+					int(action.get("status_rate", 0)),
+					status_name,
+					action.get("status_duration"),
+				)
+			)
 	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
 	if atype == "ability":
 		_state.gain_weave_gauge_for_maren(15)
+
+
+## Resolve one offensive AoE hit against a party slot. Magic when atk_type is
+## "magic" OR the action carries an element (the latter preserves legacy boss
+## AoEs — ember_pulse/frost_wave — which route by element with no atk_type);
+## otherwise physical, with ability_mult + multi-hit support. The single-target
+## branch deliberately keeps its atk_type-only routing so legacy water_jet stays
+## physical (boss AI is GAP-009 scope).
+func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
+	if action.get("atk_type", "") == "magic" or not elem.is_empty():
+		return BattleActions.execute_enemy_magic(
+			_state, enemy, slot, elem, int(action.get("power", 0))
+		)
+	return BattleActions.execute_enemy_physical_ability(
+		_state, enemy, slot, float(action.get("ability_mult", 1.0)), int(action.get("hits", 1))
+	)
