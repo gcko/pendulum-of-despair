@@ -13,6 +13,7 @@ signal message(text: String)
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 var _return_map_id: String = ""
@@ -75,6 +76,7 @@ func _ready() -> void:
 		return
 	_setup_party()
 	_setup_enemies(encounter_group, data.get("enemy_act", "act_i"))
+	_apply_atb_config()
 	_atb.apply_formation(_formation_type)
 	if _formation_type == "back_attack":
 		for i: int in range(4):
@@ -90,6 +92,15 @@ func _ready() -> void:
 		es.append({"name": e.get_display_name(), "hp": e.current_hp})
 		pos.append(e.position)
 	battle_started.emit(ps, es, pos)
+
+
+## Apply the player's ATB Mode / Battle Speed / Patience Mode config to the
+## ATB system at battle start (GAP-007). Without this the player's settings
+## never reached combat and the gauges always ran in "active" mode at speed 3.
+func _apply_atb_config() -> void:
+	var settings: Dictionary = ATBSystem.settings_from_config(PartyState.get_config())
+	_atb.set_atb_mode(str(settings.get("mode", "active")))
+	_atb.set_battle_speed(int(settings.get("speed", 3)))
 
 
 func _process(delta: float) -> void:

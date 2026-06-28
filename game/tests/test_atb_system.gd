@@ -1,11 +1,13 @@
 extends GutTest
 ## Tests for ATB gauge system.
 
+const ATBScript := preload("res://scripts/combat/atb_system.gd")
+
 var _atb: Node
 
 
 func before_each() -> void:
-	_atb = preload("res://scripts/combat/atb_system.gd").new()
+	_atb = ATBScript.new()
 	add_child_autofree(_atb)
 
 
@@ -210,3 +212,25 @@ func test_should_pause_timers_wait_submenu() -> void:
 	_atb.set_atb_mode("wait")
 	_atb.set_submenu_open(true)
 	assert_true(_atb.should_pause_timers(), "wait pauses on submenu")
+
+
+# --- Config -> ATB settings mapping (GAP-007) ---
+
+
+func test_settings_from_config_defaults() -> void:
+	var s: Dictionary = ATBScript.settings_from_config({})
+	assert_eq(s.get("mode"), "active", "defaults to active mode")
+	assert_eq(s.get("speed"), 3, "defaults to speed 3")
+
+
+func test_settings_from_config_reads_player_values() -> void:
+	var s: Dictionary = ATBScript.settings_from_config({"atb_mode": "wait", "battle_speed": 5})
+	assert_eq(s.get("mode"), "wait", "uses player's ATB mode")
+	assert_eq(s.get("speed"), 5, "uses player's battle speed")
+
+
+func test_settings_from_config_patience_mode_overrides() -> void:
+	var s: Dictionary = ATBScript.settings_from_config(
+		{"atb_mode": "active", "patience_mode": true}
+	)
+	assert_eq(s.get("mode"), "patience", "patience mode overrides the ATB mode")

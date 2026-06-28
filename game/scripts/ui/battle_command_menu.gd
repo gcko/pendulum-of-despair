@@ -9,6 +9,8 @@ signal target_changed(index: int, is_enemy: bool)
 
 enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
+const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
+
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
@@ -23,10 +25,14 @@ var _target_cursor: int = 0
 var _target_is_enemy: bool = true
 var _pending_command: Dictionary = {}
 var _target_count: int = 0
+var _character_data: Dictionary = {}
+var _current_mp: int = 0
 
-@onready var _command_list: VBoxContainer = $CommandList
-@onready var _submenu: PanelContainer = $SubMenu
-@onready var _submenu_list: VBoxContainer = $SubMenu/SubMenuList
+# get_node_or_null (not $) so unit tests can instantiate the menu via .new()
+# without a scene tree; every use of these refs is already null-guarded.
+@onready var _command_list: VBoxContainer = get_node_or_null("CommandList")
+@onready var _submenu: PanelContainer = get_node_or_null("SubMenu")
+@onready var _submenu_list: VBoxContainer = get_node_or_null("SubMenu/SubMenuList")
 
 
 func _ready() -> void:
@@ -36,8 +42,11 @@ func _ready() -> void:
 
 
 ## Show command menu for a party member.
-func show_commands(character_data: Dictionary, is_boss: bool) -> void:
+## current_mp drives MP affordability greying in the Magic submenu.
+func show_commands(character_data: Dictionary, is_boss: bool, current_mp: int = 0) -> void:
 	_is_boss = is_boss
+	_character_data = character_data
+	_current_mp = current_mp
 	_cursor = 0
 	_state = MenuState.COMMAND
 
@@ -178,6 +187,7 @@ func _confirm_command() -> void:
 			_pending_command = {"type": "attack"}
 			_start_target_selection(true)
 		"magic":
+			_build_magic_submenu()
 			_show_submenu()
 		"ability":
 			_show_submenu()
@@ -227,6 +237,34 @@ func _confirm_submenu() -> void:
 			hide_menu()
 		_:
 			_start_target_selection(true)
+
+
+## Populate the submenu with the active character's known spells (GAP-001).
+## Each item routes a {"type": "magic", "spell": <spell_dict>} command; spells
+## the character cannot afford are disabled. Mirrors menu_magic's data access.
+func _build_magic_submenu() -> void:
+	# Live battle character_data uses key "character_id" (PartyState member shape);
+	# fall back to "id" (raw character JSON shape) for safety.
+	var char_id: String = _character_data.get("character_id", _character_data.get("id", ""))
+	var level: int = int(_character_data.get("level", 1))
+	var items: Array[Dictionary] = []
+	for spell_v: Variant in SpellHelpers.get_known_spells(char_id, level):
+		if not spell_v is Dictionary:
+			continue
+		var spell: Dictionary = spell_v
+		var cost: int = int(spell.get("mp_cost", 0))
+		(
+			items
+			. append(
+				{
+					"label": "%s  %d MP" % [spell.get("name", "Spell"), cost],
+					"command": {"type": "magic", "spell": spell},
+					"target_type": spell.get("target", "single_enemy"),
+					"enabled": _current_mp >= cost,
+				}
+			)
+		)
+	set_submenu_items(items)
 
 
 ## Set submenu items (called by battle_ui).
