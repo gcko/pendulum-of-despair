@@ -238,13 +238,16 @@ func has_status(status_name: String) -> bool:
 
 
 ## Apply damage. Clamps amount >= 0 and HP to 0. Emits damage_taken and died (once).
-func take_damage(amount: int) -> void:
+## [param wakes] — whether this hit can cure wake-on-damage statuses (Sleep,
+## Confusion). Direct attacks pass true; damage-over-time ticks pass false so a
+## poisoned enemy's own tick does not wake it.
+func take_damage(amount: int, wakes: bool = true) -> void:
 	if not is_alive:
 		return
 	var clamped: int = maxi(0, amount)
 	current_hp = maxi(0, current_hp - clamped)
 	damage_taken.emit(clamped)
-	if clamped > 0:
+	if clamped > 0 and wakes:
 		_cure_wake_on_damage_statuses()
 	if current_hp <= 0:
 		is_alive = false

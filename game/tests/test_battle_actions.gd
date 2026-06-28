@@ -4,7 +4,16 @@ extends GutTest
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
+
+# Statuses intentionally declared in spell data but deferred in Bundle 2b.
+const DEFERRED_STATUSES: Array[String] = ["stop"]
+
+
+func after_each() -> void:
+	# Undo any seed() so determinism doesn't leak into later tests.
+	randomize()
 
 
 func _make_state(caster_mag: int) -> Node:
@@ -100,7 +109,14 @@ func test_every_status_spell_has_a_status_field() -> void:
 		for spell: Dictionary in data.get("spells", []):
 			if spell.get("category", "") == "status":
 				var st: Variant = spell.get("status")
+				var sid: String = spell.get("id", "?")
 				assert_true(
 					st is String and not (st as String).is_empty(),
-					"status spell %s must declare a non-empty status" % spell.get("id", "?")
+					"status spell %s must declare a non-empty status" % sid
+				)
+				# Catch typos: the status must be inflictable now, or a known
+				# deferred status (Stop) — not e.g. "poizon".
+				assert_true(
+					StatusEffects.is_known(st) or st in DEFERRED_STATUSES,
+					"status spell %s declares unknown status '%s'" % [sid, st]
 				)

@@ -79,3 +79,19 @@ static func resolve_duration(status: String, explicit: Variant) -> int:
 	if explicit != null:
 		return int(explicit)
 	return default_duration(status)
+
+
+## Combined ATB state for a list of active status dicts (each {"name": ...}).
+## Returns {"frozen": bool, "mods": Array[float]}. Pure — unit-testable without
+## a battle scene; the battle layer pushes the result to ATBSystem.
+static func atb_state(active_statuses: Array) -> Dictionary:
+	var frozen: bool = false
+	var mods: Array[float] = []
+	for s: Dictionary in active_statuses:
+		var status_name: String = s.get("name", "")
+		match atb_effect(status_name):
+			"frozen":
+				frozen = true
+			"mod":
+				mods.append(atb_mult(status_name))
+	return {"frozen": frozen, "mods": mods}

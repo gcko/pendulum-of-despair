@@ -28,6 +28,9 @@ static func apply_status_to_enemy(
 	if not enemy.is_alive or not StatusEffects.is_known(status_name):
 		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
 	# Immune targets don't roll — auto no-effect (type/boss/per-enemy immunity).
+	# Intentional deviation from combat-formulas.md's step order (immunity is
+	# step 4, after the rolls): the applied/not-applied outcome is identical and
+	# this skips a pointless roll.
 	if enemy.is_immune_to_status(status_name):
 		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
 	var caster_mag: int = state.get_effective_stat(caster_slot, "mag")

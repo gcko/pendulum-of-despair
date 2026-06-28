@@ -54,9 +54,41 @@ func test_durations() -> void:
 
 
 func test_resolve_duration_prefers_explicit() -> void:
-	# A spell's explicit duration overrides the canonical default.
-	assert_eq(SE.resolve_duration("despair", 3), 3, "explicit wins")
-	assert_eq(SE.resolve_duration("silence", 2), 2)
+	# A synthetic explicit value overrides the canonical default.
+	assert_eq(SE.resolve_duration("despair", 99), 99, "explicit wins")
 	# Null falls back to the canonical default.
 	assert_eq(SE.resolve_duration("slow", null), 5)
+	assert_eq(SE.resolve_duration("silence", null), 4, "canonical Silence")
+	assert_eq(SE.resolve_duration("despair", null), 4, "canonical Despair")
 	assert_eq(SE.resolve_duration("poison", null), SE.UNTIL_CURED)
+
+
+func test_atb_state_frozen() -> void:
+	var st: Dictionary = SE.atb_state([{"name": "sleep"}])
+	assert_true(st["frozen"], "Sleep freezes the ATB gauge")
+	assert_eq((st["mods"] as Array).size(), 0, "frozen status carries no fill mod")
+
+
+func test_atb_state_petrify_frozen() -> void:
+	assert_true(SE.atb_state([{"name": "petrify"}])["frozen"])
+
+
+func test_atb_state_mods_stack_multiplicatively() -> void:
+	var st: Dictionary = SE.atb_state([{"name": "slow"}, {"name": "despair"}])
+	assert_false(st["frozen"], "Slow/Despair do not freeze")
+	var product: float = 1.0
+	for m: float in st["mods"]:
+		product *= m
+	assert_almost_eq(product, 0.375, 0.001, "Slow 0.5 x Despair 0.75")
+
+
+func test_atb_state_empty_is_clear() -> void:
+	var st: Dictionary = SE.atb_state([])
+	assert_false(st["frozen"])
+	assert_eq((st["mods"] as Array).size(), 0)
+
+
+func test_atb_state_ignores_non_atb_statuses() -> void:
+	var st: Dictionary = SE.atb_state([{"name": "poison"}, {"name": "blind"}])
+	assert_false(st["frozen"])
+	assert_eq((st["mods"] as Array).size(), 0)

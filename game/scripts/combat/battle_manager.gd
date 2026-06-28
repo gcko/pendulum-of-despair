@@ -110,10 +110,11 @@ func _process(delta: float) -> void:
 	if not _atb.should_pause_timers():
 		for i: int in range(4):
 			_state.tick_realtime_statuses(i, delta)
-	# Resync enemy ATB freeze/mods from their current statuses (GAP-003) so a
-	# cured Sleep unfreezes and an expired Slow clears, with no signal wiring.
+	# Resync living enemies' ATB freeze/mods from their current statuses
+	# (GAP-003) so a cured Sleep unfreezes and an expired Slow clears.
 	for i: int in range(_enemies.size()):
-		_resync_enemy_atb(i)
+		if _enemies[i].is_alive:
+			_resync_enemy_atb(i)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if _battle_resolved:
@@ -332,7 +333,8 @@ func _do_status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 	)
 	if result.get("inflicted", false):
 		_resync_enemy_atb(idx)
-		_enemies[idx].emit_signal("status_applied", result.get("status", ""), 0)
+		# enemy.apply_status already emitted status_applied with the real
+		# duration; don't re-emit it here with a fabricated value.
 		damage_dealt.emit("enemy_%d" % idx, 0, "status")
 		message.emit(
 			(
@@ -341,30 +343,27 @@ func _do_status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
 			)
 		)
 		return true
-	if result.get("type", "") == "immune":
-		damage_dealt.emit("enemy_%d" % idx, 0, "immune")
-	else:
-		damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+	match result.get("type", ""):
+		"immune":
+			damage_dealt.emit("enemy_%d" % idx, 0, "immune")
+		"no_effect":
+			# Unknown/deferred status (e.g. Stop) — surface honestly, not "miss".
+			message.emit("No effect!")
+		_:
+			damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
 
 
 ## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
-## called each frame and after status changes so cured/expired statuses clear.
+## called for living enemies each frame and after status changes so cured or
+## expired statuses clear (StatusEffects.atb_state is the pure, tested core).
 func _resync_enemy_atb(idx: int) -> void:
 	if idx < 0 or idx >= _enemies.size():
 		return
 	var eid: String = "enemy_%d" % idx
-	var frozen: bool = false
-	var mods: Array = []
-	for s: Dictionary in _enemies[idx].active_statuses:
-		var status_name: String = s.get("name", "")
-		match StatusEffects.atb_effect(status_name):
-			"frozen":
-				frozen = true
-			"mod":
-				mods.append(StatusEffects.atb_mult(status_name))
-	_atb.set_frozen(eid, frozen)
-	_atb.set_status_mods(eid, mods)
+	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
+	_atb.set_frozen(eid, st["frozen"])
+	_atb.set_status_mods(eid, st["mods"])
 
 
 func _do_item(command: Dictionary) -> bool:

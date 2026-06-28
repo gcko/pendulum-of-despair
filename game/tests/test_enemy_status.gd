@@ -49,3 +49,20 @@ func test_zero_damage_does_not_wake() -> void:
 	assert_true(enemy.apply_status("sleep", UNTIL_CURED))
 	enemy.take_damage(0)
 	assert_true(enemy.has_status("sleep"), "0 damage must not wake (no real hit)")
+
+
+func test_dot_damage_does_not_wake_sleep() -> void:
+	# take_damage(amount, wakes=false) is the DoT path — must not cure.
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("sleep", UNTIL_CURED))
+	enemy.take_damage(3, false)
+	assert_true(enemy.has_status("sleep"), "poison/burn ticks must not wake Sleep")
+
+
+func test_dot_damage_does_not_cure_confusion() -> void:
+	var enemy: Enemy = _create_enemy()
+	assert_true(enemy.apply_status("confusion", 3))
+	enemy.take_damage(3, false)
+	assert_true(
+		enemy.has_status("confusion"), "a poisoned+confused enemy's own tick keeps Confusion"
+	)

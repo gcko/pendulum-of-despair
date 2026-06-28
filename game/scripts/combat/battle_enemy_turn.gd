@@ -155,12 +155,19 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 ## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
 func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 	var max_hp: int = enemy.enemy_data.get("hp", 0)
+	var eid: String = "enemy_%d" % idx
 	for s: Dictionary in enemy.active_statuses.duplicate():
-		var pct: float = StatusEffects.tick_pct(s.get("name", ""))
+		var sname: String = s.get("name", "")
+		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and enemy.is_alive:
 			var dmg: int = maxi(1, int(max_hp * pct))
-			enemy.take_damage(dmg)
-			_manager.damage_dealt.emit("enemy_%d" % idx, dmg, "poison")
+			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
+			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
+			# A DoT kill must clean up like any other kill, or the dead enemy's
+			# gauge keeps filling and re-enters the ready queue.
+			if not enemy.is_alive:
+				_manager.combatant_died.emit(eid)
+				_atb.remove_combatant(eid)
 	enemy.tick_statuses()
 
 
