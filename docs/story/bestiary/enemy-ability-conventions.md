@@ -62,8 +62,8 @@ stat already encodes its role (a Boar's high ATK makes Gore hit hard at
 
 Magic-typed single-target enemy abilities (Flicker = Flame, Spark = Ley,
 Shadow Touch = magic) use `spell_power 14`, the documented **Tier 1
-single-target spell power floor** for player attack spells (Cinder
-`magic.md:152`, Frostbite `magic.md:198` — both *Spell power 14*). Tier 1
+single-target spell power floor** for player attack spells (Ember Lance
+`magic.md:152`, Rime Shard `magic.md:198` — both *Spell power 14*). Tier 1
 matches the Act I regular-enemy band (`palette-families.md` Tier 1 kits).
 
 ### 2.3 AoE elemental abilities — `spell_power: 9`
