@@ -25,13 +25,18 @@ docs in `docs/story/`, and updates the gap tracker.
 
 ## Reference Documents
 
-**Gap tracker:** `docs/analysis/game-dev-gaps.md`
+**Gap tracker:** GitHub Issues labeled `gap-analysis`
+(`gh issue list --label gap-analysis`), with per-gap detail in the
+`docs/issues/GAP-*.md` reference files.
 **Design docs:** `docs/story/` (49K+ lines across 57 files — the canonical source of truth)
 **Architecture:** `docs/plans/technical-architecture.md`
+**Historical context:** the `docs/analysis/*.md` files captured the
+original gap analysis. They are NOT a live tracker — treat them as
+read-only history.
 
-The gap tracker is the single source of truth for what's been built and
-what remains. Read it on every invocation. Update it after every
-completed gap.
+GitHub Issues (label `gap-analysis`) are the single source of truth for
+what's been built and what remains. List them on every invocation. Close
+the relevant issue (`gh issue close <N>`) after every completed gap.
 
 ## Core Principle: Design Docs Are Law
 
@@ -89,8 +94,9 @@ digraph game_designer {
 
 ### 1. Read Gap Tracker
 
-Load `docs/analysis/game-dev-gaps.md`. Parse:
-- Current status of each gap
+Run `gh issue list --label gap-analysis` and read the relevant
+`docs/issues/GAP-*.md` detail files. Parse:
+- Current status of each gap (open vs. closed issue)
 - Dependencies between gaps
 - What's needed (checklist items)
 
@@ -185,18 +191,19 @@ and write down the answers. Do NOT skip this. Do NOT say "I should do this"
 and then not do it. Actually trace each path:
 
 1. **Repeatability:** Can this action happen more than once? If yes, does the
-   code allow it? (PR #120: TriggerZone is one-shot but doors must be
-   repeatable. Used wrong entity type.)
+   code allow it? (Illustrative bug class: a one-shot TriggerZone used where a
+   repeatable door is needed — wrong entity type.)
 2. **Ownership:** Who owns this input/action? Is there exactly ONE handler?
-   (PR #120: Both player_character and exploration handled ui_accept —
-   double-fire.)
+   (Illustrative bug class: both player_character and exploration handling
+   ui_accept — double-fire.)
 3. **Initialization:** Every entity that needs initialize() — is it actually
-   called? With the right arguments? (PR #120: metadata set on .tscn but
-   initialize() never called. Entities silently did nothing.)
-4. **Dimensions:** Do pixel sizes match the viewport? (PR #120: 176px
-   background in 180px viewport — 4px gap.)
+   called? With the right arguments? (Illustrative bug class: metadata set on
+   the .tscn but initialize() never called — entities silently do nothing.)
+4. **Dimensions:** Do pixel sizes match the viewport? (Illustrative bug class:
+   a 176px background in a 180px viewport — 4px gap.)
 5. **State cleanup:** Do tests reset ALL global state they depend on?
-   (PR #120: EventFlags not cleared, tests leaked state.)
+   (Illustrative bug class: EventFlags not cleared between tests, leaking
+   state.)
 6. **Spec accuracy:** Does the spec describe what was ACTUALLY built, not
    what was PLANNED? Grep for EVERY changed concept across ALL spec sections.
 7. **Return path:** After any state change (overlay push, map load, scene
@@ -257,25 +264,32 @@ Step 5 verification on the changed files.
 ### 7. Update Gap Tracker
 
 After verification and review pass:
-1. Update the gap's status in `docs/analysis/game-dev-gaps.md`
-2. Check off completed items in the "What's Needed" list
-3. Add a row to the Progress Tracking table
+1. Close the gap's GitHub Issue (`gh issue close <N>`), referencing the
+   PR/commit that resolved it (`Closes #N` in the PR also auto-closes)
+2. Check off completed items in the issue's "What's Needed" checklist
+   and update the matching `docs/issues/GAP-*.md` detail file
+3. Note progress in the issue (comment) so history is preserved
 4. Check if this completion unblocks any downstream gaps
 5. If downstream gaps are now unblocked, note this for the user
 
 ### 8. Hand Off
 
-Every session ends by naming the next steps:
+This skill does not commit or push directly — it delegates to
+`/create-pr` (which stages, commits, pushes through the husky quality
+gates, and opens the PR) and `/godot-review-loop` (which hardens the
+PR over multiple rounds). Every session ends by naming the next steps:
 
 ```
-1. /create-pr — open a PR targeting main
+1. /create-pr — commit, push, and open a PR targeting main
 2. /godot-review-loop <PR#> 2 — multi-round hardening on the PR
 3. Address Copilot comments + gap analysis (autonomous — no reminder needed)
 ```
 
-Follow the standard commit workflow:
+**Optional manual fallback only** — if `/create-pr` is unavailable, the
+equivalent raw git workflow is below. `/create-pr` automates all of this
+(including the quality gates), so prefer it:
 ```bash
-git add game/ docs/analysis/game-dev-gaps.md docs/superpowers/specs/
+git add game/ docs/issues/ docs/superpowers/specs/
 git commit -F /tmp/commit-msg.txt
 git push
 ```
@@ -285,7 +299,8 @@ git push
 When invoked with `/game-designer audit`:
 
 1. Read the `game/` directory tree (scripts, scenes, data, assets)
-2. For each gap in the tracker, verify:
+2. For each `gap-analysis` issue (`gh issue list --label gap-analysis`,
+   cross-referenced with its `docs/issues/GAP-*.md` detail file), verify:
    - Do the referenced output files exist?
    - Does the content match the claimed status?
    - Are checklist items actually completed?
@@ -294,12 +309,15 @@ When invoked with `/game-designer audit`:
    - Are all enemies from bestiary/ represented in enemy JSON?
    - Are all items from items.md represented in item JSON?
    - Are all shop inventories from economy.md represented in shop JSON?
-4. Update all statuses
+4. Update all statuses (reopen/close issues, edit labels, comment) and
+   sync the matching `docs/issues/GAP-*.md` detail files
 5. Report changes:
    - Upgrades (gap was more complete than status claimed)
    - Downgrades (gap was less complete than status claimed)
-   - New gaps discovered (systems not in the original analysis)
-6. Commit the updated tracker
+   - New gaps discovered (systems not in the original analysis — file
+     a new `gh issue create --label gap-analysis`)
+6. Reflect status in GitHub Issues (open/close/comment); the
+   `docs/analysis/*.md` files stay as historical context only
 
 ## Design Session Flow
 
@@ -322,7 +340,7 @@ User: [Approves approach A]
 Claude: [Writes spec, creates plan, implements JSON files]
 Claude: [Runs adversarial verification against progression.md tables]
 Claude: [Runs /godot-review on local changes]
-Claude: [Updates game-dev-gaps.md: 1.1 -> COMPLETE]
+Claude: [Closes the gap-analysis issue for 1.1: gh issue close <N>]
 Claude: "Character data complete. 6 JSON files verified against
          progression.md. This unblocks: 2.1 (PlayerCharacter Prefab),
          3.3 (Battle Scene), 3.4 (Menu Overlay).
@@ -340,7 +358,8 @@ Claude: "Character data complete. 6 JSON files verified against
 - **Always brainstorm first.** Even "obvious" data transcription needs user input on approach.
 - **Design docs are law.** No inventing values. No improvising mechanics. Every number traces to a source doc.
 - **Verify adversarially.** Assume your own output has errors. Check every value.
-- **Update the tracker.** Every session ends with an updated gap doc.
+- **Update the tracker.** Every session ends with the `gap-analysis`
+  GitHub Issue closed/updated (and its `docs/issues/GAP-*.md` synced).
 - **Cross-reference everything.** JSON IDs must match across files. Flag names must match events.md.
 - **Placeholder assets are fine.** Colored rectangles for sprites, silence for audio. Art/audio are separate gaps (4.8, 4.9).
 - **Don't over-engineer.** Implement what the design doc specifies, nothing more. YAGNI applies.

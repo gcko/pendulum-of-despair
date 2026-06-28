@@ -26,7 +26,7 @@ Inspired by FF6's Active Time Battle system.
 
 **Battle UI layout (inspired by FF6):**
 ```
-[ Battle scene -- sprites on canvas ]
+[ Battle scene -- sprites rendered in the battle.tscn scene ]
 -------------------------------------
 [ Action Menu ]    [ Party Status   ]
   > Fight            TERRA    210 ==
@@ -139,8 +139,9 @@ Auto-save should fire on:
 - Save point objects on map (glowing crystals, campfires -- to be decided)
 
 ### New Game vs. Continue
-On login:
-1. Check if user has an existing save
+From the title screen (saves are local, managed by the `SaveManager` autoload --
+there is no login or account):
+1. Check whether any local save slot exists
 2. If yes: show "Continue" (default) and "New Game" (with warning modal)
 3. If no: go straight into new game intro
 
@@ -149,11 +150,14 @@ On login:
 ## Dialogue System
 
 ### Dialogue Box Spec
-- Dark blue gradient background (see `tech-stack.md` for CSS)
+- Built as a Godot overlay scene (`scenes/overlay/dialogue.tscn`): a
+  `CanvasLayer` with `Control`/`Panel`/`Label` nodes -- not HTML/CSS
+- Dark blue panel styled via a Godot `Theme` / `StyleBox` (FF6 blue feel)
 - Speaker name displayed in yellow/gold at top left
-- Text appears character-by-character (typewriter effect, ~40ms per char)
+- Text appears character-by-character (typewriter effect, ~40ms per char),
+  e.g. via `RichTextLabel.visible_ratio` or `visible_characters`
 - Player presses confirm to advance or skip to end of current line
-- Dialogue stored in JSON files under `packages/client/src/data/dialogue/`
+- Dialogue stored in JSON files under `game/data/dialogue/`
 
 ### Dialogue JSON Format
 ```json
@@ -182,12 +186,14 @@ Avoid exposition dumps. Break up long lore into multiple exchanges.
 
 ### Tile Grid
 - **Tile size:** 16x16 pixels (matches SNES sprite scale)
-- **Map format:** Tiled JSON (`.tmj`) -- create maps in [Tiled Map Editor](https://www.mapeditor.org/)
-- **Layers (minimum):**
+- **Map format:** Godot `.tscn` scenes under `scenes/maps/` (`towns/`,
+  `dungeons/`, `cutscenes/`, plus `overworld.tscn`), built with Godot
+  `TileMapLayer` nodes and a shared `TileSet` resource -- not Tiled JSON
+- **Layers (minimum), as TileMapLayer nodes / collision setup:**
   - `ground` -- walkable terrain
   - `decoration` -- trees, rocks, objects above ground
-  - `collision` -- invisible layer marking impassable tiles
-  - `events` -- trigger zones (NPC positions, doors, transitions)
+  - `collision` -- physics layer marking impassable tiles
+  - `events` -- trigger-zone entity scenes (NPC positions, doors, transitions)
 
 ### Encounter Design
 Two options -- **confirm with user before implementing:**
@@ -214,8 +220,11 @@ Two options -- **confirm with user before implementing:**
 - Each area gets a distinct theme (town, dungeon, overworld, battle)
 - Each major character gets a leitmotif that appears in their story scenes
 - Boss battles get unique music distinct from regular battles
-- Implementation: **Howler.js** for audio, or **Web Audio API** directly
-- File format: `.ogg` (primary) + `.mp3` (fallback) for browser compatibility
+- Implementation: Godot `AudioStreamPlayer` nodes routed through the
+  `AudioManager` autoload (Music / SFX / Ambient buses) -- not Howler.js or
+  the Web Audio API
+- File format: `.ogg` (music/ambient, loops well) and `.wav` (short SFX),
+  imported as Godot `AudioStream` resources
 
 ### Boss Battle Checklist
 Before implementing any boss encounter, confirm:

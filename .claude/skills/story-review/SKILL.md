@@ -79,6 +79,9 @@ gh api /repos/{owner}/{repo}/pulls/{pr_number}/files --paginate --jq '.[].filena
 
 **Local Mode:**
 ```bash
+# Refresh local main first so the diff base is current
+# (skip/note as an assumption if offline — assumes local main is up to date).
+git fetch origin main 2>/dev/null || true
 # Uncommitted changes + branch commits ahead of main
 git diff main --name-only
 git diff main...HEAD --name-only 2>/dev/null
@@ -86,7 +89,7 @@ git diff main...HEAD --name-only 2>/dev/null
 
 Filter to story-relevant files:
 - `docs/story/*.md`
-- `packages/client/src/data/*.json` (game data)
+- `game/data/*.json` (game data)
 - `.claude/skills/pod-dev/**` (skill references)
 - `docs/superpowers/plans/*.md` and `docs/superpowers/specs/*.md` — if
   these files reference story entities (NPC names, boss names, pronouns,

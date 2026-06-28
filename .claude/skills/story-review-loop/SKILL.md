@@ -27,6 +27,14 @@ back clean), push all commits at once and post a summary to the PR.
 > (`# Story Review Loop Summary (Multi-Agent)`) is used by
 > pr-review-response to detect that the review has already been run.
 
+> **story-review-loop vs story-review-loop-cope:** This 6-agent loop is
+> the **primary** story review. Use it by default. The 3-agent
+> `story-review-loop-cope` variant is the **fallback for when Copilot
+> is unavailable** — it emulates Copilot's review patterns against the
+> 10 gap categories. Reach for `-cope` only when you need Copilot-level
+> coverage and Copilot itself cannot run; otherwise this loop is the
+> one to invoke.
+
 ## Why Multi-Agent?
 
 A single monolithic review agent suffers from systemic failure modes:
@@ -142,6 +150,25 @@ digraph review_loop {
 For each round (1 through N), dispatch **six review agents in
 parallel**. Each agent gets the same file list but a different mission.
 
+**Dispatch mechanism (concrete):** The six agents are subagents
+launched via the **Agent tool**. Follow the
+`superpowers:dispatching-parallel-agents` pattern — emit **all six
+Agent tool calls in a single assistant message** so they run
+concurrently rather than sequentially. For each agent:
+
+1. Read the agent's instruction file (e.g. `agents/propagation.md`)
+   from this skill's directory.
+2. Pass that file's **full contents as the subagent's prompt** (the
+   `prompt` argument of the Agent tool call), with the round's changed
+   file list appended so the agent knows its scope. Do not summarize or
+   truncate the checklist — the entire checklist is the prompt.
+3. Each subagent runs independently (no shared state) and returns its
+   findings as its final message.
+
+Collect the six returned findings lists and de-duplicate them in
+**Step 2b** before fixing anything. Do not begin fixes until all six
+agents have returned.
+
 #### Agent 1: Entity Propagation Checker
 
 **Mission:** Verify entity descriptions are consistent across ALL files.
@@ -229,7 +256,20 @@ If issues are found:
    paragraph, or table that appears 20+ lines away in the same
    section. The ±10-line check is NOT sufficient; full-section
    re-read is required.
-5. Run `pnpm lint && pnpm test` to verify fixes.
+5. **Verify fixes.** Linting and tests run automatically via the git
+   hooks on commit/push (pre-commit: gdlint + JSON validation +
+   `gdformat --check`; pre-push: data-integrity scans + the full GUT
+   suite). To verify manually before committing:
+   - **Code touched (`.gd`):** `gdlint <files>` and
+     `gdformat --check <files>`, then run the GUT suite with
+     `godot --headless --path game/ -s addons/gut/gut_cmdln.gd`
+     (use `/Applications/Godot.app/Contents/MacOS/Godot` if `godot`
+     is not on PATH).
+   - **Story-only PRs (`docs/story/`, `docs/superpowers/` markdown):**
+     markdown docs are NOT linted or unit-tested. The verification is
+     the data-integrity scans (ID-uniqueness, stale-count, scene-ref —
+     also run by the pre-push hook) plus the full-section re-reads from
+     step 4. There is no `pnpm lint`/`pnpm test` to run for docs.
 6. If verification fails, fix the failure before proceeding.
 
 ### Step 2d: Commit Locally
@@ -242,7 +282,7 @@ docs: address story review issues (round N)
 - Description of fix 1
 - Description of fix 2
 
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 git commit -F /tmp/commit-msg.txt
 ```
@@ -320,8 +360,10 @@ After the loop ends (either all N rounds complete or an early clean exit):
   continuing.
 - **Same issues recurring:** If round N finds the exact same issues as
   round N-1 (fix didn't work), stop and report.
-- **Verification failure:** If `pnpm lint` or `pnpm test` fails after a
-  fix and cannot be resolved, stop and report.
+- **Verification failure:** If the verification from Step 2c step 5
+  fails after a fix and cannot be resolved — gdlint/`gdformat --check`,
+  the GUT suite, the data-integrity scans, or a blocked git hook — stop
+  and report.
 
 ## Rules
 
@@ -329,13 +371,21 @@ After the loop ends (either all N rounds complete or an early clean exit):
   once at the end. This keeps the PR history clean.
 - **Six agents per round.** Always dispatch all six. Do NOT skip the
   devil's advocate — it catches what the structured agents miss.
-- **Parallel dispatch.** Launch all six agents simultaneously using a
-  single message with multiple Agent tool calls.
+- **Parallel dispatch.** Launch all six agents as subagents via the
+  Agent tool, emitting all six Agent tool calls in a **single
+  assistant message** so they run concurrently (the
+  `superpowers:dispatching-parallel-agents` pattern). Pass each agent's
+  full instruction-file contents as its subagent prompt; collect and
+  de-duplicate the six returned findings lists before fixing.
 - **No manufactured fixes.** Only fix BLOCKERs and ISSUEs. Ignore
   SUGGESTIONs unless they are trivial (one-line typo).
 - **Propagation sweep is MANDATORY.** After every fix, grep all files
   for the entity you just fixed. This is non-negotiable.
-- **Verify every round.** Run lint + tests after every fix commit.
+- **Verify every round.** After every fix, run the verification for the
+  files touched (Step 2c step 5): for code, `gdlint` +
+  `gdformat --check` + the GUT suite; for story-only docs, the
+  data-integrity scans + full-section re-reads. The git hooks rerun
+  these on commit/push — never `--no-verify`.
 - **Scope to the diff.** Only review files changed in this PR, not the
   entire story bible. But within changed files, search the WHOLE file
   for stale references.

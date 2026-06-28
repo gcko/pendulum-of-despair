@@ -1,6 +1,6 @@
 ---
 name: story-review-loop-cope
-description: Use when a story PR needs Copilot-level review but Copilot is unavailable. Emulates Copilot's review patterns using 3 specialized agents targeting the 10 gap categories from copilot-gap-taxonomy.md. Takes same parameters as story-review-loop (PR number + iteration count). Finds 4-12+ issues per round like Copilot does.
+description: Use when a story PR needs Copilot-level review but Copilot is unavailable. Emulates Copilot's review patterns using 3 specialized agents targeting the 10 gap categories from .claude/skills/pr-review-response/references/copilot-gap-taxonomy.md. Takes same parameters as story-review-loop (PR number + iteration count). Finds 4-12+ issues per round like Copilot does.
 ---
 
 # Story Review Loop — Copilot Emulation
@@ -8,7 +8,7 @@ description: Use when a story PR needs Copilot-level review but Copilot is unava
 Drop-in replacement for `/story-review-loop` when GitHub Copilot is
 unavailable. Emulates the specific issue categories Copilot catches
 by dispatching 3 agents targeting the 10 gap categories from
-`copilot-gap-taxonomy.md`.
+`.claude/skills/pr-review-response/references/copilot-gap-taxonomy.md`.
 
 ## Invocation
 
@@ -206,21 +206,39 @@ Work from: [PROJECT_ROOT]
 3. **Propagation sweep** after every fix: grep all changed files
    for the entity you fixed. Verify consistency.
 4. **Post-fix section re-read:** re-read the entire section around
-   each edit.
-5. **Verify:** `pnpm lint`
-6. **Commit locally** (do NOT push until all rounds complete).
+   each edit. This section re-read IS the verification step — story
+   markdown is not linted (no `pnpm lint`; `pnpm` is only for husky +
+   commitlint). Re-reading the surrounding section after each edit is
+   how you confirm the fix landed cleanly and introduced no regression.
+5. **Commit locally** (do NOT push until all rounds complete).
 
 ## Push and Summary
 
-After all rounds complete (or early exit on clean round):
+How this skill finishes depends on HOW it was invoked. Determine the
+context first, then follow the matching branch. **Never double-push.**
+
+<GUARD>
+**Case 1 — invoked directly** (`/story-review-loop-cope <PR#> <N>` run
+on its own): after all rounds complete (or early exit on a clean
+round), THIS skill owns the push. Commit, push, and post the summary
+comment:
 
 ```bash
 git push
 gh pr comment <PR#> --body-file /tmp/cope-summary.md
 ```
 
+**Case 2 — invoked from pr-review-response Step 6b** (post-fix review,
+where the orchestrator owns the PUSH-GATE): commit locally ONLY. Do
+NOT run `git push` and do NOT post the summary comment — return your
+findings (CLEAN or the issues fixed) to the orchestrator and let it
+perform the single authorized push at its PUSH-GATE. Pushing here
+would double-push and bypass the orchestrator's gate.
+</GUARD>
+
 Summary format matches story-review-loop format but notes
-"(Copilot Emulation)" in the header.
+"(Copilot Emulation)" in the header. In Case 2 the summary text is
+handed back to the orchestrator rather than posted directly.
 
 ## Rules
 

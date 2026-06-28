@@ -49,16 +49,29 @@ digraph godot_review {
 ### Pass A: GDScript Type Safety & Style
 
 Check all changed `.gd` files for:
-- Static typing on all parameters, return types, and variables
+- **No Godot-3 API holdovers (CRITICAL in this 4.7-only repo).** Flag
+  `KinematicBody2D`→`CharacterBody2D`, `Physics2DServer`→`PhysicsServer2D`,
+  `File`/`Directory`→`FileAccess`/`DirAccess`, string-name `connect()` →
+  `Callable`. A Godot-3 API here is a BLOCKER.
+- Static typing on parameters, return types, and `@onready`/exported vars
+  (`@onready var t: Timer = ...`). Use `:=` inference when unambiguous;
+  don't demand annotations on every trivial local.
 - GDScript style guide compliance (naming, script member ordering)
-- No common antipatterns (get_parent, uncached node lookups, null misuse)
+- No common antipatterns (`get_parent`, uncached node lookups, null misuse)
+- Nodes that must be unit-testable via `.new()` use
+  `get_node_or_null("Child")`, not `$Child` (`$` emits a "node not found →
+  nullptr" engine error that GUT counts as a failure)
 - Script files under 300 lines (suggest splitting if over)
 
 ### Pass B: Signal Architecture & Scene Composition
 
 Check `.gd` and `.tscn` files for:
-- "Call down, signal up" principle respected
+- "Call down, signal up" respected — child emits, parent listens; method
+  calls go down. A sibling/parent direct method call is a candidate signal.
 - No child-to-parent references
+- Signal names are past-tense events (`health_changed`, `door_opened`,
+  `died`); start/finish pairs use `_started`/`_finished`; handlers named
+  `_on_<Node>_<signal>`
 - Scenes have single clear responsibility
 - Correct node types for purpose
 - `process_mode` set correctly on overlay scenes
@@ -90,6 +103,12 @@ Check game logic for:
 - Data loaded via `DataManager`, not direct file I/O
 - Audio played via `AudioManager`, not standalone players
 - Flags via `EventFlags`, not custom dictionaries
+- **Resource/memory hygiene.** Multiple refs to the same `.tres` share ONE
+  object in memory — flag undocumented shared `.tres` (mutation leaks across
+  holders). The 6 autoloads (GameManager, DataManager, AudioManager,
+  SaveManager, EventFlags, PartyState) must not hold strong scene refs
+  without cleanup. `preload` is compile-time, `load` is runtime; `queue_free`
+  nodes you spawn.
 
 ### Pass F: Audio Integration
 
@@ -103,7 +122,13 @@ Check audio-related code and data for:
 ### Pass G: Performance
 
 Check for performance antipatterns:
-- No `load()` or uncached lookups in `_process()`
+- **Lifecycle correctness.** Movement/physics/raycasts (`move_and_slide`,
+  ray queries) belong in `_physics_process` (fixed 60 Hz), NOT `_process`.
+  Input belongs in `_input`/`_unhandled_input`; one-time setup in `_ready`.
+- No `load()` or uncached `get_node()`/`$` lookups in `_process()`/
+  `_physics_process()` — cache via `@onready`
+- Untyped vars in hot loops (static typing is 28–59% faster)
+- `distance_to()` where `distance_squared_to()` suffices
 - Entity/emitter counts within budget
 - Unnecessary `_process()` on idle nodes
 - String concatenation in hot loops
@@ -121,7 +146,8 @@ Cross-reference implementation against game design docs:
 ## Verdict Categories
 
 **BLOCKER:** Crashes, data loss, broken pixel rendering, state machine
-violations. Must fix before merge.
+violations, Godot-3 API holdovers (this repo is 4.7-only). Must fix before
+merge.
 
 **ISSUE:** Design doc mismatch, type safety gap, style violation,
 incorrect audio behavior. Should fix before merge.
@@ -179,7 +205,7 @@ Copilot catches (PRs #114-117 proved this).
 - **Be specific.** Report file:line for every finding.
 - **No false positives.** If you're unsure, read the source doc before flagging.
 - **File issues for skipped findings.** Every finding marked SKIP,
-  out-of-scope, or cosmetic MUST be captured as a `bd create` issue
+  out-of-scope, or cosmetic MUST be captured as a `gh issue create` issue
   before the review is considered complete. Reviews that identify
   problems but don't file them are incomplete — the findings will be
   forgotten. Include the PR number in the issue description.
