@@ -476,6 +476,16 @@ Flags are serialized as part of save data (`world.event_flags` in
 }
 ```
 
+**Optional fields:**
+
+- `hidden_spike` (object, optional) — a permanent, silent stat boost added to
+  the character's leveled stats both at join and on every level-up recompute
+  (`InventoryHelpers.leveled_stats_with_spike`). Data-driven; no per-character
+  code. Used for narrative "spikes" with no in-game notification. Keys are stat
+  names, values are flat integer deltas. Example (Cael, GAP-010,
+  `progression.md:388`): `"hidden_spike": {"atk": 2, "mag": 2, "spd": 1}`. The
+  full flag-gated milestone-spike framework is tracked separately (GAP-013).
+
 ---
 
 ## 3. Game State Machine

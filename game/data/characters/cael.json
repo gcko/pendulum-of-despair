@@ -24,5 +24,7 @@
 	},
 	"default_row": "front",
 	"weapon_type": "greatsword",
-	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"]
+	"equipment_slots": ["weapon", "head", "body", "accessory", "ley_crystal"],
+	"_comment_hidden_spike": "GAP-010: the Pallor's hidden touch — a silent, permanent stat spike baked into Cael's stats when he joins. No in-game notification. Data-driven (no special-case code).",
+	"hidden_spike": {"atk": 2, "mag": 2, "spd": 1}
 }

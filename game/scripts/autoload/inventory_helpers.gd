@@ -156,6 +156,20 @@ static func calculate_stats_at_level(
 	return stats
 
 
+## Compute leveled stats AND apply the character's permanent hidden stat spike
+## (GAP-010) on top. Data-driven from char_data.hidden_spike. Used everywhere
+## base_stats is (re)built — at join and on level-up — so the spike is never
+## wiped by a recompute (progression.md:388: spikes are permanent).
+static func leveled_stats_with_spike(char_data: Dictionary, level: int) -> Dictionary:
+	var stats: Dictionary = calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), level
+	)
+	var spike: Dictionary = char_data.get("hidden_spike", {})
+	for stat_key: String in spike:
+		stats[stat_key] = int(stats.get(stat_key, 0)) + int(spike[stat_key])
+	return stats
+
+
 ## Compute derived stats (evasion, magic evasion, crit) from effective stat values.
 static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
 	return {
@@ -210,9 +224,8 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 	if level > old_level:
 		var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
 		if not char_data.is_empty():
-			var base: Dictionary = char_data.get("base_stats", {})
-			var growth: Dictionary = char_data.get("growth", {})
-			var new_stats: Dictionary = calculate_stats_at_level(base, growth, level)
+			# Re-apply the permanent hidden spike so level-up recompute keeps it.
+			var new_stats: Dictionary = leveled_stats_with_spike(char_data, level)
 			member["base_stats"] = new_stats
 			member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
 			member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
