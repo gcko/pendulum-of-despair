@@ -18,6 +18,8 @@ static func roll_variance() -> float:
 ## Returns: positive int for damage, 0 for immunity.
 ## For absorb (element_mod < 0): returns positive int (healing amount for target).
 ## @param reduction_sources Array[float] — multiplicative reduction values (e.g., 0.25 for 25%).
+## @param pre_def_mult float — applied to base power BEFORE DEF subtraction
+##   (e.g., 0.5 for Spirit's pre-DEF physical reduction). Default 1.0.
 static func calculate_physical(
 	atk: int,
 	ability_mult: float,
@@ -30,10 +32,10 @@ static func calculate_physical(
 	reduction_sources: Array,
 	is_elemental: bool,
 	element_mod: float,
-	attacker_id: String = ""
+	pre_def_mult: float = 1.0
 ) -> int:
-	# Step 3-4: Base damage with floor
-	var raw: float = maxf(1.0, (atk * atk * ability_mult) / 6.0 - target_def)
+	# Step 3-4: Base damage with floor (pre_def_mult scales power before DEF)
+	var raw: float = maxf(1.0, (atk * atk * ability_mult) / 6.0 * pre_def_mult - target_def)
 
 	# Step 5: Critical hit
 	if is_crit:
@@ -41,10 +43,6 @@ static func calculate_physical(
 
 	# Step 6: Combat interaction modifiers
 	raw *= interaction_mult
-
-	# Cael's Pallor Shimmer: +10% physical damage (permanent, hidden)
-	if attacker_id == "cael":
-		raw *= 1.1
 
 	# Step 7: Variance
 	var result: float = raw * roll_variance()

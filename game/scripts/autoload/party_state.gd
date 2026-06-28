@@ -676,6 +676,12 @@ func _add_character(character_id: String, level: int) -> void:
 	var stats: Dictionary = Helpers.calculate_stats_at_level(
 		char_data.get("base_stats", {}), char_data.get("growth", {}), level
 	)
+	# Hidden stat spike (GAP-010): a silent, permanent boost baked in at join,
+	# driven by character data — no per-character special case. Applied once
+	# here; it persists because base_stats is serialized into the save.
+	var hidden_spike: Dictionary = char_data.get("hidden_spike", {})
+	for stat_key: String in hidden_spike:
+		stats[stat_key] = stats.get(stat_key, 0) + int(hidden_spike[stat_key])
 	var starting_equip: Dictionary = STARTING_EQUIPMENT.get(
 		character_id, {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""}
 	)

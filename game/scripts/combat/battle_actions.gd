@@ -6,6 +6,7 @@ extends RefCounted
 ## via passed references.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
 const Enemy = preload("res://scripts/entities/enemy.gd")
 
 
@@ -46,21 +47,11 @@ static func execute_party_attack(
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
-	var character_id: String = member.get("character_id", "")
 	var attacker_row: String = member.get("row", "front")
+	# Spirit enemies take 50% physical pre-DEF (GAP-008, bestiary/README.md:80).
+	var pre_def: float = ModifierAggregator.physical_pre_def_mult(enemy.get_type())
 	var dmg: int = DamageCalc.calculate_physical(
-		atk,
-		1.0,
-		target_def,
-		is_crit,
-		1.0,
-		attacker_row,
-		"front",
-		false,
-		[],
-		false,
-		1.0,
-		character_id
+		atk, 1.0, target_def, is_crit, 1.0, attacker_row, "front", false, [], false, 1.0, pre_def
 	)
 
 	enemy.take_damage(dmg)
@@ -92,7 +83,11 @@ static func apply_magic_to_enemy(
 		return {"hit": false, "damage": 0, "type": "miss"}
 
 	var element_mod: float = enemy.get_element_multiplier(element)
-	var dmg: int = DamageCalc.calculate_magic(mag, power, target_mdef, element_mod, 1.0, [], [])
+	# Enemy type-element bonus stacks multiplicatively with weakness (GAP-008).
+	var interaction: float = ModifierAggregator.type_element_multiplier(enemy.get_type(), element)
+	var dmg: int = DamageCalc.calculate_magic(
+		mag, power, target_mdef, element_mod, interaction, [], []
+	)
 
 	if element_mod == 0.0:
 		return {"hit": true, "damage": 0, "type": "immune"}
