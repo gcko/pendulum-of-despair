@@ -516,7 +516,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "poison"
 		},
 		{
 			"id": "slumber_mote",
@@ -542,7 +543,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "sleep"
 		},
 		{
 			"id": "leaden_step",
@@ -568,7 +570,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "slow"
 		},
 		{
 			"id": "murk_veil",
@@ -594,7 +597,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "blind"
 		},
 		{
 			"id": "miasma",
@@ -616,7 +620,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "poison"
 		},
 		{
 			"id": "eventide",
@@ -638,7 +643,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "sleep"
 		},
 		{
 			"id": "bogsink",
@@ -660,7 +666,8 @@
 				}
 			],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "slow"
 		},
 		{
 			"id": "ironhide",

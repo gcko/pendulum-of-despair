@@ -32,7 +32,8 @@
 			"description": "60% chance to inflict Despair. ATB fill speed reduced by 25%, all damage dealt reduced by 20%. Lasts 4 turns.",
 			"learned_by": [],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "despair"
 		},
 		{
 			"id": "pallor_tide",
@@ -62,11 +63,12 @@
 			"mp_cost": null,
 			"target": "all_enemies",
 			"hit_rate": 50,
-			"duration": 2,
+			"duration": null,
 			"description": "50% chance to inflict Silence on each party member. Additionally suppresses all active buff effects for 2 turns.",
 			"learned_by": [],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "silence"
 		},
 		{
 			"id": "drinker_of_days",
@@ -113,11 +115,12 @@
 			"mp_cost": null,
 			"target": "all_enemies",
 			"hit_rate": 45,
-			"duration": 3,
+			"duration": null,
 			"description": "Inflicts Despair on all party members (45% per target) and suppresses all healing effects by 50% for 3 turns.",
 			"learned_by": [],
 			"cross_trained": false,
-			"mp_penalty": null
+			"mp_penalty": null,
+			"status": "despair"
 		},
 		{
 			"id": "the_weight",

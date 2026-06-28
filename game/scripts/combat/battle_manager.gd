@@ -14,6 +14,7 @@ signal message(text: String)
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const ATBSystem = preload("res://scripts/combat/atb_system.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 var _return_map_id: String = ""
@@ -109,6 +110,11 @@ func _process(delta: float) -> void:
 	if not _atb.should_pause_timers():
 		for i: int in range(4):
 			_state.tick_realtime_statuses(i, delta)
+	# Resync living enemies' ATB freeze/mods from their current statuses
+	# (GAP-003) so a cured Sleep unfreezes and an expired Slow clears.
+	for i: int in range(_enemies.size()):
+		if _enemies[i].is_alive:
+			_resync_enemy_atb(i)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if _battle_resolved:
@@ -242,12 +248,23 @@ func _do_magic(actor_id: String, command: Dictionary) -> bool:
 		message.emit("Not enough MP!")
 		return false
 	var mag: int = _state.get_effective_stat(slot, "mag")
-	var power: int = spell.get("power", 10)
+	# Status spells carry power: null — guard before the int conversion.
+	var power: int = 0
+	if spell.get("power") != null:
+		power = int(spell.get("power"))
 	var element: String = spell.get("element", "non_elemental")
 	var caster_name: String = member.get("character_data", {}).get("name", "???")
 	message.emit("%s casts %s!" % [caster_name, spell.get("name", "Spell")])
+	var is_status: bool = spell.get("category", "") == "status"
 	var had_effect: bool = false
-	if target_type == "single_enemy":
+	if is_status and target_type == "single_enemy":
+		had_effect = _do_status_on_enemy(slot, spell, resolved_enemy_target)
+	elif is_status and target_type == "all_enemies":
+		for i: int in range(_enemies.size()):
+			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
+				if _do_status_on_enemy(slot, spell, i):
+					had_effect = true
+	elif target_type == "single_enemy":
 		had_effect = _do_magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
 	elif target_type == "all_enemies":
 		for i: int in range(_enemies.size()):
@@ -299,6 +316,54 @@ func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String,
 		return true
 	damage_dealt.emit("enemy_%d" % idx, 0, "miss")
 	return false
+
+
+## Resolve a status spell against a single enemy (GAP-003). Returns true if a
+## status was inflicted (drives Weave Gauge gain in _do_magic).
+func _do_status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
+	if idx < 0 or idx >= _enemies.size():
+		return false
+	var result: Dictionary = BattleActions.apply_status_to_enemy(
+		_state,
+		caster_slot,
+		int(spell.get("hit_rate", 0)),
+		str(spell.get("status", "")),
+		spell.get("duration"),
+		_enemies[idx]
+	)
+	if result.get("inflicted", false):
+		_resync_enemy_atb(idx)
+		# enemy.apply_status already emitted status_applied with the real
+		# duration; don't re-emit it here with a fabricated value.
+		damage_dealt.emit("enemy_%d" % idx, 0, "status")
+		message.emit(
+			(
+				"%s is afflicted with %s!"
+				% [_enemies[idx].get_display_name(), result.get("status", "")]
+			)
+		)
+		return true
+	match result.get("type", ""):
+		"immune":
+			damage_dealt.emit("enemy_%d" % idx, 0, "immune")
+		"no_effect":
+			# Unknown/deferred status (e.g. Stop) — surface honestly, not "miss".
+			message.emit("No effect!")
+		_:
+			damage_dealt.emit("enemy_%d" % idx, 0, "miss")
+	return false
+
+
+## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
+## called for living enemies each frame and after status changes so cured or
+## expired statuses clear (StatusEffects.atb_state is the pure, tested core).
+func _resync_enemy_atb(idx: int) -> void:
+	if idx < 0 or idx >= _enemies.size():
+		return
+	var eid: String = "enemy_%d" % idx
+	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
+	_atb.set_frozen(eid, st["frozen"])
+	_atb.set_status_mods(eid, st["mods"])
 
 
 func _do_item(command: Dictionary) -> bool:

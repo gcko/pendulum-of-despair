@@ -7,7 +7,41 @@ extends RefCounted
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const ModifierAggregator = preload("res://scripts/combat/modifier_aggregator.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const Enemy = preload("res://scripts/entities/enemy.gd")
+
+
+## Resolve a player status spell against a single enemy (GAP-003).
+## Runs the two-stage accuracy roll (DamageCalc.roll_status) using the caster's
+## MAG vs the enemy's MDEF/SPD, then applies the status (enemy.apply_status
+## gates type/boss immunities). Beneficial/ally statuses are NOT handled here.
+## Returns {hit, inflicted, type, status} where type is one of
+## "status" | "resisted" | "immune" | "no_effect".
+static func apply_status_to_enemy(
+	state: Node,
+	caster_slot: int,
+	base_rate: int,
+	status_name: String,
+	explicit_duration: Variant,
+	enemy: Node
+) -> Dictionary:
+	if not enemy.is_alive or not StatusEffects.is_known(status_name):
+		return {"hit": false, "inflicted": false, "type": "no_effect", "status": status_name}
+	# Immune targets don't roll — auto no-effect (type/boss/per-enemy immunity).
+	# Intentional deviation from combat-formulas.md's step order (immunity is
+	# step 4, after the rolls): the applied/not-applied outcome is identical and
+	# this skips a pointless roll.
+	if enemy.is_immune_to_status(status_name):
+		return {"hit": true, "inflicted": false, "type": "immune", "status": status_name}
+	var caster_mag: int = state.get_effective_stat(caster_slot, "mag")
+	var stats: Dictionary = enemy.get_stats()
+	var target_mdef: int = stats.get("mdef", 0)
+	var target_spd: int = stats.get("spd", 0)
+	if not DamageCalc.roll_status(base_rate, caster_mag, target_mdef, target_spd):
+		return {"hit": false, "inflicted": false, "type": "resisted", "status": status_name}
+	var duration: int = StatusEffects.resolve_duration(status_name, explicit_duration)
+	enemy.apply_status(status_name, duration)
+	return {"hit": true, "inflicted": true, "type": "status", "status": status_name}
 
 
 ## Map a UI cursor index (0..living-1) to an actual _enemies array index.

@@ -7,6 +7,7 @@ extends RefCounted
 
 const BattleAI = preload("res://scripts/combat/battle_ai.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
+const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 ## Boss AI state — Vein Guardian
@@ -129,14 +130,14 @@ func _track_boss_state(enemy: Node, action: Dictionary) -> void:
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
 	var atype: String = action.get("type", "")
 	if atype == "spawn":
-		_do_spawn(action, enemy, enemies)
+		_do_spawn(action, enemy, enemies, idx)
 		return
 	if atype == "skip":
-		_do_skip(action, enemy)
+		_do_skip(action, enemy, idx)
 		return
 	if atype == "ability" and action.get("target", "") == "self":
 		_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
-		enemy.tick_statuses()
+		_tick_enemy_statuses(enemy, idx)
 		return
 	if atype == "heal" and action.get("target", "") == "self":
 		var heal_amount: int = action.get("value", 0)
@@ -147,10 +148,30 @@ func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: i
 		_manager.damage_dealt.emit("enemy_%d" % idx, heal_amount, "heal")
 	elif atype in ["attack", "ability"]:
 		_do_attack_or_ability(action, enemy, idx)
+	_tick_enemy_statuses(enemy, idx)
+
+
+## End-of-turn status processing for an enemy: apply HP ticks (Poison/Burn)
+## then decrement durations. Poison/Burn = floor(max_hp * tick_pct), min 1.
+func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
+	var max_hp: int = enemy.enemy_data.get("hp", 0)
+	var eid: String = "enemy_%d" % idx
+	for s: Dictionary in enemy.active_statuses.duplicate():
+		var sname: String = s.get("name", "")
+		var pct: float = StatusEffects.tick_pct(sname)
+		if pct > 0.0 and enemy.is_alive:
+			var dmg: int = maxi(1, int(max_hp * pct))
+			enemy.take_damage(dmg, false)  # DoT must not wake Sleep/Confusion
+			_manager.damage_dealt.emit(eid, dmg, "burn" if sname == "burn" else "poison")
+			# A DoT kill must clean up like any other kill, or the dead enemy's
+			# gauge keeps filling and re-enters the ready queue.
+			if not enemy.is_alive:
+				_manager.combatant_died.emit(eid)
+				_atb.remove_combatant(eid)
 	enemy.tick_statuses()
 
 
-func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
+func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
 	var spawn_ids: Array = action.get("enemies", [])
 	var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
 	for sid: String in spawn_ids:
@@ -162,10 +183,10 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 	_manager.message.emit("Corrupted Spawns emerge from the depths!")
-	enemy.tick_statuses()
+	_tick_enemy_statuses(enemy, idx)
 
 
-func _do_skip(action: Dictionary, enemy: Node) -> void:
+func _do_skip(action: Dictionary, enemy: Node, idx: int) -> void:
 	var skip_id: String = action.get("id", "")
 	if skip_id == "start_dive":
 		_manager.message.emit("The Fenmother dives beneath the surface!")
@@ -173,7 +194,7 @@ func _do_skip(action: Dictionary, enemy: Node) -> void:
 	elif skip_id == "resurface":
 		_manager.message.emit("The Fenmother resurfaces!")
 		enemy.set_meta("untargetable", false)
-	enemy.tick_statuses()
+	_tick_enemy_statuses(enemy, idx)
 
 
 func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
