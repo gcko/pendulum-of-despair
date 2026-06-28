@@ -174,12 +174,14 @@ func has_status(slot: int, status_name: String) -> bool:
 
 ## Tick turn-based statuses at END of a combatant's turn. Applies Poison/Burn
 ## HP ticks first, then decrements durations. UNTIL_CURED (negative) durations
-## persist — they are cured by remove_status, never by countdown.
-func tick_statuses(slot: int) -> void:
+## persist — they are cured by remove_status, never by countdown. Returns the
+## DoT events [{slot, dmg, type}] so the battle layer can emit damage feedback
+## (mirrors the enemy-side tick's damage_dealt emission).
+func tick_statuses(slot: int) -> Array:
 	var m: Dictionary = get_member(slot)
 	if m.is_empty():
-		return
-	_apply_dot(slot, m)
+		return []
+	var dot_events: Array = _apply_dot(slot, m)
 	for i: int in range(m["active_statuses"].size() - 1, -1, -1):
 		var s: Dictionary = m["active_statuses"][i]
 		if s.get("duration_type", "") != "turns":
@@ -192,19 +194,28 @@ func tick_statuses(slot: int) -> void:
 			var sname: String = s.get("name", "")
 			m["active_statuses"].remove_at(i)
 			status_removed.emit(slot, sname)
+	return dot_events
 
 
 ## Apply damage-over-time (Poison 8%/turn magic.md:1392, Burn 5%/turn) to a
 ## member. Mirrors the enemy-side tick: floor(max_hp * tick_pct), min 1. DoT does
-## not wake-cure here (party has no Sleep/Confusion infliction yet).
-func _apply_dot(slot: int, m: Dictionary) -> void:
+## not wake-cure here (party has no Sleep/Confusion infliction yet). Returns the
+## per-status events [{slot, dmg, type}] for damage feedback.
+func _apply_dot(slot: int, m: Dictionary) -> Array:
+	var events: Array = []
 	if not m.get("is_alive", false):
-		return
+		return events
 	var max_hp: int = m.get("max_hp", 0)
 	for s: Dictionary in (m["active_statuses"] as Array).duplicate():
-		var pct: float = StatusEffects.tick_pct(s.get("name", ""))
+		var sname: String = s.get("name", "")
+		var pct: float = StatusEffects.tick_pct(sname)
 		if pct > 0.0 and m.get("is_alive", false):
-			take_damage(slot, maxi(1, int(max_hp * pct)))
+			var dmg: int = maxi(1, int(max_hp * pct))
+			take_damage(slot, dmg)
+			events.append(
+				{"slot": slot, "dmg": dmg, "type": "burn" if sname == "burn" else "poison"}
+			)
+	return events
 
 
 ## Tick real-time statuses (Stop). Called from _process with delta.

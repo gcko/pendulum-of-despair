@@ -68,11 +68,12 @@ matches the Act I regular-enemy band (`palette-families.md` Tier 1 kits).
 
 ### 2.3 AoE elemental abilities — `spell_power: 9`
 
-Party-wide elemental abilities (Frost Burst, Shard Burst) use `spell_power 9`.
+Party-wide elemental abilities (Frost Burst) use `spell_power 9`.
 `magic.md:101` states *"AoE spell power uses approximately 60–70% of the
 single-target ranges."* Applying 65% to the Tier 1 single-target floor of 14
 (§2.2) gives `round(14 × 0.65) = 9`. There is **no damage splitting** — each
-party member takes the full AoE hit (combat-formulas.md:633).
+party member takes the full AoE hit (combat-formulas.md:633). (Shard Burst is a
+*non-elemental* AoE-on-death — see §2.6 — but uses this same AoE power.)
 
 ### 2.4 Stat buffs — reuse the player-analog magnitude & duration
 
@@ -87,8 +88,11 @@ with the same effect (its magnitude and duration are canon):
 | Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md:801`) |
 
 `scope` is `"self"` (buffs only the caster) or `"pack"` (buffs every living
-enemy sharing the caster's `type`, e.g. Pack Howl across all Beasts/wolves in
-the encounter, per `palette-families.md:435` *"ATK up for all wolves"*).
+enemy sharing the caster's **`id`** — its own kind, e.g. Pack Howl across all
+Wayward Wolves in the encounter, per `palette-families.md:435` *"ATK up for all
+wolves"*). Matching by `id` rather than `type` avoids buffing unrelated
+same-type enemies (a Pack Howl should not strengthen the boars and serpents
+sharing a Beast-type encounter).
 
 ### 2.5 Offensive status hit-rate — `status_rate: 70`
 

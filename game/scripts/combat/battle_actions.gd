@@ -272,11 +272,14 @@ static func execute_enemy_physical_ability(
 ) -> Dictionary:
 	var total: int = 0
 	var landed: int = 0
-	var dtype: String = "physical"
+	var any_crit: bool = false
 	for _h: int in range(maxi(1, hits)):
 		var r: Dictionary = execute_enemy_attack(state, enemy, target_slot, ability_mult)
 		if r.get("hit", false):
 			landed += 1
 			total += int(r.get("damage", 0))
-			dtype = r.get("type", "physical")
+			if r.get("type", "") == "critical":
+				any_crit = true
+	# Report "critical" if ANY sub-hit crit, not just the last (which could miss).
+	var dtype: String = "critical" if any_crit else "physical"
 	return {"hit": landed > 0, "damage": total, "type": dtype, "hits_landed": landed}

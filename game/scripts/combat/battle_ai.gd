@@ -27,10 +27,14 @@ static func select_action(
 		var target: int = _pick_physical_target(living, party_rows)
 		return {"type": "attack", "target_slot": target, "ability_id": ""}
 
-	# 20% ability (if enemy has any). A chosen-but-empty ability list falls
+	# 20% ability (if enemy has any). aoe_on_death abilities (Shard Burst) are
+	# death triggers only — they fire via _on_enemy_died, never as a turn action,
+	# so exclude them from the selectable pool. A chosen-but-empty list falls
 	# through to defend (the pre-GAP-024 behavior when no enemy had abilities).
 	if roll < 90:
-		var abilities: Array = enemy_data.get("abilities", [])
+		var abilities: Array = enemy_data.get("abilities", []).filter(
+			func(a: Dictionary) -> bool: return not a.get("aoe_on_death", false)
+		)
 		if not abilities.is_empty():
 			var ab: Dictionary = abilities[randi() % abilities.size()]
 			return _build_ability_action(ab, living, party_rows)

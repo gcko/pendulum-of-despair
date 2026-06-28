@@ -188,7 +188,12 @@ func _on_ui_command(command: Dictionary) -> void:
 	_awaiting_input_for = ""
 	_atb.reset_gauge(actor_id)
 	_turn_counter += 1
-	_state.tick_statuses(actor_id.replace("party_", "").to_int())
+	# Surface party-side DoT (Poison/Burn) through damage_dealt so it shows a
+	# floating number, mirroring the enemy-side tick.
+	for ev: Dictionary in _state.tick_statuses(cmd_slot):
+		damage_dealt.emit(
+			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
+		)
 	_check_end_conditions()
 
 

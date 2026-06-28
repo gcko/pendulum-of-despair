@@ -395,3 +395,91 @@ func test_integration_pack_howl_buffs_all_wolves() -> void:
 		int(w1.get_stats().get("atk", 0)), atk_before, "Pack Howl buffs the OTHER wolf (pack scope)"
 	)
 	assert_gt(w0.active_buffs.size(), 0, "the casting wolf is buffed too")
+
+
+# --- Round 1 review fixes (GAP-024) ---
+
+
+func test_ai_excludes_aoe_on_death_from_selection() -> void:
+	# Shard Burst (aoe_on_death) is a death trigger only — never a turn action.
+	# An enemy whose ONLY ability is aoe_on_death must fall through to defend.
+	seed(5)
+	var enemy_data: Dictionary = {
+		"abilities":
+		[
+			{
+				"id": "shard_burst",
+				"aoe_on_death": true,
+				"type": "magic",
+				"target": "all",
+				"spell_power": 9
+			}
+		]
+	}
+	var pm: Array = [{"is_alive": true, "row": "front"}, null, null, null]
+	var pr: Array = ["front", "front", "front", "front"]
+	for _i: int in range(300):
+		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
+		assert_ne(
+			a.get("type", ""), "ability", "aoe_on_death-only enemy never casts it as a turn action"
+		)
+
+
+func test_party_dot_tick_returns_poison_event() -> void:
+	# tick_statuses surfaces DoT so the battle layer can emit damage feedback.
+	var state: Node = _make_party(0, 0, 100)
+	state.apply_status(0, "poison", "turns", UNTIL_CURED)
+	var events: Array = state.tick_statuses(0)
+	assert_eq(events.size(), 1, "one DoT event for the single poison")
+	assert_eq(events[0].get("type", ""), "poison", "event carries the status type")
+	assert_eq(int(events[0].get("dmg", 0)), 8, "8% of 100 max HP")
+
+
+func test_integration_nonelemental_magic_aoe_uses_magic_formula() -> void:
+	seed(77)
+	var battle: Node = await _boot(["unstable_crystal"])
+	var crystal: Node = battle._enemies[0]
+	# Force the distinction: ATK 0 so a physical AoE deals ~1/member; high MAG so a
+	# magic AoE deals real damage. A non-elemental magic AoE must route through the
+	# MAG formula (the _resolve_offensive fix), not the physical ATK formula.
+	crystal.enemy_data["atk"] = 0
+	crystal.enemy_data["mag"] = 60
+	var action: Dictionary = {
+		"type": "ability",
+		"id": "x",
+		"target": "all",
+		"atk_type": "magic",
+		"element": "",
+		"power": 20
+	}
+	var before: int = 0
+	for i: int in range(4):
+		before += int(battle._state.get_member(i).get("current_hp", 0))
+	battle._enemy_turn._do_attack_or_ability(action, crystal, 0)
+	var after: int = 0
+	for i: int in range(4):
+		after += int(battle._state.get_member(i).get("current_hp", 0))
+	assert_lt(
+		after, before - 50, "non-elemental magic AoE deals MAG-based damage, not ~1/member physical"
+	)
+
+
+func test_integration_pack_howl_does_not_buff_other_species() -> void:
+	var battle: Node = await _boot(["wayward_wolf", "wild_boar"])
+	var wolf: Node = battle._enemies[0]
+	var boar: Node = battle._enemies[1]
+	var boar_atk_before: int = int(boar.get_stats().get("atk", 0))
+	var action: Dictionary = {
+		"type": "ability",
+		"id": "pack_howl",
+		"target": "self",
+		"atk_type": "buff",
+		"buff": {"stat": "atk", "mult": 1.30, "duration": 5, "scope": "pack"},
+	}
+	battle._enemy_turn._do_self_ability(action, wolf, battle._enemies)
+	assert_eq(
+		int(boar.get_stats().get("atk", 0)),
+		boar_atk_before,
+		"Pack Howl does NOT buff a different species (id mismatch)"
+	)
+	assert_gt(wolf.active_buffs.size(), 0, "the wolf itself is still buffed")

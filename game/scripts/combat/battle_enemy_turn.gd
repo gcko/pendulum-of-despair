@@ -184,8 +184,12 @@ func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> 
 	var mult: float = float(buff.get("mult", 1.0))
 	var duration: int = int(buff.get("duration", 5))
 	if buff.get("scope", "self") == "pack":
+		# "pack" = the caster's own kind (same enemy id), e.g. all Wayward Wolves
+		# in the encounter (palette-families.md:435 "all wolves") — NOT every
+		# same-type beast, which would buff boars/serpents sharing the fight.
+		var pack_id: String = enemy.enemy_data.get("id", "")
 		for e: Node in enemies:
-			if e.is_alive and e.get_type() == enemy.get_type():
+			if e.is_alive and e.enemy_data.get("id", "") == pack_id:
 				e.apply_buff(stat, mult, duration)
 	else:
 		enemy.apply_buff(stat, mult, duration)
@@ -235,16 +239,12 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 				)
 			)
 		)
+		var status_name: String = action.get("status", "")
 		for i: int in range(4):
 			var m: Dictionary = _state.get_member(i)
 			if m.is_empty() or not m.get("is_alive", false):
 				continue
-			var result: Dictionary
-			if not elem.is_empty():
-				var pwr: int = action.get("power", 10)
-				result = BattleActions.execute_enemy_magic(_state, enemy, i, elem, pwr)
-			else:
-				result = BattleActions.execute_enemy_attack(_state, enemy, i)
+			var result: Dictionary = _resolve_offensive(action, enemy, i, elem)
 			(
 				_manager
 				. damage_dealt
@@ -254,6 +254,18 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 					result.get("type", "miss"),
 				)
 			)
+			if not status_name.is_empty() and result.get("hit", false):
+				(
+					BattleActions
+					. execute_enemy_status(
+						_state,
+						enemy,
+						i,
+						int(action.get("status_rate", 0)),
+						status_name,
+						action.get("status_duration"),
+					)
+				)
 	else:
 		var tgt: int = action.get("target_slot", 0)
 		if tgt < 0:
@@ -299,3 +311,19 @@ func _do_attack_or_ability(action: Dictionary, enemy: Node, _idx: int) -> void:
 	# Gain Weave Gauge for Maren AFTER action resolves (not before target validation)
 	if atype == "ability":
 		_state.gain_weave_gauge_for_maren(15)
+
+
+## Resolve one offensive AoE hit against a party slot. Magic when atk_type is
+## "magic" OR the action carries an element (the latter preserves legacy boss
+## AoEs — ember_pulse/frost_wave — which route by element with no atk_type);
+## otherwise physical, with ability_mult + multi-hit support. The single-target
+## branch deliberately keeps its atk_type-only routing so legacy water_jet stays
+## physical (boss AI is GAP-009 scope).
+func _resolve_offensive(action: Dictionary, enemy: Node, slot: int, elem: String) -> Dictionary:
+	if action.get("atk_type", "") == "magic" or not elem.is_empty():
+		return BattleActions.execute_enemy_magic(
+			_state, enemy, slot, elem, int(action.get("power", 0))
+		)
+	return BattleActions.execute_enemy_physical_ability(
+		_state, enemy, slot, float(action.get("ability_mult", 1.0)), int(action.get("hits", 1))
+	)
