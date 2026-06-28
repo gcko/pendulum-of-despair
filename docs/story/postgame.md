@@ -199,7 +199,7 @@ you've seen?"
 
 | Category | What It Tracks | Denominator |
 |----------|---------------|-------------|
-| **Bestiary** | Unique enemies encountered (at least one battle) | 235 (per [bestiary/README.md](bestiary/README.md): 25 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
+| **Bestiary** | Unique enemies encountered (at least one battle) | 237 (per [bestiary/README.md](bestiary/README.md): 27 Act I + 33 Act II + 52 Interlude + 69 Act III + 25 Optional + 31 Bosses) |
 | **Treasure** | Chests opened across all dungeons and overworld | Total chest count (implementation-defined per dungeon layouts) |
 | **Quests** | Sidequests completed | Total sidequest count per [sidequests.md](sidequests.md) |
 | **Items** | Unique items obtained at least once (consumables, equipment, key items, materials) | Total unique item count across [items.md](items.md) and [equipment.md](equipment.md) |

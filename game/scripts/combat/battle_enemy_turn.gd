@@ -173,8 +173,9 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 
 
 ## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
-## buffs every living enemy of the caster's type (Pack Howl across all wolves,
-## palette-families.md:435); "self" buffs only the caster.
+## buffs every living enemy of the caster's own kind (same enemy id — Pack Howl
+## across all Wayward Wolves, palette-families.md:435); "self" buffs only the
+## caster.
 func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 	_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
 	var buff: Dictionary = action.get("buff", {})

@@ -14,6 +14,8 @@ const COLOR_DAMAGE: Color = Color("#ffffff")
 const COLOR_HEAL: Color = Color("#44ff44")
 const COLOR_MISS: Color = Color("#888888")
 const COLOR_CRIT: Color = Color("#ffff44")
+const COLOR_POISON: Color = Color("#aa66cc")
+const COLOR_BURN: Color = Color("#ff8844")
 
 var _manager: Node = null
 var _battle_state: Node = null
@@ -161,6 +163,10 @@ func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> vo
 			text = "Immune"
 		"critical":
 			color = COLOR_CRIT
+		"poison":
+			color = COLOR_POISON
+		"burn":
+			color = COLOR_BURN
 
 	_spawn_damage_number(target_id, text, color)
 
