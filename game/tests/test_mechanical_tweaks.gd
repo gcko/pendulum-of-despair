@@ -2,51 +2,51 @@ extends GutTest
 ## Tests for Phase B2 mechanical tweaks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 
 
-func test_cael_physical_damage_10_percent_higher() -> void:
-	seed(42)
-	var base: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, ""
-	)
-	seed(42)
-	var cael: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "cael"
-	)
-	assert_gt(cael, base, "Cael physical damage should exceed base")
-	var ratio: float = float(cael) / float(base)
-	assert_almost_eq(ratio, 1.1, 0.02, "Cael multiplier should be ~1.1x")
+func before_each() -> void:
+	# Restore a clean party so these tests are order-independent (they mutate
+	# the PartyState autoload via initialize_new_game / add_xp).
+	PartyState.initialize_new_game()
 
 
-func test_non_cael_no_shimmer() -> void:
-	seed(42)
-	var edren: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "edren"
+func test_cael_hidden_spike_applied_at_join() -> void:
+	# GAP-010: Cael's hidden spike (+2 ATK / +2 MAG / +1 SPD) is baked into his
+	# base stats data-drivenly when he joins (no in-game notification).
+	var cael: Dictionary = PartyState.get_member("cael")
+	var char_data: Dictionary = DataManager.load_character("cael")
+	var raw: Dictionary = Helpers.calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), cael.get("level", 1)
 	)
-	seed(42)
-	var generic: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, ""
-	)
-	assert_eq(edren, generic, "Non-Cael characters should deal standard damage")
+	assert_eq(int(cael["base_stats"]["atk"]), int(raw["atk"]) + 2, "Cael ATK +2")
+	assert_eq(int(cael["base_stats"]["mag"]), int(raw["mag"]) + 2, "Cael MAG +2")
+	assert_eq(int(cael["base_stats"]["spd"]), int(raw["spd"]) + 1, "Cael SPD +1")
 
 
-func test_cael_physical_shimmer_does_not_affect_magic() -> void:
-	# calculate_magic has no attacker_id parameter by design — Pallor Shimmer
-	# is physical-only. This test documents that architectural decision.
-	seed(42)
-	var cael_phys: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "cael"
+func test_cael_hidden_spike_survives_level_up() -> void:
+	# GAP-010 permanence: the spike must NOT be wiped when level-up recomputes
+	# base_stats. Grant enough XP to gain at least one level, then re-check.
+	var cael: Dictionary = PartyState.get_member("cael")
+	var result: Dictionary = Helpers.add_xp_to_member(cael, 99999)
+	assert_gt(result.get("new_level", 1), 1, "precondition: Cael leveled up")
+	var char_data: Dictionary = DataManager.load_character("cael")
+	var raw: Dictionary = Helpers.calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), cael.get("level", 1)
 	)
-	seed(42)
-	var generic_phys: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0, "edren"
+	assert_eq(int(cael["base_stats"]["atk"]), int(raw["atk"]) + 2, "spike persists: ATK +2")
+	assert_eq(int(cael["base_stats"]["mag"]), int(raw["mag"]) + 2, "spike persists: MAG +2")
+	assert_eq(int(cael["base_stats"]["spd"]), int(raw["spd"]) + 1, "spike persists: SPD +1")
+
+
+func test_non_spiked_character_has_no_spike() -> void:
+	# Edren carries no hidden_spike data, so his stats are unmodified.
+	var edren: Dictionary = PartyState.get_member("edren")
+	var char_data: Dictionary = DataManager.load_character("edren")
+	var raw: Dictionary = Helpers.calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), edren.get("level", 1)
 	)
-	assert_gt(cael_phys, generic_phys, "Cael physical should be boosted by shimmer")
-	seed(42)
-	var cael_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
-	seed(42)
-	var generic_mag: int = DamageCalc.calculate_magic(20, 50, 10, 1.0, 1.0, [], [])
-	assert_eq(cael_mag, generic_mag, "Magic has no attacker_id — shimmer cannot apply")
+	assert_eq(int(edren["base_stats"]["atk"]), int(raw["atk"]), "no spike for Edren")
 
 
 func _get_edren_equipment() -> Dictionary:
