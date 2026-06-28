@@ -99,7 +99,10 @@ func _on_turn_ready(
 		_party_panel.set_active_slot(slot)
 	if _command_menu != null:
 		_command_menu.set_enemy_count(enemy_count)
-		_command_menu.show_commands(character_data, is_boss)
+		var current_mp: int = 0
+		if _battle_state != null:
+			current_mp = int(_battle_state.get_member(slot).get("current_mp", 0))
+		_command_menu.show_commands(character_data, is_boss, current_mp)
 
 
 func _on_command_selected(command: Dictionary) -> void:

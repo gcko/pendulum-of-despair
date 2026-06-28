@@ -99,6 +99,16 @@ func set_atb_mode(mode: String) -> void:
 	_atb_mode = mode
 
 
+## Derive the effective ATB mode + battle speed from the player's config (GAP-007).
+## Patience Mode (accessibility) takes precedence, pausing gauges during the
+## command menu as well as submenus. Pure/static so it can be unit-tested.
+static func settings_from_config(config: Dictionary) -> Dictionary:
+	var mode: String = str(config.get("atb_mode", "active"))
+	if bool(config.get("patience_mode", false)):
+		mode = "patience"
+	return {"mode": mode, "speed": int(config.get("battle_speed", 3))}
+
+
 func set_submenu_open(is_open: bool) -> void:
 	_submenu_open = is_open
 
