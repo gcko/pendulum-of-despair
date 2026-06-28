@@ -7,10 +7,12 @@ extends RefCounted
 ## the returned value as `interaction_mult` into damage_calculator, where it is
 ## multiplied against `element_mod`.
 ##
-## Scope note: this slice implements the dependency-free type traits only
-## (type-element bonus, Spirit pre-DEF, Undead heal->damage flag). Buff/status
-## interactions (Resonance, Frozen Shatter, Pallor regen, Boss overkill,
-## Elemental absorb-own-element) depend on unbuilt systems and are deferred.
+## Scope note: this slice implements only the dependency-free type traits that
+## are wired into a live path — type-element bonuses (magic) and Spirit pre-DEF
+## (physical). Deferred (tracked on #178): physical-elemental routing of type
+## bonuses; Undead heal->damage (needs a heal->enemy target path); buff/status
+## interactions (Resonance, Frozen Shatter), Pallor regen, Boss overkill, and
+## Elemental absorb-own-element — all depend on unbuilt systems.
 
 ## Type-element bonus multipliers (bestiary/README.md §Enemy Type Rules).
 ## Each value stacks MULTIPLICATIVELY with elemental weakness/resistance.
@@ -38,9 +40,3 @@ static func physical_pre_def_mult(enemy_type: String) -> float:
 	if enemy_type == "spirit":
 		return 0.5
 	return 1.0
-
-
-## True if healing magic damages this type instead of healing it.
-## Undead are damaged by healing spells (bestiary/README.md:63).
-static func is_damaged_by_healing(enemy_type: String) -> bool:
-	return enemy_type == "undead"

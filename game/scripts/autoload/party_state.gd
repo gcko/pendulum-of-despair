@@ -669,19 +669,17 @@ func save_config() -> void:
 
 
 func _add_character(character_id: String, level: int) -> void:
+	# Never add the same character twice — keeps the hidden spike applied once.
+	for m: Dictionary in members:
+		if m.get("character_id", "") == character_id:
+			return
 	var char_data: Dictionary = DataManager.load_character(character_id)
 	if char_data.is_empty():
 		push_error("PartyState: Character not found: %s" % character_id)
 		return
-	var stats: Dictionary = Helpers.calculate_stats_at_level(
-		char_data.get("base_stats", {}), char_data.get("growth", {}), level
-	)
-	# Hidden stat spike (GAP-010): a silent, permanent boost baked in at join,
-	# driven by character data — no per-character special case. Applied once
-	# here; it persists because base_stats is serialized into the save.
-	var hidden_spike: Dictionary = char_data.get("hidden_spike", {})
-	for stat_key: String in hidden_spike:
-		stats[stat_key] = stats.get(stat_key, 0) + int(hidden_spike[stat_key])
+	# Leveled stats with the permanent hidden spike (GAP-010) baked in — the
+	# same helper runs on level-up so the spike is never wiped by a recompute.
+	var stats: Dictionary = Helpers.leveled_stats_with_spike(char_data, level)
 	var starting_equip: Dictionary = STARTING_EQUIPMENT.get(
 		character_id, {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""}
 	)

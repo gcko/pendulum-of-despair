@@ -48,15 +48,3 @@ func test_spirit_physical_pre_def_half() -> void:
 func test_non_spirit_physical_pre_def_neutral() -> void:
 	assert_almost_eq(Agg.physical_pre_def_mult("undead"), 1.0, 0.001)
 	assert_almost_eq(Agg.physical_pre_def_mult("beast"), 1.0, 0.001)
-
-
-# --- Undead heal->damage flag (README:63) ---
-
-
-func test_undead_is_damaged_by_healing() -> void:
-	assert_true(Agg.is_damaged_by_healing("undead"))
-
-
-func test_non_undead_not_damaged_by_healing() -> void:
-	assert_false(Agg.is_damaged_by_healing("beast"))
-	assert_false(Agg.is_damaged_by_healing("spirit"))

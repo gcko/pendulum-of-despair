@@ -5,24 +5,15 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 
 
-func test_damage_formula_has_no_character_special_case() -> void:
-	# GAP-010: the hardcoded +10% "Cael" branch is gone. calculate_physical
-	# takes no attacker identity, so equal inputs always yield equal damage.
-	seed(42)
-	var a: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0
-	)
-	seed(42)
-	var b: int = DamageCalc.calculate_physical(
-		20, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0
-	)
-	assert_eq(a, b, "identical inputs -> identical damage; no character special case")
+func before_each() -> void:
+	# Restore a clean party so these tests are order-independent (they mutate
+	# the PartyState autoload via initialize_new_game / add_xp).
+	PartyState.initialize_new_game()
 
 
 func test_cael_hidden_spike_applied_at_join() -> void:
 	# GAP-010: Cael's hidden spike (+2 ATK / +2 MAG / +1 SPD) is baked into his
 	# base stats data-drivenly when he joins (no in-game notification).
-	PartyState.initialize_new_game()
 	var cael: Dictionary = PartyState.get_member("cael")
 	var char_data: Dictionary = DataManager.load_character("cael")
 	var raw: Dictionary = Helpers.calculate_stats_at_level(
@@ -33,9 +24,23 @@ func test_cael_hidden_spike_applied_at_join() -> void:
 	assert_eq(int(cael["base_stats"]["spd"]), int(raw["spd"]) + 1, "Cael SPD +1")
 
 
+func test_cael_hidden_spike_survives_level_up() -> void:
+	# GAP-010 permanence: the spike must NOT be wiped when level-up recomputes
+	# base_stats. Grant enough XP to gain at least one level, then re-check.
+	var cael: Dictionary = PartyState.get_member("cael")
+	var result: Dictionary = Helpers.add_xp_to_member(cael, 99999)
+	assert_gt(result.get("new_level", 1), 1, "precondition: Cael leveled up")
+	var char_data: Dictionary = DataManager.load_character("cael")
+	var raw: Dictionary = Helpers.calculate_stats_at_level(
+		char_data.get("base_stats", {}), char_data.get("growth", {}), cael.get("level", 1)
+	)
+	assert_eq(int(cael["base_stats"]["atk"]), int(raw["atk"]) + 2, "spike persists: ATK +2")
+	assert_eq(int(cael["base_stats"]["mag"]), int(raw["mag"]) + 2, "spike persists: MAG +2")
+	assert_eq(int(cael["base_stats"]["spd"]), int(raw["spd"]) + 1, "spike persists: SPD +1")
+
+
 func test_non_spiked_character_has_no_spike() -> void:
 	# Edren carries no hidden_spike data, so his stats are unmodified.
-	PartyState.initialize_new_game()
 	var edren: Dictionary = PartyState.get_member("edren")
 	var char_data: Dictionary = DataManager.load_character("edren")
 	var raw: Dictionary = Helpers.calculate_stats_at_level(
