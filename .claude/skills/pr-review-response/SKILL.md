@@ -36,11 +36,11 @@ digraph pr_review {
 
     detect [label="1. DETECT TYPE\nRead changed files\nClassify PR", fillcolor="#e6f3ff"];
     reviewed [label="Already\nreviewed?", shape=diamond, fillcolor="#fff3e6"];
-    upstream [label="2. UPSTREAM REVIEW\nStory: story-review-loop\nCode: lint + test\nMixed: both", fillcolor="#ccffcc"];
+    upstream [label="2. UPSTREAM REVIEW\nStory: story-review-loop\nCode/Data: gdlint+import+GUT\nMixed: both", fillcolor="#ccffcc"];
     fetch [label="3. FETCH COMMENTS\ngh api --paginate\nFilter unaddressed", fillcolor="#e6f3ff"];
     comments [label="Comments\nexist?", shape=diamond, fillcolor="#fff3e6"];
     assess [label="4. ASSESS & FIX\nValid concern → fix\nFalse positive → explain", fillcolor="#ccffcc"];
-    verify [label="VERIFY\npnpm lint && pnpm test", fillcolor="#ccccff"];
+    verify [label="VERIFY\ngdlint + gdformat --check\nimport gate -> GUT", fillcolor="#ccccff"];
     commit [label="5. COMMIT", fillcolor="#e6ffe6"];
     copilot [label="Copilot\ncommented?", shape=diamond, fillcolor="#fff3e6"];
     gap [label="6. GAP ANALYSIS\nCategorize findings\nPropose improvements", fillcolor="#f3e6ff"];
@@ -86,13 +86,17 @@ Classify based on file paths:
 | Pattern | PR Type |
 |---------|---------|
 | `docs/story/**` or `docs/superpowers/**` | **Story** |
-| `packages/*/src/**` or `*.ts`/`*.js` (in packages/) | **Code** |
+| `game/scripts/**/*.gd`, `game/tests/**/*.gd`, `game/scenes/**/*.tscn`, `game/addons/**` | **Code** |
+| `game/data/**/*.json` | **Data** |
 | Both Story and Code patterns present | **Mixed** |
 | `.claude/**`, `.github/**`, root config (`*.json`, `*.yaml`, `*.toml`) only | **Tooling** |
 | Any other `docs/**` or `*.md` (e.g., `CLAUDE.md`, `docs/analysis/`) | **Docs** |
 
 **Priority rules:**
 - If both Story and Code files are present → **Mixed**
+- **Data** (`game/data/**/*.json`) is treated like **Code** for
+  verification — the Godot import gate parses and validates every JSON
+  data file, and the GUT suite exercises the data loaders.
 - Tooling and Docs files are ignored when mixed with Story or Code
 - A PR with only `.claude/` + `docs/analysis/` = **Docs**
 
@@ -110,8 +114,9 @@ Before running any upstream review, check if it has already been done:
   `# Story Review Loop Summary (Multi-Agent)` — use a contains match.
   If found, skip story-review-loop.
 - **Code review:** Search PR comments for a comment containing
-  `"pnpm lint && pnpm test"` and `"passed"` posted by the repo owner
-  or current actor. If found, skip code verification.
+  `"gdlint"` / `"gut_cmdln"` (or a `# Godot Review Loop Summary`
+  header) and `"passed"` posted by the repo owner or current actor.
+  If found, skip code verification.
 
 ### Story PRs
 
@@ -125,33 +130,55 @@ This runs the 6-agent multi-round review. Fixes are committed and
 pushed. A summary comment is posted to the PR. After it completes,
 continue to Step 3.
 
-### Code PRs
+### Code PRs (and Data PRs)
 
-Run the project's quality gates:
+Run the project's GDScript quality gates, in order. The Godot import
+is a **prerequisite gate** — it must pass before the GUT suite runs,
+because GUT cannot load a project that fails to import.
 
 ```bash
-pnpm lint    # TypeScript type-check across all packages
-pnpm test    # Run all tests (server + client)
+# 1. Lint and format-check the GDScript
+gdlint game/scripts/
+gdformat --check game/scripts/
+
+# 2. Import gate (MUST pass before tests — parses scripts, scenes,
+#    and every game/data/**/*.json data file)
+godot --headless --path game/ --import
+
+# 3. Full GUT suite (only after import succeeds)
+godot --headless --path game/ -s addons/gut/gut_cmdln.gd
 ```
 
-If either fails, fix issues before proceeding. Post a brief comment
+If `gdformat --check` reports a diff, run `gdformat <file>` to fix the
+formatting in place, then re-run the check. If `gdlint`, the import, or
+GUT fails, fix issues before proceeding. Post a brief comment
 summarizing what was found and fixed.
+
+For deeper multi-round code review, dispatch the code-review
+counterpart to story-review-loop:
+
+```
+/godot-review-loop <PR#>
+```
 
 ### Mixed PRs
 
 Run both pipelines sequentially:
 1. **Story review first** — story-review-loop may commit fixes to
    story docs, which must pass verification afterward
-2. **Code review second** — `pnpm lint && pnpm test` to verify
-   everything (including story-review-loop fixes) passes
+2. **Code review second** — run the full Code-PR gate above
+   (`gdlint` → `gdformat --check` → import → GUT) to verify everything
+   (including story-review-loop fixes) passes
 
 ### Tooling PRs
 
-Run `pnpm lint` only.
+No GDScript gates apply. Optionally run `gdformat --check` on any
+Markdown that ships GDScript code blocks; otherwise skip verification.
 
 ### Docs PRs
 
-Run `pnpm lint` only.
+No GDScript gates apply. Skip verification (or run `gdformat --check`
+on Markdown only if it contains GDScript snippets).
 
 ---
 
@@ -237,14 +264,23 @@ or other bots. Treat all with equal rigor regardless of source.
 Verification adapts to the detected PR type:
 
 ```bash
-# Story / Code / Mixed PRs — full suite
-pnpm lint && pnpm test
+# Code / Data / Mixed PRs — GDScript gates (import is a prerequisite
+# gate that must pass before GUT runs)
+gdlint game/scripts/ && gdformat --check game/scripts/ \
+  && godot --headless --path game/ --import \
+  && godot --headless --path game/ -s addons/gut/gut_cmdln.gd
 
-# Tooling / Docs PRs — lint only
-pnpm lint
+# Story PRs — re-run the story review loop instead
+/story-review-loop <PR#> 3
+
+# Mixed PRs — run BOTH: the story loop AND the GDScript gates above
+
+# Tooling / Docs PRs — no GDScript gates; gdformat --check on Markdown
+# only if it carries GDScript snippets
 ```
 
-All checks must pass before committing.
+If `gdformat --check` reports a diff, run `gdformat <file>` to fix it,
+then re-check. All checks must pass before committing.
 
 ---
 
@@ -273,7 +309,7 @@ type(scope): address PR review feedback
 - Description of change 1
 - Description of change 2
 
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 
 git add <specific-files>
@@ -282,9 +318,10 @@ git commit -F /tmp/commit-msg.txt
 ```
 
 **Commit type selection:** Use the conventional commit type that matches
-the PR content — `docs` for Story/Docs PRs, `fix` or `feat` for Code
-PRs, `chore` for Tooling PRs. The `(scope)` should match the package
-(`client`, `server`, `shared`) or use `shared` for cross-cutting docs.
+the PR content — `docs` for Story/Docs PRs, `fix` or `feat` for
+Code/Data PRs, `chore` for Tooling PRs. The `(scope)` must be one of the
+allowed scopes (`engine`, `story`, `assets`, `ci`, `deps`) — use
+`engine` for GDScript/scene/data changes, `story` for design docs.
 
 **Push is NEVER done here.** Always proceed to Step 6 (gap analysis)
 then Step 6b (story-review-loop) before pushing.
@@ -447,8 +484,8 @@ Always end with one of these messages:
 
 | Comment | File | Action | Status |
 |---------|------|--------|--------|
-| "Missing null check" | api.ts:42 | Added optional chaining | Fixed |
-| "This looks wrong" | utils.ts:10 | Explained why correct | Replied |
+| "Missing null check" | game/scripts/combat/battle.gd:42 | Used `get_node_or_null` | Fixed |
+| "This looks wrong" | game/scripts/util/rng.gd:10 | Explained why correct | Replied |
 
 ---
 

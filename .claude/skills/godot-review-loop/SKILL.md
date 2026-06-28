@@ -65,7 +65,7 @@ digraph godot_review {
 ### Agent A: Code Quality + Performance
 
 ```
-You are reviewing Godot 4.6 GDScript code for a pixel art JRPG.
+You are reviewing Godot 4.7 GDScript code for a pixel art JRPG.
 Find every code quality issue.
 
 Focus on:
@@ -92,7 +92,7 @@ Work from: [PROJECT_ROOT]
 ### Agent B: Architecture + State Machine
 
 ```
-You are reviewing Godot 4.6 scene architecture for a pixel art JRPG.
+You are reviewing Godot 4.7 scene architecture for a pixel art JRPG.
 Find every architecture violation.
 
 Focus on:
@@ -121,7 +121,7 @@ Work from: [PROJECT_ROOT]
 ### Agent C: Data Integrity + Rendering + Design Docs
 
 ```
-You are reviewing Godot 4.6 game data and rendering settings for
+You are reviewing Godot 4.7 game data and rendering settings for
 a pixel art JRPG (1280x720 viewport, 4x camera zoom, effective
 320x180 game world). Find every data error and rendering misconfiguration.
 

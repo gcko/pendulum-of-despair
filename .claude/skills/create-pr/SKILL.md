@@ -9,10 +9,14 @@ description: >
 
 # Create PR
 
-Commit, push, and open a pull request. Quality gates (gdlint, gdformat,
-cross-file ID uniqueness, stale-count scan, scene reference validation)
-are enforced automatically by husky pre-commit and pre-push hooks —
-no manual test/lint step needed.
+Commit, push, and open a pull request. Quality gates are enforced
+automatically by husky hooks — no manual test/lint step needed:
+
+- **pre-commit:** branch protection (no direct commits to main) +
+  gdlint + JSON validation + `gdformat --check`.
+- **pre-push:** cross-file ID-uniqueness scan + stale-count scan +
+  scene-ref scan + Godot import (`godot --headless --path game/
+  --import`) + the full GUT test suite.
 
 ## Invocation
 
@@ -55,14 +59,14 @@ git add <specific-files>
 cat > /tmp/commit-msg.txt << 'EOF'
 type(scope): description
 
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 git commit -s -F /tmp/commit-msg.txt
 ```
 
-The pre-commit hook runs **gdlint** and **gdformat** automatically.
-If the commit fails, fix the reported issues and retry — do not
-use `--no-verify`.
+The pre-commit hook runs **branch protection**, **gdlint**, **JSON
+validation**, and **`gdformat --check`** automatically. If the commit
+fails, fix the reported issues and retry — do not use `--no-verify`.
 
 ### 2. Push
 
@@ -71,8 +75,9 @@ git push -u origin "$(git branch --show-current)"
 ```
 
 The pre-push hook runs **cross-file ID uniqueness**, **stale-count
-scan**, and **scene reference validation**. If the push fails, fix
-the reported issues and retry.
+scan**, **scene reference validation**, **Godot import**
+(`godot --headless --path game/ --import`), and the **full GUT test
+suite**. If the push fails, fix the reported issues and retry.
 
 ### 3. Write PR Body
 
@@ -86,8 +91,8 @@ PR body format:
 - Bullet points describing what changed and why
 
 ## Test plan
-- [x] Pre-commit hooks pass (gdlint, gdformat)
-- [x] Pre-push quality gates pass (ID uniqueness, stale counts, scene refs)
+- [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
+- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, Godot import, full GUT suite)
 - [ ] Manual verification steps if applicable
 
 Generated with [Claude Code](https://claude.ai/code)
@@ -119,8 +124,9 @@ After outputting the PR URL, always end with:
 ## Iron Rules
 
 - **Hooks are the quality gates.** Do not run separate test/lint
-  commands — the husky pre-commit (gdlint + gdformat) and pre-push
-  (ID uniqueness, stale counts, scene refs) hooks handle it.
+  commands — the husky pre-commit (branch protection, gdlint, JSON
+  validation, gdformat --check) and pre-push (ID uniqueness, stale
+  counts, scene refs, Godot import, full GUT suite) hooks handle it.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
 - **Temp file for body.** Always write to `/tmp/pr_body.md` and use

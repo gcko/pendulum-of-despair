@@ -12,10 +12,10 @@ description: >
 
 # Pendulum of Despair -- Project Skill
 
-A browser-based JRPG homage to the golden age of 16-bit console RPGs (1990-1995),
-drawing from **Final Fantasy IV**, **Final Fantasy VI**, **Secret of Mana**, and
-**Chrono Trigger**. The goal: honor that era while using modern web tech to make
-the game accessible to anyone with a browser -- no install required.
+A Godot 4.7 desktop JRPG written in GDScript -- an homage to the golden age of
+16-bit console RPGs (1990-1995), drawing from **Final Fantasy IV**, **Final
+Fantasy VI**, **Secret of Mana**, and **Chrono Trigger**. The goal: honor that
+era with a locally-run desktop application built on the Godot Engine.
 
 Repository: https://github.com/gcko/pendulum-of-despair
 
@@ -61,21 +61,26 @@ knows and loves this genre deeply.
 Use `gh issue list` to check project status. Issues are tracked with
 GitHub Issues, not beads/bd, markdown files, or PROGRESS.md.
 
-Suggested build order (confirm with user before starting each phase):
+Current build status (Godot project under `game/`, confirm scope with the user
+before starting each area):
 
 | Phase | Module | Status |
 |-------|--------|--------|
-| 1 | Project scaffold + renderer setup | Done |
-| 2 | Tilemap rendering + player movement | -- |
-| 3 | Overworld map with transitions | -- |
-| 4 | Dialogue / story system | -- |
-| 5 | Combat system (turn-based, ATB-style) | -- |
-| 6 | Character stats, leveling, abilities | -- |
-| 7 | Inventory & equipment | -- |
-| 8 | Enemy AI & encounter system | -- |
-| 9 | User auth & save/load (backend) | Done |
-| 10 | Music & SFX integration | -- |
-| 11 | Polish: menus, title screen, transitions | -- |
+| 1 | Project scaffold (`game/`) + 6 autoloads + viewport | Done |
+| 2 | Core scenes (title, exploration, battle) | In progress |
+| 3 | Tilemap maps (overworld, towns, dungeons) | In progress |
+| 4 | Player movement + entities (NPC, triggers, save points) | In progress |
+| 5 | Dialogue / cutscene overlays | In progress |
+| 6 | Combat system (ATB-style turn-based) | In progress |
+| 7 | Character stats, leveling, abilities, magic | In progress |
+| 8 | Inventory & equipment + shop overlays | In progress |
+| 9 | Save/load (SaveManager autoload, local JSON) | In progress |
+| 10 | Music & SFX integration (AudioManager) | In progress |
+| 11 | Polish: menus, transitions, encounter system | -- |
+
+Scenes already live under `game/scenes/{core,overlay,entities,maps,ui}`; the
+current focus is the combat command core (see open `gap-analysis` issues). Use
+`gh issue list` for the authoritative, up-to-date picture rather than this table.
 
 ---
 
@@ -84,17 +89,33 @@ Suggested build order (confirm with user before starting each phase):
 Read [`references/tech-stack.md`](references/tech-stack.md) for full detail.
 
 **Quick summary:**
-- **Monorepo:** pnpm workspace with 3 packages (`shared`, `server`, `client`)
-- **Language:** TypeScript (strict) throughout -- no `any` types
-- **Renderer:** Phaser 3 (HTML5 Canvas) via `@pendulum/client`
-- **Bundler:** Vite 8 (Rolldown — Rust-based bundler)
-- **Backend:** Express 5 on Node.js 24+ (`@pendulum/server`)
-- **Database:** `node:sqlite` (built-in, no external dependency)
-- **Auth:** Username + passphrase (bcryptjs), JWT sessions
-- **Testing:** Vitest 4 (workspace-level + per-package)
-- **Git hooks:** Husky v9 (pre-commit runs typecheck + vitest related)
-- **Game data:** JSON files (maps, enemies, items, dialogue)
-- **Font:** Press Start 2P or custom bitmap font
+- **Engine:** Godot 4.7, **GL Compatibility** renderer, `config_version=5`
+- **Language:** **GDScript only** (no TypeScript, no `.js`/`.ts` source)
+- **Project root:** `game/` (open this directory in the Godot editor)
+- **Viewport:** 1280x720 at 4x camera zoom -> 320x180 effective game world,
+  integer-scaled
+- **Game data:** JSON files under `game/data/` (enemies, items, equipment,
+  shops, spells, dialogue, etc.), loaded by the DataManager autoload
+- **Autoloads (6):** GameManager, DataManager, AudioManager, SaveManager,
+  EventFlags, PartyState (`game/scripts/autoload/`)
+- **Testing:** GUT 9.7.0 (`game/addons/gut/`), test files in `game/tests/`
+- **Save/load:** local, via the SaveManager autoload -- no backend, no database
+- **Package tooling:** `pnpm` is used **only** for husky + commitlint. No
+  bundler, no backend, no monorepo, no `npm`/`yarn`/`npx`.
+
+**Git hooks (Husky v9, `core.hooksPath=.husky/_` -- never edit `_/`):**
+- **pre-commit:** branch protection (no direct commits to main) + gdlint +
+  JSON validation + `gdformat --check`
+- **pre-push:** data-integrity scans (ID uniqueness, stale counts, scene refs)
+  + Godot `--import` + the full GUT suite
+- **commit-msg:** commitlint (Conventional Commits 1.0.0)
+- Recovery: `pnpm install`. **Never** use `--no-verify` -- fix the root cause.
+
+**Recommended MCP:** the Godot MCP server
+([tugcantopaloglu/godot-mcp](https://github.com/tugcantopaloglu/godot-mcp))
+gives live editor and scene-tree access. It is being added to the project so
+future sessions can inspect and manipulate scenes directly now that `.tscn`
+scenes exist.
 
 ---
 
@@ -197,7 +218,8 @@ step in its exit message.
 - Detects PR type from changed files (Story / Code / Mixed / Tooling / Docs)
 - Auto-runs upstream review if not already done:
   - Story PRs → `/story-review-loop <PR#> 3`
-  - Code PRs → `pnpm lint && pnpm test`
+  - Code PRs → gdlint + `gdformat --check` + Godot `--import` + the GUT suite
+    (via `/godot-review-loop`), not `pnpm lint`/`pnpm test`
   - Mixed → both pipelines
 - Fetches and addresses all human and bot review comments
 - Proposes review skill improvements when Copilot finds gaps

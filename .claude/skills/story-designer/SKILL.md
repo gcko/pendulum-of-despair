@@ -213,7 +213,7 @@ Claude: "For the stat system, FF6 used 10 stats with growth curves
 User: [Discusses, approves design]
 Claude: [Writes spec, creates plan, implements in docs/story/]
 Claude: [Runs adversarial verification]
-Claude: [Updates gap-analysis-gaps.md: 1.2 -> COMPLETE]
+Claude: [Updates game-design-gaps.md: 1.2 -> COMPLETE]
 Claude: "Stat system complete. This unblocks: 1.1 (Damage Formulas),
          2.2 (ATB Mechanics). (2.1 XP Curve still blocked by 1.3.)
          Recommend 1.1 next.

@@ -2,219 +2,198 @@
 
 ## Architecture
 
-**pnpm workspace monorepo** with three packages:
+A **single Godot 4.7 project** rooted at `game/`. There is no monorepo, no
+bundler, no backend server, and no database. The game is a locally-run desktop
+application written entirely in **GDScript**.
 
-| Package | Name | Purpose |
-|---------|------|---------|
-| `packages/shared` | `@pendulum/shared` | Shared types and constants |
-| `packages/server` | `@pendulum/server` | Express REST API with auth + save system |
-| `packages/client` | `@pendulum/client` | Phaser 3 game client with Vite |
+| Item | Value |
+|------|-------|
+| Engine | Godot 4.7 |
+| Renderer | GL Compatibility |
+| `config_version` | 5 |
+| Language | GDScript only |
+| Main scene | `res://scenes/core/title.tscn` |
+| Viewport | 1280x720 at 4x camera zoom -> 320x180 effective, integer-scaled |
+| Game name | "Pendulum of Despair" |
 
-Build order: `shared` must be built before `server` or `client` (handled by
-`predev:*` and `pretest` scripts via `pnpm run build:shared`).
-
-**Node.js requirement:** >= 24.0.0 (uses built-in `node:sqlite`).
-
----
-
-## Frontend (`@pendulum/client`)
-
-### Renderer: Phaser 3
-
-Phaser 3 (`phaser@^3.90`) provides:
-- Scene management (title screen, overworld, battle, menus as separate scenes)
-- Tilemap support via Tiled JSON format (`.tmj`)
-- Sprite/animation management
-- Input handling (keyboard, gamepad)
-- Camera system (scrolling viewport for overworld/dungeons)
-- Built-in asset loader (images, audio, tilemaps)
-
-### Bundler: Vite 8 (Rolldown)
-
-Development server and production builds via `vite@^8.0`. Port 8080 for dev.
-Vite 8 uses Rolldown (Rust-based bundler) for 10-30x faster builds. If CJS
-interop issues arise, add `legacy.inconsistentCjsInterop: true` to vite config.
-
-### UI Overlays: HTML + CSS
-
-Battle menus, dialogue boxes, inventory screens, and the HUD are HTML/CSS
-layered *over* the canvas -- not drawn in Phaser. This keeps UI logic clean and
-makes it easy to style with CSS variables.
-
-**Dialogue box styling target:**
-```css
-/* Inspired by FF6's iconic blue gradient boxes */
-background: linear-gradient(180deg, #1a2a6c, #0d1440);
-border: 2px solid #aaaacc;
-color: #ffffff;
-font-family: 'Press Start 2P', monospace;
-font-size: 8px;
-line-height: 1.8;
-padding: 12px 16px;
-```
-
-### Fonts
-
-- **Primary:** [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P)
-  (Google Fonts, free) -- for UI, dialogue, menus
-- **Fallback:** Any monospace bitmap font
+Open the `game/` directory in the Godot 4.7+ editor.
 
 ---
 
-## Backend (`@pendulum/server`)
+## Autoload Singletons
 
-### Purpose
+Six autoloads are registered in `project.godot` and live in
+`game/scripts/autoload/`:
 
-The backend is **intentionally thin** -- it exists only for:
-1. User authentication (create account, login, issue session token)
-2. Save data persistence (read/write JSON blob per user)
+| Autoload | Script | Responsibility |
+|----------|--------|----------------|
+| `GameManager` | `game_manager.gd` | Top-level game state, scene flow, run lifecycle |
+| `DataManager` | `data_manager.gd` | Loads and serves JSON game data from `game/data/` |
+| `AudioManager` | `audio_manager.gd` | Music + SFX playback via Godot audio buses |
+| `SaveManager` | `save_manager.gd` | Local save/load of game state (no backend) |
+| `EventFlags` | `event_flags.gd` | Story flags and world-state booleans |
+| `PartyState` | `party_state.gd` | Active party, characters, inventory state |
 
-All game logic runs client-side. The backend is stateless between requests.
-
-### Stack
-
-- **Framework:** Express 5 (`express@^5.0`)
-- **Database:** `node:sqlite` (built-in Node.js 24+ module, no npm dependency)
-- **Auth:** bcryptjs (`bcryptjs@^3.0`) + JWT (`jsonwebtoken@^9.0`)
-- **Dev runner:** tsx (`tsx@^4.21`) with `--watch` for hot reload
-- **Rate limiting:** `express-rate-limit@^8.0`
-- **CORS:** `cors@^2.8`
-- **Config:** `dotenv@^17.0`
-
-```
-packages/server/src/
-  index.ts          # Express app entry
-  routes/
-    auth.ts         # POST /register, POST /login
-    save.ts         # GET /save, PUT /save
-  middleware/
-    auth.ts         # JWT verification middleware
-  db/
-    init.ts         # SQLite schema (users + saves tables)
-```
-
-### Authentication Design
-
-- **No email required.** Username + passphrase only.
-- Passphrase hashed with bcryptjs (cost factor 12)
-- Session token: signed JWT, 7-day expiry, stored in `httpOnly` cookie
-- No OAuth, no magic links, no complexity
-
-### Database Schema
-
-Using `node:sqlite` with `:memory:` for tests, file-based for production:
-
-```sql
-CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  passphrase_hash TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE saves (
-  user_id INTEGER REFERENCES users(id),
-  slot INTEGER DEFAULT 1,
-  data TEXT NOT NULL,               -- JSON blob
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (user_id, slot)
-);
-```
-
-### API Surface
-
-```
-POST   /api/auth/register     { username, passphrase } -> { token }
-POST   /api/auth/login        { username, passphrase } -> { token }
-GET    /api/save              (auth) -> { data: SaveState }
-PUT    /api/save              (auth) { data: SaveState } -> { ok }
-```
+(`inventory_helpers.gd` is a helper script alongside the autoloads, not itself
+an autoload.)
 
 ---
 
-## Shared Package (`@pendulum/shared`)
+## GDScript Directory Layout
 
-Pure TypeScript types and constants. Built with `tsc` to `dist/`. Exported via
-package.json `exports` field. No runtime dependencies.
+All gameplay code lives under `game/scripts/`:
 
----
+```
+game/scripts/
+  autoload/    # The 6 autoload singletons + helpers
+  combat/      # ATB battle logic, command handling, damage resolution
+  core/        # Core game-flow controllers (scene management, run state)
+  entities/    # Player, NPCs, enemies, interactables, trigger zones
+  ui/          # Control/CanvasLayer UI controllers (menus, HUD, dialogue)
+  util/        # Shared helpers and small utilities
+```
 
-## Testing: Vitest 4
+Scenes live under `game/scenes/`:
 
-- Workspace-level config runs all tests via `pnpm test`
-- Per-package test commands: `pnpm --filter @pendulum/server test`
-- Server tests use `node:sqlite` with `:memory:` for isolation
-- Integration tests use `supertest@^7.2` for HTTP assertions
-- Pre-commit hook runs `vitest related` on affected files only
+```
+game/scenes/
+  core/        # title.tscn, exploration.tscn, battle.tscn
+  overlay/     # dialogue.tscn, cutscene.tscn, menu.tscn, shop_overlay.tscn, save_load.tscn
+  entities/    # player_character.tscn, npc.tscn, enemy.tscn, save_point.tscn, trigger/zones, etc.
+  maps/        # overworld + towns/ + dungeons/ + cutscenes/ (.tscn maps)
+  ui/          # ritual_meter.tscn and other reusable UI scenes
+```
 
----
-
-## Dev Tooling
-
-| Tool | Version | Purpose |
-|------|---------|---------|
-| pnpm | 10.32+ | Package manager (corepack-managed) |
-| TypeScript | ^5.9 | Type checking (strict, no `any`) |
-| Vitest | ^4.1 | Test runner |
-| Vite | ^8.0 | Client bundler + dev server (Rolldown) |
-| tsx | ^4.21 | Server dev runner with watch |
-| Husky | ^9.1 | Git hooks (pre-commit: typecheck + vitest related) |
-| supertest | ^7.2 | HTTP integration testing |
+Art and audio assets live under `game/assets/` (`sprites/`, `tilesets/`,
+`music/`, `sfx/`, `ambient/`).
 
 ---
 
 ## Game Data Format
 
-All game content is stored as **JSON files** under `packages/client/src/data/`.
-These are loaded by Phaser's asset loader at scene start.
+All game content is stored as **JSON files** under `game/data/`, loaded at
+runtime by the `DataManager` autoload. Current layout (directories of JSON,
+not flat files):
 
-### Current layout
 ```
-packages/client/src/data/
-  abilities.json
-  characters.json
-  dialogue.json
-  enemies.json
-  items.json
-  maps/
-    overworld.json
+game/data/
+  abilities/
+  characters/      # cael.json, edren.json, lira.json, maren.json, sable.json, torren.json
+  config/
+  crafting/
+  dialogue/        # act_i.json, act_ii.json, act_iii.json, ...
+  encounters/
+  enemies/
+  equipment/
+  items/
+  shops/
+  spells/
+  ley_crystals.json
 ```
-
-As the project grows, data files may be organized into subdirectories and maps
-may migrate to Tiled JSON format (`.tmj`). For now, most data files are flat
-in the `data/` directory with maps in a `maps/` subdirectory.
 
 ### JSON conventions
 
-- Every data file includes a `"_comment"` top-level key describing its structure
-- IDs are always strings (e.g., `"enemy_001"`) -- not integers -- for readability
-- Damage formulas use string expressions evaluated at runtime, not hardcoded numbers
-
-Example enemy entry:
-```json
-{
-  "_comment": "Enemy definitions. damage_formula uses vars: atk, def, level",
-  "enemy_001": {
-    "name": "Magitek Armor",
-    "hp": 530,
-    "mp": 50,
-    "stats": { "atk": 14, "def": 10, "mag": 8 },
-    "abilities": ["fire_beam", "ice_beam"],
-    "steal": "tonic",
-    "exp": 60,
-    "gil": 25,
-    "sprite": "magitek_armor"
-  }
-}
-```
+- Data files include a `"_comment"` key describing structure where helpful.
+- IDs are strings (e.g. `"enemy_001"`) for readability.
+- JSON is validated by the pre-commit hook (`python3 -c "import json..."`).
+- Data integrity (ID uniqueness, stale counts, scene refs) is scanned by the
+  pre-push hook.
 
 ---
 
-## Out of Scope (current phase)
+## Testing: GUT 9.7.0
+
+GUT (Godot Unit Test) 9.7.0 lives in `game/addons/gut/`. Test files
+(`test_*.gd`) live in `game/tests/`.
+
+Resolve the Godot binary as `godot` on PATH, else
+`/Applications/Godot.app/Contents/MacOS/Godot`.
+
+```bash
+# Import assets first (must pass before tests run)
+<godot> --headless --path game/ --import
+
+# Full suite
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd
+
+# Single file
+<godot> --headless --path game/ -s addons/gut/gut_cmdln.gd \
+  -gtest=res://tests/<file>.gd -gexit
+```
+
+### GUT gotchas (do not get burned)
+
+- Godot 4.7 / GUT 9.7.0 **silently skip** test files that have parse errors --
+  a green run can hide them. Always check the **Scripts / Tests** counts in the
+  summary, not just the pass/fail line.
+- The assertion helpers are `assert_lte` / `assert_gte` (NOT `assert_le` /
+  `assert_ge`).
+- Nodes that must be unit-testable via `.new()` should use
+  `get_node_or_null("Child")`, not `$Child` (`$` emits a "node not found ->
+  nullptr" engine error that GUT counts as a failure).
+- On macOS, Godot `--import` can wedge in an uninterruptible U-state (0% CPU);
+  a reboot clears it. A wedged pre-push hook means the GUT suite did NOT run --
+  never equate "other gates pass" with "tests green."
+
+---
+
+## Lint & Format
+
+- **Lint:** `gdlint <files>` (gdtoolkit)
+- **Format check:** `gdformat --check <files>`; auto-fix with `gdformat <file>`
+
+These are the verification gates for code -- there is no eslint/prettier/tsc.
+
+---
+
+## Package Tooling (pnpm -- husky + commitlint ONLY)
+
+`pnpm` exists in this repo solely to install and run **husky** (git hooks) and
+**commitlint**. It does not build, bundle, or test the game.
+
+- `pnpm install` -- installs git hooks; recovery for broken `core.hooksPath`.
+- Do **not** use `npm`, `yarn`, or standalone `npx`.
+
+### Git hooks (Husky v9)
+
+Dispatch chain: `core.hooksPath=.husky/_` -> thin shim -> dispatcher ->
+`.husky/<hook>` (user hook). **Never edit `.husky/_/`** -- it is regenerated by
+`pnpm install`.
+
+| Hook | What it runs |
+|------|--------------|
+| `commit-msg` | commitlint (Conventional Commits 1.0.0) |
+| `pre-commit` | branch protection + gdlint + JSON validation + `gdformat --check` |
+| `pre-push` | data-integrity scans + Godot `--import` + full GUT suite |
+
+**Never use `--no-verify`.** Fix the root cause (or remove the offending test)
+instead.
+
+#### Conventional Commits
+
+- **Types:** feat, fix, docs, style, refactor, test, chore, build, perf,
+  revert, ci
+- **Scopes:** engine, story, assets, ci, deps
+- Example: `git commit -m "feat(engine): add ATB gauge to battle manager"`
+
+---
+
+## Recommended MCP
+
+The Godot MCP server
+([tugcantopaloglu/godot-mcp](https://github.com/tugcantopaloglu/godot-mcp))
+provides live editor and scene-tree access -- inspecting nodes, reading scene
+structure, and driving the editor. It is being added to the project so future
+sessions can work against real `.tscn` scenes directly instead of editing them
+blind.
+
+---
+
+## Out of Scope
 
 - Multiplayer or co-op
-- Mobile-native (responsive web is fine; no React Native / Capacitor)
+- Web/browser builds (this is a desktop Godot app)
+- Any backend, REST API, auth server, or database
 - Procedurally generated content -- hand-crafted maps and story only
 - 3D rendering of any kind
 - Microtransactions or monetization
-- Serverless deployment (Cloudflare Workers, Vercel Edge) -- Express-first for now
