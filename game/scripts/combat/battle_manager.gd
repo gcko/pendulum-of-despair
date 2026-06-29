@@ -129,7 +129,7 @@ func _process(delta: float) -> void:
 			var slot: int = id.replace("party_", "").to_int()
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
-			var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
+			var lc: int = _targetable_enemy_count()
 			turn_ready.emit(id, true, slot, lc, _is_boss, char_data)
 			break
 		# Fix: skip enemy processing while a party member is awaiting input
@@ -170,7 +170,7 @@ func _on_ui_command(command: Dictionary) -> void:
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var s: int = actor_id.replace("party_", "").to_int()
-		var lc: int = _enemies.filter(func(e: Node) -> bool: return e.is_alive).size()
+		var lc: int = _targetable_enemy_count()
 		turn_ready.emit(
 			actor_id, true, s, lc, _is_boss, _state.get_member(s).get("character_data", {})
 		)
@@ -200,6 +200,17 @@ func _on_ui_command(command: Dictionary) -> void:
 func _on_ui_cancel() -> void:
 	_atb.set_command_menu_open(false)
 	_awaiting_input_for = ""
+
+
+## Count enemies the player can actually target — alive AND not untargetable —
+## matching BattleActions.resolve_enemy_target, so the target cursor range never
+## addresses a diving/untargetable boss (GAP-009).
+func _targetable_enemy_count() -> int:
+	return (
+		_enemies
+		. filter(func(e: Node) -> bool: return e.is_alive and not e.get_meta("untargetable", false))
+		. size()
+	)
 
 
 func _on_party_member_died(slot: int) -> void:

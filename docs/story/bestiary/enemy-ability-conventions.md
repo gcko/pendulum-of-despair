@@ -152,6 +152,10 @@ floor of 14 used for regular enemies):
   Reconstruct **+300 HP** (`bosses.md:190`), Drowned Sentinel Barnacle Shield
   **DEF +100% for 2 turns** (`bosses.md:220`; `buff {stat:def, mult:2.0,
   duration:2}`), Corrupted Fenmother add cap **2**.
+- **Element remap:** Corrupted Fenmother's Water Jet is "water magic"
+  (`bosses.md:257`), but the canonical element wheel has no Water (—, Flame,
+  Frost, Storm, Earth, Ley, Spirit, Void). It maps to **Frost** — the closest
+  fit for her ice/water theme and her own Frost resistance (`bosses.md:239`).
 
 ### 3.2 Threat (highest-threat targeting)
 
