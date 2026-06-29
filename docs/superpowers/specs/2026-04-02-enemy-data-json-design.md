@@ -156,6 +156,14 @@ Bosses in `bosses.json` get additional fields:
 - `boss_group`: links multi-entry bosses (e.g., Cael Phase 1 and Phase 2 share `"boss_group": "cael_knight_of_despair"`)
 - `is_mini_boss`: true for mini-bosses (Ember Drake, Drowned Sentinel, etc.)
 
+> **Update (GAP-009, 2026-06):** Act I bosses have migrated from the flat
+> `phases` (int) / `phase_hp_thresholds` form to a structured `boss_ai` object
+> (an ordered `phases` array of `{hp_above, rules|modes}` + a per-boss `moves`
+> table) consumed by the data-driven `boss_ai.gd` interpreter. The current schema
+> + conventions live in
+> [`docs/story/bestiary/enemy-ability-conventions.md` §3](../../story/bestiary/enemy-ability-conventions.md).
+> Acts II–III boss entries still use the legacy int form until migrated.
+
 ### Special Cases
 
 | Enemy | Encoding |

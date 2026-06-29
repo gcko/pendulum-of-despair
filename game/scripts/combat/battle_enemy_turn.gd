@@ -1,23 +1,14 @@
 class_name BattleEnemyTurn
 extends RefCounted
-## Handles enemy turn execution and boss-specific AI state.
-##
-## Extracted from BattleManager to reduce file size and isolate
-## boss AI tracking variables from the core battle loop.
+## Handles enemy turn execution. Bosses with a data-driven `boss_ai` script
+## (GAP-009) route through BossAI, which keeps its own per-Enemy ai_state;
+## everything else uses the weighted BattleAI. Action resolution is shared.
 
 const BattleAI = preload("res://scripts/combat/battle_ai.gd")
+const BossAI = preload("res://scripts/combat/boss_ai.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
-
-## Boss AI state — Vein Guardian
-var vg_last_action: String = ""
-var vg_reconstructed: bool = false
-
-## Boss AI state — Corrupted Fenmother
-var fm_phase_turns: int = 0
-var fm_diving: bool = false
-var fm_spawned_adds: bool = false
 
 ## References injected by BattleManager
 var _manager: Node2D
@@ -33,15 +24,15 @@ func _init(manager: Node2D, state: Node, atb: Node, enemy_area: Node2D) -> void:
 	_enemy_area = enemy_area
 
 
+## Per-Enemy boss state lives on the Enemy node (ai_state), cleared by
+## Enemy.initialize(), so the turn driver holds no boss state to reset.
 func reset() -> void:
-	vg_last_action = ""
-	vg_reconstructed = false
-	fm_phase_turns = 0
-	fm_diving = false
-	fm_spawned_adds = false
+	pass
 
 
 ## Run one enemy turn.  Returns the new turn_counter value.
+## `is_boss` (the battle-level flag) is retained for call-site interface symmetry
+## only — action routing is now decided by BossAI.has_script(enemy_data), not this.
 func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter: int) -> int:
 	var idx: int = enemy_id.replace("enemy_", "").to_int()
 	if idx < 0 or idx >= enemies.size():
@@ -57,83 +48,33 @@ func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter
 			return "front"
 	)
 	var action: Dictionary = _select_action(enemy, enemies, is_boss, turn_counter, pm, pr)
-	_track_boss_state(enemy, action)
 	turn_counter += 1
 	_apply_action(action, enemy, enemies, idx)
 	return turn_counter
 
 
+## Bosses with a data-driven script (GAP-009) route through BossAI (which manages
+## their own enemy.ai_state); every other enemy uses the weighted BattleAI.
 func _select_action(
-	enemy: Node, enemies: Array[Node], is_boss: bool, turn_counter: int, pm: Array, pr: Array
+	enemy: Node, enemies: Array[Node], _is_boss: bool, turn_counter: int, pm: Array, pr: Array
 ) -> Dictionary:
-	var eid: String = enemy.enemy_data.get("id", "")
-	if is_boss and eid == "vein_guardian":
-		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		return (
-			BattleAI
-			. get_vein_guardian_action(
-				_state,
-				turn_counter,
-				hp_ratio,
-				vg_last_action,
-				vg_reconstructed,
-			)
-		)
-	if is_boss and eid == "drowned_sentinel":
-		return BattleAI.get_drowned_sentinel_action(_state, turn_counter)
-	if is_boss and eid == "corrupted_fenmother":
-		var hp_ratio: float = float(enemy.current_hp) / float(enemy.enemy_data.get("hp", 1))
-		var alive_spawns: Array = enemies.filter(
-			func(e: Node) -> bool:
-				return e.is_alive and e.enemy_data.get("id", "") == "corrupted_spawn"
-		)
-		return (
-			BattleAI
-			. get_corrupted_fenmother_action(
-				_state,
-				turn_counter,
-				hp_ratio,
-				fm_phase_turns,
-				fm_diving,
-				fm_spawned_adds,
-				alive_spawns.size(),
-			)
-		)
-	if enemy.enemy_data.get("is_mini_boss", false) or not is_boss:
-		return BattleAI.select_action(enemy.enemy_data, pm, pr)
-	return BattleAI.select_boss_action(enemy.enemy_data, enemy.current_hp, pm, pr)
-
-
-func _track_boss_state(enemy: Node, action: Dictionary) -> void:
-	var eid: String = enemy.enemy_data.get("id", "")
-	if eid == "vein_guardian":
-		vg_last_action = action.get("id", "")
-		if action.get("id", "") == "reconstruct":
-			vg_reconstructed = true
-	if eid == "corrupted_fenmother":
-		var aid: String = action.get("id", "")
-		if aid == "spawn_adds":
-			fm_spawned_adds = true
-			fm_phase_turns += 1
-		elif aid == "start_dive":
-			fm_diving = true
-			fm_phase_turns = 0
-		elif aid == "dive":
-			fm_phase_turns += 1
-		elif aid == "resurface":
-			fm_diving = false
-			fm_phase_turns = 0
-		else:
-			fm_phase_turns += 1
+	if BossAI.has_script(enemy.enemy_data):
+		return BossAI.select_action(enemy, turn_counter, _state, enemies)
+	return BattleAI.select_action(enemy.enemy_data, pm, pr)
 
 
 func _apply_action(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
+	# One-time transition tells (phase change, dive/resurface) ride on the action.
+	var pre_message: String = str(action.get("message", ""))
+	if not pre_message.is_empty():
+		_manager.message.emit(pre_message)
 	var atype: String = action.get("type", "")
+	if atype == "skip":
+		# Untargetability is already synced by BossAI; the skip just passes a turn.
+		_tick_enemy_statuses(enemy, idx)
+		return
 	if atype == "spawn":
 		_do_spawn(action, enemy, enemies, idx)
-		return
-	if atype == "skip":
-		_do_skip(action, enemy, idx)
 		return
 	if atype == "ability" and action.get("target", "") == "self":
 		_do_self_ability(action, enemy, enemies)
@@ -198,8 +139,19 @@ func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> 
 
 func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
 	var spawn_ids: Array = action.get("enemies", [])
+	# Enforce the move's add cap (bosses.md "max N active"): spawn at most
+	# cap - current living adds, so a "< cap" trigger can never overshoot.
+	var cap: int = int(action.get("cap", 99))
+	var living_adds: int = 0
+	for e: Node in enemies:
+		if e != enemy and e.is_alive:
+			living_adds += 1
+	var slots: int = maxi(0, cap - living_adds)
 	var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
+	var spawned: int = 0
 	for sid: String in spawn_ids:
+		if spawned >= slots:
+			break
 		var new_enemy: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(new_enemy)
 		new_enemy.initialize(sid, act)
@@ -208,18 +160,9 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
-	_manager.message.emit("Corrupted Spawns emerge from the depths!")
-	_tick_enemy_statuses(enemy, idx)
-
-
-func _do_skip(action: Dictionary, enemy: Node, idx: int) -> void:
-	var skip_id: String = action.get("id", "")
-	if skip_id == "start_dive":
-		_manager.message.emit("The Fenmother dives beneath the surface!")
-		enemy.set_meta("untargetable", true)
-	elif skip_id == "resurface":
-		_manager.message.emit("The Fenmother resurfaces!")
-		enemy.set_meta("untargetable", false)
+		spawned += 1
+	if spawned > 0:
+		_manager.message.emit("Corrupted Spawns emerge from the depths!")
 	_tick_enemy_statuses(enemy, idx)
 
 

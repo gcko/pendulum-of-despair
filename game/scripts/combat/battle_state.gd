@@ -47,6 +47,9 @@ func add_member(slot: int, char_data: Dictionary) -> void:
 		"active_statuses": [] as Array[Dictionary],
 		"is_alive": current_hp > 0,
 		"is_defending": false,
+		# Cumulative damage this member has dealt to enemies — drives boss
+		# highest-threat targeting (GAP-009).
+		"threat_dealt": 0,
 		# Buffs
 		"atk_mult": 1.0,
 		"def_mult": 1.0,
@@ -259,6 +262,30 @@ func swap_row(slot: int) -> void:
 	if m.is_empty():
 		return
 	m["row"] = "back" if m["row"] == "front" else "front"
+
+
+## Accumulate threat (damage dealt to enemies) for a member (GAP-009).
+func add_threat(slot: int, amount: int) -> void:
+	var m: Dictionary = get_member(slot)
+	if m.is_empty():
+		return
+	m["threat_dealt"] = int(m.get("threat_dealt", 0)) + maxi(0, amount)
+
+
+## The living member with the most cumulative damage dealt = highest threat.
+## Ties (including the all-zero start) break to the lowest slot. -1 if none alive.
+func get_highest_threat_slot() -> int:
+	var best_slot: int = -1
+	var best_threat: int = -1
+	for i: int in range(4):
+		var m: Dictionary = get_member(i)
+		if m.is_empty() or not m.get("is_alive", false):
+			continue
+		var t: int = int(m.get("threat_dealt", 0))
+		if t > best_threat:
+			best_threat = t
+			best_slot = i
+	return best_slot
 
 
 ## Set defending flag.

@@ -404,3 +404,37 @@ func test_heal_on_kod_member_with_revive_heals() -> void:
 	assert_gt(actual, 0, "revive heal restores HP")
 	assert_true(_state.get_member(0)["is_alive"], "member revived")
 	assert_signal_emitted(_state, "member_revived", "revive signal emitted")
+
+
+# --- Highest-threat targeting (GAP-009) ---
+
+
+func test_threat_tracks_cumulative_damage() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.add_member(1, _make_char_data())
+	_state.add_threat(0, 50)
+	_state.add_threat(1, 30)
+	_state.add_threat(1, 40)  # slot 1 total 70 > slot 0 total 50
+	assert_eq(_state.get_highest_threat_slot(), 1, "most cumulative damage = highest threat")
+
+
+func test_highest_threat_tiebreak_lowest_slot() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.add_member(1, _make_char_data())
+	_state.add_threat(0, 50)
+	_state.add_threat(1, 50)
+	assert_eq(_state.get_highest_threat_slot(), 0, "ties break to the lowest slot")
+
+
+func test_highest_threat_zero_damage_returns_lowest_living() -> void:
+	_state.add_member(1, _make_char_data())
+	_state.add_member(2, _make_char_data())
+	assert_eq(_state.get_highest_threat_slot(), 1, "all-zero threat -> lowest living slot")
+
+
+func test_highest_threat_skips_dead_and_empty() -> void:
+	_state.add_member(0, _make_char_data())
+	_state.add_threat(0, 10)
+	assert_eq(_state.get_highest_threat_slot(), 0, "the only living member is highest threat")
+	_state.take_damage(0, 99999)  # KO slot 0
+	assert_eq(_state.get_highest_threat_slot(), -1, "no living members -> -1")
