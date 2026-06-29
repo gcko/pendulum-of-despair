@@ -31,6 +31,8 @@ func reset() -> void:
 
 
 ## Run one enemy turn.  Returns the new turn_counter value.
+## `is_boss` (the battle-level flag) is retained for call-site interface symmetry
+## only — action routing is now decided by BossAI.has_script(enemy_data), not this.
 func execute(enemy_id: String, enemies: Array[Node], is_boss: bool, turn_counter: int) -> int:
 	var idx: int = enemy_id.replace("enemy_", "").to_int()
 	if idx < 0 or idx >= enemies.size():
@@ -137,8 +139,19 @@ func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> 
 
 func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) -> void:
 	var spawn_ids: Array = action.get("enemies", [])
+	# Enforce the move's add cap (bosses.md "max N active"): spawn at most
+	# cap - current living adds, so a "< cap" trigger can never overshoot.
+	var cap: int = int(action.get("cap", 99))
+	var living_adds: int = 0
+	for e: Node in enemies:
+		if e != enemy and e.is_alive:
+			living_adds += 1
+	var slots: int = maxi(0, cap - living_adds)
 	var act: String = enemy.enemy_act if not enemy.enemy_act.is_empty() else "act_i"
+	var spawned: int = 0
 	for sid: String in spawn_ids:
+		if spawned >= slots:
+			break
 		var new_enemy: Node = ENEMY_SCENE.instantiate()
 		_enemy_area.add_child(new_enemy)
 		new_enemy.initialize(sid, act)
@@ -147,7 +160,9 @@ func _do_spawn(action: Dictionary, enemy: Node, enemies: Array[Node], idx: int) 
 		var eid: String = "enemy_%d" % (enemies.size() - 1)
 		_atb.add_combatant(eid, new_enemy.get_stats().get("spd", 10), true)
 		new_enemy.died.connect(_manager._on_enemy_died.bind(new_enemy))
-	_manager.message.emit("Corrupted Spawns emerge from the depths!")
+		spawned += 1
+	if spawned > 0:
+		_manager.message.emit("Corrupted Spawns emerge from the depths!")
 	_tick_enemy_statuses(enemy, idx)
 
 

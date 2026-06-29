@@ -1259,7 +1259,7 @@
             "type": "heal",
             "target": "self",
             "value": 300,
-            "_comment": "+300 HP, one-time at <=50%% (bosses.md:189)"
+            "_comment": "+300 HP, one-time at <=50%% (bosses.md:190)"
           }
         }
       }
@@ -1346,7 +1346,7 @@
               "duration": 2,
               "scope": "self"
             },
-            "_comment": "DEF +100% for 2 turns (enemy-ability-conventions.md §3.1; bosses.md:229)"
+            "_comment": "DEF +100% for 2 turns (enemy-ability-conventions.md §3.1; bosses.md:220)"
           },
           "frost_wave": {
             "type": "ability",
@@ -1354,7 +1354,7 @@
             "element": "frost",
             "spell_power": 24,
             "target": "all",
-            "_comment": "frost AoE; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:219)"
+            "_comment": "frost AoE; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:221)"
           },
           "stone_slam": {
             "type": "ability",
@@ -1520,7 +1520,7 @@
             "atk_type": "physical",
             "ability_mult": 1.0,
             "target": "all",
-            "_comment": "party-wide physical (bosses.md:247)"
+            "_comment": "party-wide physical (bosses.md:256)"
           },
           "water_jet": {
             "type": "ability",
@@ -1538,13 +1538,10 @@
               "corrupted_spawn"
             ],
             "cap": 2,
-            "_comment": "summon adds, cap 2 (bosses.md:271)"
+            "_comment": "summon adds, cap 2 (bosses.md:275)"
           },
           "dive": {
             "type": "skip",
-            "untargetable": true,
-            "message": "The Fenmother dives beneath the surface!",
-            "resurface_message": "The Fenmother resurfaces!",
             "_comment": "dive/surface untargetable cycle; Poisoned Pool hazard deferred (Phase 3 follow-up)"
           }
         },

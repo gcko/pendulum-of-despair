@@ -1,8 +1,10 @@
 extends RefCounted
 ## Enemy action selection for battle.
 ##
-## Weighted-random for regular enemies. Scripted boss AI for
-## Vein Guardian, Drowned Sentinel, and Corrupted Fenmother.
+## Weighted-random action selection for regular enemies, plus shared party-target
+## helpers (pick_alive_target / _pick_lowest_hp_target / _pick_physical_target)
+## consumed by the data-driven boss interpreter. Scripted boss AI moved to
+## boss_ai.gd (GAP-009).
 
 
 ## Select an action for a regular enemy.

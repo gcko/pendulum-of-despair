@@ -134,8 +134,11 @@ with regular enemies, is **silent on damage numbers** and never defines a
 
 ### 3.1 Boss-tier damage mapping
 
-Act I bosses are Lv 8–12, which sits in the player **Tier 2** spell band, so
-boss offensive abilities use the documented **Tier 2** player spell powers:
+Act I bosses are Lv 8–12, which the `magic.md:96` tier table places in **Tier 1**
+(Lv 1–12). A boss, however, should hit harder than a same-level regular enemy, so
+their offensive magic takes a deliberate **one-tier premium**: it uses the
+documented **Tier 2** player spell powers rather than the Tier 1 floor (the §2.2
+floor of 14 used for regular enemies):
 
 - **Single-target magic** → `spell_power 32` (Tier 2 single-target, e.g.
   Kindlepyre `magic.md:163` *Spell power 32*).
@@ -146,8 +149,8 @@ boss offensive abilities use the documented **Tier 2** player spell powers:
   a "heavy physical" reads as heavy at 1.0 — consistent with §2.1 (descriptors
   are not bumped above 1.0).
 - **Explicit non-damage values are canon and used as-stated:** Vein Guardian
-  Reconstruct **+300 HP** (`bosses.md:189`), Drowned Sentinel Barnacle Shield
-  **DEF +100% for 2 turns** (`bosses.md:229`; `buff {stat:def, mult:2.0,
+  Reconstruct **+300 HP** (`bosses.md:190`), Drowned Sentinel Barnacle Shield
+  **DEF +100% for 2 turns** (`bosses.md:220`; `buff {stat:def, mult:2.0,
   duration:2}`), Corrupted Fenmother add cap **2**.
 
 ### 3.2 Threat (highest-threat targeting)
@@ -169,6 +172,12 @@ Per `bosses.md:160-163,201-205` the telegraph is informational only — the boss
 is not untargetable or more vulnerable during the charge; the player mitigates
 via the free row-swap. Act I 1-turn telegraphs are **not interruptible**
 (interrupt windows first appear on later 2–3-turn charges).
+
+Telegraphed moves are currently supported only in **non-modal** phases (no Act I
+boss combines a `modes` phase with a telegraphed move — Vein Guardian and Ember
+Drake telegraph but have no modes; Corrupted Fenmother has modes but no
+telegraphs). A future modal boss that also telegraphs would need the resolve-turn
+short-circuit in `boss_ai.gd` to re-sync mode/untargetable state.
 
 ### 3.4 Condition keys
 

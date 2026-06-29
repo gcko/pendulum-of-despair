@@ -84,6 +84,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	active_statuses.clear()
 	active_buffs.clear()
 	ai_state.clear()
+	set_meta("untargetable", false)  # boss dive-mode meta must not survive a re-init
 	is_alive = false
 
 	enemy_id = p_enemy_id

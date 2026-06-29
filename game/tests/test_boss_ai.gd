@@ -246,6 +246,25 @@ func test_integration_boss_telegraph_then_damage() -> void:
 	assert_eq(boss.ai_state.get("charging", ""), "", "charge cleared after resolving")
 
 
+func test_integration_summon_respects_add_cap() -> void:
+	# With 1 add already alive, the {adds_below:2} rule fires but _do_spawn must
+	# top up to exactly the cap of 2 (spawn 1), never overshoot to 3 (bosses.md:275).
+	var fm: Enemy = _boss("corrupted_fenmother")
+	var add1: Enemy = _boss("corrupted_spawn")
+	var h: Dictionary = _harness()
+	var driver: BattleEnemyTurn = h["driver"]
+	fm.current_hp = int(fm.enemy_data.get("hp", 1) * 0.4)  # phase_2
+	var enemies: Array[Node] = [fm, add1]
+	driver.execute("enemy_0", enemies, true, 3)  # turn%3==0, 1 add alive -> summon
+	var living_adds: int = 0
+	for e: Node in enemies:
+		if e != fm and e.is_alive:
+			living_adds += 1
+	assert_eq(
+		living_adds, 2, "summon tops up to exactly the cap of 2 active adds (1 existing + 1 new)"
+	)
+
+
 func test_integration_vein_guardian_reconstruct_heals() -> void:
 	var boss: Enemy = _boss("vein_guardian")
 	var h: Dictionary = _harness()

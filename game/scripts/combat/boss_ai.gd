@@ -26,6 +26,9 @@ static func select_action(
 	var ai: Dictionary = enemy.ai_state
 
 	# A telegraphed move charged last turn — resolve it now (the resolve turn).
+	# NOTE: telegraphed moves are only supported in NON-modal phases (no Act-I boss
+	# combines `modes` with a `telegraph`). This short-circuit intentionally skips
+	# mode re-sync; a future modal+telegraph boss would need that added here.
 	var charging: String = ai.get("charging", "")
 	if not charging.is_empty():
 		ai["charging"] = ""
@@ -147,7 +150,12 @@ static func _build_action(move: Dictionary, move_id: String, state: Node) -> Dic
 	if mtype == "heal":
 		return {"type": "heal", "id": move_id, "target": "self", "value": int(move.get("value", 0))}
 	if mtype == "spawn":
-		return {"type": "spawn", "id": move_id, "enemies": move.get("enemies", [])}
+		return {
+			"type": "spawn",
+			"id": move_id,
+			"enemies": move.get("enemies", []),
+			"cap": int(move.get("cap", 99)),
+		}
 	if mtype == "skip":
 		return {"type": "skip", "id": move_id}
 	var target: String = move.get("target", "single")
