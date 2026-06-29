@@ -114,12 +114,12 @@ func test_enemy_status_no_effect_on_dead_member() -> void:
 
 
 func test_enemy_status_unknown_is_no_effect() -> void:
-	# 'paralysis' is undefined (deferred) -> graceful no-op, never inflicted.
+	# 'stop' is deferred (not in the registry) -> graceful no-op, never inflicted.
 	var state: Node = _make_party(0, 0)
 	var enemy: Enemy = _make_enemy("marsh_serpent")
-	var r: Dictionary = BattleActions.execute_enemy_status(state, enemy, 0, 100, "paralysis", null)
+	var r: Dictionary = BattleActions.execute_enemy_status(state, enemy, 0, 100, "stop", null)
 	assert_eq(r.get("type", ""), "no_effect")
-	assert_false(state.has_status(0, "paralysis"))
+	assert_false(state.has_status(0, "stop"))
 
 
 # --- Party-side damage-over-time (Poison/Burn) ---

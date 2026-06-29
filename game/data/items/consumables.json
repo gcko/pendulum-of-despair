@@ -434,7 +434,8 @@
         "blind",
         "confusion",
         "slow",
-        "petrify"
+        "petrify",
+        "paralysis"
       ],
       "buy_price": 800,
       "sell_price": 400,

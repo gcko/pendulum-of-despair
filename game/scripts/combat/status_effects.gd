@@ -30,6 +30,11 @@ const RULES: Dictionary = {
 	"sleep": {"atb": "frozen", "duration": UNTIL_CURED, "wake_on_damage": true},
 	# Petrify: removed from combat, ATB frozen, until cured (magic.md:694).
 	"petrify": {"atb": "frozen", "duration": UNTIL_CURED},
+	# Paralysis: cannot act for 3 turns, does NOT wake on damage (#248; differs
+	# from Sleep which wakes). Modeled as "incapacitates" (the gauge keeps filling
+	# so the turn-based countdown advances on each skipped would-be turn — unlike
+	# "frozen", which holds the gauge and has no clock).
+	"paralysis": {"incapacitates": true, "duration": 3, "wake_on_damage": false},
 	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md:720,732).
 	"slow": {"atb": "mod", "atb_mult": 0.5, "duration": 5},
 	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md:721,737). The
@@ -52,6 +57,14 @@ static func is_known(status: String) -> bool:
 ## ATB effect: "none", "frozen" (Sleep/Petrify), or "mod" (Slow/Despair).
 static func atb_effect(status: String) -> String:
 	return RULES.get(status, {}).get("atb", "none")
+
+
+## Whether the bearer cannot take a turn — Paralysis (explicit) or the
+## gauge-frozen action-denial statuses (Sleep/Petrify). The battle layer
+## auto-skips an incapacitated combatant's ready turn.
+static func is_incapacitating(status: String) -> bool:
+	var rule: Dictionary = RULES.get(status, {})
+	return rule.get("incapacitates", false) or rule.get("atb", "none") == "frozen"
 
 
 ## ATB fill multiplier for "mod" statuses (1.0 when none).

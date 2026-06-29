@@ -694,7 +694,30 @@
         "fenmothers_hollow_f2",
         "fenmothers_hollow_f3"
       ],
-      "ko_sound": "ko_elemental"
+      "ko_sound": "ko_elemental",
+      "abilities": [
+        {
+          "id": "ley_sting",
+          "name": "Ley Sting",
+          "type": "magic",
+          "element": "ley",
+          "spell_power": 14,
+          "target": "single",
+          "status": "paralysis",
+          "status_rate": 70,
+          "_comment": "single-target Ley magic + Paralysis chance; spell_power 14 (conventions §2.2); rate 70 (§2.5); Paralysis 3t no-wake (status_effects.gd; #248); palette-families.md:275"
+        },
+        {
+          "id": "drift",
+          "name": "Drift",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "selector": "random",
+          "_comment": "random-target physical (conventions §2.1 + selector random; palette-families.md:275)"
+        }
+      ]
     },
     {
       "id": "polluted_elemental",

@@ -124,9 +124,15 @@ func _process(delta: float) -> void:
 	var enemy_acted: bool = false
 	for id: String in _atb.get_ready_queue():
 		if id.begins_with("party_") and _awaiting_input_for == "":
+			var slot: int = id.replace("party_", "").to_int()
+			# Incapacitated (Paralysis) members auto-skip: the status counts down on
+			# this would-be turn (the filling gauge is the clock), then the gauge
+			# resets so the next skip is one turn later (#248).
+			if _is_incapacitated(slot):
+				_skip_incapacitated_turn(slot, id)
+				continue
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
-			var slot: int = id.replace("party_", "").to_int()
 			var member: Dictionary = _state.get_member(slot)
 			var char_data: Dictionary = member.get("character_data", {})
 			var lc: int = _targetable_enemy_count()
@@ -211,6 +217,30 @@ func _targetable_enemy_count() -> int:
 		. filter(func(e: Node) -> bool: return e.is_alive and not e.get_meta("untargetable", false))
 		. size()
 	)
+
+
+## True if the party member cannot act (Paralysis / Sleep / Petrify) — #248.
+func _is_incapacitated(slot: int) -> bool:
+	var m: Dictionary = _state.get_member(slot)
+	if m.is_empty() or not m.get("is_alive", false):
+		return false
+	for s: Dictionary in m.get("active_statuses", []):
+		if StatusEffects.is_incapacitating(s.get("name", "")):
+			return true
+	return false
+
+
+## Auto-skip an incapacitated member's ready turn: announce, tick statuses (so the
+## turn-based countdown advances + DoT still applies), and reset the gauge so the
+## next skip is a turn away (#248).
+func _skip_incapacitated_turn(slot: int, id: String) -> void:
+	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
+	message.emit("%s is paralysed and can't move!" % nm)
+	for ev: Dictionary in _state.tick_statuses(slot):
+		damage_dealt.emit(
+			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
+		)
+	_atb.reset_gauge(id)
 
 
 func _on_party_member_died(slot: int) -> void:
