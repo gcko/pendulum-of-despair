@@ -101,8 +101,18 @@ generally less dangerous than dungeon enemies at the same level.
 > deployments of the Soldier / Compact family** (base: Compact Soldier Lv 18,
 > documented in [act-ii.md](act-ii.md) / [palette-families.md](palette-families.md)),
 > appearing far below their projected level per the README "early deployment"
-> rule. Stats are transcribed as-shipped from `game/data/enemies/act_i.json`;
-> their reward/HP-curve anomalies are tracked as a separate balance follow-up.
+> rule. Stats are transcribed as-shipped from `game/data/enemies/act_i.json`.
+>
+> **Tutorial-encounter tuning exception (GAP-028 #250):** these two units are
+> intentionally hand-tuned for the opening story beat rather than derived from
+> the README stat/reward formulas, so they do **not** follow the curve:
+> Compact Patrol's HP (180) is deliberately above the Lv 5 curve (~125) to make
+> the scripted ambush a sturdier tutorial wall, and both units' Gold (30/35) is
+> set higher than the Low-threat reward multiplier would give (~5–6) to seed the
+> player's purse at the game's very start. Exp (18/20) is likewise hand-set. This
+> is a deliberate, documented exception — the values are correct as shipped and
+> should not be "corrected" to the formula. (Compact Scout's HP 140 is within the
+> normal Lv 6 band.)
 
 Recommended party level: 5–6.
 

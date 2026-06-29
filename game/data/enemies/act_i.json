@@ -37,7 +37,18 @@
         "ember_vein_f1",
         "ember_vein_f2"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "bite",
+          "name": "Bite",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:29)"
+        }
+      ]
     },
     {
       "id": "tomb_mite",
@@ -76,7 +87,18 @@
         "ember_vein_f1",
         "ember_vein_f2"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "nibble",
+          "name": "Nibble",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:52)"
+        }
+      ]
     },
     {
       "id": "restless_dead",
@@ -121,7 +143,18 @@
         "ember_vein_f2",
         "ember_vein_f3"
       ],
-      "ko_sound": "ko_undead"
+      "ko_sound": "ko_undead",
+      "abilities": [
+        {
+          "id": "claw",
+          "name": "Claw",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:68)"
+        }
+      ]
     },
     {
       "id": "unstable_crystal",
@@ -223,7 +256,18 @@
         "ember_vein_f2",
         "ember_vein_f3"
       ],
-      "ko_sound": "ko_spirit"
+      "ko_sound": "ko_spirit",
+      "abilities": [
+        {
+          "id": "shadow_touch",
+          "name": "Shadow Touch",
+          "type": "magic",
+          "element": "",
+          "spell_power": 14,
+          "target": "single",
+          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (conventions §2.2; palette-families.md:108)"
+        }
+      ]
     },
     {
       "id": "bone_warden",
@@ -267,7 +311,31 @@
         "ember_vein_f2",
         "ember_vein_f3"
       ],
-      "ko_sound": "ko_undead"
+      "ko_sound": "ko_undead",
+      "abilities": [
+        {
+          "id": "guard_stance",
+          "name": "Guard Stance",
+          "type": "buff",
+          "target": "self",
+          "buff": {
+            "stat": "def",
+            "mult": 1.4,
+            "duration": 5,
+            "scope": "self"
+          },
+          "_comment": "Guard Stance +40% DEF/5t self; Ironhide analog (conventions §2.4; palette-families.md:132)"
+        },
+        {
+          "id": "heavy_swing",
+          "name": "Heavy Swing",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:132)"
+        }
+      ]
     },
     {
       "id": "ember_wisp",
@@ -510,7 +578,27 @@
         "fenmothers_hollow_f1",
         "fenmothers_hollow_f2"
       ],
-      "ko_sound": "ko_undead"
+      "ko_sound": "ko_undead",
+      "abilities": [
+        {
+          "id": "claw",
+          "name": "Claw",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:68)"
+        },
+        {
+          "id": "bone_toss",
+          "name": "Bone Toss",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:69)"
+        }
+      ]
     },
     {
       "id": "swamp_lurker",
@@ -550,7 +638,18 @@
         "fenmothers_hollow_f2",
         "fenmothers_hollow_f3"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "heavy_claw",
+          "name": "Heavy Claw",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:249)"
+        }
+      ]
     },
     {
       "id": "ley_jellyfish",
@@ -702,7 +801,52 @@
       "locations": [
         "fenmothers_hollow_f3"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "fang_strike",
+          "name": "Fang Strike",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:205)"
+        },
+        {
+          "id": "venom_spit",
+          "name": "Venom Spit",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "status": "poison",
+          "status_rate": 70,
+          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md:1392); palette-families.md:205"
+        },
+        {
+          "id": "lunge",
+          "name": "Lunge",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "selector": "back",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:206)"
+        },
+        {
+          "id": "coil",
+          "name": "Coil",
+          "type": "buff",
+          "target": "self",
+          "buff": {
+            "stat": "spd",
+            "mult": 1.5,
+            "duration": 5,
+            "scope": "self"
+          },
+          "_comment": "Coil +50% SPD/5t self; Quickstep analog (conventions §2.4; palette-families.md:206)"
+        }
+      ]
     },
     {
       "id": "plains_hare",
@@ -740,7 +884,18 @@
       "locations": [
         "valdris_plains"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "scratch",
+          "name": "Scratch",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:325)"
+        }
+      ]
     },
     {
       "id": "thornback_beetle",
@@ -778,7 +933,18 @@
       "locations": [
         "valdris_forest"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "pinch",
+          "name": "Pinch",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:346)"
+        }
+      ]
     },
     {
       "id": "road_bandit",
@@ -816,7 +982,18 @@
       "locations": [
         "valdris_road"
       ],
-      "ko_sound": "ko_humanoid"
+      "ko_sound": "ko_humanoid",
+      "abilities": [
+        {
+          "id": "slash",
+          "name": "Slash",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:363)"
+        }
+      ]
     },
     {
       "id": "forest_sprite",
@@ -859,7 +1036,18 @@
       "locations": [
         "valdris_forest"
       ],
-      "ko_sound": "ko_spirit"
+      "ko_sound": "ko_spirit",
+      "abilities": [
+        {
+          "id": "spark",
+          "name": "Spark",
+          "type": "magic",
+          "element": "ley",
+          "spell_power": 14,
+          "target": "single",
+          "_comment": "Ley ranged bolt; Tier-1 spell_power 14 (conventions §2.2; palette-families.md:388)"
+        }
+      ]
     },
     {
       "id": "wild_boar",
@@ -898,7 +1086,18 @@
         "valdris_plains",
         "forest_edge"
       ],
-      "ko_sound": "ko_beast"
+      "ko_sound": "ko_beast",
+      "abilities": [
+        {
+          "id": "gore",
+          "name": "Gore",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:411)"
+        }
+      ]
     },
     {
       "id": "wayward_wolf",
@@ -1542,10 +1741,10 @@
           },
           "dive": {
             "type": "skip",
-            "_comment": "dive/surface untargetable cycle; Poisoned Pool hazard deferred (Phase 3 follow-up)"
+            "_comment": "dive/surface untargetable cycle; dive is a no-damage skip (the dive-mode Poisoned Pool hazard from bosses.md is not modeled — minor future polish)"
           }
         },
-        "_comment": "Phase 3 'Cleansing Sequence' (non-lethal 4-wave defense, bosses.md) is deferred to a follow-up issue."
+        "_comment": "Phases 1-2 are data-driven here; Phase 3 'Cleansing Sequence' (non-lethal 4-wave defense) is implemented in scripts/core/cleansing_sequence.gd, triggered at 0 HP via battle_manager."
       }
     }
   ]

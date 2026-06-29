@@ -30,6 +30,7 @@ Each element is a dictionary:
 | `ability_mult` | float | `1.0` | Physical power multiplier (`type:"attack"`). |
 | `spell_power` | int | `0` | Magic spell power (`type:"magic"`). |
 | `target` | String | `"single"` | `"single"`, `"all"` (party-wide AoE), or `"self"`. |
+| `selector` | String | `""` | Single-target pick. `"back"` (a back-row member, e.g. Lunge) and `"random"` (e.g. Drift) are honored by **both** regular enemies and bosses; `"highest_threat"`/`"lowest_hp"` are **boss-only** (resolved by BossAI against BattleState). Default (empty) is the front-biased physical pick. |
 | `status` | String | `""` | Status inflicted on hit (e.g. `"poison"`). |
 | `status_rate` | int | `0` | Base hit-rate fed to the two-stage roll. |
 | `status_duration` | Variant | `null` | Explicit duration override; `null` = canonical (`StatusEffects.resolve_duration`). |
@@ -205,7 +206,9 @@ These Act I kit items reference mechanics the docs do not yet define; they are
   can be implemented.
 - **Bespoke effects** with no defined magnitude: HP drain (Latch), self-destruct
   (Bloat), first-strike (Ambush), knockback (Charge), reactive counter (Thorn
-  Counter), gold theft (Steal Gold), flee (Flee), random-target (Drift).
+  Counter), gold theft (Steal Gold), flee (Flee). (Random *targeting* is now a
+  defined `selector` — see §1; only the Drift ability instance on the deferred
+  Ley Jellyfish kit remains unpopulated.)
 - **The full Act I roster.** GAP-024's first pass populates a representative
   subset proving each mechanic end-to-end; the remaining family kits are
   populated in a follow-up using the conventions above.
