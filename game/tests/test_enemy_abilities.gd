@@ -483,3 +483,69 @@ func test_integration_pack_howl_does_not_buff_other_species() -> void:
 		"Pack Howl does NOT buff a different species (id mismatch)"
 	)
 	assert_gt(wolf.active_buffs.size(), 0, "the wolf itself is still buffed")
+
+
+# --- Regular-enemy ability selector (GAP-024 follow-up #249) ---
+
+
+func test_ability_selector_back_targets_back_row() -> void:
+	seed(123)
+	var enemy_data: Dictionary = {
+		"abilities":
+		[
+			{
+				"id": "lunge",
+				"name": "Lunge",
+				"type": "attack",
+				"target": "single",
+				"selector": "back",
+				"ability_mult": 1.0,
+			}
+		]
+	}
+	var pm: Array = [
+		{"is_alive": true, "row": "front"}, {"is_alive": true, "row": "back"}, null, null
+	]
+	var pr: Array = ["front", "back", "front", "front"]
+	var found: bool = false
+	for _i: int in range(200):
+		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
+		if a.get("type", "") == "ability":
+			found = true
+			assert_eq(int(a.get("target_slot", -1)), 1, "back selector targets the back-row member")
+			break
+	assert_true(found, "the 20% ability branch fired within 200 rolls")
+
+
+# --- Act-I ability data integrity (GAP-024 follow-up #249) ---
+
+
+func test_act_i_ability_data_is_well_formed() -> void:
+	var f: FileAccess = FileAccess.open("res://data/enemies/act_i.json", FileAccess.READ)
+	assert_not_null(f, "act_i.json opens")
+	var data: Variant = JSON.parse_string(f.get_as_text())
+	f.close()
+	var valid_types: Array = ["attack", "magic", "buff"]
+	var valid_stats: Array = ["atk", "def", "mag", "mdef", "spd"]
+	var valid_selectors: Array = ["", "back", "random", "lowest_hp", "highest_threat"]
+	var checked: int = 0
+	for enemy: Dictionary in data.get("enemies", []):
+		for ab: Dictionary in enemy.get("abilities", []):
+			var eid: String = enemy.get("id", "?")
+			var aid: String = ab.get("id", "?")
+			assert_true(
+				ab.get("type", "attack") in valid_types, "%s/%s has a valid type" % [eid, aid]
+			)
+			var st: String = ab.get("status", "")
+			if not st.is_empty():
+				assert_true(
+					StatusEffects.is_known(st), "%s/%s status '%s' is known" % [eid, aid, st]
+				)
+			assert_true(
+				ab.get("selector", "") in valid_selectors, "%s/%s selector valid" % [eid, aid]
+			)
+			var bf: Dictionary = ab.get("buff", {})
+			if not bf.is_empty():
+				assert_true(bf.get("stat", "") in valid_stats, "%s/%s buff stat valid" % [eid, aid])
+			checked += 1
+	assert_gt(checked, 20, "covered the populated Act-I ability set")

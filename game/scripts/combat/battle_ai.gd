@@ -68,8 +68,31 @@ static func _build_ability_action(ab: Dictionary, living: Array, party_rows: Arr
 		"aoe_on_death": bool(ab.get("aoe_on_death", false)),
 	}
 	# Only single-target abilities resolve a concrete slot; all/self do not.
-	action["target_slot"] = _pick_physical_target(living, party_rows) if shape == "single" else -1
+	if shape == "single":
+		action["target_slot"] = _pick_by_selector(ab.get("selector", ""), living, party_rows)
+	else:
+		action["target_slot"] = -1
 	return action
+
+
+## Resolve a single-target selector for a regular-enemy ability. Supports "back"
+## (a living back-row member, e.g. Lunge) and "random" (any living member, e.g.
+## Drift); any other value falls back to the front-biased physical pick. Threat-
+## and HP-based selectors are boss-only (BossAI resolves those against BattleState).
+static func _pick_by_selector(selector: String, living: Array, party_rows: Array) -> int:
+	match selector:
+		"back":
+			var back: Array[int] = []
+			for slot: int in living:
+				if slot < party_rows.size() and party_rows[slot] == "back":
+					back.append(slot)
+			if not back.is_empty():
+				return back[randi() % back.size()]
+			return _pick_physical_target(living, party_rows)
+		"random":
+			return living[randi() % living.size()] if not living.is_empty() else -1
+		_:
+			return _pick_physical_target(living, party_rows)
 
 
 ## Pick a physical attack target. Prefers front row (75/25 split).

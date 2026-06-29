@@ -30,6 +30,7 @@ Each element is a dictionary:
 | `ability_mult` | float | `1.0` | Physical power multiplier (`type:"attack"`). |
 | `spell_power` | int | `0` | Magic spell power (`type:"magic"`). |
 | `target` | String | `"single"` | `"single"`, `"all"` (party-wide AoE), or `"self"`. |
+| `selector` | String | `""` | Single-target pick for regular enemies: `"back"` (a back-row member, e.g. Lunge) or `"random"` (e.g. Drift); default is the front-biased physical pick. (Boss `moves` also support `highest_threat`/`lowest_hp` via BossAI.) |
 | `status` | String | `""` | Status inflicted on hit (e.g. `"poison"`). |
 | `status_rate` | int | `0` | Base hit-rate fed to the two-stage roll. |
 | `status_duration` | Variant | `null` | Explicit duration override; `null` = canonical (`StatusEffects.resolve_duration`). |
