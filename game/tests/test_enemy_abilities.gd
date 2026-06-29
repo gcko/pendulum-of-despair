@@ -517,6 +517,54 @@ func test_ability_selector_back_targets_back_row() -> void:
 	assert_true(found, "the 20% ability branch fired within 200 rolls")
 
 
+func test_ability_selector_random_targets_a_living_member() -> void:
+	seed(99)
+	var enemy_data: Dictionary = {
+		"abilities":
+		[
+			{
+				"id": "drift",
+				"name": "Drift",
+				"type": "attack",
+				"target": "single",
+				"selector": "random"
+			}
+		]
+	}
+	var pm: Array = [
+		{"is_alive": true, "row": "front"}, null, {"is_alive": true, "row": "back"}, null
+	]
+	var pr: Array = ["front", "front", "back", "front"]
+	var living: Array = [0, 2]
+	for _i: int in range(200):
+		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
+		if a.get("type", "") == "ability":
+			assert_true(
+				int(a.get("target_slot", -1)) in living, "random selector picks a living slot"
+			)
+			break
+
+
+func test_ability_selector_back_falls_back_when_no_back_row() -> void:
+	seed(5)
+	var enemy_data: Dictionary = {
+		"abilities":
+		[{"id": "lunge", "name": "Lunge", "type": "attack", "target": "single", "selector": "back"}]
+	}
+	# No back-row member -> "back" selector falls back to a valid front slot, never -1.
+	var pm: Array = [
+		{"is_alive": true, "row": "front"}, {"is_alive": true, "row": "front"}, null, null
+	]
+	var pr: Array = ["front", "front", "front", "front"]
+	for _i: int in range(200):
+		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
+		if a.get("type", "") == "ability":
+			assert_true(
+				int(a.get("target_slot", -1)) in [0, 1], "back fallback picks a living front slot"
+			)
+			break
+
+
 # --- Act-I ability data integrity (GAP-024 follow-up #249) ---
 
 
@@ -528,6 +576,7 @@ func test_act_i_ability_data_is_well_formed() -> void:
 	var valid_types: Array = ["attack", "magic", "buff"]
 	var valid_stats: Array = ["atk", "def", "mag", "mdef", "spd"]
 	var valid_selectors: Array = ["", "back", "random", "lowest_hp", "highest_threat"]
+	var valid_elements: Array = ["", "flame", "frost", "storm", "earth", "ley", "spirit", "void"]
 	var checked: int = 0
 	for enemy: Dictionary in data.get("enemies", []):
 		for ab: Dictionary in enemy.get("abilities", []):
@@ -544,6 +593,17 @@ func test_act_i_ability_data_is_well_formed() -> void:
 			assert_true(
 				ab.get("selector", "") in valid_selectors, "%s/%s selector valid" % [eid, aid]
 			)
+			# A typo'd element silently degrades to neutral (enemy.get_element_multiplier
+			# returns 1.0 for unknown), so validate it explicitly.
+			assert_true(
+				ab.get("element", "") in valid_elements,
+				"%s/%s element '%s' is canonical" % [eid, aid, ab.get("element", "")]
+			)
+			# Magic abilities must carry real power (spell_power 0 -> ~1 floor damage).
+			if ab.get("type", "") == "magic":
+				assert_gt(
+					int(ab.get("spell_power", 0)), 0, "%s/%s magic has spell_power" % [eid, aid]
+				)
 			var bf: Dictionary = ab.get("buff", {})
 			if not bf.is_empty():
 				assert_true(bf.get("stat", "") in valid_stats, "%s/%s buff stat valid" % [eid, aid])
