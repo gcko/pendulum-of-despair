@@ -233,6 +233,7 @@ func _do_attack(actor_id: String, command: Dictionary) -> bool:
 	var result: Dictionary = BattleActions.execute_party_attack(
 		_state, slot, _enemies[target_idx], target_idx
 	)
+	_state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
 	damage_dealt.emit("enemy_%d" % target_idx, result.get("damage", 0), result.get("type", "miss"))
 	if result.get("killed", false):
 		combatant_died.emit("enemy_%d" % target_idx)
@@ -327,6 +328,7 @@ func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String,
 		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
 		return true
 	if result.get("hit", false):
+		_state.add_threat(caster_slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
 		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "magic")
 		if result.get("killed", false):
 			combatant_died.emit("enemy_%d" % idx)

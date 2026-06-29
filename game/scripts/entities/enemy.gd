@@ -62,6 +62,11 @@ var active_statuses: Array[Dictionary] = []
 ## Applied multiplicatively in get_stats(); ticked down at end of turn.
 var active_buffs: Array[Dictionary] = []
 
+## Transient boss-AI state (GAP-009): the data-driven BossAI interpreter reads
+## and writes per-enemy scratch here (e.g. {phase, last_move, charging,
+## turns_in_mode, mode, reconstructed}). Empty for non-AI-driven enemies.
+var ai_state: Dictionary = {}
+
 ## Whether the enemy is still alive. Defaults false until initialize().
 var is_alive: bool = false
 
@@ -78,6 +83,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 	current_mp = 0
 	active_statuses.clear()
 	active_buffs.clear()
+	ai_state.clear()
 	is_alive = false
 
 	enemy_id = p_enemy_id

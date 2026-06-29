@@ -169,7 +169,16 @@
       ],
       "ko_sound": "ko_elemental",
       "abilities": [
-        {"id": "shard_burst", "name": "Shard Burst", "type": "magic", "element": "", "spell_power": 9, "target": "all", "aoe_on_death": true, "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md:101,152; palette-families.md:90)"}
+        {
+          "id": "shard_burst",
+          "name": "Shard Burst",
+          "type": "magic",
+          "element": "",
+          "spell_power": 9,
+          "target": "all",
+          "aoe_on_death": true,
+          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md:101,152; palette-families.md:90)"
+        }
       ]
     },
     {
@@ -304,7 +313,15 @@
       ],
       "ko_sound": "ko_elemental",
       "abilities": [
-        {"id": "flicker", "name": "Flicker", "type": "magic", "element": "flame", "spell_power": 14, "target": "single", "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md:152; palette-families.md:150)"}
+        {
+          "id": "flicker",
+          "name": "Flicker",
+          "type": "magic",
+          "element": "flame",
+          "spell_power": 14,
+          "target": "single",
+          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md:152; palette-families.md:150)"
+        }
       ]
     },
     {
@@ -390,8 +407,26 @@
       ],
       "ko_sound": "ko_beast",
       "abilities": [
-        {"id": "fang_strike", "name": "Fang Strike", "type": "attack", "element": "", "ability_mult": 1.0, "target": "single", "_comment": "basic physical, ability_mult 1.0 (enemy-ability-conventions.md §2.1; palette-families.md:205)"},
-        {"id": "venom_spit", "name": "Venom Spit", "type": "attack", "element": "", "ability_mult": 1.0, "target": "single", "status": "poison", "status_rate": 70, "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md:107); Poison 8%/turn until cured (magic.md:1392); palette-families.md:205"}
+        {
+          "id": "fang_strike",
+          "name": "Fang Strike",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical, ability_mult 1.0 (enemy-ability-conventions.md §2.1; palette-families.md:205)"
+        },
+        {
+          "id": "venom_spit",
+          "name": "Venom Spit",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "status": "poison",
+          "status_rate": 70,
+          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md:107); Poison 8%/turn until cured (magic.md:1392); palette-families.md:205"
+        }
       ]
     },
     {
@@ -607,8 +642,28 @@
       ],
       "ko_sound": "ko_elemental",
       "abilities": [
-        {"id": "frost_burst", "name": "Frost Burst", "type": "magic", "element": "frost", "spell_power": 9, "target": "all", "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md:101,198; palette-families.md:292)"},
-        {"id": "elemental_shield", "name": "Elemental Shield", "type": "buff", "target": "self", "buff": {"stat": "mdef", "mult": 1.40, "duration": 5, "scope": "self"}, "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md:801; palette-families.md:292)"}
+        {
+          "id": "frost_burst",
+          "name": "Frost Burst",
+          "type": "magic",
+          "element": "frost",
+          "spell_power": 9,
+          "target": "all",
+          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md:101,198; palette-families.md:292)"
+        },
+        {
+          "id": "elemental_shield",
+          "name": "Elemental Shield",
+          "type": "buff",
+          "target": "self",
+          "buff": {
+            "stat": "mdef",
+            "mult": 1.4,
+            "duration": 5,
+            "scope": "self"
+          },
+          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md:801; palette-families.md:292)"
+        }
       ]
     },
     {
@@ -884,8 +939,28 @@
       ],
       "ko_sound": "ko_beast",
       "abilities": [
-        {"id": "bite", "name": "Bite", "type": "attack", "element": "", "ability_mult": 1.0, "target": "single", "_comment": "basic physical (conventions §2.1; palette-families.md:435)"},
-        {"id": "pack_howl", "name": "Pack Howl", "type": "buff", "target": "self", "buff": {"stat": "atk", "mult": 1.30, "duration": 5, "scope": "pack"}, "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md:834; palette-families.md:435)"}
+        {
+          "id": "bite",
+          "name": "Bite",
+          "type": "attack",
+          "element": "",
+          "ability_mult": 1.0,
+          "target": "single",
+          "_comment": "basic physical (conventions §2.1; palette-families.md:435)"
+        },
+        {
+          "id": "pack_howl",
+          "name": "Pack Howl",
+          "type": "buff",
+          "target": "self",
+          "buff": {
+            "stat": "atk",
+            "mult": 1.3,
+            "duration": 5,
+            "scope": "pack"
+          },
+          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md:834; palette-families.md:435)"
+        }
       ]
     },
     {
@@ -987,9 +1062,62 @@
       "ko_sound": "ko_beast",
       "is_boss": false,
       "is_mini_boss": true,
-      "phases": 1,
-      "phase_hp_thresholds": [],
-      "boss_group": null
+      "boss_group": null,
+      "boss_ai": {
+        "phases": [
+          {
+            "name": "phase_1",
+            "hp_above": 0.0,
+            "rules": [
+              {
+                "when": {
+                  "every_n": 3
+                },
+                "move": "flame_breath"
+              },
+              {
+                "when": {
+                  "position": "back"
+                },
+                "move": "pounce"
+              },
+              {
+                "when": {
+                  "default": true
+                },
+                "move": "tail_swipe"
+              }
+            ]
+          }
+        ],
+        "moves": {
+          "flame_breath": {
+            "type": "ability",
+            "atk_type": "magic",
+            "element": "flame",
+            "spell_power": 24,
+            "target": "all",
+            "telegraph": "The Ember Drake rears back, flames building!",
+            "_comment": "party-wide fire AoE, 1-turn charge; Tier-2 AoE spell_power 24 (enemy-ability-conventions.md §3.1; magic.md:185; bosses.md:150)"
+          },
+          "pounce": {
+            "type": "ability",
+            "atk_type": "physical",
+            "ability_mult": 1.0,
+            "target": "single",
+            "selector": "back",
+            "_comment": "back-row physical (bosses.md:152)"
+          },
+          "tail_swipe": {
+            "type": "ability",
+            "atk_type": "physical",
+            "ability_mult": 1.0,
+            "target": "single",
+            "selector": "highest_threat",
+            "_comment": "highest-threat physical (bosses.md:153)"
+          }
+        }
+      }
     },
     {
       "id": "vein_guardian",
@@ -1037,11 +1165,104 @@
       "ko_sound": "ko_construct",
       "is_boss": true,
       "is_mini_boss": false,
-      "phases": 2,
-      "phase_hp_thresholds": [
-        0.5
-      ],
-      "boss_group": null
+      "boss_group": null,
+      "boss_ai": {
+        "phases": [
+          {
+            "name": "phase_1",
+            "hp_above": 0.5,
+            "rules": [
+              {
+                "when": {
+                  "every_n": 4
+                },
+                "move": "crystal_slam"
+              },
+              {
+                "when": {
+                  "every_n": 3
+                },
+                "move": "ember_pulse"
+              },
+              {
+                "when": {
+                  "last_move": "crystal_slam"
+                },
+                "move": "ember_pulse"
+              },
+              {
+                "when": {
+                  "default": true
+                },
+                "move": "crystal_slam"
+              }
+            ]
+          },
+          {
+            "name": "phase_2",
+            "hp_above": 0.0,
+            "on_enter_message": "The Guardian's crystal core fractures... it draws inward.",
+            "rules": [
+              {
+                "when": {
+                  "once": "reconstructed"
+                },
+                "move": "reconstruct"
+              },
+              {
+                "when": {
+                  "every_n": 4
+                },
+                "move": "crystal_slam"
+              },
+              {
+                "when": {
+                  "every_n": 3
+                },
+                "move": "ember_pulse"
+              },
+              {
+                "when": {
+                  "last_move": "crystal_slam"
+                },
+                "move": "ember_pulse"
+              },
+              {
+                "when": {
+                  "default": true
+                },
+                "move": "crystal_slam"
+              }
+            ]
+          }
+        ],
+        "moves": {
+          "crystal_slam": {
+            "type": "ability",
+            "atk_type": "physical",
+            "ability_mult": 1.0,
+            "target": "single",
+            "selector": "highest_threat",
+            "telegraph": "The Vein Guardian raises its arms!",
+            "_comment": "heavy physical, highest-threat, 1-turn telegraph (enemy-ability-conventions.md §3.1/3.3; bosses.md:178)"
+          },
+          "ember_pulse": {
+            "type": "ability",
+            "atk_type": "magic",
+            "element": "flame",
+            "spell_power": 24,
+            "target": "all",
+            "telegraph": "The floor glows orange!",
+            "_comment": "fire AoE, 1-turn telegraph; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:180)"
+          },
+          "reconstruct": {
+            "type": "heal",
+            "target": "self",
+            "value": 300,
+            "_comment": "+300 HP, one-time at <=50%% (bosses.md:189)"
+          }
+        }
+      }
     },
     {
       "id": "drowned_sentinel",
@@ -1087,9 +1308,64 @@
       "ko_sound": "ko_construct",
       "is_boss": false,
       "is_mini_boss": true,
-      "phases": 1,
-      "phase_hp_thresholds": [],
-      "boss_group": null
+      "boss_group": null,
+      "boss_ai": {
+        "phases": [
+          {
+            "name": "phase_1",
+            "hp_above": 0.0,
+            "rules": [
+              {
+                "when": {
+                  "every_n": 4
+                },
+                "move": "barnacle_shield"
+              },
+              {
+                "when": {
+                  "every_n": 3
+                },
+                "move": "frost_wave"
+              },
+              {
+                "when": {
+                  "default": true
+                },
+                "move": "stone_slam"
+              }
+            ]
+          }
+        ],
+        "moves": {
+          "barnacle_shield": {
+            "type": "ability",
+            "target": "self",
+            "buff": {
+              "stat": "def",
+              "mult": 2.0,
+              "duration": 2,
+              "scope": "self"
+            },
+            "_comment": "DEF +100% for 2 turns (enemy-ability-conventions.md §3.1; bosses.md:229)"
+          },
+          "frost_wave": {
+            "type": "ability",
+            "atk_type": "magic",
+            "element": "frost",
+            "spell_power": 24,
+            "target": "all",
+            "_comment": "frost AoE; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:219)"
+          },
+          "stone_slam": {
+            "type": "ability",
+            "atk_type": "physical",
+            "ability_mult": 1.0,
+            "target": "single",
+            "selector": "highest_threat",
+            "_comment": "heavy physical, highest-threat (bosses.md:222)"
+          }
+        }
+      }
     },
     {
       "id": "corrupted_fenmother",
@@ -1134,12 +1410,146 @@
       "ko_sound": "ko_boss",
       "is_boss": true,
       "is_mini_boss": false,
-      "phases": 3,
-      "phase_hp_thresholds": [
-        0.5,
-        0.0
-      ],
-      "boss_group": null
+      "boss_group": null,
+      "boss_ai": {
+        "phases": [
+          {
+            "name": "phase_1",
+            "hp_above": 0.5,
+            "start_mode": "surface",
+            "modes": {
+              "surface": {
+                "turns": 3,
+                "next": "dive",
+                "rules": [
+                  {
+                    "when": {
+                      "every_n": 4
+                    },
+                    "move": "tail_sweep"
+                  },
+                  {
+                    "when": {
+                      "every_n": 3
+                    },
+                    "move": "water_jet"
+                  },
+                  {
+                    "when": {
+                      "default": true
+                    },
+                    "move": "tail_sweep"
+                  }
+                ],
+                "enter_message": "The Fenmother resurfaces!"
+              },
+              "dive": {
+                "turns": 2,
+                "next": "surface",
+                "untargetable": true,
+                "rules": [
+                  {
+                    "when": {
+                      "default": true
+                    },
+                    "move": "dive"
+                  }
+                ],
+                "enter_message": "The Fenmother dives beneath the surface!"
+              }
+            }
+          },
+          {
+            "name": "phase_2",
+            "hp_above": 0.0,
+            "start_mode": "surface",
+            "on_enter_message": "The Fenmother thrashes in desperation!",
+            "modes": {
+              "surface": {
+                "turns": 2,
+                "next": "dive",
+                "rules": [
+                  {
+                    "when": {
+                      "adds_below": 2,
+                      "every_n": 3
+                    },
+                    "move": "summon_spawn"
+                  },
+                  {
+                    "when": {
+                      "every_n": 3
+                    },
+                    "move": "water_jet"
+                  },
+                  {
+                    "when": {
+                      "every_n": 2
+                    },
+                    "move": "tail_sweep"
+                  },
+                  {
+                    "when": {
+                      "default": true
+                    },
+                    "move": "water_jet"
+                  }
+                ],
+                "enter_message": "The Fenmother resurfaces!"
+              },
+              "dive": {
+                "turns": 2,
+                "next": "surface",
+                "untargetable": true,
+                "rules": [
+                  {
+                    "when": {
+                      "default": true
+                    },
+                    "move": "dive"
+                  }
+                ],
+                "enter_message": "The Fenmother dives beneath the surface!"
+              }
+            }
+          }
+        ],
+        "moves": {
+          "tail_sweep": {
+            "type": "ability",
+            "atk_type": "physical",
+            "ability_mult": 1.0,
+            "target": "all",
+            "_comment": "party-wide physical (bosses.md:247)"
+          },
+          "water_jet": {
+            "type": "ability",
+            "atk_type": "magic",
+            "element": "frost",
+            "spell_power": 32,
+            "target": "single",
+            "selector": "lowest_hp",
+            "_comment": "single-target frost magic, lowest-HP; Tier-2 single 32 (enemy-ability-conventions.md §3.1; bosses.md:257)"
+          },
+          "summon_spawn": {
+            "type": "spawn",
+            "enemies": [
+              "corrupted_spawn",
+              "corrupted_spawn"
+            ],
+            "cap": 2,
+            "_comment": "summon adds, cap 2 (bosses.md:271)"
+          },
+          "dive": {
+            "type": "skip",
+            "untargetable": true,
+            "message": "The Fenmother dives beneath the surface!",
+            "resurface_message": "The Fenmother resurfaces!",
+            "_comment": "dive/surface untargetable cycle; Poisoned Pool hazard deferred (Phase 3 follow-up)"
+          }
+        },
+        "_comment": "Phase 3 'Cleansing Sequence' (non-lethal 4-wave defense, bosses.md) is deferred to a follow-up issue."
+      }
     }
   ]
 }
