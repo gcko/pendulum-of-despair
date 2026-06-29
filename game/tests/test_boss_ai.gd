@@ -252,6 +252,7 @@ func _total_hp(state: Node) -> int:
 
 
 func test_integration_boss_telegraph_then_damage() -> void:
+	seed(7)  # deterministic hit/evasion rolls so the resolve reliably lands
 	var boss: Enemy = _boss("vein_guardian")
 	var h: Dictionary = _harness()
 	var driver: BattleEnemyTurn = h["driver"]

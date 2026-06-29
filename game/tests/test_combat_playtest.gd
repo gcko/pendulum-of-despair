@@ -68,16 +68,26 @@ func test_combat_slice_playtest() -> void:
 	assert_false(e1.has_status("poison"), "undead is immune to poison")
 
 	# 3) Sleep the beast — inflict + freeze its ATB (per-frame resync).
+	# The two-stage roll with a low-MAG caster (Edren MAG 6 vs MDEF 5 ~= 54%) can
+	# miss any single attempt, and the exact RNG draw count through the live battle
+	# varies by environment — so retry until it lands (mirrors test_battle_actions'
+	# "lands within N attempts" pattern). Cure poison first so DoT ticks can't kill
+	# the beast mid-retry; sleep is the only thing under test here.
+	e0.remove_status("poison")
+	e0.current_hp = e0.enemy_data.get("hp", 1)
 	var sleep := poison.duplicate()
 	sleep["name"] = "Slumber Mote"
 	sleep["status"] = "sleep"
-	await _cast(battle, sleep, 0)
+	for _i: int in range(12):
+		if e0.has_status("sleep"):
+			break
+		await _cast(battle, sleep, 0)
 	await wait_frames(2)
 	var frozen: bool = battle._atb._combatants["enemy_0"]["frozen"]
 	gut.p(
 		"Slumber Mote -> ley_vermin: has_sleep=%s atb_frozen=%s" % [e0.has_status("sleep"), frozen]
 	)
-	assert_true(e0.has_status("sleep"), "sleep inflicted")
+	assert_true(e0.has_status("sleep"), "sleep inflicted within retries")
 	assert_true(frozen, "sleep freezes the enemy ATB gauge")
 
 	# 4) Spirit-element magic on the undead — type bonus 1.5x stacks (README:67).
