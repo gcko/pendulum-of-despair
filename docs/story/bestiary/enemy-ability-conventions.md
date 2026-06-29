@@ -200,15 +200,15 @@ covers every condition the documented format uses (`bosses.md:83-92`).
 These Act I kit items reference mechanics the docs do not yet define; they are
 **deferred** and filed as issues rather than guessed at here:
 
-- **Paralysis** (Ley Jellyfish *Ley Sting*) — referenced by
-  `palette-families.md:275` and `act-i.md:106` but **absent** from the
-  `magic.md` Status Effect Reference. A status definition is required before it
-  can be implemented.
 - **Bespoke effects** with no defined magnitude: HP drain (Latch), self-destruct
   (Bloat), first-strike (Ambush), knockback (Charge), reactive counter (Thorn
-  Counter), gold theft (Steal Gold), flee (Flee). (Random *targeting* is now a
-  defined `selector` — see §1; only the Drift ability instance on the deferred
-  Ley Jellyfish kit remains unpopulated.)
+  Counter), gold theft (Steal Gold), flee (Flee).
+
+> **Now defined (#248):** **Paralysis** — *cannot act for 3 turns, does not wake
+> on damage* — is in the `magic.md` Status Effect Reference and `status_effects.gd`
+> (`incapacitates`); the battle layer auto-skips an incapacitated member's ready
+> turn so the gauge clock counts the duration down. Ley Jellyfish (Ley Sting +
+> Drift via the `random` selector) is fully populated.
 - **The full Act I roster.** GAP-024's first pass populates a representative
   subset proving each mechanic end-to-end; the remaining family kits are
   populated in a follow-up using the conventions above.
