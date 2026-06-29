@@ -121,6 +121,27 @@ func test_vein_guardian_reconstructs_once() -> void:
 	assert_false(reconstructed_again, "Reconstruct is one-time only")
 
 
+func test_phase_enter_message_fires_once_across_oscillation() -> void:
+	var vg: Enemy = _boss("vein_guardian")
+	var state: Node = _party()
+	var max_hp: int = vg.enemy_data.get("hp", 1)
+	# Enter phase_2 -> the "crystal core fractures" line fires.
+	vg.current_hp = int(max_hp * 0.4)
+	var a1: Dictionary = BossAI.select_action(vg, 1, state, [vg])
+	assert_true(
+		str(a1.get("message", "")).contains("crystal core"), "phase_2 message on first entry"
+	)
+	# Reconstruct pushes HP back above 50% -> phase_1 (no message).
+	vg.current_hp = int(max_hp * 0.6)
+	BossAI.select_action(vg, 2, state, [vg])
+	# Re-drop below 50% -> phase_2 again; the one-time flavor line must NOT repeat.
+	vg.current_hp = int(max_hp * 0.4)
+	var a3: Dictionary = BossAI.select_action(vg, 3, state, [vg])
+	assert_false(
+		str(a3.get("message", "")).contains("crystal core"), "phase enter message does not repeat"
+	)
+
+
 # --- Drowned Sentinel: self-buff + AoE + default ---
 
 

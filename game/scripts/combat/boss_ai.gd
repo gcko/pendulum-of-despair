@@ -92,14 +92,25 @@ static func _current_phase(enemy: Node, data: Dictionary) -> Dictionary:
 
 
 ## Detect a phase change, reset mode bookkeeping, return any on_enter_message.
+## The phase message fires at most ONCE per phase (a persistent announced flag),
+## so HP oscillation across a threshold — e.g. Vein Guardian's Reconstruct healing
+## back above 50% then re-dropping — does not re-emit the one-time flavor line.
 static func _enter_phase(ai: Dictionary, phase: Dictionary) -> String:
-	if ai.get("phase", "") == phase.get("name", ""):
+	var name: String = phase.get("name", "")
+	if ai.get("phase", "") == name:
 		return ""
-	ai["phase"] = phase.get("name", "")
+	ai["phase"] = name
 	ai["mode"] = phase.get("start_mode", "")
 	ai["turns_in_mode"] = 0
 	ai["announced_mode"] = phase.get("start_mode", "")  # initial mode is silent
-	return str(phase.get("on_enter_message", ""))
+	var msg: String = str(phase.get("on_enter_message", ""))
+	if msg.is_empty():
+		return ""
+	var key: String = "announced_phase_" + name
+	if ai.get(key, false):
+		return ""
+	ai[key] = true
+	return msg
 
 
 ## First rule whose `when` conditions all hold (FF6-style first-match). Marks a
