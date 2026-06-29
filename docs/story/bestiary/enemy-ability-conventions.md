@@ -124,7 +124,64 @@ production entry sets it above 1.
 
 ---
 
-## 3. Out of scope (tracked separately)
+## 3. Boss-AI conventions (GAP-009)
+
+The data-driven boss interpreter (`boss_ai.gd`) reads a `boss_ai` object on each
+boss enemy entry: an ordered `phases` array plus a `moves` table. `bosses.md`
+fully specifies each boss's *behavior* (mode → priority list → ability) but, as
+with regular enemies, is **silent on damage numbers** and never defines a
+**threat metric**. These conventions fill those two gaps from canon.
+
+### 3.1 Boss-tier damage mapping
+
+Act I bosses are Lv 8–12, which sits in the player **Tier 2** spell band, so
+boss offensive abilities use the documented **Tier 2** player spell powers:
+
+- **Single-target magic** → `spell_power 32` (Tier 2 single-target, e.g.
+  Kindlepyre `magic.md:163` *Spell power 32*).
+- **AoE magic** → `spell_power 24` (Tier 2 AoE ≈ 65–70% of single, e.g. Scorch
+  Sweep `magic.md:185` *Spell power 24*; rule `magic.md:101`).
+- **Physical** (`crystal_slam`, `stone_slam`, `pounce`, `tail_swipe`,
+  `tail_sweep`) → `ability_mult 1.0`. Bosses already carry high ATK (~40), so
+  a "heavy physical" reads as heavy at 1.0 — consistent with §2.1 (descriptors
+  are not bumped above 1.0).
+- **Explicit non-damage values are canon and used as-stated:** Vein Guardian
+  Reconstruct **+300 HP** (`bosses.md:189`), Drowned Sentinel Barnacle Shield
+  **DEF +100% for 2 turns** (`bosses.md:229`; `buff {stat:def, mult:2.0,
+  duration:2}`), Corrupted Fenmother add cap **2**.
+
+### 3.2 Threat (highest-threat targeting)
+
+`bosses.md:94-98` lists `highest threat` as a target selector but never defines
+how threat is measured. Convention: **threat = cumulative damage a party member
+has dealt to enemies this battle** (tracked in `BattleState.threat_dealt`,
+incremented on every landed player hit). `highest_threat` selects the living
+member with the most accumulated damage; ties (including the all-zero opening)
+break to the lowest slot. This is the genre-standard reading and makes the
+boss hunt the party's damage dealer.
+
+### 3.3 Charge / telegraph
+
+A move with a `telegraph` string is a **two-turn** ability. On the **charge
+turn** the boss emits the telegraph message and deals **no damage** (recorded in
+`enemy.ai_state.charging`); on the **next turn** it resolves and deals damage.
+Per `bosses.md:160-163,201-205` the telegraph is informational only — the boss
+is not untargetable or more vulnerable during the charge; the player mitigates
+via the free row-swap. Act I 1-turn telegraphs are **not interruptible**
+(interrupt windows first appear on later 2–3-turn charges).
+
+### 3.4 Condition keys
+
+Phase rules are evaluated first-match (FF6-style) using a **fixed declarative
+key set** (no expression evaluation): `every_n` (turn_counter % N == 0),
+`hp_below` (handled by phase `hp_above` bands), `adds_below` (living adds <
+N), `last_move`, `position` (a living member is in that row), `once` (a named
+one-time gate stored in `ai_state`), and `default` (always matches). This
+covers every condition the documented format uses (`bosses.md:83-92`).
+
+---
+
+## 4. Out of scope (tracked separately)
 
 These Act I kit items reference mechanics the docs do not yet define; they are
 **deferred** and filed as issues rather than guessed at here:
