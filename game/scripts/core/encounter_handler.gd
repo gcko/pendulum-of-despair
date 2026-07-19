@@ -23,14 +23,23 @@ static func process_step(config: Dictionary, danger: int, party: Array) -> int:
 ## Builds and returns a transition Dictionary for a random encounter.
 ## Returns an empty Dictionary if no groups are configured.
 static func build_random_encounter(
-	config: Dictionary, map_id: String, player_pos: Vector2
+	config: Dictionary, map_id: String, player_pos: Vector2, party: Array[Dictionary] = []
 ) -> Dictionary:
 	var groups: Array = config.get("groups", [])
 	if groups.is_empty():
 		return {}
 	var group: Dictionary = EncounterSystem.select_encounter_group(groups)
 	var rates: Dictionary = config.get("formation_rates", {})
+	rates = EncounterSystem.apply_preemptive_bonus(
+		rates, EncounterSystem.get_preemptive_bonus(party)
+	)
 	var formation: String = EncounterSystem.roll_formation(rates)
+	# Sable's Coin: consume AFTER the roll so the RNG stream length is
+	# identical with or without the coin; random encounters only — the
+	# boss path never reads the flag (combat-formulas.md: no bosses).
+	if EventFlags.check_required_flags("sables_coin_active"):
+		formation = "preemptive"
+		EventFlags.set_flag("sables_coin_active", false)
 	return {
 		"encounter_group": group.get("enemies", []),
 		"formation_type": formation,

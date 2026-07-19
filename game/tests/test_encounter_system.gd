@@ -180,3 +180,60 @@ func test_get_accessory_modifier_ward_and_cloak_dont_stack() -> void:
 		0.01,
 		"ward + cloak should not stack below 0.5",
 	)
+
+
+func test_apply_preemptive_bonus_normalizes_all_terrains() -> void:
+	# combat-formulas.md: +25pp normalizes every terrain row to 62.5/0/37.5
+	var terrains: Array = [
+		{"normal": 87.5, "back_attack": 0.0, "preemptive": 12.5},
+		{"normal": 75.0, "back_attack": 12.5, "preemptive": 12.5},
+		{"normal": 68.75, "back_attack": 18.75, "preemptive": 12.5},
+		{"normal": 62.5, "back_attack": 25.0, "preemptive": 12.5},
+	]
+	for rates: Dictionary in terrains:
+		var result: Dictionary = ES.apply_preemptive_bonus(rates, 25.0)
+		assert_almost_eq(float(result.get("preemptive")), 37.5, 0.01, "preemptive -> 37.5")
+		assert_almost_eq(float(result.get("back_attack")), 0.0, 0.01, "back attack -> 0")
+		assert_almost_eq(float(result.get("normal")), 62.5, 0.01, "normal -> 62.5")
+
+
+func test_apply_preemptive_bonus_zero_is_identity() -> void:
+	var rates: Dictionary = {"normal": 75.0, "back_attack": 12.5, "preemptive": 12.5}
+	var result: Dictionary = ES.apply_preemptive_bonus(rates, 0.0)
+	assert_almost_eq(float(result.get("preemptive")), 12.5, 0.01, "no bonus, no shift")
+	assert_almost_eq(float(result.get("back_attack")), 12.5, 0.01, "back attack unchanged")
+
+
+func test_apply_preemptive_bonus_never_goes_negative() -> void:
+	var rates: Dictionary = {"normal": 75.0, "back_attack": 12.5, "preemptive": 12.5}
+	var result: Dictionary = ES.apply_preemptive_bonus(rates, 200.0)
+	assert_almost_eq(float(result.get("back_attack")), 0.0, 0.01, "clamped at zero")
+	assert_almost_eq(float(result.get("normal")), 0.0, 0.01, "clamped at zero")
+	assert_almost_eq(float(result.get("preemptive")), 100.0, 0.01, "everything shifted")
+
+
+func test_get_preemptive_bonus_accessory_slot() -> void:
+	var party: Array[Dictionary] = [
+		{"character_id": "edren", "equipment": {"accessory": "preemptive_charm"}},
+	]
+	assert_almost_eq(ES.get_preemptive_bonus(party), 25.0, 0.01, "charm in accessory = +25pp")
+
+
+func test_get_preemptive_bonus_crystal_slot() -> void:
+	var party: Array[Dictionary] = [
+		{"character_id": "edren", "equipment": {"crystal": "preemptive_charm"}},
+	]
+	assert_almost_eq(ES.get_preemptive_bonus(party), 25.0, 0.01, "charm in crystal = +25pp")
+
+
+func test_get_preemptive_bonus_does_not_stack() -> void:
+	var party: Array[Dictionary] = [
+		{"character_id": "edren", "equipment": {"accessory": "preemptive_charm"}},
+		{"character_id": "cael", "equipment": {"accessory": "preemptive_charm"}},
+	]
+	assert_almost_eq(ES.get_preemptive_bonus(party), 25.0, 0.01, "two charms still +25pp")
+
+
+func test_get_preemptive_bonus_none_equipped() -> void:
+	var party: Array[Dictionary] = [{"character_id": "edren", "equipment": {}}]
+	assert_almost_eq(ES.get_preemptive_bonus(party), 0.0, 0.01, "no charm = no bonus")

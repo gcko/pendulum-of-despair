@@ -54,6 +54,7 @@ func trigger_random_encounter() -> void:
 			_exploration.get_encounter_config(),
 			_exploration.get_current_map_id(),
 			player.position,
+			PartyState.get_active_party(),
 		)
 	)
 	if transition.is_empty():

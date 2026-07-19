@@ -43,6 +43,15 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 	return false
 
 
+## Whether a consumable's effect can currently apply. A second Sable's
+## Coin is refused while one is active — a guarantee cannot be improved,
+## and the item must not be silently burned.
+static func can_apply_item_effect(item_data: Dictionary) -> bool:
+	if item_data.get("effect", "") == "preemptive":
+		return not EventFlags.check_required_flags("sables_coin_active")
+	return true
+
+
 ## Apply a consumable item's effect to a target member Dictionary.
 static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void:
 	var effect: String = item_data.get("effect", "")
@@ -111,7 +120,7 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 		"teleport":
 			push_warning("InventoryHelpers: teleport effect not yet implemented")
 		"preemptive":
-			push_warning("InventoryHelpers: preemptive effect not yet implemented")
+			EventFlags.set_flag("sables_coin_active", true)
 
 
 ## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).

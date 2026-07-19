@@ -66,3 +66,53 @@ func test_build_random_encounter_enemy_act_defaults_act_i() -> void:
 	}
 	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
 	assert_eq(transition.get("enemy_act", ""), "act_i", "no flags should mean act_i enemies")
+
+
+func test_build_random_encounter_charm_reaches_the_roll() -> void:
+	# Charm shifts back_attack 25 -> preemptive: rates become 100%
+	# preemptive, so ANY roll must return preemptive (deterministic).
+	var party: Array[Dictionary] = [
+		{"character_id": "edren", "equipment": {"accessory": "preemptive_charm"}},
+	]
+	var config: Dictionary = {
+		"groups": [{"format": 1, "enemies": ["ley_vermin"], "weight": 100.0}],
+		"formation_rates": {"normal": 0.0, "back_attack": 25.0, "preemptive": 75.0},
+	}
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO, party)
+	assert_eq(transition.get("formation_type", ""), "preemptive", "charm bonus must reach roll")
+
+
+func test_build_random_encounter_sables_coin_forces_preemptive() -> void:
+	EventFlags.set_flag("sables_coin_active", true)
+	var config: Dictionary = {
+		"groups": [{"format": 1, "enemies": ["ley_vermin"], "weight": 100.0}],
+		"formation_rates": {"normal": 100.0, "back_attack": 0.0, "preemptive": 0.0},
+	}
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
+	assert_eq(transition.get("formation_type", ""), "preemptive", "coin overrides the roll")
+	assert_false(
+		bool(EventFlags.get_flag("sables_coin_active")),
+		"coin is consumed when it forces preemptive",
+	)
+
+
+func test_build_random_encounter_without_coin_rolls_normally() -> void:
+	var config: Dictionary = {
+		"groups": [{"format": 1, "enemies": ["ley_vermin"], "weight": 100.0}],
+		"formation_rates": {"normal": 100.0, "back_attack": 0.0, "preemptive": 0.0},
+	}
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
+	assert_eq(transition.get("formation_type", ""), "normal", "no coin means the roll stands")
+
+
+func test_boss_path_never_touches_sables_coin() -> void:
+	# combat-formulas.md: the coin "does not work on bosses". The boss
+	# transition hardcodes normal formation and must never read or clear
+	# the flag, so a coin popped before a boss door is not wasted.
+	var file: FileAccess = FileAccess.open(
+		"res://scripts/core/exploration_zone_handler.gd", FileAccess.READ
+	)
+	var text: String = file.get_as_text()
+	file.close()
+	assert_true(text.contains('"formation_type": "normal"'), "boss formation stays normal")
+	assert_false(text.contains("sables_coin"), "boss path must not consume the coin")
