@@ -15,8 +15,13 @@ bundle — slice them into their own multi-PR efforts.
 | Bundle | Issues | State |
 |--------|--------|-------|
 | Bundle 1 | GAP-001 magic submenu, GAP-007 ATB config | ✅ merged (PR #241) |
-| Bundle 2a | GAP-010 Cael spike, GAP-008 type-traits (slice) | 🔄 PR #243 (in review) |
-| Bundle 2b | GAP-003 status system (player→enemy core) | ⏳ next |
+| Bundle 2a | GAP-010 Cael spike, GAP-008 type-traits (slice) | ✅ merged (PR #243) |
+| Bundle 2b | GAP-003 status system (player→enemy core) | ✅ merged (PR #245) |
+| Bundle 3a | GAP-024 enemy abilities, GAP-028 bestiary reconciliation | ✅ merged (PR #251) |
+| Bundle 3b | GAP-009 data-driven boss AI | ✅ merged (PR #255) |
+| Bundle 4a | Act-I enemy kits + selector schema (#249/#250) | ✅ merged (PR #258) |
+| Bundle 4b | Paralysis + player-ATB auto-skip (#248) | ✅ merged (PR #259) |
+| Bundle 5 | GAP-025 encounter scaling, GAP-026 per-tile zones, GAP-027 formation overrides | 🔄 in review |
 
 > Bundle 2 was split after analysis: each of GAP-003/008/010 has an independent
 > "do-now" core plus a tail that depends on unbuilt systems (GAP-002 abilities,
