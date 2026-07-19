@@ -6,7 +6,7 @@ const EncounterSystem = preload("res://scripts/combat/encounter_system.gd")
 
 ## Returns the updated danger counter after processing one tile step.
 ## Returns -1 if a random encounter should trigger.
-static func process_step(config: Dictionary, danger: int, party: Array) -> int:
+static func process_step(config: Dictionary, danger: int, party: Array[Dictionary]) -> int:
 	var base: int = config.get("danger_increment", 0)
 	if base <= 0:
 		return danger

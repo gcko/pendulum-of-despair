@@ -5,8 +5,9 @@ extends RefCounted
 ## Source: combat-formulas.md § Act scaling.
 
 ## Danger-counter multiplier per period. combat-formulas.md § Act scaling.
-## Periods past Act III (Act IV/Epilogue) have no design-table row yet and
-## fall through to the Act III value.
+## The design table has no Act IV/Epilogue rows (see issue #265):
+## get_period() reports "act_iii" for everything past act_iii_started, so
+## late-game play carries the Act III value.
 const DANGER_SCALES: Dictionary = {
 	"act_i": 1.0,
 	"act_ii": 1.1,

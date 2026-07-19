@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — PR #268 |
 | **GitHub Issue** | [#185](https://github.com/gcko/pendulum-of-despair/issues/185) |
 | **Source domains** | enemies |
 
@@ -55,3 +55,7 @@ Thread act_scale from GameManager/story state and a location_mod aggregator into
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Resolution (PR #268, 2026-07-19)
+
+`roll_increment` implements `floor(base x act_scale x accessory_mod x location_mod)`; the new `StoryAct` helper supplies the act scale from EventFlags, and a flag-gated `location_mods` JSON hook covers Tunnel Map / Kole-style modifiers (entries authored for Bellhaven Tunnels + Corrund Sewers). Veilstep deferred to #262; Tunnel Map item authoring to #263; Ley Stag suppression to #264.

@@ -3,6 +3,7 @@
   "name": "Overworld",
   "zones": [
     {
+      "_comment": "Increment 148 (forest-light band); geography.md also mentions highland paths at Mountains 252 - reconcile when highland-path tiles are distinguishable (issue #265)",
       "zone_id": "valdris_highlands",
       "name": "Valdris Highlands",
       "terrain_type": "open",

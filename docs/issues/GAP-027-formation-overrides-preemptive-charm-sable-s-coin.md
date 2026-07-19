@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — PR #268 |
 | **GitHub Issue** | [#221](https://github.com/gcko/pendulum-of-despair/issues/221) |
 | **Source domains** | enemies |
 
@@ -53,3 +53,7 @@ Add an optional modifier dict (charm_bonus, force_preemptive) populated from equ
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Resolution (PR #268, 2026-07-19)
+
+`apply_preemptive_bonus` (+25pp, back-attack deducted first, non-stacking) and the `sables_coin_active` EventFlag (consumed at the forced roll, random encounters only, never read by the boss path, re-use refused while active) shipped with full test coverage.
