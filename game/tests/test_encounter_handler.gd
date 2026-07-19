@@ -1,0 +1,68 @@
+extends GutTest
+## Tests for EncounterHandler wiring: act scaling, location modifiers,
+## enemy_act selection, and formation overrides in random encounters.
+## Canon: combat-formulas.md § Danger Counter / § Battle Formations.
+
+const EH = preload("res://scripts/core/encounter_handler.gd")
+const TestHelpers = preload("res://tests/test_helpers.gd")
+
+## Deterministic first-step configs: any counter below 256 yields
+## floor(counter / 256) = 0, so check_encounter can never trigger and
+## no test below depends on the RNG stream.
+const OPEN_RATES: Dictionary = {"normal": 75.0, "back_attack": 12.5, "preemptive": 12.5}
+
+
+func before_each() -> void:
+	TestHelpers.reset_game_state()
+
+
+func after_each() -> void:
+	TestHelpers.reset_game_state()
+	randomize()
+
+
+func test_process_step_applies_act_scale() -> void:
+	# Act II: int(148 * 1.1) = 162 (combat-formulas.md act table x1.1)
+	EventFlags.set_flag("act_ii_started", true)
+	var party: Array[Dictionary] = []
+	var config: Dictionary = {"danger_increment": 148}
+	var result: int = EH.process_step(config, 0, party)
+	assert_eq(result, 162, "Act II scale should apply to the increment")
+
+
+func test_process_step_act_i_unscaled() -> void:
+	var party: Array[Dictionary] = []
+	var config: Dictionary = {"danger_increment": 148}
+	var result: int = EH.process_step(config, 0, party)
+	assert_eq(result, 148, "Act I increment should be the base value")
+
+
+func test_process_step_applies_location_mod() -> void:
+	# Tunnel Map fixture: increment 120 x0.5 => 60 (dungeons-city.md)
+	EventFlags.set_flag("tunnel_map_owned", true)
+	var party: Array[Dictionary] = []
+	var config: Dictionary = {
+		"danger_increment": 120,
+		"location_mods": [{"flag": "tunnel_map_owned", "modifier": 0.5}],
+	}
+	var result: int = EH.process_step(config, 0, party)
+	assert_eq(result, 60, "location_mod should halve the increment")
+
+
+func test_build_random_encounter_enemy_act_follows_story_act() -> void:
+	EventFlags.set_flag("act_ii_started", true)
+	var config: Dictionary = {
+		"groups": [{"format": 1, "enemies": ["iron_beetle"], "weight": 100.0}],
+		"formation_rates": OPEN_RATES,
+	}
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
+	assert_eq(transition.get("enemy_act", ""), "act_ii", "enemy_act should follow story act")
+
+
+func test_build_random_encounter_enemy_act_defaults_act_i() -> void:
+	var config: Dictionary = {
+		"groups": [{"format": 1, "enemies": ["ley_vermin"], "weight": 100.0}],
+		"formation_rates": OPEN_RATES,
+	}
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
+	assert_eq(transition.get("enemy_act", ""), "act_i", "no flags should mean act_i enemies")

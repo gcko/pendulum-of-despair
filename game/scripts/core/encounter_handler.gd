@@ -11,7 +11,10 @@ static func process_step(config: Dictionary, danger: int, party: Array) -> int:
 	if base <= 0:
 		return danger
 	var acc_mod: float = EncounterSystem.get_accessory_modifier(party)
-	var new_danger: int = danger + EncounterSystem.roll_increment(base, 1.0, acc_mod)
+	var loc_mod: float = EncounterSystem.get_location_modifier(config)
+	var new_danger: int = (
+		danger + EncounterSystem.roll_increment(base, StoryAct.get_danger_scale(), acc_mod, loc_mod)
+	)
 	if EncounterSystem.check_encounter(new_danger):
 		return -1
 	return new_danger
@@ -33,6 +36,6 @@ static func build_random_encounter(
 		"formation_type": formation,
 		"return_map_id": map_id,
 		"return_position": player_pos,
-		"enemy_act": "act_i",
+		"enemy_act": StoryAct.get_enemy_act(),
 		"encounter_source": "random",
 	}

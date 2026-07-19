@@ -19,9 +19,28 @@ static func check_encounter(danger_counter: int) -> bool:
 
 
 ## Calculate danger increment for one step.
-## final = floor(base_increment * act_scale * accessory_mod).
-static func roll_increment(base_increment: int, act_scale: float, accessory_mod: float) -> int:
-	return int(float(base_increment) * act_scale * accessory_mod)
+## final = floor(base_increment * act_scale * accessory_mod * location_mod)
+## per combat-formulas.md § Final increment formula. int() truncation
+## equals floor for the non-negative operands used here.
+static func roll_increment(
+	base_increment: int, act_scale: float, accessory_mod: float, location_mod: float = 1.0
+) -> int:
+	return int(float(base_increment) * act_scale * accessory_mod * location_mod)
+
+
+## Aggregate flag-gated location modifiers from a zone/floor config.
+## Each config.location_mods entry {"flag": ..., "modifier": ...} applies
+## while its EventFlags flag is satisfied; entries stack multiplicatively
+## (combat-formulas.md § Encounter rate modifiers: Tunnel Map, Kole's
+## patrol, Veilstep all land here as data).
+static func get_location_modifier(config: Dictionary) -> float:
+	var mod: float = 1.0
+	for entry: Variant in config.get("location_mods", []):
+		if entry is Dictionary:
+			var flag: String = (entry as Dictionary).get("flag", "")
+			if not flag.is_empty() and EventFlags.check_required_flags(flag):
+				mod *= float((entry as Dictionary).get("modifier", 1.0))
+	return mod
 
 
 ## Select an encounter group via weighted random from groups array.

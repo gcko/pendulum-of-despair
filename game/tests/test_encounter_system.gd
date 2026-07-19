@@ -2,6 +2,15 @@ extends GutTest
 ## Tests for EncounterSystem static helpers.
 
 const ES = preload("res://scripts/combat/encounter_system.gd")
+const TestHelpers = preload("res://tests/test_helpers.gd")
+
+
+func before_each() -> void:
+	TestHelpers.reset_game_state()
+
+
+func after_each() -> void:
+	TestHelpers.reset_game_state()
 
 
 func test_check_encounter_zero_counter_never_triggers() -> void:
@@ -82,6 +91,51 @@ func test_roll_formation_all_normal() -> void:
 
 func test_roll_formation_empty_defaults_normal() -> void:
 	assert_eq(ES.roll_formation({}), "normal", "empty rates should default to normal")
+
+
+func test_roll_increment_location_mod_scales() -> void:
+	# Tunnel Map fixture (dungeons-city.md): increment 120 x0.5 => 60
+	var result: int = ES.roll_increment(120, 1.0, 1.0, 0.5)
+	assert_eq(result, 60, "location_mod should scale increment")
+
+
+func test_roll_increment_all_four_factors_floor() -> void:
+	# floor(48 * 1.2 * 0.5 * 0.5) = floor(14.4) = 14
+	var result: int = ES.roll_increment(48, 1.2, 0.5, 0.5)
+	assert_eq(result, 14, "four-factor product should floor to 14")
+
+
+func test_roll_increment_location_mod_defaults_to_identity() -> void:
+	# Omitting location_mod preserves the pre-GAP-025 behavior
+	assert_eq(ES.roll_increment(120, 1.1, 0.5), 66, "3-arg call unchanged")
+
+
+func test_get_location_modifier_no_entries_is_identity() -> void:
+	assert_eq(ES.get_location_modifier({}), 1.0, "no location_mods key = 1.0")
+
+
+func test_get_location_modifier_flag_unset_is_identity() -> void:
+	var config: Dictionary = {"location_mods": [{"flag": "tunnel_map_owned", "modifier": 0.5}]}
+	assert_eq(ES.get_location_modifier(config), 1.0, "unset flag should not apply")
+
+
+func test_get_location_modifier_flag_set_applies() -> void:
+	EventFlags.set_flag("tunnel_map_owned", true)
+	var config: Dictionary = {"location_mods": [{"flag": "tunnel_map_owned", "modifier": 0.5}]}
+	assert_almost_eq(ES.get_location_modifier(config), 0.5, 0.01, "set flag applies x0.5")
+
+
+func test_get_location_modifier_entries_stack_multiplicatively() -> void:
+	EventFlags.set_flag("tunnel_map_owned", true)
+	EventFlags.set_flag("kole_patrol_timing", true)
+	var config: Dictionary = {
+		"location_mods":
+		[
+			{"flag": "tunnel_map_owned", "modifier": 0.5},
+			{"flag": "kole_patrol_timing", "modifier": 0.5},
+		]
+	}
+	assert_almost_eq(ES.get_location_modifier(config), 0.25, 0.01, "mods stack x0.25")
 
 
 func test_get_accessory_modifier_no_equipment() -> void:
