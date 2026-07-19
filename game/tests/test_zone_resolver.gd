@@ -104,9 +104,10 @@ func test_real_zone_map_ids_all_exist_in_overworld_encounters() -> void:
 			assert_has(known_ids, zone_id, "zone map id %s needs an encounter entry" % zone_id)
 
 
-func test_real_zone_map_activates_all_authored_zones() -> void:
-	# GAP-026 acceptance: every authored overworld zone is reachable
-	# (13 original zones + the sacred_sites/urban zero-zones = 15)
+func test_all_authored_zones_are_mapped() -> void:
+	# Mapping completeness: every authored overworld zone has a rect
+	# entry (13 original zones + sacred_sites/urban zero-zones = 15).
+	# Tile-level reachability is proven separately below.
 	var zone_map: Array = DataManager.load_zone_map("overworld")
 	var mapped_ids: Dictionary = {}
 	for entry: Variant in zone_map:
@@ -117,3 +118,38 @@ func test_real_zone_map_activates_all_authored_zones() -> void:
 		if zone is Dictionary:
 			var zone_id: String = (zone as Dictionary).get("zone_id", "")
 			assert_true(mapped_ids.has(zone_id), "authored zone %s must be mapped" % zone_id)
+
+
+func test_every_mapped_zone_has_a_resolving_tile() -> void:
+	# GAP-026 acceptance (reachability): under first-match shadowing at
+	# least one tile must actually RESOLVE to each mapped zone — mapping
+	# presence alone can't prove an entry isn't fully shadowed by
+	# earlier rects. Act-gated entries are checked with their flag set.
+	var zone_map: Array = DataManager.load_zone_map("overworld")
+	assert_false(zone_map.is_empty(), "overworld_zones.json should load")
+	for entry: Variant in zone_map:
+		if not entry is Dictionary:
+			continue
+		var entry_dict: Dictionary = entry as Dictionary
+		var zone_id: String = entry_dict.get("zone_id", "")
+		var flag: String = entry_dict.get("flag", "")
+		if not flag.is_empty():
+			EventFlags.set_flag(flag, true)
+		assert_true(
+			_zone_has_resolving_tile(zone_id, entry_dict, zone_map),
+			"zone %s must have at least one tile resolving to it" % zone_id,
+		)
+		if not flag.is_empty():
+			EventFlags.set_flag(flag, false)
+
+
+func _zone_has_resolving_tile(zone_id: String, entry: Dictionary, zone_map: Array) -> bool:
+	for rect: Variant in entry.get("rects", []):
+		if not (rect is Array and (rect as Array).size() == 4):
+			continue
+		var r: Array = rect as Array
+		for y: int in range(int(r[1]), int(r[3]) + 1):
+			for x: int in range(int(r[0]), int(r[2]) + 1):
+				if ZR.resolve(Vector2i(x, y), zone_map) == zone_id:
+					return true
+	return false
