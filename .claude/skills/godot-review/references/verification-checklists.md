@@ -468,6 +468,7 @@ cannot point to the exact line that handles the case, it's a bug.
 ### Scene Naming Consistency
 - [ ] metadata/map_id must match the scene's relative path under scenes/maps/ (e.g., "towns/roothollow" not "roothollow"). Check all new .tscn files against existing naming pattern. (PR #130: bare map_ids caused Copilot comments)
 - [ ] Test function names must match what they actually assert (e.g., "test_excludes_X" not "test_no_equipment" if only checking one item)
+- [ ] A test claiming a BEHAVIORAL property (reachable/activated/triggered/applied) must assert the behavior, not data presence — verifying an id exists in a table does not prove any input actually produces it (PR #268: "all zones activated" test only checked mapping completeness; a fully first-match-shadowed zone would still pass. Copilot caught it; both round-3 agents called the assertions "stronger than the title" without checking WHAT they asserted)
 
 ### Source Doc Verification
 - [ ] Every value traces to a canonical doc in docs/story/
