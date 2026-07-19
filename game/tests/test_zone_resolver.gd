@@ -104,8 +104,9 @@ func test_real_zone_map_ids_all_exist_in_overworld_encounters() -> void:
 			assert_has(known_ids, zone_id, "zone map id %s needs an encounter entry" % zone_id)
 
 
-func test_real_zone_map_activates_all_thirteen_authored_zones() -> void:
+func test_real_zone_map_activates_all_authored_zones() -> void:
 	# GAP-026 acceptance: every authored overworld zone is reachable
+	# (13 original zones + the sacred_sites/urban zero-zones = 15)
 	var zone_map: Array = DataManager.load_zone_map("overworld")
 	var mapped_ids: Dictionary = {}
 	for entry: Variant in zone_map:

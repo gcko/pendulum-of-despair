@@ -116,3 +116,22 @@ func test_boss_path_never_touches_sables_coin() -> void:
 	file.close()
 	assert_true(text.contains('"formation_type": "normal"'), "boss formation stays normal")
 	assert_false(text.contains("sables_coin"), "boss path must not consume the coin")
+
+
+func test_full_trigger_path_builds_zone_transition() -> void:
+	# End-to-end over a REAL overworld zone config: danger 65536 makes
+	# floor(counter/256) >= 256, so ANY roll triggers (deterministic).
+	var encounters: Dictionary = DataManager.load_encounters("overworld")
+	var config: Dictionary = ZoneResolver.find_entry(
+		"thornmere_wilds", encounters.get("zones", []), "zone_id"
+	)
+	assert_false(config.is_empty(), "thornmere_wilds config should exist")
+	var party: Array[Dictionary] = []
+	var step: int = EH.process_step(config, 65536, party)
+	assert_eq(step, -1, "saturated counter must always trigger an encounter")
+	var transition: Dictionary = EH.build_random_encounter(config, "overworld", Vector2.ZERO)
+	assert_false(transition.is_empty(), "transition should be built")
+	assert_eq(transition.get("enemy_act", ""), "act_i", "Act I party gets act_i tables")
+	assert_eq(transition.get("encounter_source", ""), "random")
+	var group: Array = transition.get("encounter_group", [])
+	assert_gt(group.size(), 0, "a real enemy group should be selected")

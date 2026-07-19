@@ -190,6 +190,8 @@ func _launch_wave(wave_num: int, data: Dictionary) -> void:
 		"formation_type": "normal",
 		"return_map_id": "dungeons/fenmothers_hollow_f3",
 		"return_position": player_pos,
+		# Fixed act_i by design: the Cleansing Sequence is the Act-I
+		# Fenmother finale — waves must not rescale with story period.
 		"enemy_act": "act_i",
 		"encounter_source": "cleansing_wave",
 		"wave_num": wave_num,
