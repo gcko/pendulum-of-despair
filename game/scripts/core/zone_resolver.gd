@@ -40,6 +40,29 @@ static func find_entry(zone_id: String, entries: Array, id_key: String) -> Dicti
 	return {}
 
 
+## Build the encounter setup for a freshly loaded map from its
+## encounters-file content: the entry list, the id key that selects
+## entries ("zone_id" for zone maps, "floor_id" for floors maps), and
+## the initially active config (floor_id-meta match, falling back to
+## the first entry for legacy floor configs). use_zones tells the
+## caller whether a per-tile zone map may apply — floors maps must not
+## get one, since floor_id entries can never match resolved zone ids.
+static func build_encounter_setup(encounters: Dictionary, floor_id: String) -> Dictionary:
+	var setup: Dictionary = {"entries": [], "id_key": "floor_id", "config": {}, "use_zones": false}
+	if encounters.is_empty():
+		return setup
+	var use_zones: bool = encounters.has("zones") and not encounters.has("floors")
+	var entries: Array = encounters.get("floors", encounters.get("zones", []))
+	setup.use_zones = use_zones
+	setup.entries = entries
+	setup.id_key = "zone_id" if use_zones else "floor_id"
+	setup.config = find_entry(floor_id, entries, setup.id_key)
+	if setup.config.is_empty() and not floor_id.is_empty() and not entries.is_empty():
+		if entries[0] is Dictionary:
+			setup.config = entries[0]
+	return setup
+
+
 static func _rect_contains(rect: Array, tile: Vector2i) -> bool:
 	return (
 		tile.x >= int(rect[0])

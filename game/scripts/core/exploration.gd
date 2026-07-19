@@ -134,27 +134,15 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_current_floor_id = _current_map.get_meta("floor_id", "")
 	if _player != null:
 		_last_player_tile = Vector2i(_player.position) / 16
-	_encounter_config = {}
-	_encounter_entries = []
-	_encounter_id_key = "floor_id"
 	_danger_counter = 0
 	var dungeon_id: String = _current_map.get_meta("dungeon_id", _current_map_id)
-	_zone_map = DataManager.load_zone_map(dungeon_id)
-	var encounters: Dictionary = DataManager.load_encounters(dungeon_id)
-	if not encounters.is_empty():
-		var use_zones: bool = encounters.has("zones") and not encounters.has("floors")
-		var entries: Array = encounters.get("floors", encounters.get("zones", []))
-		var id_key: String = "zone_id" if use_zones else "floor_id"
-		_encounter_entries = entries
-		_encounter_id_key = id_key
-		var match_id: String = _current_floor_id
-		for entry: Variant in entries:
-			if entry is Dictionary and (entry as Dictionary).get(id_key, "") == match_id:
-				_encounter_config = entry as Dictionary
-				break
-		if _encounter_config.is_empty() and not match_id.is_empty() and not entries.is_empty():
-			if entries[0] is Dictionary:
-				_encounter_config = entries[0]
+	var setup: Dictionary = ZoneResolver.build_encounter_setup(
+		DataManager.load_encounters(dungeon_id), _current_floor_id
+	)
+	_encounter_entries = setup.entries
+	_encounter_id_key = setup.id_key
+	_encounter_config = setup.config
+	_zone_map = DataManager.load_zone_map(dungeon_id) if setup.use_zones else []
 	var location_name: String = _current_map.get_meta("location_name", "")
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)

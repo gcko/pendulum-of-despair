@@ -92,7 +92,7 @@
       ]
     },
     {
-      "_comment": "Ley-scarred eastern Valdris border around Greyvale; zone has no sanctioned design-table row - see follow-up issue",
+      "_comment": "Ley-scarred eastern Valdris border around Greyvale; zone has no sanctioned design-table row (issue #265; enemy roster question in #270)",
       "zone_id": "ley_scarred_plains",
       "rects": [
         [60, 16, 82, 28]
