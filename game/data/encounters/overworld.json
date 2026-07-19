@@ -308,11 +308,11 @@
       "terrain_type": "low_visibility",
       "act": "act_i",
       "danger_tier": 2,
-      "danger_increment": 160,
+      "danger_increment": 148,
       "formation_rates": {
-        "normal": 75.0,
-        "back_attack": 15.0,
-        "preemptive": 10.0
+        "normal": 68.75,
+        "back_attack": 18.75,
+        "preemptive": 12.5
       },
       "groups": [
         {
@@ -603,6 +603,36 @@
           "weight": 6.25
         }
       ]
+    },
+    {
+      "_comment": "geography.md Encounter Zones: Sacred sites - no encounters (Ashgrove, Stillwater Hollow)",
+      "zone_id": "sacred_sites",
+      "name": "Sacred Sites",
+      "terrain_type": "sacred",
+      "act": "all",
+      "danger_tier": 0,
+      "danger_increment": 0,
+      "formation_rates": {
+        "normal": 100.0,
+        "back_attack": 0.0,
+        "preemptive": 0.0
+      },
+      "groups": []
+    },
+    {
+      "_comment": "geography.md Encounter Zones: Urban interior - no encounters (settlement approach tiles)",
+      "zone_id": "urban",
+      "name": "Urban Approach",
+      "terrain_type": "urban",
+      "act": "all",
+      "danger_tier": 0,
+      "danger_increment": 0,
+      "formation_rates": {
+        "normal": 100.0,
+        "back_attack": 0.0,
+        "preemptive": 0.0
+      },
+      "groups": []
     },
     {
       "zone_id": "roads",

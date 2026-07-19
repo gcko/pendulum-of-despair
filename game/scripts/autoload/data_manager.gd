@@ -136,6 +136,20 @@ func load_encounters(dungeon: String) -> Dictionary:
 	return {}
 
 
+## Load the ordered tile-rect -> encounter-zone table for a map.
+## Returns the zone_rects array, or empty if no zone map file exists.
+func load_zone_map(dungeon: String) -> Array:
+	var path: String = "res://data/encounters/%s_zones.json" % dungeon
+	if not FileAccess.file_exists(path):
+		return []
+	var data: Variant = load_json(path)
+	if data is Dictionary:
+		var rects: Variant = (data as Dictionary).get("zone_rects", [])
+		if rects is Array:
+			return rects
+	return []
+
+
 ## Load ability data for a character. Returns the abilities array, or empty if missing.
 func load_abilities(character_id: String) -> Array:
 	var path: String = "res://data/abilities/%s.json" % character_id

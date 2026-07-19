@@ -16,6 +16,9 @@ var _transition_tween: Tween = null
 var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
+var _encounter_entries: Array = []
+var _encounter_id_key: String = "floor_id"
+var _zone_map: Array = []
 var _current_floor_id: String = ""
 var _cleansing: CleansingSequence = null
 var _key_item_chest_ids: Dictionary = {}
@@ -132,13 +135,18 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	if _player != null:
 		_last_player_tile = Vector2i(_player.position) / 16
 	_encounter_config = {}
+	_encounter_entries = []
+	_encounter_id_key = "floor_id"
 	_danger_counter = 0
 	var dungeon_id: String = _current_map.get_meta("dungeon_id", _current_map_id)
+	_zone_map = DataManager.load_zone_map(dungeon_id)
 	var encounters: Dictionary = DataManager.load_encounters(dungeon_id)
 	if not encounters.is_empty():
 		var use_zones: bool = encounters.has("zones") and not encounters.has("floors")
 		var entries: Array = encounters.get("floors", encounters.get("zones", []))
 		var id_key: String = "zone_id" if use_zones else "floor_id"
+		_encounter_entries = entries
+		_encounter_id_key = id_key
 		var match_id: String = _current_floor_id
 		for entry: Variant in entries:
 			if entry is Dictionary and (entry as Dictionary).get(id_key, "") == match_id:
@@ -666,6 +674,25 @@ func get_current_map_id() -> String:
 
 func get_encounter_config() -> Dictionary:
 	return _encounter_config
+
+
+func get_zone_map() -> Array:
+	return _zone_map
+
+
+func get_player_tile() -> Vector2i:
+	return _last_player_tile
+
+
+## Swap the active encounter config to the entry matching [param zone_id]
+## (per-tile zone selection, GAP-026). The danger counter is deliberately
+## untouched — it resets only after battle or on map transition
+## (combat-formulas.md § Danger Counter). An unmatched id clears the
+## config; there is no silent fallback to the first entry.
+func set_encounter_zone(zone_id: String) -> void:
+	_encounter_config = ZoneResolver.find_entry(zone_id, _encounter_entries, _encounter_id_key)
+	if _encounter_config.is_empty() and not zone_id.is_empty():
+		push_warning("Exploration: no encounter entry for zone '%s'" % zone_id)
 
 
 func get_danger_counter() -> int:
