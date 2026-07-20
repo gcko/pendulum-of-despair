@@ -3,9 +3,6 @@ extends Control
 
 const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const COLOR_NORMAL: Color = Color("#ccddff")
-const COLOR_HP: Color = Color("#44cc44")
-const COLOR_HP_LOW: Color = Color("#ff4444")
-const COLOR_MP: Color = Color("#4488ff")
 
 const STAT_NAMES: Array[String] = ["atk", "def", "mag", "mdef", "spd", "lck"]
 const STAT_DISPLAY: Array[String] = ["ATK", "DEF", "MAG", "MDEF", "SPD", "LCK"]
@@ -93,10 +90,10 @@ func _update_display() -> void:
 	var max_hp: int = member.get("max_hp", 1)
 	if _hp_label != null:
 		_hp_label.text = "HP %d/%d" % [hp, max_hp]
-		_hp_label.modulate = COLOR_HP_LOW if hp < max_hp / 4 else COLOR_HP
+		_hp_label.modulate = StatBarHelpers.hp_fill_color(hp, max_hp)
 	if _mp_label != null:
 		_mp_label.text = "MP %d/%d" % [member.get("current_mp", 0), member.get("max_mp", 0)]
-		_mp_label.modulate = COLOR_MP
+		_mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
 
 	# Core stats
 	for i: int in range(_stat_labels.size()):

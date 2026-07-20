@@ -39,3 +39,5 @@ static func reset_game_state() -> void:
 	PartyState.ley_crystals.clear()
 	PartyState.puzzle_state.clear()
 	PartyState.is_at_save_point = false
+	PartyState.playtime = 0
+	PartyState.location_name = ""

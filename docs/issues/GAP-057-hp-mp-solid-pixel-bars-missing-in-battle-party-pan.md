@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — PR #275 |
 | **GitHub Issue** | [#203](https://github.com/gcko/pendulum-of-despair/issues/203) |
 | **Source domains** | ui |
 
@@ -56,3 +56,7 @@ Add HPBar/MPBar ColorRect (bg + fill) to each battle and menu Row; compute fill_
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Resolution (PR #275, 2026-07-20)
+
+Solid pixel HP/MP fill bars now render in battle party rows (new instanced scene `game/scenes/ui/battle_party_panel.tscn`) and main-menu party rows, alongside the retained numeric values. HP fill uses the shipped #44cc44 (doc lists "#44ff44 / #44cc44" ambiguously) and turns #ff4444 below 25% via the shipped integer-division idiom, centralized in `StatBarHelpers`.

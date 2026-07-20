@@ -21,7 +21,8 @@ bundle — slice them into their own multi-PR efforts.
 | Bundle 3b | GAP-009 data-driven boss AI | ✅ merged (PR #255) |
 | Bundle 4a | Act-I enemy kits + selector schema (#249/#250) | ✅ merged (PR #258) |
 | Bundle 4b | Paralysis + player-ATB auto-skip (#248) | ✅ merged (PR #259) |
-| Bundle 5 | GAP-025 encounter scaling, GAP-026 per-tile zones, GAP-027 formation overrides | 🔄 in review |
+| Bundle 5 | GAP-025 encounter scaling, GAP-026 per-tile zones, GAP-027 formation overrides | ✅ merged (PR #268) |
+| Bundle 6 | GAP-057 HP/MP bars, GAP-063 Weave Gauge (guest row → #272) | 🔄 in review |
 
 > Bundle 2 was split after analysis: each of GAP-003/008/010 has an independent
 > "do-now" core plus a tail that depends on unbuilt systems (GAP-002 abilities,

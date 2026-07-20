@@ -7,9 +7,6 @@ enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-const COLOR_HP: Color = Color("#44cc44")
-const COLOR_HP_LOW: Color = Color("#ff4444")
-const COLOR_MP: Color = Color("#4488ff")
 const COLOR_GOLD: Color = Color("#ffcc44")
 const COLOR_WINDOW_BG: Color = Color("#000040")
 
@@ -323,17 +320,38 @@ func _update_party_row(slot: int, member: Dictionary) -> void:
 	if lv_label != null:
 		lv_label.text = "LV %d" % member.get("level", 1)
 
-	var hp_label: Label = row.get_node_or_null("HPLabel")
+	var hp: int = member.get("current_hp", 0)
+	var max_hp: int = member.get("max_hp", 1)
+	var hp_color: Color = StatBarHelpers.hp_fill_color(hp, max_hp)
+	var hp_label: Label = row.get_node_or_null("HPCluster/HPLabel")
 	if hp_label != null:
-		var hp: int = member.get("current_hp", 0)
-		var max_hp: int = member.get("max_hp", 1)
 		hp_label.text = "HP %d/%d" % [hp, max_hp]
-		hp_label.modulate = COLOR_HP_LOW if hp < max_hp / 4 else COLOR_HP
+		hp_label.modulate = hp_color
+	_set_bar_fill(row, "HPCluster/HPBarBg", hp, max_hp, hp_color)
 
-	var mp_label: Label = row.get_node_or_null("MPLabel")
+	var mp: int = member.get("current_mp", 0)
+	var max_mp: int = member.get("max_mp", 0)
+	var mp_label: Label = row.get_node_or_null("MPCluster/MPLabel")
 	if mp_label != null:
-		mp_label.text = "MP %d/%d" % [member.get("current_mp", 0), member.get("max_mp", 0)]
-		mp_label.modulate = COLOR_MP
+		mp_label.text = "MP %d/%d" % [mp, max_mp]
+		mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
+	_set_bar_fill(row, "MPCluster/MPBarBg", mp, max_mp, StatBarHelpers.COLOR_MP_FILL)
+
+
+## Solid pixel fill bars alongside the numerics (ui-design.md § 3.3).
+## Fill width is set against the track's authored width — deterministic
+## under headless container layout.
+func _set_bar_fill(
+	row: Control, bg_path: String, current: int, max_value: int, fill_color: Color
+) -> void:
+	var bg: ColorRect = row.get_node_or_null(bg_path)
+	if bg == null:
+		return
+	var fill: ColorRect = bg.get_node_or_null("%sFill" % bg_path.get_file().trim_suffix("Bg"))
+	if fill == null:
+		return
+	fill.size.x = StatBarHelpers.fill_width(current, max_value, bg.custom_minimum_size.x)
+	fill.color = fill_color
 
 
 func _clear_char_highlight() -> void:

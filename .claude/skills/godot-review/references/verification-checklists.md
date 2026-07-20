@@ -469,6 +469,7 @@ cannot point to the exact line that handles the case, it's a bug.
 - [ ] metadata/map_id must match the scene's relative path under scenes/maps/ (e.g., "towns/roothollow" not "roothollow"). Check all new .tscn files against existing naming pattern. (PR #130: bare map_ids caused Copilot comments)
 - [ ] Test function names must match what they actually assert (e.g., "test_excludes_X" not "test_no_equipment" if only checking one item)
 - [ ] A test claiming a BEHAVIORAL property (reachable/activated/triggered/applied) must assert the behavior, not data presence — verifying an id exists in a table does not prove any input actually produces it (PR #268: "all zones activated" test only checked mapping completeness; a fully first-match-shadowed zone would still pass. Copilot caught it; both round-3 agents called the assertions "stronger than the title" without checking WHAT they asserted)
+- [ ] When one computed value feeds multiple sinks (label modulate + bar fill, text + tooltip), compute it ONCE into a local and reuse — scan each function for repeated identical helper calls, especially in per-frame paths (PR #275: hp_fill_color computed twice per row in both battle poll and menu refresh; 7 agents over 3 rounds audited allocations but missed the duplicate call — Copilot caught it)
 
 ### Source Doc Verification
 - [ ] Every value traces to a canonical doc in docs/story/

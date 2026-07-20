@@ -66,15 +66,41 @@ text = "EDREN"
 custom_minimum_size = Vector2(80, 0)
 text = "LV 1"
 
-[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row0"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0/HPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = "HP 95/95"
 
-[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/HPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/HPCluster/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row0"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row0/MPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = "MP 15/15"
+
+[node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/MPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
 
 [node name="Row1" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
 size_flags_vertical = 3
@@ -89,15 +115,41 @@ text = "CAEL"
 custom_minimum_size = Vector2(80, 0)
 text = "LV 1"
 
-[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row1"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1/HPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = "HP 78/78"
 
-[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/HPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/HPCluster/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row1"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row1/MPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = "MP 25/25"
+
+[node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/MPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
 
 [node name="Row2" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
 size_flags_vertical = 3
@@ -112,15 +164,41 @@ text = ""
 custom_minimum_size = Vector2(80, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row2"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2/HPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = ""
 
-[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/HPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/HPCluster/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row2"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row2/MPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = ""
+
+[node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/MPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
 
 [node name="Row3" type="HBoxContainer" parent="MainPanel/Margin/Rows"]
 size_flags_vertical = 3
@@ -135,15 +213,41 @@ text = ""
 custom_minimum_size = Vector2(80, 0)
 text = ""
 
-[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row3"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="HPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3/HPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = ""
 
-[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3"]
-custom_minimum_size = Vector2(160, 0)
+[node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/HPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/HPCluster/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPCluster" type="VBoxContainer" parent="MainPanel/Margin/Rows/Row3"]
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="MPLabel" type="Label" parent="MainPanel/Margin/Rows/Row3/MPCluster"]
+custom_minimum_size = Vector2(160, 0)
 text = ""
+
+[node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/MPCluster"]
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(240, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
 
 [node name="CommandPanel" type="PanelContainer" parent="."]
 offset_left = 888.0
