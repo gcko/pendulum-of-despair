@@ -96,3 +96,21 @@ func test_empty_member_hides_row() -> void:
 	_panel.update_party([_member(400, 800), {}], {"party_0": 0})
 	var row1: HBoxContainer = _panel.get_node_or_null("Rows/Row1")
 	assert_false(row1.visible, "empty member dict hides the whole row")
+
+
+func test_active_slot_highlights_name() -> void:
+	_panel.set_active_slot(0)
+	_panel.update_party([_member(400, 800)], {"party_0": 0})
+	var name_label: Label = _row_node(0, "NameLabel")
+	assert_eq(name_label.modulate, _panel.COLOR_NAME_ACTIVE, "acting member's name lights up")
+	_panel.set_active_slot(-1)
+	_panel.update_party([_member(400, 800)], {"party_0": 0})
+	assert_eq(name_label.modulate, _panel.COLOR_NAME_NORMAL, "cleared slot restores normal")
+
+
+func test_missing_name_falls_back_to_placeholder() -> void:
+	var member: Dictionary = _member(400, 800)
+	member["character_data"] = {}
+	_panel.update_party([member], {"party_0": 0})
+	var name_label: Label = _row_node(0, "NameLabel")
+	assert_eq(name_label.text, "???", "missing name renders the placeholder")

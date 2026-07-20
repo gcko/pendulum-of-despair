@@ -8,7 +8,7 @@
 | **Type** | missing-feature |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | partial — Weave Gauge shipped in PR #275; guest row moved to #272 |
 | **GitHub Issue** | [#227](https://github.com/gcko/pendulum-of-despair/issues/227) |
 | **Source domains** | ui |
 
@@ -55,3 +55,7 @@ Add a conditional WeaveBar for Maren and a 5th compact Row visible when a guest 
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Partial resolution (PR #275, 2026-07-20)
+
+Maren's purple (#aa44ff) Weave Gauge ships: thin bar below her MP bar in battle rows, fill = wg/100 from live battle state. The guest-NPC 5th row is deferred to issue #272 — the engine has no guest support (no Cordwyn/Kerra data, all party iteration capped at 4), so the row would have no data source.

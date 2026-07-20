@@ -75,6 +75,7 @@ custom_minimum_size = Vector2(160, 0)
 text = "HP 95/95"
 
 [node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/HPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0.133, 0, 0, 1)
 
@@ -92,6 +93,7 @@ custom_minimum_size = Vector2(160, 0)
 text = "MP 15/15"
 
 [node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row0/MPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0, 0.067, 0.133, 1)
 
@@ -122,6 +124,7 @@ custom_minimum_size = Vector2(160, 0)
 text = "HP 78/78"
 
 [node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/HPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0.133, 0, 0, 1)
 
@@ -139,6 +142,7 @@ custom_minimum_size = Vector2(160, 0)
 text = "MP 25/25"
 
 [node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row1/MPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0, 0.067, 0.133, 1)
 
@@ -169,6 +173,7 @@ custom_minimum_size = Vector2(160, 0)
 text = ""
 
 [node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/HPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0.133, 0, 0, 1)
 
@@ -186,6 +191,7 @@ custom_minimum_size = Vector2(160, 0)
 text = ""
 
 [node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row2/MPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0, 0.067, 0.133, 1)
 
@@ -216,6 +222,7 @@ custom_minimum_size = Vector2(160, 0)
 text = ""
 
 [node name="HPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/HPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0.133, 0, 0, 1)
 
@@ -233,6 +240,7 @@ custom_minimum_size = Vector2(160, 0)
 text = ""
 
 [node name="MPBarBg" type="ColorRect" parent="MainPanel/Margin/Rows/Row3/MPCluster"]
+size_flags_horizontal = 0
 custom_minimum_size = Vector2(240, 12)
 color = Color(0, 0.067, 0.133, 1)
 

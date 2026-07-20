@@ -81,7 +81,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-053](GAP-053-maren-s-refuge-missing-its-basement-library-and-lo.md) | World | MEDIUM | M | open | Maren's Refuge missing its basement library and lore layer |
 | [GAP-055](GAP-055-ironmouth-implemented-as-an-escape-corridor-diverg.md) | World | MEDIUM | M | open | Ironmouth implemented as an escape corridor, diverging from the designed Carradan port city |
 | [GAP-056](GAP-056-valdris-crown-act-i-interiors-deferred-chapel-cael.md) | World | MEDIUM | M | open (overstated) | Valdris Crown Act-I interiors deferred: Chapel, Cael's Quarters, Court interiors |
-| [GAP-057](GAP-057-hp-mp-solid-pixel-bars-missing-in-battle-party-pan.md) | UI | MEDIUM | M | open | HP/MP solid pixel bars missing in battle party panel and main menu (numeric text only) |
+| [GAP-057](GAP-057-hp-mp-solid-pixel-bars-missing-in-battle-party-pan.md) | UI | MEDIUM | M | resolved (PR #275) | HP/MP solid pixel fill bars in battle party panel and main menu |
 | [GAP-058](GAP-058-32x32-character-portraits-and-menu-walking-sprites.md) | UI | MEDIUM | L | open | 32x32 character portraits and menu walking sprites not implemented in any menu/HUD |
 | [GAP-059](GAP-059-unified-8x8-status-effect-icon-system-not-rendered.md) | UI | MEDIUM | L | open | Unified 8x8 status-effect icon system not rendered anywhere |
 | [GAP-060](GAP-060-abilities-screen-lacks-character-specific-ui-and-s.md) | UI | MEDIUM | M | open | Abilities screen lacks character-specific UI and shows hardcoded resource values |
@@ -108,7 +108,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-041](GAP-041-cael-s-act-iv-grey-border-flicker-only-specified-d.md) | Dialogue | LOW | S | open | Cael's Act IV grey border flicker (only specified dialogue-box visual variation) not implemented |
 | [GAP-046](GAP-046-duplicate-divergent-chancellor-haren-dialogue-file.md) | Story | LOW | S | ✅ fixed | Duplicate, divergent Chancellor Haren dialogue files — placed NPC uses the thin stub |
 | [GAP-054](GAP-054-duskfen-settlement-unbuilt-only-the-spirit-shrine.md) | World | LOW | L | open | Duskfen settlement unbuilt — only the spirit-shrine hub exists |
-| [GAP-063](GAP-063-maren-s-battle-weave-gauge-and-guest-npc-5th-party.md) | UI | LOW | M | open | Maren's battle Weave Gauge and guest-NPC 5th party row not implemented |
+| [GAP-063](GAP-063-maren-s-battle-weave-gauge-and-guest-npc-5th-party.md) | UI | LOW | M | partial (PR #275; guest row moved to #272) | Maren's Weave Gauge shipped; guest-NPC 5th party row deferred |
 | [GAP-064](GAP-064-window-color-config-sliders-update-preview-only-ne.md) | UI | LOW | M | open | Window Color config sliders update preview only — never applied to live UI chrome |
 | [GAP-065](GAP-065-item-screen-rendered-as-single-column-without-item.md) | UI | LOW | M | open | Item screen rendered as single column without item icons (design specifies two-column grid) |
 | [GAP-074](GAP-074-multiple-config-toggles-persist-but-have-no-runtim.md) | Save | LOW | M | open | Multiple config toggles persist but have no runtime consumers (High-Res Text, Mono Audio, Transition Style, Screen Shake, always-on cues) |

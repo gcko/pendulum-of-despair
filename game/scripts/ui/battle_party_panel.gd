@@ -13,6 +13,10 @@ const COLOR_NAME_ACTIVE: Color = Color("#ffff88")
 ## Weave Gauge maximum charge (abilities.md: WG 0-100).
 const WEAVE_MAX: int = 100
 
+## Precomputed ATB gauge keys — update_party runs in a per-frame poll,
+## so avoid rebuilding "party_%d" strings every frame.
+const PARTY_KEYS: Array[String] = ["party_0", "party_1", "party_2", "party_3"]
+
 ## Per-row node caches (Dictionary of refs), filled once in _ready so the
 ## per-frame poll does no get_node_or_null lookups.
 var _rows: Array = [{}, {}, {}, {}]
@@ -36,7 +40,7 @@ func update_party(members: Array, gauges: Dictionary) -> void:
 			row.visible = false
 			continue
 		row.visible = true
-		_update_row(i, m, gauges.get("party_%d" % i, 0))
+		_update_row(i, m, gauges.get(PARTY_KEYS[i], 0))
 
 
 ## Set which party member is currently acting.
@@ -77,7 +81,7 @@ func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
 	if hp_label != null:
 		hp_label.text = "%d/%d" % [hp, max_hp]
 		hp_label.modulate = StatBarHelpers.hp_fill_color(hp, max_hp)
-	_set_fill(refs, "hp", hp, max_hp)
+	_set_fill(refs["hp_bg"], refs["hp_fill"], hp, max_hp)
 	var hp_fill: ColorRect = refs["hp_fill"]
 	if hp_fill != null:
 		hp_fill.color = StatBarHelpers.hp_fill_color(hp, max_hp)
@@ -88,10 +92,10 @@ func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
 	if mp_label != null:
 		mp_label.text = "%d/%d" % [mp, max_mp]
 		mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
-	_set_fill(refs, "mp", mp, max_mp)
+	_set_fill(refs["mp_bg"], refs["mp_fill"], mp, max_mp)
 
 	_update_weave(refs, member)
-	_set_fill(refs, "atb", atb_gauge, ATBSystemScript.GAUGE_MAX)
+	_set_fill(refs["atb_bg"], refs["atb_fill"], atb_gauge, ATBSystemScript.GAUGE_MAX)
 
 
 ## Maren-only Weave Gauge below the MP bar (ui-design.md § 2.9).
@@ -102,14 +106,12 @@ func _update_weave(refs: Dictionary, member: Dictionary) -> void:
 	var shows: bool = StatBarHelpers.shows_weave_gauge(member.get("character_id", ""))
 	weave_bg.visible = shows
 	if shows:
-		_set_fill(refs, "weave", member.get("wg", 0), WEAVE_MAX)
+		_set_fill(refs["weave_bg"], refs["weave_fill"], member.get("wg", 0), WEAVE_MAX)
 
 
 ## Size a fill rect against its track's authored width — deterministic
 ## under headless container layout.
-func _set_fill(refs: Dictionary, key: String, current: int, max_value: int) -> void:
-	var bg: ColorRect = refs["%s_bg" % key]
-	var fill: ColorRect = refs["%s_fill" % key]
+func _set_fill(bg: ColorRect, fill: ColorRect, current: int, max_value: int) -> void:
 	if bg == null or fill == null:
 		return
 	fill.size.x = StatBarHelpers.fill_width(current, max_value, bg.custom_minimum_size.x)
