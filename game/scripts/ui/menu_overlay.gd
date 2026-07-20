@@ -322,11 +322,12 @@ func _update_party_row(slot: int, member: Dictionary) -> void:
 
 	var hp: int = member.get("current_hp", 0)
 	var max_hp: int = member.get("max_hp", 1)
+	var hp_color: Color = StatBarHelpers.hp_fill_color(hp, max_hp)
 	var hp_label: Label = row.get_node_or_null("HPCluster/HPLabel")
 	if hp_label != null:
 		hp_label.text = "HP %d/%d" % [hp, max_hp]
-		hp_label.modulate = StatBarHelpers.hp_fill_color(hp, max_hp)
-	_set_bar_fill(row, "HPCluster/HPBarBg", hp, max_hp, StatBarHelpers.hp_fill_color(hp, max_hp))
+		hp_label.modulate = hp_color
+	_set_bar_fill(row, "HPCluster/HPBarBg", hp, max_hp, hp_color)
 
 	var mp: int = member.get("current_mp", 0)
 	var max_mp: int = member.get("max_mp", 0)
