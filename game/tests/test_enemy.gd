@@ -269,3 +269,31 @@ func test_mixed_format_neutral_element() -> void:
 		"absorb": [],
 	}
 	assert_eq(enemy.get_element_multiplier("earth"), 1.0, "neutral element should return 1.0")
+
+
+func test_initialize_falls_back_to_home_act_table() -> void:
+	# Encounter zones can mix enemies whose definitions live in
+	# different act files (the roads zone mixes act_i road_bandit with
+	# act_ii road_viper), and each ID is defined in exactly one table —
+	# so lookup must fall back past the requested act table.
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("sea_crawler", "act_i")
+	assert_true(enemy.is_alive, "sea_crawler should load despite wrong act hint")
+	assert_gt(enemy.current_hp, 0, "stats should come from the home table")
+	assert_eq(enemy.enemy_act, "act_ii", "enemy_act should reflect the actual table")
+
+
+func test_initialize_fallback_covers_interlude_period() -> void:
+	# During the Interlude no overworld enemy lives in interlude.json;
+	# battles must still resolve every ID to its home table.
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("road_viper", "interlude")
+	assert_true(enemy.is_alive, "road_viper should load during the Interlude")
+	assert_eq(enemy.enemy_act, "act_ii", "road_viper lives in act_ii.json")
+
+
+func test_initialize_unknown_id_still_errors() -> void:
+	var enemy: Enemy = _create_enemy()
+	enemy.initialize("definitely_not_an_enemy", "act_i")
+	assert_push_error("Enemy: Failed to load 'definitely_not_an_enemy' from act 'act_i'")
+	assert_false(enemy.is_alive, "unknown id should leave the enemy dead")

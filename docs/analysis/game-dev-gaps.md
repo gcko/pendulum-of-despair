@@ -262,7 +262,7 @@ transformation that can be validated line-by-line against source docs.
 
 **Notes:**
 - Known gap: ~95 unique enemy/boss IDs referenced in design docs do not yet exist in gap 1.2 enemy data. Encounter files use thematically appropriate substitute IDs from existing enemies. Formation composition counts match source docs. A gap 1.2 supplement pass may be needed to add missing dungeon-specific enemies.
-- 27 encounter files: 20 world dungeons + 6 city dungeons + 1 overworld (12 terrain zones)
+- 28 encounter files: 20 world dungeons + 6 city dungeons + 1 overworld (15 terrain zones) + 1 overworld zone-rect map
 - Schema extends tech-arch Section 2.6: renamed floor→floor_id, restructured formation rates into object, added terrain_type/danger_tier/format fields
 - Act scaling multipliers (x1.0/x1.1/x1.2/x1.1) and encounter rate modifiers (Ward Talisman, Veilstep, etc.) applied at runtime, not in static data
 - Dreamer's Fault uses extended 5-6 pack format with non-standard weights

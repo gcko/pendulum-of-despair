@@ -13,6 +13,7 @@ func _init(exploration: Exploration) -> void:
 
 
 func process_encounter_step() -> void:
+	_update_encounter_zone()
 	var config: Dictionary = _exploration.get_encounter_config()
 	if config.is_empty():
 		return
@@ -30,6 +31,17 @@ func process_encounter_step() -> void:
 		_exploration.set_danger_counter(result)
 
 
+## Re-resolve the encounter zone from the player's tile (GAP-026).
+## Maps without a zone-rect table keep their static floor_id config.
+func _update_encounter_zone() -> void:
+	var zone_map: Array = _exploration.get_zone_map()
+	if zone_map.is_empty():
+		return
+	var zone_id: String = ZoneResolver.resolve(_exploration.get_player_tile(), zone_map)
+	if zone_id != _exploration.get_encounter_config().get("zone_id", ""):
+		_exploration.set_encounter_zone(zone_id)
+
+
 func trigger_random_encounter() -> void:
 	if _exploration.is_transitioning():
 		return
@@ -42,6 +54,7 @@ func trigger_random_encounter() -> void:
 			_exploration.get_encounter_config(),
 			_exploration.get_current_map_id(),
 			player.position,
+			PartyState.get_active_party(),
 		)
 	)
 	if transition.is_empty():

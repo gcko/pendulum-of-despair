@@ -26,6 +26,12 @@ signal died
 ## Fixed critical hit rate for all enemies (per combat-formulas.md).
 const ENEMY_CRIT_RATE: float = 0.05
 
+## Enemy stat tables searched by initialize(). Each enemy ID is defined
+## in exactly one table, but encounter zones can mix residents of
+## different tables (the roads zone mixes act_i and act_ii enemies), so
+## lookup falls back past the requested act.
+const ACT_TABLES: Array[String] = ["act_i", "act_ii", "act_iii", "interlude", "optional"]
+
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 
 ## Type-based default status immunities (per bestiary/README.md).
@@ -89,11 +95,7 @@ func initialize(p_enemy_id: String, p_act: String) -> void:
 
 	enemy_id = p_enemy_id
 	enemy_act = p_act
-	var enemies: Array = DataManager.load_enemies(p_act)
-	for entry: Dictionary in enemies:
-		if entry.get("id", "") == enemy_id:
-			enemy_data = entry
-			break
+	enemy_data = _find_enemy_entry(p_act)
 	if enemy_data.is_empty():
 		push_error("Enemy: Failed to load '%s' from act '%s'" % [enemy_id, p_act])
 		return
@@ -345,6 +347,24 @@ func roll_drop() -> Dictionary:
 		"item_id": drop_data.get("item_id", "") if success else "",
 		"success": success,
 	}
+
+
+## Find this enemy's data entry, preferring [param preferred_act]'s
+## table and falling back to the other act tables (DataManager caches
+## each file, so repeat scans are dictionary lookups). Sets enemy_act
+## to the table that actually held the entry so downstream act-keyed
+## lookups (e.g. enemy abilities) resolve against the right file.
+func _find_enemy_entry(preferred_act: String) -> Dictionary:
+	var tables: Array[String] = [preferred_act]
+	for act: String in ACT_TABLES:
+		if act != preferred_act:
+			tables.append(act)
+	for act: String in tables:
+		for entry: Dictionary in DataManager.load_enemies(act):
+			if entry.get("id", "") == enemy_id:
+				enemy_act = act
+				return entry
+	return {}
 
 
 func _load_placeholder_sprite() -> void:

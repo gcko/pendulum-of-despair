@@ -201,11 +201,13 @@ func _show_feedback(msg: String) -> void:
 ## Returns 1 (Act I), 2 (Act II or Interlude), 3 (Act III).
 ## Interlude-only items should use restock_event gating, not available_act.
 func _get_current_act() -> int:
-	if EventFlags.get_flag("act_iii_started"):
-		return 3
-	if EventFlags.get_flag("interlude_start") or EventFlags.get_flag("act_ii_started"):
-		return 2
-	return 1
+	match StoryAct.get_period():
+		"act_iii":
+			return 3
+		"interlude", "act_ii":
+			return 2
+		_:
+			return 1
 
 
 func _consume_input() -> void:

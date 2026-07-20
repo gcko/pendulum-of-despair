@@ -407,3 +407,49 @@ func test_interaction_blocked_when_owner_has_no_interact() -> void:
 	# Should not crash — just silently skip.
 	exp._on_interaction_requested(child_area)
 	pass_test("no crash when owner lacks interact()")
+
+
+# --- Per-tile encounter zones (GAP-026) ---
+
+
+func _step_player_to_tile(exp: Node2D, tile: Vector2i) -> void:
+	exp.get_player().position = Vector2(tile.x * 16 + 8, tile.y * 16 + 8)
+	exp._physics_process(0.016)
+
+
+func test_crossing_into_thornmere_swaps_encounter_zone() -> void:
+	var exp: Node2D = _create_exploration()
+	# Overlap band tile: Thornmere takes priority over Valdris (geography.md)
+	_step_player_to_tile(exp, Vector2i(20, 30))
+	assert_eq(
+		exp.get_encounter_config().get("zone_id", ""),
+		"thornmere_wilds",
+		"crossing terrain should swap the active zone",
+	)
+
+
+func test_zone_swap_keeps_danger_counter() -> void:
+	var exp: Node2D = _create_exploration()
+	exp.set_danger_counter(50)
+	# Sacred site (Ashgrove): zero increment, so the counter must not move
+	_step_player_to_tile(exp, Vector2i(48, 48))
+	assert_eq(exp.get_encounter_config().get("zone_id", ""), "sacred_sites")
+	assert_eq(exp.get_danger_counter(), 50, "zone change must not reset the counter")
+
+
+func test_zone_step_accumulates_scaled_increment() -> void:
+	var exp: Node2D = _create_exploration()
+	# thornmere_wilds increment 148 (Act I x1.0); counter 148 < 256 can
+	# never trigger an encounter, keeping this fully deterministic.
+	_step_player_to_tile(exp, Vector2i(20, 30))
+	assert_eq(exp.get_danger_counter(), 148, "one step should add the zone increment")
+
+
+func test_unmapped_tile_gives_empty_config_not_fallback() -> void:
+	var exp: Node2D = _create_exploration()
+	# Deep ocean tile: unclassified — must NOT silently fall back to zone 0
+	_step_player_to_tile(exp, Vector2i(2, 2))
+	assert_true(
+		exp.get_encounter_config().is_empty(),
+		"unclassified tile should clear the encounter config",
+	)

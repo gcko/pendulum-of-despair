@@ -8,6 +8,13 @@
       "terrain_type": "low_visibility",
       "danger_tier": 2,
       "danger_increment": 120,
+      "location_mods": [
+        {
+          "_comment": "Tunnel Map key item x0.5 (combat-formulas.md Encounter rate modifiers)",
+          "flag": "tunnel_map_owned",
+          "modifier": 0.5
+        }
+      ],
       "formation_rates": {
         "normal": 68.75,
         "back_attack": 18.75,

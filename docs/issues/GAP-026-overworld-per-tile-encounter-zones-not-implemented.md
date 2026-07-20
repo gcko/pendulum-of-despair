@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — PR #268 |
 | **GitHub Issue** | [#186](https://github.com/gcko/pendulum-of-despair/issues/186) |
 | **Source domains** | exploration |
 
@@ -57,3 +57,7 @@ Add a TileMapLayer terrain-tag -> zone_id map and update the current zone on til
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Resolution (PR #268, 2026-07-19)
+
+Per-tile zone selection shipped via an ordered rect table (`game/data/encounters/overworld_zones.json`) resolved by the pure-static `ZoneResolver` on each tile step; all zones (now 15, including explicit zero-encounter `sacred_sites`/`urban` and an `act_iii_started`-gated Pallor approach) are reachable. The `entries[0]` fallback described in the evidence above was removed from the per-tile zone path — unmatched ids clear the config (legacy floors-based maps keep the first-entry fallback at map load). Act III/post-game zone transforms deferred to #266; tileset custom-data migration to #267.

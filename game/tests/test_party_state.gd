@@ -601,3 +601,23 @@ func test_consume_item_not_owned() -> void:
 	_state.initialize_new_game()
 	var ok: bool = _state.consume_item("nonexistent_item")
 	assert_false(ok, "cannot consume item not in inventory")
+
+
+func test_use_sables_coin_sets_flag_and_consumes() -> void:
+	_state.initialize_new_game()
+	_state.add_item("sables_coin", 2)
+	var ok: bool = _state.use_item("sables_coin", "edren")
+	assert_true(ok, "coin use should succeed")
+	assert_true(bool(EventFlags.get_flag("sables_coin_active")), "coin flag set")
+	assert_eq(_state.get_consumables().get("sables_coin", 0), 1, "one coin consumed")
+
+
+func test_use_sables_coin_while_active_is_blocked() -> void:
+	# A guarantee cannot be improved: re-use is refused, not silently burned
+	_state.initialize_new_game()
+	_state.add_item("sables_coin", 2)
+	_state.use_item("sables_coin", "edren")
+	var ok: bool = _state.use_item("sables_coin", "edren")
+	assert_false(ok, "second coin should be refused while one is active")
+	assert_eq(_state.get_consumables().get("sables_coin", 0), 1, "second coin not consumed")
+	assert_true(bool(EventFlags.get_flag("sables_coin_active")), "flag stays set")

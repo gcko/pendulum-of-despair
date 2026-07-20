@@ -1,0 +1,137 @@
+{
+  "dungeon_id": "overworld",
+  "_comment": "Ordered tile-rect -> encounter zone table for the 128x96 overworld (geography.md Region Boundaries / Key Landmark Positions / Encounter Zones). First match wins: sacred/urban zero-zones, then act-gated Pallor approach, then roads, then Thornmere zones (priority over Valdris/Compact in overlap bands per geography.md), then regional fills. Rects are inclusive [x1, y1, x2, y2] tile coords. Road strips and sub-zone splits are placeholder geometry pending the real overworld tileset; ocean tiles are impassable and intentionally unmapped (resolve to no zone).",
+  "zone_rects": [
+    {
+      "_comment": "Sacred sites - no encounters (geography.md: Ashgrove 48,48; Stillwater Hollow 42,44)",
+      "zone_id": "sacred_sites",
+      "rects": [
+        [47, 47, 49, 49],
+        [41, 43, 43, 45]
+      ]
+    },
+    {
+      "_comment": "Urban approaches - no encounters (3x3 around each settlement landmark, geography.md Key Landmark Positions)",
+      "zone_id": "urban",
+      "rects": [
+        [29, 13, 31, 15],
+        [47, 17, 49, 19],
+        [51, 7, 53, 9],
+        [45, 27, 47, 29],
+        [67, 21, 69, 23],
+        [31, 39, 33, 41],
+        [27, 45, 29, 47],
+        [43, 37, 45, 39],
+        [35, 51, 37, 53],
+        [57, 37, 59, 39],
+        [43, 59, 45, 61],
+        [47, 63, 49, 65],
+        [61, 57, 63, 59],
+        [55, 71, 57, 73],
+        [41, 73, 43, 75],
+        [37, 79, 39, 81],
+        [71, 77, 73, 79],
+        [77, 65, 79, 67],
+        [51, 81, 53, 83],
+        [61, 75, 63, 77]
+      ]
+    },
+    {
+      "_comment": "Act III Pallor epicenter, 10-mile (4-tile) radius around the Convergence 52,52 (geography.md Encounter Zones: Pallor Wastes Act III)",
+      "zone_id": "pallor_wastes_approach",
+      "flag": "act_iii_started",
+      "rects": [
+        [48, 48, 56, 56]
+      ]
+    },
+    {
+      "_comment": "Valdris Highroad (Aelhart -> Valdris Crown -> Thornwatch) and Compact roads (Ironmouth -> Gael's Span -> Corrund -> Ashmark); placeholder strips",
+      "zone_id": "roads",
+      "rects": [
+        [31, 14, 46, 15],
+        [46, 16, 47, 28],
+        [44, 60, 45, 63],
+        [45, 63, 55, 65],
+        [55, 65, 56, 72],
+        [43, 73, 55, 74]
+      ]
+    },
+    {
+      "_comment": "Duskfen marsh system (geography.md: Marshland, Duskfen system)",
+      "zone_id": "duskfen_marshland",
+      "rects": [
+        [30, 48, 41, 58]
+      ]
+    },
+    {
+      "_comment": "Deep Thornmere core (Roothollow / Maren's Refuge / Greywood Camp)",
+      "zone_id": "deep_thornmere",
+      "rects": [
+        [24, 34, 50, 50]
+      ]
+    },
+    {
+      "_comment": "Eastern Thornmere fringe (Canopy Reach / Sunstone Ridge side)",
+      "zone_id": "wilds_edge",
+      "rects": [
+        [56, 28, 100, 62]
+      ]
+    },
+    {
+      "_comment": "Outer Thornmere band; listed before Valdris/Compact fills so the Thornmere region takes overlap priority (geography.md Region Boundaries)",
+      "zone_id": "thornmere_wilds",
+      "rects": [
+        [8, 28, 100, 62]
+      ]
+    },
+    {
+      "_comment": "Frostcap Peaks northern edge of Valdris territory (geography.md: Mountains)",
+      "zone_id": "frostcap_foothills",
+      "rects": [
+        [10, 4, 85, 10]
+      ]
+    },
+    {
+      "_comment": "Ley-scarred eastern Valdris border around Greyvale; zone has no sanctioned design-table row (issue #265; enemy roster question in #270)",
+      "zone_id": "ley_scarred_plains",
+      "rects": [
+        [60, 16, 82, 28]
+      ]
+    },
+    {
+      "_comment": "Aelhart farmland valley (geography.md: Farmland/Settled)",
+      "zone_id": "aelhart_valley",
+      "rects": [
+        [24, 10, 36, 22]
+      ]
+    },
+    {
+      "_comment": "Valdris territory fill (geography.md Region Boundaries: 10,4 - 85,32)",
+      "zone_id": "valdris_highlands",
+      "rects": [
+        [10, 4, 85, 32]
+      ]
+    },
+    {
+      "_comment": "Bellhaven coastal strip (geography.md: Coastal)",
+      "zone_id": "bellhaven_coast",
+      "rects": [
+        [66, 74, 81, 84]
+      ]
+    },
+    {
+      "_comment": "Ashport coastal strip (geography.md: Coastal)",
+      "zone_id": "ashport_coast",
+      "rects": [
+        [72, 60, 81, 73]
+      ]
+    },
+    {
+      "_comment": "Carradan Compact fill (geography.md Region Boundaries: 20,55 - 115,90)",
+      "zone_id": "compact_industrial",
+      "rects": [
+        [20, 55, 115, 90]
+      ]
+    }
+  ]
+}

@@ -400,6 +400,8 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	var target: Dictionary = get_member(target_character_id)
 	if target.is_empty():
 		return false
+	if not Helpers.can_apply_item_effect(item_data):
+		return false
 	Helpers.apply_item_effect(item_data, target)
 	consumables[item_id] = qty - 1
 	if consumables[item_id] <= 0:
