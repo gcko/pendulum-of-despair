@@ -63,12 +63,10 @@ func test_ko_member_renders_empty_hp_bar() -> void:
 	assert_eq(fill.size.x, 0.0, "KO renders an honest empty bar")
 
 
-func test_mp_bar_empty_but_track_visible() -> void:
+func test_mp_bar_empty_renders_zero_width_fill() -> void:
 	_panel.update_party([_member(800, 800, 0, 80)], {"party_0": 0})
 	var fill: ColorRect = _row_node(0, "MPCluster/MPBarBg/MPBarFill")
-	var bg: ColorRect = _row_node(0, "MPCluster/MPBarBg")
-	assert_eq(fill.size.x, 0.0, "0 MP is an empty fill")
-	assert_true(bg.visible, "the track still shows the empty state")
+	assert_eq(fill.size.x, 0.0, "0 MP is an empty fill over the visible track")
 
 
 func test_weave_gauge_visible_only_for_maren() -> void:

@@ -107,6 +107,9 @@ func _update_weave(refs: Dictionary, member: Dictionary) -> void:
 	weave_bg.visible = shows
 	if shows:
 		_set_fill(refs["weave_bg"], refs["weave_fill"], member.get("wg", 0), WEAVE_MAX)
+		var weave_fill: ColorRect = refs["weave_fill"]
+		if weave_fill != null:
+			weave_fill.color = StatBarHelpers.COLOR_WEAVE_FILL
 
 
 ## Size a fill rect against its track's authored width — deterministic

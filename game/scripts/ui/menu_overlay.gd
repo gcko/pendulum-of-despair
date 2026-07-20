@@ -7,9 +7,6 @@ enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
-const COLOR_HP: Color = Color("#44cc44")
-const COLOR_HP_LOW: Color = Color("#ff4444")
-const COLOR_MP: Color = Color("#4488ff")
 const COLOR_GOLD: Color = Color("#ffcc44")
 const COLOR_WINDOW_BG: Color = Color("#000040")
 
@@ -336,7 +333,7 @@ func _update_party_row(slot: int, member: Dictionary) -> void:
 	var mp_label: Label = row.get_node_or_null("MPCluster/MPLabel")
 	if mp_label != null:
 		mp_label.text = "MP %d/%d" % [mp, max_mp]
-		mp_label.modulate = COLOR_MP
+		mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
 	_set_bar_fill(row, "MPCluster/MPBarBg", mp, max_mp, StatBarHelpers.COLOR_MP_FILL)
 
 

@@ -65,3 +65,4 @@ func test_menu_numeric_labels_remain() -> void:
 	var hp_label: Label = _row0_node("HPCluster/HPLabel")
 	assert_not_null(hp_label, "numeric HP label stays alongside the bar")
 	assert_eq(hp_label.text, "HP 100/400", "numeric value keeps rendering")
+	assert_true(hp_label.visible, "label is not hidden by the bar layout")
