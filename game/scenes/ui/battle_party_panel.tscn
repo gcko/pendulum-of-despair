@@ -1,0 +1,291 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/battle_party_panel.gd" id="1_panel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0, 0, 0.251, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.333, 0.4, 0.667, 1)
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+
+[node name="PartyPanel" type="PanelContainer"]
+offset_left = 0.0
+offset_top = 468.0
+offset_right = 832.0
+offset_bottom = 720.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+script = ExtResource("1_panel")
+
+[node name="Rows" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Row0" type="HBoxContainer" parent="Rows"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Rows/Row0"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+text = ""
+
+[node name="HPLabel" type="Label" parent="Rows/Row0"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row0"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(120, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row0/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPLabel" type="Label" parent="Rows/Row0"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row0"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row0/MPCluster"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row0/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
+
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row0/MPCluster"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(120, 6)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row0/MPCluster/WeaveBarBg"]
+offset_right = 0.0
+offset_bottom = 6.0
+color = Color(0.667, 0.267, 1, 1)
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row0"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(80, 16)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row0/ATBBarBg"]
+offset_right = 0.0
+offset_bottom = 16.0
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row1" type="HBoxContainer" parent="Rows"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Rows/Row1"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+text = ""
+
+[node name="HPLabel" type="Label" parent="Rows/Row1"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row1"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(120, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row1/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPLabel" type="Label" parent="Rows/Row1"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row1"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row1/MPCluster"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row1/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
+
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row1/MPCluster"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(120, 6)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row1/MPCluster/WeaveBarBg"]
+offset_right = 0.0
+offset_bottom = 6.0
+color = Color(0.667, 0.267, 1, 1)
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row1"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(80, 16)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row1/ATBBarBg"]
+offset_right = 0.0
+offset_bottom = 16.0
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row2" type="HBoxContainer" parent="Rows"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Rows/Row2"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+text = ""
+
+[node name="HPLabel" type="Label" parent="Rows/Row2"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row2"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(120, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row2/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPLabel" type="Label" parent="Rows/Row2"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row2"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row2/MPCluster"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row2/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
+
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row2/MPCluster"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(120, 6)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row2/MPCluster/WeaveBarBg"]
+offset_right = 0.0
+offset_bottom = 6.0
+color = Color(0.667, 0.267, 1, 1)
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row2"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(80, 16)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row2/ATBBarBg"]
+offset_right = 0.0
+offset_bottom = 16.0
+color = Color(1, 0.8, 0, 1)
+
+[node name="Row3" type="HBoxContainer" parent="Rows"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Rows/Row3"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+text = ""
+
+[node name="HPLabel" type="Label" parent="Rows/Row3"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="HPBarBg" type="ColorRect" parent="Rows/Row3"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(120, 12)
+color = Color(0.133, 0, 0, 1)
+
+[node name="HPBarFill" type="ColorRect" parent="Rows/Row3/HPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.8, 0.267, 1)
+
+[node name="MPLabel" type="Label" parent="Rows/Row3"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+text = ""
+
+[node name="MPCluster" type="VBoxContainer" parent="Rows/Row3"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="MPBarBg" type="ColorRect" parent="Rows/Row3/MPCluster"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 12)
+color = Color(0, 0.067, 0.133, 1)
+
+[node name="MPBarFill" type="ColorRect" parent="Rows/Row3/MPCluster/MPBarBg"]
+offset_right = 0.0
+offset_bottom = 12.0
+color = Color(0.267, 0.533, 1, 1)
+
+[node name="WeaveBarBg" type="ColorRect" parent="Rows/Row3/MPCluster"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(120, 6)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="WeaveBarFill" type="ColorRect" parent="Rows/Row3/MPCluster/WeaveBarBg"]
+offset_right = 0.0
+offset_bottom = 6.0
+color = Color(0.667, 0.267, 1, 1)
+
+[node name="ATBBarBg" type="ColorRect" parent="Rows/Row3"]
+layout_mode = 2
+size_flags_vertical = 4
+custom_minimum_size = Vector2(80, 16)
+color = Color(0.133, 0.133, 0.133, 1)
+
+[node name="ATBBarFill" type="ColorRect" parent="Rows/Row3/ATBBarBg"]
+offset_right = 0.0
+offset_bottom = 16.0
+color = Color(1, 0.8, 0, 1)

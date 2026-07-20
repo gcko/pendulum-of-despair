@@ -1,67 +1,115 @@
 extends PanelContainer
-## Renders party member rows in battle: name, HP/MP bars, ATB gauge, status icons.
+## Renders party member rows in battle: name, HP/MP numerics + solid
+## pixel fill bars, Maren's Weave Gauge, and the ATB gauge
+## (ui-design.md § 2.1/2.3/2.9). Scene: scenes/ui/battle_party_panel.tscn.
+## Updated by BattleUI's per-frame poll — stays pull-based because MP
+## changes emit no signals.
 
-const COLOR_HP_FILL: Color = Color("#44cc44")
-const COLOR_HP_LOW: Color = Color("#ff4444")
-const COLOR_MP_FILL: Color = Color("#4488ff")
-const COLOR_ATB_FILL: Color = Color("#ffcc00")
+const ATBSystemScript = preload("res://scripts/combat/atb_system.gd")
+
 const COLOR_NAME_NORMAL: Color = Color("#ffffff")
 const COLOR_NAME_ACTIVE: Color = Color("#ffff88")
 
-var _rows: Array = [null, null, null, null]
+## Weave Gauge maximum charge (abilities.md: WG 0-100).
+const WEAVE_MAX: int = 100
+
+## Per-row node caches (Dictionary of refs), filled once in _ready so the
+## per-frame poll does no get_node_or_null lookups.
+var _rows: Array = [{}, {}, {}, {}]
 var _active_slot: int = -1
 
 
 func _ready() -> void:
-	var rows_container: VBoxContainer = get_node_or_null("Rows")
 	for i: int in range(4):
-		var path: String = "Rows/Row%d" % i if rows_container != null else "Row%d" % i
-		var row: HBoxContainer = get_node_or_null(path)
-		_rows[i] = row
+		_rows[i] = _cache_row(get_node_or_null("Rows/Row%d" % i))
 
 
 ## Update all party rows from state data.
 func update_party(members: Array, gauges: Dictionary) -> void:
 	for i: int in range(4):
-		if _rows[i] == null:
+		var refs: Dictionary = _rows[i]
+		if refs.is_empty():
 			continue
+		var row: HBoxContainer = refs["row"]
 		var m: Dictionary = members[i] if i < members.size() and members[i] is Dictionary else {}
 		if m.is_empty():
-			_rows[i].visible = false
+			row.visible = false
 			continue
-		_rows[i].visible = true
+		row.visible = true
 		_update_row(i, m, gauges.get("party_%d" % i, 0))
-
-
-func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
-	var row: HBoxContainer = _rows[slot]
-	if row == null:
-		return
-
-	var name_label: Label = row.get_node_or_null("NameLabel")
-	if name_label != null:
-		name_label.text = member.get("character_data", {}).get("name", "???")
-		name_label.modulate = COLOR_NAME_ACTIVE if slot == _active_slot else COLOR_NAME_NORMAL
-
-	var hp_label: Label = row.get_node_or_null("HPLabel")
-	if hp_label != null:
-		var hp: int = member.get("current_hp", 0)
-		var max_hp: int = member.get("max_hp", 1)
-		hp_label.text = "%d/%d" % [hp, max_hp]
-		hp_label.modulate = COLOR_HP_LOW if hp < max_hp / 4 else COLOR_HP_FILL
-
-	var mp_label: Label = row.get_node_or_null("MPLabel")
-	if mp_label != null:
-		mp_label.text = "%d/%d" % [member.get("current_mp", 0), member.get("max_mp", 0)]
-		mp_label.modulate = COLOR_MP_FILL
-
-	var atb_bar: ColorRect = row.get_node_or_null("ATBBar")
-	if atb_bar != null:
-		var fill_ratio: float = clampf(float(atb_gauge) / 16000.0, 0.0, 1.0)
-		atb_bar.custom_minimum_size.x = fill_ratio * 80.0
-		atb_bar.color = COLOR_ATB_FILL
 
 
 ## Set which party member is currently acting.
 func set_active_slot(slot: int) -> void:
 	_active_slot = slot
+
+
+func _cache_row(row: HBoxContainer) -> Dictionary:
+	if row == null:
+		return {}
+	return {
+		"row": row,
+		"name_label": row.get_node_or_null("NameLabel"),
+		"hp_label": row.get_node_or_null("HPLabel"),
+		"hp_bg": row.get_node_or_null("HPBarBg"),
+		"hp_fill": row.get_node_or_null("HPBarBg/HPBarFill"),
+		"mp_label": row.get_node_or_null("MPLabel"),
+		"mp_bg": row.get_node_or_null("MPCluster/MPBarBg"),
+		"mp_fill": row.get_node_or_null("MPCluster/MPBarBg/MPBarFill"),
+		"weave_bg": row.get_node_or_null("MPCluster/WeaveBarBg"),
+		"weave_fill": row.get_node_or_null("MPCluster/WeaveBarBg/WeaveBarFill"),
+		"atb_bg": row.get_node_or_null("ATBBarBg"),
+		"atb_fill": row.get_node_or_null("ATBBarBg/ATBBarFill"),
+	}
+
+
+func _update_row(slot: int, member: Dictionary, atb_gauge: int) -> void:
+	var refs: Dictionary = _rows[slot]
+
+	var name_label: Label = refs["name_label"]
+	if name_label != null:
+		name_label.text = member.get("character_data", {}).get("name", "???")
+		name_label.modulate = COLOR_NAME_ACTIVE if slot == _active_slot else COLOR_NAME_NORMAL
+
+	var hp: int = member.get("current_hp", 0)
+	var max_hp: int = member.get("max_hp", 1)
+	var hp_label: Label = refs["hp_label"]
+	if hp_label != null:
+		hp_label.text = "%d/%d" % [hp, max_hp]
+		hp_label.modulate = StatBarHelpers.hp_fill_color(hp, max_hp)
+	_set_fill(refs, "hp", hp, max_hp)
+	var hp_fill: ColorRect = refs["hp_fill"]
+	if hp_fill != null:
+		hp_fill.color = StatBarHelpers.hp_fill_color(hp, max_hp)
+
+	var mp: int = member.get("current_mp", 0)
+	var max_mp: int = member.get("max_mp", 0)
+	var mp_label: Label = refs["mp_label"]
+	if mp_label != null:
+		mp_label.text = "%d/%d" % [mp, max_mp]
+		mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
+	_set_fill(refs, "mp", mp, max_mp)
+
+	_update_weave(refs, member)
+	_set_fill(refs, "atb", atb_gauge, ATBSystemScript.GAUGE_MAX)
+
+
+## Maren-only Weave Gauge below the MP bar (ui-design.md § 2.9).
+func _update_weave(refs: Dictionary, member: Dictionary) -> void:
+	var weave_bg: ColorRect = refs["weave_bg"]
+	if weave_bg == null:
+		return
+	var shows: bool = StatBarHelpers.shows_weave_gauge(member.get("character_id", ""))
+	weave_bg.visible = shows
+	if shows:
+		_set_fill(refs, "weave", member.get("wg", 0), WEAVE_MAX)
+
+
+## Size a fill rect against its track's authored width — deterministic
+## under headless container layout.
+func _set_fill(refs: Dictionary, key: String, current: int, max_value: int) -> void:
+	var bg: ColorRect = refs["%s_bg" % key]
+	var fill: ColorRect = refs["%s_fill" % key]
+	if bg == null or fill == null:
+		return
+	fill.size.x = StatBarHelpers.fill_width(current, max_value, bg.custom_minimum_size.x)

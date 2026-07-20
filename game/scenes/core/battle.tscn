@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/combat/atb_system.gd" id="2_atb"]
 [ext_resource type="Script" path="res://scripts/combat/battle_state.gd" id="3_state"]
 [ext_resource type="Script" path="res://scripts/ui/battle_ui.gd" id="4_ui"]
-[ext_resource type="Script" path="res://scripts/ui/battle_party_panel.gd" id="5_panel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/battle_party_panel.tscn" id="5_panel"]
 [ext_resource type="Script" path="res://scripts/ui/battle_command_menu.gd" id="6_cmd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
@@ -50,109 +50,7 @@ zoom = Vector2(4, 4)
 layer = 10
 script = ExtResource("4_ui")
 
-[node name="PartyPanel" type="PanelContainer" parent="BattleUI"]
-offset_left = 0.0
-offset_top = 468.0
-offset_right = 832.0
-offset_bottom = 720.0
-theme_override_styles/panel = SubResource("StyleBox_panel")
-script = ExtResource("5_panel")
-
-[node name="Rows" type="VBoxContainer" parent="BattleUI/PartyPanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Row0" type="HBoxContainer" parent="BattleUI/PartyPanel/Rows"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row0"]
-layout_mode = 2
-custom_minimum_size = Vector2(200, 0)
-text = ""
-
-[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row0"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row0"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Rows/Row0"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 16)
-color = Color(1, 0.8, 0, 1)
-
-[node name="Row1" type="HBoxContainer" parent="BattleUI/PartyPanel/Rows"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row1"]
-layout_mode = 2
-custom_minimum_size = Vector2(200, 0)
-text = ""
-
-[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row1"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row1"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Rows/Row1"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 16)
-color = Color(1, 0.8, 0, 1)
-
-[node name="Row2" type="HBoxContainer" parent="BattleUI/PartyPanel/Rows"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row2"]
-layout_mode = 2
-custom_minimum_size = Vector2(200, 0)
-text = ""
-
-[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row2"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row2"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Rows/Row2"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 16)
-color = Color(1, 0.8, 0, 1)
-
-[node name="Row3" type="HBoxContainer" parent="BattleUI/PartyPanel/Rows"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row3"]
-layout_mode = 2
-custom_minimum_size = Vector2(200, 0)
-text = ""
-
-[node name="HPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row3"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="MPLabel" type="Label" parent="BattleUI/PartyPanel/Rows/Row3"]
-layout_mode = 2
-custom_minimum_size = Vector2(160, 0)
-text = ""
-
-[node name="ATBBar" type="ColorRect" parent="BattleUI/PartyPanel/Rows/Row3"]
-layout_mode = 2
-custom_minimum_size = Vector2(80, 16)
-color = Color(1, 0.8, 0, 1)
+[node name="PartyPanel" parent="BattleUI" instance=ExtResource("5_panel")]
 
 [node name="CommandMenu" type="PanelContainer" parent="BattleUI"]
 offset_left = 848.0
