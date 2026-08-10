@@ -143,6 +143,7 @@ func on_plant_restored(_plant_id: String) -> void:
 		if e is Dictionary:
 			entries.append(e as Dictionary)
 	if not entries.is_empty() and GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		DialogueConsequences.connect_overlay(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(entries)
 
 

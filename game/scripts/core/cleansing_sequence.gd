@@ -97,6 +97,7 @@ func start(data: Dictionary) -> void:
 		return
 	var dialogue: Array = [entries[0]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		DialogueConsequences.connect_overlay(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(dialogue)
 		_pending_callable = _on_dialogue_closed.bind(0, data)
 		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
@@ -168,6 +169,7 @@ func continue_sequence(data: Dictionary) -> void:
 		return
 	var dialogue: Array = [entries[entry_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		DialogueConsequences.connect_overlay(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(dialogue)
 		_pending_callable = _on_dialogue_closed.bind(next_wave, data)
 		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)
@@ -218,6 +220,7 @@ func _complete(_data: Dictionary) -> void:
 		return
 	var dialogue: Array = [entries[final_idx]]
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		DialogueConsequences.connect_overlay(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(dialogue)
 		_pending_callable = _on_complete_dialogue_closed
 		GameManager.overlay_state_changed.connect(_pending_callable, CONNECT_ONE_SHOT)

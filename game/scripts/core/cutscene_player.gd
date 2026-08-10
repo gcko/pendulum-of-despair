@@ -17,6 +17,7 @@ signal cutscene_shake_requested(intensity: int, duration: float)
 signal cutscene_music_requested(track_id: String, action: String)
 signal cutscene_finished
 signal flag_set_requested(flag_name: String, value: Variant)
+signal score_increment_requested(score_name: String, delta: int)
 signal sfx_requested(sfx_id: String)
 
 ## Tier constants.
@@ -61,6 +62,10 @@ func _ready() -> void:
 		if _dialogue_box.has_signal("flag_set_requested"):
 			_dialogue_box.flag_set_requested.connect(
 				func(f: String, v: Variant): flag_set_requested.emit(f, v)
+			)
+		if _dialogue_box.has_signal("score_increment_requested"):
+			_dialogue_box.score_increment_requested.connect(
+				func(s: String, d: int): score_increment_requested.emit(s, d)
 			)
 		if _dialogue_box.has_signal("choice_made"):
 			_dialogue_box.choice_made.connect(_on_dialogue_choice_made)

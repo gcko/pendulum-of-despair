@@ -8,6 +8,19 @@ extends Node
 
 signal flag_changed(flag_name: String, value: Variant)
 
+## Documented ranges for the hidden approval scores, as (min, max).
+## Sourced from docs/story/events.md flags 40–43; dialogue-system.md 3.3
+## requires clamp(score, min, max) after each increment.
+const SCORE_RANGES: Dictionary = {
+	"council_savanh_approval": Vector2i(0, 3),
+	"council_caden_approval": Vector2i(0, 3),
+	"council_wynne_approval": Vector2i(0, 3),
+	"council_result": Vector2i(0, 3),
+}
+
+## Bounds used for a score events.md does not document yet.
+const SCORE_RANGE_DEFAULT: Vector2i = Vector2i(0, 3)
+
 ## Dictionary of all event flags. Keys are strings, values are
 ## bool | int | String (most are bool, council_result is int,
 ## reunion_order_1..4 are strings).
@@ -27,6 +40,50 @@ func set_flag(flag_name: String, value: Variant) -> void:
 ## Get a flag value, returning [param default] if not set.
 func get_flag(flag_name: String, default: Variant = false) -> Variant:
 	return _flags.get(flag_name, default)
+
+
+## Bounds for a named score, as (min, max). Unknown names fall back to
+## [constant SCORE_RANGE_DEFAULT] and warn in debug builds — dialogue-system.md
+## 3.4 requires every score to be documented in events.md.
+func get_score_range(score_name: String) -> Vector2i:
+	if SCORE_RANGES.has(score_name):
+		return SCORE_RANGES[score_name]
+	if OS.is_debug_build():
+		push_warning(
+			(
+				"EventFlags: score '%s' is not documented in events.md — clamping to %s"
+				% [score_name, SCORE_RANGE_DEFAULT]
+			)
+		)
+	return SCORE_RANGE_DEFAULT
+
+
+## Add [param delta] to a named score and clamp the total to
+## [param min_value]..[param max_value]. Scores accumulate across the several
+## questions that feed them, so this adds rather than overwrites — see
+## dialogue-system.md 3.3/3.4. An unset score starts at its minimum.
+## Returns the stored total.
+func increment_score(score_name: String, delta: int, min_value: int, max_value: int) -> int:
+	if score_name.is_empty():
+		if OS.is_debug_build():
+			push_warning("EventFlags: attempted to increment an empty score name")
+		return 0
+	var lower: int = mini(min_value, max_value)
+	var upper: int = maxi(min_value, max_value)
+	var current: Variant = _flags.get(score_name, lower)
+	var base: int = int(current) if (current is int or current is float) else lower
+	var total: int = clampi(base + delta, lower, upper)
+	_flags[score_name] = total
+	flag_changed.emit(score_name, total)
+	return total
+
+
+## Apply a dialogue choice's score delta using the range documented for that
+## score. This is the path score choices take; callers with an explicit range
+## can use [method increment_score] directly. Returns the stored total.
+func apply_score_choice(score_name: String, delta: int) -> int:
+	var bounds: Vector2i = get_score_range(score_name)
+	return increment_score(score_name, delta, bounds.x, bounds.y)
 
 
 ## Check if a flag exists (has been set at all).

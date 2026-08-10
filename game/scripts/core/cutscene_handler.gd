@@ -42,6 +42,7 @@ func _connect_cutscene_signals() -> void:
 	_safe_connect(cs, "cutscene_shake_requested", _on_cutscene_shake)
 	_safe_connect(cs, "cutscene_music_requested", _on_cutscene_music)
 	_safe_connect(cs, "flag_set_requested", _on_cutscene_flag_set)
+	_safe_connect(cs, "score_increment_requested", _on_cutscene_score_increment)
 	_safe_connect(cs, "sfx_requested", _on_cutscene_sfx)
 
 
@@ -167,6 +168,16 @@ func _on_cutscene_flag_set(flag_name: String, value: Variant) -> void:
 			push_warning("Cutscene: flag_set_requested with empty flag_name")
 		return
 	EventFlags.set_flag(flag_name, value)
+
+
+## Score choices accumulate and clamp instead of overwriting, so they take a
+## separate route from plain flag sets (dialogue-system.md 3.3).
+func _on_cutscene_score_increment(score_name: String, delta: int) -> void:
+	if score_name.is_empty():
+		if OS.is_debug_build():
+			push_warning("Cutscene: score_increment_requested with empty score_name")
+		return
+	EventFlags.apply_score_choice(score_name, delta)
 
 
 func _on_cutscene_music(track_id: String, action: String) -> void:

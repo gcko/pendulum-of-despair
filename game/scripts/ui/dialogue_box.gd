@@ -15,6 +15,10 @@ signal animation_requested(who: String, anim: String)
 signal sfx_requested(sfx_id: String)
 ## Emitted when a choice option has flag_set data. Exploration scene handles.
 signal flag_set_requested(flag_name: String, value: Variant)
+## Emitted when a choice option carries a score delta. Distinct from
+## flag_set_requested because scores accumulate and clamp rather than
+## overwrite (dialogue-system.md 3.3/3.4).
+signal score_increment_requested(score_name: String, delta: int)
 
 ## Text speed in characters per second, indexed by config setting name.
 const TEXT_SPEEDS: Dictionary = {
@@ -299,10 +303,13 @@ func _select_choice() -> void:
 			var flag: String = flag_val if flag_val is String else ""
 			if flag != "":
 				flag_set_requested.emit(flag, true)
-			var score_name: String = opt.get("score_name", "")
-			var score_delta: int = opt.get("score_delta", 0)
-			if score_name != "" and score_delta != 0:
-				flag_set_requested.emit(score_name, score_delta)
+			var score_val: Variant = opt.get("score_name", "")
+			var score_name: String = score_val if score_val is String else ""
+			if score_name != "":
+				# A score_delta of 0 is a valid intentional outcome (3.4): it
+				# records that the question was answered, so it still routes
+				# through and materialises the score at its minimum.
+				score_increment_requested.emit(score_name, int(opt.get("score_delta", 0)))
 
 	# Advance to next entry
 	_show_entry(_current_index + 1)

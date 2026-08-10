@@ -296,7 +296,7 @@ func on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
 			_handle_inn(npc_node)
 			return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		_connect_dialogue_sfx(GameManager.overlay_node)
+		_connect_dialogue_signals(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue([dialogue_data])
 
 
@@ -391,7 +391,7 @@ func on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
 	if not (dialogue is Array) or (dialogue as Array).is_empty():
 		return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		_connect_dialogue_sfx(GameManager.overlay_node)
+		_connect_dialogue_signals(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(dialogue as Array)
 		if not flag.is_empty():
 			EventFlags.set_flag(flag, true)
@@ -524,7 +524,8 @@ func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
 
 ## Connect the dialogue box sfx_requested signal to AudioManager for
 ## non-cutscene dialogues (NPC interaction, dialogue triggers).
-func _connect_dialogue_sfx(overlay: Node) -> void:
+func _connect_dialogue_signals(overlay: Node) -> void:
+	DialogueConsequences.connect_overlay(overlay)
 	if overlay != null and overlay.has_signal("sfx_requested"):
 		if not overlay.is_connected("sfx_requested", _on_dialogue_sfx):
 			overlay.sfx_requested.connect(_on_dialogue_sfx)
