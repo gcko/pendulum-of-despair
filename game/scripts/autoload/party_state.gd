@@ -132,6 +132,12 @@ func load_from_save(data: Dictionary) -> void:
 	ley_crystals = lc_data as Dictionary if lc_data is Dictionary else {}
 	var ps_data: Variant = data.get("puzzle_state", {})
 	puzzle_state = ps_data as Dictionary if ps_data is Dictionary else {}
+	# Max HP/MP are derived at load time, not trusted from the file
+	# (save-system.md § 1). Runs last because the crystal term needs the
+	# ley_crystals block above. A save written before #274 therefore loads with
+	# its equipment HP/MP bonus restored instead of a stale maximum.
+	for m: Dictionary in members:
+		_recalculate_max_hp_mp(m.get("character_id", ""))
 
 
 func build_save_data() -> Dictionary:
@@ -187,7 +193,10 @@ func add_crystal_xp(crystal_id: String, amount: int) -> void:
 	if level >= 5:
 		xp = thresholds[4] if thresholds.size() > 4 else 15000
 	state["xp"] = xp
+	var old_level: int = state.get("level", 1)
 	state["level"] = level
+	if level > old_level:
+		_recalculate_crystal_holder(crystal_id)
 
 
 ## Equip a crystal on a character. Swaps if another character has it.
@@ -395,8 +404,12 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	var target: Dictionary = get_member(target_character_id)
 	if target.is_empty():
 		return false
-	if not Helpers.can_apply_item_effect(item_data):
+	if not Helpers.can_apply_item_effect(item_data, target):
 		return false
+	# Max HP/MP are derived, never authoritative in storage (save-system.md § 1),
+	# so re-derive BEFORE the effect too: a full or percentage restore sizes
+	# itself off max_hp, and healing against a stale maximum under-heals.
+	_recalculate_max_hp_mp(target_character_id)
 	Helpers.apply_item_effect(item_data, target)
 	# A Stat Capsule can raise HP/MP, so re-derive the maxima through the shared
 	# recalculation. Idempotent for every other consumable effect.
@@ -739,6 +752,19 @@ func get_crystal_stat_bonus(crystal_id: String, stat: String, char_level: int = 
 	elif stat == "mp":
 		total += int(bonus.get("mp_per_level", 0)) * char_level
 	return total
+
+
+## Re-derive the wearer's max HP/MP after a crystal's own level changed. A
+## crystal level carries hp_per_level / mp_per_level (ley_crystals.json), so
+## levelling one is a change to its holder's persistent stats and must go
+## through the same recalculation an equip change does (#274 family).
+func _recalculate_crystal_holder(crystal_id: String) -> void:
+	for m: Dictionary in members:
+		if m.get("equipment", {}).get("crystal", "") != crystal_id:
+			continue
+		var holder_id: String = m.get("character_id", "")
+		_recalculate_max_hp_mp(holder_id)
+		equipment_changed.emit(holder_id)
 
 
 ## Re-derive max HP/MP after anything that changes persistent stats. Routes

@@ -7,12 +7,21 @@ extends GutTest
 
 const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const BattleStateScript = preload("res://scripts/combat/battle_state.gd")
+const EquipMenuScript = preload("res://scripts/ui/menu_equip.gd")
 
 # life_pendant grants +300 HP, mana_bead grants +50 MP (accessories.json).
 const HP_ACCESSORY: String = "life_pendant"
 const HP_ACCESSORY_BONUS: int = 300
 const MP_ACCESSORY: String = "mana_bead"
 const MP_ACCESSORY_BONUS: int = 50
+# Edren swords (weapons.json): training_sword ATK 4, knights_edge ATK 12.
+const WEAK_SWORD: String = "training_sword"
+const WEAK_SWORD_ATK: int = 4
+const STRONG_SWORD: String = "knights_edge"
+const STRONG_SWORD_ATK: int = 12
+# iron_core reaches Lv3 at 2500 XP, where it starts granting hp_per_level.
+const CRYSTAL_HP: String = "iron_core"
+const CRYSTAL_HP_XP_TO_LV3: int = 2500
 # Enough XP to guarantee at least one level from level 1.
 const LEVEL_UP_XP: int = 99999
 
@@ -40,6 +49,15 @@ func _level_up(character_id: String) -> void:
 func _give_capsule(item_id: String, character_id: String) -> bool:
 	PartyState.add_item(item_id, 1)
 	return PartyState.use_item(item_id, character_id)
+
+
+## Equip sub-screen instance for the projection under test. Deliberately not
+## added to the tree: _ready() only wires scene labels the projection never
+## touches, and the menu has no scene of its own to instantiate.
+func _equip_menu() -> Node:
+	var menu: Node = EquipMenuScript.new()
+	autofree(menu)
+	return menu
 
 
 # --- #274: level-up must keep equipment HP/MP bonuses ---
@@ -270,3 +288,163 @@ func test_legacy_member_level_up_keeps_equipment_bonus() -> void:
 		edren.get("base_stats", {}).get("hp", 0) + HP_ACCESSORY_BONUS,
 		"legacy member keeps the equipment HP bonus across a level-up",
 	)
+
+
+# --- The equip menu must project the same formula it compares against ---
+
+
+func test_equip_projection_of_the_worn_weapon_shows_no_change() -> void:
+	_equip("edren", "weapon", STRONG_SWORD)
+	_give_capsule("strength_capsule", "edren")
+	var menu: Node = _equip_menu()
+	var member: Dictionary = PartyState.get_member("edren")
+	assert_eq(
+		menu._project_stat(member, "atk", "weapon", STRONG_SWORD),
+		PartyState.get_effective_stat("edren", "atk"),
+		"re-equipping the worn weapon must project no change once a capsule is banked",
+	)
+
+
+func test_equip_projection_keeps_the_capsule_when_the_slot_is_emptied() -> void:
+	_equip("edren", "weapon", STRONG_SWORD)
+	_give_capsule("strength_capsule", "edren")
+	var menu: Node = _equip_menu()
+	var member: Dictionary = PartyState.get_member("edren")
+	assert_eq(
+		menu._project_stat(member, "atk", "weapon", ""),
+		int(member.get("base_stats", {}).get("atk", 0)) + 1,
+		"removing the weapon drops only the weapon term, never the capsule gain",
+	)
+
+
+func test_equip_projection_reports_the_true_swap_delta() -> void:
+	_equip("edren", "weapon", STRONG_SWORD)
+	_give_capsule("strength_capsule", "edren")
+	var menu: Node = _equip_menu()
+	var member: Dictionary = PartyState.get_member("edren")
+	var current: int = PartyState.get_effective_stat("edren", "atk")
+	var projected: int = menu._project_stat(member, "atk", "weapon", WEAK_SWORD)
+	assert_eq(
+		projected - current,
+		WEAK_SWORD_ATK - STRONG_SWORD_ATK,
+		"the arrow delta is the weapon difference alone",
+	)
+
+
+func test_equip_projection_matches_the_effective_stat_after_the_swap() -> void:
+	_equip("edren", "weapon", STRONG_SWORD)
+	_give_capsule("strength_capsule", "edren")
+	var menu: Node = _equip_menu()
+	var projected: int = menu._project_stat(
+		PartyState.get_member("edren"), "atk", "weapon", WEAK_SWORD
+	)
+	_equip("edren", "weapon", WEAK_SWORD)
+	assert_eq(
+		projected,
+		PartyState.get_effective_stat("edren", "atk"),
+		"the projection must equal what the stat actually becomes",
+	)
+
+
+# --- items.md § Stat Capsules: a finite item is refused, never burned ---
+
+
+func test_capsule_is_refused_once_the_permanent_total_is_at_cap() -> void:
+	var edren: Dictionary = PartyState.get_member("edren")
+	edren["base_stats"]["atk"] = Helpers.stat_cap("atk")
+	PartyState.add_item("strength_capsule", 1)
+	assert_false(
+		PartyState.use_item("strength_capsule", "edren"), "a capped stat refuses the capsule"
+	)
+	assert_eq(
+		int(PartyState.get_consumables().get("strength_capsule", 0)),
+		1,
+		"the refused capsule stays in the bag instead of being burned",
+	)
+
+
+func test_capsule_is_accepted_when_only_equipment_reaches_the_cap() -> void:
+	var edren: Dictionary = PartyState.get_member("edren")
+	edren["base_stats"]["atk"] = Helpers.stat_cap("atk") - STRONG_SWORD_ATK
+	_equip("edren", "weapon", STRONG_SWORD)
+	assert_eq(
+		PartyState.get_effective_stat("edren", "atk"),
+		Helpers.stat_cap("atk"),
+		"precondition: gear alone holds ATK at the cap",
+	)
+	assert_true(
+		_give_capsule("strength_capsule", "edren"), "a gear-only cap still accepts a capsule"
+	)
+	assert_eq(
+		int(edren.get("stat_capsules", {}).get("atk", 0)),
+		1,
+		"the gain is banked for when the gear comes off",
+	)
+
+
+# --- Max HP/MP are derived, so a heal never sizes off a stale maximum ---
+
+
+func test_full_restore_heals_to_the_recalculated_maximum() -> void:
+	_equip("edren", "accessory", HP_ACCESSORY)
+	var edren: Dictionary = PartyState.get_member("edren")
+	# Stale maximum as a save written before #274 would hold it.
+	edren["max_hp"] = int(edren["max_hp"]) - HP_ACCESSORY_BONUS
+	edren["current_hp"] = 1
+	PartyState.add_item("elixir", 1)
+	assert_true(PartyState.use_item("elixir", "edren"), "precondition: the Elixir is usable")
+	assert_eq(
+		int(edren.get("current_hp", 0)),
+		PartyState.get_effective_stat("edren", "hp"),
+		"a full restore must fill to the true maximum, not a stale one",
+	)
+
+
+func test_load_from_save_rederives_a_stale_max_hp() -> void:
+	_equip("edren", "accessory", HP_ACCESSORY)
+	var save_data: Dictionary = PartyState.build_save_data()
+	for entry: Variant in save_data.get("party", []):
+		if entry is Dictionary and (entry as Dictionary).get("character_id", "") == "edren":
+			(entry as Dictionary)["max_hp"] = 1
+	PartyState.load_from_save(save_data)
+	assert_eq(
+		int(PartyState.get_member("edren").get("max_hp", 0)),
+		PartyState.get_effective_stat("edren", "hp"),
+		"max HP is derived at load time, never trusted from the file",
+	)
+
+
+# --- A Ley Crystal level-up is a change to its holder's persistent stats ---
+
+
+func test_crystal_level_up_updates_the_holder_max_hp() -> void:
+	PartyState.add_ley_crystal(CRYSTAL_HP)
+	PartyState.equip_crystal("edren", CRYSTAL_HP)
+	var edren: Dictionary = PartyState.get_member("edren")
+	var before: int = int(edren.get("max_hp", 0))
+	PartyState.add_crystal_xp(CRYSTAL_HP, CRYSTAL_HP_XP_TO_LV3)
+	assert_eq(
+		int(PartyState.get_crystal_state(CRYSTAL_HP).get("level", 0)),
+		3,
+		"precondition: the crystal reached the level that grants HP",
+	)
+	assert_gt(
+		PartyState.get_crystal_stat_bonus(CRYSTAL_HP, "hp", int(edren.get("level", 1))),
+		0,
+		"precondition: that level grants HP per character level",
+	)
+	assert_gt(int(edren.get("max_hp", 0)), before, "levelling the crystal raises its holder's HP")
+	assert_eq(
+		int(edren.get("max_hp", 0)),
+		PartyState.get_effective_stat("edren", "hp"),
+		"and does so through the one shared formula",
+	)
+
+
+func test_crystal_level_up_leaves_a_non_holder_alone() -> void:
+	PartyState.add_ley_crystal(CRYSTAL_HP)
+	PartyState.equip_crystal("edren", CRYSTAL_HP)
+	var cael: Dictionary = PartyState.get_member("cael")
+	var before: int = int(cael.get("max_hp", 0))
+	PartyState.add_crystal_xp(CRYSTAL_HP, CRYSTAL_HP_XP_TO_LV3)
+	assert_eq(int(cael.get("max_hp", 0)), before, "a crystal only changes the character wearing it")

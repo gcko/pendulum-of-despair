@@ -43,8 +43,8 @@ tables, not the save file.
 
 | Category | Source |
 |----------|--------|
-| Max HP/MP | Level + growth curve + equipment + crystals |
-| ATK/DEF/MAG/MDEF/SPD/LCK | Level + growth curve + equipment bonuses |
+| Max HP/MP | Level + growth curve + saved capsule gains + equipment + crystals |
+| ATK/DEF/MAG/MDEF/SPD/LCK | Level + growth curve + saved capsule gains + equipment bonuses |
 | Available abilities/spells | Character level (from [abilities.md](abilities.md) / [magic.md](magic.md) tables) |
 | Shop inventories | Event flags + [economy.md](economy.md) rules |
 | NPC dialogue | Event flags + dialogue priority stack |
@@ -115,6 +115,11 @@ party[]: {
     accessory:     string|null
     ley_crystal:   string|null  -- crystal ID (links to ley_crystals.collected)
   }
+  stat_capsules: {           -- permanent Stat Capsule gains (items.md § Stat
+    <stat_id>:     integer   -- Capsules). NOT derivable from level or gear, so
+  }                          -- it must survive every save rewrite. Absent in
+                             -- saves written before capsules were persisted;
+                             -- treat a missing key as no gains.
   row:             string    -- "front" | "back"
   ability_loadout: string[]  -- equipped ability IDs (subset of level-unlocked)
   status_ailments: string[]  -- active persistent ailments (e.g., ["poison", "blind"])

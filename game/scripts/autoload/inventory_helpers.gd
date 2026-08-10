@@ -45,11 +45,40 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 
 ## Whether a consumable's effect can currently apply. A second Sable's
 ## Coin is refused while one is active — a guarantee cannot be improved,
-## and the item must not be silently burned.
-static func can_apply_item_effect(item_data: Dictionary) -> bool:
-	if item_data.get("effect", "") == "preemptive":
+## and the item must not be silently burned. A Stat Capsule is refused on
+## the same principle once its target's permanent total is at the stat cap.
+## `target` is optional so callers without a member dictionary keep the old
+## item-only behaviour.
+static func can_apply_item_effect(item_data: Dictionary, target: Dictionary = {}) -> bool:
+	var effect: String = item_data.get("effect", "")
+	if effect == "preemptive":
 		return not EventFlags.check_required_flags("sables_coin_active")
+	if effect == "stat_boost":
+		return can_gain_capsule(target, item_data.get("stat", ""))
 	return true
+
+
+## Hard cap for one stat (progression.md § Stat Caps). One table so the
+## effective-stat clamp and the capsule refusal can never disagree.
+static func stat_cap(stat: String) -> int:
+	if stat == "hp":
+		return 14999
+	if stat == "mp":
+		return 1499
+	return 255
+
+
+## Whether a Stat Capsule would do anything for this target. Refused once the
+## target's own permanent total — leveled base plus already-banked gains — sits
+## at the cap, because base stats only ever grow and the extra gain could never
+## become visible (items.md § Stat Capsules). Equipment is deliberately excluded
+## from the comparison: a stat held at the cap by gear alone still benefits,
+## since removing the gear reveals the banked gain.
+static func can_gain_capsule(target: Dictionary, stat: String) -> bool:
+	if target.is_empty() or stat.is_empty():
+		return true
+	var base: int = int(target.get("base_stats", {}).get(stat, 0))
+	return base + get_capsule_gain(target, stat) < stat_cap(stat)
 
 
 ## Apply a consumable item's effect to a target member Dictionary.
@@ -237,11 +266,7 @@ static func compute_effective_stat(member: Dictionary, stat: String, equip_bonus
 	var total: int = int(member.get("base_stats", {}).get(stat, 0))
 	total += get_capsule_gain(member, stat)
 	total += equip_bonus
-	if stat == "hp":
-		return mini(total, 14999)
-	if stat == "mp":
-		return mini(total, 1499)
-	return clampi(total, 0, 255)
+	return clampi(total, 0, stat_cap(stat))
 
 
 ## Re-derive max HP/MP from the effective-stat formula and re-clamp current
