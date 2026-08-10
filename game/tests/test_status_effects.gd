@@ -21,6 +21,19 @@ func test_atb_frozen_statuses() -> void:
 	assert_eq(SE.atb_effect("poison"), "none")
 
 
+func test_display_adjective_reads_back_as_an_announcement() -> void:
+	# battle_manager builds "%s is %s and can't move!" from this, so the value
+	# has to be the adjective, never the raw status name (#260 review).
+	assert_eq(SE.display_adjective("paralysis"), "paralysed")
+	assert_eq(SE.display_adjective("sleep"), "asleep")
+	assert_eq(SE.display_adjective("petrify"), "petrified")
+	assert_eq(
+		SE.display_adjective("nonsense"),
+		"nonsense",
+		"an unlisted status reads back as itself rather than as another status"
+	)
+
+
 func test_atb_mod_statuses() -> void:
 	assert_eq(SE.atb_effect("slow"), "mod")
 	assert_almost_eq(SE.atb_mult("slow"), 0.5, 0.001)  # combat-formulas.md:720

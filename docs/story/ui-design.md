@@ -196,10 +196,14 @@ and commands share the bottom ~35%.
 - Damage numbers pop above sprites, float upward over ~0.5 seconds,
   pixel font 12px, 2-frame animation. Color-coded: white (damage),
   green (heal), grey (miss).
-- Party-side damage and healing numbers use the same popup, centred
-  horizontally on the targeted member's party-panel row and rising from
-  just above it. Like the target cursor (§ 2.6), the popup reads the
-  row's actual rect rather than assuming a row pitch.
+- Party-side damage and healing numbers use the same popup, but not the
+  same placement: party rows sit only ~31px apart, less than the height
+  of the number itself, so a number floated above a row would cover the
+  member above it and read as damage to the wrong character. A
+  party-side number is centred on the row it belongs to — both axes —
+  and rises only as far as the gap between rows, never entering a
+  neighbouring row's band. Like the target cursor (§ 2.6), the popup
+  reads the row's actual rect rather than assuming a row pitch.
 
 ### 2.3 Party Panel (Bottom-Left, ~65% Width)
 
@@ -249,6 +253,16 @@ Vertical list of battle commands:
   changes, enemy actions.
 - Pixel font 8px, pale yellow text on dark navy background.
 - Auto-fades after 1.5 seconds. Does not persist.
+- Announcements queue rather than overwrite. A line is guaranteed at
+  least 0.75 seconds on screen before the next one may take the window;
+  anything arriving inside that guarantee waits its turn. Without it a
+  line can be flashed past in a single frame — an auto-skipped
+  Paralysis turn (see [combat-formulas.md](combat-formulas.md) § Status
+  Effect ATB Interactions) is announced one frame before the enemy that
+  was ready alongside it attacks.
+- At most 3 lines wait behind the current one. A longer burst drops its
+  oldest waiting lines, so the window can never run seconds behind the
+  battle it is describing.
 
 ### 2.6 Target Selection
 
@@ -261,7 +275,12 @@ Vertical list of battle commands:
   it stays correct when row height changes. The party panel hugs the
   left edge of the screen, so the cursor clamps there rather than
   sliding off.
-- Left/right cycles through enemies; up/down cycles through party members.
+- Left/right cycles through enemies; up/down cycles through party
+  members — through the occupied slots only, so a two-member party
+  cycles between two rows and can never point at an empty slot. A KO'd
+  member stays targetable (revives and healing must reach them). If a
+  slot with no row is somehow targeted anyway, the cursor hides rather
+  than pointing at empty space.
 - Multi-target spells: all valid targets highlighted simultaneously,
   cursor shows "All" text indicator.
 - Confirm executes; cancel returns to sub-menu or command panel.

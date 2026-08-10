@@ -125,15 +125,25 @@ func _process(delta: float) -> void:
 	for id: String in _atb.get_ready_queue():
 		if id.begins_with("party_") and _awaiting_input_for == "":
 			var slot: int = id.replace("party_", "").to_int()
-			# Incapacitated (Paralysis) members auto-skip: the status counts down on
-			# this would-be turn (the filling gauge is the clock), then the gauge
-			# resets so the next skip is one turn later (#248).
-			if _is_incapacitated(slot):
-				_skip_incapacitated_turn(slot, id)
+			var blocked_by: String = _incapacitating_status(slot)
+			if blocked_by != "":
+				# Sleep/Petrify freeze the gauge, and a frozen gauge retains its
+				# value (combat-formulas.md § Status Effect ATB Interactions), so
+				# a member already at full gauge simply takes no turn: no
+				# announcement, no tick, and above all no reset that would throw
+				# the retained value away. Other combatants act around them.
+				if StatusEffects.atb_effect(blocked_by) == "frozen":
+					continue
+				# Paralysis fills the gauge instead, so it does have a turn to
+				# consume: the status counts down on this would-be turn (the
+				# filling gauge is the clock), then the gauge resets so the next
+				# skip is one turn later (#248).
+				_skip_incapacitated_turn(slot, id, blocked_by)
 				# break, not continue: the skip consumes this frame's single
-				# action slot so its message is not overwritten by another
-				# combatant's before the UI renders it (#260). The gauge is
-				# back at 0, so this member is not ready again next frame.
+				# action slot, so nothing else resolves alongside it (#260). The
+				# gauge is back at 0, so this member is not ready again next
+				# frame. The announcement's readability is the UI's job —
+				# battle_ui queues messages (ui-design.md § 2.5).
 				break
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
@@ -223,25 +233,29 @@ func _targetable_enemy_count() -> int:
 	)
 
 
-## True if the party member cannot act (Paralysis / Sleep / Petrify) — #248.
-func _is_incapacitated(slot: int) -> bool:
+## Name of the status stopping this member from acting — Paralysis, Sleep or
+## Petrify — or "" when it can act (#248). The name matters: the caller treats a
+## gauge-freezing status differently from Paralysis, and the announcement reads
+## it back to the player.
+func _incapacitating_status(slot: int) -> String:
 	var m: Dictionary = _state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
-		return false
+		return ""
 	for s: Dictionary in m.get("active_statuses", []):
-		if StatusEffects.is_incapacitating(s.get("name", "")):
-			return true
-	return false
+		var status_name: String = s.get("name", "")
+		if StatusEffects.is_incapacitating(status_name):
+			return status_name
+	return ""
 
 
-## Auto-skip an incapacitated member's ready turn: announce, tick statuses (so the
+## Auto-skip a paralysed member's ready turn: announce, tick statuses (so the
 ## turn-based countdown advances + DoT still applies), and reset the gauge so the
 ## next skip is a turn away (#248). Ends with an end-condition check, mirroring
 ## _on_ui_command, so a DoT that kills the last standing member resolves the
 ## party wipe on this frame instead of one frame later (#260).
-func _skip_incapacitated_turn(slot: int, id: String) -> void:
+func _skip_incapacitated_turn(slot: int, id: String, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	message.emit("%s is paralysed and can't move!" % nm)
+	message.emit("%s is %s and can't move!" % [nm, StatusEffects.display_adjective(status_name)])
 	for ev: Dictionary in _state.tick_statuses(slot):
 		damage_dealt.emit(
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")

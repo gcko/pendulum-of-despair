@@ -48,6 +48,16 @@ const RULES: Dictionary = {
 	"blind": {"duration": 4},
 }
 
+## Player-facing adjective for the statuses that produce a battle announcement
+## ("paralysis" -> "paralysed"). Only the action-denying statuses are listed
+## because they are the only ones the battle layer announces by name; anything
+## else falls back to its raw status name rather than reading as another status.
+const ADJECTIVES: Dictionary = {
+	"paralysis": "paralysed",
+	"sleep": "asleep",
+	"petrify": "petrified",
+}
+
 
 ## Whether the registry knows this status (and 2b can inflict it).
 static func is_known(status: String) -> bool:
@@ -80,6 +90,11 @@ static func tick_pct(status: String) -> float:
 ## Whether taking damage cures this status (Sleep, Confusion).
 static func wakes_on_damage(status: String) -> bool:
 	return RULES.get(status, {}).get("wake_on_damage", false)
+
+
+## Adjective for a battle announcement, e.g. "Edren is paralysed and can't move!"
+static func display_adjective(status: String) -> String:
+	return ADJECTIVES.get(status, status)
 
 
 ## Canonical turns for a status (UNTIL_CURED for persistent ones).

@@ -25,6 +25,9 @@ var _target_cursor: int = 0
 var _target_is_enemy: bool = true
 var _pending_command: Dictionary = {}
 var _target_count: int = 0
+## Party slots ally targeting may cycle through. BattleUI pushes the live party
+## size; the four-slot default keeps a caller that never sets it working (#276).
+var _party_target_count: int = 4
 var _character_data: Dictionary = {}
 var _current_mp: int = 0
 
@@ -231,7 +234,7 @@ func _confirm_submenu() -> void:
 		"single_enemy":
 			_start_target_selection(true)
 		"single_ally":
-			_start_target_selection(false, 4)
+			_start_target_selection(false, _party_target_count)
 		"all_enemies", "all_allies":
 			command_selected.emit(_pending_command)
 			hide_menu()
@@ -276,6 +279,12 @@ func set_submenu_items(items: Array[Dictionary]) -> void:
 ## Set enemy count for target selection. Minimum 1 to prevent division by zero.
 func set_enemy_count(count: int) -> void:
 	_target_count = maxi(1, count)
+
+
+## Set how many party slots ally targeting may address — the live party size, so
+## the cursor never lands on an empty slot (#276). Minimum 1 for the modulo.
+func set_party_count(count: int) -> void:
+	_party_target_count = maxi(1, count)
 
 
 func _update_command_display() -> void:

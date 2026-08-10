@@ -68,3 +68,56 @@ func test_empty_submenu_for_caster_with_no_spells() -> void:
 	m.show_commands({"id": "nobody_xyz", "level": 1}, false, 99)
 	_open_magic_submenu(m)
 	assert_eq(m._submenu_items.size(), 0, "no spells -> empty submenu")
+
+
+# --- Ally targeting is bounded by the live party size (#276) ---
+
+
+func _press(action: String) -> InputEventAction:
+	var event: InputEventAction = InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	return event
+
+
+## Drive the menu to ally-target selection. A party_count of 0 means "the caller
+## never pushed one", exercising the default.
+func _open_single_ally_target(m: Node, party_count: int) -> void:
+	if party_count > 0:
+		m.set_party_count(party_count)
+	var items: Array[Dictionary] = [
+		{
+			"label": "Mend",
+			"command": {"type": "magic"},
+			"target_type": "single_ally",
+			"enabled": true,
+		}
+	]
+	m.set_submenu_items(items)
+	m._submenu_cursor = 0
+	m._confirm_submenu()
+
+
+func test_ally_targeting_uses_the_live_party_count() -> void:
+	# Before #276 this was hardcoded to 4, letting the cursor walk onto empty
+	# party slots that have no row to point at.
+	var m: Node = _make_menu()
+	_open_single_ally_target(m, 2)
+	assert_eq(m._target_count, 2, "a two-member party offers exactly two ally targets")
+
+
+func test_ally_target_cursor_wraps_within_the_live_party() -> void:
+	var m: Node = _make_menu()
+	_open_single_ally_target(m, 2)
+
+	m._handle_target_input(_press("ui_down"))
+	assert_eq(m._target_cursor, 1, "down moves to the second member")
+	m._handle_target_input(_press("ui_down"))
+	assert_eq(m._target_cursor, 0, "and wraps back rather than reaching an empty slot")
+
+
+func test_ally_targeting_defaults_to_a_full_party() -> void:
+	# A caller that never pushes a count keeps the pre-#276 four-slot behaviour.
+	var m: Node = _make_menu()
+	_open_single_ally_target(m, 0)
+	assert_eq(m._target_count, 4, "an unset party count still addresses four slots")

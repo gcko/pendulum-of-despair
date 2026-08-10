@@ -5,6 +5,7 @@ extends GutTest
 ## laid out exactly as it renders in play.
 
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
+const BattleUIScript = preload("res://scripts/ui/battle_ui.gd")
 
 var _booted: Node = null
 
@@ -77,7 +78,7 @@ func test_target_cursor_hides_for_an_empty_party_slot() -> void:
 	assert_false(ui._target_arrow.visible, "no row means no cursor to place")
 
 
-func test_party_damage_popup_is_centred_over_the_real_row() -> void:
+func test_party_damage_popup_sits_on_the_row_it_belongs_to() -> void:
 	seed(31)
 	var battle: Node = await _boot()
 	var ui: CanvasLayer = battle._ui
@@ -87,7 +88,49 @@ func test_party_damage_popup_is_centred_over_the_real_row() -> void:
 	ui._on_damage_dealt("party_1", 42, "damage")
 	var popup: Label = _popup(ui, "42")
 	assert_not_null(popup, "a popup label spawned for the party hit")
-	var popup_centre_x: float = popup.position.x + popup.get_minimum_size().x * 0.5
-	var row_centre_x: float = row.position.x + row.size.x * 0.5
-	assert_almost_eq(popup_centre_x, row_centre_x, 1.0, "popup is centred over its row")
-	assert_lt(popup.position.y, row.position.y, "popup floats above the row")
+	var size: Vector2 = popup.get_minimum_size()
+	assert_almost_eq(
+		popup.position.x + size.x * 0.5,
+		row.position.x + row.size.x * 0.5,
+		1.0,
+		"popup is centred over its row"
+	)
+	assert_almost_eq(
+		popup.position.y + size.y * 0.5,
+		row.position.y + row.size.y * 0.5,
+		1.0,
+		"and vertically centred on it, so it cannot be read as another member's"
+	)
+
+
+func test_party_damage_popup_never_climbs_into_the_row_above() -> void:
+	# The party rows are ~31px apart — far tighter than the 64px enemy lift — so
+	# the popup rises only into the gap between rows (#276, ui-design.md § 2.2).
+	seed(31)
+	var battle: Node = await _boot()
+	var ui: CanvasLayer = battle._ui
+	var above: Rect2 = ui._party_panel.get_row_global_rect(0)
+	var row: Rect2 = ui._party_panel.get_row_global_rect(1)
+	assert_gt(above.size.y, 0.0, "precondition: slot 0 has a visible row")
+	assert_lt(row.position.y - above.position.y, 60.0, "precondition: rows are tightly packed")
+
+	ui._on_damage_dealt("party_1", 45, "damage")
+	var popup: Label = _popup(ui, "45")
+	assert_not_null(popup, "a popup label spawned for the party hit")
+	var highest_y: float = popup.position.y - BattleUIScript.PARTY_POPUP_RISE
+	assert_gte(
+		highest_y, above.position.y + above.size.y, "the whole rise stays clear of the row above"
+	)
+
+
+func test_ally_targeting_is_limited_to_the_occupied_party_slots() -> void:
+	# The Act I party is two members, so the ally cursor must never be able to
+	# walk onto slots 2 and 3 — which have no row to point at (#276).
+	seed(31)
+	var battle: Node = await _boot()
+	var ui: CanvasLayer = battle._ui
+	assert_eq(ui._occupied_party_slot_count(), 2, "precondition: Act I starts with two members")
+
+	ui._on_turn_ready("party_0", true, 0, 1, false, {"character_id": "edren", "level": 1})
+
+	assert_eq(ui._command_menu._party_target_count, 2, "the menu targets only the occupied slots")
