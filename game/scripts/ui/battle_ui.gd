@@ -17,6 +17,20 @@ const COLOR_CRIT: Color = Color("#ffff44")
 const COLOR_POISON: Color = Color("#aa66cc")
 const COLOR_BURN: Color = Color("#ff8844")
 
+## Offsets applied to the target cursor when it points at an enemy sprite
+## (ui-design.md § 2.6 — cursor above the sprite).
+const ENEMY_ARROW_OFFSET: Vector2 = Vector2(32, 8)
+## Gap between the target cursor and the left edge of the party row it
+## points at (ui-design.md § 2.6 — cursor beside the targeted member).
+const PARTY_ARROW_GAP: float = 6.0
+## Damage popups spawn POPUP_LIFT px above their anchor and float a further
+## POPUP_RISE px over 0.5s (ui-design.md § 2.2).
+const POPUP_LIFT: float = 64.0
+const POPUP_RISE: float = 64.0
+## World-space anchor used when a damage event names a combatant this UI
+## cannot place (unknown id, or a party slot with no visible row).
+const FALLBACK_WORLD_ANCHOR: Vector2 = Vector2(640, 360)
+
 var _manager: Node = null
 var _battle_state: Node = null
 var _atb_system: Node = null
@@ -137,13 +151,21 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 		return
 	if is_enemy and index < _enemy_positions.size():
 		_target_arrow.visible = true
-		var vp: Viewport = get_viewport()
-		var world_pos: Vector2 = _enemy_positions[index]
-		var arrow_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
-		_target_arrow.position = arrow_pos - Vector2(32, 8)
+		_target_arrow.position = _to_screen(_enemy_positions[index]) - ENEMY_ARROW_OFFSET
 	elif not is_enemy:
+		var row: Rect2 = _party_row_rect(index)
+		if row.size == Vector2.ZERO:
+			_target_arrow.visible = false
+			return
 		_target_arrow.visible = true
-		_target_arrow.position = Vector2(40, 480 + index * 60)
+		var arrow: Vector2 = _target_arrow.get_minimum_size()
+		# Sits just left of the row, vertically centred on it. The party panel
+		# hugs the viewport's left edge, so clamp at 0 rather than let the
+		# cursor slide off-screen.
+		_target_arrow.position = Vector2(
+			maxf(0.0, row.position.x - arrow.x - PARTY_ARROW_GAP),
+			row.position.y + (row.size.y - arrow.y) * 0.5
+		)
 	else:
 		_target_arrow.visible = false
 
@@ -211,28 +233,46 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	label.modulate = color
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
-	var world_pos: Vector2 = _get_target_position(target_id)
-	var vp: Viewport = get_viewport()
-	var screen_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
-	label.position = screen_pos - Vector2(80, 64)
 	add_child(label)
+
+	var anchor: Vector2 = _get_target_anchor(target_id)
+	label.position = anchor - Vector2(label.get_minimum_size().x * 0.5, POPUP_LIFT)
 
 	var tween: Tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(label, "position:y", screen_pos.y - 128, 0.5)
+	tween.tween_property(label, "position:y", label.position.y - POPUP_RISE, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)
 
 
-func _get_target_position(target_id: String) -> Vector2:
+## Screen-space anchor for a combatant's floating numbers. Enemies live in
+## world space and go through the canvas transform; party rows are already
+## screen space (the panel shares this CanvasLayer) and report their own
+## rects, so nothing here guesses a row pitch (#276).
+func _get_target_anchor(target_id: String) -> Vector2:
 	if target_id.begins_with("enemy_"):
 		var idx: int = target_id.replace("enemy_", "").to_int()
 		if idx < _enemy_positions.size():
-			return _enemy_positions[idx]
+			return _to_screen(_enemy_positions[idx])
 	elif target_id.begins_with("party_"):
 		var slot: int = target_id.replace("party_", "").to_int()
-		return Vector2(160, 480 + slot * 60)
-	return Vector2(640, 360)
+		var row: Rect2 = _party_row_rect(slot)
+		if row.size != Vector2.ZERO:
+			return row.position + row.size * 0.5
+	return _to_screen(FALLBACK_WORLD_ANCHOR)
+
+
+## Real screen rect of a party row, or an empty Rect2 when the panel is
+## absent (battle_manager tolerates a missing UI child) or the slot is empty.
+func _party_row_rect(slot: int) -> Rect2:
+	if _party_panel == null:
+		return Rect2()
+	return _party_panel.get_row_global_rect(slot)
+
+
+func _to_screen(world_pos: Vector2) -> Vector2:
+	var vp: Viewport = get_viewport()
+	return vp.get_canvas_transform() * world_pos if vp != null else world_pos
 
 
 func _show_results(rewards: Dictionary) -> void:

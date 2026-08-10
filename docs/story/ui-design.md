@@ -196,6 +196,10 @@ and commands share the bottom ~35%.
 - Damage numbers pop above sprites, float upward over ~0.5 seconds,
   pixel font 12px, 2-frame animation. Color-coded: white (damage),
   green (heal), grey (miss).
+- Party-side damage and healing numbers use the same popup, centred
+  horizontally on the targeted member's party-panel row and rising from
+  just above it. Like the target cursor (§ 2.6), the popup reads the
+  row's actual rect rather than assuming a row pitch.
 
 ### 2.3 Party Panel (Bottom-Left, ~65% Width)
 
@@ -249,7 +253,14 @@ Vertical list of battle commands:
 ### 2.6 Target Selection
 
 - Blinking pixel-art arrow cursor above targeted enemy (for offensive
-  actions) or below targeted party member (for support/healing).
+  actions) or beside the targeted party member (for support/healing).
+- The party has no sprites on the battle screen, so a party-side cursor
+  anchors to the targeted member's row in the party panel: immediately
+  left of the row, vertically centred on it (FF6's row-list convention).
+  It reads the row's actual on-screen rect — never a fixed row pitch, so
+  it stays correct when row height changes. The party panel hugs the
+  left edge of the screen, so the cursor clamps there rather than
+  sliding off.
 - Left/right cycles through enemies; up/down cycles through party members.
 - Multi-target spells: all valid targets highlighted simultaneously,
   cursor shows "All" text indicator.
