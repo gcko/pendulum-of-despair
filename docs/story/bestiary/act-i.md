@@ -15,12 +15,26 @@ calculations.
 Recommended party level: 1–8. First dungeon -- every enemy teaches a
 core mechanic.
 
+> **Sanctioned overworld appearance (#270):** Ley Vermin and Unstable
+> Crystal are ley-corrupted creatures, not mine-dwellers — the Ember Vein
+> is simply where the party first meets them. Both legitimately roam the
+> ley-scarred terrain above the vein, so their Location(s) entries below
+> also list the overworld zones they appear in per
+> `game/data/encounters/overworld.json` (Ley Vermin: Ley-Scarred Plains,
+> Valdris Highlands; Unstable Crystal: Ley-Scarred Plains). Without them
+> the Ley-Scarred Plains zone would have no ley-themed enemy at all. This
+> is a deliberate, documented widening of the Location column — the same
+> kind of sanctioned exception as the GAP-028 tutorial-encounter note in
+> the Ironmouth Docks section below — and **not** an authoring error to
+> be "corrected" by removing them from the overworld tables. The
+> remaining Ember Vein enemies stay dungeon-confined.
+
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Ley Vermin | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Sharp Fang (25%) | — | — | — | — | Ember Vein F1–F2 |
+| Ley Vermin | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Sharp Fang (25%) | — | — | — | — | Ember Vein F1–F2, Ley-Scarred Plains, Valdris Highlands |
 | Tomb Mite | Beast | 2 | 35 | 0 | 9 | 7 | 8 | 6 | 9 | 2 | 4 | Beast Hide (75%) | Sharp Fang (25%) | — | — | — | — | Ember Vein F1–F2 |
 | Restless Dead | Undead | 3 | 72 | 10 | 12 | 8 | 10 | 7 | 10 | 2 | 4 | Bone Fragment (75%) | Spirit Dust (25%) | Spirit | — | — | Poison, Death | Ember Vein F1–F3 |
-| Unstable Crystal | Elemental | 3 | 64 | 10 | 13 | 6 | 10 | 7 | 10 | 5 | 10 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Ember Vein F1–F3 |
+| Unstable Crystal | Elemental | 3 | 64 | 10 | 13 | 6 | 10 | 7 | 10 | 5 | 10 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Ember Vein F1–F3, Ley-Scarred Plains |
 | Mine Shade | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Ember Vein F2–F3 |
 | Bone Warden | Undead | 4 | 105 | 14 | 14 | 10 | 11 | 8 | 9 | 5 | 11 | Bone Fragment (75%) | Spirit Dust (25%) | Spirit | — | — | Poison, Death | Ember Vein F2–F3 |
 | Ember Wisp | Elemental | 5 | 125 | 17 | 13 | 11 | 14 | 9 | 12 | 5 | 12 | Element Shard (75%) | Elemental Core (25%) | Frost | — | Flame | Petrify | Ember Vein F3 |
@@ -78,14 +92,26 @@ For full AI scripts, phase mechanics, and scripted events, see
 Encounters between Valdris and Fenmother's Hollow. Overworld enemies are
 generally less dangerous than dungeon enemies at the same level.
 
+> **Thornmere Wilds roster (#270):** the Thornmere Wilds zone
+> (`thornmere_wilds` in `game/data/encounters/overworld.json`) draws its
+> four groups from the forest members of this roster — Wayward Wolf,
+> Wild Boar, Forest Sprite, and Thornback Beetle — so those four list
+> Thornmere Wilds among their locations. It previously drew on Marsh
+> Serpent and Drowned Bones, which are confined to Fenmother's Hollow;
+> that was an authoring error, corrected in the data rather than
+> sanctioned here. Plains Hare and Road Bandit stay out of the Wilds:
+> the Hare is a plains/roadside animal and the Bandit works the Valdris
+> Road, and the Wilds have no roads ([geography.md](../geography.md):
+> "The Wilds have no safe corridors -- there are no roads").
+
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Plains Hare | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Hare Pelt (25%) | — | — | — | — | Valdris Plains |
-| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Valdris Forest |
+| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Valdris Forest, Thornmere Wilds |
 | Road Bandit | Humanoid | 4 | 96 | 0 | 14 | 9 | 11 | 8 | 11 | 5 | 11 | Potion (75%) | Leather Pouch (25%) | — | — | — | — | Valdris Road |
-| Forest Sprite | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Valdris Forest |
-| Wild Boar | Beast | 5 | 112 | 0 | 18 | 9 | 13 | 9 | 12 | 10 | 21 | Beast Hide (75%) | Boar Tusk (25%) | — | — | — | — | Valdris Plains, Forest Edge |
-| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Valdris Forest, Duskfen Road |
+| Forest Sprite | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Valdris Forest, Thornmere Wilds |
+| Wild Boar | Beast | 5 | 112 | 0 | 18 | 9 | 13 | 9 | 12 | 10 | 21 | Beast Hide (75%) | Boar Tusk (25%) | — | — | — | — | Valdris Plains, Forest Edge, Thornmere Wilds |
+| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Valdris Forest, Duskfen Road, Thornmere Wilds |
 
 ---
 

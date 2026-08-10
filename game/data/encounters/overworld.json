@@ -304,6 +304,7 @@
       ]
     },
     {
+      "_comment": "Issue #270: groups repopulated from the bestiary/act-i.md 'Overworld Act I' roster (forest members only). The previous marsh_serpent/drowned_bones set is Location-confined to Fenmother's Hollow F1-F3 and did not belong in a dense forest. Encounter math (tier, increment, terrain, formation rates, weights) is unchanged; expected group HP 360 -> 332, still ~2.5x tier-1 aelhart_valley (132).",
       "zone_id": "thornmere_wilds",
       "name": "Thornmere Wilds",
       "terrain_type": "low_visibility",
@@ -319,33 +320,36 @@
         {
           "format": 1,
           "enemies": [
-            "marsh_serpent",
-            "marsh_serpent"
+            "wayward_wolf",
+            "wayward_wolf"
           ],
           "weight": 31.25
         },
         {
           "format": 2,
           "enemies": [
-            "marsh_serpent",
-            "drowned_bones"
+            "wild_boar",
+            "wild_boar",
+            "forest_sprite"
           ],
           "weight": 31.25
         },
         {
           "format": 3,
           "enemies": [
-            "drowned_bones",
-            "drowned_bones"
+            "wayward_wolf",
+            "thornback_beetle",
+            "forest_sprite"
           ],
           "weight": 31.25
         },
         {
           "format": 4,
           "enemies": [
-            "marsh_serpent",
-            "marsh_serpent",
-            "drowned_bones"
+            "wayward_wolf",
+            "wayward_wolf",
+            "wild_boar",
+            "wild_boar"
           ],
           "weight": 6.25
         }
