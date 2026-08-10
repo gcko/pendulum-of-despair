@@ -1,16 +1,24 @@
-# Gap-Closure Bundle Roadmap
+# Gap-Closure Roadmap
 
-A living plan for closing the remaining `gap-analysis` GitHub Issues as
-**bundles** — small sets of 2–4 related issues that share a code touchpoint and
-ship as ONE PR via the `/issue-bundle` skill. Generated 2026-06-28 from a
-multi-agent clustering pass over the ~80 open gap issues; refine as work lands.
+A living plan for closing the remaining `gap-analysis` GitHub Issues. Work ships
+as **bundles** — small sets of 2–4 related issues that share a code touchpoint
+and land as ONE PR via the `/issue-bundle` skill.
 
-**Process:** `gh issue list --label gap-analysis` → pick a coherent bundle →
+**Ordering lives in the [GitHub Project](https://github.com/users/gcko/projects/3).**
+Every open issue carries exactly one phase milestone, one type label
+(`bug` / `feature` / `enhancement` / `documentation` / `chore`), and a Project
+`Priority` of P0/P1/P2. `Size` is set only for L and XL work; everything else is
+left blank on purpose. This document is the prose companion — the Project is the
+queue.
+
+**Process:** pick the next `Ready` items inside the lowest-numbered open phase →
 implement together on one branch (`/game-designer` or `/gut-tdd`) → one PR
 (`/create-pr`) → review & fix (`/pr-review-response`). Epics are too big to
 bundle — slice them into their own multi-PR efforts.
 
-## Status
+---
+
+## Shipped
 
 | Bundle | Issues | State |
 |--------|--------|-------|
@@ -22,83 +30,132 @@ bundle — slice them into their own multi-PR efforts.
 | Bundle 4a | Act-I enemy kits + selector schema (#249/#250) | ✅ merged (PR #258) |
 | Bundle 4b | Paralysis + player-ATB auto-skip (#248) | ✅ merged (PR #259) |
 | Bundle 5 | GAP-025 encounter scaling, GAP-026 per-tile zones, GAP-027 formation overrides | ✅ merged (PR #268) |
-| Bundle 6 | GAP-057 HP/MP bars, GAP-063 Weave Gauge (guest row → #272) | 🔄 in review |
+| Bundle 6 | GAP-057 HP/MP bars, GAP-063 Weave Gauge (guest row → #272) | ✅ merged (PR #275) |
 
-> Bundle 2 was split after analysis: each of GAP-003/008/010 has an independent
-> "do-now" core plus a tail that depends on unbuilt systems (GAP-002 abilities,
-> GAP-009 boss AI, GAP-013 spike framework, GAP-023 enemy-element schema). 2a
-> shipped the pure damage-math cores; 2b is the status subsystem.
+All six planned bundles have shipped. The original clustering (2026-06-28) is
+exhausted; the phases below are the 2026-08-10 re-plan over the 93 remaining
+open issues.
 
 ---
 
-## Combat + Enemies + Encounters
+## Phase order
 
-1. **Bundle 2b — combat status system** (GAP-003 #159) — `roll_status`→`apply_status`
-   wiring, `STATUS_RULES` + spell `status` JSON fields, ATB freeze/mods sync,
-   poison ticks, boss immunity. *(L; player→enemy core only — enemy→party defers
-   to GAP-009.)*
-2. **Data-driven enemy & boss AI + bestiary reconciliation** (GAP-024 #166,
-   GAP-009 #179, GAP-028 #222) — *depends on Bundle 2a/2b combat layer. (L)*
-3. **Encounter scaling & formations** (GAP-025 #185, GAP-026 #186, GAP-027 #221)
-   — act/location scaling, per-tile zones, formation overrides. *(M)*
-- **EPIC GAP-002 #158 (XL):** six unique character commands (Bulwark/Rally/
-  Forgewright/Spiritcall/Tricks/Arcanum). Slice per character; unblocks the
-  deferred GAP-008 buff interactions.
+Phases are strictly ordered by *what unblocks what*, not by severity. The
+gap-analysis `sev:*` labels are kept as historical signal but are **not** the
+priority axis — Project `Priority` is.
 
-## Save + Progression
+### Phase 1 — Live Regressions (11 issues)
 
-1. **Permanent stat-accumulation framework** (GAP-011 #161, GAP-013 #180) —
-   Crystal accrual + milestone spikes; **GAP-013 absorbs GAP-010's framework
-   tail.** *(L)*
-2. **Ley Crystal effects + XP** (GAP-014 #181, GAP-015 #220) — *depends on #1. (L)*
-3. **Save backend** (GAP-066 #174, GAP-068 #209, GAP-070 #211, GAP-076 #232) —
-   persistence, triggers, playtime, validation. *(L)*
-4. **Save-screen & save-point ops** (GAP-069 #210, GAP-075 #231) — Copy/Delete,
-   Inn/Rest. *(M)*
-5. **Accessibility — visual cues** (GAP-071 #212, GAP-074 #230). *(L)*
-6. **Accessibility — input & captions** (GAP-072 #213, GAP-073 #214). *(M)*
+Behavior that is already built and demonstrably wrong. Cheap, high-confidence,
+and it stops new systems from being layered on top of broken foundations. This
+phase should be one or two bundles, not eight PRs.
 
-## World + Exploration + Story
+- **P0:** #274 level-up drops equipment HP/MP bonus · #269 saves hardcode player
+  position · #165 GAP-020 stat capsules wiped on level-up · #164 GAP-019 material
+  drops land in consumables · #192 GAP-042 dialogue resolver drops default lines ·
+  #190 GAP-036 cutscene ignores entry condition · #171 GAP-038 score overwrites
+  instead of accumulating
+- **P1:** #260 paralysis message clobber · #270 overworld zones pull dungeon-only
+  enemies · #276 target-arrow/damage-popup anchors · #184 GAP-022 employee-card
+  discount never applied
 
-1. **Dialogue resolver & flag-catalog** (GAP-042 #192, GAP-045 #194, GAP-043 #193)
-   — Act-I slice. *(M)*
-2. **Act-I Valdris town builds** (GAP-050 #197, GAP-051 #198, GAP-056 #202). *(L)*
-3. **Act-I Thornmere expansions** (GAP-052 #199, GAP-053 #200). *(L)*
-4. **Settlement namespacing** (GAP-054 #226, GAP-055 #201) — *depends on GAP-049. (S)*
-5. **Overworld traversal** (GAP-032 #187, GAP-035 #223) — *depends on GAP-029. (M)*
-6. **Overworld map & biome atmosphere** (GAP-033 #188, GAP-034 #189) — *depends on GAP-029. (M)*
-- **EPICS:** GAP-029 #167 continental overworld (keystone), GAP-030 #168
-  transport, GAP-031 #169 act-based world transforms, GAP-044 #172 sidequest
-  system, **GAP-047 #173 Acts II–IV (largest single effort)**, GAP-048 #195 world
-  dungeons, GAP-049 #196 faction cities, GAP-091 #239 post-game.
+### Phase 2 — Combat Completion (11 issues)
 
-## UI + Items/Economy + Dialogue + Audio
+Closes out the combat layer so it can be considered feature-complete before the
+world grows around it.
 
-1. **Inventory item effects & routing** (GAP-019 #164, GAP-020 #165, GAP-021 #183). *(L)*
-2. **Shop overhaul** (GAP-017 #163, GAP-018 #182, GAP-022 #184) — *depends on #1. (L)*
-3. **Dialogue choice-consequence & animation** (GAP-038 #171, GAP-037 #170, GAP-039 #191). *(L)*
-4. **Dialogue condition eval & box visuals** (GAP-036 #190, GAP-040 #224, GAP-041 #225) — *depends on #3. (M)*
-5. **Battle party-panel HP/MP bars** (GAP-057 #203, GAP-063 #227). *(M)*
-6. **Icon & portrait atlas** (GAP-058 #204, GAP-059 #205, GAP-065 #229) — *depends on GAP-082 art. (L)*
-7. **Menu detail panels** (GAP-060 #206, GAP-061 #207, GAP-062 #208) — *depends on #6, GAP-002. (L)*
-8. **AudioManager transition primitive** (GAP-081 #234) — `enter_pallor`. *(S)*
-9. **Window-color theming** (GAP-064 #228). *(M)*
-- **EPICS:** GAP-016 #162 crafting, GAP-078 #175 audio production, GAP-079 #215
-  corruption evolution, GAP-080 #216 leitmotif layering.
+- **P0:** #178 GAP-008 buff/type multipliers never applied · #158 GAP-002 **EPIC**
+  six character commands (XL — slice per character)
+- **P1:** #177 GAP-006 ATB speed factors ~4× off spec · #246 deferred status
+  effects · #256 bespoke Act-I enemy abilities · #257 kits for no-kit Act-I
+  enemies · #176 GAP-005 twelve dual-tech combos (L)
+- **P2:** #253 boss charge interrupts · #254 Cael-as-boss Rally kit · #272 guest
+  NPC battle support · #273 battle party-row polish
 
-## Infra / Docs
+### Phase 3 — Progression & Save (12 issues)
 
-1. **SaveManager ownership consolidation + tests** (GAP-077 #233, GAP-083 #218). *(L)*
-2. **Autoload cleanup + oversized-file decomposition** (GAP-086 #236, GAP-087 #237)
-   — *depends on #1. (L)*
-3. **Architecture/doc reconciliation** (GAP-084 #235, GAP-089 #238). *(M)*
-- **EPIC GAP-082 #217 (XL):** all 22 art PNGs are placeholders — blocks the
-  icon/portrait UI bundle.
+The Esper/Magicite-model progression framework plus save integrity. #161 and
+#174 gate most of the rest.
+
+- **P0:** #161 GAP-011 permanent crystal accumulation (L) · #174 GAP-066
+  Faint-and-Fast-Reload persistence (L)
+- **P1:** #180 GAP-013 milestone stat spikes (L) · #181 GAP-014 crystal negative
+  effects · #209 GAP-068 auto-save triggers · #211 GAP-070 playtime increment ·
+  #218 GAP-083 SaveManager unit tests (L)
+- **P2:** #220 GAP-015 XP for reserve/KO · #232 GAP-076 save validation depth ·
+  #233 GAP-077 config-persistence ownership · #210 GAP-069 save Copy/Delete ·
+  #231 GAP-075 inn rest flow
+
+### Phase 4 — Items, Shop & Crafting (4 issues)
+
+- **P1:** #183 GAP-021 item effect stubs (L) · #163 GAP-017 shop Sell mode (L)
+- **P2:** #182 GAP-018 shop Buy mode UI (L) · #162 GAP-016 **EPIC** Arcanite
+  Forging (XL)
+
+### Phase 5 — Dialogue & Story Flags (7 issues)
+
+Prerequisite for Acts II–IV and the sidequest system: consequences must stick
+before story content depends on them.
+
+- **P0:** #170 GAP-037 choice consequences for standalone dialogue (L)
+- **P1:** #191 GAP-039 dialogue animation (L) · #194 GAP-045 NPC act-state
+  variants · #193 GAP-043 Act II content ungated in Act I
+- **P2:** #224 GAP-040 speaker name tag · #225 GAP-041 Cael grey border ·
+  #271 reconcile mechanical period flags with canon
+
+### Phase 6 — World & Overworld (24 issues)
+
+The largest phase by far. #167 is the keystone — the continental overworld —
+and almost every other world issue is cheaper after it lands.
+
+- **P0:** #167 GAP-029 **EPIC** continental overworld (XL) · #197 GAP-050 Aelhart
+  starting village (L)
+- **P1:** #168 GAP-030 **EPIC** transport (XL) · #169 GAP-031 **EPIC** act world
+  transforms (XL) · #172 GAP-044 **EPIC** sidequest system (XL) · #173 GAP-047
+  **EPIC** Acts II–IV (XL, largest single effort) · #198 GAP-051 Thornwatch (L) ·
+  #199 GAP-052 Roothollow (L)
+- **P2:** #187 region banners · #188 GAP-033 overworld map screen (L) · #189
+  biome weather · #223 overworld save points · #267 zone rects → tileset data ·
+  #266 Act III overworld transforms · #262 Veilstep field-cast · #263 Tunnel Map
+  + Kole patrol · #264 Ley Stag encounter suppression · #200 Maren's Refuge
+  basement · #201 GAP-055 Ironmouth (L) · #202 GAP-056 Valdris interiors (L) ·
+  #226 GAP-054 Duskfen (L) · #196 GAP-049 **EPIC** faction cities (XL) · #195
+  GAP-048 **EPIC** world dungeons (XL) · #239 GAP-091 **EPIC** post-game (XL)
+
+### Phase 7 — UI, Menus & Art (12 issues)
+
+#217 gates the icon/portrait work — every art-dependent UI issue below is
+blocked until real assets exist.
+
+- **P0:** #217 GAP-082 **EPIC** all art assets are placeholders (XL)
+- **P1:** #204 GAP-058 portraits + walking sprites (L) · #205 GAP-059 status-icon
+  system · #207 GAP-061 equip stat comparison · #208 GAP-062 battle results ·
+  #212 GAP-071 colour-blind mode · #214 GAP-073 key rebinding (L)
+- **P2:** #229 GAP-065 item screen grid · #206 GAP-060 abilities screen ·
+  #228 GAP-064 window colour · #230 GAP-074 orphaned config toggles ·
+  #213 GAP-072 SFX captions
+
+### Phase 8 — Audio (7 issues)
+
+- **P0:** #154 wire AudioManager into runtime (L)
+- **P1:** #155 SFX panning + Mono mode · #175 GAP-078 **EPIC** music/SFX assets (XL)
+- **P2:** #156 ambient spot-effect layering · #215 GAP-079 **EPIC** corruption
+  evolution (XL) · #216 GAP-080 **EPIC** leitmotif layering (XL) · #234 GAP-081
+  `enter_pallor()`
+
+### Infra & Docs (5 issues, all P2)
+
+Opportunistic — fold into whichever phase touches the same files.
+
+- #235 GAP-084 architecture doc vs. enemy JSON · #236 GAP-086 `inventory_helpers`
+  misplaced in `autoload/` · #237 GAP-087 oversized files (L) · #238 GAP-089
+  design-doc numeric balance · #265 encounter-table reconciliation
 
 ---
 
 ## Notes
 
 - Issue numbers map to GAP-NNN via the issue titles (`gh issue list --label gap-analysis`).
-- "Depends on" = the named bundle/gap should land first to avoid rework/conflict.
-- Sizes (S/M/L/XL) are the clustering agents' estimates — re-confirm at SELECT time.
+- Phase order is dependency order. Within a phase, work P0 → P1 → P2.
+- Only L and XL carry a `Size`; anything unsized is S/M and not worth estimating.
+- The 14 `epic`-labelled issues are all XL and must be sliced before implementation.
