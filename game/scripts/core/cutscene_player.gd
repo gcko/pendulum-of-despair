@@ -30,6 +30,12 @@ var _tier: int = TIER_FULL
 var _is_playing: bool = false
 var _config: Dictionary = {}
 var _skipped: bool = false
+
+## Scene-local pseudo-flags (`choice_N_selected`) for the most recent choice.
+## Entries are fed to the embedded dialogue box one at a time, so the choice
+## made inside it has to be remembered here to gate the reaction entries that
+## follow. Reset on every start_cutscene; never saved.
+var _choice_context: Dictionary = {}
 var _fade_tween: Tween = null
 var _flash_tween: Tween = null
 var _title_tween: Tween = null
@@ -56,6 +62,8 @@ func _ready() -> void:
 			_dialogue_box.flag_set_requested.connect(
 				func(f: String, v: Variant): flag_set_requested.emit(f, v)
 			)
+		if _dialogue_box.has_signal("choice_made"):
+			_dialogue_box.choice_made.connect(_on_dialogue_choice_made)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -84,6 +92,7 @@ func start_cutscene(cutscene_id: String, entries: Array, tier: int = TIER_FULL) 
 	_current_index = 0
 	_is_playing = true
 	_skipped = false
+	_choice_context = {}
 
 	# Check skip flag
 	var skip_flag: String = "cutscene_seen_%s" % cutscene_id
@@ -133,9 +142,12 @@ func skip_cutscene() -> void:
 	_is_playing = false
 	_skipped = true
 
-	# Emit remaining flags
+	# Emit remaining flags — entries whose condition is false never would have
+	# played, so skipping must not set their flags either.
 	for i: int in range(_current_index, _entries.size()):
 		var entry: Dictionary = _entries[i]
+		if not DialogueCondition.should_play(entry, _choice_context):
+			continue
 		var flag_val: Variant = entry.get("flag_set", "")
 		var flag: String = flag_val if flag_val is String else ""
 		if flag != "":
@@ -181,6 +193,11 @@ func _process_entries() -> void:
 	while _current_index < _entries.size() and _is_playing:
 		var entry: Dictionary = _entries[_current_index]
 
+		# Honour the per-entry condition (dialogue-system.md 3.2/3.5).
+		if not DialogueCondition.should_play(entry, _choice_context):
+			_current_index += 1
+			continue
+
 		# Run "before" commands
 		await _run_commands(entry, "before")
 		if _skipped or not _is_playing:
@@ -213,6 +230,12 @@ func _process_entries() -> void:
 			flag_set_requested.emit(flag, true)
 
 		_current_index += 1
+
+
+## Remember which option the player picked so the reaction entries that follow
+## (condition: `choice_N_selected`) resolve against this cutscene's own choice.
+func _on_dialogue_choice_made(choice_index: int) -> void:
+	_choice_context = DialogueCondition.choice_context(choice_index)
 
 
 func _fire_entry_animations(entry: Dictionary, prefix: String) -> void:

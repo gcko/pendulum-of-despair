@@ -6,6 +6,7 @@ const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
 
 func after_each() -> void:
 	EventFlags.clear_all()
+	PartyState.members.clear()
 
 
 func _create_npc():
@@ -116,64 +117,27 @@ func test_get_current_dialogue_null_before_conditioned() -> void:
 
 
 # --- Condition Evaluation ---
+# The expression evaluator itself now lives in DialogueCondition and is
+# covered by test_dialogue_conditions.gd. What matters here is that the NPC
+# resolver actually consults it.
 
 
-func test_evaluate_condition_null() -> void:
+func test_resolver_uses_shared_condition_evaluator() -> void:
 	var npc = _create_npc()
-	assert_true(npc._evaluate_condition(null), "null should return true")
-
-
-func test_evaluate_condition_empty() -> void:
-	var npc = _create_npc()
-	assert_true(npc._evaluate_condition(""), "empty should return true")
-
-
-func test_evaluate_condition_flag_set() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("test_flag", true)
-	assert_true(npc._evaluate_condition("test_flag"), "set flag should return true")
-
-
-func test_evaluate_condition_flag_unset() -> void:
-	var npc = _create_npc()
-	assert_false(npc._evaluate_condition("unset_flag"), "unset flag should return false")
-
-
-func test_evaluate_condition_and_both_true() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("flag_a", true)
-	EventFlags.set_flag("flag_b", true)
-	assert_true(npc._evaluate_condition("flag_a AND flag_b"), "both true should return true")
-
-
-func test_evaluate_condition_and_one_false() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("flag_a", true)
-	assert_false(
-		npc._evaluate_condition("flag_a AND flag_missing"),
-		"one false should return false",
+	npc.npc_id = "test_npc"
+	npc.dialogue_entries = [
+		{"id": "party_line", "condition": "party_has(torren)", "lines": ["Torren!"]},
+		{"id": "default_line", "condition": null, "lines": ["default"]},
+	]
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_line",
+		"party_has should be false with an empty party",
 	)
-
-
-func test_evaluate_condition_party_has() -> void:
-	var npc = _create_npc()
-	assert_false(
-		npc._evaluate_condition("party_has(torren)"),
-		"party_has should return false when member not in party",
-	)
-	var saved_members: Array[Dictionary] = PartyState.members.duplicate(true)
 	PartyState.add_member("torren")
-	assert_true(
-		npc._evaluate_condition("party_has(torren)"),
-		"party_has should return true when member is in party",
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"party_line",
+		"party_has should be honoured through DialogueCondition",
 	)
 	PartyState.members.clear()
-	for m: Dictionary in saved_members:
-		PartyState.members.append(m)
-
-
-func test_evaluate_condition_numeric_comparison() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("score", 3)
-	assert_true(npc._evaluate_condition("score >= 2"), "3 >= 2 should be true")
-	assert_false(npc._evaluate_condition("score >= 5"), "3 >= 5 should be false")

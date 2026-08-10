@@ -68,6 +68,11 @@ var _choice_count: int = 0
 ## Current text speed (chars per second).
 var _text_speed: int = 60
 
+## Scene-local pseudo-flags (`choice_N_selected`) describing the most recent
+## choice in this sequence. Shadows EventFlags while resolving conditions and
+## is never saved. Empty until the player picks an option.
+var _choice_context: Dictionary = {}
+
 @onready var _dialogue_box: PanelContainer = $DialogueBox
 @onready var _speaker_container: PanelContainer = $DialogueBox/SpeakerLabel
 @onready var _speaker_label: Label = $DialogueBox/SpeakerLabel/NameLabel
@@ -121,6 +126,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func show_dialogue(entries: Array) -> void:
 	_entries = entries
 	_current_index = 0
+	_choice_context = {}
 	if _entries.is_empty():
 		dialogue_finished.emit()
 		if not embedded_mode:
@@ -140,15 +146,20 @@ func close() -> void:
 		GameManager.pop_overlay()
 
 
+## Advance past any entry whose `condition` does not hold right now, then show
+## the first playable one. Keeps [member _current_index] pointing at the entry
+## actually on screen so _advance/_select_choice read the same entry.
 func _show_entry(index: int) -> void:
-	if index >= _entries.size():
+	_current_index = _next_playable_index(index)
+
+	if _current_index >= _entries.size():
 		set_process(false)
 		dialogue_finished.emit()
 		if not embedded_mode:
 			GameManager.pop_overlay()
 		return
 
-	var entry: Dictionary = _entries[index]
+	var entry: Dictionary = _entries[_current_index]
 
 	# Fire "before" animations
 	_fire_animations(entry, "before_line_0")
@@ -167,6 +178,18 @@ func _show_entry(index: int) -> void:
 		_current_lines = [speaker.to_upper() + ":"]
 	_page_start = 0
 	_show_page()
+
+
+## First index at or after [param start] whose entry may play now.
+## Returns _entries.size() when nothing is left to play.
+func _next_playable_index(start: int) -> int:
+	var index: int = maxi(start, 0)
+	while index < _entries.size():
+		var candidate: Variant = _entries[index]
+		if candidate is Dictionary and DialogueCondition.should_play(candidate, _choice_context):
+			return index
+		index += 1
+	return _entries.size()
 
 
 func _show_page() -> void:
@@ -211,20 +234,18 @@ func _advance() -> void:
 		return
 
 	# Advance to next entry
-	_current_index += 1
-	_show_entry(_current_index)
+	_show_entry(_current_index + 1)
 
 
 func _show_choice(options: Array) -> void:
-	_choice_count = mini(options.size(), 4)
+	_choice_count = mini(options.size(), DialogueCondition.MAX_CHOICES)
 	if _choice_count == 0:
-		_current_index += 1
-		_show_entry(_current_index)
+		_show_entry(_current_index + 1)
 		return
 	_in_choice = true
 	_choice_index = 0
 
-	for i: int in range(4):
+	for i: int in range(DialogueCondition.MAX_CHOICES):
 		if i < _choice_count:
 			var opt: Variant = options[i]
 			var label_text: String = opt.get("label", "") if opt is Dictionary else ""
@@ -261,6 +282,9 @@ func _select_choice() -> void:
 	_in_choice = false
 	_choice_box.visible = false
 	_choice_cursor.visible = false
+	# Publish the selection as scene-local pseudo-flags before advancing so the
+	# reaction entries gated on `choice_N_selected` resolve against it.
+	_choice_context = DialogueCondition.choice_context(_choice_index)
 	choice_made.emit(_choice_index)
 
 	# Emit flag_set if the selected option has flag/score data
@@ -281,8 +305,7 @@ func _select_choice() -> void:
 				flag_set_requested.emit(score_name, score_delta)
 
 	# Advance to next entry
-	_current_index += 1
-	_show_entry(_current_index)
+	_show_entry(_current_index + 1)
 
 
 func _update_choice_display() -> void:

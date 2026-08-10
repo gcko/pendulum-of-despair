@@ -70,82 +70,9 @@ func get_current_dialogue() -> Dictionary:
 		if condition == null or condition == "":
 			fallback = entry
 			continue
-		if _evaluate_condition(condition):
+		if DialogueCondition.evaluate(condition):
 			return entry
 	return fallback
-
-
-## Evaluate a condition expression against current game state.
-## Supports: null (always true), binary flags, numeric comparisons,
-## party_has(), and AND combinations.
-func _evaluate_condition(condition: Variant) -> bool:
-	# Null or empty = always true (default/fallback entry).
-	if condition == null or condition == "":
-		return true
-
-	# Must be a string to parse further.
-	if not (condition is String):
-		return false
-
-	var cond_str: String = condition
-
-	# AND combinations: split and evaluate each part.
-	if " AND " in cond_str:
-		var parts: PackedStringArray = cond_str.split(" AND ")
-		for part: String in parts:
-			if not _evaluate_condition(part.strip_edges()):
-				return false
-		return true
-
-	# party_has(character) — check if character is in active party.
-	if cond_str.begins_with("party_has("):
-		var end_idx: int = cond_str.find(")")
-		if end_idx < 0:
-			return false
-		var char_id: String = cond_str.substr(10, end_idx - 10).strip_edges()
-		return PartyState.has_member(char_id)
-
-	# Numeric/string comparison operators.
-	var operators: Array[String] = [">=", "<=", "==", "!=", ">", "<"]
-	for op: String in operators:
-		var op_idx: int = cond_str.find(op)
-		if op_idx > 0:
-			var flag_name: String = cond_str.substr(0, op_idx).strip_edges()
-			var value_str: String = cond_str.substr(op_idx + op.length()).strip_edges()
-			return _compare_flag(flag_name, op, value_str)
-
-	# Binary flag (simplest case).
-	return bool(EventFlags.get_flag(cond_str))
-
-
-## Compare a flag value against an expected value using an operator.
-func _compare_flag(flag_name: String, op: String, value_str: String) -> bool:
-	var flag_val: Variant = EventFlags.get_flag(flag_name)
-	var result: bool = false
-	if value_str.is_valid_int():
-		var expected: int = value_str.to_int()
-		var actual: int = int(flag_val) if flag_val != null else 0
-		match op:
-			">=":
-				result = actual >= expected
-			"<=":
-				result = actual <= expected
-			"==":
-				result = actual == expected
-			"!=":
-				result = actual != expected
-			">":
-				result = actual > expected
-			"<":
-				result = actual < expected
-	else:
-		var actual_str: String = str(flag_val) if flag_val != null else ""
-		match op:
-			"==":
-				result = actual_str == value_str
-			"!=":
-				result = actual_str != value_str
-	return result
 
 
 ## Lightweight init for cutscene actors — loads sprite but skips dialogue.
