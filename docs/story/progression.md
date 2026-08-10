@@ -182,6 +182,7 @@ Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actio
 
 ### Equipment and Buffs
 
+- **Effective stat = leveled base + permanent gains + equipment.** A character's effective stat is the leveled base stat (growth curve plus any narrative milestone spike), plus permanent Stat Capsule gains ([items.md](items.md) § Stat Capsules), plus equipment and Ley Crystal bonuses — then clamped to the caps above. Max HP and max MP are the same formula applied to HP and MP. Every term must survive every recalculation: changing gear must not drop capsule gains, and levelling up must not drop equipment or capsule bonuses.
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds 12 to the character's ATK. Simple and transparent.
 - **Equipment cannot push stats past the 255 cap** for ATK/DEF/MAG/MDEF/SPD/LCK. HP and MP can exceed their natural growth via equipment up to their hard caps (14999 / 1499).
 - **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass = +40% MDEF (single) / +25% MDEF (party). These are applied to the final stat (base + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See [magic.md](magic.md) for full buff/debuff spell list.
@@ -236,6 +237,12 @@ When a character levels up:
 2. All stats increase per growth rates
 3. Current HP and MP fully restored (FF6 model — creates clutch moments)
 4. New abilities/spells unlock per learning schedules in [abilities.md](abilities.md) and [magic.md](magic.md)
+
+The level-up recompute rebuilds the base stats from the growth curve, so it must
+re-apply everything layered on top of them: the narrative milestone spike, the
+permanent Stat Capsule gains, and the equipment/Ley Crystal bonuses. Max HP after
+a level-up equals the effective HP defined in § Equipment and Buffs — never the
+bare base value.
 
 Level-up notification: character name, new level, stat deltas, newly learned abilities.
 

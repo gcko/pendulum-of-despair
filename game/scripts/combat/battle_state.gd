@@ -17,8 +17,9 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 var _members: Array = [null, null, null, null]
 
 
-## Add a party member to a slot. Bakes equipment bonuses into effective_stats
-## at battle start so combat calculations reflect equipped gear and crystals.
+## Add a party member to a slot. Bakes equipment and Stat Capsule bonuses into
+## effective_stats at battle start so combat calculations reflect equipped gear,
+## crystals and permanent capsule gains.
 func add_member(slot: int, char_data: Dictionary) -> void:
 	if slot < 0 or slot > 3:
 		push_error("BattleState: Invalid slot %d" % slot)
@@ -339,13 +340,18 @@ func gain_weave_gauge_for_maren(amount: int) -> void:
 		gain_weave_gauge(i, amount)
 
 
-## Compute effective stats (base + equipment bonuses) for a character.
-## Called once at battle start to bake equipment into combat stats.
+## Compute effective stats (base + Stat Capsule gains + equipment bonuses) for a
+## character. Called once at battle start to bake them into combat stats.
 func _compute_effective_stats(character_id: String, base_stats: Dictionary) -> Dictionary:
 	var effective: Dictionary = base_stats.duplicate()
 	if character_id.is_empty():
 		return effective
 	for stat: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
-		var bonus: int = PartyState.get_equipment_bonus(character_id, stat)
+		# Permanent Stat Capsule gains (GAP-020) ride on top of base_stats the
+		# same way equipment does, so combat must see both.
+		var bonus: int = (
+			PartyState.get_equipment_bonus(character_id, stat)
+			+ PartyState.get_capsule_gain(character_id, stat)
+		)
 		effective[stat] = effective.get(stat, 0) + bonus
 	return effective

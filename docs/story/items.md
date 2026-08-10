@@ -160,6 +160,14 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 
 > **Distribution:** 20% in Act II/Interlude, 30% in Act III, 50% in Dreamer's Fault.
 
+**Capsule rules:**
+
+- **One target.** A capsule is used in the field on a single party member — active or reserve — and boosts only that character. There is no party-wide capsule.
+- **Additive and unlimited stacking.** Using the same capsule type again adds another +1. Nothing caps how many a character may absorb beyond the stat's own hard cap (see [progression.md](progression.md) § Stat Caps): capsule gains are added before that clamp, so a character already at 255 gains nothing visible.
+- **Permanent and independent of level.** A capsule gain is banked separately from the leveled base stats. Levelling up recomputes base stats from the growth curve, and that recompute must never subtract the banked capsule gains — they are re-applied on top of the new base. The same holds for the hidden Act I spike (progression.md § Narrative Milestone Stat Spikes).
+- **Visible everywhere the stat is.** Capsule gains count toward the effective stat used by the status/equip menus, by combat, and by max HP/MP, exactly like an equipment bonus.
+- **Saved.** Capsule gains are stored per party member and round-trip through save/load. A save written before capsules were persisted simply has no banked gains and loads as zero.
+
 ### Consumable Summary
 
 | Category | Count |

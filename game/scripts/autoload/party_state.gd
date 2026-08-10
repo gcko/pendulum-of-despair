@@ -280,36 +280,31 @@ func get_all_members() -> Array[Dictionary]:
 	return members
 
 
+## Base stats + permanent Stat Capsule gains + equipment/crystal bonus, clamped.
+## Delegates the assembly to Helpers so battle stat baking and the level-up
+## recalculation share one formula.
 func get_effective_stat(character_id: String, stat: String) -> int:
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return 0
-	var total: int = m.get("base_stats", {}).get(stat, 0) + get_equipment_bonus(character_id, stat)
-	if stat == "hp":
-		return mini(total, 14999)
-	if stat == "mp":
-		return mini(total, 1499)
-	return clampi(total, 0, 255)
+	return Helpers.compute_effective_stat(m, stat, get_equipment_bonus(character_id, stat))
+
+
+## Permanent Stat Capsule gain for one stat (GAP-020). Zero for members saved
+## before capsules were persisted.
+func get_capsule_gain(character_id: String, stat: String) -> int:
+	return Helpers.get_capsule_gain(get_member(character_id), stat)
 
 
 func get_equipment_bonus(character_id: String, stat: String) -> int:
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return 0
-	var equip: Dictionary = m.get("equipment", {})
-	var total: int = 0
-	for slot: String in ["weapon", "head", "body", "accessory"]:
-		var equip_id: String = equip.get(slot, "")
-		if equip_id == "":
-			continue
-		var item_data: Dictionary = Helpers.lookup_equipment(equip_id)
-		total += Helpers.get_top_level_stat(item_data, slot, stat)
-		total += item_data.get("bonus_stats", {}).get(stat, 0)
-	# Crystal bonuses come from ley_crystals data, not owned_equipment
-	var crystal_id: String = equip.get("crystal", "")
+	var total: int = Helpers.get_worn_equipment_bonus(m, stat)
+	# Crystal bonuses come from this instance's ley_crystals, not owned_equipment
+	var crystal_id: String = m.get("equipment", {}).get("crystal", "")
 	if not crystal_id.is_empty():
-		var char_level: int = m.get("level", 1)
-		total += get_crystal_stat_bonus(crystal_id, stat, char_level)
+		total += get_crystal_stat_bonus(crystal_id, stat, m.get("level", 1))
 	return total
 
 
@@ -403,6 +398,9 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	if not Helpers.can_apply_item_effect(item_data):
 		return false
 	Helpers.apply_item_effect(item_data, target)
+	# A Stat Capsule can raise HP/MP, so re-derive the maxima through the shared
+	# recalculation. Idempotent for every other consumable effect.
+	_recalculate_max_hp_mp(target_character_id)
 	consumables[item_id] = qty - 1
 	if consumables[item_id] <= 0:
 		consumables.erase(item_id)
@@ -695,10 +693,18 @@ func _add_character(character_id: String, level: int) -> void:
 		"current_xp": 0,
 		"xp_to_next": Helpers.xp_to_next_level(level),
 		"base_stats": stats,
+		# Permanent Stat Capsule gains, kept apart from base_stats so a level-up
+		# recompute cannot wipe them (items.md § Stat Capsules).
+		"stat_capsules": {} as Dictionary,
 		"equipment": starting_equip.duplicate(),
 		"status_effects": [] as Array,
 	}
 	members.append(member)
+	# Max HP/MP go through the one recalculation so starting-gear bonuses count,
+	# then the character joins at full health.
+	_recalculate_max_hp_mp(character_id)
+	member["current_hp"] = member["max_hp"]
+	member["current_mp"] = member["max_mp"]
 
 
 func _load_config() -> void:
@@ -735,15 +741,16 @@ func get_crystal_stat_bonus(crystal_id: String, stat: String, char_level: int = 
 	return total
 
 
+## Re-derive max HP/MP after anything that changes persistent stats. Routes
+## through the shared recalculation so this instance's crystal state is used
+## while the formula stays identical to the level-up path (#274).
 func _recalculate_max_hp_mp(character_id: String) -> void:
 	var m: Dictionary = get_member(character_id)
 	if m.is_empty():
 		return
-	var bs: Dictionary = m.get("base_stats", {})
-	m["max_hp"] = mini(bs.get("hp", 1) + get_equipment_bonus(character_id, "hp"), 14999)
-	m["max_mp"] = mini(bs.get("mp", 0) + get_equipment_bonus(character_id, "mp"), 1499)
-	m["current_hp"] = mini(m.get("current_hp", 0), m["max_hp"])
-	m["current_mp"] = mini(m.get("current_mp", 0), m["max_mp"])
+	Helpers.recalculate_max_hp_mp(
+		m, func(stat: String) -> int: return get_equipment_bonus(character_id, stat)
+	)
 
 
 func _generate_inst_id(equipment_id: String) -> String:
