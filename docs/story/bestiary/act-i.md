@@ -99,19 +99,47 @@ generally less dangerous than dungeon enemies at the same level.
 > Thornmere Wilds among their locations. It previously drew on Marsh
 > Serpent and Drowned Bones, which are confined to Fenmother's Hollow;
 > that was an authoring error, corrected in the data rather than
-> sanctioned here. Plains Hare and Road Bandit stay out of the Wilds:
-> the Hare is a plains/roadside animal and the Bandit works the Valdris
-> Road, and the Wilds have no roads ([geography.md](../geography.md):
-> "The Wilds have no safe corridors -- there are no roads").
+> sanctioned here.
+>
+> The admitted members are exactly those whose Location column already
+> names a forest habitat (Valdris Forest or Forest Edge). Plains Hare
+> has none — it is listed only for Valdris Plains — and Road Bandit
+> works the Valdris Road, which the Wilds do not have
+> ([geography.md](../geography.md): "The Wilds have no safe corridors
+> -- there are no roads"). Wild Boar qualifies on Forest Edge despite
+> also ranging the plains.
+>
+> **Reward effect of the swap.** Weight-expected reward per encounter
+> rises from 27.8 exp / 13.4 gold to 49.1 exp / 23.9 gold while
+> expected group HP falls from 360 to 332. This is deliberate. The
+> marsh pair were high-HP, low-reward enemies, which made the old
+> Wilds a uniquely stingy zone: 0.077 exp per point of enemy HP
+> against 0.145 in Valdris Highlands, 0.154 in the Ley-Scarred Plains
+> and 0.152 in Aelhart Valley. The new roster lands at 0.148, inside
+> that Act I band. Because the encounter increment is unchanged and
+> fight length tracks enemy HP, reward *per unit of play time* is now
+> in line with the rest of the act rather than half of it; the higher
+> per-encounter figure reflects the Wilds' larger fights. The Wilds
+> are therefore not an XP farm — that role stays with the Ley Scar in
+> Act III ([progression.md](../progression.md)).
+>
+> **Adjacent zones.** Thornback Beetle and Wayward Wolf also roll
+> in `valdris_highlands`, and Thornback Beetle in `ley_scarred_plains`,
+> so both list those zones too. A forest beetle and a wolf pack ranging
+> the adjacent highland and plains terrain need no special sanction.
+> Not reconciled here, and out of scope for #270: `aelhart_valley`
+> (Forest Sprite, Wild Boar, Plains Hare) and `roads` (Plains Hare,
+> Road Bandit) still carry Location cells that name the region rather
+> than the zone.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | Plains Hare | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Hare Pelt (25%) | — | — | — | — | Valdris Plains |
-| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Valdris Forest, Thornmere Wilds |
+| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Valdris Forest, Thornmere Wilds, Ley-Scarred Plains, Valdris Highlands |
 | Road Bandit | Humanoid | 4 | 96 | 0 | 14 | 9 | 11 | 8 | 11 | 5 | 11 | Potion (75%) | Leather Pouch (25%) | — | — | — | — | Valdris Road |
 | Forest Sprite | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Valdris Forest, Thornmere Wilds |
 | Wild Boar | Beast | 5 | 112 | 0 | 18 | 9 | 13 | 9 | 12 | 10 | 21 | Beast Hide (75%) | Boar Tusk (25%) | — | — | — | — | Valdris Plains, Forest Edge, Thornmere Wilds |
-| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Valdris Forest, Duskfen Road, Thornmere Wilds |
+| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Valdris Forest, Duskfen Road, Thornmere Wilds, Valdris Highlands |
 
 ---
 

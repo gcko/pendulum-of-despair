@@ -172,10 +172,71 @@ func test_thornmere_wilds_stays_a_tier_two_step_up() -> void:
 	assert_gte(thornmere, 280.0, "zone must not become a pushover")
 	assert_lte(thornmere, 420.0, "zone must stay in its old difficulty band")
 	var levels: Array[int] = _zone_level_band(_find_zone("thornmere_wilds"), index)
-	assert_gte(levels[0], 3, "no trivial filler below the Overworld Act I floor")
+	# Not the roster floor — the Overworld Act I roster starts at Plains
+	# Hare (Lv 1). 3 is the floor of the four forest members the Wilds
+	# draw on, whose lowest is Thornback Beetle (Lv 3).
+	assert_gte(levels[0], 3, "lowest chosen forest member is Thornback Beetle (Lv 3)")
 	assert_lte(levels[1], 6, "roster caps at Wayward Wolf (Lv 6)")
 	var valley_levels: Array[int] = _zone_level_band(_find_zone("aelhart_valley"), index)
 	assert_gt(levels[1], valley_levels[1], "Wilds top out above the Valley")
+
+
+func test_thornmere_wilds_reward_efficiency_matches_act_i_peers() -> void:
+	# HP alone does not pin the balance band: a roster swap can hold
+	# expected HP steady and still double the payout. What Act I keeps
+	# constant is reward per point of enemy HP — with the danger
+	# increment fixed, fight length tracks HP, so this is reward per
+	# unit of play time. Every Act I overworld zone sits near 0.15.
+	var index: Dictionary = _build_enemy_index()
+	var peers: Array[String] = ["aelhart_valley", "valdris_highlands", "ley_scarred_plains"]
+	var wilds_exp_rate: float = _exp_per_hp("thornmere_wilds", index)
+	for zone_id: String in peers:
+		var peer_rate: float = _exp_per_hp(zone_id, index)
+		assert_gt(peer_rate, 0.0, "%s exp rate should be computable" % zone_id)
+		assert_almost_eq(
+			wilds_exp_rate,
+			peer_rate,
+			0.03,
+			"Wilds exp per enemy HP should track %s, not farm above it" % zone_id,
+		)
+	# Absolute guards so a future edit cannot drift the whole act.
+	assert_gte(wilds_exp_rate, 0.12, "Wilds must not become a low-reward slog")
+	assert_lte(wilds_exp_rate, 0.18, "Wilds must not become an Act I XP farm")
+	var wilds: Dictionary = _find_zone("thornmere_wilds")
+	assert_almost_eq(
+		_expected_group_stat(wilds, index, "exp"),
+		49.12,
+		0.5,
+		"documented expected exp per encounter"
+	)
+	assert_almost_eq(
+		_expected_group_stat(wilds, index, "gold"),
+		23.88,
+		0.5,
+		"documented expected gold per encounter",
+	)
+
+
+func test_issue_270_zone_rosters_are_mirrored_in_enemy_locations() -> void:
+	# The bestiary note promises that every enemy rolling in one of the
+	# three zones #270 names lists that zone in its locations array.
+	var index: Dictionary = _build_enemy_index()
+	var missing: Array[String] = []
+	for zone_id: String in ["thornmere_wilds", "ley_scarred_plains", "valdris_highlands"]:
+		for enemy_id: String in _zone_enemy_ids(_find_zone(zone_id)):
+			var locations: Array = (index.get(enemy_id, {}) as Dictionary).get("locations", [])
+			if not locations.has(zone_id):
+				missing.append("%s missing from %s" % [zone_id, enemy_id])
+	assert_eq(missing.size(), 0, "unmirrored zone locations: %s" % str(missing))
+
+
+## Weight-expected exp per point of weight-expected enemy HP for a zone.
+func _exp_per_hp(zone_id: String, index: Dictionary) -> float:
+	var zone: Dictionary = _find_zone(zone_id)
+	var hp: float = _expected_group_stat(zone, index, "hp")
+	if hp <= 0.0:
+		return 0.0
+	return _expected_group_stat(zone, index, "exp") / hp
 
 
 ## Build enemy_id -> enemy Dictionary across every act enemy table.
@@ -222,18 +283,23 @@ func _zone_enemy_ids(zone: Dictionary) -> Dictionary:
 	return ids
 
 
-## Weight-averaged total HP of a zone's encounter groups.
-func _expected_group_hp(zone: Dictionary, index: Dictionary) -> float:
+## Weight-averaged total of one integer enemy stat across a zone's groups.
+func _expected_group_stat(zone: Dictionary, index: Dictionary, key: String) -> float:
 	var total: float = 0.0
 	for group: Variant in zone.get("groups", []):
 		if not group is Dictionary:
 			continue
-		var group_hp: int = 0
+		var group_total: int = 0
 		for enemy_id: Variant in (group as Dictionary).get("enemies", []):
 			var enemy: Dictionary = index.get(enemy_id, {})
-			group_hp += int(enemy.get("hp", 0))
-		total += float(group_hp) * float((group as Dictionary).get("weight", 0.0)) / 100.0
+			group_total += int(enemy.get(key, 0))
+		total += float(group_total) * float((group as Dictionary).get("weight", 0.0)) / 100.0
 	return total
+
+
+## Weight-averaged total HP of a zone's encounter groups.
+func _expected_group_hp(zone: Dictionary, index: Dictionary) -> float:
+	return _expected_group_stat(zone, index, "hp")
 
 
 ## [min_level, max_level] across every enemy a zone can roll.

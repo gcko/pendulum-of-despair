@@ -304,7 +304,7 @@
       ]
     },
     {
-      "_comment": "Issue #270: groups repopulated from the bestiary/act-i.md 'Overworld Act I' roster (forest members only). The previous marsh_serpent/drowned_bones set is Location-confined to Fenmother's Hollow F1-F3 and did not belong in a dense forest. Encounter math (tier, increment, terrain, formation rates, weights) is unchanged; expected group HP 360 -> 332, still ~2.5x tier-1 aelhart_valley (132).",
+      "_comment": "Issue #270: groups repopulated from the bestiary/act-i.md 'Overworld Act I' roster (forest members only). The previous marsh_serpent/drowned_bones set is Location-confined to Fenmother's Hollow F1-F3 and did not belong in a dense forest. Encounter math (tier, increment, terrain, formation rates, weights) is unchanged; expected group HP 360 -> 332, still ~2.5x tier-1 aelhart_valley (132). Rewards move deliberately: weight-expected exp 27.8 -> 49.1 and gold 13.4 -> 23.9, because the marsh pair were high-HP/low-reward. That had left the Wilds at 0.077 exp per point of enemy HP against 0.145-0.154 everywhere else in Act I; the new roster sits at 0.148, inside the band. With the increment unchanged and fight length tracking HP, reward per unit of play time is now normal for the act rather than half of it - the Wilds are not an XP farm (that role is the Act III Ley Scar). See the 'Thornmere Wilds roster' note in docs/story/bestiary/act-i.md.",
       "zone_id": "thornmere_wilds",
       "name": "Thornmere Wilds",
       "terrain_type": "low_visibility",

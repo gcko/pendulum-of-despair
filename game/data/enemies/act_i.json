@@ -958,7 +958,9 @@
       },
       "locations": [
         "valdris_forest",
-        "thornmere_wilds"
+        "thornmere_wilds",
+        "ley_scarred_plains",
+        "valdris_highlands"
       ],
       "ko_sound": "ko_beast",
       "abilities": [
@@ -1164,7 +1166,8 @@
       "locations": [
         "valdris_forest",
         "duskfen_road",
-        "thornmere_wilds"
+        "thornmere_wilds",
+        "valdris_highlands"
       ],
       "ko_sound": "ko_beast",
       "abilities": [
