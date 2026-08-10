@@ -270,6 +270,27 @@ Dialogue choices produce one or both of two consequence types:
   valid intentional outcome (records the question was answered with a
   neutral response).
 
+**Reacting to the choice itself.** A question is usually followed by one
+reaction entry per option. Those entries are gated on
+`choice_1_selected` … `choice_4_selected`, numbered from the top option
+down. These are **not** event flags: they are scene-local, live only for
+the remainder of the current sequence, and are never written to save
+data. Selecting an option makes exactly one of them true and the rest
+false, so a later question's reactions can never be satisfied by an
+earlier answer. Reaction entries must therefore follow their question
+within the same sequence — the pseudo-flags do not survive into a
+different scene or NPC conversation.
+
+```
+thornmere_council_005  [default]           -> Savanh's question, 3 options
+thornmere_council_006  [choice_1_selected] -> reaction to the first option
+thornmere_council_007  [choice_2_selected] -> reaction to the second
+thornmere_council_008  [choice_3_selected] -> reaction to the third
+```
+
+Because an unanswered question leaves all four false, an entry gated this
+way simply does not play if the player never reached the choice.
+
 ### 3.5 Party-Aware Dialogue
 
 Party composition affects dialogue at two tiers, balancing narrative
