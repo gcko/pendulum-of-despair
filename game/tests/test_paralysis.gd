@@ -104,3 +104,52 @@ func test_integration_paralysed_member_is_skipped_and_recovers() -> void:
 	battle._atb.set_gauge("party_0", 16000)
 	await wait_frames(2)
 	assert_eq(battle._awaiting_input_for, "party_0", "recovered member is prompted normally")
+
+
+func test_skip_consumes_the_frame_so_its_message_is_not_clobbered() -> void:
+	# combat-formulas.md § Status Effect ATB Interactions: the auto-skip consumes
+	# the frame's single action slot, so no other combatant's message can
+	# overwrite the skip announcement before the UI renders it (#260).
+	seed(31)
+	var battle: Node = await _boot(["ley_vermin"])
+	battle.set_process(false)  # drive _process by hand, one frame exactly
+	battle._state.apply_status(0, "paralysis", "turns", 3)
+	# Make the enemy slower than the party so the ready queue puts party_0 first.
+	battle._atb._combatants["enemy_0"]["spd"] = 1
+	var msgs: Array[String] = []
+	battle.message.connect(func(t: String) -> void: msgs.append(t))
+	battle._atb.set_gauge("party_0", 16000)
+	battle._atb.set_gauge("enemy_0", 16000)
+
+	battle._process(0.0)
+
+	assert_eq(msgs.size(), 1, "exactly one message this frame: %s" % str(msgs))
+	assert_true(msgs[0].contains("can't move"), "and it is the paralysis skip: %s" % str(msgs))
+	assert_eq(battle._atb.get_gauge("enemy_0"), 16000, "the enemy still acts next frame")
+
+
+func test_dot_death_during_skip_resolves_the_party_wipe_same_frame() -> void:
+	# A paralysed last-standing member killed by its own Poison tick must trip
+	# the end-condition check inside the skip, not a frame later (#260).
+	seed(31)
+	var battle: Node = await _boot(["ley_vermin"])
+	battle.set_process(false)
+	for slot: int in range(1, 4):
+		battle._state.take_damage(slot, 999999)
+	battle._state.take_damage(0, battle._state.get_member(0).get("current_hp", 1) - 1)
+	battle._state.apply_status(0, "paralysis", "turns", 3)
+	battle._state.apply_status(0, "poison", "turns", StatusEffects.default_duration("poison"))
+	# Array counter, not an int: GDScript lambdas capture locals by value.
+	var defeats: Array[int] = []
+	battle.defeat.connect(
+		func() -> void:
+			defeats.append(1)
+			# Guard: keep _exit_battle from starting a real scene transition.
+			battle._battle_active = false
+	)
+	battle._atb.set_gauge("party_0", 16000)
+
+	battle._process(0.0)
+
+	assert_false(battle._state.get_member(0).get("is_alive", true), "the DoT tick killed them")
+	assert_eq(defeats.size(), 1, "party wipe resolves inside the skip, not a frame later")

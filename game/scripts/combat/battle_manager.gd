@@ -130,7 +130,11 @@ func _process(delta: float) -> void:
 			# resets so the next skip is one turn later (#248).
 			if _is_incapacitated(slot):
 				_skip_incapacitated_turn(slot, id)
-				continue
+				# break, not continue: the skip consumes this frame's single
+				# action slot so its message is not overwritten by another
+				# combatant's before the UI renders it (#260). The gauge is
+				# back at 0, so this member is not ready again next frame.
+				break
 			_awaiting_input_for = id
 			_atb.set_command_menu_open(true)
 			var member: Dictionary = _state.get_member(slot)
@@ -232,7 +236,9 @@ func _is_incapacitated(slot: int) -> bool:
 
 ## Auto-skip an incapacitated member's ready turn: announce, tick statuses (so the
 ## turn-based countdown advances + DoT still applies), and reset the gauge so the
-## next skip is a turn away (#248).
+## next skip is a turn away (#248). Ends with an end-condition check, mirroring
+## _on_ui_command, so a DoT that kills the last standing member resolves the
+## party wipe on this frame instead of one frame later (#260).
 func _skip_incapacitated_turn(slot: int, id: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	message.emit("%s is paralysed and can't move!" % nm)
@@ -241,6 +247,7 @@ func _skip_incapacitated_turn(slot: int, id: String) -> void:
 			"party_%d" % int(ev.get("slot", 0)), int(ev.get("dmg", 0)), ev.get("type", "poison")
 		)
 	_atb.reset_gauge(id)
+	_check_end_conditions()
 
 
 func _on_party_member_died(slot: int) -> void:

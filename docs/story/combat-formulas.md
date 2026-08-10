@@ -737,12 +737,14 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 | Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |
 | Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Flying only |
 | Petrify | Frozen (0) | Removed from battle | Until cured | Gauge resets to 0 on cure |
+| Paralysis | × 1.0 | Auto-skipped turn (cannot act) | 3 turns | Gauge keeps filling — the filling gauge is the countdown clock. See [magic.md](magic.md). |
 
 **Key rules:**
 - **Frozen gauge retains value.** Sleep and Stop freeze at current position. Gauge resumes from that point when status ends.
 - **Petrify resets to 0.** Most severe status — recovery starts fresh.
 - **Stop uses real-time.** 3 seconds of real-time (not turn-based), counted only while battle time is running. Proportionally more punishing at slow speeds. In Wait mode, the Stop countdown pauses along with all other time progression while sub-menus are open.
 - **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
+- **An incapacitated member's turn is auto-skipped.** When a member who cannot act (Paralysis, Sleep, Petrify) fills its gauge, the battle resolves that turn without a command prompt: it announces the skip, ticks that member's turn-based statuses (so the duration counts down and any Poison/Burn damage lands), resets the gauge, and immediately re-checks the battle's end conditions — a DoT tick that kills the last standing member ends the battle on that turn, not on the next one. The auto-skip consumes the turn slot exactly as a real action does: no other combatant resolves alongside it, so the skip announcement is never overwritten before the player reads it.
 
 ### Turn Order Resolution
 
