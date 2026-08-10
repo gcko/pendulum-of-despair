@@ -131,7 +131,9 @@ scene into a puppet show.
   (one or more text boxes), and the interaction ends.
 - **Re-talking repeats current dialogue.** Talking to the same NPC
   again delivers the same lines, unless an event flag has changed
-  since the last interaction.
+  since the last interaction. The one exception is an NPC with
+  several `[default]` entries, which rotates through them — see
+  "Multiple defaults" in Section 3.2.
 - **Priority stack determines current dialogue.** Each NPC has an
   ordered list of flag-gated entries. The engine evaluates
   top-to-bottom and serves the first entry whose condition is true
@@ -168,6 +170,42 @@ The engine checks each condition in order:
 
 The author never writes `if/else` logic. Priority is implicit in the
 ordering. Moving an entry higher makes it win over entries below it.
+
+**Multiple defaults — ambient rotation.** Most NPCs have one
+`[default]` entry, but ambient townsfolk often carry several
+unconditioned lines on different topics (Bren has three, Grandmother
+Seyth five). These are not alternatives to each other: every one of
+them is authored content the player is meant to see.
+
+When no condition matches, the engine therefore does not pick a single
+default. It collects **all** unconditioned entries in authored order
+and serves the next one in that list on each interaction, wrapping
+back to the first after the last:
+
+```
+NPC: Bren (baker, Valdris)
+  [default]  -> "Used to sell out by noon..."           <- 1st confirm press
+  [default]  -> "My father baked for the old king..."   <- 2nd
+  [default]  -> "There's a family in the Lower Ward..." <- 3rd, then wraps
+```
+
+Rules for the rotation:
+
+- **Conditions still win outright.** A matched condition is
+  first-match-wins and resolves to exactly one entry, which repeats
+  on re-talk as usual. The ambient cursor does not move while a
+  conditioned entry is being served, so the player resumes where they
+  left off once the condition lapses.
+- **One line per interaction.** The rotation advances by one entry per
+  confirm press. An entry's own multiple text boxes still page within
+  that single interaction.
+- **The cursor is session state, not save state.** It persists across
+  map changes and battles within a play session, and resets to the
+  first default on a new game or on loading a save. Which flavour line
+  comes next is not progression, so it is deliberately absent from
+  save data.
+- **Order is authored order.** Entries rotate in the order they appear
+  in the NPC's dialogue file.
 
 ### 3.3 Flag Types in Conditions
 

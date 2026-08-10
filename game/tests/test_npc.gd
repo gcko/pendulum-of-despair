@@ -4,9 +4,12 @@ extends GutTest
 const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
 
 
+func before_each() -> void:
+	TestHelpers.reset_game_state()
+
+
 func after_each() -> void:
-	EventFlags.clear_all()
-	PartyState.members.clear()
+	TestHelpers.reset_game_state()
 
 
 func _create_npc():
@@ -99,12 +102,13 @@ func test_get_current_dialogue_null_before_conditioned() -> void:
 		{"id": "default_002", "condition": null, "lines": ["default second"]},
 		{"id": "flagged_001", "condition": "late_game_flag", "lines": ["late game"]},
 	]
-	# Without flag: should return last null-condition entry (fallback)
+	# Without flag: should start on the FIRST default (GAP-042 — the defaults
+	# take turns instead of collapsing to the last one).
 	var result_no_flag: Dictionary = npc.get_current_dialogue()
 	assert_eq(
 		result_no_flag.get("id"),
-		"default_002",
-		"without flag should return last default",
+		"default_001",
+		"without flag should start on the first default",
 	)
 	# With flag: should return conditioned entry
 	EventFlags.set_flag("late_game_flag", true)
@@ -113,6 +117,100 @@ func test_get_current_dialogue_null_before_conditioned() -> void:
 		result_with_flag.get("id"),
 		"flagged_001",
 		"with flag should return conditioned entry",
+	)
+
+
+# --- Multi-default cycling (GAP-042) ---
+
+
+func _served_ids(npc, times: int) -> Array:
+	var ids: Array = []
+	npc.npc_interacted.connect(func(_id: String, data: Dictionary): ids.append(data.get("id")))
+	for _i: int in range(times):
+		npc.interact()
+	return ids
+
+
+func test_all_defaults_are_reachable_across_interactions() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_cycle_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+		{"id": "default_003", "condition": null, "lines": ["three"]},
+	]
+	var ids: Array = _served_ids(npc, 4)
+	assert_eq(
+		ids,
+		["default_001", "default_002", "default_003", "default_001"],
+		"every default should be reachable, wrapping after the last",
+	)
+
+
+func test_real_multi_default_npc_reaches_every_line() -> void:
+	# npc_bren.json ships three distinct unconditioned topics; before GAP-042
+	# only npc_bren_003 was ever reachable in Act I.
+	var npc = _create_npc()
+	npc.initialize("bren")
+	var defaults: Array = DialogueCondition.resolve_stack(npc.dialogue_entries)
+	assert_gt(defaults.size(), 1, "bren should have more than one default line")
+	var ids: Array = _served_ids(npc, defaults.size())
+	assert_eq(ids.size(), defaults.size(), "one line served per interaction")
+	var unique: Dictionary = {}
+	for id: Variant in ids:
+		unique[id] = true
+	assert_eq(unique.size(), defaults.size(), "each default should be served exactly once")
+
+
+func test_cycle_survives_a_map_reload() -> void:
+	var first = _create_npc()
+	first.npc_id = "persistent_npc"
+	first.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	assert_eq(_served_ids(first, 1), ["default_001"], "first interaction serves the first line")
+	# A new node with the same npc_id stands in for re-entering the map.
+	var second = _create_npc()
+	second.npc_id = "persistent_npc"
+	second.dialogue_entries = first.dialogue_entries
+	assert_eq(
+		_served_ids(second, 1), ["default_002"], "the cursor is session state, not node state"
+	)
+
+
+func test_conditioned_entry_does_not_advance_the_cycle() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_gated_npc"
+	npc.dialogue_entries = [
+		{"id": "gated", "condition": "late_game_flag", "lines": ["late"]},
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	EventFlags.set_flag("late_game_flag", true)
+	assert_eq(_served_ids(npc, 2), ["gated", "gated"], "a matched condition repeats, per 3.2")
+	EventFlags.set_flag("late_game_flag", false)
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"the ambient cursor should not have moved while the condition held",
+	)
+
+
+func test_reset_dialogue_cycles_returns_to_the_first_default() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_reset_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	npc.interact()
+	assert_eq(npc.get_current_dialogue().get("id"), "default_002", "cursor advanced")
+	NPC.reset_dialogue_cycles()
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"a new game or load should restart the rotation",
 	)
 
 
@@ -140,4 +238,3 @@ func test_resolver_uses_shared_condition_evaluator() -> void:
 		"party_line",
 		"party_has should be honoured through DialogueCondition",
 	)
-	PartyState.members.clear()

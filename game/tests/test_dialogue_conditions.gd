@@ -108,6 +108,52 @@ func test_evaluate_party_has_and_reunion_order_combined() -> void:
 	)
 
 
+func test_is_unconditioned_accepts_only_null_and_empty() -> void:
+	assert_true(DialogueCondition.is_unconditioned(null), "JSON null means always plays")
+	assert_true(DialogueCondition.is_unconditioned(""), "empty string means always plays")
+	assert_false(DialogueCondition.is_unconditioned("some_flag"), "a real expression is gated")
+	assert_false(DialogueCondition.is_unconditioned(0), "a non-string is not unconditioned")
+
+
+# --- Priority stack resolution (GAP-042) ---
+
+
+func test_resolve_stack_returns_every_default_when_nothing_matches() -> void:
+	var entries: Array = [
+		_entry("d1", null),
+		_entry("d2", null),
+		_entry("d3", null),
+		_entry("c1", "late_game_flag"),
+	]
+	var resolved: Array = DialogueCondition.resolve_stack(entries)
+	assert_eq(resolved.size(), 3, "all three defaults should be candidates")
+	assert_eq(resolved[0].get("id"), "d1", "defaults keep authored order")
+	assert_eq(resolved[2].get("id"), "d3", "no default is dropped")
+
+
+func test_resolve_stack_first_match_wins() -> void:
+	var entries: Array = [
+		_entry("d1", null),
+		_entry("c1", "cael_betrayal_complete"),
+		_entry("c2", "cael_betrayal_complete"),
+	]
+	EventFlags.set_flag("cael_betrayal_complete", true)
+	var resolved: Array = DialogueCondition.resolve_stack(entries)
+	assert_eq(resolved.size(), 1, "a matched condition resolves to exactly one entry")
+	assert_eq(resolved[0].get("id"), "c1", "the topmost matching entry wins")
+
+
+func test_resolve_stack_ignores_non_dictionary_entries() -> void:
+	var resolved: Array = DialogueCondition.resolve_stack(["junk", _entry("d1", null)])
+	assert_eq(resolved.size(), 1, "malformed entries are skipped")
+	assert_eq(resolved[0].get("id"), "d1", "the real entry survives")
+
+
+func test_resolve_stack_empty_when_nothing_is_playable() -> void:
+	var resolved: Array = DialogueCondition.resolve_stack([_entry("c1", "missing_flag")])
+	assert_true(resolved.is_empty(), "a stack with no default and no match says nothing")
+
+
 func test_should_play_reflects_condition() -> void:
 	assert_false(DialogueCondition.should_play(_entry("x", "missing_flag")), "false condition")
 	assert_true(DialogueCondition.should_play(_entry("x", null)), "no condition")

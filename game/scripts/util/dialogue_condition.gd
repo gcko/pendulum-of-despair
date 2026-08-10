@@ -32,16 +32,12 @@ const AND_SEPARATOR: String = " AND "
 ## Evaluate a condition expression against current game state.
 ## Returns true for null/empty conditions (unconditioned entries).
 static func evaluate(condition: Variant, context: Dictionary = {}) -> bool:
-	# Type-check before comparing to "" — Variant `==` between an int and a
-	# String raises "Invalid operands" rather than returning false.
-	if condition == null:
+	if is_unconditioned(condition):
 		return true
 	if not (condition is String):
 		return false
 
 	var cond_str: String = condition
-	if cond_str == "":
-		return true
 
 	# AND combinations: every part must hold.
 	if AND_SEPARATOR in cond_str:
@@ -71,9 +67,41 @@ static func evaluate(condition: Variant, context: Dictionary = {}) -> bool:
 	return bool(value_of(cond_str, context))
 
 
+## True when [param condition] is the "always plays" form — JSON null or an
+## empty string. Type-checked before comparing to "" because Variant `==`
+## between an int and a String raises "Invalid operands" instead of returning
+## false.
+static func is_unconditioned(condition: Variant) -> bool:
+	if condition == null:
+		return true
+	return condition is String and (condition as String) == ""
+
+
 ## True when [param entry] has no condition or its condition holds.
 static func should_play(entry: Dictionary, context: Dictionary = {}) -> bool:
 	return evaluate(entry.get("condition"), context)
+
+
+## Resolve a priority stack to the entries that may be served right now.
+##
+## Walks top-to-bottom and returns a single-element array holding the first
+## conditioned entry whose condition holds — first-match-wins, per
+## dialogue-system.md 3.2. When no condition holds, returns every
+## unconditioned entry in authored order: an NPC may have several ambient
+## defaults, and the caller decides which one to surface (npc.gd rotates
+## through them). Returns an empty array when the stack has nothing to say.
+static func resolve_stack(entries: Array, context: Dictionary = {}) -> Array:
+	var defaults: Array = []
+	for entry: Variant in entries:
+		if not (entry is Dictionary):
+			continue
+		var condition: Variant = (entry as Dictionary).get("condition")
+		if is_unconditioned(condition):
+			defaults.append(entry)
+			continue
+		if evaluate(condition, context):
+			return [entry]
+	return defaults
 
 
 ## Build the scene-local context produced by selecting [param choice_index].

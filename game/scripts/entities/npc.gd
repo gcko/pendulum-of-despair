@@ -14,6 +14,13 @@ signal npc_interacted(npc_id: String, dialogue_data: Dictionary)
 ## Emitted when walk_to() completes.
 signal walk_complete
 
+## Cursor into each NPC's ambient (unconditioned) dialogue set, keyed by
+## npc_id. Session-scoped on purpose: it is static so an NPC keeps its place
+## in the rotation across map reloads and battles, and it is deliberately NOT
+## written to save data — which ambient line comes next is flavour, not
+## progression state. Cleared by [method reset_dialogue_cycles].
+static var _dialogue_cycle_indices: Dictionary = {}
+
 ## NPC identifier used for dialogue lookup.
 var npc_id: String = ""
 
@@ -28,6 +35,13 @@ var _walk_tween: Tween = null
 ## Child node references.
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
+
+
+## Clear every NPC's ambient dialogue cursor so a fresh playthrough starts on
+## the first default line. Called when a new game starts and when a save is
+## loaded, since the cursor is session state rather than save state.
+static func reset_dialogue_cycles() -> void:
+	_dialogue_cycle_indices.clear()
 
 
 ## Initialize the NPC with an ID. Loads dialogue from DataManager.
@@ -53,26 +67,42 @@ func initialize(p_npc_id: String) -> void:
 func interact() -> void:
 	if npc_id == "":
 		return
-	var entry: Dictionary = get_current_dialogue()
+	var entry: Dictionary = _take_current_dialogue()
 	if entry.is_empty():
 		return
 	npc_interacted.emit(npc_id, entry)
 
 
-## Get the current dialogue entry based on priority stack resolution.
-## First pass: check conditioned entries (skip null/empty conditions).
-## Second pass: return last null-condition entry as fallback.
-## This handles data where default entries appear before conditioned ones.
+## Peek at the entry this NPC would serve right now, without advancing the
+## ambient cycle. Returns {} when the NPC has nothing to say.
+##
+## A matched condition wins outright (first-match-wins, dialogue-system.md
+## 3.2). Otherwise the NPC serves one of its unconditioned defaults — an NPC
+## may have several, and they take turns rather than collapsing to the last
+## one. See [method _take_current_dialogue].
 func get_current_dialogue() -> Dictionary:
-	var fallback: Dictionary = {}
-	for entry: Dictionary in dialogue_entries:
-		var condition: Variant = entry.get("condition")
-		if condition == null or condition == "":
-			fallback = entry
-			continue
-		if DialogueCondition.evaluate(condition):
-			return entry
-	return fallback
+	var candidates: Array = DialogueCondition.resolve_stack(dialogue_entries)
+	if candidates.is_empty():
+		return {}
+	return candidates[_cycle_index() % candidates.size()]
+
+
+## Serve the current entry and advance the ambient cycle past it, so the next
+## interaction surfaces the next default and wraps at the end.
+func _take_current_dialogue() -> Dictionary:
+	var candidates: Array = DialogueCondition.resolve_stack(dialogue_entries)
+	if candidates.is_empty():
+		return {}
+	var index: int = _cycle_index() % candidates.size()
+	# Only the default set rotates. A matched condition always resolves to
+	# exactly one candidate, so the cursor stays put while it is active.
+	if candidates.size() > 1:
+		_dialogue_cycle_indices[npc_id] = (index + 1) % candidates.size()
+	return candidates[index]
+
+
+func _cycle_index() -> int:
+	return int(_dialogue_cycle_indices.get(npc_id, 0))
 
 
 ## Lightweight init for cutscene actors — loads sprite but skips dialogue.
