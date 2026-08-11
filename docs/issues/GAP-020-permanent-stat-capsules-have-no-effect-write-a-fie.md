@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — #165 |
 | **GitHub Issue** | [#165](https://github.com/gcko/pendulum-of-despair/issues/165) |
 | **Source domains** | items |
 
@@ -40,7 +40,8 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 
 ## Code references
 
-- game/scripts/util/inventory_helpers.gd — `apply_item_effect()` stat_boost arm, `add_xp_to_member()` level-up overwrite
+- game/scripts/util/inventory_helpers.gd — `apply_item_effect()` stat_boost arm
+- game/scripts/util/progression_helpers.gd — `add_xp_to_member()` level-up overwrite
 - game/scripts/autoload/party_state.gd:287
 
 
@@ -49,9 +50,11 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 - **Verdict:** CONFIRMED
 - **Verified severity:** HIGH
 - **Safe to fix immediately:** no — tracked as development work
-- **Evidence:** inventory_helpers.gd stat_boost (104-110) writes target[stat_key]=current+boost (a top-level member field). party_state.gd get_effective_stat (283-292) reads m.get('base_stats',{}).get(stat,0)+equipment_bonus — never the top-level field. add_xp_to_member level-up (inventory_helpers.gd) calls calculate_stats_at_level then sets member['base_stats']=new_stats and member[stat_key]=new_stats.get(...), overwriting any capsule gain. Capsules are therefore inert and wiped on level-up.
+- **Evidence:** the `stat_boost` arm of `inventory_helpers.gd` `apply_item_effect()` writes target[stat_key]=current+boost (a top-level member field). `party_state.gd` `get_effective_stat()` reads m.get('base_stats',{}).get(stat,0)+equipment_bonus — never the top-level field. The level-up path `add_xp_to_member()` calls calculate_stats_at_level then sets member['base_stats']=new_stats and member[stat_key]=new_stats.get(...), overwriting any capsule gain. Capsules are therefore inert and wiped on level-up.
 - **Notes:** Confirmed bug. Although S-effort, the fix introduces a new persistent stat_capsules field that must be added into get_effective_stat, re-applied after level-up recalculation, and round-tripped through save — new logic with real risk to the stat/level/save test paths. fixNow FALSE.
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The durable, maintained anchors are the file-plus-symbol bullets under **Code references**: those must name a file that exists and a symbol that file actually defines, and `scripts/quality-gates/check_stale_counts.py` fails the build if they do not. Always verify against current code before acting._

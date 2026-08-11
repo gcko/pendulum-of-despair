@@ -44,7 +44,7 @@ Phase 1: AC pool + device crafting field menu + tiered rest AC restoration + sav
 ## Code references
 
 - game/data/crafting/devices.json|recipes.json|synergies.json
-- game/scripts/util/inventory_helpers.gd — dead crafting stub in `build_save_dict()`
+- game/scripts/util/save_data_helpers.gd — dead crafting stub in `build_save_dict()`
 - game/scripts/autoload/party_state.gd:604
 
 
@@ -58,4 +58,6 @@ Phase 1: AC pool + device crafting field menu + tiered rest AC restoration + sav
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The durable, maintained anchors are the file-plus-symbol bullets under **Code references**: those must name a file that exists and a symbol that file actually defines, and `scripts/quality-gates/check_stale_counts.py` fails the build if they do not. Always verify against current code before acting._
