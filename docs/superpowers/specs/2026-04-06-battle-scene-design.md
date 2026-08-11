@@ -581,8 +581,10 @@ Cancel returns to command panel.
 ### 7.5 Target Selection
 
 Per ui-design.md Section 2.6:
-- Blinking arrow above enemies (offensive) / below party (support)
-- Left/right cycles enemies, up/down cycles party
+- Blinking arrow above enemies (offensive) / immediately left of the
+  targeted party row, vertically centred on it (support)
+- Left/right cycles enemies, up/down cycles the *occupied* party slots
+  only; a KO'd member stays targetable, an empty slot is never reachable
 - Multi-target: all highlighted, "All" text
 - Confirm executes, cancel returns
 
@@ -592,12 +594,16 @@ Per ui-design.md Section 2.2:
 - Pop above sprite, float upward ~0.5s
 - White (damage), green (heal), grey (miss)
 - Pixel font 12px
+- Party-side numbers instead sit centred on the targeted party-panel row
+  and rise only into the gap between rows, never the enemy lift
+  (ui-design.md Section 2.3)
 
 ### 7.7 Message Area
 
 Per ui-design.md Section 2.5:
 - Top-center, pale yellow on dark navy
-- Action announcements, auto-fade 1.5s
+- Action announcements, auto-fade 1.5s when nothing is waiting behind them
+- Announcements queue (0.75s guaranteed per line, at most 3 waiting)
 
 ### 7.8 Results Screen
 

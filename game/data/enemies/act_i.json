@@ -35,7 +35,9 @@
       },
       "locations": [
         "ember_vein_f1",
-        "ember_vein_f2"
+        "ember_vein_f2",
+        "ley_scarred_plains",
+        "valdris_highlands"
       ],
       "ko_sound": "ko_beast",
       "abilities": [
@@ -198,7 +200,8 @@
       "locations": [
         "ember_vein_f1",
         "ember_vein_f2",
-        "ember_vein_f3"
+        "ember_vein_f3",
+        "ley_scarred_plains"
       ],
       "ko_sound": "ko_elemental",
       "abilities": [
@@ -954,7 +957,10 @@
         "rate": 25
       },
       "locations": [
-        "valdris_forest"
+        "valdris_forest",
+        "thornmere_wilds",
+        "ley_scarred_plains",
+        "valdris_highlands"
       ],
       "ko_sound": "ko_beast",
       "abilities": [
@@ -1057,7 +1063,8 @@
         "rate": 25
       },
       "locations": [
-        "valdris_forest"
+        "valdris_forest",
+        "thornmere_wilds"
       ],
       "ko_sound": "ko_spirit",
       "abilities": [
@@ -1107,7 +1114,8 @@
       },
       "locations": [
         "valdris_plains",
-        "forest_edge"
+        "forest_edge",
+        "thornmere_wilds"
       ],
       "ko_sound": "ko_beast",
       "abilities": [
@@ -1157,7 +1165,9 @@
       },
       "locations": [
         "valdris_forest",
-        "duskfen_road"
+        "duskfen_road",
+        "thornmere_wilds",
+        "valdris_highlands"
       ],
       "ko_sound": "ko_beast",
       "abilities": [

@@ -221,6 +221,8 @@ The dialogue overlay does NOT play animations or SFX directly — it signals up 
 
 ### Condition Evaluation
 
+> **Superseded (2026-08, GAP-036).** The overlay now DOES evaluate conditions. It plays scene and cutscene sequences as well as pre-resolved NPC entries, and a sequence entry carries its own `condition` that nothing upstream has resolved. `dialogue_box.gd` skips every entry whose condition does not hold, using the shared evaluator in `game/scripts/util/dialogue_condition.gd`. See dialogue-system.md Sections 3.2 and 3.4.
+
 The dialogue overlay does NOT evaluate conditions. That's already done by the NPC prefab's `get_current_dialogue()` which resolves the priority stack before emitting. The overlay receives pre-resolved entries.
 
 However, for flag-setting after dialogue completion, the overlay emits:

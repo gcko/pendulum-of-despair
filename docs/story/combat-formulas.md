@@ -30,9 +30,9 @@ damage_after_rows = damage_after_variance × attacker_row_mod × defender_row_mo
 final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 ```
 
-- **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
+- **ATK** includes all sources: the effective stat of [progression.md](progression.md) § Equipment and Buffs (base stat + permanent Stat Capsule gains + equipment) plus buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
-- **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
+- **target.DEF** is the same effective stat — permanent Stat Capsule gains and equipment included — plus buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
 - **row modifiers** are applied after variance (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
 - **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). `reduction_product` is 1.0 if no reduction sources are active.
@@ -224,7 +224,7 @@ else:
 - **MAG** includes all sources. Attunement (+30% MAG) modifies MAG before the formula.
 - **spell_power** is defined per spell in [magic.md](magic.md) (Tier 1: 12–20, Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
 - **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)). Immunity (0.0×) and absorb (-1.0×) bypass both damage reduction and the floor-of-1 clamp — see the branches above.
-- **target.MDEF** includes equipment and debuff modifiers.
+- **target.MDEF** is the effective stat (permanent Stat Capsule gains and equipment included) plus debuff modifiers.
 - **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
 
 **Why divisor 4?** Tuned to produce these milestone values (MAG values are natural, per [progression.md](progression.md) milestones):
@@ -737,12 +737,15 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 | Despair | × 0.75 | Normal turn (-20% damage) | 4 turns | Pallor signature |
 | Grounded | × 0.75 | Normal turn (lose evasion) | 3 turns | Flying only |
 | Petrify | Frozen (0) | Removed from battle | Until cured | Gauge resets to 0 on cure |
+| Paralysis | × 1.0 | Auto-skipped turn (cannot act) | 3 turns | Gauge keeps filling — the filling gauge is the countdown clock. See [magic.md](magic.md). |
 
 **Key rules:**
 - **Frozen gauge retains value.** Sleep and Stop freeze at current position. Gauge resumes from that point when status ends.
 - **Petrify resets to 0.** Most severe status — recovery starts fresh.
 - **Stop uses real-time.** 3 seconds of real-time (not turn-based), counted only while battle time is running. Proportionally more punishing at slow speeds. In Wait mode, the Stop countdown pauses along with all other time progression while sub-menus are open.
 - **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
+- **A paralysed member's turn is auto-skipped.** Paralysis fills the gauge but denies the action, so when a paralysed member's gauge fills the battle resolves that turn without a command prompt: it announces the skip by name (the "[Character] is paralysed and can't move!" line in [battle-dialogue.md](script/battle-dialogue.md) § Status Effect Notifications), ticks that member's turn-based statuses (so the duration counts down and any Poison/Burn damage lands), resets the gauge, and immediately re-checks the battle's end conditions — a DoT tick that kills the last standing member ends the battle on that turn, not on the next one. The skip consumes the turn slot exactly as a real action does, so no other combatant resolves alongside it; the announcement then holds the message window for its guaranteed readable minimum, which is what keeps the *next* frame's enemy action from replacing it unread (see [ui-design.md](ui-design.md) § 2.5).
+- **A gauge-frozen member takes no turn at all.** Stop, Sleep and Petrify all freeze the gauge, and the battle passes a frozen member over in silence: no announcement, no status tick, and — the point of the rule — no gauge reset, so a gauge that was already full when the status landed is never spent. The skip never writes to the gauge, so whatever each status is holding survives it: Sleep and Stop keep the value they froze at and resume from it (see "Frozen gauge retains value" above), while Petrify is held at 0 and recovery starts fresh on cure (see "Petrify resets to 0" above). Other combatants act normally around them. Only Paralysis, whose gauge keeps filling, has a turn to consume; the auto-skip above is specific to it.
 
 ### Turn Order Resolution
 

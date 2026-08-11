@@ -25,7 +25,16 @@ var _is_boss: bool = false
 var _target_cursor: int = 0
 var _target_is_enemy: bool = true
 var _pending_command: Dictionary = {}
+## Live range of the cursor in the mode currently being targeted. Derived from
+## the per-mode counts below on every entry into TARGET, never carried over from
+## the previous mode — an ally-targeted spell must not shrink the enemy row.
 var _target_count: int = 0
+## Enemies enemy targeting may cycle through. BattleUI pushes the encounter's
+## size each turn; the default keeps a caller that never sets it on one target.
+var _enemy_target_count: int = 1
+## Party slots ally targeting may cycle through. BattleUI pushes the live party
+## size; the four-slot default keeps a caller that never sets it working (#276).
+var _party_target_count: int = 4
 var _character_data: Dictionary = {}
 var _current_mp: int = 0
 
@@ -203,10 +212,14 @@ func _confirm_command() -> void:
 			hide_menu()
 
 
-func _start_target_selection(is_enemy: bool, count: int = 0) -> void:
+## Enter target selection, sizing the cursor's range from the count belonging to
+## the mode being entered. Reading the mode's own field (rather than whatever the
+## last selection left behind) is what stops a single_ally spell the player
+## backed out of from capping the enemy cursor at the party size (#276).
+func _start_target_selection(is_enemy: bool) -> void:
 	_target_is_enemy = is_enemy
 	_target_cursor = 0
-	_target_count = maxi(1, count if count > 0 else _target_count)
+	_target_count = maxi(1, _enemy_target_count if is_enemy else _party_target_count)
 	_state = MenuState.TARGET
 	submenu_opened.emit()
 	target_changed.emit(0, is_enemy)
@@ -233,7 +246,7 @@ func _confirm_submenu() -> void:
 		"single_enemy":
 			_start_target_selection(true)
 		"single_ally":
-			_start_target_selection(false, 4)
+			_start_target_selection(false)
 		"all_enemies", "all_allies":
 			command_selected.emit(_pending_command)
 			hide_menu()
@@ -296,9 +309,15 @@ func set_submenu_items(items: Array[Dictionary]) -> void:
 	_update_submenu_display()
 
 
-## Set enemy count for target selection. Minimum 1 to prevent division by zero.
+## Set how many enemies enemy targeting may address. Minimum 1 for the modulo.
 func set_enemy_count(count: int) -> void:
-	_target_count = maxi(1, count)
+	_enemy_target_count = maxi(1, count)
+
+
+## Set how many party slots ally targeting may address — the live party size, so
+## the cursor never lands on an empty slot (#276). Minimum 1 for the modulo.
+func set_party_count(count: int) -> void:
+	_party_target_count = maxi(1, count)
 
 
 func _update_command_display() -> void:

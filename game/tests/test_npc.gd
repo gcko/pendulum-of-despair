@@ -2,10 +2,15 @@ extends GutTest
 ## Tests for NPC entity with priority stack dialogue resolution.
 
 const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
+const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
+
+
+func before_each() -> void:
+	TestHelpers.reset_game_state()
 
 
 func after_each() -> void:
-	EventFlags.clear_all()
+	TestHelpers.reset_game_state()
 
 
 func _create_npc():
@@ -98,12 +103,13 @@ func test_get_current_dialogue_null_before_conditioned() -> void:
 		{"id": "default_002", "condition": null, "lines": ["default second"]},
 		{"id": "flagged_001", "condition": "late_game_flag", "lines": ["late game"]},
 	]
-	# Without flag: should return last null-condition entry (fallback)
+	# Without flag: should start on the FIRST default (GAP-042 — the defaults
+	# take turns instead of collapsing to the last one).
 	var result_no_flag: Dictionary = npc.get_current_dialogue()
 	assert_eq(
 		result_no_flag.get("id"),
-		"default_002",
-		"without flag should return last default",
+		"default_001",
+		"without flag should start on the first default",
 	)
 	# With flag: should return conditioned entry
 	EventFlags.set_flag("late_game_flag", true)
@@ -115,65 +121,145 @@ func test_get_current_dialogue_null_before_conditioned() -> void:
 	)
 
 
+# --- Multi-default cycling (GAP-042) ---
+
+
+func _served_ids(npc, times: int) -> Array:
+	var ids: Array = []
+	npc.npc_interacted.connect(func(_id: String, data: Dictionary): ids.append(data.get("id")))
+	for _i: int in range(times):
+		npc.interact()
+	return ids
+
+
+func test_all_defaults_are_reachable_across_interactions() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_cycle_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+		{"id": "default_003", "condition": null, "lines": ["three"]},
+	]
+	var ids: Array = _served_ids(npc, 4)
+	assert_eq(
+		ids,
+		["default_001", "default_002", "default_003", "default_001"],
+		"every default should be reachable, wrapping after the last",
+	)
+
+
+func test_real_multi_default_npc_reaches_every_line() -> void:
+	# npc_bren.json ships three distinct unconditioned topics; before GAP-042
+	# only npc_bren_003 was ever reachable in Act I.
+	var npc = _create_npc()
+	npc.initialize("bren")
+	var defaults: Array = DialogueCondition.resolve_stack(npc.dialogue_entries)
+	assert_gt(defaults.size(), 1, "bren should have more than one default line")
+	var ids: Array = _served_ids(npc, defaults.size())
+	assert_eq(ids.size(), defaults.size(), "one line served per interaction")
+	var unique: Dictionary = {}
+	for id: Variant in ids:
+		unique[id] = true
+	assert_eq(unique.size(), defaults.size(), "each default should be served exactly once")
+
+
+func test_cycle_survives_a_map_reload() -> void:
+	var first = _create_npc()
+	first.npc_id = "persistent_npc"
+	first.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	assert_eq(_served_ids(first, 1), ["default_001"], "first interaction serves the first line")
+	# A new node with the same npc_id stands in for re-entering the map.
+	var second = _create_npc()
+	second.npc_id = "persistent_npc"
+	second.dialogue_entries = first.dialogue_entries
+	assert_eq(
+		_served_ids(second, 1), ["default_002"], "the cursor is session state, not node state"
+	)
+
+
+func test_conditioned_entry_does_not_advance_the_cycle() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_gated_npc"
+	npc.dialogue_entries = [
+		{"id": "gated", "condition": "late_game_flag", "lines": ["late"]},
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	EventFlags.set_flag("late_game_flag", true)
+	assert_eq(_served_ids(npc, 2), ["gated", "gated"], "a matched condition repeats, per 3.2")
+	EventFlags.set_flag("late_game_flag", false)
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"the ambient cursor should not have moved while the condition held",
+	)
+
+
+func test_reset_dialogue_cycles_returns_to_the_first_default() -> void:
+	var npc = _create_npc()
+	npc.npc_id = "test_reset_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	npc.interact()
+	assert_eq(npc.get_current_dialogue().get("id"), "default_002", "cursor advanced")
+	NPC.reset_dialogue_cycles()
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"a new game or load should restart the rotation",
+	)
+
+
+func test_continue_from_title_resets_the_ambient_cursor() -> void:
+	# Title -> Continue applies the save inside exploration rather than through
+	# SaveManager, so that path has to reset the cursors too.
+	var npc = _create_npc()
+	npc.npc_id = "test_continue_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	npc.interact()
+	assert_eq(npc.get_current_dialogue().get("id"), "default_002", "cursor advanced")
+	GameManager.transition_data = {
+		"save_slot": 1,
+		"save_data": {"world": {"current_location": "test_room"}},
+	}
+	var exp: Node2D = EXPLORATION_SCENE.instantiate()
+	add_child_autofree(exp)
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"loading a save should restart every NPC's rotation",
+	)
+
+
 # --- Condition Evaluation ---
+# The expression evaluator itself now lives in DialogueCondition and is
+# covered by test_dialogue_conditions.gd. What matters here is that the NPC
+# resolver actually consults it.
 
 
-func test_evaluate_condition_null() -> void:
+func test_resolver_uses_shared_condition_evaluator() -> void:
 	var npc = _create_npc()
-	assert_true(npc._evaluate_condition(null), "null should return true")
-
-
-func test_evaluate_condition_empty() -> void:
-	var npc = _create_npc()
-	assert_true(npc._evaluate_condition(""), "empty should return true")
-
-
-func test_evaluate_condition_flag_set() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("test_flag", true)
-	assert_true(npc._evaluate_condition("test_flag"), "set flag should return true")
-
-
-func test_evaluate_condition_flag_unset() -> void:
-	var npc = _create_npc()
-	assert_false(npc._evaluate_condition("unset_flag"), "unset flag should return false")
-
-
-func test_evaluate_condition_and_both_true() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("flag_a", true)
-	EventFlags.set_flag("flag_b", true)
-	assert_true(npc._evaluate_condition("flag_a AND flag_b"), "both true should return true")
-
-
-func test_evaluate_condition_and_one_false() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("flag_a", true)
-	assert_false(
-		npc._evaluate_condition("flag_a AND flag_missing"),
-		"one false should return false",
+	npc.npc_id = "test_npc"
+	npc.dialogue_entries = [
+		{"id": "party_line", "condition": "party_has(torren)", "lines": ["Torren!"]},
+		{"id": "default_line", "condition": null, "lines": ["default"]},
+	]
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_line",
+		"party_has should be false with an empty party",
 	)
-
-
-func test_evaluate_condition_party_has() -> void:
-	var npc = _create_npc()
-	assert_false(
-		npc._evaluate_condition("party_has(torren)"),
-		"party_has should return false when member not in party",
-	)
-	var saved_members: Array[Dictionary] = PartyState.members.duplicate(true)
 	PartyState.add_member("torren")
-	assert_true(
-		npc._evaluate_condition("party_has(torren)"),
-		"party_has should return true when member is in party",
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"party_line",
+		"party_has should be honoured through DialogueCondition",
 	)
-	PartyState.members.clear()
-	for m: Dictionary in saved_members:
-		PartyState.members.append(m)
-
-
-func test_evaluate_condition_numeric_comparison() -> void:
-	var npc = _create_npc()
-	EventFlags.set_flag("score", 3)
-	assert_true(npc._evaluate_condition("score >= 2"), "3 >= 2 should be true")
-	assert_false(npc._evaluate_condition("score >= 5"), "3 >= 5 should be false")

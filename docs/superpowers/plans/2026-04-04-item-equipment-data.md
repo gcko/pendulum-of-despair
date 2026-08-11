@@ -48,7 +48,7 @@ For each item:
 8. `sell_price`: from items.md Sell column. `null` for items with "—". Verify: `floor(buy_price / 2)` when buy_price exists
 9. `stack_limit`: 199 for hp_healing and mp_restoration subcategories, EXCEPT rest items (Sleeping Bag, Tent, Pavilion) which are 99. All others: 99
 10. `description`: brief in-game text based on effect
-11. `target`: `single_ally` for single-target heals/cures/revives, `all_allies` for party-wide, `single_enemy` for none (consumables don't target enemies), `self` for stat capsules
+11. `target`: `single_ally` for single-target heals/cures/revives and for stat capsules (the field item menu picks the recipient, per items.md § Stat Capsules), `all_allies` for party-wide, `single_enemy` for none (consumables don't target enemies)
 12. `usable_in_battle`: true for most. false for rest items (Sleeping Bag, Tent, Pavilion), Waystone, stat capsules
 13. `usable_in_field`: true for healing, cures, rest items, stat capsules, Waystone, Sable's Coin (field use: guarantees preemptive next battle). false for Smoke Bomb
 14. `availability`: from items.md Availability column

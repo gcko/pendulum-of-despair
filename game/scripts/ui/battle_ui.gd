@@ -17,10 +17,43 @@ const COLOR_CRIT: Color = Color("#ffff44")
 const COLOR_POISON: Color = Color("#aa66cc")
 const COLOR_BURN: Color = Color("#ff8844")
 
+## Offsets applied to the target cursor when it points at an enemy sprite
+## (ui-design.md § 2.6 — cursor above the sprite).
+const ENEMY_ARROW_OFFSET: Vector2 = Vector2(32, 8)
+## Gap between the target cursor and the left edge of the party row it
+## points at (ui-design.md § 2.6 — cursor beside the targeted member).
+const PARTY_ARROW_GAP: float = 6.0
+## Enemy damage popups spawn POPUP_LIFT px above the sprite and float a further
+## POPUP_RISE px over 0.5s (ui-design.md § 2.2).
+const POPUP_LIFT: float = 64.0
+const POPUP_RISE: float = 64.0
+## Party rows are packed far tighter than the enemy sprites, so a party number
+## lifted like an enemy's would land over a different member's row. It sits on
+## its own row and rises only into the gap above it (ui-design.md § 2.3, #276) —
+## this matches the party panel's inter-row separation.
+const PARTY_POPUP_RISE: float = 8.0
+## World-space anchor used when a damage event names a combatant this UI
+## cannot place (unknown id, or a party slot with no visible row).
+const FALLBACK_WORLD_ANCHOR: Vector2 = Vector2(640, 360)
+
+## How long a battle message holds the window before it fades (ui-design.md § 2.5).
+const MESSAGE_HOLD: float = 1.5
+## ...and how long it is guaranteed to be legible before another line may take
+## the window. Lines arriving inside that guarantee queue instead of clobbering
+## it, so an auto-skipped turn's announcement survives the next frame's enemy
+## action (#260, ui-design.md § 2.5).
+const MESSAGE_MIN_DISPLAY: float = 0.75
+## Queue cap: a burst of announcements must not leave the window falling further
+## and further behind the battle, so the oldest waiting line is dropped instead.
+## The cap bounds the lag at MESSAGE_QUEUE_MAX * MESSAGE_MIN_DISPLAY (~2.25s).
+const MESSAGE_QUEUE_MAX: int = 3
+
 var _manager: Node = null
 var _battle_state: Node = null
 var _atb_system: Node = null
 var _message_timer: float = 0.0
+var _message_shown_for: float = 0.0
+var _message_queue: Array[String] = []
 var _enemy_positions: Array[Vector2] = []
 var _results_showing: bool = false
 var _target_arrow: Label = null
@@ -70,11 +103,24 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if _message_timer > 0.0:
-		_message_timer -= delta
-		if _message_timer <= 0.0 and _message_area != null:
-			_message_area.visible = false
+	_advance_message(delta)
 	_update_party_panel()
+
+
+## Age the current message, then hand the window to the next queued line once
+## the current one has had its guaranteed legible time (#260).
+func _advance_message(delta: float) -> void:
+	if _message_timer <= 0.0:
+		return
+	_message_shown_for += delta
+	_message_timer -= delta
+	if _message_shown_for >= MESSAGE_MIN_DISPLAY and not _message_queue.is_empty():
+		var next: String = _message_queue[0]
+		_message_queue.remove_at(0)
+		_display_message(next)
+		return
+	if _message_timer <= 0.0 and _message_area != null:
+		_message_area.visible = false
 
 
 func _on_battle_started(
@@ -101,6 +147,7 @@ func _on_turn_ready(
 		_party_panel.set_active_slot(slot)
 	if _command_menu != null:
 		_command_menu.set_enemy_count(enemy_count)
+		_command_menu.set_party_count(_occupied_party_slot_count())
 		var current_mp: int = 0
 		if _battle_state != null:
 			current_mp = int(_battle_state.get_member(slot).get("current_mp", 0))
@@ -137,13 +184,21 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 		return
 	if is_enemy and index < _enemy_positions.size():
 		_target_arrow.visible = true
-		var vp: Viewport = get_viewport()
-		var world_pos: Vector2 = _enemy_positions[index]
-		var arrow_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
-		_target_arrow.position = arrow_pos - Vector2(32, 8)
+		_target_arrow.position = _to_screen(_enemy_positions[index]) - ENEMY_ARROW_OFFSET
 	elif not is_enemy:
+		var row: Rect2 = _party_row_rect(index)
+		if row.size == Vector2.ZERO:
+			_target_arrow.visible = false
+			return
 		_target_arrow.visible = true
-		_target_arrow.position = Vector2(40, 480 + index * 60)
+		var arrow: Vector2 = _target_arrow.get_minimum_size()
+		# Sits just left of the row, vertically centred on it. The party panel
+		# hugs the viewport's left edge, so clamp at 0 rather than let the
+		# cursor slide off-screen.
+		_target_arrow.position = Vector2(
+			maxf(0.0, row.position.x - arrow.x - PARTY_ARROW_GAP),
+			row.position.y + (row.size.y - arrow.y) * 0.5
+		)
 	else:
 		_target_arrow.visible = false
 
@@ -172,11 +227,21 @@ func _on_damage_dealt(target_id: String, amount: int, damage_type: String) -> vo
 
 
 func _on_message(text: String) -> void:
+	if _message_timer > 0.0 and _message_shown_for < MESSAGE_MIN_DISPLAY:
+		_message_queue.append(text)
+		while _message_queue.size() > MESSAGE_QUEUE_MAX:
+			_message_queue.remove_at(0)
+		return
+	_display_message(text)
+
+
+func _display_message(text: String) -> void:
 	if _message_label != null:
 		_message_label.text = text
 	if _message_area != null:
 		_message_area.visible = true
-	_message_timer = 1.5
+	_message_timer = MESSAGE_HOLD
+	_message_shown_for = 0.0
 
 
 func _on_victory(rewards: Dictionary) -> void:
@@ -211,28 +276,68 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 	label.modulate = color
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
-	var world_pos: Vector2 = _get_target_position(target_id)
-	var vp: Viewport = get_viewport()
-	var screen_pos: Vector2 = vp.get_canvas_transform() * world_pos if vp != null else world_pos
-	label.position = screen_pos - Vector2(80, 64)
 	add_child(label)
+
+	var placement: Dictionary = _popup_placement(target_id, label.get_minimum_size())
+	label.position = placement["start"]
+	var rise: float = placement["rise"]
 
 	var tween: Tween = create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(label, "position:y", screen_pos.y - 128, 0.5)
+	tween.tween_property(label, "position:y", label.position.y - rise, 0.5)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.5).set_delay(0.3)
 	tween.tween_callback(label.queue_free)
 
 
-func _get_target_position(target_id: String) -> Vector2:
+## Where a combatant's floating number starts ("start", screen-space top-left)
+## and how far it floats up ("rise"). Enemies live in world space and pop above
+## the sprite. A party member's number sits centred on its own panel row: the
+## rows are packed far tighter than POPUP_LIFT, so anything lifted like an
+## enemy's number would clear the row above and land over a different member,
+## reading as damage to them (#276, ui-design.md § 2.3). Row rects come from the
+## panel, so nothing here guesses a row pitch.
+func _popup_placement(target_id: String, size: Vector2) -> Dictionary:
+	if target_id.begins_with("party_"):
+		var row: Rect2 = _party_row_rect(target_id.replace("party_", "").to_int())
+		if row.size != Vector2.ZERO:
+			return {"start": row.position + (row.size - size) * 0.5, "rise": PARTY_POPUP_RISE}
+	var world: Vector2 = FALLBACK_WORLD_ANCHOR
 	if target_id.begins_with("enemy_"):
 		var idx: int = target_id.replace("enemy_", "").to_int()
 		if idx < _enemy_positions.size():
-			return _enemy_positions[idx]
-	elif target_id.begins_with("party_"):
-		var slot: int = target_id.replace("party_", "").to_int()
-		return Vector2(160, 480 + slot * 60)
-	return Vector2(640, 360)
+			world = _enemy_positions[idx]
+	return {
+		"start": _to_screen(world) - Vector2(size.x * 0.5, POPUP_LIFT),
+		"rise": POPUP_RISE,
+	}
+
+
+## How many party slots the ally-target cursor may address: the leading run of
+## occupied battle slots (_setup_party fills them from 0). Without this the menu
+## would offer all four and the cursor could land on a slot with no row (#276,
+## ui-design.md § 2.6). KO'd members still count — revive items must reach them.
+func _occupied_party_slot_count() -> int:
+	if _battle_state == null:
+		return 4
+	var count: int = 0
+	for i: int in range(4):
+		if _battle_state.get_member(i).is_empty():
+			break
+		count += 1
+	return maxi(1, count)
+
+
+## Real screen rect of a party row, or an empty Rect2 when the panel is
+## absent (battle_manager tolerates a missing UI child) or the slot is empty.
+func _party_row_rect(slot: int) -> Rect2:
+	if _party_panel == null:
+		return Rect2()
+	return _party_panel.get_row_global_rect(slot)
+
+
+func _to_screen(world_pos: Vector2) -> Vector2:
+	var vp: Viewport = get_viewport()
+	return vp.get_canvas_transform() * world_pos if vp != null else world_pos
 
 
 func _show_results(rewards: Dictionary) -> void:

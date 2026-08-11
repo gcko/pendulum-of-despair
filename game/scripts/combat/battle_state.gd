@@ -12,6 +12,7 @@ signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]
@@ -346,12 +347,17 @@ func _compute_effective_stats(character_id: String, base_stats: Dictionary) -> D
 	var effective: Dictionary = base_stats.duplicate()
 	if character_id.is_empty():
 		return effective
+	# Assemble through the one shared formula so combat, the status/equip menus
+	# and the level-up recompute cannot disagree — including on the stat cap
+	# (progression.md § Equipment and Buffs: equipment cannot push a stat past
+	# 255). The view carries this battle's base_stats with the member's banked
+	# Stat Capsule gains (GAP-020).
+	var view: Dictionary = {
+		"base_stats": base_stats,
+		"stat_capsules": PartyState.get_member(character_id).get("stat_capsules", {}),
+	}
 	for stat: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
-		# Permanent Stat Capsule gains (GAP-020) ride on top of base_stats the
-		# same way equipment does, so combat must see both.
-		var bonus: int = (
-			PartyState.get_equipment_bonus(character_id, stat)
-			+ PartyState.get_capsule_gain(character_id, stat)
+		effective[stat] = Helpers.compute_effective_stat(
+			view, stat, PartyState.get_equipment_bonus(character_id, stat)
 		)
-		effective[stat] = effective.get(stat, 0) + bonus
 	return effective

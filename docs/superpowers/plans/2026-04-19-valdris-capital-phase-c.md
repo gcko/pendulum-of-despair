@@ -845,7 +845,7 @@ Create all 11 NPC dialogue JSON files. Each follows the standard schema. Source 
 
 **`game/data/dialogue/npc_dame_cordwyn.json`:**
 
-This NPC has BOTH Scene 7c dialogue (gated by `pendulum_presented AND !scene_7c_cordwyn`) and ambient fallback. The priority stack puts conditioned entries first.
+This NPC has BOTH Scene 7c dialogue (gated by `pendulum_presented AND scene_7c_cordwyn == 0` — there is no `!` operator; dialogue-system.md 3.3 spells "not yet" as `flag == 0`, which is what the shipped JSON uses) and ambient fallback. The priority stack puts conditioned entries first.
 
 ```json
 {

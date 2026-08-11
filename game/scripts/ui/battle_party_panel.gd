@@ -48,6 +48,24 @@ func set_active_slot(slot: int) -> void:
 	_active_slot = slot
 
 
+## Screen-space rect of a party member's row, so BattleUI can anchor the
+## target cursor and damage popups to the real layout instead of a guessed
+## row pitch (#276, ui-design.md § 2.6). Returns an empty Rect2 when the
+## slot has no row — out of range, uncached, or hidden because the party
+## slot is empty — and callers must treat that as "no anchor here".
+## Shape-agnostic: a taller multi-line row still reports its own rect.
+func get_row_global_rect(slot: int) -> Rect2:
+	if slot < 0 or slot >= _rows.size():
+		return Rect2()
+	var refs: Dictionary = _rows[slot]
+	if refs.is_empty():
+		return Rect2()
+	var row: Control = refs["row"]
+	if row == null or not row.visible:
+		return Rect2()
+	return Rect2(row.global_position, row.size)
+
+
 func _cache_row(row: HBoxContainer) -> Dictionary:
 	if row == null:
 		return {}

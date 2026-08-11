@@ -106,6 +106,33 @@ func test_active_slot_highlights_name() -> void:
 	assert_eq(name_label.modulate, _panel.COLOR_NAME_NORMAL, "cleared slot restores normal")
 
 
+func test_row_rect_reports_real_row_geometry() -> void:
+	_panel.update_party([_member(400, 800), _member(300, 600)], {"party_0": 0, "party_1": 0})
+	await wait_frames(1)  # container layout settles on the next frame
+	var r0: Rect2 = _panel.get_row_global_rect(0)
+	var r1: Rect2 = _panel.get_row_global_rect(1)
+	assert_gt(r0.size.y, 0.0, "row 0 reports a real height")
+	assert_eq(r0.size.y, r1.size.y, "rows share a height")
+	assert_gt(r1.position.y, r0.position.y, "row 1 sits below row 0")
+	assert_lt(
+		r1.position.y - r0.position.y,
+		60.0,
+		"real pitch is far tighter than the 60px anchors #276 removed"
+	)
+
+
+func test_row_rect_is_empty_for_a_hidden_row() -> void:
+	_panel.update_party([_member(400, 800), {}], {"party_0": 0})
+	await wait_frames(1)
+	assert_eq(_panel.get_row_global_rect(1), Rect2(), "an empty party slot has no anchor")
+
+
+func test_row_rect_is_empty_out_of_range() -> void:
+	_panel.update_party([_member(400, 800)], {"party_0": 0})
+	assert_eq(_panel.get_row_global_rect(-1), Rect2(), "negative slot has no anchor")
+	assert_eq(_panel.get_row_global_rect(4), Rect2(), "slot past the party has no anchor")
+
+
 func test_missing_name_falls_back_to_placeholder() -> void:
 	var member: Dictionary = _member(400, 800)
 	member["character_data"] = {}

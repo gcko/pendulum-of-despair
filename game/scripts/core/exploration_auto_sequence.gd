@@ -120,6 +120,7 @@ func _caden_start_dialogue(caden: Node2D, completion_flag: String) -> void:
 		_caden_complete(caden, completion_flag)
 		return
 	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
+		DialogueConsequences.connect_overlay(GameManager.overlay_node)
 		GameManager.overlay_node.show_dialogue(entries)
 		_caden_dialogue_callable = _on_caden_dialogue_closed.bind(caden, completion_flag)
 		GameManager.overlay_state_changed.connect(_caden_dialogue_callable, CONNECT_ONE_SHOT)

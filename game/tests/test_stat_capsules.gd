@@ -222,6 +222,24 @@ func test_capsule_reaches_battle_effective_stats() -> void:
 	)
 
 
+func test_battle_effective_stat_clamps_at_the_cap() -> void:
+	# progression.md § Equipment and Buffs: equipment cannot push a stat past
+	# 255. Combat bakes its own copy of the effective stats, so it must clamp
+	# exactly where the status/equip menus do.
+	var member: Dictionary = PartyState.get_member("edren")
+	member["base_stats"]["atk"] = 255
+	_equip("edren", "weapon", STRONG_SWORD)
+	assert_eq(PartyState.get_effective_stat("edren", "atk"), 255, "menu ATK must clamp at the cap")
+	var battle: Node = BattleStateScript.new()
+	add_child_autofree(battle)
+	battle.add_member(0, PartyState.get_member("edren"))
+	assert_eq(
+		battle.get_effective_stat(0, "atk"),
+		255,
+		"combat ATK must clamp at the same cap the menus use",
+	)
+
+
 # --- GAP-020: capsule gains round-trip through save ---
 
 
