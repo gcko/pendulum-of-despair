@@ -46,7 +46,7 @@ in these docs.**
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
 | Abilities & magic | `abilities.md` (940), `magic.md` (1,613) |
 | Enemy data | `bestiary/` (10 files) |
-| Items & equipment | `items.md` (631), `equipment.md` (726) |
+| Items & equipment | `items.md` (631), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |
 | Crafting | `crafting.md` (403) |
 | Encounters | `dungeons-world.md` (5,352), `dungeons-city.md` (1,489), `combat-formulas.md` |
@@ -66,7 +66,7 @@ in these docs.**
 | Dynamic world | `dynamic-world.md` (1,156) |
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
-| Architecture | `docs/plans/technical-architecture.md` (1,197) |
+| Architecture | `docs/plans/technical-architecture.md` (1,208) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
