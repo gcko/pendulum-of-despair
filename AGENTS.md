@@ -196,8 +196,18 @@ gh issue list --label bug          # filter by label
 **Create new issues:**
 
 ```bash
-gh issue create --title "Issue title" --body "Detailed context" --label bug
+gh issue create --title "Issue title" --body "Detailed context" \
+  --label bug --milestone "Phase 2 — Combat Completion"
 ```
+
+**`--milestone` is mandatory on every `gh issue create`.** An unmilestoned
+issue is invisible to the milestone-by-milestone workflow and silently
+falls out of the plan. Pick the milestone from the topic of the *fix*,
+not from which PR surfaced it — an encounter-roster bug found during a
+docs pass belongs to the world milestone, not the docs one. Run
+`gh api repos/gcko/pendulum-of-despair/milestones -q '.[].title'` for the
+current list. If genuinely none fit, say so explicitly in your report so
+a new milestone can be created — do not leave the field empty.
 
 **View and complete work:**
 
@@ -218,13 +228,16 @@ Use GitHub labels in place of bd's types/priorities:
 1. **Check open work**: `gh issue list` shows available issues
 2. **Work on it**: Implement, test, document; reference the issue in the PR
    (e.g. "Closes #123") so it auto-closes on merge
-3. **Discover new work?** File a linked issue:
-   `gh issue create --title "Found bug" --body "Details. Discovered in #<parent>"`
+3. **Discover new work?** File a linked issue, always with a milestone:
+   `gh issue create --title "Found bug" --body "Details. Discovered in #<parent>" --milestone "<milestone>"`
 4. **Complete**: close the issue (or let the merged PR auto-close it)
 
 ### Important Rules
 
 - Use GitHub Issues for ALL task tracking
+- **Every issue gets a `--milestone` at creation time** (see above)
+- Before filing, check whether a sibling agent in the same review wave
+  already filed it — parallel reviews duplicate findings often
 - Reference issues from PRs/commits (`Closes #N`, `Refs #N`)
 - Do NOT create markdown TODO lists
 - Do NOT reintroduce `.beads`/bd or other parallel trackers
