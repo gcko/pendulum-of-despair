@@ -3,7 +3,7 @@
   "name": "Overworld",
   "zones": [
     {
-      "_comment": "Increment 148 (forest-light band); geography.md also mentions highland paths at Mountains 252 - reconcile when highland-path tiles are distinguishable (issue #265)",
+      "_comment": "Increment 148 (geography.md Forest (light) / Quarried plains band). This zone is the settled Valdris plateau fill, not the highland paths: geography.md Terrain Effects on Gameplay resolves 'Highland paths' (Mountains, 252) to frostcap_foothills, which is matched ahead of this fill in overworld_zones.json (#265).",
       "zone_id": "valdris_highlands",
       "name": "Valdris Highlands",
       "terrain_type": "open",

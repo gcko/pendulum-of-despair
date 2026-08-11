@@ -744,7 +744,7 @@ Stacking example: Haste + Despair = 1.5 × 0.75 = 1.125 (net +12.5%).
 - **Petrify resets to 0.** Most severe status — recovery starts fresh.
 - **Stop uses real-time.** 3 seconds of real-time (not turn-based), counted only while battle time is running. Proportionally more punishing at slow speeds. In Wait mode, the Stop countdown pauses along with all other time progression while sub-menus are open.
 - **Berserk is a tradeoff.** Faster (+25%) and stronger (+50% basic attack) but uncontrollable. Almost a buff on physical fighters.
-- **A paralysed member's turn is auto-skipped.** Paralysis fills the gauge but denies the action, so when a paralysed member's gauge fills the battle resolves that turn without a command prompt: it announces the skip by name (the "[Character] is paralysed and can't move!" line in [battle-dialogue.md](script/battle-dialogue.md) § Status Effect Notifications), ticks that member's turn-based statuses (so the duration counts down and any Poison/Burn damage lands), resets the gauge, and immediately re-checks the battle's end conditions — a DoT tick that kills the last standing member ends the battle on that turn, not on the next one. The skip consumes the turn slot exactly as a real action does, so no other combatant resolves alongside it; the announcement then holds the message window for its guaranteed readable minimum, which is what keeps the *next* frame's enemy action from replacing it unread (see [ui-design.md](ui-design.md) § 2.5).
+- **A paralyzed member's turn is auto-skipped.** Paralysis fills the gauge but denies the action, so when a paralyzed member's gauge fills the battle resolves that turn without a command prompt: it announces the skip by name (the "[Character] is paralyzed and can't move!" line in [battle-dialogue.md](script/battle-dialogue.md) § Status Effect Notifications), ticks that member's turn-based statuses (so the duration counts down and any Poison/Burn damage lands), resets the gauge, and immediately re-checks the battle's end conditions — a DoT tick that kills the last standing member ends the battle on that turn, not on the next one. The skip consumes the turn slot exactly as a real action does, so no other combatant resolves alongside it; the announcement then holds the message window for its guaranteed readable minimum, which is what keeps the *next* frame's enemy action from replacing it unread (see [ui-design.md](ui-design.md) § 2.5).
 - **A gauge-frozen member takes no turn at all.** Stop, Sleep and Petrify all freeze the gauge, and the battle passes a frozen member over in silence: no announcement, no status tick, and — the point of the rule — no gauge reset, so a gauge that was already full when the status landed is never spent. The skip never writes to the gauge, so whatever each status is holding survives it: Sleep and Stop keep the value they froze at and resume from it (see "Frozen gauge retains value" above), while Petrify is held at 0 and recovery starts fresh on cure (see "Petrify resets to 0" above). Other combatants act normally around them. Only Paralysis, whose gauge keeps filling, has a turn to consume; the auto-skip above is specific to it.
 
 ### Turn Order Resolution
@@ -806,6 +806,24 @@ for on-foot movement rules (uniform speed, no per-terrain modifiers).
 | Act II | ×1.1 |
 | Interlude | ×1.2 |
 | Act III | ×1.1 |
+| Act IV | ×1.1 |
+| Epilogue / Post-game | ×1.1 |
+
+Act IV and the Epilogue hold Act III's ×1.1 rather than climbing further.
+Act IV (from `pallor_defeated`, [events.md](events.md) § Act IV Flags) is
+the farewell sequence inside the Convergence — scripted throughout, with
+no free-roam terrain to roll against — so the value is carried for
+completeness, not for tuning. The post-game world reopens at Act III
+rates: the Convergence Meadow that replaces the Pallor Wastes is a
+zero-increment sacred site (see [geography.md](geography.md) § Encounter
+Zones), and the Dreamer's Fault supplies its own per-floor increments
+(120 / 252 / 506 across F1–F20), so raising the multiplier again would
+only inflate the ordinary overworld the player is revisiting.
+
+`StoryAct.get_period()` has no `act_iv` or `epilogue` branch: it reports
+`act_iii` for every state past `act_iii_started`, which yields exactly the
+×1.1 tabled here. The rows above are the canon these two periods were
+already resolving to, not a change in behavior.
 
 **Final increment formula:**
 
@@ -862,6 +880,13 @@ scripted encounters always use Normal formation.
 **Preemptive Charm interaction:** +25 percentage points to preemptive,
 deducted from back attack first then normal. Normalizes all terrains to
 62.5% Normal / 0% Back Attack / 37.5% Preemptive.
+
+**Preemptive Charms do not stack.** The bonus is a flat +25pp whenever any
+party member has one equipped, regardless of how many the party carries —
+the same non-stacking rule the Ward Talisman and Infiltrator's Cloak
+follow above, and the reason the "normalizes all terrains to 62.5/0/37.5"
+sentence can state one outcome rather than a per-count table. Two charms
+give +25pp, not +50pp.
 
 **Sable's Coin:** Guarantees preemptive on next battle (overrides roll).
 Does not work on bosses.
