@@ -859,8 +859,12 @@ of the 2026-03-21 design, not a live rule.
 
 The three custom resources (AP/AC/WG) are within their stated caps, and the
 damage and healing magnitudes that used to be adjectives are now numbers. Both
-are asserted by `game/tests/test_ability_balance.gd` against
-`game/data/abilities/`. The derivations live in
+are asserted by `game/tests/test_ability_balance.gd` against the numeric fields
+in `game/data/abilities/` — the caps, and every `power`, `power_favor3`,
+`ability_mult`, `ability_mult_max` and `component_powers` value. Three
+quantities below live only in effect prose and are pinned by nothing: the
+Chorus's barrier percentage and immunity duration, and Shock Coil's tick count.
+The derivations live in
 [abilities.md](../story/abilities.md) § Damage Magnitudes; each value is written
 next to the rule that produced it, so it can be checked or overturned rather
 than taken on trust.

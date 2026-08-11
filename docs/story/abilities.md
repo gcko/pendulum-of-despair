@@ -588,8 +588,10 @@ value this balance pass changes — the base rules and the stated target agree.
 *Damage magnitudes.* Abilities that use the standard physical formula take their
 `ability_mult` from [combat-formulas.md](combat-formulas.md) § Ability
 Multipliers (1.0 basic / 1.5 strong / 2.0 ultimate / 2.5 combo / 3.0 maximum).
+Wild Card is on that ladder too — `ability_mult` 2.0 rising to 3.0, see § Damage
+Magnitudes — despite the "2x her Attack" phrasing its entry uses.
 Abilities with their own formula state it inline in the tables above (Unweave,
-`Maren MAG x 3`; Wild Card's 0-item branch, `2x Attack`; Arcanite Colossus,
+`Maren MAG x 3`; Arcanite Colossus,
 `Lira ATK x 1.5`; Ley Torrent, `(Maren MAG + Torren MAG) x 4`; Twilight Raid,
 `(Sable ATK + Torren MAG) x 1.5`; Cael's Echo, `combined ATK x 3`); the three
 whose formula needs the battle layer's own state — Shatter Guard, Annulment and
@@ -606,29 +608,45 @@ resolved in § Damage Magnitudes below.
 Companion to § Resource Cost Invariants. That section fixed what abilities
 *cost*; this one fixes what they *deal*. Ten entries described their output in
 adjectives rather than numbers. Nine are resolved here and one is left open on
-purpose. `game/tests/test_ability_balance.gd` asserts every value below against
-`game/data/abilities/`, so an edit that breaks one fails the suite.
+purpose. `game/tests/test_ability_balance.gd` asserts the numeric *fields* below
+against `game/data/abilities/` — every `power`, `power_favor3`, `ability_mult`
+and `ability_mult_max`, plus the two `component_powers` — so an edit that breaks
+one of those fails the suite. Three quantities in this section live only in
+effect prose and are pinned by nothing: the Chorus's "counter 10% of DEF" and
+"status immunity, 1 turn", and Shock Coil's "3 ticks". Editing one of those
+passes the suite silently.
 
-Nothing here is a fresh design choice. Each number falls out of a rule already
+No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can
-check it — or overturn it, which is the point of writing it down.
+check it — or overturn it, which is the point of writing it down. One
+non-numeric choice is made: how Wild Card's item branches deliver their 2.0
+strike. It is labelled as a choice where it is made, with its alternative, and
+Shiv's equivalent fork is left open rather than settled.
 
 #### The rules used
 
 1. **MP-costed abilities are priced on magic.md's tier ladder.** Torren's
-   Spiritcalls are the only abilities paid in MP that carry a damage or healing
-   magnitude, and this document defines no ladder of its own, so
+   Spiritcalls are the only abilities whose magnitude this pass *derives* from
+   an MP price. Other MP-costed abilities carry a magnitude but are priced by
+   something else and so are not on this ladder: Unweave (12 MP) states its own
+   formula, `Maren MAG x 3`; Wild Card (10 MP) is priced off the physical
+   multiplier ladder; and combos are priced off the ability they fire (rule 4),
+   which is how Ambush Protocol lands at Tier-3 power for 8 MP. This document
+   defines no ladder of its own, so
    [magic.md](magic.md) § Spell Balance Guidelines supplies one: MP 3-8 = Tier 1,
    12-20 = Tier 2, 25-45 = Tier 3, 50-99 = Tier 4; single-target power bands
    12-20 / 28-40 / 50-70 / 85-120; an AoE version costs 1.5-2x its same-tier
    single-target counterpart and carries 60-70% of its power at Tiers 1-3.
    AP/AC/WG abilities are **not** on this ladder — they are priced against each
    other inside their own pool, because their pools refill on different rules.
-2. **A Favor 3 upgrade never reduces the per-target magnitude.** Of the five
-   Spiritcall upgrades, the two that broaden the target set leave the magnitude
-   alone (Dewfall -> Torrent's Grace and Stoneheart -> Mountain's Resolve, both
-   one ally -> all allies), and the one that keeps its target set doubles instead
-   (Thornveil -> Deeproot Veil, 20% -> 40% of DEF). Both undefined upgrades keep
+2. **A Favor 3 upgrade never reduces the per-target magnitude.** Each branch of
+   this rule rests on one quantified precedent, and it is worth weighing at that
+   strength. *Broadening:* Stoneheart -> Mountain's Resolve goes one ally -> all
+   allies at an unchanged 2 turns. (Dewfall -> Torrent's Grace broadens the same
+   way and keeps the same adjective, "moderate" -> "moderate", in both cells —
+   but its magnitude is one of the values this pass is deriving, so it is
+   corroboration, not independent evidence.) *Doubling:* Thornveil -> Deeproot
+   Veil keeps its target set and goes 20% -> 40% of DEF. Both undefined upgrades keep
    their target set — Inferno Gale is AoE like Ember Wing, Duskbreaker
    single-target like Greyveil — so the rule leaves only the doubling branch for
    them. It is also why the 60-70% AoE reduction is *not* applied to Torrent's
@@ -637,9 +655,14 @@ check it — or overturn it, which is the point of writing it down.
 3. **"Heavy" means double.** One convention, stated once. It is what Thornveil's
    quantified upgrade does, and "Heavy" is the adjective used for both undefined
    upgrades and for Wild Card's three-item branch.
-4. **A combo doubles the constituent ability it fires.** Ambush Protocol says so
-   outright — "2x normal Arc Trap damage" — and Thornfire's stated total is the
-   independent check (see Shock Coil).
+4. **A combo doubles the constituent ability's per-application magnitude.** For
+   a persistent device that is one tick (Shock Coil, 10 per tick); for a
+   single-shot one it is the whole burst (Arc Trap, 30). Ambush Protocol says
+   the doubling outright — "2x normal Arc Trap damage" — and Thornfire's stated
+   total is the independent check (see Shock Coil). The unit matters: the
+   equal-AC budget argument that sets Arc Trap at 30 compares Shock Coil's
+   *three-tick total* against Arc Trap's burst, which is a different quantity
+   from the per-tick 10 that rule 4 doubles into Thornfire.
 
 #### Resolved values
 
@@ -687,7 +710,9 @@ is Tier 1 (band 3-8). The shipped 5 MP Tier 1 attack spells are Linebolt
 9-11, and the 40% Burn rider argues for the bottom of that window: **power 10**.
 It sits mid-band in the Tier 1 AoE range of 7-14 that
 `game/tests/test_spell_balance.gd` already enforces for spells. Tier 2 is ruled
-out by price alone — the shipped Tier 2 AoE spells cost 22-25 MP, not 10.
+out by price alone — the shipped Tier 2 AoE *attack* spells cost 22-25 MP
+(Scorch Sweep, Whiteout and Quake Stride at 22 up to Ley Storm at 25), and the
+cheapest Tier 2 AoE spell of any kind is 12 MP. Neither is 10.
 **Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
 Tier 2 AoE band of 16-28 at unchanged MP. The upgrade is worth exactly one tier,
 which is what 15-20 battles of Favor should buy.
@@ -701,7 +726,13 @@ from MP pricing alone, without reference to Thornfire, and it reproduces
 Thornfire's stated 20 exactly. Over three turns the device delivers 30 power for
 2 AC, spread across random targets.
 
-**Arc Trap — spell power 30.** Arc Trap and Shock Coil cost the same 2 AC out of
+**Arc Trap — spell power 30.** Both of Lira's damage devices resolve through the
+*magic* formula: Shock Coil's entry says outright that its damage scales with
+Lira's Magic stat, and Arc Trap is budgeted directly against it below, so a
+spell power is the right unit for both. Their Flame and Storm elements are
+therefore applied by the magic formula's `element_mod`; combat-formulas.md
+§ Physical Elemental Attacks used to list Arc Trap and no longer does.
+Arc Trap and Shock Coil cost the same 2 AC out of
 the same 12 AC pool, so they get the same output budget: Shock Coil's
 3 x 10 = **30**, delivered as one burst instead of three ticks. The trade is
 even. The burst and the Speed debuff are paid for with conditionality — the trap
@@ -751,14 +782,15 @@ The Rain row is the same number in both columns because Dewfall's Favor 3
 upgrade broadens rather than doubles (rule 2) and the Chorus has already
 broadened it; Favor 3 adds only the Sleep cleanse.
 
-*Which four spirits.* Torren's roster when the ability unlocks in the Interlude
-is Briar, Rain, Flame, Earth, and possibly Twilight. The four effects the table
-cell names map one-to-one onto the first four, using each spirit once. The
-cell's word "cleanse" covers Rain's Poison removal and Earth's status immunity
-between them; the effect text is corrected above to say so. Twilight is not part
-of the composite — Greyveil's single-target MDEF-ignoring damage is not among
-the listed effects, and excluding it keeps the ability stable as Torren's roster
-grows.
+*Which four spirits.* Torren's roster when the ability unlocks is Briar, Rain,
+Flame, Earth and Twilight — Greyveil unlocks on the same `interlude_ley_line_nexus`
+event as the Chorus itself, so Twilight is definitely in hand, not merely
+possible. The four effects the table cell names map one-to-one onto the first
+four, using each spirit once. The cell's word "cleanse" covers Rain's Poison
+removal and Earth's status immunity between them; the effect text is corrected
+above to say so. Twilight is nonetheless excluded from the composite —
+Greyveil's single-target MDEF-ignoring damage is not among the listed effects,
+and excluding it keeps the ability stable as Torren's roster grows.
 
 *Sanity check on the 20 MP.* Each component is far below a Tier 2 spell —
 power 5 and 6 against Whiteout's 24 and Sanctuary's 22. The 20 MP buys breadth
@@ -775,18 +807,34 @@ which is `ability_mult` 2.0 in [combat-formulas.md](combat-formulas.md)
 skill", which is what Wild Card is. (Read as flat arithmetic instead, `2 x ATK`
 would be about 300 damage at level 70 — against the ~3,700 that same document
 quotes for Sable's *basic* Shiv at the same level — so the multiplier reading is
-the only one consistent with the rest of it.) The item branches change delivery, not the multiplier:
+the only one consistent with the rest of it.) The item branches then read as
+follows — and the 1-item branch is a **choice**, not a derivation, flagged as
+such below:
 
 - **1 item:** 2.0 against all enemies, carrying the thrown item's element.
   Physical attacks can carry an element — combat-formulas.md § Physical
-  Elemental Attacks defines that pipeline and already names Lira's Arc Trap and
-  Overcharge as cases.
+  Elemental Attacks defines that pipeline, with Lira's Overcharge and elemental
+  weapons as the shipped cases.
 - **2 items:** as above, plus one random debuff on all enemies.
 - **3 items:** "heavy". By rule 3 that is double, but 4.0 is off the top of the
   ladder, so the branch takes the highest tier the ladder defines: **3.0**, which
   combat-formulas.md reserves for "abilities with extreme costs". Emptying the
   entire three-item Stolen Goods pool on a 5-turn cooldown is that cost, and it
   gives that tier a second shipped exemplar alongside Sever Bond.
+
+*The 1-item branch is a choice.* The shipped text read "1 item: adds the item's
+element as AoE damage", and "adds" admits the same two shapes Shiv's throw does:
+**(a)** the strike itself becomes elemental and AoE at the unchanged 2.0, or
+**(b)** the 2.0 single-target strike keeps its shape and a second, separate
+elemental AoE hit is added on top. This pass takes **(a)** — the same reading it
+recommends for Shiv — because (b) needs a magnitude for the second hit that no
+document states, and inventing one is exactly what this pass is trying not to do.
+The cost of (a) is real and should be named: single-target -> all-enemies at an
+unchanged 2.0 for 10 MP is a large swing, and it is the first thing to revisit if
+Wild Card plays too strong. Unlike Shiv, the branch is not left open, because
+`target: all_enemies` was already shipped in `game/data/abilities/sable.json` and
+(b) would contradict it; the entry's `target` field records the item branches,
+and the 0-item branch is the single-target exception stated in the effect text.
 
 What is *not* settled here is which element a given stolen item confers. That is
 the same missing item-type -> element mapping that blocks Shiv's throw branch,
@@ -813,3 +861,10 @@ are missing and neither is implied by anything already written:
    changes how Sable plays across the whole game, and that call belongs to a
    pass with the item tables open, not to a documentation reconciliation. The
    entry stays open rather than taking an invented number.
+
+   Wild Card's item branches face the same (a)/(b) fork and this pass *does*
+   settle theirs, on reading (a) — see the Wild Card derivation above. The two
+   are treated differently for one reason: Wild Card's shipped `target` field
+   already says `all_enemies`, so (b) would contradict data that exists, while
+   Shiv's says `single_enemy` and is consistent with either reading. Whichever
+   pass closes Shiv should confirm Wild Card at the same time.

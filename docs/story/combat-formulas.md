@@ -328,7 +328,7 @@ The 3.0 tier is reserved for abilities with extreme costs — a single scripted 
 **What this table does *not* cover.** Every entry above is a plain multiplier applied to `ATK²`. Three kinds of ability are therefore out of scope, and none of them belongs in a row here:
 
 - **Composites of other abilities.** Torren's Convergence Chorus fires four Spiritcall effects at 50% potency in one action — an AoE heal, AoE damage, a party barrier and a status effect ([abilities.md](abilities.md) § Torren — Spiritcall). It has no physical component at all, so no `ability_mult` can express it; its magnitudes are derived per component in abilities.md § Damage Magnitudes.
-- **Combos that modify a constituent ability.** Shattered Vanguard is Misdirect on all enemies followed by Shatter Guard at +50% damage, and Shatter Guard is a custom-formula ability (below) — so Shattered Vanguard is `Shatter Guard × 1.5`, not a multiplier on Edren's ATK. Ambush Protocol is likewise `Arc Trap × 2`.
+- **Combos that modify a constituent ability.** Shattered Vanguard is Misdirect on all enemies followed by Shatter Guard at +50% damage, and Shatter Guard is a custom-formula ability (below) — so Shattered Vanguard is `Shatter Guard × 1.5`, not a multiplier on Edren's ATK. Ambush Protocol is likewise `Arc Trap × 2` — and because Arc Trap deals magic damage at spell power 30, the combo resolves through the *magic* formula at spell power 60 (guaranteed to trigger, which is a rider on the hit check, not a change of formula). See [abilities.md](abilities.md) § Damage Magnitudes.
 - **Combos that state their own formula.** Ley Torrent, Twilight Raid and Cael's Echo each define their own expression in abilities.md and never enter this table.
 
 That is why the 2.5 row has no exemplar: no shipped combo takes a physical `ability_mult`. The row is kept because the ladder itself is the reference, and because a future ability may claim it.
@@ -361,7 +361,8 @@ These abilities use their own formulas, not the standard physical or magic formu
 - **Annulment:** Damage = (MAG × 2) + (effects_removed × 15), as magic damage. 100 WG cost.
 - **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes.
 - **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. Inherits Shatter Guard's 2× max-HP cap before the multiplier.
-- **Ambush Protocol** (combo): Arc Trap × 2, resolved as guaranteed magic damage. Arc Trap is spell power 30, so the combo lands at 60 — see [abilities.md](abilities.md) § Damage Magnitudes.
+
+Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula, so it needs no formula of its own. See § Physical Ability Multiplier Tiers, "What this table does not cover".
 
 ---
 
@@ -415,9 +416,14 @@ From [magic.md](magic.md):
 ### Physical Elemental Attacks
 
 Some weapons and abilities have elemental properties:
-- Lira's Arc Trap: Flame element
-- Lira's Overcharge: Storm element
+- Lira's Overcharge: Storm element (a buff that adds the element to the ally's next *physical* attack)
 - Elemental weapons (defined in equipment, Gap 1.5)
+
+Lira's Arc Trap used to be listed here. It is not a physical attack: it is a
+device whose damage scales with Lira's Magic stat at spell power 30
+([abilities.md](abilities.md) § Damage Magnitudes), so its Flame element is
+applied by the magic formula's `element_mod`, not by the physical pipeline
+described below. The same goes for Shock Coil (Storm, spell power 10 per tick).
 
 When a physical attack has an element, the elemental multiplier
 applies after variance (between step 7 and step 8 in the resolution

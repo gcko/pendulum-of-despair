@@ -332,6 +332,8 @@ func test_convergence_chorus_components_are_half_their_spiritcall() -> void:
 func test_lira_devices_share_an_equal_arcanite_budget() -> void:
 	## Shock Coil and Arc Trap both cost 2 AC from the same 12 AC pool, so they
 	## are budgeted the same total output: three ticks of 10 against one burst.
+	## The quantity compared here is Shock Coil's whole-life total (3 x power),
+	## which is NOT the per-tick quantity rule 4 doubles into Thornfire.
 	var coil: Dictionary = _find_ability("shock_coil")
 	var trap: Dictionary = _find_ability("arc_trap")
 	if coil.is_empty() or trap.is_empty():
@@ -349,7 +351,13 @@ func test_lira_devices_share_an_equal_arcanite_budget() -> void:
 
 
 func test_combos_double_the_ability_they_fire() -> void:
-	## Rule 4. Ambush Protocol states the doubling outright; Thornfire states its
+	## Rule 4 doubles a constituent's *per-application* magnitude, and the two
+	## constituents apply differently. Arc Trap is single-shot, so `power` 30 is
+	## one application and Ambush Protocol is 2 x 30. Shock Coil is a 3-turn
+	## device, so `power` 10 is one tick and Thornfire doubles the tick, not the
+	## 30 it delivers over its life. That 30 is a separate quantity, used only by
+	## the equal-AC budget check in the test above.
+	## Ambush Protocol states the doubling outright; Thornfire states its
 	## total instead, and the total is what checks the two constituent values.
 	var ambush: Dictionary = _find_combo("ambush_protocol")
 	if not ambush.is_empty():

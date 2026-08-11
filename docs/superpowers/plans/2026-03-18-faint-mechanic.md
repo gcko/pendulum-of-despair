@@ -133,7 +133,7 @@ git commit -m "docs(shared): update events.md with Faint terminology and party-w
 ### Task 2: Update magic.md -- Status Effect Table, Spell Targets, Mechanics
 
 **Files:**
-- Modify: `docs/story/magic.md:724,735,993,1255,1540,1550`
+- Modify: `docs/story/magic.md:732,743,1001,1263,1548,1558`
 
 Six changes in one file, all mechanical KO->Faint replacements.
 
