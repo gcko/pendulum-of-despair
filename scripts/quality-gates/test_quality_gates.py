@@ -186,6 +186,32 @@ The pipeline that lets a physical hit carry an element.
 Calculate base damage, then apply the row modifier.
 """
 
+# Mirrors the shape of docs/plans/technical-architecture.md, where a
+# letter-suffixed section sits directly under the section it extends. That
+# adjacency is what a digits-only matcher gets wrong.
+NUMBERED_FIXTURE = """# Technical Architecture
+
+## 1. Project Setup
+
+### 1.1 Directory Structure
+
+Where each kind of file lives.
+
+### 1.2 Naming Conventions
+
+snake_case files, PascalCase classes.
+
+### 1.2a Script Size Budget
+
+Aim 400 lines, hard maximum 600.
+
+## 2. Data Formats
+
+### 2.1 Enemy Data
+
+### 2.3 Equipment Data
+"""
+
 
 class TestCheckDocCitations(unittest.TestCase):
     """Tests for Gate G: doc citation integrity."""
@@ -240,6 +266,66 @@ class TestCheckDocCitations(unittest.TestCase):
         errors = self._errors()
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("names no heading", errors[0])
+
+    # ── Letter-suffixed section ids ────────────────────────────────────
+    #
+    # A digits-only section matcher truncated "1.2a" to "1.2", resolved it
+    # against "### 1.2 Naming Conventions", and returned before the
+    # word-prefix search could find the real heading. Live files cite
+    # "technical-architecture.md § 1.2a", so deleting or renaming that
+    # section left the gate reporting "passed" — a false green in the one
+    # gate whose job is to notice.
+
+    def test_letter_suffixed_section_resolves_to_its_own_heading(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(),
+            "docs/plans/arch.md",
+            "1.2a Script Size Budget",
+        )
+        self.assertIsNotNone(hit, "§ 1.2a must resolve")
+        self.assertEqual(hit[2], "1.2a Script Size Budget")
+
+    def test_letter_suffixed_citation_survives_a_full_scan(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2a.\n")
+        self.assertEqual(self._errors(), [])
+
+    def test_nonexistent_letter_suffix_does_not_borrow_its_parent(self):
+        """§ 1.2b must fail even though § 1.2 exists."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2b.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_long_invented_suffix_does_not_borrow_its_parent(self):
+        """§ 1.2zzz must fail too — the truncation was the whole bug."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2zzz.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_renaming_a_cited_letter_section_fails_the_gate(self):
+        """End to end: the rot this gate exists to catch, on a suffixed id."""
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE.replace("### 1.2a ", "### 1.2q "),
+        )
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2a.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_plain_numbered_sections_still_resolve(self):
+        """The suffix support must not cost the ordinary numeric citation."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd",
+            "# See arch.md § 1.2 Naming Conventions and arch.md § 2.1/2.3.\n",
+        )
+        self.assertEqual(self._errors(), [])
 
     def test_rejects_term_absent_from_the_cited_section(self):
         """The term must sit under the cited heading, not merely in the file."""

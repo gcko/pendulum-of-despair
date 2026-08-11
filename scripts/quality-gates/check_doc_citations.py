@@ -74,6 +74,17 @@ HEADING_CITE_RE = re.compile(
 # The optional "> 'Poison'" narrowing term.
 TERM_RE = re.compile(r">[ \t]*['\"](?P<term>[^'\"]+)['\"]")
 
+# A section id as documents actually number them: "2", "2.1", and — the case
+# that matters — "1.2a". The letter suffix is part of the id, not decoration.
+# technical-architecture.md carries both "### 1.2 Naming Conventions" and
+# "### 1.2a Script Size Budget"; a matcher that reads only the digits resolves
+# a citation to § 1.2a against § 1.2, which is a green light on the wrong
+# section, and passes § 1.2b, which nobody wrote.
+SECTION_ID = r"\d+(?:\.\d+)*[A-Za-z]?"
+
+# "2.1", "1.2a", or a list of them: "2.1/2.3", "1.2,1.3".
+SECTION_LIST_RE = re.compile(rf"^({SECTION_ID}(?:[/,]{SECTION_ID})*)")
+
 # Where one citation stops and the next begins. A comment often chains them
 # ("conventions §2.1; palette-families.md § Serpent Family > 'Marsh Serpent'"),
 # and without this cut the first citation would claim the second one's term.
@@ -332,13 +343,21 @@ def match_heading(
 
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
+
+    A citation that opens with a section id is resolved by that id alone, and
+    the id includes any letter suffix: ``§ 1.2a`` reaches
+    ``### 1.2a Script Size Budget``, never the adjacent ``### 1.2 Naming
+    Conventions``, and ``§ 1.2b`` resolves to nothing and fails.
     """
     words = candidate.split()
     if not words:
         return None
 
-    numeric = re.match(r"^(\d+(?:\.\d+)*(?:[/,]\d+(?:\.\d+)*)*)", words[0])
+    numeric = SECTION_LIST_RE.match(words[0])
     if numeric:
+        # Authoritative: a citation that opens with a section id is resolved by
+        # that id alone. Falling through to the word-prefix loop on failure
+        # would let a shorter prefix of a nonexistent id match its parent.
         return match_all(index, path, re.split(r"[/,]", numeric.group(1)))
 
     for k in range(len(words), 0, -1):
