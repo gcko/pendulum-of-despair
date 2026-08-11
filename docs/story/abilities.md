@@ -105,9 +105,9 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 | Ability | Learned | AC Cost | Effect |
 |---------|---------|---------|--------|
-| **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat. |
+| **Shock Coil** | Level 1 | 2 AC | Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat: spell power 10 per tick (see § Damage Magnitudes). |
 | **Bulkhead** | Level 7 | 3 AC | Device. Persists 3 turns. Reduces physical damage to one chosen ally by 40%. Can stack with Edren's Ironwall. |
-| **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage and inflicting a 20% Speed debuff for 2 turns. Single use. |
+| **Arc Trap** | Level 12 | 2 AC | Device. Hidden trap placed on the field. When an enemy uses a physical attack, the trap triggers, dealing Flame damage (spell power 30) and inflicting a 20% Speed debuff for 2 turns. Single use. |
 | **Mending Engine** | Interlude [S] (Lv 17+) | 4 AC | Device. Persists 4 turns. Heals the most-injured ally for 15% max HP at the end of each turn. |
 | **Overcharge** | Interlude [S] (Lv 22+) | 3 AC | Instant. Lira supercharges one ally's next attack, adding Storm element and +50% damage. If the target already has an elemental weapon, the attack gains dual-element: it hits with BOTH elements, checking the target's weakness to each independently and using the more favorable result. Consumed on next attack. |
 | **Salvage** | Level 1 | 0 AC | Instant. Destroys one active device, recovering half its AC cost (rounded down). |
@@ -148,12 +148,12 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | Ability | Learned | MP Cost | Effect | Favor 3 Upgrade |
 |---------|---------|---------|--------|-----------------|
 | **Thornveil** (Briar Spirit) | Level 1 | 5 MP | Single ally gains a thorn barrier — attackers take counter-damage equal to 20% of the shielded ally's Defense for 3 turns. | **Deeproot Veil:** Counter-damage rises to 40% and the barrier also reduces incoming damage by 15%. |
-| **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally. Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies and removes Poison and Sleep. |
-| **Ember Wing** (Flame Spirit) | Level 11 | 10 MP | Flame damage to all enemies. 40% chance to inflict Burn (Flame damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies. Burn is guaranteed. |
+| **Dewfall** (Rain Spirit) | Level 5 | 8 MP | Moderate heal to one ally (spell power 12). Removes Poison status. | **Torrent's Grace:** Heals moderate HP to all allies (spell power 12 each) and removes Poison and Sleep. |
+| **Ember Wing** (Flame Spirit) | Level 11 | 10 MP | Flame damage to all enemies (spell power 10). 40% chance to inflict Burn (Flame damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies (spell power 20). Burn is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
-| **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense. Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage. If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
-| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls all known spirits at once. Each spirit performs its ability at 50% normal potency simultaneously — AoE heal, AoE damage, party barrier, and status cleanse in a single action. Usable once per battle. | N/A |
-| **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP each (same per-target potency as Dewfall) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
+| **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense (spell power 28). Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage (spell power 56). If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
+| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5), AoE heal (spell power 6) that also cleanses Poison, a party barrier countering for 10% of DEF, and status immunity for 1 turn. Usable once per battle. See § Damage Magnitudes for the 50% rule and the Favor 3 figures. | N/A |
+| **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP each (spell power 12 — the same per-target potency as Dewfall) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
 
 **Synergies:**
 - Torren + Edren: Thornveil on Edren while he's in Ironwall stance means enemies take counter-damage from both Riposte and the thorn barrier.
@@ -187,10 +187,10 @@ Each party member has one unique command in their battle menu alongside Fight, M
 |---------|---------|-------------|--------|
 | **Filch** | Level 1 | 0 MP / 0 CD | Steal an item from one enemy. Success rate based on Sable's Speed vs. enemy Speed. Each enemy has a common and rare steal. |
 | **Smokescreen** | Level 4 | 4 MP / 2 turns | Reduces all enemies' accuracy by 30% for 2 turns. If Sable has a stolen Forgewright component, also reduces enemy Speed by 15%. |
-| **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it for bonus elemental damage (element depends on item type). The item is consumed. |
+| **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack (`ability_mult` 1.0) that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it for bonus elemental damage (element depends on item type). The item is consumed. **The throw branch's magnitude is still open** — see § Damage Magnitudes. |
 | **Misdirect** | Interlude [S] (Lv 14+) | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. Against AoE attacks, Misdirect has no effect. Against non-physical actions (spells), it redirects the targeting as normal. If used on a boss, instead reduces the boss's next attack damage by 25%. |
 | **Ransack** | Interlude [S] (Lv 19+) | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
-| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: deals physical damage equal to 2x her Attack. 1 item: adds the item's element as AoE damage. 2 items: AoE damage plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: AoE heavy damage, random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow), and restores 10% HP to all allies. All stolen items are consumed. |
+| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is still open — see § Damage Magnitudes. |
 
 **Synergies:**
 - Sable + Lira: Stolen Forgewright components can be given to Lira between battles to restore 2 AC each.
@@ -275,7 +275,7 @@ Combo abilities require two specific party members to both have full ATB gauges.
 | 5 | **Spiritward** | Torren + Edren | 14 MP (8/6) | Torren summons Stoneheart on the entire party while Edren channels the effect through his Bulwark stance. All allies gain status immunity for 3 turns AND 20% damage reduction. | *The earth spirit settles into Edren's shield like a heartbeat. For a moment, the whole party stands on bedrock.* |
 | 6 | **Weave Theft** | Maren + Sable | 10 MP (6/4) | Sable steals an active buff from one enemy (removing it), and Maren immediately reweaves it onto one ally. If the enemy has no buffs, Sable steals an item instead and Maren converts it into a random party buff. | *Sable's hands are faster than spells. Maren's mind is faster than Sable's hands. Between the two of them, nothing the enemy has stays theirs for long.* |
 | 7 | **Ley Torrent** | Maren + Torren | 18 MP (10/8) | Maren channels raw ley-line energy through Torren's spirit connection, unleashing a non-elemental blast that deals damage to all enemies equal to (Maren's Magic + Torren's Magic) x 4. Ignores Magic Defense. Generates 30 WG for Maren. | *The ley lines sing. The spirits answer. For one terrible moment, the raw voice of the world speaks through two people at once.* |
-| 8 | **Ambush Protocol** | Sable + Lira | 8 MP (4/4) | Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage, and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1). | *"I stole this off a Compact sergeant." "That's a proximity mine." "Is that what it's called? I just thought it was fun."* |
+| 8 | **Ambush Protocol** | Sable + Lira | 8 MP (4/4) | Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage (spell power 60), and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1). | *"I stole this off a Compact sergeant." "That's a proximity mine." "Is that what it's called? I just thought it was fun."* |
 | 9 | **Promise of Dawn** | Lira + Cael | 16 MP (8/8) | Cael rallies Lira with a personal command. Lira's next two device deployments cost 0 AC and have double duration. Cael is unable to act for 1 turn afterward (the emotional cost of the bond). | *He looks at her and says the only words that matter: "I believe in what you're building." She builds faster.* |
 | 10 | **Arcane Convergence** | Maren + Lira | 14 MP (8/6) | Maren weaves raw ley-line magic into Lira's deployed devices. All active devices trigger their effects immediately (out of turn) and gain +1 turn of duration. Generates 20 WG for Maren. | *Old magic and new craft were never meant to mix. Maren and Lira prove that wrong in six seconds flat.* |
 | 11 | **Twilight Raid** | Sable + Torren | 12 MP (4/8) | Torren's Greyveil spirit cloaks Sable in shadow. Sable attacks all enemies for physical damage equal to (Sable's Attack + Torren's Magic) x 1.5, spirit-typed (effective against Pallor enemies), and steals from each target with 100% success rate. | *She vanishes into the spirit's shadow and reappears behind every enemy in the space between heartbeats. When she's done, her pockets are full and theirs are empty.* |
@@ -597,7 +597,219 @@ Greyveil — are additionally spelled out in combat-formulas.md § Custom-Formul
 Abilities. A combo may also modify a custom-formula ability rather than carry an
 `ability_mult` of its own (Shattered Vanguard is Shatter Guard at +50% damage),
 so a combo appearing in the physical multiplier table is not by itself evidence
-that it uses the physical formula. A handful of damaging abilities still describe
-their output qualitatively ("Flame damage to all enemies") rather than with a
-spell power or multiplier — see the Ability System row in
-[game-design-gaps.md](../analysis/game-design-gaps.md) for the outstanding list.
+that it uses the physical formula. The abilities that used to describe their
+output qualitatively ("Flame damage to all enemies", "moderate heal") are
+resolved in § Damage Magnitudes below.
+
+### Damage Magnitudes (numeric balance pass)
+
+Companion to § Resource Cost Invariants. That section fixed what abilities
+*cost*; this one fixes what they *deal*. Ten entries described their output in
+adjectives rather than numbers. Nine are resolved here and one is left open on
+purpose. `game/tests/test_ability_balance.gd` asserts every value below against
+`game/data/abilities/`, so an edit that breaks one fails the suite.
+
+Nothing here is a fresh design choice. Each number falls out of a rule already
+written down somewhere, and the derivation sits next to the value so a reader can
+check it — or overturn it, which is the point of writing it down.
+
+#### The rules used
+
+1. **MP-costed abilities are priced on magic.md's tier ladder.** Torren's
+   Spiritcalls are the only abilities paid in MP that carry a damage or healing
+   magnitude, and this document defines no ladder of its own, so
+   [magic.md](magic.md) § Spell Balance Guidelines supplies one: MP 3-8 = Tier 1,
+   12-20 = Tier 2, 25-45 = Tier 3, 50-99 = Tier 4; single-target power bands
+   12-20 / 28-40 / 50-70 / 85-120; an AoE version costs 1.5-2x its same-tier
+   single-target counterpart and carries 60-70% of its power at Tiers 1-3.
+   AP/AC/WG abilities are **not** on this ladder — they are priced against each
+   other inside their own pool, because their pools refill on different rules.
+2. **A Favor 3 upgrade never reduces the per-target magnitude.** Of the five
+   Spiritcall upgrades, the two that broaden the target set leave the magnitude
+   alone (Dewfall -> Torrent's Grace and Stoneheart -> Mountain's Resolve, both
+   one ally -> all allies), and the one that keeps its target set doubles instead
+   (Thornveil -> Deeproot Veil, 20% -> 40% of DEF). Both undefined upgrades keep
+   their target set — Inferno Gale is AoE like Ember Wing, Duskbreaker
+   single-target like Greyveil — so the rule leaves only the doubling branch for
+   them. It is also why the 60-70% AoE reduction is *not* applied to Torrent's
+   Grace: that upgrade is bought with 15-20 battles of Favor, not with MP, and
+   discounting it would turn a reward into a downgrade.
+3. **"Heavy" means double.** One convention, stated once. It is what Thornveil's
+   quantified upgrade does, and "Heavy" is the adjective used for both undefined
+   upgrades and for Wild Card's three-item branch.
+4. **A combo doubles the constituent ability it fires.** Ambush Protocol says so
+   outright — "2x normal Arc Trap damage" — and Thornfire's stated total is the
+   independent check (see Shock Coil).
+
+#### Resolved values
+
+| Ability | Character | Value | Rule |
+|---------|-----------|-------|------|
+| Shock Coil | Lira | Spell power 10 per tick, 3 ticks | 4 |
+| Arc Trap | Lira | Spell power 30 | equal-AC budget |
+| Ember Wing | Torren | Spell power 10 (AoE) | 1 |
+| Inferno Gale (Favor 3) | Torren | Spell power 20 (AoE) | 2, 3 |
+| Dewfall | Torren | Spell power 12 (heal) | 1 |
+| Torrent's Grace (Favor 3) | Torren | Spell power 12 (heal, all allies) | 2 |
+| Greyveil | Torren | Spell power 28 | 1 |
+| Duskbreaker (Favor 3) | Torren | Spell power 56 | 2, 3 |
+| Rootsong | Torren | Spell power 12 per ally | stated equality with Dewfall |
+| Convergence Chorus | Torren | 50% of each component (see table below) | stated 50% rule |
+| Wild Card, 0-2 items | Sable | `ability_mult` 2.0 | stated "2x her Attack" |
+| Wild Card, 3 items | Sable | `ability_mult` 3.0 | 3, capped by the ladder |
+| Ambush Protocol | Sable + Lira | Spell power 60 | 4 |
+| **Shiv, thrown-item branch** | Sable | **still open** | — |
+
+#### Derivations
+
+**Dewfall — spell power 12.** Dewfall is Mend plus Cleansing Draught in a single
+action, and it is priced as the sum of the two: Mend (Tier 1 heal, single ally,
+power 12, 3 MP) + Cleansing Draught (Tier 1, removes one negative status, 5 MP)
+= 8 MP = Dewfall, and Torren learns all three. The MP buys the same heal and the
+same cleanse; what the ability adds is the turn it saves, not extra output. So
+the heal component is Mend's, **power 12**, and "moderate" means Tier 1 here
+because Tier 1 is what 8 MP buys.
+**Torrent's Grace** keeps that 12 and broadens to all allies, adding Sleep to the
+cleanse (rule 2). Cross-check: Breath of the Wilds is the shipped Tier 1 all-ally
+heal at power 8 for 6 MP, and Lifetide is the Tier 3 one at power 45 for 42 MP —
+so a Favor 3 reward at power 12 for 8 MP is clearly better than a Tier 1 spell
+and nowhere near a Tier 3 one, which is where it belongs.
+
+**Rootsong — spell power 12 per ally.** The table already states the answer,
+"same per-target potency as Dewfall"; this pass only writes it as a number. The
+6 MP it costs over Torrent's Grace buys the party-wide Favor boost and removes
+the Favor 3 prerequisite.
+
+**Ember Wing — spell power 10.** Rule 1. An AoE costs 1.5-2x its same-tier
+single-target counterpart, so a 10 MP AoE implies a 5-6.7 MP counterpart, which
+is Tier 1 (band 3-8). The shipped 5 MP Tier 1 attack spells are Linebolt
+(power 15) and Arc Snap (16); applying the 60-70% AoE reduction to those gives
+9-11, and the 40% Burn rider argues for the bottom of that window: **power 10**.
+It sits mid-band in the Tier 1 AoE range of 7-14 that
+`game/tests/test_spell_balance.gd` already enforces for spells. Tier 2 is ruled
+out by price alone — the shipped Tier 2 AoE spells cost 22-25 MP, not 10.
+**Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
+Tier 2 AoE band of 16-28 at unchanged MP. The upgrade is worth exactly one tier,
+which is what 15-20 battles of Favor should buy.
+
+**Shock Coil — spell power 10 per tick.** Thornfire (combo #4) is Ember Wing
+fired through Shock Coil, and it states its total: spell power 40, split
+20 Flame + 20 Storm. By rule 4 the combo doubles each constituent, so the Flame
+half implies Ember Wing 10 and the Storm half implies Shock Coil **10**. The
+Flame half is the check rather than the input: Ember Wing's 10 was derived above
+from MP pricing alone, without reference to Thornfire, and it reproduces
+Thornfire's stated 20 exactly. Over three turns the device delivers 30 power for
+2 AC, spread across random targets.
+
+**Arc Trap — spell power 30.** Arc Trap and Shock Coil cost the same 2 AC out of
+the same 12 AC pool, so they get the same output budget: Shock Coil's
+3 x 10 = **30**, delivered as one burst instead of three ticks. The trade is
+even. The burst and the Speed debuff are paid for with conditionality — the trap
+only fires when an enemy uses a *physical* attack, so against an all-caster group
+it never fires at all — and with the device slot it occupies (one of two) until
+it does. 30 is also the floor of the Tier 2 single-target band, which suits a
+level 12 unlock sitting on the Tier 1/2 boundary.
+**Ambush Protocol** follows from rule 4 and the combo's own text: **60**. That
+is mid-band Tier 3 for 8 MP, the cheapest combo in the table — but it costs two
+ATB gauges and one stolen Forgewright component, and it is single-target where
+Thornfire (40, 16 MP) hits the whole group with guaranteed Burn.
+
+**Greyveil — spell power 28.** Rule 1 puts 14 MP in Tier 2, band 28-40. The
+shipped 14 MP single-target spells are Rootgrip (30), Hoarfall (32) and
+Kindlepyre (32), so 30-32 is the parity point. Greyveil then adds one advantage
+and takes one disadvantage: it ignores MDEF, and it is non-elemental, so it can
+never be resisted — but it also can never take the 1.5x weakness bonus its
+14 MP peers can. The MDEF ignore is worth roughly 2 power at the documented
+milestones (at MAG 146 against MDEF 60, power 32 minus MDEF equals power 30.4
+with MDEF ignored), and forfeiting the elemental multiplier costs more than that.
+Netting the two riders against a 30-32 comparator puts Greyveil at the floor of
+its band: **power 28**.
+**Duskbreaker** doubles to **power 56** (rules 2 and 3), which sits at the low
+end of the Tier 3 band (50-70) — the same one-tier step Inferno Gale takes. The "2x damage if the target
+is Pallor-corrupted" clause is a separate rider stated in the same cell, so
+against a Pallor target Duskbreaker resolves at an effective 112. That is
+deliberate: this document calls Greyveil "the most effective tool the party has
+against Pallor-type enemies". It is also the hottest number this pass produces,
+and it is the first knob to turn if the Pallor-heavy back half of Act III plays
+too easy.
+
+**Convergence Chorus — 50% of each component.** The ability states a rule rather
+than magnitudes: every spirit acts "at 50% normal potency". With the components
+now numeric, the rule resolves. **50% halves the ability's one quantity** — its
+magnitude where it has one, its duration where a duration is all it has — and
+the Chorus applies each component to the whole party or the whole enemy group by
+definition, which is what makes the single-target components read as "AoE".
+
+| Component | Spirit | Base Spiritcall | In Convergence Chorus | With that spirit at Favor 3 |
+|-----------|--------|-----------------|-----------------------|-----------------------------|
+| AoE damage | Flame | Ember Wing, power 10 | Power 5, all enemies | Power 10 (Inferno Gale 20) |
+| AoE heal | Rain | Dewfall, power 12 | Power 6, all allies, cleanses Poison | Power 6, also cleanses Sleep |
+| Party barrier | Briar | Thornveil, counter 20% of DEF | Counter 10% of DEF, 3 turns | Counter 20% of DEF (Deeproot Veil 40%) |
+| Status immunity | Earth | Stoneheart, 2 turns | 1 turn | 1 turn, already party-wide |
+
+The Rain row is the same number in both columns because Dewfall's Favor 3
+upgrade broadens rather than doubles (rule 2) and the Chorus has already
+broadened it; Favor 3 adds only the Sleep cleanse.
+
+*Which four spirits.* Torren's roster when the ability unlocks in the Interlude
+is Briar, Rain, Flame, Earth, and possibly Twilight. The four effects the table
+cell names map one-to-one onto the first four, using each spirit once. The
+cell's word "cleanse" covers Rain's Poison removal and Earth's status immunity
+between them; the effect text is corrected above to say so. Twilight is not part
+of the composite — Greyveil's single-target MDEF-ignoring damage is not among
+the listed effects, and excluding it keeps the ability stable as Torren's roster
+grows.
+
+*Sanity check on the 20 MP.* Each component is far below a Tier 2 spell —
+power 5 and 6 against Whiteout's 24 and Sanctuary's 22. The 20 MP buys breadth
+and a saved turn, not power, which is exactly what "50% normal potency" plus
+"once per battle" describes. It also settles the question the physical
+multiplier table used to raise: Convergence Chorus deals no physical damage at
+all and is nowhere near a 3.0 ATK ultimate. See
+[combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers.
+
+**Wild Card — `ability_mult` 2.0, rising to 3.0 at three items.** The 0-item
+branch already states its magnitude, "physical damage equal to 2x her Attack",
+which is `ability_mult` 2.0 in [combat-formulas.md](combat-formulas.md)
+§ Physical Ability Multiplier Tiers — the tier that document labels "Ultimate
+skill", which is what Wild Card is. (Read as flat arithmetic instead, `2 x ATK`
+would be about 300 damage at level 70 — against the ~3,700 that same document
+quotes for Sable's *basic* Shiv at the same level — so the multiplier reading is
+the only one consistent with the rest of it.) The item branches change delivery, not the multiplier:
+
+- **1 item:** 2.0 against all enemies, carrying the thrown item's element.
+  Physical attacks can carry an element — combat-formulas.md § Physical
+  Elemental Attacks defines that pipeline and already names Lira's Arc Trap and
+  Overcharge as cases.
+- **2 items:** as above, plus one random debuff on all enemies.
+- **3 items:** "heavy". By rule 3 that is double, but 4.0 is off the top of the
+  ladder, so the branch takes the highest tier the ladder defines: **3.0**, which
+  combat-formulas.md reserves for "abilities with extreme costs". Emptying the
+  entire three-item Stolen Goods pool on a 5-turn cooldown is that cost, and it
+  gives that tier a second shipped exemplar alongside Sever Bond.
+
+What is *not* settled here is which element a given stolen item confers. That is
+the same missing item-type -> element mapping that blocks Shiv's throw branch,
+and it is one decision covering both.
+
+**Shiv's thrown-item branch — left open.** The base attack is fully specified
+(`ability_mult` 1.0 plus 50% DEF ignore, combat-formulas.md § Special: Shiv).
+The throw is not, and it cannot be derived, because two independent decisions
+are missing and neither is implied by anything already written:
+
+1. *The mapping.* "Element depends on item type", but no document maps
+   [items.md](items.md)'s consumables, materials and steal-only drops onto the
+   six elements. Wild Card's item branches need the same mapping.
+2. *The shape of the bonus.* "Throw it for bonus elemental damage" admits at
+   least three readings, and they are not close to equivalent. **(a)** The throw
+   re-elements the existing Shiv hit, changing `element_mod` and nothing else.
+   **(b)** The throw adds a second, separate elemental hit at its own magnitude.
+   **(c)** The throw raises Shiv's multiplier for that one use.
+
+   **Recommendation: (a).** It is the only reading that keeps a 0 MP, one-turn
+   cooldown ability from becoming Sable's best damage button; it needs no new
+   number at all once the mapping exists; and it fits what is being described —
+   Sable throwing a stolen bottle, not casting a spell. But (a) versus (b)
+   changes how Sable plays across the whole game, and that call belongs to a
+   pass with the item tables open, not to a documentation reconciliation. The
+   entry stays open rather than taking an invented number.
