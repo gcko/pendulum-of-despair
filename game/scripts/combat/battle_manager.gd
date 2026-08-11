@@ -1,4 +1,11 @@
 extends Node2D
+## Drives one battle: the ATB loop, whose turn it is, and what happens when the
+## last enemy or the last party member falls.
+##
+## The commands a player can pick live in their own modules — BattlePlayerActions
+## (attack/defend/flee), BattleMagicCommand and BattleItemCommand — and
+## battle-start assembly lives in BattleSetup (GAP-087). This script dispatches
+## to them and owns everything they need through the accessors below.
 
 signal battle_started(party: Array, enemies: Array, enemy_positions: Array)
 signal turn_ready(
@@ -11,11 +18,8 @@ signal defeat
 signal flee_result(success: bool)
 signal message(text: String)
 
-const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
-const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
-const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 
 var _return_map_id: String = ""
 var _return_position: Vector2 = Vector2.ZERO
@@ -35,6 +39,9 @@ var _wave_num: int = -1
 var _cleansing_origin_position: Variant = null
 var _encounter_source: String = ""
 var _ritual_meter_value: float = 100.0
+var _actions: BattlePlayerActions = null
+var _magic: BattleMagicCommand = null
+var _items: BattleItemCommand = null
 
 @onready var _atb: Node = $ATBSystem
 @onready var _state: Node = $BattleState
@@ -46,18 +53,18 @@ func _ready() -> void:
 	_enemy_turn = BattleEnemyTurn.new(self, _state, _atb, _enemy_area)
 	if _ui == null:
 		push_error("BattleManager: BattleUI not found")
-		call_deferred("_exit_battle", "flee")
+		call_deferred("exit_battle", "flee")
 		return
 	_ui.initialize(self)
 	_ui.command_submitted.connect(_on_ui_command)
 	_ui.command_cancelled.connect(_on_ui_cancel)
-	_ui.results_dismissed.connect(func() -> void: _exit_battle("victory"))
+	_ui.results_dismissed.connect(func() -> void: exit_battle("victory"))
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)
 	var data: Dictionary = GameManager.transition_data
 	if data.is_empty():
 		push_error("BattleManager: No transition data")
-		call_deferred("_exit_battle", "flee")
+		call_deferred("exit_battle", "flee")
 		return
 	_return_map_id = data.get("return_map_id", "")
 	_return_position = data.get("return_position", Vector2.ZERO)
@@ -73,11 +80,15 @@ func _ready() -> void:
 	var encounter_group: Array = data.get("encounter_group", [])  # Variant from JSON
 	if encounter_group.is_empty():
 		push_error("BattleManager: Empty encounter group")
-		call_deferred("_exit_battle", "flee")
+		call_deferred("exit_battle", "flee")
 		return
-	_setup_party()
-	_setup_enemies(encounter_group, data.get("enemy_act", "act_i"))
-	_apply_atb_config()
+	BattleSetup.setup_party(_state, _atb)
+	_turn_counter = 0
+	_enemy_turn.reset()
+	_enemies = BattleSetup.setup_enemies(
+		encounter_group, data.get("enemy_act", "act_i"), _enemy_area, _atb, _on_enemy_died
+	)
+	BattleSetup.apply_atb_config(_atb)
 	_atb.apply_formation(_formation_type)
 	if _formation_type == "back_attack":
 		for i: int in range(4):
@@ -95,15 +106,6 @@ func _ready() -> void:
 	battle_started.emit(ps, es, pos)
 
 
-## Apply the player's ATB Mode / Battle Speed / Patience Mode config to the
-## ATB system at battle start (GAP-007). Without this the player's settings
-## never reached combat and the gauges always ran in "active" mode at speed 3.
-func _apply_atb_config() -> void:
-	var settings: Dictionary = ATBSystem.settings_from_config(PartyState.get_config())
-	_atb.set_atb_mode(str(settings.get("mode", "active")))
-	_atb.set_battle_speed(int(settings.get("speed", 3)))
-
-
 func _process(delta: float) -> void:
 	if not _battle_active or _battle_resolved:
 		return
@@ -114,7 +116,7 @@ func _process(delta: float) -> void:
 	# (GAP-003) so a cured Sleep unfreezes and an expired Slow clears.
 	for i: int in range(_enemies.size()):
 		if _enemies[i].is_alive:
-			_resync_enemy_atb(i)
+			resync_enemy_atb(i)
 	_atb.tick(delta)
 	_check_end_conditions()
 	if _battle_resolved:
@@ -172,21 +174,21 @@ func _on_ui_command(command: Dictionary) -> void:
 	var ok: bool = true
 	match command.get("type", ""):
 		"attack":
-			ok = _do_attack(actor_id, command)
+			ok = _get_actions().do_attack(actor_id, command)
 		"magic":
-			ok = _do_magic(actor_id, command)
+			ok = _get_magic().do_magic(actor_id, command)
 		"item":
-			ok = _do_item(command)
+			ok = _get_items().do_item(command)
 		"defend":
-			_do_defend(actor_id)
+			_get_actions().do_defend(actor_id)
 		"flee":
 			if _is_boss:
 				message.emit("Can't escape!")
 				ok = false
 			else:
-				_do_flee()
+				_get_actions().do_flee()
 		"ability":
-			ok = _do_attack(actor_id, command)
+			ok = _get_actions().do_attack(actor_id, command)
 	if not ok:
 		_atb.set_command_menu_open(true)
 		var s: int = actor_id.replace("party_", "").to_int()
@@ -284,345 +286,16 @@ func _on_enemy_died(enemy: Node) -> void:
 		)
 
 
-func _do_attack(actor_id: String, command: Dictionary) -> bool:
-	var slot: int = actor_id.replace("party_", "").to_int()
-	var target_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
-	if target_idx < 0:
-		message.emit("No target!")
-		return false
-	var member: Dictionary = _state.get_member(slot)
-	message.emit("%s attacks!" % member.get("character_data", {}).get("name", "???"))
-	var result: Dictionary = BattleActions.execute_party_attack(
-		_state, slot, _enemies[target_idx], target_idx
-	)
-	_state.add_threat(slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
-	damage_dealt.emit("enemy_%d" % target_idx, result.get("damage", 0), result.get("type", "miss"))
-	if result.get("killed", false):
-		combatant_died.emit("enemy_%d" % target_idx)
-		_atb.remove_combatant("enemy_%d" % target_idx)
-	return true
-
-
-func _do_magic(actor_id: String, command: Dictionary) -> bool:
-	var slot: int = actor_id.replace("party_", "").to_int()
-	var member: Dictionary = _state.get_member(slot)
-	if member.is_empty():
-		return false
-	var spell: Dictionary = command.get("spell", {})
-	var target_type: String = spell.get("target", "single_enemy")
-	# Validate targets before spending MP or gaining gauge
-	if target_type == "single_ally":
-		var tgt: int = command.get("target", 0)
-		var tm: Dictionary = _state.get_member(tgt)
-		if tm.is_empty() or not tm.get("is_alive", false):
-			message.emit("No effect!")
-			return false
-	var resolved_enemy_target: int = -1
-	if target_type == "single_enemy":
-		resolved_enemy_target = BattleActions.resolve_enemy_target(
-			command.get("target", 0), _enemies
-		)
-		if resolved_enemy_target < 0:
-			message.emit("No target!")
-			return false
-	if not _state.spend_mp(slot, spell.get("mp_cost", 0)):
-		message.emit("Not enough MP!")
-		return false
-	var mag: int = _state.get_effective_stat(slot, "mag")
-	# Status spells carry power: null — guard before the int conversion.
-	var power: int = 0
-	if spell.get("power") != null:
-		power = int(spell.get("power"))
-	var element: String = spell.get("element", "non_elemental")
-	var caster_name: String = member.get("character_data", {}).get("name", "???")
-	message.emit("%s casts %s!" % [caster_name, spell.get("name", "Spell")])
-	var is_status: bool = spell.get("category", "") == "status"
-	var had_effect: bool = false
-	if is_status and target_type == "single_enemy":
-		had_effect = _do_status_on_enemy(slot, spell, resolved_enemy_target)
-	elif is_status and target_type == "all_enemies":
-		for i: int in range(_enemies.size()):
-			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
-				if _do_status_on_enemy(slot, spell, i):
-					had_effect = true
-	elif target_type == "single_enemy":
-		had_effect = _do_magic_on_enemy(slot, mag, power, element, resolved_enemy_target)
-	elif target_type == "all_enemies":
-		for i: int in range(_enemies.size()):
-			if _enemies[i].is_alive and not _enemies[i].get_meta("untargetable", false):
-				if _do_magic_on_enemy(slot, mag, power, element, i):
-					had_effect = true
-	elif target_type in ["single_ally", "all_allies"]:
-		var heal_amt: int = DamageCalc.calculate_healing(mag, power)
-		if target_type == "single_ally":
-			var tgt: int = command.get("target", 0)
-			var healed: int = _state.heal(tgt, heal_amt)
-			if healed > 0:
-				damage_dealt.emit("party_%d" % tgt, healed, "heal")
-				had_effect = true
-		else:
-			for i: int in range(4):
-				var m: Dictionary = _state.get_member(i)
-				if not m.is_empty() and m.get("is_alive", false):
-					var healed_amt: int = _state.heal(i, heal_amt)
-					if healed_amt > 0:
-						damage_dealt.emit("party_%d" % i, healed_amt, "heal")
-						had_effect = true
-	# Only gain Weave Gauge if the spell actually affected at least one target
-	if had_effect:
-		_state.gain_weave_gauge(slot, 5)
-		if member.get("character_id", "") != "maren":
-			_state.gain_weave_gauge_for_maren(10)
-	return true
-
-
-func _do_magic_on_enemy(caster_slot: int, mag: int, power: int, element: String, idx: int) -> bool:
-	if idx < 0 or idx >= _enemies.size():
-		return false
-	var result: Dictionary = BattleActions.apply_magic_to_enemy(
-		_state, caster_slot, mag, power, element, _enemies[idx], idx
-	)
-	var dtype: String = result.get("type", "miss")
-	if dtype == "immune":
-		damage_dealt.emit("enemy_%d" % idx, 0, "immune")
-		return false
-	if dtype == "absorb":
-		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "heal")
-		return true
-	if result.get("hit", false):
-		_state.add_threat(caster_slot, int(result.get("damage", 0)))  # GAP-009 highest-threat
-		damage_dealt.emit("enemy_%d" % idx, result.get("damage", 0), "magic")
-		if result.get("killed", false):
-			combatant_died.emit("enemy_%d" % idx)
-			_atb.remove_combatant("enemy_%d" % idx)
-		return true
-	damage_dealt.emit("enemy_%d" % idx, 0, "miss")
-	return false
-
-
-## Resolve a status spell against a single enemy (GAP-003). Returns true if a
-## status was inflicted (drives Weave Gauge gain in _do_magic).
-func _do_status_on_enemy(caster_slot: int, spell: Dictionary, idx: int) -> bool:
-	if idx < 0 or idx >= _enemies.size():
-		return false
-	var result: Dictionary = BattleActions.apply_status_to_enemy(
-		_state,
-		caster_slot,
-		int(spell.get("hit_rate", 0)),
-		str(spell.get("status", "")),
-		spell.get("duration"),
-		_enemies[idx]
-	)
-	if result.get("inflicted", false):
-		_resync_enemy_atb(idx)
-		# enemy.apply_status already emitted status_applied with the real
-		# duration; don't re-emit it here with a fabricated value.
-		damage_dealt.emit("enemy_%d" % idx, 0, "status")
-		message.emit(
-			(
-				"%s is afflicted with %s!"
-				% [_enemies[idx].get_display_name(), result.get("status", "")]
-			)
-		)
-		return true
-	match result.get("type", ""):
-		"immune":
-			damage_dealt.emit("enemy_%d" % idx, 0, "immune")
-		"no_effect":
-			# Unknown/deferred status (e.g. Stop) — surface honestly, not "miss".
-			message.emit("No effect!")
-		_:
-			damage_dealt.emit("enemy_%d" % idx, 0, "miss")
-	return false
-
-
 ## Recompute an enemy's ATB freeze/mods from its current statuses. Idempotent;
 ## called for living enemies each frame and after status changes so cured or
 ## expired statuses clear (StatusEffects.atb_state is the pure, tested core).
-func _resync_enemy_atb(idx: int) -> void:
+func resync_enemy_atb(idx: int) -> void:
 	if idx < 0 or idx >= _enemies.size():
 		return
 	var eid: String = "enemy_%d" % idx
 	var st: Dictionary = StatusEffects.atb_state(_enemies[idx].active_statuses)
 	_atb.set_frozen(eid, st["frozen"])
 	_atb.set_status_mods(eid, st["mods"])
-
-
-func _do_item(command: Dictionary) -> bool:
-	var item: Dictionary = command.get("item", {})
-	var target_slot: int = command.get("target", 0)
-	var effect: String = item.get("effect", "")
-	var target_type: String = item.get("target", "single_ally")
-	# Pre-validate: single-target effects that require a living target
-	if target_type != "all_allies":
-		if effect in ["restore_mp", "restore_hp_mp", "cure_status", "buff_atk", "buff_mag"]:
-			var pre_tgt: Dictionary = _state.get_member(target_slot)
-			if pre_tgt.is_empty() or not pre_tgt.get("is_alive", false):
-				message.emit("No effect!")
-				return false
-	match effect:
-		"restore_hp":
-			var can_revive: bool = item.get("can_revive", false)
-			var slots: Array[int] = _get_item_target_slots(target_type, target_slot)
-			var any_valid: bool = false
-			for slot: int in slots:
-				var tgt_m: Dictionary = _state.get_member(slot)
-				if tgt_m.is_empty():
-					continue
-				if not tgt_m.get("is_alive", true) and not can_revive:
-					continue
-				any_valid = true
-			if not any_valid:
-				message.emit("No effect!")
-				return false
-			message.emit("Used %s!" % item.get("name", "Item"))
-			for slot: int in slots:
-				var tgt_m: Dictionary = _state.get_member(slot)
-				if tgt_m.is_empty():
-					continue
-				if not tgt_m.get("is_alive", true) and not can_revive:
-					continue
-				var raw_val: Variant = item.get("value")
-				var hp_amt: int = int(raw_val) if raw_val != null else 0
-				if item.has("restore_percent"):
-					var pct: int = item.get("restore_percent", 100)
-					hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
-				var actual: int = _state.heal(slot, hp_amt, can_revive)
-				if actual > 0:
-					damage_dealt.emit("party_%d" % slot, actual, "heal")
-				if item.get("clears_status", false):
-					var statuses: Array = tgt_m.get("active_statuses", [])
-					for i: int in range(statuses.size() - 1, -1, -1):
-						_state.remove_status(slot, statuses[i].get("name", ""))
-		"revive":
-			var rev_m: Dictionary = _state.get_member(target_slot)
-			if rev_m.is_empty() or rev_m.get("is_alive", true):
-				message.emit("No effect!")
-				return false
-			message.emit("Used %s!" % item.get("name", "Item"))
-			var raw_rev: Variant = item.get("value")
-			var revive_pct: int = int(raw_rev) if raw_rev != null else 25
-			var revived_hp: int = int(
-				ceil(float(rev_m.get("max_hp", 1)) * float(revive_pct) / 100.0)
-			)
-			var actual: int = _state.heal(
-				target_slot, clampi(revived_hp, 1, rev_m.get("max_hp", 1)), true
-			)
-			if actual > 0:
-				damage_dealt.emit("party_%d" % target_slot, actual, "heal")
-		"restore_mp":
-			message.emit("Used %s!" % item.get("name", "Item"))
-			var mp_tgt: Dictionary = _state.get_member(target_slot)
-			var raw_mp: Variant = item.get("value")
-			var mp_amt: int = int(raw_mp) if raw_mp != null else 0
-			if item.has("restore_percent"):
-				var pct: int = item.get("restore_percent", 100)
-				mp_amt = int(float(mp_tgt.get("max_mp", 1)) * float(pct) / 100.0)
-			_state.restore_mp(target_slot, mp_amt)
-		"restore_hp_mp":
-			var slots: Array[int] = _get_item_target_slots(target_type, target_slot)
-			message.emit("Used %s!" % item.get("name", "Item"))
-			for slot: int in slots:
-				var tgt_m: Dictionary = _state.get_member(slot)
-				if tgt_m.is_empty() or not tgt_m.get("is_alive", false):
-					continue
-				var raw_hpmp: Variant = item.get("value")
-				var hp_amt: int = int(raw_hpmp) if raw_hpmp != null else 9999
-				if item.has("restore_percent"):
-					var pct: int = item.get("restore_percent", 100)
-					hp_amt = int(float(tgt_m.get("max_hp", 1)) * float(pct) / 100.0)
-				var mp_amt: int = hp_amt
-				if item.has("restore_percent"):
-					var pct: int = item.get("restore_percent", 100)
-					mp_amt = int(float(tgt_m.get("max_mp", 1)) * float(pct) / 100.0)
-				var healed: int = _state.heal(slot, hp_amt)
-				if healed > 0:
-					damage_dealt.emit("party_%d" % slot, healed, "heal")
-				_state.restore_mp(slot, mp_amt)
-				if item.get("clears_status", false):
-					var hp_mp_statuses: Array = tgt_m.get("active_statuses", [])
-					for i: int in range(hp_mp_statuses.size() - 1, -1, -1):
-						_state.remove_status(slot, hp_mp_statuses[i].get("name", ""))
-		"fixed_damage":
-			# Drake Fang: a flat hit that ignores DEF and cannot miss
-			# (items.md § Drake Fang Special Case).
-			var fd_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
-			if fd_idx < 0:
-				message.emit("No target!")
-				return false
-			message.emit("Used %s!" % item.get("name", "Item"))
-			var fd_dmg: int = maxi(0, int(item.get("value", 0)))
-			_enemies[fd_idx].take_damage(fd_dmg)
-			damage_dealt.emit("enemy_%d" % fd_idx, fd_dmg, "physical")
-			if not _enemies[fd_idx].is_alive:
-				combatant_died.emit("enemy_%d" % fd_idx)
-				_atb.remove_combatant("enemy_%d" % fd_idx)
-		"cure_status":
-			message.emit("Used %s!" % item.get("name", "Item"))
-			for sname: String in item.get("cures", []):
-				_state.remove_status(target_slot, sname)
-		"buff_atk":
-			message.emit("Used %s!" % item.get("name", "Item"))
-			var raw_atk: Variant = item.get("value")
-			var atk_boost: int = int(raw_atk) if raw_atk != null else 10
-			_state.set_buff(target_slot, "atk_mult", 1.0 + float(atk_boost) / 100.0)
-		"buff_mag":
-			message.emit("Used %s!" % item.get("name", "Item"))
-			var raw_mag: Variant = item.get("value")
-			var mag_boost: int = int(raw_mag) if raw_mag != null else 15
-			_state.set_buff(target_slot, "mag_mult", 1.0 + float(mag_boost) / 100.0)
-		"flee":
-			if _is_boss:
-				message.emit("Can't use that here!")
-				return false
-			message.emit("Used %s!" % item.get("name", "Item"))
-			# Consume before exit — _exit_battle triggers scene transition
-			var flee_item_id: String = item.get("id", "")
-			if not flee_item_id.is_empty():
-				PartyState.consume_item(flee_item_id)
-			_exit_battle("flee")
-			return true
-		_:
-			message.emit("No effect!")
-			return false
-	var item_id: String = item.get("id", "")
-	if not item_id.is_empty():
-		PartyState.consume_item(item_id)
-	return true
-
-
-func _get_item_target_slots(target_type: String, single_slot: int) -> Array[int]:
-	if target_type == "all_allies":
-		return [0, 1, 2, 3]
-	return [single_slot]
-
-
-func _do_defend(actor_id: String) -> void:
-	var slot: int = actor_id.replace("party_", "").to_int()
-	_state.set_defending(slot, true)
-	_state.set_buff(slot, "damage_taken_mult", 0.5)
-	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
-	message.emit("%s defends!" % nm)
-
-
-func _do_flee() -> void:
-	var alive_enemies: Array[Node] = []
-	for e: Node in _enemies:
-		if e.is_alive:
-			alive_enemies.append(e)
-	var enemy_spd_sum: float = alive_enemies.reduce(
-		func(acc: float, e: Node) -> float: return acc + e.get_stats().get("spd", 10), 0.0
-	)
-	var chance: int = DamageCalc.calculate_flee_chance(
-		_state.get_avg_party_spd(), enemy_spd_sum / maxf(1.0, alive_enemies.size())
-	)
-	if randi() % 100 < chance:
-		message.emit("Escaped!")
-		flee_result.emit(true)
-		_exit_battle("flee")
-	else:
-		message.emit("Can't escape!")
-		flee_result.emit(false)
 
 
 func _check_end_conditions() -> void:
@@ -641,12 +314,12 @@ func _check_end_conditions() -> void:
 		var r: Dictionary = {"xp": _earned_xp, "gold": _earned_gold, "drops": _earned_drops}
 		# Intercept: Fenmother boss triggers cleansing instead of victory
 		if _boss_flag == "fenmother_boss_defeated":
-			_exit_battle("fenmother_cleansing")
+			exit_battle("fenmother_cleansing")
 			return
 		victory.emit(r)
 	elif _state.is_party_wiped():
 		defeat.emit()
-		_exit_battle("faint")
+		exit_battle("faint")
 
 
 func _count_ko_party_members() -> int:
@@ -658,7 +331,7 @@ func _count_ko_party_members() -> int:
 	return count
 
 
-func _exit_battle(result: String) -> void:
+func exit_battle(result: String) -> void:
 	if not _battle_active:
 		return
 	_battle_active = false
@@ -700,25 +373,42 @@ func _sync_party_hp_mp() -> void:
 		active[i]["current_mp"] = battle_member.get("current_mp", active[i].get("current_mp", 0))
 
 
-func _setup_party() -> void:
-	var active: Array[Dictionary] = PartyState.get_active_party()
-	for i: int in range(active.size()):
-		if not active[i].is_empty():
-			_state.add_member(i, active[i])
-			var effective_spd: int = _state.get_effective_stat(i, "spd")
-			_atb.add_combatant("party_%d" % i, effective_spd, false)
+# ---------- Accessors for the command modules ----------
 
 
-## @param encounter_group Array[String] — enemy IDs from JSON encounter data.
-func _setup_enemies(encounter_group: Array, enemy_act: String) -> void:
-	_turn_counter = 0
-	_enemy_turn.reset()
-	for i: int in range(mini(6, encounter_group.size())):
-		var e: Node = ENEMY_SCENE.instantiate()
-		_enemy_area.add_child(e)
-		e.initialize(encounter_group[i], enemy_act)
-		e.position = Vector2(160.0 + (i % 3) * 48.0, 40.0 + floorf(i / 3.0) * 48.0)
-		_enemies.append(e)
-		_atb.add_combatant("enemy_%d" % i, e.get_stats().get("spd", 10), true)
-		# AoE-on-death (Shard Burst): fire when this enemy dies, by any cause.
-		e.died.connect(_on_enemy_died.bind(e))
+## The BattleState node holding the party's in-battle records.
+func get_battle_state() -> Node:
+	return _state
+
+
+## The enemy nodes on the field, in slot order.
+func get_enemies() -> Array[Node]:
+	return _enemies
+
+
+## The ATB system driving the turn gauges.
+func get_atb() -> Node:
+	return _atb
+
+
+## Whether this is a boss fight — bosses cannot be fled or smoke-bombed.
+func is_boss_battle() -> bool:
+	return _is_boss
+
+
+func _get_actions() -> BattlePlayerActions:
+	if _actions == null:
+		_actions = BattlePlayerActions.new(self)
+	return _actions
+
+
+func _get_magic() -> BattleMagicCommand:
+	if _magic == null:
+		_magic = BattleMagicCommand.new(self)
+	return _magic
+
+
+func _get_items() -> BattleItemCommand:
+	if _items == null:
+		_items = BattleItemCommand.new(self)
+	return _items
