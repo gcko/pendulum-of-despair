@@ -237,7 +237,7 @@ push the player 1–3 levels above these targets.
 |------|-----|--------------|--------------------|
 | Aelhart / Prologue | Prologue | 1–3 | — |
 | Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
-| Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
+| Fenmother's Hollow | II | 12–15 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
 | Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
@@ -246,6 +246,15 @@ push the player 1–3 levels above these targets.
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–86) |
+
+**Note on Fenmother's Hollow (#287):** the Act cell reads II because
+that is the canonical assignment ([dungeons-world.md](dungeons-world.md)
+§ 2 — Duskfen opens on `diplomatic_mission_start`, which cannot fire
+until `pendulum_to_capital` has ended Act I), and the Player Level cell
+reads 12–15 to match that section. Its roster is still Lv 6–12 and ships
+in `game/data/enemies/act_i.json`: the dungeon is Act II's opening
+content deliberately pitched at the top of the Act I power band, which is
+why its bosses sit below the levels of every other Act II row.
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference used to compute enemy stats via growth

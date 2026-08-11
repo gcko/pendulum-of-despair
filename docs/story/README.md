@@ -65,18 +65,30 @@ This directory contains the narrative design for Pendulum of Despair.
   "he's paralyzed by guilt" (line 50) — and it is the form the engine
   emits for status notifications.
 - **This is a rule for new writing, not a description of the corpus.**
-  The `color` / `paralyzed` / `centered` families were swept, but
-  British forms survive elsewhere and are *not* to be read as sanctioned:
-  *armour*, *favour*, *defence* in
-  `docs/story/script/battle-dialogue.md`, `script/act-iii.md`,
-  `script/act-ii-part-2.md` and seven shipped
-  `game/data/dialogue/*.json` files; *catalogue* /
-  *catalogued* in `items.md`, `npcs.md`, `dungeons-world.md`,
-  `dialogue-system.md` and `bestiary/bosses.md`; *travelling* in
-  `outline.md`, `events.md` and `script/npc-ambient.md`; *cancelled* in
-  `overworld.md`; *synthesises* in `dialogue-system.md`. Sweeping those
-  is a separate, tracked change (#311) — a residual British spelling is a
-  defect to be fixed, not a precedent to be matched.
+  The `color` / `paralyzed` / `centered` / `behavior` families were swept
+  across `docs/story/`, every shipped `game/data/` string, and
+  `game/scripts/`; `docs/plans/bundle-roadmap.md` (*colour*, ×2) and
+  `docs/superpowers/specs/2026-04-06-battle-scene-design.md` (*centred*,
+  ×2) were left, because those are dated records rather than canon.
+  Other British families survive and are *not* to be read as
+  sanctioned — *armour*, *favour*, *defence*, *catalogue* /
+  *catalogued* / *cataloguing*, *travelling*, *cancelled*,
+  *synthesises*. **Do not scope the sweep from a hand-written list;
+  regenerate it**, because a hand-written one has already been wrong
+  once:
+
+  ```
+  grep -rlniE "armour|favour|defence|catalogu|travelling|cancelled|synthesis(e|ing)" \
+    docs/story game/data
+  ```
+
+  As of this commit that returns 14 files under `docs/story/` and 10
+  under `game/data/` — 8 in `game/data/dialogue/` plus
+  `game/data/items/key_items.json` and `game/data/items/materials.json`,
+  so the shipped residue is not confined to dialogue and includes
+  player-facing item text. Sweeping those is a separate, tracked change
+  (#311) — a residual British spelling is a defect to be fixed, not a
+  precedent to be matched.
 - **Changing a spelling is never local to one file.** Anything quoted as
   canon by a design doc, a test, or `game/data/dialogue/*.json` must
   match the string the engine emits — see

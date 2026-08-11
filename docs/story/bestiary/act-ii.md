@@ -5,6 +5,12 @@ Ashmark Factory Depths, Bellhaven Smuggler Tunnels, Valdris Siege,
 and the Overworld between cities. See [README.md](README.md) for
 type rules, stat formulas, and reward calculations.
 
+Act II *opens* with Fenmother's Hollow (#287), whose nine enemies are
+Lv 6–12 and whose stat table therefore lives in [act-i.md](act-i.md)
+alongside the `game/data/enemies/act_i.json` roster it mirrors — that
+file is organized by power band, not by act. The tables below start at
+the Ley Line Depths.
+
 **Total:** 33 enemies (28 regular + 1 unique + 1 spawn + 1 mini-boss + 2 bosses)
 
 ---

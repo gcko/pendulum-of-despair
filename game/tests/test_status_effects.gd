@@ -63,9 +63,9 @@ func test_shipped_notification_matches_the_engine_adjective() -> void:
 
 func test_atb_mod_statuses() -> void:
 	assert_eq(SE.atb_effect("slow"), "mod")
-	assert_almost_eq(SE.atb_mult("slow"), 0.5, 0.001)  # combat-formulas.md:720
+	assert_almost_eq(SE.atb_mult("slow"), 0.5, 0.001)  # combat-formulas.md § Fill Rate Modifiers
 	assert_eq(SE.atb_effect("despair"), "mod")
-	assert_almost_eq(SE.atb_mult("despair"), 0.75, 0.001)  # combat-formulas.md:721
+	assert_almost_eq(SE.atb_mult("despair"), 0.75, 0.001)  # combat-formulas.md § Fill Rate Modifiers
 	assert_almost_eq(SE.atb_mult("poison"), 1.0, 0.001, "non-mod statuses default 1.0")
 
 
@@ -86,7 +86,7 @@ func test_durations() -> void:
 	assert_eq(SE.default_duration("poison"), SE.UNTIL_CURED, "poison until cured")
 	assert_eq(SE.default_duration("sleep"), SE.UNTIL_CURED, "sleep until cured")
 	assert_eq(SE.default_duration("petrify"), SE.UNTIL_CURED)
-	assert_eq(SE.default_duration("slow"), 5)  # combat-formulas.md:732
+	assert_eq(SE.default_duration("slow"), 5)  # combat-formulas.md § Status Effect ATB Interactions
 	assert_eq(SE.default_duration("despair"), 4)
 	assert_eq(SE.default_duration("silence"), 4)
 	assert_eq(SE.default_duration("confusion"), 3)

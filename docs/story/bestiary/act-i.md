@@ -90,11 +90,13 @@ For full AI scripts, phase mechanics, and scripted events, see
 > band, not by act.** Every enemy below is Lv 6–12 and every one of them
 > ships in `game/data/enemies/act_i.json`; the Corrupted Fenmother (Lv
 > 12) sits exactly at the Act I ceiling that [README.md](README.md) § Level
-> Ranges by Act gives (Act I 1–12, Act II 13–25). The dungeon is the
+> Ranges by Act gives (Act I 1–12, Act II 13–25 from the Ley Line Depths
+> onward). The dungeon is the
 > first content of Act II and is deliberately pitched at the top of the
 > Act I curve, so splitting the table away from the roster file it
 > mirrors would cost more than it clarifies. Do not read its presence
-> here as an act assignment.
+> here as an act assignment. That § Level Ranges by Act row now carries
+> the matching exception, so the two documents do not contradict.
 >
 > **Consequence for #286, stated explicitly.** `serpent_fang` — Marsh
 > Serpent's steal and drop — has **no Act I source**. Every remaining
@@ -102,7 +104,21 @@ For full AI scripts, phase mechanics, and scripted events, see
 > `duskfen_marshland` (both behind `diplomatic_mission_start`),
 > `duskfen_hollow`, then Deep Serpent in the Ley Line Depths
 > ([act-ii.md](act-ii.md)) and Ashen Serpent in Act III
-> ([act-iii.md](act-iii.md)). One caveat on checking that against the
+> ([act-iii.md](act-iii.md)). **That is the canon reading; the current
+> build enforces neither gate.** The dungeon transition carries no
+> `metadata/required_flag` in `game/scenes/maps/overworld.tscn` and
+> `diplomatic_mission_start` is never set by any content
+> ([dungeons-world.md](../dungeons-world.md) § 2, tracked as #193), and
+> `duskfen_marshland` carries
+> no `flag` key in `game/data/encounters/overworld_zones.json` —
+> `zone_resolver.gd` skips an entry only when it has one, and the sole
+> flagged entry in that file is `pallor_wastes_approach`
+> (`act_iii_started`); the zone's `"act"` field in `overworld.json` is
+> read by no runtime code. So an Act I party that walks to tiles
+> (30, 48)–(41, 58) draws the marsh roster and can farm `serpent_fang`
+> today. This is the same class of build gap as #193 and #310, and it is
+> what #286 must decide against: the canon reading, with the build gap
+> named. One further caveat on checking that against the
 > data: `game/data/encounters/caves_and_grottos.json` carries a
 > file-level `"act": "act_i"`, but it is a mixed-act file — the same file
 > holds `highcairn_hermit_cave` (rolls `pallor_boar`, an Act III enemy)
@@ -111,7 +127,8 @@ For full AI scripts, phase mechanics, and scripted events, see
 > retagging or splitting that file is #314.
 >
 > The material appears in this file, which a reader takes for an Act I
-> roster, while its earliest supplier is now unambiguously behind flag 8.
+> roster, while in canon its earliest supplier is now unambiguously
+> behind flag 8 (and in the current build behind nothing at all).
 > #286 owns the fix — either give it an Act I source or retier it — and
 > this note removes the "maybe Fenmother's Hollow is Act I" escape hatch
 > that was blocking that decision. Nothing consumes `serpent_fang` today,
@@ -185,10 +202,17 @@ partly on Ember Vein enemies instead, documented in that section above.
 > excluded as open-ground grazer: it rolls only in `aelhart_valley`
 > (farmland) and `roads`. Road Bandit is excluded because Humanoid
 > bandits need traffic to rob and the roads carry their own `roads`
-> zone. That second exclusion is a zone-scoped judgement, not a claim
+> zone. That second exclusion is a zone-scoped judgment, not a claim
 > that the Wilds are roadless — canon documents the Wildwood Trail, the
 > Diplomatic Road and the Wilds Gate Pass through the region; the point
-> is only that no *road* encounter zone overlaps `thornmere_wilds`.
+> is only that no tile resolves to both. The `roads` rects do cut the
+> Wilds rect — `[46, 16, 47, 28]` and `[44, 60, 45, 63]` overlap
+> `thornmere_wilds` `[8, 28, 100, 62]` on eight tiles — but `roads` is
+> entry 3 in `overworld_zones.json` and `thornmere_wilds` entry 7, and
+> `zone_resolver.gd` is first-match-wins, so those tiles roll the roads
+> roster. Road Bandit therefore already appears where the roads cross
+> the Wilds; adding it to the Wilds roster would put it on the
+> off-road tiles too.
 > (This rule replaces an earlier one phrased as "names a forest habitat
 > (Valdris Forest or Forest Edge)", which no reader could check: neither
 > string was defined anywhere in the repo — see #288 and

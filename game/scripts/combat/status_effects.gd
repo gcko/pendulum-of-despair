@@ -26,7 +26,8 @@ const RULES: Dictionary = {
 	"poison": {"tick_pct": 0.08, "duration": UNTIL_CURED},
 	# Burn: 5% max HP/turn for 3 turns (magic.md:1530).
 	"burn": {"tick_pct": 0.05, "duration": 3},
-	# Sleep: ATB frozen until damaged/cured (magic.md:798, combat-formulas.md:734).
+	# Sleep: ATB frozen until damaged/cured (magic.md § Sleep,
+	# combat-formulas.md § Status Effect ATB Interactions).
 	"sleep": {"atb": "frozen", "duration": UNTIL_CURED, "wake_on_damage": true},
 	# Petrify: removed from combat, ATB frozen, until cured (magic.md:831).
 	"petrify": {"atb": "frozen", "duration": UNTIL_CURED},
@@ -35,9 +36,11 @@ const RULES: Dictionary = {
 	# so the turn-based countdown advances on each skipped would-be turn — unlike
 	# "frozen", which holds the gauge and has no clock).
 	"paralysis": {"incapacitates": true, "duration": 3, "wake_on_damage": false},
-	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md:720,732).
+	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions).
 	"slow": {"atb": "mod", "atb_mult": 0.5, "duration": 5},
-	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md:721,737). The
+	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions). The
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
 	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
 	# Silence: cannot cast, 4 turns (magic.md:820). Effect deferred.

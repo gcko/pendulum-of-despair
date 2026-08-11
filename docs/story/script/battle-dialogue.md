@@ -21,6 +21,9 @@
 
 ### Act I Bosses
 
+<!-- Power band, not an act: the two Fenmother's Hollow bosses below are
+     Act II content pitched at the Act I band (#287, dungeons-world.md § 2). -->
+
 #### Vein Guardian
 <!-- Cross-ref: bestiary/bosses.md § Vein Guardian -->
 

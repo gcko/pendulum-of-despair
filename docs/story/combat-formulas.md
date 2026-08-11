@@ -46,7 +46,7 @@ final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 | Scenario | ATK | Mult | DEF | Damage | Notes |
 |----------|-----|------|-----|--------|-------|
 | Edren Lv1 vs tutorial mob | 18 | 1.0 | 5 | ~49 | 2–3 hits on 100–150 HP mob |
-| Edren Lv18 vs Act I mob | 49 | 1.0 | 15 | ~385 | 2–3 hits on 800 HP mob |
+| Edren Lv18 vs early Act II mob | 49 | 1.0 | 15 | ~385 | 2–3 hits on 800 HP mob |
 | Edren Lv35 vs Act II mob | 85 | 1.0 | 30 | ~1,174 | 2–3 hits on 2,500 HP mob |
 | Edren Lv70 vs Act III (good gear) | 175 | 1.0 | 60 | ~5,044 | In the 5–7K target range |
 | Edren Lv70 Riposte (1.5×) | 175 | 1.5 | 60 | ~7,596 | Strong skill hit |
@@ -55,6 +55,15 @@ final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 | Edren Lv150 basic | 255 | 1.0 | 80 | ~10,757 | Post-game power fantasy |
 | Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
 | Any Lv150 2.0× technique | 255 | 2.0 | 60 | 14,999 | Bum Rush equivalent |
+
+The act label in each Scenario names the content the party's *level* puts
+it in, per [progression.md](progression.md) § Milestones — so the Lv18 row
+reads "early Act II", the milestone that table now labels "After
+Fenmother's Hollow (Act II)" (#287). The 800 HP reference target is the
+`game/data/enemies/act_ii.json` Lv 17–19 band (`cave_crawler` 818,
+`ley_wisp` 819, `deep_serpent` 807); no regular Act I enemy exceeds 288 HP.
+The ATK/DEF figures are divisor-tuning targets, not readings from the
+shipped rosters.
 
 ### Row Modifier
 
@@ -427,7 +436,7 @@ Stage 2: if Stage 1 succeeds, target rolls Magic Evasion% to resist
 
 | Scenario | Base | MAG | MDEF | Stage 1 | MEVA% | Final |
 |----------|------|-----|------|---------|-------|-------|
-| Maren Lv18 Poison (75%) vs Act I | 75% | 53 | 15 | 58% | ~8% | ~53% |
+| Maren Lv18 Poison (75%) vs Lv 11 target | 75% | 53 | 15 | 58% | ~8% | ~53% |
 | Maren Lv70 Sleep (70%) vs Act III | 70% | 146 | 60 | 50% | ~15% | ~42% |
 | Maren Lv70 Petrify (50%) vs boss | 50% | 146 | 80 | 32% | ~18% | ~26% |
 
@@ -846,8 +855,12 @@ final_increment = floor(base_increment × act_scale × accessory_mod × location
 | Kole's patrol timing (quest) | ×0.5 | Caldera Inner Ring only | Quest-dependent |
 
 Modifiers stack multiplicatively. Ward Talisman and Infiltrator's Cloak
-provide the same effect (×0.5) and do not stack with each other (same
-accessory slot). Veilstep stacks with accessory modifiers (e.g.,
+provide the same effect (×0.5) and do not stack with each other. The
+non-stack is *party-wide*, not slot-bound: `EncounterSystem`
+`.get_accessory_modifier()` scans every party member's `accessory` and
+`crystal` slots and collapses the result to one `has_reduce` flag, so a
+Ward Talisman on Edren plus an Infiltrator's Cloak on Sable still gives
+×0.5, not ×0.25. Veilstep stacks with accessory modifiers (e.g.,
 Veilstep + Ward Talisman = ×0.125 — dramatically reduces encounters
 in low-danger zones, still meaningful reduction in high-danger zones).
 
@@ -887,15 +900,14 @@ deducted from back attack first then normal. Normalizes all terrains to
 **Preemptive Charms do not stack.** The bonus is a flat +25pp whenever any
 party member has one equipped, regardless of how many the party carries.
 Two charms give +25pp, not +50pp; `EncounterSystem.get_preemptive_bonus()`
-returns on the first match it finds. This is a *party-wide* rule and is
-decided on its own terms, not inherited from the Ward Talisman /
-Infiltrator's Cloak precedent above: those two fail to stack because they
-compete for one character's accessory slot, whereas each party member can
-equip a charm of their own ([equipment.md](equipment.md) § Accessories
-lists Preemptive Charm as an ordinary accessory). The reason to decide it
-this way is that the "normalizes all terrains to 62.5/0/37.5" sentence
-above states one outcome, and no per-count table was ever authored to
-replace it.
+scans every party member's `accessory` and `crystal` slots and returns on
+the first match it finds. This is the *same shape* as the Ward Talisman /
+Infiltrator's Cloak non-stack above — one party-wide flag, not a
+per-character slot contest — so the two rules are consistent, and the
+code comment on `get_preemptive_bonus()` correctly cites that precedent.
+The reason to decide it this way is that the "normalizes all terrains to
+62.5/0/37.5" sentence above states one outcome, and no per-count table
+was ever authored to replace it.
 
 **Sable's Coin:** Guarantees preemptive on next battle (overrides roll).
 Does not work on bosses.

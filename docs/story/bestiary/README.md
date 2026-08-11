@@ -9,7 +9,7 @@
 | File | Contents |
 |------|----------|
 | [act-i.md](act-i.md) | The Lv 1–12 band: Ember Vein, Overworld Act I, Ironmouth Docks, and Fenmother's Hollow — which is Act II content tuned to the top of this band (#287) (27 enemies) |
-| [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
+| [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies). Act II's *opening* dungeon, Fenmother's Hollow, is tabled in act-i.md (#287) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
 | [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Ley Scar, Overworld (69 enemies) |
 | [optional.md](optional.md) | Dreamer's Fault (25 enemies across 5 ages, Lv 42–100) |
@@ -48,12 +48,12 @@ Each enemy in the bestiary tables uses these columns:
 
 The `Location(s)` column names **encounter tables, not places.** Every
 entry must name something that exists in the repo, so that a reader who
-has never seen the map can check the cell without judgement. Exactly two
+has never seen the map can check the cell without judgment. Exactly two
 forms are admissible:
 
 | Form | Written as | Resolves against |
 |------|-----------|------------------|
-| Dungeon floor | Dungeon name + floor span — `Ember Vein F1–F2`, `Fenmother's Hollow F3` | the dungeon's numbered entry in [dungeons-world.md](../dungeons-world.md) or [dungeons-city.md](../dungeons-city.md), and the matching `<enemy>_f<n>` id in the enemy's `locations` array. **Not** machine-checkable against the encounter files — see below |
+| Dungeon floor | Dungeon name + floor span — `Ember Vein F1–F2`, `Fenmother's Hollow F3` | the dungeon's numbered entry in [dungeons-world.md](../dungeons-world.md) or [dungeons-city.md](../dungeons-city.md), and the matching `<dungeon>_f<n>` id in the enemy's `locations` array. **Not** machine-checkable against the encounter files — see below |
 | Encounter zone | The zone's `name` field verbatim — `Thornmere Wilds`, `Ley-Scarred Plains`, `Roads` | a `zone_id`/`name` pair in `game/data/encounters/overworld.json` |
 
 **The dungeon-floor form does not resolve against the encounter data,
@@ -88,6 +88,26 @@ matching zone, which made every habitat argument built on them
 uncheckable (#288). They have been replaced by the zones the enemies
 actually roll in.
 
+**The rule is normative everywhere; it is *enforced* only in Act I so
+far.** [act-i.md](act-i.md) and `game/data/enemies/act_i.json` are the
+only pair converted. [act-ii.md](act-ii.md) and [act-iii.md](act-iii.md)
+still carry a third, undefined terrain vocabulary of exactly the class
+retired above — 18 ids across 30 `locations` entries that resolve to no
+`overworld.json` zone and no dungeon: `coastal`, `deep_forest`, `forest`,
+`grassland`, `highland`, `mountain`, `mountain_caves`, `mountain_paths`,
+`roads_between_cities`, `swamp` in `act_ii.json`, and `overworld_coast`,
+`overworld_grassland`, `overworld_grey_zones`, `overworld_highland`,
+`overworld_mountain`, `overworld_roads`, `overworld_ruins`,
+`overworld_swamp` in `act_iii.json`, mirrored in the markdown as cells
+reading "Mountain caves", "Roads between cities", "Grassland, forest",
+"Overworld grey zones". A second, milder class runs through
+`act_ii.json`, `act_iii.json` and `interlude.json`: dungeon-plus-named-
+section ids (`rail_tunnels_hub`, `valdris_catacombs_catacomb_heart`,
+`pallor_wastes_trial_1`, `convergence_outer_ring`) that name a real
+dungeon but not a floor span. Neither class is sanctioned; both are
+tracked in #349. Do not read this section as a description of the
+corpus outside Act I.
+
 **The column and the data are one artifact.** Each cell corresponds
 one-for-one with the enemy's `locations` array in
 `game/data/enemies/<act>.json`, which holds the same list as ids
@@ -95,7 +115,10 @@ one-for-one with the enemy's `locations` array in
 defect. `game/tests/test_bestiary_locations.gd` enforces the overworld
 half of this: every `overworld.json` zone that rolls an **Act I** enemy
 must appear in that enemy's `locations`, and the five retired names must
-appear nowhere in any act. Act II and Act III have 22 zone appearances
+appear nowhere in any of the five stat tables (the four act files plus
+`optional.json`). Nothing yet enforces the two-admissible-forms rule
+itself — that check can only be turned on once #349 lands. Act II and
+Act III also have 22 zone appearances
 their `locations` arrays still omit (15 and 7 respectively; no Interlude
 enemy appears in any `overworld.json` zone roster) — the same defect, not
 yet reconciled, and the reason the coverage assertion is scoped to Act I
@@ -200,11 +223,19 @@ and keeps the system simple (FF6's approach).
 | Act | Enemy Level Range | Recommended Party Level |
 |-----|------------------|------------------------|
 | Act I | 1–12 | 1–12 |
-| Act II | 13–25 | 13–25 |
+| Act II | 13–25 (opening dungeon 6–12) | 12–25 |
 | Interlude | 20–35 | 20–35 |
 | Act III | 26–45 (Ley Scar: 40–48) | 26–45 (Ley Scar: 40–48) |
 | Post-game | 40–80 | 40–80 |
 | Optional / Superboss | 70–150 | 70–150 |
+
+**The Act II exception (#287).** Act II opens with Fenmother's Hollow,
+whose nine enemies are Lv 6–12 and ship in `game/data/enemies/act_i.json`
+(stat table in [act-i.md](act-i.md), which is organized by power band,
+not by act). The party enters it at ~12 ([dungeons-world.md](../dungeons-world.md)
+§ 2, recommended level 12–15), which is why the recommended-party column
+reads 12–25 rather than 13–25. The 13–25 enemy band describes Act II
+from the Ley Line Depths onward. Nothing else in Act II sits below 13.
 
 ### Base Stat Curves (Regular Enemies)
 

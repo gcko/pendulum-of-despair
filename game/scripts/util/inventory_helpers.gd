@@ -99,7 +99,7 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 ## and the item must not be silently burned. A Stat Capsule is refused on
 ## the same principle once its target's permanent total is at the stat cap.
 ## `target` is optional so callers without a member dictionary keep the old
-## item-only behaviour.
+## item-only behavior.
 static func can_apply_item_effect(item_data: Dictionary, target: Dictionary = {}) -> bool:
 	var effect: String = item_data.get("effect", "")
 	if effect == "preemptive":
@@ -307,7 +307,8 @@ static func calculate_stats_at_level(
 ## Compute leveled stats AND apply the character's permanent hidden stat spike
 ## (GAP-010) on top. Data-driven from char_data.hidden_spike. Used everywhere
 ## base_stats is (re)built — at join and on level-up — so the spike is never
-## wiped by a recompute (progression.md:388: spikes are permanent).
+## wiped by a recompute (progression.md
+## § Narrative Milestone Stat Spikes: spikes are permanent).
 static func leveled_stats_with_spike(char_data: Dictionary, level: int) -> Dictionary:
 	var stats: Dictionary = calculate_stats_at_level(
 		char_data.get("base_stats", {}), char_data.get("growth", {}), level

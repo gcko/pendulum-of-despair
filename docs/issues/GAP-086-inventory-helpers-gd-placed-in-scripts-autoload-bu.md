@@ -66,7 +66,7 @@ call sites were repointed at `res://scripts/util/inventory_helpers.gd` — 8
 source files (`ui/save_load_display.gd`, `ui/menu_status.gd`, `ui/menu_items.gd`,
 `ui/menu_equip.gd`, `ui/battle_command_menu.gd`, `combat/battle_state.gd`,
 `autoload/save_manager.gd`, `autoload/party_state.gd`) and 6 test files. Pure
-relocation: no behaviour change, and `game/tests/test_script_layout.gd` now
+relocation: no behavior change, and `game/tests/test_script_layout.gd` now
 guards the split against regression.
 
 Two notes on the claims above.

@@ -110,7 +110,7 @@ func test_vein_guardian_reconstructs_once() -> void:
 	var first: Dictionary = BossAI.select_action(vg, 1, state, [vg])
 	assert_eq(first.get("id", ""), "reconstruct", "enters phase_2 with a one-time Reconstruct")
 	assert_eq(first.get("type", ""), "heal")
-	assert_eq(int(first.get("value", 0)), 300, "Reconstruct heals +300 (bosses.md:189)")
+	assert_eq(int(first.get("value", 0)), 300, "Reconstruct heals +300 (bosses.md § Vein Guardian)")
 	# Subsequent phase_2 turns never reconstruct again.
 	var reconstructed_again: bool = false
 	for t: int in range(2, 20):
@@ -270,7 +270,7 @@ func test_integration_boss_telegraph_then_damage() -> void:
 
 func test_integration_summon_respects_add_cap() -> void:
 	# With 1 add already alive, the {adds_below:2} rule fires but _do_spawn must
-	# top up to exactly the cap of 2 (spawn 1), never overshoot to 3 (bosses.md:275).
+	# top up to exactly the cap of 2 (spawn 1), never overshoot to 3 (bosses.md § Corrupted Fenmother).
 	var fm: Enemy = _boss("corrupted_fenmother")
 	var add1: Enemy = _boss("corrupted_spawn")
 	var h: Dictionary = _harness()

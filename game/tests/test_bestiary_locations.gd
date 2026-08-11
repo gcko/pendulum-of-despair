@@ -21,9 +21,11 @@ extends GutTest
 ##    22 zone appearances their `locations` arrays do not list (15 and 7; no
 ##    interlude enemy appears in an overworld.json zone roster at all) — the
 ##    same defect, an unreconciled follow-up, and not something this test
-##    should red-flag before someone fixes it. The retired-name check below
-##    does span every act, because those five names must never come back
-##    anywhere.
+##    should red-flag before someone fixes it. Act II and Act III also still
+##    carry an undefined terrain vocabulary the README forbids (#349), which
+##    is why no test asserts the two-admissible-forms rule itself yet.
+##    The retired-name check below does span every stat table, including
+##    optional.json, because those five names must never come back anywhere.
 
 ## Names retired by #288. None may reappear in any enemy file's `locations`.
 const RETIRED_LOCATION_IDS: Array[String] = [
@@ -34,8 +36,9 @@ const RETIRED_LOCATION_IDS: Array[String] = [
 	"duskfen_road",
 ]
 
-## Enemy stat tables to scan. StoryAct.get_enemy_act() names these files.
-const ENEMY_ACTS: Array[String] = ["act_i", "act_ii", "interlude", "act_iii"]
+## Enemy stat tables to scan. Every table in Enemy.ACT_TABLES: the four
+## StoryAct.get_enemy_act() names, plus optional.json (Dreamer's Fault).
+const ENEMY_ACTS: Array[String] = ["act_i", "act_ii", "interlude", "act_iii", "optional"]
 
 
 func before_each() -> void:

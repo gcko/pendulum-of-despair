@@ -305,11 +305,14 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 > through 18→19 is 14,117 (~14,100), which is why the labels move and the
 > numbers do not.
 >
-> Not corrected here: the per-act XP and gold *supply* estimates in § XP
-> Pacing Per Act and economy.md § Act I still count the Corrupted
-> Fenmother's 2,500 XP and 1,500g as Act I income, so the supply side does
-> not yet add up to ~5,300 by the end of Act I. Re-deriving those splits is
-> a balance pass (#313), not a doc fix. Three dated design records also still key
+> Not corrected here: the gold *supply* estimate in [economy.md](economy.md)
+> § Act I still counts the Corrupted Fenmother's 1,500g as Act I income.
+> On the XP side there is nothing to correct yet, because **no document
+> tallies per-act XP supply at all** — § XP Pacing Per Act below states
+> level spans, hour budgets and per-level cadences only, and no other
+> section sums enemy `exp` by act. So the ~5,300 Act I target is unbacked
+> on the supply side rather than wrongly backed. Deriving that tally and
+> re-splitting the gold is a balance pass (#313), not a doc fix. Three dated design records also still key
 > the milestone to 18 —
 > `docs/superpowers/specs/2026-03-24-xp-leveling-curve-design.md` § 8
 > Tuning Targets, `docs/superpowers/plans/2026-03-24-xp-leveling-curve.md`,
