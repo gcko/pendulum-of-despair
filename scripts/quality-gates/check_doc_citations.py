@@ -322,7 +322,13 @@ def match_heading(
     breadcrumb path (the heading plus its ancestors). That is loose enough
     for the house style — ``§ Derived Rules`` for
     ``### Derived Rules (numeric balance pass)``, ``§ Caden`` for
-    ``### Spirit-speaker Caden`` — and still refuses a heading nobody wrote.
+    ``### Spirit-speaker Caden``.
+
+    What it does *not* catch: a citation that names a real heading and then
+    keeps going into a subsection nobody wrote. ``§ Encounter System
+    Nonexistent Subsection`` shortens to ``§ Encounter System``, which
+    exists, and passes. Tightening that without breaking the house style
+    needs a repo-wide sweep — tracked as #367.
 
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
