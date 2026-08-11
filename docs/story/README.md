@@ -69,39 +69,83 @@ This directory contains the narrative design for Pendulum of Despair.
   swept the `color` / `paralyzed` / `centered` / `behavior` families and
   #311 swept the rest, so for the two corpora a player can actually read —
   `docs/story/script/*.md` and `game/data/dialogue/*.json` — the
-  description now holds: **zero** British spellings, verified by the
-  regenerating grep below. The design prose in `docs/story/*.md` was
-  swept with them. A residual British spelling is therefore a defect to
-  be fixed, not a precedent to be matched.
-- **Do not scope a sweep from a hand-written word list; regenerate it.**
-  A hand-written list has been wrong twice. The second time,
+  description now holds: **zero** British spellings, verified by both
+  greps below plus a hand check of the two families they cannot see
+  (`paralys`, `centre`). The last survivor was *harbour*, six sites the
+  earlier hand-listed pattern was structurally unable to find; the design
+  prose in `docs/story/*.md` was swept alongside. A residual British
+  spelling is therefore a defect to be fixed, not a precedent to be
+  matched.
+- **Enumerate the exceptions, never the defects.** A hand-written list of
+  *misspellings* has now been wrong three times, because the set of words
+  a writer might get wrong is open-ended. The second time,
   `catalogue|catalogued` silently missed *cataloguing* — the stem drops
   the final *e* — and that alone hid three player-facing sites
   (`script/act-i.md`, `script/npc-ambient.md`, and the shipped
-  `game/data/dialogue/scene_7_the_capital.json`). Match on stems:
+  `game/data/dialogue/scene_7_the_capital.json`). The third time, the
+  `-our` branch was five hard-coded stems
+  (`armou|favou|honou|colou|behaviou`), so it saw nothing wrong with
+  *harbour* — six sites, three of them in the shipped dialogue JSON — or
+  with *flavour* in `game/scripts/entities/npc.gd`.
+
+  Where a family admits a rule, write the rule and enumerate only the
+  correct English words it over-matches. That list is closed and short,
+  because it is a fact about English rather than a guess about authors.
+  The `-our` family works this way:
 
   ```
-  grep -rnoiE '\b(armou|favou|honou|colou|behaviou|defenc|catalogu|travell|cancell|labell|levell|synthesis(e|es|ed|ing)|realis(e|es|ed|ing)|recognis(e|es|ed|ing)|mould)\w*' \
-    docs/story game/data game/scripts game/tests
+  grep -rnoiE '\b[a-z]+ou(r|rs|red|ring|rful|rless|rable|rite)\b' \
+      docs/story game/data game/scripts game/tests \
+    | grep -v '^docs/story/README.md:' \
+    | grep -viE ':(four|hour|your|pour|downpour|outpour|sour|tour|flour|scour|devour|contour|detour|velour|dour|amour|paramour|troubadour|glamour)(s|ed|ing)?$'
   ```
 
-  Stems, not whole words — but stems chosen so they do *not* collide
-  with `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`,
-  the `grey_*` data identifiers) or with *analysis* / *paralysis*, all of
-  which are correct. Widening the pattern past this list is how the
-  false positives get in. Two trees are outside the sweep entirely and
-  must stay that way: `docs/references/scripts/`, which quotes the
-  published scripts of other games verbatim, and the dated records in
-  `docs/plans/`, `docs/superpowers/`, `docs/analysis/` and closed-issue
-  titles, which record what was written at the time.
+  This file is excluded from both greps because it necessarily spells out
+  the very words it forbids. That exclusion is the one place a British
+  spelling may live in `docs/story/` — keep it to quoted examples.
 
-  Every hit the pattern still returns is a known defect tracked in
+  That single rule catches *harbour*, *flavour*, *neighbour*, *rumour*,
+  *vapour*, *endeavour*, *splendour*, *armour* and *colour* without being
+  told about any of them, and returns no false positives across the four
+  trees. Requiring `ou` + an `r`-suffix + a word boundary is what keeps
+  *courage*, *journey*, *mourning*, *flourish* and *tournament* out.
+
+  The remaining families have no tractable rule yet, so they are still
+  stems, and **this half of the pattern is known to be incomplete** —
+  treat a clean run of it as "no *known* family regressed", not as "the
+  corpus is clean":
+
+  ```
+  grep -rnoiE '\b(defenc|catalogu|travell|cancell|labell|levell|synthesis(e|es|ed|ing)|realis(e|es|ed|ing)|recognis(e|es|ed|ing)|mould)\w*' \
+      docs/story game/data game/scripts game/tests \
+    | grep -v '^docs/story/README.md:'
+  ```
+
+  A general `-ise/-isation` rule was tried and rejected: *rising*,
+  *sunrise* and *promising* flood it, and the exception list needed to
+  suppress them is longer and less stable than the stems it replaces.
+  Two more families are deliberately absent — `paralys` collides with the
+  correct *analysis* / *paralysis*, and `centre` with the proper noun
+  *Centre*. Both are clean today (checked by hand), but nothing in the
+  patterns above will tell you when they stop being clean.
+
+  `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`, the
+  `grey_*` data identifiers) are correct and are excluded on purpose.
+  Two trees are outside the sweep entirely and must stay that way:
+  `docs/references/scripts/`, which quotes the published scripts of other
+  games verbatim, and the dated records in `docs/plans/`,
+  `docs/superpowers/`, `docs/analysis/` and closed-issue titles, which
+  record what was written at the time.
+
+  Every hit the two patterns still return is a known defect tracked in
   #363 — two shipped item strings in `game/data/items/` and their paired
   copy in `items.md`, `progression.md`, `bestiary/bosses.md` (where
   `Catalogue` is also The Index's AI *mode name*, so decide whether that
   one is a proper noun before touching it), and non-emitting comments and
-  test-assertion messages under `game/scripts/` and `game/tests/`. If the
-  grep returns anything not on that list, it is new and it is a defect.
+  test-assertion messages under `game/scripts/` and `game/tests/`, plus
+  the `npc.gd` *flavour* the `-our` rule newly surfaced. A hit outside
+  that list is new and it is a defect; the absence of hits is not a proof
+  of cleanliness.
 - **Changing a spelling is never local to one file.** Anything quoted as
   canon by a design doc, a test, or `game/data/dialogue/*.json` must
   match the string the engine emits — see
