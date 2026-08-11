@@ -70,8 +70,10 @@ func test_atb_mod_statuses() -> void:
 
 
 func test_tick_percentages() -> void:
-	assert_almost_eq(SE.tick_pct("poison"), 0.08, 0.001)  # magic.md:1537
-	assert_almost_eq(SE.tick_pct("burn"), 0.05, 0.001)  # magic.md:1538
+	# Poison loses 8% max HP/turn (magic.md § Status Effect Reference > 'Poison').
+	assert_almost_eq(SE.tick_pct("poison"), 0.08, 0.001)
+	# Burn loses 5% max HP/turn (magic.md § Status Effect Reference > 'Burn').
+	assert_almost_eq(SE.tick_pct("burn"), 0.05, 0.001)
 	assert_almost_eq(SE.tick_pct("sleep"), 0.0, 0.001)
 
 

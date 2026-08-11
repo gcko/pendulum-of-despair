@@ -5,8 +5,9 @@ extends RefCounted
 ## Bar geometry is set against the track's custom_minimum_size so fills
 ## stay deterministic under headless container layout.
 
-## HP fill/text green. ui-design.md:76 lists "#44ff44 / #44cc44" without
-## assigning which is fill — we keep the shipped #44cc44 everywhere.
+## HP fill/text green. ui-design.md § 1.4 Color Palette > 'HP text & bar fill'
+## lists "#44ff44 / #44cc44" without assigning which is fill — we keep the
+## shipped #44cc44 everywhere.
 const COLOR_HP_FILL: Color = Color("#44cc44")
 ## Low-HP warning (< 25% of max), bar fill AND numeric text.
 const COLOR_HP_LOW: Color = Color("#ff4444")

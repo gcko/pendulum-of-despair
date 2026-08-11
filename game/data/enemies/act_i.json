@@ -48,7 +48,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:29)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Vermin Family > 'Ley Vermin')"
         }
       ]
     },
@@ -98,7 +98,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:52)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Mite Family > 'Tomb Mite')"
         }
       ]
     },
@@ -154,7 +154,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:68)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Restless Dead')"
         }
       ]
     },
@@ -213,7 +213,7 @@
           "spell_power": 9,
           "target": "all",
           "aoe_on_death": true,
-          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md:101,297; palette-families.md:90)"
+          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Crystal Family > 'Shard Burst')"
         }
       ]
     },
@@ -268,7 +268,7 @@
           "element": "",
           "spell_power": 14,
           "target": "single",
-          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (conventions §2.2; palette-families.md:108)"
+          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (conventions §2.2; palette-families.md § Shade Family > 'Mine Shade')"
         }
       ]
     },
@@ -327,7 +327,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "Guard Stance +40% DEF/5t self; Ironhide analog (conventions §2.4; palette-families.md:132)"
+          "_comment": "Guard Stance +40% DEF/5t self; Ironhide analog (conventions §2.4; palette-families.md § Warden Family > 'Guard Stance')"
         },
         {
           "id": "heavy_swing",
@@ -336,7 +336,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:132)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Warden Family > 'Bone Warden')"
         }
       ]
     },
@@ -391,7 +391,7 @@
           "element": "flame",
           "spell_power": 14,
           "target": "single",
-          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md:297; palette-families.md:150)"
+          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Wisp Family > 'Ember Wisp')"
         }
       ]
     },
@@ -486,7 +486,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical, ability_mult 1.0 (enemy-ability-conventions.md §2.1; palette-families.md:205)"
+          "_comment": "basic physical, ability_mult 1.0 (enemy-ability-conventions.md §2.1; palette-families.md § Serpent Family > 'Marsh Serpent')"
         },
         {
           "id": "venom_spit",
@@ -497,7 +497,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md:107); Poison 8%/turn until cured (magic.md:1537); palette-families.md:205"
+          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md § Balance Rules > 'base hit rate'); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Venom Spit'"
         }
       ]
     },
@@ -592,7 +592,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:68)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Restless Dead')"
         },
         {
           "id": "bone_toss",
@@ -601,7 +601,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:69)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Drowned Bones')"
         }
       ]
     },
@@ -653,7 +653,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:249)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Lurker Family > 'Swamp Lurker')"
         }
       ]
     },
@@ -711,7 +711,7 @@
           "target": "single",
           "status": "paralysis",
           "status_rate": 70,
-          "_comment": "single-target Ley magic + Paralysis chance; spell_power 14 (conventions §2.2); rate 70 (§2.5); Paralysis 3t no-wake (status_effects.gd; #248); palette-families.md:275"
+          "_comment": "single-target Ley magic + Paralysis chance; spell_power 14 (conventions §2.2); rate 70 (§2.5); Paralysis 3t no-wake (status_effects.gd; #248); palette-families.md § Jellyfish Family > 'Ley Sting'"
         },
         {
           "id": "drift",
@@ -721,7 +721,7 @@
           "ability_mult": 1.0,
           "target": "single",
           "selector": "random",
-          "_comment": "random-target physical (conventions §2.1 + selector random; palette-families.md:275)"
+          "_comment": "random-target physical (conventions §2.1 + selector random; palette-families.md § Jellyfish Family > 'Drift')"
         }
       ]
     },
@@ -777,7 +777,7 @@
           "element": "frost",
           "spell_power": 9,
           "target": "all",
-          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md:101,343; palette-families.md:292)"
+          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Rime Shard > 'Spell power 14'; palette-families.md § Elemental Family > 'Polluted Elemental')"
         },
         {
           "id": "elemental_shield",
@@ -790,7 +790,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md:946; palette-families.md:292)"
+          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md § Wardglass > 'magic defense by 40%'; palette-families.md § Elemental Family > 'Polluted Elemental')"
         }
       ]
     },
@@ -839,7 +839,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:205)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
         },
         {
           "id": "venom_spit",
@@ -850,7 +850,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md:1537); palette-families.md:205"
+          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Corrupted Spawn'"
         },
         {
           "id": "lunge",
@@ -860,7 +860,7 @@
           "ability_mult": 1.0,
           "target": "single",
           "selector": "back",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:206)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
         },
         {
           "id": "coil",
@@ -873,7 +873,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "Coil +50% SPD/5t self; Quickstep analog (conventions §2.4; palette-families.md:206)"
+          "_comment": "Coil +50% SPD/5t self; Quickstep analog (conventions §2.4; palette-families.md § Serpent Family > 'Coil')"
         }
       ]
     },
@@ -923,7 +923,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:325)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Hare Family > 'Plains Hare')"
         }
       ]
     },
@@ -974,7 +974,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:346)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Beetle Family > 'Thornback Beetle')"
         }
       ]
     },
@@ -1023,7 +1023,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:363)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Bandit Family > 'Road Bandit')"
         }
       ]
     },
@@ -1078,7 +1078,7 @@
           "element": "ley",
           "spell_power": 14,
           "target": "single",
-          "_comment": "Ley ranged bolt; Tier-1 spell_power 14 (conventions §2.2; palette-families.md:388)"
+          "_comment": "Ley ranged bolt; Tier-1 spell_power 14 (conventions §2.2; palette-families.md § Sprite Family > 'Forest Sprite')"
         }
       ]
     },
@@ -1128,7 +1128,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:411)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Boar Family > 'Wild Boar')"
         }
       ]
     },
@@ -1178,7 +1178,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md:435)"
+          "_comment": "basic physical (conventions §2.1; palette-families.md § Wolf Family > 'Wayward Wolf')"
         },
         {
           "id": "pack_howl",
@@ -1191,7 +1191,7 @@
             "duration": 5,
             "scope": "pack"
           },
-          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md:979; palette-families.md:435)"
+          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md § Rallying Cry > 'physical attack by 30%'; palette-families.md § Wolf Family > 'Pack Howl')"
         }
       ]
     },
@@ -1330,7 +1330,7 @@
             "spell_power": 24,
             "target": "all",
             "telegraph": "The Ember Drake rears back, flames building!",
-            "_comment": "party-wide fire AoE, 1-turn charge; Tier-2 AoE spell_power 24 (enemy-ability-conventions.md §3.1; magic.md:330; bosses.md:150)"
+            "_comment": "party-wide fire AoE, 1-turn charge; Tier-2 AoE spell_power 24 (enemy-ability-conventions.md §3.1; magic.md § Scorch Sweep > 'Spell power 24'; bosses.md § Ember Drake > 'Flame Breath')"
           },
           "pounce": {
             "type": "ability",
@@ -1338,7 +1338,7 @@
             "ability_mult": 1.0,
             "target": "single",
             "selector": "back",
-            "_comment": "back-row physical (bosses.md:152)"
+            "_comment": "back-row physical (bosses.md § Ember Drake > 'Pounce')"
           },
           "tail_swipe": {
             "type": "ability",
@@ -1346,7 +1346,7 @@
             "ability_mult": 1.0,
             "target": "single",
             "selector": "highest_threat",
-            "_comment": "highest-threat physical (bosses.md:153)"
+            "_comment": "highest-threat physical (bosses.md § Ember Drake > 'Tail Swipe')"
           }
         }
       }
@@ -1476,7 +1476,7 @@
             "target": "single",
             "selector": "highest_threat",
             "telegraph": "The Vein Guardian raises its arms!",
-            "_comment": "heavy physical, highest-threat, 1-turn telegraph (enemy-ability-conventions.md §3.1/3.3; bosses.md:178)"
+            "_comment": "heavy physical, highest-threat, 1-turn telegraph (enemy-ability-conventions.md §3.1/3.3; bosses.md § Vein Guardian > 'Crystal Slam')"
           },
           "ember_pulse": {
             "type": "ability",
@@ -1485,13 +1485,13 @@
             "spell_power": 24,
             "target": "all",
             "telegraph": "The floor glows orange!",
-            "_comment": "fire AoE, 1-turn telegraph; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:180)"
+            "_comment": "fire AoE, 1-turn telegraph; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md § Vein Guardian > 'Ember Pulse')"
           },
           "reconstruct": {
             "type": "heal",
             "target": "self",
             "value": 300,
-            "_comment": "+300 HP, one-time at <=50%% (bosses.md:190)"
+            "_comment": "+300 HP, one-time at <=50%% (bosses.md § Vein Guardian > 'Reconstruct')"
           }
         }
       }
@@ -1578,7 +1578,7 @@
               "duration": 2,
               "scope": "self"
             },
-            "_comment": "DEF +100% for 2 turns (enemy-ability-conventions.md §3.1; bosses.md:220)"
+            "_comment": "DEF +100% for 2 turns (enemy-ability-conventions.md §3.1; bosses.md § Drowned Sentinel > 'Barnacle Shield')"
           },
           "frost_wave": {
             "type": "ability",
@@ -1586,7 +1586,7 @@
             "element": "frost",
             "spell_power": 24,
             "target": "all",
-            "_comment": "frost AoE; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md:221)"
+            "_comment": "frost AoE; Tier-2 AoE 24 (enemy-ability-conventions.md §3.1; bosses.md § Drowned Sentinel > 'Frost Wave')"
           },
           "stone_slam": {
             "type": "ability",
@@ -1594,7 +1594,7 @@
             "ability_mult": 1.0,
             "target": "single",
             "selector": "highest_threat",
-            "_comment": "heavy physical, highest-threat (bosses.md:222)"
+            "_comment": "heavy physical, highest-threat (bosses.md § Drowned Sentinel > 'Stone Slam')"
           }
         }
       }
@@ -1752,7 +1752,7 @@
             "atk_type": "physical",
             "ability_mult": 1.0,
             "target": "all",
-            "_comment": "party-wide physical (bosses.md:256)"
+            "_comment": "party-wide physical (bosses.md § Corrupted Fenmother > 'Tail Sweep')"
           },
           "water_jet": {
             "type": "ability",
@@ -1761,7 +1761,7 @@
             "spell_power": 32,
             "target": "single",
             "selector": "lowest_hp",
-            "_comment": "single-target frost magic, lowest-HP; Tier-2 single 32 (enemy-ability-conventions.md §3.1; bosses.md:257)"
+            "_comment": "single-target frost magic, lowest-HP; Tier-2 single 32 (enemy-ability-conventions.md §3.1; bosses.md § Corrupted Fenmother > 'Water Jet')"
           },
           "summon_spawn": {
             "type": "spawn",
@@ -1770,7 +1770,7 @@
               "corrupted_spawn"
             ],
             "cap": 2,
-            "_comment": "summon adds, cap 2 (bosses.md:275)"
+            "_comment": "summon adds, cap 2 (bosses.md § Corrupted Fenmother > 'Summon Corrupted Spawn')"
           },
           "dive": {
             "type": "skip",

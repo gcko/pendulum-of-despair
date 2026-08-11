@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
-"""Tests for quality gate scripts.
+"""Quality Gate I: tests for the quality gate scripts themselves.
 
-Run: python3 -m pytest scripts/quality-gates/test_quality_gates.py -v
+Gates D-G are scans, and a broken scan reports "nothing found", which reads
+exactly like "nothing wrong". This gate runs first in pre-push so that a gate
+which has stopped detecting fails loudly instead of passing silently (#365).
+
+Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 Or:  python3 scripts/quality-gates/test_quality_gates.py
 """
+import contextlib
+import io
 import json
 import os
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -16,6 +23,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import check_id_uniqueness
 import check_stale_counts
 import check_scene_refs
+import check_doc_citations
 
 
 class TestCheckIdUniqueness(unittest.TestCase):
@@ -160,6 +168,360 @@ class TestCheckSceneRefs(unittest.TestCase):
             self.assertIn("missing resource", errors[0])
 
 
+MAGIC_FIXTURE = """# Magic System
+
+## Status Effect Reference
+
+| Status | Effect |
+|--------|--------|
+| Poison | Lose 8% max HP per turn |
+| Burn | Lose 5% max HP per turn |
+
+## Spell Count Summary
+
+Eighty-nine spells, and nothing else worth saying.
+
+## Physical Elemental Attacks
+
+The pipeline that lets a physical hit carry an element.
+
+## Physical Attack Resolution
+
+Calculate base damage, then apply the row modifier.
+"""
+
+# Mirrors the shape of docs/plans/technical-architecture.md, where a
+# letter-suffixed section sits directly under the section it extends. That
+# adjacency is what a digits-only matcher gets wrong.
+NUMBERED_FIXTURE = """# Technical Architecture
+
+## 1. Project Setup
+
+### 1.1 Directory Structure
+
+Where each kind of file lives.
+
+### 1.2 Naming Conventions
+
+snake_case files, PascalCase classes.
+
+### 1.2a Script Size Budget
+
+Aim 400 lines, hard maximum 600.
+
+## 2. Data Formats
+
+### 2.1 Enemy Data
+
+### 2.3 Equipment Data
+"""
+
+
+class TestCheckDocCitations(unittest.TestCase):
+    """Tests for Gate G: doc citation integrity."""
+
+    def setUp(self):
+        self.cwd = os.getcwd()
+        self.tmpdir = tempfile.mkdtemp()
+        self._write("docs/story/magic.md", MAGIC_FIXTURE)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def _write(self, rel: str, text: str) -> None:
+        full = os.path.join(self.tmpdir, rel)
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        with open(full, "w") as f:
+            f.write(text)
+
+    def _errors(self, known: dict | None = None) -> list[str]:
+        """Run the whole scan against the fixture repo."""
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, known or {}, clear=True
+        ):
+            return check_doc_citations.check_citations()
+
+    def test_bans_line_anchored_citation(self):
+        self._write("game/scripts/a.gd", "# Poison 8%/turn (magic.md:1537).\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+        self.assertIn("magic.md:1537", errors[0])
+
+    def test_bans_line_anchored_gd_citation(self):
+        self._write("docs/story/note.md", "See `status_effects.gd:25`.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("status_effects.gd:25", errors[0])
+
+    def test_accepts_heading_citation_with_term(self):
+        self._write(
+            "game/scripts/a.gd",
+            "# Poison (magic.md § Status Effect Reference > 'Poison').\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_rejects_unknown_heading(self):
+        self._write(
+            "game/scripts/a.gd", "# See magic.md § Nonexistent Heading.\n"
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    # ── Letter-suffixed section ids ────────────────────────────────────
+    #
+    # A digits-only section matcher truncated "1.2a" to "1.2", resolved it
+    # against "### 1.2 Naming Conventions", and returned before the
+    # word-prefix search could find the real heading. Live files cite
+    # "technical-architecture.md § 1.2a", so deleting or renaming that
+    # section left the gate reporting "passed" — a false green in the one
+    # gate whose job is to notice.
+
+    def test_letter_suffixed_section_resolves_to_its_own_heading(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(),
+            "docs/plans/arch.md",
+            "1.2a Script Size Budget",
+        )
+        self.assertIsNotNone(hit, "§ 1.2a must resolve")
+        self.assertEqual(hit[2], "1.2a Script Size Budget")
+
+    def test_letter_suffixed_citation_survives_a_full_scan(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2a.\n")
+        self.assertEqual(self._errors(), [])
+
+    def test_nonexistent_letter_suffix_does_not_borrow_its_parent(self):
+        """§ 1.2b must fail even though § 1.2 exists."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2b.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_long_invented_suffix_does_not_borrow_its_parent(self):
+        """§ 1.2zzz must fail too — the truncation was the whole bug."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2zzz.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_renaming_a_cited_letter_section_fails_the_gate(self):
+        """End to end: the rot this gate exists to catch, on a suffixed id."""
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE.replace("### 1.2a ", "### 1.2q "),
+        )
+        self._write("game/scripts/a.gd", "# Budget: arch.md § 1.2a.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_plain_numbered_sections_still_resolve(self):
+        """The suffix support must not cost the ordinary numeric citation."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd",
+            "# See arch.md § 1.2 Naming Conventions and arch.md § 2.1/2.3.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_rejects_term_absent_from_the_cited_section(self):
+        """The term must sit under the cited heading, not merely in the file."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Spell Count Summary > 'Poison'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_rejects_term_that_lives_in_a_later_section(self):
+        """The search stops at the next heading, so a term below it fails."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Eighty-nine'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_citation_does_not_steal_the_next_ones_term(self):
+        """`a.md § X; a.md § Y > 'z'` must not read 'z' as X's term."""
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Spell Count Summary; "
+            "magic.md § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_rejects_unknown_target_file(self):
+        self._write("game/scripts/a.gd", "# See nosuchdoc.md § Whatever.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("not a file in this repo", errors[0])
+
+    def test_checks_every_citation_on_a_line(self):
+        """A second citation on the same line is checked, not swallowed."""
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Status Effect Reference > 'Poison'; "
+            "magic.md § Spell Count Summary > 'Eighty-nine'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Status Effect Reference > 'Poison'; "
+            "magic.md § Spell Count Summary > 'Ninety-one'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("Ninety-one", errors[0])
+
+    def test_ignores_dated_records(self):
+        """docs/issues and docs/superpowers describe the tree as it was."""
+        self._write("docs/issues/rot.md", "Broke at magic.md:1537.\n")
+        self._write("docs/superpowers/plan.md", "Broke at magic.md:1537.\n")
+        self.assertEqual(self._errors(), [])
+
+    def test_ignores_fenced_examples_in_markdown(self):
+        self._write(
+            "docs/story/guide.md",
+            "How to cite:\n\n```markdown\nrelevant_doc.md § Section Name\n```\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_known_unresolved_entry_suppresses_its_own_citation(self):
+        self._write("game/scripts/a.gd", "# See magic.md § Ghost Section.\n")
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_resolves_a_heading_that_wraps_to_the_next_line(self):
+        """Prose wraps, and the heading it names wraps with it.
+
+        Reading only the first line hands ``§ Physical Attack`` to the
+        resolver, which matches the earlier *Physical Elemental Attacks* —
+        ``attack`` is a subsequence of it. The citation means *Physical Attack
+        Resolution*, and reading the continuation line is what gets it there.
+        """
+        index = check_doc_citations.DocIndex()
+        truncated = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", "Physical Attack"
+        )
+        self.assertEqual(truncated[2], "Physical Elemental Attacks")
+
+        wrapped = check_doc_citations.citation_tail(
+            " Physical Attack\n## Resolution).\n", markdown=False
+        )
+        hit = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", wrapped
+        )
+        self.assertEqual(hit[2], "Physical Attack Resolution")
+
+        self._write(
+            "game/scripts/a.gd",
+            "## Base damage (magic.md § Physical Attack\n"
+            "## Resolution > 'row modifier').\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_wrapped_citation_cannot_green_light_the_wrong_section(self):
+        """The silent failure this gate exists to stop.
+
+        ``row modifier`` is the term that belongs to *Physical Attack
+        Resolution*; ``carry an element`` belongs to the section a truncated
+        read lands on instead. Cited under the wrapped heading it must fail —
+        and it must fail naming the section that was actually resolved, so the
+        reader can see which one the citation reached.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "## Base damage (magic.md § Physical Attack\n"
+            "## Resolution > 'carry an element').\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+        self.assertIn("§ Physical Attack Resolution", errors[0])
+
+    def test_a_markdown_heading_does_not_continue_a_citation(self):
+        """``#`` opens a section in prose; it is not comment furniture.
+
+        In a ``.gd`` file the next line's ``##`` is a doc-comment marker to be
+        stripped. In markdown it is the next section, and swallowing its title
+        would rewrite the citation's identity — the pin below would come
+        unstuck and the ratchet would fail on a document nobody touched.
+        """
+        self._write(
+            "docs/story/note.md",
+            "Poison ticks per magic.md § Ghost Section\n"
+            "## Status Effect Reference\n",
+        )
+        known = {
+            ("docs/story/note.md", "magic.md § Ghost Section"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_citation_identity_stops_at_the_prose_around_it(self):
+        """The ratchet keys on a citation, not on the code beside it.
+
+        A pin whose signature carried the next token of prose would come
+        unstuck the moment that prose changed, and a stale pin fails the gate.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "## (magic.md § Ghost Section). const POISON_PCT: float = 8.0\n"
+            "## See also magic.md § Ghost Section. Prose follows here.\n"
+            "<!-- magic.md § Ghost Section -->\n",
+        )
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_an_apostrophe_does_not_swallow_the_rest_of_a_citation(self):
+        """``§ Cael's Edge -->`` ends at the arrow, not at the apostrophe."""
+        self._write("docs/story/note.md", "<!-- magic.md § Cael's Ghost -->\n")
+        known = {
+            ("docs/story/note.md", "magic.md § Cael's Ghost"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_pass_message_reports_how_many_citations_are_pinned(self):
+        """The escape hatch has to announce its own size.
+
+        The commit that introduced this list described it as five entries
+        while adding twelve. A count printed by the gate cannot drift from
+        the list it counts.
+        """
+        self._write("game/scripts/a.gd", "# See magic.md § Ghost Section.\n")
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        buffer = io.StringIO()
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, known, clear=True
+        ), contextlib.redirect_stdout(buffer):
+            self.assertEqual(check_doc_citations.main(), 0)
+        self.assertIn("1 citation(s) pinned", buffer.getvalue())
+
+    def test_stale_known_unresolved_entry_fails(self):
+        """The ratchet cannot rot either: a pin with nothing to pin fails."""
+        known = {
+            ("game/scripts/gone.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        errors = self._errors(known)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("stale entry in KNOWN_UNRESOLVED", errors[0])
+
+
 class TestIntegration(unittest.TestCase):
     """Integration tests — run all gates against real project data."""
 
@@ -182,6 +544,13 @@ class TestIntegration(unittest.TestCase):
         if not os.path.exists("game/scenes"):
             self.skipTest("No scene files available")
         result = check_scene_refs.main()
+        self.assertEqual(result, 0)
+
+    def test_full_citation_scan_passes(self):
+        """Full doc citation scan should pass on current data."""
+        if not os.path.exists("docs/story"):
+            self.skipTest("No design docs available")
+        result = check_doc_citations.main()
         self.assertEqual(result, 0)
 
 

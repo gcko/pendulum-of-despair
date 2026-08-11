@@ -1,7 +1,8 @@
 extends GutTest
 ## Guards the documented GDScript directory layout (GAP-086).
 ##
-## technical-architecture.md:64 places utilities under `scripts/util/`, and
+## technical-architecture.md § 1.1 Directory Structure > 'Static helpers'
+## places utilities under `scripts/util/`, and
 ## `scripts/autoload/` is reserved for the singletons actually registered in
 ## the `[autoload]` block of project.godot. `inventory_helpers.gd` is a static
 ## RefCounted helper that used to sit in `scripts/autoload/` despite never
@@ -11,6 +12,10 @@ const AUTOLOAD_DIR := "res://scripts/autoload"
 const UTIL_DIR := "res://scripts/util"
 const PROJECT_GODOT := "res://project.godot"
 
+## The budget's canonical home, relative to the repo root (outside res://).
+const ARCH_DOC := "docs/plans/technical-architecture.md"
+const BUDGET_HEADING := "### 1.2a"
+
 ## Hard maximum. A file past this fails the suite; see § 1.2a for why 400 is
 ## the aim and 600 the ceiling.
 const MAX_SCRIPT_LINES: int = 600
@@ -18,6 +23,24 @@ const MAX_SCRIPT_LINES: int = 600
 ## The aim. Files between this and MAX_SCRIPT_LINES are acceptable only when
 ## breaking them down is intrinsically difficult, and § 1.2a names each one.
 const TARGET_SCRIPT_LINES: int = 400
+
+## Files in the 400-600 band that § 1.2a does not name yet.
+##
+## A hand-kept copy of the doc's list drifts from it silently — which is how
+## `battle_manager.gd` came to sit in this file's allowlist while § 1.2a still
+## named only three files. So the doc is now the allowlist, and this is the
+## ratchet for the gap: shrink-only, and the suite fails at BOTH ends. A band
+## file named in neither the doc nor here fails, and an entry here that is no
+## longer needed fails too, so the list cannot outlive its reason.
+##
+## Do not add to it. Write the justification into § 1.2a instead.
+const UNDOCUMENTED_BAND_FILES: Dictionary = {
+	"battle_manager.gd":
+	(
+		"#377 — § 1.2a predates it; the entry is being written on branch "
+		+ "docs/infra2-prose-hygiene. Delete this line when that lands."
+	),
+}
 
 
 ## Script filenames (no directory) present in a res:// directory.
@@ -144,32 +167,96 @@ func test_no_script_exceeds_the_hard_line_maximum() -> void:
 	)
 
 
-func test_files_between_the_aim_and_the_maximum_are_the_documented_ones() -> void:
-	# Not a failure -- 400-600 is allowed. This pins WHICH files are there, so a
-	# new arrival is a deliberate decision with a justification in 1.2a rather
-	# than something that drifted in unnoticed.
-	var allowed: Array[String] = [
-		"res://scripts/autoload/audio_manager.gd",
-		"res://scripts/autoload/party_state.gd",
-		"res://scripts/combat/battle_manager.gd",
-		"res://scripts/core/exploration.gd",
-	]
+## Read a repo doc that lives outside res://. Fails loudly if unreachable, so a
+## moved doc cannot silently turn the guard below into a no-op.
+func _read_repo_doc(rel_path: String) -> String:
+	var repo_root: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
+	var abs_path: String = repo_root.path_join(rel_path)
+	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
+	if file == null:
+		fail_test(
+			(
+				"cannot open %s (error %d) — the budget guard cannot run"
+				% [abs_path, FileAccess.get_open_error()]
+			)
+		)
+		return ""
+	var content: String = file.get_as_text()
+	file.close()
+	return content
+
+
+## Body of § 1.2a Script Size Budget, or "" after failing the test.
+func _budget_section() -> String:
+	var doc: String = _read_repo_doc(ARCH_DOC)
+	if doc.is_empty():
+		return ""
+	var collecting := false
+	var body := PackedStringArray()
+	for line: String in doc.split("\n"):
+		if collecting:
+			# Any heading at all ends the section; the next one is § 1.3.
+			if line.begins_with("#"):
+				break
+			body.append(line)
+		elif line.begins_with(BUDGET_HEADING):
+			collecting = true
+	if not collecting:
+		fail_test(
+			"%s has no `%s` heading — the budget guard cannot run" % [ARCH_DOC, BUDGET_HEADING]
+		)
+		return ""
+	return "\n".join(body)
+
+
+## True when `text` names `base_name` as a whole filename, not as the tail of a
+## longer one — `exploration.gd` must not be found inside
+## `exploration_interactions.gd`.
+func _names_file(text: String, base_name: String) -> bool:
+	var pattern := "(?<![A-Za-z0-9_])%s(?![A-Za-z0-9_])" % base_name.replace(".", "\\.")
+	var re: RegEx = RegEx.create_from_string(pattern)
+	assert_not_null(re, "regex for %s must compile" % base_name)
+	return re != null and re.search(text) != null
+
+
+func test_files_between_the_aim_and_the_maximum_are_justified_in_the_doc() -> void:
+	# 400-600 is allowed, so this is not a size assertion. It asserts that the
+	# doc and the tree agree about WHICH files are there: every band file must
+	# carry a written justification in § 1.2a. Restating the list here instead
+	# is what let the two drift apart in the first place.
+	var section: String = _budget_section()
+	if section.is_empty():
+		return  # _budget_section already failed the test
 	var counts: Dictionary = _script_line_counts()
-	var found: Array[String] = []
+	var still_undocumented: Dictionary = {}
 	for path: String in counts:
-		if int(counts[path]) > TARGET_SCRIPT_LINES:
-			found.append(path)
-	found.sort()
-	for path: String in found:
-		assert_has(
-			allowed,
-			path,
+		if int(counts[path]) <= TARGET_SCRIPT_LINES:
+			continue
+		var base: String = path.get_file()
+		if _names_file(section, base):
+			continue
+		still_undocumented[base] = true
+		assert_true(
+			UNDOCUMENTED_BAND_FILES.has(base),
 			(
 				(
-					"%s is over the %d-line aim; either extract from it or add it to 1.2a "
-					+ "with the reason and list it here"
+					"%s is over the %d-line aim but %s § 1.2a does not name it; "
+					+ "either extract from it, or write the justification into § 1.2a"
 				)
-				% [path, TARGET_SCRIPT_LINES]
+				% [path, TARGET_SCRIPT_LINES, ARCH_DOC]
+			)
+		)
+	# Shrink-only: an entry that is no longer needed must go, or the list turns
+	# back into the stale hand-kept copy this test replaced.
+	for base: String in UNDOCUMENTED_BAND_FILES:
+		assert_true(
+			still_undocumented.has(base),
+			(
+				(
+					"stale UNDOCUMENTED_BAND_FILES entry for %s — § 1.2a now names it "
+					+ "(or it dropped under %d lines); delete the entry"
+				)
+				% [base, TARGET_SCRIPT_LINES]
 			)
 		)
 

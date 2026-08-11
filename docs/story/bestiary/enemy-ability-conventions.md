@@ -7,7 +7,8 @@
 > ability power, status hit-rates, and buff magnitudes/durations. Rather than
 > invent values, every convention below is **derived from an already-documented
 > canon value** (a player spell, a combat formula, a status-table entry) and
-> cites its source to `file:line`. Enemy ability data in `game/data/enemies/`
+> cites its source as a `<file>.md § Heading` anchor, which survives edits to
+> the cited document. Enemy ability data in `game/data/enemies/`
 > references a rule here for each value it sets.
 
 This document defines (1) the JSON ability schema, and (2) the
@@ -63,15 +64,17 @@ stat already encodes its role (a Boar's high ATK makes Gore hit hard at
 
 Magic-typed single-target enemy abilities (Flicker = Flame, Spark = Ley,
 Shadow Touch = magic) use `spell_power 14`, the documented **Tier 1
-single-target spell power floor** for player attack spells (Ember Lance
-`magic.md:297`, Rime Shard `magic.md:343` — both *Spell power 14*). Tier 1
+single-target spell power floor** for player attack spells: Ember Lance
+`magic.md § Ember Lance > 'Spell power 14'` and Rime Shard
+`magic.md § Rime Shard > 'Spell power 14'`. Tier 1
 matches the Act I regular-enemy band (`palette-families.md` Tier 1 kits).
 
 ### 2.3 AoE elemental abilities — `spell_power: 9`
 
 Party-wide elemental abilities (Frost Burst) use `spell_power 9`.
-`magic.md:101` states *"AoE spell power uses approximately 60–70% of the
-single-target ranges above ... at Tiers 1-3 only"* (Tier 4 is exempt — magic.md
+`magic.md § MP Cost by Tier > 'AoE spell power'` states *"AoE spell power
+uses approximately 60–70% of the single-target ranges above ... at Tiers 1-3
+only"* (Tier 4 is exempt — magic.md
 § Tier 4 AoE Exemption; §2.3 only ever applies the rule at Tier 1-2, so the
 scoping does not change any value here). Applying 65% to the Tier 1 single-target floor of 14
 (§2.2) gives `round(14 × 0.65) = 9`. There is **no damage splitting** — each
@@ -85,21 +88,22 @@ with the same effect (its magnitude and duration are canon):
 
 | Enemy ability | Buffs | Mult | Duration | Player analog (source) |
 |---------------|-------|------|----------|------------------------|
-| Pack Howl | ATK | ×1.30 | 5 turns | Rallying Cry +30% ATK / 5t (`magic.md:979`) |
-| Guard Stance | DEF | ×1.40 | 5 turns | Ironhide +40% DEF / 5t (`magic.md:935`) |
-| Coil | SPD | ×1.50 | 5 turns | Quickstep +50% / 5t (`magic.md:957`) |
-| Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md:946`) |
+| Pack Howl | ATK | ×1.30 | 5 turns | Rallying Cry +30% ATK / 5t (`magic.md § Rallying Cry`) |
+| Guard Stance | DEF | ×1.40 | 5 turns | Ironhide +40% DEF / 5t (`magic.md § Ironhide`) |
+| Coil | SPD | ×1.50 | 5 turns | Quickstep +50% / 5t (`magic.md § Quickstep`) |
+| Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md § Wardglass`) |
 
 `scope` is `"self"` (buffs only the caster) or `"pack"` (buffs every living
 enemy sharing the caster's **`id`** — its own kind, e.g. Pack Howl across all
-Wayward Wolves in the encounter, per `palette-families.md:435` *"ATK up for all
-wolves"*). Matching by `id` rather than `type` avoids buffing unrelated
+Wayward Wolves in the encounter, per
+`palette-families.md § Wolf Family > 'ATK up for all wolves'`). Matching by `id` rather than `type` avoids buffing unrelated
 same-type enemies (a Pack Howl should not strengthen the boars and serpents
 sharing a Beast-type encounter).
 
 ### 2.5 Offensive status hit-rate — `status_rate: 70`
 
-Enemy status base-rates are unspecified. `magic.md:107` documents the player
+Enemy status base-rates are unspecified.
+`magic.md § Balance Rules > 'base hit rate'` documents the player
 *standard* band: *"Status spells have a base hit rate of 60–80%."* (magic.md
 § Derived Rules adds a severe 45-59% band for combat-removal statuses; enemy
 offensive statuses here are all standard-band.) Enemy offensive
@@ -108,12 +112,14 @@ as player status spells (`DamageCalc.roll_status`, combat-formulas.md
 § Status Spell Resolution):
 Stage 1 `effective = base_rate · MAG/(MAG+MDEF)`, Stage 2 magic-evasion
 `(MDEF+SPD)/8` capped at 40%. The status's **effect** (e.g. Poison = 8% max-HP
-per turn until cured, `magic.md:1537`) is already canon in
+per turn until cured, `magic.md § Status Effect Reference > 'Poison'`) is
+already canon in
 `status_effects.gd` / `StatusEffects.resolve_duration`.
 
 ### 2.6 AoE-on-death (Shard Burst) — non-elemental, `spell_power: 9`
 
-`palette-families.md:90` gives only *"Shard Burst (AoE on death)"* — element,
+`palette-families.md § Crystal Family > 'Shard Burst'` gives only
+*"Shard Burst (AoE on death)"* — element,
 power, and status all silent. It resolves as a `target:"all"`, `type:"magic"`,
 `aoe_on_death:true` ability at the §2.3 AoE power (`spell_power 9`), element
 **non-elemental** (`""`). Non-elemental is chosen because the burst's element
@@ -140,32 +146,40 @@ with regular enemies, is **silent on damage numbers** and never defines a
 
 ### 3.1 Boss-tier damage mapping
 
-Act I bosses are Lv 8–12, which the `magic.md:96` tier table places in **Tier 1**
+Act I bosses are Lv 8–12, which the `magic.md § MP Cost by Tier` table places
+in **Tier 1**
 (Lv 1–12). A boss, however, should hit harder than a same-level regular enemy, so
 their offensive magic takes a deliberate **one-tier premium**: it uses the
 documented **Tier 2** player spell powers rather than the Tier 1 floor (the §2.2
 floor of 14 used for regular enemies):
 
 - **Single-target magic** → `spell_power 32` (Tier 2 single-target, e.g.
-  Kindlepyre `magic.md:308` *Spell power 32*).
+  Kindlepyre `magic.md § Kindlepyre > 'Spell power 32'`).
 - **AoE magic** → `spell_power 24` (Tier 2 AoE ≈ 65–70% of single, e.g. Scorch
-  Sweep `magic.md:330` *Spell power 24*; rule `magic.md:101`).
+  Sweep `magic.md § Scorch Sweep > 'Spell power 24'`; rule
+  `magic.md § MP Cost by Tier > 'AoE spell power'`).
 - **Physical** (`crystal_slam`, `stone_slam`, `pounce`, `tail_swipe`,
   `tail_sweep`) → `ability_mult 1.0`. Bosses already carry high ATK (~40), so
   a "heavy physical" reads as heavy at 1.0 — consistent with §2.1 (descriptors
   are not bumped above 1.0).
 - **Explicit non-damage values are canon and used as-stated:** Vein Guardian
-  Reconstruct **+300 HP** (`bosses.md:190`), Drowned Sentinel Barnacle Shield
-  **DEF +100% for 2 turns** (`bosses.md:220`; `buff {stat:def, mult:2.0,
+  Reconstruct **+300 HP** (`bosses.md § Vein Guardian > 'Reconstruct'`),
+  Drowned Sentinel Barnacle Shield
+  **DEF +100% for 2 turns**
+  (`bosses.md § Drowned Sentinel > 'Barnacle Shield'`; `buff {stat:def,
+  mult:2.0,
   duration:2}`), Corrupted Fenmother add cap **2**.
 - **Element remap:** Corrupted Fenmother's Water Jet is "water magic"
-  (`bosses.md:257`), but the canonical element wheel has no Water (—, Flame,
+  (`bosses.md § Corrupted Fenmother > 'Water Jet'`), but the canonical element
+  wheel has no Water (—, Flame,
   Frost, Storm, Earth, Ley, Spirit, Void). It maps to **Frost** — the closest
-  fit for her ice/water theme and her own Frost resistance (`bosses.md:239`).
+  fit for her ice/water theme and her own Frost resistance
+  (`bosses.md § Corrupted Fenmother > 'Frost'`).
 
 ### 3.2 Threat (highest-threat targeting)
 
-`bosses.md:94-98` lists `highest threat` as a target selector but never defines
+`bosses.md § Conditional Priority Lists > 'highest threat'` lists
+`highest threat` as a target selector but never defines
 how threat is measured. Convention: **threat = cumulative damage a party member
 has dealt to enemies this battle** (tracked in `BattleState.threat_dealt`,
 incremented on every landed player hit). `highest_threat` selects the living
@@ -178,7 +192,9 @@ boss hunt the party's damage dealer.
 A move with a `telegraph` string is a **two-turn** ability. On the **charge
 turn** the boss emits the telegraph message and deals **no damage** (recorded in
 `enemy.ai_state.charging`); on the **next turn** it resolves and deals damage.
-Per `bosses.md:160-163,201-205` the telegraph is informational only — the boss
+Per `bosses.md § Ember Drake > '1-turn charge'` and
+`bosses.md § Vein Guardian > '1-turn telegraph'` the telegraph is
+informational only — the boss
 is not untargetable or more vulnerable during the charge; the player mitigates
 via the free row-swap. Act I 1-turn telegraphs are **not interruptible**
 (interrupt windows first appear on later 2–3-turn charges).
@@ -196,7 +212,8 @@ key set** (no expression evaluation): `every_n` (turn_counter % N == 0),
 `hp_below` (handled by phase `hp_above` bands), `adds_below` (living adds <
 N), `last_move`, `position` (a living member is in that row), `once` (a named
 one-time gate stored in `ai_state`), and `default` (always matches). This
-covers every condition the documented format uses (`bosses.md:83-92`).
+covers every condition the documented format uses
+(`bosses.md § Conditional Priority Lists > 'Condition types'`).
 
 ---
 
