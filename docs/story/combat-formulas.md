@@ -668,7 +668,7 @@ authoritative for enemy stats.
 
 AoE spells have ~60–70% of single-target spell power at **Tiers 1–3 only** (Tier 4 ultimates keep the full 85–120 band even when they target all enemies, which is why the § Magic Damage worked example above uses Ley Ruin, AoE, at the full power 100). No damage splitting — each enemy takes the full AoE damage. AoE is valuable for clearing groups; single-target is better for bosses.
 
-**[magic.md](magic.md) is authoritative for this rule** — for the per-tier power bands, for the AoE reduction, and for its Tier 4 exemption. This section restates it so the combat pipeline reads in one place; when the two disagree, magic.md wins and this paragraph is the bug. `game/tests/test_spell_balance.gd` asserts the bands and the exemption against `game/data/spells/`, so the rule is enforced on magic.md's side, not here.
+**[magic.md](magic.md) is authoritative for this rule** — for the per-tier power bands, for the AoE reduction, and for its Tier 4 exemption. This section restates it so the combat pipeline reads in one place; when the two disagree, magic.md wins and this paragraph is the bug. `game/tests/test_spell_balance.gd` asserts the bands and the exemption against `game/data/spells/`. Note what that does and does not guard: it holds the **shipped spell data** to the rule, using bands hard-coded in the test. It does not read this file or magic.md, so editing either prose copy alone will not fail the suite — the doc and the test would diverge silently. Changing the rule means changing magic.md, then this restatement, then the test.
 
 ---
 
