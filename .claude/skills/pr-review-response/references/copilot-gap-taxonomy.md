@@ -566,3 +566,34 @@ Copilot's implied code change with call-graph evidence and fixed the comment
 instead, and #284's agent proved Copilot's scenario unreachable before
 applying the fix on separate grounds. Both also declined to add tests they
 could not make fail — the #278 lesson propagating within the same session.
+
+### PR #291 (2026-08-11) — 1 Copilot comment, 1 new gap
+
+Phase 1 bundle A2 (#269 save position, #164 materials bucket, #184 Caldera
+discount). Reviewed by two adversarial lenses plus a fix pass before Copilot.
+
+| Comment | Category | Verdict |
+|---------|----------|---------|
+| `lookup_material()` "re-reads/parses the JSON each time", now called for every add/remove/consume | **Newly-central helper cost (NEW)** | **Premise incorrect, residual real** |
+
+**The stated mechanism was wrong.** `DataManager.load_json()` is memoised by
+path (`data_manager.gd:18-19`), so there is no repeated disk read and no
+re-parse — the table is parsed once per run. What is actually left is a linear
+scan of 87 entries per lookup: real in kind, ~3 orders of magnitude smaller
+than described, and not measurable in play since inventory operations happen on
+drops, purchases and item use rather than per frame.
+
+Answered with a reply and filed as #308 rather than folded into the PR, because
+`lookup_consumable()` has the identical shape and doing it properly means
+indexing both and agreeing on invalidation with `DataManager.clear_cache()`
+(which the GUT suite calls in `before_each`). Step 6b was therefore skipped per
+its own carve-out — the comment required a reply, not a file change.
+
+**The genuine gap it exposed:** our own reviewers found the two real defects on
+this PR (the MAT tab crashing on `gold_pouch`'s `"sell_price": null`, and a
+12-row list that made a 15-material inventory unreachable) but none of them
+asked what `bucket_for_item()` costs per call after being promoted to the
+routing rule for every inventory mutation. New checklist section
+**Newly-Central Helper Cost** added to godot-review — including the instruction
+to identify the real mechanism before acting, since a finding that names the
+wrong one produces the wrong fix.

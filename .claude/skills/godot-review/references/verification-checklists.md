@@ -190,6 +190,18 @@ Reference for all review agents. Check every applicable item.
 - [ ] `DirAccess.list_dir_begin()` yields "." and ".." entries. Any recursive directory scan MUST filter these out before recursing, or the function will stack overflow by recursing into the same directory infinitely. Use `if file_name == "." or file_name == "..": continue`. (PR #147: _scan_for_bare_viewport_calls lacked this filter)
 - [ ] Doc comments (`##`) must be placed directly above the function they describe. When inserting new functions above existing documented functions, verify the doc comment still precedes the correct function. (PR #147: _consume_input inserted above _close, stealing its doc comment)
 
+### Newly-Central Helper Cost (from Copilot PR #291 gap analysis)
+
+**The trap:** a PR promotes a helper to "the single rule" for some operation —
+which is good design — but nobody asks what it costs *per call* now that it
+sits on a hot path it was never on. On #291 `bucket_for_item()` became the
+routing rule for every `add_item` / `remove_item` / `consume_item`, and it
+calls a helper that linearly scans an 87-entry table.
+
+- [ ] When a PR makes a helper the single source of truth for an operation, list its new callers and ask what the per-call cost is on the busiest one. "It is called once today" is not the question — the question is what calls it after this PR.
+- [ ] Distinguish the real cost from the assumed one before acting. `DataManager.load_json()` is memoised by path, so a `load_*` call in a loop is an array return, NOT a disk read or a re-parse. A performance finding that names the wrong mechanism will get the wrong fix.
+- [ ] A linear scan over a small fixed table is usually fine; say so explicitly with the size rather than silently accepting it, so the next reader knows it was considered.
+
 ### Non-Failing Regression Tests (from Copilot PR #278 gap analysis)
 
 **The trap:** a regression test that CANNOT FAIL in the case it exists to
