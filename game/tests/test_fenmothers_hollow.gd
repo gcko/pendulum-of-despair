@@ -293,10 +293,11 @@ func test_overworld_has_fenmothers_hollow_spawn() -> void:
 
 
 func test_exploration_handles_required_flag() -> void:
-	var text: String = _read_file("res://scripts/core/exploration.gd")
+	# Transition-area gating moved to ExplorationInteractions in GAP-087.
+	var text: String = _read_file("res://scripts/core/exploration_interactions.gd")
 	assert_true(
 		text.contains("required_flag"),
-		"exploration.gd should check required_flag in transition handling",
+		"exploration_interactions.gd should check required_flag in transition handling",
 	)
 
 

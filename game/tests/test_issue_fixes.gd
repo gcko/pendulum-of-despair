@@ -32,6 +32,9 @@ const MenuOverlayScript: GDScript = preload("res://scripts/ui/menu_overlay.gd")
 const SaveLoadScript: GDScript = preload("res://scripts/ui/save_load.gd")
 const BattleMgrScript: GDScript = preload("res://scripts/combat/battle_manager.gd")
 const BattleItemScript: GDScript = preload("res://scripts/combat/battle_item_command.gd")
+const ExplorationInteractionsScript: GDScript = preload(
+	"res://scripts/core/exploration_interactions.gd"
+)
 const InventoryHelpers: GDScript = preload("res://scripts/util/inventory_helpers.gd")
 
 
@@ -401,8 +404,11 @@ func test_helpers_teardown_overlay() -> void:
 
 
 func test_exploration_line_count_under_threshold() -> void:
+	# Tightened from 750 after GAP-087 pulled the screen transitions and the
+	# interaction handlers into their own collaborators. Ratchet it down again
+	# rather than up: growth belongs in a collaborator, not here.
 	var lines: int = ExplorationScript.source_code.count("\n")
-	assert_lt(lines, 750, "exploration.gd should stay under 750 lines")
+	assert_lt(lines, 620, "exploration.gd should stay under 620 lines")
 
 
 func test_game_manager_overlay_enum_has_shop() -> void:
@@ -908,14 +914,24 @@ func test_overlay_swap_no_gap() -> void:
 func test_exploration_exit_tree_disconnects_signals() -> void:
 	# Structural: exploration.gd should have _exit_tree that disconnects
 	# pending one-shot callbacks from GameManager.overlay_state_changed.
+	# The dialogue one-shot itself moved to ExplorationInteractions in GAP-087,
+	# so _exit_tree now reaches it through _disconnect_pending_signals.
 	var source: String = ExplorationScript.source_code
 	assert_true(
 		"func _exit_tree()" in source,
 		"exploration.gd should have _exit_tree",
 	)
 	assert_true(
-		"_on_dialogue_closed_check_party" in source.substr(source.find("func _exit_tree()")),
-		"_exit_tree should disconnect _on_dialogue_closed_check_party",
+		"_disconnect_pending_signals()" in source.substr(source.find("func _exit_tree()")),
+		"_exit_tree should call _disconnect_pending_signals",
+	)
+	var interactions: String = ExplorationInteractionsScript.source_code
+	var teardown_pos: int = interactions.find("func disconnect_pending_signals()")
+	assert_gt(teardown_pos, 0, "ExplorationInteractions should have disconnect_pending_signals")
+	var teardown_body: String = interactions.substr(teardown_pos)
+	assert_true(
+		"on_dialogue_closed_check_party" in teardown_body,
+		"disconnect_pending_signals should drop on_dialogue_closed_check_party",
 	)
 
 
