@@ -17,17 +17,32 @@ core mechanic.
 
 > **Sanctioned overworld appearance (#270):** Ley Vermin and Unstable
 > Crystal are ley-corrupted creatures, not mine-dwellers — the Ember Vein
-> is simply where the party first meets them. Both legitimately roam the
-> ley-scarred terrain above the vein, so their Location(s) entries below
-> also list the overworld zones they appear in per
-> `game/data/encounters/overworld.json` (Ley Vermin: Ley-Scarred Plains,
-> Valdris Highlands; Unstable Crystal: Ley-Scarred Plains). Without them
-> the Ley-Scarred Plains zone would have no ley-themed enemy at all. This
-> is a deliberate, documented widening of the Location column — the same
-> kind of sanctioned exception as the GAP-028 tutorial-encounter note in
-> the Ironmouth Docks section below — and **not** an authoring error to
-> be "corrected" by removing them from the overworld tables. The
-> remaining Ember Vein enemies stay dungeon-confined.
+> is simply where the party first meets them. Ley corruption is not
+> confined to the vein, and the encounter design already says so:
+> [biomes.md](../biomes.md) lists "ley-corrupted wildlife" in the Valdris
+> Highlands encounter feel. Their Location(s) entries below therefore also
+> list the overworld zones they appear in per
+> `game/data/encounters/overworld.json` — Ley Vermin: `ley_scarred_plains`,
+> `valdris_highlands`; Unstable Crystal: `ley_scarred_plains`. Without them
+> that zone would have no ley-themed enemy at all. This is a deliberate,
+> documented widening of the Location column, **not** an authoring error to
+> be "corrected" by removing them from the overworld tables.
+>
+> Two naming caveats. "Ley-Scarred Plains" is a zone label from
+> `overworld.json`, not a canonical region: it has no entry in
+> [geography.md](../geography.md) or [locations.md](../locations.md), and
+> its missing design-table row is tracked in #265. Do not confuse it with
+> the **Ley Scar**, a different place — the Act III grinding zone inside
+> the Pallor Wastes. The zone id is used here rather than a proper noun
+> for that reason.
+>
+> The other Ember Vein enemies (Tomb Mite, Restless Dead, Mine Shade, Bone
+> Warden, Ember Wisp) appear in no other encounter table and stay
+> dungeon-confined. **Not reconciled here:** Ley Vermin and Unstable
+> Crystal also roll in `thornvein_grotto`
+> (`game/data/encounters/caves_and_grottos.json`), which neither the
+> column below nor their `locations` arrays name. That is the same
+> unmirrored-location class as #270 and is deferred to the follow-up sweep.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
@@ -89,48 +104,83 @@ For full AI scripts, phase mechanics, and scripted events, see
 
 ## Overworld Act I
 
-Encounters between Valdris and Fenmother's Hollow. Overworld enemies are
-generally less dangerous than dungeon enemies at the same level.
+Overworld enemies of the Valdris region and the outer Thornmere band.
+Overworld enemies are generally less dangerous than dungeon enemies at
+the same level. This table is also the roster source for the
+`thornmere_wilds` zone (see the note below); `ley_scarred_plains` draws
+partly on Ember Vein enemies instead, documented in that section above.
 
 > **Thornmere Wilds roster (#270):** the Thornmere Wilds zone
 > (`thornmere_wilds` in `game/data/encounters/overworld.json`) draws its
 > four groups from the forest members of this roster — Wayward Wolf,
 > Wild Boar, Forest Sprite, and Thornback Beetle — so those four list
 > Thornmere Wilds among their locations. It previously drew on Marsh
-> Serpent and Drowned Bones, which are confined to Fenmother's Hollow;
-> that was an authoring error, corrected in the data rather than
-> sanctioned here.
+> Serpent and Drowned Bones.
+>
+> **Why that was wrong, precisely.** `thornmere_wilds` carries
+> `danger_increment: 148`, which is [geography.md](../geography.md)'s
+> **Forest (light)** band ("Valdris border woods, Wilds edges"); the
+> dense-forest band is 380, and that is the separate `deep_thornmere`
+> zone. The Wilds region does contain marshland, but the marsh has its
+> own zone — `duskfen_marshland`, increment 380 — which
+> `overworld_zones.json` matches *before* the outer band. So the marsh
+> pair were not "marsh creatures in a forest region"; they were marsh
+> creatures in the **light-forest zone** while their own zone sat next
+> to it. Drowned Bones is genuinely confined to Fenmother's Hollow
+> F1–F2. Marsh Serpent is **not** — it also rolls in `duskfen_marshland`
+> and `duskfen_hollow` — so "confined" applies to the pair only within
+> the Act I overworld, not absolutely.
 >
 > The admitted members are exactly those whose Location column already
 > names a forest habitat (Valdris Forest or Forest Edge). Plains Hare
-> has none — it is listed only for Valdris Plains — and Road Bandit
-> works the Valdris Road, which the Wilds do not have
-> ([geography.md](../geography.md): "The Wilds have no safe corridors
-> -- there are no roads"). Wild Boar qualifies on Forest Edge despite
-> also ranging the plains.
+> has none — it is listed only for Valdris Plains. Road Bandit is
+> excluded because Humanoid bandits need traffic to rob, and the roads
+> have their own `roads` zone; note this is a zone-scoped judgement, not
+> a claim that the Wilds are roadless — canon documents the Wildwood
+> Trail, the Diplomatic Road and the Wilds Gate Pass through the region,
+> and Wayward Wolf's own row lists Duskfen Road. Wild Boar qualifies on
+> Forest Edge despite also ranging the plains.
 >
 > **Reward effect of the swap.** Weight-expected reward per encounter
 > rises from 27.8 exp / 13.4 gold to 49.1 exp / 23.9 gold while
 > expected group HP falls from 360 to 332. This is deliberate. The
 > marsh pair were high-HP, low-reward enemies, which made the old
-> Wilds a uniquely stingy zone: 0.077 exp per point of enemy HP
-> against 0.145 in Valdris Highlands, 0.154 in the Ley-Scarred Plains
-> and 0.152 in Aelhart Valley. The new roster lands at 0.148, inside
-> that Act I band. Because the encounter increment is unchanged and
-> fight length tracks enemy HP, reward *per unit of play time* is now
-> in line with the rest of the act rather than half of it; the higher
-> per-encounter figure reflects the Wilds' larger fights. The Wilds
-> are therefore not an XP farm — that role stays with the Ley Scar in
-> Act III ([progression.md](../progression.md)).
+> Wilds the stingiest of the Act I *regional* zones: 0.077 exp per
+> point of enemy HP against 0.145 in Valdris Highlands, 0.154 in
+> `ley_scarred_plains` and 0.152 in Aelhart Valley. The new roster
+> lands at 0.148, inside that band. (The `roads` zone is lower still at
+> 0.056, but it is `act: all` and tuned around the Act II Road Viper,
+> so it is not a like-for-like peer.) Because the encounter increment
+> is unchanged and fight length tracks enemy HP, reward *per unit of
+> play time* is now in line with the rest of the act rather than half
+> of it. The Wilds are therefore not an XP farm — that role stays with
+> the Ley Scar in Act III ([progression.md](../progression.md)).
 >
-> **Adjacent zones.** Thornback Beetle and Wayward Wolf also roll
-> in `valdris_highlands`, and Thornback Beetle in `ley_scarred_plains`,
-> so both list those zones too. A forest beetle and a wolf pack ranging
-> the adjacent highland and plains terrain need no special sanction.
-> Not reconciled here, and out of scope for #270: `aelhart_valley`
-> (Forest Sprite, Wild Boar, Plains Hare) and `roads` (Plains Hare,
-> Road Bandit) still carry Location cells that name the region rather
-> than the zone.
+> **The hardest fight got harder.** Expected group HP falls, but the
+> rare format-4 pack grows from 3 enemies / 491 HP to 4 / 536 HP, and
+> the weight-expected enemy *count* rises 2.06 → 2.94. The party meets
+> the Wilds straight out of Ironmouth at roughly Lv 5–6, so the routine
+> encounter is easier and the rare one is not.
+>
+> **Adjacent zones.** Thornback Beetle and Wayward Wolf also roll in
+> `valdris_highlands`; Thornback Beetle additionally rolls in
+> `ley_scarred_plains`. Each lists the zones it actually appears in — a
+> forest beetle and a wolf pack ranging the adjacent highland and plains
+> terrain need no special sanction.
+>
+> **Not reconciled here, and out of scope for #270**, which names only
+> `thornmere_wilds`, `ley_scarred_plains` and `valdris_highlands`. Each
+> is the same unmirrored-location class and is deferred to a follow-up
+> sweep:
+> - `duskfen_marshland` rolls Marsh Serpent, Bog Leech and Swamp Lurker,
+>   none of which list it
+> - `duskfen_hollow` and `thornvein_grotto`
+>   (`caves_and_grottos.json`) likewise
+> - `wilds_gate_pass` (`mountain_passes.json`) rolls Wayward Wolf, Wild
+>   Boar and Road Bandit, none of which list it
+> - `aelhart_valley` (Forest Sprite, Wild Boar, Plains Hare) and `roads`
+>   (Plains Hare, Road Bandit) carry Location cells that name the region
+>   rather than the zone
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|

@@ -10,7 +10,10 @@ const THORNMERE_ROSTER: Array[String] = [
 	"thornback_beetle",
 ]
 
-## Location-confined to Fenmother's Hollow F1–F3; must not roam the Wilds.
+## Marsh enemies that must not roam the Act I light-forest zone. Drowned Bones
+## is confined to Fenmother's Hollow F1–F2; Marsh Serpent also rolls in
+## duskfen_marshland and duskfen_hollow, so it is not confined absolutely —
+## it simply belongs to the marsh zones, not this one.
 const FENMOTHER_CONFINED: Array[String] = ["marsh_serpent", "drowned_bones"]
 
 ## enemy_id -> enemy Dictionary, built once per run by _build_enemy_index().
@@ -161,7 +164,9 @@ func test_thornmere_wilds_encounter_math_unchanged() -> void:
 		)
 		var size: int = (group.get("enemies", []) as Array).size()
 		assert_gte(size, 2, "group %d has at least 2 enemies" % i)
-		assert_lte(size, 4, "group %d fits the 4-slot enemy formation" % i)
+		# combat-formulas.md allows up to 6 enemies per encounter; this zone's
+		# groups are 2-4, which is what "unchanged" means here.
+		assert_lte(size, 6, "group %d stays within the 6-enemy encounter cap" % i)
 
 
 func test_thornmere_wilds_stays_a_tier_two_step_up() -> void:
@@ -303,6 +308,7 @@ func _zone_enemy_ids(zone: Dictionary) -> Dictionary:
 ## Weight-averaged total of one integer enemy stat across a zone's groups.
 func _expected_group_stat(zone: Dictionary, index: Dictionary, key: String) -> float:
 	var total: float = 0.0
+	var weight_sum: float = 0.0
 	for group: Variant in zone.get("groups", []):
 		if not group is Dictionary:
 			continue
@@ -310,8 +316,16 @@ func _expected_group_stat(zone: Dictionary, index: Dictionary, key: String) -> f
 		for enemy_id: Variant in (group as Dictionary).get("enemies", []):
 			var enemy: Dictionary = index.get(enemy_id, {})
 			group_total += int(enemy.get(key, 0))
-		total += float(group_total) * float((group as Dictionary).get("weight", 0.0)) / 100.0
-	return total
+		var weight: float = float((group as Dictionary).get("weight", 0.0))
+		total += float(group_total) * weight
+		weight_sum += weight
+	# Divide by the actual weight sum rather than a hardcoded 100. The weights
+	# total 100 today, but a hardcoded divisor would let a future weight edit
+	# silently skew every documented expected value instead of failing.
+	if weight_sum <= 0.0:
+		fail_test("zone '%s' has no weighted groups" % zone.get("zone_id", "?"))
+		return 0.0
+	return total / weight_sum
 
 
 ## Weight-averaged total HP of a zone's encounter groups.
