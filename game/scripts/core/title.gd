@@ -68,6 +68,7 @@ func _confirm_selection() -> void:
 				push_warning("Title: Exploration scene not found")
 				_input_active = true
 				return
+			NPC.reset_dialogue_cycles()
 			PartyState.initialize_new_game()
 			GameManager.change_core_state(GameManager.CoreState.EXPLORATION, {"new_game": true})
 		MenuOption.CONTINUE:

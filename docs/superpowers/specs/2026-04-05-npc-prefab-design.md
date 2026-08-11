@@ -115,6 +115,8 @@ return {}  # no match (should never happen with a default entry)
 
 Note: entries with `condition: null` are fallback entries. They should be at the END of the array so higher-priority conditioned entries are checked first. If a null-condition entry appears before conditioned entries, it will always match first (first-match-wins).
 
+> **Superseded (2026-08, GAP-042).** The last sentence no longer holds, and the pseudocode above is not what `DialogueCondition.resolve_stack` does. Unconditioned entries are collected as a fallback *set* rather than competing for position, so a `[default]` sitting above a conditioned entry does not win — which is what 28 of the shipped `npc_*.json` files rely on. When no condition matches, all the defaults are returned and `npc.gd` rotates through them one per interaction; entries sharing the winning condition rotate the same way. See dialogue-system.md Section 3.2.
+
 ### Condition Evaluation
 
 ```gdscript

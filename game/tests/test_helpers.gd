@@ -28,6 +28,7 @@ static func teardown_overlay() -> void:
 ## Reset common game state for test isolation.
 static func reset_game_state() -> void:
 	teardown_overlay()
+	NPC.reset_dialogue_cycles()
 	GameManager.cutscene_active = false
 	GameManager.transition_data = {}
 	EventFlags.clear_all()

@@ -337,4 +337,7 @@ func _full_restore(_data: Dictionary) -> void:
 
 
 func _apply_save_data(data: Dictionary) -> void:
+	# Ambient NPC dialogue cursors are session state, not save state — a loaded
+	# game starts each NPC on its first default line.
+	NPC.reset_dialogue_cycles()
 	PartyState.load_from_save(data)

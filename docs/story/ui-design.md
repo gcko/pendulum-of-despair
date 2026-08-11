@@ -862,6 +862,10 @@ Small window prompt: **Buy** | **Sell** | **Exit**. Hand cursor to select.
 
 - Single interaction per confirm press. Dialogue plays, ends.
 - Re-talking repeats current dialogue (may change based on event flags).
+  The exception is an NPC with several lines authored for the same
+  state — several `[default]` entries, or several sharing one condition
+  — which rotates through them one per interaction. See
+  dialogue-system.md Section 3.2, "Multiple defaults".
 - No repeatable dialogue trees. Single linear exchanges with
   occasional choice prompts.
 

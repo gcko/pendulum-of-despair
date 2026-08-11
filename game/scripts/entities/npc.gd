@@ -3,8 +3,9 @@ extends Area2D
 ## NPC entity with flag-gated dialogue priority stack.
 ##
 ## Loads dialogue entries from DataManager, resolves the priority
-## stack on interact (first-match-wins), and emits the resolved
-## dialogue data as a signal. Does not push overlays directly —
+## stack on interact (first-match-wins over the conditioned entries,
+## rotating through whichever set that resolves to), and emits the
+## resolved dialogue data as a signal. Does not push overlays directly —
 ## exploration scene handles that ("call down, signal up").
 ##
 ## Usage: instance npc.tscn, call initialize("bren").
@@ -13,6 +14,14 @@ extends Area2D
 signal npc_interacted(npc_id: String, dialogue_data: Dictionary)
 ## Emitted when walk_to() completes.
 signal walk_complete
+
+## Cursor into each NPC's currently resolved dialogue set — its unconditioned
+## defaults, or the group of entries sharing whichever condition won the stack.
+## Keyed by npc_id. Session-scoped on purpose: it is static so an NPC keeps its
+## place in the rotation across map reloads and battles, and it is deliberately
+## NOT written to save data — which line comes next within a single story state
+## is flavour, not progression. Cleared by [method reset_dialogue_cycles].
+static var _dialogue_cycle_indices: Dictionary = {}
 
 ## NPC identifier used for dialogue lookup.
 var npc_id: String = ""
@@ -28,6 +37,13 @@ var _walk_tween: Tween = null
 ## Child node references.
 @onready var _sprite: Sprite2D = $Sprite2D
 @onready var _anim_player: AnimationPlayer = $AnimationPlayer
+
+
+## Clear every NPC's ambient dialogue cursor so a fresh playthrough starts on
+## the first default line. Called when a new game starts and when a save is
+## loaded, since the cursor is session state rather than save state.
+static func reset_dialogue_cycles() -> void:
+	_dialogue_cycle_indices.clear()
 
 
 ## Initialize the NPC with an ID. Loads dialogue from DataManager.
@@ -53,99 +69,44 @@ func initialize(p_npc_id: String) -> void:
 func interact() -> void:
 	if npc_id == "":
 		return
-	var entry: Dictionary = get_current_dialogue()
+	var entry: Dictionary = _take_current_dialogue()
 	if entry.is_empty():
 		return
 	npc_interacted.emit(npc_id, entry)
 
 
-## Get the current dialogue entry based on priority stack resolution.
-## First pass: check conditioned entries (skip null/empty conditions).
-## Second pass: return last null-condition entry as fallback.
-## This handles data where default entries appear before conditioned ones.
+## Peek at the entry this NPC would serve right now, without advancing the
+## dialogue cycle. Returns {} when the NPC has nothing to say.
+##
+## A matched condition wins outright (first-match-wins, dialogue-system.md
+## 3.2); when several entries share that winning condition they rotate as a
+## group. Otherwise the NPC serves one of its unconditioned defaults — an NPC
+## may have several, and they take turns rather than collapsing to the last
+## one. See [method _take_current_dialogue].
 func get_current_dialogue() -> Dictionary:
-	var fallback: Dictionary = {}
-	for entry: Dictionary in dialogue_entries:
-		var condition: Variant = entry.get("condition")
-		if condition == null or condition == "":
-			fallback = entry
-			continue
-		if _evaluate_condition(condition):
-			return entry
-	return fallback
+	var candidates: Array = DialogueCondition.resolve_stack(dialogue_entries)
+	if candidates.is_empty():
+		return {}
+	return candidates[_cycle_index() % candidates.size()]
 
 
-## Evaluate a condition expression against current game state.
-## Supports: null (always true), binary flags, numeric comparisons,
-## party_has(), and AND combinations.
-func _evaluate_condition(condition: Variant) -> bool:
-	# Null or empty = always true (default/fallback entry).
-	if condition == null or condition == "":
-		return true
-
-	# Must be a string to parse further.
-	if not (condition is String):
-		return false
-
-	var cond_str: String = condition
-
-	# AND combinations: split and evaluate each part.
-	if " AND " in cond_str:
-		var parts: PackedStringArray = cond_str.split(" AND ")
-		for part: String in parts:
-			if not _evaluate_condition(part.strip_edges()):
-				return false
-		return true
-
-	# party_has(character) — check if character is in active party.
-	if cond_str.begins_with("party_has("):
-		var end_idx: int = cond_str.find(")")
-		if end_idx < 0:
-			return false
-		var char_id: String = cond_str.substr(10, end_idx - 10).strip_edges()
-		return PartyState.has_member(char_id)
-
-	# Numeric/string comparison operators.
-	var operators: Array[String] = [">=", "<=", "==", "!=", ">", "<"]
-	for op: String in operators:
-		var op_idx: int = cond_str.find(op)
-		if op_idx > 0:
-			var flag_name: String = cond_str.substr(0, op_idx).strip_edges()
-			var value_str: String = cond_str.substr(op_idx + op.length()).strip_edges()
-			return _compare_flag(flag_name, op, value_str)
-
-	# Binary flag (simplest case).
-	return bool(EventFlags.get_flag(cond_str))
+## Serve the current entry and advance the dialogue cycle past it, so the next
+## interaction surfaces the next line in the resolved set and wraps at the end.
+func _take_current_dialogue() -> Dictionary:
+	var candidates: Array = DialogueCondition.resolve_stack(dialogue_entries)
+	if candidates.is_empty():
+		return {}
+	var index: int = _cycle_index() % candidates.size()
+	# Any set of two or more rotates — the defaults, or a group of entries
+	# sharing the winning condition. A story state with exactly one authored
+	# line resolves to one candidate, so the cursor stays put while it holds.
+	if candidates.size() > 1:
+		_dialogue_cycle_indices[npc_id] = (index + 1) % candidates.size()
+	return candidates[index]
 
 
-## Compare a flag value against an expected value using an operator.
-func _compare_flag(flag_name: String, op: String, value_str: String) -> bool:
-	var flag_val: Variant = EventFlags.get_flag(flag_name)
-	var result: bool = false
-	if value_str.is_valid_int():
-		var expected: int = value_str.to_int()
-		var actual: int = int(flag_val) if flag_val != null else 0
-		match op:
-			">=":
-				result = actual >= expected
-			"<=":
-				result = actual <= expected
-			"==":
-				result = actual == expected
-			"!=":
-				result = actual != expected
-			">":
-				result = actual > expected
-			"<":
-				result = actual < expected
-	else:
-		var actual_str: String = str(flag_val) if flag_val != null else ""
-		match op:
-			"==":
-				result = actual_str == value_str
-			"!=":
-				result = actual_str != value_str
-	return result
+func _cycle_index() -> int:
+	return int(_dialogue_cycle_indices.get(npc_id, 0))
 
 
 ## Lightweight init for cutscene actors — loads sprite but skips dialogue.
