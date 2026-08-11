@@ -15,7 +15,11 @@ python3 "$GATE_DIR/check_stale_counts.py"
 echo "=== Pre-push: Scene reference validation ==="
 python3 "$GATE_DIR/check_scene_refs.py"
 
-# === QUALITY GATE G: GUT unit tests ===
+# === QUALITY GATE G: Doc citation integrity ===
+echo "=== Pre-push: Doc citation integrity ==="
+python3 "$GATE_DIR/check_doc_citations.py"
+
+# === QUALITY GATE H: GUT unit tests ===
 # Run all GUT tests headless. Requires Godot binary on PATH or at
 # /Applications/Godot.app (macOS). Skip gracefully if Godot not found.
 GODOT_BIN=""

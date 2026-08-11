@@ -6,6 +6,7 @@ Or:  python3 scripts/quality-gates/test_quality_gates.py
 """
 import json
 import os
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -16,6 +17,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import check_id_uniqueness
 import check_stale_counts
 import check_scene_refs
+import check_doc_citations
 
 
 class TestCheckIdUniqueness(unittest.TestCase):
@@ -160,6 +162,157 @@ class TestCheckSceneRefs(unittest.TestCase):
             self.assertIn("missing resource", errors[0])
 
 
+MAGIC_FIXTURE = """# Magic System
+
+## Status Effect Reference
+
+| Status | Effect |
+|--------|--------|
+| Poison | Lose 8% max HP per turn |
+| Burn | Lose 5% max HP per turn |
+
+## Spell Count Summary
+
+Eighty-nine spells, and nothing else worth saying.
+"""
+
+
+class TestCheckDocCitations(unittest.TestCase):
+    """Tests for Gate G: doc citation integrity."""
+
+    def setUp(self):
+        self.cwd = os.getcwd()
+        self.tmpdir = tempfile.mkdtemp()
+        self._write("docs/story/magic.md", MAGIC_FIXTURE)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def _write(self, rel: str, text: str) -> None:
+        full = os.path.join(self.tmpdir, rel)
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        with open(full, "w") as f:
+            f.write(text)
+
+    def _errors(self, known: dict | None = None) -> list[str]:
+        """Run the whole scan against the fixture repo."""
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, known or {}, clear=True
+        ):
+            return check_doc_citations.check_citations()
+
+    def test_bans_line_anchored_citation(self):
+        self._write("game/scripts/a.gd", "# Poison 8%/turn (magic.md:1537).\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+        self.assertIn("magic.md:1537", errors[0])
+
+    def test_bans_line_anchored_gd_citation(self):
+        self._write("docs/story/note.md", "See `status_effects.gd:25`.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("status_effects.gd:25", errors[0])
+
+    def test_accepts_heading_citation_with_term(self):
+        self._write(
+            "game/scripts/a.gd",
+            "# Poison (magic.md § Status Effect Reference > 'Poison').\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_rejects_unknown_heading(self):
+        self._write(
+            "game/scripts/a.gd", "# See magic.md § Nonexistent Heading.\n"
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_rejects_term_absent_from_the_cited_section(self):
+        """The term must sit under the cited heading, not merely in the file."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Spell Count Summary > 'Poison'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_rejects_term_that_lives_in_a_later_section(self):
+        """The search stops at the next heading, so a term below it fails."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Eighty-nine'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_citation_does_not_steal_the_next_ones_term(self):
+        """`a.md § X; a.md § Y > 'z'` must not read 'z' as X's term."""
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Spell Count Summary; "
+            "magic.md § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_rejects_unknown_target_file(self):
+        self._write("game/scripts/a.gd", "# See nosuchdoc.md § Whatever.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("not a file in this repo", errors[0])
+
+    def test_checks_every_citation_on_a_line(self):
+        """A second citation on the same line is checked, not swallowed."""
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Status Effect Reference > 'Poison'; "
+            "magic.md § Spell Count Summary > 'Eighty-nine'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write(
+            "game/scripts/a.gd",
+            "# magic.md § Status Effect Reference > 'Poison'; "
+            "magic.md § Spell Count Summary > 'Ninety-one'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("Ninety-one", errors[0])
+
+    def test_ignores_dated_records(self):
+        """docs/issues and docs/superpowers describe the tree as it was."""
+        self._write("docs/issues/rot.md", "Broke at magic.md:1537.\n")
+        self._write("docs/superpowers/plan.md", "Broke at magic.md:1537.\n")
+        self.assertEqual(self._errors(), [])
+
+    def test_ignores_fenced_examples_in_markdown(self):
+        self._write(
+            "docs/story/guide.md",
+            "How to cite:\n\n```markdown\nrelevant_doc.md § Section Name\n```\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_known_unresolved_entry_suppresses_its_own_citation(self):
+        self._write("game/scripts/a.gd", "# See magic.md § Ghost Section.\n")
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_stale_known_unresolved_entry_fails(self):
+        """The ratchet cannot rot either: a pin with nothing to pin fails."""
+        known = {
+            ("game/scripts/gone.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        errors = self._errors(known)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("stale entry in KNOWN_UNRESOLVED", errors[0])
+
+
 class TestIntegration(unittest.TestCase):
     """Integration tests — run all gates against real project data."""
 
@@ -182,6 +335,13 @@ class TestIntegration(unittest.TestCase):
         if not os.path.exists("game/scenes"):
             self.skipTest("No scene files available")
         result = check_scene_refs.main()
+        self.assertEqual(result, 0)
+
+    def test_full_citation_scan_passes(self):
+        """Full doc citation scan should pass on current data."""
+        if not os.path.exists("docs/story"):
+            self.skipTest("No design docs available")
+        result = check_doc_citations.main()
         self.assertEqual(result, 0)
 
 
