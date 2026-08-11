@@ -93,6 +93,18 @@ SECTION_ID = r"\d+(?:\.\d+)*[A-Za-z]?"
 # "2.1", "1.2a", or a list of them: "2.1/2.3", "1.2,1.3".
 SECTION_LIST_RE = re.compile(rf"^({SECTION_ID}(?:[/,]{SECTION_ID})*)")
 
+# A whole word that is *itself* a section id, and so is a claim about the
+# document's heading tree rather than prose: "2.3", "1.2a", "21.", "3)".
+# Either the id is multi-part ("2.3") or it carries a list terminator ("21."),
+# because a bare "30" in "§ Inn Costs 30 gil a night" is a number, not a
+# section. Used by ``continues_a_heading``: documents here number their
+# headings ("### 2.3 Party Panel", "## 19. Ley Nexus Hollow"), so a citation
+# that runs on into a *second* id is naming a section, and the check for a
+# capitalised word cannot see that — digits are not upper case (#367).
+SECTION_WORD_RE = re.compile(
+    r"^(?:\d+(?:\.\d+)+[A-Za-z]?|\d+(?:\.\d+)*[A-Za-z]?[.)])$"
+)
+
 # Where one citation stops and the next begins. A comment often chains them
 # ("conventions §2.1; palette-families.md § Serpent Family > 'Marsh Serpent'"),
 # and without this cut the first citation would claim the second one's term.
@@ -281,17 +293,42 @@ def match_words(
     return None
 
 
-def continues_a_heading(words: list[str], k: int) -> bool:
+def named_prefix_len(
+    index: DocIndex, path: str, hit: tuple[int, int, str], words: list[str]
+) -> int:
+    """How many leading citation words ``hit`` actually accounts for.
+
+    The word-prefix loop learns this by construction; the section-id branch
+    does not — it resolves on ``words[0]`` alone and never looks at the rest.
+    Recovering the number here is what lets a numbered citation be held to
+    the same invention check as an unnumbered one.
+
+    Never less than one: the id itself is spent resolving the heading, and a
+    list of ids (``§ 2.1/2.3``) normalises to words no single heading's
+    breadcrumb contains, so counting it as unaccounted-for would refuse every
+    list citation.
+    """
+    heads = index.headings(path)
+    trail = index.trails(path)[heads.index(hit)]
+    for k in range(len(words), 1, -1):
+        want = normalize(" ".join(words[:k])).split()
+        if want and is_subsequence(want, trail):
+            return k
+    return 1
+
+
+def continues_a_heading(
+    words: list[str], k: int, own: int, by_id: bool = False
+) -> bool:
     """True when the citation keeps naming heading after the prefix ends.
 
     ``match_heading`` accepts a prefix ``words[:k]``, which means every
     longer prefix — ``words[:k + 1]`` included — matched no heading at all.
     So ``words[k]`` is a word the citation offers as part of the section's
     name and the document does not have. When it is *shaped* like a heading
-    word — capitalised, opening no gloss, quote or code — the citation is
-    naming a subsection nobody wrote, and resolving it to the shorter
-    heading would point the reader at a section that does not say what the
-    citation claims (#367).
+    word the citation is naming a subsection nobody wrote, and resolving it
+    to the shorter heading would point the reader at a section that does not
+    say what the citation claims (#367).
 
     The shape test is what keeps the deliberate shortening alive. Citations
     sit mid-sentence, and the prose that follows a heading name continues in
@@ -299,16 +336,44 @@ def continues_a_heading(words: list[str], k: int) -> bool:
     parenthetical gloss (``§ 20. Highcairn Monastery (Pallor encounter)``),
     a quotation (``§ Wolf Family, "all wolves"``) or a code span. None of
     those is a claim about the document's heading tree; a bare capitalised
-    word is.
+    word is, and so is a bare section id — ``§ 19. Ley Nexus Hollow 21.
+    Invented Chamber`` invents just as hard as the capitalised form, and
+    ``isupper`` is blind to it because digits have no case.
+
+    ``by_id`` narrows the test to the section-id shape, and is set when the
+    heading was settled by a section id rather than by its words. Such a
+    citation has already identified its target exactly; whatever follows is
+    the author *locating* something inside it, and in the live corpus that
+    trailing phrase is routinely capitalised without naming any heading —
+    ``audio.md § 3.1 SFX budget`` (§ 3.1 Channel Budget budgets SFX at 12
+    channels, which is what the citing line asserts) and ``dungeons-world.md
+    § 1 Ember Vein Floor 2`` (§ 1. Ember Vein describes floor 2 in prose).
+    Reading capitalisation as invention there fails four correct citations,
+    so under an id only a *second id* counts. See ``match_heading`` for what
+    that leaves uncovered.
+
+    ``own`` is how many of ``words`` came from the citation's own line; the
+    rest were joined on from the wrapped continuation by ``citation_tail``.
+    Only the citation's own line can trigger the refusal. A continuation
+    line is prose the citation did not choose — the sentence after it may
+    open on a proper noun (``... § Danger Counter`` / ``Maren banks
+    weave...``) — and refusing on that would fail a correct citation for how
+    it happens to wrap. Capping the refusal at ``own`` is what keeps
+    over-reading free; see ``citation_tail``.
     """
-    if k >= len(words):
+    if k >= len(words) or k >= own:
         return False
-    first = words[k][:1]
+    word = words[k]
+    if SECTION_WORD_RE.match(word):
+        return True
+    if by_id:
+        return False
+    first = word[:1]
     return first.isalpha() and first.isupper()
 
 
 def match_heading(
-    index: DocIndex, path: str, candidate: str
+    index: DocIndex, path: str, candidate: str, own: int | None = None
 ) -> tuple[int, int, str] | None:
     """Resolve the text after ``§`` to a heading in ``path``.
 
@@ -323,18 +388,24 @@ def match_heading(
     ``### Derived Rules (numeric balance pass)``, ``§ Caden`` for
     ``### Spirit-speaker Caden``.
 
-    Shortening stops where invention starts. A prefix that is followed by a
-    capitalised word — a word shaped like more heading, which by
-    construction matches nothing — is refused outright rather than resolved
-    to the shorter heading, so ``§ Encounter System Nonexistent Subsection``
-    now names no heading instead of quietly landing on ``§ Encounter
-    System``. See ``continues_a_heading`` for why the refusal reads
-    capitalisation and why lower-case prose, glosses, quotations and code
-    spans still run on harmlessly.
+    Shortening stops where invention starts — *in this loop*; a citation
+    resolved by section id is held to a weaker rule, spelled out at the
+    bottom of this docstring. A prefix that is followed by a word shaped like
+    more heading — capitalised, or a section id of its own, either way a word
+    that by construction matches nothing — is refused outright rather than
+    resolved to the shorter heading, so ``§ Encounter System Nonexistent
+    Subsection`` names no heading instead of quietly landing on ``§ Encounter
+    System``. See ``continues_a_heading`` for the shapes the refusal reads
+    and why lower-case prose, glosses, quotations and code spans still run on
+    harmlessly.
 
     The refusal ends the search: a shorter prefix can only reach a vaguer
     heading, so once a citation has been caught naming a subsection nobody
     wrote there is nothing better left to find.
+
+    ``own`` is how many words of ``candidate`` came from the citation's own
+    line rather than from the wrapped continuation ``citation_tail`` joined
+    on; it bounds the refusal and defaults to all of them.
 
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
@@ -342,18 +413,44 @@ def match_heading(
     A citation that opens with a section id is resolved by that id alone, and
     the id includes any letter suffix: ``§ 1.2a`` reaches
     ``### 1.2a Script Size Budget``, never the adjacent ``### 1.2 Naming
-    Conventions``, and ``§ 1.2b`` resolves to nothing and fails.
+    Conventions``, and ``§ 1.2b`` resolves to nothing and fails. The id
+    settles *which* heading, not whether the citation stops there: the
+    invention check then runs over the words the id did not account for, so
+    ``§ 19. Ley Nexus Hollow 21. Invented Chamber`` is refused. Numbered
+    headings are the common shape in ui-design.md, technical-architecture.md
+    and dungeons-world.md, so running no check here at all would have left
+    #367 standing over most of the corpus.
+
+    **Under a section id the check reads ids only, not capitalisation, and
+    that gap is deliberate.** ``§ 2.3 Nonexistent Subsection`` still
+    resolves to ``### 2.3 Equipment Data``. Its shape cannot be told from
+    ``audio.md § 3.1 SFX budget`` or ``dungeons-world.md § 1 Ember Vein
+    Floor 2``, both correct citations in this repo whose trailing words
+    locate something *inside* the cited section rather than name a
+    subsection; refusing on capitalisation fails four live citations that
+    have not rotted. An id already identifies the section exactly, which is
+    what makes the trailing phrase optional there and load-bearing in the
+    unnumbered form above. Closing the gap needs a signal this resolver does
+    not have — see the issue filed against this exception (#389).
     """
     words = candidate.split()
     if not words:
         return None
+    if own is None:
+        own = len(words)
 
     numeric = SECTION_LIST_RE.match(words[0])
     if numeric:
         # Authoritative: a citation that opens with a section id is resolved by
         # that id alone. Falling through to the word-prefix loop on failure
         # would let a shorter prefix of a nonexistent id match its parent.
-        return match_all(index, path, re.split(r"[/,]", numeric.group(1)))
+        hit = match_all(index, path, re.split(r"[/,]", numeric.group(1)))
+        if hit is None:
+            return None
+        k = named_prefix_len(index, path, hit, words)
+        if continues_a_heading(words, k, own, by_id=True):
+            return None
+        return hit
 
     for k in range(len(words), 0, -1):
         joined = " ".join(words[:k])
@@ -365,7 +462,7 @@ def match_heading(
             hit = match_all(index, path, joined.split("/"))
         if hit is None:
             continue
-        if continues_a_heading(words, k):
+        if continues_a_heading(words, k, own):
             return None
         return hit
     return None
@@ -392,8 +489,11 @@ def citation_signature(cited_file: str, heading_part: str) -> str:
     return f"{cited_file} § {' '.join(heading_part.split())[:60]}"
 
 
-def citation_tail(tail: str, markdown: bool) -> str:
+def citation_tail(tail: str, markdown: bool) -> tuple[str, int]:
     """Citation text after ``§``, following it across one line wrap.
+
+    Returns the text and the length of the part of it that came from the
+    citation's own line, so a caller can tell the two apart after trimming.
 
     Prose wraps, and a heading wraps with it: ``combat-formulas.md §
     Physical Attack`` / ``Resolution)``. Reading only the first line would
@@ -403,29 +503,39 @@ def citation_tail(tail: str, markdown: bool) -> str:
 
     So the continuation line joins the first, with its comment or blockquote
     marker stripped. One line only: a heading that wraps twice is not a
-    heading. Nothing is lost by over-reading, because ``match_heading`` walks
-    word prefixes from longest to shortest — the extra words can only let a
-    *longer*, more specific heading win.
+    heading.
+
+    Nothing is lost by over-reading, and the second return value is what
+    keeps that true. ``match_heading`` walks word prefixes from longest to
+    shortest, so extra words can only let a *longer*, more specific heading
+    win — but its invention check (#367) refuses a prefix followed by a
+    heading-shaped word, and a continuation line is ordinary prose that may
+    well open on one (``§ Danger Counter`` / ``Maren banks weave...``).
+    Refusing on a word the citation never offered would fail a correct
+    citation for how it happens to wrap, so the check is bounded to the
+    citation's own line and the joined words can only ever widen the search.
     """
     newline = tail.find("\n")
     if newline < 0:
-        return tail
+        return tail, len(tail)
     first = tail[:newline]
     body = tail[newline + 1:].split("\n", 1)[0].strip()
     if not body:
-        return first
+        return first, len(first)
     if body.startswith("#"):
         # In markdown a leading ``#`` opens a new heading, which ends the
         # citation; in code it is comment furniture (``##`` doc comments).
         if markdown:
-            return first
+            return first, len(first)
         body = body.lstrip("#").strip()
     else:
         for mark in ("//", ">", "*"):
             if body.startswith(mark):
                 body = body[len(mark):].strip()
                 break
-    return f"{first} {body}" if body else first
+    if not body:
+        return first, len(first)
+    return f"{first} {body}", len(first)
 
 
 def citation_extent(rest: str) -> str:
@@ -511,7 +621,11 @@ def check_file(
         if line_no in skip_lines:
             continue
 
-        rest: str = citation_tail(text[m.end():], path.endswith(".md"))
+        # ``own_len`` marks where the citation's own line stops and the
+        # wrapped continuation begins. Every trim below returns a *prefix* of
+        # ``rest``, so the offset stays meaningful all the way to the
+        # resolver, which uses it to bound the invention check (#367).
+        rest, own_len = citation_tail(text[m.end():], path.endswith(".md"))
         boundary = NEXT_CITE_RE.search(rest)
         if boundary:
             rest = rest[: boundary.start()]
@@ -547,9 +661,10 @@ def check_file(
             )
             continue
 
+        own_words = len(heading_part[:own_len].split())
         hit: tuple[str, tuple[int, int, str]] | None = None
         for target in targets:
-            found = match_heading(index, target, heading_part)
+            found = match_heading(index, target, heading_part, own_words)
             if found:
                 hit = (target, found)
                 break

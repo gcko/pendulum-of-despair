@@ -216,6 +216,21 @@ Aim 400 lines, hard maximum 600.
 ### 2.3 Equipment Data
 """
 
+# The numbered-list heading shape, as dungeons-world.md writes it: the
+# number is part of the title, not a dotted id. It is the case where a
+# citation can run on into a *second* number, and where the check for a
+# capitalised word cannot see the invention — "21." has no case.
+DUNGEON_FIXTURE = """# Dungeons
+
+## 19. Ley Nexus Hollow
+
+A leech feeds on the ley line here.
+
+## 20. Highcairn Monastery
+
+Pallor waits on the top floor.
+"""
+
 # The house style in one file: a heading named by its last word
 # (``§ Caden``), a heading named by a plural of its first (``§ Inns``), a
 # heading named by its breadcrumb path (``§ Interlude The World Changes``),
@@ -447,11 +462,12 @@ class TestCheckDocCitations(unittest.TestCase):
         )
         self.assertEqual(truncated[2], "Physical Elemental Attacks")
 
-        wrapped = check_doc_citations.citation_tail(
+        wrapped, own = check_doc_citations.citation_tail(
             " Physical Attack\n## Resolution).\n", markdown=False
         )
+        self.assertEqual(wrapped[:own], " Physical Attack")
         hit = check_doc_citations.match_heading(
-            index, "docs/story/magic.md", wrapped
+            index, "docs/story/magic.md", wrapped, own
         )
         self.assertEqual(hit[2], "Physical Attack Resolution")
 
@@ -631,6 +647,161 @@ class TestCheckDocCitations(unittest.TestCase):
             "# npcs.md § Danger Counter increments once per step.\n",
         )
         self.assertEqual(self._errors(), [])
+
+    # ── The same invention, under a numbered heading (#367) ────────────
+    #
+    # The first fix for #367 guarded only the word-prefix loop. A citation
+    # that opens with a section id never reaches that loop — it resolves on
+    # the id and returns — so no invention check ran at all, and numbered
+    # headings are the common shape in ui-design.md,
+    # technical-architecture.md and dungeons-world.md.
+    #
+    # What runs there now reads the section-id shape only: a leftover
+    # ``21.`` is as loud a claim about the heading tree as ``Invented`` is,
+    # and ``isupper`` is blind to it because digits have no case. The
+    # capitalisation half stays out — under an id it fails four correct live
+    # citations — and the exception has a test of its own below so it is
+    # pinned rather than merely absent.
+
+    def _arch(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        return check_doc_citations.DocIndex()
+
+    def _arch_resolve(self, candidate: str):
+        return check_doc_citations.match_heading(
+            self._arch(), "docs/plans/arch.md", candidate
+        )
+
+    def _dungeon_resolve(self, candidate: str):
+        self._write("docs/story/dungeons.md", DUNGEON_FIXTURE)
+        return check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(), "docs/story/dungeons.md", candidate
+        )
+
+    def test_a_second_section_id_is_invention_too(self):
+        """``§ 19. <real> 21. <invented>`` — digits are not upper case.
+
+        The whole heading resolves, so the capitalisation check never sees a
+        capital: the first unaccounted-for word is ``21.``. Only the section
+        id shape catches it.
+        """
+        self.assertIsNone(
+            self._dungeon_resolve("19. Ley Nexus Hollow 21. Invented Chamber")
+        )
+
+    def test_a_numbered_list_heading_still_resolves_by_its_full_title(self):
+        """The other half: ``§ 19. Ley Nexus Hollow`` must still land."""
+        hit = self._dungeon_resolve("19. Ley Nexus Hollow")
+        self.assertIsNotNone(hit, "§ 19. Ley Nexus Hollow must resolve")
+        self.assertEqual(hit[2], "19. Ley Nexus Hollow")
+
+    def test_a_gloss_after_a_numbered_list_heading_still_runs_on(self):
+        """``§ 20. Highcairn Monastery (Pallor encounter)`` — a real one."""
+        hit = self._dungeon_resolve("20. Highcairn Monastery (Pallor waits)")
+        self.assertIsNotNone(hit, "a gloss must not break a citation")
+        self.assertEqual(hit[2], "20. Highcairn Monastery")
+
+    def test_a_numbered_invention_fails_the_whole_scan(self):
+        """End to end, through the gate rather than around it.
+
+        Dotted ids, not the ``19.`` list form: ``citation_extent`` reads a
+        ``.`` before a space as the end of a sentence, so a citation to
+        ``§ 19. Ley Nexus Hollow`` is already trimmed to ``19`` before the
+        resolver sees a word of the title. Three of the four live ``§ N.``
+        citations want exactly that trim (``§3. The remaining 32 boss
+        records...``), so the resolver-level guard is as far as this fix
+        reaches; #390 carries the rest.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd",
+            "# See arch.md § 2.1 Enemy Data 2.3 Invented Section.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_capitalised_run_on_under_a_section_id_is_allowed(self):
+        """The recorded exception, pinned so it cannot drift unnoticed.
+
+        Under an id the check reads ids only. ``§ 2.3 Nonexistent
+        Subsection`` is indistinguishable from ``audio.md § 3.1 SFX budget``
+        and ``dungeons-world.md § 1 Ember Vein Floor 2`` — two correct live
+        citations whose trailing words locate something inside the section
+        rather than name a subsection. Refusing on capitalisation here fails
+        all three. This test is the exception's record; if a later change
+        closes the gap (#389), it is the test that should change with it.
+        """
+        hit = self._arch_resolve("2.3 Nonexistent Subsection")
+        self.assertIsNotNone(hit, "the documented exception must hold")
+        self.assertEqual(hit[2], "2.3 Equipment Data")
+
+    def test_a_locator_phrase_after_an_id_survives_a_full_scan(self):
+        """The live shape end to end: § <id> <Capitalised locator>.
+
+        Modelled on ``audio.md § 3.1 SFX budget``, which cites the channel
+        table inside § 3.1 by what the citing line reads off it.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd", "# arch.md § 2.1 Enemy Data Field Budget.\n"
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_numbered_citation_naming_its_own_title_still_resolves(self):
+        """The check must not cost the citation that spells the heading out."""
+        hit = self._arch_resolve("2.3 Equipment Data")
+        self.assertIsNotNone(hit, "§ 2.3 Equipment Data must resolve")
+        self.assertEqual(hit[2], "2.3 Equipment Data")
+
+    def test_a_numbered_citation_may_still_run_on_into_prose(self):
+        """Lower-case prose after a numbered id is a sentence, not a claim."""
+        hit = self._arch_resolve("2.1 Enemy Data lists every field")
+        self.assertIsNotNone(hit, "run-on prose must not break a citation")
+        self.assertEqual(hit[2], "2.1 Enemy Data")
+
+    def test_a_bare_number_after_a_heading_is_not_a_section_id(self):
+        """``§ 1.1 Directory Structure 400 files`` — 400 is a count."""
+        hit = self._arch_resolve("1.1 Directory Structure 400 files")
+        self.assertIsNotNone(hit, "a bare number must not read as a section")
+        self.assertEqual(hit[2], "1.1 Directory Structure")
+
+    def test_a_section_list_citation_is_not_read_as_invention(self):
+        """``§ 2.1/2.3`` normalises to words no one heading holds."""
+        hit = self._arch_resolve("2.1/2.3")
+        self.assertIsNotNone(hit, "a section list must still resolve")
+
+    # ── Over-reading a wrapped line must stay free (#367) ──────────────
+    #
+    # ``citation_tail`` joins the continuation line so a wrapped heading
+    # still resolves. Its docstring promised that over-reading costs
+    # nothing — true when the resolver only ever shortened, false once the
+    # invention check could *refuse*. A continuation line is prose the
+    # citation did not choose, and English sentences open on capitals, so a
+    # correct citation could fail the gate purely for where it wrapped.
+    # The check is bounded to the citation's own line to keep the promise.
+
+    def test_a_continuation_line_may_open_on_a_capital(self):
+        """The latent trap: a correct citation must not fail for wrapping."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "## The counter grows per npcs.md § Danger Counter\n"
+            "## Maren banks weave when somebody else casts.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_invention_on_the_citations_own_line_still_fails_when_wrapped(self):
+        """The bound is the line, not the check: own-line invention still bites."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "## The counter grows per npcs.md § Danger Counter Nonexistent\n"
+            "## Subsection is what it claims.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
 
     # ── A narrowing term the checker cannot read (#366) ────────────────
 
