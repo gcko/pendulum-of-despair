@@ -6,6 +6,8 @@ extends GutTest
 ## 2. New items (ley_lantern, pallor_antidote, warp_walker_boots,
 ##    gravity_shard, composite_shortbow) exist in their data files
 ## 3. No camelCase keys remain in save-system.md pseudo-schema
+## 4. technical-architecture.md section 2.1 keeps documenting the enemy
+##    schema the act tables actually ship (issue #235)
 
 
 func before_each() -> void:
@@ -211,3 +213,107 @@ func test_no_camelcase_keys_in_save_system_md() -> void:
 			content.contains(key),
 			"save-system.md should not contain camelCase key: %s" % key,
 		)
+
+
+# ── technical-architecture.md §2.1 enemy schema sync (issue #235) ────────
+
+
+## Read a repo doc that lives outside res://. Fails loudly if unreachable,
+## so a moved doc cannot silently turn the guards below into no-ops.
+func _read_repo_doc(rel_path: String) -> String:
+	var repo_root: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
+	var abs_path: String = repo_root.path_join(rel_path)
+	if not FileAccess.file_exists(abs_path):
+		fail_test("cannot read %s (looked at %s)" % [rel_path, abs_path])
+		return ""
+	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
+	var content: String = file.get_as_text()
+	file.close()
+	return content
+
+
+## Keys carried by EVERY enemy record across every act table — the fields
+## section 2.1 is obliged to document.
+func _universal_enemy_keys() -> Array[String]:
+	var universal: Dictionary = {}
+	var seeded: bool = false
+	for act: String in ["act_i", "act_ii", "act_iii", "interlude", "optional"]:
+		for entry: Variant in DataManager.load_enemies(act):
+			if not entry is Dictionary:
+				continue
+			var enemy: Dictionary = entry as Dictionary
+			if not seeded:
+				for key: Variant in enemy.keys():
+					universal[key] = true
+				seeded = true
+				continue
+			for key: Variant in universal.keys():
+				if not enemy.has(key):
+					universal.erase(key)
+	var out: Array[String] = []
+	for key: Variant in universal.keys():
+		out.append(str(key))
+	out.sort()
+	return out
+
+
+## Slice a markdown doc between two headings. Fails the test (returns "")
+## if either heading is missing, so a renamed section cannot silently
+## reduce the guards above to a scan of an empty string.
+func _arch_section(from_heading: String, to_heading: String, content: String) -> String:
+	var start: int = content.find(from_heading)
+	var end: int = content.find(to_heading)
+	if start < 0:
+		fail_test("technical-architecture.md is missing the '%s' heading" % from_heading)
+		return ""
+	if end <= start:
+		fail_test("'%s' should follow '%s'" % [to_heading, from_heading])
+		return ""
+	return content.substr(start, end - start)
+
+
+func test_arch_doc_2_1_documents_every_universal_enemy_field() -> void:
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section("### 2.1 Enemy Data", "### 2.2 Item Data", content)
+	if section.is_empty():
+		return
+	var keys: Array[String] = _universal_enemy_keys()
+	# Guard the loop below: an empty key list would make it vacuously pass.
+	assert_gte(
+		keys.size(), 20, "every act table should share 20+ enemy fields, got %d" % keys.size()
+	)
+	var undocumented: Array[String] = []
+	for key: String in keys:
+		if not section.contains('"%s"' % key):
+			undocumented.append(key)
+	assert_eq(
+		undocumented.size(),
+		0,
+		"technical-architecture.md section 2.1 does not document: %s" % str(undocumented),
+	)
+
+
+func test_arch_doc_2_1_shows_nested_two_tier_steal() -> void:
+	# The shipped schema is nested steal:{common,rare}, read by
+	# enemy.gd::roll_steal(). The flat steal_common/steal_rare pair was a
+	# proposal that never landed (issue #235).
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section("### 2.1 Enemy Data", "### 2.2 Item Data", content)
+	if section.is_empty():
+		return
+	assert_true(section.contains('"steal": {'), "section 2.1 should show steal as an object")
+	assert_true(section.contains('"common"'), "section 2.1 steal should carry a common tier")
+	assert_true(section.contains('"rare"'), "section 2.1 steal should carry a rare tier")
+	assert_false(
+		section.contains("steal_common") or section.contains("steal_rare"),
+		"section 2.1 should not show the flat steal_common/steal_rare pair",
+	)
+	# The stale note that survived until #235 claimed the opposite.
+	assert_false(
+		content.contains("a single `steal` field"),
+		"technical-architecture.md still claims the enemy JSON uses a single steal field",
+	)
