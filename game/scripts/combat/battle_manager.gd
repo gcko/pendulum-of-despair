@@ -248,7 +248,7 @@ func _incapacitating_status(slot: int) -> String:
 	return ""
 
 
-## Auto-skip a paralysed member's ready turn: announce, tick statuses (so the
+## Auto-skip a paralyzed member's ready turn: announce, tick statuses (so the
 ## turn-based countdown advances + DoT still applies), and reset the gauge so the
 ## next skip is a turn away (#248). Ends with an end-condition check, mirroring
 ## _on_ui_command, so a DoT that kills the last standing member resolves the

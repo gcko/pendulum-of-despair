@@ -827,7 +827,7 @@ Classic JRPG design: things said early should gain new meaning later. The follow
 | 23 | **Act II / before the siege** / Brant receives a visitor — a grey-robed figure who "explained how things would go." | **Interlude** / Brant confesses that someone planted fatalism in him. The visitor was Vaelith, engineering cowardice as precisely as they engineered the Ashen Ram. |
 | 24 | **Act II / Corrund** / A charming tavern scholar buys drinks and discusses ley line folklore with genuine-seeming warmth. | **Act II** / The Doma moment cutscene retroactively recontextualizes the encounter. The scholar was feeding, and every warm word was reconnaissance. |
 | 25 | **Interlude / Rail Tunnels** / Drayce's engineering legacy — the Ironbound is a worker consumed by a boring engine. | **Interlude** / The Forge Warden in Ashmark connects the same "progress at any cost" design philosophy. Two bosses, same institutional rot, same refusal to count the human cost. |
-| 26 | **Interlude / Grey Bounties** / Riven reports disturbed creatures in the deep Wilds — behaviour erratic, territorial patterns broken. | **Act III** / Vaelith's passage through the Wilds woke them. The bounty targets were not random — they were collateral damage from the Ashen Shepherd's transit. |
+| 26 | **Interlude / Grey Bounties** / Riven reports disturbed creatures in the deep Wilds — behavior erratic, territorial patterns broken. | **Act III** / Vaelith's passage through the Wilds woke them. The bounty targets were not random — they were collateral damage from the Ashen Shepherd's transit. |
 
 ---
 

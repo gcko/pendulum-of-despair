@@ -71,7 +71,8 @@ stat derivation, and naming conventions.
 | 4 | Pallor Revenant | 40 | Pallor | Weak->Spirit, Resist->Void | +Soul Rend (HP drain), +Undying (auto-revive once) | Dangerous |
 
 > The Dead family represents basic humanoid undead. Tier 2 already
-> appears in Act I (Fenmother's Hollow). Tier 4 transitions to Pallor
+> appears at Act I power level (Fenmother's Hollow, which is Act II
+> content tuned to the top of the Act I band -- #287). Tier 4 transitions to Pallor
 > -- the corruption that raised them consumes what remains.
 >
 > **Act III early deployment:** Pallor Revenant (Tier 4) is deployed at
@@ -208,8 +209,9 @@ stat derivation, and naming conventions.
 | 3 | Greater Serpent | 28 | Beast | Weak->Frost | +Constrict (Stun + damage over time), +Toxic Spray (AoE Poison) | Standard |
 | 4 | Ashen Serpent | 42 | Pallor | Weak->Spirit, Resist->Void | +Despair Fang (Poison + Despair), +Shed Skin (remove debuffs) | Dangerous |
 
-> Serpents are fast and status-oriented. Tier 2 already appears in
-> Act I (Corrupted Spawn in Fenmother's Hollow). The Ashen Serpent
+> Serpents are fast and status-oriented. Tier 2 already appears at Act I
+> power level (Corrupted Spawn in Fenmother's Hollow, which is Act II
+> content tuned to the top of the Act I band -- #287). The Ashen Serpent
 > combines Poison and Despair for dangerous status stacking.
 >
 > Serpent family has two Tier 2 variants: Corrupted Spawn (Lv 10,

@@ -56,10 +56,24 @@ func test_danger_scale_interlude() -> void:
 
 
 func test_danger_scale_act_iii() -> void:
-	# combat-formulas.md act-scaling table: Act III x1.1 (also the
-	# fallback for Act IV/Epilogue until the design table adds rows)
+	# combat-formulas.md act-scaling table: Act III x1.1
 	EventFlags.set_flag("act_iii_started", true)
 	assert_eq(SA.get_danger_scale(), 1.1)
+
+
+func test_danger_scale_act_iv_and_epilogue_hold_at_act_iii() -> void:
+	# combat-formulas.md act-scaling table now carries explicit Act IV and
+	# Epilogue rows, both x1.1 (#265). get_period() has no branch for either,
+	# so this pins the carried value against the tabled one: if a later change
+	# gives Act IV or the Epilogue its own multiplier, the branch has to be
+	# added here too rather than silently reading back as Act III.
+	EventFlags.set_flag("act_iii_started", true)
+	EventFlags.set_flag("pallor_defeated", true)
+	assert_eq(SA.get_period(), "act_iii", "Act IV reports as act_iii by design")
+	assert_eq(SA.get_danger_scale(), 1.1, "Act IV row: x1.1")
+	EventFlags.set_flag("epilogue_complete", true)
+	assert_eq(SA.get_period(), "act_iii", "the Epilogue reports as act_iii by design")
+	assert_eq(SA.get_danger_scale(), 1.1, "Epilogue / Post-game row: x1.1")
 
 
 func test_enemy_act_matches_period_for_each_flag_regime() -> void:

@@ -13,8 +13,8 @@
 |---|------|-----|----------|----|----|------|--------|
 | 1 | Ember Drake | I | Ember Vein F2 | 8 | 1,500 | Beast | 1 |
 | 2 | Vein Guardian | I | Ember Vein F4 | 12 | 6,000 | Boss | 2 |
-| 3 | Drowned Sentinel | I | Fenmother's Hollow F2 | 10 | 4,000 | Construct | 1 |
-| 4 | Corrupted Fenmother | I | Fenmother's Hollow F3 | 12 | 18,000 | Boss | 3 |
+| 3 | Drowned Sentinel | II | Fenmother's Hollow F2 | 10 | 4,000 | Construct | 1 |
+| 4 | Corrupted Fenmother | II | Fenmother's Hollow F3 | 12 | 18,000 | Boss | 3 |
 | 5 | Ley Colossus | II | Ley Line Depths F3 | 22 | 7,000 | Elemental | 2 |
 | 6 | The Forge Warden | II | Ashmark Factory Depths | 24 | 8,500 | Boss | 2 |
 | 7 | The Ashen Ram | II | Valdris Siege | 22 | 25,000 | Boss | 3 |
@@ -133,6 +133,16 @@ thresholds, turn counts, or special conditions.
 ---
 
 ## Act I Bosses
+
+> **This heading is a power band, not an act.** The four bosses below are
+> the Lv 8–12 entries whose stat tables live in
+> [act-i.md](act-i.md) / `game/data/enemies/act_i.json`. Two of them —
+> Drowned Sentinel and the Corrupted Fenmother — are in Fenmother's
+> Hollow, which is **Act II** content pitched at the ceiling of the Act I
+> curve; see [dungeons-world.md](../dungeons-world.md) § 2 for the
+> reasoning and [act-i.md](act-i.md) § Fenmother's Hollow for the same
+> note on the roster (#287). The Act column in § Quick Reference gives the
+> act; this grouping gives the band.
 
 ### Ember Drake (Mini-Boss)
 
@@ -327,8 +337,10 @@ Scripted Events:
     - party_change: none (Spirit-Bound Spear is in F2 chest)
 ```
 
-**Design Note:** The Corrupted Fenmother is Act I's climactic encounter,
-combining every mechanic taught so far -- telegraphed attacks, positional
+**Design Note:** The Corrupted Fenmother is the climax of Fenmother's
+Hollow, Act II's opening dungeon, fought at the ceiling of the Act I
+power curve (#287). It combines every mechanic taught so far --
+telegraphed attacks, positional
 hazards, add management, and elemental strategy (Flame weakness). The
 dive/surface cycle creates windows of vulnerability that reward planning.
 Phase 3's wave defense is a narrative payoff for Torren's arc, reinforcing

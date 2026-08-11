@@ -136,7 +136,7 @@ static func execute_party_attack(
 
 	var is_crit: bool = DamageCalc.roll_crit(lck)
 	var attacker_row: String = member.get("row", "front")
-	# Spirit enemies take 50% physical pre-DEF (GAP-008, bestiary/README.md:80).
+	# Spirit enemies take 50% physical pre-DEF (GAP-008, bestiary/README.md § Spirit).
 	var pre_def: float = ModifierAggregator.physical_pre_def_mult(enemy.get_type())
 	var dmg: int = DamageCalc.calculate_physical(
 		atk, 1.0, target_def, is_crit, 1.0, attacker_row, "front", false, [], false, 1.0, pre_def

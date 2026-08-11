@@ -26,7 +26,8 @@ const RULES: Dictionary = {
 	"poison": {"tick_pct": 0.08, "duration": UNTIL_CURED},
 	# Burn: 5% max HP/turn for 3 turns (magic.md:1530).
 	"burn": {"tick_pct": 0.05, "duration": 3},
-	# Sleep: ATB frozen until damaged/cured (magic.md:798, combat-formulas.md:734).
+	# Sleep: ATB frozen until damaged/cured (magic.md § Sleep,
+	# combat-formulas.md § Status Effect ATB Interactions).
 	"sleep": {"atb": "frozen", "duration": UNTIL_CURED, "wake_on_damage": true},
 	# Petrify: removed from combat, ATB frozen, until cured (magic.md:831).
 	"petrify": {"atb": "frozen", "duration": UNTIL_CURED},
@@ -35,9 +36,11 @@ const RULES: Dictionary = {
 	# so the turn-based countdown advances on each skipped would-be turn — unlike
 	# "frozen", which holds the gauge and has no clock).
 	"paralysis": {"incapacitates": true, "duration": 3, "wake_on_damage": false},
-	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md:720,732).
+	# Slow: ATB fill x0.5 for 5 turns (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions).
 	"slow": {"atb": "mod", "atb_mult": 0.5, "duration": 5},
-	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md:721,737). The
+	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md
+	# § Fill Rate Modifiers + § Status Effect ATB Interactions). The
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
 	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
 	# Silence: cannot cast, 4 turns (magic.md:820). Effect deferred.
@@ -49,13 +52,13 @@ const RULES: Dictionary = {
 }
 
 ## Player-facing adjective for an action-denial announcement ("paralysis" ->
-## "paralysed"). Only Paralysis reaches an announcement today: a gauge-frozen
+## "paralyzed"). Only Paralysis reaches an announcement today: a gauge-frozen
 ## member is passed over in silence (combat-formulas.md § Status Effect ATB
 ## Interactions), so the sleep/petrify entries are pre-registered wording for a
-## future announcement path, not live behaviour. Anything unlisted falls back to
+## future announcement path, not live behavior. Anything unlisted falls back to
 ## its raw status name rather than reading as another status.
 const ADJECTIVES: Dictionary = {
-	"paralysis": "paralysed",
+	"paralysis": "paralyzed",
 	"sleep": "asleep",
 	"petrify": "petrified",
 }
@@ -95,7 +98,7 @@ static func wakes_on_damage(status: String) -> bool:
 	return RULES.get(status, {}).get("wake_on_damage", false)
 
 
-## Adjective for a battle announcement, e.g. "Edren is paralysed and can't move!"
+## Adjective for a battle announcement, e.g. "Edren is paralyzed and can't move!"
 static func display_adjective(status: String) -> String:
 	return ADJECTIVES.get(status, status)
 

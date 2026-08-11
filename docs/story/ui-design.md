@@ -100,6 +100,12 @@ the player focuses on the game world and characters, not the menus.
 | Damage numbers | 12px | Float upward with 2-frame animation |
 | Tiny labels (status icon tooltips) | 6px | Only where space-constrained |
 
+**Spelling.** Strings in this document, and the strings the UI emits,
+use American English (*color*, *behavior*, *paralyzed*, *centered*). The
+house rule, its single deliberate exception (*grey*, a proper noun), and
+the residual British spellings still awaiting a sweep are stated once in
+[README.md](README.md) § Writing Conventions.
+
 ### 1.6 Unified Status Effect Icon System
 
 8×8 pixel-art icons used consistently across all screens. These icons
@@ -228,10 +234,10 @@ rows are stacked barely more than a number's own height apart — far
 tighter than the enemy sprites — so a number floated above its row by
 the enemy lift would clear its own row's band entirely and land over a
 different member, reading as damage to the wrong character.
-A party-side number is instead centred on the row it belongs to, both
-axes, and rises only as far as the gap between rows. Centring is
+A party-side number is instead centered on the row it belongs to, both
+axes, and rises only as far as the gap between rows. Centering is
 unconditional; what holds for any number no taller than a row is the
-guarantee that it never enters a neighbouring row's band. Like the
+guarantee that it never enters a neighboring row's band. Like the
 target cursor (§ 2.6), the popup reads the row's actual on-screen rect
 rather than assuming a row pitch, so it stays correct when row height
 changes.
@@ -282,7 +288,7 @@ Vertical list of battle commands:
   actions) or beside the targeted party member (for support/healing).
 - The party has no sprites on the battle screen, so a party-side cursor
   anchors to the targeted member's row in the party panel: immediately
-  left of the row, vertically centred on it (FF6's row-list convention).
+  left of the row, vertically centered on it (FF6's row-list convention).
   It reads the row's actual on-screen rect — never a fixed row pitch, so
   it stays correct when row height changes. The party panel hugs the
   left edge of the screen, so the cursor clamps there rather than

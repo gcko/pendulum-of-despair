@@ -21,6 +21,9 @@
 
 ### Act I Bosses
 
+<!-- Power band, not an act: the two Fenmother's Hollow bosses below are
+     Act II content pitched at the Act I band (#287, dungeons-world.md § 2). -->
+
 #### Vein Guardian
 <!-- Cross-ref: bestiary/bosses.md § Vein Guardian -->
 
@@ -524,7 +527,7 @@ did.
 **CRYSTAL QUEEN** : The throne... was not worth... the sitting.
 
 *(A crown of crystal rolls across the floor. It catches the light
-in four colours — flame, ice, spirit, void — before going dark.)*
+in four colors — flame, ice, spirit, void — before going dark.)*
 
 **TORREN** : She tried to protect everything at once. All four
 directions. All four elements. Nobody told her that protecting
@@ -749,7 +752,7 @@ before the thread breaks entirely.
 - "[Character] is Berserk!"
 - "[Character] is Stopped!"
 - "[Character] is Grounded!"
-- "[Character] is paralysed and can't move!"
+- "[Character] is paralyzed and can't move!"
 - "Poison wears off."
 - "Silence wears off."
 - "[Character] woke up!"

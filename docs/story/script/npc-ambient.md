@@ -90,7 +90,7 @@ never seen that before.
 
 (If `interlude_begins` set.)
 **NELLA** : I dry them now. Press flat, tie with string. People
-buy anyway. I think they just want to remember what colour
+buy anyway. I think they just want to remember what color
 looked like.
 
 (If `epilogue_complete` set.)

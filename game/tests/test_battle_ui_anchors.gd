@@ -57,8 +57,8 @@ func test_target_cursor_lands_on_the_real_party_row() -> void:
 	ui._on_target_changed(1, false)
 	var arrow: Label = ui._target_arrow
 	assert_true(arrow.visible, "targeting a party member shows the cursor")
-	var centre_y: float = arrow.position.y + arrow.get_minimum_size().y * 0.5
-	assert_between(centre_y, row.position.y, row.position.y + row.size.y, "cursor is on the row")
+	var center_y: float = arrow.position.y + arrow.get_minimum_size().y * 0.5
+	assert_between(center_y, row.position.y, row.position.y + row.size.y, "cursor is on the row")
 	assert_lte(
 		arrow.position.x + arrow.get_minimum_size().x,
 		row.position.x,
@@ -93,13 +93,13 @@ func test_party_damage_popup_sits_on_the_row_it_belongs_to() -> void:
 		popup.position.x + size.x * 0.5,
 		row.position.x + row.size.x * 0.5,
 		1.0,
-		"popup is centred over its row"
+		"popup is centered over its row"
 	)
 	assert_almost_eq(
 		popup.position.y + size.y * 0.5,
 		row.position.y + row.size.y * 0.5,
 		1.0,
-		"and vertically centred on it, so it cannot be read as another member's"
+		"and vertically centered on it, so it cannot be read as another member's"
 	)
 
 

@@ -132,8 +132,20 @@ Location strings from the bestiary are converted to snake_case IDs with these ru
 4. Single floors: "Ember Vein F3" → `["ember_vein_f3"]`
 5. Named sections: "Rail Tunnels (Hub, East)" → `["rail_tunnels_hub", "rail_tunnels_east"]`
 6. Generic "all sections": "Rail Tunnels (all sections)" → `["rail_tunnels"]`
-7. Overworld areas: "Valdris Plains" → `["valdris_plains"]`
+7. Overworld areas: "Thornmere Wilds" → `["thornmere_wilds"]`. The area
+   must be a zone that exists in `game/data/encounters/overworld.json`;
+   `valdris_plains`, the example this rule originally used, was one of
+   five invented names retired by #288 and is now forbidden in every
+   enemy stat table's `locations` array, enforced by
+   `game/tests/test_bestiary_locations.gd`.
 8. Spawned enemies: "spawned by Gyrocopter" → `["valdris_siege"]` (parent encounter location)
+
+> **Rules 5, 6 and 8 predate #288 and are not yet reconciled with it.**
+> `docs/story/bestiary/README.md` § Location Vocabulary now admits only a
+> dungeon-plus-floor-span form and an `overworld.json` zone name; the
+> named-section, all-sections and parent-encounter forms above describe
+> the ids Act II / Act III / Interlude still carry, not sanctioned
+> vocabulary. Reconciling them is #349.
 9. Apostrophes removed: "Fenmother's Hollow" → `fenmothers_hollow`
 10. "The" prefix removed from location IDs: "The Ley Scar" → `ley_scar`
 

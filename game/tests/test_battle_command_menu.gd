@@ -117,7 +117,7 @@ func test_ally_target_cursor_wraps_within_the_live_party() -> void:
 
 
 func test_ally_targeting_defaults_to_a_full_party() -> void:
-	# A caller that never pushes a count keeps the pre-#276 four-slot behaviour.
+	# A caller that never pushes a count keeps the pre-#276 four-slot behavior.
 	var m: Node = _make_menu()
 	_open_single_ally_target(m, 0)
 	assert_eq(m._target_count, 4, "an unset party count still addresses four slots")

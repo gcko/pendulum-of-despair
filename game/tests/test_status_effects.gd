@@ -24,7 +24,7 @@ func test_atb_frozen_statuses() -> void:
 func test_display_adjective_reads_back_as_an_announcement() -> void:
 	# battle_manager builds "%s is %s and can't move!" from this, so the value
 	# has to be the adjective, never the raw status name (#260 review).
-	assert_eq(SE.display_adjective("paralysis"), "paralysed")
+	assert_eq(SE.display_adjective("paralysis"), "paralyzed")
 	assert_eq(SE.display_adjective("sleep"), "asleep")
 	assert_eq(SE.display_adjective("petrify"), "petrified")
 	assert_eq(
@@ -34,11 +34,38 @@ func test_display_adjective_reads_back_as_an_announcement() -> void:
 	)
 
 
+## The paralysis announcement exists in three places that must agree: the
+## adjective in status_effects.gd, the canon line in battle-dialogue.md
+## § Status Effect Notifications, and the shipped
+## game/data/dialogue/battle_status_effect_notifications.json generated from
+## it by tools/dialogue_parser.py. Nothing else compares the JSON against the
+## engine, so a spelling drift in either one was previously silent (#301).
+func test_shipped_notification_matches_the_engine_adjective() -> void:
+	var data: Dictionary = DataManager.load_dialogue("battle_status_effect_notifications")
+	var entries: Array = data.get("entries", [])
+	if entries.is_empty():
+		fail_test("battle_status_effect_notifications.json is missing or has no entries")
+		return
+	var shipped: String = ""
+	for entry: Variant in entries:
+		for line: Variant in (entry as Dictionary).get("lines", []):
+			if String(line).contains("can't move"):
+				shipped = String(line)
+	if shipped.is_empty():
+		fail_test('no "can\'t move" notification in battle_status_effect_notifications.json')
+		return
+	assert_eq(
+		shipped,
+		"[Character] is %s and can't move!" % SE.display_adjective("paralysis"),
+		"shipped notification must read back exactly as battle_manager builds it"
+	)
+
+
 func test_atb_mod_statuses() -> void:
 	assert_eq(SE.atb_effect("slow"), "mod")
-	assert_almost_eq(SE.atb_mult("slow"), 0.5, 0.001)  # combat-formulas.md:720
+	assert_almost_eq(SE.atb_mult("slow"), 0.5, 0.001)  # combat-formulas.md § Fill Rate Modifiers
 	assert_eq(SE.atb_effect("despair"), "mod")
-	assert_almost_eq(SE.atb_mult("despair"), 0.75, 0.001)  # combat-formulas.md:721
+	assert_almost_eq(SE.atb_mult("despair"), 0.75, 0.001)  # combat-formulas.md § Fill Rate Modifiers
 	assert_almost_eq(SE.atb_mult("poison"), 1.0, 0.001, "non-mod statuses default 1.0")
 
 
@@ -59,7 +86,7 @@ func test_durations() -> void:
 	assert_eq(SE.default_duration("poison"), SE.UNTIL_CURED, "poison until cured")
 	assert_eq(SE.default_duration("sleep"), SE.UNTIL_CURED, "sleep until cured")
 	assert_eq(SE.default_duration("petrify"), SE.UNTIL_CURED)
-	assert_eq(SE.default_duration("slow"), 5)  # combat-formulas.md:732
+	assert_eq(SE.default_duration("slow"), 5)  # combat-formulas.md § Status Effect ATB Interactions
 	assert_eq(SE.default_duration("despair"), 4)
 	assert_eq(SE.default_duration("silence"), 4)
 	assert_eq(SE.default_duration("confusion"), 3)

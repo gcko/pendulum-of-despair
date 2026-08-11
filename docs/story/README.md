@@ -55,6 +55,50 @@ This directory contains the narrative design for Pendulum of Despair.
 | `worldbuilding-audit.md` | Worldbuilding continuity audit (biomes + geography + visual) |
 | `layout-audit.md` | Layout continuity audit (cities + dungeons + interiors + economy) |
 
+## Writing Conventions
+
+- **Write American English.** New design prose, new dialogue, and every
+  new player-facing string use American spellings: *color*, *behavior*,
+  *paralyzed*, *centered*, *-ize/-ization*. This is the direction the
+  narrative canon already sets — `outline.md` "paralyzed by guilt"
+  (line 210), `characters.md` "paralyzes him" (line 21), `abilities.md`
+  "he's paralyzed by guilt" (line 50) — and it is the form the engine
+  emits for status notifications.
+- **This is a rule for new writing, not a description of the corpus.**
+  The `color` / `paralyzed` / `centered` / `behavior` families were swept
+  across `docs/story/`, every shipped `game/data/` string, and
+  `game/scripts/`; `docs/plans/bundle-roadmap.md` (*colour*, ×2) and
+  `docs/superpowers/specs/2026-04-06-battle-scene-design.md` (*centred*,
+  ×2) were left, because those are dated records rather than canon.
+  Other British families survive and are *not* to be read as
+  sanctioned — *armour*, *favour*, *defence*, *catalogue* /
+  *catalogued* / *cataloguing*, *travelling*, *cancelled*,
+  *synthesises*. **Do not scope the sweep from a hand-written list;
+  regenerate it**, because a hand-written one has already been wrong
+  once:
+
+  ```
+  grep -rlniE "armour|favour|defence|catalogu|travelling|cancelled|synthesis(e|ing)" \
+    docs/story game/data
+  ```
+
+  As of this commit that returns 14 files under `docs/story/` and 10
+  under `game/data/` — 8 in `game/data/dialogue/` plus
+  `game/data/items/key_items.json` and `game/data/items/materials.json`,
+  so the shipped residue is not confined to dialogue and includes
+  player-facing item text. Sweeping those is a separate, tracked change
+  (#311) — a residual British spelling is a defect to be fixed, not a
+  precedent to be matched.
+- **Changing a spelling is never local to one file.** Anything quoted as
+  canon by a design doc, a test, or `game/data/dialogue/*.json` must
+  match the string the engine emits — see
+  `docs/story/script/battle-dialogue.md` § Status Effect Notifications
+  and its generator in `tools/dialogue_parser.py`.
+- **`grey` is the one deliberate exception, and it is a proper noun.**
+  *The Grey* is the game's name for the Pallor's drained world-state;
+  *grey* is used throughout for it and for the color it names. Do not
+  "correct" it to *gray*.
+
 ## Design Principles
 
 - **Homage, not recreation.** Inspired by FF4, FF6, Chrono Trigger, and Secret of Mana — but original names, places, and characters throughout.

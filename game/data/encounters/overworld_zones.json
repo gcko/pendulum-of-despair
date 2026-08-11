@@ -92,7 +92,7 @@
       ]
     },
     {
-      "_comment": "Ley-scarred eastern Valdris border around Greyvale; zone has no sanctioned design-table row (issue #265; enemy roster question in #270)",
+      "_comment": "Ley-scarred eastern Valdris border around Greyvale; sanctioned as geography.md Encounter Zones 'Quarried plains' (148) and defined in geography.md Valdris Terrain Effects on Gameplay (#265). Distinct from the Ley Scar, the Act III zone inside the Pallor Wastes (506).",
       "zone_id": "ley_scarred_plains",
       "rects": [
         [60, 16, 82, 28]

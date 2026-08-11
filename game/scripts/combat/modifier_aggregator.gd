@@ -35,7 +35,7 @@ static func type_element_multiplier(enemy_type: String, element: String) -> floa
 
 
 ## Pre-DEF physical multiplier. Spirit takes 50% physical, applied BEFORE the
-## DEF subtraction (bestiary/README.md:80). Returns 1.0 for all other types.
+## DEF subtraction (bestiary/README.md § Spirit). Returns 1.0 for all other types.
 static func physical_pre_def_mult(enemy_type: String) -> float:
 	if enemy_type == "spirit":
 		return 0.5

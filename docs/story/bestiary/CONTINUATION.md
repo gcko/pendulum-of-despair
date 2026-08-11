@@ -136,8 +136,9 @@ Death, Petrify, Stop, Sleep, Confusion (can be overridden per boss).
 ### Sub-project 4: Boss Compendium (~20–25 bosses)
 
 **All bosses from dungeons-world.md and dungeons-city.md:**
-- Vein Guardian, Corrupted Fenmother (Act I — already in act-i.md as
-  brief Boss Notes, need full AI scripts)
+- Vein Guardian, Corrupted Fenmother (Act I power band — already in
+  act-i.md as brief Boss Notes, need full AI scripts; the Fenmother is
+  Act II content pitched at that band, #287)
 - Ember Drake, Drowned Sentinel (mini-bosses, same)
 - The Ironbound, General Kole, Ley Colossus (Interlude)
 - Archive Guardian, Ashen Ram, Ley Leech, Grey Engine, Forge Heart,

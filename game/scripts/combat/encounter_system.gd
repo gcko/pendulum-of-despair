@@ -103,8 +103,10 @@ static func apply_preemptive_bonus(rates: Dictionary, bonus_pp: float) -> Dictio
 
 
 ## Preemptive bonus (pp) from the party's equipped Preemptive Charms.
-## Non-stacking: one fixed +25pp regardless of charm count, mirroring the
-## Ward Talisman / Infiltrator's Cloak non-stack precedent.
+## Non-stacking: one fixed +25pp regardless of charm count. Same shape as the
+## Ward Talisman / Infiltrator's Cloak non-stack in get_accessory_modifier() —
+## one party-wide flag, not a per-character slot contest
+## (combat-formulas.md § Battle Formations).
 static func get_preemptive_bonus(party: Array[Dictionary]) -> float:
 	for member: Dictionary in party:
 		var equip: Dictionary = member.get("equipment", {})

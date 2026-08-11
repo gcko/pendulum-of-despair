@@ -147,7 +147,8 @@ Valdris occupies the northwest quadrant of the continent: a region of limestone 
 
 **Terrain Effects on Gameplay:**
 
-- **Highland paths:** Encounter rate uses Mountains zone (increment 252). Enemy types shift to highland beasts (ice wolves, stone elementals).
+- **The Ley-Scarred Plains:** The exhausted ley-crystal quarry country on Valdris's eastern border, the country east of the Valdris Crown plateau (48, 18): it begins twelve tiles beyond the capital, takes in Greyvale (68, 22), and runs on toward the Sea of Echoes. It does **not** reach the Aelhart lowlands, which lie west of the capital and carry their own `aelhart_valley` farmland zone. Centuries of quarrying stripped the topsoil down to fractured ley-crystal bedrock; the failing Shoreward Line (see § Ley Line Network) leaves the exposed seams discharging, which is why ley-corrupted wildlife ranges here rather than staying near the Ember Vein. Encounter rate is the **Quarried plains** band (increment 148) -- the same terrain classification as the Compact's industrial hinterland, for the same reason. Overworld zone `ley_scarred_plains`, tiles (60, 16)–(82, 28). **Not the Ley Scar**, which is a different place: the Act III optional grinding zone inside the Pallor Wastes, increment 506. The two names share a root because both are ley-damaged ground; nothing else connects them.
+- **Highland paths:** Encounter rate uses the **Mountains** band (increment 252). This is the climb north out of the Valdris plateau into the Frostcaps, which the overworld resolves as the `frostcap_foothills` zone -- tiles (10, 4)–(85, 10), matched ahead of the Valdris territory fill, at increment 252 exactly as tabled. It is **not** the `valdris_highlands` zone: that is the settled plateau fill below the foothills (tiles (10, 4)–(85, 32)), which is rolling grass and border woodland and correctly carries the Forest (light) / Quarried plains increment of 148. The two were previously conflated because both are "highland". *Still unbuilt, and currently broken:* the highland-beast roster this bullet calls for -- ice wolves, stone elementals -- does not exist. `frostcap_foothills` ships a Pallor roster instead (Shadow Wolf, Pallor Boar and Pallor Vermin from `game/data/enemies/act_iii.json`; Mountain Hawk from `act_ii.json`), and **nothing gates it.** The zone carries `"act": "act_iii"` in `overworld.json`, but no runtime code reads that field: `zone_resolver.gd` skips an entry only when it carries a `"flag"` key whose flag is unmet, and in `overworld_zones.json` the sole entry with a `flag` is `pallor_wastes_approach` (`act_iii_started`). So an Act I party that reaches any tile in y 4–10 resolves to `frostcap_foothills` and draws that Pallor roster. The stats resolve too -- `enemy.gd` falls back past the act table `StoryAct.get_enemy_act()` names and scans the others -- so the fight is not a load error, it is a Lv 1–12 party against Lv 17–30 enemies. Tracked as #310; do not read this bullet as describing gated behavior. The increment claim is reconciled; the roster claim is not.
 - **Farmland:** Lowest encounter rate in the game -- the Aelhart Valley is genuinely safe in Act I.
 - **Old-growth forest:** Encounter rate moderate. Visibility reduced -- enemies can ambush the party (back-attack chance increased).
 - **Winter access (Highcairn):** During the Interlude, the overworld highland route to Highcairn is permanently snowbound (conditional passability block per [overworld.md](overworld.md)). Highcairn is instead accessed via an interior passage (dungeon-like) with cold-themed encounters and waypoint rest stops.
@@ -537,7 +538,7 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 | **Forest (dense)** | High | 380 | ~16 | Deep Thornmere, ley-line corridors |
 | **Marshland** | High | 380 | ~16 | Duskfen system |
 | **Mountains** | Moderate | 252 | ~20 | Frostcap foothills, Broken Hills |
-| **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland |
+| **Quarried plains** | Moderate | 148 | ~24 | Compact industrial hinterland, the Ley-Scarred Plains around Greyvale |
 | **Coastal** | Very low | 64 | ~40 | Bellhaven shoreline, Ashport coast, Sundering Sea cliffs |
 | **Sacred sites** | None | 0 | — | Ashgrove, Stillwater Hollow, save points |
 | **Convergence Meadow (Post-game)** | None | 0 | — | Replaces Pallor Wastes zone after `epilogue_complete`. Sacred memorial site — Cael's sword, First Tree Seed scene, The Lingering trigger. |
@@ -548,8 +549,11 @@ Random encounters are governed by terrain type and story act. Each tile has an e
 **Safe corridors:** Roads between major settlements have reduced encounter rates. The Compact's rail routes are encounter-free when riding a rail cart (100g per trip per [transport.md](transport.md)). The Wilds have no safe corridors -- there are no roads.
 
 **Act scaling:** Encounter rate increases per act transition:
-Act I ×1.0, Act II ×1.1, Interlude ×1.2, Act III ×1.1. The multiplier
-applies to the base danger counter increment before item modifiers.
+Act I ×1.0, Act II ×1.1, Interlude ×1.2, Act III ×1.1, Act IV ×1.1,
+Epilogue / Post-game ×1.1. The multiplier applies to the base danger
+counter increment before item modifiers. Act IV and the Epilogue hold at
+Act III's value rather than climbing further -- see
+[combat-formulas.md](combat-formulas.md) § Act scaling for why.
 See [combat-formulas.md](combat-formulas.md) (Encounter System section)
 for the full formula and modifier stacking rules.
 

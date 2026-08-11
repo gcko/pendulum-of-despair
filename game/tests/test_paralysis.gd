@@ -87,18 +87,18 @@ func _boot(encounter: Array) -> Node:
 	return battle
 
 
-func test_integration_paralysed_member_is_skipped_and_recovers() -> void:
+func test_integration_paralyzed_member_is_skipped_and_recovers() -> void:
 	seed(31)
 	var battle: Node = await _boot(["ley_vermin"])
 	battle._state.apply_status(0, "paralysis", "turns", 3)
-	# Drive party_0's would-be turns: while paralysed it is auto-skipped (never
+	# Drive party_0's would-be turns: while paralyzed it is auto-skipped (never
 	# prompted) and the status counts down; eventually it wears off.
 	for _i: int in range(8):
 		if not battle._state.has_status(0, "paralysis"):
 			break
 		battle._atb.set_gauge("party_0", 16000)
 		await wait_frames(2)
-		assert_ne(battle._awaiting_input_for, "party_0", "a paralysed member is never prompted")
+		assert_ne(battle._awaiting_input_for, "party_0", "a paralyzed member is never prompted")
 	assert_false(battle._state.has_status(0, "paralysis"), "paralysis wears off after its turns")
 	# Recovered: a now-free member fills and IS prompted.
 	battle._atb.set_gauge("party_0", 16000)
@@ -125,7 +125,7 @@ func test_skip_consumes_the_frame_so_its_message_is_not_clobbered() -> void:
 
 	assert_eq(msgs.size(), 1, "exactly one message this frame: %s" % str(msgs))
 	assert_true(
-		msgs[0].contains("paralysed") and msgs[0].contains("can't move"),
+		msgs[0].contains("paralyzed") and msgs[0].contains("can't move"),
 		"and it names the status that blocked the turn: %s" % str(msgs)
 	)
 	# The enemy keeps its full gauge and acts on the NEXT frame — which is why
@@ -186,7 +186,7 @@ func test_frozen_status_takes_no_turn_and_keeps_its_gauge() -> void:
 
 
 func test_dot_death_during_skip_resolves_the_party_wipe_same_frame() -> void:
-	# A paralysed last-standing member killed by its own Poison tick must trip
+	# A paralyzed last-standing member killed by its own Poison tick must trip
 	# the end-condition check inside the skip, not a frame later (#260).
 	seed(31)
 	var battle: Node = await _boot(["ley_vermin"])

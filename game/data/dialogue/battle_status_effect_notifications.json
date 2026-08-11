@@ -137,7 +137,7 @@
       "id": "battle_status_effect_notifications_013",
       "speaker": "",
       "lines": [
-        "[Character] is paralysed and can't move!"
+        "[Character] is paralyzed and can't move!"
       ],
       "condition": null,
       "animations": null,

@@ -143,11 +143,19 @@ Projected stats exclude equipment, Ley Crystal bonuses, permanent Stat Capsule g
 | Milestone | Lvl | Edren HP | Edren ATK | Maren MAG | Sable SPD | Sable LCK |
 |-----------|-----|----------|-----------|-----------|-----------|-----------|
 | First level-up | 2 | 180 | 20 | 24 | — | — |
-| End of Act I | ~18 | 1,540 | 49 | 53 | 45 | 42 |
+| End of Act I | ~12 | 1,030 | 38 | 42 | 36 | 33 |
+| After Fenmother's Hollow (Act II) | ~18 | 1,540 | 49 | 53 | 45 | 42 |
 | End of Act II | ~35 | 2,985 | 79 | 83 | 72 | 67 |
 | Interlude end | ~50 | 4,260 | 106 | 110 | 96 | 90 |
 | End of Act III | ~70 | 5,960 | 142 | 146 | 128 | 120 |
 | Level cap | 150 | 12,760 | 255 | 255 | 255 | 240 |
+
+The "End of Act I" row sits at ~12 rather than the ~18 it previously
+carried, following the act-boundary correction in § XP Pacing Targets
+below (#287): Fenmother's Hollow is Act II content, so the ~18 band it is
+cleared at belongs to the row beneath. Both rows are computed from the
+formula above (Edren HP at 12 = `95 + 85 × 11 = 1,030`; at 18 =
+`95 + 85 × 17 = 1,540`).
 
 Primary stats reach the 255 cap around level 120-140 naturally. Sable's SPD (growth 1.6) hits 255 at level ~149. LCK (growth 1.5) reaches 240 at level 150 — the only primary stat that doesn't cap naturally, rewarding LCK-boosting Ley Crystals. The last 10-30 levels are for secondary stats to catch up and for HP/MP to keep growing toward their higher ceilings.
 
@@ -183,6 +191,7 @@ Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actio
 ### Equipment and Buffs
 
 - **Effective stat = leveled base + permanent gains + equipment.** A player character's effective stat is the leveled base stat (growth curve plus any narrative milestone spike), plus permanent Stat Capsule gains ([items.md](items.md) § Stat Capsules), plus equipment bonuses, plus whatever the equipped Ley Crystal contributes under § Ley Crystal System — then clamped to the caps above. Max HP and max MP are the same formula applied to HP and MP. Every term must survive every recalculation: changing gear must not drop capsule gains, and levelling up must not drop equipment or capsule bonuses. Guest NPCs do not use this formula — their stats come from the party-average rules in § Guest NPCs.
+- **A percentage term in a narrative milestone spike applies to the leveled base alone.** Most spikes in § Narrative Milestone Stat Spikes are flat (`ATK +8`), but one is a percentage — Torren's `HP -15%`. A percentage spike is evaluated against the growth-curve value for the character's current level *before* Stat Capsule gains, equipment, and Ley Crystal terms are added, never against the effective stat. Its result is part of the leveled base, so the sum in the bullet above is unchanged: `effective = (leveled base, with percentage spike terms applied and flat spike terms added) + capsule gains + equipment + crystal`, then clamped. Two consequences follow. Equipping +HP gear never enlarges the penalty, because the penalty was taken before the gear was counted. And because the level-up recompute re-applies the spike (§ Level-Up Effects), the percentage tracks the base as it grows rather than freezing at the value it had when the story beat fired — which is what makes the sacrifice permanent instead of something the player outlevels. This is the reading the design note is priced against: Torren's leveled base HP at level 50 is `62 + 50 × 49 = 2,512` from § Base Stats at Level 1 and § Growth Rates Per Level, and 15% of that is ~377, matching the "~2,500 HP / ~375 HP" figure below. Against base + capsules + equipment the cost would be materially larger.
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds 12 to the character's ATK. Simple and transparent.
 - **Equipment cannot push stats past the 255 cap** for ATK/DEF/MAG/MDEF/SPD/LCK. HP and MP can exceed their natural growth via equipment up to their hard caps (14999 / 1499).
 - **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass = +40% MDEF (single) / +25% MDEF (party). These are applied to the effective stat defined above (base + capsule gains + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See [magic.md](magic.md) for full buff/debuff spell list.
@@ -206,8 +215,8 @@ Different base constants (24 vs 10) create a 53% jump at the phase transition (l
 | 1→2 | 24 | 24 | Game start |
 | 2→3 | 67 | 91 | Early Act I |
 | 5→6 | 268 | 675 | Early Act I |
-| 10→11 | 758 | 3,420 | Mid Act I |
-| 18→19 | 1,832 | 14,117 | End of Act I |
+| 10→11 | 758 | 3,420 | Late Act I |
+| 18→19 | 1,832 | 14,117 | After Fenmother's Hollow (Act II) |
 | 25→26 | 3,000 | 31,503 | Mid Act II |
 | 35→36 | 4,969 | 72,059 | End of Act II |
 | 50→51 | 8,485 | 173,946 | End of Interlude |
@@ -262,8 +271,8 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 | Milestone | Target Level | Cumulative XP | Act |
 |-----------|-------------|--------------|-----|
 | After Ember Vein | ~8 | ~2,000 | I |
-| After Fenmother's Hollow | ~12 | ~5,300 | I |
-| End of Act I | ~18 | ~14,100 | I |
+| End of Act I (arrive Valdris) | ~12 | ~5,300 | I |
+| After Fenmother's Hollow | ~18 | ~14,100 | II |
 | Mid Act II (Corrund) | ~25 | ~31,500 | II |
 | End of Act II | ~35 | ~72,000 | II |
 | Mid Interlude (Sable solo) | ~38 | ~90,000 | Int |
@@ -279,11 +288,59 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 
 > These targets assume critical-path + moderate exploration, no intentional grinding. The Ley Scar (see [dungeons-world.md](dungeons-world.md)) provides optional high-XP farming in Act III.
 
+> **Act boundary correction (#287).** The first three rows previously read
+> "After Ember Vein ~8 / After Fenmother's Hollow ~12 (Act I) / End of Act I
+> ~18". Fenmother's Hollow is Act II content — it opens on
+> `diplomatic_mission_start`, which cannot fire until `pendulum_to_capital`
+> has ended Act I (see [dungeons-world.md](dungeons-world.md) § 2). Cumulative
+> XP only rises, so the smaller figure has to belong to the earlier
+> milestone; the two labels have been swapped rather than the numbers
+> invented. The result is the Act I band that [economy.md](economy.md) § Act I
+> ("Levels 1–12") and [bestiary/README.md](bestiary/README.md) § Level Ranges
+> by Act (Act I, recommended party level 1–12) already state, so this table no
+> longer stands alone at 18. It also puts the party at ~12 when it reaches a dungeon whose
+> recommended level is 12–15. The level/XP pairs themselves are untouched
+> because each is a fact about the curve, not about content: under § Two-Phase
+> XP Curve, cumulative XP through the 12→13 level-up is 5,292 (~5,300) and
+> through 18→19 is 14,117 (~14,100), which is why the labels move and the
+> numbers do not.
+>
+> Not corrected here: the gold *supply* estimate in [economy.md](economy.md)
+> § Act I still counts the Corrupted Fenmother's 1,500g as Act I income.
+> On the XP side there is nothing to correct yet, because **no document
+> tallies per-act XP supply at all** — § XP Pacing Per Act below states
+> level spans, hour budgets and per-level cadences only, and no other
+> section sums enemy `exp` by act. So the ~5,300 Act I target is unbacked
+> on the supply side rather than wrongly backed. Deriving that tally and
+> re-splitting the gold is a balance pass (#313), not a doc fix. Three dated design records also still key
+> the milestone to 18 —
+> `docs/superpowers/specs/2026-03-24-xp-leveling-curve-design.md` § 8
+> Tuning Targets, `docs/superpowers/plans/2026-03-24-xp-leveling-curve.md`,
+> and `docs/superpowers/specs/2026-03-19-stat-system-design.md` § 4.3
+> Projected Stats at Milestones.
+> Those are the dated spec and plan that produced these tables, not the
+> canon they produced: `docs/story/` holds the canonical design documents
+> and `docs/superpowers/` holds specs and plans (AGENTS.md § Repository
+> Layout). This section is the live table; the dated records are left as
+> written.
+
 ### XP Pacing Per Act
 
-**Act I (Fast Levels):** Levels 1→18 in ~2–3 hours. Level-up every ~15–20 minutes. New ability every 3–5 levels. Purpose: teach the player that leveling = new capabilities.
+**Act I (Fast Levels):** Levels 1→12 in ~2–3 hours — 11 level-ups, so one every ~11–16 minutes. New ability every 3–5 levels. Purpose: teach the player that leveling = new capabilities.
 
-**Act II (Steady Progression):** Levels 18→35 in ~4–5 hours. Level-up every ~20–25 minutes. Abilities space out (every 4–6 levels). System depth provides non-level rewards.
+**Act II (Steady Progression):** Levels 12→35 in ~4–5 hours — 23 level-ups, so one every ~10–13 minutes. Abilities space out (every 4–6 levels). System depth provides non-level rewards. Fenmother's Hollow is the act's opening dungeon, entered at ~12–15 (#287).
+
+> **The cadence figures are derived, and two of them do not yet support
+> their own labels.** Each is `hours × 60 ÷ (levels gained)`. Divided out,
+> Act II levels *faster* than Act I (~10–13 min against ~11–16), which is
+> the opposite of the "fast, then steady" shape the labels claim. The
+> level spans are now fixed by the act boundary (#287) and by § XP Pacing
+> Targets, so the term to revisit is the hour budget, not the cadence —
+> that is the same balance pass the act-boundary note above defers to (#313), and
+> it also owns the Interlude / Act III / Post-Game bullets below, whose
+> stated cadences (~15–20, ~25–30, ~45–90 min) likewise do not reproduce
+> from their spans (~12–16, ~12–18, ~15–30). Treat the hours and the level
+> spans as canon and the per-level minutes as illustrative until then.
 
 **Interlude (Survival Pacing):** Levels 35→50 in ~3–4 hours. Level-up every ~15–20 minutes (faster due to harder enemies). Story-triggered abilities supplement level-based ones. 50% absent share keeps reunited characters close.
 
@@ -410,7 +467,7 @@ One-time permanent stat boosts tied to story moments. These reward narrative eng
 - Cael's hidden boost is never explained — rewards observant replayers
 - The campfire +2 all stats is shared, intimate, and memorable
 
-**Torren's -15% HP:** At level 50 with ~2,500 HP, this costs ~375 HP permanently. He becomes more fragile but more powerful — a healer who needs healing. Mechanical echo of the game's sacrifice theme.
+**Torren's -15% HP:** At level 50 his leveled base HP is 2,512, so this costs ~377 HP permanently. He becomes more fragile but more powerful — a healer who needs healing. Mechanical echo of the game's sacrifice theme. The percentage is taken against the leveled base only, and is re-applied on every level-up — see § Equipment and Buffs for the composition rule, which this figure is the worked example of.
 
 ---
 

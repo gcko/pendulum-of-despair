@@ -615,7 +615,7 @@ energy. The first clean ley energy since the rupture.)*
 
 **TORREN** : You are many things. Useless is not one of them.
 
-*(He lets her help him stand. The colour is already returning to
+*(He lets her help him stand. The color is already returning to
 his arms — the grey frost receding.)*
 
 **TORREN** : The nexus held. I felt it shift. Whatever you did—

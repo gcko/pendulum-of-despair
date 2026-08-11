@@ -116,9 +116,10 @@ with ~60% of actions being damage (rest: healing, buffs, defending):
 Add phase transition (~20s scripted), healing pressure, and variance:
 **~1.5–2 minutes.** The Vein Guardian is the game's first major boss
 and functions as a tutorial — its duration falls below the standard
-3–5 minute target intentionally. Later Act I bosses (Corrupted Fenmother at
-18,000 HP) exceed the standard boss HP ceiling (15,000),
-establishing the full-length fight format.
+3–5 minute target intentionally. The next boss up the curve (the Corrupted
+Fenmother at 18,000 HP — early Act II, but still inside the Act I power
+band per [dungeons-world.md](dungeons-world.md) § 2) exceeds the standard
+boss HP ceiling (15,000), establishing the full-length fight format.
 
 At endgame (Cael, 80,000 HP total across 2 phases), party averaging
 ~800 damage per action at ~1.5s per action, ~50% damage actions
@@ -236,7 +237,7 @@ push the player 1–3 levels above these targets.
 |------|-----|--------------|--------------------|
 | Aelhart / Prologue | Prologue | 1–3 | — |
 | Ember Vein | I | 5–8 | Ember Drake (8), Vein Guardian (12) |
-| Fenmother's Hollow | I | 10–14 | Drowned Sentinel (10), Corrupted Fenmother (12) |
+| Fenmother's Hollow | II | 12–15 | Drowned Sentinel (10), Corrupted Fenmother (12) |
 | Ley Line Depths | II | 18–22 | Ley Colossus (22) |
 | Ashmark Factory | II | 20–24 | The Forge Warden (24) |
 | Siege of Valdris | II | 20–24 | The Ashen Ram (22) |
@@ -245,6 +246,15 @@ push the player 1–3 levels above these targets.
 | Pallor Wastes overworld | III | 50–60 | The Grey Keeper (32), etc. |
 | Convergence gauntlet | III | 60–70 | Cael, Knight of Despair (36/38), The Pallor Incarnate (40) |
 | Dreamer's Fault | Post | 70–150 | Optional (50–86) |
+
+**Note on Fenmother's Hollow (#287):** the Act cell reads II because
+that is the canonical assignment ([dungeons-world.md](dungeons-world.md)
+§ 2 — Duskfen opens on `diplomatic_mission_start`, which cannot fire
+until `pendulum_to_capital` has ended Act I), and the Player Level cell
+reads 12–15 to match that section. Its roster is still Lv 6–12 and ships
+in `game/data/enemies/act_i.json`: the dungeon is Act II's opening
+content deliberately pitched at the top of the Act I power band, which is
+why its bosses sit below the levels of every other Act II row.
 
 **Note on boss "Lv" vs player level:** Boss "Lv" in the bestiary
 is a stat-scaling reference used to compute enemy stats via growth

@@ -115,8 +115,8 @@ func _tick_enemy_statuses(enemy: Node, idx: int) -> void:
 
 ## Resolve a self-targeted ability (GAP-024): apply its stat buff. scope "pack"
 ## buffs every living enemy of the caster's own kind (same enemy id — Pack Howl
-## across all Wayward Wolves, palette-families.md:435); "self" buffs only the
-## caster.
+## across all Wayward Wolves, palette-families.md § Wolf Family); "self" buffs
+## only the caster.
 func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> void:
 	_manager.message.emit("%s uses %s!" % [enemy.get_display_name(), action.get("id", "")])
 	var buff: Dictionary = action.get("buff", {})
@@ -127,8 +127,8 @@ func _do_self_ability(action: Dictionary, enemy: Node, enemies: Array[Node]) -> 
 	var duration: int = int(buff.get("duration", 5))
 	if buff.get("scope", "self") == "pack":
 		# "pack" = the caster's own kind (same enemy id), e.g. all Wayward Wolves
-		# in the encounter (palette-families.md:435 "all wolves") — NOT every
-		# same-type beast, which would buff boars/serpents sharing the fight.
+		# in the encounter (palette-families.md § Wolf Family, "all wolves") —
+		# NOT every same-type beast, which would buff boars/serpents in the fight.
 		var pack_id: String = enemy.enemy_data.get("id", "")
 		for e: Node in enemies:
 			if e.is_alive and e.enemy_data.get("id", "") == pack_id:
