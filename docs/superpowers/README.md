@@ -8,9 +8,9 @@ before work starts. Every file is named `YYYY-MM-DD-<slug>.md`.
 
 ## The policy
 
-A dated artefact under `docs/superpowers/` is a record of what was known,
+A dated artifact under `docs/superpowers/` is a record of what was known,
 planned and true **on the date in its filename**. Once the work it describes
-has merged, the artefact is frozen:
+has merged, the artifact is frozen:
 
 - **Everything concrete in it is accurate as of its date only.** File paths,
   line numbers, function signatures, file manifests, estimated line counts,
@@ -37,7 +37,7 @@ the specs and plans that produced them.
 
 ## How you know, from inside the file
 
-Every dated artefact carries a standing banner immediately under its title:
+Every dated artifact carries a standing banner immediately under its title:
 
 ```markdown
 > **Dated record (2026-03-26) — not maintained.** Paths, line numbers, counts
@@ -51,7 +51,7 @@ The banner is on the file rather than only in this README because agents open
 specs directly — from a grep hit, from a link in an issue, from a plan's
 "Files" list — and never see the directory they came from.
 
-**New artefacts must carry it.** When `story-designer` or `game-designer`
+**New artifacts must carry it.** When `story-designer` or `game-designer`
 writes a new spec or plan, add the banner as the second block of the file with
 the date from the filename.
 
@@ -63,7 +63,7 @@ the date from the filename.
   roots. That exclusion belongs in the gate from its first commit — do not
   "fix" a checker to cover this directory later; that would re-open a question
   this policy closed.
-- **Review agents should not raise drift here.** A dated artefact disagreeing
+- **Review agents should not raise drift here.** A dated artifact disagreeing
   with current canon is not a review finding. If the *canon* is wrong, fix
   `docs/story/`.
 - **A plan is live only while its PR is open.** During execution, tick its
@@ -90,7 +90,7 @@ in #236 (`game/scripts/autoload/` → `game/scripts/util/`).
 
 ## History
 
-This policy generalises a carve-out that already existed. `docs/story/progression.md`
+This policy generalizes a carve-out that already existed. `docs/story/progression.md`
 § XP Pacing Targets previously named three dated records left as written after
 the act-boundary correction (#287); that list went stale the moment a fourth
 record disagreed with canon (#352). The rule now covers the whole directory, so
