@@ -550,3 +550,36 @@ Cael's departure at the end of Act II removes the party's dedicated buffer. This
 - **Spirit Favor** progression should take approximately 15-20 battles per spirit to reach Favor 3 through natural play, rewarding players who pay attention to elemental matchups.
 - **Arcanite Charges** should create genuine resource tension — Lira can't deploy everything in every fight. Players should think about which devices matter most for the current encounter.
 - **Weave Gauge** should fill to 100 approximately once per major battle (3-4 rounds of heavy spellcasting), making Ley Surge and Annulment feel earned rather than spammable.
+
+### Resource Cost Invariants
+
+The three custom resources have hard caps stated in their own sections above.
+No ability may cost more than its resource's cap, or the ability would be
+permanently uncastable. `game/tests/test_ability_balance.gd` asserts this
+against `game/data/abilities/`.
+
+| Resource | Cap | Most expensive ability | Cost |
+|----------|-----|------------------------|------|
+| Aegis Points (AP) | 10 | Oathkeeper | 8 AP |
+| Arcanite Charges (AC) | 12 | Arcanite Colossus | 8 AC |
+| Weave Gauge (WG) | 100 | Annulment | 100 WG |
+
+Annulment sits exactly on the cap by design — it is the only ability that
+consumes a full gauge, and it is described that way in the Arcanum table above.
+
+*Weave Gauge derivation.* The gain rules are +5 WG when Maren casts, +10 WG when
+another ally casts, +15 WG when an enemy casts. A "round of heavy spellcasting"
+in a four-slot party is Maren plus one other caster plus one enemy caster:
+`5 + 10 + 15 = 30 WG per round`, reaching 100 on round 4. With two ally casters
+alongside Maren it is `5 + 20 + 15 = 40 WG per round`, reaching 100 on round 3.
+That bounds the stated 3-4 round target from both sides, so the gain values and
+the balance target agree and neither needs changing.
+
+*Damage magnitudes.* Abilities that use the standard physical formula take their
+`ability_mult` from [combat-formulas.md](combat-formulas.md) § Ability
+Multipliers (1.0 basic / 1.5 strong / 2.0 ultimate / 2.5 combo / 3.0 maximum);
+abilities with their own formula are listed in that document's Custom-Formula
+Abilities section. A handful of damaging abilities still describe their output
+qualitatively ("Flame damage to all enemies") rather than with a spell power or
+multiplier — see the Ability System row in
+[game-design-gaps.md](../analysis/game-design-gaps.md) for the outstanding list.

@@ -98,7 +98,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 | 3 | High | 25-45 MP | Late game (Lv 26-40) | 50-70 |
 | 4 | Ultimate | 50-99 MP | Endgame (Lv 40+) | 85-120 |
 
-*Note: AoE **spell power** uses approximately 60-70% of the single-target ranges above (e.g., Tier 2 AoE spell power: 18-28 vs single-target 28-40). AoE **MP cost** is handled separately: 1.5-2x the single-target cost (see Balance Rules below).*
+*Note: AoE **spell power** uses approximately 60-70% of the single-target ranges above (e.g., Tier 2 AoE spell power: 18-28 vs single-target 28-40) at **Tiers 1-3 only** — see "Tier 4 AoE exemption" below. AoE **MP cost** is handled separately: 1.5-2x the single-target cost (see Balance Rules below).*
 
 ### Balance Rules
 
@@ -108,6 +108,90 @@ Each element has one element it is strong against (deals 150% damage) and one it
 - **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
 - **Damage formula reference:** `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
 - **Healing formula:** `heal_amount = min(14999, (caster.mag * spell.power * 0.8) * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md).
+
+### Tier 4 AoE Exemption
+
+**Tier 4 (Ultimate) spells use the full 85-120 spell power band even when they
+target all enemies.** The 60-70% AoE reduction applies at Tiers 1-3 only.
+
+*Derivation.* [combat-formulas.md](combat-formulas.md) § Magic Damage tunes the
+14,999 damage cap around Ley Ruin (power 100, AoE) at Maren Lv150: MAG 332 with
+Attunement, target MDEF 80, elemental weakness, Resonance. That chain is
+`(332 x 100 / 4 - 80) x 1.5 x 1.3 = 16,029`, capped to 14,999 — the documented
+"perfect setup" moment. Solving the same chain for the minimum power that still
+reaches the cap gives `power >= 94`. Applying the 60-70% AoE reduction to Tier 4
+would cap AoE power at `120 x 0.7 = 84`, and 84 < 94, so the cap would become
+unreachable by any spell in the game. The reduction therefore cannot apply at
+Tier 4. Ultimates are balanced by MP cost (50-99, i.e. 2-4x a Tier 3 single
+target) and by availability, not by a power discount.
+
+Not every ultimate reaches the cap: Requiem of Thorns (power 90) tops out at
+~14,410 on the same chain, and is the cheapest Tier 4 spell at 70 MP.
+
+### Derived Rules (numeric balance pass)
+
+These rules were derived from the shipped spell data plus the damage math in
+[combat-formulas.md](combat-formulas.md) and the stat curves in
+[progression.md](progression.md). They close values the rules above left
+unstated. `game/tests/test_spell_balance.gd` asserts all of them against
+`game/data/spells/`.
+
+- **Status hit rate has two bands.** The 60-80% rule above is the *standard*
+  band, for statuses the target can act through or that break on damage (Poison,
+  Blind, Slow, Silence, Confusion, Despair, single-target Sleep). AoE versions of
+  standard statuses sit at the band floor (60%). A second **severe band of
+  45-59%** covers statuses that stop the target acting for an indefinite duration
+  (Petrify, Stop) and multi-target statuses that deny actions or suppress a party
+  system (party-wide Sleep; Silence plus buff suppression; Despair plus healing
+  suppression). Debuff spells that impose a stat penalty (Drag Tide, Fray,
+  Sunder, Dampening Field, Crumble) also roll to hit and use the standard band;
+  dispel-type debuffs that only strip buffs (Dispersion, Mass Dispersion) always
+  land and declare `hit_rate: null`. The severe band is anchored by
+  [combat-formulas.md](combat-formulas.md) § Status Accuracy at Key Points, which
+  uses "Maren Lv70 Petrify (50%)" as its canonical worked example — after the
+  two-stage MAG/MDEF and Magic Evasion checks that 50% base lands ~26% of the
+  time against a boss, which is the intended reliability for a combat-removal
+  status.
+- **AoE MP pricing needs a named counterpart.** The 1.5-2x rule binds only for
+  the AoE/single-target pairs listed below. A standalone AoE spell with no
+  counterpart (Leyward, Bulwark Line, Flashblind, Miasma, Eventide, Bogsink,
+  Mass Dispersion, Drift, Smokeveil, and every Tier 4 ultimate) is priced inside
+  its plain tier MP band instead — there is no single-target cost to multiply.
+  The enemy-only Void AoE spells (Pallor Tide, Silence of Ages, The Weight, Grey
+  Horizon) carry no MP cost at all and are outside this rule entirely.
+
+  | Single target | MP | AoE version | MP | Ratio |
+  |---------------|----|-------------|----|-------|
+  | Kindlepyre (T2) | 14 | Scorch Sweep | 22 | 1.57x |
+  | Hoarfall (T2) | 14 | Whiteout | 22 | 1.57x |
+  | Galeforce (T2) | 15 | Squall Line | 24 | 1.60x |
+  | Ley Cascade (T2) | 16 | Ley Storm | 25 | 1.56x |
+  | Rootgrip (T2) | 14 | Quake Stride | 22 | 1.57x |
+  | Spiritfang (T2) | 15 | Wilds Chorus | 23 | 1.53x |
+  | Mend (T1) | 3 | Breath of the Wilds | 6 | 2.00x |
+  | Deepmend (T2) | 10 | Sanctuary | 18 | 1.80x |
+  | Deepmend (T2) | 10 | Rekindling | 16 | 1.60x |
+  | Resurgence (T3) | 28 | Lifetide | 42 | 1.50x |
+- **Revival spells take no healing discount.** Spirit Recall (Tier 2, 20 MP) and
+  Second Dawn (Tier 3, 40 MP) are priced at the top of the *full* tier MP band,
+  not at 80% of it. Restoring a fainted ally restores that ally's entire
+  remaining action economy, which the ~80% healing discount is not tuned for.
+- **Substitute-cost spells are exempt from the MP band.** Leydraught costs 0 MP
+  and 15% of the caster's max HP. A spell that pays in a resource other than MP
+  states that cost explicitly and is not measured against the MP table.
+- **Enemy-only spells carry no MP cost.** Spells cast only by an enemy or boss
+  (the Void list, other than Hollow Mend and Pendulum's Echo) encode
+  `mp_cost: null` — enemies do not spend MP. Their spell power still follows the
+  tier bands so that [combat-formulas.md](combat-formulas.md) damage math applies
+  unchanged.
+- **`duration: null` is meaningful.** A null duration means the effect is
+  instantaneous (Dispersion, Mass Dispersion), charge-limited rather than
+  turn-limited (Leymirror: next 3 spells), or lasts until end of battle (Last
+  Breath, and every Tier 3 buff/debuff per the rule above). Buff and debuff
+  spells that *are* turn-counted must fall inside their tier's turn range.
+- **Cross-training multiplier.** Every `learned_by` entry marked
+  `cross_trained: true` carries `mp_penalty: 1.5`, matching the "+50% MP cost"
+  wording used throughout § Spell Progression & Learning.
 
 ---
 
@@ -528,7 +612,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Spirit
 - **Category:** Healing
 - **Tier:** 1
-- **MP Cost:** 8
+- **MP Cost:** 6
 - **Target:** All allies
 - **Effect:** Spell power 8. Restores minor HP to entire party.
 - **Description:** A soft wind carries the scent of moss and rain. Every wound eases. Every breath comes easier.
@@ -1000,7 +1084,7 @@ Each character learns spells through a tradition that reflects their background 
 - **Element:** Spirit
 - **Category:** Utility
 - **Tier:** 2
-- **MP Cost:** 10
+- **MP Cost:** 12
 - **Target:** Self/Party (field use)
 - **Effect:** Reduces random encounter rate by 75% for 120 seconds (real time) or 200 steps.
 - **Description:** The caster steps half into the spirit world. The party's presence dims. Predators look past them. The Wilds forget they were there.

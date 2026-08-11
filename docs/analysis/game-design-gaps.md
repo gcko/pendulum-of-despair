@@ -805,14 +805,49 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Location Design | locations.md, city-*.md | COMPLETE |
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
-| Magic System | magic.md | MOSTLY COMPLETE (needs numeric balance) |
-| Ability System | abilities.md | MOSTLY COMPLETE (needs damage values) |
+| Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
+| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; 8 abilities still describe damage/healing qualitatively — see below) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
 | Biomes | biomes.md | COMPLETE |
 | Side Quests | sidequests.md | MOSTLY COMPLETE |
 | Event Flags | events.md | MOSTLY COMPLETE |
+
+### Magic System — numeric balance (closed)
+
+All 89 spells in `game/data/spells/` were reconciled against the rules stated in
+[magic.md](../story/magic.md) § Spell Balance Guidelines. Tier MP bands, tier
+spell power bands, the AoE power reduction, the AoE MP multiplier, the healing
+discount, status hit rates, buff/debuff durations and the cross-training penalty
+all now hold, and `game/tests/test_spell_balance.gd` asserts them so a future
+edit that breaks one fails the suite. Two spell costs moved (Breath of the Wilds
+8 -> 6 MP, Veilstep 10 -> 12 MP); the remaining divergences were resolved by
+writing the missing rule into magic.md rather than by changing shipped values —
+see § Tier 4 AoE Exemption and § Derived Rules there.
+
+### Ability System — outstanding damage values
+
+The three custom resources (AP/AC/WG) are within their stated caps and asserted
+by `game/tests/test_ability_balance.gd`, and physical abilities take their
+multiplier from [combat-formulas.md](../story/combat-formulas.md) § Ability
+Multipliers. What remains open is a specific list of abilities whose output is
+still described qualitatively rather than as a spell power or multiplier:
+
+| Ability | Character | Missing value |
+|---------|-----------|---------------|
+| Shock Coil | Lira | Per-turn Storm damage — "scales with Lira's Magic", no coefficient |
+| Arc Trap | Lira | Flame damage on trigger — no magnitude |
+| Ember Wing / Inferno Gale | Torren | AoE Flame damage; "Heavy" at Favor 3 undefined |
+| Greyveil / Duskbreaker | Torren | Non-elemental MDEF-ignoring damage; "Heavy" at Favor 3 undefined |
+| Dewfall / Torrent's Grace | Torren | "Moderate heal" — no spell power |
+| Rootsong | Torren | Defined as "same per-target potency as Dewfall", so blocked on Dewfall |
+| Convergence Chorus | Torren | "50% normal potency" of the above, so blocked on all four Spiritcalls |
+| Wild Card (1/2/3-item branches) | Sable | AoE damage magnitude undefined (0-item branch is 2x Attack) |
+
+These are unblocked as soon as party ability execution lands in the battle layer
+— today `game/data/abilities/` is consumed only by the menu UI, so there is no
+consumer for a magnitude field.
 
 ---
 
