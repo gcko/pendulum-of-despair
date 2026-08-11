@@ -251,7 +251,7 @@ else:
 
 **Reaching the 14,999 cap requires:** Best spell + elemental weakness + Attunement buff + Resonance combo. The math: 8,220 base × 1.5 element × 1.3 Resonance = 16,029, capped at 14,999. This is the "perfect setup" moment — rare, earned, and spectacular.
 
-*Note: Ley Ruin (power 100) is AoE per [magic.md](magic.md). No single-target Tier 4 spell currently exists; if one is added during the ability pass, it would reach cap more easily.*
+*Note: the worked example uses Ley Ruin (power 100), which is AoE per [magic.md](magic.md). Nothing is discounted for that — Tier 4 keeps the full 85–120 power band even when it targets all enemies (magic.md § Tier 4 AoE Exemption, which is authoritative for the band and for the AoE reduction's scope). A single-target Tier 4 spell does exist: **Unmaking** (Void, power 85 — magic.md entry 85, `game/data/spells/void.json`), which the Pallor casts at one party member rather than the party casting it outward. Because the Tier 4 exemption removes the AoE power discount, target count no longer affects how easily a spell reaches the cap — only spell power does, and this chain needs `power >= 94`. Unmaking at 85 does not reach it, and neither does Requiem of Thorns at 90; Worldfire (95) and Ley Ruin (100) are the only two party-castable spells that can.*
 
 Magic damage is unaffected by row position.
 
@@ -319,11 +319,19 @@ The `ability_mult` value in the physical formula. Basic attack = 1.0. Damage col
 |------|------|---------|-------------------------------|
 | 1.0 | Basic attack | Attack command, Shiv (see below) | ~5,044 |
 | 1.5 | Strong skill | Riposte counter | ~7,596 |
-| 2.0 | Ultimate skill | Oathkeeper hits | ~10,148 |
-| 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,700 |
-| 3.0 | Maximum | Convergence Chorus (once per battle) | 14,999 (capped) |
+| 2.0 | Ultimate skill | Oathkeeper hits; Wild Card at 0–2 stolen items | ~10,148 |
+| 2.5 | Combo ability | *(reserved — see note)* | ~12,700 |
+| 3.0 | Maximum | Sever Bond (Cael's Edge, 1 use); Wild Card at 3 stolen items | 14,999 (capped) |
 
-The 3.0 tier is reserved for abilities with extreme costs — Torren's Convergence Chorus (once per battle), combo ultimates requiring specific party + setup. These are "Bum Rush" moments — the payoff for mastering the system.
+The 3.0 tier is reserved for abilities with extreme costs — a single scripted use (Lira's Sever Bond, spent for good after the Vaelith fight), or spending an entire resource pool (Wild Card consuming all three stolen items). These are "Bum Rush" moments — the payoff for mastering the system.
+
+**What this table does *not* cover.** Every entry above is a plain multiplier applied to `ATK²`. Three kinds of ability are therefore out of scope, and none of them belongs in a row here:
+
+- **Composites of other abilities.** Torren's Convergence Chorus fires four Spiritcall effects at 50% potency in one action — an AoE heal, AoE damage, a party barrier and a status effect ([abilities.md](abilities.md) § Torren — Spiritcall). It has no physical component at all, so no `ability_mult` can express it; its magnitudes are derived per component in abilities.md § Damage Magnitudes.
+- **Combos that modify a constituent ability.** Shattered Vanguard is Misdirect on all enemies followed by Shatter Guard at +50% damage, and Shatter Guard is a custom-formula ability (below) — so Shattered Vanguard is `Shatter Guard × 1.5`, not a multiplier on Edren's ATK. Ambush Protocol is likewise `Arc Trap × 2`.
+- **Combos that state their own formula.** Ley Torrent, Twilight Raid and Cael's Echo each define their own expression in abilities.md and never enter this table.
+
+That is why the 2.5 row has no exemplar: no shipped combo takes a physical `ability_mult`. The row is kept because the ladder itself is the reference, and because a future ability may claim it.
 
 ### Buff-Granted Multipliers
 
@@ -351,7 +359,9 @@ These abilities use their own formulas, not the standard physical or magic formu
 
 - **Shatter Guard:** Damage = total absorbed damage since stance began, capped at 2× Edren's max HP. See [abilities.md](abilities.md).
 - **Annulment:** Damage = (MAG × 2) + (effects_removed × 15), as magic damage. 100 WG cost.
-- **Greyveil:** Non-elemental magic damage that ignores MDEF.
+- **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes.
+- **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. Inherits Shatter Guard's 2× max-HP cap before the multiplier.
+- **Ambush Protocol** (combo): Arc Trap × 2, resolved as guaranteed magic damage. Arc Trap is spell power 30, so the combo lands at 60 — see [abilities.md](abilities.md) § Damage Magnitudes.
 
 ---
 
@@ -642,7 +652,9 @@ authoritative for enemy stats.
 
 ### AoE Damage Rules
 
-AoE spells have ~60–70% of single-target spell power at **Tiers 1–3 only** (defined in [magic.md](magic.md); Tier 4 ultimates keep the full 85–120 band even when they target all enemies — see magic.md § Tier 4 AoE Exemption, which is why the § Magic Damage worked example above uses Ley Ruin, AoE, at the full power 100). No damage splitting — each enemy takes the full AoE damage. AoE is valuable for clearing groups; single-target is better for bosses.
+AoE spells have ~60–70% of single-target spell power at **Tiers 1–3 only** (Tier 4 ultimates keep the full 85–120 band even when they target all enemies, which is why the § Magic Damage worked example above uses Ley Ruin, AoE, at the full power 100). No damage splitting — each enemy takes the full AoE damage. AoE is valuable for clearing groups; single-target is better for bosses.
+
+**[magic.md](magic.md) is authoritative for this rule** — for the per-tier power bands, for the AoE reduction, and for its Tier 4 exemption. This section restates it so the combat pipeline reads in one place; when the two disagree, magic.md wins and this paragraph is the bug. `game/tests/test_spell_balance.gd` asserts the bands and the exemption against `game/data/spells/`, so the rule is enforced on magic.md's side, not here.
 
 ---
 
