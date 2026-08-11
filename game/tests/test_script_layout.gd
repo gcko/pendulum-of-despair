@@ -172,3 +172,21 @@ func test_files_between_the_aim_and_the_maximum_are_the_documented_ones() -> voi
 				% [path, TARGET_SCRIPT_LINES]
 			)
 		)
+
+
+# ── Formation shape robustness (Copilot review, PR #357) ───────────────
+
+
+func test_add_member_repairs_a_malformed_formation() -> void:
+	# load_from_save assigns a saved formation verbatim, so a save missing a key
+	# used to crash the next party join on a direct index. RED without
+	# _ensure_formation_shape().
+	var roster: PartyRoster = PartyRoster.new(PartyState)
+	var saved: Dictionary = PartyState.formation.duplicate(true)
+	var saved_members: Array = PartyState.members.duplicate(true)
+	PartyState.formation = {"active": []}  # no "reserve", no "rows"
+	roster.add_member("lira", 1)
+	assert_true(PartyState.formation.has("reserve"), "reserve is repaired, not crashed on")
+	assert_true(PartyState.formation.has("rows"), "rows is repaired, not crashed on")
+	PartyState.formation = saved
+	PartyState.members = saved_members

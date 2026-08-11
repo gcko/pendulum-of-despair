@@ -31,12 +31,29 @@ func add_member(character_id: String, level: int) -> void:
 	if _party.members.size() == prev_size:
 		return
 	var idx: int = _party.members.size() - 1
+	# load_from_save assigns the saved formation verbatim, so a save written by
+	# an older build (or a hand-edited one) can be missing a key. Repair the
+	# shape before indexing rather than crashing the party-join that triggered
+	# it. A well-formed formation is untouched.
+	_ensure_formation_shape()
 	if _party.formation["active"].size() < MAX_ACTIVE:
 		_party.formation["active"].append(idx)
 	else:
 		_party.formation["reserve"].append(idx)
 	var char_data: Dictionary = DataManager.load_character(character_id)
 	_party.formation["rows"][character_id] = char_data.get("default_row", "back")
+
+
+## Guarantee formation carries its three sub-structures with the right types.
+func _ensure_formation_shape() -> void:
+	if not _party.formation is Dictionary:
+		_party.formation = {}
+	if not _party.formation.get("active") is Array:
+		_party.formation["active"] = []
+	if not _party.formation.get("reserve") is Array:
+		_party.formation["reserve"] = []
+	if not _party.formation.get("rows") is Dictionary:
+		_party.formation["rows"] = {}
 
 
 func has_member(character_id: String) -> bool:
