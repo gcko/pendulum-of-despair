@@ -35,7 +35,7 @@ Write the following sections from the spec:
 - Section 1.5: Font Sizes (6 context rows)
 - Section 1.6: Unified Status Effect Icon System (placement rules, 12 negative icons, 10 positive icons — all from magic.md canonical list)
 
-Verify: Every status effect in the icon tables exists in magic.md lines 1390–1413. No phantom statuses (no "Freeze", no "Depower").
+Verify: Every status effect in the icon tables exists in magic.md lines 1527–1550. No phantom statuses (no "Freeze", no "Depower").
 
 - [ ] **Step 2: Verify cross-references**
 

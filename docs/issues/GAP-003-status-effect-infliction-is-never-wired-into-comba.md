@@ -18,7 +18,7 @@ roll_status() and apply_status() are implemented but have zero callers; no spell
 
 ## Current state (implementation)
 
-The two-stage status accuracy roll and party status container exist but are dead-ended. ATB frozen/status_mods plumbing exists with nothing feeding it. Boss debuffs (e.g. Marked for Sorrow) cannot be applied. Tracker flags this at game-dev-gaps.md:612.
+The two-stage status accuracy roll and party status container exist but are dead-ended. ATB frozen/status_mods plumbing exists with nothing feeding it. Boss debuffs (e.g. Marked for Sorrow) cannot be applied. Tracker flags this at game-dev-gaps.md:616.
 
 ## Desired state (per design)
 

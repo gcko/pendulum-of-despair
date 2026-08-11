@@ -103,8 +103,8 @@ Each element has one element it is strong against (deals 150% damage) and one it
 ### Balance Rules
 
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
-- **AoE versions** cost 1.5-2x the single-target version of the same tier
-- **Status spells** have a base hit rate of 60-80% (modified by caster MAG vs. target MDEF)
+- **AoE versions** cost 1.5-2x the single-target version of the same tier — binds only on the named same-tier pairs; see "AoE MP pricing" under § Derived Rules below
+- **Status spells** have a base hit rate of 60-80% (the *standard* band; see "Status hit rate has two bands" under § Derived Rules below for the 45-59% severe band) (modified by caster MAG vs. target MDEF)
 - **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
 - **Damage formula reference:** `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
 - **Healing formula:** `heal_amount = min(14999, (caster.mag * spell.power * 0.8) * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md).
@@ -141,8 +141,11 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   band, for statuses the target can act through or that break on damage (Poison,
   Blind, Slow, Silence, Confusion, Despair, single-target Sleep). AoE versions of
   standard statuses sit at the band floor (60%). A second **severe band of
-  45-59%** covers statuses that stop the target acting for an indefinite duration
-  (Petrify, Stop) and multi-target statuses that deny actions or suppress a party
+  45-59%** covers statuses that remove the target from the action economy
+  outright — indefinitely (Petrify, "Until cured") or on a fixed timer the target
+  cannot influence (Stop, "3 real-time seconds", which wears off only and cannot
+  be broken by damage or cured) — and multi-target statuses that deny actions or
+  suppress a party
   system (party-wide Sleep; Silence plus buff suppression; Despair plus healing
   suppression). Debuff spells that impose a stat penalty (Drag Tide, Fray,
   Sunder, Dampening Field, Crumble) also roll to hit and use the standard band;
@@ -153,13 +156,9 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   two-stage MAG/MDEF and Magic Evasion checks that 50% base lands ~26% of the
   time against a boss, which is the intended reliability for a combat-removal
   status.
-- **AoE MP pricing needs a named counterpart.** The 1.5-2x rule binds only for
-  the AoE/single-target pairs listed below. A standalone AoE spell with no
-  counterpart (Leyward, Bulwark Line, Flashblind, Miasma, Eventide, Bogsink,
-  Mass Dispersion, Drift, Smokeveil, and every Tier 4 ultimate) is priced inside
-  its plain tier MP band instead — there is no single-target cost to multiply.
-  The enemy-only Void AoE spells (Pallor Tide, Silence of Ages, The Weight, Grey
-  Horizon) carry no MP cost at all and are outside this rule entirely.
+- **AoE MP pricing needs a named *same-tier* counterpart.** The 1.5-2x rule binds
+  only on the nine AoE/single-target pairs listed below, where both halves sit in
+  the same tier and deliver the same effect.
 
   | Single target | MP | AoE version | MP | Ratio |
   |---------------|----|-------------|----|-------|
@@ -171,8 +170,42 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   | Spiritfang (T2) | 15 | Wilds Chorus | 23 | 1.53x |
   | Mend (T1) | 3 | Breath of the Wilds | 6 | 2.00x |
   | Deepmend (T2) | 10 | Sanctuary | 18 | 1.80x |
-  | Deepmend (T2) | 10 | Rekindling | 16 | 1.60x |
   | Resurgence (T3) | 28 | Lifetide | 42 | 1.50x |
+
+  The ratio, not the tier MP band, is the binding constraint for these nine AoE
+  spells. Multiplying a single-target cost by 1.5-2x routinely lands above the
+  plain tier band (Ley Storm 25 and Squall Line 24 against a Tier 2 ceiling of
+  20) and above the ~80% healing band (Sanctuary 18 against a Tier 2 healing
+  ceiling of 16; Lifetide 42 against a Tier 3 healing ceiling of 36). That is the
+  intended outcome — a party-wide effect is worth more than its tier band alone
+  would allow — so a paired AoE spell is measured against its counterpart and is
+  *not* measured against the tier MP band or the healing discount.
+
+- **Cross-tier AoE escalations are not pairs.** Several AoE spells reproduce a
+  lower-tier single-target effect one tier up. They are new spells at a new tier,
+  not a repriced version of the same spell, so they are priced inside their own
+  plain tier MP band and the 1.5-2x rule does not bind on them. Their ratios
+  against the lower-tier original are recorded here so the relationship is not
+  mistaken for a broken pair:
+
+  | Lower-tier single target | MP | Cross-tier AoE | MP | Ratio |
+  |--------------------------|----|----------------|----|-------|
+  | Murk Veil (T1, Blind) | 4 | Flashblind (T2) | 13 | 3.25x |
+  | Vilethorn (T1, Poison) | 5 | Miasma (T2) | 12 | 2.40x |
+  | Leaden Step (T1, Slow) | 5 | Bogsink (T2) | 12 | 2.40x |
+  | Slumber Mote (T1, Sleep) | 6 | Eventide (T2) | 14 | 2.33x |
+  | Kindle Breath (T1, Regen) | 6 | Rekindling (T2) | 16 | 2.67x |
+  | Dispersion (T2, dispel) | 14 | Mass Dispersion (T3) | 30 | 2.14x |
+
+  Note that Sanctuary, not Rekindling, is Deepmend's party version: Deepmend is a
+  direct heal (spell power 30) and Rekindling is the party form of Kindle
+  Breath's regeneration.
+
+  A standalone AoE spell with no single-target counterpart at any tier (Leyward,
+  Bulwark Line, Drift, Smokeveil, and every Tier 4 ultimate) is likewise priced
+  inside its plain tier MP band — there is no single-target cost to multiply. The
+  enemy-only Void AoE spells (Pallor Tide, Silence of Ages, The Weight, Grey
+  Horizon) carry no MP cost at all and are outside this rule entirely.
 - **Revival spells take no healing discount.** Spirit Recall (Tier 2, 20 MP) and
   Second Dawn (Tier 3, 40 MP) are priced inside the *full* tier MP band, above
   the ~80% healing band (Tier 2 ceiling 16, Tier 3 ceiling 36) — restoring a
@@ -185,11 +218,30 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   `mp_cost: null` — enemies do not spend MP. Their spell power still follows the
   tier bands so that [combat-formulas.md](combat-formulas.md) damage math applies
   unchanged.
-- **`duration: null` is meaningful.** A null duration means the effect is
-  instantaneous (Dispersion, Mass Dispersion), charge-limited rather than
-  turn-limited (Leymirror: next 3 spells), or lasts until end of battle (Last
-  Breath, and every Tier 3 buff/debuff per the rule above). Buff and debuff
-  spells that *are* turn-counted must fall inside their tier's turn range.
+- **`duration: null` is meaningful.** A null duration means one of four things:
+
+  1. **The duration belongs to the inflicted status, not to the spell.** This is
+     the dominant case — fourteen of the fifteen `category: status` spells encode
+     `duration: null` for this reason. Murk Veil and Flashblind inflict Blind,
+     so they last "4 turns or until cured"; Leaden Step and Bogsink inflict Slow,
+     so they last 5 turns; Befuddle inflicts Confusion (3 turns or until damaged);
+     Vilethorn and Miasma inflict Poison, Slumber Mote and Eventide inflict Sleep,
+     Grey Gaze inflicts Petrify and Stillwatch inflicts Stop — all open-ended or
+     real-time rather than turn-counted. The authority for every one of those
+     numbers is § Status Effect Reference below, keyed on the spell's `status`
+     field. A status spell must therefore either declare `duration: null` or
+     restate its status's canonical turn count exactly; Ashen Whisper is the one
+     spell that restates it (`duration: 4`, matching the Despair row) because its
+     effect text names the number.
+  2. **The effect is instantaneous** (Dispersion, Mass Dispersion).
+  3. **The effect is charge-limited rather than turn-limited** (Leymirror: next
+     3 spells), or field-scoped and measured in real time or steps rather than
+     turns (Veilstep: 120 seconds or 200 steps).
+  4. **The effect lasts until end of battle** (Last Breath, and every Tier 3
+     buff/debuff per the rule above).
+
+  Buff and debuff spells that *are* turn-counted must fall inside their tier's
+  turn range.
 - **Cross-training multiplier.** Every `learned_by` entry marked
   `cross_trained: true` carries `mp_penalty: 1.5`, matching the "+50% MP cost"
   wording in this document's preamble and in each spell's "Who learns" line.

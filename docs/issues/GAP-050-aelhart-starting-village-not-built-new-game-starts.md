@@ -42,7 +42,7 @@ Make an explicit decision and either build Aelhart or reconcile the docs.
 ## Code references
 
 - game/scenes/maps/dungeons/ember_vein_f1.tscn
-- docs/analysis/game-dev-gaps.md:1037
+- docs/analysis/game-dev-gaps.md:1041
 
 
 ## Verification (fresh-eyes adversarial pass)

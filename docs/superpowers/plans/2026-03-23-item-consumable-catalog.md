@@ -80,14 +80,14 @@ Copy from spec Section 1.4. Include the design note blockquote about Despair cur
 Items: Antidote, Alarm Clock, Echo Drop, Eye Drops, Smelling Salts, Soft Stone, Chronos Dust, Remedy, Pallor Salve, Hope Shard.
 
 IMPORTANT: The "Cured By" column in magic.md references these exact item names. Verify each name matches magic.md exactly:
-- magic.md line 1392: "Antidote item" ✓
-- magic.md line 1394: "Alarm Clock item" ✓
-- magic.md line 1396: "Echo Drop item" ✓
-- magic.md line 1397: "Eye Drops item" ✓
-- magic.md line 1398: "Soft Stone item" ✓
-- magic.md line 1399: "Chronos Dust item" ✓
-- magic.md line 1403: "Hope Shard item" ✓
-- magic.md line 1395: "Remedy item" ✓ (for Confusion — but we now also have Smelling Salts as dedicated cure)
+- magic.md line 1529: "Antidote item" ✓
+- magic.md line 1531: "Alarm Clock item" ✓
+- magic.md line 1533: "Echo Drop item" ✓
+- magic.md line 1534: "Eye Drops item" ✓
+- magic.md line 1535: "Soft Stone item" ✓
+- magic.md line 1536: "Chronos Dust item" ✓
+- magic.md line 1541: "Hope Shard item" ✓
+- magic.md line 1532: "Remedy item" ✓ (for Confusion — but we now also have Smelling Salts as dedicated cure)
 
 NOTE: Smelling Salts is NEW — not yet in magic.md's "Cured By" column for Confusion (line 1395 currently says "Cleansing Draught, Purge, Remedy item"). This will need a magic.md update in a later task.
 

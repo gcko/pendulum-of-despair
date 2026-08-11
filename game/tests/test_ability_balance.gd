@@ -1,5 +1,9 @@
 extends GutTest
-## Balance invariants for game/data/abilities/ (7 files, 56 entries).
+## Balance invariants for game/data/abilities/ (6 character files, 44 entries).
+##
+## combos.json (12 entries) is deliberately outside this file's assertions: its
+## `cost` is a free-text per-character split ("Edren: 7 MP, Cael: 7 MP") with no
+## `cost_value` field to check it against.
 ##
 ## Assertions map to docs/story/abilities.md:
 ##   § Bulwark / Forgewright / Arcanum resource blocks — AP/AC/WG caps

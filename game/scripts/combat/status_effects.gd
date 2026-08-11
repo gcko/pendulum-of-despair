@@ -22,13 +22,13 @@ const UNTIL_CURED: int = -1
 ## atb is "none" | "frozen" | "mod"; tick_pct is fraction of MAX HP lost at the
 ## end of the bearer's turn. Sources are cited per status.
 const RULES: Dictionary = {
-	# Poison: 8% max HP/turn, until cured (magic.md:1477).
+	# Poison: 8% max HP/turn, until cured (magic.md:1529).
 	"poison": {"tick_pct": 0.08, "duration": UNTIL_CURED},
-	# Burn: 5% max HP/turn for 3 turns (magic.md:1478).
+	# Burn: 5% max HP/turn for 3 turns (magic.md:1530).
 	"burn": {"tick_pct": 0.05, "duration": 3},
-	# Sleep: ATB frozen until damaged/cured (magic.md:746, combat-formulas.md:734).
+	# Sleep: ATB frozen until damaged/cured (magic.md:798, combat-formulas.md:734).
 	"sleep": {"atb": "frozen", "duration": UNTIL_CURED, "wake_on_damage": true},
-	# Petrify: removed from combat, ATB frozen, until cured (magic.md:779).
+	# Petrify: removed from combat, ATB frozen, until cured (magic.md:831).
 	"petrify": {"atb": "frozen", "duration": UNTIL_CURED},
 	# Paralysis: cannot act for 3 turns, does NOT wake on damage (#248; differs
 	# from Sleep which wakes). Modeled as "incapacitates" (the gauge keeps filling
@@ -40,11 +40,11 @@ const RULES: Dictionary = {
 	# Despair: ATB fill x0.75 for 4 turns (combat-formulas.md:721,737). The
 	# -20% damage-dealt half is deferred (needs an attacker-status param).
 	"despair": {"atb": "mod", "atb_mult": 0.75, "duration": 4},
-	# Silence: cannot cast, 4 turns (magic.md:768). Effect deferred.
+	# Silence: cannot cast, 4 turns (magic.md:820). Effect deferred.
 	"silence": {"duration": 4},
-	# Confusion: 3 turns or until damaged (magic.md:757). Auto-target deferred.
+	# Confusion: 3 turns or until damaged (magic.md:809). Auto-target deferred.
 	"confusion": {"duration": 3, "wake_on_damage": true},
-	# Blind: -50% physical accuracy, 4 turns (magic.md:812). Effect deferred.
+	# Blind: -50% physical accuracy, 4 turns (magic.md:864). Effect deferred.
 	"blind": {"duration": 4},
 }
 

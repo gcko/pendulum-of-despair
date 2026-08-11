@@ -587,9 +587,17 @@ value this balance pass changes — the base rules and the stated target agree.
 
 *Damage magnitudes.* Abilities that use the standard physical formula take their
 `ability_mult` from [combat-formulas.md](combat-formulas.md) § Ability
-Multipliers (1.0 basic / 1.5 strong / 2.0 ultimate / 2.5 combo / 3.0 maximum);
-abilities with their own formula are listed in that document's Custom-Formula
-Abilities section. A handful of damaging abilities still describe their output
-qualitatively ("Flame damage to all enemies") rather than with a spell power or
-multiplier — see the Ability System row in
+Multipliers (1.0 basic / 1.5 strong / 2.0 ultimate / 2.5 combo / 3.0 maximum).
+Abilities with their own formula state it inline in the tables above (Unweave,
+`Maren MAG x 3`; Wild Card's 0-item branch, `2x Attack`; Arcanite Colossus,
+`Lira ATK x 1.5`; Ley Torrent, `(Maren MAG + Torren MAG) x 4`; Twilight Raid,
+`(Sable ATK + Torren MAG) x 1.5`; Cael's Echo, `combined ATK x 3`); the three
+whose formula needs the battle layer's own state — Shatter Guard, Annulment and
+Greyveil — are additionally spelled out in combat-formulas.md § Custom-Formula
+Abilities. A combo may also modify a custom-formula ability rather than carry an
+`ability_mult` of its own (Shattered Vanguard is Shatter Guard at +50% damage),
+so a combo appearing in the physical multiplier table is not by itself evidence
+that it uses the physical formula. A handful of damaging abilities still describe
+their output qualitatively ("Flame damage to all enemies") rather than with a
+spell power or multiplier — see the Ability System row in
 [game-design-gaps.md](../analysis/game-design-gaps.md) for the outstanding list.

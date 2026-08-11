@@ -43,8 +43,8 @@ func test_atb_mod_statuses() -> void:
 
 
 func test_tick_percentages() -> void:
-	assert_almost_eq(SE.tick_pct("poison"), 0.08, 0.001)  # magic.md:1477
-	assert_almost_eq(SE.tick_pct("burn"), 0.05, 0.001)  # magic.md:1478
+	assert_almost_eq(SE.tick_pct("poison"), 0.08, 0.001)  # magic.md:1529
+	assert_almost_eq(SE.tick_pct("burn"), 0.05, 0.001)  # magic.md:1530
 	assert_almost_eq(SE.tick_pct("sleep"), 0.0, 0.001)
 
 

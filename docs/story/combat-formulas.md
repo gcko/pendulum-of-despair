@@ -630,7 +630,7 @@ authoritative for enemy stats.
 
 ### AoE Damage Rules
 
-AoE spells have ~60–70% of single-target spell power (defined in [magic.md](magic.md)). No damage splitting — each enemy takes the full AoE damage. AoE is valuable for clearing groups; single-target is better for bosses.
+AoE spells have ~60–70% of single-target spell power at **Tiers 1–3 only** (defined in [magic.md](magic.md); Tier 4 ultimates keep the full 85–120 band even when they target all enemies — see magic.md § Tier 4 AoE Exemption, which is why the § Magic Damage worked example above uses Ley Ruin, AoE, at the full power 100). No damage splitting — each enemy takes the full AoE damage. AoE is valuable for clearing groups; single-target is better for bosses.
 
 ---
 

@@ -74,9 +74,9 @@ Implementation gaps that depend on these may encounter missing data —
 use `/story-designer` to fill design gaps before implementing.
 `magic.md` is now COMPLETE (numeric balance closed). `abilities.md` is
 still MOSTLY COMPLETE, but the residue is specific rather than general:
-resource costs are closed and nine entries lack damage/healing
+resource costs are closed and ten entries lack damage/healing
 magnitudes — see `game-design-gaps.md` § Ability System — outstanding
-damage values for the enumerated list.
+damage values for the enumerated list, tracked as issue #321.
 
 ---
 

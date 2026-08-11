@@ -6,10 +6,11 @@ extends GutTest
 ##   § Balance Rules             — healing discount, AoE MP multiplier,
 ##                                 status hit rate, buff/debuff duration
 ##   § Tier 4 AoE Exemption      — ultimates keep the full power band
-##   § Derived Rules             — severe status band, named AoE pairs,
+##   § Derived Rules             — severe status band, named same-tier AoE pairs,
 ##                                 revival pricing, substitute costs,
-##                                 enemy-only spells, null durations,
-##                                 cross-training penalty
+##                                 enemy-only spells, null durations (including
+##                                 status durations owned by § Status Effect
+##                                 Reference), cross-training penalty
 ##
 ## If a spell value changes and a test here fails, either the value is wrong
 ## or the rule in magic.md is wrong. Fix one of them — do not weaken the test.
@@ -31,7 +32,28 @@ const AOE_POWER_BAND: Dictionary = {1: [7, 14], 2: [16, 28], 3: [30, 49]}
 ## Tier 3 is absent: those last until end of battle and encode duration as null.
 const DURATION_BAND: Dictionary = {1: [4, 6], 2: [4, 8]}
 
-## [single_target_id, aoe_id] — the only pairs the 1.5-2x AoE MP rule binds on.
+## Status id -> canonical turn count from magic.md § Status Effect Reference.
+## 0 marks an open-ended status (until cured, until damaged, or measured in real
+## time), which no spell may restate as a turn count. Per § Derived Rules a
+## status spell either declares `duration: null` — the duration belongs to the
+## status, not the spell — or restates this number exactly.
+const STATUS_CANONICAL_TURNS: Dictionary = {
+	"blind": 4,
+	"confusion": 3,
+	"despair": 4,
+	"petrify": 0,
+	"poison": 0,
+	"silence": 4,
+	"sleep": 0,
+	"slow": 5,
+	"stop": 0,
+}
+
+## [single_target_id, aoe_id] — the only same-tier pairs the 1.5-2x AoE MP rule
+## binds on. Cross-tier escalations (Murk Veil -> Flashblind, Kindle Breath ->
+## Rekindling, Dispersion -> Mass Dispersion, ...) are deliberately absent: per
+## § Derived Rules they are new spells at a new tier, priced inside their own
+## plain tier MP band rather than off a counterpart.
 const AOE_PAIRS: Array = [
 	["kindlepyre", "scorch_sweep"],
 	["hoarfall", "whiteout"],
@@ -41,7 +63,6 @@ const AOE_PAIRS: Array = [
 	["spiritfang", "wilds_chorus"],
 	["mend", "breath_of_the_wilds"],
 	["deepmend", "sanctuary"],
-	["deepmend", "rekindling"],
 	["resurgence", "lifetide"],
 ]
 
@@ -153,7 +174,11 @@ func test_mp_cost_within_tier_band() -> void:
 		if SUBSTITUTE_COST_SPELLS.has(spell_id):
 			continue  # pays in HP, outside the MP band by rule
 		if paired.has(spell_id):
-			continue  # priced off its counterpart, covered by the ratio test
+			# Priced off its same-tier counterpart via the 1.5-2x rule, which
+			# deliberately overshoots the plain tier band and the healing band
+			# (Ley Storm 25, Sanctuary 18, Lifetide 42) — see § Derived Rules
+			# "AoE MP pricing". Covered by the ratio test instead.
+			continue
 		var tier: int = int(spell.get("tier", 0))
 		var band: Array = MP_BAND[tier]
 		var low: int = int(band[0])
@@ -353,6 +378,47 @@ func test_turn_counted_buff_durations_match_their_tier() -> void:
 		)
 		checked += 1
 	assert_gt(checked, 0, "no turn-counted buffs or debuffs were checked")
+
+
+func test_status_spell_durations_come_from_the_status_effect_reference() -> void:
+	var checked: int = 0
+	var restated: int = 0
+	for spell: Dictionary in _spells:
+		if String(spell.get("category", "")) != "status":
+			continue
+		var status: String = String(spell.get("status", ""))
+		assert_true(
+			STATUS_CANONICAL_TURNS.has(status),
+			(
+				"%s inflicts '%s', which has no row in magic.md § Status Effect Reference"
+				% [_label(spell), status]
+			),
+		)
+		if not STATUS_CANONICAL_TURNS.has(status):
+			continue
+		checked += 1
+		if spell.get("duration") == null:
+			continue  # duration owned by the status, per § Derived Rules
+		var canonical: int = int(STATUS_CANONICAL_TURNS[status])
+		assert_gt(
+			canonical,
+			0,
+			(
+				"%s declares a turn count, but '%s' is open-ended in § Status Effect Reference"
+				% [_label(spell), status]
+			),
+		)
+		assert_eq(
+			int(spell.get("duration")),
+			canonical,
+			(
+				"%s declares %d turns; § Status Effect Reference gives '%s' as %d"
+				% [_label(spell), int(spell.get("duration")), status, canonical]
+			),
+		)
+		restated += 1
+	assert_gt(checked, 0, "no status spells were checked")
+	assert_gt(restated, 0, "expected at least one status spell to restate its status duration")
 
 
 func test_tier1_buffs_and_debuffs_are_all_turn_counted() -> void:

@@ -86,7 +86,7 @@ git commit -m "docs(shared): add combat pacing targets to difficulty-balance.md"
 **Cross-reference files to verify against:**
 - `docs/story/items.md` — Potion (100 HP, 50g), Hi-Potion (500 HP, 300g, Act II), Ether (30 MP, 200g)
 - `docs/story/economy.md` § Gold Pacing Targets — expected gold per act
-- `docs/story/magic.md` — Mend (3 MP), Leybalm (3 MP), Breath of the Wilds (8 MP)
+- `docs/story/magic.md` — Mend (3 MP), Leybalm (3 MP), Breath of the Wilds (6 MP)
 
 - [ ] **Step 1: Write Section 3 (Resource Management)**
 

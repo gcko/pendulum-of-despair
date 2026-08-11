@@ -11,7 +11,7 @@ const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 
-## Poison: 8% max HP/turn, until cured (magic.md:1477). UNTIL_CURED sentinel = -1.
+## Poison: 8% max HP/turn, until cured (magic.md:1529). UNTIL_CURED sentinel = -1.
 const UNTIL_CURED: int = -1
 
 
@@ -126,7 +126,7 @@ func test_enemy_status_unknown_is_no_effect() -> void:
 
 
 func test_poison_ticks_party_member_hp() -> void:
-	# Poison = 8% max HP/turn (magic.md:1477). 100 max HP -> 8 per tick, floor 1.
+	# Poison = 8% max HP/turn (magic.md:1529). 100 max HP -> 8 per tick, floor 1.
 	var state: Node = _make_party(0, 0, 100)
 	state.apply_status(0, "poison", "turns", UNTIL_CURED)
 	state.tick_statuses(0)
@@ -244,7 +244,7 @@ func test_ai_without_abilities_never_returns_ability() -> void:
 
 
 func test_enemy_buff_scales_get_stats() -> void:
-	# Pack Howl = +30% ATK (Rallying Cry analog, magic.md:919).
+	# Pack Howl = +30% ATK (Rallying Cry analog, magic.md:971).
 	var enemy: Enemy = _make_synthetic_enemy({"atk": 20, "type": "beast", "hp": 100})
 	assert_eq(int(enemy.get_stats().get("atk", 0)), 20, "base ATK before buff")
 	enemy.apply_buff("atk", 1.30, 5)
