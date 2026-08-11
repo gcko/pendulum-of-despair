@@ -1,5 +1,11 @@
 # Gap 3.7: Cutscene Overlay (T1 Full Cutscene + T4 Micro-Cutscene)
 
+> **Dated record (2026-04-13) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 **Date:** 2026-04-13
 **Gap:** 3.7
 **Status:** Design approved, ready for implementation

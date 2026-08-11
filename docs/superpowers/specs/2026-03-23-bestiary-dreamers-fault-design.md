@@ -1,5 +1,11 @@
 # Bestiary Dreamer's Fault Design Spec (Gap 1.3, Sub-project 3b)
 
+> **Dated record (2026-03-23) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Scope:** Post-game super dungeon enemy bestiary — 20 floors across
 > 5 ages, 20 regular enemies, 4 Echo Bosses, 1 non-combat encounter.
 >

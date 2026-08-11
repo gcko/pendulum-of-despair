@@ -1,5 +1,11 @@
 # XP & Leveling Curve Design
 
+> **Dated record (2026-03-24) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > Spec for Gap 2.1. Defines the XP-to-level formula (two-phase curve),
 > XP distribution rules, level-up effects, catch-up mechanics, the Ley
 > Scar grinding zone, and tuning targets for expected party level at

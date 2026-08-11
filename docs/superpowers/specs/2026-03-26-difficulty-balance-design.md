@@ -1,5 +1,11 @@
 # Difficulty & Balance Framework Specification
 
+> **Dated record (2026-03-26) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 3.4 Difficulty & Balance Framework
 > **Status:** MISSING → design approved
 > **Priority:** P2

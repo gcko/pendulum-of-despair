@@ -1,5 +1,11 @@
 # Audio Integration (Gap 3.8) Implementation Plan
 
+> **Dated record (2026-04-22) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the AudioManager stub with a working 16-channel audio system featuring dual-track crossfade, SFX priority pool, and mixing model — then wire existing callers and generate placeholder .ogg files.

@@ -1,5 +1,11 @@
 # Battle Scene Design Spec (Gap 3.3)
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Goal:** Implement the ATB battle system as a core state scene in
 > Godot 4.6, covering all combat formulas, turn flow, battle UI, and
 > victory/defeat flow. One PR, phased internally.

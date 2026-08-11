@@ -1,5 +1,11 @@
 # Gaps 1.6 + 1.7: Encounter Tables + Crafting Data — Design Spec
 
+> **Dated record (2026-04-04) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Date:** 2026-04-04
 > **Gaps:** 1.6 (Encounter Table Data) + 1.7 (Crafting & Device Data)
 > **Status:** Approved

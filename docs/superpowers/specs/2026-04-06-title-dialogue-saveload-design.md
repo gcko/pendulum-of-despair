@@ -1,5 +1,11 @@
 # Gaps 3.1 + 3.5 + 3.6: Title Screen, Dialogue Overlay, Save/Load Overlay — Design Spec
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Date:** 2026-04-06
 > **Gaps:** 3.1 (Title Screen), 3.5 (Dialogue Overlay), 3.6 (Save/Load Overlay)
 > **Status:** Approved

@@ -1,5 +1,11 @@
 # Wilds Route — Design Spec (Gap 4.4 Phase A)
 
+> **Dated record (2026-04-08) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **SUPERSEDED IN PART BY [#270](https://github.com/gcko/pendulum-of-despair/issues/270) (PR #278).** Dated design record, kept as-is. Its "Encounter Zone" section is stale in two independently-superseded ways: `thornmere_wilds` now rolls the Act I *forest* roster (`wayward_wolf`, `wild_boar`, `forest_sprite`, `thornback_beetle`) rather than `marsh_serpent` / `drowned_bones` — **that swap is #270 (PR #278)** — and it ships `danger_increment: 148` with formation rates `68.75 / 18.75 / 12.5` rather than `160` and `75 / 15 / 10` — **that correction came earlier, from PR #268; #278 left the encounter math untouched**. That section also contradicts itself, calling for "Act I forest enemies" and then listing marsh IDs; the marsh IDs won at implementation time, and that mismatch is the origin of the bug #270 fixed. Shipped values live in the `thornmere_wilds` `_comment` in `game/data/encounters/overworld.json` and the "Thornmere Wilds roster" note in `docs/story/bestiary/act-i.md`.
 
 > **Gap:** 4.4 Phase A (Remaining Act I Content — Wilds Route)

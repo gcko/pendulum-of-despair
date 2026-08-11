@@ -1,5 +1,11 @@
 # Economy & Pricing System Design
 
+> **Dated record (2026-03-24) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > Spec for Gap 1.6. Defines the complete economic system: currency,
 > shop inventories, gold pacing, treasure chest formulas, boss gold
 > drops, inn costs, crafting costs, steal economy, quest rewards,

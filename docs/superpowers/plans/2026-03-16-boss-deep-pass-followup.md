@@ -1,5 +1,11 @@
 # Boss Deep Pass Follow-Up Plan
 
+> **Dated record (2026-03-16) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Complete the remaining work from the boss deep pass — ASCII dungeon layouts, bounty boss stat blocks, and Lira's weapon mechanical definition.

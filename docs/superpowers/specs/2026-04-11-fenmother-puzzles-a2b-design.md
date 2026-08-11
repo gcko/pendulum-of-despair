@@ -1,5 +1,11 @@
 # Fenmother's Hollow Puzzles — Phase A2b Design Spec
 
+> **Dated record (2026-04-11) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 4.4 Phase A2b (Fenmother's Hollow Puzzles)
 > **Date:** 2026-04-11
 > **Status:** Approved

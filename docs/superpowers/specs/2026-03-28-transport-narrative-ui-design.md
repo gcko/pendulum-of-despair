@@ -1,5 +1,11 @@
 # Transport Narrative & UI Gaps — Design Spec
 
+> **Dated record (2026-03-28) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 **Issues:** #63 (items 1-2), #64 (items 1-5, 10-11)
 **Status:** Approved design, ready for implementation
 **Date:** 2026-03-28

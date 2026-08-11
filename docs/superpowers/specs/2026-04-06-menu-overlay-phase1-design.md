@@ -1,5 +1,11 @@
 # Menu Overlay Phase 1 — Design Spec
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 3.4 (Phase 1 of 2)
 > **Priority:** P1
 > **Source Docs:** `ui-design.md` Sections 3–5, 8, 10; `accessibility.md`;

@@ -1,5 +1,11 @@
 # Valdris Crown Lower Ward Implementation Plan
 
+> **Dated record (2026-04-07) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a 1-district town (Lower Ward) proving the town gameplay loop: walk around, talk to NPCs, shop, rest at inn, save, transition to/from dungeon.

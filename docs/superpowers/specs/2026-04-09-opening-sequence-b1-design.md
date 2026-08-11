@@ -1,5 +1,11 @@
 # Opening Sequence Phase B1 — Design Spec
 
+> **Dated record (2026-04-09) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 4.4 Phase B1 (Party Assembly + Game Start Restructuring)
 > **Goal:** Wire correct party assembly flow: Edren+Cael at start,
 > Lira+Sable join via carradan_ambush_survived flag, Scene 2+4

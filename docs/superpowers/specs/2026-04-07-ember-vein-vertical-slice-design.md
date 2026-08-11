@@ -1,5 +1,11 @@
 # Ember Vein Vertical Slice — Design Spec
 
+> **Dated record (2026-04-07) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 4.1 (Vertical Slice: Ember Vein Dungeon)
 > **Approach:** B — Two-Floor + Boss (3 map files: F1, F2, F4)
 > **Goal:** Prove the end-to-end dungeon gameplay loop: enter dungeon →
