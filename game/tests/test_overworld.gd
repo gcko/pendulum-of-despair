@@ -13,6 +13,9 @@ const THORNMERE_ROSTER: Array[String] = [
 ## Location-confined to Fenmother's Hollow F1–F3; must not roam the Wilds.
 const FENMOTHER_CONFINED: Array[String] = ["marsh_serpent", "drowned_bones"]
 
+## enemy_id -> enemy Dictionary, built once per run by _build_enemy_index().
+var _enemy_index_cache: Dictionary = {}
+
 
 func before_each() -> void:
 	DataManager.clear_cache()
@@ -130,6 +133,8 @@ func test_thornmere_wilds_draws_only_documented_overworld_roster() -> void:
 func test_thornmere_wilds_excludes_dungeon_confined_enemies() -> void:
 	# Regression for #270: marsh creatures must not roam a dense forest.
 	var used: Dictionary = _zone_enemy_ids(_find_zone("thornmere_wilds"))
+	# An empty roster would satisfy the loop below without proving anything.
+	assert_gt(used.size(), 0, "thornmere_wilds should roll at least one enemy")
 	for enemy_id: String in FENMOTHER_CONFINED:
 		assert_false(used.has(enemy_id), "%s is confined to Fenmother's Hollow" % enemy_id)
 
@@ -241,6 +246,12 @@ func _exp_per_hp(zone_id: String, index: Dictionary) -> float:
 
 ## Build enemy_id -> enemy Dictionary across every act enemy table.
 func _build_enemy_index() -> Dictionary:
+	# Built once per run: the scan reparses every act enemy table, and
+	# before_each()'s DataManager.clear_cache() would otherwise force a full
+	# rescan for each test that needs it. The result is plain data, so the
+	# cleared DataManager cache does not invalidate it.
+	if not _enemy_index_cache.is_empty():
+		return _enemy_index_cache
 	var index: Dictionary = {}
 	var dir: DirAccess = DirAccess.open("res://data/enemies/")
 	if dir == null:
@@ -254,6 +265,7 @@ func _build_enemy_index() -> Dictionary:
 					index[(enemy as Dictionary)["id"]] = enemy
 		entry = dir.get_next()
 	dir.list_dir_end()
+	_enemy_index_cache = index
 	return index
 
 
@@ -265,10 +277,15 @@ func _all_zones() -> Array[Dictionary]:
 	return zones
 
 
+## Look up a zone by id, failing the calling test when it is absent.
+## Returning a bare {} would let a renamed or deleted zone satisfy every
+## "must not contain" assertion vacuously — the regression tests below would
+## then pass in exactly the case they exist to catch.
 func _find_zone(zone_id: String) -> Dictionary:
 	for zone: Dictionary in _all_zones():
 		if zone.get("zone_id", "") == zone_id:
 			return zone
+	fail_test("overworld zone '%s' not found" % zone_id)
 	return {}
 
 
