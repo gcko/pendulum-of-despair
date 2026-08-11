@@ -784,7 +784,7 @@ the act ends.)*
 
 <!-- Cross-ref: npcs.md § Scholar Aldis -->
 
-**ALDIS** : Commander Edren. I've been cataloguing the ley line
+**ALDIS** : Commander Edren. I've been cataloging the ley line
 decline for three years now. Twelve percent capacity loss in the
 last year alone. I presented these findings to the court. They
 asked me if I was certain about the margin of error.

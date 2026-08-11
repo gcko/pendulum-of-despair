@@ -281,7 +281,7 @@ outside, but unraveled from within, methodically, by someone who
 understood their architecture.)*
 
 *(Cael stands in the courtyard. The Pendulum is in his hand. He
-is calm. His armour is buckled for travel. His eyes are clear.
+is calm. His armor is buckled for travel. His eyes are clear.
 That is the worst part.)*
 
 **EDREN** : Cael. Put it down.
