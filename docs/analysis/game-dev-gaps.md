@@ -66,7 +66,7 @@ in these docs.**
 | Dynamic world | `dynamic-world.md` (1,156) |
 | Sidequests | `sidequests.md` (704) |
 | Post-game | `postgame.md` (281) |
-| Architecture | `docs/plans/technical-architecture.md` (1,194) |
+| Architecture | `docs/plans/technical-architecture.md` (1,197) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).

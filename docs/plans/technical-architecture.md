@@ -474,7 +474,10 @@ spec; the earlier draft in this section (`floor`, and flat
 
 - Top level: `dungeon_id`, `name`, `act`, `floors`, `bosses`. `act` uses
   the same roman-numeral ids as the rest of the game data — `act_i`,
-  `act_ii`, `act_iii`, `interlude`, `post_game` — never `act_1`.
+  `act_ii`, `act_iii`, `interlude`, `post_game` — never `act_1`. Dungeon
+  files use only those five; the overworld zone records in
+  `overworld.json` add a sixth value, `all`, for zones that are reachable
+  in every act (three zones carry it today).
 - Each floor carries `floor_id` (a string, and a span such as `"1-2"` when
   one table covers several floors), `terrain_type`, `danger_tier`,
   `danger_increment`, `formation_rates` and `groups`. Two floors add an
