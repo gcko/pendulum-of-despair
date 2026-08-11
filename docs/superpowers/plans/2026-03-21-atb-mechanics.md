@@ -196,9 +196,9 @@ After inserting:
    - Sable Lv1: floor((18+25)*3*1.0) = 129. Time: 16000/129/60 = 2.07s ≈ 2.1s
    - Sable Lv70+Haste: floor((128+25)*3*1.5) = floor(688.5) = 688. Time: 16000/688/60 = 0.387s ≈ 0.39s
 2. Verify the status effect percentages match magic.md:
-   - Quickstep/Haste: +50% (magic.md line 812)
-   - Slow: -50% (magic.md line 705)
-   - Despair: -25% ATB, -20% damage (magic.md line 1078)
+   - Quickstep/Haste: +50% (magic.md line 949)
+   - Slow: -50% (magic.md line 842)
+   - Despair: -25% ATB, -20% damage (magic.md line 1215)
 3. Verify SPD values match progression.md base stats (line 126):
    Maren 8, Sable 18, Edren 10
 

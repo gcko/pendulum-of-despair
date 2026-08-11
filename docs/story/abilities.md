@@ -550,3 +550,54 @@ Cael's departure at the end of Act II removes the party's dedicated buffer. This
 - **Spirit Favor** progression should take approximately 15-20 battles per spirit to reach Favor 3 through natural play, rewarding players who pay attention to elemental matchups.
 - **Arcanite Charges** should create genuine resource tension — Lira can't deploy everything in every fight. Players should think about which devices matter most for the current encounter.
 - **Weave Gauge** should fill to 100 approximately once per major battle (3-4 rounds of heavy spellcasting), making Ley Surge and Annulment feel earned rather than spammable.
+
+### Resource Cost Invariants
+
+The three custom resources have hard caps stated in their own sections above.
+No ability may cost more than its resource's cap, or the ability would be
+permanently uncastable. `game/tests/test_ability_balance.gd` asserts this
+against `game/data/abilities/`.
+
+| Resource | Cap | Most expensive ability | Cost |
+|----------|-----|------------------------|------|
+| Aegis Points (AP) | 10 | Oathkeeper | 8 AP |
+| Arcanite Charges (AC) | 12 | Arcanite Colossus | 8 AC |
+| Weave Gauge (WG) | 100 | Annulment | 100 WG |
+
+Annulment sits exactly on the cap by design — it is the only ability that
+consumes a full gauge, and it is described that way in the Arcanum table above.
+
+*Weave Gauge derivation.* The **base** gain rules are +5 WG when Maren casts,
++10 WG when another ally casts, +15 WG when an enemy casts. A "round of heavy
+spellcasting" in a four-slot party is Maren plus one other caster plus one enemy
+caster: `5 + 10 + 15 = 30 WG per round`, reaching 100 on round 4. With two ally
+casters alongside Maren it is `5 + 20 + 15 = 40 WG per round`, reaching 100 on
+round 3. That bounds the stated 3-4 round target from both sides on the base
+rules alone, so neither the base gain values nor the balance target needs
+changing.
+
+30 WG/round is a floor, not the only rate. Several Arcanum abilities generate WG
+on top of the base rules — Siphon +20 on success, Resonance +10, Unweave +10,
+Mirrorsong +15 — as do two combos (Ley Torrent +30, Arcane Convergence +20). A
+round that includes one of these runs at roughly 35-50 WG, which pulls the fill
+to the round-3 end of the stated target, and a party that lands Siphon or a
+WG-generating combo every single round can reach 100 during round 2. Whether
+that best case needs a cap is a tuning question for the battle layer, not a
+value this balance pass changes — the base rules and the stated target agree.
+
+*Damage magnitudes.* Abilities that use the standard physical formula take their
+`ability_mult` from [combat-formulas.md](combat-formulas.md) § Ability
+Multipliers (1.0 basic / 1.5 strong / 2.0 ultimate / 2.5 combo / 3.0 maximum).
+Abilities with their own formula state it inline in the tables above (Unweave,
+`Maren MAG x 3`; Wild Card's 0-item branch, `2x Attack`; Arcanite Colossus,
+`Lira ATK x 1.5`; Ley Torrent, `(Maren MAG + Torren MAG) x 4`; Twilight Raid,
+`(Sable ATK + Torren MAG) x 1.5`; Cael's Echo, `combined ATK x 3`); the three
+whose formula needs the battle layer's own state — Shatter Guard, Annulment and
+Greyveil — are additionally spelled out in combat-formulas.md § Custom-Formula
+Abilities. A combo may also modify a custom-formula ability rather than carry an
+`ability_mult` of its own (Shattered Vanguard is Shatter Guard at +50% damage),
+so a combo appearing in the physical multiplier table is not by itself evidence
+that it uses the physical formula. A handful of damaging abilities still describe
+their output qualitatively ("Flame damage to all enemies") rather than with a
+spell power or multiplier — see the Ability System row in
+[game-design-gaps.md](../analysis/game-design-gaps.md) for the outstanding list.

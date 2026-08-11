@@ -46,7 +46,7 @@ Track per-act as sub-epics. Reuse the proven pipeline (dialogue JSON -> map trig
 
 - game/scenes/maps/ (all Act-I)
 - game/data/dialogue/ (Act II-IV scene JSON unwired)
-- docs/analysis/game-dev-gaps.md:1089-1119
+- docs/analysis/game-dev-gaps.md:1093-1123
 
 
 ## Verification (fresh-eyes adversarial pass)

@@ -168,7 +168,7 @@ not a design constraint.
 
 **Healing spells supplement items:** Mend (3 MP, ~155–250 HP at early
 levels depending on caster MAG), Leybalm (3 MP, similar), Breath of
-the Wilds (8 MP, party heal). These conserve Potions but cost the
+the Wilds (6 MP, party heal). These conserve Potions but cost the
 real resource: MP.
 
 ### 3.2 MP — The Soft Constraint

@@ -805,14 +805,100 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Location Design | locations.md, city-*.md | COMPLETE |
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
-| Magic System | magic.md | MOSTLY COMPLETE (needs numeric balance) |
-| Ability System | abilities.md | MOSTLY COMPLETE (needs damage values) |
+| Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
+| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; 10 entries still describe damage/healing qualitatively — see below) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
 | Biomes | biomes.md | COMPLETE |
 | Side Quests | sidequests.md | MOSTLY COMPLETE |
 | Event Flags | events.md | MOSTLY COMPLETE |
+
+### Magic System — numeric balance (closed)
+
+All 89 spells in `game/data/spells/` were reconciled against the rules stated in
+[magic.md](../story/magic.md) § Spell Balance Guidelines. Tier MP bands, tier
+spell power bands, the AoE power reduction, the AoE MP multiplier, the healing
+discount, status hit rates, buff/debuff durations and the cross-training penalty
+now hold **with their scopes written down**, and
+`game/tests/test_spell_balance.gd` asserts them so a future edit that breaks one
+fails the suite. Two spell costs moved (Breath of the Wilds 8 -> 6 MP, Veilstep
+10 -> 12 MP); the remaining divergences were resolved by writing the missing rule
+into magic.md rather than by changing shipped values — see § Tier 4 AoE Exemption
+and § Derived Rules there.
+
+Scope matters for two of those rules, and the tests encode the scope rather than
+the unqualified sentence:
+
+- The **tier MP band** and the **healing discount** do not bind on the nine
+  spells priced off a same-tier counterpart by the 1.5-2x AoE rule. Multiplying a
+  single-target cost overshoots the plain band by design — Ley Storm 25 and
+  Squall Line 24 against a Tier 2 ceiling of 20, Sanctuary 18 and Lifetide 42
+  against Tier 2/3 healing ceilings of 16 and 36. For those nine the ratio is the
+  binding constraint; magic.md § Derived Rules "AoE MP pricing" states this and
+  `test_mp_cost_within_tier_band` skips them for that reason.
+- The **status hit rate** rule has two bands, standard (60-80%) and severe
+  (45-59%); five shipped spells sit in the severe band.
+
+### Ability System — outstanding damage values
+
+The three custom resources (AP/AC/WG) are within their stated caps and asserted
+by `game/tests/test_ability_balance.gd`, and physical abilities take their
+multiplier from [combat-formulas.md](../story/combat-formulas.md) § Ability
+Multipliers. What remains open is a specific list of abilities whose output is
+still described qualitatively rather than as a spell power or multiplier:
+
+| Ability | Character | Missing value |
+|---------|-----------|---------------|
+| Shock Coil | Lira | Per-turn Storm damage — "scales with Lira's Magic", no coefficient |
+| Arc Trap | Lira | Flame damage on trigger — no magnitude |
+| Ember Wing / Inferno Gale | Torren | AoE Flame damage; "Heavy" at Favor 3 undefined |
+| Greyveil / Duskbreaker | Torren | Non-elemental MDEF-ignoring damage; "Heavy" at Favor 3 undefined |
+| Dewfall / Torrent's Grace | Torren | "Moderate heal" — no spell power |
+| Rootsong | Torren | Defined as "same per-target potency as Dewfall", so blocked on Dewfall |
+| Convergence Chorus | Torren | "50% normal potency" of the above, so blocked on all four Spiritcalls |
+| Wild Card (1/2/3-item branches) | Sable | AoE damage magnitude undefined (0-item branch is 2x Attack) |
+| Shiv (thrown-item branch) | Sable | "Bonus elemental damage" from a thrown stolen item — no magnitude, and no item-type -> element mapping. The base attack is fully specified (ability_mult 1.0 + 50% DEF ignore, combat-formulas.md § Special: Shiv); only the throw branch is open |
+| Ambush Protocol (combo #8) | Sable + Lira | "2x normal Arc Trap damage", so blocked on Arc Trap |
+
+Nine of the ten are character abilities; Ambush Protocol is the one combo that
+inherits the gap, via Arc Trap. The other eleven entries in
+`game/data/abilities/combos.json` either state their own magnitude (Thornfire,
+spell power 40; Ley Torrent, `(Maren MAG + Torren MAG) x 4`) or are pure
+buff/utility effects with nothing to quantify — but see the multiplier-table
+conflict below, which affects one of them.
+
+**Physical Ability Multiplier table conflicts.**
+[combat-formulas.md](../story/combat-formulas.md) § Ability Multipliers lists two
+abilities in its *Physical* Ability Multiplier Tiers table that cannot take a
+physical `ability_mult` at all:
+
+- **Convergence Chorus** at `3.0` ("Maximum").
+  [abilities.md](../story/abilities.md) § Torren — Spiritcall defines it as four
+  simultaneous Spiritcall effects at 50% potency — an AoE heal, AoE damage, a
+  party barrier and a status cleanse, with no physical component. A physical
+  `ability_mult` cannot express that composite, so the combat-formulas.md row is
+  the incorrect one and the magnitude is genuinely still open. (The prose
+  immediately below the table repeats the claim, so both need correcting.)
+- **Shattered Vanguard** at `2.5` ("Combo ability", quoted at ~12,700).
+  [abilities.md](../story/abilities.md) § Combo Abilities defines it as Misdirect
+  on all enemies followed by Shatter Guard at +50% damage, and Shatter Guard is a
+  custom-formula ability — combat-formulas.md § Custom-Formula Abilities gives it
+  as "total absorbed damage since stance began, capped at 2x Edren's max HP". A
+  flat ATK multiplier cannot express absorbed damage either, so the ~12,700 is
+  as unfounded as the 3.0 row.
+
+Correcting both rows is tracked separately as a combat-formulas.md fix, in
+[#333](https://github.com/gcko/pendulum-of-despair/issues/333) (opened for
+Convergence Chorus; the Shattered Vanguard row belongs in the same pass).
+`abilities.md:129` already documents Sever Bond as a genuine physical 3.0x
+ability, so the 3.0 row has a correct exemplar available.
+
+The magnitudes above are unblocked as soon as party ability execution lands in
+the battle layer — today `game/data/abilities/` is consumed only by the menu UI,
+so there is no consumer for a magnitude field. That work is tracked in
+[#321](https://github.com/gcko/pendulum-of-despair/issues/321) (whose title still
+says "eight"; the enumerated list here is the current count).
 
 ---
 

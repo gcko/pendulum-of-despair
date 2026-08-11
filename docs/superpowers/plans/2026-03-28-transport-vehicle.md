@@ -61,7 +61,7 @@ Check against canonical sources:
 - Rail routes match city-carradan.md network diagram (Corrund↔Ashmark↔Caldera, Corrund↔Kettleworks)
 - Rail Conductor NPC exists at Corrund (building #28) and Ashmark (building #1) per city-carradan.md
 - Note Caldera and Kettleworks lack formal building entries — file a GitHub issue for adding Rail Station building directory entries to city-carradan.md
-- Linewalk: 12 MP, Maren Lv 20, "any previously visited town" per magic.md line 994
+- Linewalk: 12 MP, Maren Lv 20, "any previously visited town" per magic.md line 1131
 - Bellhaven docks exist in locations.md
 - Gael's Span is described as a bridge-town in geography.md
 
