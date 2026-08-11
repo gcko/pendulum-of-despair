@@ -7,7 +7,7 @@ extends CanvasLayer
 
 signal results_dismissed
 signal command_submitted(command: Dictionary)
-signal command_cancelled
+signal command_canceled
 signal submenu_state_changed(is_open: bool)
 
 const COLOR_DAMAGE: Color = Color("#ffffff")
@@ -89,7 +89,7 @@ func _ready() -> void:
 
 	if _command_menu != null:
 		_command_menu.command_selected.connect(_on_command_selected)
-		_command_menu.command_cancelled.connect(_on_command_cancelled)
+		_command_menu.command_canceled.connect(_on_command_canceled)
 		_command_menu.submenu_opened.connect(_on_submenu_opened)
 		_command_menu.submenu_closed.connect(_on_submenu_closed)
 		_command_menu.target_changed.connect(_on_target_changed)
@@ -160,12 +160,12 @@ func _on_command_selected(command: Dictionary) -> void:
 	command_submitted.emit(command)
 
 
-func _on_command_cancelled() -> void:
+func _on_command_canceled() -> void:
 	if _command_menu != null:
 		_command_menu.hide_menu()
 	if _party_panel != null:
 		_party_panel.set_active_slot(-1)
-	command_cancelled.emit()
+	command_canceled.emit()
 
 
 func _on_submenu_opened() -> void:

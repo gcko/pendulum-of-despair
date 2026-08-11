@@ -524,7 +524,7 @@ Narrative trophies dropped by major bosses. These have no gameplay effect — th
 | Cael's Pendant | Cael (Phase 1) | A locket with a pressed flower inside. Lira recognizes it. |
 | Cael's Sword | Pallor Incarnate | The blade is cold. It will not rust. |
 | Vaelith's Quill | Vaelith | An 800-year-old scholar's quill. The ink is still wet. |
-| Lost Page | The Index | A single page from the catalogue. One name. One story. |
+| Lost Page | The Index | A single page from the catalog. One name. One story. |
 | Grey Echo Shard | Pallor Echo | A fragment of someone Cael used to be. |
 
 > **8 mementos total.** Each memento corresponds to a major narrative turning point. They appear in the Key Items tab in the order acquired and cannot be reordered or hidden.
