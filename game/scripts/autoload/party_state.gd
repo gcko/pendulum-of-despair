@@ -438,6 +438,12 @@ func get_key_items() -> Array:
 	return inventory.get("key_items", [])
 
 
+## Whether the party holds a key item (items.md § Story Items). Key items are
+## unique, so this is the only ownership question they answer.
+func has_key_item(item_id: String) -> bool:
+	return item_id in get_key_items()
+
+
 func use_item(item_id: String, target_character_id: String) -> bool:
 	var consumables: Dictionary = inventory.get("consumables", {})
 	var qty: int = consumables.get(item_id, 0)

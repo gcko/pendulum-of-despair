@@ -2,6 +2,7 @@ extends GutTest
 ## Tests for ShopOverlay — buy-only shop UI.
 
 const SHOP_SCENE: PackedScene = preload("res://scenes/overlay/shop_overlay.tscn")
+const ShopOverlayScript: GDScript = preload("res://scripts/ui/shop_overlay.gd")
 
 var _shop: Node
 
@@ -148,3 +149,73 @@ func test_stock_limit_prevents_excess_purchases() -> void:
 	var gold_before: int = PartyState.gold
 	shop._try_buy()
 	assert_eq(PartyState.gold, gold_before, "gold should not decrease when stock limit reached")
+
+
+# --- Caldera Employee Card discount (GAP-022) ---
+
+
+func _open_caldera_store() -> Node:
+	# Caldera stock is Act II; without the flag the shop lists nothing.
+	EventFlags.set_flag("act_ii_started", true)
+	PartyState.gold = 2000
+	var shop: Node = _create_shop("caldera_company_store")
+	var item_list: VBoxContainer = shop.get_node("Panel/VBox/ScrollContainer/ItemList")
+	assert_gt(item_list.get_child_count(), 0, "the Caldera store should list stock")
+	return shop
+
+
+## Gold figure shown on the selected row. Fails the calling test when the row
+## carries no price, so a price comparison can never pass against a blank label.
+func _displayed_price(shop: Node) -> int:
+	var item_list: VBoxContainer = shop.get_node("Panel/VBox/ScrollContainer/ItemList")
+	var label: Label = item_list.get_child(shop._selected) as Label
+	var digits: String = ""
+	for chunk: String in label.text.split(" "):
+		if chunk.ends_with("G") and chunk.left(chunk.length() - 1).is_valid_int():
+			digits = chunk.left(chunk.length() - 1)
+	if digits.is_empty():
+		fail_test("shop row '%s' shows no price" % label.text)
+		return -1
+	return digits.to_int()
+
+
+func test_caldera_charges_the_inflated_price_without_the_card() -> void:
+	var shop: Node = _open_caldera_store()
+	assert_eq(_displayed_price(shop), 450, "hi_potion posts its 150% Caldera price")
+	shop._try_buy()
+	assert_eq(PartyState.gold, 1550, "the full inflated price is charged")
+
+
+func test_caldera_takes_25_percent_off_with_the_card() -> void:
+	PartyState.add_key_item("caldera_employee_card")
+	var shop: Node = _open_caldera_store()
+	assert_eq(_displayed_price(shop), 338, "450 * 0.75 rounds half up to 338 (economy.md)")
+	shop._try_buy()
+	assert_eq(PartyState.gold, 1662, "the discounted price is charged")
+
+
+func test_displayed_price_is_the_price_charged() -> void:
+	PartyState.add_key_item("caldera_employee_card")
+	var shop: Node = _open_caldera_store()
+	var shown: int = _displayed_price(shop)
+	var before: int = PartyState.gold
+	shop._try_buy()
+	assert_eq(before - PartyState.gold, shown, "the shop must charge what it posted")
+
+
+func test_non_caldera_shop_ignores_the_card() -> void:
+	PartyState.add_key_item("caldera_employee_card")
+	PartyState.gold = 200
+	var shop: Node = _create_shop("aelhart_general")
+	assert_eq(_displayed_price(shop), 50, "a standard-price shop posts its list price")
+	shop._try_buy()
+	assert_eq(PartyState.gold, 150, "the card grants nothing outside inflated shops")
+
+
+func test_posted_price_rounds_half_up_and_only_for_inflated_shops() -> void:
+	assert_eq(ShopOverlayScript.posted_price(450, 1.5, true), 338, "337.5 rounds up")
+	assert_eq(ShopOverlayScript.posted_price(750, 1.5, true), 563, "562.5 rounds up")
+	assert_eq(ShopOverlayScript.posted_price(2250, 1.5, true), 1688, "1687.5 rounds up")
+	assert_eq(ShopOverlayScript.posted_price(1200, 1.5, true), 900, "an exact quarter stays exact")
+	assert_eq(ShopOverlayScript.posted_price(450, 1.5, false), 450, "no card, no discount")
+	assert_eq(ShopOverlayScript.posted_price(50, 1.0, true), 50, "no markup, no discount")
