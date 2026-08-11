@@ -196,6 +196,8 @@ and commands share the bottom ~35%.
 - Damage numbers pop above sprites, float upward over ~0.5 seconds,
   pixel font 12px, 2-frame animation. Color-coded: white (damage),
   green (heal), grey (miss).
+- Party-side numbers use the same popup with a different placement —
+  see § 2.3.
 
 ### 2.3 Party Panel (Bottom-Left, ~65% Width)
 
@@ -219,6 +221,20 @@ Each row contains:
    When full: 2-frame flash alternating gold and white to signal
    "ready to act." See [combat-formulas.md](combat-formulas.md) §
    ATB Gauge System for fill rate formula and status interactions.
+
+**Damage and healing numbers on party rows.** A party-side number is
+the same popup as an enemy's (§ 2.2) but not the same placement. Party
+rows are stacked barely more than a number's own height apart — far
+tighter than the enemy sprites — so a number floated above its row by
+the enemy lift would clear its own row's band entirely and land over a
+different member, reading as damage to the wrong character.
+A party-side number is instead centred on the row it belongs to, both
+axes, and rises only as far as the gap between rows. Centring is
+unconditional; what holds for any number no taller than a row is the
+guarantee that it never enters a neighbouring row's band. Like the
+target cursor (§ 2.6), the popup reads the row's actual on-screen rect
+rather than assuming a row pitch, so it stays correct when row height
+changes.
 
 ### 2.4 Command Panel (Bottom-Right, ~35% Width)
 
@@ -244,13 +260,39 @@ Vertical list of battle commands:
 - Appears for action announcements: spell names, item use, status
   changes, enemy actions.
 - Pixel font 8px, pale yellow text on dark navy background.
-- Auto-fades after 1.5 seconds. Does not persist.
+- Auto-fades after 1.5 seconds when nothing is waiting behind it (see
+  the queue rule below). Does not persist.
+- Announcements queue rather than overwrite. A line is guaranteed at
+  least 0.75 seconds on screen before the next one may take the window;
+  anything arriving inside that guarantee waits its turn. A line with
+  something queued behind it therefore hands over at 0.75 seconds
+  rather than holding the full 1.5. Without the guarantee a line can be
+  flashed past in a single frame — an auto-skipped Paralysis turn (see
+  [combat-formulas.md](combat-formulas.md) § Status Effect ATB
+  Interactions) is announced one frame before the enemy that was ready
+  alongside it attacks.
+- At most 3 lines wait behind the current one; a longer burst drops its
+  oldest waiting lines. The window therefore trails the battle by at
+  most ~2.25 seconds (3 waiting lines × the 0.75-second guarantee)
+  instead of falling further behind without limit.
 
 ### 2.6 Target Selection
 
 - Blinking pixel-art arrow cursor above targeted enemy (for offensive
-  actions) or below targeted party member (for support/healing).
-- Left/right cycles through enemies; up/down cycles through party members.
+  actions) or beside the targeted party member (for support/healing).
+- The party has no sprites on the battle screen, so a party-side cursor
+  anchors to the targeted member's row in the party panel: immediately
+  left of the row, vertically centred on it (FF6's row-list convention).
+  It reads the row's actual on-screen rect — never a fixed row pitch, so
+  it stays correct when row height changes. The party panel hugs the
+  left edge of the screen, so the cursor clamps there rather than
+  sliding off.
+- Left/right cycles through enemies; up/down cycles through party
+  members — through the occupied slots only, so a two-member party
+  cycles between two rows and can never point at an empty slot. A KO'd
+  member stays targetable (revives and healing must reach them). If a
+  slot with no row is somehow targeted anyway, the cursor hides rather
+  than pointing at empty space.
 - Multi-target spells: all valid targets highlighted simultaneously,
   cursor shows "All" text indicator.
 - Confirm executes; cancel returns to sub-menu or command panel.
