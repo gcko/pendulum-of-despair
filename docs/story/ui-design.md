@@ -100,10 +100,11 @@ the player focuses on the game world and characters, not the menus.
 | Damage numbers | 12px | Float upward with 2-frame animation |
 | Tiny labels (status icon tooltips) | 6px | Only where space-constrained |
 
-**Spelling.** Every string in this document, and every string the UI
-emits, uses American English (*color*, *behavior*, *paralyzed*,
-*centered*). The house rule and its single exception (*grey*, a proper
-noun) are stated once in [README.md](README.md) § Writing Conventions.
+**Spelling.** Strings in this document, and the strings the UI emits,
+use American English (*color*, *behavior*, *paralyzed*, *centered*). The
+house rule, its single deliberate exception (*grey*, a proper noun), and
+the residual British spellings still awaiting a sweep are stated once in
+[README.md](README.md) § Writing Conventions.
 
 ### 1.6 Unified Status Effect Icon System
 
@@ -236,7 +237,7 @@ different member, reading as damage to the wrong character.
 A party-side number is instead centered on the row it belongs to, both
 axes, and rises only as far as the gap between rows. Centering is
 unconditional; what holds for any number no taller than a row is the
-guarantee that it never enters a neighbouring row's band. Like the
+guarantee that it never enters a neighboring row's band. Like the
 target cursor (§ 2.6), the popup reads the row's actual on-screen rect
 rather than assuming a row pitch, so it stays correct when row height
 changes.

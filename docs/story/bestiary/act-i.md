@@ -102,13 +102,20 @@ For full AI scripts, phase mechanics, and scripted events, see
 > `duskfen_marshland` (both behind `diplomatic_mission_start`),
 > `duskfen_hollow`, then Deep Serpent in the Ley Line Depths
 > ([act-ii.md](act-ii.md)) and Ashen Serpent in Act III
-> ([act-iii.md](act-iii.md)). The material appears in this file, which a
-> reader takes for an Act I roster, while its earliest supplier is now
-> unambiguously behind flag 8. #286 owns the fix —
-> either give it an Act I source or retier it — and this note removes the
-> "maybe Fenmother's Hollow is Act I" escape hatch that was blocking that
-> decision. Nothing consumes `serpent_fang` today, so the severity stays
-> low.
+> ([act-iii.md](act-iii.md)). One caveat on checking that against the
+> data: `game/data/encounters/caves_and_grottos.json` carries a
+> file-level `"act": "act_i"`, but it is a mixed-act file — the same file
+> holds `highcairn_hermit_cave` (rolls `pallor_boar`, an Act III enemy)
+> and `corrund_river_cave` (Compact constructs) — so its tag does not
+> assign an act to `duskfen_hollow`. Duskfen itself opens on flag 8;
+> retagging or splitting that file is a follow-up.
+>
+> The material appears in this file, which a reader takes for an Act I
+> roster, while its earliest supplier is now unambiguously behind flag 8.
+> #286 owns the fix — either give it an Act I source or retier it — and
+> this note removes the "maybe Fenmother's Hollow is Act I" escape hatch
+> that was blocking that decision. Nothing consumes `serpent_fang` today,
+> so the severity stays low.
 
 Recommended party level: 12–15 per
 [dungeons-world.md](../dungeons-world.md) § 2 — the party arrives at the
@@ -170,8 +177,11 @@ partly on Ember Vein enemies instead, documented in that section above.
 > the roster's woodland species: two forest-floor Beasts (Wayward Wolf,
 > Thornback Beetle), a browsing Beast that ranges the woodland margin
 > (Wild Boar), and the Spirit type canon binds to old-growth timber
-> (Forest Sprite — the Wilds are "ley-line guardians" per
-> [geography.md](../geography.md) § Natural Resources). Plains Hare is
+> (Forest Sprite — of the old-growth timber running between the highlands
+> and the Wilds, [geography.md](../geography.md) § Valdris Territory /
+> Natural Resources says "the trees are considered ley-line guardians";
+> the guardians are the trees, and that is the habitat claim, not a claim
+> about the Wilds as a region). Plains Hare is
 > excluded as open-ground grazer: it rolls only in `aelhart_valley`
 > (farmland) and `roads`. Road Bandit is excluded because Humanoid
 > bandits need traffic to rob and the roads carry their own `roads`
@@ -271,8 +281,8 @@ Recommended party level: 5–6.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Compact Patrol | Humanoid | 5 | 180 | 0 | 16 | 14 | 8 | 10 | 10 | 30 | 18 | — | Potion (75%) | — | — | — | — | Ironmouth Docks |
-| Compact Scout | Humanoid | 6 | 140 | 0 | 14 | 10 | 8 | 8 | 14 | 35 | 20 | — | Antidote (50%) | — | — | — | — | Ironmouth Docks |
+| Compact Patrol | Humanoid | 5 | 180 | 0 | 16 | 14 | 8 | 10 | 10 | 30 | 18 | — | Potion (75%) | — | — | — | — | Ironmouth Docks (Scene 3) |
+| Compact Scout | Humanoid | 6 | 140 | 0 | 14 | 10 | 8 | 8 | 14 | 35 | 20 | — | Antidote (50%) | — | — | — | — | Ironmouth Docks (Scene 3) |
 
 ---
 

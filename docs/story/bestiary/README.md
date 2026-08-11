@@ -47,14 +47,28 @@ Each enemy in the bestiary tables uses these columns:
 ### Location Vocabulary
 
 The `Location(s)` column names **encounter tables, not places.** Every
-entry must resolve to a row of shipped encounter data, so that a reader
-who has never seen the map can check the cell without judgement. Exactly
-two forms are admissible:
+entry must name something that exists in the repo, so that a reader who
+has never seen the map can check the cell without judgement. Exactly two
+forms are admissible:
 
 | Form | Written as | Resolves against |
 |------|-----------|------------------|
-| Dungeon floor | Dungeon name + floor span — `Ember Vein F1–F2`, `Fenmother's Hollow F3` | the `floors[].floor_id` entries of `game/data/encounters/<dungeon_id>.json`; the dungeon itself is a numbered entry in [dungeons-world.md](../dungeons-world.md) or [dungeons-city.md](../dungeons-city.md) |
+| Dungeon floor | Dungeon name + floor span — `Ember Vein F1–F2`, `Fenmother's Hollow F3` | the dungeon's numbered entry in [dungeons-world.md](../dungeons-world.md) or [dungeons-city.md](../dungeons-city.md), and the matching `<enemy>_f<n>` id in the enemy's `locations` array. **Not** machine-checkable against the encounter files — see below |
 | Encounter zone | The zone's `name` field verbatim — `Thornmere Wilds`, `Ley-Scarred Plains`, `Roads` | a `zone_id`/`name` pair in `game/data/encounters/overworld.json` |
+
+**The dungeon-floor form does not resolve against the encounter data,
+and saying otherwise would be false.** The two sides count floors
+differently: the enemy files and this column spell them per floor
+(`ember_vein_f1`, `Ember Vein F1–F2`), while
+`game/data/encounters/<dungeon_id>.json` keys `floors[].floor_id` by
+*roster band* — `ember_vein.json` and `fenmothers_hollow.json` each ship
+exactly two, `"1-2"` and `"3"`. So a cell reading `Ember Vein F2–F3`
+matches no `floor_id`, and Tomb Mite's `Ember Vein F1–F2` sits in a band
+whose roster is `ley_vermin` + `unstable_crystal` and does not include
+it. No mapping between the two schemes is canon yet, which is why
+`test_bestiary_locations.gd` checks only the overworld half of this rule.
+Until that mapping exists, treat a dungeon-floor cell as a claim about
+the dungeon and the enemy's `locations` array, not about a roster row.
 
 Parenthetical role markers (`(boss)`, `(mini-boss)`, `(unique)`,
 `(Wave 4)`, `(Scene 3)`) may follow either form. Scripted, non-random
@@ -80,8 +94,9 @@ one-for-one with the enemy's `locations` array in
 defect. `game/tests/test_bestiary_locations.gd` enforces the overworld
 half of this: every `overworld.json` zone that rolls an **Act I** enemy
 must appear in that enemy's `locations`, and the five retired names must
-appear nowhere in any act. Act II, Interlude and Act III have 22 zone
-appearances their `locations` arrays still omit — the same defect, not
+appear nowhere in any act. Act II and Act III have 22 zone appearances
+their `locations` arrays still omit (15 and 7 respectively; no Interlude
+enemy appears in any `overworld.json` zone roster) — the same defect, not
 yet reconciled, and the reason the coverage assertion is scoped to Act I
 rather than turned off.
 

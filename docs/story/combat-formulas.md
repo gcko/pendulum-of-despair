@@ -567,15 +567,18 @@ The bestiary (Gap 1.3) defines enemy properties (flying, armored, undead, Pallor
 Key bosses from [bestiary/bosses.md](bestiary/bosses.md) (20 of 30
 in the full roster). Omits Pallor Wastes trial bosses (4), Dreamer's
 Fault bosses (4), The Grey Keeper, and Pallor Echo. All listed HP
-and act values match bosses.md. See bosses.md for the complete
+and act values match bosses.md. The Act column is the act the encounter
+belongs to, which for the two Fenmother's Hollow bosses is II even though
+bosses.md still groups them under its Act I heading — that heading is a
+power band (#287). See bosses.md for the complete
 roster, stat tables, and AI scripts.
 
 | Boss | Act | HP | Rationale |
 |------|-----|----|-----------|
 | Ember Drake | I | 1,500 | Mini-boss. First real threat. |
 | Vein Guardian | I | 6,000 | Tutorial boss. ~20 party actions. |
-| Drowned Sentinel | I | 4,000 | Mini-boss. Construct puzzle. |
-| Corrupted Fenmother | I | 18,000 | Act I climax. 3 phases + cleansing waves. |
+| Drowned Sentinel | II | 4,000 | Mini-boss. Construct puzzle. Fenmother's Hollow — Act II content at the top of the Act I power band (#287). |
+| Corrupted Fenmother | II | 18,000 | Act II's opening climax. 3 phases + cleansing waves. |
 | Ley Colossus | II | 7,000 | Mini-boss. Magic-immune puzzle. |
 | The Forge Warden | II | 8,500 | Ashmark boss. 2 phases. |
 | The Ashen Ram | II | 25,000 | Act II climax. Siege boss. 3 phases. |
@@ -882,11 +885,17 @@ deducted from back attack first then normal. Normalizes all terrains to
 62.5% Normal / 0% Back Attack / 37.5% Preemptive.
 
 **Preemptive Charms do not stack.** The bonus is a flat +25pp whenever any
-party member has one equipped, regardless of how many the party carries —
-the same non-stacking rule the Ward Talisman and Infiltrator's Cloak
-follow above, and the reason the "normalizes all terrains to 62.5/0/37.5"
-sentence can state one outcome rather than a per-count table. Two charms
-give +25pp, not +50pp.
+party member has one equipped, regardless of how many the party carries.
+Two charms give +25pp, not +50pp; `EncounterSystem.get_preemptive_bonus()`
+returns on the first match it finds. This is a *party-wide* rule and is
+decided on its own terms, not inherited from the Ward Talisman /
+Infiltrator's Cloak precedent above: those two fail to stack because they
+compete for one character's accessory slot, whereas each party member can
+equip a charm of their own ([equipment.md](equipment.md) § Accessories
+lists Preemptive Charm as an ordinary accessory). The reason to decide it
+this way is that the "normalizes all terrains to 62.5/0/37.5" sentence
+above states one outcome, and no per-count table was ever authored to
+replace it.
 
 **Sable's Coin:** Guarantees preemptive on next battle (overrides roll).
 Does not work on bosses.

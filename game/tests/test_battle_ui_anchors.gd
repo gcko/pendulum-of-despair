@@ -57,8 +57,8 @@ func test_target_cursor_lands_on_the_real_party_row() -> void:
 	ui._on_target_changed(1, false)
 	var arrow: Label = ui._target_arrow
 	assert_true(arrow.visible, "targeting a party member shows the cursor")
-	var centre_y: float = arrow.position.y + arrow.get_minimum_size().y * 0.5
-	assert_between(centre_y, row.position.y, row.position.y + row.size.y, "cursor is on the row")
+	var center_y: float = arrow.position.y + arrow.get_minimum_size().y * 0.5
+	assert_between(center_y, row.position.y, row.position.y + row.size.y, "cursor is on the row")
 	assert_lte(
 		arrow.position.x + arrow.get_minimum_size().x,
 		row.position.x,

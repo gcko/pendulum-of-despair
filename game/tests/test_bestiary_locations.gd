@@ -17,9 +17,10 @@ extends GutTest
 ##    `ember_vein_f1` while the encounter files key them `dungeon_id` +
 ##    `floor_id` ("1-2"), and no mapping between the two is canon yet.
 ## 2. Zone coverage is asserted for act_i.json only, which is the file #288
-##    names and the one reconciled here. The Act II / Interlude / Act III
-##    tables have 22 zone appearances their `locations` arrays do not list —
-##    the same defect, an unreconciled follow-up, and not something this test
+##    names and the one reconciled here. The Act II and Act III tables have
+##    22 zone appearances their `locations` arrays do not list (15 and 7; no
+##    interlude enemy appears in an overworld.json zone roster at all) — the
+##    same defect, an unreconciled follow-up, and not something this test
 ##    should red-flag before someone fixes it. The retired-name check below
 ##    does span every act, because those five names must never come back
 ##    anywhere.

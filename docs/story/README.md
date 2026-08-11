@@ -57,21 +57,35 @@ This directory contains the narrative design for Pendulum of Despair.
 
 ## Writing Conventions
 
-- **American spelling, everywhere.** Design prose, dialogue, and every
-  player-facing string use American English: *color*, *behavior*,
-  *paralyzed*, *centered*, *-ize/-ization*. This matches the existing
-  corpus (280 `color` against 6 `colour` before the sweep; 142 `-ize`
-  verbs against zero `-ise`) and the narrative canon already in place
-  (`outline.md` "paralyzed by guilt", `characters.md` "paralyzes him",
-  `abilities.md` "he's paralyzed by guilt"). Anything quoted as canon by
-  a design doc, a test, or `game/data/dialogue/*.json` must match the
-  string the engine emits, so a spelling change is never local to one
-  file — see `docs/story/script/battle-dialogue.md` § Status Effect
-  Notifications and its generator in `tools/dialogue_parser.py`.
-- **`grey` is the one exception, and it is a proper noun.** *The Grey* is
-  the game's name for the Pallor's drained world-state; *grey* is used
-  throughout for it and for the color it names. Do not "correct" it to
-  *gray*.
+- **Write American English.** New design prose, new dialogue, and every
+  new player-facing string use American spellings: *color*, *behavior*,
+  *paralyzed*, *centered*, *-ize/-ization*. This is the direction the
+  narrative canon already sets — `outline.md` "paralyzed by guilt"
+  (line 210), `characters.md` "paralyzes him" (line 21), `abilities.md`
+  "he's paralyzed by guilt" (line 50) — and it is the form the engine
+  emits for status notifications.
+- **This is a rule for new writing, not a description of the corpus.**
+  The `color` / `paralyzed` / `centered` families were swept, but
+  British forms survive elsewhere and are *not* to be read as sanctioned:
+  *armour*, *favour*, *defence* in
+  `docs/story/script/battle-dialogue.md`, `script/act-iii.md`,
+  `script/act-ii-part-2.md` and seven shipped
+  `game/data/dialogue/*.json` files; *catalogue* /
+  *catalogued* in `items.md`, `npcs.md`, `dungeons-world.md`,
+  `dialogue-system.md` and `bestiary/bosses.md`; *travelling* in
+  `outline.md`, `events.md` and `script/npc-ambient.md`; *cancelled* in
+  `overworld.md`; *synthesises* in `dialogue-system.md`. Sweeping those
+  is a separate, tracked change — a residual British spelling is a defect
+  to be fixed, not a precedent to be matched.
+- **Changing a spelling is never local to one file.** Anything quoted as
+  canon by a design doc, a test, or `game/data/dialogue/*.json` must
+  match the string the engine emits — see
+  `docs/story/script/battle-dialogue.md` § Status Effect Notifications
+  and its generator in `tools/dialogue_parser.py`.
+- **`grey` is the one deliberate exception, and it is a proper noun.**
+  *The Grey* is the game's name for the Pallor's drained world-state;
+  *grey* is used throughout for it and for the color it names. Do not
+  "correct" it to *gray*.
 
 ## Design Principles
 
