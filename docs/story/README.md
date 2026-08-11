@@ -64,36 +64,57 @@ This directory contains the narrative design for Pendulum of Despair.
   (line 210), `characters.md` "paralyzes him" (line 21), `abilities.md`
   "he's paralyzed by guilt" (line 50) — and it is the form the engine
   emits for status notifications.
-- **This is a rule for new writing, not a description of the corpus.**
-  The `color` / `paralyzed` / `centered` / `behavior` families were swept
-  across `docs/story/`, every shipped `game/data/` string, and
-  `game/scripts/`; `docs/plans/bundle-roadmap.md` (*colour*, ×2) and
-  `docs/superpowers/specs/2026-04-06-battle-scene-design.md` (*centred*,
-  ×2) were left, because those are dated records rather than canon.
-  Other British families survive and are *not* to be read as
-  sanctioned — *armour*, *favour*, *defence*, *catalogue* /
-  *catalogued* / *cataloguing*, *travelling*, *cancelled*,
-  *synthesises*. **Do not scope the sweep from a hand-written list;
-  regenerate it**, because a hand-written one has already been wrong
-  once:
+- **The player-facing corpus now matches the rule.** This bullet used to
+  read "a rule for new writing, not a description of the corpus"; #301
+  swept the `color` / `paralyzed` / `centered` / `behavior` families and
+  #311 swept the rest, so for the two corpora a player can actually read —
+  `docs/story/script/*.md` and `game/data/dialogue/*.json` — the
+  description now holds: **zero** British spellings, verified by the
+  regenerating grep below. The design prose in `docs/story/*.md` was
+  swept with them. A residual British spelling is therefore a defect to
+  be fixed, not a precedent to be matched.
+- **Do not scope a sweep from a hand-written word list; regenerate it.**
+  A hand-written list has been wrong twice. The second time,
+  `catalogue|catalogued` silently missed *cataloguing* — the stem drops
+  the final *e* — and that alone hid three player-facing sites
+  (`script/act-i.md`, `script/npc-ambient.md`, and the shipped
+  `game/data/dialogue/scene_7_the_capital.json`). Match on stems:
 
   ```
-  grep -rlniE "armour|favour|defence|catalogu|travelling|cancelled|synthesis(e|ing)" \
-    docs/story game/data
+  grep -rnoiE '\b(armou|favou|honou|colou|behaviou|defenc|catalogu|travell|cancell|labell|levell|synthesis(e|es|ed|ing)|realis(e|es|ed|ing)|recognis(e|es|ed|ing)|mould)\w*' \
+    docs/story game/data game/scripts game/tests
   ```
 
-  As of this commit that returns 14 files under `docs/story/` and 10
-  under `game/data/` — 8 in `game/data/dialogue/` plus
-  `game/data/items/key_items.json` and `game/data/items/materials.json`,
-  so the shipped residue is not confined to dialogue and includes
-  player-facing item text. Sweeping those is a separate, tracked change
-  (#311) — a residual British spelling is a defect to be fixed, not a
-  precedent to be matched.
+  Stems, not whole words — but stems chosen so they do *not* collide
+  with `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`,
+  the `grey_*` data identifiers) or with *analysis* / *paralysis*, all of
+  which are correct. Widening the pattern past this list is how the
+  false positives get in. Two trees are outside the sweep entirely and
+  must stay that way: `docs/references/scripts/`, which quotes the
+  published scripts of other games verbatim, and the dated records in
+  `docs/plans/`, `docs/superpowers/`, `docs/analysis/` and closed-issue
+  titles, which record what was written at the time.
+
+  Every hit the pattern still returns is a known defect tracked in
+  #363 — two shipped item strings in `game/data/items/` and their paired
+  copy in `items.md`, `progression.md`, `bestiary/bosses.md` (where
+  `Catalogue` is also The Index's AI *mode name*, so decide whether that
+  one is a proper noun before touching it), and non-emitting comments and
+  test-assertion messages under `game/scripts/` and `game/tests/`. If the
+  grep returns anything not on that list, it is new and it is a defect.
 - **Changing a spelling is never local to one file.** Anything quoted as
   canon by a design doc, a test, or `game/data/dialogue/*.json` must
   match the string the engine emits — see
-  `docs/story/script/battle-dialogue.md` § Status Effect Notifications
-  and its generator in `tools/dialogue_parser.py`.
+  `docs/story/script/battle-dialogue.md` § Status Effect Notifications.
+  Player-facing strings are duplicated between the script markdown and
+  the shipped dialogue JSON, so **both copies move in the same commit**.
+  Do not reach for `tools/dialogue_parser.py` to do it for you: the
+  parser currently crashes, and its output has diverged from the
+  committed JSON badly enough that running it deletes shipped files
+  (#364). Until that is resolved, edit both copies by hand and prove they
+  agree — `items.md` § Key Items and `game/data/items/key_items.json` are
+  deliberately still British together for exactly this reason, because
+  half a fix is worse than none.
 - **`grey` is the one deliberate exception, and it is a proper noun.**
   *The Grey* is the game's name for the Pallor's drained world-state;
   *grey* is used throughout for it and for the color it names. Do not

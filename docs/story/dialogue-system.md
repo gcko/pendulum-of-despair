@@ -162,7 +162,7 @@ another rung on the ladder.
 ```
 NPC: Scholar Aldis
   [convergence_reached]          -> "The equations... they were wrong all along."
-  [cael_betrayal_complete]       -> "I catalogued his notes for months. I should have seen it."
+  [cael_betrayal_complete]       -> "I cataloged his notes for months. I should have seen it."
   [cael_nightmares_begin]        -> "Have you noticed Cael seems... distracted lately?"
   [pendulum_to_capital]          -> "Cael's temporal research is remarkable. Truly remarkable."
   [default]                      -> "Welcome to the Valdris archives."
@@ -224,7 +224,7 @@ Rules for the rotation:
 
 **Conditions in scene sequences.** A cutscene or scene file is played
 in authored order rather than resolved as a priority stack, but its
-entries carry the same `condition` field and the engine honours it the
+entries carry the same `condition` field and the engine honors it the
 same way: a false condition means that entry does not play. Two
 authoring rules follow, and both are checkable by reading the file:
 
@@ -424,7 +424,7 @@ whatever Tier 1 scene variations require. Total script target remains
 > work: `savanh_audience_active`, `act2_thornmere_council`,
 > `cael_betrayal_cutscene`. Distinct from those are the four
 > `choice_1_selected` … `choice_4_selected` **pseudo-flags** of Section
-> 3.4: the engine synthesises them from the option the player just
+> 3.4: the engine synthesizes them from the option the player just
 > picked, they live only for the remainder of the sequence, and they
 > will never appear in events.md.
 
@@ -496,7 +496,7 @@ id: aldis_post_betrayal
 speaker: Aldis
 condition: cael_betrayal_complete
 lines:
-  - "I catalogued his notes for months."
+  - "I cataloged his notes for months."
   - "Every formula, every late-night revision..."
   - "I should have seen it."
 animations:

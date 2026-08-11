@@ -275,7 +275,7 @@ mood with reduced instrumentation.
 | Ashgrove Undercroft | II/Interlude | Thornmere + Ancient | Tense / Sacred | Beneath the Ashgrove clearing. Thornmere drums at combat tempo with Ancient crystalline undertone. Spiritual test energy. |
 | Carradan Rail Tunnels | II-Interlude | Carradan (dark) | Tense / Industrial | Echoing mechanical palette. Train-rhythm percussion (clack-clack tempo). Darkness and distance. Collapse sections: rhythm breaks apart. |
 | Ley Line Depths | II-III | Ancient + Thornmere | Sacred / Mysterious | Deep underground ley channels. Ancient palette dominant, Thornmere hum woven in. Crystalline resonance at maximum. The music feels like the planet's heartbeat. |
-| Archive of Ages | Interlude | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloguing millennia. Maren's motif as harmonic undercurrent. |
+| Archive of Ages | Interlude | Ancient | Solemn / Mysterious | Pure Ancient palette. Glass tones and sustained drones. Vast, echoing, cataloging millennia. Maren's motif as harmonic undercurrent. |
 | Highcairn Monastery | Interlude | Valdris (sacred) | Sacred → Corrupted | Low sustained strings mimicking monastic chant (instrumental, not vocal). As Pallor influence deepens, the "chant" decomposes into the Pallor motif. |
 | Ley Nexus Hollow | Interlude | Thornmere + Ancient | Sacred / Urgent | Torren's reunion location. His flute motif corrupted by Ley Leech — the music IS the boss fight. Thornmere palette at maximum spiritual intensity. |
 | Sunken Rig | Interlude | Carradan (submerged) | Mysterious / Tense | Underwater-distorted industrial palette. Drowned machinery sounds. Accordion replaced by murky sustained tones. Eerie. |
