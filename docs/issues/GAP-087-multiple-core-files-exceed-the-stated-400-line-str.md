@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | L |
 | **Epic** | No |
-| **Status** | partial — decomposed on `refactor/infra-decompose-oversized`; 4 files still over 400 |
+| **Status** | resolved — #237 (decomposition landed); the residual band is sanctioned by tech-arch § 1.2a and enforced by `test_script_layout.gd` — closes #319 |
 | **GitHub Issue** | [#237](https://github.com/gcko/pendulum-of-despair/issues/237) |
 | **Source domains** | arch |
 
@@ -34,24 +34,28 @@ Continue the extraction pattern: split PartyState into composition/stats/invento
 - [x] Responsibilities are cohesively grouped
 - [x] No behavior change
 
-## Measured line counts (`wc -l`, re-run in one pass)
+## Measured line counts (`wc -l`, all files re-measured in one pass)
 
-Baseline column is `main` at merge-base 7c1b16b; the "after" column is the tip of `refactor/infra-decompose-oversized`. This table supersedes the 2026-06-27 figures, which were up to 55% stale by the time the work started (#319, #343).
+Baseline column is `main` at merge-base 7c1b16b; "after decomposition" is the tip of `refactor/infra-decompose-oversized`; "current" is `wc -l` re-run over all eight files in a single pass on 2026-08-12 (#319). A half-refreshed list is less trustworthy than a fully stale one, so every row is re-measured together or none is.
 
-| File | 2026-06-27 (gap analysis) | main @ 7c1b16b | after |
-|------|--------------------------|----------------|-------|
-| `game/scripts/autoload/party_state.gd` | 751 | 861 | 512 |
-| `game/scripts/core/exploration.gd` | 719 | 728 | 590 |
-| `game/scripts/autoload/audio_manager.gd` | 710 | 710 | 536 |
-| `game/scripts/combat/battle_manager.gd` | 550 | 724 | 414 |
-| `game/scripts/util/inventory_helpers.gd` | 453 | 705 | 386 |
-| `game/scripts/ui/menu_ley_crystal.gd` | 451 | 451 | 341 |
-| `game/scripts/core/cutscene_player.gd` | 429 | 464 | 339 |
-| `game/scripts/ui/menu_overlay.gd` | — | 408 | 313 |
+This table supersedes the 2026-06-27 figures, which were up to 55% stale by the time the work started (#319, #343).
+
+| File | 2026-06-27 (gap analysis) | main @ 7c1b16b | after decomposition | current (2026-08-12) |
+|------|--------------------------|----------------|---------------------|----------------------|
+| `game/scripts/autoload/party_state.gd` | 751 | 861 | 512 | 512 |
+| `game/scripts/core/exploration.gd` | 719 | 728 | 590 | 590 |
+| `game/scripts/autoload/audio_manager.gd` | 710 | 710 | 536 | 536 |
+| `game/scripts/combat/battle_manager.gd` | 550 | 724 | 414 | 414 |
+| `game/scripts/util/inventory_helpers.gd` | 453 | 705 | 386 | 386 |
+| `game/scripts/ui/menu_ley_crystal.gd` | 451 | 451 | 341 | 341 |
+| `game/scripts/core/cutscene_player.gd` | 429 | 464 | 339 | 339 |
+| `game/scripts/ui/menu_overlay.gd` | — | 408 | 313 | 313 |
 
 ## Remaining
 
-Four files are still over 400 (`exploration.gd` 590, `audio_manager.gd` 536, `party_state.gd` 512, `battle_manager.gd` 414). All four are facades or scene roots: what is left is signal wiring, owned node references and one-line forwards to the extracted modules, so further splitting buys indirection rather than cohesion. `PartyState` in particular is capped by `max-public-methods: 65` in `.gdlintrc` rather than by line count — it sits at 64. Re-open or file a follow-up if the residual grows.
+Nothing blocking. The rule this gap was written against no longer exists in the form it cites: the budget is now **aim 400 / hard maximum 600** (technical-architecture.md § 1.2a), enforced by `game/tests/test_script_layout.gd`, and every file in the tree complies. The original framing — "4 files still over 400" — described a violation of a single 400-line rule that has since been replaced.
+
+Four files sit in the sanctioned 400-600 band (`exploration.gd` 590, `audio_manager.gd` 536, `party_state.gd` 512, `battle_manager.gd` 414). All four are facades or scene roots: what is left is signal wiring, owned node references and one-line forwards to the extracted modules, so further splitting buys indirection rather than cohesion — exactly the case § 1.2a sanctions, and each is named there. `PartyState` in particular is capped by `max-public-methods: 65` in `.gdlintrc` rather than by line count — it sits at 64. `test_script_layout.gd` is the durable guard: a regression past 600 fails the suite, so this doc does not need to be re-measured by hand to stay honest.
 
 ## Design references
 
@@ -77,4 +81,6 @@ Four files are still over 400 (`exploration.gd` 590, `audio_manager.gd` 536, `pa
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The durable, maintained anchors are the file-plus-symbol bullets under **Code references**: those must name a file that exists and a symbol that file actually defines, and `scripts/quality-gates/check_stale_counts.py` fails the build if they do not. Always verify against current code before acting._
