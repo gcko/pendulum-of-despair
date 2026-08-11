@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | partial — CONFIRMED (magic.md closed; 10 ability magnitudes open, tracked as #321) |
+| **Status** | partial — 9 of 10 magnitudes resolved in PR #358; Shiv's thrown-item branch tracked as #359 |
 | **GitHub Issue** | [#238](https://github.com/gcko/pendulum-of-despair/issues/238) |
 | **Source domains** | tracker |
 
@@ -32,14 +32,18 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
 
 - [x] magic.md/abilities.md balance pass done
 - [x] JSON values reconciled to the docs
-- [ ] Docs upgraded from MOSTLY COMPLETE — magic.md is now COMPLETE;
-  abilities.md stays MOSTLY COMPLETE because ten entries still describe
-  damage/healing qualitatively (enumerated in game-design-gaps.md
-  § Ability System — outstanding damage values). They are unblocked only
-  once party ability execution lands in the battle layer, tracked as
-  issue #321 (party ability execution + the missing magnitudes). Two rows
-  of combat-formulas.md § Ability Multipliers also need correcting under
-  issue #333.
+- [ ] Docs upgraded from MOSTLY COMPLETE — magic.md is now COMPLETE.
+  abilities.md stays MOSTLY COMPLETE on a single entry: PR #358 derived
+  nine of the ten qualitative magnitudes (enumerated in
+  game-design-gaps.md § Ability System — damage magnitudes (9 of 10
+  closed)), and left Sable's Shiv thrown-item branch open because it
+  needs two design decisions no document implies — the item-type ->
+  element mapping and the shape of the thrown bonus. That residue is
+  tracked as issue #359 and is the only thing keeping this criterion
+  unmet. Two rows of combat-formulas.md § Ability Multipliers were
+  corrected under issue #333; the same table's disputed Oathkeeper
+  exemplar remains open under issue #346. Runtime execution of the party
+  abilities is tracked as issue #321.
 
 ## Design references
 

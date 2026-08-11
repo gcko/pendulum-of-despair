@@ -202,7 +202,7 @@ func tick_statuses(slot: int) -> Array:
 	return dot_events
 
 
-## Apply damage-over-time (Poison 8%/turn magic.md:1529, Burn 5%/turn) to a
+## Apply damage-over-time (Poison 8%/turn magic.md:1537, Burn 5%/turn) to a
 ## member. Mirrors the enemy-side tick: floor(max_hp * tick_pct), min 1. DoT does
 ## not wake-cure here (party has no Sleep/Confusion infliction yet). Returns the
 ## per-status events [{slot, dmg, type}] for damage feedback.

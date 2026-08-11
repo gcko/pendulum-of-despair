@@ -114,6 +114,18 @@ Each element has one element it is strong against (deals 150% damage) and one it
 **Tier 4 (Ultimate) spells use the full 85-120 spell power band even when they
 target all enemies.** The 60-70% AoE reduction applies at Tiers 1-3 only.
 
+*This document is authoritative for the power bands and for the AoE reduction.*
+[combat-formulas.md](combat-formulas.md) § AoE Damage Rules restates the rule so
+the combat pipeline reads in one place, and its § Magic Damage worked example is
+tuned against it; if the two ever disagree, the sentence there is the bug.
+Changing the band or the exemption means changing it here first, then the
+restatement, then `game/tests/test_spell_balance.gd`. That test holds the
+**shipped spell data** in `game/data/spells/` to the rule using bands hard-coded
+in the test; it does not parse this document. So a change made here and nowhere
+else will not fail the suite — the prose and the test simply drift apart. All
+three have to move together, and the test is the last of the three, not a guard
+on the first.
+
 *Derivation.* [combat-formulas.md](combat-formulas.md) § Magic Damage tunes the
 14,999 damage cap around Ley Ruin (power 100, AoE) at Maren Lv150: MAG 332 with
 Attunement, target MDEF 80, elemental weakness, Resonance. That chain is

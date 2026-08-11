@@ -133,11 +133,11 @@ git commit -m "docs(shared): update events.md with Faint terminology and party-w
 ### Task 2: Update magic.md -- Status Effect Table, Spell Targets, Mechanics
 
 **Files:**
-- Modify: `docs/story/magic.md:724,735,993,1255,1540,1550`
+- Modify: `docs/story/magic.md:732,743,1001,1263,1548,1558`
 
 Six changes in one file, all mechanical KO->Faint replacements.
 
-- [ ] **Step 1: Update Spirit Recall spell target (line 724)**
+- [ ] **Step 1: Update Spirit Recall spell target (line 732)**
 
 Change:
 ```
@@ -148,7 +148,7 @@ to:
 - **Target:** Single ally (Fainted)
 ```
 
-- [ ] **Step 2: Update Second Dawn spell target (line 735)**
+- [ ] **Step 2: Update Second Dawn spell target (line 743)**
 
 Change:
 ```
@@ -159,7 +159,7 @@ to:
 - **Target:** Single ally (Fainted)
 ```
 
-- [ ] **Step 3: Update Last Breath spell effect (line 993)**
+- [ ] **Step 3: Update Last Breath spell effect (line 1001)**
 
 Change:
 ```
@@ -170,7 +170,7 @@ to:
 **Effect:** Grants auto-revive. If the target is Fainted, they automatically revive with 30% HP once.
 ```
 
-- [ ] **Step 4: Update Unmaking spell effect (line 1255)**
+- [ ] **Step 4: Update Unmaking spell effect (line 1263)**
 
 Change:
 ```
@@ -181,7 +181,7 @@ to:
 they are instantly Fainted.
 ```
 
-- [ ] **Step 5: Update Status Effect Reference table -- KO row (line 1540, now the Faint row)**
+- [ ] **Step 5: Update Status Effect Reference table -- KO row (line 1548, now the Faint row)**
 
 Change:
 ```
@@ -192,7 +192,7 @@ to:
 | Faint | Negative | Unconscious, out of combat | Until revived | Spirit Recall, Second Dawn, Phoenix Feather item |
 ```
 
-- [ ] **Step 6: Update Status Effect Reference table -- Last Breath row (line 1550)**
+- [ ] **Step 6: Update Status Effect Reference table -- Last Breath row (line 1558)**
 
 Change:
 ```

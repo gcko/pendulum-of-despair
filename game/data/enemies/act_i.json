@@ -213,7 +213,7 @@
           "spell_power": 9,
           "target": "all",
           "aoe_on_death": true,
-          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md:101,289; palette-families.md:90)"
+          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md:101,297; palette-families.md:90)"
         }
       ]
     },
@@ -391,7 +391,7 @@
           "element": "flame",
           "spell_power": 14,
           "target": "single",
-          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md:289; palette-families.md:150)"
+          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md:297; palette-families.md:150)"
         }
       ]
     },
@@ -497,7 +497,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md:107); Poison 8%/turn until cured (magic.md:1529); palette-families.md:205"
+          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md:107); Poison 8%/turn until cured (magic.md:1537); palette-families.md:205"
         }
       ]
     },
@@ -777,7 +777,7 @@
           "element": "frost",
           "spell_power": 9,
           "target": "all",
-          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md:101,335; palette-families.md:292)"
+          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md:101,343; palette-families.md:292)"
         },
         {
           "id": "elemental_shield",
@@ -790,7 +790,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md:938; palette-families.md:292)"
+          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md:946; palette-families.md:292)"
         }
       ]
     },
@@ -850,7 +850,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md:1529); palette-families.md:205"
+          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md:1537); palette-families.md:205"
         },
         {
           "id": "lunge",
@@ -1191,7 +1191,7 @@
             "duration": 5,
             "scope": "pack"
           },
-          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md:971; palette-families.md:435)"
+          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md:979; palette-families.md:435)"
         }
       ]
     },
@@ -1330,7 +1330,7 @@
             "spell_power": 24,
             "target": "all",
             "telegraph": "The Ember Drake rears back, flames building!",
-            "_comment": "party-wide fire AoE, 1-turn charge; Tier-2 AoE spell_power 24 (enemy-ability-conventions.md §3.1; magic.md:322; bosses.md:150)"
+            "_comment": "party-wide fire AoE, 1-turn charge; Tier-2 AoE spell_power 24 (enemy-ability-conventions.md §3.1; magic.md:330; bosses.md:150)"
           },
           "pounce": {
             "type": "ability",

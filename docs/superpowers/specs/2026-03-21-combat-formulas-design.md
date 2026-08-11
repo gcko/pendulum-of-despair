@@ -134,6 +134,13 @@ highest-power endgame spell. No single-target Tier 4 spell currently
 exists; if one is added during the ability pass, it would reach cap
 more easily.*
 
+> **Superseded (2026-08-11).** A single-target Tier 4 spell does exist:
+> **Unmaking** (Void, power 85, `single_enemy` — magic.md's Unmaking entry,
+> `game/data/spells/void.json`). And with the Tier 4 AoE exemption in force,
+> target count no longer affects cap reachability at all — only spell power
+> does. Canonical note: combat-formulas.md § Magic Damage. This spec is left as
+> written — it is the dated record of the 2026-03-21 design, not a live rule.
+
 ### 3.3 Healing
 
 ```
@@ -217,6 +224,14 @@ Damage column assumes Edren at Lv70 with endgame gear (ATK ~175 =
 | 2.5 | Combo ability | Shattered Vanguard (Edren+Sable) | ~12,700 |
 | 3.0 | Maximum | Convergence Chorus (once per battle) | 14,999 (capped) |
 
+> **Superseded (2026-08-11).** Both exemplars were category errors. Shattered
+> Vanguard is Shatter Guard (a custom-formula ability) at +50%, and Convergence
+> Chorus is a composite of four Spiritcall effects with no physical component.
+> Neither takes a physical `ability_mult`. Canonical table:
+> combat-formulas.md § Physical Ability Multiplier Tiers, which now cites
+> Sever Bond and Wild Card. This spec is left as written — it is the dated
+> record of the 2026-03-21 design, not a live rule.
+
 **Buff-granted multipliers (stacking):** Some abilities are buffs that
 multiply the next attack's output rather than having their own mult:
 - **Overcharge (+50% damage):** Multiplies the next attack's final
@@ -241,6 +256,13 @@ The 3.0 tier is reserved for abilities with extreme costs:
 - Combo ultimates requiring specific party + setup
 
 These are "Bum Rush" moments — the payoff for mastering the system.
+
+> **Superseded (2026-08-11).** Same category error as the table above, restated
+> in prose: Convergence Chorus is a composite of four Spiritcall effects with no
+> physical component, so it takes no `ability_mult` at all, and no shipped combo
+> takes one either. The live 3.0 exemplars are Lira's Sever Bond and Wild Card
+> at three stolen items. Canonical table: combat-formulas.md § Physical Ability
+> Multiplier Tiers. This spec is left as written.
 
 ### 5.3 Special Multiplier: Shiv (DEF Ignore)
 
@@ -316,6 +338,13 @@ Some weapons and abilities have elemental properties:
 When a physical attack has an element, the elemental multiplier applies
 to the physical damage output. This gives Lira's engineering abilities
 real tactical value against elementally-weak enemies.
+
+> **Superseded (2026-08-11).** Arc Trap is not a physical attack. It is a device
+> whose damage scales with Lira's Magic stat (spell power 30, abilities.md
+> § Damage Magnitudes), so its Flame element is applied by the magic formula's
+> `element_mod`. Overcharge and elemental weapons remain correct here. Canonical
+> list: combat-formulas.md § Physical Elemental Attacks. This spec is left as
+> written.
 
 ## 7. Status Effect Accuracy
 
@@ -528,6 +557,12 @@ phase mechanics, and party composition are modeled together.
 AoE spells have ~60–70% of single-target spell power (defined in
 magic.md). No damage splitting — each enemy takes the full AoE damage.
 AoE is valuable for clearing groups; single-target is better for bosses.
+
+> **Superseded (2026-08-11).** The reduction was later scoped to Tiers 1–3;
+> Tier 4 ultimates keep the full 85–120 band even when they target all
+> enemies. Canonical statement: magic.md § Tier 4 AoE Exemption, restated in
+> combat-formulas.md § AoE Damage Rules. This spec is left as written — it is
+> the dated record of the 2026-03-21 design, not a live rule.
 
 ## 11. Existing Formula Replacements
 
