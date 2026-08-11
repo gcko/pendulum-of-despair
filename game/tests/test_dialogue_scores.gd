@@ -6,6 +6,7 @@ extends GutTest
 const CUTSCENE_SCENE: PackedScene = preload("res://scenes/overlay/cutscene.tscn")
 const DIALOGUE_SCENE: PackedScene = preload("res://scenes/overlay/dialogue.tscn")
 const SAVANH: String = "council_savanh_approval"
+const CADEN: String = "council_caden_approval"
 
 
 func before_each() -> void:
@@ -118,6 +119,26 @@ func test_documented_ranges_match_events_md() -> void:
 		)
 
 
+func test_caden_score_starts_at_the_value_events_md_documents() -> void:
+	# events.md flag 41: Caden starts at 1 (Torren's rapport), and dialogue
+	# choices add 0-2 on top of that.
+	assert_eq(EventFlags.get_score_initial(CADEN), 1, "documented starting value")
+	assert_eq(EventFlags.apply_score_choice(CADEN, 1), 2, "1 + a middling answer is 2")
+
+
+func test_caden_best_answer_reaches_the_documented_maximum() -> void:
+	assert_eq(EventFlags.apply_score_choice(CADEN, 2), 3, "1 + the best answer reaches 3")
+
+
+func test_caden_worst_answer_leaves_the_starting_value() -> void:
+	assert_eq(EventFlags.apply_score_choice(CADEN, 0), 1, "a 0 answer keeps the start of 1")
+
+
+func test_scores_without_a_documented_start_begin_at_their_minimum() -> void:
+	assert_eq(EventFlags.get_score_initial(SAVANH), 0, "Savanh has no documented head start")
+	assert_eq(EventFlags.apply_score_choice(SAVANH, 1), 1, "so a +1 answer totals 1")
+
+
 func test_apply_score_choice_clamps_to_the_documented_range() -> void:
 	EventFlags.apply_score_choice(SAVANH, 2)
 	EventFlags.apply_score_choice(SAVANH, 2)
@@ -197,7 +218,11 @@ func test_cutscene_player_forwards_score_requests() -> void:
 # --- Real council data (the case the bug broke) ---
 
 
-func test_thornmere_savanh_score_reaches_three_via_seyth_bonus() -> void:
+func test_thornmere_savanh_score_accumulates_across_both_questions() -> void:
+	# 011 is the entry events.md flag 40 describes as the Grandmother Seyth
+	# bonus, but the shipped data leaves it unconditioned, so what this covers
+	# is accumulation across two questions of the real scene. Gating 011 on
+	# `consulted_grandmother_seyth` is tracked separately.
 	var data: Dictionary = DataManager.load_dialogue("thornmere_council")
 	var by_id: Dictionary = {}
 	for e: Variant in data.get("entries", []):
@@ -206,7 +231,7 @@ func test_thornmere_savanh_score_reaches_three_via_seyth_bonus() -> void:
 	var question: Variant = by_id.get("thornmere_council_005", null)
 	var bonus: Variant = by_id.get("thornmere_council_011", null)
 	assert_not_null(question, "council question 005 should exist")
-	assert_not_null(bonus, "Grandmother Seyth bonus 011 should exist")
+	assert_not_null(bonus, "council follow-up 011 should exist")
 	if question == null or bonus == null:
 		return
 
@@ -215,11 +240,11 @@ func test_thornmere_savanh_score_reaches_three_via_seyth_bonus() -> void:
 		func(n: String, d: int) -> void: EventFlags.apply_score_choice(n, d)
 	)
 	dlg.show_dialogue([question, bonus])
-	# Best base answer (+2), then the Seyth bonus option (+1).
+	# Best answer to 005 (+2), then the single option on 011 (+1).
 	_answer_choice(dlg, 0)
 	_answer_choice(dlg, 0)
 	assert_eq(
 		int(EventFlags.get_flag(SAVANH, 0)),
 		3,
-		"3 is only reachable when the base answer and the bonus accumulate",
+		"3 is only reachable when both answers accumulate",
 	)

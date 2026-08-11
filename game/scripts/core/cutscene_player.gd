@@ -215,8 +215,13 @@ func _process_entries() -> void:
 		var lines: Array = entry.get("lines", [])
 		if lines.size() > 0 and _dialogue_box != null:
 			_dialogue_box.visible = true
-			_dialogue_box.show_dialogue([entry])
-			await _dialogue_box.dialogue_finished
+			# Hand over this cutscene's choice context. The box re-resolves the
+			# entry's condition, and against an empty context a reaction gated
+			# on `choice_N_selected` would be dropped and the box would finish
+			# synchronously — before the await below could attach.
+			_dialogue_box.show_dialogue([entry], _choice_context)
+			if _dialogue_box.is_showing():
+				await _dialogue_box.dialogue_finished
 			if _skipped or not _is_playing:
 				return
 

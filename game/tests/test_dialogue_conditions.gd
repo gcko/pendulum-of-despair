@@ -306,6 +306,61 @@ func test_dialogue_box_choice_gates_reaction_entries() -> void:
 	)
 
 
+func test_cutscene_reaction_entry_with_lines_plays_instead_of_deadlocking() -> void:
+	# The cutscene gates each entry, then hands it to the embedded dialogue box,
+	# which gates it again. If the box resolves the second gate against its own
+	# empty context, the reaction is dropped and the box finishes synchronously —
+	# before the cutscene's await can attach — and the scene hangs forever.
+	var cs: Node = await _create_cutscene()
+	var fired: Array = []
+	cs.flag_set_requested.connect(func(f: String, _v: Variant): fired.append(f))
+	var choices: Array = [{"label": "Diplomatic"}, {"label": "Blunt"}]
+	var entries: Array[Dictionary] = [
+		_entry("question", null, {"lines": ["Well?"], "choice": choices}),
+		_entry("reaction_1", "choice_1_selected", {"lines": ["Wise."], "flag_set": "reacted_1"}),
+		_entry("reaction_2", "choice_2_selected", {"lines": ["Blunt."], "flag_set": "reacted_2"}),
+	]
+	cs.start_cutscene("cond_choice_lines", entries, cs.TIER_MICRO)
+	await get_tree().process_frame
+
+	var box: Node = cs._dialogue_box
+	assert_true(box.is_showing(), "the question should be on screen")
+	box._complete_text()
+	box._advance()
+	assert_true(box._in_choice, "the question should offer its choice")
+	box._choice_index = 0
+	box._select_choice()
+
+	assert_true(box.is_showing(), "the reaction must reach the box, not be gated out")
+	assert_eq(
+		box._entries[box._current_index].get("id"),
+		"reaction_1",
+		"the reaction for the chosen option should be the one displayed",
+	)
+	box._complete_text()
+	box._advance()
+	await get_tree().create_timer(0.2).timeout
+	assert_true(fired.has("reacted_1"), "the played reaction should set its flag")
+	assert_false(fired.has("reacted_2"), "the unchosen reaction should stay skipped")
+	assert_false(cs._is_playing, "the cutscene should finish rather than hang on the await")
+
+
+func test_embedded_box_releases_entries_when_the_sequence_ends() -> void:
+	# Embedded mode keeps the box alive and listening after it finishes, so a
+	# confirm press mashed during the cutscene's after-commands must not index
+	# past the last entry.
+	var dlg: Node = _create_dialogue()
+	dlg.embedded_mode = true
+	dlg.show_dialogue([_entry("only", null, {"lines": ["one"]})])
+	dlg._complete_text()
+	dlg._advance()
+	assert_true(dlg._entries.is_empty(), "a finished box should hold no out-of-range cursor")
+	assert_false(dlg.is_showing(), "and should report that nothing is on screen")
+	watch_signals(dlg)
+	dlg._advance()
+	assert_signal_not_emitted(dlg, "dialogue_finished", "advancing an exhausted box is a no-op")
+
+
 func test_cutscene_choice_gates_following_entries() -> void:
 	var cs: Node = await _create_cutscene()
 	var fired: Array = []

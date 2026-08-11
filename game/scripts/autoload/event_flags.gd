@@ -21,6 +21,16 @@ const SCORE_RANGES: Dictionary = {
 ## Bounds used for a score events.md does not document yet.
 const SCORE_RANGE_DEFAULT: Vector2i = Vector2i(0, 3)
 
+## Documented starting values for scores that do not begin at their minimum.
+## events.md flag 41: Caden's score starts at 1 because Torren — always in the
+## diplomatic party — has natural rapport as a spirit-speaker, so dialogue
+## choices add 0-2 on top of it rather than supplying the whole score. Scores
+## absent here start at the minimum of their range. The starting value
+## materialises on the first increment, which is when the score is first read.
+const SCORE_INITIALS: Dictionary = {
+	"council_caden_approval": 1,
+}
+
 ## Dictionary of all event flags. Keys are strings, values are
 ## bool | int | String (most are bool, council_result is int,
 ## reunion_order_1..4 are strings).
@@ -58,10 +68,22 @@ func get_score_range(score_name: String) -> Vector2i:
 	return SCORE_RANGE_DEFAULT
 
 
+## Documented starting value for a score, before any dialogue choice applies.
+## Falls back to the minimum of the score's range. Looks the range up directly
+## rather than through [method get_score_range] so an undocumented score warns
+## once, at the point it is incremented.
+func get_score_initial(score_name: String) -> int:
+	if SCORE_INITIALS.has(score_name):
+		return int(SCORE_INITIALS[score_name])
+	var bounds: Vector2i = SCORE_RANGES.get(score_name, SCORE_RANGE_DEFAULT)
+	return bounds.x
+
+
 ## Add [param delta] to a named score and clamp the total to
 ## [param min_value]..[param max_value]. Scores accumulate across the several
 ## questions that feed them, so this adds rather than overwrites — see
-## dialogue-system.md 3.3/3.4. An unset score starts at its minimum.
+## dialogue-system.md 3.3/3.4. An unset score starts at the value events.md
+## documents for it, or at its minimum when events.md documents none.
 ## Returns the stored total.
 func increment_score(score_name: String, delta: int, min_value: int, max_value: int) -> int:
 	if score_name.is_empty():
@@ -70,8 +92,9 @@ func increment_score(score_name: String, delta: int, min_value: int, max_value: 
 		return 0
 	var lower: int = mini(min_value, max_value)
 	var upper: int = maxi(min_value, max_value)
-	var current: Variant = _flags.get(score_name, lower)
-	var base: int = int(current) if (current is int or current is float) else lower
+	var unset_base: int = clampi(get_score_initial(score_name), lower, upper)
+	var current: Variant = _flags.get(score_name, unset_base)
+	var base: int = int(current) if (current is int or current is float) else unset_base
 	var total: int = clampi(base + delta, lower, upper)
 	_flags[score_name] = total
 	flag_changed.emit(score_name, total)

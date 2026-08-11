@@ -127,10 +127,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Start displaying a sequence of dialogue entries.
-func show_dialogue(entries: Array) -> void:
+##
+## [param context] carries scene-local pseudo-flags (`choice_N_selected`) that
+## shadow EventFlags while conditions are resolved. A caller that already gated
+## these entries against a context of its own must pass the same one: the box
+## re-resolves every condition, and against an empty context a reaction entry
+## gated on a choice made earlier in the sequence would be dropped.
+func show_dialogue(entries: Array, context: Dictionary = {}) -> void:
 	_entries = entries
 	_current_index = 0
-	_choice_context = {}
+	_choice_context = context.duplicate()
 	if _entries.is_empty():
 		dialogue_finished.emit()
 		if not embedded_mode:
@@ -138,6 +144,15 @@ func show_dialogue(entries: Array) -> void:
 		return
 	set_process(true)
 	_show_entry(_current_index)
+
+
+## True while an entry is on screen. Goes false as soon as the sequence ends —
+## including the synchronous end [method show_dialogue] reaches when nothing it
+## was handed can play. A caller that awaits [signal dialogue_finished] after
+## calling [method show_dialogue] must check this first, or it waits on an
+## emission that already happened.
+func is_showing() -> bool:
+	return not _entries.is_empty()
 
 
 ## Force-close dialogue (for cutscene override).
@@ -157,6 +172,12 @@ func _show_entry(index: int) -> void:
 	_current_index = _next_playable_index(index)
 
 	if _current_index >= _entries.size():
+		# Release the entries before announcing the end. Embedded mode keeps
+		# this node alive and accepting input afterwards, and a cursor left
+		# pointing past the last entry would index out of range on the next
+		# confirm press. Clearing must precede the emit: a listener may start
+		# a new sequence on this same box from inside the signal.
+		_entries = []
 		set_process(false)
 		dialogue_finished.emit()
 		if not embedded_mode:
@@ -221,6 +242,9 @@ func _complete_text() -> void:
 
 
 func _advance() -> void:
+	# Nothing left to advance past — mirrors the guard in _select_choice.
+	if _current_index >= _entries.size():
+		return
 	_advance_arrow.visible = false
 
 	# Check if more pages exist in current entry

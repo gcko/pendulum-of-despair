@@ -2,6 +2,7 @@ extends GutTest
 ## Tests for NPC entity with priority stack dialogue resolution.
 
 const NPC_SCENE: PackedScene = preload("res://scenes/entities/npc.tscn")
+const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
 
 
 func before_each() -> void:
@@ -211,6 +212,30 @@ func test_reset_dialogue_cycles_returns_to_the_first_default() -> void:
 		npc.get_current_dialogue().get("id"),
 		"default_001",
 		"a new game or load should restart the rotation",
+	)
+
+
+func test_continue_from_title_resets_the_ambient_cursor() -> void:
+	# Title -> Continue applies the save inside exploration rather than through
+	# SaveManager, so that path has to reset the cursors too.
+	var npc = _create_npc()
+	npc.npc_id = "test_continue_npc"
+	npc.dialogue_entries = [
+		{"id": "default_001", "condition": null, "lines": ["one"]},
+		{"id": "default_002", "condition": null, "lines": ["two"]},
+	]
+	npc.interact()
+	assert_eq(npc.get_current_dialogue().get("id"), "default_002", "cursor advanced")
+	GameManager.transition_data = {
+		"save_slot": 1,
+		"save_data": {"world": {"current_location": "test_room"}},
+	}
+	var exp: Node2D = EXPLORATION_SCENE.instantiate()
+	add_child_autofree(exp)
+	assert_eq(
+		npc.get_current_dialogue().get("id"),
+		"default_001",
+		"loading a save should restart every NPC's rotation",
 	)
 
 

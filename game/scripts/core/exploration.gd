@@ -196,6 +196,10 @@ func _initialize_from_transition_data() -> void:
 		load_map("dungeons/ember_vein_f1", "from_overworld")
 	elif data.has("save_data"):
 		var save_data: Dictionary = data.get("save_data", {})
+		# Title -> Continue applies the save here rather than through
+		# SaveManager, so the ambient dialogue cursors have to be reset on this
+		# path too — they are session state, not save state.
+		NPC.reset_dialogue_cycles()
 		PartyState.load_from_save(save_data)
 		var world: Dictionary = save_data.get("world", {})
 		var location: String = world.get("current_location", "overworld")
