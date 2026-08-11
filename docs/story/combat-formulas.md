@@ -323,6 +323,14 @@ The `ability_mult` value in the physical formula. Basic attack = 1.0. Damage col
 | 2.5 | Combo ability | *(reserved — see note)* | ~12,700 |
 | 3.0 | Maximum | Sever Bond (Cael's Edge, 1 use); Wild Card at 3 stolen items | 14,999 (capped) |
 
+**The 2.0 row's Oathkeeper exemplar is disputed and is not settled here.** This
+document gives Oathkeeper three different multipliers (1.0 doubled, 1.5, 2.0)
+across this table and its own worked examples, tracked as
+[#346](https://github.com/gcko/pendulum-of-despair/issues/346). Wild Card's
+0-2 item branch is derived independently in [abilities.md](abilities.md)
+§ Damage Magnitudes from its own stated "2x her Attack" and does not depend on
+how #346 resolves; the two exemplars share a row but not an argument.
+
 The 3.0 tier is reserved for abilities with extreme costs — a single scripted use (Lira's Sever Bond, spent for good after the Vaelith fight), or spending an entire resource pool (Wild Card consuming all three stolen items). These are "Bum Rush" moments — the payoff for mastering the system.
 
 **What this table does *not* cover.** Every entry above is a plain multiplier applied to `ATK²`. Three kinds of ability are therefore out of scope, and none of them belongs in a row here:
@@ -345,7 +353,7 @@ Some abilities are buffs that multiply the next attack's output rather than havi
 
 Sable's Shiv halves target DEF before the formula: `DEF_effective = target.DEF / 2`
 
-Shiv uses ability_mult 1.0 (no damage multiplier beyond the DEF penetration). The 50% DEF ignore IS the damage bonus — it is most valuable against heavily armored targets. Per [abilities.md](abilities.md): "Quick physical attack that ignores 50% of target's Defense."
+Shiv uses ability_mult 1.0 (no damage multiplier beyond the DEF penetration). The 50% DEF ignore IS the damage bonus — it is most valuable against heavily armored targets. Per [abilities.md](abilities.md), Shiv is a quick physical attack at `ability_mult` 1.0 that ignores 50% of the target's Defense; its thrown-stolen-item branch is still open, and the numbers above cover only the base attack. See [abilities.md](abilities.md) § Damage Magnitudes.
 
 Example — DEF 100 boss, both characters at Lv70 with gear:
 - Edren (ATK 175) basic: (175² / 6) - 100 = ~5,004
@@ -359,10 +367,10 @@ These abilities use their own formulas, not the standard physical or magic formu
 
 - **Shatter Guard:** Damage = total absorbed damage since stance began, capped at 2× Edren's max HP. See [abilities.md](abilities.md).
 - **Annulment:** Damage = (MAG × 2) + (effects_removed × 15), as magic damage. 100 WG cost.
-- **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes.
-- **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. Inherits Shatter Guard's 2× max-HP cap before the multiplier.
+- **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes. It is on this list because forcing `target.MDEF` to 0 changes a term of the magic formula; supplying a different spell power to the unchanged formula does not (see Ambush Protocol below).
+- **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. **Whether Shatter Guard's 2× max-HP cap applies before or after the ×1.5 is undecided** — before yields a 3× max-HP ceiling, after keeps 2× — and no document states it. It is left open here rather than settled, because it is a balance decision worth a 50% swing in the combo's ceiling and belongs to the pass that implements Shatter Guard in the battle layer.
 
-Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula, so it needs no formula of its own. See § Physical Ability Multiplier Tiers, "What this table does not cover".
+Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula with no term altered, so it needs no formula of its own. See § Physical Ability Multiplier Tiers, "What this table does not cover".
 
 ---
 
@@ -416,7 +424,7 @@ From [magic.md](magic.md):
 ### Physical Elemental Attacks
 
 Some weapons and abilities have elemental properties:
-- Lira's Overcharge: Storm element (a buff that adds the element to the ally's next *physical* attack)
+- Lira's Overcharge: Storm element added to the ally's next attack (the physical pipeline below applies when that attack is physical)
 - Elemental weapons (defined in equipment, Gap 1.5)
 
 Lira's Arc Trap used to be listed here. It is not a physical attack: it is a

@@ -102,11 +102,12 @@
 			"cost_value": 20,
 			"cooldown": null,
 			"target": "all_enemies",
+			"_comment": "target records the damage component only; the heal, the barrier and the status immunity all resolve party-side (abilities.md § Damage Magnitudes, Convergence Chorus). A component whose source Spiritcall Torren has not yet learned is skipped.",
 			"component_powers": {
 				"damage": 5,
 				"heal": 6
 			},
-			"effect": "Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5), AoE heal (spell power 6) that also cleanses Poison, a party barrier countering for 10% of DEF, and status immunity for 1 turn. Usable once per battle.",
+			"effect": "Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5, all enemies), AoE heal (spell power 6, all allies) that also cleanses Poison, a party barrier countering for 10% of DEF, and party status immunity for 1 turn. Usable once per battle. A component whose spirit Torren has not yet learned is skipped.",
 			"row_restriction": null,
 			"story_gated": true,
 			"story_event": "interlude_ley_line_nexus",

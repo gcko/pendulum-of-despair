@@ -38,7 +38,7 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 
 - docs/story/progression.md:388
 - docs/story/characters.md:49-50
-- docs/story/combat-formulas.md:542 ('interactions are data-driven, not special-cased')
+- docs/story/combat-formulas.md § Implementation Architecture ('interactions are data-driven, not special-cased')
 
 ## Code references
 
@@ -50,7 +50,7 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 - **Verdict:** CONFIRMED
 - **Verified severity:** LOW
 - **Safe to fix immediately:** no — tracked as development work
-- **Evidence:** damage_calculator.gd:45-47: '# Cael's Pallor Shimmer: +10% physical damage (permanent, hidden)' / 'if attacker_id == "cael":' / 'raw *= 1.1'. This is a hardcoded character-name special case; combat-formulas.md:542 states interactions should be data-driven not special-cased, and progression.md:388/characters.md:49-50 specify the spike as +2 ATK/+2 MAG/+1 SPD (not a flat 10% physical multiplier, and ignores MAG/SPD).
+- **Evidence:** damage_calculator.gd:45-47: '# Cael's Pallor Shimmer: +10% physical damage (permanent, hidden)' / 'if attacker_id == "cael":' / 'raw *= 1.1'. This is a hardcoded character-name special case; combat-formulas.md § Implementation Architecture states interactions should be data-driven not special-cased, and progression.md:388/characters.md:49-50 specify the spike as +2 ATK/+2 MAG/+1 SPD (not a flat 10% physical multiplier, and ignores MAG/SPD).
 - **Notes:** Confirmed divergence. Not fixNow despite small footprint: a correct fix means removing the branch AND applying ATK+2/MAG+2/SPD+1 on the Ember Vein flag via the spike framework (GAP-013); a bare deletion would change combat output and very likely break a GUT test asserting the 1.1x behavior. Safer to do with the spike system and test updates.
 
 ---

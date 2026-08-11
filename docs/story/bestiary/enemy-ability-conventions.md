@@ -104,7 +104,8 @@ Enemy status base-rates are unspecified. `magic.md:107` documents the player
 § Derived Rules adds a severe 45-59% band for combat-removal statuses; enemy
 offensive statuses here are all standard-band.) Enemy offensive
 statuses use **70** (band midpoint), then run the same two-stage accuracy roll
-as player status spells (`DamageCalc.roll_status`, combat-formulas.md:478–484):
+as player status spells (`DamageCalc.roll_status`, combat-formulas.md
+§ Status Spell Resolution):
 Stage 1 `effective = base_rate · MAG/(MAG+MDEF)`, Stage 2 magic-evasion
 `(MDEF+SPD)/8` capped at 40%. The status's **effect** (e.g. Poison = 8% max-HP
 per turn until cured, `magic.md:1537`) is already canon in

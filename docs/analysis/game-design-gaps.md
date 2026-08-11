@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; damage magnitudes closed for 9 of 10 entries — Shiv's thrown-item branch remains, see below) |
+| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; damage magnitudes closed for 9 of 10 entries — Shiv's thrown-item branch remains, tracked as [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -873,14 +873,14 @@ than taken on trust.
 |---------|-----------|-------|--------------|
 | Shock Coil | Lira | Spell power 10 per tick, 3 ticks | Thornfire's stated total (40 = 2x10 Flame + 2x10 Storm) and the combo-doubling rule |
 | Arc Trap | Lira | Spell power 30 | Equal 2 AC cost with Shock Coil, so equal output budget: one burst = three ticks |
-| Ember Wing | Torren | Spell power 10 (AoE) | 10 MP = 2x a 5 MP Tier 1 single target; 60-70% AoE reduction on power 15-16 |
+| Ember Wing | Torren | Spell power 10 (AoE) | The Flame half of Thornfire's stated 40 (20 Flame + 20 Storm), halved back by the combo-doubling rule; the MP ladder brackets it at 9-11 but does not select it |
 | Inferno Gale (Favor 3) | Torren | Spell power 20 (AoE) | "Heavy" = double; the target set is unchanged, so the upgrade doubles |
 | Dewfall | Torren | Spell power 12 (heal) | Priced as Mend (3 MP, power 12) + Cleansing Draught (5 MP) = 8 MP |
 | Torrent's Grace (Favor 3) | Torren | Spell power 12, all allies | The upgrade broadens the target set, so the per-target power holds |
 | Greyveil | Torren | Spell power 28 | 14 MP Tier 2 comparators (Rootgrip 30, Kindlepyre 32) netted against the MDEF-ignore and non-elemental riders |
 | Duskbreaker (Favor 3) | Torren | Spell power 56 | "Heavy" = double; single target both sides |
 | Rootsong | Torren | Spell power 12 per ally | The table's own "same per-target potency as Dewfall" |
-| Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components |
+| Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components. Which four spirits compose it, and how the cell's "cleanse" is read, are labelled choices — see abilities.md |
 | Wild Card (0-2 items) | Sable | `ability_mult` 2.0 | The 0-item branch's stated "2x her Attack" |
 | Wild Card (3 items) | Sable | `ability_mult` 3.0 | "Heavy" = double, capped by the ladder's Maximum tier |
 | Ambush Protocol (combo #8) | Sable + Lira | Spell power 60 | The combo's own "2x normal Arc Trap damage" |
@@ -896,9 +896,13 @@ same one, so it is one decision covering both. Second, "bonus elemental damage"
 admits three non-equivalent readings: the throw re-elements the existing Shiv
 hit, adds a separate hit at its own magnitude, or raises Shiv's multiplier for
 that use. abilities.md § Damage Magnitudes states the options and recommends the
-first; the call belongs to a pass with the item tables open.
+first; the call belongs to a pass with the item tables open. Both decisions are
+tracked as [#359](https://github.com/gcko/pendulum-of-despair/issues/359), which
+is the only thing keeping the Ability System row above at MOSTLY COMPLETE and
+[#238](https://github.com/gcko/pendulum-of-despair/issues/238) from closing.
 
-**Physical Ability Multiplier table conflicts — resolved.**
+**Physical Ability Multiplier table — the two #333 rows are corrected; the
+2.0 row's Oathkeeper exemplar remains open.**
 [combat-formulas.md](../story/combat-formulas.md) § Physical Ability Multiplier
 Tiers used to list two abilities that cannot take a physical `ability_mult` at
 all. Both rows are corrected:
@@ -916,6 +920,14 @@ multiplier physical attack") and Wild Card's three-item branch. The `2.5` row is
 marked reserved: no shipped combo takes a physical `ability_mult`, because every
 combo either modifies a constituent ability or states its own formula. Closes
 [#333](https://github.com/gcko/pendulum-of-despair/issues/333).
+
+The table is *not* fully settled. Its `2.0` row also carries Oathkeeper, which
+the same document gives three different multipliers (1.0 doubled, 1.5, 2.0)
+across the table and its own worked examples —
+[#346](https://github.com/gcko/pendulum-of-despair/issues/346), still open.
+Wild Card's `2.0` was derived independently from its own stated "2x her Attack"
+and does not depend on how #346 resolves, and the table now says so in place; the
+two exemplars share a row but not an argument.
 
 The magnitudes above still have no runtime consumer — `game/data/abilities/` is
 read only by the menu UI, and `battle_actions.gd`'s `spell_power` path serves

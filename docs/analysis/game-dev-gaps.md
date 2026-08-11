@@ -73,10 +73,13 @@ in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
 Implementation gaps that depend on these may encounter missing data —
 use `/story-designer` to fill design gaps before implementing.
 `magic.md` is now COMPLETE (numeric balance closed). `abilities.md` is
-still MOSTLY COMPLETE, but the residue is specific rather than general:
-resource costs are closed and ten entries lack damage/healing
-magnitudes — see `game-design-gaps.md` § Ability System — outstanding
-damage values for the enumerated list, tracked as issue #321.
+still MOSTLY COMPLETE, but the residue is one entry rather than a
+general caveat: resource costs are closed and nine of the ten
+damage/healing magnitudes are now numbers, leaving only Sable's Shiv
+thrown-item branch — see `game-design-gaps.md` § Ability System —
+damage magnitudes (9 of 10 closed) for the enumerated list. The
+remaining branch is tracked as issue #359; runtime execution of the
+party abilities is tracked as issue #321.
 
 ---
 

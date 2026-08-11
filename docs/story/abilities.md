@@ -152,7 +152,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 | **Ember Wing** (Flame Spirit) | Level 11 | 10 MP | Flame damage to all enemies (spell power 10). 40% chance to inflict Burn (Flame damage over time, 3 turns). | **Inferno Gale:** Heavy Flame damage to all enemies (spell power 20). Burn is guaranteed. |
 | **Stoneheart** (Earth Spirit) | Interlude [S] (Lv 16+) | 12 MP | One ally gains immunity to status effects for 2 turns. | **Mountain's Resolve:** All allies gain status immunity for 2 turns. |
 | **Greyveil** (Twilight Spirit) | Interlude [S] (Lv 20+) | 14 MP | Deals non-elemental damage (channeled through a spirit) that ignores Magic Defense (spell power 28). Effective against Pallor-type enemies. | **Duskbreaker:** Heavy non-elemental damage (spell power 56). If the target is Pallor-corrupted, deals 2x damage and has a 60% chance to dispel Pallor buffs. |
-| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5), AoE heal (spell power 6) that also cleanses Poison, a party barrier countering for 10% of DEF, and status immunity for 1 turn. Usable once per battle. See § Damage Magnitudes for the 50% rule and the Favor 3 figures. | N/A |
+| **Convergence Chorus** | Story: After stabilizing the ley line nexus (Interlude) | 20 MP | Torren calls the Briar, Rain, Flame and Earth spirits at once. Each performs its ability at 50% normal potency simultaneously, and the single-target ones are broadened to the whole party: AoE damage (spell power 5, all enemies), AoE heal (spell power 6, all allies) that also cleanses Poison, a party barrier countering for 10% of DEF, and party status immunity for 1 turn. Usable once per battle. A component whose spirit Torren has not yet learned is skipped. See § Damage Magnitudes for the 50% rule, the choice of roster and the Favor 3 figures. | N/A |
 | **Rootsong** | Story: `trial_torren_complete` (Pallor Wastes trial) | 14 MP | Torren sings to all spirits at once. Heals all allies for moderate HP each (spell power 12 — the same per-target potency as Dewfall) AND increases all spirit Favor by 1 (up to max 3). Usable once per battle. The only way to boost Favor for multiple spirits in a single action. | N/A |
 
 **Synergies:**
@@ -618,16 +618,27 @@ passes the suite silently.
 
 No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can
-check it — or overturn it, which is the point of writing it down. One
-non-numeric choice is made: how Wild Card's item branches deliver their 2.0
-strike. It is labelled as a choice where it is made, with its alternative, and
-Shiv's equivalent fork is left open rather than settled.
+check it — or overturn it, which is the point of writing it down. Three
+non-numeric choices *are* made, each labelled where it is made and each stated
+with the alternative it rejects:
+
+1. How Wild Card's item branches deliver their 2.0 strike (reading (a), the
+   strike itself becomes elemental and AoE). Shiv's equivalent fork is left open
+   rather than settled.
+2. Which spirits the Convergence Chorus composites, and how the cell's word
+   "cleanse" is read. The shipped text said "all known spirits" and listed a
+   "status cleanse"; this pass names four spirits and reads the cleanse as Rain's
+   Poison removal plus Earth's status immunity. See *Which four spirits* below
+   for the alternative and what it costs.
+3. What the Chorus does when a component spirit is not yet learned. Also below.
 
 #### The rules used
 
 1. **MP-costed abilities are priced on magic.md's tier ladder.** Torren's
    Spiritcalls are the only abilities whose magnitude this pass *derives* from
-   an MP price. Other MP-costed abilities carry a magnitude but are priced by
+   an MP price, and only some of them: Dewfall, Torrent's Grace, Greyveil and
+   Duskbreaker. Ember Wing's MP is a check on a value rule 4 supplies, not the
+   input — see its derivation. Other MP-costed abilities carry a magnitude but are priced by
    something else and so are not on this ladder: Unweave (12 MP) states its own
    formula, `Maren MAG x 3`; Wild Card (10 MP) is priced off the physical
    multiplier ladder; and combos are priced off the ability they fire (rule 4),
@@ -635,8 +646,14 @@ Shiv's equivalent fork is left open rather than settled.
    defines no ladder of its own, so
    [magic.md](magic.md) § Spell Balance Guidelines supplies one: MP 3-8 = Tier 1,
    12-20 = Tier 2, 25-45 = Tier 3, 50-99 = Tier 4; single-target power bands
-   12-20 / 28-40 / 50-70 / 85-120; an AoE version costs 1.5-2x its same-tier
-   single-target counterpart and carries 60-70% of its power at Tiers 1-3.
+   12-20 / 28-40 / 50-70 / 85-120; and an AoE version carries 60-70% of the
+   single-target power at Tiers 1-3. magic.md's companion *MP* rule — an AoE
+   costs 1.5-2x the single-target version — is **scoped**: magic.md § Derived
+   Rules binds it only to the nine named same-tier AoE/single-target pairs, and
+   says a standalone AoE with no counterpart is priced inside its plain tier MP
+   band instead. Torren's Spiritcalls are not spells and appear on none of those
+   lists, so where this pass reaches for the MP ratio it is reasoning by analogy
+   and says so at the point of use.
    AP/AC/WG abilities are **not** on this ladder — they are priced against each
    other inside their own pool, because their pools refill on different rules.
 2. **A Favor 3 upgrade never reduces the per-target magnitude.** Each branch of
@@ -655,14 +672,26 @@ Shiv's equivalent fork is left open rather than settled.
 3. **"Heavy" means double.** One convention, stated once. It is what Thornveil's
    quantified upgrade does, and "Heavy" is the adjective used for both undefined
    upgrades and for Wild Card's three-item branch.
-4. **A combo doubles the constituent ability's per-application magnitude.** For
-   a persistent device that is one tick (Shock Coil, 10 per tick); for a
-   single-shot one it is the whole burst (Arc Trap, 30). Ambush Protocol says
-   the doubling outright — "2x normal Arc Trap damage" — and Thornfire's stated
-   total is the independent check (see Shock Coil). The unit matters: the
-   equal-AC budget argument that sets Arc Trap at 30 compares Shock Coil's
-   *three-tick total* against Arc Trap's burst, which is a different quantity
-   from the per-tick 10 that rule 4 doubles into Thornfire.
+4. **A combo that fires a *damaging* constituent doubles its per-application
+   magnitude.** Both shipped cases state the doubling themselves rather than
+   inheriting it from a rule: Ambush Protocol says "2x normal Arc Trap damage",
+   and Thornfire states its total as 40, split 20 Flame + 20 Storm over Ember
+   Wing and Shock Coil. The rule is the generalisation of those two, and it is
+   worth exactly that much. The unit matters: for a persistent device the
+   doubled quantity is one tick (Shock Coil, 10 per tick); for a single-shot one
+   it is the whole burst (Arc Trap, 30). The equal-AC budget argument that sets
+   Arc Trap at 30 compares Shock Coil's *three-tick total* against Arc Trap's
+   burst, which is a different quantity from the per-tick 10 that rule 4 doubles
+   into Thornfire.
+
+   Combos over **buff or utility** constituents do not double a magnitude; they
+   extend a duration or bolt on a rider, and the shipped cases are unanimous.
+   Forged Rampart leaves Bulkhead's 40% reduction untouched and buys 5 turns
+   instead of 3 plus a 20% reflect; Spiritward leaves Stoneheart's immunity as
+   immunity and buys 3 turns instead of 2 plus 20% damage reduction; Shield Oath
+   buys 4 turns instead of 3 on both of its buffs. So rule 4 is not a universal
+   law of combos, and nothing in this pass asks it to be — the only two values it
+   carries, Shock Coil 10 and Ambush Protocol 60, are both damage.
 
 #### Resolved values
 
@@ -670,7 +699,7 @@ Shiv's equivalent fork is left open rather than settled.
 |---------|-----------|-------|------|
 | Shock Coil | Lira | Spell power 10 per tick, 3 ticks | 4 |
 | Arc Trap | Lira | Spell power 30 | equal-AC budget |
-| Ember Wing | Torren | Spell power 10 (AoE) | 1 |
+| Ember Wing | Torren | Spell power 10 (AoE) | 4 (checked against 1) |
 | Inferno Gale (Favor 3) | Torren | Spell power 20 (AoE) | 2, 3 |
 | Dewfall | Torren | Spell power 12 (heal) | 1 |
 | Torrent's Grace (Favor 3) | Torren | Spell power 12 (heal, all allies) | 2 |
@@ -703,28 +732,39 @@ and nowhere near a Tier 3 one, which is where it belongs.
 6 MP it costs over Torrent's Grace buys the party-wide Favor boost and removes
 the Favor 3 prerequisite.
 
-**Ember Wing — spell power 10.** Rule 1. An AoE costs 1.5-2x its same-tier
-single-target counterpart, so a 10 MP AoE implies a 5-6.7 MP counterpart, which
-is Tier 1 (band 3-8). The shipped 5 MP Tier 1 attack spells are Linebolt
-(power 15) and Arc Snap (16); applying the 60-70% AoE reduction to those gives
-9-11, and the 40% Burn rider argues for the bottom of that window: **power 10**.
-It sits mid-band in the Tier 1 AoE range of 7-14 that
-`game/tests/test_spell_balance.gd` already enforces for spells. Tier 2 is ruled
-out by price alone — the shipped Tier 2 AoE *attack* spells cost 22-25 MP
-(Scorch Sweep, Whiteout and Quake Stride at 22 up to Ley Storm at 25), and the
-cheapest Tier 2 AoE spell of any kind is 12 MP. Neither is 10.
-**Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
-Tier 2 AoE band of 16-28 at unchanged MP. The upgrade is worth exactly one tier,
-which is what 15-20 battles of Favor should buy.
+**Ember Wing — spell power 10.** Rule 4, with the MP ladder as a check that
+agrees but does not decide. Thornfire (combo #4) is Ember Wing fired through
+Lira's Shock Coil, and it is the only document that states a number for either
+constituent: total spell power 40, split **20 Flame + 20 Storm**. The split is
+Thornfire's own text, not an assumption of this pass. Rule 4 halves each side
+back to the ability that supplied it, so the Flame half gives Ember Wing
+**power 10** and the Storm half gives Shock Coil 10.
 
-**Shock Coil — spell power 10 per tick.** Thornfire (combo #4) is Ember Wing
-fired through Shock Coil, and it states its total: spell power 40, split
-20 Flame + 20 Storm. By rule 4 the combo doubles each constituent, so the Flame
-half implies Ember Wing 10 and the Storm half implies Shock Coil **10**. The
-Flame half is the check rather than the input: Ember Wing's 10 was derived above
-from MP pricing alone, without reference to Thornfire, and it reproduces
-Thornfire's stated 20 exactly. Over three turns the device delivers 30 power for
-2 AC, spread across random targets.
+*Why the MP ladder cannot carry this on its own.* Ember Wing costs 10 MP, and
+10 MP falls in the gap between magic.md's Tier 1 MP band (3-8) and its Tier 2
+band (12-20) — priced on the plain band it lands in no tier at all. Running the
+AoE MP *ratio* backwards (a 10 MP AoE implying a 5-6.7 MP single-target
+counterpart, i.e. Tier 1) is reasoning by analogy outside the nine same-tier
+pairs magic.md binds that ratio to, per rule 1, so it is a corroboration and is
+labelled as one. Taken that way it agrees: the shipped 5 MP Tier 1 attack spells
+are Linebolt (power 15) and Arc Snap (16), and the 60-70% AoE reduction puts an
+AoE counterpart in the window 9-11.2, which contains 10 — and 10 sits mid-band
+in the Tier 1 AoE range of 7-14 that `game/tests/test_spell_balance.gd` already
+enforces for spells. Tier 2 is ruled out by price from either direction: the
+shipped Tier 2 AoE *attack* spells cost 22-25 MP (Scorch Sweep, Whiteout and
+Quake Stride at 22 up to Ley Storm at 25), and the cheapest Tier 2 AoE spell of
+any kind is 12 MP. Neither is 10. The window brackets Thornfire's answer; it
+does not select it, because 9, 10 and 11 all sit inside it.
+**Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
+Tier 2 AoE band of 18-28 that [magic.md](magic.md) § Spell Balance Guidelines
+gives, at unchanged MP. The upgrade is worth exactly one tier, which is what
+15-20 battles of Favor should buy.
+
+**Shock Coil — spell power 10 per tick.** The Storm half of Thornfire's stated
+40, halved back by the same rule-4 step that gives Ember Wing its 10 (above).
+Thornfire is the input for both values and the MP ladder is the check on both,
+not the other way round. Over three turns the device delivers 30 power for 2 AC,
+spread across random targets.
 
 **Arc Trap — spell power 30.** Both of Lira's damage devices resolve through the
 *magic* formula: Shock Coil's entry says outright that its damage scales with
@@ -738,16 +778,22 @@ the same 12 AC pool, so they get the same output budget: Shock Coil's
 even. The burst and the Speed debuff are paid for with conditionality — the trap
 only fires when an enemy uses a *physical* attack, so against an all-caster group
 it never fires at all — and with the device slot it occupies (one of two) until
-it does. 30 is also the floor of the Tier 2 single-target band, which suits a
-level 12 unlock sitting on the Tier 1/2 boundary.
+it does. As a loose sanity check, 30 sits just above the floor of the Tier 2
+single-target band (28-40), which suits a level 12 unlock on the Tier 1/2
+boundary — but only as a sanity check: rule 1 keeps AC-costed abilities off the
+MP ladder entirely, so the band carries no weight in the derivation. The
+equal-2 AC budget argument carries it alone.
 **Ambush Protocol** follows from rule 4 and the combo's own text: **60**. That
 is mid-band Tier 3 for 8 MP, the cheapest combo in the table — but it costs two
 ATB gauges and one stolen Forgewright component, and it is single-target where
 Thornfire (40, 16 MP) hits the whole group with guaranteed Burn.
 
 **Greyveil — spell power 28.** Rule 1 puts 14 MP in Tier 2, band 28-40. The
-shipped 14 MP single-target spells are Rootgrip (30), Hoarfall (32) and
-Kindlepyre (32), so 30-32 is the parity point. Greyveil then adds one advantage
+shipped 14 MP single-target spells that carry a spell power are Rootgrip (30),
+Hoarfall (32) and Kindlepyre (32), so 30-32 is the parity point. (Five more
+spells cost 14 MP and target one unit — Purge, Quickstep, Attunement,
+Dispersion and Dampening Field — but they heal, buff or debuff and state no
+power, so they are not comparators here.) Greyveil then adds one advantage
 and takes one disadvantage: it ignores MDEF, and it is non-elemental, so it can
 never be resisted — but it also can never take the 1.5x weakness bonus its
 14 MP peers can. The MDEF ignore is worth roughly 2 power at the documented
@@ -782,15 +828,38 @@ The Rain row is the same number in both columns because Dewfall's Favor 3
 upgrade broadens rather than doubles (rule 2) and the Chorus has already
 broadened it; Favor 3 adds only the Sleep cleanse.
 
-*Which four spirits.* Torren's roster when the ability unlocks is Briar, Rain,
-Flame, Earth and Twilight — Greyveil unlocks on the same `interlude_ley_line_nexus`
-event as the Chorus itself, so Twilight is definitely in hand, not merely
-possible. The four effects the table cell names map one-to-one onto the first
-four, using each spirit once. The cell's word "cleanse" covers Rain's Poison
-removal and Earth's status immunity between them; the effect text is corrected
-above to say so. Twilight is nonetheless excluded from the composite —
-Greyveil's single-target MDEF-ignoring damage is not among the listed effects,
-and excluding it keeps the ability stable as Torren's roster grows.
+*Which four spirits — a choice, not a derivation.* The shipped cell read "all
+known spirits", which is roster-relative; this pass names Briar, Rain, Flame and
+Earth. Two things push that way: the four effects the cell itself lists map
+one-to-one onto those four, using each spirit once; and a fixed roster keeps a
+20 MP once-per-battle ability stable in cost and output, where "all known
+spirits" inflates it every time Torren learns another. *The alternative is
+real.* Keep the roster-relative reading and add Twilight as a fifth component at
+50% of Greyveil's 28 — power 14 of single-target, MDEF-ignoring damage. It is
+rejected because that effect is not among the four the cell names and because an
+ability that grows without bound is the harder one to balance, but it is the
+first thing to revisit if the Chorus reads as too weak late.
+
+*Reading the cell's "cleanse" is also a choice.* The shipped cell listed "status
+cleanse" as its fourth effect. Read strictly, a cleanse removes statuses the
+party already has; Earth's contribution, halved from Stoneheart, is *immunity*,
+which prevents new ones and does nothing for a party that is already Silenced or
+Blinded. This pass reads the single word as covering what the named spirits
+between them actually supply — Rain's Poison removal, a real cleanse and kept in
+the effect text, plus Earth's immunity — rather than inventing a fifth,
+source-less cleanse component. The alternative is to keep a general cleanse and
+name the spirit that supplies it, which the roster does not contain. Stated
+plainly so it is not missed: against the shipped wording this **narrows** what
+the Chorus does for an already-statused party, and it is the second thing to
+revisit if the ability underperforms.
+
+*If a component spirit is not yet learned.* Greyveil and Stoneheart carry level
+floors that the Chorus does not — Interlude [S] at Lv 20+ and Lv 16+ against the
+Chorus's bare story trigger — so a Torren who reaches the nexus below Lv 16 has
+the Chorus without Stoneheart, and the Earth component would have no source
+ability to take 50% of. **A component whose source Spiritcall is not yet learned
+is skipped**, and the four-row table above is the fully-unlocked case. One rule
+covers both spirits that can be missing, and it needs no new number.
 
 *Sanity check on the 20 MP.* Each component is far below a Tier 2 spell —
 power 5 and 6 against Whiteout's 24 and Sanctuary's 22. The 20 MP buys breadth
@@ -840,7 +909,8 @@ What is *not* settled here is which element a given stolen item confers. That is
 the same missing item-type -> element mapping that blocks Shiv's throw branch,
 and it is one decision covering both.
 
-**Shiv's thrown-item branch — left open.** The base attack is fully specified
+**Shiv's thrown-item branch — left open**, tracked as
+[#359](https://github.com/gcko/pendulum-of-despair/issues/359). The base attack is fully specified
 (`ability_mult` 1.0 plus 50% DEF ignore, combat-formulas.md § Special: Shiv).
 The throw is not, and it cannot be derived, because two independent decisions
 are missing and neither is implied by anything already written:
