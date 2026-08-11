@@ -41,4 +41,4 @@ static func reset_game_state() -> void:
 	PartyState.puzzle_state.clear()
 	PartyState.is_at_save_point = false
 	PartyState.playtime = 0
-	PartyState.location_name = ""
+	PartyState.clear_player_location()

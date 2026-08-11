@@ -437,7 +437,9 @@ selects which character, then the sub-screen opens for that character.
 
 ### 3.5 Info Boxes (Bottom)
 
-- **Bottom-left** (~68% width): Location name in pale blue.
+- **Bottom-left** (~68% width): Location name in pale blue. This is the map's
+  friendly place name (`location_display` in the save, from the map scene's
+  `location_name` metadata), never the map id, which is a scene path.
 - **Bottom-right** (~28% width): Two stacked boxes:
   - Time (HH:MM format, white)
   - Gold (with comma separators, gold `#ffcc44`)
@@ -456,7 +458,7 @@ FF6 item screen: tabs top, description middle, item list bottom.
 
 ```
 ┌──────────────────────────────────────────┐
-│  [USE]   ARRANGE   KEY                   │
+│  [USE]   MAT   ARRANGE   KEY             │
 ├──────────────────────────────────────────┤
 │ Cures [poison icon] status               │
 ├──────────────────────────────────────────┤
@@ -471,8 +473,11 @@ FF6 item screen: tabs top, description middle, item list bottom.
 
 ### 4.3 Tab Bar
 
-- Three tabs: **USE** | **ARRANGE** | **KEY**
-- USE: consumable items. ARRANGE: cycles through sort orders on each
+- Four tabs: **USE** | **MAT** | **ARRANGE** | **KEY**
+- USE: consumable items. MAT: crafting materials with their sell value,
+  view-only here — a material's only in-game use is in battle (see
+  [items.md](items.md) § Drake Fang Special Case) or in crafting.
+  ARRANGE: cycles through sort orders on each
   press (Type → Name → Quantity → Type...; default sort is Type).
   KEY: key items and quest items (viewable, not usable).
 - Active tab highlighted in white, inactive in pale blue.
@@ -945,7 +950,8 @@ intentional retro-fidelity decision matching FF6. No NG+ exists (per
 
 ### 13.3 Populated Slot
 
-- **Header row:** Location name (left) + Time HH:MM + Gold (right).
+- **Header row:** Location name (left, the save's `location_display`; "Unknown"
+  when it carries none) + Time HH:MM + Gold (right).
 - **Party row:** All 4 active members displayed horizontally:
   - 16×20 walking sprite
   - Name + LV (compact)

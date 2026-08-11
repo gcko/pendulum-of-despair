@@ -12,6 +12,57 @@ static func lookup_consumable(item_id: String) -> Dictionary:
 	return {}
 
 
+## Look up a crafting material by ID from DataManager (data/items/materials.json).
+static func lookup_material(item_id: String) -> Dictionary:
+	var items: Array = DataManager.load_items("materials")
+	for item: Variant in items:
+		if item is Dictionary and (item as Dictionary).get("id", "") == item_id:
+			return item as Dictionary
+	return {}
+
+
+## A material's sell value in gold. `sell_price` is present-but-null for
+## materials whose worth is act-scaled (Gold Pouch) and for the story materials
+## that cannot be sold at all, so a get(..., 0) default never fires and the raw
+## null must never reach a format string (items.md § Sell Price Rules).
+static func material_sell_value(material: Dictionary) -> int:
+	var raw: Variant = material.get("sell_price")
+	if raw != null:
+		return int(raw)
+	var by_act: Variant = material.get("gold_value_by_act")
+	if by_act is Dictionary:
+		return int((by_act as Dictionary).get(StoryAct.get_period(), 0))
+	return 0
+
+
+## Which inventory bucket an item id belongs in. Crafting materials go to
+## `materials`, everything else counted by quantity to `consumables`
+## (items.md § Inventory Structure). THE routing rule: every add, remove and
+## consume goes through this, so an item can never land in one bucket and be
+## looked for in the other (GAP-019).
+static func bucket_for_item(item_id: String) -> String:
+	return "materials" if not lookup_material(item_id).is_empty() else "consumables"
+
+
+## Move crafting materials that were filed under consumables into the materials
+## bucket, in place. Used by the v1 -> v2 save migration: before GAP-019 every
+## drop was routed to consumables, where a material has no name and no use.
+static func reroute_materials(inv: Dictionary) -> void:
+	var consumables: Variant = inv.get("consumables", null)
+	if not consumables is Dictionary:
+		return
+	var cons: Dictionary = consumables
+	var mats: Variant = inv.get("materials", {})
+	var materials: Dictionary = mats as Dictionary if mats is Dictionary else {}
+	for item_id: String in cons.keys():
+		if bucket_for_item(item_id) != "materials":
+			continue
+		materials[item_id] = int(materials.get(item_id, 0)) + int(cons[item_id])
+		cons.erase(item_id)
+	inv["consumables"] = cons
+	inv["materials"] = materials
+
+
 ## Look up equipment by ID across all equipment types.
 static func lookup_equipment(equipment_id: String) -> Dictionary:
 	for equip_type: String in ["weapons", "armor", "accessories"]:
@@ -172,6 +223,43 @@ static func add_capsule_gain(member: Dictionary, stat: String, amount: int) -> v
 	var gains: Dictionary = caps as Dictionary if caps is Dictionary else {}
 	gains[stat] = int(gains.get(stat, 0)) + amount
 	member["stat_capsules"] = gains
+
+
+## Translate a crafting material's battle fields into the same shape a battle
+## consumable has, so battle code never needs to know which bucket an item came
+## from. Drake Fang is the only such material today (items.md § Drake Fang
+## Special Case).
+static func battle_entry_for_material(material: Dictionary, quantity: int) -> Dictionary:
+	return {
+		"id": material.get("id", ""),
+		"name": material.get("name", ""),
+		"effect": material.get("battle_effect", ""),
+		"value": material.get("battle_value", 0),
+		"target": material.get("battle_target", "single_enemy"),
+		"usable_in_battle": true,
+		"quantity": quantity,
+	}
+
+
+## Every item the party can use in battle: consumables flagged usable_in_battle
+## plus battle-usable crafting materials, each carrying its held "quantity".
+static func build_battle_item_list() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var consumables: Dictionary = PartyState.get_consumables()
+	for item_id: String in consumables:
+		var data: Dictionary = lookup_consumable(item_id)
+		if data.is_empty() or not data.get("usable_in_battle", false):
+			continue
+		var entry: Dictionary = data.duplicate()
+		entry["quantity"] = int(consumables[item_id])
+		result.append(entry)
+	var materials: Dictionary = PartyState.get_materials()
+	for item_id: String in materials:
+		var material: Dictionary = lookup_material(item_id)
+		if material.is_empty() or not material.get("battle_usable", false):
+			continue
+		result.append(battle_entry_for_material(material, int(materials[item_id])))
+	return result
 
 
 ## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).
@@ -410,19 +498,61 @@ static func load_config_from_disk() -> Dictionary:
 	return config
 
 
+## Whether a save's world block carries a real recorded player position.
+## Saves written before #269 do not — v1 only ever wrote a hardcoded origin,
+## and the v1 -> v2 migration strips it. Callers must then fall back to the
+## destination map's default spawn marker (save-system.md § 3.7).
+static func has_saved_position(world: Dictionary) -> bool:
+	var pos: Variant = world.get("current_position", null)
+	if not pos is Dictionary:
+		return false
+	return (pos as Dictionary).has("x") and (pos as Dictionary).has("y")
+
+
+## The player position recorded in a save's world block. Check
+## has_saved_position() first: with no record this returns the origin, which is
+## also a legitimate map coordinate and must never be read as "unknown".
+static func saved_position(world: Dictionary) -> Vector2i:
+	if not has_saved_position(world):
+		return Vector2i.ZERO
+	var pos: Dictionary = world.get("current_position", {})
+	return Vector2i(int(pos.get("x", 0)), int(pos.get("y", 0)))
+
+
+## The place name a save slot shows the player. `current_location` is the map
+## id used to reload the scene and is never rendered — a save that carries no
+## recorded place name reads "Unknown" rather than leaking a file path
+## (ui-design.md § 3.5, save-system.md § 3.7).
+static func location_display_name(world: Dictionary) -> String:
+	var display: String = str(world.get("location_display", ""))
+	return display if not display.is_empty() else "Unknown"
+
+
 ## Build the save data template with stub sections for systems not yet implemented.
+## `world_state` carries the caller-owned world block (location, position, gold,
+## event flags); everything else in `world` is filled in here.
 static func build_save_dict(
 	party: Array,
 	form: Dictionary,
 	inv: Dictionary,
 	equips: Array,
-	loc: String,
-	g: int,
-	flags: Dictionary,
+	world_state: Dictionary,
 	play_time: int = 0,
 	lc: Dictionary = {},
 	ps: Dictionary = {}
 ) -> Dictionary:
+	var world: Dictionary = {
+		"event_flags": world_state.get("event_flags", {}),
+		"act": world_state.get("act", "1"),
+		"current_location": world_state.get("current_location", ""),
+		"location_display": world_state.get("location_display", ""),
+		"gold": world_state.get("gold", 0),
+	}
+	# The position is written only once one has actually been recorded (#269).
+	# An absent key means "no stored position" and sends the loader to the map's
+	# default spawn marker — never to a fabricated origin.
+	if world_state.has("current_position"):
+		world["current_position"] = world_state["current_position"]
 	return {
 		"party": party.duplicate(true),
 		"formation": form.duplicate(true),
@@ -439,19 +569,12 @@ static func build_save_dict(
 		"puzzle_state": ps.duplicate(true),
 		"meta":
 		{
-			"version": 1,
+			"version": SaveManager.CURRENT_SAVE_VERSION,
 			"playtime": play_time,
 			"saved_at": Time.get_datetime_string_from_system(),
 			"slot_type": "manual",
 		},
-		"world":
-		{
-			"event_flags": flags,
-			"act": "1",
-			"current_location": loc,
-			"current_position": {"x": 0, "y": 0},
-			"gold": g,
-		},
+		"world": world,
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}

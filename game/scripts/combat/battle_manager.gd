@@ -543,6 +543,20 @@ func _do_item(command: Dictionary) -> bool:
 					var hp_mp_statuses: Array = tgt_m.get("active_statuses", [])
 					for i: int in range(hp_mp_statuses.size() - 1, -1, -1):
 						_state.remove_status(slot, hp_mp_statuses[i].get("name", ""))
+		"fixed_damage":
+			# Drake Fang: a flat hit that ignores DEF and cannot miss
+			# (items.md § Drake Fang Special Case).
+			var fd_idx: int = BattleActions.resolve_enemy_target(command.get("target", 0), _enemies)
+			if fd_idx < 0:
+				message.emit("No target!")
+				return false
+			message.emit("Used %s!" % item.get("name", "Item"))
+			var fd_dmg: int = maxi(0, int(item.get("value", 0)))
+			_enemies[fd_idx].take_damage(fd_dmg)
+			damage_dealt.emit("enemy_%d" % fd_idx, fd_dmg, "physical")
+			if not _enemies[fd_idx].is_alive:
+				combatant_died.emit("enemy_%d" % fd_idx)
+				_atb.remove_combatant("enemy_%d" % fd_idx)
 		"cure_status":
 			message.emit("Used %s!" % item.get("name", "Item"))
 			for sname: String in item.get("cures", []):

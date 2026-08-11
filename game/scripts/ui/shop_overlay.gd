@@ -14,6 +14,13 @@ const COLOR_SELECTED: Color = Color("#ffff88")
 ## Normal row color.
 const COLOR_NORMAL: Color = Color("#ccddff")
 
+## Key item that discounts every inflated (Caldera) shop.
+const EMPLOYEE_CARD_ID: String = "caldera_employee_card"
+## Price multiplier the card grants: 25% off the posted price, so a Caldera
+## item costs 112.5% of standard instead of 150% (economy.md § Caldera
+## Inflation).
+const EMPLOYEE_CARD_MULTIPLIER: float = 0.75
+
 ## Resolved inventory: array of {item_id, name, buy_price, stock_limit, purchased}.
 var _inventory: Array = []
 ## Set of equipment item_ids (buy routes to owned_equipment, not consumables).
@@ -84,6 +91,11 @@ func _load_shop(shop_id: String) -> void:
 	var shop: Dictionary = raw.get("shop", {})
 	_title_label.text = shop.get("shop_id", shop_id).replace("_", " ").to_upper()
 
+	# Resolved once for the whole shop: the discount depends on the shop's
+	# markup and the party's key items, neither of which changes while the
+	# overlay is open.
+	var markup: float = float(shop.get("markup", 1.0))
+	var has_card: bool = PartyState.has_key_item(EMPLOYEE_CARD_ID)
 	var name_map: Dictionary = _build_name_map()
 	var raw_inventory: Variant = shop.get("inventory", [])
 	if not raw_inventory is Array:
@@ -100,7 +112,9 @@ func _load_shop(shop_id: String) -> void:
 			if not EventFlags.get_flag(restock_val as String):
 				continue
 		var item_id: String = entry.get("item_id", "")
-		var buy_price: int = entry.get("buy_price", 0)
+		# Store the posted price, not the list price: the row label and the
+		# gold charged in _try_buy then read the same number by construction.
+		var buy_price: int = posted_price(entry.get("buy_price", 0), markup, has_card)
 		if item_id == "":
 			continue
 		var stock_val: Variant = entry.get("stock_limit", null)
@@ -114,6 +128,21 @@ func _load_shop(shop_id: String) -> void:
 			"purchased": 0,
 		}
 		_inventory.append(shop_entry)
+
+
+## Price actually posted and charged for one shop entry.
+##
+## Caldera vendors carry pre-multiplied prices and a markup > 1.0; holding the
+## Caldera Employee Card takes 25% off them, landing at 112.5% of the standard
+## price (economy.md § Caldera Inflation, items.md § Story Items). Shops at
+## standard prices have markup 1.0 and are never touched by the card.
+##
+## Rounded half up, which reproduces the posted table in economy.md exactly
+## (450 -> 338, 750 -> 563, 2250 -> 1688).
+static func posted_price(base_price: int, markup: float, has_card: bool) -> int:
+	if markup <= 1.0 or not has_card:
+		return base_price
+	return roundi(float(base_price) * EMPLOYEE_CARD_MULTIPLIER)
 
 
 ## Build item_id -> name map from all known data sources.

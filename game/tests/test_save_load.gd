@@ -84,7 +84,8 @@ func test_populated_slot_display() -> void:
 		"ley_crystals": {},
 		"world":
 		{
-			"current_location": "Valdris Crown",
+			"current_location": "towns/valdris_crown",
+			"location_display": "Valdris Crown",
 			"gold": 1200,
 			"event_flags": {},
 			"act": "1",
@@ -99,6 +100,7 @@ func test_populated_slot_display() -> void:
 	var header: Label = sl._manual_slots[0].get_node_or_null("SlotLayout/HeaderRow/HeaderLabel")
 	assert_not_null(header, "slot should have header label")
 	assert_string_contains(header.text, "Valdris Crown", "should show location name")
+	assert_false(header.text.contains("towns/"), "the slot header must not show the map path")
 
 
 # --- Save Operation ---

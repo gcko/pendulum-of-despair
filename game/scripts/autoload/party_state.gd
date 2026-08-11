@@ -43,6 +43,17 @@ var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
 var playtime: int = 0
 var location_name: String = ""
+## Player-facing place name for `location_name`'s map, taken from the map's
+## `location_name` metadata. The map id is the load key and is never shown;
+## this is what the pause menu and the save slots render (ui-design.md § 3.5).
+var location_display: String = ""
+## Player's pixel position on `location_name`'s map. Only meaningful while
+## `has_player_position` is true — see save-system.md § 3.7 (#269).
+var player_position: Vector2i = Vector2i.ZERO
+## Whether a real player position has been recorded yet. False for a fresh game
+## and for saves written before positions were persisted; the loader then uses
+## the map's default spawn marker instead.
+var has_player_position: bool = false
 var is_at_save_point: bool = false
 var ley_crystals: Dictionary = {}
 var puzzle_state: Dictionary = {}
@@ -75,7 +86,7 @@ func initialize_new_game() -> void:
 	}
 	gold = STARTING_GOLD
 	playtime = 0
-	location_name = ""
+	clear_player_location()
 	ley_crystals.clear()
 	puzzle_state.clear()
 
@@ -125,6 +136,11 @@ func load_from_save(data: Dictionary) -> void:
 	var world: Dictionary = data.get("world", {})
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
+	location_display = world.get("location_display", "")
+	# A save with no recorded position keeps has_player_position false, so a
+	# re-save cannot invent an origin the player was never standing on (#269).
+	has_player_position = Helpers.has_saved_position(world)
+	player_position = Helpers.saved_position(world)
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
@@ -146,13 +162,53 @@ func build_save_data() -> Dictionary:
 		formation,
 		inventory,
 		owned_equipment,
-		location_name,
-		gold,
-		EventFlags.to_save_data(),
+		build_world_state(),
 		playtime,
 		ley_crystals,
 		puzzle_state
 	)
+
+
+## The world block written to a save: which map the party is on, where they
+## stand on it, gold and event flags (save-system.md § 3.7). `current_position`
+## is omitted while no position has been recorded, which tells the loader to
+## use the map's default spawn marker (#269).
+func build_world_state() -> Dictionary:
+	var world: Dictionary = {
+		"current_location": location_name,
+		"location_display": location_display,
+		"gold": gold,
+		"event_flags": EventFlags.to_save_data(),
+	}
+	if has_player_position:
+		world["current_position"] = {"x": player_position.x, "y": player_position.y}
+	return world
+
+
+## Record where the party currently stands. Exploration calls this as the
+## player moves, so a save taken at any moment stores the real position
+## instead of a hardcoded origin (#269).
+func set_player_location(map_id: String, position: Vector2i) -> void:
+	if not map_id.is_empty():
+		location_name = map_id
+	player_position = position
+	has_player_position = true
+
+
+## Forget the recorded map and position (new game). The next map load records
+## a fresh one.
+func clear_player_location() -> void:
+	location_name = ""
+	location_display = ""
+	player_position = Vector2i.ZERO
+	has_player_position = false
+
+
+## The place name to show the player. Empty when the current map carries no
+## `location_name` metadata — the raw map id is a file path and is never a
+## substitute for it (ui-design.md § 3.5).
+func get_location_display() -> String:
+	return location_display
 
 
 func get_active_party() -> Array[Dictionary]:
@@ -387,8 +443,19 @@ func get_consumables() -> Dictionary:
 	return inventory.get("consumables", {})
 
 
+## Held crafting materials as {item_id: quantity} (items.md § Crafting Materials).
+func get_materials() -> Dictionary:
+	return inventory.get("materials", {})
+
+
 func get_key_items() -> Array:
 	return inventory.get("key_items", [])
+
+
+## Whether the party holds a key item (items.md § Story Items). Key items are
+## unique, so this is the only ownership question they answer.
+func has_key_item(item_id: String) -> bool:
+	return item_id in get_key_items()
 
 
 func use_item(item_id: String, target_character_id: String) -> bool:
@@ -414,11 +481,7 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	# A Stat Capsule can raise HP/MP, so re-derive the maxima through the shared
 	# recalculation. Idempotent for every other consumable effect.
 	_recalculate_max_hp_mp(target_character_id)
-	consumables[item_id] = qty - 1
-	if consumables[item_id] <= 0:
-		consumables.erase(item_id)
-	inventory["consumables"] = consumables
-	inventory_changed.emit()
+	consume_item(item_id)
 	return true
 
 
@@ -473,23 +536,28 @@ func break_arcanite_gear() -> void:
 		equipment_changed.emit("edren")
 
 
+## Add a quantity item to the inventory, routed to its bucket: crafting
+## materials to `materials`, everything else to `consumables` (GAP-019).
 func add_item(item_id: String, quantity: int) -> void:
-	if quantity <= 0:
+	if quantity <= 0 or item_id.is_empty():
 		return
-	var consumables: Dictionary = inventory.get("consumables", {})
-	consumables[item_id] = consumables.get(item_id, 0) + quantity
-	inventory["consumables"] = consumables
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	items[item_id] = items.get(item_id, 0) + quantity
+	inventory[bucket] = items
 	inventory_changed.emit()
 
 
+## Remove a quantity item from whichever bucket it belongs to.
 func remove_item(item_id: String, quantity: int) -> void:
-	if quantity <= 0:
+	if quantity <= 0 or item_id.is_empty():
 		return
-	var cons: Dictionary = inventory.get("consumables", {})
-	cons[item_id] = maxi(0, cons.get(item_id, 0) - quantity)
-	if cons[item_id] <= 0:
-		cons.erase(item_id)
-	inventory["consumables"] = cons
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	items[item_id] = maxi(0, items.get(item_id, 0) - quantity)
+	if items[item_id] <= 0:
+		items.erase(item_id)
+	inventory[bucket] = items
 	inventory_changed.emit()
 
 
@@ -632,16 +700,19 @@ func rest_party(restore_pct: float, clears_status: bool) -> void:
 			m["status_effects"] = []
 
 
-## Consume one unit of a consumable item. Returns true if consumed.
+## Consume one unit of an item from its own bucket. Returns true if consumed.
+## Battle use of a Drake Fang spends it from the material stack (items.md
+## § Drake Fang Special Case), which is the same routing rule adds use.
 func consume_item(item_id: String) -> bool:
-	var consumables: Dictionary = inventory.get("consumables", {})
-	var qty: int = consumables.get(item_id, 0)
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	var qty: int = items.get(item_id, 0)
 	if qty <= 0:
 		return false
-	consumables[item_id] = qty - 1
-	if consumables[item_id] <= 0:
-		consumables.erase(item_id)
-	inventory["consumables"] = consumables
+	items[item_id] = qty - 1
+	if items[item_id] <= 0:
+		items.erase(item_id)
+	inventory[bucket] = items
 	inventory_changed.emit()
 	return true
 

@@ -198,6 +198,9 @@ standard price. A Potion that costs 50g elsewhere costs 75g in Caldera.
 - **Acquisition:** Sable pickpockets the card from a Compact officer during
   a story scene in Caldera.
 - Applies to all Caldera vendors including the inn.
+- **Rounding:** the discounted price rounds half up, matching the posted
+  tables below (450g → 338g, 750g → 563g, 2,250g → 1,688g). The shop displays
+  and charges that one number.
 
 **Tash's Black Market (Caldera Undercity)**
 
