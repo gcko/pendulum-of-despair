@@ -2,7 +2,11 @@ name: GUT Tests
 
 on:
   pull_request:
-    branches: [main]
+    # No `branches:` filter on purpose. Stacked PRs target their parent branch
+    # rather than main, and a filter of [main] silently gave them no CI at all
+    # -- the suite only ran once a PR was retargeted at merge time, which is far
+    # too late to be a gate. Running on every PR base keeps each link in a stack
+    # verified on its own.
     types: [opened, synchronize, reopened]
 
 env:
