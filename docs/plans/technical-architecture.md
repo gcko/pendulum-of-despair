@@ -83,6 +83,20 @@ res://
 └── export/                    # Export presets (gitignored)
 ```
 
+**`scripts/autoload/` is reserved, and the split is enforced.** That directory
+holds **only** the scripts registered in the `[autoload]` block of
+`project.godot` — the six singletons listed in § 1.3, and nothing else. A static
+helper or per-owner `RefCounted` facet that is never registered belongs in
+`scripts/util/`; conversely, a registered singleton may not live in
+`scripts/util/`. Both directions are checked by
+`game/tests/test_script_layout.gd`, which parses the `[autoload]` block out of
+`project.godot` and compares it against the two directory listings
+(`test_autoload_dir_holds_only_registered_singletons`,
+`test_util_dir_holds_no_registered_singleton`), so this rule and the suite
+cannot drift apart. A third test pins the count at exactly six. The rule was
+retrofitted for GAP-086, when `inventory_helpers.gd` — a static `RefCounted`
+helper that was never an autoload — moved out of `scripts/autoload/`.
+
 ### 1.2 Naming Conventions
 
 | Element | Convention | Example |
@@ -119,6 +133,17 @@ not re-litigate it. Legitimate reasons look like:
 - **State a test suite pins directly.** `audio_manager.gd` keeps its player/tween/track-ID
   fields because `test_audio_manager.gd` asserts against them in ~25 places — moving them
   would discard the strongest evidence that crossfade behaviour is unchanged.
+- **A loop plus the seam its collaborators reach it through.** `battle_manager.gd` is the
+  post-extraction residue of a 724-line original: every command the player can pick was
+  moved out to `BattlePlayerActions` (attack/defend/flee), `BattleMagicCommand` and
+  `BattleItemCommand`, and battle-start assembly to `BattleSetup`. What is left is one
+  per-frame ATB loop — `_process` threads `_awaiting_input_for`, `_turn_counter` and
+  `_battle_resolved` through its party/enemy branches, so splitting it yields two halves
+  that must hand the same three fields back and forth — plus the `get_battle_state` /
+  `get_enemies` / `get_atb` / `is_boss_battle` accessor block those four modules work
+  through. It sits just over the aim, not near the maximum, and the next command module
+  adds to the extracted side rather than to this file. The reason is stated in its header
+  comment.
 
 What is **not** a reason: "it grew". A file over 400 with no stated justification is debt,
 and the next change to it should pay some down.
@@ -414,34 +439,79 @@ expressions and `party_has()` checks for party-aware dialogue.
 ```json
 {
   "dungeon_id": "ember_vein",
+  "name": "Ember Vein",
+  "act": "act_i",
   "floors": [
     {
-      "floor": "1-2",
+      "floor_id": "1-2",
+      "terrain_type": "open",
+      "danger_tier": 2,
       "danger_increment": 120,
+      "formation_rates": {
+        "normal": 75.0,
+        "back_attack": 12.5,
+        "preemptive": 12.5
+      },
       "groups": [
         {
+          "format": 1,
           "enemies": ["ley_vermin", "ley_vermin", "unstable_crystal"],
           "weight": 31.25
         },
         {
-          "enemies": ["ley_vermin", "ley_vermin", "ley_vermin"],
-          "weight": 31.25
-        },
-        {
-          "enemies": ["unstable_crystal", "unstable_crystal"],
-          "weight": 31.25
-        },
-        {
+          "format": 4,
           "enemies": ["ley_vermin", "ley_vermin", "ley_vermin", "ley_vermin", "unstable_crystal"],
           "weight": 6.25
         }
-      ],
-      "back_attack_rate": 12.5,
-      "preemptive_rate": 12.5
+      ]
+    }
+  ],
+  "bosses": [
+    {
+      "enemy_id": "ember_drake",
+      "name": "Ember Drake",
+      "floor": "2",
+      "trigger": "zone",
+      "is_mini_boss": true
     }
   ]
 }
 ```
+
+**Field notes.** The shape above is the one the 28 files in
+`res://data/encounters/` actually ship, as of the 2026-04-04 encounters
+spec; the earlier draft in this section (`floor`, and flat
+`back_attack_rate` / `preemptive_rate`) never landed.
+
+- Top level: `dungeon_id`, `name`, `act`, `floors`, `bosses`. `act` uses
+  the same roman-numeral ids as the rest of the game data — `act_i`,
+  `act_ii`, `act_iii`, `interlude`, `post_game` — never `act_1`. Dungeon
+  files use only those five; the overworld zone records in
+  `overworld.json` add a sixth value, `all`, for zones that are reachable
+  in every act (three zones carry it today).
+- Each floor carries `floor_id` (a string, and a span such as `"1-2"` when
+  one table covers several floors), `terrain_type`, `danger_tier`,
+  `danger_increment`, `formation_rates` and `groups`. Two floors add an
+  optional `location_mods`.
+- `formation_rates` replaces the flat pair: an object of `normal`,
+  `back_attack` and `preemptive` percentages summing to 100.
+- Every group carries `format`, `enemies` and `weight` — `format` is the
+  1-based index of the formation within its own table, so a rolled group
+  can be named in logs and tests. `weight` values are percentages summing
+  to 100 across a table. Two of `ember_vein`'s four groups are elided
+  above.
+- `bosses` entries carry `enemy_id`, `name`, `floor`, `trigger` and
+  `is_mini_boss`. A boss's `floor` is a single floor number or a named
+  location id (`"summit"`, `"trial_1"`), never a `floor_id` span.
+- Three files depart from this shape deliberately. `overworld.json` has
+  no top-level `act` and no `floors`: it carries `zones` instead, whose
+  entries are floor-shaped but keyed `zone_id` and carry their own `act`
+  (`zone_id`, `name`, `terrain_type`, `act`, `danger_tier`,
+  `danger_increment`, `formation_rates`, `groups`; two zones ship an
+  empty `groups` array). `overworld_zones.json` is the zone-rectangle
+  lookup (`zone_rects`) and carries no encounter tables at all.
+  `fenmothers_hollow.json` adds an `_act_comment` recording the Act I /
+  Act II boundary (#287).
 
 ### 2.7 Spell Data
 
@@ -474,7 +544,8 @@ expressions and `party_has()` checks for party-aware dialogue.
 ### 2.8 Crafting Data
 
 **Source:** [crafting.md](../story/crafting.md)
-**Files:** `res://data/crafting/devices.json`, `recipes.json`
+**Files:** `res://data/crafting/devices.json`, `recipes.json`,
+`synergies.json`
 
 **Device definitions** (pre-crafted field devices):
 
@@ -487,34 +558,84 @@ expressions and `party_has()` checks for party-aware dialogue.
       "tier": "basic",
       "ac_cost": 1,
       "category": "offensive",
+      "element": "flame",
       "effect": "Flame AoE: 400 dmg",
       "charges": 3,
-      "unlock_phase": "act_1"
+      "materials": [
+        { "item_id": "element_shard", "quantity": 2 },
+        { "item_id": "scrap_metal", "quantity": 1 }
+      ],
+      "gold_cost": 100,
+      "unlock_phase": "act_i",
+      "schematic_required": null,
+      "description": "A volatile charge that detonates in a burst of flame."
     }
   ]
 }
 ```
 
-**Forging recipes** (equipment forging at forge locations):
+All 13 device records carry every key above. `unlock_phase` uses the
+roman-numeral act ids (`act_i`, `act_ii`, `act_iii`, `interlude`,
+`post_convergence`), not `act_1`. `schematic_required` is a schematic
+item id or `null` for devices available without one.
+
+**Forging recipes and infusions** (equipment forging at forge locations):
 
 ```json
 {
-  "recipes": [
+  "forging_recipes": [
     {
       "id": "arcanite_blade",
       "name": "Arcanite Blade",
-      "result_item": "arcanite_blade",
+      "result_id": "arcanite_blade",
+      "result_type": "weapon",
       "materials": [
         { "item_id": "arcanite_ingot", "quantity": 1 },
         { "item_id": "crystal_shard", "quantity": 3 }
       ],
       "gold_fee": 500,
-      "forge_location": ["ashmark", "caldera", "lira_workshop"],
-      "unlock_phase": "interlude"
+      "forge_locations": [
+        "ashmark",
+        "caldera",
+        "lira_workshop_corrund",
+        "lira_workshop_caldera"
+      ],
+      "unlock_phase": "interlude",
+      "schematic_required": null,
+      "description": "An Arcanite-infused blade forged for Edren."
+    }
+  ],
+  "infusions": [
+    {
+      "id": "flame_infusion",
+      "name": "Flame Infusion",
+      "element": "flame",
+      "tier": "basic",
+      "materials": [
+        { "item_id": "element_shard", "quantity": 2 },
+        { "item_id": "molten_gear", "quantity": 1 }
+      ],
+      "gold_fee": 300,
+      "description": "Permanently imbue a weapon with flame element."
     }
   ]
 }
 ```
+
+`recipes.json` holds **two** arrays, not one: 9 `forging_recipes` and 7
+`infusions`. The top-level key is `forging_recipes` — there is no
+`recipes` array. Within a recipe the result is `result_id` (paired with
+`result_type`, e.g. `weapon`), and the forge list is the plural
+`forge_locations`; the singular `forge_location` and the bare
+`result_item` of the original draft never shipped. Infusion records carry
+no `unlock_phase` or `result_id` — an infusion targets whatever weapon is
+brought to the forge.
+
+**Synergies** (`synergies.json`) is the third file: 7 records of
+`id`, `name`, `base_weapon_id`, `base_weapon_class`, `infusion_element`,
+`result_element`, `bonus_effect`, `discovery_channel` and `description`,
+covering the secret base-weapon × infusion combinations in
+[crafting.md](../story/crafting.md).
 
 ### Data Formats Deferred at Design Time
 

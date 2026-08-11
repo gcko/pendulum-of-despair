@@ -18,6 +18,7 @@ pr-review-response (Step 6).
 | Post-fix regression | A fix introduced a new problem | Fix step (full-section re-read) | Fixed timing but broke silence rule |
 | Formula precision | Missing rounding rules, incomplete formula terms, stated ranges that don't match formula outputs | Agent 3 (Technical) | 255/256 != 1.0; floor vs round unspecified |
 | Ambiguity | Unclear language, multiple interpretations, undefined edge cases | Agent 5 (Devil's Advocate) | "1.5x damage" vs "+50% damage"; timer behavior during pause |
+| Enumeration completeness | Doc lists a field's allowed values but omits one that ships in the data | Agent 6 (Canonical Verifier) | `act` list omits `all`, which `overworld.json` uses |
 
 ## Agent Mapping
 

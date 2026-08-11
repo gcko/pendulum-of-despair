@@ -156,6 +156,28 @@ All weapon tables in the sections below use these columns:
 | 5 — Ultimate | Endgame | 65–100 | Not sold | Sidequests, bosses, Dreamer's Fault |
 | Forged | Various | +5–10 above tier | — (Forged) | Lira's Arcanite Forging |
 
+> **Act boundary note (#287):** the Act column names a **power band**, not
+> a strict acquisition window. The Spirit-Bound Spear (§ Spears) is a Tier 1
+> chest find inside Fenmother's Hollow, which is Act II content — it opens on
+> `diplomatic_mission_start`, after `pendulum_to_capital` has ended Act I
+> ([dungeons-world.md](dungeons-world.md) § 2, Dungeon Overview → Act; the
+> spear itself appears in that section's Floor 2 map key and its Treasure/Loot
+> table). The dungeon is tuned to the top of the Act I band and the party
+> arrives at level 12–15, so Tier 1 stats and prices stay right for it; only
+> the "Act I" label is a band, not a location. The same qualification is
+> recorded in [bestiary/README.md](bestiary/README.md) § Level Ranges by Act
+> and [economy.md](economy.md) § Gold Pacing Targets.
+>
+> Two further Tier 1 rows — the War Cleaver (§ Greatswords) and the Reinforced
+> Vest (§ Body Armor → Light Armor) — carry "Fenmother chest" in the Acquired
+> column, but **that source is unconfirmed and should not be cited as a second
+> example.** dungeons-world.md § 2 enumerates the dungeon's containers
+> completely (a seven-row Treasure/Loot table, and five `T` markers across the
+> three floor maps, each described in its key), and neither item is among
+> them; the Reinforced Vest is separately sold by the Armorer in
+> [economy.md](economy.md) § Valdris Crown, which is reachable in Act I.
+> Reconciling those two rows against the dungeon and shop docs is #376.
+
 ---
 
 ### Swords (Edren)
@@ -649,7 +671,10 @@ infusion. The weapon transforms..."*
 ## Equipment Tiers by Act
 
 Summary of available equipment power by act. Weapon ATK ranges
-include type modifiers (Swords are the ×1.0 baseline).
+include type modifiers (Swords are the ×1.0 baseline). The Act column
+is a power band — see the Act boundary note (#287) under § Weapon ATK
+Progression by Tier for the three Tier 1 items that drop in Act II's
+opening dungeon.
 
 | Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
 |-----|-------------|-----------|-----------|-----------------|
