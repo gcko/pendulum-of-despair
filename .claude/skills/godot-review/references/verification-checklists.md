@@ -158,6 +158,8 @@ Reference for all review agents. Check every applicable item.
 - [ ] Review reference doc headings/counts match actual content (e.g., "10 categories" vs actual 12)
 - [ ] Code comments in migration/versioning logic match actual constants and scheme
 - [ ] Gap tracker "Notes" section claims only match actual implementation (no claiming gold border if using modulate, no claiming copy-from if no UI path)
+- [ ] GDScript doc comments (`##`) must describe what the code ACTUALLY does, not the intended contract. When a PR changes behaviour, re-read every `##` block in the touched files. (PR #283: `get_score_initial` claimed it warns on undocumented scores, but the warning lives in `get_score_range`, which it never calls. PR #284: `ADJECTIVES` claimed every listed status "produces a battle announcement" after the same PR made frozen statuses skip silently.)
+- [ ] A doc comment that describes a guarantee the engine does not provide is a defect, not a nit — it is the next author's spec. If the doc and code disagree, decide deliberately which one is wrong and say why in the PR.
 
 ### Scene Rendering (from Copilot PR #119 gap analysis)
 - [ ] NinePatchRect nodes MUST have a texture assigned — otherwise invisible. Prefer PanelContainer + StyleBoxFlat for UI windows without art assets.
@@ -187,6 +189,39 @@ Reference for all review agents. Check every applicable item.
 - [ ] Tests that re-implement internal logic (e.g., comma-splitting flag strings, damage formulas) instead of calling the actual handler code paths can pass even when the real handlers regress. Prefer exercising the real code path (e.g., creating an Area2D with metadata and calling the handler) over duplicating the logic inline. (PR #147: required_flags tests duplicated split logic instead of calling _on_dialogue_trigger_entered)
 - [ ] `DirAccess.list_dir_begin()` yields "." and ".." entries. Any recursive directory scan MUST filter these out before recursing, or the function will stack overflow by recursing into the same directory infinitely. Use `if file_name == "." or file_name == "..": continue`. (PR #147: _scan_for_bare_viewport_calls lacked this filter)
 - [ ] Doc comments (`##`) must be placed directly above the function they describe. When inserting new functions above existing documented functions, verify the doc comment still precedes the correct function. (PR #147: _consume_input inserted above _close, stealing its doc comment)
+
+### Non-Failing Regression Tests (from Copilot PR #278 gap analysis)
+
+**The trap:** a regression test that CANNOT FAIL in the case it exists to
+catch. It passes forever, reads as coverage, and proves nothing. Two
+independent review agents wrote and approved such a test on PR #278;
+Copilot caught it.
+
+- [ ] Every negative assertion (`assert_false(x.has(y))`, "must not contain", "must not appear") must be preceded by proof the container is non-empty. An empty collection satisfies every "must not contain" assertion trivially.
+- [ ] Lookup helpers that can miss (`_find_zone`, `_find_entity`, `get_x_by_id`) must `fail_test("... not found")` rather than return a bare `{}` / `[]` / `null`. Returning empty makes every downstream assertion vacuous, so a renamed or deleted subject silently passes the very test guarding it. Fix at the helper, not at each call site.
+- [ ] For every new regression test, MUTATE the thing it guards (revert the fix, rename the id, delete the entry) and confirm the test goes RED. State in the PR that you did this. "The suite is green" is not evidence a new test works.
+- [ ] Expensive per-test setup (full directory scans, reparsing every data file) must be cached across the run when `before_each()` invalidates a shared cache — otherwise the scan repeats for every test in the file and inflates suite runtime.
+
+### Formula Consolidation Sweep (from Copilot PR #280 gap analysis)
+
+**The trap:** a refactor that centralises a formula but leaves a
+restatement somewhere else, so the two silently drift. On PR #280 the
+review agents found ONE restatement (`menu_equip._project_stat`) and
+missed a second (`BattleState._compute_effective_stats`), which skipped
+the stat clamp and let a near-cap character enter battle at ATK 307
+against a documented cap of 255.
+
+- [ ] When a PR consolidates a calculation into a shared helper, grep the WHOLE repo for the operands (`base_stats`, `equipment_bonus`, the stat-name array) — not just the call sites the issue names. Every remaining open-coded assembly is a defect.
+- [ ] Confirm each surviving restatement is justified in a comment, or delete it. "It happens to agree today" is not justification.
+- [ ] Check the consolidated helper's clamping/rounding is inherited by every caller. Open-coded sums typically drop the clamp, which only shows up at the extremes.
+- [ ] Add a test asserting the consumer agrees with the shared helper (`assert_eq(consumer_value, helper_value)`), not just that the consumer returns a plausible number.
+
+### Buffer and Queue Ordering (from Copilot PR #284 gap analysis)
+
+- [ ] Any newly introduced queue/buffer must be checked FIFO under INTERLEAVED arrival, not just the happy path: enqueue A, enqueue B while A displays, then deliver C late — C must not overtake B.
+- [ ] State the drain invariant in a comment ("a non-empty queue implies the current item is still inside its minimum window") and verify it holds at the end of EVERY mutator, not just the one you wrote.
+- [ ] Verify nothing can be stranded: an item waiting behind one whose hold expired must be handed the window, not left in a hidden queue.
+- [ ] If an invariant currently holds only because two thresholds happen to be coupled, make the coupling explicit in code — an undocumented coupling is a latent bug for the next editor even when the current behaviour is correct.
 
 ### Behavioral State Trace (from Copilot PRs #119-#120 — the #1 gap category)
 

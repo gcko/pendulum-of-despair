@@ -519,3 +519,50 @@ resume, sfx null guard, docs). 13 already-fixed comments replied with current
 state. Deferred feature work (runtime wiring, panning/mono, ambient spot
 effects) filed as GitHub issues #154/#155/#156 — first PR using GitHub Issues
 after the beads removal.
+
+### Phase 1 milestone, PRs #278/#280/#283/#284 (2026-08-11) — 7 Copilot comments, 4 new gaps
+
+Four PRs closing the Phase 1 "Live Regressions" milestone, each built by an
+implementer agent and reviewed by two independent adversarial lenses plus a
+fix pass before Copilot ever saw them. Copilot still found 7 issues.
+
+**All 7 landed on GDScript, none on story docs** — so all 7 are code-review
+gaps and were logged against `godot-review/references/verification-checklists.md`
+rather than the story-review-loop checklists.
+
+**Pre-Copilot catch rate: 0/7.** Our agents were thorough on the code they
+were pointed at and missed the *classes* below. That is the useful signal:
+these are blind spots in what the reviewers thought to look for, not lapses
+in rigour on what they did look at.
+
+| PR | Comment | Category | Verdict |
+|----|---------|----------|---------|
+| #278 | `_find_zone` returns `{}`, so the #270 regression test passes vacuously when the zone is renamed | **Vacuous assertion (NEW)** | Valid — fixed at the helper with `fail_test` |
+| #278 | `_build_enemy_index` rescans every enemy table per test | **Expensive per-test setup (NEW)** | Valid — cached per run |
+| #280 | `BattleState._compute_effective_stats` restates the effective-stat formula without the clamp | **Incomplete consolidation sweep (NEW)** | Valid — near-cap character entered battle at ATK 307 vs a 255 cap |
+| #283 | `get_score_initial` doc comment misattributes where the warning is emitted | Self-contradiction (doc vs code) | Valid — comment corrected; the *code* reading was rejected with evidence |
+| #284 | Message queue can display a late line ahead of a waiting one | **Queue/ordering invariant (NEW)** | Valid as a contract; the exact scenario proved unreachable today — fixed anyway because correctness rested on an undocumented coupling |
+| #284 | Duplicated wording in a doc comment | Reference format | Valid — nit |
+| #284 | `ADJECTIVES` comment claims frozen statuses are announced; the same PR made them silent | Self-contradiction (doc vs code) | Valid — comment corrected |
+
+**Four new checklist sections added to godot-review:**
+1. **Non-Failing Regression Tests** — the headline gap. Two independent
+   review agents wrote, read and approved a test that could not fail in the
+   case it guarded. Mandates mutation-checking every new regression test and
+   making lookup helpers `fail_test` instead of returning empty.
+2. **Formula Consolidation Sweep** — when a PR centralises a calculation,
+   grep the whole repo for the operands. On #280 the agents found one
+   restatement and missed a second.
+3. **Buffer and Queue Ordering** — FIFO under interleaved arrival, explicit
+   drain invariants, no stranding, and no correctness resting on an
+   undocumented coupling between thresholds.
+4. **Documentation Accuracy (extended)** — GDScript `##` blocks are specs for
+   the next author; a comment describing a guarantee the engine does not
+   provide is a defect, not a nit.
+
+**Process note.** Two of the strongest results this round came from agents
+*disagreeing* with a reviewer rather than complying: #283's agent rejected
+Copilot's implied code change with call-graph evidence and fixed the comment
+instead, and #284's agent proved Copilot's scenario unreachable before
+applying the fix on separate grounds. Both also declined to add tests they
+could not make fail — the #278 lesson propagating within the same session.
