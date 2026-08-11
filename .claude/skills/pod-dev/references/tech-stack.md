@@ -34,8 +34,10 @@ Six autoloads are registered in `project.godot` and live in
 | `EventFlags` | `event_flags.gd` | Story flags and world-state booleans |
 | `PartyState` | `party_state.gd` | Active party, characters, inventory state |
 
-(`inventory_helpers.gd` is a helper script alongside the autoloads, not itself
-an autoload.)
+`scripts/autoload/` holds these six scripts and nothing else. Static helper
+scripts that are preloaded rather than registered — `inventory_helpers.gd`,
+`input_util.gd`, `dialogue_condition.gd`, `dialogue_consequences.gd` — live in
+`scripts/util/`. `game/tests/test_script_layout.gd` enforces the split.
 
 ---
 
@@ -45,7 +47,7 @@ All gameplay code lives under `game/scripts/`:
 
 ```
 game/scripts/
-  autoload/    # The 6 autoload singletons + helpers
+  autoload/    # The 6 autoload singletons registered in project.godot
   combat/      # ATB battle logic, command handling, damage resolution
   core/        # Core game-flow controllers (scene management, run state)
   entities/    # Player, NPCs, enemies, interactables, trigger zones

@@ -1,7 +1,7 @@
 extends Control
 ## Status sub-screen: read-only character stat sheet.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const COLOR_NORMAL: Color = Color("#ccddff")
 
 const STAT_NAMES: Array[String] = ["atk", "def", "mag", "mdef", "spd", "lck"]

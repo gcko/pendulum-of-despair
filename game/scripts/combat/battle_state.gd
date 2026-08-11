@@ -12,7 +12,7 @@ signal status_applied(slot: int, status_name: String)
 signal status_removed(slot: int, status_name: String)
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 ## Party member data. Index = slot (0-3). Null entries = empty slots.
 var _members: Array = [null, null, null, null]

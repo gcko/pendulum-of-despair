@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — Issue #236 |
 | **GitHub Issue** | [#236](https://github.com/gcko/pendulum-of-despair/issues/236) |
 | **Source domains** | arch |
 
@@ -56,3 +56,21 @@ Move the file to scripts/util/ and update the ~7 preload paths and .uid referenc
 ---
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+
+## Resolution (Issue #236, 2026-08-11)
+
+`inventory_helpers.gd` moved to `game/scripts/util/`, so `scripts/autoload/`
+now contains exactly the six scripts registered in the `[autoload]` block of
+`project.godot`. All 14 `preload("res://scripts/autoload/inventory_helpers.gd")`
+call sites were repointed at `res://scripts/util/inventory_helpers.gd` — 8
+source files (`ui/save_load_display.gd`, `ui/menu_status.gd`, `ui/menu_items.gd`,
+`ui/menu_equip.gd`, `ui/battle_command_menu.gd`, `combat/battle_state.gd`,
+`autoload/save_manager.gd`, `autoload/party_state.gd`) and 6 test files. Pure
+relocation: no behaviour change, and `game/tests/test_script_layout.gd` now
+guards the split against regression.
+
+Two claims above are stale. "~7 files" / the verification note's "4 files" both
+undercount — Phase 1 added consumers and the real count at move time was 14.
+And there were no `.uid` references to update: `*.uid` is gitignored, no
+`inventory_helpers.gd.uid` existed on disk or in git, and nothing referenced the
+script by `uid://` (every consumer used a `res://` path preload).

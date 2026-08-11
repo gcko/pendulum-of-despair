@@ -5,7 +5,7 @@ extends GutTest
 ## Design source: items.md § Stat Capsules, progression.md § Stat Caps,
 ## § Equipment and Buffs, § Level-Up Effects.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const BattleStateScript = preload("res://scripts/combat/battle_state.gd")
 const EquipMenuScript = preload("res://scripts/ui/menu_equip.gd")
 

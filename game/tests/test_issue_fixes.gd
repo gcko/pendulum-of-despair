@@ -31,7 +31,7 @@ const DialogueScript: GDScript = preload("res://scripts/ui/dialogue_box.gd")
 const MenuOverlayScript: GDScript = preload("res://scripts/ui/menu_overlay.gd")
 const SaveLoadScript: GDScript = preload("res://scripts/ui/save_load.gd")
 const BattleMgrScript: GDScript = preload("res://scripts/combat/battle_manager.gd")
-const InventoryHelpers: GDScript = preload("res://scripts/autoload/inventory_helpers.gd")
+const InventoryHelpers: GDScript = preload("res://scripts/util/inventory_helpers.gd")
 
 
 func before_each() -> void:

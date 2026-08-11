@@ -3,7 +3,7 @@ extends RefCounted
 ## Display/rendering helpers for the Save/Load overlay.
 ## Extracted from save_load.gd to keep it focused on state and input.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 ## Colors from ui-design.md Section 1.4.
 const COLOR_SELECTED: Color = Color("#ffff88")

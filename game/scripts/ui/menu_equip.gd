@@ -4,7 +4,7 @@ extends Control
 enum EquipMode { EQUIP, OPTIMUM, REMOVE, EMPTY }
 enum EquipState { MODE_SELECT, SLOT_SELECT, ITEM_SELECT }
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")

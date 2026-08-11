@@ -5,7 +5,7 @@ extends Node
 ## Save files are JSON in user://saves/. Global config is separate.
 ## See docs/plans/technical-architecture.md Section 6.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 ## Increment this when the save schema changes. Migration chain runs
 ## automatically on load for older versions.

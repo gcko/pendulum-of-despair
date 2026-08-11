@@ -44,7 +44,7 @@ Phase 1: AC pool + device crafting field menu + tiered rest AC restoration + sav
 ## Code references
 
 - game/data/crafting/devices.json|recipes.json|synergies.json
-- game/scripts/autoload/inventory_helpers.gd:303-309 (dead crafting stub)
+- game/scripts/util/inventory_helpers.gd:303-309 (dead crafting stub)
 - game/scripts/autoload/party_state.gd:604
 
 

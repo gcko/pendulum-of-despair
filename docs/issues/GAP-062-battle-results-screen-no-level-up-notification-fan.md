@@ -42,7 +42,7 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 ## Code references
 
 - game/scripts/ui/battle_ui.gd:229-243
-- game/scripts/autoload/inventory_helpers.gd:230-265
+- game/scripts/util/inventory_helpers.gd:230-265
 - game/scripts/core/exploration.gd:225
 
 

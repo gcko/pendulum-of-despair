@@ -42,7 +42,7 @@ Add SaveManager.save_config/load_config delegating to the JSON helper; have Part
 
 - game/scripts/autoload/save_manager.gd:14
 - game/scripts/autoload/party_state.gd:664,698
-- game/scripts/autoload/inventory_helpers.gd:269
+- game/scripts/util/inventory_helpers.gd:269
 
 
 ## Verification (fresh-eyes adversarial pass)

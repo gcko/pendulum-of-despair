@@ -42,7 +42,7 @@ On level-up, if a crystal is equipped, add its current-level bonus to a persiste
 ## Code references
 
 - game/scripts/autoload/party_state.gd:710-729,295-313,219-229
-- game/scripts/autoload/inventory_helpers.gd:193-223
+- game/scripts/util/inventory_helpers.gd:193-223
 
 
 ## Verification (fresh-eyes adversarial pass)

@@ -43,7 +43,7 @@ Replace the defaults.json loads with PartyState.get_config(); reload on open() s
 
 - game/scripts/ui/dialogue_box.gd:336-341
 - game/scripts/core/cutscene_player.gd:171-174
-- game/scripts/autoload/inventory_helpers.gd:269-282
+- game/scripts/util/inventory_helpers.gd:269-282
 
 
 ## Verification (fresh-eyes adversarial pass)

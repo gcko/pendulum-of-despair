@@ -2,7 +2,7 @@ extends GutTest
 ## Tests for Phase B2 mechanical tweaks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 
 func before_each() -> void:

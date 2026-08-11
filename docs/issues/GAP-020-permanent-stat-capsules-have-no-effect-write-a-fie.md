@@ -40,7 +40,7 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 
 ## Code references
 
-- game/scripts/autoload/inventory_helpers.gd:105-110,217-220
+- game/scripts/util/inventory_helpers.gd:105-110,217-220
 - game/scripts/autoload/party_state.gd:287
 
 

@@ -4,7 +4,7 @@ extends Node
 signal inventory_changed
 signal equipment_changed(character_id: String)
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const CLASS_TITLES: Dictionary = {
 	"edren": "Knight",
 	"cael": "Commander",
