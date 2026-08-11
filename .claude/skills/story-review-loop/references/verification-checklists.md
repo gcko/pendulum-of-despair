@@ -219,3 +219,14 @@ Each item is a single check. Grows from Copilot gap analysis.
   expressions, or values. Annotations belong in surrounding prose, not
   inline in syntax examples. Code blocks should be copy-pasteable
   without cleanup.
+
+## Enumerated Value-Set Completeness (from Copilot gap analysis, PR #372)
+
+- When a doc enumerates the allowed values of a data field, extract the
+  DISTINCT values actually present in the shipped JSON and confirm the
+  list is complete. Verifying that each listed value is real is NOT
+  sufficient — the failure mode is omission, not misstatement.
+- When an enumeration is scoped to one file shape (e.g. dungeon
+  encounter files), confirm that sibling files with a different shape
+  (e.g. `overworld.json` zone records) are either covered by the same
+  list or explicitly excluded from it.
