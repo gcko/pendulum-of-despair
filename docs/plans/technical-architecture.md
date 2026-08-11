@@ -152,6 +152,7 @@ save files, and the pseudo-schema in
       "id": "ley_vermin",
       "name": "Ley Vermin",
       "type": "beast",
+      "threat": "trivial",
       "level": 1,
       "hp": 23,
       "mp": 0,
@@ -171,11 +172,47 @@ save files, and the pseudo-schema in
         "rare": { "item_id": "sharp_fang", "rate": 25 }
       },
       "drop": { "item_id": "sharp_fang", "rate": 25 },
+      "locations": [
+        "ember_vein_f1",
+        "ember_vein_f2",
+        "ley_scarred_plains",
+        "valdris_highlands"
+      ],
       "ko_sound": "ko_beast"
     }
   ]
 }
 ```
+
+**Field notes** (full definitions in
+[2026-04-02-enemy-data-json-design.md](../superpowers/specs/2026-04-02-enemy-data-json-design.md)):
+
+- `threat` — reward multiplier band, one of `trivial`, `low`,
+  `standard`, `dangerous`, `rare`, `boss`. The multipliers are the
+  Threat Multiplier table in
+  [bestiary/README.md](../story/bestiary/README.md). `gold` and `exp`
+  above are already multiplied, so `threat` is carried for rebalancing
+  and reward auditing rather than being applied at runtime.
+- `steal` — two tiers, `common` and `rare`, each `{ item_id, rate }`
+  or null; `steal` itself may be null for enemies carrying nothing.
+  `rate` is the chance the slot holds an item at all, not the chance
+  the theft lands — Sable's Filch rolls its own SPD-based success
+  first, then common, then rare. `enemy.gd::roll_steal(tier)` looks
+  the tier up by name, so the two tiers are peers, not a fallback
+  chain in the data.
+- `locations` — every place this enemy can be encountered, as
+  snake_case IDs. The array mixes dungeon-floor IDs (`ember_vein_f1`)
+  with overworld zone IDs from
+  `res://data/encounters/overworld.json` (`valdris_highlands`), so an
+  enemy that roams both is listed under both. Issue #270 made these
+  arrays authoritative: `test_overworld.gd` asserts that every enemy
+  appearing in a `thornmere_wilds` / `ley_scarred_plains` /
+  `valdris_highlands` encounter group also names that zone here.
+
+Boss and ability records extend this shape with `is_boss`,
+`is_mini_boss`, `boss_group`, `phases`, `phase_hp_thresholds`,
+`boss_ai` and `abilities`; those are defined in the enemy-data spec
+linked above, not here.
 
 ### 2.2 Item Data
 
@@ -416,12 +453,14 @@ structures are complex enough to warrant separate design work):
   systems, phase transitions, counter tables per
   [bestiary/bosses.md](../story/bestiary/bosses.md) (31 bosses)
 
-**Note on steal schema:** The enemy JSON uses a single `steal` field
-(one item + rate) matching the bestiary's single-column format.
-[abilities.md](../story/abilities.md) describes Sable's Filch as
-having "common and rare steal" — if a two-tier steal system is
-implemented, the enemy JSON should be extended with `steal_common` and
-`steal_rare` fields.
+**Note on steal schema (resolved):** Two-tier steal shipped, as a
+nested `steal: { common, rare }` object rather than the flat
+`steal_common` / `steal_rare` pair this section once proposed. See
+§2.1 for the shape, `enemy.gd::roll_steal()` for the reader, and
+[2026-04-02-enemy-data-json-design.md](../superpowers/specs/2026-04-02-enemy-data-json-design.md)
+"Decision: Two-Tier Steal" for why. The bestiary tables still show one
+steal column (the common tier); rare tiers follow the type patterns in
+[economy.md](../story/economy.md).
 
 ### 2.9 Event Flags
 
