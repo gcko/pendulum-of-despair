@@ -95,7 +95,7 @@ This directory contains the narrative design for Pendulum of Despair.
 
   ```
   grep -rnoiE '\b[a-z]+ou(r|rs|red|ring|rful|rless|rable|rite)\b' \
-      docs/story game/data game/scripts game/tests \
+      docs/story game/data game/scripts game/tests docs/plans docs/analysis \
     | grep -v '^docs/story/README.md:' \
     | grep -viE ':(four|hour|your|pour|downpour|outpour|sour|tour|flour|scour|devour|contour|detour|velour|dour|amour|paramour|troubadour|glamour)(s|ed|ing)?$'
   ```
@@ -106,7 +106,7 @@ This directory contains the narrative design for Pendulum of Despair.
 
   That single rule catches *harbour*, *flavour*, *neighbour*, *rumour*,
   *vapour*, *endeavour*, *splendour*, *armour* and *colour* without being
-  told about any of them, and returns no false positives across the four
+  told about any of them, and returns no false positives across the six
   trees. Requiring `ou` + an `r`-suffix + a word boundary is what keeps
   *courage*, *journey*, *mourning*, *flourish* and *tournament* out.
 
@@ -117,9 +117,15 @@ This directory contains the narrative design for Pendulum of Despair.
 
   ```
   grep -rnoiE '\b(defenc|catalogu|travell|cancell|labell|levell|synthesis(e|es|ed|ing)|realis(e|es|ed|ing)|recognis(e|es|ed|ing)|mould)\w*' \
-      docs/story game/data game/scripts game/tests \
+      docs/story game/data game/scripts game/tests docs/plans docs/analysis \
     | grep -v '^docs/story/README.md:'
   ```
+
+  The leading `\b` is load-bearing and not decoration. Drop it — write
+  `\b\w*(...)` to catch stems mid-identifier — and `levell` starts
+  matching `NextLevelLabel` (`menu_ley_crystal.gd`), which is *Level* +
+  *Label* and correct. If you broaden the pattern that way to hunt a
+  suspected miss, read the extra hits as identifiers first.
 
   A general `-ise/-isation` rule was tried and rejected: *rising*,
   *sunrise* and *promising* flood it, and the exception list needed to
@@ -131,39 +137,56 @@ This directory contains the narrative design for Pendulum of Despair.
 
   `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`, the
   `grey_*` data identifiers) are correct and are excluded on purpose.
-  Five things sit outside the sweep, for two different reasons, and the
-  reason decides whether a hit in them is a defect.
 
-  Three are frozen and must stay that way: `docs/references/scripts/`,
-  which quotes the published scripts of other games verbatim;
-  `docs/superpowers/`, whose dated records are never corrected after the
-  fact (see `docs/superpowers/README.md`); and closed-issue titles. All
-  three record what was written at the time, so a British spelling in
-  them is history, not a defect.
-
-  Two are live and simply have not been swept yet: `docs/plans/` and
-  `docs/analysis/`. Neither is a dated record —
+  **The sweep covers six trees, and only three things sit outside it.**
+  `docs/plans/` and `docs/analysis/` were added by #375, which found the
+  earlier classification wrong: it had filed them alongside
+  `docs/superpowers/` as dated records, when neither is one.
   `docs/superpowers/README.md` § Where the live answers are names
   `docs/plans/` as the home of architecture decisions still in force,
-  `docs/plans/technical-architecture.md` is edited in this milestone, and
-  `docs/analysis/game-dev-gaps.md` is re-measured under
-  `scripts/quality-gates/check_stale_counts.py`. They fall outside the
-  four trees the greps scan only because they hold no player-facing
-  strings, and they are not clean: `behaviour` in
-  `docs/plans/technical-architecture.md`, `colour` (twice) and `labelled`
-  in `docs/plans/bundle-roadmap.md`, and `labelled` in
-  `docs/analysis/game-design-gaps.md` are live today. Tracked in #375,
-  which also decides whether to widen the two greps to cover them.
+  `docs/plans/technical-architecture.md` is edited under the current
+  milestone, and `docs/analysis/game-dev-gaps.md` is re-measured under
+  `scripts/quality-gates/check_stale_counts.py`. Holding no player-facing
+  strings was never a reason to leave them unchecked — it only means a
+  hit in them is a doc defect rather than a shipped one — and leaving
+  them unchecked is precisely how five sites survived two sweeps. So the
+  stated scope and the scanned scope now name the same six trees; widen
+  both together or neither, because a scope that claims more than it
+  checks is worse than a narrow one.
 
-  Every hit the two patterns still return is a known defect tracked in
-  #363 — two shipped item strings in `game/data/items/` and their paired
-  copy in `items.md`, `progression.md`, `bestiary/bosses.md` (where
-  `Catalogue` is also The Index's AI *mode name*, so decide whether that
-  one is a proper noun before touching it), and non-emitting comments and
-  test-assertion messages under `game/scripts/` and `game/tests/`, plus
-  the `npc.gd` *flavour* the `-our` rule newly surfaced. A hit outside
-  that list is new and it is a defect; the absence of hits is not a proof
-  of cleanliness.
+  The three that remain outside are frozen and must stay that way:
+  `docs/references/scripts/`, which quotes the published scripts of other
+  games verbatim; `docs/superpowers/`, whose dated records are never
+  corrected after the fact (see `docs/superpowers/README.md`); and
+  closed-issue titles. All three record what was written at the time, so
+  a British spelling in them is history, not a defect.
+
+  Within the six trees, the two patterns as written return exactly seven
+  hits across five files, with no false positives: `behaviour` in
+  `docs/plans/technical-architecture.md` § 1.2a, and comment and
+  assertion-message text in four files under `game/tests/`. All seven are
+  carried by #378 because they sit in files owned by other in-flight
+  branches. Any *other* hit is new and it is a defect. The absence of
+  hits is still not a proof of cleanliness: the stem half of the pattern
+  only knows the families it has been told about.
+
+  Two decisions the sweep had to make, recorded so they are not
+  re-litigated:
+
+  - **`Catalogue` is not a proper noun.** It was The Index's AI mode name
+    in `bestiary/bosses.md`, but every other mode name in that file is an
+    ordinary capitalized English word (*Normal*, *Reconstructing*,
+    *Shattered*, *Waiting*, *Scholar*), not a coined one like *Greyveil*;
+    `game/data/enemies/act_iii.json` does not encode a mode name at all,
+    so nothing in the engine pinned the spelling; and the shipped
+    `scene_7_the_capital.json` already said *cataloging*. It is now
+    *Catalog*, matching the lowercase prose two lines below it.
+  - **`dialogue` and `analogue` stay.** The sweep is per-word by dominant
+    American usage, not by suffix family. *Catalog* is the dominant
+    American form; *dialogue* also is (*dialog* is the UI-widget
+    variant), and *analogue* in the sense "counterpart" is standard in
+    American prose. A `-logue → -log` family rule would be wrong for two
+    of the three, which is why no such rule is written here.
 - **Changing a spelling is never local to one file.** Anything quoted as
   canon by a design doc, a test, or `game/data/dialogue/*.json` must
   match the string the engine emits — see
@@ -193,9 +216,8 @@ This directory contains the narrative design for Pendulum of Despair.
   each swept spelling in both corpora itself. #379 tracks the gate that
   would catch the drift; until it exists, edit both copies by hand and
   prove they agree — `items.md` § Key Items and
-  `game/data/items/key_items.json` are deliberately still British
-  together for exactly this reason, because half a fix is worse than
-  none.
+  `game/data/items/key_items.json` were swept in one commit for exactly
+  this reason, because half a fix is worse than none.
 - **`grey` is the one deliberate exception, and it is a proper noun.**
   *The Grey* is the game's name for the Pallor's drained world-state;
   *grey* is used throughout for it and for the color it names. Do not
