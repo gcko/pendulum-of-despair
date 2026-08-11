@@ -186,7 +186,18 @@ func _read_repo_doc(rel_path: String) -> String:
 	if not FileAccess.file_exists(abs_path):
 		fail_test("cannot read %s (looked at %s)" % [rel_path, abs_path])
 		return ""
+	# file_exists() passing does not guarantee open() succeeds — permissions or a
+	# transient IO error still return null, and get_as_text() on null crashes the
+	# whole runner instead of failing this one test.
 	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
+	if file == null:
+		fail_test(
+			(
+				"cannot open %s (error %d) — the guard cannot run"
+				% [abs_path, FileAccess.get_open_error()]
+			)
+		)
+		return ""
 	var content: String = file.get_as_text()
 	file.close()
 	return content
