@@ -34,10 +34,20 @@ Six autoloads are registered in `project.godot` and live in
 | `EventFlags` | `event_flags.gd` | Story flags and world-state booleans |
 | `PartyState` | `party_state.gd` | Active party, characters, inventory state |
 
-`scripts/autoload/` holds these six scripts and nothing else. Static helper
-scripts that are preloaded rather than registered — `inventory_helpers.gd`,
-`input_util.gd`, `dialogue_condition.gd`, `dialogue_consequences.gd` — live in
-`scripts/util/`. `game/tests/test_script_layout.gd` enforces the split.
+`scripts/autoload/` holds these six scripts and nothing else. Cross-cutting
+static helpers that are *not* registered as autoloads live in `scripts/util/`:
+`inventory_helpers.gd` (reached by `preload`), plus `InputUtil`,
+`DialogueCondition` and `DialogueConsequences` (reached by global
+`class_name`). Static helpers scoped to one screen stay next to that screen —
+`ui/spell_helpers.gd`, `ui/ability_helpers.gd`, `ui/stat_bar_helpers.gd` and
+`ui/save_load_display.gd` are all `RefCounted` helpers, not UI controllers, and
+belong in `scripts/ui/`.
+
+`game/tests/test_script_layout.gd` enforces only the `autoload/` half: every
+`.gd` in `scripts/autoload/` must appear in the `[autoload]` block, no script in
+`scripts/util/` may be a registered singleton, and `inventory_helpers.gd` must
+live in `scripts/util/`. The util-vs-ui placement above is a convention the
+suite does not check.
 
 ---
 
@@ -51,8 +61,8 @@ game/scripts/
   combat/      # ATB battle logic, command handling, damage resolution
   core/        # Core game-flow controllers (scene management, run state)
   entities/    # Player, NPCs, enemies, interactables, trigger zones
-  ui/          # Control/CanvasLayer UI controllers (menus, HUD, dialogue)
-  util/        # Shared helpers and small utilities
+  ui/          # UI controllers (menus, HUD, dialogue) + their local helpers
+  util/        # Cross-cutting helpers, not registered as autoloads
 ```
 
 Scenes live under `game/scenes/`:

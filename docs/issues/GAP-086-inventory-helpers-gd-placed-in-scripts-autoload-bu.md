@@ -69,8 +69,20 @@ source files (`ui/save_load_display.gd`, `ui/menu_status.gd`, `ui/menu_items.gd`
 relocation: no behaviour change, and `game/tests/test_script_layout.gd` now
 guards the split against regression.
 
-Two claims above are stale. "~7 files" / the verification note's "4 files" both
-undercount — Phase 1 added consumers and the real count at move time was 14.
-And there were no `.uid` references to update: `*.uid` is gitignored, no
-`inventory_helpers.gd.uid` existed on disk or in git, and nothing referenced the
-script by `uid://` (every consumer used a `res://` path preload).
+Two notes on the claims above.
+
+The body's "~7 files" was accurate when this doc was generated — at the last
+commit before 2026-06-28, `git grep -l autoload/inventory_helpers -- game/`
+returns 7 files (party_state.gd, menu_equip.gd, menu_status.gd,
+save_load_display.gd, and the test_battle_rewards / test_issue_fixes /
+test_mechanical_tweaks tests). Phase 1 then doubled it to 14. The verification
+note's "4 files" was wrong even at authoring: it counted only source consumers
+and dropped the three test files.
+
+The "update the .uid references" step was a no-op, but not because sidecars do
+not exist — every script in `game/scripts/` has one on disk. It was a no-op
+because nothing pointed at this script by UID: `*.uid` is gitignored
+(`.gitignore:7`), no `inventory_helpers.gd.uid` is tracked in git, and grepping
+the repo for the UIDs held by the old and new sidecars returns no hits. Every
+consumer preloads a `res://` path, so the untracked sidecar was free to be
+regenerated at the new location.

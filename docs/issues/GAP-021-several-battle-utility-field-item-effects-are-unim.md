@@ -41,7 +41,7 @@ Implement teleport/preemptive via EventFlags + exploration/battle hooks; route b
 
 ## Code references
 
-- game/scripts/util/inventory_helpers.gd:99-114
+- game/scripts/util/inventory_helpers.gd — `apply_item_effect()`
 - game/data/items/consumables.json:487-700
 
 
