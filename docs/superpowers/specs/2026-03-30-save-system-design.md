@@ -22,7 +22,7 @@ everything that is a *function of those choices* at load time.
 
 | Category | Examples |
 |----------|---------|
-| Character progression | Level, XP, current HP/MP, status ailments |
+| Character progression | Level, XP, current HP/MP, status ailments, permanent Stat Capsule gains (items.md § Stat Capsules) |
 | Equipment | Which item in which slot per character |
 | Ability loadout | Equipped subset of level-unlocked abilities |
 | Ley Crystals | Which crystals collected, their XP/level |
@@ -39,8 +39,8 @@ everything that is a *function of those choices* at load time.
 
 | Category | Source |
 |----------|--------|
-| Max HP/MP | Level + growth curve + equipment + crystals |
-| ATK/DEF/MAG/MDEF/SPD/LCK | Level + growth curve + equipment bonuses |
+| Max HP/MP | Level + growth curve + saved capsule gains + equipment + crystals |
+| ATK/DEF/MAG/MDEF/SPD/LCK | Level + growth curve + saved capsule gains + equipment bonuses |
 | Available abilities/spells | Character level (from abilities.md / magic.md tables) |
 | Shop inventories | Event flags + economy.md rules |
 | NPC dialogue | Event flags + dialogue priority stack |
@@ -86,8 +86,9 @@ party[]: {
   id:              string    -- "edren", "cael", "maren", "sable", "lira", "torren"
   level:           integer
   xp:              integer
-  hp:              integer   -- current (max derived from level + equipment)
-  mp:              integer   -- current (max derived)
+  hp:              integer   -- current (max derived: level + capsule gains
+                             --          + equipment + crystals)
+  mp:              integer   -- current (max derived, same formula)
   equipment: {
     weapon:        string|null  -- item ID
     head:          string|null
@@ -95,6 +96,11 @@ party[]: {
     accessory:     string|null
     leyCrystal:    string|null  -- crystal ID (links to leyCrystals.collected)
   }
+  statCapsules: {            -- permanent Stat Capsule gains (items.md § Stat
+    <statId>:      integer   -- Capsules). NOT derivable from level or gear, so
+  }                          -- it must survive every save rewrite. Additive
+                             -- optional field: a missing key reads as no gains
+                             -- (Section 10 Migration Types).
   row:             string    -- "front" | "back"
   abilityLoadout:  string[]  -- equipped ability IDs (subset of level-unlocked)
   statusAilments:  string[]  -- active persistent ailments (e.g., ["poison", "blind"])
@@ -450,6 +456,7 @@ Every save file carries an integer `version` in its `meta` block
 | Change Type | Migration Needed? | Example |
 |-------------|-------------------|---------|
 | New field added | Yes — add with default | New `spiritFavor` tracking system |
+| New *additive optional* field whose absence is meaningful and safe | No — read the missing key as its documented default | `statCapsules` (missing = no banked gains) |
 | Field renamed | Yes — map old → new | `gp` → `gold` |
 | Field removed | Yes — strip old field | System removed from game |
 | Balance retuned | No | Tent heals 60% instead of 50% |

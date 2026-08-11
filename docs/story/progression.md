@@ -16,7 +16,7 @@
 - **Level cap 150.** Extended beyond the classic 99 — rewards dedicated players without being unreachable.
 - **HP cap 14999, MP cap 1499.** 10:1 ratio matching FF6's convention.
 - **Differentiated growth.** Each character levels up differently — a mage gains MP and MAG; a knight gains HP and DEF.
-- **Three progression layers.** Base growth (automatic per level) + Ley Crystal bonuses (player choice) + narrative milestone spikes (story-driven).
+- **Four progression layers.** Base growth (automatic per level) + Ley Crystal bonuses (player choice) + permanent Stat Capsule gains (exploration reward, [items.md](items.md) § Stat Capsules) + narrative milestone spikes (story-driven).
 - **Party join at average level - 1.** New and returning characters join at `party_average_level - 1`. Matches FF6's approach.
 
 ---
@@ -138,7 +138,7 @@ See [characters.md](characters.md) for full character profiles.
 
 Formula (per level): compute `raw = base + growth * (level - 1)`, then `stat_at_level = min(cap, floor(raw + 0.5))`, where the cap is 255 for primary stats, 14999 for HP, and 1499 for MP. Rounding uses standard half-up: `floor(raw + 0.5)`. This produces deterministic alternating gain patterns (e.g., +2, +2, +2, +2, +1 for a growth of 1.8) while keeping long-term growth equal to the specified average.
 
-Projected stats exclude equipment, Ley Crystal bonuses, and narrative milestone spikes. Milestone values in the table below are computed from this rule; when in doubt, the formula above takes precedence.
+Projected stats exclude equipment, Ley Crystal bonuses, permanent Stat Capsule gains, and narrative milestone spikes. Milestone values in the table below are computed from this rule; when in doubt, the formula above takes precedence.
 
 | Milestone | Lvl | Edren HP | Edren ATK | Maren MAG | Sable SPD | Sable LCK |
 |-----------|-----|----------|-----------|-----------|-----------|-----------|
@@ -182,9 +182,10 @@ Guest NPCs cannot be equipped, cannot use items, and do not earn XP. Their actio
 
 ### Equipment and Buffs
 
+- **Effective stat = leveled base + permanent gains + equipment.** A player character's effective stat is the leveled base stat (growth curve plus any narrative milestone spike), plus permanent Stat Capsule gains ([items.md](items.md) § Stat Capsules), plus equipment bonuses, plus whatever the equipped Ley Crystal contributes under § Ley Crystal System — then clamped to the caps above. Max HP and max MP are the same formula applied to HP and MP. Every term must survive every recalculation: changing gear must not drop capsule gains, and levelling up must not drop equipment or capsule bonuses. Guest NPCs do not use this formula — their stats come from the party-average rules in § Guest NPCs.
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds 12 to the character's ATK. Simple and transparent.
 - **Equipment cannot push stats past the 255 cap** for ATK/DEF/MAG/MDEF/SPD/LCK. HP and MP can exceed their natural growth via equipment up to their hard caps (14999 / 1499).
-- **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass = +40% MDEF (single) / +25% MDEF (party). These are applied to the final stat (base + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See [magic.md](magic.md) for full buff/debuff spell list.
+- **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass = +40% MDEF (single) / +25% MDEF (party). These are applied to the effective stat defined above (base + capsule gains + equipment) and CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See [magic.md](magic.md) for full buff/debuff spell list.
 - **Buff stacking:** Buffs of the same type do not stack. Recasting Protect refreshes the duration but does not double the bonus. Different buff types stack (Protect + Shell = both active).
 
 ---
@@ -236,6 +237,12 @@ When a character levels up:
 2. All stats increase per growth rates
 3. Current HP and MP fully restored (FF6 model — creates clutch moments)
 4. New abilities/spells unlock per learning schedules in [abilities.md](abilities.md) and [magic.md](magic.md)
+
+The level-up recompute rebuilds the base stats from the growth curve, so it must
+re-apply everything layered on top of them: the narrative milestone spike, the
+permanent Stat Capsule gains, and the equipment and Ley Crystal terms. Max HP
+after a level-up equals the effective HP defined in § Equipment and Buffs —
+never the bare base value.
 
 Level-up notification: character name, new level, stat deltas, newly learned abilities.
 

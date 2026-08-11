@@ -45,11 +45,40 @@ static func can_equip(character_id: String, slot: String, item_data: Dictionary)
 
 ## Whether a consumable's effect can currently apply. A second Sable's
 ## Coin is refused while one is active — a guarantee cannot be improved,
-## and the item must not be silently burned.
-static func can_apply_item_effect(item_data: Dictionary) -> bool:
-	if item_data.get("effect", "") == "preemptive":
+## and the item must not be silently burned. A Stat Capsule is refused on
+## the same principle once its target's permanent total is at the stat cap.
+## `target` is optional so callers without a member dictionary keep the old
+## item-only behaviour.
+static func can_apply_item_effect(item_data: Dictionary, target: Dictionary = {}) -> bool:
+	var effect: String = item_data.get("effect", "")
+	if effect == "preemptive":
 		return not EventFlags.check_required_flags("sables_coin_active")
+	if effect == "stat_boost":
+		return can_gain_capsule(target, item_data.get("stat", ""))
 	return true
+
+
+## Hard cap for one stat (progression.md § Stat Caps). One table so the
+## effective-stat clamp and the capsule refusal can never disagree.
+static func stat_cap(stat: String) -> int:
+	if stat == "hp":
+		return 14999
+	if stat == "mp":
+		return 1499
+	return 255
+
+
+## Whether a Stat Capsule would do anything for this target. Refused once the
+## target's own permanent total — leveled base plus already-banked gains — sits
+## at the cap, because base stats only ever grow and the extra gain could never
+## become visible (items.md § Stat Capsules). Equipment is deliberately excluded
+## from the comparison: a stat held at the cap by gear alone still benefits,
+## since removing the gear reveals the banked gain.
+static func can_gain_capsule(target: Dictionary, stat: String) -> bool:
+	if target.is_empty() or stat.is_empty():
+		return true
+	var base: int = int(target.get("base_stats", {}).get(stat, 0))
+	return base + get_capsule_gain(target, stat) < stat_cap(stat)
 
 
 ## Apply a consumable item's effect to a target member Dictionary.
@@ -112,15 +141,37 @@ static func apply_item_effect(item_data: Dictionary, target: Dictionary) -> void
 		"light_source":
 			EventFlags.set_flag("light_source_active", true)
 		"stat_boost":
+			# Stat Capsules (items.md § Stat Capsules) are permanent. The gain is
+			# banked in its own dictionary so the level-up recompute of base_stats
+			# cannot wipe it (GAP-020).
 			var stat_key: String = item_data.get("stat", "")
 			var boost: int = item_data.get("value", 0)
 			if stat_key != "" and boost > 0:
-				var current: int = target.get(stat_key, 0)
-				target[stat_key] = current + boost
+				add_capsule_gain(target, stat_key, boost)
 		"teleport":
 			push_warning("InventoryHelpers: teleport effect not yet implemented")
 		"preemptive":
 			EventFlags.set_flag("sables_coin_active", true)
+
+
+## Permanent Stat Capsule gain banked on a member for one stat. Members saved
+## before GAP-020 have no `stat_capsules` key, so the lookup defaults to zero.
+static func get_capsule_gain(member: Dictionary, stat: String) -> int:
+	var caps: Variant = member.get("stat_capsules", {})
+	if not caps is Dictionary:
+		return 0
+	return int((caps as Dictionary).get(stat, 0))
+
+
+## Bank a permanent Stat Capsule gain on a member, creating the dictionary on
+## first use so legacy members upgrade in place.
+static func add_capsule_gain(member: Dictionary, stat: String, amount: int) -> void:
+	if stat.is_empty() or amount <= 0:
+		return
+	var caps: Variant = member.get("stat_capsules", {})
+	var gains: Dictionary = caps as Dictionary if caps is Dictionary else {}
+	gains[stat] = int(gains.get(stat, 0)) + amount
+	member["stat_capsules"] = gains
 
 
 ## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).
@@ -179,6 +230,62 @@ static func leveled_stats_with_spike(char_data: Dictionary, level: int) -> Dicti
 	return stats
 
 
+## Equipment bonus contributed by the member's worn gear for one stat. Covers the
+## item-data slots only; the crystal slot is runtime state and is supplied by the
+## caller (PartyState owns crystal levels).
+static func get_worn_equipment_bonus(member: Dictionary, stat: String) -> int:
+	var equip: Dictionary = member.get("equipment", {})
+	var total: int = 0
+	for slot: String in ["weapon", "head", "body", "accessory"]:
+		var equip_id: String = equip.get(slot, "")
+		if equip_id == "":
+			continue
+		var item_data: Dictionary = lookup_equipment(equip_id)
+		total += get_top_level_stat(item_data, slot, stat)
+		total += item_data.get("bonus_stats", {}).get(stat, 0)
+	return total
+
+
+## Worn gear plus the equipped Ley Crystal, resolved through the PartyState
+## autoload because crystal levels are runtime state rather than item data.
+## Used by the static level-up path, which has only the member dictionary.
+static func get_full_equipment_bonus(member: Dictionary, stat: String) -> int:
+	var total: int = get_worn_equipment_bonus(member, stat)
+	var crystal_id: String = member.get("equipment", {}).get("crystal", "")
+	if not crystal_id.is_empty():
+		total += PartyState.get_crystal_stat_bonus(crystal_id, stat, member.get("level", 1))
+	return total
+
+
+## The ONE place a persistent stat total is assembled: leveled base stats (hidden
+## spike included) + permanent Stat Capsule gains + equipment/crystal bonus, then
+## clamped to the caps in progression.md § Stat Caps. Every effective-stat reader
+## and the max HP/MP recalculation funnel through this, so a level-up can never
+## diverge from an equip change (#274) and capsules are never invisible (#165).
+static func compute_effective_stat(member: Dictionary, stat: String, equip_bonus: int) -> int:
+	var total: int = int(member.get("base_stats", {}).get(stat, 0))
+	total += get_capsule_gain(member, stat)
+	total += equip_bonus
+	return clampi(total, 0, stat_cap(stat))
+
+
+## Re-derive max HP/MP from the effective-stat formula and re-clamp current
+## HP/MP. Called after every change to a member's persistent stats — equip,
+## unequip, crystal swap, capsule, level-up — so there is a single recalculation.
+## `bonus_fn` takes a stat name and returns that stat's equipment bonus; when it
+## is omitted the bonus is resolved from the member dictionary itself.
+static func recalculate_max_hp_mp(member: Dictionary, bonus_fn: Callable = Callable()) -> void:
+	if member.is_empty():
+		return
+	var resolve: Callable = bonus_fn
+	if not resolve.is_valid():
+		resolve = func(stat: String) -> int: return get_full_equipment_bonus(member, stat)
+	member["max_hp"] = maxi(1, compute_effective_stat(member, "hp", int(resolve.call("hp"))))
+	member["max_mp"] = maxi(0, compute_effective_stat(member, "mp", int(resolve.call("mp"))))
+	member["current_hp"] = mini(member.get("current_hp", 0), member["max_hp"])
+	member["current_mp"] = mini(member.get("current_mp", 0), member["max_mp"])
+
+
 ## Compute derived stats (evasion, magic evasion, crit) from effective stat values.
 static func compute_derived_stats(spd: int, lck: int, mdef: int) -> Dictionary:
 	return {
@@ -234,12 +341,11 @@ static func add_xp_to_member(member: Dictionary, amount: int) -> Dictionary:
 		var char_data: Dictionary = DataManager.load_character(member.get("character_id", ""))
 		if not char_data.is_empty():
 			# Re-apply the permanent hidden spike so level-up recompute keeps it.
-			var new_stats: Dictionary = leveled_stats_with_spike(char_data, level)
-			member["base_stats"] = new_stats
-			member["max_hp"] = new_stats.get("hp", member.get("max_hp", 1))
-			member["max_mp"] = new_stats.get("mp", member.get("max_mp", 0))
-			for stat_key: String in ["atk", "def", "mag", "mdef", "spd", "lck"]:
-				member[stat_key] = new_stats.get(stat_key, member.get(stat_key, 0))
+			member["base_stats"] = leveled_stats_with_spike(char_data, level)
+			# Max HP/MP go through the shared recalculation, which layers the
+			# permanent capsule gains and the equipment/crystal bonus back on
+			# top of the fresh base stats (#274, GAP-020).
+			recalculate_max_hp_mp(member)
 		member["current_hp"] = member["max_hp"]
 		member["current_mp"] = member["max_mp"]
 	return {"leveled_up": level > old_level, "old_level": old_level, "new_level": level}

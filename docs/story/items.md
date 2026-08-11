@@ -145,6 +145,12 @@ Status effect definitions and spell-based cures: see [magic.md](magic.md#status-
 | Sable's Coin | Guaranteed preemptive next battle | — | — | Quest reward, rare chests |
 | Ley-Lantern | Light source for dungeons | 60 | 30 | Valdris Lower Ward item shop |
 
+**An item whose effect would be a no-op is refused, not consumed.** Confirming
+it leaves the stack untouched. This matters most for the items that cannot be
+bought back: a second **Sable's Coin** used while a preemptive is already
+guaranteed is refused rather than spent, and Stat Capsules follow the same rule
+at the stat cap (§ Stat Capsules below).
+
 ### Stat Capsules
 
 Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden passages, and quest rewards. Approximately 82 total exist across the game.
@@ -159,6 +165,14 @@ Stat Capsules are permanent, non-buyable stat boosts found in chests, hidden pas
 | Fortune Capsule | LCK +1 (permanent) | 10 |
 
 > **Distribution:** 20% in Act II/Interlude, 30% in Act III, 50% in Dreamer's Fault.
+
+**Capsule rules:**
+
+- **One target.** A capsule is used in the field on a single member of the active party, and boosts only that character. There is no party-wide capsule. The item use flow target-selects across the active party only ([ui-design.md](ui-design.md) § 4.6 Use Flow, whose overlay follows the § 3.3 party panel — reserve members are not shown), so a reserve character is swapped in before receiving a capsule. Guest NPCs are not valid capsule targets — they cannot use items at all, and their stats are recomputed from party averages at the start of every battle, so a banked gain would never show up ([progression.md](progression.md) § Guest NPCs).
+- **Additive stacking, refused at the cap.** Using the same capsule type again adds another +1, and nothing caps how many a character may absorb short of the stat's own hard cap (see [progression.md](progression.md) § Stat Caps). Capsule gains are added before that clamp. Once a character's *permanent* total for the stat — leveled base plus already-banked gains — reaches the cap, further capsules of that type are refused rather than consumed, under the no-op refusal rule in § Battle Utility above; capsules are finite and unbuyable, so burning one silently is never acceptable. A stat held at the cap by equipment alone still accepts capsules, because unequipping would reveal the banked gain.
+- **Permanent and independent of level.** A capsule gain is banked separately from the leveled base stats. Levelling up recomputes base stats from the growth curve, and that recompute must never subtract the banked capsule gains — they are re-applied on top of the new base. The same holds for the narrative milestone stat spikes, in every act (progression.md § Narrative Milestone Stat Spikes).
+- **Visible everywhere the stat is.** Capsule gains ride the same effective-stat formula the status/equip menus and combat read ([progression.md](progression.md) § Equipment and Buffs), exactly like an equipment bonus. That formula also produces max HP/MP, though no HP or MP capsule exists in the current catalogue, so that term is zero today.
+- **Saved.** Capsule gains are stored per party member and round-trip through save/load. A save written before capsules were persisted simply has no banked gains and loads as zero.
 
 ### Consumable Summary
 

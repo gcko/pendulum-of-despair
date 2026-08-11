@@ -285,11 +285,15 @@ func _update_stat_comparison() -> void:
 			_stat_labels[i].modulate = COLOR_NORMAL
 
 
+## Effective stat this member would have with `new_equip_id` in `slot`. Only the
+## equipment term is projected here; the total is assembled by the same helper
+## get_effective_stat uses, so the comparison arrows can never drift from the
+## real stat. Restating the formula locally lost the permanent capsule gains and
+## rendered a false downgrade arrow on every capsule stat (#165).
 func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id: String) -> int:
-	var base: int = member.get("base_stats", {}).get(stat, 0)
 	var equip: Dictionary = member.get("equipment", {})
 	var char_level: int = member.get("level", 1)
-	var total: int = base
+	var equip_bonus: int = 0
 	for s: String in SLOT_NAMES:
 		var eid: String = equip.get(s, "")
 		if s == slot:
@@ -297,16 +301,12 @@ func _project_stat(member: Dictionary, stat: String, slot: String, new_equip_id:
 		if eid == "":
 			continue
 		if s == "crystal":
-			total += PartyState.get_crystal_stat_bonus(eid, stat, char_level)
+			equip_bonus += PartyState.get_crystal_stat_bonus(eid, stat, char_level)
 		else:
 			var item_data: Dictionary = _lookup_equipment(eid)
-			total += Helpers.get_top_level_stat(item_data, s, stat)
-			total += item_data.get("bonus_stats", {}).get(stat, 0)
-	if stat == "hp":
-		return clampi(total, 0, 14999)
-	if stat == "mp":
-		return clampi(total, 0, 1499)
-	return clampi(total, 0, 255)
+			equip_bonus += Helpers.get_top_level_stat(item_data, s, stat)
+			equip_bonus += item_data.get("bonus_stats", {}).get(stat, 0)
+	return Helpers.compute_effective_stat(member, stat, equip_bonus)
 
 
 func _get_equipment_name(equip_id: String, slot: String = "") -> String:
