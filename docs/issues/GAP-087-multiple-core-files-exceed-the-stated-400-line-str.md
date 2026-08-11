@@ -18,7 +18,7 @@ Several core scripts exceeded the ~400-line guideline; inventory_helpers was its
 
 ## Current state (implementation)
 
-Decomposed. Every file named in the original finding shrank, and none of the extracted modules exceeds the budget. Four files remain over 400 lines and are tracked as the residual (see "Remaining").
+Resolved. Every file named in the original finding shrank, and none of the extracted modules exceeds the budget. Four files sit between 400 and 600 — inside the band the budget explicitly allows for files that are intrinsically hard to break down, each justified by name in technical-architecture.md § 1.2a.
 
 ## Desired state (per design)
 
@@ -55,7 +55,7 @@ Four files are still over 400 (`exploration.gd` 590, `audio_manager.gd` 536, `pa
 
 ## Design references
 
-- game/scripts/combat/battle_actions.gd:4 ("Extracted from battle_manager.gd to stay under 400 lines") — the only remaining in-code statement of the budget
+- The budget now has a canonical home: technical-architecture.md § 1.2a (aim 400, hard maximum 600), enforced by test_script_layout.gd. It was previously stated only in a code comment.
 - .claude/skills/pod-dev/references/tech-stack.md (util-vs-ui placement and the per-owner facet pattern)
 
 ## Code references

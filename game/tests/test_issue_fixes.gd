@@ -404,11 +404,13 @@ func test_helpers_teardown_overlay() -> void:
 
 
 func test_exploration_line_count_under_threshold() -> void:
-	# Tightened from 750 after GAP-087 pulled the screen transitions and the
-	# interaction handlers into their own collaborators. Ratchet it down again
-	# rather than up: growth belongs in a collaborator, not here.
+	# The repo-wide budget lives in test_script_layout.gd (600 hard maximum,
+	# 400 aim — technical-architecture.md § 1.2a). This keeps a tighter local
+	# ratchet on exploration.gd specifically, because it is the file most prone
+	# to accreting logic that belongs in one of its six collaborators.
+	# Ratchet it DOWN as extractions land, never up.
 	var lines: int = ExplorationScript.source_code.count("\n")
-	assert_lt(lines, 620, "exploration.gd should stay under 620 lines")
+	assert_lt(lines, 600, "exploration.gd should stay under 600 lines")
 
 
 func test_game_manager_overlay_enum_has_shop() -> void:

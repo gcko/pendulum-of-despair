@@ -20,7 +20,10 @@ static func empty_meta(idle_priority: int) -> Dictionary:
 ## Whether [param sfx_id] is already playing on as many slots as it may hold.
 static func at_same_id_limit(pool: Array, meta: Array, sfx_id: String) -> bool:
 	var same_count: int = 0
-	for i: int in range(POOL_SIZE):
+	# Bound by the arrays actually passed in, not by POOL_SIZE. Before the split
+	# this module owned the pool, so the constant and the arrays could not
+	# disagree; now a shorter pool from a test double would index out of range.
+	for i: int in range(mini(pool.size(), meta.size())):
 		if pool[i].playing and meta[i].get("sfx_id") == sfx_id:
 			same_count += 1
 	return same_count >= MAX_SAME_SFX
@@ -28,7 +31,7 @@ static func at_same_id_limit(pool: Array, meta: Array, sfx_id: String) -> bool:
 
 ## Index of the first idle slot, or -1 when every slot is busy.
 static func find_free_slot(pool: Array) -> int:
-	for i: int in range(POOL_SIZE):
+	for i: int in range(pool.size()):
 		if not pool[i].playing:
 			return i
 	return -1
@@ -39,7 +42,7 @@ static func find_free_slot(pool: Array) -> int:
 static func find_steal_target(meta: Array, requested_priority: int, idle_priority: int) -> int:
 	var lowest_priority: int = requested_priority
 	var lowest_idx: int = -1
-	for i: int in range(POOL_SIZE):
+	for i: int in range(meta.size()):
 		var slot_priority: int = int(meta[i].get("priority", idle_priority))
 		if slot_priority < lowest_priority:
 			lowest_priority = slot_priority

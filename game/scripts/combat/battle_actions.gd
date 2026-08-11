@@ -1,7 +1,8 @@
 extends RefCounted
 ## Battle action execution — physical attacks, magic, items, abilities.
 ##
-## Extracted from battle_manager.gd to stay under 400 lines.
+## Extracted from battle_manager.gd under the script size budget
+## (technical-architecture.md § 1.2a: aim 400 lines, hard maximum 600).
 ## All functions are static. They operate on battle_state and enemies
 ## via passed references.
 
