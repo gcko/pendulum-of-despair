@@ -7,12 +7,21 @@ node_modules/
 # .uid sidecars stay untracked (#315). Godot regenerates them on import, so
 # committing them is pure churn — but that is only safe because nothing here
 # resolves a resource *through* a uid. Every ext_resource in game/scenes/ and
-# every autoload in project.godot references `path="res://..."`; the only
-# uid:// tokens outside game/addons/ are the six [gd_scene uid="..."] identity
-# fields a .tscn stores inline for itself, which have no relation to a script's
-# .uid sidecar. 24 sidecars predating this rule were untracked to match it,
-# rather than the reverse — committing one per script would have meant ~169
-# more files that churn on every script added, for zero referential benefit.
+# every autoload in project.godot references `path="res://..."`, and
+#   git grep -n 'uid://' -- game/ ':!game/addons/'
+# returns exactly six lines: the [gd_scene uid="..."] identity field on line 1
+# of each of the six game/scenes/maps/towns/valdris_*.tscn. That is what a
+# .tscn stores inline for itself; it has no relation to a script's .uid
+# sidecar. Nothing under game/scripts/ or game/tests/ holds a uid:// at all.
+# (Scope the grep to game/ and use git grep: a plain recursive grep also hits
+# this comment, the untracked sidecars on disk and game/.godot/.)
+#
+# 24 sidecars predating this rule were untracked to match it, rather than the
+# reverse. Going the other way — one committed .uid per script — would have
+# meant 169 tracked sidecars (89 under game/scripts/ + 80 under game/tests/,
+# i.e. 145 more than the 24 already tracked), all churning on every script
+# added, for zero referential benefit.
+#
 # If a future .tscn is ever authored with ext_resource uid="uid://...", this
 # decision has to be revisited before that scene is committed.
 *.uid

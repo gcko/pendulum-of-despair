@@ -98,3 +98,13 @@ gitignored (`.gitignore:7`), but the rule postdates 24 already-tracked sidecars
 `game_manager`, `save_manager`). Moving any of those would need a tracked `.uid`
 rename, and `test_script_layout.gd` would not catch a miss: it inspects only
 `.gd` files.
+
+> **No longer current (#315).** All 24 of those sidecars — the five in
+> `scripts/autoload/` included — were untracked in this milestone, so the
+> generalisation the paragraph above withholds now holds for the whole tree:
+> `git ls-files '*.uid' | wc -l` returns 0, and no script anywhere has a
+> tracked `.uid`. Moving a script no longer needs a `.uid` rename, and the
+> `test_script_layout.gd` blind spot the paragraph names is no longer
+> reachable. The rationale, and the one condition that would force this
+> decision to be revisited, is recorded in the comment above the `*.uid` rule
+> in `.gitignore`.
