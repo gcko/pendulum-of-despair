@@ -81,7 +81,7 @@ Dungeon encounter tables (~26 dungeons + 1 overworld file), pre-crafted device d
 | 24 | `ashmark_factory.json` | Ashmark Factory Depths | II+ | 2 |
 | 25 | `ironmark_citadel.json` | Ironmark Citadel Dungeons | Interlude | 3 |
 | 26 | `bellhaven_tunnels.json` | Bellhaven Smuggler Tunnels | II+ | 3 |
-| 27 | `overworld.json` | Overworld Terrain Zones | All | 12 zones |
+| 27 | `overworld.json` | Overworld Terrain Zones | All | 12 zones (15 today — see "Overworld Zone List" below) |
 
 Total: 27 encounter files in `game/data/encounters/`.
 
@@ -277,6 +277,8 @@ Standard dungeons use exactly 4 encounter groups per floor:
 `DataManager.load_encounters(dungeon_id)` at line 88 of `data_manager.gd` returns a Dictionary. The method loads `res://data/encounters/{dungeon_id}.json`. Similarly, `load_crafting(crafting_type)` at line 112 loads `res://data/crafting/{crafting_type}.json`.
 
 ### Overworld Zone List
+
+> **Count is historical.** This plan shipped `overworld.json` with exactly the 12 zones below. The file now carries **15**: `thornmere_wilds` was added by the 2026-04-08 Wilds Route work, and `sacred_sites` + `urban` by GAP-026 (#186). The 12 rows here are still accurate for what this spec produced — read `game/data/encounters/overworld.json` for the current roster.
 
 The overworld.json file contains 12 terrain zones. Not all zones have random encounters — sacred sites and urban interiors are Tier 0 (safe) and will have empty groups arrays.
 

@@ -242,7 +242,10 @@ CITY DUNGEONS (6 files):
 }
 ```
 
-OVERWORLD ZONES (12 entries):
+OVERWORLD ZONES (12 entries — historical; `overworld.json` now has 15,
+with `thornmere_wilds` added by the 2026-04-08 Wilds Route work and
+`sacred_sites` + `urban` by GAP-026 (#186). Read the shipped file
+before editing it.):
 1. valdris_highlands (open, 148, act_i)
 2. aelhart_valley (open, 48, act_i)
 3. compact_industrial (open, 148, act_ii)
@@ -260,7 +263,7 @@ Enemy compositions for overworld zones: use enemies from the relevant act's enem
 
 - [ ] **Step 1:** Read geography.md and combat-formulas.md for terrain data
 - [ ] **Step 2:** Read relevant bestiary and dungeon docs for enemy assignments
-- [ ] **Step 3:** Create `game/data/encounters/overworld.json` with all 12 zones
+- [ ] **Step 3:** Create `game/data/encounters/overworld.json` with all 12 zones *(shipped; the file has since grown to 15 — see the note above)*
 - [ ] **Step 4:** Self-verify: formation rates match terrain_type, all zones present, weights sum to 100
 
 ---

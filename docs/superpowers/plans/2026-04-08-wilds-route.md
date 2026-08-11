@@ -1,5 +1,7 @@
 # Wilds Route Implementation Plan
 
+> **SUPERSEDED IN PART BY [#270](https://github.com/gcko/pendulum-of-despair/issues/270) (PR #278) — DO NOT RE-RUN TASK 2 AS WRITTEN.** This is a dated implementation record, kept as-is for history. Task 2 Step 1's copy-paste JSON block is wrong against shipped `game/data/encounters/overworld.json`: it builds `thornmere_wilds` from `marsh_serpent` / `drowned_bones` (marsh enemies, replaced by the forest roster), and uses `danger_increment: 160` and formation rates `75 / 15 / 10` (shipped: `148` and `68.75 / 18.75 / 12.5`). Executing it verbatim would regress #270. Read the zone's `_comment` in `overworld.json` and the "Thornmere Wilds roster" note in `docs/story/bestiary/act-i.md` for the current, authoritative values.
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add Roothollow village and Maren's Refuge to the game with overworld transitions, shop, party assembly (Torren + Maren join), and full test coverage.
@@ -96,10 +98,18 @@ git commit -m "feat(engine): add Roothollow herbalist shop data (Act I Thornmere
 
 ### Task 2: Add thornmere_wilds zone to overworld encounters
 
+> **STOP — SUPERSEDED BY #270 (PR #278). Do not execute Steps 1-3.** The
+> zone already exists in `overworld.json` with a different, corrected
+> roster and encounter math. The JSON below is retained only as the
+> historical record of what this plan originally shipped; copying it
+> back would reintroduce the bug #270 fixed. Steps 1-3 are left
+> unchecked because the plan was never re-run, not because work is
+> outstanding.
+
 **Files:**
 - Modify: `game/data/encounters/overworld.json`
 
-- [ ] **Step 1: Add the zone entry**
+- [ ] **Step 1: Add the zone entry** *(superseded — see the STOP note above)*
 
 Add a new zone object to the `zones` array in overworld.json, after the
 existing valdris_highlands zone. Use marsh_serpent and drowned_bones

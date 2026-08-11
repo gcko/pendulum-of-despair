@@ -1,5 +1,7 @@
 # Wilds Route — Design Spec (Gap 4.4 Phase A)
 
+> **SUPERSEDED IN PART BY [#270](https://github.com/gcko/pendulum-of-despair/issues/270) (PR #278).** Dated design record, kept as-is. Its "Encounter Zone" section is stale: `thornmere_wilds` now rolls the Act I *forest* roster (`wayward_wolf`, `wild_boar`, `forest_sprite`, `thornback_beetle`), not `marsh_serpent` / `drowned_bones`, and ships `danger_increment: 148` with formation rates `68.75 / 18.75 / 12.5` — not `160` and `75 / 15 / 10`. That section also contradicts itself, calling for "Act I forest enemies" and then listing marsh IDs; the marsh IDs won at implementation time, and that mismatch is the origin of the bug #270 fixed. Shipped values live in the `thornmere_wilds` `_comment` in `game/data/encounters/overworld.json` and the "Thornmere Wilds roster" note in `docs/story/bestiary/act-i.md`.
+
 > **Gap:** 4.4 Phase A (Remaining Act I Content — Wilds Route)
 > **Goal:** Add Roothollow village and Maren's Refuge to the game,
 > connected via overworld transitions. Implement Scenes 5-6 (Torren
@@ -204,6 +206,11 @@ Modify `game/scenes/maps/overworld.tscn` to add:
 - `from_marens_refuge` (Marker2D) at ~(232, 468)
 
 ### Encounter Zone
+
+> **Superseded by #270 — self-contradictory as written.** The sentence
+> below asks for "Act I forest enemies" and the JSON then lists marsh
+> IDs. The shipped zone follows the forest reading. Do not copy the
+> JSON block in this section.
 
 Add a `thornmere_wilds` zone to `game/data/encounters/overworld.json`
 with Act I forest enemies. The overworld map metadata already uses
