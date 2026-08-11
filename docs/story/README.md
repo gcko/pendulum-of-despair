@@ -185,7 +185,7 @@ This directory contains the narrative design for Pendulum of Despair.
   Nothing automated compares the two corpora to each other either. The
   one test that checks a shipped dialogue string against the engine —
   `game/tests/test_status_effects.gd` — pins the paralysis notification
-  to the adjective `scripts/combat/status_effects.gd` emits; it never
+  to the adjective `game/scripts/combat/status_effects.gd` emits; it never
   opens `docs/story/script/*.md`, so it catches JSON-versus-engine drift
   and nothing else. This rule is therefore the only thing holding the script
   markdown and the dialogue JSON together, which is why #311 had to move
