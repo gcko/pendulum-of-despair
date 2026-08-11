@@ -48,10 +48,12 @@ const RULES: Dictionary = {
 	"blind": {"duration": 4},
 }
 
-## Player-facing adjective for the statuses that produce a battle announcement
-## ("paralysis" -> "paralysed"). Only the action-denying statuses are listed
-## because they are the only ones the battle layer announces by name; anything
-## else falls back to its raw status name rather than reading as another status.
+## Player-facing adjective for an action-denial announcement ("paralysis" ->
+## "paralysed"). Only Paralysis reaches an announcement today: a gauge-frozen
+## member is passed over in silence (combat-formulas.md § Status Effect ATB
+## Interactions), so the sleep/petrify entries are pre-registered wording for a
+## future announcement path, not live behaviour. Anything unlisted falls back to
+## its raw status name rather than reading as another status.
 const ADJECTIVES: Dictionary = {
 	"paralysis": "paralysed",
 	"sleep": "asleep",
@@ -70,8 +72,9 @@ static func atb_effect(status: String) -> String:
 
 
 ## Whether the bearer cannot take a turn — Paralysis (explicit) or the
-## gauge-frozen action-denial statuses (Sleep/Petrify). The battle layer
-## auto-skips an incapacitated combatant's ready turn.
+## gauge-frozen action-denial statuses (Sleep/Petrify). The battle layer denies
+## the turn either way, but only Paralysis consumes one (announce, tick, reset);
+## a gauge-frozen bearer is passed over untouched so the frozen value survives.
 static func is_incapacitating(status: String) -> bool:
 	var rule: Dictionary = RULES.get(status, {})
 	return rule.get("incapacitates", false) or rule.get("atb", "none") == "frozen"

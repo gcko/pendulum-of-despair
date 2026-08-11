@@ -749,6 +749,7 @@ before the thread breaks entirely.
 - "[Character] is Berserk!"
 - "[Character] is Stopped!"
 - "[Character] is Grounded!"
+- "[Character] is paralysed and can't move!"
 - "Poison wears off."
 - "Silence wears off."
 - "[Character] woke up!"

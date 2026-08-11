@@ -127,11 +127,11 @@ func _process(delta: float) -> void:
 			var slot: int = id.replace("party_", "").to_int()
 			var blocked_by: String = _incapacitating_status(slot)
 			if blocked_by != "":
-				# Sleep/Petrify freeze the gauge, and a frozen gauge retains its
-				# value (combat-formulas.md § Status Effect ATB Interactions), so
-				# a member already at full gauge simply takes no turn: no
-				# announcement, no tick, and above all no reset that would throw
-				# the retained value away. Other combatants act around them.
+				# Sleep/Petrify freeze the gauge, and a gauge-frozen member takes
+				# no turn at all (combat-formulas.md § Status Effect ATB
+				# Interactions): no announcement, no tick, and above all no reset
+				# — the skip never writes to the gauge, so whatever the status is
+				# holding survives it. Other combatants act around them.
 				if StatusEffects.atb_effect(blocked_by) == "frozen":
 					continue
 				# Paralysis fills the gauge instead, so it does have a turn to

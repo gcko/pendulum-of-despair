@@ -229,6 +229,10 @@ Vertical list of battle commands:
 
 ### 2.5 Battle Message Area
 
+> Superseded: `docs/story/ui-design.md` § 2.5 is canonical for the
+> message window. It adds the announcement queue (0.75s guaranteed per
+> line, at most 3 waiting) that this section predates.
+
 - Small window at top-center of screen.
 - Appears for action announcements: spell names, item use, status
   changes, enemy actions.
@@ -236,6 +240,11 @@ Vertical list of battle commands:
 - Auto-fades after 1.5 seconds. Does not persist.
 
 ### 2.6 Target Selection
+
+> Superseded: `docs/story/ui-design.md` § 2.6 is canonical for battle
+> targeting. The party-side cursor sits *beside* (immediately left of)
+> the targeted row, not below the member, and cycling visits occupied
+> slots only.
 
 - Blinking pixel-art arrow cursor above targeted enemy (for offensive
   actions) or below targeted party member (for support/healing).

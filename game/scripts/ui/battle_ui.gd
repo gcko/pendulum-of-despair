@@ -29,7 +29,7 @@ const POPUP_LIFT: float = 64.0
 const POPUP_RISE: float = 64.0
 ## Party rows are packed far tighter than the enemy sprites, so a party number
 ## lifted like an enemy's would land over a different member's row. It sits on
-## its own row and rises only into the gap above it (ui-design.md § 2.2, #276) —
+## its own row and rises only into the gap above it (ui-design.md § 2.3, #276) —
 ## this matches the party panel's inter-row separation.
 const PARTY_POPUP_RISE: float = 8.0
 ## World-space anchor used when a damage event names a combatant this UI
@@ -43,8 +43,9 @@ const MESSAGE_HOLD: float = 1.5
 ## it, so an auto-skipped turn's announcement survives the next frame's enemy
 ## action (#260, ui-design.md § 2.5).
 const MESSAGE_MIN_DISPLAY: float = 0.75
-## Queue cap: a burst of announcements must not leave the window running seconds
-## behind the battle, so the oldest waiting line is dropped instead.
+## Queue cap: a burst of announcements must not leave the window falling further
+## and further behind the battle, so the oldest waiting line is dropped instead.
+## The cap bounds the lag at MESSAGE_QUEUE_MAX * MESSAGE_MIN_DISPLAY (~2.25s).
 const MESSAGE_QUEUE_MAX: int = 3
 
 var _manager: Node = null
@@ -291,10 +292,10 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 ## Where a combatant's floating number starts ("start", screen-space top-left)
 ## and how far it floats up ("rise"). Enemies live in world space and pop above
 ## the sprite. A party member's number sits centred on its own panel row: the
-## rows are only ~31px apart, so anything lifted like an enemy's number would
-## land squarely over a different member and read as damage to them (#276,
-## ui-design.md § 2.2). Row rects come from the panel, so nothing here guesses
-## a row pitch.
+## rows are packed far tighter than POPUP_LIFT, so anything lifted like an
+## enemy's number would clear the row above and land over a different member,
+## reading as damage to them (#276, ui-design.md § 2.3). Row rects come from the
+## panel, so nothing here guesses a row pitch.
 func _popup_placement(target_id: String, size: Vector2) -> Dictionary:
 	if target_id.begins_with("party_"):
 		var row: Rect2 = _party_row_rect(target_id.replace("party_", "").to_int())

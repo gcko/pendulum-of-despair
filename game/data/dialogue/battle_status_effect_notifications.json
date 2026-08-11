@@ -137,7 +137,7 @@
       "id": "battle_status_effect_notifications_013",
       "speaker": "",
       "lines": [
-        "Poison wears off."
+        "[Character] is paralysed and can't move!"
       ],
       "condition": null,
       "animations": null,
@@ -148,7 +148,7 @@
       "id": "battle_status_effect_notifications_014",
       "speaker": "",
       "lines": [
-        "Silence wears off."
+        "Poison wears off."
       ],
       "condition": null,
       "animations": null,
@@ -159,7 +159,7 @@
       "id": "battle_status_effect_notifications_015",
       "speaker": "",
       "lines": [
-        "[Character] woke up!"
+        "Silence wears off."
       ],
       "condition": null,
       "animations": null,
@@ -168,6 +168,17 @@
     },
     {
       "id": "battle_status_effect_notifications_016",
+      "speaker": "",
+      "lines": [
+        "[Character] woke up!"
+      ],
+      "condition": null,
+      "animations": null,
+      "choice": null,
+      "sfx": null
+    },
+    {
+      "id": "battle_status_effect_notifications_017",
       "speaker": "",
       "lines": [
         "[Status] was cured!"

@@ -1,7 +1,7 @@
 extends GutTest
 ## Tests that BattleUI anchors the target cursor and damage popups to the
 ## party panel's real row rects instead of a hardcoded row pitch (#276,
-## ui-design.md § 2.2/2.6). Boots the real battle scene so the panel is
+## ui-design.md § 2.3/2.6). Boots the real battle scene so the panel is
 ## laid out exactly as it renders in play.
 
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
@@ -104,8 +104,8 @@ func test_party_damage_popup_sits_on_the_row_it_belongs_to() -> void:
 
 
 func test_party_damage_popup_never_climbs_into_the_row_above() -> void:
-	# The party rows are ~31px apart — far tighter than the 64px enemy lift — so
-	# the popup rises only into the gap between rows (#276, ui-design.md § 2.2).
+	# The party rows are packed far tighter than the enemy lift (POPUP_LIFT), so
+	# the popup rises only into the gap between rows (#276, ui-design.md § 2.3).
 	seed(31)
 	var battle: Node = await _boot()
 	var ui: CanvasLayer = battle._ui

@@ -162,9 +162,9 @@ func test_skip_message_survives_the_enemys_action_on_the_next_frame() -> void:
 
 func test_frozen_status_takes_no_turn_and_keeps_its_gauge() -> void:
 	# Sleep and Petrify freeze the gauge, and combat-formulas.md § Status Effect
-	# ATB Interactions requires a frozen gauge to retain its value. A member
-	# already at full gauge when one lands is therefore passed over in silence:
-	# no announcement, no status tick, and no gauge reset (#260 review).
+	# ATB Interactions says the skip never writes to it — Sleep in particular
+	# retains its frozen value. A member already at full gauge is therefore
+	# passed over in silence: no announcement, no status tick, no reset (#260).
 	seed(31)
 	var battle: Node = await _boot(["ley_vermin"])
 	battle.set_process(false)
