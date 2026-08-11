@@ -74,6 +74,14 @@ HEADING_CITE_RE = re.compile(
 # The optional "> 'Poison'" narrowing term.
 TERM_RE = re.compile(r">[ \t]*['\"](?P<term>[^'\"]+)['\"]")
 
+# A "> '" that TERM_RE could not complete. The term is the half of a citation
+# that catches a section rewritten under a heading nobody renamed, so a term
+# the checker cannot read is the half that silently stops working — which is
+# what a quote left open by a line wrap (``> 'Barnacle`` / ``Shield'``) does.
+# Ignoring it is worse than the citation having had no term at all, because
+# the citation still *looks* narrowed. Say so instead (#366).
+OPEN_TERM_RE = re.compile(r">[ \t]*['\"]")
+
 # A section id as documents actually number them: "2", "2.1", and — the case
 # that matters — "1.2a". The letter suffix is part of the id, not decoration.
 # technical-architecture.md carries both "### 1.2 Naming Conventions" and
@@ -90,62 +98,16 @@ SECTION_LIST_RE = re.compile(rf"^({SECTION_ID}(?:[/,]{SECTION_ID})*)")
 # and without this cut the first citation would claim the second one's term.
 NEXT_CITE_RE = re.compile(r"§|[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md")
 
-# Citations that predate this gate and point at a heading nobody wrote.
-# Each one is real rot; each one lives in a file this gate's author does not
-# own. They are pinned here rather than waved through: the gate fails if an
-# entry stops appearing, so fixing a citation forces its line out of the list
-# and the list can only shrink. Do not add to it — fix the citation instead.
-KNOWN_UNRESOLVED: dict[tuple[str, str], str] = {
-    (
-        "docs/story/script/interlude.md",
-        "dungeons-world.md § Roothollow Ley Nexus (Ley Leech)",
-    ): "#366 — the dungeon is § 19. Ley Nexus Hollow; Roothollow is a village",
-    (
-        "game/scripts/combat/battle_magic_command.gd",
-        "combat-formulas.md § Weave Gauge",
-    ): "#366 — combat-formulas.md has no Weave Gauge section",
-    (
-        "game/scripts/combat/encounter_system.gd",
-        "combat-formulas.md § Preemptive Charm interaction",
-    ): "#366 — no such section; the rule lives under § Encounter System",
-    (
-        "game/scripts/combat/encounter_system.gd",
-        "combat-formulas.md § Final increment formula",
-    ): "#366 — no such section; the formula lives under § Danger Counter",
-    (
-        "game/scripts/combat/encounter_system.gd",
-        'combat-formulas.md § Preemptive Charm interaction ("normalizes '
-        "all terrains to 62",
-    ): "#366 — no such section; the rule lives under § Encounter System",
-    (
-        "docs/story/script/act-i.md",
-        "npcs.md § Vessa/Torren",
-    ): "#366 — Torren is a party member; his entry is in characters.md",
-    (
-        "docs/story/script/act-iii.md",
-        "abilities.md § Steadfast Resolve",
-    ): "#366 — abilities.md lists it in a table, under no heading of its own",
-    (
-        "docs/story/script/act-iii.md",
-        "abilities.md § Cael's Edge",
-    ): "#366 — abilities.md lists it in a table, under no heading of its own",
-    (
-        "docs/story/script/act-iii.md",
-        "abilities.md § Rootsong",
-    ): "#366 — abilities.md lists it in a table, under no heading of its own",
-    (
-        "docs/story/script/act-iii.md",
-        "abilities.md § Unbreakable Thread",
-    ): "#366 — abilities.md lists it in a table, under no heading of its own",
-    (
-        "docs/story/script/act-iv-epilogue.md",
-        "characters.md § all",
-    ): "#366 — 'all' is prose for the whole document, not a section",
-    (
-        "docs/story/script/act-iv-epilogue.md",
-        "items.md § First Tree Seed",
-    ): "#366 — items.md lists it in a table, under no heading of its own",
-}
+# A ratchet, now at zero (#366). It carried the twelve citations that
+# predated this gate and named a heading nobody wrote; every one has since
+# been repointed at the section that actually says what it claimed, and its
+# entry deleted with the fix.
+#
+# The mechanism is what remains worth keeping: the gate fails when a pinned
+# citation stops appearing, so a pin can only be removed by fixing the
+# citation it names, and the list can only shrink. Empty is the state it is
+# supposed to be in. Do not add to it — fix the citation instead.
+KNOWN_UNRESOLVED: dict[tuple[str, str], str] = {}
 
 FIX_HINT_ANCHOR = (
     "line anchors rot on the next insertion — cite a heading instead, e.g. "
@@ -319,6 +281,32 @@ def match_words(
     return None
 
 
+def continues_a_heading(words: list[str], k: int) -> bool:
+    """True when the citation keeps naming heading after the prefix ends.
+
+    ``match_heading`` accepts a prefix ``words[:k]``, which means every
+    longer prefix — ``words[:k + 1]`` included — matched no heading at all.
+    So ``words[k]`` is a word the citation offers as part of the section's
+    name and the document does not have. When it is *shaped* like a heading
+    word — capitalised, opening no gloss, quote or code — the citation is
+    naming a subsection nobody wrote, and resolving it to the shorter
+    heading would point the reader at a section that does not say what the
+    citation claims (#367).
+
+    The shape test is what keeps the deliberate shortening alive. Citations
+    sit mid-sentence, and the prose that follows a heading name continues in
+    lower case (``§ Derived Rules binds it only to...``), opens a
+    parenthetical gloss (``§ 20. Highcairn Monastery (Pallor encounter)``),
+    a quotation (``§ Wolf Family, "all wolves"``) or a code span. None of
+    those is a claim about the document's heading tree; a bare capitalised
+    word is.
+    """
+    if k >= len(words):
+        return False
+    first = words[k][:1]
+    return first.isalpha() and first.isupper()
+
+
 def match_heading(
     index: DocIndex, path: str, candidate: str
 ) -> tuple[int, int, str] | None:
@@ -335,11 +323,18 @@ def match_heading(
     ``### Derived Rules (numeric balance pass)``, ``§ Caden`` for
     ``### Spirit-speaker Caden``.
 
-    What it does *not* catch: a citation that names a real heading and then
-    keeps going into a subsection nobody wrote. ``§ Encounter System
-    Nonexistent Subsection`` shortens to ``§ Encounter System``, which
-    exists, and passes. Tightening that without breaking the house style
-    needs a repo-wide sweep — tracked as #367.
+    Shortening stops where invention starts. A prefix that is followed by a
+    capitalised word — a word shaped like more heading, which by
+    construction matches nothing — is refused outright rather than resolved
+    to the shorter heading, so ``§ Encounter System Nonexistent Subsection``
+    now names no heading instead of quietly landing on ``§ Encounter
+    System``. See ``continues_a_heading`` for why the refusal reads
+    capitalisation and why lower-case prose, glosses, quotations and code
+    spans still run on harmlessly.
+
+    The refusal ends the search: a shorter prefix can only reach a vaguer
+    heading, so once a citation has been caught naming a subsection nobody
+    wrote there is nothing better left to find.
 
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
@@ -366,12 +361,13 @@ def match_heading(
         if not want:
             continue
         hit = match_words(index, path, want)
-        if hit is not None:
-            return hit
-        if "/" in joined:
+        if hit is None and "/" in joined:
             hit = match_all(index, path, joined.split("/"))
-            if hit is not None:
-                return hit
+        if hit is None:
+            continue
+        if continues_a_heading(words, k):
+            return None
+        return hit
     return None
 
 
@@ -527,6 +523,15 @@ def check_file(
         if term_match:
             term = term_match.group("term")
             heading_part = rest[: term_match.start()]
+        else:
+            open_term = OPEN_TERM_RE.search(rest)
+            if open_term:
+                errors.append(
+                    f"{path}:{line_no}: narrowing term after `>` never closes "
+                    f"its quote — the term check is being skipped, not passed; "
+                    f"keep `> 'term'` whole on one line"
+                )
+                heading_part = rest[: open_term.start()]
 
         signature = citation_signature(cited_file, heading_part)
         known_key = (path, signature)

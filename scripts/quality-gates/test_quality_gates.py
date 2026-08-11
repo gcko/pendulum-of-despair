@@ -216,6 +216,36 @@ Aim 400 lines, hard maximum 600.
 ### 2.3 Equipment Data
 """
 
+# The house style in one file: a heading named by its last word
+# (``§ Caden``), a heading named by a plural of its first (``§ Inns``), a
+# heading named by its breadcrumb path (``§ Interlude The World Changes``),
+# and — the shape #367 is about — a real section with a real subsection
+# under it, so a citation can be tested for running on past both.
+HOUSE_STYLE_FIXTURE = """# NPC Directory
+
+## Duskfen
+
+### Spirit-speaker Caden
+
+Caden reads the ley currents for anyone who asks twice.
+
+## Inn Costs
+
+Twenty gil a night, everywhere but Canopy Reach.
+
+## The Interlude: The Unraveling
+
+### The World Changes
+
+The map redraws itself while the party sleeps.
+
+## Encounter System
+
+### Danger Counter
+
+The counter increments once per step and resets on a battle.
+"""
+
 
 class TestCheckDocCitations(unittest.TestCase):
     """Tests for Gate G: doc citation integrity."""
@@ -511,6 +541,132 @@ class TestCheckDocCitations(unittest.TestCase):
         ), contextlib.redirect_stdout(buffer):
             self.assertEqual(check_doc_citations.main(), 0)
         self.assertIn("1 citation(s) pinned", buffer.getvalue())
+
+    # ── Running on past the heading into invention (#367) ──────────────
+    #
+    # The resolver shortens a citation until some prefix matches, which is
+    # what makes ``§ Caden`` reach ``### Spirit-speaker Caden``. Before
+    # #367 the shortening had no floor: a citation could name a real
+    # heading, keep going into a subsection nobody wrote, and still
+    # resolve — to the shorter heading, silently, sending the reader to a
+    # section that does not say what the citation claims it says. The two
+    # halves below are inseparable: the rejection must bite, and the
+    # shortening it is carved out of must survive it.
+
+    def _house(self) -> None:
+        self._write("docs/story/npcs.md", HOUSE_STYLE_FIXTURE)
+
+    def _resolve(self, candidate: str):
+        self._house()
+        return check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(), "docs/story/npcs.md", candidate
+        )
+
+    def test_invented_subsection_under_a_real_section_resolves_to_nothing(
+        self,
+    ):
+        """The reported defect, verbatim: § <real> <invented> must not pass."""
+        self.assertIsNone(
+            self._resolve("Encounter System Nonexistent Subsection")
+        )
+
+    def test_invented_words_after_a_real_subsection_resolve_to_nothing(self):
+        """The second reported defect: invention after a *sub*section."""
+        self.assertIsNone(self._resolve("Danger Counter That Nobody Wrote"))
+
+    def test_an_invented_subsection_fails_the_whole_scan(self):
+        """End to end, not just the resolver: the gate must report it."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# See npcs.md § Encounter System Nonexistent Subsection.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_shortening_to_a_later_word_of_the_heading_still_resolves(self):
+        """``§ Caden`` -> ``### Spirit-speaker Caden``, the house style."""
+        hit = self._resolve("Caden")
+        self.assertIsNotNone(hit, "§ Caden must still resolve")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_shortening_to_a_stemmed_first_word_still_resolves(self):
+        """``§ Inns`` -> ``## Inn Costs``: plural, and short of the title."""
+        hit = self._resolve("Inns")
+        self.assertIsNotNone(hit, "§ Inns must still resolve")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_a_breadcrumb_path_citation_still_resolves(self):
+        """Ancestor words may still be skipped: § Interlude <subsection>."""
+        hit = self._resolve("Interlude The World Changes")
+        self.assertIsNotNone(hit, "breadcrumb citations must still resolve")
+        self.assertEqual(hit[2], "The World Changes")
+
+    def test_lower_case_prose_may_still_run_on_past_the_heading(self):
+        """Citations sit mid-sentence; the sentence keeps going."""
+        hit = self._resolve("Danger Counter increments once per step")
+        self.assertIsNotNone(hit, "run-on prose must not break a citation")
+        self.assertEqual(hit[2], "Danger Counter")
+
+    def test_a_parenthetical_gloss_may_still_follow_the_heading(self):
+        """``§ 20. Highcairn Monastery (Pallor encounter)`` — a real one."""
+        hit = self._resolve("Spirit-speaker Caden (Duskfen resident)")
+        self.assertIsNotNone(hit, "a gloss must not break a citation")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_a_quotation_may_still_follow_the_heading(self):
+        """``§ Wolf Family, "all wolves"`` — also a real one."""
+        hit = self._resolve('Inn Costs, "Twenty gil a night"')
+        self.assertIsNotNone(hit, "a quotation must not break a citation")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_house_style_citations_survive_a_full_scan(self):
+        """All four shortening forms, through the gate rather than around it."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# npcs.md § Caden. npcs.md § Inns.\n"
+            "# npcs.md § Interlude The World Changes.\n"
+            "# npcs.md § Danger Counter increments once per step.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    # ── A narrowing term the checker cannot read (#366) ────────────────
+
+    def test_a_term_whose_quote_never_closes_is_reported(self):
+        """An unreadable term is a skipped check wearing a passed one's face.
+
+        ``> 'Poison`` with no closing quote used to leave ``TERM_RE`` with no
+        match, which is the same state as a citation that never narrowed —
+        so the heading resolved, the term went unchecked, and the gate said
+        nothing. The citation still reads as narrowed to anyone following it.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Poison\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("never closes its quote", errors[0])
+
+    def test_an_open_term_does_not_also_break_its_heading(self):
+        """One complaint, about the term — the heading still resolved."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Spell Count Summary > 'Eighty\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertNotIn("names no heading", errors[0])
+
+    def test_a_closed_term_is_not_reported_as_open(self):
+        """The guard must not fire on the form it is protecting."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
 
     def test_stale_known_unresolved_entry_fails(self):
         """The ratchet cannot rot either: a pin with nothing to pin fails."""

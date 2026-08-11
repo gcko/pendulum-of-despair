@@ -71,7 +71,7 @@ Party departs for the Wilds.)*
 <!-- Scene: duskfen_alliance | Tier: 3 | Trigger: party reaches Duskfen -->
 <!-- Location: Duskfen settlement / Fenmother's Hollow | Party: Edren, Lira, Torren, Maren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act II Duskfen Alliance, locations.md § Duskfen, npcs.md § Caden -->
+<!-- Cross-ref: outline.md § The Diplomatic Mission > 'Duskfen alliance', locations.md § Duskfen, npcs.md § Caden -->
 
 ### 9a. Duskfen Arrival
 
@@ -129,7 +129,7 @@ facing. I'll speak for Duskfen at the council.
 <!-- Scene: canopy_alliance | Tier: 1+3 | Trigger: party reaches Canopy Reach -->
 <!-- Location: Canopy Reach / Observatory | Party: Edren, Lira, Torren, Maren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act II Canopy Reach, locations.md § Canopy Reach, npcs.md § Wynne -->
+<!-- Cross-ref: outline.md § The Diplomatic Mission > 'Canopy Reach alliance', locations.md § Canopy Reach, npcs.md § Wynne -->
 
 ### 10a. Canopy Reach
 
@@ -197,7 +197,7 @@ different from up here. Smaller. More fragile.)*
 <!-- Scene: ley_stag_bonding | Tier: 2 | Trigger: optional, at Roothollow heartwood shrine -->
 <!-- Location: Roothollow | Party: Edren, Lira, Torren, Maren -->
 <!-- Variants: none (optional scene) -->
-<!-- Cross-ref: sidequests.md § Ley Stag, events.md flag 54 -->
+<!-- Cross-ref: transport.md § Ley Stag Mount, events.md flag 54 -->
 
 *(Roothollow. The heartwood shrine. Vessa performs a spirit-bonding
 ritual at the great tree's root-altar. Torren stands beside her.
@@ -459,7 +459,7 @@ to care about a kingdom they've never trusted.
 <!-- Scene: vaelith_tavern | Tier: 3 | Trigger: vaelith_tavern_encounter (flag 13) -->
 <!-- Location: Frontier tavern (Corrund road or Bellhaven) | Party: Edren, Lira, Torren, Maren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act II Tavern Encounter, npcs.md § Vaelith -->
+<!-- Cross-ref: outline.md § The Diplomatic Mission > 'frontier tavern', npcs.md § Vaelith -->
 
 *(A frontier tavern. The party stops for the night on the road
 back to Valdris. The room is warm, the ale is thin, the locals
@@ -546,7 +546,7 @@ appreciates what you've done. Good allies are hard to find.
 <!-- Scene: vaelith_doma | Tier: 1 | Trigger: automatic, mid-Act II (flag 14) -->
 <!-- Location: Pallor-touched village | Party: none (dramatic irony cutscene) -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act II Vaelith's Work, npcs.md § Vaelith -->
+<!-- Cross-ref: outline.md § The Stranger's Work, npcs.md § Vaelith -->
 
 *(Cutscene. The party is not present. The player watches.)*
 
