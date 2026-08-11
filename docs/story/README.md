@@ -182,16 +182,19 @@ This directory contains the narrative design for Pendulum of Despair.
   source anywhere in `docs/story/script/*.md` at all (#380), so no
   generator could emit them. The JSON is authored, not derived, and the
   evidence for that is recorded in `tools/README.md`.
-  What holds the two corpora together is therefore this rule plus one
-  test — `game/tests/test_status_effects.gd` pins a single string, the
-  paralysis notification, against the adjective the engine emits. Every
-  other duplicated string is held by hand, which is why #311 had to move
+  Nothing automated compares the two corpora to each other either. The
+  one test that checks a shipped dialogue string against the engine —
+  `game/tests/test_status_effects.gd` — pins the paralysis notification
+  to the adjective `scripts/combat/status_effects.gd` emits; it never
+  opens `docs/story/script/*.md`, so it catches JSON-versus-engine drift
+  and nothing else. This rule is therefore the only thing holding the script
+  markdown and the dialogue JSON together, which is why #311 had to move
   each swept spelling in both corpora itself. #379 tracks the gate that
   would catch the drift; until it exists, edit both copies by hand and
   prove they agree — `items.md` § Key Items and
-  `game/data/items/key_items.json` are
-  deliberately still British together for exactly this reason, because
-  half a fix is worse than none.
+  `game/data/items/key_items.json` are deliberately still British
+  together for exactly this reason, because half a fix is worse than
+  none.
 - **`grey` is the one deliberate exception, and it is a proper noun.**
   *The Grey* is the game's name for the Pallor's drained world-state;
   *grey* is used throughout for it and for the color it names. Do not
