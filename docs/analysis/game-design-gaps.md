@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; 10 entries still describe damage/healing qualitatively — see below) |
+| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; damage magnitudes closed for 9 of 10 entries — Shiv's thrown-item branch remains, see below) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -840,65 +840,85 @@ the unqualified sentence:
 - The **status hit rate** rule has two bands, standard (60-80%) and severe
   (45-59%); five shipped spells sit in the severe band.
 
-### Ability System — outstanding damage values
+The combat-formulas.md side of that pass is now reconciled too. § AoE Damage
+Rules names magic.md as authoritative for the power bands, the AoE reduction and
+its Tier 4 exemption, and magic.md § Tier 4 AoE Exemption says the same thing
+from the other end, so the rule has one owner rather than two copies
+([#332](https://github.com/gcko/pendulum-of-despair/issues/332)). The § Magic
+Damage note that claimed "no single-target Tier 4 spell currently exists" is
+corrected: Unmaking (Void, power 85, `game/data/spells/void.json`) is exactly
+that, cast by the Pallor at a party member. Its parenthetical is corrected as
+well — with the Tier 4 exemption in place, target count no longer affects cap
+reachability, only power does, and the chain needs `power >= 94`, which Unmaking
+at 85 does not meet ([#322](https://github.com/gcko/pendulum-of-despair/issues/322)).
+The mirrored sentences in `docs/superpowers/specs/2026-03-21-combat-formulas-design.md`
+carry dated supersession notes rather than edits, since that file is the record
+of the 2026-03-21 design, not a live rule.
 
-The three custom resources (AP/AC/WG) are within their stated caps and asserted
-by `game/tests/test_ability_balance.gd`, and physical abilities take their
-multiplier from [combat-formulas.md](../story/combat-formulas.md) § Ability
-Multipliers. What remains open is a specific list of abilities whose output is
-still described qualitatively rather than as a spell power or multiplier:
+### Ability System — damage magnitudes (9 of 10 closed)
 
-| Ability | Character | Missing value |
-|---------|-----------|---------------|
-| Shock Coil | Lira | Per-turn Storm damage — "scales with Lira's Magic", no coefficient |
-| Arc Trap | Lira | Flame damage on trigger — no magnitude |
-| Ember Wing / Inferno Gale | Torren | AoE Flame damage; "Heavy" at Favor 3 undefined |
-| Greyveil / Duskbreaker | Torren | Non-elemental MDEF-ignoring damage; "Heavy" at Favor 3 undefined |
-| Dewfall / Torrent's Grace | Torren | "Moderate heal" — no spell power |
-| Rootsong | Torren | Defined as "same per-target potency as Dewfall", so blocked on Dewfall |
-| Convergence Chorus | Torren | "50% normal potency" of the above, so blocked on all four Spiritcalls |
-| Wild Card (1/2/3-item branches) | Sable | AoE damage magnitude undefined (0-item branch is 2x Attack) |
-| Shiv (thrown-item branch) | Sable | "Bonus elemental damage" from a thrown stolen item — no magnitude, and no item-type -> element mapping. The base attack is fully specified (ability_mult 1.0 + 50% DEF ignore, combat-formulas.md § Special: Shiv); only the throw branch is open |
-| Ambush Protocol (combo #8) | Sable + Lira | "2x normal Arc Trap damage", so blocked on Arc Trap |
+The three custom resources (AP/AC/WG) are within their stated caps, and the
+damage and healing magnitudes that used to be adjectives are now numbers. Both
+are asserted by `game/tests/test_ability_balance.gd` against
+`game/data/abilities/`. The derivations live in
+[abilities.md](../story/abilities.md) § Damage Magnitudes; each value is written
+next to the rule that produced it, so it can be checked or overturned rather
+than taken on trust.
 
-Nine of the ten are character abilities; Ambush Protocol is the one combo that
-inherits the gap, via Arc Trap. The other eleven entries in
-`game/data/abilities/combos.json` either state their own magnitude (Thornfire,
-spell power 40; Ley Torrent, `(Maren MAG + Torren MAG) x 4`) or are pure
-buff/utility effects with nothing to quantify — but see the multiplier-table
-conflict below, which affects one of them.
+| Ability | Character | Value | Derived from |
+|---------|-----------|-------|--------------|
+| Shock Coil | Lira | Spell power 10 per tick, 3 ticks | Thornfire's stated total (40 = 2x10 Flame + 2x10 Storm) and the combo-doubling rule |
+| Arc Trap | Lira | Spell power 30 | Equal 2 AC cost with Shock Coil, so equal output budget: one burst = three ticks |
+| Ember Wing | Torren | Spell power 10 (AoE) | 10 MP = 2x a 5 MP Tier 1 single target; 60-70% AoE reduction on power 15-16 |
+| Inferno Gale (Favor 3) | Torren | Spell power 20 (AoE) | "Heavy" = double; the target set is unchanged, so the upgrade doubles |
+| Dewfall | Torren | Spell power 12 (heal) | Priced as Mend (3 MP, power 12) + Cleansing Draught (5 MP) = 8 MP |
+| Torrent's Grace (Favor 3) | Torren | Spell power 12, all allies | The upgrade broadens the target set, so the per-target power holds |
+| Greyveil | Torren | Spell power 28 | 14 MP Tier 2 comparators (Rootgrip 30, Kindlepyre 32) netted against the MDEF-ignore and non-elemental riders |
+| Duskbreaker (Favor 3) | Torren | Spell power 56 | "Heavy" = double; single target both sides |
+| Rootsong | Torren | Spell power 12 per ally | The table's own "same per-target potency as Dewfall" |
+| Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components |
+| Wild Card (0-2 items) | Sable | `ability_mult` 2.0 | The 0-item branch's stated "2x her Attack" |
+| Wild Card (3 items) | Sable | `ability_mult` 3.0 | "Heavy" = double, capped by the ladder's Maximum tier |
+| Ambush Protocol (combo #8) | Sable + Lira | Spell power 60 | The combo's own "2x normal Arc Trap damage" |
+| **Shiv (thrown-item branch)** | Sable | **still open** | Needs two design decisions — see below |
 
-**Physical Ability Multiplier table conflicts.**
-[combat-formulas.md](../story/combat-formulas.md) § Ability Multipliers lists two
-abilities in its *Physical* Ability Multiplier Tiers table that cannot take a
-physical `ability_mult` at all:
+**Still open: Shiv's thrown-item branch.** The base attack is fully specified
+(`ability_mult` 1.0 plus 50% DEF ignore, combat-formulas.md § Special: Shiv).
+The throw is not, and it was deliberately not invented, because two independent
+decisions are missing. First, no document maps [items.md](../story/items.md)'s
+consumables, materials and steal-only drops onto the six elements, and "element
+depends on item type" needs that mapping — Wild Card's item branches need the
+same one, so it is one decision covering both. Second, "bonus elemental damage"
+admits three non-equivalent readings: the throw re-elements the existing Shiv
+hit, adds a separate hit at its own magnitude, or raises Shiv's multiplier for
+that use. abilities.md § Damage Magnitudes states the options and recommends the
+first; the call belongs to a pass with the item tables open.
 
-- **Convergence Chorus** at `3.0` ("Maximum").
-  [abilities.md](../story/abilities.md) § Torren — Spiritcall defines it as four
-  simultaneous Spiritcall effects at 50% potency — an AoE heal, AoE damage, a
-  party barrier and a status cleanse, with no physical component. A physical
-  `ability_mult` cannot express that composite, so the combat-formulas.md row is
-  the incorrect one and the magnitude is genuinely still open. (The prose
-  immediately below the table repeats the claim, so both need correcting.)
-- **Shattered Vanguard** at `2.5` ("Combo ability", quoted at ~12,700).
-  [abilities.md](../story/abilities.md) § Combo Abilities defines it as Misdirect
-  on all enemies followed by Shatter Guard at +50% damage, and Shatter Guard is a
-  custom-formula ability — combat-formulas.md § Custom-Formula Abilities gives it
-  as "total absorbed damage since stance began, capped at 2x Edren's max HP". A
-  flat ATK multiplier cannot express absorbed damage either, so the ~12,700 is
-  as unfounded as the 3.0 row.
+**Physical Ability Multiplier table conflicts — resolved.**
+[combat-formulas.md](../story/combat-formulas.md) § Physical Ability Multiplier
+Tiers used to list two abilities that cannot take a physical `ability_mult` at
+all. Both rows are corrected:
 
-Correcting both rows is tracked separately as a combat-formulas.md fix, in
-[#333](https://github.com/gcko/pendulum-of-despair/issues/333) (opened for
-Convergence Chorus; the Shattered Vanguard row belongs in the same pass).
-`abilities.md:129` already documents Sever Bond as a genuine physical 3.0x
-ability, so the 3.0 row has a correct exemplar available.
+- **Convergence Chorus** at `3.0` ("Maximum") — a composite of four Spiritcall
+  effects with no physical component. Removed from the table; its magnitudes are
+  derived per component in abilities.md § Damage Magnitudes, and the table now
+  carries a note explaining what kinds of ability it does not cover.
+- **Shattered Vanguard** at `2.5` ("Combo ability") — Misdirect followed by
+  Shatter Guard at +50%, and Shatter Guard is a custom-formula ability. Moved to
+  § Custom-Formula Abilities as `Shatter Guard × 1.5`.
 
-The magnitudes above are unblocked as soon as party ability execution lands in
-the battle layer — today `game/data/abilities/` is consumed only by the menu UI,
-so there is no consumer for a magnitude field. That work is tracked in
+The `3.0` row now cites Sever Bond (abilities.md § Lira, a stated "3.0× ability
+multiplier physical attack") and Wild Card's three-item branch. The `2.5` row is
+marked reserved: no shipped combo takes a physical `ability_mult`, because every
+combo either modifies a constituent ability or states its own formula. Closes
+[#333](https://github.com/gcko/pendulum-of-despair/issues/333).
+
+The magnitudes above still have no runtime consumer — `game/data/abilities/` is
+read only by the menu UI, and `battle_actions.gd`'s `spell_power` path serves
+enemy abilities from `game/data/enemies/`. Party ability execution is tracked in
 [#321](https://github.com/gcko/pendulum-of-despair/issues/321) (whose title still
-says "eight"; the enumerated list here is the current count).
+says "eight"; the enumerated list here is the current count). Writing the values
+down first is what lets that work start from numbers rather than adjectives.
 
 ---
 
