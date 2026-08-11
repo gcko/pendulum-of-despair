@@ -36,7 +36,7 @@ Continue the extraction pattern: split PartyState into composition/stats/invento
 
 ## Design references
 
-- game/scripts/autoload/inventory_helpers.gd:3 (self-stated 400-line goal)
+- game/scripts/util/inventory_helpers.gd:3 (self-stated 400-line goal)
 
 ## Code references
 

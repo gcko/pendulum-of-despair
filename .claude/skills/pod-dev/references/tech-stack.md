@@ -34,8 +34,28 @@ Six autoloads are registered in `project.godot` and live in
 | `EventFlags` | `event_flags.gd` | Story flags and world-state booleans |
 | `PartyState` | `party_state.gd` | Active party, characters, inventory state |
 
-(`inventory_helpers.gd` is a helper script alongside the autoloads, not itself
-an autoload.)
+`scripts/autoload/` holds these six scripts and nothing else. Helpers that are
+*not* registered as autoloads split on who reaches them, not on how many screens
+use them. A helper reached from outside `scripts/ui/` lives in `scripts/util/`:
+`inventory_helpers.gd` (preloaded from `autoload/`, `combat/` and `ui/`),
+`InputUtil` (`ui/`, `core/`), `DialogueCondition` (`ui/`, `core/`, `entities/`)
+and `DialogueConsequences` (`core/`). A helper whose only consumers are UI
+scripts stays in `scripts/ui/` next to those screens, even when several screens
+share it — `ui/stat_bar_helpers.gd` is used by the battle party panel, the main
+menu and the status screen, and `ui/spell_helpers.gd` by the battle command menu
+and the magic menu, while `ui/ability_helpers.gd` and `ui/save_load_display.gd`
+each serve one screen. None of the four are UI controllers: the first three are
+all-`static` `RefCounted` helpers, and `save_load_display.gd` is an instantiated
+`RefCounted` collaborator that holds a reference to its owning overlay. A global
+`class_name` does not mark the split either way — `StatBarHelpers` and
+`SaveLoadDisplay` are `class_name` globals in `scripts/ui/`, and
+`inventory_helpers.gd` in `scripts/util/` has no `class_name` at all.
+
+`game/tests/test_script_layout.gd` enforces only the `autoload/` half: every
+`.gd` in `scripts/autoload/` must appear in the `[autoload]` block, no script in
+`scripts/util/` may be a registered singleton, and `inventory_helpers.gd` must
+live in `scripts/util/`. The util-vs-ui placement above is a convention the
+suite does not check.
 
 ---
 
@@ -45,12 +65,12 @@ All gameplay code lives under `game/scripts/`:
 
 ```
 game/scripts/
-  autoload/    # The 6 autoload singletons + helpers
+  autoload/    # The 6 autoload singletons registered in project.godot
   combat/      # ATB battle logic, command handling, damage resolution
   core/        # Core game-flow controllers (scene management, run state)
   entities/    # Player, NPCs, enemies, interactables, trigger zones
-  ui/          # Control/CanvasLayer UI controllers (menus, HUD, dialogue)
-  util/        # Shared helpers and small utilities
+  ui/          # UI controllers (menus, HUD, dialogue) + their local helpers
+  util/        # Cross-cutting helpers, not registered as autoloads
 ```
 
 Scenes live under `game/scenes/`:

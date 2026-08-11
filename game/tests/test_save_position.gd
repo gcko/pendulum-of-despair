@@ -6,7 +6,7 @@ extends GutTest
 ## "no position recorded" fallback, and the v1 -> v2 migration that strips the
 ## fabricated origin from old saves.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const TEST_SLOT: int = 1
 
 

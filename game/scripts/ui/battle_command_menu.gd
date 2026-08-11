@@ -10,7 +10,7 @@ signal target_changed(index: int, is_enemy: bool)
 enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
-const InvHelpers := preload("res://scripts/autoload/inventory_helpers.gd")
+const InvHelpers := preload("res://scripts/util/inventory_helpers.gd")
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")

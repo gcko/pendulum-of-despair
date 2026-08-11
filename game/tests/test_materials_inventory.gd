@@ -6,7 +6,7 @@ extends GutTest
 ## rule, the Materials tab, the battle-item list, and the save migration that
 ## rescues materials stranded in old saves' consumables bucket.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const MENU_SCENE: PackedScene = preload("res://scenes/overlay/menu.tscn")
 const BATTLE_SCENE: PackedScene = preload("res://scenes/core/battle.tscn")
 const TEST_SLOT: int = 2

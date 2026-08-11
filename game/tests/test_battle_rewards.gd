@@ -1,7 +1,7 @@
 extends GutTest
 ## Tests for XP distribution and level-up logic.
 
-const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 
 func _make_member(id: String, level: int, xp: int, hp: int) -> Dictionary:
