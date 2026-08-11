@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — #219 |
 | **GitHub Issue** | [#219](https://github.com/gcko/pendulum-of-despair/issues/219) |
 | **Source domains** | combat, progression |
 
@@ -42,7 +42,7 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 
 ## Code references
 
-- game/scripts/combat/damage_calculator.gd:45-47
+- game/scripts/combat/damage_calculator.gd
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -55,4 +55,6 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

@@ -6,18 +6,44 @@ Design-vs-implementation gaps for the Godot project, produced by a 14-agent
 
 ## Verification summary
 
+### 2026-06-27 analysis pass — frozen snapshot
+
+These figures record what the fresh-eyes pass concluded on 2026-06-27. They are
+a historical record of that pass, **not a running count**, and are deliberately
+never recomputed:
+
 - **91 issues** analyzed → **86 CONFIRMED**, **1 already done** (GAP-004,
   equipment bonuses ARE applied in battle), **4 overstated** (refined).
 - **8 resolved in this pass**: 7 safe fixes applied (GAP-012, 023, 046, 067,
   085, 088, 090) + 1 already-done (GAP-004).
-- The remaining **83 are real, open gaps** (incl. 14 epics) migrated to GitHub
-  Issues for tracking. This directory is the durable, reviewable source.
+- The remaining **83** were open at that moment and were migrated to GitHub
+  Issues for tracking. That 83 is a 2026-06-27 figure; for the live number see
+  the running count below.
 
-**Headline:** the combat system marked "complete" is a basic-attack shell —
-Magic (GAP-001), the six character commands (GAP-002), status infliction
-(GAP-003), and dual-techs (GAP-005) are unwired.
+### Current tally — running count
+
+Recomputed from the Status column of the table below, which
+`scripts/quality-gates/check_stale_counts.py` cross-checks against the Status
+field of each linked GAP doc. **Update these numbers whenever a row's Status
+changes** — the gate fails the build when they drift.
+
+- **91 gap files** — **61 open**, **2 partial**, **28 resolved**.
+- **14 epics** (🏔️) among them.
+
+This directory is the durable, reviewable source.
+
+**Headline (2026-06-27):** the combat system marked "complete" is a
+basic-attack shell — Magic (GAP-001), the six character commands (GAP-002),
+status infliction (GAP-003), and dual-techs (GAP-005) are unwired. _Since then
+GAP-001 (#157) and GAP-003 (#159) have shipped; GAP-002 and GAP-005 remain
+open._
 
 ## Gap-analysis summary
+
+Everything below this line is the verbatim 2026-06-27 analysis narrative,
+preserved as written. It is a **frozen record of that pass**, not a status
+report: statements in it are true as of 2026-06-27 only. The Status column of
+the table is the live view.
 
 Consolidated 119 raw domain-agent gaps into 91 deduplicated master issues (GAP-001..GAP-091), grouped by area and ordered by severity within area. 14 are marked epic=true (coarse, multi-week content/system gaps): GAP-002 (unique character commands), GAP-016 (crafting), GAP-029/030/031 (continental overworld / transport / dynamic world), GAP-044 (sidequests), GAP-047 (Acts II-IV narrative & scene wiring), GAP-048/049 (dungeons / faction cities), GAP-078/079/080 (music+audio assets / corruption evolution / leitmotifs), GAP-082 (art assets), GAP-091 (post-game).
 
@@ -33,21 +59,21 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 
 | ID | Area | Severity | Effort | Status | Title |
 |----|------|----------|--------|--------|-------|
-| [GAP-001](GAP-001-magic-command-is-non-functional-in-battle-spell-su.md) | Combat | BLOCKER | M | open | Magic command is non-functional in battle — spell submenu never populated |
+| [GAP-001](GAP-001-magic-command-is-non-functional-in-battle-spell-su.md) | Combat | BLOCKER | M | resolved (#157) | Magic command is non-functional in battle — spell submenu never populated |
 | [GAP-002](GAP-002-six-unique-character-commands-bulwark-rally-forgew.md) 🏔️ | Combat | HIGH | XL | open | Six unique character commands (Bulwark/Rally/Forgewright/Spiritcall/Tricks/Arcanum) not implemented in battle |
-| [GAP-003](GAP-003-status-effect-infliction-is-never-wired-into-comba.md) | Combat | HIGH | M | open | Status-effect infliction is never wired into combat actions |
-| [GAP-007](GAP-007-atb-mode-battle-speed-patience-mode-config-never-r.md) | Combat | HIGH | M | open | ATB Mode / Battle Speed / Patience Mode config never reaches the battle system |
+| [GAP-003](GAP-003-status-effect-infliction-is-never-wired-into-comba.md) | Combat | HIGH | M | resolved (#159) | Status-effect infliction is never wired into combat actions |
+| [GAP-007](GAP-007-atb-mode-battle-speed-patience-mode-config-never-r.md) | Combat | HIGH | M | resolved (#160) | ATB Mode / Battle Speed / Patience Mode config never reaches the battle system |
 | [GAP-011](GAP-011-ley-crystal-progression-uses-a-flat-while-equipped.md) | Progression | HIGH | L | open | Ley Crystal progression uses a flat while-equipped bonus instead of permanent per-level-up accumulation (Esper/Magicite model) |
 | [GAP-016](GAP-016-entire-crafting-forging-system-arcanite-forging-un.md) 🏔️ | Items/Economy | HIGH | XL | open | Entire crafting/forging system (Arcanite Forging) unimplemented — data exists, zero gameplay |
 | [GAP-017](GAP-017-shop-has-no-sell-mode-and-no-buy-sell-exit-entry-p.md) | Items/Economy | HIGH | L | open | Shop has no Sell mode and no Buy/Sell/Exit entry prompt |
-| [GAP-019](GAP-019-crafting-materials-inventory-bucket-never-populate.md) | Items/Economy | HIGH | M | open | Crafting materials inventory bucket never populated; material drops land in consumables and become unusable |
-| [GAP-020](GAP-020-permanent-stat-capsules-have-no-effect-write-a-fie.md) | Items/Economy | HIGH | S | open | Permanent stat capsules have no effect (write a field nothing reads; wiped on level-up) |
-| [GAP-024](GAP-024-enemy-special-abilities-absent-from-data-regular-e.md) | Enemies | HIGH | L | open | Enemy special abilities absent from data; regular-enemy AI can only basic-attack or defend |
+| [GAP-019](GAP-019-crafting-materials-inventory-bucket-never-populate.md) | Items/Economy | HIGH | M | resolved (#164) | Crafting materials inventory bucket never populated; material drops land in consumables and become unusable |
+| [GAP-020](GAP-020-permanent-stat-capsules-have-no-effect-write-a-fie.md) | Items/Economy | HIGH | S | resolved (#165) | Permanent stat capsules have no effect (write a field nothing reads; wiped on level-up) |
+| [GAP-024](GAP-024-enemy-special-abilities-absent-from-data-regular-e.md) | Enemies | HIGH | L | resolved (#166) | Enemy special abilities absent from data; regular-enemy AI can only basic-attack or defend |
 | [GAP-029](GAP-029-continental-overworld-unbuilt-60x40-act-i-screen-v.md) 🏔️ | Exploration | HIGH | XL | open | Continental overworld unbuilt — 60x40 Act-I screen vs designed 128x96 free-scroll continent |
 | [GAP-030](GAP-030-transport-vehicle-system-entirely-missing-ley-stag.md) 🏔️ | Exploration | HIGH | L | open | Transport/vehicle system entirely missing (Ley Stag, rail, ferry, Linewalk) |
 | [GAP-031](GAP-031-act-based-dynamic-world-transformations-not-implem.md) 🏔️ | Exploration | HIGH | XL | open | Act-based dynamic world transformations not implemented — all locations are single Act-I state |
 | [GAP-037](GAP-037-choice-consequences-flag-set-score-not-wired-for-s.md) | Dialogue | HIGH | M | open | Choice consequences (flag_set/score) not wired for standalone NPC/zone/auto-sequence dialogue |
-| [GAP-038](GAP-038-numeric-score-increment-clamp-not-implemented-scor.md) | Dialogue | HIGH | M | open | Numeric score increment + clamp not implemented — score choices overwrite instead of accumulate |
+| [GAP-038](GAP-038-numeric-score-increment-clamp-not-implemented-scor.md) | Dialogue | HIGH | M | resolved (#171) | Numeric score increment + clamp not implemented — score choices overwrite instead of accumulate |
 | [GAP-044](GAP-044-sidequest-system-entirely-absent-no-schema-no-jour.md) 🏔️ | Story | HIGH | XL | open | Sidequest system entirely absent: no schema, no journal, 0 of 26 quests wired (givers already placed) |
 | [GAP-047](GAP-047-epic-acts-ii-iv-interlude-epilogue-narrative-scene.md) 🏔️ | World/Story | HIGH | XL | open | EPIC: Acts II–IV + Interlude + Epilogue narrative, scene wiring, NPCs, and world-state transitions unimplemented |
 | [GAP-066](GAP-066-faint-and-fast-reload-death-persistence-is-entirel.md) | Save | HIGH | L | open | Faint-and-Fast-Reload death-persistence is entirely stubbed (XP/level-ups/restore/flags are no-ops) |
@@ -56,21 +82,21 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-005](GAP-005-12-dual-tech-combos-are-entirely-unimplemented-com.md) | Combat | MEDIUM | L | open | 12 dual-tech combos are entirely unimplemented (combos.json unused) |
 | [GAP-006](GAP-006-atb-battle-speed-factors-diverge-from-combat-formu.md) | Combat | MEDIUM | S | open | ATB battle-speed factors diverge from combat-formulas.md (~4x slower than documented) |
 | [GAP-008](GAP-008-combat-interaction-buff-type-trait-multipliers-are.md) | Combat | MEDIUM | L | open | Combat interaction/buff/type-trait multipliers are never applied (damage_calculator params always neutral) |
-| [GAP-009](GAP-009-boss-ai-is-stubbed-hardcoded-data-driven-phase-scr.md) | Combat | MEDIUM | L | open | Boss AI is stubbed/hardcoded; data-driven phase scripts, telegraphs, and Ember Drake kit missing |
+| [GAP-009](GAP-009-boss-ai-is-stubbed-hardcoded-data-driven-phase-scr.md) | Combat | MEDIUM | L | resolved (#179) | Boss AI is stubbed/hardcoded; data-driven phase scripts, telegraphs, and Ember Drake kit missing |
 | [GAP-012](GAP-012-party-join-level-omits-the-design-mandated-1.md) | Progression | MEDIUM | S | ✅ fixed | Party join level omits the design-mandated '-1' |
 | [GAP-013](GAP-013-narrative-milestone-stat-spike-system-is-unimpleme.md) | Progression | MEDIUM | L | open | Narrative milestone stat-spike system is unimplemented (no framework; 11 of 12 spikes absent) |
 | [GAP-014](GAP-014-ley-crystal-negative-effects-and-special-rule-crys.md) | Progression | MEDIUM | L | open | Ley Crystal negative effects and special-rule crystals have data but no mechanics |
 | [GAP-018](GAP-018-shop-buy-mode-missing-descriptions-stat-comparison.md) | Items/Economy | MEDIUM | L | open | Shop Buy mode missing descriptions, stat comparison, compat icons, affordability greying, owned-qty, quantity selector |
 | [GAP-021](GAP-021-several-battle-utility-field-item-effects-are-unim.md) | Items/Economy | MEDIUM | M | open | Several battle-utility/field item effects are unimplemented stubs |
-| [GAP-022](GAP-022-caldera-employee-card-25-discount-not-applied-at-r.md) | Items/Economy | MEDIUM | S | open | Caldera Employee Card 25% discount not applied at runtime |
-| [GAP-025](GAP-025-random-encounter-increment-ignores-act-scale-and-l.md) | Encounters | MEDIUM | M | open | Random-encounter increment ignores act_scale and location_mod |
-| [GAP-026](GAP-026-overworld-per-tile-encounter-zones-not-implemented.md) | Encounters | MEDIUM | M | open | Overworld per-tile encounter zones not implemented; 12 of 13 zones are unreachable dead data |
+| [GAP-022](GAP-022-caldera-employee-card-25-discount-not-applied-at-r.md) | Items/Economy | MEDIUM | S | resolved (#184) | Caldera Employee Card 25% discount not applied at runtime |
+| [GAP-025](GAP-025-random-encounter-increment-ignores-act-scale-and-l.md) | Encounters | MEDIUM | M | resolved (PR #268) | Random-encounter increment ignores act_scale and location_mod |
+| [GAP-026](GAP-026-overworld-per-tile-encounter-zones-not-implemented.md) | Encounters | MEDIUM | M | resolved (PR #268) | Overworld per-tile encounter zones not implemented; 12 of 13 zones are unreachable dead data |
 | [GAP-032](GAP-032-region-boundary-banners-not-implemented.md) | Exploration | MEDIUM | S | open | Region boundary banners not implemented |
 | [GAP-033](GAP-033-overworld-map-screen-menu-parchment-map-discovery.md) | Exploration | MEDIUM | M | open | Overworld map screen (menu parchment map + discovery) not implemented |
 | [GAP-034](GAP-034-per-biome-weather-atmospheric-effects-and-story-ov.md) | Exploration | MEDIUM | M | open | Per-biome weather/atmospheric effects and story overrides not implemented |
-| [GAP-036](GAP-036-cutscene-player-ignores-entry-condition-field-all.md) | Dialogue | MEDIUM | M | open (overstated) | Cutscene player ignores entry condition field — all scripted entries play unconditionally |
+| [GAP-036](GAP-036-cutscene-player-ignores-entry-condition-field-all.md) | Dialogue | MEDIUM | M | resolved (#190; verified severity overstated) | Cutscene player ignores entry condition field — all scripted entries play unconditionally |
 | [GAP-039](GAP-039-dialogue-animation-system-when-timing-stubbed-stan.md) | Dialogue | MEDIUM | M | open | Dialogue animation system: when-timing stubbed, standalone routing unconnected, clear/hold-reset missing |
-| [GAP-042](GAP-042-npc-dialogue-resolver-silently-drops-all-default-l.md) | Story | MEDIUM | M | open | NPC dialogue resolver silently drops all default lines except the last |
+| [GAP-042](GAP-042-npc-dialogue-resolver-silently-drops-all-default-l.md) | Story | MEDIUM | M | resolved (#192) | NPC dialogue resolver silently drops all default lines except the last |
 | [GAP-043](GAP-043-act-ii-diplomatic-mission-content-is-reachable-com.md) | Story | MEDIUM | S | open | Act II diplomatic-mission content is reachable/completable during Act I with no story gating |
 | [GAP-045](GAP-045-npc-act-state-dialogue-variants-unreachable-condit.md) | Story | MEDIUM | M | open | NPC act-state dialogue variants unreachable: conditions on flags never set anywhere |
 | [GAP-048](GAP-048-epic-world-dungeons-3-20-and-all-6-city-dungeons-2.md) 🏔️ | World | MEDIUM | XL | open | EPIC: World dungeons 3-20 and all 6 city dungeons + ~20 secret passages unbuilt |
@@ -98,11 +124,11 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-082](GAP-082-epic-all-art-assets-are-placeholders-no-real-sprit.md) 🏔️ | Art | MEDIUM | XL | open | EPIC: All art assets are placeholders (no real sprites, biome tilesets, UI frames, or status icons) |
 | [GAP-083](GAP-083-savemanager-core-logic-ffr-migration-validation-co.md) | Tests | MEDIUM | M | open | SaveManager core logic (FFR, migration, validation, corrupt-load) has no unit tests |
 | [GAP-004](GAP-004-equipment-stat-bonuses-are-never-applied-in-battle.md) | Combat | LOW | M | ✅ already done | Equipment stat bonuses are never applied in battle |
-| [GAP-010](GAP-010-cael-s-hidden-act-i-spike-implemented-as-hardcoded.md) | Combat | LOW | S | open | Cael's hidden Act I spike implemented as hardcoded +10% physical damage instead of ATK+2/MAG+2/SPD+1 |
+| [GAP-010](GAP-010-cael-s-hidden-act-i-spike-implemented-as-hardcoded.md) | Combat | LOW | S | resolved (#219) | Cael's hidden Act I spike implemented as hardcoded +10% physical damage instead of ATK+2/MAG+2/SPD+1 |
 | [GAP-015](GAP-015-crystal-xp-distribution-ignores-reserve-wearers-an.md) | Progression | LOW | S | open | Crystal XP distribution ignores reserve wearers and KO status |
 | [GAP-023](GAP-023-equipment-data-counts-exceed-and-diverge-from-stal.md) | Items/Economy | LOW | S | ✅ fixed | Equipment data counts exceed and diverge from stale tracker figures |
-| [GAP-027](GAP-027-formation-overrides-preemptive-charm-sable-s-coin.md) | Encounters | LOW | S | open | Formation overrides (Preemptive Charm, Sable's Coin) not implemented |
-| [GAP-028](GAP-028-undocumented-act-i-enemies-in-data-compact-patrol.md) | Enemies | LOW | S | open | Undocumented Act I enemies in data (Compact Patrol, Compact Scout) absent from bestiary |
+| [GAP-027](GAP-027-formation-overrides-preemptive-charm-sable-s-coin.md) | Encounters | LOW | S | resolved (PR #268) | Formation overrides (Preemptive Charm, Sable's Coin) not implemented |
+| [GAP-028](GAP-028-undocumented-act-i-enemies-in-data-compact-patrol.md) | Enemies | LOW | S | resolved (#222) | Undocumented Act I enemies in data (Compact Patrol, Compact Scout) absent from bestiary |
 | [GAP-035](GAP-035-overworld-save-points-missing-camera-edge-boundari.md) | Exploration | LOW | S | open | Overworld save points missing; camera edge boundaries not enforced |
 | [GAP-040](GAP-040-speaker-name-tag-diverges-from-design-inline-speak.md) | Dialogue | LOW | S | open | Speaker name tag diverges from design — inline 'SPEAKER:' prefix instead of inset tag (SpeakerLabel dead) |
 | [GAP-041](GAP-041-cael-s-act-iv-grey-border-flicker-only-specified-d.md) | Dialogue | LOW | S | open | Cael's Act IV grey border flicker (only specified dialogue-box visual variation) not implemented |

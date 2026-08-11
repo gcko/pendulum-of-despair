@@ -8,7 +8,7 @@
 | **Type** | partial-impl |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — OVERSTATED |
+| **Status** | resolved — #190 (verified severity OVERSTATED) |
 | **GitHub Issue** | [#190](https://github.com/gcko/pendulum-of-despair/issues/190) |
 | **Source domains** | dialogue |
 
@@ -40,8 +40,9 @@ Extract the condition evaluator + priority-stack logic into a shared helper and 
 
 ## Code references
 
-- game/scripts/core/cutscene_player.gd:178-214
-- game/scripts/entities/npc.gd:81-148
+- game/scripts/core/cutscene_player.gd — `_process_entries()`
+- game/scripts/util/dialogue_condition.gd — `should_play()`, `resolve_stack()` (the shared evaluator the fix extracted; it no longer lives in npc.gd)
+- game/scripts/entities/npc.gd — `get_current_dialogue()`
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -54,4 +55,6 @@ Extract the condition evaluator + priority-stack logic into a shared helper and 
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

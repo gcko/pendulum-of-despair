@@ -42,9 +42,9 @@ Wire each consumer: read screen_shake in shake emitters; branch transitions on t
 
 ## Code references
 
-- game/scripts/ui/menu_config.gd:24,27,39,48-52
-- game/scripts/autoload/audio_manager.gd:651-674
-- game/scripts/core/cutscene_player.gd:353-359
+- game/scripts/ui/menu_config.gd
+- game/scripts/autoload/audio_manager.gd
+- game/scripts/core/cutscene_player.gd
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -57,4 +57,6 @@ Wire each consumer: read screen_shake in shake emitters; branch transitions on t
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

@@ -554,5 +554,478 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(result, 0)
 
 
+class TestDocLineCounts(unittest.TestCase):
+    """Gate E, scan 2: canonical-source line-count claims (#336)."""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.story = os.path.join(self.tmpdir, "story")
+        os.makedirs(os.path.join(self.story, "bestiary"))
+        with open(os.path.join(self.story, "combat.md"), "w") as f:
+            f.write("a\nb\nc\n")
+        for n in ("one.md", "two.md"):
+            with open(os.path.join(self.story, "bestiary", n), "w") as f:
+                f.write("x\n")
+
+    def _tracker(self, body: str) -> str:
+        path = os.path.join(self.tmpdir, "gaps.md")
+        with open(path, "w") as f:
+            f.write(
+                "| Category | Source Documents |\n"
+                "|----------|----------------|\n" + body + "\n\nAfter the table.\n"
+            )
+        return path
+
+    def test_accurate_counts_pass(self):
+        p = self._tracker("| Combat | `combat.md` (3) |\n| Enemies | `bestiary/` (2 files) |")
+        self.assertEqual(
+            check_stale_counts.check_doc_line_counts(p, self.story), []
+        )
+
+    def test_detects_stale_line_count(self):
+        p = self._tracker("| Combat | `combat.md` (933) |")
+        errors = check_stale_counts.check_doc_line_counts(p, self.story)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 933 lines, actual 3", errors[0])
+
+    def test_detects_stale_file_count(self):
+        p = self._tracker("| Enemies | `bestiary/` (9 files) |")
+        errors = check_stale_counts.check_doc_line_counts(p, self.story)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 9 files, actual 2", errors[0])
+
+    def test_detects_missing_document(self):
+        p = self._tracker("| Combat | `ghost.md` (10) |")
+        errors = check_stale_counts.check_doc_line_counts(p, self.story)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_comma_formatted_counts_are_compared_numerically(self):
+        with open(os.path.join(self.story, "big.md"), "w") as f:
+            f.write("x\n" * 1234)
+        p = self._tracker("| Big | `big.md` (1,234) |")
+        self.assertEqual(
+            check_stale_counts.check_doc_line_counts(p, self.story), []
+        )
+
+    def test_missing_table_is_reported(self):
+        path = os.path.join(self.tmpdir, "no-table.md")
+        with open(path, "w") as f:
+            f.write("# Nothing here\n")
+        errors = check_stale_counts.check_doc_line_counts(path, self.story)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("table not found", errors[0])
+
+    def test_real_tracker_is_current(self):
+        if not os.path.exists("docs/analysis/game-dev-gaps.md"):
+            self.skipTest("No gap tracker available")
+        errors = check_stale_counts.check_doc_line_counts()
+        self.assertEqual(errors, [], f"Stale doc line counts: {errors}")
+
+
+class TestGapStatusConsistency(unittest.TestCase):
+    """Gate E, scan 3: README rows vs linked GAP doc Status (#345)."""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+
+    def _gap(self, gap_id: str, status: str) -> str:
+        name = f"{gap_id}-thing.md"
+        with open(os.path.join(self.tmpdir, name), "w") as f:
+            f.write(f"| **ID** | {gap_id} |\n| **Status** | {status} |\n")
+        return name
+
+    def _readme(self, rows: list[str], tally: str) -> None:
+        with open(os.path.join(self.tmpdir, "README.md"), "w") as f:
+            f.write(tally + "\n\n| ID | Area | Severity | Effort | Status | Title |\n")
+            f.write("|----|------|----------|--------|--------|-------|\n")
+            f.write("\n".join(rows) + "\n")
+
+    @staticmethod
+    def _row(gap_id: str, link: str, status: str, epic: bool = False) -> str:
+        marker = " 🏔️" if epic else ""
+        return (
+            f"| [{gap_id}]({link}){marker} | Combat | HIGH | M | {status} | Title |"
+        )
+
+    def test_agreeing_statuses_pass(self):
+        a = self._gap("GAP-001", "open — CONFIRMED")
+        b = self._gap("GAP-002", "resolved — #157")
+        self._readme(
+            [self._row("GAP-001", a, "open"), self._row("GAP-002", b, "✅ fixed")],
+            "- **2 gap files** — **1 open**, **0 partial**, **1 resolved**.\n"
+            "- **0 epics** (🏔️) among them.",
+        )
+        self.assertEqual(
+            check_stale_counts.check_gap_status_consistency(self.tmpdir), []
+        )
+
+    def test_detects_row_disagreeing_with_doc(self):
+        a = self._gap("GAP-001", "resolved — PR #268")
+        self._readme(
+            [self._row("GAP-001", a, "open")],
+            "- **1 gap files** — **0 open**, **0 partial**, **1 resolved**.\n"
+            "- **0 epics** (🏔️) among them.",
+        )
+        errors = check_stale_counts.check_gap_status_consistency(self.tmpdir)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("GAP-001 row says 'open'", errors[0])
+        self.assertIn("resolved", errors[0])
+
+    def test_detects_stale_running_tally(self):
+        a = self._gap("GAP-001", "open — CONFIRMED")
+        self._readme(
+            [self._row("GAP-001", a, "open")],
+            "- **1 gap files** — **83 open**, **0 partial**, **0 resolved**.\n"
+            "- **0 epics** (🏔️) among them.",
+        )
+        errors = check_stale_counts.check_gap_status_consistency(self.tmpdir)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 83 open, actual 1", errors[0])
+
+    def test_detects_stale_epic_count(self):
+        a = self._gap("GAP-001", "open — CONFIRMED")
+        self._readme(
+            [self._row("GAP-001", a, "open", epic=True)],
+            "- **1 gap files** — **1 open**, **0 partial**, **0 resolved**.\n"
+            "- **14 epics** (🏔️) among them.",
+        )
+        errors = check_stale_counts.check_gap_status_consistency(self.tmpdir)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 14 epics, actual 1", errors[0])
+
+    def test_detects_broken_row_link(self):
+        self._readme(
+            [self._row("GAP-001", "GAP-001-gone.md", "open")],
+            "- **1 gap files** — **0 open**, **0 partial**, **0 resolved**.\n"
+            "- **0 epics** (🏔️) among them.",
+        )
+        errors = check_stale_counts.check_gap_status_consistency(self.tmpdir)
+        self.assertTrue(any("links to missing" in e for e in errors))
+
+    def test_unrecognised_status_is_reported_not_ignored(self):
+        a = self._gap("GAP-001", "wibble — who knows")
+        self._readme(
+            [self._row("GAP-001", a, "open")],
+            "- **1 gap files** — **0 open**, **0 partial**, **0 resolved**.\n"
+            "- **0 epics** (🏔️) among them.",
+        )
+        errors = check_stale_counts.check_gap_status_consistency(self.tmpdir)
+        self.assertTrue(any("unrecognised Status" in e for e in errors))
+
+    def test_normalize_status_variants(self):
+        for raw, expected in [
+            ("open — CONFIRMED", "open"),
+            ("open (overstated)", "open"),
+            ("✅ fixed", "resolved"),
+            ("✅ already done", "resolved"),
+            ("RESOLVED — fixed in commit d06a566", "resolved"),
+            ("resolved (PR #268)", "resolved"),
+            ("partial (PR #275; guest row moved to #272)", "partial"),
+        ]:
+            self.assertEqual(
+                check_stale_counts.normalize_status(raw), expected, raw
+            )
+
+    def test_real_readme_is_consistent(self):
+        if not os.path.exists("docs/issues/README.md"):
+            self.skipTest("No gap issue index available")
+        errors = check_stale_counts.check_gap_status_consistency()
+        self.assertEqual(errors, [], f"Status drift: {errors}")
+
+
+class TestGapCodeReferences(unittest.TestCase):
+    """Gate E, scan 4: symbol-anchored Code references bullets (#318)."""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.makedirs(os.path.join(self.tmpdir, "game", "scripts", "util"))
+        with open(
+            os.path.join(self.tmpdir, "game/scripts/util/helpers.gd"), "w"
+        ) as f:
+            f.write("extends RefCounted\n\n\nstatic func distribute_rewards() -> void:\n\tpass\n")
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+
+    def _doc(self, body: str) -> None:
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-001-thing.md", "w") as f:
+            f.write("# GAP-001\n\n## Code references\n\n" + body + "\n")
+
+    def test_valid_reference_passes(self):
+        self._doc("- game/scripts/util/helpers.gd — `distribute_rewards()`")
+        self.assertEqual(
+            check_stale_counts.check_gap_code_references("issues"), []
+        )
+
+    def test_detects_symbol_that_moved_away(self):
+        self._doc("- game/scripts/util/helpers.gd — `add_xp_to_member()`")
+        errors = check_stale_counts.check_gap_code_references("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not define add_xp_to_member()", errors[0])
+
+    def test_detects_missing_file(self):
+        self._doc("- game/scripts/util/gone.gd — `distribute_rewards()`")
+        errors = check_stale_counts.check_gap_code_references("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_bullet_without_symbol_is_left_alone(self):
+        """GAP-086 deliberately cites a pre-move path with no symbol."""
+        self._doc("- game/scripts/autoload/helpers.gd:1 (pre-move location)")
+        self.assertEqual(
+            check_stale_counts.check_gap_code_references("issues"), []
+        )
+
+    def test_all_symbols_on_a_bullet_are_checked(self):
+        self._doc(
+            "- game/scripts/util/helpers.gd — `distribute_rewards()`, `nope()`"
+        )
+        errors = check_stale_counts.check_gap_code_references("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("nope()", errors[0])
+
+    def test_only_the_code_references_section_is_scanned(self):
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-001-thing.md", "w") as f:
+            f.write(
+                "# GAP-001\n\n## Code references\n\n"
+                "- game/scripts/util/helpers.gd — `distribute_rewards()`\n\n"
+                "## Verification\n\n"
+                "- game/scripts/util/helpers.gd — `long_gone()`\n"
+            )
+        self.assertEqual(
+            check_stale_counts.check_gap_code_references("issues"), []
+        )
+
+    def test_real_gap_docs_resolve(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        errors = check_stale_counts.check_gap_code_references()
+        self.assertEqual(errors, [], f"Stale code references: {errors}")
+
+
+class TestGapCodeReferencePaths(unittest.TestCase):
+    """Gate E, scan 4: path and line-anchor rules on EVERY bullet (#318).
+
+    The symbol rule only ever covered a handful of bullets; the rest named
+    paths and line numbers that nothing measured, which is how GAP-036 came to
+    cite an evaluator that had moved to another file.
+    """
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.makedirs(os.path.join(self.tmpdir, "game/scripts/util"))
+        os.makedirs(os.path.join(self.tmpdir, "game/data/crafting"))
+        os.makedirs(os.path.join(self.tmpdir, "game/scenes/maps/towns"))
+        for path in (
+            "game/scripts/util/party_roster.gd",
+            "game/scripts/util/party_vitals.gd",
+            "game/data/crafting/devices.json",
+            "game/data/crafting/recipes.json",
+            "game/scenes/maps/towns/roothollow.tscn",
+        ):
+            with open(os.path.join(self.tmpdir, path), "w") as f:
+                f.write("stub\n")
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+
+    def _errors(self, body: str) -> list:
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-001-thing.md", "w") as f:
+            f.write("# GAP-001\n\n## Code references\n\n" + body + "\n")
+        return check_stale_counts.check_gap_code_references("issues")
+
+    def test_path_only_bullet_is_verified_not_skipped(self):
+        self.assertEqual(self._errors("- game/scripts/util/party_roster.gd"), [])
+        errors = self._errors("- game/scripts/util/party_gone.gd")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("party_gone.gd does not exist", errors[0])
+
+    def test_line_anchor_is_rejected(self):
+        errors = self._errors("- game/scripts/util/party_roster.gd:81-148")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("line anchor", errors[0])
+
+    def test_line_anchor_is_rejected_even_beside_a_valid_symbol(self):
+        with open("game/scripts/util/party_roster.gd", "w") as f:
+            f.write("func add_member() -> void:\n\tpass\n")
+        errors = self._errors(
+            "- game/scripts/util/party_roster.gd:81 — `add_member()`"
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("line anchor", errors[0])
+
+    def test_historical_bullets_are_exempt_from_both_rules(self):
+        """GAP-046 and GAP-086 cite paths the fix deliberately removed."""
+        self.assertEqual(
+            self._errors(
+                "- game/scripts/autoload/party_roster.gd:1 "
+                "(pre-move location; now game/scripts/util/party_roster.gd)"
+            ),
+            [],
+        )
+        self.assertEqual(
+            self._errors("- game/data/dialogue/dupe.json (historical — deleted)"),
+            [],
+        )
+
+    def test_directory_bullets_are_verified(self):
+        self.assertEqual(
+            self._errors("- game/scenes/maps/towns/ (three built)"), []
+        )
+        errors = self._errors("- game/scenes/maps/cities/ (none built)")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_glob_bullets_must_match_something(self):
+        self.assertEqual(self._errors("- game/scenes/maps/towns/*"), [])
+        errors = self._errors("- game/scenes/maps/dungeons/*")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("matches nothing", errors[0])
+
+    def test_brace_shorthand_checks_every_member(self):
+        self.assertEqual(
+            self._errors("- game/scripts/util/party_{roster,vitals}.gd"), []
+        )
+        errors = self._errors("- game/scripts/util/party_{roster,ghost}.gd")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("party_ghost.gd does not exist", errors[0])
+
+    def test_alternation_shorthand_checks_every_member(self):
+        self.assertEqual(
+            self._errors("- game/data/crafting/devices.json|recipes.json"), []
+        )
+        errors = self._errors("- game/data/crafting/devices.json|missing.json")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("crafting/missing.json does not exist", errors[0])
+
+    def test_several_paths_on_one_bullet_are_all_checked(self):
+        errors = self._errors(
+            "- game/scripts/util/party_roster.gd, game/scripts/util/nope.gd"
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("nope.gd", errors[0])
+
+    def test_trailing_prose_is_not_mistaken_for_a_path(self):
+        self.assertEqual(
+            self._errors(
+                "- game/scripts/util/party_roster.gd "
+                "(no milestone/spike application)"
+            ),
+            [],
+        )
+
+    def test_bullet_with_no_path_at_all_is_ignored(self):
+        self.assertEqual(self._errors("- (none — no post-game scenes)"), [])
+
+    def test_real_gap_docs_carry_no_line_anchors(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        errors = check_stale_counts.check_gap_code_references()
+        self.assertEqual(errors, [], f"Stale code references: {errors}")
+
+
+class TestGapMeasuredTables(unittest.TestCase):
+    """Gate E, scan 5: the 'current' column of GAP measured tables (#319)."""
+
+    HEADER = (
+        "| File | baseline | current (2026-08-12) |\n"
+        "|------|----------|----------------------|\n"
+    )
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.makedirs(os.path.join(self.tmpdir, "game", "scripts"))
+        with open(os.path.join(self.tmpdir, "game/scripts/big.gd"), "w") as f:
+            f.write("extends Node\n" * 4)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+
+    def _doc(self, body: str) -> None:
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-087-sizes.md", "w") as f:
+            f.write("# GAP-087\n\n## Measured line counts\n\n" + body + "\n")
+
+    def test_matching_count_passes(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 4 |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_detects_a_count_that_drifted(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 5 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 5 lines", errors[0])
+        self.assertIn("actual 4", errors[0])
+
+    def test_detects_a_file_that_moved_away(self):
+        self._doc(self.HEADER + "| `game/scripts/gone.gd` | 9 | 4 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_thousands_separators_are_understood(self):
+        with open("game/scripts/big.gd", "w") as f:
+            f.write("extends Node\n" * 1200)
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 1,200 |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_unmeasured_rows_are_skipped(self):
+        self._doc(self.HEADER + "| `game/scripts/gone.gd` | 9 | — |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_non_numeric_cell_is_reported_not_ignored(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | about 4 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("not a line count", errors[0])
+
+    def test_tables_without_a_current_column_are_ignored(self):
+        self._doc(
+            "| File | baseline | after decomposition |\n"
+            "|------|----------|---------------------|\n"
+            "| `game/scripts/big.gd` | 9 | 999 |"
+        )
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_the_field_table_at_the_top_of_a_gap_doc_is_ignored(self):
+        """Two-column Field/Value tables must not be read as measurements."""
+        self._doc(
+            "| Field | Value |\n|-------|-------|\n"
+            "| **ID** | GAP-087 |\n"
+            + self.HEADER
+            + "| `game/scripts/big.gd` | 9 | 4 |"
+        )
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_real_gap_docs_are_measured_correctly(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        errors = check_stale_counts.check_gap_measured_tables()
+        self.assertEqual(errors, [], f"Stale measured counts: {errors}")
+
+
 if __name__ == "__main__":
     unittest.main()

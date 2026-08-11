@@ -40,9 +40,9 @@ Add SaveManager.save_config/load_config delegating to the JSON helper; have Part
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd:14
-- game/scripts/autoload/party_state.gd:664,698
-- game/scripts/util/inventory_helpers.gd — `load_config_from_disk()`
+- game/scripts/autoload/save_manager.gd
+- game/scripts/autoload/party_state.gd
+- game/scripts/util/save_data_helpers.gd — `load_config_from_disk()`
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -50,9 +50,11 @@ Add SaveManager.save_config/load_config delegating to the JSON helper; have Part
 - **Verdict:** CONFIRMED
 - **Verified severity:** LOW
 - **Safe to fix immediately:** no — tracked as development work
-- **Evidence:** save_manager.gd:14 declares CONFIG_PATH but SaveManager never reads/writes it (grep shows it's referenced only externally). Config I/O lives in party_state.gd:664-668 save_config (writes SaveManager.CONFIG_PATH) and inventory_helpers.gd:269-282 load_config_from_disk (reads SaveManager.CONFIG_PATH). Persistence is split across three files.
+- **Evidence:** save_manager.gd:14 declares CONFIG_PATH but SaveManager never reads/writes it (grep shows it's referenced only externally). Config I/O lives in `party_state.gd` `save_config()` (writes SaveManager.CONFIG_PATH) and `save_data_helpers.gd` `load_config_from_disk()` (reads SaveManager.CONFIG_PATH). Persistence is split across three files.
 - **Notes:** Confirmed responsibility split / design-divergence (LOW). Resolving it means moving config I/O into SaveManager and updating PartyState/inventory_helpers callers + tests — a refactor touching 3 autoloads. Not bounded. fixNow=false.
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

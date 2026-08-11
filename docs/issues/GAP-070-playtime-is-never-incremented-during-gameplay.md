@@ -40,9 +40,9 @@ Add a _process(delta) accumulator in PartyState/GameManager that increments whil
 
 ## Code references
 
-- game/scripts/autoload/party_state.gd:44,77,128
-- game/scripts/autoload/save_manager.gd:305-306
-- game/scripts/ui/save_load_display.gd:159-165
+- game/scripts/autoload/party_state.gd
+- game/scripts/autoload/save_manager.gd
+- game/scripts/ui/save_load_display.gd
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -55,4 +55,6 @@ Add a _process(delta) accumulator in PartyState/GameManager that increments whil
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

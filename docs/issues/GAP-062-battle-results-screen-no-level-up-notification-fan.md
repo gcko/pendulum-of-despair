@@ -41,9 +41,9 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 
 ## Code references
 
-- game/scripts/ui/battle_ui.gd:229-243
-- game/scripts/util/inventory_helpers.gd — `distribute_rewards()`
-- game/scripts/core/exploration.gd:225
+- game/scripts/ui/battle_ui.gd
+- game/scripts/util/progression_helpers.gd — `distribute_rewards()`
+- game/scripts/core/exploration.gd — `_initialize_from_transition_data()` (the return-from-battle path that distributes rewards)
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -51,9 +51,11 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 - **Verdict:** CONFIRMED
 - **Verified severity:** MEDIUM
 - **Safe to fix immediately:** no — tracked as development work
-- **Evidence:** battle_ui.gd:229-243 _show_results dumps a single static block: 'EXP: %d', 'Gold: %d', and 'Found: %s' % drop.get('item_id') — raw item_id, no name/icon resolution, no per-section advance, no level-up branch (dismissed by single ui_accept at 247-253). inventory_helpers.gd:230-267 distribute_rewards computes and returns level_ups, but the caller chain PartyState.distribute_battle_rewards (party_state.gd:264) -> exploration.gd:225 discards the returned Dictionary (line 'PartyState.distribute_battle_rewards(rewards)' with no assignment). Design ui-design.md:2.8 and progression.md:240.
+- **Evidence:** battle_ui.gd:229-243 _show_results dumps a single static block: 'EXP: %d', 'Gold: %d', and 'Found: %s' % drop.get('item_id') — raw item_id, no name/icon resolution, no per-section advance, no level-up branch (dismissed by single ui_accept at 247-253). progression_helpers.gd `distribute_rewards()` computes and returns level_ups, but the caller chain `PartyState.distribute_battle_rewards()` -> `exploration.gd` discards the returned Dictionary (line 'PartyState.distribute_battle_rewards(rewards)' with no assignment). Design ui-design.md:2.8 and progression.md:240.
 - **Notes:** Confirmed. Minor naming note: the issue says 'distribute_battle_rewards' (the PartyState wrapper) while the helper is distribute_rewards/apply_battle_rewards — substance is correct, level_ups is genuinely discarded. Sectioned state machine + level-up panel = significant new logic + tests; not fixNow.
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

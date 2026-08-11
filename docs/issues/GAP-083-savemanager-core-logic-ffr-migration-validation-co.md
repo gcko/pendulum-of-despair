@@ -41,7 +41,7 @@ Add game/tests/test_save_manager.gd with GUT cases for _migrate, _validate, load
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd:60-92,191-237,133-176
+- game/scripts/autoload/save_manager.gd
 - game/tests/test_save_load.gd
 
 
@@ -55,4 +55,6 @@ Add game/tests/test_save_manager.gd with GUT cases for _migrate, _validate, load
 
 ---
 
-_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis). Verify against current code before acting._
+_Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
+
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._
