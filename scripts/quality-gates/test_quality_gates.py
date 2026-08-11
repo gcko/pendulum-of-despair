@@ -4,6 +4,8 @@
 Run: python3 -m pytest scripts/quality-gates/test_quality_gates.py -v
 Or:  python3 scripts/quality-gates/test_quality_gates.py
 """
+import contextlib
+import io
 import json
 import os
 import shutil
@@ -174,6 +176,14 @@ MAGIC_FIXTURE = """# Magic System
 ## Spell Count Summary
 
 Eighty-nine spells, and nothing else worth saying.
+
+## Physical Elemental Attacks
+
+The pipeline that lets a physical hit carry an element.
+
+## Physical Attack Resolution
+
+Calculate base damage, then apply the row modifier.
 """
 
 
@@ -302,6 +312,115 @@ class TestCheckDocCitations(unittest.TestCase):
             ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
         }
         self.assertEqual(self._errors(known), [])
+
+    def test_resolves_a_heading_that_wraps_to_the_next_line(self):
+        """Prose wraps, and the heading it names wraps with it.
+
+        Reading only the first line hands ``§ Physical Attack`` to the
+        resolver, which matches the earlier *Physical Elemental Attacks* —
+        ``attack`` is a subsequence of it. The citation means *Physical Attack
+        Resolution*, and reading the continuation line is what gets it there.
+        """
+        index = check_doc_citations.DocIndex()
+        truncated = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", "Physical Attack"
+        )
+        self.assertEqual(truncated[2], "Physical Elemental Attacks")
+
+        wrapped = check_doc_citations.citation_tail(
+            " Physical Attack\n## Resolution).\n", markdown=False
+        )
+        hit = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", wrapped
+        )
+        self.assertEqual(hit[2], "Physical Attack Resolution")
+
+        self._write(
+            "game/scripts/a.gd",
+            "## Base damage (magic.md § Physical Attack\n"
+            "## Resolution > 'row modifier').\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_wrapped_citation_cannot_green_light_the_wrong_section(self):
+        """The silent failure this gate exists to stop.
+
+        ``row modifier`` is the term that belongs to *Physical Attack
+        Resolution*; ``carry an element`` belongs to the section a truncated
+        read lands on instead. Cited under the wrapped heading it must fail —
+        and it must fail naming the section that was actually resolved, so the
+        reader can see which one the citation reached.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "## Base damage (magic.md § Physical Attack\n"
+            "## Resolution > 'carry an element').\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+        self.assertIn("§ Physical Attack Resolution", errors[0])
+
+    def test_a_markdown_heading_does_not_continue_a_citation(self):
+        """``#`` opens a section in prose; it is not comment furniture.
+
+        In a ``.gd`` file the next line's ``##`` is a doc-comment marker to be
+        stripped. In markdown it is the next section, and swallowing its title
+        would rewrite the citation's identity — the pin below would come
+        unstuck and the ratchet would fail on a document nobody touched.
+        """
+        self._write(
+            "docs/story/note.md",
+            "Poison ticks per magic.md § Ghost Section\n"
+            "## Status Effect Reference\n",
+        )
+        known = {
+            ("docs/story/note.md", "magic.md § Ghost Section"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_citation_identity_stops_at_the_prose_around_it(self):
+        """The ratchet keys on a citation, not on the code beside it.
+
+        A pin whose signature carried the next token of prose would come
+        unstuck the moment that prose changed, and a stale pin fails the gate.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "## (magic.md § Ghost Section). const POISON_PCT: float = 8.0\n"
+            "## See also magic.md § Ghost Section. Prose follows here.\n"
+            "<!-- magic.md § Ghost Section -->\n",
+        )
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_an_apostrophe_does_not_swallow_the_rest_of_a_citation(self):
+        """``§ Cael's Edge -->`` ends at the arrow, not at the apostrophe."""
+        self._write("docs/story/note.md", "<!-- magic.md § Cael's Ghost -->\n")
+        known = {
+            ("docs/story/note.md", "magic.md § Cael's Ghost"): "#0 — pinned",
+        }
+        self.assertEqual(self._errors(known), [])
+
+    def test_pass_message_reports_how_many_citations_are_pinned(self):
+        """The escape hatch has to announce its own size.
+
+        The commit that introduced this list described it as five entries
+        while adding twelve. A count printed by the gate cannot drift from
+        the list it counts.
+        """
+        self._write("game/scripts/a.gd", "# See magic.md § Ghost Section.\n")
+        known = {
+            ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
+        }
+        buffer = io.StringIO()
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, known, clear=True
+        ), contextlib.redirect_stdout(buffer):
+            self.assertEqual(check_doc_citations.main(), 0)
+        self.assertIn("1 citation(s) pinned", buffer.getvalue())
 
     def test_stale_known_unresolved_entry_fails(self):
         """The ratchet cannot rot either: a pin with nothing to pin fails."""

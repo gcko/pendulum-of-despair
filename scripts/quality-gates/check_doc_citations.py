@@ -87,51 +87,52 @@ NEXT_CITE_RE = re.compile(r"§|[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md")
 KNOWN_UNRESOLVED: dict[tuple[str, str], str] = {
     (
         "docs/story/script/interlude.md",
-        "dungeons-world.md § Roothollow Ley Nexus (Ley Leech) -->",
+        "dungeons-world.md § Roothollow Ley Nexus (Ley Leech)",
     ): "#366 — the dungeon is § 19. Ley Nexus Hollow; Roothollow is a village",
     (
         "game/scripts/combat/battle_magic_command.gd",
-        "combat-formulas.md § Weave Gauge).",
+        "combat-formulas.md § Weave Gauge",
     ): "#366 — combat-formulas.md has no Weave Gauge section",
-    (
-        "game/scripts/combat/encounter_system.gd",
-        "combat-formulas.md § Preemptive Charm interaction).",
-    ): "#366 — no such section; the rule lives under § Encounter System",
-    (
-        "game/scripts/combat/encounter_system.gd",
-        "combat-formulas.md § Final increment formula. int() truncation",
-    ): "#366 — no such section; the formula lives under § Danger Counter",
     (
         "game/scripts/combat/encounter_system.gd",
         "combat-formulas.md § Preemptive Charm interaction",
     ): "#366 — no such section; the rule lives under § Encounter System",
     (
+        "game/scripts/combat/encounter_system.gd",
+        "combat-formulas.md § Final increment formula",
+    ): "#366 — no such section; the formula lives under § Danger Counter",
+    (
+        "game/scripts/combat/encounter_system.gd",
+        'combat-formulas.md § Preemptive Charm interaction ("normalizes '
+        "all terrains to 62",
+    ): "#366 — no such section; the rule lives under § Encounter System",
+    (
         "docs/story/script/act-i.md",
-        "npcs.md § Vessa/Torren -->",
+        "npcs.md § Vessa/Torren",
     ): "#366 — Torren is a party member; his entry is in characters.md",
     (
         "docs/story/script/act-iii.md",
-        "abilities.md § Steadfast Resolve -->",
+        "abilities.md § Steadfast Resolve",
     ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
-        "abilities.md § Cael's Edge -->",
+        "abilities.md § Cael's Edge",
     ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
-        "abilities.md § Rootsong -->",
+        "abilities.md § Rootsong",
     ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
-        "abilities.md § Unbreakable Thread -->",
+        "abilities.md § Unbreakable Thread",
     ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iv-epilogue.md",
-        "characters.md § all -->",
+        "characters.md § all",
     ): "#366 — 'all' is prose for the whole document, not a section",
     (
         "docs/story/script/act-iv-epilogue.md",
-        "items.md § First Tree Seed -->",
+        "items.md § First Tree Seed",
     ): "#366 — items.md lists it in a table, under no heading of its own",
 }
 
@@ -370,6 +371,82 @@ def citation_signature(cited_file: str, heading_part: str) -> str:
     return f"{cited_file} § {' '.join(heading_part.split())[:60]}"
 
 
+def citation_tail(tail: str, markdown: bool) -> str:
+    """Citation text after ``§``, following it across one line wrap.
+
+    Prose wraps, and a heading wraps with it: ``combat-formulas.md §
+    Physical Attack`` / ``Resolution)``. Reading only the first line would
+    hand ``Physical Attack`` to the resolver, which happily matches
+    ``### Physical Elemental Attacks`` — a green light on a citation that
+    points at the wrong section, which is the rot this gate exists to catch.
+
+    So the continuation line joins the first, with its comment or blockquote
+    marker stripped. One line only: a heading that wraps twice is not a
+    heading. Nothing is lost by over-reading, because ``match_heading`` walks
+    word prefixes from longest to shortest — the extra words can only let a
+    *longer*, more specific heading win.
+    """
+    newline = tail.find("\n")
+    if newline < 0:
+        return tail
+    first = tail[:newline]
+    body = tail[newline + 1:].split("\n", 1)[0].strip()
+    if not body:
+        return first
+    if body.startswith("#"):
+        # In markdown a leading ``#`` opens a new heading, which ends the
+        # citation; in code it is comment furniture (``##`` doc comments).
+        if markdown:
+            return first
+        body = body.lstrip("#").strip()
+    else:
+        for mark in ("//", ">", "*"):
+            if body.startswith(mark):
+                body = body[len(mark):].strip()
+                break
+    return f"{first} {body}" if body else first
+
+
+def citation_extent(rest: str) -> str:
+    """Trim the trailing prose that cannot belong to the cited heading.
+
+    The house style parenthesises citations — ``(combat-formulas.md § Physical
+    Attack Resolution)`` — so a ``)`` with no opener of its own ends the
+    citation, as does the ``-->`` of an HTML comment and a sentence-ending
+    ``. ``. Headings *do* contain balanced parentheses (``### Derived Rules
+    (numeric balance pass)``) and dotted numbers (``### 2.1 Foo``), so neither
+    is treated as a terminator. A narrowing term is stepped over whole, because
+    ``> 'Shard Burst (AoE on death)'`` may contain any of these — but only a
+    quote that follows ``>`` opens one, so the apostrophe in ``§ Cael's Edge``
+    stays an apostrophe.
+
+    Trimming here keeps a citation's identity — the signature the ratchet keys
+    on — independent of whatever code or prose happens to follow it.
+    """
+    depth = 0
+    i = 0
+    while i < len(rest):
+        ch = rest[i]
+        if ch in "'\"" and rest[:i].rstrip().endswith(">"):
+            close = rest.find(ch, i + 1)
+            if close < 0:
+                return rest
+            i = close + 1
+            continue
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            if depth == 0:
+                return rest[:i]
+            depth -= 1
+        elif rest.startswith("-->", i):
+            return rest[:i]
+        elif ch == "." and rest[i + 1: i + 2] in (" ", "\t"):
+            return rest[:i]
+        i += 1
+    return rest
+
+
 def check_file(
     path: str, index: DocIndex, seen_known: set[tuple[str, str]]
 ) -> list[str]:
@@ -413,12 +490,11 @@ def check_file(
         if line_no in skip_lines:
             continue
 
-        tail: str = text[m.end():]
-        newline = tail.find("\n")
-        rest: str = tail if newline < 0 else tail[:newline]
+        rest: str = citation_tail(text[m.end():], path.endswith(".md"))
         boundary = NEXT_CITE_RE.search(rest)
         if boundary:
             rest = rest[: boundary.start()]
+        rest = citation_extent(rest)
 
         term_match = TERM_RE.search(rest)
         term: str | None = None
@@ -505,7 +581,12 @@ def main() -> int:
         )
         return 1
 
-    print("Doc citation validation passed.")
+    # State the size of the escape hatch on every run. A number nobody has to
+    # count by hand is a number nobody can understate.
+    print(
+        f"Doc citation validation passed. {len(KNOWN_UNRESOLVED)} citation(s) "
+        "pinned in KNOWN_UNRESOLVED (#366); the list can only shrink."
+    )
     return 0
 
 
