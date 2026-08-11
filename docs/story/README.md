@@ -131,11 +131,29 @@ This directory contains the narrative design for Pendulum of Despair.
 
   `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`, the
   `grey_*` data identifiers) are correct and are excluded on purpose.
-  Two trees are outside the sweep entirely and must stay that way:
-  `docs/references/scripts/`, which quotes the published scripts of other
-  games verbatim, and the dated records in `docs/plans/`,
-  `docs/superpowers/`, `docs/analysis/` and closed-issue titles, which
-  record what was written at the time.
+  Five things sit outside the sweep, for two different reasons, and the
+  reason decides whether a hit in them is a defect.
+
+  Three are frozen and must stay that way: `docs/references/scripts/`,
+  which quotes the published scripts of other games verbatim;
+  `docs/superpowers/`, whose dated records are never corrected after the
+  fact (see `docs/superpowers/README.md`); and closed-issue titles. All
+  three record what was written at the time, so a British spelling in
+  them is history, not a defect.
+
+  Two are live and simply have not been swept yet: `docs/plans/` and
+  `docs/analysis/`. Neither is a dated record —
+  `docs/superpowers/README.md` § Where the live answers are names
+  `docs/plans/` as the home of architecture decisions still in force,
+  `docs/plans/technical-architecture.md` is edited in this milestone, and
+  `docs/analysis/game-dev-gaps.md` is re-measured under
+  `scripts/quality-gates/check_stale_counts.py`. They fall outside the
+  four trees the greps scan only because they hold no player-facing
+  strings, and they are not clean: `behaviour` in
+  `docs/plans/technical-architecture.md`, `colour` (twice) and `labelled`
+  in `docs/plans/bundle-roadmap.md`, and `labelled` in
+  `docs/analysis/game-design-gaps.md` are live today. Tracked in #375,
+  which also decides whether to widen the two greps to cover them.
 
   Every hit the two patterns still return is a known defect tracked in
   #363 — two shipped item strings in `game/data/items/` and their paired
