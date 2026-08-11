@@ -1,10 +1,17 @@
 # Act I Bestiary
 
-Enemies encountered during Act I: Ember Vein, Fenmother's Hollow,
-the Overworld between Valdris and the Hollow, and the Ironmouth outpost
-(the Act I opening / Scene 3 escape on the Carradan border). See
-[README.md](README.md) for type rules, stat formulas, and reward
-calculations.
+The Lv 1–12 power band — the enemies of the Ember Vein, the Valdris and
+outer Thornmere overworld, the Ironmouth outpost (the Act I opening /
+Scene 3 escape on the Carradan border), and Fenmother's Hollow. See
+[README.md](README.md) for type rules, stat formulas, reward
+calculations, and the § Location Vocabulary rule the Location(s) column
+follows.
+
+> **This file is a power band, not an act.** All 27 enemies below ship in
+> `game/data/enemies/act_i.json` and all sit inside § Level Ranges by
+> Act's Act I band of 1–12. One of the four sections — Fenmother's
+> Hollow — is Act II *content* played at the top of that band; see the
+> act boundary note on that section (#287).
 
 **Total:** 27 enemies (22 regular + 1 unique + 2 mini-bosses + 2 bosses)
 
@@ -28,21 +35,24 @@ core mechanic.
 > documented widening of the Location column, **not** an authoring error to
 > be "corrected" by removing them from the overworld tables.
 >
-> Two naming caveats. "Ley-Scarred Plains" is a zone label from
-> `overworld.json`, not a canonical region: it has no entry in
-> [geography.md](../geography.md) or [locations.md](../locations.md), and
-> its missing design-table row is tracked in #265. Do not confuse it with
-> the **Ley Scar**, a different place — the Act III grinding zone inside
-> the Pallor Wastes. The zone id is used here rather than a proper noun
-> for that reason.
+> One naming caveat. The **Ley-Scarred Plains** is not the **Ley Scar**.
+> The former is the exhausted ley-crystal quarry country on Valdris's
+> eastern border around Greyvale — now a sanctioned Quarried plains zone
+> (increment 148) with its own definition in
+> [geography.md](../geography.md) § Valdris Territory / Terrain Effects on
+> Gameplay (#265). The latter is the Act III optional grinding zone inside
+> the Pallor Wastes (increment 506). They share a root because both are
+> ley-damaged ground; nothing else connects them.
 >
 > The other Ember Vein enemies (Tomb Mite, Restless Dead, Mine Shade, Bone
 > Warden, Ember Wisp) appear in no other encounter table and stay
 > dungeon-confined. **Not reconciled here:** Ley Vermin and Unstable
 > Crystal also roll in `thornvein_grotto`
-> (`game/data/encounters/caves_and_grottos.json`), which neither the
-> column below nor their `locations` arrays name. That is the same
-> unmirrored-location class as #270 and is deferred to the follow-up sweep.
+> (`game/data/encounters/caves_and_grottos.json`), and Bone Warden in
+> `valdris_catacombs` F1, which neither the column below nor their
+> `locations` arrays name. Those are dungeon floors rather than overworld
+> zones, the same unmirrored-location class as #270, and are deferred to
+> the follow-up sweep.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
@@ -69,23 +79,48 @@ For full AI scripts, phase mechanics, and scripted events, see
 
 ## Fenmother's Hollow (Floors 1–3 + Cleansing)
 
-> **Act boundary note:** dungeons-world.md classifies Fenmother's Hollow
-> as Act II (recommended level 12–15). It is included in the Act I
-> bestiary file because (1) the party reaches it at the end of Act I
-> progression, (2) its enemies share the Act I level range (6–12), and
-> (3) the boss fight is the Act I climax. The act-i.md file covers the
-> "first playthrough arc" -- everything before the Valdris diplomatic
-> missions. The Corrupted Fenmother boss (Lv 12) sits at the Act I cap.
+> **Act boundary note (#287): Fenmother's Hollow is Act II content.**
+> That is settled canon, not a classification this file disputes — see
+> [dungeons-world.md](../dungeons-world.md) § 2 for the reasoning
+> (Duskfen opens on `diplomatic_mission_start`, which cannot fire until
+> `pendulum_to_capital` has ended Act I). This file previously argued the
+> opposite; it was wrong.
+>
+> Its stat table stays here because **this file is organized by power
+> band, not by act.** Every enemy below is Lv 6–12 and every one of them
+> ships in `game/data/enemies/act_i.json`; the Corrupted Fenmother (Lv
+> 12) sits exactly at the Act I ceiling that [README.md](README.md) § Level
+> Ranges by Act gives (Act I 1–12, Act II 13–25). The dungeon is the
+> first content of Act II and is deliberately pitched at the top of the
+> Act I curve, so splitting the table away from the roster file it
+> mirrors would cost more than it clarifies. Do not read its presence
+> here as an act assignment.
+>
+> **Consequence for #286, stated explicitly.** `serpent_fang` — Marsh
+> Serpent's steal and drop — has **no Act I source**. Every remaining
+> supplier is Act II or later: Fenmother's Hollow F1–F3 and
+> `duskfen_marshland` (both behind `diplomatic_mission_start`),
+> `duskfen_hollow`, then Deep Serpent in the Ley Line Depths
+> ([act-ii.md](act-ii.md)) and Ashen Serpent in Act III
+> ([act-iii.md](act-iii.md)). The material appears in this file, which a
+> reader takes for an Act I roster, while its earliest supplier is now
+> unambiguously behind flag 8. #286 owns the fix —
+> either give it an Act I source or retier it — and this note removes the
+> "maybe Fenmother's Hollow is Act I" escape hatch that was blocking that
+> decision. Nothing consumes `serpent_fang` today, so the severity stays
+> low.
 
-Recommended party level: 6–12. Second dungeon -- water-themed, teaches
-status effects, elemental resistance, and the cleansing mechanic.
+Recommended party level: 12–15 per
+[dungeons-world.md](../dungeons-world.md) § 2 — the party arrives at the
+Act I/II transition around level 12. Second dungeon -- water-themed,
+teaches status effects, elemental resistance, and the cleansing mechanic.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Marsh Serpent | Beast | 6 | 140 | 0 | 19 | 10 | 14 | 10 | 12 | 6 | 13 | Beast Hide (75%) | Serpent Fang (25%) | — | — | — | — | Fenmother's Hollow F1–F3 |
-| Bog Leech | Beast | 7 | 192 | 0 | 19 | 13 | 15 | 11 | 13 | 7 | 14 | Beast Hide (75%) | Leech Ichor (25%) | — | — | — | — | Fenmother's Hollow F1–F2 |
+| Marsh Serpent | Beast | 6 | 140 | 0 | 19 | 10 | 14 | 10 | 12 | 6 | 13 | Beast Hide (75%) | Serpent Fang (25%) | — | — | — | — | Fenmother's Hollow F1–F3, Duskfen Marshland |
+| Bog Leech | Beast | 7 | 192 | 0 | 19 | 13 | 15 | 11 | 13 | 7 | 14 | Beast Hide (75%) | Leech Ichor (25%) | — | — | — | — | Fenmother's Hollow F1–F2, Duskfen Marshland |
 | Drowned Bones | Undead | 7 | 211 | 24 | 19 | 14 | 15 | 11 | 11 | 7 | 14 | Bone Fragment (75%) | Spirit Dust (25%) | Spirit | — | — | Poison, Death | Fenmother's Hollow F1–F2 |
-| Swamp Lurker | Beast | 8 | 254 | 0 | 20 | 16 | 17 | 12 | 12 | 13 | 26 | Beast Hide (75%) | Lurker Shell (25%) | — | — | — | — | Fenmother's Hollow F1–F3 |
+| Swamp Lurker | Beast | 8 | 254 | 0 | 20 | 16 | 17 | 12 | 12 | 13 | 26 | Beast Hide (75%) | Lurker Shell (25%) | — | — | — | — | Fenmother's Hollow F1–F3, Duskfen Marshland |
 | Ley Jellyfish | Elemental | 8 | 231 | 28 | 17 | 14 | 19 | 13 | 14 | 13 | 26 | Element Shard (75%) | Elemental Core (25%) | Storm | — | Frost | Petrify | Fenmother's Hollow F2–F3 |
 | Polluted Elemental | Elemental | 9 | 273 | 31 | 18 | 15 | 20 | 14 | 15 | 13 | 28 | Element Shard (75%) | Elemental Core (25%) | Flame | — | Frost | Petrify | Fenmother's Hollow F2–F3 |
 | Corrupted Spawn | Beast | 10 | 288 | 0 | 27 | 14 | 20 | 14 | 16 | 15 | 30 | Beast Hide (75%) | Dark Scale (25%) | — | — | — | — | Fenmother's Hollow F3 (Wave 4) |
@@ -131,15 +166,23 @@ partly on Ember Vein enemies instead, documented in that section above.
 > and `duskfen_hollow` — so "confined" applies to the pair only within
 > the Act I overworld, not absolutely.
 >
-> The admitted members are exactly those whose Location column already
-> names a forest habitat (Valdris Forest or Forest Edge). Plains Hare
-> has none — it is listed only for Valdris Plains. Road Bandit is
-> excluded because Humanoid bandits need traffic to rob, and the roads
-> have their own `roads` zone; note this is a zone-scoped judgement, not
-> a claim that the Wilds are roadless — canon documents the Wildwood
-> Trail, the Diplomatic Road and the Wilds Gate Pass through the region,
-> and Wayward Wolf's own row lists Duskfen Road. Wild Boar qualifies on
-> Forest Edge despite also ranging the plains.
+> **Who is admitted, and how to check it.** The four admitted members are
+> the roster's woodland species: two forest-floor Beasts (Wayward Wolf,
+> Thornback Beetle), a browsing Beast that ranges the woodland margin
+> (Wild Boar), and the Spirit type canon binds to old-growth timber
+> (Forest Sprite — the Wilds are "ley-line guardians" per
+> [geography.md](../geography.md) § Natural Resources). Plains Hare is
+> excluded as open-ground grazer: it rolls only in `aelhart_valley`
+> (farmland) and `roads`. Road Bandit is excluded because Humanoid
+> bandits need traffic to rob and the roads carry their own `roads`
+> zone. That second exclusion is a zone-scoped judgement, not a claim
+> that the Wilds are roadless — canon documents the Wildwood Trail, the
+> Diplomatic Road and the Wilds Gate Pass through the region; the point
+> is only that no *road* encounter zone overlaps `thornmere_wilds`.
+> (This rule replaces an earlier one phrased as "names a forest habitat
+> (Valdris Forest or Forest Edge)", which no reader could check: neither
+> string was defined anywhere in the repo — see #288 and
+> [README.md](README.md) § Location Vocabulary.)
 >
 > **Reward effect of the swap.** Weight-expected reward per encounter
 > rises from 27.8 exp / 13.4 gold to 49.1 exp / 23.9 gold while
@@ -168,28 +211,34 @@ partly on Ember Vein enemies instead, documented in that section above.
 > forest beetle and a wolf pack ranging the adjacent highland and plains
 > terrain need no special sanction.
 >
-> **Not reconciled here, and out of scope for #270**, which names only
-> `thornmere_wilds`, `ley_scarred_plains` and `valdris_highlands`. Each
-> is the same unmirrored-location class and is deferred to a follow-up
-> sweep:
-> - `duskfen_marshland` rolls Marsh Serpent, Bog Leech and Swamp Lurker,
->   none of which list it
-> - `duskfen_hollow` and `thornvein_grotto`
->   (`caves_and_grottos.json`) likewise
+> **Overworld coverage is now complete (#288).** Every
+> `overworld.json` zone that rolls an Act I enemy is named in that
+> enemy's Location cell and in its `locations` array — including the
+> three that were previously missing: `aelhart_valley` (Forest Sprite,
+> Wild Boar, Plains Hare), `roads` (Plains Hare, Road Bandit) and
+> `duskfen_marshland` (Marsh Serpent, Bog Leech, Swamp Lurker, listed on
+> their rows in the Fenmother's Hollow table above).
+> `game/tests/test_bestiary_locations.gd` fails if a zone is added
+> without the matching Location entry.
+>
+> **Still not reconciled, and out of scope for #270**, which names only
+> `thornmere_wilds`, `ley_scarred_plains` and `valdris_highlands`. These
+> are *dungeon floors* rather than overworld zones, so the coverage test
+> does not reach them; they are deferred to a follow-up sweep:
 > - `wilds_gate_pass` (`mountain_passes.json`) rolls Wayward Wolf, Wild
 >   Boar and Road Bandit, none of which list it
-> - `aelhart_valley` (Forest Sprite, Wild Boar, Plains Hare) and `roads`
->   (Plains Hare, Road Bandit) carry Location cells that name the region
->   rather than the zone
+> - `duskfen_hollow` and `thornvein_grotto`
+>   (`caves_and_grottos.json`) likewise
+> - `valdris_catacombs` F1 rolls Bone Warden, which does not list it
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Plains Hare | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Hare Pelt (25%) | — | — | — | — | Valdris Plains |
-| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Valdris Forest, Thornmere Wilds, Ley-Scarred Plains, Valdris Highlands |
-| Road Bandit | Humanoid | 4 | 96 | 0 | 14 | 9 | 11 | 8 | 11 | 5 | 11 | Potion (75%) | Leather Pouch (25%) | — | — | — | — | Valdris Road |
-| Forest Sprite | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Valdris Forest, Thornmere Wilds |
-| Wild Boar | Beast | 5 | 112 | 0 | 18 | 9 | 13 | 9 | 12 | 10 | 21 | Beast Hide (75%) | Boar Tusk (25%) | — | — | — | — | Valdris Plains, Forest Edge, Thornmere Wilds |
-| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Valdris Forest, Duskfen Road, Thornmere Wilds, Valdris Highlands |
+| Plains Hare | Beast | 1 | 23 | 0 | 8 | 6 | 7 | 5 | 8 | 1 | 4 | Beast Hide (75%) | Hare Pelt (25%) | — | — | — | — | Aelhart Valley, Roads |
+| Thornback Beetle | Beast | 3 | 72 | 0 | 12 | 8 | 10 | 7 | 10 | 5 | 10 | Beast Hide (75%) | Beetle Carapace (25%) | — | — | — | — | Ley-Scarred Plains, Thornmere Wilds, Valdris Highlands |
+| Road Bandit | Humanoid | 4 | 96 | 0 | 14 | 9 | 11 | 8 | 11 | 5 | 11 | Potion (75%) | Leather Pouch (25%) | — | — | — | — | Roads |
+| Forest Sprite | Spirit | 4 | 96 | 14 | 11 | 9 | 12 | 8 | 11 | 5 | 11 | Ether Wisp (75%) | Spirit Essence (25%) | Ley | — | — | Poison, Petrify | Aelhart Valley, Thornmere Wilds |
+| Wild Boar | Beast | 5 | 112 | 0 | 18 | 9 | 13 | 9 | 12 | 10 | 21 | Beast Hide (75%) | Boar Tusk (25%) | — | — | — | — | Aelhart Valley, Thornmere Wilds |
+| Wayward Wolf | Beast | 6 | 156 | 0 | 17 | 12 | 14 | 10 | 12 | 11 | 22 | Beast Hide (75%) | Wolf Pelt (25%) | — | — | — | — | Thornmere Wilds, Valdris Highlands |
 
 ---
 

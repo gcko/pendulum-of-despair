@@ -8,7 +8,7 @@
 
 | File | Contents |
 |------|----------|
-| [act-i.md](act-i.md) | Ember Vein, Fenmother's Hollow, Overworld Act I, Ironmouth Docks (27 enemies) |
+| [act-i.md](act-i.md) | The Lv 1–12 band: Ember Vein, Overworld Act I, Ironmouth Docks, and Fenmother's Hollow — which is Act II content tuned to the top of this band (#287) (27 enemies) |
 | [act-ii.md](act-ii.md) | Valdris Siege, Ley Line Depths, Ashmark, Bellhaven, Overworld Act II (33 enemies) |
 | [interlude.md](interlude.md) | Rail Tunnels, Corrund, Catacombs, Caldera, Axis Tower, Ironmark (52 enemies) |
 | [act-iii.md](act-iii.md) | Pallor Wastes, Convergence, Ley F5, Dry Well F5–7, Forgotten Forge, Ley Scar, Overworld (69 enemies) |
@@ -42,7 +42,48 @@ Each enemy in the bestiary tables uses these columns:
 | Resists | string | Elements dealing 0.75x damage (elemental disadvantage per combat-formulas.md). Comma-separated or "—" |
 | Absorbs | string | Elements that heal. Comma-separated or "—" |
 | Status Immunities | string | Immune statuses. Comma-separated or "—" |
-| Location(s) | string | Where enemy appears. Comma-separated areas |
+| Location(s) | string | Where enemy appears. Comma-separated, one vocabulary only — see § Location Vocabulary |
+
+### Location Vocabulary
+
+The `Location(s)` column names **encounter tables, not places.** Every
+entry must resolve to a row of shipped encounter data, so that a reader
+who has never seen the map can check the cell without judgement. Exactly
+two forms are admissible:
+
+| Form | Written as | Resolves against |
+|------|-----------|------------------|
+| Dungeon floor | Dungeon name + floor span — `Ember Vein F1–F2`, `Fenmother's Hollow F3` | the `floors[].floor_id` entries of `game/data/encounters/<dungeon_id>.json`; the dungeon itself is a numbered entry in [dungeons-world.md](../dungeons-world.md) or [dungeons-city.md](../dungeons-city.md) |
+| Encounter zone | The zone's `name` field verbatim — `Thornmere Wilds`, `Ley-Scarred Plains`, `Roads` | a `zone_id`/`name` pair in `game/data/encounters/overworld.json` |
+
+Parenthetical role markers (`(boss)`, `(mini-boss)`, `(unique)`,
+`(Wave 4)`, `(Scene 3)`) may follow either form. Scripted, non-random
+encounters that have no table — the Ironmouth ambush, boss arenas — name
+the dungeon or scene and carry the marker.
+
+**Nothing else is admissible.** Region names from
+[geography.md](../geography.md) / [locations.md](../locations.md) are
+*not* valid entries unless a zone happens to carry that name: a region is
+an area of the world, an encounter zone is a rate-and-roster table, and
+the two do not tile the same way. Five invented names — "Valdris
+Forest", "Valdris Plains", "Valdris Road", "Forest Edge", "Duskfen Road"
+— were in use in [act-i.md](act-i.md) and mirrored into
+`game/data/enemies/act_i.json`; none was defined anywhere and none had a
+matching zone, which made every habitat argument built on them
+uncheckable (#288). They have been replaced by the zones the enemies
+actually roll in.
+
+**The column and the data are one artifact.** Each cell corresponds
+one-for-one with the enemy's `locations` array in
+`game/data/enemies/<act>.json`, which holds the same list as ids
+(`thornmere_wilds`, `ember_vein_f1`). Changing one without the other is a
+defect. `game/tests/test_bestiary_locations.gd` enforces the overworld
+half of this: every `overworld.json` zone that rolls an **Act I** enemy
+must appear in that enemy's `locations`, and the five retired names must
+appear nowhere in any act. Act II, Interlude and Act III have 22 zone
+appearances their `locations` arrays still omit — the same defect, not
+yet reconciled, and the reason the coverage assertion is scoped to Act I
+rather than turned off.
 
 ---
 
