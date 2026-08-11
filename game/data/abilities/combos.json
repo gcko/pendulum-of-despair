@@ -45,6 +45,7 @@
 			],
 			"cost": "Torren: 8 MP, Lira: 8 MP",
 			"effect": "Torren calls Ember Wing while Lira overcharges it with Arcanite energy. Deals Flame + Storm damage to all enemies (spell power 40, 20 Flame + 20 Storm each checked independently against target's elemental resistance) with guaranteed Burn and a 30% chance of Stop.",
+			"power": 40,
 			"availability": "After Torren learns Ember Wing (Level 11)",
 			"description": "The Flame Spirit screams through a Shock Coil, doubling in size and splitting into blazing arcs."
 		},
@@ -92,7 +93,8 @@
 				"lira"
 			],
 			"cost": "Sable: 4 MP, Lira: 4 MP",
-			"effect": "Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage, and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1).",
+			"effect": "Sable plants one of Lira's Arc Traps and then forces an enemy to trigger it with Misdirect. Guaranteed trigger, deals 2x normal Arc Trap damage (spell power 60), and the target loses their next turn. Does not consume Lira's AC — uses Sable's stolen Forgewright components instead (consumes 1).",
+			"power": 60,
 			"availability": "After Sable learns Misdirect (Interlude) and Lira learns Arc Trap (Level 12)",
 			"description": "Sable rigs a stolen proximity mine and lures an enemy into it."
 		},
