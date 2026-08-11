@@ -125,6 +125,21 @@ func test_util_dir_holds_no_registered_singleton() -> void:
 # ── Script size budget (technical-architecture.md § 1.2a) ───────────────
 
 
+## Lines in `text` the way `wc -l` counts them: one per newline character.
+##
+## `split("\n").size()` is a different measure, and using it here put this guard
+## on a different definition of "line" from the rule it enforces. Every .gd ends
+## in a newline (gdformat --check requires it), so the split yields a trailing
+## empty element and every count came out one high — the 600 ceiling really bit
+## at 599. § 1.2a states the budget in lines, the measured tables in docs/issues
+## are `wc -l`, and check_gap_measured_tables() in
+## scripts/quality-gates/check_stale_counts.py validates them with
+## `f.read().count(b"\n")`. Counting newlines is that same measure, and it
+## matches `wc -l` for a newline-terminated and an unterminated file alike.
+func _line_count(text: String) -> int:
+	return text.count("\n")
+
+
 ## Every .gd under `roots`, recursively, as "path: line_count".
 ##
 ## The vendored res://addons/gut tree is in neither root list: it is
@@ -151,7 +166,7 @@ func _script_line_counts(roots: Array[String]) -> Dictionary:
 					if f == null:
 						fail_test("cannot open %s (error %d)" % [full, FileAccess.get_open_error()])
 						return counts
-					counts[full] = f.get_as_text().split("\n").size()
+					counts[full] = _line_count(f.get_as_text())
 					f.close()
 			entry = dir.get_next()
 		dir.list_dir_end()
