@@ -2,7 +2,6 @@ extends GutTest
 ## Tests for Phase B2 mechanical tweaks.
 
 const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
-const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 
 
 func before_each() -> void:
@@ -16,7 +15,7 @@ func test_cael_hidden_spike_applied_at_join() -> void:
 	# base stats data-drivenly when he joins (no in-game notification).
 	var cael: Dictionary = PartyState.get_member("cael")
 	var char_data: Dictionary = DataManager.load_character("cael")
-	var raw: Dictionary = Helpers.calculate_stats_at_level(
+	var raw: Dictionary = ProgressionHelpers.calculate_stats_at_level(
 		char_data.get("base_stats", {}), char_data.get("growth", {}), cael.get("level", 1)
 	)
 	assert_eq(int(cael["base_stats"]["atk"]), int(raw["atk"]) + 2, "Cael ATK +2")
@@ -28,10 +27,10 @@ func test_cael_hidden_spike_survives_level_up() -> void:
 	# GAP-010 permanence: the spike must NOT be wiped when level-up recomputes
 	# base_stats. Grant enough XP to gain at least one level, then re-check.
 	var cael: Dictionary = PartyState.get_member("cael")
-	var result: Dictionary = Helpers.add_xp_to_member(cael, 99999)
+	var result: Dictionary = ProgressionHelpers.add_xp_to_member(cael, 99999)
 	assert_gt(result.get("new_level", 1), 1, "precondition: Cael leveled up")
 	var char_data: Dictionary = DataManager.load_character("cael")
-	var raw: Dictionary = Helpers.calculate_stats_at_level(
+	var raw: Dictionary = ProgressionHelpers.calculate_stats_at_level(
 		char_data.get("base_stats", {}), char_data.get("growth", {}), cael.get("level", 1)
 	)
 	assert_eq(int(cael["base_stats"]["atk"]), int(raw["atk"]) + 2, "spike persists: ATK +2")
@@ -43,7 +42,7 @@ func test_non_spiked_character_has_no_spike() -> void:
 	# Edren carries no hidden_spike data, so his stats are unmodified.
 	var edren: Dictionary = PartyState.get_member("edren")
 	var char_data: Dictionary = DataManager.load_character("edren")
-	var raw: Dictionary = Helpers.calculate_stats_at_level(
+	var raw: Dictionary = ProgressionHelpers.calculate_stats_at_level(
 		char_data.get("base_stats", {}), char_data.get("growth", {}), edren.get("level", 1)
 	)
 	assert_eq(int(edren["base_stats"]["atk"]), int(raw["atk"]), "no spike for Edren")

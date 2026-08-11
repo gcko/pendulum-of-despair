@@ -42,7 +42,7 @@ func _equip(character_id: String, slot: String, equipment_id: String) -> void:
 
 func _level_up(character_id: String) -> void:
 	var member: Dictionary = PartyState.get_member(character_id)
-	var result: Dictionary = Helpers.add_xp_to_member(member, LEVEL_UP_XP)
+	var result: Dictionary = ProgressionHelpers.add_xp_to_member(member, LEVEL_UP_XP)
 	assert_true(result.get("leveled_up", false), "precondition: %s leveled up" % character_id)
 
 

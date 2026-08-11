@@ -10,8 +10,6 @@ extends RefCounted
 ## The active party never exceeds four members (combat-formulas.md § Party).
 const MAX_ACTIVE: int = 4
 
-const Helpers = preload("res://scripts/util/inventory_helpers.gd")
-
 var _party: Node
 
 
@@ -60,7 +58,7 @@ func add_character(character_id: String, level: int) -> void:
 		return
 	# Leveled stats with the permanent hidden spike (GAP-010) baked in — the
 	# same helper runs on level-up so the spike is never wiped by a recompute.
-	var stats: Dictionary = Helpers.leveled_stats_with_spike(char_data, level)
+	var stats: Dictionary = ProgressionHelpers.leveled_stats_with_spike(char_data, level)
 	var starting_equip: Dictionary = _party.STARTING_EQUIPMENT.get(
 		character_id, {"weapon": "", "head": "", "body": "", "accessory": "", "crystal": ""}
 	)
@@ -72,7 +70,7 @@ func add_character(character_id: String, level: int) -> void:
 		"current_mp": stats.get("mp", 0),
 		"max_mp": stats.get("mp", 0),
 		"current_xp": 0,
-		"xp_to_next": Helpers.xp_to_next_level(level),
+		"xp_to_next": ProgressionHelpers.xp_to_next_level(level),
 		"base_stats": stats,
 		# Permanent Stat Capsule gains, kept apart from base_stats so a level-up
 		# recompute cannot wipe them (items.md § Stat Capsules).
@@ -148,12 +146,12 @@ func toggle_row(cid: String) -> void:
 
 ## The formation menu's ordered view of active + reserve slots.
 func formation_list() -> Array:
-	return Helpers.build_formation_list(_party.members, _party.formation)
+	return FormationHelpers.build_formation_list(_party.members, _party.formation)
 
 
 ## Swap two entries of the formation list by display index.
 func swap_positions(a: int, b: int) -> void:
-	Helpers.swap_formation(_party.members, _party.formation, a, b)
+	FormationHelpers.swap_formation(_party.members, _party.formation, a, b)
 
 
 ## Whether the formation dictionary still carries both slot lists. A save

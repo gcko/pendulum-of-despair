@@ -35,8 +35,8 @@ func load_from_save(data: Dictionary) -> void:
 	_party.location_display = world.get("location_display", "")
 	# A save with no recorded position keeps has_player_position false, so a
 	# re-save cannot invent an origin the player was never standing on (#269).
-	_party.has_player_position = Helpers.has_saved_position(world)
-	_party.player_position = Helpers.saved_position(world)
+	_party.has_player_position = SaveDataHelpers.has_saved_position(world)
+	_party.player_position = SaveDataHelpers.saved_position(world)
 	_party.playtime = data.get("meta", {}).get("playtime", 0)
 	_party.is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
@@ -54,7 +54,7 @@ func load_from_save(data: Dictionary) -> void:
 
 ## The full save dictionary for the current runtime state.
 func build_save_data() -> Dictionary:
-	return Helpers.build_save_dict(
+	return SaveDataHelpers.build_save_dict(
 		_party.members,
 		_party.formation,
 		_party.inventory,

@@ -153,12 +153,12 @@ func get_location_display() -> String:
 
 
 func get_active_party() -> Array[Dictionary]:
-	return Helpers.get_active_members(members, formation)
+	return FormationHelpers.get_active_members(members, formation)
 
 
 ## Get reserve (non-active) party members.
 func get_reserve_party() -> Array[Dictionary]:
-	return Helpers.get_reserve_members(members, formation)
+	return FormationHelpers.get_reserve_members(members, formation)
 
 
 # ---------- Ley Crystals (PartyCrystals) ----------
@@ -227,9 +227,9 @@ func clear_puzzle_state(dungeon_id: String) -> void:
 	puzzle_state.erase(dungeon_id)
 
 
-## Apply battle rewards (XP, gold, drops). Returns Helpers.distribute_rewards() summary.
+## Apply battle rewards (XP, gold, drops). Returns ProgressionHelpers.distribute_rewards() summary.
 func distribute_battle_rewards(rewards: Dictionary) -> Dictionary:
-	return Helpers.apply_battle_rewards(
+	return ProgressionHelpers.apply_battle_rewards(
 		rewards, get_active_party(), get_reserve_party(), add_gold, add_item
 	)
 
@@ -463,7 +463,7 @@ func save_config() -> void:
 
 
 func _load_config() -> void:
-	_config = Helpers.load_config_from_disk()
+	_config = SaveDataHelpers.load_config_from_disk()
 	_config_loaded = true
 
 
