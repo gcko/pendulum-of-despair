@@ -395,7 +395,9 @@ selects which character, then the sub-screen opens for that character.
 
 ### 3.5 Info Boxes (Bottom)
 
-- **Bottom-left** (~68% width): Location name in pale blue.
+- **Bottom-left** (~68% width): Location name in pale blue. This is the map's
+  friendly place name (`location_display` in the save, from the map scene's
+  `location_name` metadata), never the map id, which is a scene path.
 - **Bottom-right** (~28% width): Two stacked boxes:
   - Time (HH:MM format, white)
   - Gold (with comma separators, gold `#ffcc44`)
@@ -902,7 +904,8 @@ intentional retro-fidelity decision matching FF6. No NG+ exists (per
 
 ### 13.3 Populated Slot
 
-- **Header row:** Location name (left) + Time HH:MM + Gold (right).
+- **Header row:** Location name (left, the save's `location_display`; "Unknown"
+  when it carries none) + Time HH:MM + Gold (right).
 - **Party row:** All 4 active members displayed horizontally:
   - 16×20 walking sprite
   - Name + LV (compact)

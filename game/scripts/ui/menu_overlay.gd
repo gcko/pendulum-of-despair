@@ -382,7 +382,7 @@ func _update_info_panel() -> void:
 		var minutes: int = (total % 3600) / 60
 		_time_label.text = "%d:%02d" % [hours, minutes]
 	if _location_label != null:
-		_location_label.text = PartyState.location_name
+		_location_label.text = PartyState.get_location_display()
 
 
 func _is_command_disabled(index: int) -> bool:

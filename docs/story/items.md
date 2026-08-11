@@ -60,6 +60,11 @@
 
 - Consumables: sell at 50% of buy price
 - Materials: sell at listed sell price (see Crafting Materials section)
+- Materials with no listed sell price carry a null `sell_price` in data, and
+  their worth comes from elsewhere: a Gold Pouch is worth its
+  `gold_value_by_act` entry for the current act, and the story materials
+  (Pallor Core, Grey Mist Essence) are worth nothing because they cannot be
+  sold. The Materials tab shows that resolved value, never the raw null.
 - Devices: cannot be sold (crafted, not bought)
 - Key items: cannot be sold
 - Equipment: sell at 50% of buy price (see equipment.md — Gap 1.5, not yet created)

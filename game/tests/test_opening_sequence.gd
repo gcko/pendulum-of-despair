@@ -217,18 +217,19 @@ func test_scene_triggers_in_story_order() -> void:
 
 
 func test_exploration_checks_carradan_flag() -> void:
-	var text: String = _read_file("res://scripts/core/exploration.gd")
+	var text: String = _read_file("res://scripts/core/exploration_party_joins.gd")
+	assert_false(text.is_empty(), "the party-join collaborator should be readable")
 	assert_true(
 		text.contains("carradan_ambush_survived"),
-		"exploration should check carradan_ambush_survived flag for party joins",
+		"party joins should check the carradan_ambush_survived flag",
 	)
+	assert_true(text.contains('_join_if_missing("lira")'), "lira joins on the carradan flag")
+	assert_true(text.contains('_join_if_missing("sable")'), "sable joins on the carradan flag")
 	assert_true(
-		text.contains('add_member("lira"'),
-		"exploration should add lira on carradan flag",
-	)
-	assert_true(
-		text.contains('add_member("sable"'),
-		"exploration should add sable on carradan flag",
+		_read_file("res://scripts/core/exploration.gd").contains(
+			"ExplorationPartyJoins.check_join_flags"
+		),
+		"exploration should run the party-join check",
 	)
 
 

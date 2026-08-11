@@ -131,6 +131,60 @@ func test_saved_position_reads_coordinates() -> void:
 	assert_eq(Helpers.saved_position({"current_position": {"x": 10, "y": 20}}), Vector2i(10, 20))
 
 
+# --- Place name shown to the player ---
+
+
+func test_save_stores_a_place_name_beside_the_map_id() -> void:
+	PartyState.initialize_new_game()
+	PartyState.set_player_location("dungeons/ember_vein_f1", Vector2i(16, 16))
+	PartyState.location_display = "Ember Vein - Upper Mine"
+	var world: Dictionary = _world_of(PartyState.build_save_data())
+	assert_eq(
+		world.get("current_location", ""),
+		"dungeons/ember_vein_f1",
+		"the map id stays the load key",
+	)
+	assert_eq(
+		Helpers.location_display_name(world),
+		"Ember Vein - Upper Mine",
+		"the slot header shows the place, not the path",
+	)
+
+
+func test_place_name_round_trips_through_save_and_load() -> void:
+	PartyState.initialize_new_game()
+	PartyState.set_player_location("towns/valdris_lower_ward", Vector2i(8, 8))
+	PartyState.location_display = "Valdris - Lower Ward"
+	PartyState.load_from_save(PartyState.build_save_data())
+	assert_eq(
+		PartyState.get_location_display(),
+		"Valdris - Lower Ward",
+		"the pause menu shows the place name after a load",
+	)
+
+
+func test_display_name_never_falls_back_to_the_map_path() -> void:
+	assert_eq(
+		Helpers.location_display_name({"current_location": "dungeons/ember_vein_f1"}),
+		"Unknown",
+		"a save with no recorded place name must not show its map path",
+	)
+	assert_eq(Helpers.location_display_name({}), "Unknown", "an empty world block reads Unknown")
+
+
+func test_pause_menu_shows_no_path_when_a_map_has_no_place_name() -> void:
+	PartyState.initialize_new_game()
+	PartyState.set_player_location("dungeons/ember_vein_f1", Vector2i(16, 16))
+	assert_eq(PartyState.get_location_display(), "", "an unnamed map shows nothing, never its path")
+
+
+func test_new_game_clears_the_place_name() -> void:
+	PartyState.set_player_location("test_room", Vector2i(32, 32))
+	PartyState.location_display = "Test Room"
+	PartyState.initialize_new_game()
+	assert_eq(PartyState.location_display, "", "a new game starts with no place name")
+
+
 # --- v1 -> v2 migration ---
 
 

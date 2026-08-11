@@ -43,6 +43,10 @@ var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
 var playtime: int = 0
 var location_name: String = ""
+## Player-facing place name for `location_name`'s map, taken from the map's
+## `location_name` metadata. The map id is the load key and is never shown;
+## this is what the pause menu and the save slots render (ui-design.md § 3.5).
+var location_display: String = ""
 ## Player's pixel position on `location_name`'s map. Only meaningful while
 ## `has_player_position` is true — see save-system.md § 3.7 (#269).
 var player_position: Vector2i = Vector2i.ZERO
@@ -132,6 +136,7 @@ func load_from_save(data: Dictionary) -> void:
 	var world: Dictionary = data.get("world", {})
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
+	location_display = world.get("location_display", "")
 	# A save with no recorded position keeps has_player_position false, so a
 	# re-save cannot invent an origin the player was never standing on (#269).
 	has_player_position = Helpers.has_saved_position(world)
@@ -171,6 +176,7 @@ func build_save_data() -> Dictionary:
 func build_world_state() -> Dictionary:
 	var world: Dictionary = {
 		"current_location": location_name,
+		"location_display": location_display,
 		"gold": gold,
 		"event_flags": EventFlags.to_save_data(),
 	}
@@ -193,8 +199,16 @@ func set_player_location(map_id: String, position: Vector2i) -> void:
 ## a fresh one.
 func clear_player_location() -> void:
 	location_name = ""
+	location_display = ""
 	player_position = Vector2i.ZERO
 	has_player_position = false
+
+
+## The place name to show the player. Empty when the current map carries no
+## `location_name` metadata — the raw map id is a file path and is never a
+## substitute for it (ui-design.md § 3.5).
+func get_location_display() -> String:
+	return location_display
 
 
 func get_active_party() -> Array[Dictionary]:

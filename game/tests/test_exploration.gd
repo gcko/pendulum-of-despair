@@ -516,3 +516,29 @@ func test_walking_updates_the_recorded_position() -> void:
 		"each step should record the new position",
 	)
 	assert_eq(PartyState.location_name, "test_room", "the map is recorded alongside it")
+
+
+func test_loading_a_map_records_its_place_name_for_the_ui() -> void:
+	_create_exploration_test_room()
+	assert_eq(PartyState.location_name, "test_room", "the map id is the save key")
+	assert_eq(
+		PartyState.get_location_display(),
+		"Test Room",
+		"the map's location_name metadata is what the player is shown",
+	)
+
+
+func test_save_naming_a_missing_map_falls_back_to_the_overworld() -> void:
+	# A map renamed or dropped between builds leaves a save pointing at nothing;
+	# load_map bails, and without a fallback the party stands in an empty scene.
+	var exp: Node2D = _load_exploration_from_save(
+		_save_data_at("dungeons/no_such_map", Vector2i(112, 48))
+	)
+	assert_push_error("Map not found", "the missing map is still reported")
+	assert_eq(exp.get_current_map_id(), "overworld", "a stale map id degrades to the overworld")
+	assert_not_null(exp.get_current_map(), "the party must never be left without a map")
+	assert_ne(
+		exp.get_player().position,
+		Vector2(112, 48),
+		"the saved position belongs to the missing map and must not be reused",
+	)

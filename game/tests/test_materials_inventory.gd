@@ -163,6 +163,141 @@ func test_materials_tab_ignores_consumables() -> void:
 	assert_false("potion" in ids, "starting potions belong to the USE tab")
 
 
+## Every material row currently painted on screen, in display order. Fails the
+## calling test when nothing is visible, so a "contains" assertion can never
+## pass against an empty screen.
+func _visible_rows(screen: Node) -> Array[String]:
+	var rows: Array[String] = []
+	for label: Label in screen._item_labels:
+		if label != null and label.visible:
+			rows.append(label.text)
+	if rows.is_empty():
+		fail_test("the item list painted no visible rows")
+	return rows
+
+
+func _press(screen: Node, action: String) -> void:
+	var event: InputEventAction = InputEventAction.new()
+	event.action = action
+	event.pressed = true
+	screen.handle_input(event)
+
+
+func test_materials_tab_prices_an_act_scaled_material_instead_of_erroring() -> void:
+	# gold_pouch ships with "sell_price": null — the key is present, so a
+	# get(..., 0) default never fires and the raw null reaches the format string.
+	PartyState.initialize_new_game()
+	PartyState.add_item("gold_pouch", 1)
+	PartyState.add_item("beast_hide", 2)
+	var screen: Node = _open_materials_tab()
+	assert_eq(screen._items.size(), 2, "both held materials are listed")
+	var rows: Array[String] = _visible_rows(screen)
+	assert_eq(rows.size(), 2, "a null sell price must not abort the row loop")
+	assert_string_contains(rows[0], "Gold Pouch", "the pouch renders")
+	assert_string_contains(rows[0], "150g", "Act I gold value stands in for the null price")
+	assert_string_contains(rows[1], "Beast Hide", "the row after it still renders")
+
+
+func test_materials_tab_prices_an_unsellable_material_at_zero() -> void:
+	PartyState.initialize_new_game()
+	PartyState.add_item("pallor_core", 1)
+	var screen: Node = _open_materials_tab()
+	var rows: Array[String] = _visible_rows(screen)
+	assert_string_contains(rows[0], "Pallor Core", "the unsellable material renders")
+	assert_string_contains(rows[0], "0g", "an unsellable material is worth nothing")
+
+
+func test_material_sell_value_resolves_a_null_price() -> void:
+	assert_eq(Helpers.material_sell_value({"sell_price": 25}), 25, "a plain price is used as is")
+	assert_eq(
+		Helpers.material_sell_value({"sell_price": null, "gold_value_by_act": {"act_i": 150}}),
+		150,
+		"act-scaled worth stands in for a null price",
+	)
+	assert_eq(
+		Helpers.material_sell_value({"sell_price": null}), 0, "an unsellable material is worth 0"
+	)
+
+
+func test_materials_tab_scrolls_to_materials_past_the_last_row() -> void:
+	# 87 materials exist, nothing sells or spends them yet, and the list panel
+	# holds 12 rows — everything past row 12 has to scroll into view (#164).
+	PartyState.initialize_new_game()
+	var held: Array[String] = [
+		"beast_hide",
+		"sharp_fang",
+		"drake_scale",
+		"serpent_fang",
+		"leech_ichor",
+		"lurker_shell",
+		"wolf_pelt",
+		"boar_tusk",
+		"hawk_feather",
+		"hare_pelt",
+		"beetle_carapace",
+		"crab_claw",
+		"viper_fang",
+		"mite_husk",
+		"roach_wing",
+	]
+	for item_id: String in held:
+		PartyState.add_item(item_id, 1)
+	var screen: Node = _open_materials_tab()
+	assert_eq(screen._items.size(), held.size(), "every held material is in the list")
+	assert_gt(screen._items.size(), screen._item_labels.size(), "more materials than list rows")
+	assert_string_contains(
+		_visible_rows(screen)[0], "Beast Hide", "the first row starts at the top"
+	)
+
+	for _i: int in range(held.size() - 1):
+		_press(screen, "ui_down")
+	assert_eq(screen._cursor_index, held.size() - 1, "the cursor reaches the last material")
+	assert_string_contains(
+		"\n".join(_visible_rows(screen)), "Roach Wing", "the last material scrolls into view"
+	)
+
+
+func test_materials_tab_scrolls_back_to_the_top() -> void:
+	PartyState.initialize_new_game()
+	for item_id: String in ["beast_hide", "sharp_fang", "drake_scale", "serpent_fang"]:
+		PartyState.add_item(item_id, 1)
+	var screen: Node = _open_materials_tab()
+	_press(screen, "ui_up")  # wraps to the last entry
+	assert_eq(screen._cursor_index, 3, "up from the first entry wraps to the last")
+	assert_string_contains(
+		"\n".join(_visible_rows(screen)), "Beast Hide", "a short list never scrolls off the top"
+	)
+
+
+func test_switching_tabs_resets_the_scroll_window() -> void:
+	PartyState.initialize_new_game()
+	for item_id: String in [
+		"beast_hide",
+		"sharp_fang",
+		"drake_scale",
+		"serpent_fang",
+		"leech_ichor",
+		"lurker_shell",
+		"wolf_pelt",
+		"boar_tusk",
+		"hawk_feather",
+		"hare_pelt",
+		"beetle_carapace",
+		"crab_claw",
+		"viper_fang",
+	]:
+		PartyState.add_item(item_id, 1)
+	var screen: Node = _open_materials_tab()
+	for _i: int in range(12):
+		_press(screen, "ui_down")
+	screen._switch_tab(1)  # MAT -> ARRANGE
+	screen._switch_tab(-1)  # back to MAT
+	assert_eq(screen._cursor_index, 0, "the cursor returns to the top of the tab")
+	assert_string_contains(
+		"\n".join(_visible_rows(screen)), "Beast Hide", "and the window follows it back"
+	)
+
+
 func test_item_screen_has_four_tabs() -> void:
 	PartyState.initialize_new_game()
 	var menu: Node = MENU_SCENE.instantiate()

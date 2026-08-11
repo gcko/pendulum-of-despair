@@ -21,6 +21,20 @@ static func lookup_material(item_id: String) -> Dictionary:
 	return {}
 
 
+## A material's sell value in gold. `sell_price` is present-but-null for
+## materials whose worth is act-scaled (Gold Pouch) and for the story materials
+## that cannot be sold at all, so a get(..., 0) default never fires and the raw
+## null must never reach a format string (items.md § Sell Price Rules).
+static func material_sell_value(material: Dictionary) -> int:
+	var raw: Variant = material.get("sell_price")
+	if raw != null:
+		return int(raw)
+	var by_act: Variant = material.get("gold_value_by_act")
+	if by_act is Dictionary:
+		return int((by_act as Dictionary).get(StoryAct.get_period(), 0))
+	return 0
+
+
 ## Which inventory bucket an item id belongs in. Crafting materials go to
 ## `materials`, everything else counted by quantity to `consumables`
 ## (items.md § Inventory Structure). THE routing rule: every add, remove and
@@ -505,6 +519,15 @@ static func saved_position(world: Dictionary) -> Vector2i:
 	return Vector2i(int(pos.get("x", 0)), int(pos.get("y", 0)))
 
 
+## The place name a save slot shows the player. `current_location` is the map
+## id used to reload the scene and is never rendered — a save that carries no
+## recorded place name reads "Unknown" rather than leaking a file path
+## (ui-design.md § 3.5, save-system.md § 3.7).
+static func location_display_name(world: Dictionary) -> String:
+	var display: String = str(world.get("location_display", ""))
+	return display if not display.is_empty() else "Unknown"
+
+
 ## Build the save data template with stub sections for systems not yet implemented.
 ## `world_state` carries the caller-owned world block (location, position, gold,
 ## event flags); everything else in `world` is filled in here.
@@ -522,6 +545,7 @@ static func build_save_dict(
 		"event_flags": world_state.get("event_flags", {}),
 		"act": world_state.get("act", "1"),
 		"current_location": world_state.get("current_location", ""),
+		"location_display": world_state.get("location_display", ""),
 		"gold": world_state.get("gold", 0),
 	}
 	# The position is written only once one has actually been recorded (#269).

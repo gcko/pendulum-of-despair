@@ -212,7 +212,15 @@ world: {
                    -- Mixed types: most are boolean, council_result is integer,
                    -- reunion_order_1..4 are string.
   act:             string   -- "1", "2", "interlude", "3", "4", "epilogue", "postgame"
-  current_location: string   -- map/scene identifier
+  current_location: string   -- map/scene identifier. A load key, never shown
+                   -- to the player: it is a scene path such as
+                   -- "dungeons/ember_vein_f1".
+  location_display: string   -- player-facing place name for current_location,
+                   -- copied from the map's location_name metadata (e.g.
+                   -- "Ember Vein - Upper Mine"). This is what the save slot
+                   -- header and the pause menu's Location box render. Empty
+                   -- for a save written before the field existed, or for a map
+                   -- carrying no metadata; both read "Unknown" in the slot list.
   current_position: { x: integer, y: integer }
                    -- pixel coordinates on current_location's map. OPTIONAL:
                    -- the key is omitted while no position has been recorded.

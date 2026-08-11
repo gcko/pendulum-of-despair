@@ -154,8 +154,7 @@ func _show_populated_slot(
 	data: Dictionary,
 ) -> void:
 	var world: Dictionary = data.get("world", {})
-	var raw_loc: String = world.get("current_location", "")
-	var loc: String = raw_loc if raw_loc != "" else "Unknown"
+	var loc: String = Helpers.location_display_name(world)
 	var pt: int = data.get("meta", {}).get("playtime", 0)
 	header.text = "%s%s" % [prefix, loc]
 	header.modulate = COLOR_NORMAL

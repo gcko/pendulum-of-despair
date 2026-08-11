@@ -14,6 +14,10 @@ const TAB_NODE_NAMES: Array[String] = ["UseTab", "MatTab", "ArrangeTab", "KeyTab
 var _tab: ItemTab = ItemTab.USE
 var _state: ItemState = ItemState.BROWSING
 var _cursor_index: int = 0
+## Index of the first entry painted into the list panel. The panel holds a fixed
+## number of rows and the inventory does not, so the window follows the cursor
+## (ui-design.md § 4.5). 87 materials exist and nothing sells them yet.
+var _scroll_offset: int = 0
 var _target_index: int = 0
 var _items: Array[Dictionary] = []
 var _sort_mode: int = 0  # 0=type, 1=name, 2=quantity
@@ -50,6 +54,7 @@ func _ready() -> void:
 func open() -> void:
 	_tab = ItemTab.USE
 	_cursor_index = 0
+	_scroll_offset = 0
 	_state = ItemState.BROWSING
 	_refresh_items()
 	_update_display()
@@ -75,11 +80,13 @@ func _handle_browse_input(event: InputEvent) -> bool:
 	if event.is_action_pressed("ui_down"):
 		if _items.size() > 0:
 			_cursor_index = (_cursor_index + 1) % _items.size()
+			_scroll_to_cursor()
 			_update_display()
 		return true
 	if event.is_action_pressed("ui_up"):
 		if _items.size() > 0:
 			_cursor_index = (_cursor_index - 1 + _items.size()) % _items.size()
+			_scroll_to_cursor()
 			_update_display()
 		return true
 	if event.is_action_pressed("ui_page_down") or event.is_action_pressed("ui_right"):
@@ -153,6 +160,7 @@ func _use_on_target() -> void:
 		_refresh_items()
 		if _cursor_index >= _items.size() and _items.size() > 0:
 			_cursor_index = _items.size() - 1
+		_scroll_to_cursor()
 		_update_display()
 		_update_target_display()
 	# Stay in target select to allow using more
@@ -163,8 +171,19 @@ func _switch_tab(direction: int) -> void:
 	var new_tab: int = (_tab + direction + tab_count) % tab_count
 	_tab = new_tab as ItemTab
 	_cursor_index = 0
+	_scroll_offset = 0
 	_refresh_items()
 	_update_display()
+
+
+## Keep the cursor inside the painted window. Called after every cursor move so
+## an entry past the last row can still be reached and read.
+func _scroll_to_cursor() -> void:
+	var rows: int = _item_labels.size()
+	if rows <= 0:
+		return
+	_scroll_offset = clampi(_scroll_offset, maxi(0, _cursor_index - rows + 1), _cursor_index)
+	_scroll_offset = clampi(_scroll_offset, 0, maxi(0, _items.size() - rows))
 
 
 func _refresh_items() -> void:
@@ -230,13 +249,16 @@ func _update_display() -> void:
 	for i: int in range(_item_labels.size()):
 		if _item_labels[i] == null:
 			continue
-		if i < _items.size():
-			var item: Dictionary = _items[i]
+		var index: int = _scroll_offset + i
+		if index < _items.size():
+			var item: Dictionary = _items[index]
 			var qty: int = item.get("quantity", 0)
 			var qty_str: String = ":%d" % qty if qty > 0 else ""
 			_item_labels[i].text = "%s %s" % [item.get("name", ""), qty_str]
 			if _tab == ItemTab.MAT:
-				_item_labels[i].text += "  %dg" % item.get("sell_price", 0)
+				# sell_price is null for act-scaled and unsellable materials, so
+				# it can never go straight into the format string.
+				_item_labels[i].text += "  %dg" % Helpers.material_sell_value(item)
 			_item_labels[i].visible = true
 			var is_usable: bool = item.get("usable_in_field", false)
 			if (
@@ -245,7 +267,7 @@ func _update_display() -> void:
 				and not PartyState.is_at_save_point
 			):
 				is_usable = false
-			if i == _cursor_index:
+			if index == _cursor_index:
 				_item_labels[i].modulate = COLOR_SELECTED
 			elif not is_usable and _tab == ItemTab.USE:
 				_item_labels[i].modulate = COLOR_DISABLED

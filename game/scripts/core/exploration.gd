@@ -148,6 +148,8 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_encounter_config = setup.config
 	_zone_map = DataManager.load_zone_map(dungeon_id) if setup.use_zones else []
 	var location_name: String = _current_map.get_meta("location_name", "")
+	# The place name the pause menu and save slots show; the map id is a path.
+	PartyState.location_display = location_name
 	if location_name != "" and location_name != _last_flash_id:
 		flash_location_name(location_name)
 		_last_flash_id = location_name
@@ -205,6 +207,11 @@ func _initialize_from_transition_data() -> void:
 		var saved_position: Vector2i = PartyState.player_position
 		var location: String = PartyState.location_name
 		load_map(location if location != "" else "overworld")
+		if _current_map == null:
+			# The saved map was renamed or dropped between builds; an empty scene
+			# has no floor and no exit, so degrade to the overworld instead.
+			load_map("overworld")
+			had_position = false
 		if _player != null and had_position:
 			_player.position = Vector2(saved_position)
 			_record_player_location()
@@ -241,7 +248,7 @@ func _initialize_from_transition_data() -> void:
 		load_map("overworld")
 	# Safety net: if a party-joining flag was set but the member was never
 	# added (e.g., crash or force-quit during dialogue), pick them up now.
-	_check_party_joining_flags()
+	ExplorationPartyJoins.check_join_flags(self)
 
 
 func _initialize_entities(map_node: Node2D) -> void:
@@ -417,48 +424,13 @@ func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
 	if state != GameManager.OverlayState.NONE:
 		GameManager.overlay_state_changed.connect(_on_dialogue_closed_check_party, CONNECT_ONE_SHOT)
 		return
-	_check_party_joining_flags()
+	ExplorationPartyJoins.check_join_flags(self)
 	if (
 		EventFlags.get_flag("ember_vein_1e_seen")
 		and not EventFlags.get_flag("arcanite_gear_broken")
 	):
 		PartyState.break_arcanite_gear()
 		EventFlags.set_flag("arcanite_gear_broken", true)
-
-
-func _check_party_joining_flags() -> void:
-	if EventFlags.get_flag("carradan_ambush_survived"):
-		var added_lira: bool = false
-		var added_sable: bool = false
-		if not PartyState.has_member("lira"):
-			PartyState.add_member("lira", _get_join_level())
-			added_lira = true
-		if not PartyState.has_member("sable"):
-			PartyState.add_member("sable", _get_join_level())
-			added_sable = true
-		if added_lira and added_sable:
-			flash_location_name("Lira and Sable joined the party!")
-		elif added_lira:
-			flash_location_name("Lira joined the party!")
-		elif added_sable:
-			flash_location_name("Sable joined the party!")
-	if EventFlags.get_flag("torren_joined") and not PartyState.has_member("torren"):
-		PartyState.add_member("torren", _get_join_level())
-		flash_location_name("Torren joined the party!")
-	if EventFlags.get_flag("maren_warning") and not PartyState.has_member("maren"):
-		PartyState.add_member("maren", _get_join_level())
-		flash_location_name("Maren joined the party!")
-
-
-## Level a newly-joining party member starts at: max(1, floor(party average) - 1)
-## per progression.md "Party Join Rules" (joiners arrive slightly under the average).
-func _get_join_level() -> int:
-	if PartyState.members.is_empty():
-		return 1
-	var total: int = 0
-	for m: Dictionary in PartyState.members:
-		total += int(m.get("level", 1))
-	return maxi(1, floori(float(total) / float(PartyState.members.size())) - 1)
 
 
 func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
