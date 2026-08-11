@@ -122,8 +122,9 @@ Attunement, target MDEF 80, elemental weakness, Resonance. That chain is
 reaches the cap gives `power >= 94`. Applying the 60-70% AoE reduction to Tier 4
 would cap AoE power at `120 x 0.7 = 84`, and 84 < 94, so the cap would become
 unreachable by any spell in the game. The reduction therefore cannot apply at
-Tier 4. Ultimates are balanced by MP cost (50-99, i.e. 2-4x a Tier 3 single
-target) and by availability, not by a power discount.
+Tier 4. Ultimates are balanced by MP cost (50-99, roughly double a Tier 3
+single target at the same point in its band) and by availability, not by a
+power discount.
 
 Not every ultimate reaches the cap: Requiem of Thorns (power 90) tops out at
 ~14,410 on the same chain, and is the cheapest Tier 4 spell at 70 MP.
