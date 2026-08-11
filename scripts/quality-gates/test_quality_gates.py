@@ -462,12 +462,19 @@ class TestCheckDocCitations(unittest.TestCase):
         )
         self.assertEqual(truncated[2], "Physical Elemental Attacks")
 
-        wrapped, own = check_doc_citations.citation_tail(
+        # ``citation_tail`` returns a *character* length; ``match_heading``
+        # takes a *word* count. ``check_citations`` converts between the two
+        # (``own_words = len(heading_part[:own_len].split())``) and this test
+        # must convert identically — a character length is several times the
+        # word count, which switches the own-line bound off and lets the
+        # assertion pass whatever the bounding logic does.
+        wrapped, own_len = check_doc_citations.citation_tail(
             " Physical Attack\n## Resolution).\n", markdown=False
         )
-        self.assertEqual(wrapped[:own], " Physical Attack")
+        self.assertEqual(wrapped[:own_len], " Physical Attack")
+        own_words = len(wrapped[:own_len].split())
         hit = check_doc_citations.match_heading(
-            index, "docs/story/magic.md", wrapped, own
+            index, "docs/story/magic.md", wrapped, own_words
         )
         self.assertEqual(hit[2], "Physical Attack Resolution")
 
@@ -477,6 +484,29 @@ class TestCheckDocCitations(unittest.TestCase):
             "## Resolution > 'row modifier').\n",
         )
         self.assertEqual(self._errors(), [])
+
+    def test_the_wrapped_bound_is_counted_in_words_not_characters(self):
+        """A wrap whose next line opens on a capital needs the bound exact.
+
+        Above, the citation's own words and the joined ones together name one
+        heading, so the invention check never reaches ``words[own]`` and any
+        ``own`` at all resolves it. Here the heading ends on the citation's own
+        line and the continuation opens on ``Eighty-nine`` — capitalised, and
+        matching no heading. Only a bound of exactly three words stops that
+        from reading as an invented subsection, so this case fails on a
+        character length and fails again if the bound is dropped.
+        """
+        index = check_doc_citations.DocIndex()
+        wrapped, own_len = check_doc_citations.citation_tail(
+            " Spell Count Summary\n## Eighty-nine spells.\n", markdown=False
+        )
+        self.assertEqual(wrapped, " Spell Count Summary Eighty-nine spells.")
+        own_words = len(wrapped[:own_len].split())
+        self.assertEqual(own_words, 3)
+        hit = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", wrapped, own_words
+        )
+        self.assertEqual(hit[2], "Spell Count Summary")
 
     def test_a_wrapped_citation_cannot_green_light_the_wrong_section(self):
         """The silent failure this gate exists to stop.
