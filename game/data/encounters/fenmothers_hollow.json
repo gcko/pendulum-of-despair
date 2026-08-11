@@ -1,7 +1,8 @@
 {
   "dungeon_id": "fenmothers_hollow",
   "name": "Fenmother's Hollow",
-  "act": "act_i",
+  "_act_comment": "Act II: the dungeon is gated behind diplomatic_mission_start (events.md flag 8), which fires after pendulum_to_capital ends Act I, and is cleared for duskfen_alliance (flag 9). Its enemy roster still lives in game/data/enemies/act_i.json because the fight is tuned to the top of the Act I power band - see dungeons-world.md section 2 (#287).",
+  "act": "act_ii",
   "floors": [
     {
       "floor_id": "1-2",

@@ -97,6 +97,17 @@ func test_encounter_data_exists() -> void:
 	assert_false(d.is_empty())
 
 
+func test_encounter_act_is_act_ii() -> void:
+	# #287: the dungeon is gated behind diplomatic_mission_start (events.md
+	# flag 8), which cannot fire until pendulum_to_capital has ended Act I, so
+	# it is Act II content even though its roster is tuned to the Act I power
+	# band and still ships in game/data/enemies/act_i.json. See
+	# dungeons-world.md section 2.
+	var d: Dictionary = DataManager.load_encounters("fenmothers_hollow")
+	assert_false(d.is_empty(), "fenmothers_hollow.json must load")
+	assert_eq(d.get("act", ""), "act_ii", "Fenmother's Hollow is Act II content")
+
+
 func test_encounter_floor_ids() -> void:
 	var d: Dictionary = DataManager.load_encounters("fenmothers_hollow")
 	var key: String = "floors" if d.has("floors") else "zones"

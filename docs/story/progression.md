@@ -263,8 +263,8 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 | Milestone | Target Level | Cumulative XP | Act |
 |-----------|-------------|--------------|-----|
 | After Ember Vein | ~8 | ~2,000 | I |
-| After Fenmother's Hollow | ~12 | ~5,300 | I |
-| End of Act I | ~18 | ~14,100 | I |
+| End of Act I (arrive Valdris) | ~12 | ~5,300 | I |
+| After Fenmother's Hollow | ~18 | ~14,100 | II |
 | Mid Act II (Corrund) | ~25 | ~31,500 | II |
 | End of Act II | ~35 | ~72,000 | II |
 | Mid Interlude (Sable solo) | ~38 | ~90,000 | Int |
@@ -280,11 +280,27 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 
 > These targets assume critical-path + moderate exploration, no intentional grinding. The Ley Scar (see [dungeons-world.md](dungeons-world.md)) provides optional high-XP farming in Act III.
 
+> **Act boundary correction (#287).** The first three rows previously read
+> "After Ember Vein ~8 / After Fenmother's Hollow ~12 (Act I) / End of Act I
+> ~18". Fenmother's Hollow is Act II content — it opens on
+> `diplomatic_mission_start`, which cannot fire until `pendulum_to_capital`
+> has ended Act I (see [dungeons-world.md](dungeons-world.md) § 2). Cumulative
+> XP only rises, so the smaller figure has to belong to the earlier
+> milestone; the two labels have been swapped rather than the numbers
+> invented. The result is the Act I band that [economy.md](economy.md) § Act I
+> ("Levels 1–12") and [bestiary/README.md](bestiary/README.md) § Level Ranges
+> by Act (Act I, recommended party level 1–12) already state, so this table no
+> longer stands alone at 18. It also puts the party at ~12 when it reaches a dungeon whose
+> recommended level is 12–15. Not corrected here: the per-act XP and gold
+> *supply* estimates in § XP Pacing Per Act and economy.md § Act I still
+> count the Corrupted Fenmother's 2,500 XP and 1,500g as Act I income.
+> Re-deriving those splits is a balance pass, not a doc fix.
+
 ### XP Pacing Per Act
 
-**Act I (Fast Levels):** Levels 1→18 in ~2–3 hours. Level-up every ~15–20 minutes. New ability every 3–5 levels. Purpose: teach the player that leveling = new capabilities.
+**Act I (Fast Levels):** Levels 1→12 in ~2–3 hours. Level-up every ~15–20 minutes. New ability every 3–5 levels. Purpose: teach the player that leveling = new capabilities.
 
-**Act II (Steady Progression):** Levels 18→35 in ~4–5 hours. Level-up every ~20–25 minutes. Abilities space out (every 4–6 levels). System depth provides non-level rewards.
+**Act II (Steady Progression):** Levels 12→35 in ~4–5 hours. Level-up every ~20–25 minutes. Abilities space out (every 4–6 levels). System depth provides non-level rewards. Fenmother's Hollow is the act's opening dungeon, entered at ~12–15 (#287).
 
 **Interlude (Survival Pacing):** Levels 35→50 in ~3–4 hours. Level-up every ~15–20 minutes (faster due to harder enemies). Story-triggered abilities supplement level-based ones. 50% absent share keeps reunited characters close.
 

@@ -808,6 +808,15 @@ Small gold tips (50–100g) from NPCs for information or returning lost items. F
 
 ### Act I (Levels 1–12, 2 dungeons + overworld)
 
+> **Act boundary note (#287):** the second of the "2 dungeons" is
+> Fenmother's Hollow, which is Act II content — it opens on
+> `diplomatic_mission_start`, after `pendulum_to_capital` has ended Act I
+> (see [dungeons-world.md](dungeons-world.md) § 2). Its 1,500g boss payday
+> is still counted in the Act I income table below, as authored. The
+> level band (1–12) is unaffected and remains correct. Re-deriving the
+> Act I / Act II gold split, and the affordability percentages that hang
+> off it, is a balance pass rather than a doc fix and has not been done.
+
 **Income:**
 
 | Source | Estimate | Notes |
