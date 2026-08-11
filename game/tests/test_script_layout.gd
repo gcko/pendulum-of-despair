@@ -24,6 +24,18 @@ const MAX_SCRIPT_LINES: int = 600
 ## breaking them down is intrinsically difficult, and § 1.2a names each one.
 const TARGET_SCRIPT_LINES: int = 400
 
+## Trees the hard maximum applies to. `res://tests` used to be outside the
+## walk entirely, which is how three test files reached 968, 623 and 613
+## lines unchecked (#374).
+const CEILING_ROOTS: Array[String] = ["res://scripts", "res://tests"]
+
+## Trees the 400-line aim applies to. Deliberately narrower than
+## CEILING_ROOTS: § 1.2a exempts test suites from the aim, because a test
+## file's length tracks how many behaviours its subject has rather than any
+## property of its own design. The exemption is a documented decision, so
+## the guard below checks that the doc still states it.
+const AIM_ROOTS: Array[String] = ["res://scripts"]
+
 ## Files in the 400-600 band that § 1.2a does not name yet.
 ##
 ## A hand-kept copy of the doc's list drifts from it silently — which is how
@@ -113,10 +125,13 @@ func test_util_dir_holds_no_registered_singleton() -> void:
 # ── Script size budget (technical-architecture.md § 1.2a) ───────────────
 
 
-## Every .gd under res://scripts, recursively, as "path: line_count".
-func _script_line_counts() -> Dictionary:
+## Every .gd under `roots`, recursively, as "path: line_count".
+##
+## The vendored res://addons/gut tree is in neither root list: it is
+## third-party code and stays outside the budget (#374).
+func _script_line_counts(roots: Array[String]) -> Dictionary:
 	var counts: Dictionary = {}
-	var pending: Array[String] = ["res://scripts"]
+	var pending: Array[String] = roots.duplicate()
 	while not pending.is_empty():
 		var dir_path: String = pending.pop_back()
 		var dir: DirAccess = DirAccess.open(dir_path)
@@ -144,8 +159,17 @@ func _script_line_counts() -> Dictionary:
 
 
 func test_no_script_exceeds_the_hard_line_maximum() -> void:
-	var counts: Dictionary = _script_line_counts()
+	var counts: Dictionary = _script_line_counts(CEILING_ROOTS)
 	assert_gt(counts.size(), 20, "the scan must actually find the script tree")
+	# The walk missing a whole root is the failure this test cannot survive:
+	# it would report a clean tree while never looking at it.
+	for root: String in CEILING_ROOTS:
+		var seen: bool = false
+		for path: String in counts:
+			if path.begins_with(root + "/"):
+				seen = true
+				break
+		assert_true(seen, "the scan must reach %s" % root)
 	var over: Array[String] = []
 	for path: String in counts:
 		if int(counts[path]) > MAX_SCRIPT_LINES:
@@ -221,7 +245,7 @@ func test_files_between_the_aim_and_the_maximum_are_justified_in_the_doc() -> vo
 	var section: String = _budget_section()
 	if section.is_empty():
 		return  # _budget_section already failed the test
-	var counts: Dictionary = _script_line_counts()
+	var counts: Dictionary = _script_line_counts(AIM_ROOTS)
 	var still_undocumented: Dictionary = {}
 	for path: String in counts:
 		if int(counts[path]) <= TARGET_SCRIPT_LINES:
@@ -251,6 +275,26 @@ func test_files_between_the_aim_and_the_maximum_are_justified_in_the_doc() -> vo
 					+ "(or it dropped under %d lines); delete the entry"
 				)
 				% [base, TARGET_SCRIPT_LINES]
+			)
+		)
+
+
+func test_the_doc_states_which_trees_the_budget_covers() -> void:
+	# The scan's seed paths ARE the budget's scope, so leaving them
+	# undocumented makes the scope an accident rather than a decision — which
+	# is exactly how game/tests/ stayed unscanned while three files there ran
+	# past the hard maximum (#374). Every tree the ceiling walks must be named
+	# in § 1.2a, and so must the narrower scope of the 400-line aim.
+	var section: String = _budget_section()
+	if section.is_empty():
+		return  # _budget_section already failed the test
+	for root: String in CEILING_ROOTS:
+		var tree: String = "%s/" % root.trim_prefix("res://")
+		assert_true(
+			section.contains(tree),
+			(
+				"§ 1.2a must say how the %d-line maximum applies to `%s`, because the guard walks it"
+				% [MAX_SCRIPT_LINES, tree]
 			)
 		)
 
