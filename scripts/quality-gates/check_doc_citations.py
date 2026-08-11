@@ -88,51 +88,51 @@ KNOWN_UNRESOLVED: dict[tuple[str, str], str] = {
     (
         "docs/story/script/interlude.md",
         "dungeons-world.md § Roothollow Ley Nexus (Ley Leech) -->",
-    ): "#362 — the dungeon is § 19. Ley Nexus Hollow; Roothollow is a village",
+    ): "#366 — the dungeon is § 19. Ley Nexus Hollow; Roothollow is a village",
     (
         "game/scripts/combat/battle_magic_command.gd",
         "combat-formulas.md § Weave Gauge).",
-    ): "#362 — combat-formulas.md has no Weave Gauge section",
+    ): "#366 — combat-formulas.md has no Weave Gauge section",
     (
         "game/scripts/combat/encounter_system.gd",
         "combat-formulas.md § Preemptive Charm interaction).",
-    ): "#362 — no such section; the rule lives under § Encounter System",
+    ): "#366 — no such section; the rule lives under § Encounter System",
     (
         "game/scripts/combat/encounter_system.gd",
         "combat-formulas.md § Final increment formula. int() truncation",
-    ): "#362 — no such section; the formula lives under § Danger Counter",
+    ): "#366 — no such section; the formula lives under § Danger Counter",
     (
         "game/scripts/combat/encounter_system.gd",
         "combat-formulas.md § Preemptive Charm interaction",
-    ): "#362 — no such section; the rule lives under § Encounter System",
+    ): "#366 — no such section; the rule lives under § Encounter System",
     (
         "docs/story/script/act-i.md",
         "npcs.md § Vessa/Torren -->",
-    ): "#362 — Torren is a party member; his entry is in characters.md",
+    ): "#366 — Torren is a party member; his entry is in characters.md",
     (
         "docs/story/script/act-iii.md",
         "abilities.md § Steadfast Resolve -->",
-    ): "#362 — abilities.md lists it in a table, under no heading of its own",
+    ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
         "abilities.md § Cael's Edge -->",
-    ): "#362 — abilities.md lists it in a table, under no heading of its own",
+    ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
         "abilities.md § Rootsong -->",
-    ): "#362 — abilities.md lists it in a table, under no heading of its own",
+    ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iii.md",
         "abilities.md § Unbreakable Thread -->",
-    ): "#362 — abilities.md lists it in a table, under no heading of its own",
+    ): "#366 — abilities.md lists it in a table, under no heading of its own",
     (
         "docs/story/script/act-iv-epilogue.md",
         "characters.md § all -->",
-    ): "#362 — 'all' is prose for the whole document, not a section",
+    ): "#366 — 'all' is prose for the whole document, not a section",
     (
         "docs/story/script/act-iv-epilogue.md",
         "items.md § First Tree Seed -->",
-    ): "#362 — items.md lists it in a table, under no heading of its own",
+    ): "#366 — items.md lists it in a table, under no heading of its own",
 }
 
 FIX_HINT_ANCHOR = (
