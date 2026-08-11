@@ -121,3 +121,50 @@ func test_ally_targeting_defaults_to_a_full_party() -> void:
 	var m: Node = _make_menu()
 	_open_single_ally_target(m, 0)
 	assert_eq(m._target_count, 4, "an unset party count still addresses four slots")
+
+
+# --- Enemy and ally target ranges are independent (#276) ---
+
+
+## Drive the menu to enemy target selection via the Attack command.
+func _open_attack_target(m: Node) -> void:
+	m._cursor = 0  # Attack is index 0 in the command list.
+	m._confirm_command()
+
+
+func test_enemy_targeting_uses_the_pushed_enemy_count() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.set_enemy_count(3)
+	_open_attack_target(m)
+	assert_eq(m._target_count, 3, "attack cycles the three enemies in the encounter")
+
+
+func test_backing_out_of_an_ally_spell_leaves_every_enemy_reachable() -> void:
+	# Both modes once shared one count field, so a two-member party's ally
+	# targeting capped the enemy cursor at 2 and the third enemy became
+	# unreachable for the rest of the turn (#276).
+	var m: Node = _make_menu()
+	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.set_enemy_count(3)
+	_open_single_ally_target(m, 2)
+	assert_eq(m._target_count, 2, "precondition: ally targeting is bounded by the party")
+
+	m._handle_target_input(_press("ui_cancel"))  # TARGET -> SUBMENU
+	m._handle_submenu_input(_press("ui_cancel"))  # SUBMENU -> COMMAND
+	_open_attack_target(m)
+
+	assert_eq(m._target_count, 3, "the enemy count is restored, not the party's leftover")
+	m._handle_target_input(_press("ui_right"))
+	m._handle_target_input(_press("ui_right"))
+	assert_eq(m._target_cursor, 2, "the third enemy is still reachable")
+
+
+func test_ally_targeting_is_not_widened_by_a_larger_enemy_count() -> void:
+	var m: Node = _make_menu()
+	m.show_commands({"id": "cael", "level": 1}, false, 99)
+	m.set_enemy_count(6)
+	_open_attack_target(m)
+	m._handle_target_input(_press("ui_cancel"))  # TARGET -> COMMAND (attack)
+	_open_single_ally_target(m, 2)
+	assert_eq(m._target_count, 2, "ally targeting still stops at the occupied party slots")

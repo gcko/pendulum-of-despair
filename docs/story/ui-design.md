@@ -197,13 +197,15 @@ and commands share the bottom ~35%.
   pixel font 12px, 2-frame animation. Color-coded: white (damage),
   green (heal), grey (miss).
 - Party-side damage and healing numbers use the same popup, but not the
-  same placement: party rows sit only ~31px apart, less than the height
-  of the number itself, so a number floated above a row would cover the
-  member above it and read as damage to the wrong character. A
-  party-side number is centred on the row it belongs to — both axes —
-  and rises only as far as the gap between rows, never entering a
-  neighbouring row's band. Like the target cursor (§ 2.6), the popup
-  reads the row's actual rect rather than assuming a row pitch.
+  same placement: party rows sit only ~31px apart and a number is about
+  as tall as a row itself, so a number floated above its row the way an
+  enemy's is (64px) would land squarely on the member above and read as
+  damage to the wrong character. A party-side number is centred on the
+  row it belongs to — both axes — and rises only as far as the gap
+  between rows, never entering a neighbouring row's band. Centring holds
+  for any number no taller than a row, which is why — like the target
+  cursor (§ 2.6) — the popup reads the row's actual rect rather than
+  assuming a row pitch.
 
 ### 2.3 Party Panel (Bottom-Left, ~65% Width)
 
