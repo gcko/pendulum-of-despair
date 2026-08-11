@@ -1,7 +1,7 @@
 extends GutTest
 ## Tests BattleUI's battle-message window (ui-design.md § 2.5). A line must stay
 ## legible for a minimum time before the next one may replace it, so an action
-## resolving on the following frame — an enemy attacking right after a paralysed
+## resolving on the following frame — an enemy attacking right after a paralyzed
 ## member's turn was auto-skipped — cannot flash the earlier line past the player
 ## unread (#260). Boots the real battle scene: the label, its timer and the queue
 ## only exist in the assembled UI.
@@ -46,14 +46,14 @@ func _boot_ui() -> CanvasLayer:
 
 func test_a_new_message_waits_while_the_current_one_is_still_fresh() -> void:
 	var ui: CanvasLayer = await _boot_ui()
-	ui._on_message("Edren is paralysed and can't move!")
+	ui._on_message("Edren is paralyzed and can't move!")
 	ui._process(0.016)  # one rendered frame — nowhere near readable yet
 
 	ui._on_message("Ley Vermin attacks Edren!")
 
 	assert_eq(
 		ui._message_label.text,
-		"Edren is paralysed and can't move!",
+		"Edren is paralyzed and can't move!",
 		"the fresh line keeps the window"
 	)
 	assert_eq(ui._message_queue.size(), 1, "the newcomer waits its turn")

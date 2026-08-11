@@ -24,13 +24,40 @@ func test_atb_frozen_statuses() -> void:
 func test_display_adjective_reads_back_as_an_announcement() -> void:
 	# battle_manager builds "%s is %s and can't move!" from this, so the value
 	# has to be the adjective, never the raw status name (#260 review).
-	assert_eq(SE.display_adjective("paralysis"), "paralysed")
+	assert_eq(SE.display_adjective("paralysis"), "paralyzed")
 	assert_eq(SE.display_adjective("sleep"), "asleep")
 	assert_eq(SE.display_adjective("petrify"), "petrified")
 	assert_eq(
 		SE.display_adjective("nonsense"),
 		"nonsense",
 		"an unlisted status reads back as itself rather than as another status"
+	)
+
+
+## The paralysis announcement exists in three places that must agree: the
+## adjective in status_effects.gd, the canon line in battle-dialogue.md
+## § Status Effect Notifications, and the shipped
+## game/data/dialogue/battle_status_effect_notifications.json generated from
+## it by tools/dialogue_parser.py. Nothing else compares the JSON against the
+## engine, so a spelling drift in either one was previously silent (#301).
+func test_shipped_notification_matches_the_engine_adjective() -> void:
+	var data: Dictionary = DataManager.load_dialogue("battle_status_effect_notifications")
+	var entries: Array = data.get("entries", [])
+	if entries.is_empty():
+		fail_test("battle_status_effect_notifications.json is missing or has no entries")
+		return
+	var shipped: String = ""
+	for entry: Variant in entries:
+		for line: Variant in (entry as Dictionary).get("lines", []):
+			if String(line).contains("can't move"):
+				shipped = String(line)
+	if shipped.is_empty():
+		fail_test('no "can\'t move" notification in battle_status_effect_notifications.json')
+		return
+	assert_eq(
+		shipped,
+		"[Character] is %s and can't move!" % SE.display_adjective("paralysis"),
+		"shipped notification must read back exactly as battle_manager builds it"
 	)
 
 

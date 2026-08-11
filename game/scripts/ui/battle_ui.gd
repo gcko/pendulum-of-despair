@@ -192,7 +192,7 @@ func _on_target_changed(index: int, is_enemy: bool) -> void:
 			return
 		_target_arrow.visible = true
 		var arrow: Vector2 = _target_arrow.get_minimum_size()
-		# Sits just left of the row, vertically centred on it. The party panel
+		# Sits just left of the row, vertically centered on it. The party panel
 		# hugs the viewport's left edge, so clamp at 0 rather than let the
 		# cursor slide off-screen.
 		_target_arrow.position = Vector2(
@@ -291,7 +291,7 @@ func _spawn_damage_number(target_id: String, text: String, color: Color) -> void
 
 ## Where a combatant's floating number starts ("start", screen-space top-left)
 ## and how far it floats up ("rise"). Enemies live in world space and pop above
-## the sprite. A party member's number sits centred on its own panel row: the
+## the sprite. A party member's number sits centered on its own panel row: the
 ## rows are packed far tighter than POPUP_LIFT, so anything lifted like an
 ## enemy's number would clear the row above and land over a different member,
 ## reading as damage to them (#276, ui-design.md § 2.3). Row rects come from the

@@ -55,6 +55,24 @@ This directory contains the narrative design for Pendulum of Despair.
 | `worldbuilding-audit.md` | Worldbuilding continuity audit (biomes + geography + visual) |
 | `layout-audit.md` | Layout continuity audit (cities + dungeons + interiors + economy) |
 
+## Writing Conventions
+
+- **American spelling, everywhere.** Design prose, dialogue, and every
+  player-facing string use American English: *color*, *behavior*,
+  *paralyzed*, *centered*, *-ize/-ization*. This matches the existing
+  corpus (280 `color` against 6 `colour` before the sweep; 142 `-ize`
+  verbs against zero `-ise`) and the narrative canon already in place
+  (`outline.md` "paralyzed by guilt", `characters.md` "paralyzes him",
+  `abilities.md` "he's paralyzed by guilt"). Anything quoted as canon by
+  a design doc, a test, or `game/data/dialogue/*.json` must match the
+  string the engine emits, so a spelling change is never local to one
+  file — see `docs/story/script/battle-dialogue.md` § Status Effect
+  Notifications and its generator in `tools/dialogue_parser.py`.
+- **`grey` is the one exception, and it is a proper noun.** *The Grey* is
+  the game's name for the Pallor's drained world-state; *grey* is used
+  throughout for it and for the color it names. Do not "correct" it to
+  *gray*.
+
 ## Design Principles
 
 - **Homage, not recreation.** Inspired by FF4, FF6, Chrono Trigger, and Secret of Mana — but original names, places, and characters throughout.

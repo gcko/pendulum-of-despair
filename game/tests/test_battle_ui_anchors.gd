@@ -93,13 +93,13 @@ func test_party_damage_popup_sits_on_the_row_it_belongs_to() -> void:
 		popup.position.x + size.x * 0.5,
 		row.position.x + row.size.x * 0.5,
 		1.0,
-		"popup is centred over its row"
+		"popup is centered over its row"
 	)
 	assert_almost_eq(
 		popup.position.y + size.y * 0.5,
 		row.position.y + row.size.y * 0.5,
 		1.0,
-		"and vertically centred on it, so it cannot be read as another member's"
+		"and vertically centered on it, so it cannot be read as another member's"
 	)
 
 

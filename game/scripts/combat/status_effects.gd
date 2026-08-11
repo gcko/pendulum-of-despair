@@ -49,13 +49,13 @@ const RULES: Dictionary = {
 }
 
 ## Player-facing adjective for an action-denial announcement ("paralysis" ->
-## "paralysed"). Only Paralysis reaches an announcement today: a gauge-frozen
+## "paralyzed"). Only Paralysis reaches an announcement today: a gauge-frozen
 ## member is passed over in silence (combat-formulas.md § Status Effect ATB
 ## Interactions), so the sleep/petrify entries are pre-registered wording for a
-## future announcement path, not live behaviour. Anything unlisted falls back to
+## future announcement path, not live behavior. Anything unlisted falls back to
 ## its raw status name rather than reading as another status.
 const ADJECTIVES: Dictionary = {
-	"paralysis": "paralysed",
+	"paralysis": "paralyzed",
 	"sleep": "asleep",
 	"petrify": "petrified",
 }
@@ -95,7 +95,7 @@ static func wakes_on_damage(status: String) -> bool:
 	return RULES.get(status, {}).get("wake_on_damage", false)
 
 
-## Adjective for a battle announcement, e.g. "Edren is paralysed and can't move!"
+## Adjective for a battle announcement, e.g. "Edren is paralyzed and can't move!"
 static func display_adjective(status: String) -> String:
 	return ADJECTIVES.get(status, status)
 

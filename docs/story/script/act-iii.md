@@ -26,7 +26,7 @@
 <!-- Variants: none -->
 <!-- Cross-ref: outline.md § Act III The March -->
 
-*(The trail through the Wilds. The colour drains as they walk —
+*(The trail through the Wilds. The color drains as they walk —
 greens fading to grey-green, then grey. The birdsong dies first.
 Then the wind. Then the sound of their own footsteps seems
 muffled, as if the ground doesn't want to be walked on.)*
@@ -500,7 +500,7 @@ Acceptance starves it. That's why we're still standing.
 <!-- Variants: campfire_complete (flag 52) only if player speaks to all members -->
 <!-- Cross-ref: outline.md § Act III Campfire, events.md flag 52 -->
 
-*(A clearing. The only colour left — a campfire. The flames are
+*(A clearing. The only color left — a campfire. The flames are
 real, warm, defiant against the grey. The party rests here before
 the final push. Each member can be spoken to.)*
 
@@ -707,7 +707,7 @@ silhouette is visible at the machine's base, impossibly small
 against its scale.)*
 
 *(The party walks in silence. There is nothing left to say. The
-grey is absolute here — no colour, no sound except their
+grey is absolute here — no color, no sound except their
 footsteps. Even the wind has stopped.)*
 
 **LIRA** : There he is.

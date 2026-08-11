@@ -210,7 +210,7 @@ These Act I kit items reference mechanics the docs do not yet define; they are
 
 > **Now defined (#248):** **Paralysis** — *cannot act for 3 turns, does not wake
 > on damage* — is in the `magic.md` Status Effect Reference and `status_effects.gd`
-> (`incapacitates`); the battle layer auto-skips a *paralysed* member's ready
+> (`incapacitates`); the battle layer auto-skips a *paralyzed* member's ready
 > turn so the gauge clock counts the duration down (gauge-frozen statuses are
 > passed over instead — see `combat-formulas.md` § Status Effect ATB
 > Interactions). Ley Jellyfish (Ley Sting +

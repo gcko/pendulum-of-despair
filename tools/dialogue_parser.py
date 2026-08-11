@@ -1459,7 +1459,7 @@ def postprocess_system_text_files():
             "[Character] is Berserk!",
             "[Character] is Stopped!",
             "[Character] is Grounded!",
-            "[Character] is paralysed and can't move!",
+            "[Character] is paralyzed and can't move!",
             "Poison wears off.",
             "Silence wears off.",
             "[Character] woke up!",
