@@ -304,6 +304,7 @@
       ]
     },
     {
+      "_comment": "Issue #270: groups repopulated from the bestiary/act-i.md 'Overworld Act I' roster (forest members only). The previous marsh_serpent/drowned_bones set belongs to the marsh, which has its own zone (duskfen_marshland, increment 380, matched before this one) -- not to this light-forest band. This zone's increment 148 is geography.md's Forest (light) row; dense forest is deep_thornmere at 380. drowned_bones is confined to Fenmother's Hollow F1-F2; marsh_serpent also rolls in duskfen_marshland and duskfen_hollow, so 'confined' holds only within the Act I overworld. Encounter math (tier, increment, terrain, formation rates, weights) is unchanged; expected group HP 360 -> 332, still ~2.5x tier-1 aelhart_valley (132). Rewards move deliberately: weight-expected exp 27.8 -> 49.1 and gold 13.4 -> 23.9, because the marsh pair were high-HP/low-reward. That had left the Wilds at 0.077 exp per point of enemy HP against 0.145-0.154 across the other Act I regional zones; the new roster sits at 0.148. With the increment unchanged and fight length tracking HP, reward per unit of play time is now normal for the act (the Act III Ley Scar remains the XP farm). Note the rare format-4 pack grew 3 enemies/491 HP -> 4/536. See the 'Thornmere Wilds roster' note in docs/story/bestiary/act-i.md.",
       "zone_id": "thornmere_wilds",
       "name": "Thornmere Wilds",
       "terrain_type": "low_visibility",
@@ -319,33 +320,36 @@
         {
           "format": 1,
           "enemies": [
-            "marsh_serpent",
-            "marsh_serpent"
+            "wayward_wolf",
+            "wayward_wolf"
           ],
           "weight": 31.25
         },
         {
           "format": 2,
           "enemies": [
-            "marsh_serpent",
-            "drowned_bones"
+            "wild_boar",
+            "wild_boar",
+            "forest_sprite"
           ],
           "weight": 31.25
         },
         {
           "format": 3,
           "enemies": [
-            "drowned_bones",
-            "drowned_bones"
+            "wayward_wolf",
+            "thornback_beetle",
+            "forest_sprite"
           ],
           "weight": 31.25
         },
         {
           "format": 4,
           "enemies": [
-            "marsh_serpent",
-            "marsh_serpent",
-            "drowned_bones"
+            "wayward_wolf",
+            "wayward_wolf",
+            "wild_boar",
+            "wild_boar"
           ],
           "weight": 6.25
         }
