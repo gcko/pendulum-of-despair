@@ -42,7 +42,7 @@ Implement capture/merge against PartyState XP and EventFlags boss_cutscene_seen_
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd
+- game/scripts/autoload/save_manager.gd — `faint_and_fast_reload()` and the stubs it calls: `_merge_xp()`, `_process_level_ups()`, `_full_restore()`
 
 
 ## Verification (fresh-eyes adversarial pass)

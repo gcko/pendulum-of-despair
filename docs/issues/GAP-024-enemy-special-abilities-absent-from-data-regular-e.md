@@ -43,7 +43,7 @@ Add an abilities schema to enemy JSON (Act I families first), populate from pale
 ## Code references
 
 - game/data/enemies/act_i.json (no 'abilities' field in any of 28 entries)
-- game/scripts/combat/battle_ai.gd
+- game/scripts/combat/battle_ai.gd — `select_action()` (the 20% ability roll)
 - game/scripts/combat/battle_actions.gd (no apply_status path)
 
 

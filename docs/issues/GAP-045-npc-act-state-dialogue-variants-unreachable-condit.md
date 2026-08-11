@@ -42,7 +42,7 @@ Add flag setters when each act is built; extend events.md with the *_seen/*_defe
 
 - game/data/dialogue/npc_bren.json|npc_dame_cordwyn.json|npc_scholar_aldis.json
 - game/scripts/entities/npc.gd
-- game/scripts/core/cleansing_sequence.gd
+- game/scripts/core/cleansing_sequence.gd — `_complete()` (sets fenmother_cleansed, one of the flags absent from events.md)
 
 
 ## Verification (fresh-eyes adversarial pass)

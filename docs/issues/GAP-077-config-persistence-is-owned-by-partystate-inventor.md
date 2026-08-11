@@ -41,7 +41,7 @@ Add SaveManager.save_config/load_config delegating to the JSON helper; have Part
 ## Code references
 
 - game/scripts/autoload/save_manager.gd
-- game/scripts/autoload/party_state.gd
+- game/scripts/autoload/party_state.gd — `save_config()`, `_load_config()` (config I/O outside SaveManager)
 - game/scripts/util/save_data_helpers.gd — `load_config_from_disk()`
 
 

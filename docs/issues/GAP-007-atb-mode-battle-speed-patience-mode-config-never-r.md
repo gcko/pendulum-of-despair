@@ -42,7 +42,7 @@ In battle_manager._ready/init, read config and configure the ATB node; also paus
 
 ## Code references
 
-- game/scripts/combat/atb_system.gd
+- game/scripts/combat/atb_system.gd — `set_atb_mode()`, `set_battle_speed()`
 - game/scripts/combat/battle_manager.gd
 - game/scripts/ui/menu_config.gd
 

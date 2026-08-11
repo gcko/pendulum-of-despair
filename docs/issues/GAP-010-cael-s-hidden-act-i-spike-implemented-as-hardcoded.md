@@ -42,7 +42,7 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 
 ## Code references
 
-- game/scripts/combat/damage_calculator.gd
+- game/scripts/combat/damage_calculator.gd — `calculate_physical()` (where the hardcoded character special-case sat)
 
 
 ## Verification (fresh-eyes adversarial pass)

@@ -40,7 +40,7 @@ Add HPBar/MPBar ColorRect (bg + fill) to each battle and menu Row; compute fill_
 
 ## Code references
 
-- game/scripts/ui/battle_party_panel.gd
+- game/scripts/ui/battle_party_panel.gd — `_set_fill()` (the HP/MP fill bars)
 - game/scenes/core/battle.tscn
 - game/scripts/ui/menu_overlay.gd
 

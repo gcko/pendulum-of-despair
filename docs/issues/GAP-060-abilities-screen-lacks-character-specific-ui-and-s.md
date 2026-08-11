@@ -41,7 +41,7 @@ Add per-command rendering branches (pips/gauge/highlight) and source live values
 ## Code references
 
 - game/scripts/ui/menu_abilities.gd
-- game/scripts/ui/ability_helpers.gd
+- game/scripts/ui/ability_helpers.gd — `get_resource_label()` (the resource header the finding recorded as hardcoded)
 
 
 ## Verification (fresh-eyes adversarial pass)

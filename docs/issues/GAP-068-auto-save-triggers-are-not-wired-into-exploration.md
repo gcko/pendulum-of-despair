@@ -41,7 +41,7 @@ Hook auto-save at flagged floor/town transitions, at boss trigger zones before f
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd
+- game/scripts/autoload/save_manager.gd — `auto_save()` (zero callers)
 
 
 ## Verification (fresh-eyes adversarial pass)

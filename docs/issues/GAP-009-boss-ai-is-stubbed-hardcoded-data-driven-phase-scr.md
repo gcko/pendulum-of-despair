@@ -43,7 +43,7 @@ Build boss_ai.gd interpreting phase triggers + scripted actions from bosses JSON
 ## Code references
 
 - game/scripts/combat/battle_ai.gd
-- game/scripts/combat/battle_enemy_turn.gd
+- game/scripts/combat/battle_enemy_turn.gd — `_select_action()` (the boss-vs-regular AI dispatch)
 
 
 ## Verification (fresh-eyes adversarial pass)

@@ -40,9 +40,9 @@ Implement per-box when filtering in DialogueBox, drive cutscenes box-by-box, con
 
 ## Code references
 
-- game/scripts/ui/dialogue_box.gd
-- game/scripts/core/cutscene_player.gd
-- game/scripts/entities/npc.gd
+- game/scripts/ui/dialogue_box.gd — `_fire_animations()` (ignores the when field)
+- game/scripts/core/cutscene_player.gd — `_fire_entry_animations()` (collapses per-line timing to per-entry)
+- game/scripts/entities/npc.gd — `play_animation()` (no-ops on clear)
 - game/scripts/core/exploration.gd
 
 

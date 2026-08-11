@@ -42,7 +42,7 @@ Build per-command executor modules reading/writing battle_state resource fields,
 ## Code references
 
 - game/scripts/combat/battle_player_actions.gd — `do_attack()` (where 'ability' commands were routed; was battle_manager._do_attack)
-- game/scripts/ui/battle_command_menu.gd
+- game/scripts/ui/battle_command_menu.gd — `_get_ability_name()` (maps each character to their unique command label)
 - game/scripts/combat/battle_state.gd (resource fields unused)
 
 

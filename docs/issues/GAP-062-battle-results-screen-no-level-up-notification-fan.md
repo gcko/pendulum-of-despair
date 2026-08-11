@@ -41,7 +41,7 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 
 ## Code references
 
-- game/scripts/ui/battle_ui.gd
+- game/scripts/ui/battle_ui.gd — `_show_results()`
 - game/scripts/util/progression_helpers.gd — `distribute_rewards()`
 - game/scripts/core/exploration.gd — `_initialize_from_transition_data()` (the return-from-battle path that distributes rewards)
 

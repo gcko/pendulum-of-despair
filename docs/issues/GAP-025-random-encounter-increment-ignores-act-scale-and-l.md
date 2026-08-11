@@ -40,8 +40,8 @@ Thread act_scale from GameManager/story state and a location_mod aggregator into
 
 ## Code references
 
-- game/scripts/core/encounter_handler.gd
-- game/scripts/combat/encounter_system.gd
+- game/scripts/core/encounter_handler.gd — `process_step()` (the act_scale caller)
+- game/scripts/combat/encounter_system.gd — `roll_increment()`
 
 
 ## Verification (fresh-eyes adversarial pass)

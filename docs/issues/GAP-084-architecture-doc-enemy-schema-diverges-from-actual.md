@@ -42,7 +42,7 @@ Update §2.1 example and remove/replace the stale §2.8 note; add threat and loc
 ## Code references
 
 - game/data/enemies/act_i.json
-- game/scripts/entities/enemy.gd
+- game/scripts/entities/enemy.gd — `roll_steal()` (reads the nested steal object the doc contradicts)
 
 
 ## Verification (fresh-eyes adversarial pass)

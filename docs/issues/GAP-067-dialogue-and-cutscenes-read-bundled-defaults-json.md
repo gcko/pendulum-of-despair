@@ -41,8 +41,8 @@ Replace the defaults.json loads with PartyState.get_config(); reload on open() s
 
 ## Code references
 
-- game/scripts/ui/dialogue_box.gd
-- game/scripts/core/cutscene_player.gd
+- game/scripts/ui/dialogue_box.gd — `_load_text_speed()`
+- game/scripts/core/cutscene_player.gd — `_load_config()`
 - game/scripts/util/save_data_helpers.gd — `load_config_from_disk()`
 
 

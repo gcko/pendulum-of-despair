@@ -41,8 +41,8 @@ Add a per-slot operations sub-menu (Save/Copy/Delete) wiring Copy to a source->d
 
 ## Code references
 
-- game/scripts/ui/save_load.gd
-- game/scripts/autoload/save_manager.gd
+- game/scripts/ui/save_load.gd — `_do_copy()`, `_do_delete()` (unreachable from slot input)
+- game/scripts/autoload/save_manager.gd — `copy_slot()`, `delete_slot()` (the reachable-from-nowhere backend)
 
 
 ## Verification (fresh-eyes adversarial pass)
