@@ -57,11 +57,12 @@ the date from the filename.
 
 ## Consequences
 
-- **The citation checker skips this directory.**
-  `scripts/quality-gates/check_doc_citations.py` excludes
-  `docs/superpowers/` by design. Stale paths and stale line numbers in here
-  are expected output of the policy, not findings. Do not "fix" the checker to
-  cover this directory; that would re-open a question this policy closed.
+- **No citation checker may scan this directory.** Stale paths and stale line
+  numbers in here are expected output of the policy, not findings, so any gate
+  that verifies doc citations must exclude `docs/superpowers/` from its scan
+  roots. That exclusion belongs in the gate from its first commit — do not
+  "fix" a checker to cover this directory later; that would re-open a question
+  this policy closed.
 - **Review agents should not raise drift here.** A dated artefact disagreeing
   with current canon is not a review finding. If the *canon* is wrong, fix
   `docs/story/`.
