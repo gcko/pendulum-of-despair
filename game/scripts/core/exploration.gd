@@ -72,7 +72,11 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if _player == null or _transitioning or _get_auto_seq().in_auto_walk or _in_cutscene:
+	if _player == null or _transitioning:
+		return
+	# Every frame, cutscenes included, so any save stores the real spot (#269).
+	_record_player_location()
+	if _get_auto_seq().in_auto_walk or _in_cutscene:
 		return
 	var current_tile: Vector2i = Vector2i(_player.position) / 16
 	if current_tile == _last_player_tile:
@@ -195,14 +199,15 @@ func _initialize_from_transition_data() -> void:
 	if data.get("new_game", false):
 		load_map("dungeons/ember_vein_f1", "from_overworld")
 	elif data.has("save_data"):
-		var save_data: Dictionary = data.get("save_data", {})
-		PartyState.load_from_save(save_data)
-		var world: Dictionary = save_data.get("world", {})
-		var location: String = world.get("current_location", "overworld")
+		PartyState.load_from_save(data.get("save_data", {}))
+		# Read before load_map records the spawn; no stored position keeps it (#269).
+		var had_position: bool = PartyState.has_player_position
+		var saved_position: Vector2i = PartyState.player_position
+		var location: String = PartyState.location_name
 		load_map(location if location != "" else "overworld")
-		var pos: Dictionary = world.get("current_position", {})
-		if _player != null and pos.has("x") and pos.has("y"):
-			_player.position = Vector2(pos["x"], pos["y"])
+		if _player != null and had_position:
+			_player.position = Vector2(saved_position)
+			_record_player_location()
 	elif data.has("result"):
 		var r: String = data.get("result", "")
 		if r == "fenmother_cleansing":
@@ -231,6 +236,7 @@ func _initialize_from_transition_data() -> void:
 		if _player != null:
 			var pos: Variant = data.get("position", Vector2(80, 90))
 			_player.position = pos.round() if pos is Vector2 else Vector2(80, 90)
+			_record_player_location()
 	else:
 		load_map("overworld")
 	# Safety net: if a party-joining flag was set but the member was never
@@ -250,12 +256,19 @@ func _disconnect_entity_signals(map_node: Node2D) -> void:
 	_get_entity_manager().disconnect_entity_signals(map_node)
 
 
+## Record where the party stands so the next save writes it (#269).
+func _record_player_location() -> void:
+	if _player != null and not _current_map_id.is_empty():
+		PartyState.set_player_location(_current_map_id, Vector2i(_player.position.round()))
+
+
 func _position_player_at_spawn(spawn_name: String) -> void:
 	if _player == null or _current_map == null:
 		return
 	var marker_name: String = spawn_name if spawn_name != "" else "PlayerSpawn"
 	var spawn: Node2D = _current_map.get_node_or_null(marker_name)
 	_player.position = spawn.position.round() if spawn != null else Vector2(80, 90)
+	_record_player_location()
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:

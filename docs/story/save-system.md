@@ -214,6 +214,13 @@ world: {
   act:             string   -- "1", "2", "interlude", "3", "4", "epilogue", "postgame"
   current_location: string   -- map/scene identifier
   current_position: { x: integer, y: integer }
+                   -- pixel coordinates on current_location's map. OPTIONAL:
+                   -- the key is omitted while no position has been recorded.
+                   -- Absent means "no stored position" and the loader places
+                   -- the party at the map's default spawn marker, never at the
+                   -- origin. Version 1 saves always wrote a hardcoded (0,0),
+                   -- so the v1 -> v2 migration strips the key rather than
+                   -- trusting it.
   gold:            integer
 }
 ```
@@ -524,6 +531,13 @@ rules. See [postgame.md](postgame.md) for boss rush tier structure.
 
 Every save file carries an integer `version` in its `meta` block
 (starts at 1). The game ships with a chain of migration functions.
+
+### Version History
+
+| Version | Change |
+|---------|--------|
+| 1 | Initial format |
+| 2 | `world.current_position` is a real position or absent (v1 wrote a hardcoded origin, which the migration strips); crafting materials move from `inventory.consumables` into `inventory.materials` |
 
 ### Load Flow
 

@@ -43,6 +43,13 @@ var owned_equipment: Array[Dictionary] = []
 var gold: int = 0
 var playtime: int = 0
 var location_name: String = ""
+## Player's pixel position on `location_name`'s map. Only meaningful while
+## `has_player_position` is true — see save-system.md § 3.7 (#269).
+var player_position: Vector2i = Vector2i.ZERO
+## Whether a real player position has been recorded yet. False for a fresh game
+## and for saves written before positions were persisted; the loader then uses
+## the map's default spawn marker instead.
+var has_player_position: bool = false
 var is_at_save_point: bool = false
 var ley_crystals: Dictionary = {}
 var puzzle_state: Dictionary = {}
@@ -75,7 +82,7 @@ func initialize_new_game() -> void:
 	}
 	gold = STARTING_GOLD
 	playtime = 0
-	location_name = ""
+	clear_player_location()
 	ley_crystals.clear()
 	puzzle_state.clear()
 
@@ -125,6 +132,10 @@ func load_from_save(data: Dictionary) -> void:
 	var world: Dictionary = data.get("world", {})
 	gold = world.get("gold", 0)
 	location_name = world.get("current_location", "")
+	# A save with no recorded position keeps has_player_position false, so a
+	# re-save cannot invent an origin the player was never standing on (#269).
+	has_player_position = Helpers.has_saved_position(world)
+	player_position = Helpers.saved_position(world)
 	playtime = data.get("meta", {}).get("playtime", 0)
 	is_at_save_point = false
 	EventFlags.load_from_save(world.get("event_flags", {}))
@@ -146,13 +157,44 @@ func build_save_data() -> Dictionary:
 		formation,
 		inventory,
 		owned_equipment,
-		location_name,
-		gold,
-		EventFlags.to_save_data(),
+		build_world_state(),
 		playtime,
 		ley_crystals,
 		puzzle_state
 	)
+
+
+## The world block written to a save: which map the party is on, where they
+## stand on it, gold and event flags (save-system.md § 3.7). `current_position`
+## is omitted while no position has been recorded, which tells the loader to
+## use the map's default spawn marker (#269).
+func build_world_state() -> Dictionary:
+	var world: Dictionary = {
+		"current_location": location_name,
+		"gold": gold,
+		"event_flags": EventFlags.to_save_data(),
+	}
+	if has_player_position:
+		world["current_position"] = {"x": player_position.x, "y": player_position.y}
+	return world
+
+
+## Record where the party currently stands. Exploration calls this as the
+## player moves, so a save taken at any moment stores the real position
+## instead of a hardcoded origin (#269).
+func set_player_location(map_id: String, position: Vector2i) -> void:
+	if not map_id.is_empty():
+		location_name = map_id
+	player_position = position
+	has_player_position = true
+
+
+## Forget the recorded map and position (new game). The next map load records
+## a fresh one.
+func clear_player_location() -> void:
+	location_name = ""
+	player_position = Vector2i.ZERO
+	has_player_position = false
 
 
 func get_active_party() -> Array[Dictionary]:

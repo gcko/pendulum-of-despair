@@ -410,19 +410,51 @@ static func load_config_from_disk() -> Dictionary:
 	return config
 
 
+## Whether a save's world block carries a real recorded player position.
+## Saves written before #269 do not — v1 only ever wrote a hardcoded origin,
+## and the v1 -> v2 migration strips it. Callers must then fall back to the
+## destination map's default spawn marker (save-system.md § 3.7).
+static func has_saved_position(world: Dictionary) -> bool:
+	var pos: Variant = world.get("current_position", null)
+	if not pos is Dictionary:
+		return false
+	return (pos as Dictionary).has("x") and (pos as Dictionary).has("y")
+
+
+## The player position recorded in a save's world block. Check
+## has_saved_position() first: with no record this returns the origin, which is
+## also a legitimate map coordinate and must never be read as "unknown".
+static func saved_position(world: Dictionary) -> Vector2i:
+	if not has_saved_position(world):
+		return Vector2i.ZERO
+	var pos: Dictionary = world.get("current_position", {})
+	return Vector2i(int(pos.get("x", 0)), int(pos.get("y", 0)))
+
+
 ## Build the save data template with stub sections for systems not yet implemented.
+## `world_state` carries the caller-owned world block (location, position, gold,
+## event flags); everything else in `world` is filled in here.
 static func build_save_dict(
 	party: Array,
 	form: Dictionary,
 	inv: Dictionary,
 	equips: Array,
-	loc: String,
-	g: int,
-	flags: Dictionary,
+	world_state: Dictionary,
 	play_time: int = 0,
 	lc: Dictionary = {},
 	ps: Dictionary = {}
 ) -> Dictionary:
+	var world: Dictionary = {
+		"event_flags": world_state.get("event_flags", {}),
+		"act": world_state.get("act", "1"),
+		"current_location": world_state.get("current_location", ""),
+		"gold": world_state.get("gold", 0),
+	}
+	# The position is written only once one has actually been recorded (#269).
+	# An absent key means "no stored position" and sends the loader to the map's
+	# default spawn marker — never to a fabricated origin.
+	if world_state.has("current_position"):
+		world["current_position"] = world_state["current_position"]
 	return {
 		"party": party.duplicate(true),
 		"formation": form.duplicate(true),
@@ -439,19 +471,12 @@ static func build_save_dict(
 		"puzzle_state": ps.duplicate(true),
 		"meta":
 		{
-			"version": 1,
+			"version": SaveManager.CURRENT_SAVE_VERSION,
 			"playtime": play_time,
 			"saved_at": Time.get_datetime_string_from_system(),
 			"slot_type": "manual",
 		},
-		"world":
-		{
-			"event_flags": flags,
-			"act": "1",
-			"current_location": loc,
-			"current_position": {"x": 0, "y": 0},
-			"gold": g,
-		},
+		"world": world,
 		"quests": {"active": [], "completed": []},
 		"completion": {"bestiary": [], "treasures": [], "items_found": []},
 	}

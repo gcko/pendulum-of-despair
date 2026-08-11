@@ -7,20 +7,21 @@ extends Node
 
 ## Increment this when the save schema changes. Migration chain runs
 ## automatically on load for older versions.
-const CURRENT_SAVE_VERSION: int = 1
+## v2: player position is real or absent (#269) and crafting materials live in
+## their own inventory bucket (#164).
+const CURRENT_SAVE_VERSION: int = 2
 
 ## File paths.
 const SAVE_DIR: String = "user://saves/"
 const CONFIG_PATH: String = "user://config.json"
 
-## Migration functions: version N -> version N+1.
-## Add entries as the schema evolves.
-var _migration_steps: Dictionary = {
-# Example: when bumping to version 2, add: 1: _migrate_v1_to_v2
-}
+## Migration functions: version N -> version N+1. Populated in _ready() so the
+## entries can be instance method Callables.
+var _migration_steps: Dictionary = {}
 
 
 func _ready() -> void:
+	_migration_steps = {1: _migrate_v1_to_v2}
 	# Ensure save directory exists
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
 		var dir_err: Error = DirAccess.make_dir_recursive_absolute(SAVE_DIR)
@@ -205,6 +206,20 @@ func _migrate(data: Dictionary) -> Dictionary:
 		data = migrated
 		version += 1
 	data["meta"]["version"] = CURRENT_SAVE_VERSION
+	return data
+
+
+## Migrate a v1 save to v2.
+##
+## v1 wrote `world.current_position` as a hardcoded (0,0) for every save (#269),
+## so the stored value carries no information about where the player actually
+## stood. Dropping the key is deliberate: an absent position means "spawn at the
+## map's default marker", which keeps an old save from materialising the party
+## inside geometry at the map origin.
+func _migrate_v1_to_v2(data: Dictionary) -> Dictionary:
+	var world: Variant = data.get("world", null)
+	if world is Dictionary:
+		(world as Dictionary).erase("current_position")
 	return data
 
 

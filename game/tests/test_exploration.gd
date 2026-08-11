@@ -453,3 +453,66 @@ func test_unmapped_tile_gives_empty_config_not_fallback() -> void:
 		exp.get_encounter_config().is_empty(),
 		"unclassified tile should clear the encounter config",
 	)
+
+
+# --- Save Position Restore (#269) ---
+
+
+## Build save data for a party standing at `position` on `map_id`. Passing a
+## null position models a save that recorded none (a migrated v1 save).
+func _save_data_at(map_id: String, position: Variant) -> Dictionary:
+	PartyState.initialize_new_game()
+	PartyState.set_player_location(map_id, Vector2i(0, 0))
+	var data: Dictionary = PartyState.build_save_data()
+	if position is Vector2i:
+		var p: Vector2i = position
+		data["world"]["current_position"] = {"x": p.x, "y": p.y}
+	else:
+		data["world"].erase("current_position")
+	return data
+
+
+func _load_exploration_from_save(save_data: Dictionary) -> Node2D:
+	GameManager.transition_data = {"save_data": save_data}
+	var exp: Node2D = EXPLORATION_SCENE.instantiate()
+	add_child_autofree(exp)
+	return exp
+
+
+func test_saved_position_restored_on_load() -> void:
+	var exp: Node2D = _load_exploration_from_save(_save_data_at("test_room", Vector2i(112, 48)))
+	assert_eq(
+		exp.get_player().position,
+		Vector2(112, 48),
+		"loading should put the player back where they saved",
+	)
+
+
+func test_legacy_save_without_position_spawns_at_marker() -> void:
+	var exp: Node2D = _load_exploration_from_save(_save_data_at("test_room", null))
+	assert_eq(
+		exp.get_player().position,
+		Vector2(80, 96),
+		"a save with no stored position should use the map spawn, not the origin",
+	)
+
+
+func test_loaded_position_is_re_recorded_for_the_next_save() -> void:
+	_load_exploration_from_save(_save_data_at("test_room", Vector2i(112, 48)))
+	assert_true(PartyState.has_player_position, "loading should leave a recorded position")
+	assert_eq(
+		PartyState.player_position,
+		Vector2i(112, 48),
+		"the restored position must be what a save taken right away writes",
+	)
+
+
+func test_walking_updates_the_recorded_position() -> void:
+	var exp: Node2D = _create_exploration_test_room()
+	_step_player_to_tile(exp, Vector2i(5, 6))
+	assert_eq(
+		PartyState.player_position,
+		Vector2i(5 * 16 + 8, 6 * 16 + 8),
+		"each step should record the new position",
+	)
+	assert_eq(PartyState.location_name, "test_room", "the map is recorded alongside it")
