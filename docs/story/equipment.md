@@ -156,6 +156,19 @@ All weapon tables in the sections below use these columns:
 | 5 — Ultimate | Endgame | 65–100 | Not sold | Sidequests, bosses, Dreamer's Fault |
 | Forged | Various | +5–10 above tier | — (Forged) | Lira's Arcanite Forging |
 
+> **Act boundary note (#287):** the Act column names a **power band**, not
+> a strict acquisition window. Three Tier 1 items are chest finds inside
+> Fenmother's Hollow, which is Act II content — it opens on
+> `diplomatic_mission_start`, after `pendulum_to_capital` has ended Act I
+> (see [dungeons-world.md](dungeons-world.md) § 2). They are the War
+> Cleaver (§ Greatswords), the Spirit-Bound Spear (§ Spears) and the
+> Reinforced Vest (§ Body Armor → Light Armor). The dungeon is tuned to
+> the top of the Act I band and the party arrives at level 12–15, so Tier 1
+> stats and prices remain right for those three; only the "Act I" label
+> is a band, not a location. The same qualification is recorded in
+> [bestiary/README.md](bestiary/README.md) § Level Ranges by Act and
+> [economy.md](economy.md) § Gold Pacing Targets.
+
 ---
 
 ### Swords (Edren)
@@ -649,7 +662,10 @@ infusion. The weapon transforms..."*
 ## Equipment Tiers by Act
 
 Summary of available equipment power by act. Weapon ATK ranges
-include type modifiers (Swords are the ×1.0 baseline).
+include type modifiers (Swords are the ×1.0 baseline). The Act column
+is a power band — see the Act boundary note (#287) under § Weapon ATK
+Progression by Tier for the three Tier 1 items that drop in Act II's
+opening dungeon.
 
 | Act | Weapon Tier | Head Tier | Body Tier | Key Accessories |
 |-----|-------------|-----------|-----------|-----------------|
