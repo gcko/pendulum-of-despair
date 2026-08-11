@@ -3,10 +3,16 @@ extends Node
 ##
 ## This script is the facade every other system calls. The rules behind it are
 ## grouped into collaborators under `scripts/util/` — PartyCrystals,
-## PartyRoster, PartyVitals, PartyInventory and PartyEquipment (GAP-087). The
-## mutable state itself (members, formation, inventory, owned_equipment, gold,
-## ley_crystals, puzzle_state) stays here, because saves and tests read it
-## directly and the facets are constructed lazily around it.
+## PartyRoster, PartyVitals, PartyInventory, PartyEquipment and
+## PartyPersistence (GAP-087). The mutable state itself (members, formation,
+## inventory, owned_equipment, gold, ley_crystals, puzzle_state) stays here,
+## because saves and tests read it directly and the facets are constructed
+## lazily around it.
+##
+## Budget: the facade sits at 64 public methods against `max-public-methods: 65`
+## in `.gdlintrc`. Adding a public forward here costs the last slot, so pair any
+## addition with a removal or raise the ceiling deliberately — a facade over six
+## facets only grows.
 
 signal inventory_changed
 signal equipment_changed(character_id: String)
@@ -103,15 +109,6 @@ func initialize_new_game() -> void:
 	puzzle_state.clear()
 
 
-## Recruit a character, slotting them into the active four or into reserve.
-func add_member(character_id: String, level: int = 1) -> void:
-	_get_roster().add_member(character_id, level)
-
-
-func has_member(character_id: String) -> bool:
-	return _get_roster().has_member(character_id)
-
-
 # ---------- Persistence (PartyPersistence) ----------
 
 
@@ -139,26 +136,11 @@ func clear_player_location() -> void:
 	_get_persistence().clear_player_location()
 
 
-## Seed the equipment instance-ID counter — 0 for a new game, or the highest ID
-## already present in a loaded save.
-func set_next_inst_id(value: int) -> void:
-	_get_equipment().set_next_inst_id(value)
-
-
 ## The place name to show the player. Empty when the current map carries no
 ## `location_name` metadata — the raw map id is a file path and is never a
 ## substitute for it (ui-design.md § 3.5).
 func get_location_display() -> String:
 	return location_display
-
-
-func get_active_party() -> Array[Dictionary]:
-	return FormationHelpers.get_active_members(members, formation)
-
-
-## Get reserve (non-active) party members.
-func get_reserve_party() -> Array[Dictionary]:
-	return FormationHelpers.get_reserve_members(members, formation)
 
 
 # ---------- Ley Crystals (PartyCrystals) ----------
@@ -227,22 +209,14 @@ func clear_puzzle_state(dungeon_id: String) -> void:
 	puzzle_state.erase(dungeon_id)
 
 
+# ---------- Progression (ProgressionHelpers) ----------
+
+
 ## Apply battle rewards (XP, gold, drops). Returns ProgressionHelpers.distribute_rewards() summary.
 func distribute_battle_rewards(rewards: Dictionary) -> Dictionary:
 	return ProgressionHelpers.apply_battle_rewards(
 		rewards, get_active_party(), get_reserve_party(), add_gold, add_item
 	)
-
-
-func get_member(character_id: String) -> Dictionary:
-	for m: Dictionary in members:
-		if m.get("character_id", "") == character_id:
-			return m
-	return {}
-
-
-func get_all_members() -> Array[Dictionary]:
-	return members
 
 
 # ---------- Derived stats ----------
@@ -286,6 +260,12 @@ func refresh_max_hp_mp(character_id: String) -> void:
 
 
 # ---------- Equipment (PartyEquipment) ----------
+
+
+## Seed the equipment instance-ID counter — 0 for a new game, or the highest ID
+## already present in a loaded save.
+func set_next_inst_id(value: int) -> void:
+	_get_equipment().set_next_inst_id(value)
 
 
 func get_equipment_bonus(character_id: String, stat: String) -> int:
@@ -409,6 +389,35 @@ func rest_party(restore_pct: float, clears_status: bool) -> void:
 
 
 # ---------- Composition (PartyRoster) ----------
+
+
+## Recruit a character, slotting them into the active four or into reserve.
+func add_member(character_id: String, level: int = 1) -> void:
+	_get_roster().add_member(character_id, level)
+
+
+func has_member(character_id: String) -> bool:
+	return _get_roster().has_member(character_id)
+
+
+func get_member(character_id: String) -> Dictionary:
+	for m: Dictionary in members:
+		if m.get("character_id", "") == character_id:
+			return m
+	return {}
+
+
+func get_all_members() -> Array[Dictionary]:
+	return members
+
+
+func get_active_party() -> Array[Dictionary]:
+	return FormationHelpers.get_active_members(members, formation)
+
+
+## Get reserve (non-active) party members.
+func get_reserve_party() -> Array[Dictionary]:
+	return FormationHelpers.get_reserve_members(members, formation)
 
 
 ## Find the members array index for a character by ID. Returns -1 if not found.

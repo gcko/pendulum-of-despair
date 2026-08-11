@@ -6,6 +6,11 @@ extends CanvasLayer
 ## show dialogue via embedded dialogue_box, run after-commands.
 ## Attached to the root CanvasLayer of cutscene.tscn.
 ##
+## The commands an entry can carry — fades, flashes, title cards, camera and
+## actor moves, shakes, music cues — live in CutsceneCommands
+## (`scripts/core/cutscene_commands.gd`, GAP-087). This file keeps the
+## sequencer: what order entries run in and which commands block.
+##
 ## Usage: GameManager.push_overlay(CUTSCENE), then call
 ## start_cutscene(id, entries, tier) on GameManager.overlay_node.
 

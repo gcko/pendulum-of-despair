@@ -7,6 +7,10 @@ extends Node
 ## 2 ambient crossfade pair + 12 SFX pool) with an 8-tier priority stack.
 ## See docs/story/audio.md for full rules.
 ## See docs/plans/technical-architecture.md Section 5.3.
+##
+## The rules behind the players live in `scripts/util/` — AudioCrossfade (fade
+## curves and the music/ambient swap), AudioMixContext (duck/restore levels) and
+## AudioSfxPolicy (priority and voice stealing), all extracted in GAP-087.
 
 ## Audio priority levels (per audio.md Section 3.2).
 ## Higher number = higher priority.

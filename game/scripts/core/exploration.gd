@@ -1,5 +1,14 @@
 class_name Exploration
 extends Node2D
+## The overworld/dungeon scene: it owns the player, the loaded map and the
+## camera, and routes everything else to collaborators in `scripts/core/` —
+## ExplorationScreen (fades and map swaps), ExplorationInteractions (NPCs,
+## chests, save points, dialogue and transition triggers),
+## ExplorationEntityManager (entity init and signal wiring),
+## ExplorationZoneHandler (zones, encounters, boss triggers),
+## ExplorationAutoSequence (auto-walk and story sequences),
+## ExplorationPartyJoins (recovering missed recruits) and CutsceneHandler.
+## The split is GAP-087; each collaborator names this file in its own doc.
 
 signal map_changed(map_id: String)
 
@@ -361,8 +370,6 @@ func _end_auto_walk() -> void:
 func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
 	get_auto_sequence().run_auto_sequence(sequence_id, completion_flag)
 
-
-# ---------- Dialogue SFX relay ----------
 
 # ---------- Cutscene overlay integration (delegated to CutsceneHandler) ----------
 

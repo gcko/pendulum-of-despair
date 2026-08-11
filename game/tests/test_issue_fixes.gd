@@ -705,7 +705,7 @@ func test_valid_item_returns_true() -> void:
 
 
 # ==========================================================================
-# Bug fix: _do_item must consume the item from inventory after use
+# Bug fix: do_item must consume the item from inventory after use
 # ==========================================================================
 
 
@@ -917,12 +917,16 @@ func test_exploration_exit_tree_disconnects_signals() -> void:
 	# The dialogue one-shot itself moved to ExplorationInteractions in GAP-087,
 	# so _exit_tree now reaches it through _disconnect_pending_signals.
 	var source: String = ExplorationScript.source_code
+	var exit_pos: int = source.find("func _exit_tree()")
+	assert_gt(exit_pos, 0, "exploration.gd should have _exit_tree")
+	# Slice to the NEXT func, so the guard reads the body of _exit_tree and not
+	# the definition of _disconnect_pending_signals further down the file.
+	var exit_next: int = source.find("\nfunc ", exit_pos + 1)
+	if exit_next < 0:
+		exit_next = source.length()
+	var exit_body: String = source.substr(exit_pos, exit_next - exit_pos)
 	assert_true(
-		"func _exit_tree()" in source,
-		"exploration.gd should have _exit_tree",
-	)
-	assert_true(
-		"_disconnect_pending_signals()" in source.substr(source.find("func _exit_tree()")),
+		"_disconnect_pending_signals()" in exit_body,
 		"_exit_tree should call _disconnect_pending_signals",
 	)
 	var interactions: String = ExplorationInteractionsScript.source_code

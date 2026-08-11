@@ -1,6 +1,10 @@
 extends CanvasLayer
 ## Main menu overlay — command list, character select, sub-screen dispatch.
 ## Process mode set by GameManager.push_overlay().
+##
+## Row and info-panel rendering lives in MenuPartyPanel
+## (`scripts/ui/menu_party_panel.gd`, GAP-087); this file keeps the state
+## machine and the input routing.
 
 enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
 

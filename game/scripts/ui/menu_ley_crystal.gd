@@ -1,5 +1,10 @@
 extends Control
 ## Ley Crystal sub-screen: browse, inspect, and equip crystals.
+##
+## Every "what does this read as" question — bonus lists, stat deltas,
+## invocation blurbs, XP progress — is answered by CrystalDisplay
+## (`scripts/ui/crystal_display.gd`, GAP-087). This file keeps cursor state and
+## node wiring.
 
 enum CrystalState { BROWSING, DETAIL }
 

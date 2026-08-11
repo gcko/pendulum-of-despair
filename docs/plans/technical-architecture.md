@@ -61,7 +61,7 @@ res://
 │   ├── entities/              # Entity behavior scripts
 │   ├── combat/                # Battle system scripts
 │   ├── ui/                    # Menu and HUD scripts
-│   └── util/                  # Utility functions
+│   └── util/                  # Static helpers + per-owner RefCounted facets
 ├── data/                      # JSON game data (source of truth)
 │   ├── enemies/               # Per-act enemy stat tables
 │   ├── items/                 # Consumables, materials, key items

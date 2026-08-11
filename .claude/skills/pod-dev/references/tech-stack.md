@@ -36,20 +36,38 @@ Six autoloads are registered in `project.godot` and live in
 
 `scripts/autoload/` holds these six scripts and nothing else. Helpers that are
 *not* registered as autoloads split on who reaches them, not on how many screens
-use them. A helper reached from outside `scripts/ui/` lives in `scripts/util/`:
-`inventory_helpers.gd` (preloaded from `autoload/`, `combat/` and `ui/`),
-`InputUtil` (`ui/`, `core/`), `DialogueCondition` (`ui/`, `core/`, `entities/`)
-and `DialogueConsequences` (`core/`). A helper whose only consumers are UI
-scripts stays in `scripts/ui/` next to those screens, even when several screens
-share it — `ui/stat_bar_helpers.gd` is used by the battle party panel, the main
-menu and the status screen, and `ui/spell_helpers.gd` by the battle command menu
-and the magic menu, while `ui/ability_helpers.gd` and `ui/save_load_display.gd`
-each serve one screen. None of the four are UI controllers: the first three are
-all-`static` `RefCounted` helpers, and `save_load_display.gd` is an instantiated
-`RefCounted` collaborator that holds a reference to its owning overlay. A global
-`class_name` does not mark the split either way — `StatBarHelpers` and
-`SaveLoadDisplay` are `class_name` globals in `scripts/ui/`, and
-`inventory_helpers.gd` in `scripts/util/` has no `class_name` at all.
+use them. A helper reached from outside `scripts/ui/` lives in `scripts/util/`;
+a helper whose only consumers are UI scripts stays in `scripts/ui/` next to
+those screens, even when several screens share it — `ui/stat_bar_helpers.gd` is
+used by the battle party panel, the main menu and the status screen, and
+`ui/spell_helpers.gd` by the battle command menu and the magic menu, while
+`ui/ability_helpers.gd`, `ui/save_load_display.gd`, `ui/crystal_display.gd` and
+`ui/menu_party_panel.gd` each serve one screen.
+
+Do not read `scripts/util/` as an enumerable list — GAP-087 grew it from four
+scripts to sixteen. It holds two kinds of thing:
+
+- **Cross-cutting static helpers.** All-`static` `RefCounted` files with no
+  instance state: `inventory_helpers.gd` (preloaded from `autoload/`, `combat/`
+  and `ui/`), `InputUtil` (`ui/`, `core/`), `DialogueCondition` (`ui/`, `core/`,
+  `entities/`), `DialogueConsequences` (`core/`), plus the helper sets split out
+  of the big files — `formation_helpers.gd`, `progression_helpers.gd`,
+  `save_data_helpers.gd`, `audio_crossfade.gd`, `audio_mix_context.gd`,
+  `audio_sfx_policy.gd`.
+- **Per-owner facets.** Instantiated `RefCounted` collaborators that take their
+  owner in `_init(owner)` and hold a back-reference to it, so a single oversized
+  owner can be split without moving its state: `party_crystals.gd`,
+  `party_roster.gd`, `party_vitals.gd`, `party_inventory.gd`,
+  `party_equipment.gd` and `party_persistence.gd` are all facets of `PartyState`.
+  A new facet goes next to its siblings and its owner names it in a class doc.
+
+Neither kind is a UI controller, and a global `class_name` does not mark the
+split either way — `StatBarHelpers` and `SaveLoadDisplay` are `class_name`
+globals in `scripts/ui/`, and `inventory_helpers.gd` in `scripts/util/` has no
+`class_name` at all. The facet pattern is not confined to `util/`: an owner
+whose consumers are all UI keeps its facets in `ui/` (`ui/menu_party_panel.gd`,
+`ui/save_load_display.gd`), and `core/` and `combat/` hold their own
+(`core/exploration_*.gd`, `combat/battle_*.gd`).
 
 `game/tests/test_script_layout.gd` enforces only the `autoload/` half: every
 `.gd` in `scripts/autoload/` must appear in the `[autoload]` block, no script in

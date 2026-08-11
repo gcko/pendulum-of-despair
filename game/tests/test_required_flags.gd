@@ -11,6 +11,9 @@ const CutsceneHandlerScript: GDScript = preload("res://scripts/core/cutscene_han
 const ExplorationInteractionsScript: GDScript = preload(
 	"res://scripts/core/exploration_interactions.gd"
 )
+const ExplorationAutoSequenceScript: GDScript = preload(
+	"res://scripts/core/exploration_auto_sequence.gd"
+)
 
 
 func before_each() -> void:
@@ -238,9 +241,19 @@ func test_end_auto_walk_enables_input_when_not_in_cutscene() -> void:
 
 
 func test_end_auto_walk_cutscene_guard_structural() -> void:
-	# Structural test: verify the _in_cutscene guard exists in _end_auto_walk.
-	var source: String = ExplorationScript.source_code
+	# Structural test: verify the cutscene guard exists in end_auto_walk, which
+	# moved to ExplorationAutoSequence in GAP-087 and now asks the owner through
+	# is_in_cutscene() instead of reading exploration's private _in_cutscene.
+	# Sliced to the function body so the assertion cannot be satisfied by an
+	# unrelated occurrence elsewhere in the file.
+	var source: String = ExplorationAutoSequenceScript.source_code
+	var pos: int = source.find("func end_auto_walk()")
+	assert_gt(pos, 0, "exploration_auto_sequence.gd should have end_auto_walk")
+	var next_func: int = source.find("\nfunc ", pos + 1)
+	if next_func < 0:
+		next_func = source.length()
+	var body: String = source.substr(pos, next_func - pos)
 	assert_true(
-		"not _in_cutscene" in source,
-		"_end_auto_walk should check _in_cutscene before enabling input",
+		"not _exploration.is_in_cutscene()" in body,
+		"end_auto_walk should check is_in_cutscene() before enabling input",
 	)
