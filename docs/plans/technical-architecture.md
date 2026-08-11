@@ -195,17 +195,27 @@ save files, and the pseudo-schema in
   and reward auditing rather than being applied at runtime.
 - `steal` — two tiers, `common` and `rare`, each `{ item_id, rate }`
   or null; `steal` itself may be null for enemies carrying nothing.
-  Two Act I records (`compact_patrol`, `compact_scout`) ship an empty
-  object instead, which `roll_steal()` silently reports as no-steal —
-  that is a data gap, not a third intended shape (issue #309).
+  Both null forms are spec-mandated (Steal Mapping Rules 3 and 4) and
+  widely shipped: 20 records set `steal` to null and 28 tier slots are
+  null. Two Act I records (`compact_patrol`, `compact_scout`) ship an
+  empty object instead, which `roll_steal()` silently reports as
+  no-steal — that is a data gap, not a third intended shape (issue
+  #309). `roll_steal()` cannot currently read *either* null form:
+  `enemy.gd::roll_steal()` assigns the field and the tier into typed
+  `Dictionary` locals, and `Dictionary.get()` hands back the stored
+  null rather than the `{}` default, so the assignment raises "Trying
+  to assign value of type 'Nil'" and aborts the function (issue #342).
+  Nothing depends on that yet, for the reason below.
   `rate` is the chance the slot holds an item at all, not the chance
   the theft lands: per the enemy-data spec and
   [abilities.md](../story/abilities.md), Sable's Filch is designed to
   roll its own SPD-vs-SPD success before `rate` is consulted. That
   layer is **not implemented** — no combat script calls `roll_steal()`
   yet, and `enemy.gd::roll_steal()` currently returns the `rate` roll
-  itself as `success`. `roll_steal(tier)` looks the tier up by name, so
-  the two tiers are peers, not a fallback chain in the data.
+  itself as `success`. `roll_steal(tier)` takes a tier by name and does
+  no sequencing, so the data encodes no ordering between the two tiers;
+  the spec's designed order — common first, rare only if common fails
+  or is null — belongs to that same unbuilt Filch layer.
 - `locations` — the places this enemy is *meant* to be encountered, as
   snake_case IDs, mirroring the Location column of its bestiary row.
   The array mixes dungeon-floor IDs (`ember_vein_f1`) with overworld
@@ -222,10 +232,12 @@ save files, and the pseudo-schema in
   `frostcap_foothills`, `aelhart_valley`, `wilds_edge`,
   `deep_thornmere`, `ashport_coast`, `bellhaven_coast`,
   `compact_industrial` and `pallor_wastes_approach`); the sweep is
-  tracked as issue #285, and the "Not reconciled here, and out of scope
-  for #270" note in
-  [bestiary/act-i.md](../story/bestiary/act-i.md) enumerates the known
-  cases.
+  tracked as issue #285, which now tables all ten zone-by-zone. The
+  "Not reconciled here, and out of scope for #270" note in
+  [bestiary/act-i.md](../story/bestiary/act-i.md) enumerates only the
+  Act I cases (`duskfen_marshland`, `aelhart_valley` and `roads`, plus
+  two dungeon zones outside this list) — the Act II/III zones above are
+  recorded in #285, not in any bestiary file.
 
 Some records carry additional fields. `is_boss`, `is_mini_boss`,
 `boss_group`, `phases` and `phase_hp_thresholds` are defined in the
@@ -236,9 +248,13 @@ and are defined instead in
 §1 (ability schema) and §3 (boss-AI conventions). `abilities` is not
 boss-only: 19 ordinary Act I enemies carry it, including `ley_vermin`
 above, whose real record ends with a one-entry `abilities` array
-omitted here for brevity. `boss_ai` is carried by the four Act I
-bosses that have migrated to the data-driven `boss_ai.gd` interpreter;
-Acts II–III still use the legacy flat `phases` form.
+omitted here for brevity. `boss_ai` is carried by the four Act I boss
+and mini-boss records that have migrated to the data-driven
+`boss_ai.gd` interpreter (`vein_guardian` and `corrupted_fenmother`;
+`ember_drake` and `drowned_sentinel` are `is_mini_boss`). Every other
+boss record still uses the legacy flat `phases` form — 8 in `act_ii`,
+20 in `act_iii` and 4 in `optional.json`; `interlude.json` has no boss
+records at all.
 
 ### 2.2 Item Data
 
@@ -466,24 +482,28 @@ expressions and `party_has()` checks for party-aware dialogue.
 }
 ```
 
-### Future Data Format Sections
+### Data Formats Deferred at Design Time
 
-The following game systems need JSON schemas but are deferred to
-implementation time (the design docs are complete, but the data
-structures are complex enough to warrant separate design work):
+When this document was written, the two game systems below were the
+ones whose JSON schemas were deferred to implementation time (the
+design docs were complete, but the data structures were complex enough
+to warrant separate design work). Both have since landed, in whole or
+in part; the bullets are kept for the history of the decision, with the
+shipped state noted on each:
 
 - **Ability data** — 6 unique command systems per
   [abilities.md](../story/abilities.md) (Bulwark, Rally, Forgewright,
   Spiritcall, Tricks, Arcanum) with sub-abilities, costs, and effects.
   *(Shipped — one file per character in `res://data/abilities/`, plus
-  `combos.json`; this bullet is kept for the history of the decision.)*
+  `combos.json`.)*
 - **Boss AI scripts** — conditional priority lists, mode/stance
   systems, phase transitions, counter tables per
   [bestiary/bosses.md](../story/bestiary/bosses.md) (31 bosses).
-  *(Partly shipped — the four Act I bosses use the structured `boss_ai`
-  object read by `combat/boss_ai.gd`; schema in
+  *(Partly shipped — the four Act I boss and mini-boss records use the
+  structured `boss_ai` object read by `combat/boss_ai.gd`; schema in
   [bestiary/enemy-ability-conventions.md](../story/bestiary/enemy-ability-conventions.md)
-  §3. Acts II–III are still on the legacy flat `phases` form.)*
+  §3. The remaining 32 boss records — Acts II and III plus the four
+  optional superbosses — are still on the legacy flat `phases` form.)*
 
 **Note on steal schema (resolved):** Two-tier steal shipped, as a
 nested `steal: { common, rare }` object rather than the flat
