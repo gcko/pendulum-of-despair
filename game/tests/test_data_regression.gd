@@ -175,25 +175,32 @@ func test_composite_shortbow_stats() -> void:
 	fail_test("composite_shortbow not found in weapons.json")
 
 
+# ── repo-doc helper (shared by the doc guards below) ────────────────────
+
+
+## Read a repo doc that lives outside res://. Fails loudly if unreachable,
+## so a moved doc cannot silently turn the guards below into no-ops.
+func _read_repo_doc(rel_path: String) -> String:
+	var repo_root: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
+	var abs_path: String = repo_root.path_join(rel_path)
+	if not FileAccess.file_exists(abs_path):
+		fail_test("cannot read %s (looked at %s)" % [rel_path, abs_path])
+		return ""
+	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
+	var content: String = file.get_as_text()
+	file.close()
+	return content
+
+
 # ── save-system.md camelCase regression ─────────────────────────────────
 
 
 func test_no_camelcase_keys_in_save_system_md() -> void:
-	var path: String = "res://../../docs/story/save-system.md"
-	# Use absolute project path since res:// may not reach docs/
-	var abs_path: String = ProjectSettings.globalize_path("res://").path_join(
-		"../../docs/story/save-system.md"
-	)
-	if not FileAccess.file_exists(abs_path):
-		# Fallback: try relative from project root
-		abs_path = "res://../docs/story/save-system.md"
-	if not FileAccess.file_exists(abs_path):
-		pending("save-system.md not accessible from Godot project path")
+	# _read_repo_doc() fails the test if the doc moves, so this guard cannot
+	# quietly degrade into a scan of an empty string.
+	var content: String = _read_repo_doc("docs/story/save-system.md")
+	if content.is_empty():
 		return
-
-	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
-	var content: String = file.get_as_text()
-	file.close()
 
 	# These specific camelCase keys were the bugs we fixed
 	var banned_keys: Array[String] = [
@@ -216,20 +223,6 @@ func test_no_camelcase_keys_in_save_system_md() -> void:
 
 
 # ── technical-architecture.md §2.1 enemy schema sync (issue #235) ────────
-
-
-## Read a repo doc that lives outside res://. Fails loudly if unreachable,
-## so a moved doc cannot silently turn the guards below into no-ops.
-func _read_repo_doc(rel_path: String) -> String:
-	var repo_root: String = ProjectSettings.globalize_path("res://").trim_suffix("/").get_base_dir()
-	var abs_path: String = repo_root.path_join(rel_path)
-	if not FileAccess.file_exists(abs_path):
-		fail_test("cannot read %s (looked at %s)" % [rel_path, abs_path])
-		return ""
-	var file: FileAccess = FileAccess.open(abs_path, FileAccess.READ)
-	var content: String = file.get_as_text()
-	file.close()
-	return content
 
 
 ## Keys carried by EVERY enemy record across every act table — the fields

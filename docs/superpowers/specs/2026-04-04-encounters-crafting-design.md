@@ -30,7 +30,7 @@ Dungeon encounter tables (~26 dungeons + 1 overworld file), pre-crafted device d
 **Gap 1.6 — Encounter Table Data:**
 - 20 world dungeon encounter files (one per dungeon)
 - 6 city dungeon encounter files (one per city dungeon)
-- 1 overworld encounter file (12 terrain zones)
+- 1 overworld encounter file (12 terrain zones — historical; 15 today, see "Overworld Zone List")
 - Source: dungeons-world.md, dungeons-city.md, combat-formulas.md, geography.md
 - Cross-references gap 1.2 enemy IDs
 
@@ -278,7 +278,7 @@ Standard dungeons use exactly 4 encounter groups per floor:
 
 ### Overworld Zone List
 
-> **Count is historical.** This plan shipped `overworld.json` with exactly the 12 zones below. The file now carries **15**: `thornmere_wilds` was added by the 2026-04-08 Wilds Route work, and `sacred_sites` + `urban` by GAP-026 (#186). The 12 rows here are still accurate for what this spec produced — read `game/data/encounters/overworld.json` for the current roster.
+> **Count is historical.** This plan shipped `overworld.json` with exactly the 12 zones below. The file now carries **15**: `thornmere_wilds` was added by the 2026-04-08 Wilds Route work, and `sacred_sites` + `urban` by GAP-026 (#186). Note that `sacred_sites` and `urban` were *specified here* — the sentence directly below calls for them as Tier 0 zones with empty `groups` arrays, and the Danger Increment Reference above gives them increment 0 — but the 12-row table omits them, so this table was already internally short of its own prose. They were not actually built until GAP-026. Read `game/data/encounters/overworld.json` for the current roster.
 
 The overworld.json file contains 12 terrain zones. Not all zones have random encounters — sacred sites and urban interiors are Tier 0 (safe) and will have empty groups arrays.
 
@@ -552,7 +552,7 @@ Total: 3 crafting files in `game/data/crafting/`.
 |----------|-------|---------|
 | World dungeon encounters (1.6) | 20 | ~20 dungeons, variable floor-groups |
 | City dungeon encounters (1.6) | 6 | ~6 dungeons, variable floor-groups |
-| Overworld encounters (1.6) | 1 | 12 terrain zones |
+| Overworld encounters (1.6) | 1 | 12 terrain zones (historical; 15 today) |
 | Devices (1.7) | 1 | 13 devices |
 | Forging recipes (1.7) | — | 9 recipes (in recipes.json) |
 | Infusions (1.7) | — | 7 infusions (in recipes.json) |

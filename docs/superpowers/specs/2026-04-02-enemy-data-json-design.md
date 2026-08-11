@@ -16,7 +16,7 @@ The game has ~204 regular enemies and ~36 boss entries defined across 9 bestiary
 - abilities.md: "Each enemy has a common and rare steal"
 - economy.md: full steal tier table by enemy type (Common 75%, Rare 25%)
 - Bestiary tables show only the common steal; rare steals follow economy.md type patterns
-- Tech-arch Section 2.1 uses a single steal object; this spec extends it to nested `{ common, rare }`. Tech-arch Section 2.1 should be updated to match in a follow-up.
+- Tech-arch Section 2.1 uses a single steal object; this spec extends it to nested `{ common, rare }`. Tech-arch Section 2.1 should be updated to match in a follow-up. **(Done, issue #235 — §2.1 now shows the nested shape, and §2.8's flat `steal_common`/`steal_rare` proposal is marked resolved.)**
 
 ## Schema
 
@@ -178,6 +178,12 @@ Bosses in `bosses.json` get additional fields:
 ### Intentional Exclusions
 
 - **Enemy abilities/AI scripts:** Not encoded in JSON. Abilities are runtime behavior implemented in GDScript (future gaps). Boss AI scripts live in bosses.md and will be implemented as GDScript state machines.
+  > **Superseded (GAP-024 / GAP-009):** both are now data. 19 Act I enemies carry an
+  > `abilities` array and the four migrated Act I bosses carry a `boss_ai` object,
+  > read by `combat/battle_ai.gd` / `combat/battle_actions.gd` and
+  > `combat/boss_ai.gd`. The schema for
+  > both lives in [`docs/story/bestiary/enemy-ability-conventions.md`](../../story/bestiary/enemy-ability-conventions.md)
+  > §1 and §3 — not in this spec.
 - **Palette family metadata:** Family name, tier number, etc. are design-time concepts, not runtime data. The enemy's stats already reflect its tier.
 
 ## File Structure

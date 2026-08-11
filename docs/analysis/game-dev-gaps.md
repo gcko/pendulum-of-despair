@@ -256,7 +256,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Danger counter increment per floor/terrain
 - [x] Back attack and preemptive strike rates per terrain (formation_rates object)
 - [x] Boss trigger conditions (zone, interact, cutscene, HP threshold)
-- [x] Overworld encounter tables per terrain type (12 zones in overworld.json)
+- [x] Overworld encounter tables per terrain type (12 zones in overworld.json at the time; 15 today)
 - [x] Verify every enemy_id references an existing enemy from Gap 1.2 (0 missing after fix pass)
 - [x] Verify group compositions match dungeons-world.md formation tables (counts match; ~18 dungeons use substitute enemy IDs pending gap 1.2 supplement)
 

@@ -211,7 +211,7 @@ CITY DUNGEONS (6 files):
 - Create: `game/data/encounters/overworld.json`
 - Read: `docs/story/geography.md`, `docs/story/combat-formulas.md`, `docs/story/dungeons-world.md` (for enemy references)
 
-**Agent instructions:** Create the overworld encounter file with 12 terrain zones. Uses a different top-level structure:
+**Agent instructions:** Create the overworld encounter file with 12 terrain zones *(historical count — the shipped file now has 15; see the note on the OVERWORLD ZONES list below before acting on this)*. Uses a different top-level structure:
 
 ```json
 {

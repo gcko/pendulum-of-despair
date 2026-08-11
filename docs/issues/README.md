@@ -116,7 +116,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-076](GAP-076-corruption-detection-save-validation-only-type-che.md) | Save | LOW | S | open | Corruption-detection save validation only type-checks meta and world |
 | [GAP-077](GAP-077-config-persistence-is-owned-by-partystate-inventor.md) | Architecture | LOW | M | open | Config persistence is owned by PartyState/inventory_helpers, not SaveManager (responsibility split) |
 | [GAP-081](GAP-081-enter-pallor-pallor-wastes-audio-transition-unimpl.md) | Audio | LOW | S | open | enter_pallor() / Pallor Wastes audio transition unimplemented — CROSSFADE_PALLOR constants are dead code |
-| [GAP-084](GAP-084-architecture-doc-enemy-schema-diverges-from-actual.md) | Docs | LOW | S | open (overstated) | Architecture doc enemy schema diverges from actual JSON data and runtime code |
+| [GAP-084](GAP-084-architecture-doc-enemy-schema-diverges-from-actual.md) | Docs | LOW | S | resolved (#235; steal half of the claim was false) | Architecture doc enemy schema diverges from actual JSON data and runtime code |
 | [GAP-085](GAP-085-godot-engine-version-mismatch-project-on-4-7-all-d.md) | Docs | LOW | S | ✅ fixed | Godot engine version mismatch: project on 4.7, all docs say 4.6 |
 | [GAP-086](GAP-086-inventory-helpers-gd-placed-in-scripts-autoload-bu.md) | Code structure | LOW | S | open | inventory_helpers.gd placed in scripts/autoload/ but is a static helper, not an autoload |
 | [GAP-087](GAP-087-multiple-core-files-exceed-the-stated-400-line-str.md) | Code structure | LOW | L | open | Multiple core files exceed the stated ~400-line structure target |

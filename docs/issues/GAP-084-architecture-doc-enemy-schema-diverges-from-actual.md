@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — OVERSTATED |
+| **Status** | resolved — #235 (the single-tier-steal half of the claim was false) |
 | **GitHub Issue** | [#235](https://github.com/gcko/pendulum-of-despair/issues/235) |
 | **Source domains** | arch |
 
@@ -30,9 +30,10 @@ Update §2.1 example and remove/replace the stale §2.8 note; add threat and loc
 
 ## Acceptance criteria
 
-- [ ] Doc shows nested two-tier steal
-- [ ] threat and locations documented
-- [ ] §2.8 stale note removed/updated
+- [x] Doc shows nested two-tier steal (it already did; the issue's claim here was false)
+- [x] threat and locations documented (added to the §2.1 example and to a new "Field notes" block)
+- [x] §2.8 stale note removed/updated (rewritten as "Note on steal schema (resolved)")
+- [x] `test_data_regression.gd` guards §2.1 against re-drifting from the shipped act tables
 
 ## Design references
 

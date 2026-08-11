@@ -195,24 +195,50 @@ save files, and the pseudo-schema in
   and reward auditing rather than being applied at runtime.
 - `steal` — two tiers, `common` and `rare`, each `{ item_id, rate }`
   or null; `steal` itself may be null for enemies carrying nothing.
+  Two Act I records (`compact_patrol`, `compact_scout`) ship an empty
+  object instead, which `roll_steal()` silently reports as no-steal —
+  that is a data gap, not a third intended shape (issue #309).
   `rate` is the chance the slot holds an item at all, not the chance
-  the theft lands — Sable's Filch rolls its own SPD-based success
-  first, then common, then rare. `enemy.gd::roll_steal(tier)` looks
-  the tier up by name, so the two tiers are peers, not a fallback
-  chain in the data.
-- `locations` — every place this enemy can be encountered, as
-  snake_case IDs. The array mixes dungeon-floor IDs (`ember_vein_f1`)
-  with overworld zone IDs from
-  `res://data/encounters/overworld.json` (`valdris_highlands`), so an
-  enemy that roams both is listed under both. Issue #270 made these
-  arrays authoritative: `test_overworld.gd` asserts that every enemy
-  appearing in a `thornmere_wilds` / `ley_scarred_plains` /
-  `valdris_highlands` encounter group also names that zone here.
+  the theft lands: per the enemy-data spec and
+  [abilities.md](../story/abilities.md), Sable's Filch is designed to
+  roll its own SPD-vs-SPD success before `rate` is consulted. That
+  layer is **not implemented** — no combat script calls `roll_steal()`
+  yet, and `enemy.gd::roll_steal()` currently returns the `rate` roll
+  itself as `success`. `roll_steal(tier)` looks the tier up by name, so
+  the two tiers are peers, not a fallback chain in the data.
+- `locations` — the places this enemy is *meant* to be encountered, as
+  snake_case IDs, mirroring the Location column of its bestiary row.
+  The array mixes dungeon-floor IDs (`ember_vein_f1`) with overworld
+  zone IDs from `res://data/encounters/overworld.json`
+  (`valdris_highlands`), so an enemy that roams both is listed under
+  both. **The mirror is not complete, and `locations` is not the
+  authority on where an enemy actually rolls** — the encounter tables
+  are. Issue #270 (PR #278) made the mirror exact for three zones only,
+  and `test_overworld.gd` pins exactly those: every enemy appearing in
+  a `thornmere_wilds` / `ley_scarred_plains` / `valdris_highlands`
+  encounter group also names that zone here. 10 of the other 12
+  overworld zones still roll enemies whose `locations` omit the zone
+  (30 such pairs as of this writing, in `duskfen_marshland`, `roads`,
+  `frostcap_foothills`, `aelhart_valley`, `wilds_edge`,
+  `deep_thornmere`, `ashport_coast`, `bellhaven_coast`,
+  `compact_industrial` and `pallor_wastes_approach`); the sweep is
+  tracked as issue #285, and the "Not reconciled here, and out of scope
+  for #270" note in
+  [bestiary/act-i.md](../story/bestiary/act-i.md) enumerates the known
+  cases.
 
-Boss and ability records extend this shape with `is_boss`,
-`is_mini_boss`, `boss_group`, `phases`, `phase_hp_thresholds`,
-`boss_ai` and `abilities`; those are defined in the enemy-data spec
-linked above, not here.
+Some records carry additional fields. `is_boss`, `is_mini_boss`,
+`boss_group`, `phases` and `phase_hp_thresholds` are defined in the
+enemy-data spec linked above. `abilities` and `boss_ai` are **not** in
+that spec — it lists enemy abilities under "Intentional Exclusions" —
+and are defined instead in
+[bestiary/enemy-ability-conventions.md](../story/bestiary/enemy-ability-conventions.md)
+§1 (ability schema) and §3 (boss-AI conventions). `abilities` is not
+boss-only: 19 ordinary Act I enemies carry it, including `ley_vermin`
+above, whose real record ends with a one-entry `abilities` array
+omitted here for brevity. `boss_ai` is carried by the four Act I
+bosses that have migrated to the data-driven `boss_ai.gd` interpreter;
+Acts II–III still use the legacy flat `phases` form.
 
 ### 2.2 Item Data
 
@@ -448,10 +474,16 @@ structures are complex enough to warrant separate design work):
 
 - **Ability data** — 6 unique command systems per
   [abilities.md](../story/abilities.md) (Bulwark, Rally, Forgewright,
-  Spiritcall, Tricks, Arcanum) with sub-abilities, costs, and effects
+  Spiritcall, Tricks, Arcanum) with sub-abilities, costs, and effects.
+  *(Shipped — one file per character in `res://data/abilities/`, plus
+  `combos.json`; this bullet is kept for the history of the decision.)*
 - **Boss AI scripts** — conditional priority lists, mode/stance
   systems, phase transitions, counter tables per
-  [bestiary/bosses.md](../story/bestiary/bosses.md) (31 bosses)
+  [bestiary/bosses.md](../story/bestiary/bosses.md) (31 bosses).
+  *(Partly shipped — the four Act I bosses use the structured `boss_ai`
+  object read by `combat/boss_ai.gd`; schema in
+  [bestiary/enemy-ability-conventions.md](../story/bestiary/enemy-ability-conventions.md)
+  §3. Acts II–III are still on the legacy flat `phases` form.)*
 
 **Note on steal schema (resolved):** Two-tier steal shipped, as a
 nested `steal: { common, rare }` object rather than the flat
