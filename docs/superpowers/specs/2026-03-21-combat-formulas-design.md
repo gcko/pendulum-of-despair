@@ -58,12 +58,15 @@ raw = max(1, (ATK² × ability_mult) / 6 - target.DEF)
 final = min(14999, raw × variance)
 ```
 
-- **ATK** includes all sources: base stat + equipment + buff modifiers.
+- **ATK** includes all sources: the effective stat of progression.md
+  § Equipment and Buffs (base stat + permanent Stat Capsule gains +
+  equipment) plus buff modifiers.
   Buffs like Rallying Cry (+30% ATK) modify the ATK value before it
   enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values
   (see Section 5).
-- **target.DEF** includes equipment and buff/debuff modifiers. Debuffs
+- **target.DEF** is the same effective stat — permanent Stat Capsule
+  gains and equipment included — plus buff/debuff modifiers. Debuffs
   like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied last, before the cap (see Section 4).
 
@@ -104,7 +107,8 @@ final = min(14999, raw × element_mod × variance)
 - **spell_power** is defined per spell in magic.md (Tier 1: 12–20,
   Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
 - **element_mod** is applied after the base calculation (see Section 6).
-- **target.MDEF** includes equipment and debuff modifiers.
+- **target.MDEF** is the effective stat (permanent Stat Capsule gains
+  and equipment included) plus debuff modifiers.
 
 **Why divisor 4?** Tuned to produce these milestone values:
 

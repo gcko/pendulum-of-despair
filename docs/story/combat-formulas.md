@@ -30,9 +30,9 @@ damage_after_rows = damage_after_variance × attacker_row_mod × defender_row_mo
 final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 ```
 
-- **ATK** includes all sources: base stat + equipment + buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
+- **ATK** includes all sources: the effective stat of [progression.md](progression.md) § Equipment and Buffs (base stat + permanent Stat Capsule gains + equipment) plus buff modifiers. Buffs like Rallying Cry (+30% ATK) modify ATK before it enters the formula (before squaring).
 - **ability_mult** is 1.0 for a basic attack. Skills use higher values (see [Ability Multipliers](#physical-ability-multiplier-tiers)).
-- **target.DEF** includes equipment and buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
+- **target.DEF** is the same effective stat — permanent Stat Capsule gains and equipment included — plus buff/debuff modifiers. Debuffs like Sunder (-30% DEF) reduce DEF before subtraction.
 - **variance** is applied after DEF subtraction (see [Damage Variance](#damage-variance)).
 - **row modifiers** are applied after variance (see [Row Modifier](#row-modifier)). Enemies use ×1.0 (no rows).
 - **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). `reduction_product` is 1.0 if no reduction sources are active.
@@ -224,7 +224,7 @@ else:
 - **MAG** includes all sources. Attunement (+30% MAG) modifies MAG before the formula.
 - **spell_power** is defined per spell in [magic.md](magic.md) (Tier 1: 12–20, Tier 2: 28–40, Tier 3: 50–70, Tier 4: 85–120).
 - **element_mod** is applied after the base calculation (see [Elemental System](#elemental-system)). Immunity (0.0×) and absorb (-1.0×) bypass both damage reduction and the floor-of-1 clamp — see the branches above.
-- **target.MDEF** includes equipment and debuff modifiers.
+- **target.MDEF** is the effective stat (permanent Stat Capsule gains and equipment included) plus debuff modifiers.
 - **damage reduction** is applied last (see [Damage Reduction](#damage-reduction)). Only "All" and "Magic only" type reductions apply to magic (not physical-only sources like Ironwall/Bulkhead). `reduction_product` is 1.0 if no reduction sources are active.
 
 **Why divisor 4?** Tuned to produce these milestone values (MAG values are natural, per [progression.md](progression.md) milestones):

@@ -27,9 +27,10 @@ equipment, encounters).
 4. **Differentiated growth.** Each character levels up differently.
    A mage gains MP and MAG; a knight gains HP and DEF. No two
    characters feel interchangeable.
-5. **Three progression layers.** Base growth (automatic per level) +
-   Ley Crystal bonuses (player choice) + narrative milestone spikes
-   (story-driven). Each layer serves a different design purpose.
+5. **Four progression layers.** Base growth (automatic per level) +
+   Ley Crystal bonuses (player choice) + permanent Stat Capsule gains
+   (exploration reward, items.md § Stat Capsules) + narrative milestone
+   spikes (story-driven). Each layer serves a different design purpose.
 6. **Party join at average level - 1.** New and returning characters
    join at `party_average_level - 1`, ensuring immediate playability.
    Matches FF6's approach.
@@ -220,6 +221,14 @@ but a guest is standing, the wipe still triggers (per events.md).
 
 ### 4.6 Equipment and Buff Rules
 
+- **Effective stat = leveled base + permanent gains + equipment.** A
+  player character's effective stat is the leveled base stat (growth
+  curve plus any narrative milestone spike), plus permanent Stat Capsule
+  gains (items.md § Stat Capsules), plus equipment bonuses, plus
+  whatever the equipped Ley Crystal contributes under the Ley Crystal
+  System — then clamped to the caps above. Max HP and max MP are the
+  same formula applied to HP and MP. Every term must survive every
+  recalculation. Canonical in progression.md § Equipment and Buffs.
 - **Equipment stat bonuses are additive.** A sword with ATK +12 adds
   12 to the character's ATK. Simple and transparent.
 - **Equipment cannot push stats past the 255 cap** for ATK/DEF/MAG/
@@ -228,8 +237,8 @@ but a guest is standing, the wipe still triggers (per events.md).
 - **Buffs and debuffs are percentage-based.** Quickstep = +50% ATB
   speed. Ironhide = +40% DEF (single) / +25% DEF (party). Wardglass
   = +40% MDEF (single) / +25% MDEF (party). These are applied to the
-  final stat (base + equipment) and CAN temporarily exceed 255 in
-  combat. Debuffs work the same way in reverse. See magic.md for full
+  effective stat defined above (base + capsule gains + equipment) and
+  CAN temporarily exceed 255 in combat. Debuffs work the same way in reverse. See magic.md for full
   buff/debuff spell list.
 - **Buff stacking:** Buffs of the same type do not stack. Recasting
   Protect refreshes the duration but does not double the bonus.

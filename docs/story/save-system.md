@@ -26,7 +26,7 @@ tables, not the save file.
 
 | Category | Examples |
 |----------|---------|
-| Character progression | Level, XP, current HP/MP, status ailments |
+| Character progression | Level, XP, current HP/MP, status ailments, permanent Stat Capsule gains ([items.md](items.md) § Stat Capsules) |
 | Equipment | Which item in which slot per character |
 | Ability loadout | Equipped subset of level-unlocked abilities |
 | Ley Crystals | Which crystals collected, their XP/level |
@@ -106,8 +106,9 @@ party[]: {
   id:              string    -- "edren", "cael", "maren", "sable", "lira", "torren"
   level:           integer
   xp:              integer
-  hp:              integer   -- current (max derived from level + equipment)
-  mp:              integer   -- current (max derived)
+  hp:              integer   -- current (max derived: level + capsule gains
+                             --          + equipment + crystals)
+  mp:              integer   -- current (max derived, same formula)
   equipment: {
     weapon:        string|null  -- item ID
     head:          string|null
@@ -117,9 +118,10 @@ party[]: {
   }
   stat_capsules: {           -- permanent Stat Capsule gains (items.md § Stat
     <stat_id>:     integer   -- Capsules). NOT derivable from level or gear, so
-  }                          -- it must survive every save rewrite. Absent in
-                             -- saves written before capsules were persisted;
-                             -- treat a missing key as no gains.
+  }                          -- it must survive every save rewrite. Additive
+                             -- optional field: absent in saves written before
+                             -- capsules were persisted, and a missing key reads
+                             -- as no gains (§ 10 Migration Types).
   row:             string    -- "front" | "back"
   ability_loadout: string[]  -- equipped ability IDs (subset of level-unlocked)
   status_ailments: string[]  -- active persistent ailments (e.g., ["poison", "blind"])
@@ -542,6 +544,7 @@ Every save file carries an integer `version` in its `meta` block
 | Change Type | Migration Needed? | Example |
 |-------------|-------------------|---------|
 | New field added | Yes — add with default | New `spirit_favor` tracking system |
+| New *additive optional* field whose absence is meaningful and safe | No — read the missing key as its documented default | `stat_capsules` (missing = no banked gains) |
 | Field renamed | Yes — map old to new | `gp` to `gold` |
 | Field removed | Yes — strip old field | System removed from game |
 | Balance retuned | No | Tent heals 60% instead of 50% |
@@ -551,6 +554,14 @@ Every save file carries an integer `version` in its `meta` block
 
 Most game updates need zero migration because balance values are derived
 from data tables at load time, not stored in saves.
+
+The additive-optional-field exemption is deliberately narrow. It applies
+only when all three hold: the field is purely additive (nothing already
+in the save changes meaning), its default is the zero or empty value,
+and no other field's interpretation depends on it. A tolerant read then
+gives the same result a migration would, without rewriting every
+existing save. Anything outside those three conditions takes a version
+bump and a migration step.
 
 ### Breaking Changes
 
@@ -576,7 +587,10 @@ Engine-agnostic. The implementing engine should:
 
 On load, validate that required fields exist and have expected types.
 If validation fails, mark the slot as corrupted in the load screen UI
-and prevent loading. Do not silently load partial data.
+and prevent loading. Do not silently load partial data. Additive
+optional fields (§ 10 Migration Types) are exempt from the existence
+check — their absence is a documented default, not corruption — but
+they are still type-checked when present.
 
 ### File Size
 

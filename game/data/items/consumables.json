@@ -544,7 +544,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases ATK by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (15 total)"
@@ -561,7 +561,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases DEF by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (15 total)"
@@ -578,7 +578,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases MAG by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (15 total)"
@@ -595,7 +595,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases MDEF by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (15 total)"
@@ -612,7 +612,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases SPD by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (12 total)"
@@ -629,7 +629,7 @@
       "sell_price": null,
       "stack_limit": 99,
       "description": "Permanently increases LCK by 1.",
-      "target": "self",
+      "target": "single_ally",
       "usable_in_battle": false,
       "usable_in_field": true,
       "availability": "Chests, hidden passages, quest rewards (10 total)"
