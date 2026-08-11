@@ -1,7 +1,8 @@
 extends GutTest
 ## Guards the documented GDScript directory layout (GAP-086).
 ##
-## technical-architecture.md:64 places utilities under `scripts/util/`, and
+## technical-architecture.md § 1.1 Directory Structure > 'Static helpers'
+## places utilities under `scripts/util/`, and
 ## `scripts/autoload/` is reserved for the singletons actually registered in
 ## the `[autoload]` block of project.godot. `inventory_helpers.gd` is a static
 ## RefCounted helper that used to sit in `scripts/autoload/` despite never
