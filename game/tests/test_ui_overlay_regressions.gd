@@ -107,12 +107,12 @@ func test_no_bare_get_viewport_set_input_as_handled() -> void:
 	# and assert zero matches. All call sites should use a guarded _consume_input() helper
 	# or an explicit null-check pattern.
 	var scripts_dir: String = "res://scripts/"
-	var dir: DirAccess = DirAccess.open(scripts_dir)
-	assert_not_null(dir, "scripts directory should exist")
-	if dir == null:
-		return
 	var bare_call_files: Array[String] = []
-	_scan_for_bare_viewport_calls(scripts_dir, bare_call_files)
+	var scanned: int = _scan_for_bare_viewport_calls(scripts_dir, bare_call_files)
+	# Without this the assertion below is vacuous: a scan that reached no
+	# directory and read no script returns an empty result list, and "found 0
+	# bare calls" passes exactly as happily as a genuinely clean tree.
+	assert_gt(scanned, 50, "the scan must actually read the script tree, not report an empty one")
 	assert_eq(
 		bare_call_files.size(),
 		0,
@@ -123,10 +123,24 @@ func test_no_bare_get_viewport_set_input_as_handled() -> void:
 	)
 
 
-func _scan_for_bare_viewport_calls(path: String, results: Array[String]) -> void:
+## Appends every .gd under `path` containing a bare call to `results`, and
+## returns how many scripts it actually read.
+##
+## Every way this can come up short fails the test rather than returning
+## quietly. An unopenable directory or an unloadable script used to be skipped,
+## which made the caller's "0 matches" mean "found none" and "looked at none"
+## indistinguishably — the vacuous-guard failure this suite exists to catch.
+func _scan_for_bare_viewport_calls(path: String, results: Array[String]) -> int:
 	var dir: DirAccess = DirAccess.open(path)
 	if dir == null:
-		return
+		fail_test(
+			(
+				"cannot open %s (error %d) — the bare-call scan cannot run"
+				% [path, DirAccess.get_open_error()]
+			)
+		)
+		return 0
+	var scanned: int = 0
 	dir.list_dir_begin()
 	var file_name: String = dir.get_next()
 	while file_name != "":
@@ -135,13 +149,20 @@ func _scan_for_bare_viewport_calls(path: String, results: Array[String]) -> void
 			continue
 		var full_path: String = path.path_join(file_name)
 		if dir.current_is_dir():
-			_scan_for_bare_viewport_calls(full_path, results)
+			scanned += _scan_for_bare_viewport_calls(full_path, results)
 		elif file_name.ends_with(".gd"):
 			var script: GDScript = load(full_path) as GDScript
-			if script != null and "get_viewport().set_input_as_handled()" in script.source_code:
-				results.append(full_path)
+			if script == null:
+				fail_test(
+					"cannot load %s as a GDScript — the bare-call scan skipped it" % full_path
+				)
+			else:
+				scanned += 1
+				if "get_viewport().set_input_as_handled()" in script.source_code:
+					results.append(full_path)
 		file_name = dir.get_next()
 	dir.list_dir_end()
+	return scanned
 
 
 func test_consume_input_helper_exists_in_ui_scripts() -> void:
