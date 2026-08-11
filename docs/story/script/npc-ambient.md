@@ -208,7 +208,7 @@ has forty gunships. If you're asking about naval strategy,
 recalibrate your expectations.
 
 (If `cael_betrayal_complete` set.)
-**ISEN** : The harbour's full of debris from the siege. I've got
+**ISEN** : The harbor's full of debris from the siege. I've got
 my crews clearing it, but we lost two boats to fire. Down to
 four. Four boats against whatever comes next.
 
@@ -218,7 +218,7 @@ council's arguing. People needed boats. Simple enough.
 
 (If `epilogue_complete` set.)
 **ISEN** : Six boats now. Started with four after the siege,
-borrowed two from Bellhaven. First trade convoy left harbour
+borrowed two from Bellhaven. First trade convoy left harbor
 yesterday. I counted the sails until they were out of sight.
 
 ### Mirren (Royal Library Archives)
@@ -809,7 +809,7 @@ dock work later, I think the spirits were being literal.
 
 *(If spoken to a third time.)*
 
-**PELL** : Sometimes at night, if the harbour's quiet, I can
+**PELL** : Sometimes at night, if the harbor's quiet, I can
 almost hear it. The singing. My mother said it never stops — we
 just forget how to listen. I think she was right about a lot of
 things.
