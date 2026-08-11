@@ -83,6 +83,20 @@ res://
 └── export/                    # Export presets (gitignored)
 ```
 
+**`scripts/autoload/` is reserved, and the split is enforced.** That directory
+holds **only** the scripts registered in the `[autoload]` block of
+`project.godot` — the six singletons listed in § 1.3, and nothing else. A static
+helper or per-owner `RefCounted` facet that is never registered belongs in
+`scripts/util/`; conversely, a registered singleton may not live in
+`scripts/util/`. Both directions are checked by
+`game/tests/test_script_layout.gd`, which parses the `[autoload]` block out of
+`project.godot` and compares it against the two directory listings
+(`test_autoload_dir_holds_only_registered_singletons`,
+`test_util_dir_holds_no_registered_singleton`), so this rule and the suite
+cannot drift apart. A third test pins the count at exactly six. The rule was
+retrofitted for GAP-086, when `inventory_helpers.gd` — a static `RefCounted`
+helper that was never an autoload — moved out of `scripts/autoload/`.
+
 ### 1.2 Naming Conventions
 
 | Element | Convention | Example |
