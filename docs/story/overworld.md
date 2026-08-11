@@ -244,7 +244,7 @@ changes through music and palette shifts alone, not text overlays.
   banner is active, the fade immediately cancels the banner. Location
   name banners and region banners do not stack — if a location name
   banner triggers while a region banner is displaying, the region
-  banner is immediately cancelled and replaced.
+  banner is immediately canceled and replaced.
 - **Music crossfade:** 3-second transition — outgoing biome music fades
   from 100% to 0% over 1.5 seconds, incoming biome music fades from
   0% to 100% over 1.5 seconds. Crossfade begins at the transition's

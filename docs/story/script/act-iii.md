@@ -115,7 +115,7 @@ cannot follow — an invisible barrier.)*
 *(Inside the circle:)*
 
 *(The Crowned Hollow materializes — a towering figure wearing
-every failed crown at once, its body a patchwork of armour from
+every failed crown at once, its body a patchwork of armor from
 a hundred armies. It holds a sword that mirrors Edren's.)*
 
 **CROWNED HOLLOW** : Every command you gave. Every life spent
@@ -630,7 +630,7 @@ observations between strikes.)*
 **VAELITH** : Your form is excellent, Edren. Cael taught you the
 high guard, I assume. He was always precise.
 
-**VAELITH** : Torren, you favour your left side when tired. The
+**VAELITH** : Torren, you favor your left side when tired. The
 spirits could have told you that.
 
 **VAELITH** : Lira — how does it feel to defend a kingdom that

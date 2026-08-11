@@ -1784,7 +1784,7 @@ Torren faces the Last Voice -- an ancient Great Spirit cracked with grey stone, 
 Sable faces the Open Door -- a literal open door at the end of the alley leading to safety, warmth, and freedom. Shadows of Sable (copies using her Tricks moveset) urge her through. Not a combat encounter. The correct response: turn around and walk back into the alley, toward the party, toward danger. The door closes. The shadows vanish. Sable gains Unbreakable Thread (passive: once per battle, any ally survives lethal damage at 1 HP per [abilities.md](abilities.md)).
 
 **Trial 5 (B5): Maren's Trial**
-Maren faces the Index -- a vast catalogue entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (passive: reveals all enemy weaknesses, HP, and immunities from battle start per [abilities.md](abilities.md)).
+Maren faces the Index -- a vast catalog entity containing every recorded death from every Pallor cycle. It presents a binary choice: Absorb (power at great cost) or Destroy (safety at the cost of knowledge). Neither is correct. The correct response: select Read One Entry -- grieve for one person individually, not as data. The Index shatters because mourning one person breaks its logic. Maren gains Pallor Sight (passive: reveals all enemy weaknesses, HP, and immunities from battle start per [abilities.md](abilities.md)).
 
 - `S` (bottom-right): Final save point before the Convergence.
 - *(near final save point)* A loose page in archaic script, placed deliberately on the save point's ley-line clearing -- the only spot with color in the grey waste. Torren and Maren together translate: "This cycle has a forgewright who loves the vessel. That is new. I wonder if it will matter." The handwriting has not changed across eight hundred years and six locations. The ink is fresh. The page was left here for the party to find. Maren's hands shake: "Every fragment. Every location. The same hand. Eight centuries of writing and the penmanship never aged." If the party has found all six fragments, Maren adds: "A scholar. A diplomat. Someone who walks everywhere and writes everything down. Someone who has been watching since before any of us were born."
@@ -1805,7 +1805,7 @@ Maren faces the Index -- a vast catalogue entity containing every recorded death
 | The Last Voice | Ancient Great Spirit cracked with grey stone. Barely alive, asks to rest. 6000 HP. | Trial 3 (B3) |
 | Shadows of Sable | Copies using Sable's Tricks moveset. Fast, evasive. Taunt: "You always leave." | Trial 4 (B4) |
 | The Open Door | A literal open door at the end of the alley. Warm light, freedom. Not a combat encounter (non-combat resolution). | Trial 4 (B4) |
-| The Index | Vast catalogue entity containing every recorded death from every Pallor cycle. 7000 HP. | Trial 5 (B5) |
+| The Index | Vast catalog entity containing every recorded death from every Pallor cycle. 7000 HP. | Trial 5 (B5) |
 | Hollow Knights | Grey echoes of Valdris soldiers. Fight in formation. Summoned by Crowned Hollow. | Trial 1 (B1) |
 | Unfinished Constructs | Machines that beg to be repaired. Repairing wastes turns and spawns more. | Trial 2 (B2) |
 | Stone Spirits | Petrified nature spirits that animate on approach. Cannot speak. | Trial 3 (B3) |
@@ -1949,7 +1949,7 @@ A literal door at the end of the alley, standing open. Warm light, no enemies, f
 
 **Boss: The Index (7000 HP)**
 
-A vast catalogue entity containing every recorded death from every Pallor cycle.
+A vast catalog entity containing every recorded death from every Pallor cycle.
 
 **Mechanic:** Presents a binary choice:
 - **Absorb** -- massive INT buff but 90% max HP damage and permanent Despair.
@@ -1978,7 +1978,7 @@ The fight begins like the previous unwinnable encounter at Valdris. Party attack
 5. "I met a forgewright once. Eight hundred years ago. She built a weapon too."
 6. "The spirit-speakers always burn brightest before they go out."
 7. "The thief. Always the thief who surprises me. They never stay."
-8. "The scholar catalogues everything. As if knowing changes anything."
+8. "The scholar catalogs everything. As if knowing changes anything."
 9. "You fight as if it matters. It is... almost endearing."
 10. "Shall we stop pretending? You cannot hurt me. No one can."
 

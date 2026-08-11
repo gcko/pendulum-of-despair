@@ -18,7 +18,7 @@
       "id": "npc_captain_isen_002",
       "speaker": "isen",
       "lines": [
-        "The harbour's full of debris from the siege. I've got",
+        "The harbor's full of debris from the siege. I've got",
         "my crews clearing it, but we lost two boats to fire. Down to",
         "four. Four boats against whatever comes next."
       ],
@@ -44,7 +44,7 @@
       "speaker": "isen",
       "lines": [
         "Six boats now. Started with four after the siege,",
-        "borrowed two from Bellhaven. First trade convoy left harbour",
+        "borrowed two from Bellhaven. First trade convoy left harbor",
         "yesterday. I counted the sails until they were out of sight."
       ],
       "condition": "epilogue_complete",

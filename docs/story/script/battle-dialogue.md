@@ -71,7 +71,7 @@ goes quiet.
 The Ram crashes into the wall. Stone cracks. The ground splits.
 
 **CORDWYN** : It's breached the outer wall! Get in close —
-the armour's thinner at the joints!
+the armor's thinner at the joints!
 
 *(Phase 3 transition:)*
 The hull splits open. Inside, a pulsing core of grey energy.
@@ -170,7 +170,7 @@ of character.)*
 **VAELITH** : Your form is excellent, Edren. Cael taught you the
 high guard, I assume. He was always precise.
 
-**VAELITH** : Torren, you favour your left side when tired. The
+**VAELITH** : Torren, you favor your left side when tired. The
 spirits could have told you that. Did you not ask?
 
 **VAELITH** : Lira — how does it feel to defend a kingdom that
@@ -202,7 +202,7 @@ exquisitely predictable.
 last sharpen that blade, Edren? It's good work.
 
 *(After being debuffed:)*
-**VAELITH** : Clever. The Pallor's defences are not infinite.
+**VAELITH** : Clever. The Pallor's defenses are not infinite.
 Neither, I should note, is your time.
 
 *(At HP 37,500 — first real acknowledgment:)*
@@ -322,7 +322,7 @@ The Pallor forces Cael's body forward. His feet leave grooves in
 the stone.
 
 *(After using Draining Whisper:)*
-Grey mist seeps from Cael's armour. The air tastes of metal and
+Grey mist seeps from Cael's armor. The air tastes of metal and
 old grief.
 
 *(At 50% Phase 2 HP — Cael breaks through:)*
@@ -334,7 +334,7 @@ close. Don't stop. Please don't stop.
 
 *(False Hope — survives at 1 HP:)*
 He should have fallen. The Pallor energy flares — grey light
-pours from every crack in his armour. He stands. Not because he
+pours from every crack in his armor. He stands. Not because he
 wants to. Because the Pallor won't let go.
 
 **MAREN** : He should have fallen. The Pallor won't let him.
@@ -592,7 +592,7 @@ plating. Reinforcing structural integrity.
 **IRON WARDEN** : You adapt. Noted. Counter-adapting.
 
 *(Mode 3 — Overclock:)*
-**IRON WARDEN** : Overclock initiated. Defence parameters:
+**IRON WARDEN** : Overclock initiated. Defense parameters:
 secondary. Mission priority: absolute.
 
 *(Random barks — Phase 2, something beneath the machine:)*
@@ -794,7 +794,7 @@ determines how fast it fills."
 
 #### Defend (Vein Guardian Fight)
 "Defending halves incoming damage and fills your gauge faster.
-Time your defence against heavy attacks."
+Time your defense against heavy attacks."
 
 #### Status Effects (First Poison)
 "Status effects persist after battle ends. Use Remedies or visit

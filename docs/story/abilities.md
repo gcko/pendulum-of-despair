@@ -619,7 +619,7 @@ passes the suite silently.
 No *number* here is a fresh design choice. Each one falls out of a rule already
 written down somewhere, and the derivation sits next to the value so a reader can
 check it — or overturn it, which is the point of writing it down. Three
-non-numeric choices *are* made, each labelled where it is made and each stated
+non-numeric choices *are* made, each labeled where it is made and each stated
 with the alternative it rejects:
 
 1. How Wild Card's item branches deliver their 2.0 strike (reading (a), the
@@ -746,7 +746,7 @@ band (12-20) — priced on the plain band it lands in no tier at all. Running th
 AoE MP *ratio* backwards (a 10 MP AoE implying a 5-6.7 MP single-target
 counterpart, i.e. Tier 1) is reasoning by analogy outside the nine same-tier
 pairs magic.md binds that ratio to, per rule 1, so it is a corroboration and is
-labelled as one. Taken that way it agrees: the shipped 5 MP Tier 1 attack spells
+labeled as one. Taken that way it agrees: the shipped 5 MP Tier 1 attack spells
 are Linebolt (power 15) and Arc Snap (16), and the 60-70% AoE reduction puts an
 AoE counterpart in the window 9-11.2, which contains 10 — and 10 sits mid-band
 in the Tier 1 AoE range of 7-14 that `game/tests/test_spell_balance.gd` already

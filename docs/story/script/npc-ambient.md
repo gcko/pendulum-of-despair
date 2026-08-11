@@ -208,7 +208,7 @@ has forty gunships. If you're asking about naval strategy,
 recalibrate your expectations.
 
 (If `cael_betrayal_complete` set.)
-**ISEN** : The harbour's full of debris from the siege. I've got
+**ISEN** : The harbor's full of debris from the siege. I've got
 my crews clearing it, but we lost two boats to fire. Down to
 four. Four boats against whatever comes next.
 
@@ -218,7 +218,7 @@ council's arguing. People needed boats. Simple enough.
 
 (If `epilogue_complete` set.)
 **ISEN** : Six boats now. Started with four after the siege,
-borrowed two from Bellhaven. First trade convoy left harbour
+borrowed two from Bellhaven. First trade convoy left harbor
 yesterday. I counted the sails until they were out of sight.
 
 ### Mirren (Royal Library Archives)
@@ -258,7 +258,7 @@ library wall. In paint. Nobody is going to forget this time.
 *(If spoken to again.)*
 
 **MIRREN** : Maren sent me her Archive notes. Thirteen volumes.
-I'm cataloguing them. Properly, this time. With the correct
+I'm cataloging them. Properly, this time. With the correct
 margin of error.
 
 ### Sergeant Marek (Knight's Barracks)
@@ -575,7 +575,7 @@ they're learning how to do it again.
 ### Rhona (Border Trader, Ashfen)
 
 **RHONA** : Valdris coin, Compact gold — I take both. Information?
-That costs more, but I take that in favours.
+That costs more, but I take that in favors.
 
 (If `interlude_begins` set.)
 **RHONA** : Fish float belly-up and they're not rotting. Just
@@ -602,7 +602,7 @@ tired.
 
 (If `interlude_begins` set.)
 **FIARA** : I can see it now. The grey. It's under everything,
-like mould under paint. Getting thicker.
+like mold under paint. Getting thicker.
 
 *(If spoken to again.)*
 
@@ -809,7 +809,7 @@ dock work later, I think the spirits were being literal.
 
 *(If spoken to a third time.)*
 
-**PELL** : Sometimes at night, if the harbour's quiet, I can
+**PELL** : Sometimes at night, if the harbor's quiet, I can
 almost hear it. The singing. My mother said it never stops — we
 just forget how to listen. I think she was right about a lot of
 things.
@@ -968,7 +968,7 @@ be me.
 the place. I told her the bar's hers if she promises to keep the
 ale honest. She promised.
 
-### Marrek (Travelling Merchant)
+### Marrek (Traveling Merchant)
 
 **MARREK** : Interesting times. I find interesting times are good
 for business. People need things they didn't know they needed.
