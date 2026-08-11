@@ -37,9 +37,7 @@ var _skipped: bool = false
 ## made inside it has to be remembered here to gate the reaction entries that
 ## follow. Reset on every start_cutscene; never saved.
 var _choice_context: Dictionary = {}
-var _fade_tween: Tween = null
-var _flash_tween: Tween = null
-var _title_tween: Tween = null
+var _commands: CutsceneCommands = null
 
 @onready var _dialogue_box: DialogueBox = $DialogueBox
 @onready var _fade_rect: ColorRect = $FadeRect
@@ -163,7 +161,7 @@ func skip_cutscene() -> void:
 		_dialogue_box.close()
 
 	# Kill all active tweens
-	_kill_visual_tweens()
+	_get_commands().kill_tweens()
 
 	# Reset visual state
 	if _fade_rect != null:
@@ -300,7 +298,7 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 		else:
 			var blocking_tasks: Array[Signal] = []
 			for cmd: Dictionary in group:
-				var result: Variant = _execute_command(cmd)
+				var result: Variant = _get_commands().execute(cmd)
 				if result is Signal:
 					blocking_tasks.append(result)
 			for sig: Signal in blocking_tasks:
@@ -309,156 +307,28 @@ func _run_commands(entry: Dictionary, when_filter: String) -> void:
 					return
 
 
-func _execute_command(cmd: Dictionary) -> Variant:
-	var cmd_type: String = cmd.get("type", "")
-	match cmd_type:
-		"fade":
-			return _cmd_fade(cmd)
-		"move":
-			_cmd_move(cmd)
-			return null
-		"camera":
-			_cmd_camera(cmd)
-			return null
-		"shake":
-			_cmd_shake(cmd)
-			return null
-		"flash":
-			return _cmd_flash(cmd)
-		"title":
-			return _cmd_title(cmd)
-		"music":
-			_cmd_music(cmd)
-			return null
-		"hide_dialogue":
-			if _dialogue_box != null:
-				_dialogue_box.visible = false
-			return null
-		"show_dialogue":
-			if _dialogue_box != null:
-				_dialogue_box.visible = true
-			return null
-		_:
-			if OS.is_debug_build():
-				push_warning("Unknown cutscene command: %s" % cmd_type)
-			return null
+# ---------- Accessors for CutsceneCommands ----------
 
 
-func _cmd_fade(cmd: Dictionary) -> Variant:
-	var direction: String = cmd.get("direction", "out")
-	var duration: float = cmd.get("duration", 0.5)
-	var color_name: String = cmd.get("color", "black")
-	if _fade_rect == null:
-		return null
-	match color_name:
-		"white":
-			_fade_rect.color = Color.WHITE
-		"red":
-			_fade_rect.color = Color.RED
-		_:
-			_fade_rect.color = Color.BLACK
-	var target_alpha: float = 1.0 if direction == "out" else 0.0
-	# Headless mode: set directly, no tween (avoids rp_target null error).
-	if _is_headless():
-		_fade_rect.modulate.a = target_alpha
-		return null
-	if _fade_tween != null and _fade_tween.is_valid():
-		_fade_tween.kill()
-	_fade_tween = create_tween()
-	_fade_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_fade_tween.tween_property(_fade_rect, "modulate:a", target_alpha, duration)
-	return _fade_tween.finished
+func get_fade_rect() -> ColorRect:
+	return _fade_rect
 
 
-func _cmd_move(cmd: Dictionary) -> void:
-	var who: String = cmd.get("who", "")
-	var to: Array = cmd.get("to", [0, 0])
-	var speed: float = cmd.get("speed", 80.0)
-	if who != "" and to.size() >= 2:
-		cutscene_move_requested.emit(who, Vector2(to[0], to[1]), speed)
+func get_title_label() -> Label:
+	return _title_label
 
 
-func _cmd_camera(cmd: Dictionary) -> void:
-	var target: Array = cmd.get("target", [0, 0])
-	var duration: float = cmd.get("duration", 1.0)
-	if target.size() >= 2:
-		cutscene_camera_requested.emit(Vector2(target[0], target[1]), duration)
+func get_dialogue_box() -> DialogueBox:
+	return _dialogue_box
 
 
-func _cmd_shake(cmd: Dictionary) -> void:
-	var reduce_motion: bool = bool(_config.get("reduce_motion", false))
-	if reduce_motion:
-		return
-	var intensity: int = cmd.get("intensity", 2)
-	var duration: float = cmd.get("duration", 0.3)
-	cutscene_shake_requested.emit(intensity, duration)
+## The player's live config, so accessibility options (reduce motion, flash
+## intensity) reach the commands that honour them.
+func get_config() -> Dictionary:
+	return _config
 
 
-func _cmd_flash(cmd: Dictionary) -> Variant:
-	var flash_intensity: String = str(_config.get("flash_intensity", "full"))
-	if flash_intensity == "off":
-		return null
-	if _fade_rect == null:
-		return null
-	var color_name: String = cmd.get("color", "white")
-	var duration: float = cmd.get("duration", 0.3)
-	if flash_intensity == "reduced":
-		duration = duration * 0.5
-	match color_name:
-		"red":
-			_fade_rect.color = Color.RED
-		_:
-			_fade_rect.color = Color.WHITE
-	if _is_headless():
-		_fade_rect.modulate.a = 0.0
-		return null
-	if _flash_tween != null and _flash_tween.is_valid():
-		_flash_tween.kill()
-	_flash_tween = create_tween()
-	_flash_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.8, duration * 0.3)
-	_flash_tween.tween_property(_fade_rect, "modulate:a", 0.0, duration * 0.7)
-	return _flash_tween.finished
-
-
-func _cmd_title(cmd: Dictionary) -> Variant:
-	if _title_label == null:
-		return null
-	var text: String = cmd.get("text", "")
-	var duration: float = cmd.get("duration", 2.0)
-	var fade_in: float = cmd.get("fade_in", 0.5)
-	var fade_out: float = cmd.get("fade_out", 0.5)
-	_title_label.text = text
-	if _is_headless():
-		_title_label.modulate.a = 0.0
-		return null
-	if _title_tween != null and _title_tween.is_valid():
-		_title_tween.kill()
-	_title_tween = create_tween()
-	_title_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_title_tween.tween_property(_title_label, "modulate:a", 1.0, fade_in)
-	_title_tween.tween_interval(duration)
-	_title_tween.tween_property(_title_label, "modulate:a", 0.0, fade_out)
-	return _title_tween.finished
-
-
-func _cmd_music(cmd: Dictionary) -> void:
-	var track_id: String = cmd.get("track_id", "")
-	var action: String = cmd.get("action", "play")
-	cutscene_music_requested.emit(track_id, action)
-
-
-func _kill_visual_tweens() -> void:
-	if _fade_tween != null and _fade_tween.is_valid():
-		_fade_tween.kill()
-	_fade_tween = null
-	if _flash_tween != null and _flash_tween.is_valid():
-		_flash_tween.kill()
-	_flash_tween = null
-	if _title_tween != null and _title_tween.is_valid():
-		_title_tween.kill()
-	_title_tween = null
-
-
-func _is_headless() -> bool:
-	return DisplayServer.window_get_size() == Vector2i.ZERO
+func _get_commands() -> CutsceneCommands:
+	if _commands == null:
+		_commands = CutsceneCommands.new(self)
+	return _commands
