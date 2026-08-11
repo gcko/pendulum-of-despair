@@ -1,5 +1,11 @@
 # Pallor Wastes Oases Design
 
+> **Dated record (2026-03-25) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > Spec for Gap 2.6. Defines the three Act III Oases: ley ward stone
 > protection mechanic, refugee micro-settlements with displaced NPCs,
 > services (shops, rest, save), minor sidequests, discovery mechanics,

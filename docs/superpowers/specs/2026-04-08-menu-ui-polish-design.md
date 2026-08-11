@@ -1,5 +1,11 @@
 # Menu UI Polish — Design Spec (Gap 3.4 Phase 3)
 
+> **Dated record (2026-04-08) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Goal:** Replace all 7 menu sub-screens with FF6-style bordered
 > window panels using full-viewport replacement mode. Each sub-screen
 > hides the main menu and owns the entire 1280x720 viewport.

@@ -1,5 +1,11 @@
 # Encounter Rates & Weighted Tables Design
 
+> **Dated record (2026-03-25) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > Spec for Gap 2.4. Defines the random encounter system: danger counter
 > model, per-terrain encounter rates, formation types and rates, 4-pack
 > encounter group tables, flee mechanics, boss triggers, and encounter

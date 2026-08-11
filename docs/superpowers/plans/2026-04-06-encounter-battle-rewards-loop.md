@@ -1,5 +1,11 @@
 # Encounter → Battle → Rewards Loop Implementation Plan
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Wire the end-to-end random encounter gameplay loop: walk → danger counter → battle → XP/gold/drops → level-up → return to map.
@@ -23,6 +29,12 @@
 | `game/tests/test_battle_rewards.gd` | CREATE | Unit tests for XP distribution and level-up logic |
 | `game/scripts/autoload/party_state.gd` | MODIFY (after line 125) | Add `get_reserve_party()`, `distribute_battle_rewards()` |
 | `game/scripts/core/exploration.gd` | MODIFY (lines 7-17, 38-48, 51+, 111+) | Add danger counter, step detection, battle entry/return |
+
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. Every
+> `game/scripts/autoload/inventory_helpers.gd` in this document is the
+> as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ---
 
@@ -389,6 +401,13 @@ git commit -m "feat(engine): include earned_drops in battle exit transition data
 - Create: `game/tests/test_battle_rewards.gd`
 
 - [ ] **Step 1: Write failing tests**
+
+> **Do not paste this block unchanged (#236).** `inventory_helpers.gd` moved
+> to `game/scripts/util/` after this plan was written, so the `preload` below
+> no longer resolves — pasted as-is it is a hard parse error that silently
+> skips the whole test file under GUT. The live path is
+> `res://scripts/util/inventory_helpers.gd`. The block is left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ```gdscript
 # game/tests/test_battle_rewards.gd

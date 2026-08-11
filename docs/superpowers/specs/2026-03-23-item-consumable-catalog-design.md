@@ -1,5 +1,11 @@
 # Item & Consumable Catalog Design Spec
 
+> **Dated record (2026-03-23) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap 1.4** — the first post-Bestiary system. Defines every consumable,
 > crafting material, key item, and Ley Crystal invocation in the game.
 

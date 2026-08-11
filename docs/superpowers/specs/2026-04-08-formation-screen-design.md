@@ -1,5 +1,11 @@
 # Formation Menu Screen — Design Spec
 
+> **Dated record (2026-04-08) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 3.4 Phase 2 (Formation screen)
 > **Goal:** Let the player reorder party members and toggle front/back
 > row from the main menu.

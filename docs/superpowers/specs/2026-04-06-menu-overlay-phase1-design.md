@@ -1,5 +1,11 @@
 # Menu Overlay Phase 1 — Design Spec
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 3.4 (Phase 1 of 2)
 > **Priority:** P1
 > **Source Docs:** `ui-design.md` Sections 3–5, 8, 10; `accessibility.md`;
@@ -500,6 +506,11 @@ user presses cancel, the overlay closes back to the title screen
 | `game/scripts/ui/menu_status.gd` | Status sub-screen | ~170 |
 | `game/scripts/ui/menu_config.gd` | Config sub-screen | ~290 |
 | `game/tests/test_party_state.gd` | PartyState unit tests | ~225 |
+
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. The row above records the
+> as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ### Modified Files (4)
 

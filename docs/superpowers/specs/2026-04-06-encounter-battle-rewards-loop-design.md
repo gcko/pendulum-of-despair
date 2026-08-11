@@ -1,5 +1,11 @@
 # Encounter → Battle → Rewards Loop Integration
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Date:** 2026-04-06
 > **Approach:** A — Minimal Exploration-Centric
 > **Scope:** Wire the deferred integration items from gaps 3.2, 3.3,
@@ -238,6 +244,11 @@ Small change: store drops as instance var and include in exit transition.
 This ensures exploration can read drops from transition_data on return.
 
 ## Modified: `game/scripts/autoload/inventory_helpers.gd`
+
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. This heading and the File Summary
+> row below record the as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ### New Static Methods
 

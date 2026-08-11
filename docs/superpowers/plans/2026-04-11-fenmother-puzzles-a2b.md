@@ -1,5 +1,11 @@
 # Fenmother's Hollow Puzzles (Phase A2b) Implementation Plan
 
+> **Dated record (2026-04-11) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add interactive puzzle systems to Fenmother's Hollow — water wheels, spirit vessel fetch quest, poison zones, ritual meter, spirit-path walk scene, and Caden binding sequence.
@@ -49,6 +55,12 @@
 | `game/scenes/maps/dungeons/fenmothers_hollow_f1.tscn` | entities | Add wheels, spring, vessel chest, water zones, alcove |
 | `game/scenes/maps/dungeons/fenmothers_hollow_f2.tscn` | entities | Replace dialogue with spirit-plant, add wheel 3, water zones, damage zones |
 | `game/scenes/maps/dungeons/fenmothers_hollow_f3.tscn` | entities | Add damage zones, remove blessing chest |
+
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. Every
+> `game/scripts/autoload/inventory_helpers.gd` in this document is the
+> as-of-2026-04-11 path, left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ---
 

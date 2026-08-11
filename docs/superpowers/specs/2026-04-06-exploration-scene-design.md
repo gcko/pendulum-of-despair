@@ -1,5 +1,11 @@
 # Gap 3.2: Exploration Scene (Minimal Viable) — Design Spec
 
+> **Dated record (2026-04-06) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Date:** 2026-04-06
 > **Gap:** 3.2 (Exploration Scene — Option A: Minimal Viable)
 > **Status:** Approved

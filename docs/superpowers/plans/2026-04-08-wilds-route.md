@@ -1,5 +1,11 @@
 # Wilds Route Implementation Plan
 
+> **Dated record (2026-04-08) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **SUPERSEDED IN PART BY [#270](https://github.com/gcko/pendulum-of-despair/issues/270) (PR #278) — DO NOT RE-RUN TASK 2 AS WRITTEN.** This is a dated implementation record, kept as-is for history. Task 2 Step 1's copy-paste JSON block is wrong against shipped `game/data/encounters/overworld.json`: it builds `thornmere_wilds` from `marsh_serpent` / `drowned_bones` (marsh enemies, **replaced by the forest roster by #270 / PR #278**), and uses `danger_increment: 160` and formation rates `75 / 15 / 10` (shipped: `148` and `68.75 / 18.75 / 12.5` — **those two were corrected earlier, by PR #268, which #278 explicitly left untouched**). Executing it verbatim would regress both. Read the zone's `_comment` in `overworld.json` and the "Thornmere Wilds roster" note in `docs/story/bestiary/act-i.md` for the current, authoritative values.
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.

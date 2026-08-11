@@ -1,5 +1,11 @@
 # Row/Position System Design
 
+> **Dated record (2026-03-24) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > Spec for Gap 2.5. Defines the front/back row system: damage modifiers,
 > back-row capable weapon rules, default character rows, free swap action, and
 > enemy positioning (none — player-only rows).

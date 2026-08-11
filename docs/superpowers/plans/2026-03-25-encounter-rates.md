@@ -1,5 +1,11 @@
 # Encounter Rates & Weighted Tables Implementation Plan
 
+> **Dated record (2026-03-25) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Formalize the encounter rate system by adding the danger counter model, formation types/rates, flee formula, and encounter rate modifier accessories to the story docs, then add 4-pack formation tables and encounter tier assignments to all dungeons.

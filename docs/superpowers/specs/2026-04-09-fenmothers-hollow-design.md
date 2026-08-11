@@ -1,5 +1,11 @@
 # Fenmother's Hollow — Phase A2 Design Spec
 
+> **Dated record (2026-04-09) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 > **Gap:** 4.4 Phase A2 (Fenmother's Hollow)
 > **Goal:** Build the second Act I dungeon — 3 floors, 9 enemy types,
 > mini-boss, 3-phase boss with wave defense cleansing, 7 treasure chests,

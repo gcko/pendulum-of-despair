@@ -1,5 +1,11 @@
 # Enemy Bestiary Design Spec (Gap 1.3 — Sub-project 2b: Interlude)
 
+> **Dated record (2026-03-22) — not maintained.** Paths, line numbers, counts
+> and canon values below were accurate on that date only; the code and the
+> canon have moved since. Canon lives in `docs/story/`, architecture in
+> `docs/plans/`, and the shipped code is the authority on itself. Policy:
+> [docs/superpowers/README.md](../README.md).
+
 **Date:** 2026-03-22
 **Status:** Draft
 **Scope:** Populate interlude.md with all Interlude enemies: Rail Tunnels,
