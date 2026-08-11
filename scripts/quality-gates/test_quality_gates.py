@@ -809,5 +809,98 @@ class TestGapCodeReferences(unittest.TestCase):
         self.assertEqual(errors, [], f"Stale code references: {errors}")
 
 
+class TestGapMeasuredTables(unittest.TestCase):
+    """Gate E, scan 5: the 'current' column of GAP measured tables (#319)."""
+
+    HEADER = (
+        "| File | baseline | current (2026-08-12) |\n"
+        "|------|----------|----------------------|\n"
+    )
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.makedirs(os.path.join(self.tmpdir, "game", "scripts"))
+        with open(os.path.join(self.tmpdir, "game/scripts/big.gd"), "w") as f:
+            f.write("extends Node\n" * 4)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+
+    def _doc(self, body: str) -> None:
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-087-sizes.md", "w") as f:
+            f.write("# GAP-087\n\n## Measured line counts\n\n" + body + "\n")
+
+    def test_matching_count_passes(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 4 |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_detects_a_count_that_drifted(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 5 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("claims 5 lines", errors[0])
+        self.assertIn("actual 4", errors[0])
+
+    def test_detects_a_file_that_moved_away(self):
+        self._doc(self.HEADER + "| `game/scripts/gone.gd` | 9 | 4 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_thousands_separators_are_understood(self):
+        with open("game/scripts/big.gd", "w") as f:
+            f.write("extends Node\n" * 1200)
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | 1,200 |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_unmeasured_rows_are_skipped(self):
+        self._doc(self.HEADER + "| `game/scripts/gone.gd` | 9 | — |")
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_non_numeric_cell_is_reported_not_ignored(self):
+        self._doc(self.HEADER + "| `game/scripts/big.gd` | 9 | about 4 |")
+        errors = check_stale_counts.check_gap_measured_tables("issues")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("not a line count", errors[0])
+
+    def test_tables_without_a_current_column_are_ignored(self):
+        self._doc(
+            "| File | baseline | after decomposition |\n"
+            "|------|----------|---------------------|\n"
+            "| `game/scripts/big.gd` | 9 | 999 |"
+        )
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_the_field_table_at_the_top_of_a_gap_doc_is_ignored(self):
+        """Two-column Field/Value tables must not be read as measurements."""
+        self._doc(
+            "| Field | Value |\n|-------|-------|\n"
+            "| **ID** | GAP-087 |\n"
+            + self.HEADER
+            + "| `game/scripts/big.gd` | 9 | 4 |"
+        )
+        self.assertEqual(
+            check_stale_counts.check_gap_measured_tables("issues"), []
+        )
+
+    def test_real_gap_docs_are_measured_correctly(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        errors = check_stale_counts.check_gap_measured_tables()
+        self.assertEqual(errors, [], f"Stale measured counts: {errors}")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -5,7 +5,7 @@ Verifies numeric count claims in the gap tracker match actual
 data file counts. Catches mirror staleness — the #1 Copilot
 catch pattern across PRs #109-113.
 
-Four independent scans run here:
+Five independent scans run here:
 
 1. ``check_gap_tracker``       — game/data counts claimed in the gap tracker.
 2. ``check_doc_line_counts``   — the ``(NNN)`` line counts in the
@@ -14,10 +14,14 @@ Four independent scans run here:
 3. ``check_gap_status_consistency`` — the Status column of the
    docs/issues/README.md table against the Status field of each linked
    GAP doc, plus the running tally in the README header (#345).
-4. ``check_gap_code_references`` — symbol-anchored bullets under
-   "## Code references" in each GAP doc must name a file that exists and a
-   symbol that file actually defines (#318: the whole point of anchoring on
-   function names instead of line numbers is that it can be verified).
+4. ``check_gap_code_references`` — every bullet under "## Code references" in
+   each GAP doc must name a path that exists and must not carry a
+   ``file.gd:NNN`` line anchor; where a bullet names a ``symbol()`` the file
+   must define it (#318: the whole point of anchoring on function names
+   instead of line numbers is that it can be verified).
+5. ``check_gap_measured_tables`` — the "current" column of any measured
+   line-count table inside a GAP doc against ``wc -l`` (#319: GAP-087 carries
+   eight hand-written counts of actively-developed files).
 
 Exit code 0 = pass, 1 = stale counts found.
 """
@@ -327,6 +331,88 @@ def check_gap_code_references(issues_dir: str = ISSUES_DIR) -> list[str]:
     return errors
 
 
+_BLANK_CELLS = {"", "-", "—", "–", "n/a"}
+
+
+def _table_blocks(content: str) -> list[list[str]]:
+    """Contiguous runs of markdown table lines, header row first."""
+    blocks: list[list[str]] = []
+    current: list[str] = []
+    for line in content.splitlines():
+        if line.startswith("|"):
+            current.append(line)
+        elif current:
+            blocks.append(current)
+            current = []
+    if current:
+        blocks.append(current)
+    return blocks
+
+
+def _cells(row: str) -> list[str]:
+    """Cell texts of a markdown table row, outer pipes discarded."""
+    return [c.strip() for c in row.strip().strip("|").split("|")]
+
+
+def check_gap_measured_tables(issues_dir: str = ISSUES_DIR) -> list[str]:
+    """Check hand-written "current" line-count columns in the GAP docs (#319).
+
+    A GAP doc may carry a measured table whose first column is a backticked
+    repo path and whose final column header begins with "current" — GAP-087
+    records eight such counts for actively-developed files. Those numbers are
+    the whole evidence for the gap being resolved, so a one-line change to any
+    of the files must fail the build rather than quietly rot. Rows whose count
+    cell is blank or an em-dash (no measurement taken) are skipped.
+
+    Args:
+        issues_dir: Directory holding the GAP-NNN docs.
+    """
+    errors: list[str] = []
+    for doc in sorted(glob.glob(os.path.join(issues_dir, "GAP-*.md"))):
+        with open(doc) as f:
+            content = f.read()
+        name = os.path.basename(doc)
+        for block in _table_blocks(content):
+            if len(block) < 3:
+                continue
+            header = _cells(block[0])
+            if not header or not header[-1].lower().startswith("current"):
+                continue
+            column = header[-1]
+            for row in block[2:]:
+                cells = _cells(row)
+                if len(cells) != len(header):
+                    continue
+                path = cells[0].strip("`")
+                if "/" not in path:
+                    continue
+                claimed_raw = cells[-1].replace(",", "")
+                if claimed_raw.lower() in _BLANK_CELLS:
+                    continue
+                if not claimed_raw.isdigit():
+                    errors.append(
+                        f"STALE COUNT in {name}: '{column}' cell for `{path}` "
+                        f"is {cells[-1]!r}, which is not a line count"
+                    )
+                    continue
+                if not os.path.exists(path):
+                    errors.append(
+                        f"STALE COUNT in {name}: measured table cites `{path}` "
+                        f"but it does not exist"
+                    )
+                    continue
+                actual = _line_count(path)
+                claimed = int(claimed_raw)
+                if claimed != actual:
+                    errors.append(
+                        f"STALE COUNT in {name}: `{path}` claims {claimed} "
+                        f"lines under '{column}', actual {actual} — fix by "
+                        f"writing {actual} in that cell"
+                    )
+
+    return errors
+
+
 def main() -> int:
     """Run stale-count scan. Returns 0 on pass, 1 on failure."""
     counts: dict[str, int] = count_actual_data()
@@ -334,6 +420,7 @@ def main() -> int:
     errors += check_doc_line_counts()
     errors += check_gap_status_consistency()
     errors += check_gap_code_references()
+    errors += check_gap_measured_tables()
 
     if errors:
         print("Stale-count scan FAILED:")

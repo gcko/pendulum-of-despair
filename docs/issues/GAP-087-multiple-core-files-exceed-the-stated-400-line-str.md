@@ -38,6 +38,8 @@ Continue the extraction pattern: split PartyState into composition/stats/invento
 
 Baseline column is `main` at merge-base 7c1b16b; "after decomposition" is the tip of `refactor/infra-decompose-oversized`; "current" is `wc -l` re-run over all eight files in a single pass on 2026-08-12 (#319). A half-refreshed list is less trustworthy than a fully stale one, so every row is re-measured together or none is.
 
+The first three columns are historical measurements and stay as written. The **current** column is not hand-maintained: `check_gap_measured_tables()` in `scripts/quality-gates/check_stale_counts.py` re-runs `wc -l` over every path in it on each pre-push and fails with the corrected cell, so a one-line change to any of these actively-developed files breaks the build until the number is updated (#319).
+
 This table supersedes the 2026-06-27 figures, which were up to 55% stale by the time the work started (#319, #343).
 
 | File | 2026-06-27 (gap analysis) | main @ 7c1b16b | after decomposition | current (2026-08-12) |
@@ -55,7 +57,7 @@ This table supersedes the 2026-06-27 figures, which were up to 55% stale by the 
 
 Nothing blocking. The rule this gap was written against no longer exists in the form it cites: the budget is now **aim 400 / hard maximum 600** (technical-architecture.md § 1.2a), enforced by `game/tests/test_script_layout.gd`, and every file in the tree complies. The original framing — "4 files still over 400" — described a violation of a single 400-line rule that has since been replaced.
 
-Four files sit in the sanctioned 400-600 band (`exploration.gd` 590, `audio_manager.gd` 536, `party_state.gd` 512, `battle_manager.gd` 414). All four are facades or scene roots: what is left is signal wiring, owned node references and one-line forwards to the extracted modules, so further splitting buys indirection rather than cohesion — exactly the case § 1.2a sanctions, and each is named there. `PartyState` in particular is capped by `max-public-methods: 65` in `.gdlintrc` rather than by line count — it sits at 64. `test_script_layout.gd` is the durable guard: a regression past 600 fails the suite, so this doc does not need to be re-measured by hand to stay honest.
+Four files sit in the sanctioned 400-600 band (`exploration.gd` 590, `audio_manager.gd` 536, `party_state.gd` 512, `battle_manager.gd` 414). All four are facades or scene roots: what is left is signal wiring, owned node references and one-line forwards to the extracted modules, so further splitting buys indirection rather than cohesion — exactly the case § 1.2a sanctions, and each is named there. `PartyState` in particular is capped by `max-public-methods: 65` in `.gdlintrc` rather than by line count — it sits at 64. Two guards keep this honest without a manual re-measure: `test_script_layout.gd` fails the suite on a regression past 600 or on an undocumented new arrival in the 400-600 band, and `check_gap_measured_tables()` fails pre-push the moment any figure in the current column stops matching `wc -l`.
 
 ## Design references
 
