@@ -3,8 +3,6 @@ extends RefCounted
 ## Display/rendering helpers for the Save/Load overlay.
 ## Extracted from save_load.gd to keep it focused on state and input.
 
-const Helpers = preload("res://scripts/util/inventory_helpers.gd")
-
 ## Colors from ui-design.md Section 1.4.
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -154,7 +152,7 @@ func _show_populated_slot(
 	data: Dictionary,
 ) -> void:
 	var world: Dictionary = data.get("world", {})
-	var loc: String = Helpers.location_display_name(world)
+	var loc: String = SaveDataHelpers.location_display_name(world)
 	var pt: int = data.get("meta", {}).get("playtime", 0)
 	header.text = "%s%s" % [prefix, loc]
 	header.modulate = COLOR_NORMAL
@@ -166,4 +164,4 @@ func _show_populated_slot(
 	if gold_lbl:
 		gold_lbl.text = "%dg" % world.get("gold", 0)
 		gold_lbl.modulate = COLOR_NORMAL
-	party.text = Helpers.format_active_party_names(data)
+	party.text = SaveDataHelpers.format_active_party_names(data)

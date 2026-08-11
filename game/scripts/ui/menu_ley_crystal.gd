@@ -1,5 +1,10 @@
 extends Control
 ## Ley Crystal sub-screen: browse, inspect, and equip crystals.
+##
+## Every "what does this read as" question — bonus lists, stat deltas,
+## invocation blurbs, XP progress — is answered by CrystalDisplay
+## (`scripts/ui/crystal_display.gd`, GAP-087). This file keeps cursor state and
+## node wiring.
 
 enum CrystalState { BROWSING, DETAIL }
 
@@ -15,9 +20,6 @@ const COLOR_XP_FILL: Color = Color("#44aacc")
 const GRID_ROWS: int = 6
 const GRID_COLS: int = 2
 const GRID_SIZE: int = GRID_ROWS * GRID_COLS
-
-const STAT_KEYS: Array[String] = ["atk", "def", "mag", "mdef", "spd", "lck"]
-const STAT_LABELS: Array[String] = ["ATK", "DEF", "MAG", "MDEF", "SPD", "LCK"]
 
 var _character_id: String = ""
 var _crystal_ids: Array[String] = []
@@ -192,26 +194,17 @@ func _show_detail(crystal_id: String) -> void:
 	if _header_label != null:
 		_header_label.text = "%s  Lv %d" % [static_data.get("name", crystal_id), level]
 	_update_xp_bar(runtime, static_data)
-	var level_bonuses: Array = static_data.get("level_bonuses", [])
-	var current_bonus: Dictionary = (
-		level_bonuses[level - 1] if level_bonuses.size() >= level else {}
-	)
+	var current_bonus: Dictionary = CrystalDisplay.level_bonus(static_data, level)
 	if _bonus_label != null:
-		_bonus_label.text = "Bonus: %s" % _format_bonus(current_bonus)
+		_bonus_label.text = "Bonus: %s" % CrystalDisplay.format_bonus(current_bonus)
 	if _next_level_label != null:
-		if level >= 5:
-			_next_level_label.text = "Next Lv: MAX"
-		elif static_data.get("secret_lv5", false) and level == 4:
-			_next_level_label.text = "Next Lv: ???"
-		else:
-			var next_bonus: Dictionary = (
-				level_bonuses[level] if level_bonuses.size() > level else {}
-			)
-			_next_level_label.text = "Next Lv: %s" % _format_bonus(next_bonus)
+		_next_level_label.text = "Next Lv: %s" % _next_level_text(static_data, level)
 	if _level_up_label != null:
-		_level_up_label.text = "On Lv Up: %s" % _format_bonus(current_bonus)
+		_level_up_label.text = "On Lv Up: %s" % CrystalDisplay.format_bonus(current_bonus)
 	if _stat_compare_label != null:
-		_stat_compare_label.text = _build_stat_comparison(crystal_id, current_bonus)
+		_stat_compare_label.text = CrystalDisplay.stat_comparison(
+			_character_id, crystal_id, current_bonus
+		)
 	var negative_effect: Variant = static_data.get("negative_effect", null)
 	if _warning_label != null:
 		if negative_effect != null and negative_effect is Dictionary:
@@ -223,24 +216,7 @@ func _show_detail(crystal_id: String) -> void:
 			_warning_label.visible = false
 	# Update DescPanel with power at current level (spec: detail adds "Power: N")
 	if _desc_label != null:
-		var invocation: Dictionary = static_data.get("invocation", {})
-		var inv_name: String = invocation.get("name", "")
-		var inv_desc: String = invocation.get("description", "")
-		var uses: int = invocation.get("uses_per_rest", 0)
-		var level_effects: Array = invocation.get("level_effects", [])
-		var power: int = 0
-		if level_effects.size() >= level:
-			power = (
-				level_effects[level - 1].get("power", 0)
-				if level_effects[level - 1] is Dictionary
-				else 0
-			)
-		if inv_name.is_empty():
-			_desc_label.text = static_data.get("description", "")
-		elif power > 0:
-			_desc_label.text = "%s: %s  Power: %d  [%d/rest]" % [inv_name, inv_desc, power, uses]
-		else:
-			_desc_label.text = "%s: %s  [%d/rest]" % [inv_name, inv_desc, uses]
+		_desc_label.text = CrystalDisplay.invocation_text(static_data, level)
 		_desc_label.modulate = COLOR_NORMAL
 	if _detail_view != null:
 		_detail_view.visible = true
@@ -262,26 +238,23 @@ func _equip_crystal(crystal_id: String) -> void:
 
 
 func _update_xp_bar(runtime: Dictionary, static_data: Dictionary) -> void:
-	var level: int = runtime.get("level", 1)
-	var xp: int = runtime.get("xp", 0)
-	var thresholds: Array = static_data.get("xp_thresholds", [0, 800, 2500, 6000, 15000])
+	var progress: Dictionary = CrystalDisplay.xp_progress(runtime, static_data)
 	if _xp_bar_fill != null:
 		_xp_bar_fill.color = COLOR_XP_FILL
-	if level >= 5:
-		if _xp_label != null:
-			_xp_label.text = "XP: MAX"
-		if _xp_bar_fill != null and _xp_bar_bg != null:
-			_xp_bar_fill.size.x = _xp_bar_bg.size.x
-		return
-	var current_threshold: int = thresholds[level - 1] if thresholds.size() >= level else 0
-	var next_threshold: int = thresholds[level] if thresholds.size() > level else 15000
-	var progress_xp: int = xp - current_threshold
-	var threshold_range: int = next_threshold - current_threshold
 	if _xp_label != null:
-		_xp_label.text = "XP: %d / %d" % [progress_xp, threshold_range]
-	if _xp_bar_fill != null and _xp_bar_bg != null and threshold_range > 0:
-		var fill_ratio: float = clampf(float(progress_xp) / float(threshold_range), 0.0, 1.0)
-		_xp_bar_fill.size.x = _xp_bar_bg.size.x * fill_ratio
+		_xp_label.text = progress["label"]
+	if _xp_bar_fill != null and _xp_bar_bg != null and progress["has_ratio"]:
+		_xp_bar_fill.size.x = _xp_bar_bg.size.x * float(progress["fill_ratio"])
+
+
+## The "Next Lv" line: MAX at the cap, and deliberately withheld for a crystal
+## whose Lv5 bonus is a secret until it is earned.
+func _next_level_text(static_data: Dictionary, level: int) -> String:
+	if level >= PartyCrystals.MAX_LEVEL:
+		return "MAX"
+	if static_data.get("secret_lv5", false) and level == PartyCrystals.MAX_LEVEL - 1:
+		return "???"
+	return CrystalDisplay.format_bonus(CrystalDisplay.level_bonus(static_data, level + 1))
 
 
 func _update_char_info() -> void:
@@ -315,7 +288,7 @@ func _update_grid() -> void:
 			var runtime: Dictionary = PartyState.get_crystal_state(crystal_id)
 			var level: int = runtime.get("level", 1)
 			var crystal_name: String = static_data.get("name", crystal_id)
-			var equipped_by: String = _get_equipped_by(crystal_id)
+			var equipped_by: String = CrystalDisplay.equipped_by(crystal_id)
 			var is_equipped_by_other: bool = (
 				not equipped_by.is_empty() and equipped_by != _character_id
 			)
@@ -342,17 +315,9 @@ func _update_desc() -> void:
 		return
 	if _cursor < total_crystal:
 		var crystal_id: String = _crystal_ids[_cursor]
-		var static_data: Dictionary = DataManager.get_ley_crystal(crystal_id)
-		var invocation: Dictionary = static_data.get("invocation", {})
-		var inv_name: String = invocation.get("name", "")
-		var inv_desc: String = invocation.get("description", "")
-		var uses: int = invocation.get("uses_per_rest", 0)
-		if inv_name.is_empty():
-			_desc_label.text = static_data.get("description", "")
-		else:
-			_desc_label.text = "%s: %s  [%d/rest]" % [inv_name, inv_desc, uses]
+		_desc_label.text = CrystalDisplay.invocation_text(DataManager.get_ley_crystal(crystal_id))
 		_desc_label.modulate = COLOR_NORMAL
-		var equipped_by: String = _get_equipped_by(crystal_id)
+		var equipped_by: String = CrystalDisplay.equipped_by(crystal_id)
 		if not equipped_by.is_empty() and equipped_by != _character_id:
 			_desc_label.modulate = COLOR_DISABLED
 	elif _cursor == total_crystal and _has_equipped_crystal():
@@ -374,78 +339,3 @@ func _has_equipped_crystal() -> bool:
 	if member.is_empty():
 		return false
 	return not member.get("equipment", {}).get("crystal", "").is_empty()
-
-
-## Returns the character_id of whoever has this crystal equipped, or empty string.
-func _get_equipped_by(crystal_id: String) -> String:
-	for m: Dictionary in PartyState.members:
-		if m.get("equipment", {}).get("crystal", "") == crystal_id:
-			return m.get("character_id", "")
-	return ""
-
-
-## Format a bonus dict into a human-readable string, e.g. "ATK +2, DEF +1".
-func _format_bonus(bonus: Dictionary) -> String:
-	if bonus.is_empty():
-		return "none"
-	var parts: Array[String] = []
-	for i: int in range(STAT_KEYS.size()):
-		var key: String = STAT_KEYS[i]
-		if bonus.has(key):
-			var val: int = int(bonus[key])
-			if val >= 0:
-				parts.append("%s +%d" % [STAT_LABELS[i], val])
-			else:
-				parts.append("%s %d" % [STAT_LABELS[i], val])
-	if bonus.has("hp_per_level"):
-		parts.append("HP +%d/Lv" % int(bonus["hp_per_level"]))
-	if bonus.has("mp_per_level"):
-		parts.append("MP +%d/Lv" % int(bonus["mp_per_level"]))
-	if parts.is_empty():
-		return "none"
-	return ", ".join(parts)
-
-
-## Build stat comparison text: delta between equipping this crystal vs current state.
-func _build_stat_comparison(crystal_id: String, bonus: Dictionary) -> String:
-	var lines: Array[String] = []
-	var currently_equipped: String = PartyState.get_member(_character_id).get("equipment", {}).get(
-		"crystal", ""
-	)
-	var current_bonuses: Dictionary = {}
-	if not currently_equipped.is_empty() and currently_equipped != crystal_id:
-		var current_static: Dictionary = DataManager.get_ley_crystal(currently_equipped)
-		var current_runtime: Dictionary = PartyState.get_crystal_state(currently_equipped)
-		var current_level: int = current_runtime.get("level", 1)
-		var current_level_bonuses: Array = current_static.get("level_bonuses", [])
-		if current_level_bonuses.size() >= current_level:
-			var entry: Variant = current_level_bonuses[current_level - 1]
-			current_bonuses = entry as Dictionary if entry is Dictionary else {}
-	for i: int in range(STAT_KEYS.size()):
-		var key: String = STAT_KEYS[i]
-		var new_val: int = int(bonus.get(key, 0))
-		var old_val: int = int(current_bonuses.get(key, 0))
-		var delta: int = new_val - old_val
-		if delta > 0:
-			lines.append("%s +%d" % [STAT_LABELS[i], delta])
-		elif delta < 0:
-			lines.append("%s %d" % [STAT_LABELS[i], delta])
-	# HP/MP per-level bonuses (scaled by character level)
-	var char_level: int = PartyState.get_member(_character_id).get("level", 1)
-	var new_hp: int = int(bonus.get("hp_per_level", 0)) * char_level
-	var old_hp: int = int(current_bonuses.get("hp_per_level", 0)) * char_level
-	var hp_delta: int = new_hp - old_hp
-	if hp_delta > 0:
-		lines.append("HP +%d" % hp_delta)
-	elif hp_delta < 0:
-		lines.append("HP %d" % hp_delta)
-	var new_mp: int = int(bonus.get("mp_per_level", 0)) * char_level
-	var old_mp: int = int(current_bonuses.get("mp_per_level", 0)) * char_level
-	var mp_delta: int = new_mp - old_mp
-	if mp_delta > 0:
-		lines.append("MP +%d" % mp_delta)
-	elif mp_delta < 0:
-		lines.append("MP %d" % mp_delta)
-	if lines.is_empty():
-		return "No stat change"
-	return "\n".join(lines)

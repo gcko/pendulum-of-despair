@@ -11,6 +11,14 @@ const AUTOLOAD_DIR := "res://scripts/autoload"
 const UTIL_DIR := "res://scripts/util"
 const PROJECT_GODOT := "res://project.godot"
 
+## Hard maximum. A file past this fails the suite; see § 1.2a for why 400 is
+## the aim and 600 the ceiling.
+const MAX_SCRIPT_LINES: int = 600
+
+## The aim. Files between this and MAX_SCRIPT_LINES are acceptable only when
+## breaking them down is intrinsically difficult, and § 1.2a names each one.
+const TARGET_SCRIPT_LINES: int = 400
+
 
 ## Script filenames (no directory) present in a res:// directory.
 func _script_names_in(dir_path: String) -> PackedStringArray:
@@ -83,3 +91,102 @@ func test_util_dir_holds_no_registered_singleton() -> void:
 			registered.has(script_name),
 			"%s is a registered autoload and must live in scripts/autoload/" % script_name
 		)
+
+
+# ── Script size budget (technical-architecture.md § 1.2a) ───────────────
+
+
+## Every .gd under res://scripts, recursively, as "path: line_count".
+func _script_line_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	var pending: Array[String] = ["res://scripts"]
+	while not pending.is_empty():
+		var dir_path: String = pending.pop_back()
+		var dir: DirAccess = DirAccess.open(dir_path)
+		if dir == null:
+			fail_test("cannot open directory %s" % dir_path)
+			return counts
+		dir.list_dir_begin()
+		var entry: String = dir.get_next()
+		while entry != "":
+			# "." and ".." would recurse forever.
+			if entry != "." and entry != "..":
+				var full: String = dir_path.path_join(entry)
+				if dir.current_is_dir():
+					pending.append(full)
+				elif entry.ends_with(".gd"):
+					var f: FileAccess = FileAccess.open(full, FileAccess.READ)
+					if f == null:
+						fail_test("cannot open %s (error %d)" % [full, FileAccess.get_open_error()])
+						return counts
+					counts[full] = f.get_as_text().split("\n").size()
+					f.close()
+			entry = dir.get_next()
+		dir.list_dir_end()
+	return counts
+
+
+func test_no_script_exceeds_the_hard_line_maximum() -> void:
+	var counts: Dictionary = _script_line_counts()
+	assert_gt(counts.size(), 20, "the scan must actually find the script tree")
+	var over: Array[String] = []
+	for path: String in counts:
+		if int(counts[path]) > MAX_SCRIPT_LINES:
+			over.append("%s (%d)" % [path, counts[path]])
+	over.sort()
+	assert_eq(
+		over.size(),
+		0,
+		(
+			"scripts over the %d-line hard maximum (technical-architecture.md 1.2a): %s"
+			% [MAX_SCRIPT_LINES, str(over)]
+		)
+	)
+
+
+func test_files_between_the_aim_and_the_maximum_are_the_documented_ones() -> void:
+	# Not a failure -- 400-600 is allowed. This pins WHICH files are there, so a
+	# new arrival is a deliberate decision with a justification in 1.2a rather
+	# than something that drifted in unnoticed.
+	var allowed: Array[String] = [
+		"res://scripts/autoload/audio_manager.gd",
+		"res://scripts/autoload/party_state.gd",
+		"res://scripts/combat/battle_manager.gd",
+		"res://scripts/core/exploration.gd",
+	]
+	var counts: Dictionary = _script_line_counts()
+	var found: Array[String] = []
+	for path: String in counts:
+		if int(counts[path]) > TARGET_SCRIPT_LINES:
+			found.append(path)
+	found.sort()
+	for path: String in found:
+		assert_has(
+			allowed,
+			path,
+			(
+				(
+					"%s is over the %d-line aim; either extract from it or add it to 1.2a "
+					+ "with the reason and list it here"
+				)
+				% [path, TARGET_SCRIPT_LINES]
+			)
+		)
+
+
+# ── Formation shape robustness (Copilot review, PR #357) ───────────────
+
+
+func test_add_member_repairs_a_malformed_formation() -> void:
+	# load_from_save assigns a saved formation verbatim, so a save missing a key
+	# used to crash the next party join on a direct index. RED without
+	# _ensure_formation_shape().
+	var roster: PartyRoster = PartyRoster.new(PartyState)
+	var saved: Dictionary = PartyState.formation.duplicate(true)
+	var saved_members: Array = PartyState.members.duplicate(true)
+	PartyState.formation = {"active": []}  # no "reserve", no "rows"
+	roster.add_member("lira", 1)
+	assert_true(PartyState.formation.has("reserve"), "reserve is repaired, not crashed on")
+	assert_true(PartyState.formation.has("rows"), "rows is repaired, not crashed on")
+	PartyState.formation = saved
+	PartyState.members = saved_members

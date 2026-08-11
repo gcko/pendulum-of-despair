@@ -86,13 +86,16 @@ func test_config_has_title_label() -> void:
 
 
 func test_char_select_uses_color_highlight() -> void:
+	# Row rendering moved to MenuPartyPanel in GAP-087; the menu asks it to
+	# highlight a row index, and -1 clears the highlight.
+	var panel: String = _read_file("res://scripts/ui/menu_party_panel.gd")
+	assert_true(
+		panel.contains("_selected_color if i == char_index"),
+		"char select should highlight selected member name with the selected colour",
+	)
 	var text: String = _read_file("res://scripts/ui/menu_overlay.gd")
 	assert_true(
-		text.contains("COLOR_SELECTED if i == _char_index"),
-		"char select should highlight selected member name with COLOR_SELECTED",
-	)
-	assert_true(
-		text.contains("_clear_char_highlight"),
+		text.contains("_panel.highlight(-1)"),
 		"char select should clear highlight on cancel/accept",
 	)
 

@@ -8,6 +8,12 @@ extends GutTest
 const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
 const ExplorationScript: GDScript = preload("res://scripts/core/exploration.gd")
 const CutsceneHandlerScript: GDScript = preload("res://scripts/core/cutscene_handler.gd")
+const ExplorationInteractionsScript: GDScript = preload(
+	"res://scripts/core/exploration_interactions.gd"
+)
+const ExplorationAutoSequenceScript: GDScript = preload(
+	"res://scripts/core/exploration_auto_sequence.gd"
+)
 
 
 func before_each() -> void:
@@ -134,14 +140,16 @@ func test_required_flags_single_flag_passes_when_set() -> void:
 
 
 func test_exploration_uses_check_required_flags() -> void:
-	var source: String = ExplorationScript.source_code
+	# The trigger handlers moved to ExplorationInteractions in GAP-087; the
+	# guard followed them.
+	var source: String = ExplorationInteractionsScript.source_code
 	assert_true(
 		'get_meta("required_flags"' in source,
-		"exploration.gd should read required_flags metadata",
+		"exploration_interactions.gd should read required_flags metadata",
 	)
 	assert_true(
 		"check_required_flags" in source,
-		"exploration.gd should delegate to EventFlags.check_required_flags()",
+		"exploration_interactions.gd should delegate to EventFlags.check_required_flags()",
 	)
 
 
@@ -206,7 +214,7 @@ func test_end_auto_walk_does_not_enable_input_during_cutscene() -> void:
 	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp.get_player(), "player must exist")
 	# Simulate auto_walk in progress during a cutscene.
-	exp._get_auto_seq().in_auto_walk = true
+	exp.get_auto_sequence().in_auto_walk = true
 	exp.set_in_cutscene(true)
 	exp.get_player().set_input_enabled(false)
 	exp._end_auto_walk()
@@ -221,7 +229,7 @@ func test_end_auto_walk_enables_input_when_not_in_cutscene() -> void:
 	# When _in_cutscene is false, _end_auto_walk SHOULD re-enable player input.
 	var exp: Node2D = _create_exploration_test_room()
 	assert_not_null(exp.get_player(), "player must exist")
-	exp._get_auto_seq().in_auto_walk = true
+	exp.get_auto_sequence().in_auto_walk = true
 	exp.set_in_cutscene(false)
 	exp.get_player().set_input_enabled(false)
 	exp._end_auto_walk()
@@ -233,9 +241,19 @@ func test_end_auto_walk_enables_input_when_not_in_cutscene() -> void:
 
 
 func test_end_auto_walk_cutscene_guard_structural() -> void:
-	# Structural test: verify the _in_cutscene guard exists in _end_auto_walk.
-	var source: String = ExplorationScript.source_code
+	# Structural test: verify the cutscene guard exists in end_auto_walk, which
+	# moved to ExplorationAutoSequence in GAP-087 and now asks the owner through
+	# is_in_cutscene() instead of reading exploration's private _in_cutscene.
+	# Sliced to the function body so the assertion cannot be satisfied by an
+	# unrelated occurrence elsewhere in the file.
+	var source: String = ExplorationAutoSequenceScript.source_code
+	var pos: int = source.find("func end_auto_walk()")
+	assert_gt(pos, 0, "exploration_auto_sequence.gd should have end_auto_walk")
+	var next_func: int = source.find("\nfunc ", pos + 1)
+	if next_func < 0:
+		next_func = source.length()
+	var body: String = source.substr(pos, next_func - pos)
 	assert_true(
-		"not _in_cutscene" in source,
-		"_end_auto_walk should check _in_cutscene before enabling input",
+		"not _exploration.is_in_cutscene()" in body,
+		"end_auto_walk should check is_in_cutscene() before enabling input",
 	)

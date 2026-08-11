@@ -1,6 +1,6 @@
 extends GutTest
 ## Tests for main-menu party-row HP/MP fill bars (GAP-057).
-## Calls _update_party_row directly with fabricated member dicts so no
+## Calls MenuPartyPanel.update_row directly with fabricated member dicts so no
 ## PartyState seeding is needed.
 
 const MENU_SCENE: PackedScene = preload("res://scenes/overlay/menu.tscn")
@@ -36,7 +36,7 @@ func _row0_node(path: String) -> Node:
 
 
 func test_menu_hp_bar_fill_and_low_color() -> void:
-	_menu._update_party_row(0, _fake_member(99, 400, 10, 80))
+	_menu.get_party_panel().update_row(0, _fake_member(99, 400, 10, 80))
 	var bg: ColorRect = _row0_node("HPCluster/HPBarBg")
 	var fill: ColorRect = _row0_node("HPCluster/HPBarBg/HPBarFill")
 	assert_not_null(bg, "menu row should have an HP bar track")
@@ -46,14 +46,14 @@ func test_menu_hp_bar_fill_and_low_color() -> void:
 
 
 func test_menu_hp_bar_green_when_healthy() -> void:
-	_menu._update_party_row(0, _fake_member(400, 400, 10, 80))
+	_menu.get_party_panel().update_row(0, _fake_member(400, 400, 10, 80))
 	var fill: ColorRect = _row0_node("HPCluster/HPBarBg/HPBarFill")
 	assert_not_null(fill)
 	assert_eq(fill.color, StatBarHelpers.COLOR_HP_FILL, "healthy HP stays green")
 
 
 func test_menu_mp_bar_fill() -> void:
-	_menu._update_party_row(0, _fake_member(400, 400, 10, 80))
+	_menu.get_party_panel().update_row(0, _fake_member(400, 400, 10, 80))
 	var bg: ColorRect = _row0_node("MPCluster/MPBarBg")
 	var fill: ColorRect = _row0_node("MPCluster/MPBarBg/MPBarFill")
 	assert_not_null(fill, "menu row should have an MP bar fill")
@@ -61,7 +61,7 @@ func test_menu_mp_bar_fill() -> void:
 
 
 func test_menu_numeric_labels_remain() -> void:
-	_menu._update_party_row(0, _fake_member(100, 400, 10, 80))
+	_menu.get_party_panel().update_row(0, _fake_member(100, 400, 10, 80))
 	var hp_label: Label = _row0_node("HPCluster/HPLabel")
 	assert_not_null(hp_label, "numeric HP label stays alongside the bar")
 	assert_eq(hp_label.text, "HP 100/400", "numeric value keeps rendering")

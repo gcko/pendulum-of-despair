@@ -6,7 +6,6 @@ extends GutTest
 ## "no position recorded" fallback, and the v1 -> v2 migration that strips the
 ## fabricated origin from old saves.
 
-const Helpers = preload("res://scripts/util/inventory_helpers.gd")
 const TEST_SLOT: int = 1
 
 
@@ -34,10 +33,10 @@ func _world_of(save_data: Dictionary) -> Dictionary:
 ## none — "absent" is a separate outcome that its own tests assert directly.
 func _position_of(save_data: Dictionary) -> Vector2i:
 	var world: Dictionary = _world_of(save_data)
-	if not Helpers.has_saved_position(world):
+	if not SaveDataHelpers.has_saved_position(world):
 		fail_test("save data has no stored position")
 		return Vector2i(-1, -1)
-	return Helpers.saved_position(world)
+	return SaveDataHelpers.saved_position(world)
 
 
 # --- Round trip ---
@@ -115,20 +114,22 @@ func test_origin_is_a_real_position_when_recorded() -> void:
 
 
 func test_has_saved_position_rejects_missing_and_partial() -> void:
-	assert_false(Helpers.has_saved_position({}), "no key means no position")
-	assert_false(Helpers.has_saved_position({"current_position": null}), "null means none")
+	assert_false(SaveDataHelpers.has_saved_position({}), "no key means no position")
+	assert_false(SaveDataHelpers.has_saved_position({"current_position": null}), "null means none")
 	assert_false(
-		Helpers.has_saved_position({"current_position": {"x": 10}}),
+		SaveDataHelpers.has_saved_position({"current_position": {"x": 10}}),
 		"a half-written position is not a position",
 	)
 	assert_true(
-		Helpers.has_saved_position({"current_position": {"x": 10, "y": 20}}),
+		SaveDataHelpers.has_saved_position({"current_position": {"x": 10, "y": 20}}),
 		"x and y together are a position",
 	)
 
 
 func test_saved_position_reads_coordinates() -> void:
-	assert_eq(Helpers.saved_position({"current_position": {"x": 10, "y": 20}}), Vector2i(10, 20))
+	assert_eq(
+		SaveDataHelpers.saved_position({"current_position": {"x": 10, "y": 20}}), Vector2i(10, 20)
+	)
 
 
 # --- Place name shown to the player ---
@@ -145,7 +146,7 @@ func test_save_stores_a_place_name_beside_the_map_id() -> void:
 		"the map id stays the load key",
 	)
 	assert_eq(
-		Helpers.location_display_name(world),
+		SaveDataHelpers.location_display_name(world),
 		"Ember Vein - Upper Mine",
 		"the slot header shows the place, not the path",
 	)
@@ -165,11 +166,13 @@ func test_place_name_round_trips_through_save_and_load() -> void:
 
 func test_display_name_never_falls_back_to_the_map_path() -> void:
 	assert_eq(
-		Helpers.location_display_name({"current_location": "dungeons/ember_vein_f1"}),
+		SaveDataHelpers.location_display_name({"current_location": "dungeons/ember_vein_f1"}),
 		"Unknown",
 		"a save with no recorded place name must not show its map path",
 	)
-	assert_eq(Helpers.location_display_name({}), "Unknown", "an empty world block reads Unknown")
+	assert_eq(
+		SaveDataHelpers.location_display_name({}), "Unknown", "an empty world block reads Unknown"
+	)
 
 
 func test_pause_menu_shows_no_path_when_a_map_has_no_place_name() -> void:

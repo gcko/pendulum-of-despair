@@ -61,7 +61,7 @@ res://
 │   ├── entities/              # Entity behavior scripts
 │   ├── combat/                # Battle system scripts
 │   ├── ui/                    # Menu and HUD scripts
-│   └── util/                  # Utility functions
+│   └── util/                  # Static helpers + per-owner RefCounted facets
 ├── data/                      # JSON game data (source of truth)
 │   ├── enemies/               # Per-act enemy stat tables
 │   ├── items/                 # Consumables, materials, key items
@@ -95,6 +95,40 @@ res://
 | Constants | UPPER_SNAKE_CASE | `const MAX_PARTY_SIZE = 4` |
 | JSON keys | snake_case | `"atk_growth": 3` |
 | Asset files | snake_case, organized by category directory | `sfx/hit_physical.ogg`, `music/title_theme.ogg` |
+
+### 1.2a Script Size Budget
+
+Two thresholds, not one:
+
+| Threshold | Meaning |
+|-----------|---------|
+| **~400 lines** | The **aim**. A script past this is a prompt to look for a cohesive piece to extract. |
+| **600 lines** | The **hard maximum**. Enforced by `test_script_layout.gd`; exceeding it fails the suite. |
+
+Between 400 and 600 a file is acceptable **only when breaking it down is intrinsically
+difficult** — and the reason belongs in the file's header comment so the next reader does
+not re-litigate it. Legitimate reasons look like:
+
+- **A facade over extracted facets.** `party_state.gd` is ~60 public methods that other
+  systems and 20+ test files call by name, each a 1–3 line forward, plus the mutable state
+  saves read directly. The rules behind it live in `scripts/util/party_*.gd`. Splitting the
+  public surface would move the line count without improving the design.
+- **A scene controller.** `exploration.gd` is the Godot lifecycle (`_ready`, `_process`,
+  `_unhandled_input`, `load_map`) plus the accessors its collaborators need. `load_map`
+  mutates ten private fields at once; extracting it trades method bodies for setters.
+- **State a test suite pins directly.** `audio_manager.gd` keeps its player/tween/track-ID
+  fields because `test_audio_manager.gd` asserts against them in ~25 places — moving them
+  would discard the strongest evidence that crossfade behaviour is unchanged.
+
+What is **not** a reason: "it grew". A file over 400 with no stated justification is debt,
+and the next change to it should pay some down.
+
+Prefer the patterns already in the tree: static `class_name` helpers in `scripts/util/`
+(`inventory_helpers.gd`, `dialogue_condition.gd`), and `RefCounted` collaborators
+constructed lazily by their owner (`exploration_interactions.gd`, `battle_item_command.gd`).
+
+> Splitting one responsibility across two files to satisfy a number makes the code worse.
+> The budget exists to prompt the question, not to answer it.
 
 ### 1.3 Autoload Singletons
 

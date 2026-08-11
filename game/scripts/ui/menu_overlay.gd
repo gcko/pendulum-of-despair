@@ -1,6 +1,10 @@
 extends CanvasLayer
 ## Main menu overlay — command list, character select, sub-screen dispatch.
 ## Process mode set by GameManager.push_overlay().
+##
+## Row and info-panel rendering lives in MenuPartyPanel
+## (`scripts/ui/menu_party_panel.gd`, GAP-087); this file keeps the state
+## machine and the input routing.
 
 enum MenuState { COMMAND, CHARACTER_SELECT, SUB_SCREEN }
 
@@ -29,16 +33,13 @@ var _char_index: int = 0
 var _active_sub_screen: Control = null
 var _active_party: Array[Dictionary] = []
 var _config_direct: bool = false
+var _panel: MenuPartyPanel = null
 
 @onready var _command_labels: Array[Label] = []
-@onready var _party_rows: Array[Control] = []
 @onready var _cursor: Sprite2D = $Cursor
 @onready var _main_panel: PanelContainer = $MainPanel
 @onready var _command_panel: PanelContainer = $CommandPanel
 @onready var _info_panel: PanelContainer = $InfoPanel
-@onready var _gold_label: Label = $InfoPanel/Margin/Layout/RightCol/GoldLabel
-@onready var _time_label: Label = $InfoPanel/Margin/Layout/RightCol/TimeLabel
-@onready var _location_label: Label = $InfoPanel/Margin/Layout/LocationLabel
 @onready var _magic_screen: Control = $SubScreen/MagicScreen
 @onready var _item_screen: Control = $SubScreen/ItemScreen
 @onready var _equip_screen: Control = $SubScreen/EquipScreen
@@ -57,14 +58,11 @@ func _ready() -> void:
 		if label != null:
 			label.text = COMMANDS[i]["name"]
 			_command_labels.append(label)
-	_party_rows = []
-	for i: int in range(4):
-		var row: Control = get_node_or_null("MainPanel/Margin/Rows/Row%d" % i)
-		_party_rows.append(row)
+	_panel = MenuPartyPanel.new(self, COLOR_SELECTED, COLOR_GOLD)
 	_hide_all_sub_screens()
 	_refresh_party_data()
 	_update_display()
-	_update_info_panel()
+	_panel.update_info_panel()
 
 
 ## Open directly to config screen (used by title screen).
@@ -106,24 +104,24 @@ func _handle_command_input(event: InputEvent) -> void:
 func _handle_char_select_input(event: InputEvent) -> void:
 	if _active_party.is_empty():
 		if event.is_action_pressed("ui_cancel"):
-			_clear_char_highlight()
+			_panel.highlight(-1)
 			_state = MenuState.COMMAND
 			_consume_input()
 		return
 	if event.is_action_pressed("ui_down"):
 		_char_index = (_char_index + 1) % _active_party.size()
-		_update_char_highlight()
+		_panel.highlight(_char_index)
 		_consume_input()
 	elif event.is_action_pressed("ui_up"):
 		_char_index = (_char_index - 1 + _active_party.size()) % _active_party.size()
-		_update_char_highlight()
+		_panel.highlight(_char_index)
 		_consume_input()
 	elif event.is_action_pressed("ui_accept"):
-		_clear_char_highlight()
+		_panel.highlight(-1)
 		_open_sub_screen_for_character()
 		_consume_input()
 	elif event.is_action_pressed("ui_cancel"):
-		_clear_char_highlight()
+		_panel.highlight(-1)
 		_state = MenuState.COMMAND
 		_consume_input()
 
@@ -152,7 +150,7 @@ func _confirm_command() -> void:
 	if cmd.get("char_select", false):
 		_state = MenuState.CHARACTER_SELECT
 		_char_index = 0
-		_update_char_highlight()
+		_panel.highlight(_char_index)
 		return
 	# Direct sub-screens (no character select)
 	match cmd_name:
@@ -228,7 +226,7 @@ func _close_sub_screen() -> void:
 	_state = MenuState.COMMAND
 	_refresh_party_data()
 	_update_display()
-	_update_info_panel()
+	_panel.update_info_panel()
 
 
 func _hide_all_sub_screens() -> void:
@@ -296,93 +294,12 @@ func _update_display() -> void:
 	if _cursor != null and _command_index < _command_labels.size():
 		var target: Label = _command_labels[_command_index]
 		_cursor.position = Vector2(target.position.x - 48, target.position.y + target.size.y / 2.0)
-	# Update party rows
-	for i: int in range(4):
-		if _party_rows[i] == null:
-			continue
-		if i >= _active_party.size():
-			_party_rows[i].visible = false
-			continue
-		_party_rows[i].visible = true
-		_update_party_row(i, _active_party[i])
+	_panel.update_rows(_active_party)
 
 
-func _update_party_row(slot: int, member: Dictionary) -> void:
-	var row: Control = _party_rows[slot]
-	if row == null:
-		return
-	var name_label: Label = row.get_node_or_null("NameLabel")
-	if name_label != null:
-		name_label.text = member.get("character_id", "???").to_upper()
-		name_label.modulate = Color.WHITE
-
-	var lv_label: Label = row.get_node_or_null("LvLabel")
-	if lv_label != null:
-		lv_label.text = "LV %d" % member.get("level", 1)
-
-	var hp: int = member.get("current_hp", 0)
-	var max_hp: int = member.get("max_hp", 1)
-	var hp_color: Color = StatBarHelpers.hp_fill_color(hp, max_hp)
-	var hp_label: Label = row.get_node_or_null("HPCluster/HPLabel")
-	if hp_label != null:
-		hp_label.text = "HP %d/%d" % [hp, max_hp]
-		hp_label.modulate = hp_color
-	_set_bar_fill(row, "HPCluster/HPBarBg", hp, max_hp, hp_color)
-
-	var mp: int = member.get("current_mp", 0)
-	var max_mp: int = member.get("max_mp", 0)
-	var mp_label: Label = row.get_node_or_null("MPCluster/MPLabel")
-	if mp_label != null:
-		mp_label.text = "MP %d/%d" % [mp, max_mp]
-		mp_label.modulate = StatBarHelpers.COLOR_MP_FILL
-	_set_bar_fill(row, "MPCluster/MPBarBg", mp, max_mp, StatBarHelpers.COLOR_MP_FILL)
-
-
-## Solid pixel fill bars alongside the numerics (ui-design.md § 3.3).
-## Fill width is set against the track's authored width — deterministic
-## under headless container layout.
-func _set_bar_fill(
-	row: Control, bg_path: String, current: int, max_value: int, fill_color: Color
-) -> void:
-	var bg: ColorRect = row.get_node_or_null(bg_path)
-	if bg == null:
-		return
-	var fill: ColorRect = bg.get_node_or_null("%sFill" % bg_path.get_file().trim_suffix("Bg"))
-	if fill == null:
-		return
-	fill.size.x = StatBarHelpers.fill_width(current, max_value, bg.custom_minimum_size.x)
-	fill.color = fill_color
-
-
-func _clear_char_highlight() -> void:
-	for i: int in range(_party_rows.size()):
-		if _party_rows[i] == null:
-			continue
-		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
-		if name_lbl != null:
-			name_lbl.modulate = Color.WHITE
-
-
-func _update_char_highlight() -> void:
-	for i: int in range(_party_rows.size()):
-		if _party_rows[i] == null:
-			continue
-		var name_lbl: Label = _party_rows[i].get_node_or_null("NameLabel")
-		if name_lbl != null:
-			name_lbl.modulate = COLOR_SELECTED if i == _char_index else Color.WHITE
-
-
-func _update_info_panel() -> void:
-	if _gold_label != null:
-		_gold_label.text = "%s Gold" % _format_number(PartyState.get_gold())
-		_gold_label.modulate = COLOR_GOLD
-	if _time_label != null:
-		var total: int = PartyState.playtime
-		var hours: int = total / 3600
-		var minutes: int = (total % 3600) / 60
-		_time_label.text = "%d:%02d" % [hours, minutes]
-	if _location_label != null:
-		_location_label.text = PartyState.get_location_display()
+## The party-row / info-panel renderer, so tests can drive a single row.
+func get_party_panel() -> MenuPartyPanel:
+	return _panel
 
 
 func _is_command_disabled(index: int) -> bool:
@@ -394,15 +311,3 @@ func _is_command_disabled(index: int) -> bool:
 
 func _consume_input() -> void:
 	InputUtil.consume(self)
-
-
-func _format_number(value: int) -> String:
-	var s: String = str(value)
-	if value < 1000:
-		return s
-	var parts: Array[String] = []
-	while s.length() > 3:
-		parts.insert(0, s.right(3))
-		s = s.left(s.length() - 3)
-	parts.insert(0, s)
-	return ",".join(parts)

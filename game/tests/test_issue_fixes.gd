@@ -31,6 +31,10 @@ const DialogueScript: GDScript = preload("res://scripts/ui/dialogue_box.gd")
 const MenuOverlayScript: GDScript = preload("res://scripts/ui/menu_overlay.gd")
 const SaveLoadScript: GDScript = preload("res://scripts/ui/save_load.gd")
 const BattleMgrScript: GDScript = preload("res://scripts/combat/battle_manager.gd")
+const BattleItemScript: GDScript = preload("res://scripts/combat/battle_item_command.gd")
+const ExplorationInteractionsScript: GDScript = preload(
+	"res://scripts/core/exploration_interactions.gd"
+)
 const InventoryHelpers: GDScript = preload("res://scripts/util/inventory_helpers.gd")
 
 
@@ -400,8 +404,13 @@ func test_helpers_teardown_overlay() -> void:
 
 
 func test_exploration_line_count_under_threshold() -> void:
+	# The repo-wide budget lives in test_script_layout.gd (600 hard maximum,
+	# 400 aim — technical-architecture.md § 1.2a). This keeps a tighter local
+	# ratchet on exploration.gd specifically, because it is the file most prone
+	# to accreting logic that belongs in one of its six collaborators.
+	# Ratchet it DOWN as extractions land, never up.
 	var lines: int = ExplorationScript.source_code.count("\n")
-	assert_lt(lines, 750, "exploration.gd should stay under 750 lines")
+	assert_lt(lines, 600, "exploration.gd should stay under 600 lines")
 
 
 func test_game_manager_overlay_enum_has_shop() -> void:
@@ -633,79 +642,81 @@ func test_defend_not_cleared_on_menu_open() -> void:
 # ==========================================================================
 
 
+## The source of one function in BattleItemCommand, from its `func` line to the
+## next one. The item command moved out of battle_manager.gd in GAP-087; these
+## guards followed it.
+func _item_command_body(func_signature: String) -> String:
+	var source: String = BattleItemScript.source_code
+	var pos: int = source.find(func_signature)
+	assert_gt(pos, 0, "%s should exist in battle_item_command.gd" % func_signature)
+	if pos < 0:
+		return ""
+	var next_func: int = source.find("\nfunc ", pos + 1)
+	if next_func < 0:
+		next_func = source.length()
+	return source.substr(pos, next_func - pos)
+
+
 func test_smoke_bomb_blocked_in_boss_fight() -> void:
-	# Structural: _do_item should check _is_boss for smoke_bomb and return false
-	var source: String = BattleMgrScript.source_code
-	var item_pos: int = source.find("func _do_item(")
-	assert_gt(item_pos, 0, "_do_item should exist")
-	var next_func: int = source.find("\nfunc ", item_pos + 1)
-	var item_body: String = source.substr(item_pos, next_func - item_pos)
+	# Structural: the flee item must be refused, not spent, in a boss fight
+	var entry_body: String = _item_command_body("func do_item(")
 	assert_true(
-		"-> bool" in item_body.substr(0, 60),
-		"_do_item should return bool",
+		"-> bool" in entry_body.substr(0, 60),
+		"do_item should return bool",
+	)
+	var flee_body: String = _item_command_body("func _flee_item(")
+	assert_true(
+		"is_boss_battle()" in flee_body,
+		"the flee item should check is_boss_battle() for smoke_bomb",
 	)
 	assert_true(
-		"_is_boss" in item_body,
-		"_do_item should check _is_boss for smoke_bomb",
-	)
-	assert_true(
-		"Can't use that here!" in item_body,
+		"Can't use that here!" in flee_body,
 		"should emit 'Can't use that here!' for boss smoke_bomb",
 	)
 
 
 func test_item_on_dead_target_returns_false() -> void:
-	# Structural: _do_item restore_hp on dead target without can_revive returns false
-	var source: String = BattleMgrScript.source_code
-	var item_pos: int = source.find("func _do_item(")
-	var next_func: int = source.find("\nfunc ", item_pos + 1)
-	var item_body: String = source.substr(item_pos, next_func - item_pos)
-	# The restore_hp branch should return false for dead targets
+	# Structural: restore_hp on a dead target without can_revive returns false
+	var restore_body: String = _item_command_body("func _restore_hp(")
 	assert_true(
-		"return false" in item_body,
-		"_do_item should return false for invalid targets",
+		"return false" in restore_body,
+		"_restore_hp should return false for invalid targets",
 	)
 	assert_true(
-		"No effect!" in item_body,
+		"No effect!" in restore_body,
 		"should emit 'No effect!' for dead target without revive",
 	)
 
 
 func test_valid_item_returns_true() -> void:
-	# Structural: _do_item should return true at the end for valid items
-	var source: String = BattleMgrScript.source_code
-	var item_pos: int = source.find("func _do_item(")
-	var next_func: int = source.find("\nfunc ", item_pos + 1)
-	var item_body: String = source.substr(item_pos, next_func - item_pos)
+	# Structural: do_item should return true at the end for valid items
+	var item_body: String = _item_command_body("func do_item(")
 	assert_true(
 		"return true" in item_body,
-		"_do_item should return true for valid item usage",
+		"do_item should return true for valid item usage",
 	)
 	# Verify the caller uses the return value
+	var source: String = BattleMgrScript.source_code
 	var cmd_pos: int = source.find("func _on_ui_command(")
 	var cmd_next: int = source.find("\nfunc ", cmd_pos + 1)
 	var cmd_body: String = source.substr(cmd_pos, cmd_next - cmd_pos)
 	assert_true(
-		"ok = _do_item" in cmd_body,
-		"_on_ui_command should capture _do_item return value",
+		"ok = _get_items().do_item(" in cmd_body,
+		"_on_ui_command should capture do_item's return value",
 	)
 
 
 # ==========================================================================
-# Bug fix: _do_item must consume the item from inventory after use
+# Bug fix: do_item must consume the item from inventory after use
 # ==========================================================================
 
 
 func test_do_item_consumes_item_after_use() -> void:
-	# Structural: _do_item should call PartyState.consume_item
-	var source: String = BattleMgrScript.source_code
-	var item_pos: int = source.find("func _do_item(")
-	assert_gt(item_pos, 0, "_do_item should exist")
-	var next_func: int = source.find("\nfunc ", item_pos + 1)
-	var item_body: String = source.substr(item_pos, next_func - item_pos)
+	# Structural: do_item should call PartyState.consume_item
+	var item_body: String = _item_command_body("func do_item(")
 	assert_true(
 		"consume_item" in item_body,
-		"_do_item should call PartyState.consume_item after successful use",
+		"do_item should call PartyState.consume_item after successful use",
 	)
 	# Verify consume is after the match block, near return true
 	var consume_pos: int = item_body.find("consume_item")
@@ -905,14 +916,28 @@ func test_overlay_swap_no_gap() -> void:
 func test_exploration_exit_tree_disconnects_signals() -> void:
 	# Structural: exploration.gd should have _exit_tree that disconnects
 	# pending one-shot callbacks from GameManager.overlay_state_changed.
+	# The dialogue one-shot itself moved to ExplorationInteractions in GAP-087,
+	# so _exit_tree now reaches it through _disconnect_pending_signals.
 	var source: String = ExplorationScript.source_code
+	var exit_pos: int = source.find("func _exit_tree()")
+	assert_gt(exit_pos, 0, "exploration.gd should have _exit_tree")
+	# Slice to the NEXT func, so the guard reads the body of _exit_tree and not
+	# the definition of _disconnect_pending_signals further down the file.
+	var exit_next: int = source.find("\nfunc ", exit_pos + 1)
+	if exit_next < 0:
+		exit_next = source.length()
+	var exit_body: String = source.substr(exit_pos, exit_next - exit_pos)
 	assert_true(
-		"func _exit_tree()" in source,
-		"exploration.gd should have _exit_tree",
+		"_disconnect_pending_signals()" in exit_body,
+		"_exit_tree should call _disconnect_pending_signals",
 	)
+	var interactions: String = ExplorationInteractionsScript.source_code
+	var teardown_pos: int = interactions.find("func disconnect_pending_signals()")
+	assert_gt(teardown_pos, 0, "ExplorationInteractions should have disconnect_pending_signals")
+	var teardown_body: String = interactions.substr(teardown_pos)
 	assert_true(
-		"_on_dialogue_closed_check_party" in source.substr(source.find("func _exit_tree()")),
-		"_exit_tree should disconnect _on_dialogue_closed_check_party",
+		"on_dialogue_closed_check_party" in teardown_body,
+		"disconnect_pending_signals should drop on_dialogue_closed_check_party",
 	)
 
 

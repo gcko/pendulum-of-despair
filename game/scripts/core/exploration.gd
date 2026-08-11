@@ -1,18 +1,23 @@
 class_name Exploration
 extends Node2D
+## The overworld/dungeon scene: it owns the player, the loaded map and the
+## camera, and routes everything else to collaborators in `scripts/core/` —
+## ExplorationScreen (fades and map swaps), ExplorationInteractions (NPCs,
+## chests, save points, dialogue and transition triggers),
+## ExplorationEntityManager (entity init and signal wiring),
+## ExplorationZoneHandler (zones, encounters, boss triggers),
+## ExplorationAutoSequence (auto-walk and story sequences),
+## ExplorationPartyJoins (recovering missed recruits) and CutsceneHandler.
+## The split is GAP-087; each collaborator names this file in its own doc.
 
 signal map_changed(map_id: String)
 
 const PLAYER_SCENE: PackedScene = preload("res://scenes/entities/player_character.tscn")
 const MAP_BASE_PATH: String = "res://scenes/maps/"
-const FADE_DURATION: float = 0.3
 var _current_map_id: String = ""
 var _current_map: Node2D = null
 var _player: Node2D = null
 var _transitioning: bool = false
-var _last_flash_id: String = ""
-var _flash_tween: Tween = null
-var _transition_tween: Tween = null
 var _danger_counter: int = 0
 var _last_player_tile: Vector2i = Vector2i(-999, -999)
 var _encounter_config: Dictionary = {}
@@ -21,10 +26,10 @@ var _encounter_id_key: String = "floor_id"
 var _zone_map: Array = []
 var _current_floor_id: String = ""
 var _cleansing: CleansingSequence = null
-var _key_item_chest_ids: Dictionary = {}
-var _equipment_chest_ids: Dictionary = {}
 var _in_cutscene: bool = false
 var _cutscene_handler: CutsceneHandler = null
+var _screen: ExplorationScreen = null
+var _interactions: ExplorationInteractions = null
 var _entity_manager: ExplorationEntityManager = null
 var _zone_handler: ExplorationZoneHandler = null
 var _auto_seq: ExplorationAutoSequence = null
@@ -59,9 +64,8 @@ func _exit_tree() -> void:
 
 
 func _disconnect_pending_signals() -> void:
-	if GameManager.overlay_state_changed.is_connected(_on_dialogue_closed_check_party):
-		GameManager.overlay_state_changed.disconnect(_on_dialogue_closed_check_party)
-	_get_auto_seq().disconnect_pending_signals()
+	_get_interactions().disconnect_pending_signals()
+	get_auto_sequence().disconnect_pending_signals()
 
 
 func _process(_delta: float) -> void:
@@ -76,7 +80,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	# Every frame, cutscenes included, so any save stores the real spot (#269).
 	_record_player_location()
-	if _get_auto_seq().in_auto_walk or _in_cutscene:
+	if get_auto_sequence().in_auto_walk or _in_cutscene:
 		return
 	var current_tile: Vector2i = Vector2i(_player.position) / 16
 	if current_tile == _last_player_tile:
@@ -86,7 +90,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _transitioning or _get_auto_seq().in_auto_walk or _in_cutscene:
+	if _transitioning or get_auto_sequence().in_auto_walk or _in_cutscene:
 		return
 	if event.is_action_pressed("ui_menu"):
 		if _player != null and not _player.is_input_enabled():
@@ -130,8 +134,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	_current_map = (map_resource as PackedScene).instantiate()
 	_map_container.add_child(_current_map)
 	_current_map_id = map_id
-	_key_item_chest_ids = {}
-	_equipment_chest_ids = {}
+	_get_interactions().clear_chest_registries()
 	_initialize_entities(_current_map)
 	_connect_entity_signals(_current_map)
 	_position_player_at_spawn(spawn_name)
@@ -150,9 +153,7 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 	var location_name: String = _current_map.get_meta("location_name", "")
 	# The place name the pause menu and save slots show; the map id is a path.
 	PartyState.location_display = location_name
-	if location_name != "" and location_name != _last_flash_id:
-		flash_location_name(location_name)
-		_last_flash_id = location_name
+	_get_screen().flash_location_once(location_name)
 	map_changed.emit(map_id)
 	if _current_map.get_meta("is_auto_walk", false) and _player != null and not _in_cutscene:
 		_start_auto_walk()
@@ -175,18 +176,9 @@ func load_map(map_id: String, spawn_name: String = "") -> void:
 		)
 
 
+## Fade a line of text in over the map, hold it, and fade it out.
 func flash_location_name(text: String) -> void:
-	if _flash_tween != null and _flash_tween.is_valid():
-		_flash_tween.kill()
-	_location_label.text = text
-	_location_panel.visible = true
-	_location_panel.modulate = Color(1, 1, 1, 0)
-	_flash_tween = create_tween()
-	_flash_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_flash_tween.tween_property(_location_panel, "modulate:a", 1.0, 0.5)
-	_flash_tween.tween_interval(2.0)
-	_flash_tween.tween_property(_location_panel, "modulate:a", 0.0, 0.5)
-	_flash_tween.tween_callback(_location_panel.hide)
+	_get_screen().flash_location_name(text)
 
 
 func _spawn_player() -> void:
@@ -285,69 +277,23 @@ func _position_player_at_spawn(spawn_name: String) -> void:
 
 
 func _on_interaction_requested(interactable: Node2D) -> void:
-	if _transitioning or _in_cutscene:
-		return
-	var target: Node2D = interactable
-	if not target.has_method("interact"):
-		var owner_node: Node = target.owner
-		if owner_node is Node2D and owner_node.has_method("interact"):
-			target = owner_node as Node2D
-	if target.has_method("interact"):
-		target.interact()
-
-
-func _find_entity_npc(npc_id: String) -> Node:
-	var entity: Variant = _entities.get(npc_id, null)
-	if entity is Node and is_instance_valid(entity) and entity.has_signal("npc_interacted"):
-		return entity
-	return null
-
-
-func _handle_inn(node: Node) -> void:
-	if not PartyState.spend_gold(node.get_meta("inn_cost", 150)):
-		flash_location_name("Not enough gold.")
-		return
-	PartyState.rest_at_inn()
-	flash_location_name("Rested at the inn.")
+	_get_interactions().on_interaction_requested(interactable)
 
 
 func on_npc_interacted(npc_id: String, dialogue_data: Dictionary) -> void:
-	var npc_node: Node = _find_entity_npc(npc_id)
-	if npc_node != null:
-		if npc_node.has_meta("shop_id"):
-			GameManager.transition_data = {"shop_id": npc_node.get_meta("shop_id")}
-			if GameManager.push_overlay(GameManager.OverlayState.SHOP):
-				return
-		if npc_node.has_meta("inn_id"):
-			_handle_inn(npc_node)
-			return
-	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		_connect_dialogue_signals(GameManager.overlay_node)
-		GameManager.overlay_node.show_dialogue([dialogue_data])
+	_get_interactions().on_npc_interacted(npc_id, dialogue_data)
 
 
 func on_chest_opened(chest_id: String, item_id: String, quantity: int) -> void:
-	if _key_item_chest_ids.get(chest_id, false):
-		PartyState.add_key_item(item_id)
-	elif _equipment_chest_ids.get(chest_id, false):
-		PartyState.add_equipment(item_id)
-	else:
-		PartyState.add_item(item_id, quantity)
-	flash_location_name("Found %s!" % item_id)
+	_get_interactions().on_chest_opened(chest_id, item_id, quantity)
 
 
 func on_save_point_activated(_save_point_id: String) -> void:
-	if _transitioning or _in_cutscene:
-		return
-	PartyState.is_at_save_point = true
-	if GameManager.push_overlay(GameManager.OverlayState.SAVE_LOAD):
-		GameManager.overlay_node.open_save_point()
+	_get_interactions().on_save_point_activated()
 
 
 func on_save_point_entered(_save_point_id: String) -> void:
-	if _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
-		return
-	AudioManager.play_sfx("save_point_chime", AudioManager.Priority.EXPLORATION_SFX)
+	_get_interactions().on_save_point_entered()
 
 
 func on_save_point_exited(_save_point_id: String) -> void:
@@ -392,139 +338,37 @@ func on_interaction_message(text: String) -> void:
 
 
 func on_boss_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
+	if body != _player or _transitioning or _in_cutscene or get_auto_sequence().in_auto_walk:
 		return
 	_get_zone_handler().trigger_boss_encounter(area)
 
 
 func on_dialogue_trigger_entered(body: Node2D, area: Area2D) -> void:
-	if body != _player or _transitioning or _in_cutscene or _get_auto_seq().in_auto_walk:
-		return
-	var flag: String = area.get_meta("flag", "")
-	if not flag.is_empty() and EventFlags.get_flag(flag):
-		return
-	var required: String = area.get_meta("required_flag", "")
-	if not required.is_empty() and not EventFlags.get_flag(required):
-		return
-	var required_multi: String = area.get_meta("required_flags", "")
-	if not required_multi.is_empty() and not EventFlags.check_required_flags(required_multi):
-		return
-	var dialogue: Variant = area.get_meta("dialogue_data", [])
-	var scene_id: String = area.get_meta("dialogue_scene_id", "")
-	if scene_id != "":
-		var scene_data: Dictionary = DataManager.load_dialogue(scene_id)
-		dialogue = scene_data.get("entries", [])
-	if not (dialogue is Array) or (dialogue as Array).is_empty():
-		return
-	if GameManager.push_overlay(GameManager.OverlayState.DIALOGUE):
-		_connect_dialogue_signals(GameManager.overlay_node)
-		GameManager.overlay_node.show_dialogue(dialogue as Array)
-		if not flag.is_empty():
-			EventFlags.set_flag(flag, true)
-			GameManager.overlay_state_changed.connect(
-				_on_dialogue_closed_check_party, CONNECT_ONE_SHOT
-			)
-
-
-func _on_dialogue_closed_check_party(state: GameManager.OverlayState) -> void:
-	if state != GameManager.OverlayState.NONE:
-		GameManager.overlay_state_changed.connect(_on_dialogue_closed_check_party, CONNECT_ONE_SHOT)
-		return
-	ExplorationPartyJoins.check_join_flags(self)
-	if (
-		EventFlags.get_flag("ember_vein_1e_seen")
-		and not EventFlags.get_flag("arcanite_gear_broken")
-	):
-		PartyState.break_arcanite_gear()
-		EventFlags.set_flag("arcanite_gear_broken", true)
+	_get_interactions().on_dialogue_trigger_entered(body, area)
 
 
 func on_transition_body_entered(body: Node2D, area: Area2D) -> void:
-	if _transitioning or body != _player or _in_cutscene or _get_auto_seq().in_auto_walk:
-		return
-	var req_flag: String = area.get_meta("required_flag", "")
-	if not req_flag.is_empty() and not EventFlags.get_flag(req_flag):
-		return
-	var tgt: String = area.get_meta("target_map", "")
-	if tgt != "":
-		_transition_to_map(tgt, area.get_meta("target_spawn", ""))
+	_get_interactions().on_transition_body_entered(body, area)
 
 
-func _transition_to_map(target_map: String, target_spawn: String) -> void:
-	_danger_counter = 0
-	_transitioning = true
-	_get_auto_seq().kill_auto_walk_tween()
-	_get_auto_seq().kill_arrival_tween()
-	if _flash_tween != null and _flash_tween.is_valid():
-		_flash_tween.kill()
-		_flash_tween = null
-		_location_panel.visible = false
-	_fade_rect.visible = true
-	_fade_rect.color = Color(0, 0, 0, 0)
-	if _transition_tween != null and _transition_tween.is_valid():
-		_transition_tween.kill()
-	_transition_tween = create_tween()
-	_transition_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_transition_tween.tween_property(_fade_rect, "color:a", 1.0, FADE_DURATION)
-	_transition_tween.tween_callback(_do_map_swap.bind(target_map, target_spawn))
-	_transition_tween.tween_property(_fade_rect, "color:a", 0.0, FADE_DURATION)
-	_transition_tween.tween_callback(_end_transition)
-
-
-func _do_map_swap(target_map: String, target_spawn: String) -> void:
-	var map_path: String = MAP_BASE_PATH + target_map + ".tscn"
-	if not ResourceLoader.exists(map_path):
-		push_error("Exploration: Transition target not found: %s" % map_path)
-		_abort_transition()
-		return
-	load_map(target_map, target_spawn)
-
-
-func _abort_transition() -> void:
-	if _transition_tween != null and _transition_tween.is_valid():
-		_transition_tween.kill()
-	_pending_cutscene = {}
-	_cutscene_return = {}
-	_end_transition()
-
-
-func _end_transition() -> void:
-	_fade_rect.visible = false
-	_transitioning = false
-	if _player != null and not _in_cutscene and not _get_auto_seq().in_auto_walk:
-		_player.set_input_enabled(true)
+## Fade out, swap the map, fade back in.
+func transition_to_map(target_map: String, target_spawn: String) -> void:
+	_get_screen().transition_to_map(target_map, target_spawn)
 
 
 # ---------- Auto-walk and auto-sequences (delegated to ExplorationAutoSequence) ----------
 
 
 func _start_auto_walk() -> void:
-	_get_auto_seq().start_auto_walk()
+	get_auto_sequence().start_auto_walk()
 
 
 func _end_auto_walk() -> void:
-	_get_auto_seq().end_auto_walk()
+	get_auto_sequence().end_auto_walk()
 
 
 func _run_auto_sequence(sequence_id: String, completion_flag: String) -> void:
-	_get_auto_seq().run_auto_sequence(sequence_id, completion_flag)
-
-
-# ---------- Dialogue SFX relay ----------
-
-
-## Connect the dialogue box sfx_requested signal to AudioManager for
-## non-cutscene dialogues (NPC interaction, dialogue triggers).
-func _connect_dialogue_signals(overlay: Node) -> void:
-	DialogueConsequences.connect_overlay(overlay)
-	if overlay != null and overlay.has_signal("sfx_requested"):
-		if not overlay.is_connected("sfx_requested", _on_dialogue_sfx):
-			overlay.sfx_requested.connect(_on_dialogue_sfx)
-
-
-func _on_dialogue_sfx(sfx_id: String) -> void:
-	if not sfx_id.is_empty():
-		AudioManager.play_sfx(sfx_id, AudioManager.Priority.UI_SFX)
+	get_auto_sequence().run_auto_sequence(sequence_id, completion_flag)
 
 
 # ---------- Cutscene overlay integration (delegated to CutsceneHandler) ----------
@@ -560,10 +404,23 @@ func _get_zone_handler() -> ExplorationZoneHandler:
 	return _zone_handler
 
 
-func _get_auto_seq() -> ExplorationAutoSequence:
+## The auto-walk / scripted-sequence collaborator.
+func get_auto_sequence() -> ExplorationAutoSequence:
 	if _auto_seq == null:
 		_auto_seq = ExplorationAutoSequence.new(self)
 	return _auto_seq
+
+
+func _get_screen() -> ExplorationScreen:
+	if _screen == null:
+		_screen = ExplorationScreen.new(self)
+	return _screen
+
+
+func _get_interactions() -> ExplorationInteractions:
+	if _interactions == null:
+		_interactions = ExplorationInteractions.new(self)
+	return _interactions
 
 
 # ---------- Public accessors for delegated handlers ----------
@@ -601,8 +458,17 @@ func get_fade_rect() -> ColorRect:
 	return _fade_rect
 
 
+## The panel the location flash fades in and out.
+func get_location_panel() -> PanelContainer:
+	return _location_panel
+
+
+func get_location_label() -> Label:
+	return _location_label
+
+
 func is_in_auto_walk() -> bool:
-	return _get_auto_seq().in_auto_walk
+	return get_auto_sequence().in_auto_walk
 
 
 func is_in_cutscene() -> bool:
@@ -642,10 +508,6 @@ func get_pending_cutscene() -> Dictionary:
 
 func set_pending_cutscene(value: Dictionary) -> void:
 	_pending_cutscene = value
-
-
-func transition_to_map(target_map: String, target_spawn: String) -> void:
-	_transition_to_map(target_map, target_spawn)
 
 
 func get_current_map_id() -> String:
@@ -696,11 +558,11 @@ func has_entity(entity_id: String) -> bool:
 
 
 func register_key_item_chest(chest_id: String) -> void:
-	_key_item_chest_ids[chest_id] = true
+	_get_interactions().register_key_item_chest(chest_id)
 
 
 func register_equipment_chest(chest_id: String) -> void:
-	_equipment_chest_ids[chest_id] = true
+	_get_interactions().register_equipment_chest(chest_id)
 
 
 # ---------- Crystal XP distribution ----------
