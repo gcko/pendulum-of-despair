@@ -109,8 +109,9 @@ func test_annulment_consumes_exactly_a_full_weave_gauge() -> void:
 
 
 func test_mp_abilities_are_never_free_by_accident() -> void:
-	# Zero-cost abilities exist on purpose (Siphon, Ironwall, Salvage, Filch,
-	# Purify, Calibrate, Cael's Edge). Anything else costing 0 MP is a typo.
+	# Zero-cost abilities exist on purpose (Siphon, Ironwall, Rampart, Salvage,
+	# Filch, Shiv, Purify, Calibrate, Cael's Edge). Anything else costing 0 MP
+	# is a typo.
 	var intentionally_free: Array[String] = [
 		"siphon",
 		"ironwall",

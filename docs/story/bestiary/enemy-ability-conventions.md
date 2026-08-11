@@ -64,7 +64,7 @@ stat already encodes its role (a Boar's high ATK makes Gore hit hard at
 Magic-typed single-target enemy abilities (Flicker = Flame, Spark = Ley,
 Shadow Touch = magic) use `spell_power 14`, the documented **Tier 1
 single-target spell power floor** for player attack spells (Ember Lance
-`magic.md:152`, Rime Shard `magic.md:198` — both *Spell power 14*). Tier 1
+`magic.md:237`, Rime Shard `magic.md:283` — both *Spell power 14*). Tier 1
 matches the Act I regular-enemy band (`palette-families.md` Tier 1 kits).
 
 ### 2.3 AoE elemental abilities — `spell_power: 9`
@@ -83,10 +83,10 @@ with the same effect (its magnitude and duration are canon):
 
 | Enemy ability | Buffs | Mult | Duration | Player analog (source) |
 |---------------|-------|------|----------|------------------------|
-| Pack Howl | ATK | ×1.30 | 5 turns | Rallying Cry +30% ATK / 5t (`magic.md:834`) |
-| Guard Stance | DEF | ×1.40 | 5 turns | Ironhide +40% DEF / 5t (`magic.md:790`) |
-| Coil | SPD | ×1.50 | 5 turns | Quickstep +50% / 5t (`magic.md:812`) |
-| Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md:801`) |
+| Pack Howl | ATK | ×1.30 | 5 turns | Rallying Cry +30% ATK / 5t (`magic.md:919`) |
+| Guard Stance | DEF | ×1.40 | 5 turns | Ironhide +40% DEF / 5t (`magic.md:875`) |
+| Coil | SPD | ×1.50 | 5 turns | Quickstep +50% / 5t (`magic.md:897`) |
+| Elemental Shield | MDEF | ×1.40 | 5 turns | Wardglass +40% MDEF / 5t (`magic.md:886`) |
 
 `scope` is `"self"` (buffs only the caster) or `"pack"` (buffs every living
 enemy sharing the caster's **`id`** — its own kind, e.g. Pack Howl across all
@@ -103,7 +103,7 @@ statuses use **70** (band midpoint), then run the same two-stage accuracy roll
 as player status spells (`DamageCalc.roll_status`, combat-formulas.md:478–484):
 Stage 1 `effective = base_rate · MAG/(MAG+MDEF)`, Stage 2 magic-evasion
 `(MDEF+SPD)/8` capped at 40%. The status's **effect** (e.g. Poison = 8% max-HP
-per turn until cured, `magic.md:1392`) is already canon in
+per turn until cured, `magic.md:1477`) is already canon in
 `status_effects.gd` / `StatusEffects.resolve_duration`.
 
 ### 2.6 AoE-on-death (Shard Burst) — non-elemental, `spell_power: 9`
@@ -142,9 +142,9 @@ documented **Tier 2** player spell powers rather than the Tier 1 floor (the §2.
 floor of 14 used for regular enemies):
 
 - **Single-target magic** → `spell_power 32` (Tier 2 single-target, e.g.
-  Kindlepyre `magic.md:163` *Spell power 32*).
+  Kindlepyre `magic.md:248` *Spell power 32*).
 - **AoE magic** → `spell_power 24` (Tier 2 AoE ≈ 65–70% of single, e.g. Scorch
-  Sweep `magic.md:185` *Spell power 24*; rule `magic.md:101`).
+  Sweep `magic.md:270` *Spell power 24*; rule `magic.md:101`).
 - **Physical** (`crystal_slam`, `stone_slam`, `pounce`, `tail_swipe`,
   `tail_sweep`) → `ability_mult 1.0`. Bosses already carry high ATK (~40), so
   a "heavy physical" reads as heavy at 1.0 — consistent with §2.1 (descriptors

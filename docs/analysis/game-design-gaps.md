@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; 8 abilities still describe damage/healing qualitatively — see below) |
+| Ability System | abilities.md | MOSTLY COMPLETE (resource costs closed; 9 entries still describe damage/healing qualitatively — see below) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -844,6 +844,23 @@ still described qualitatively rather than as a spell power or multiplier:
 | Rootsong | Torren | Defined as "same per-target potency as Dewfall", so blocked on Dewfall |
 | Convergence Chorus | Torren | "50% normal potency" of the above, so blocked on all four Spiritcalls |
 | Wild Card (1/2/3-item branches) | Sable | AoE damage magnitude undefined (0-item branch is 2x Attack) |
+| Ambush Protocol (combo #8) | Sable + Lira | "2x normal Arc Trap damage", so blocked on Arc Trap |
+
+Eight of the nine are character abilities; Ambush Protocol is the one combo that
+inherits the gap, via Arc Trap. The other eleven entries in
+`game/data/abilities/combos.json` either state their own magnitude (Thornfire,
+spell power 40; Ley Torrent, `(Maren MAG + Torren MAG) x 4`) or are pure
+buff/utility effects with nothing to quantify.
+
+**Convergence Chorus conflict.** [combat-formulas.md](../story/combat-formulas.md)
+§ Ability Multipliers does list Convergence Chorus, at `ability_mult 3.0`
+("Maximum"). That row is in the *Physical* Ability Multiplier Tiers table, and
+[abilities.md](../story/abilities.md) § Torren — Spiritcall defines it as
+four simultaneous Spiritcall effects at 50% potency — an AoE heal, AoE damage, a
+party barrier and a status cleanse, with no physical component. A physical
+`ability_mult` cannot express that composite, so the combat-formulas.md row is
+the incorrect one and the magnitude is genuinely still open. Correcting that row
+is tracked separately as a combat-formulas.md fix.
 
 These are unblocked as soon as party ability execution lands in the battle layer
 — today `game/data/abilities/` is consumed only by the menu UI, so there is no

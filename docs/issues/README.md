@@ -121,6 +121,6 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-086](GAP-086-inventory-helpers-gd-placed-in-scripts-autoload-bu.md) | Code structure | LOW | S | resolved (Issue #236) | inventory_helpers.gd placed in scripts/autoload/ but is a static helper, not an autoload |
 | [GAP-087](GAP-087-multiple-core-files-exceed-the-stated-400-line-str.md) | Code structure | LOW | L | open | Multiple core files exceed the stated ~400-line structure target |
 | [GAP-088](GAP-088-resolution-accessibility-doc-divergence-impl-on-12.md) | Docs | LOW | S | ✅ fixed | Resolution/accessibility doc divergence: impl on 1280x720 native + 4x zoom, docs still assume 320x180 integer scaling |
-| [GAP-089](GAP-089-design-docs-magic-md-abilities-md-still-mostly-com.md) | Docs | LOW | M | open | Design docs magic.md/abilities.md still MOSTLY COMPLETE (numeric balance) but JSON + battle already consume them |
+| [GAP-089](GAP-089-design-docs-magic-md-abilities-md-still-mostly-com.md) | Docs | LOW | M | partial (magic.md COMPLETE; 9 ability magnitudes still open) | Design docs magic.md/abilities.md still MOSTLY COMPLETE (numeric balance) but JSON + battle already consume them |
 | [GAP-090](GAP-090-music-md-self-contradicts-on-a-game-over-music-cue.md) | Docs | LOW | S | ✅ fixed | music.md self-contradicts on a 'game over' music cue |
 | [GAP-091](GAP-091-epic-post-game-content-unbuilt-dreamer-s-fault-bos.md) 🏔️ | Post-game | LOW | L | open | EPIC: Post-game content unbuilt (Dreamer's Fault, boss rush, The Lingering, completion tracking) |

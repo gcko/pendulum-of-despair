@@ -8,7 +8,7 @@
 | **Type** | doc-inconsistency |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | partial — CONFIRMED (magic.md closed; 9 ability magnitudes open) |
 | **GitHub Issue** | [#238](https://github.com/gcko/pendulum-of-despair/issues/238) |
 | **Source domains** | tracker |
 
@@ -30,9 +30,13 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
 
 ## Acceptance criteria
 
-- [ ] magic.md/abilities.md balance pass done
-- [ ] JSON values reconciled to the docs
-- [ ] Docs upgraded from MOSTLY COMPLETE
+- [x] magic.md/abilities.md balance pass done
+- [x] JSON values reconciled to the docs
+- [ ] Docs upgraded from MOSTLY COMPLETE — magic.md is now COMPLETE;
+  abilities.md stays MOSTLY COMPLETE because nine entries still describe
+  damage/healing qualitatively (enumerated in game-design-gaps.md
+  § Ability System — outstanding damage values). They are unblocked only
+  once party ability execution lands in the battle layer.
 
 ## Design references
 

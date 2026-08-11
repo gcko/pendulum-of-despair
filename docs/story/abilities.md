@@ -567,13 +567,23 @@ against `game/data/abilities/`.
 Annulment sits exactly on the cap by design — it is the only ability that
 consumes a full gauge, and it is described that way in the Arcanum table above.
 
-*Weave Gauge derivation.* The gain rules are +5 WG when Maren casts, +10 WG when
-another ally casts, +15 WG when an enemy casts. A "round of heavy spellcasting"
-in a four-slot party is Maren plus one other caster plus one enemy caster:
-`5 + 10 + 15 = 30 WG per round`, reaching 100 on round 4. With two ally casters
-alongside Maren it is `5 + 20 + 15 = 40 WG per round`, reaching 100 on round 3.
-That bounds the stated 3-4 round target from both sides, so the gain values and
-the balance target agree and neither needs changing.
+*Weave Gauge derivation.* The **base** gain rules are +5 WG when Maren casts,
++10 WG when another ally casts, +15 WG when an enemy casts. A "round of heavy
+spellcasting" in a four-slot party is Maren plus one other caster plus one enemy
+caster: `5 + 10 + 15 = 30 WG per round`, reaching 100 on round 4. With two ally
+casters alongside Maren it is `5 + 20 + 15 = 40 WG per round`, reaching 100 on
+round 3. That bounds the stated 3-4 round target from both sides on the base
+rules alone, so neither the base gain values nor the balance target needs
+changing.
+
+30 WG/round is a floor, not the only rate. Several Arcanum abilities generate WG
+on top of the base rules — Siphon +20 on success, Resonance +10, Unweave +10,
+Mirrorsong +15 — as do two combos (Ley Torrent +30, Arcane Convergence +20). A
+round that includes one of these runs at roughly 35-50 WG, which pulls the fill
+to the round-3 end of the stated target, and a party that lands Siphon or a
+WG-generating combo every single round can reach 100 during round 2. Whether
+that best case needs a cap is a tuning question for the battle layer, not a
+value this balance pass changes — the base rules and the stated target agree.
 
 *Damage magnitudes.* Abilities that use the standard physical formula take their
 `ability_mult` from [combat-formulas.md](combat-formulas.md) § Ability

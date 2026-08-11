@@ -174,9 +174,9 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   | Deepmend (T2) | 10 | Rekindling | 16 | 1.60x |
   | Resurgence (T3) | 28 | Lifetide | 42 | 1.50x |
 - **Revival spells take no healing discount.** Spirit Recall (Tier 2, 20 MP) and
-  Second Dawn (Tier 3, 40 MP) are priced at the top of the *full* tier MP band,
-  not at 80% of it. Restoring a fainted ally restores that ally's entire
-  remaining action economy, which the ~80% healing discount is not tuned for.
+  Second Dawn (Tier 3, 40 MP) are priced inside the *full* tier MP band, above
+  the ~80% healing band (Tier 2 ceiling 16, Tier 3 ceiling 36) — restoring a
+  fainted ally restores that ally's entire remaining action economy.
 - **Substitute-cost spells are exempt from the MP band.** Leydraught costs 0 MP
   and 15% of the caster's max HP. A spell that pays in a resource other than MP
   states that cost explicitly and is not measured against the MP table.
@@ -192,7 +192,7 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   spells that *are* turn-counted must fall inside their tier's turn range.
 - **Cross-training multiplier.** Every `learned_by` entry marked
   `cross_trained: true` carries `mp_penalty: 1.5`, matching the "+50% MP cost"
-  wording used throughout § Spell Progression & Learning.
+  wording in this document's preamble and in each spell's "Who learns" line.
 
 ---
 

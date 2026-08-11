@@ -44,7 +44,7 @@ in these docs.**
 | Game overview | `gdd-overview.md` (254), `outline.md` (371), `world.md` (79) |
 | Combat mechanics | `combat-formulas.md` (933) |
 | Character stats/growth | `progression.md` (446), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (552), `magic.md` (1,463) |
+| Abilities & magic | `abilities.md` (595), `magic.md` (1,549) |
 | Enemy data | `bestiary/` (9 files) |
 | Items & equipment | `items.md` (602), `equipment.md` (708) |
 | Economy & shops | `economy.md` (953) |
@@ -69,10 +69,14 @@ in these docs.**
 | Architecture | `docs/plans/technical-architecture.md` (943) |
 
 **Design doc risk note:** Some source docs are marked "MOSTLY COMPLETE"
-in `game-design-gaps.md` (magic.md, abilities.md, npcs.md, sidequests.md,
-events.md). Implementation gaps that depend on these may encounter
-missing data — use `/story-designer` to fill design gaps before
-implementing.
+in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
+Implementation gaps that depend on these may encounter missing data —
+use `/story-designer` to fill design gaps before implementing.
+`magic.md` is now COMPLETE (numeric balance closed). `abilities.md` is
+still MOSTLY COMPLETE, but the residue is specific rather than general:
+resource costs are closed and nine entries lack damage/healing
+magnitudes — see `game-design-gaps.md` § Ability System — outstanding
+damage values for the enumerated list.
 
 ---
 
