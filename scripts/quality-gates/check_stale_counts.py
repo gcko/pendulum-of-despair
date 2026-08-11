@@ -285,17 +285,60 @@ def check_gap_status_consistency(issues_dir: str = ISSUES_DIR) -> list[str]:
 _CODE_REF_SECTION = re.compile(r"^## Code references\n(.*?)(?=^## |\Z)", re.M | re.S)
 _CODE_REF_BULLET = re.compile(r"^- (game/[\w/.-]+\.gd)\b(.*)$", re.M)
 _SYMBOL = re.compile(r"`(\w+)\(\)`")
+_LINE_ANCHOR = re.compile(r"[\w/-]+\.(?:gd|json|tscn|md|godot):\d")
+_HISTORICAL = re.compile(r"\((?:historical|pre-move)\b", re.I)
+_PATH_TOKEN = re.compile(r"^[\w./*{},|-]+$")
+_BRACES = re.compile(r"^([\w./-]*)\{([\w,]+)\}([\w./-]*)$")
+
+
+def _bullet_paths(text: str) -> list[str]:
+    """Every repo path a Code-references bullet points at.
+
+    Bullets lead with their paths and trail into prose, so the leading run of
+    path-shaped tokens is the citation and everything after it is commentary.
+    Three shorthands used across the docs are expanded rather than skipped,
+    because a shorthand nobody checks is how the rot got in:
+    ``dir/{a,b}.gd`` braces, ``dir/a.json|b.json`` basename alternation and
+    ``dir/*`` globs.
+    """
+    paths: list[str] = []
+    for token in text.split():
+        token = token.rstrip(",")
+        if "/" not in token or not _PATH_TOKEN.match(token):
+            break
+        expanded = [token]
+        brace = _BRACES.match(token)
+        if brace:
+            head, names, tail = brace.groups()
+            expanded = [f"{head}{name}{tail}" for name in names.split(",")]
+        alternated: list[str] = []
+        for item in expanded:
+            if "|" in item:
+                first, *rest = item.split("|")
+                parent = os.path.dirname(first)
+                alternated.append(first)
+                alternated += [os.path.join(parent, name) for name in rest]
+            else:
+                alternated.append(item)
+        paths += alternated
+    return paths
 
 
 def check_gap_code_references(issues_dir: str = ISSUES_DIR) -> list[str]:
-    """Check symbol-anchored 'Code references' bullets in the GAP docs.
+    """Check the 'Code references' bullets in the GAP docs (#318).
 
-    A bullet of the form ``- <path>.gd — `symbol()``` is the maintained anchor
-    that replaced rotting ``file.gd:NNN`` citations (#318). It is only worth
-    more than a line number if it is verified, so: the file must exist and must
-    define every symbol named on that bullet. Bullets with no ``symbol()``
-    token are historical prose (e.g. GAP-086 cites a pre-move path on purpose)
-    and are left alone.
+    Three claims are enforced on every bullet, because a citation nobody
+    measures is the thing #318 was filed about:
+
+    1. Every path it names exists — file, directory or glob with a match.
+    2. It carries no ``file.gd:NNN`` line anchor. Line numbers cannot be
+       maintained and rot silently; the Summary/Evidence prose keeps the
+       frozen 2026-06-27 snapshot for provenance, this section does not.
+    3. Where the bullet names a ``symbol()``, the file defines it — the
+       durable anchor that replaces a line number.
+
+    A bullet explicitly marked ``(historical …)`` or ``(pre-move …)`` is
+    skipped whole: GAP-086 cites a path that deliberately no longer exists.
 
     Args:
         issues_dir: Directory holding the GAP-NNN docs.
@@ -306,15 +349,35 @@ def check_gap_code_references(issues_dir: str = ISSUES_DIR) -> list[str]:
             section = _CODE_REF_SECTION.search(f.read())
         if not section:
             continue
+        name = os.path.basename(doc)
+        for line in section.group(1).splitlines():
+            if not line.startswith("- "):
+                continue
+            text = line[2:]
+            if _HISTORICAL.search(text):
+                continue
+            anchor = _LINE_ANCHOR.search(text)
+            if anchor:
+                errors.append(
+                    f"STALE REFERENCE in {name}: '{anchor.group(0)}…' is a "
+                    f"line anchor — those rot unmeasured; cite the file plus "
+                    f"a `symbol()` instead"
+                )
+            for path in _bullet_paths(text):
+                if "*" in path:
+                    if not glob.glob(path):
+                        errors.append(
+                            f"STALE REFERENCE in {name}: {path} matches "
+                            f"nothing"
+                        )
+                elif not os.path.exists(path):
+                    errors.append(
+                        f"STALE REFERENCE in {name}: {path} does not exist"
+                    )
+
         for path, rest in _CODE_REF_BULLET.findall(section.group(1)):
             symbols = _SYMBOL.findall(rest)
-            if not symbols:
-                continue
-            if not os.path.exists(path):
-                errors.append(
-                    f"STALE REFERENCE in {os.path.basename(doc)}: "
-                    f"{path} does not exist (cites {', '.join(symbols)})"
-                )
+            if not symbols or not os.path.exists(path):
                 continue
             with open(path) as f:
                 source = f.read()
@@ -323,7 +386,7 @@ def check_gap_code_references(issues_dir: str = ISSUES_DIR) -> list[str]:
                     r"^(static )?func %s\(" % re.escape(symbol), source, re.M
                 ):
                     errors.append(
-                        f"STALE REFERENCE in {os.path.basename(doc)}: "
+                        f"STALE REFERENCE in {name}: "
                         f"{path} does not define {symbol}() — it moved or was "
                         f"renamed; re-anchor the bullet at its current file"
                     )

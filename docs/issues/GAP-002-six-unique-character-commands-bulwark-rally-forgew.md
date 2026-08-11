@@ -41,9 +41,9 @@ Build per-command executor modules reading/writing battle_state resource fields,
 
 ## Code references
 
-- game/scripts/combat/battle_manager.gd:151-152 ('ability' -> _do_attack)
-- game/scripts/ui/battle_command_menu.gd:182-184
-- game/scripts/combat/battle_state.gd:55-63 (resource fields unused)
+- game/scripts/combat/battle_player_actions.gd — `do_attack()` (where 'ability' commands were routed; was battle_manager._do_attack)
+- game/scripts/ui/battle_command_menu.gd
+- game/scripts/combat/battle_state.gd (resource fields unused)
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -58,4 +58,4 @@ Build per-command executor modules reading/writing battle_state resource fields,
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
 
-_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The durable, maintained anchors are the file-plus-symbol bullets under **Code references**: those must name a file that exists and a symbol that file actually defines, and `scripts/quality-gates/check_stale_counts.py` fails the build if they do not. Always verify against current code before acting._
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

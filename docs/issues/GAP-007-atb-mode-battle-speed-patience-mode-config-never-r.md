@@ -42,9 +42,9 @@ In battle_manager._ready/init, read config and configure the ATB node; also paus
 
 ## Code references
 
-- game/scripts/combat/atb_system.gd:94-99,182-187
-- game/scripts/combat/battle_manager.gd:37,53,111,133,154
-- game/scripts/ui/menu_config.gd:203-254
+- game/scripts/combat/atb_system.gd
+- game/scripts/combat/battle_manager.gd
+- game/scripts/ui/menu_config.gd
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -59,4 +59,4 @@ In battle_manager._ready/init, read config and configure the ATB node; also paus
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
 
-_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The durable, maintained anchors are the file-plus-symbol bullets under **Code references**: those must name a file that exists and a symbol that file actually defines, and `scripts/quality-gates/check_stale_counts.py` fails the build if they do not. Always verify against current code before acting._
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._

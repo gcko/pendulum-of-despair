@@ -809,6 +809,131 @@ class TestGapCodeReferences(unittest.TestCase):
         self.assertEqual(errors, [], f"Stale code references: {errors}")
 
 
+class TestGapCodeReferencePaths(unittest.TestCase):
+    """Gate E, scan 4: path and line-anchor rules on EVERY bullet (#318).
+
+    The symbol rule only ever covered a handful of bullets; the rest named
+    paths and line numbers that nothing measured, which is how GAP-036 came to
+    cite an evaluator that had moved to another file.
+    """
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cwd = os.getcwd()
+        os.makedirs(os.path.join(self.tmpdir, "game/scripts/util"))
+        os.makedirs(os.path.join(self.tmpdir, "game/data/crafting"))
+        os.makedirs(os.path.join(self.tmpdir, "game/scenes/maps/towns"))
+        for path in (
+            "game/scripts/util/party_roster.gd",
+            "game/scripts/util/party_vitals.gd",
+            "game/data/crafting/devices.json",
+            "game/data/crafting/recipes.json",
+            "game/scenes/maps/towns/roothollow.tscn",
+        ):
+            with open(os.path.join(self.tmpdir, path), "w") as f:
+                f.write("stub\n")
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+
+    def _errors(self, body: str) -> list:
+        os.makedirs("issues", exist_ok=True)
+        with open("issues/GAP-001-thing.md", "w") as f:
+            f.write("# GAP-001\n\n## Code references\n\n" + body + "\n")
+        return check_stale_counts.check_gap_code_references("issues")
+
+    def test_path_only_bullet_is_verified_not_skipped(self):
+        self.assertEqual(self._errors("- game/scripts/util/party_roster.gd"), [])
+        errors = self._errors("- game/scripts/util/party_gone.gd")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("party_gone.gd does not exist", errors[0])
+
+    def test_line_anchor_is_rejected(self):
+        errors = self._errors("- game/scripts/util/party_roster.gd:81-148")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("line anchor", errors[0])
+
+    def test_line_anchor_is_rejected_even_beside_a_valid_symbol(self):
+        with open("game/scripts/util/party_roster.gd", "w") as f:
+            f.write("func add_member() -> void:\n\tpass\n")
+        errors = self._errors(
+            "- game/scripts/util/party_roster.gd:81 — `add_member()`"
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("line anchor", errors[0])
+
+    def test_historical_bullets_are_exempt_from_both_rules(self):
+        """GAP-046 and GAP-086 cite paths the fix deliberately removed."""
+        self.assertEqual(
+            self._errors(
+                "- game/scripts/autoload/party_roster.gd:1 "
+                "(pre-move location; now game/scripts/util/party_roster.gd)"
+            ),
+            [],
+        )
+        self.assertEqual(
+            self._errors("- game/data/dialogue/dupe.json (historical — deleted)"),
+            [],
+        )
+
+    def test_directory_bullets_are_verified(self):
+        self.assertEqual(
+            self._errors("- game/scenes/maps/towns/ (three built)"), []
+        )
+        errors = self._errors("- game/scenes/maps/cities/ (none built)")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("does not exist", errors[0])
+
+    def test_glob_bullets_must_match_something(self):
+        self.assertEqual(self._errors("- game/scenes/maps/towns/*"), [])
+        errors = self._errors("- game/scenes/maps/dungeons/*")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("matches nothing", errors[0])
+
+    def test_brace_shorthand_checks_every_member(self):
+        self.assertEqual(
+            self._errors("- game/scripts/util/party_{roster,vitals}.gd"), []
+        )
+        errors = self._errors("- game/scripts/util/party_{roster,ghost}.gd")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("party_ghost.gd does not exist", errors[0])
+
+    def test_alternation_shorthand_checks_every_member(self):
+        self.assertEqual(
+            self._errors("- game/data/crafting/devices.json|recipes.json"), []
+        )
+        errors = self._errors("- game/data/crafting/devices.json|missing.json")
+        self.assertEqual(len(errors), 1)
+        self.assertIn("crafting/missing.json does not exist", errors[0])
+
+    def test_several_paths_on_one_bullet_are_all_checked(self):
+        errors = self._errors(
+            "- game/scripts/util/party_roster.gd, game/scripts/util/nope.gd"
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("nope.gd", errors[0])
+
+    def test_trailing_prose_is_not_mistaken_for_a_path(self):
+        self.assertEqual(
+            self._errors(
+                "- game/scripts/util/party_roster.gd "
+                "(no milestone/spike application)"
+            ),
+            [],
+        )
+
+    def test_bullet_with_no_path_at_all_is_ignored(self):
+        self.assertEqual(self._errors("- (none — no post-game scenes)"), [])
+
+    def test_real_gap_docs_carry_no_line_anchors(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        errors = check_stale_counts.check_gap_code_references()
+        self.assertEqual(errors, [], f"Stale code references: {errors}")
+
+
 class TestGapMeasuredTables(unittest.TestCase):
     """Gate E, scan 5: the 'current' column of GAP measured tables (#319)."""
 
