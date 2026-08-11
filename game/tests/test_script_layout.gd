@@ -34,13 +34,7 @@ const TARGET_SCRIPT_LINES: int = 400
 ## longer needed fails too, so the list cannot outlive its reason.
 ##
 ## Do not add to it. Write the justification into § 1.2a instead.
-const UNDOCUMENTED_BAND_FILES: Dictionary = {
-	"battle_manager.gd":
-	(
-		"#377 — § 1.2a predates it; the entry is being written on branch "
-		+ "docs/infra2-prose-hygiene. Delete this line when that lands."
-	),
-}
+const UNDOCUMENTED_BAND_FILES: Dictionary = {}
 
 
 ## Script filenames (no directory) present in a res:// directory.
