@@ -108,7 +108,7 @@ For full AI scripts, phase mechanics, and scripted events, see
 > holds `highcairn_hermit_cave` (rolls `pallor_boar`, an Act III enemy)
 > and `corrund_river_cave` (Compact constructs) — so its tag does not
 > assign an act to `duskfen_hollow`. Duskfen itself opens on flag 8;
-> retagging or splitting that file is a follow-up.
+> retagging or splitting that file is #314.
 >
 > The material appears in this file, which a reader takes for an Act I
 > roster, while its earliest supplier is now unambiguously behind flag 8.

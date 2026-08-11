@@ -309,7 +309,7 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 > Pacing Per Act and economy.md § Act I still count the Corrupted
 > Fenmother's 2,500 XP and 1,500g as Act I income, so the supply side does
 > not yet add up to ~5,300 by the end of Act I. Re-deriving those splits is
-> a balance pass, not a doc fix. Three dated design records also still key
+> a balance pass (#313), not a doc fix. Three dated design records also still key
 > the milestone to 18 —
 > `docs/superpowers/specs/2026-03-24-xp-leveling-curve-design.md` § 8
 > Tuning Targets, `docs/superpowers/plans/2026-03-24-xp-leveling-curve.md`,
@@ -333,7 +333,7 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 > the opposite of the "fast, then steady" shape the labels claim. The
 > level spans are now fixed by the act boundary (#287) and by § XP Pacing
 > Targets, so the term to revisit is the hour budget, not the cadence —
-> that is the same balance pass the act-boundary note above defers to, and
+> that is the same balance pass the act-boundary note above defers to (#313), and
 > it also owns the Interlude / Act III / Post-Game bullets below, whose
 > stated cadences (~15–20, ~25–30, ~45–90 min) likewise do not reproduce
 > from their spans (~12–16, ~12–18, ~15–30). Treat the hours and the level

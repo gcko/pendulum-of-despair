@@ -75,8 +75,8 @@ This directory contains the narrative design for Pendulum of Despair.
   `dialogue-system.md` and `bestiary/bosses.md`; *travelling* in
   `outline.md`, `events.md` and `script/npc-ambient.md`; *cancelled* in
   `overworld.md`; *synthesises* in `dialogue-system.md`. Sweeping those
-  is a separate, tracked change — a residual British spelling is a defect
-  to be fixed, not a precedent to be matched.
+  is a separate, tracked change (#311) — a residual British spelling is a
+  defect to be fixed, not a precedent to be matched.
 - **Changing a spelling is never local to one file.** Anything quoted as
   canon by a design doc, a test, or `game/data/dialogue/*.json` must
   match the string the engine emits — see

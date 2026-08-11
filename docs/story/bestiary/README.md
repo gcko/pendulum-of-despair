@@ -67,8 +67,9 @@ matches no `floor_id`, and Tomb Mite's `Ember Vein F1–F2` sits in a band
 whose roster is `ley_vermin` + `unstable_crystal` and does not include
 it. No mapping between the two schemes is canon yet, which is why
 `test_bestiary_locations.gd` checks only the overworld half of this rule.
-Until that mapping exists, treat a dungeon-floor cell as a claim about
-the dungeon and the enemy's `locations` array, not about a roster row.
+Until that mapping exists (#312), treat a dungeon-floor cell as a claim
+about the dungeon and the enemy's `locations` array, not about a roster
+row.
 
 Parenthetical role markers (`(boss)`, `(mini-boss)`, `(unique)`,
 `(Wave 4)`, `(Scene 3)`) may follow either form. Scripted, non-random
