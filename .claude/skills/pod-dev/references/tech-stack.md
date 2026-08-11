@@ -34,14 +34,22 @@ Six autoloads are registered in `project.godot` and live in
 | `EventFlags` | `event_flags.gd` | Story flags and world-state booleans |
 | `PartyState` | `party_state.gd` | Active party, characters, inventory state |
 
-`scripts/autoload/` holds these six scripts and nothing else. Cross-cutting
-static helpers that are *not* registered as autoloads live in `scripts/util/`:
-`inventory_helpers.gd` (reached by `preload`), plus `InputUtil`,
-`DialogueCondition` and `DialogueConsequences` (reached by global
-`class_name`). Static helpers scoped to one screen stay next to that screen —
-`ui/spell_helpers.gd`, `ui/ability_helpers.gd`, `ui/stat_bar_helpers.gd` and
-`ui/save_load_display.gd` are all `RefCounted` helpers, not UI controllers, and
-belong in `scripts/ui/`.
+`scripts/autoload/` holds these six scripts and nothing else. Helpers that are
+*not* registered as autoloads split on who reaches them, not on how many screens
+use them. A helper reached from outside `scripts/ui/` lives in `scripts/util/`:
+`inventory_helpers.gd` (preloaded from `autoload/`, `combat/` and `ui/`),
+`InputUtil` (`ui/`, `core/`), `DialogueCondition` (`ui/`, `core/`, `entities/`)
+and `DialogueConsequences` (`core/`). A helper whose only consumers are UI
+scripts stays in `scripts/ui/` next to those screens, even when several screens
+share it — `ui/stat_bar_helpers.gd` is used by the battle party panel, the main
+menu and the status screen, and `ui/spell_helpers.gd` by the battle command menu
+and the magic menu, while `ui/ability_helpers.gd` and `ui/save_load_display.gd`
+each serve one screen. None of the four are UI controllers: the first three are
+all-`static` `RefCounted` helpers, and `save_load_display.gd` is an instantiated
+`RefCounted` collaborator that holds a reference to its owning overlay. A global
+`class_name` does not mark the split either way — `StatBarHelpers` and
+`SaveLoadDisplay` are `class_name` globals in `scripts/ui/`, and
+`inventory_helpers.gd` in `scripts/util/` has no `class_name` at all.
 
 `game/tests/test_script_layout.gd` enforces only the `autoload/` half: every
 `.gd` in `scripts/autoload/` must appear in the `[autoload]` block, no script in

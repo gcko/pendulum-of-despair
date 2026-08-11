@@ -40,7 +40,7 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 
 ## Code references
 
-- game/scripts/util/inventory_helpers.gd — `apply_item_effect()` stat_boost arm, `add_capsule_gain()`
+- game/scripts/util/inventory_helpers.gd — `apply_item_effect()` stat_boost arm, `add_xp_to_member()` level-up overwrite
 - game/scripts/autoload/party_state.gd:287
 
 

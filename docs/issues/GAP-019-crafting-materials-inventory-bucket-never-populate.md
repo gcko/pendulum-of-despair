@@ -42,7 +42,7 @@ Classify add_item by category/source (or add add_material) and route to the corr
 ## Code references
 
 - game/scripts/autoload/party_state.gd:41,463-469
-- game/scripts/util/inventory_helpers.gd — `bucket_for_item()` / `reroute_materials()`
+- game/scripts/util/inventory_helpers.gd — `apply_battle_rewards()` drop routing
 - game/scripts/ui/menu_items.gd:4
 
 
