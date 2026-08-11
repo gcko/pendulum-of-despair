@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""Tests for quality gate scripts.
+"""Quality Gate I: tests for the quality gate scripts themselves.
 
-Run: python3 -m pytest scripts/quality-gates/test_quality_gates.py -v
+Gates D-G are scans, and a broken scan reports "nothing found", which reads
+exactly like "nothing wrong". This gate runs first in pre-push so that a gate
+which has stopped detecting fails loudly instead of passing silently (#365).
+
+Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 Or:  python3 scripts/quality-gates/test_quality_gates.py
 """
 import contextlib

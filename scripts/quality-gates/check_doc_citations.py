@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quality Gate H: doc citation integrity.
+"""Quality Gate G: doc citation integrity.
 
 Line-anchored citations (``magic.md:1537``) rot silently: inserting a
 paragraph above the cited line repoints every citation below it, and no

@@ -3,11 +3,31 @@ set -euo pipefail
 
 GATE_DIR="scripts/quality-gates"
 
-# === QUALITY GATE C: Quality-gate self-tests ===
-# The gates below only protect the repo for as long as they still DETECT.
-# A refactor that breaks a scan's matching makes it return "nothing found",
-# which is indistinguishable from "nothing wrong" — so the scans are tested
-# first, and a broken scan fails here rather than passing silently (#365).
+# Gate letters are a REGISTRY, not a running order. A letter names one gate
+# for the life of the repo, is allocated once at the gate's introduction, and
+# is never reused or renumbered — error reports, commit messages and issues
+# cite gates by letter, so a letter that shifts meaning falsifies the record.
+# A new gate takes the next free letter wherever in the run order it lands.
+#
+#   A  gdlint                     pre-commit
+#   B  JSON validation            pre-commit
+#   C  gdformat check             pre-commit
+#   D  cross-file ID uniqueness   pre-push   check_id_uniqueness.py
+#   E  stale-count scan           pre-push   check_stale_counts.py
+#   F  scene reference validation pre-push   check_scene_refs.py
+#   G  doc citation integrity     pre-push   check_doc_citations.py
+#   H  GUT unit tests             pre-push
+#   I  quality-gate self-tests    pre-push   test_quality_gates.py
+#
+# Each gate script's module docstring names its own letter; keep the two in
+# step when editing either.
+
+# === QUALITY GATE I: Quality-gate self-tests ===
+# Runs first despite its letter: the gates below only protect the repo for as
+# long as they still DETECT. A refactor that breaks a scan's matching makes it
+# return "nothing found", which is indistinguishable from "nothing wrong" — so
+# the scans are tested before they run, and a broken scan fails here rather
+# than passing silently (#365).
 # unittest, not pytest: stdlib only, so this needs no dev dependency.
 echo "=== Pre-push: Quality-gate self-tests ==="
 python3 -m unittest discover -s "$GATE_DIR" -p 'test_*.py' -q
