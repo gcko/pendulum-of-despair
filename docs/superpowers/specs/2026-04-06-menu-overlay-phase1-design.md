@@ -507,6 +507,11 @@ user presses cancel, the overlay closes back to the title screen
 | `game/scripts/ui/menu_config.gd` | Config sub-screen | ~290 |
 | `game/tests/test_party_state.gd` | PartyState unit tests | ~225 |
 
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. The row above records the
+> as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
+
 ### Modified Files (4)
 
 | File | Change |

@@ -312,17 +312,18 @@ Enemies always give listed XP regardless of party level. No bonuses for higher-l
 > level spans, hour budgets and per-level cadences only, and no other
 > section sums enemy `exp` by act. So the ~5,300 Act I target is unbacked
 > on the supply side rather than wrongly backed. Deriving that tally and
-> re-splitting the gold is a balance pass (#313), not a doc fix. Three dated design records also still key
-> the milestone to 18 —
-> `docs/superpowers/specs/2026-03-24-xp-leveling-curve-design.md` § 8
-> Tuning Targets, `docs/superpowers/plans/2026-03-24-xp-leveling-curve.md`,
-> and `docs/superpowers/specs/2026-03-19-stat-system-design.md` § 4.3
-> Projected Stats at Milestones.
-> Those are the dated spec and plan that produced these tables, not the
-> canon they produced: `docs/story/` holds the canonical design documents
-> and `docs/superpowers/` holds specs and plans (AGENTS.md § Repository
-> Layout). This section is the live table; the dated records are left as
-> written.
+> re-splitting the gold is a balance pass (#313), not a doc fix.
+>
+> Dated design records under `docs/superpowers/` still key the milestone to
+> 18. They are left as written — not because these particular ones were
+> examined and excused, but because that is the standing rule for the whole
+> directory: `docs/superpowers/` holds point-in-time execution records whose
+> numbers are accurate as of their date only, and `docs/story/` holds the
+> canon they produced (AGENTS.md § Repository Layout;
+> [docs/superpowers/README.md](../superpowers/README.md), and the banner on
+> each record). This section is the live table. No list of the affected
+> records is kept here, because such a list goes stale the next time canon
+> moves (#352).
 
 ### XP Pacing Per Act
 

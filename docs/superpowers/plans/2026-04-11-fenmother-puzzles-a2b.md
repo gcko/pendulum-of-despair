@@ -56,6 +56,12 @@
 | `game/scenes/maps/dungeons/fenmothers_hollow_f2.tscn` | entities | Replace dialogue with spirit-plant, add wheel 3, water zones, damage zones |
 | `game/scenes/maps/dungeons/fenmothers_hollow_f3.tscn` | entities | Add damage zones, remove blessing chest |
 
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. Every
+> `game/scripts/autoload/inventory_helpers.gd` in this document is the
+> as-of-2026-04-11 path, left as written per
+> [docs/superpowers/README.md](../README.md).
+
 ---
 
 ## Chunk 1: Foundation (Tasks 1-3)

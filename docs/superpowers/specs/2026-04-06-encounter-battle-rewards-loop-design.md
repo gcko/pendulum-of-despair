@@ -245,6 +245,11 @@ This ensures exploration can read drops from transition_data on return.
 
 ## Modified: `game/scripts/autoload/inventory_helpers.gd`
 
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. This heading and the File Summary
+> row below record the as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
+
 ### New Static Methods
 
 ```gdscript

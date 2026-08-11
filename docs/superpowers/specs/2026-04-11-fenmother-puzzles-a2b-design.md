@@ -864,6 +864,11 @@ Also count KO'd party members for transition data:
 | `game/scenes/maps/dungeons/fenmothers_hollow_f2.tscn` | Replace dialogue trigger with spirit-plant, add wheel 3, water zones, damage zones |
 | `game/scenes/maps/dungeons/fenmothers_hollow_f3.tscn` | Add damage zones, remove fenmothers_blessing chest (Caden gives it now) |
 
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. The row above records the
+> as-of-2026-04-11 path, left as written per
+> [docs/superpowers/README.md](../README.md).
+
 ---
 
 ## What This Does NOT Include (Deferred)

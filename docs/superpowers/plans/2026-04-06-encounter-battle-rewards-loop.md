@@ -30,6 +30,12 @@
 | `game/scripts/autoload/party_state.gd` | MODIFY (after line 125) | Add `get_reserve_party()`, `distribute_battle_rewards()` |
 | `game/scripts/core/exploration.gd` | MODIFY (lines 7-17, 38-48, 51+, 111+) | Add danger counter, step detection, battle entry/return |
 
+> **Path moved since (#236).** `inventory_helpers.gd` now lives at
+> `game/scripts/util/inventory_helpers.gd`. Every
+> `game/scripts/autoload/inventory_helpers.gd` in this document is the
+> as-of-2026-04-06 path, left as written per
+> [docs/superpowers/README.md](../README.md).
+
 ---
 
 ## Chunk 1: EncounterSystem Static Helper + Tests
@@ -395,6 +401,13 @@ git commit -m "feat(engine): include earned_drops in battle exit transition data
 - Create: `game/tests/test_battle_rewards.gd`
 
 - [ ] **Step 1: Write failing tests**
+
+> **Do not paste this block unchanged (#236).** `inventory_helpers.gd` moved
+> to `game/scripts/util/` after this plan was written, so the `preload` below
+> no longer resolves — pasted as-is it is a hard parse error that silently
+> skips the whole test file under GUT. The live path is
+> `res://scripts/util/inventory_helpers.gd`. The block is left as written per
+> [docs/superpowers/README.md](../README.md).
 
 ```gdscript
 # game/tests/test_battle_rewards.gd
