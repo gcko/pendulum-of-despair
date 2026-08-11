@@ -429,8 +429,8 @@ GDScript loads data from Tier 1 JSON via DataManager.
 
 **Notes:**
 - Signal-only design: NPC emits npc_interacted, exploration scene handles overlay push
-- Priority stack: first-match-wins, walks entries top-to-bottom
-- Condition evaluator: binary flags, numeric comparisons (>=, <, ==), AND combos, party_has (implemented via PartyState.has_member())
+- Priority stack: walks the conditioned entries top-to-bottom, first-match-wins; entries sharing the winning condition rotate as a group, and unconditioned entries are the fallback set (rotated one per interaction)
+- Condition evaluator: extracted to `game/scripts/util/dialogue_condition.gd` (shared by npc.gd, cutscene_player.gd and dialogue_box.gd). Binary flags, numeric comparisons (>=, <, ==), AND combos, party_has (implemented via PartyState.has_member()), `choice_N_selected` pseudo-flags
 - 15 stub animations (idle + 14 emotions per dialogue-system.md Section 2.1)
 - GUT tests in test_npc.gd, all code passes gdlint + gdformat
 - **This completes ALL Tier 2 Entity Prefabs (4/4). Exploration scene (3.2) is fully unblocked.**
@@ -715,7 +715,7 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Choice prompt display with cursor navigation (2-4 options, cancel selects bottom)
 - [x] Animation trigger system (animation_requested signal with who + anim)
 - [x] SFX trigger system (sfx_requested signal with sfx_id)
-- [x] ~~Flag condition evaluation~~ → not needed here; NPC prefab resolves priority stack before emitting
+- [x] Flag condition evaluation → the overlay resolves each entry's `condition` through the shared `DialogueCondition` evaluator and skips the ones that do not hold. (Originally scoped out on the assumption the NPC prefab had already resolved everything; that holds for a priority stack but not for the scene sequences the overlay also plays.)
 - [x] Flag setting on dialogue completion (flag_set_requested signal)
 - [x] Process mode: PROCESS_MODE_ALWAYS
 

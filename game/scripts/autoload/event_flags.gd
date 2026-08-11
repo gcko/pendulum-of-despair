@@ -8,15 +8,24 @@ extends Node
 
 signal flag_changed(flag_name: String, value: Variant)
 
-## Documented ranges for the hidden approval scores, as (min, max).
-## Sourced from docs/story/events.md flags 40–43; dialogue-system.md 3.3
-## requires clamp(score, min, max) after each increment.
+## Documented ranges for the choice-driven approval scores, as (min, max).
+## Sourced from docs/story/events.md flags 40–42; dialogue-system.md 3.3
+## requires clamp(score, min, max) after each increment. Membership of this
+## dictionary is what makes a name a *score*: [method apply_score_choice] may
+## add to it and [method get_score] resolves its documented starting value.
 const SCORE_RANGES: Dictionary = {
 	"council_savanh_approval": Vector2i(0, 3),
 	"council_caden_approval": Vector2i(0, 3),
 	"council_wynne_approval": Vector2i(0, 3),
-	"council_result": Vector2i(0, 3),
 }
+
+## Bounds of `council_result` (events.md flag 43). Deliberately NOT in
+## [constant SCORE_RANGES]: flag 43 is a derived outcome tier — the count of
+## tribal leaders whose approval reached 2 — computed once when the council
+## concludes and written with [method set_flag]. Routing it through
+## [method apply_score_choice] would add to the previous value instead of
+## assigning the tally. See issue #281.
+const COUNCIL_RESULT_RANGE: Vector2i = Vector2i(0, 3)
 
 ## Bounds used for a score events.md does not document yet.
 const SCORE_RANGE_DEFAULT: Vector2i = Vector2i(0, 3)
@@ -25,8 +34,9 @@ const SCORE_RANGE_DEFAULT: Vector2i = Vector2i(0, 3)
 ## events.md flag 41: Caden's score starts at 1 because Torren — always in the
 ## diplomatic party — has natural rapport as a spirit-speaker, so dialogue
 ## choices add 0-2 on top of it rather than supplying the whole score. Scores
-## absent here start at the minimum of their range. The starting value
-## materialises on the first increment, which is when the score is first read.
+## absent here start at the minimum of their range. Reads go through
+## [method get_score] so the starting value is observable before the first
+## increment, not only after it.
 const SCORE_INITIALS: Dictionary = {
 	"council_caden_approval": 1,
 }
@@ -77,6 +87,27 @@ func get_score_initial(score_name: String) -> int:
 		return int(SCORE_INITIALS[score_name])
 	var bounds: Vector2i = SCORE_RANGES.get(score_name, SCORE_RANGE_DEFAULT)
 	return bounds.x
+
+
+## True when [param flag_name] names a choice-driven score documented in
+## [constant SCORE_RANGES]. Condition evaluation uses this to decide whether an
+## unset name resolves to a documented starting value or to the plain flag
+## default. `council_result` is not a score — see [constant COUNCIL_RESULT_RANGE].
+func is_documented_score(flag_name: String) -> bool:
+	return SCORE_RANGES.has(flag_name)
+
+
+## Current total of a documented score. An untouched score reads as the value
+## events.md documents for it rather than as 0, so a condition evaluated before
+## the first choice sees the same base [method increment_score] would add to.
+## Without this, `council_caden_approval` would read 0 until a choice ran even
+## though events.md flag 41 starts it at 1.
+func get_score(score_name: String) -> int:
+	var stored: Variant = _flags.get(score_name, null)
+	if stored is int or stored is float:
+		return int(stored)
+	var bounds: Vector2i = SCORE_RANGES.get(score_name, SCORE_RANGE_DEFAULT)
+	return clampi(get_score_initial(score_name), bounds.x, bounds.y)
 
 
 ## Add [param delta] to a named score and clamp the total to

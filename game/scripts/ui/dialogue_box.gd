@@ -332,7 +332,9 @@ func _select_choice() -> void:
 			if score_name != "":
 				# A score_delta of 0 is a valid intentional outcome (3.4): it
 				# records that the question was answered, so it still routes
-				# through and materialises the score at its minimum.
+				# through and materialises the score at its documented starting
+				# value — the minimum of its range unless events.md says
+				# otherwise, as it does for council_caden_approval.
 				score_increment_requested.emit(score_name, int(opt.get("score_delta", 0)))
 
 	# Advance to next entry

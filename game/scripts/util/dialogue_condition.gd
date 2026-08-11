@@ -84,14 +84,19 @@ static func should_play(entry: Dictionary, context: Dictionary = {}) -> bool:
 
 ## Resolve a priority stack to the entries that may be served right now.
 ##
-## Walks top-to-bottom and returns a single-element array holding the first
-## conditioned entry whose condition holds — first-match-wins, per
-## dialogue-system.md 3.2. When no condition holds, returns every
-## unconditioned entry in authored order: an NPC may have several ambient
-## defaults, and the caller decides which one to surface (npc.gd rotates
-## through them). Returns an empty array when the stack has nothing to say.
+## Walks the conditioned entries top-to-bottom; the first whose condition holds
+## wins the stack — first-match-wins, per dialogue-system.md 3.2. Every later
+## entry repeating that same condition string belongs to the winner's group and
+## comes back with it, so an author who writes several lines for one story state
+## gets all of them rather than only the topmost. When no condition holds,
+## returns every unconditioned entry in authored order instead: an NPC may have
+## several ambient defaults. Either way the caller decides which member of the
+## returned set to surface (npc.gd rotates through them). Returns an empty array
+## when the stack has nothing to say.
 static func resolve_stack(entries: Array, context: Dictionary = {}) -> Array:
 	var defaults: Array = []
+	var matched: Array = []
+	var matched_condition: String = ""
 	for entry: Variant in entries:
 		if not (entry is Dictionary):
 			continue
@@ -99,8 +104,18 @@ static func resolve_stack(entries: Array, context: Dictionary = {}) -> Array:
 		if is_unconditioned(condition):
 			defaults.append(entry)
 			continue
+		if not matched.is_empty():
+			# The stack is already decided. Only an exact repeat of the winning
+			# condition joins it; a different condition lost first-match-wins,
+			# even if it would also evaluate true.
+			if condition is String and (condition as String) == matched_condition:
+				matched.append(entry)
+			continue
 		if evaluate(condition, context):
-			return [entry]
+			matched_condition = (condition as String) if condition is String else ""
+			matched.append(entry)
+	if not matched.is_empty():
+		return matched
 	return defaults
 
 
@@ -117,9 +132,15 @@ static func choice_context(choice_index: int) -> Dictionary:
 
 
 ## Resolve a flag name, preferring scene-local context over EventFlags.
+## A documented score resolves through [method EventFlags.get_score] so an
+## untouched score reads as its events.md starting value rather than as the
+## `false` a plain flag lookup returns — otherwise a condition evaluated before
+## the first choice would disagree with the score the increment path builds on.
 static func value_of(flag_name: String, context: Dictionary = {}) -> Variant:
 	if context.has(flag_name):
 		return context[flag_name]
+	if EventFlags.is_documented_score(flag_name):
+		return EventFlags.get_score(flag_name)
 	return EventFlags.get_flag(flag_name)
 
 

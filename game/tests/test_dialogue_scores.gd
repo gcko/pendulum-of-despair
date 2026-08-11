@@ -108,10 +108,8 @@ func test_zero_delta_materialises_the_score() -> void:
 
 
 func test_documented_ranges_match_events_md() -> void:
-	# events.md flags 40-43: all four council scores are 0-3.
-	for score_name: String in [
-		SAVANH, "council_caden_approval", "council_wynne_approval", "council_result"
-	]:
+	# events.md flags 40-42: the three choice-driven approval scores are 0-3.
+	for score_name: String in [SAVANH, CADEN, "council_wynne_approval"]:
 		assert_eq(
 			EventFlags.get_score_range(score_name),
 			Vector2i(0, 3),
@@ -119,11 +117,45 @@ func test_documented_ranges_match_events_md() -> void:
 		)
 
 
+func test_council_result_is_a_derived_tier_not_a_choice_score() -> void:
+	# events.md flag 43 is computed from flags 40-42 and assigned, never
+	# incremented by a dialogue choice — so it must stay out of SCORE_RANGES
+	# where apply_score_choice could reach it. Its bounds live on their own
+	# constant for the #281 tally to clamp against.
+	assert_eq(EventFlags.COUNCIL_RESULT_RANGE, Vector2i(0, 3), "events.md flag 43 is 0-3")
+	assert_false(
+		EventFlags.is_documented_score("council_result"),
+		"council_result is a derived tally, not a choice-driven score",
+	)
+	for score_name: String in [SAVANH, CADEN, "council_wynne_approval"]:
+		assert_true(EventFlags.is_documented_score(score_name), "%s is a score" % score_name)
+
+
 func test_caden_score_starts_at_the_value_events_md_documents() -> void:
 	# events.md flag 41: Caden starts at 1 (Torren's rapport), and dialogue
 	# choices add 0-2 on top of that.
 	assert_eq(EventFlags.get_score_initial(CADEN), 1, "documented starting value")
 	assert_eq(EventFlags.apply_score_choice(CADEN, 1), 2, "1 + a middling answer is 2")
+
+
+func test_reading_an_untouched_score_sees_its_documented_start() -> void:
+	# A condition evaluated before the first choice must agree with the base
+	# increment_score would add to. Reading through get_flag alone yields
+	# int(false) == 0 and silently loses Caden's documented head start.
+	assert_false(EventFlags.has_flag(CADEN), "no choice has touched the score yet")
+	assert_eq(EventFlags.get_score(CADEN), 1, "an untouched score reads its events.md start")
+	assert_eq(EventFlags.get_score(SAVANH), 0, "a score with no documented start reads 0")
+
+
+func test_conditions_resolve_an_untouched_score_at_its_documented_start() -> void:
+	assert_true(
+		DialogueCondition.evaluate("%s >= 1" % CADEN),
+		"Caden's head start is visible to conditions before any choice runs",
+	)
+	assert_false(
+		DialogueCondition.evaluate("%s >= 1" % SAVANH),
+		"a score with no documented start still evaluates from 0",
+	)
 
 
 func test_caden_best_answer_reaches_the_documented_maximum() -> void:

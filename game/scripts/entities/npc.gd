@@ -3,8 +3,9 @@ extends Area2D
 ## NPC entity with flag-gated dialogue priority stack.
 ##
 ## Loads dialogue entries from DataManager, resolves the priority
-## stack on interact (first-match-wins), and emits the resolved
-## dialogue data as a signal. Does not push overlays directly —
+## stack on interact (first-match-wins over the conditioned entries,
+## rotating through whichever set that resolves to), and emits the
+## resolved dialogue data as a signal. Does not push overlays directly —
 ## exploration scene handles that ("call down, signal up").
 ##
 ## Usage: instance npc.tscn, call initialize("bren").
@@ -14,11 +15,12 @@ signal npc_interacted(npc_id: String, dialogue_data: Dictionary)
 ## Emitted when walk_to() completes.
 signal walk_complete
 
-## Cursor into each NPC's ambient (unconditioned) dialogue set, keyed by
-## npc_id. Session-scoped on purpose: it is static so an NPC keeps its place
-## in the rotation across map reloads and battles, and it is deliberately NOT
-## written to save data — which ambient line comes next is flavour, not
-## progression state. Cleared by [method reset_dialogue_cycles].
+## Cursor into each NPC's currently resolved dialogue set — its unconditioned
+## defaults, or the group of entries sharing whichever condition won the stack.
+## Keyed by npc_id. Session-scoped on purpose: it is static so an NPC keeps its
+## place in the rotation across map reloads and battles, and it is deliberately
+## NOT written to save data — which line comes next within a single story state
+## is flavour, not progression. Cleared by [method reset_dialogue_cycles].
 static var _dialogue_cycle_indices: Dictionary = {}
 
 ## NPC identifier used for dialogue lookup.
@@ -74,10 +76,11 @@ func interact() -> void:
 
 
 ## Peek at the entry this NPC would serve right now, without advancing the
-## ambient cycle. Returns {} when the NPC has nothing to say.
+## dialogue cycle. Returns {} when the NPC has nothing to say.
 ##
 ## A matched condition wins outright (first-match-wins, dialogue-system.md
-## 3.2). Otherwise the NPC serves one of its unconditioned defaults — an NPC
+## 3.2); when several entries share that winning condition they rotate as a
+## group. Otherwise the NPC serves one of its unconditioned defaults — an NPC
 ## may have several, and they take turns rather than collapsing to the last
 ## one. See [method _take_current_dialogue].
 func get_current_dialogue() -> Dictionary:
@@ -87,15 +90,16 @@ func get_current_dialogue() -> Dictionary:
 	return candidates[_cycle_index() % candidates.size()]
 
 
-## Serve the current entry and advance the ambient cycle past it, so the next
-## interaction surfaces the next default and wraps at the end.
+## Serve the current entry and advance the dialogue cycle past it, so the next
+## interaction surfaces the next line in the resolved set and wraps at the end.
 func _take_current_dialogue() -> Dictionary:
 	var candidates: Array = DialogueCondition.resolve_stack(dialogue_entries)
 	if candidates.is_empty():
 		return {}
 	var index: int = _cycle_index() % candidates.size()
-	# Only the default set rotates. A matched condition always resolves to
-	# exactly one candidate, so the cursor stays put while it is active.
+	# Any set of two or more rotates — the defaults, or a group of entries
+	# sharing the winning condition. A story state with exactly one authored
+	# line resolves to one candidate, so the cursor stays put while it holds.
 	if candidates.size() > 1:
 		_dialogue_cycle_indices[npc_id] = (index + 1) % candidates.size()
 	return candidates[index]

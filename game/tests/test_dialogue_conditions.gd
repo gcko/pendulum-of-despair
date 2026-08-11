@@ -134,13 +134,45 @@ func test_resolve_stack_returns_every_default_when_nothing_matches() -> void:
 func test_resolve_stack_first_match_wins() -> void:
 	var entries: Array = [
 		_entry("d1", null),
+		_entry("c1", "convergence_reached"),
+		_entry("c2", "cael_betrayal_complete"),
+	]
+	EventFlags.set_flag("convergence_reached", true)
+	EventFlags.set_flag("cael_betrayal_complete", true)
+	var resolved: Array = DialogueCondition.resolve_stack(entries)
+	assert_eq(resolved.size(), 1, "the lower true condition loses the stack outright")
+	assert_eq(resolved[0].get("id"), "c1", "the topmost matching entry wins")
+
+
+func test_resolve_stack_returns_every_entry_sharing_the_winning_condition() -> void:
+	# npc_bren.json authors two lines for `cael_betrayal_complete` and two for
+	# `interlude_begins`. Both members of the winning group are authored content,
+	# so the stack must hand back the whole group for npc.gd to rotate through.
+	var entries: Array = [
+		_entry("d1", null),
 		_entry("c1", "cael_betrayal_complete"),
 		_entry("c2", "cael_betrayal_complete"),
+		_entry("c3", "interlude_begins"),
 	]
 	EventFlags.set_flag("cael_betrayal_complete", true)
 	var resolved: Array = DialogueCondition.resolve_stack(entries)
-	assert_eq(resolved.size(), 1, "a matched condition resolves to exactly one entry")
-	assert_eq(resolved[0].get("id"), "c1", "the topmost matching entry wins")
+	assert_eq(resolved.size(), 2, "both entries on the winning condition survive")
+	assert_eq(resolved[0].get("id"), "c1", "authored order is preserved")
+	assert_eq(resolved[1].get("id"), "c2", "the second line is no longer stranded")
+
+
+func test_resolve_stack_group_excludes_other_true_conditions() -> void:
+	var entries: Array = [
+		_entry("c1", "cael_betrayal_complete"),
+		_entry("c2", "interlude_begins"),
+		_entry("c3", "cael_betrayal_complete"),
+	]
+	EventFlags.set_flag("cael_betrayal_complete", true)
+	EventFlags.set_flag("interlude_begins", true)
+	var resolved: Array = DialogueCondition.resolve_stack(entries)
+	assert_eq(resolved.size(), 2, "only the winning condition's own entries join it")
+	assert_eq(resolved[0].get("id"), "c1", "the topmost matching entry still wins")
+	assert_eq(resolved[1].get("id"), "c3", "a later repeat joins across an interloper")
 
 
 func test_resolve_stack_ignores_non_dictionary_entries() -> void:

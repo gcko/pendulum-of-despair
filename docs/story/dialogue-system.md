@@ -131,13 +131,16 @@ scene into a puppet show.
   (one or more text boxes), and the interaction ends.
 - **Re-talking repeats current dialogue.** Talking to the same NPC
   again delivers the same lines, unless an event flag has changed
-  since the last interaction. The one exception is an NPC with
-  several `[default]` entries, which rotates through them — see
-  "Multiple defaults" in Section 3.2.
+  since the last interaction. The one exception is an NPC with several
+  lines authored for the same state — several `[default]` entries, or
+  several sharing one condition — which rotates through them, one per
+  interaction. See "Multiple defaults" in Section 3.2.
 - **Priority stack determines current dialogue.** Each NPC has an
-  ordered list of flag-gated entries. The engine evaluates
-  top-to-bottom and serves the first entry whose condition is true
-  (first-match-wins).
+  ordered list of flag-gated entries. The engine evaluates the
+  *conditioned* entries top-to-bottom and serves the first whose
+  condition is true (first-match-wins). Unconditioned entries are the
+  fallback set and are only reached when no condition holds, wherever
+  they sit in the file — see "Multiple defaults" in Section 3.2.
 - **No branching conversation flows.** NPCs deliver linear exchanges
   with occasional choice prompts (2–4 options). Choices set flags or
   increment scores; they never open sub-menus or nested dialogue
@@ -145,10 +148,14 @@ scene into a puppet show.
 
 ### 3.2 Priority Stack Resolution
 
-Each NPC has an ordered list of dialogue entries. The engine walks
-top-to-bottom and serves the **first** entry whose condition evaluates
-true. Authors control priority through entry ordering — later story
-states go higher in the stack so they take precedence.
+Each NPC has an ordered list of dialogue entries. The engine walks the
+conditioned entries top-to-bottom and serves the **first** whose
+condition evaluates true. Authors control priority through entry
+ordering — later story states go higher in the stack so they take
+precedence. Ordering governs the conditioned entries only: an
+unconditioned `[default]` never wins over a matched condition no matter
+how high it sits, because defaults are the fallback set rather than
+another rung on the ladder.
 
 **Worked example — Scholar Aldis:**
 
@@ -169,7 +176,8 @@ The engine checks each condition in order:
 4. If no condition matches, the `[default]` entry fires.
 
 The author never writes `if/else` logic. Priority is implicit in the
-ordering. Moving an entry higher makes it win over entries below it.
+ordering. Moving a conditioned entry higher makes it win over the
+conditioned entries below it.
 
 **Multiple defaults — ambient rotation.** Most NPCs have one
 `[default]` entry, but ambient townsfolk often carry several
@@ -192,20 +200,44 @@ NPC: Bren (baker, Valdris)
 Rules for the rotation:
 
 - **Conditions still win outright.** A matched condition is
-  first-match-wins and resolves to exactly one entry, which repeats
-  on re-talk as usual. The ambient cursor does not move while a
-  conditioned entry is being served, so the player resumes where they
-  left off once the condition lapses.
+  first-match-wins: the topmost true condition takes the stack, and a
+  lower entry with a *different* condition does not get a turn even if
+  it would also be true.
+- **A shared condition rotates too.** Several entries may carry the
+  *identical* condition string — the same authoring pattern as multiple
+  defaults, applied to a story state. Bren has two lines on
+  `cael_betrayal_complete` and two on `interlude_begins`. Every entry
+  repeating the winning condition joins the rotation, so none of them
+  is stranded. A story state with exactly one authored line resolves to
+  that line, which repeats on re-talk as usual.
 - **One line per interaction.** The rotation advances by one entry per
-  confirm press. An entry's own multiple text boxes still page within
-  that single interaction.
+  interaction. An entry's own multiple text boxes still page within
+  that single interaction, consuming several confirm presses but
+  advancing the cursor once.
 - **The cursor is session state, not save state.** It persists across
   map changes and battles within a play session, and resets to the
-  first default on a new game or on loading a save. Which flavour line
-  comes next is not progression, so it is deliberately absent from
-  save data.
+  first entry on a new game or on loading a save. Which line comes next
+  within a single story state is not progression, so it is deliberately
+  absent from save data.
 - **Order is authored order.** Entries rotate in the order they appear
   in the NPC's dialogue file.
+
+**Conditions in scene sequences.** A cutscene or scene file is played
+in authored order rather than resolved as a priority stack, but its
+entries carry the same `condition` field and the engine honours it the
+same way: a false condition means that entry does not play. Two
+authoring rules follow, and both are checkable by reading the file:
+
+- **A branch is a block, not a line.** When a conditioned entry is
+  answered or continued by the entries beneath it, every entry in that
+  block must carry the same condition. An unconditioned reply below a
+  gated line will play on its own when the gate is false, leaving a
+  character answering something nobody said.
+- **Mutually exclusive branches need a reachable fallback.** Write the
+  else-half as its own condition (Section 3.3 has no NOT operator — use
+  `flag == 0`), or leave the last branch unconditioned so exactly one
+  always plays. A "default" branch gated on an invented flag name never
+  fires.
 
 ### 3.3 Flag Types in Conditions
 
@@ -215,6 +247,8 @@ Rules for the rotation:
 | Numeric comparison | `score_name >= N` | `council_savanh_approval >= 2` | Supports `>=`, `<=`, `==`, `!=`, `>`, `<` |
 | String comparison | `flag_name == value` | `reunion_order_1 == edren` | Used for reunion order and any value-storing flags |
 | Party presence | `party_has(member)` | `party_has(torren)` | True when the named character is in the active party |
+| Negation | `flag_name == 0` | `scene_7c_cordwyn == 0` | The "not yet" form. An unset flag reads as `0`, so this is true until the flag is set. There is no `NOT`/`!` operator — do not invent `<flag>_not_set` style names, which are just unset flags and are false forever |
+| Choice pseudo-flag | `choice_N_selected` | `choice_2_selected` | Scene-local, set by the preceding choice in the same sequence; never an event flag. See Section 3.4 |
 
 **Combination rules:**
 
@@ -239,6 +273,18 @@ Scores are clamped to their documented range — the engine enforces
 `clamp(score, min, max)` after each increment. Score ranges are
 defined in events.md alongside the flag definition.
 
+**Starting values.** A score need not start at its minimum. events.md
+may document a non-zero starting value — `council_caden_approval`
+(flag 41) starts at 1, because Torren is always in the diplomatic party
+and his rapport as a spirit-speaker is already banked before anyone
+speaks. Dialogue choices add on top of that start, and a condition read
+before the first choice sees the documented start, not 0.
+
+**Derived tallies are not scores.** `council_result` (flag 43) is
+computed from flags 40–42 once the council concludes and is *assigned*,
+not incremented. It uses the same numeric comparison syntax in
+conditions, but no choice may carry it as a `score_name`.
+
 ### 3.4 Choice Consequences (Two Patterns Only)
 
 Dialogue choices produce one or both of two consequence types:
@@ -254,8 +300,9 @@ Dialogue choices produce one or both of two consequence types:
    score variable.
    - Example: A diplomatic answer during Savanh's audience adds +2 to
      `council_savanh_approval` (events.md flag 40). The total score
-     (0–3) determines Savanh's support at the tribal council and
-     unlocks the Grandmother Seyth bonus dialogue path at score 3.
+     (0–3) determines Savanh's support at the tribal council;
+     consulting Grandmother Seyth beforehand is what unlocks the bonus
+     option that reaches 3.
 
 **Explicit design constraints:**
 
@@ -275,11 +322,13 @@ reaction entry per option. Those entries are gated on
 `choice_1_selected` … `choice_4_selected`, numbered from the top option
 down. These are **not** event flags: they are scene-local, live only for
 the remainder of the current sequence, and are never written to save
-data. Selecting an option makes exactly one of them true and the rest
-false, so a later question's reactions can never be satisfied by an
-earlier answer. Reaction entries must therefore follow their question
-within the same sequence — the pseudo-flags do not survive into a
-different scene or NPC conversation.
+data. Answering a question replaces the previous answer's pseudo-flags:
+exactly one of them becomes true and the rest false. Reaction entries
+must therefore follow their question within the same sequence — the
+pseudo-flags do not survive into a different scene or NPC conversation
+— and a question whose reactions matter must itself be unconditioned,
+since a question the engine skips leaves the *previous* question's
+answer standing and its reactions would fire against that.
 
 ```
 thornmere_council_005  [default]           -> Savanh's question, 3 options
@@ -373,7 +422,11 @@ whatever Tier 1 scene variations require. Total script target remains
 > Three flags are **scene-local** and do not yet exist in events.md —
 > they are defined here and slated for addition during Gap 3.7 script
 > work: `savanh_audience_active`, `act2_thornmere_council`,
-> `cael_betrayal_cutscene`.
+> `cael_betrayal_cutscene`. Distinct from those are the four
+> `choice_1_selected` … `choice_4_selected` **pseudo-flags** of Section
+> 3.4: the engine synthesises them from the option the player just
+> picked, they live only for the remainder of the sequence, and they
+> will never appear in events.md.
 
 ---
 
@@ -390,7 +443,7 @@ a custom format, but the information per entry is fixed.
 | `id` | Yes | string | Unique identifier, e.g., `aldis_act2_early` |
 | `speaker` | Yes | string | Character name shown in name tag. Empty string `""` hides the name tag entirely (used for narration). |
 | `lines` | Yes | string[] | Array of dialogue boxes (each 1–3 rendered lines of text). Multi-page dialogue = multiple entries in the array. Index N in this array is what `before_line_N`/`after_line_N` and `sfx.line` reference — "line" in those contexts means "dialogue box at index N," not a rendered text line within a box. |
-| `condition` | No | expression | Flag expression for priority stack. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, and AND combinations (Section 3.3). Omit for default/fallback entries. |
+| `condition` | No | expression | Flag expression, evaluated both for NPC priority-stack entries and for every entry of a scene or cutscene sequence — a sequence entry whose condition is false does not play. Supports binary flags, numeric comparisons, string comparisons, `party_has()` checks, `choice_N_selected` pseudo-flags, and AND combinations (Section 3.3). Omit for default/fallback entries. |
 | `animations` | No | animation[] | Sprite animation triggers fired between dialogue boxes. Each trigger specifies `who`, `anim`, and `when` (see Animation Trigger Fields). |
 | `choice` | No | choice[] | Choice prompt displayed after the final line. Array of options, each with a label and consequence (see Choice Option Fields). |
 | `sfx` | No | sfx_trigger[] | Sound effect triggers tied to specific lines. Each trigger specifies `line` and `id` (see SFX Trigger Fields). |
@@ -579,6 +632,8 @@ scene-local flag pending addition to events.md during Gap 3.7.
 - **Scene files:** One file per major story scene (e.g.,
   `scene-betrayal`, `scene-council`). Contains cutscene dialogue with
   animations, choices, and sound effects.
-- **Priority stack order = entry order.** Within each NPC's block,
-  entries are evaluated top-to-bottom. Authors control priority by
-  reordering entries — no separate priority field is needed.
+- **Priority stack order = entry order.** Within each NPC's block, the
+  conditioned entries are evaluated top-to-bottom. Authors control
+  priority by reordering them — no separate priority field is needed.
+  Unconditioned entries are the fallback set and do not compete for
+  position (Section 3.2).
