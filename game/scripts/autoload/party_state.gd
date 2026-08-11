@@ -156,7 +156,7 @@ func get_crystal_state(crystal_id: String) -> Dictionary:
 	return _get_crystals().get_state(crystal_id)
 
 
-## Add XP to a crystal, auto-leveling when thresholds are crossed.
+## Add XP to a crystal, auto-levelling when thresholds are crossed.
 func add_crystal_xp(crystal_id: String, amount: int) -> void:
 	_get_crystals().add_xp(crystal_id, amount)
 

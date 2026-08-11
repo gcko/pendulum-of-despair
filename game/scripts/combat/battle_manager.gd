@@ -57,7 +57,7 @@ func _ready() -> void:
 		return
 	_ui.initialize(self)
 	_ui.command_submitted.connect(_on_ui_command)
-	_ui.command_canceled.connect(_on_ui_cancel)
+	_ui.command_cancelled.connect(_on_ui_cancel)
 	_ui.results_dismissed.connect(func() -> void: exit_battle("victory"))
 	_ui.submenu_state_changed.connect(func(o: bool) -> void: _atb.set_submenu_open(o))
 	_state.member_died.connect(_on_party_member_died)

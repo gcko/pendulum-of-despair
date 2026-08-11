@@ -2,7 +2,7 @@ extends PanelContainer
 ## Command panel + sub-menus + target selection for battle.
 
 signal command_selected(command: Dictionary)
-signal command_canceled
+signal command_cancelled
 signal submenu_opened
 signal submenu_closed
 signal target_changed(index: int, is_enemy: bool)
@@ -113,7 +113,7 @@ func _handle_command_input(event: InputEvent) -> bool:
 		_confirm_command()
 		return true
 	if event.is_action_pressed("ui_cancel"):
-		command_canceled.emit()
+		command_cancelled.emit()
 		return true
 	return false
 

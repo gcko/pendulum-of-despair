@@ -127,6 +127,15 @@ This directory contains the narrative design for Pendulum of Despair.
   *Label* and correct. If you broaden the pattern that way to hunt a
   suspected miss, read the extra hits as identifiers first.
 
+  The same boundary is why the sweep never sees a British spelling that
+  is already *inside* an identifier: `_` is a word character, so the
+  `command_cancelled` signal in `game/scripts/ui/battle_ui.gd` and
+  `game/scripts/ui/battle_command_menu.gd` does not match `cancell`.
+  That omission is correct and should stay. Renaming a signal is an API
+  change with call sites in other files — `battle_manager.gd` connects
+  to it — not a prose fix, so it belongs in its own commit under its own
+  review rather than folded into a spelling sweep.
+
   A general `-ise/-isation` rule was tried and rejected: *rising*,
   *sunrise* and *promising* flood it, and the exception list needed to
   suppress them is longer and less stable than the stems it replaces.
@@ -161,14 +170,25 @@ This directory contains the narrative design for Pendulum of Despair.
   closed-issue titles. All three record what was written at the time, so
   a British spelling in them is history, not a defect.
 
-  Within the six trees, the two patterns as written return exactly seven
-  hits across five files, with no false positives: `behaviour` in
-  `docs/plans/technical-architecture.md` § 1.2a, and comment and
-  assertion-message text in four files under `game/tests/`. All seven are
-  carried by #378 because they sit in files owned by other in-flight
-  branches. Any *other* hit is new and it is a defect. The absence of
-  hits is still not a proof of cleanliness: the stem half of the pattern
-  only knows the families it has been told about.
+  Within the six trees, the two patterns as written return exactly
+  sixteen hits across thirteen files, with no false positives, and every
+  one of them sits in a file owned by another in-flight branch in this
+  wave — which is why they are tracked rather than fixed here:
+
+  - #378 carries seven: `behaviour` in
+    `docs/plans/technical-architecture.md` § 1.2a, and comment and
+    assertion-message text in four files under `game/tests/`.
+  - #387 carries nine: eight comment sites in seven files under
+    `game/scripts/` (`cutscene_commands.gd`, `cutscene_handler.gd`,
+    `cutscene_player.gd`, which holds two, `npc.gd`, `party_state.gd`,
+    `party_crystals.gd`, `progression_helpers.gd`) and one in
+    `docs/story/progression.md`.
+
+  Every one of the sixteen is doc prose, a code comment, or an assertion
+  message; none is a string the engine emits. Any *other* hit is new and
+  it is a defect. The absence of hits is still not a proof of
+  cleanliness: the stem half of the pattern only knows the families it
+  has been told about.
 
   Two decisions the sweep had to make, recorded so they are not
   re-litigated:

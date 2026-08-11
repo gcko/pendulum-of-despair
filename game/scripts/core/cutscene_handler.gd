@@ -125,7 +125,7 @@ func _on_cutscene_finished() -> void:
 		_cutscene_shake_tween.kill()
 	_cutscene_shake_tween = null
 	# Kill any in-flight entity walk tweens from cutscene move commands
-	# Snap positions to pixel after canceling to prevent sub-pixel drift
+	# Snap positions to pixel after cancelling to prevent sub-pixel drift
 	for entity: Node in _exploration.get_entities().values():
 		if is_instance_valid(entity) and entity.has_method("cancel_walk"):
 			entity.cancel_walk()

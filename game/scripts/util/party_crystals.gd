@@ -126,7 +126,7 @@ func stat_bonus(crystal_id: String, stat: String, char_level: int = 1) -> int:
 
 ## Re-derive the wearer's max HP/MP after a crystal's own level changed. A
 ## crystal level carries hp_per_level / mp_per_level (ley_crystals.json), so
-## leveling one is a change to its holder's persistent stats and must go
+## levelling one is a change to its holder's persistent stats and must go
 ## through the same recalculation an equip change does (#274 family).
 func recalculate_holder(crystal_id: String) -> void:
 	for m: Dictionary in _party.members:

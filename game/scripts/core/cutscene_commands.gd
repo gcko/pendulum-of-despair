@@ -168,7 +168,7 @@ func _new_tween() -> Tween:
 	return tween
 
 
-## Fade colors: white and red are named, everything else fades to black.
+## Fade colours: white and red are named, everything else fades to black.
 func _fade_color(name: String) -> Color:
 	match name:
 		"white":
