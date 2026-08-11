@@ -365,6 +365,9 @@ theme_override_styles/panel = SubResource("StyleBox_ff6_window")
 [node name="UseTab" type="Label" parent="SubScreen/ItemScreen/Layout/TabPanel/TabBar"]
 text = "USE"
 
+[node name="MatTab" type="Label" parent="SubScreen/ItemScreen/Layout/TabPanel/TabBar"]
+text = "MAT"
+
 [node name="ArrangeTab" type="Label" parent="SubScreen/ItemScreen/Layout/TabPanel/TabBar"]
 text = "ARRANGE"
 

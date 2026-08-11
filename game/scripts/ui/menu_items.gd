@@ -1,12 +1,15 @@
 extends Control
-## Items sub-screen: USE / ARRANGE / KEY tabs with single-column item list.
+## Items sub-screen: USE / MAT / ARRANGE / KEY tabs with single-column item list.
 
-enum ItemTab { USE, ARRANGE, KEY }
+enum ItemTab { USE, MAT, ARRANGE, KEY }
 enum ItemState { BROWSING, TARGET_SELECT }
 
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
 const COLOR_DISABLED: Color = Color("#666688")
+## Tab bar label nodes, in ItemTab order (ui-design.md § 4.3).
+const TAB_NODE_NAMES: Array[String] = ["UseTab", "MatTab", "ArrangeTab", "KeyTab"]
 
 var _tab: ItemTab = ItemTab.USE
 var _state: ItemState = ItemState.BROWSING
@@ -25,7 +28,7 @@ var _sort_mode: int = 0  # 0=type, 1=name, 2=quantity
 
 func _ready() -> void:
 	_tab_labels = []
-	for tab_name: String in ["UseTab", "ArrangeTab", "KeyTab"]:
+	for tab_name: String in TAB_NODE_NAMES:
 		var label: Label = get_node_or_null("Layout/TabPanel/TabBar/" + tab_name)
 		if label != null:
 			_tab_labels.append(label)
@@ -119,8 +122,10 @@ func _confirm_item() -> void:
 		_refresh_items()
 		_update_display()
 		return
-	if _tab == ItemTab.KEY:
-		return  # Key items are view-only
+	if _tab == ItemTab.KEY or _tab == ItemTab.MAT:
+		# Key items are view-only, and a material's only use is in battle
+		# (items.md § Drake Fang Special Case).
+		return
 	if _cursor_index >= _items.size():
 		return
 	var item: Dictionary = _items[_cursor_index]
@@ -154,7 +159,8 @@ func _use_on_target() -> void:
 
 
 func _switch_tab(direction: int) -> void:
-	var new_tab: int = (_tab + direction + 3) % 3
+	var tab_count: int = ItemTab.size()
+	var new_tab: int = (_tab + direction + tab_count) % tab_count
 	_tab = new_tab as ItemTab
 	_cursor_index = 0
 	_refresh_items()
@@ -174,6 +180,16 @@ func _refresh_items() -> void:
 				_items.append(data)
 			if _tab == ItemTab.ARRANGE:
 				_sort_items()
+		ItemTab.MAT:
+			# Materials list their sell value, the only number that matters for
+			# them outside crafting (items.md § Sell Price Rules).
+			var materials: Dictionary = PartyState.get_materials()
+			for item_id: String in materials:
+				var mat: Dictionary = _lookup_material(item_id)
+				if mat.is_empty():
+					continue
+				mat["quantity"] = materials[item_id]
+				_items.append(mat)
 		ItemTab.KEY:
 			var key_items: Array = PartyState.get_key_items()
 			for kid: Variant in key_items:
@@ -219,6 +235,8 @@ func _update_display() -> void:
 			var qty: int = item.get("quantity", 0)
 			var qty_str: String = ":%d" % qty if qty > 0 else ""
 			_item_labels[i].text = "%s %s" % [item.get("name", ""), qty_str]
+			if _tab == ItemTab.MAT:
+				_item_labels[i].text += "  %dg" % item.get("sell_price", 0)
 			_item_labels[i].visible = true
 			var is_usable: bool = item.get("usable_in_field", false)
 			if (
@@ -258,6 +276,10 @@ func _update_target_display() -> void:
 			_target_labels[i].modulate = COLOR_SELECTED if i == _target_index else COLOR_NORMAL
 		else:
 			_target_labels[i].visible = false
+
+
+func _lookup_material(item_id: String) -> Dictionary:
+	return Helpers.lookup_material(item_id).duplicate()
 
 
 func _lookup_consumable(item_id: String) -> Dictionary:

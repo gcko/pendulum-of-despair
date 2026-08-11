@@ -12,6 +12,43 @@ static func lookup_consumable(item_id: String) -> Dictionary:
 	return {}
 
 
+## Look up a crafting material by ID from DataManager (data/items/materials.json).
+static func lookup_material(item_id: String) -> Dictionary:
+	var items: Array = DataManager.load_items("materials")
+	for item: Variant in items:
+		if item is Dictionary and (item as Dictionary).get("id", "") == item_id:
+			return item as Dictionary
+	return {}
+
+
+## Which inventory bucket an item id belongs in. Crafting materials go to
+## `materials`, everything else counted by quantity to `consumables`
+## (items.md § Inventory Structure). THE routing rule: every add, remove and
+## consume goes through this, so an item can never land in one bucket and be
+## looked for in the other (GAP-019).
+static func bucket_for_item(item_id: String) -> String:
+	return "materials" if not lookup_material(item_id).is_empty() else "consumables"
+
+
+## Move crafting materials that were filed under consumables into the materials
+## bucket, in place. Used by the v1 -> v2 save migration: before GAP-019 every
+## drop was routed to consumables, where a material has no name and no use.
+static func reroute_materials(inv: Dictionary) -> void:
+	var consumables: Variant = inv.get("consumables", null)
+	if not consumables is Dictionary:
+		return
+	var cons: Dictionary = consumables
+	var mats: Variant = inv.get("materials", {})
+	var materials: Dictionary = mats as Dictionary if mats is Dictionary else {}
+	for item_id: String in cons.keys():
+		if bucket_for_item(item_id) != "materials":
+			continue
+		materials[item_id] = int(materials.get(item_id, 0)) + int(cons[item_id])
+		cons.erase(item_id)
+	inv["consumables"] = cons
+	inv["materials"] = materials
+
+
 ## Look up equipment by ID across all equipment types.
 static func lookup_equipment(equipment_id: String) -> Dictionary:
 	for equip_type: String in ["weapons", "armor", "accessories"]:
@@ -172,6 +209,43 @@ static func add_capsule_gain(member: Dictionary, stat: String, amount: int) -> v
 	var gains: Dictionary = caps as Dictionary if caps is Dictionary else {}
 	gains[stat] = int(gains.get(stat, 0)) + amount
 	member["stat_capsules"] = gains
+
+
+## Translate a crafting material's battle fields into the same shape a battle
+## consumable has, so battle code never needs to know which bucket an item came
+## from. Drake Fang is the only such material today (items.md § Drake Fang
+## Special Case).
+static func battle_entry_for_material(material: Dictionary, quantity: int) -> Dictionary:
+	return {
+		"id": material.get("id", ""),
+		"name": material.get("name", ""),
+		"effect": material.get("battle_effect", ""),
+		"value": material.get("battle_value", 0),
+		"target": material.get("battle_target", "single_enemy"),
+		"usable_in_battle": true,
+		"quantity": quantity,
+	}
+
+
+## Every item the party can use in battle: consumables flagged usable_in_battle
+## plus battle-usable crafting materials, each carrying its held "quantity".
+static func build_battle_item_list() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var consumables: Dictionary = PartyState.get_consumables()
+	for item_id: String in consumables:
+		var data: Dictionary = lookup_consumable(item_id)
+		if data.is_empty() or not data.get("usable_in_battle", false):
+			continue
+		var entry: Dictionary = data.duplicate()
+		entry["quantity"] = int(consumables[item_id])
+		result.append(entry)
+	var materials: Dictionary = PartyState.get_materials()
+	for item_id: String in materials:
+		var material: Dictionary = lookup_material(item_id)
+		if material.is_empty() or not material.get("battle_usable", false):
+			continue
+		result.append(battle_entry_for_material(material, int(materials[item_id])))
+	return result
 
 
 ## Extract top-level stat from equipment (atk for weapons, def/mdef for armor).

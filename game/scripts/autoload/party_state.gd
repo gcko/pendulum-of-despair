@@ -429,6 +429,11 @@ func get_consumables() -> Dictionary:
 	return inventory.get("consumables", {})
 
 
+## Held crafting materials as {item_id: quantity} (items.md § Crafting Materials).
+func get_materials() -> Dictionary:
+	return inventory.get("materials", {})
+
+
 func get_key_items() -> Array:
 	return inventory.get("key_items", [])
 
@@ -456,11 +461,7 @@ func use_item(item_id: String, target_character_id: String) -> bool:
 	# A Stat Capsule can raise HP/MP, so re-derive the maxima through the shared
 	# recalculation. Idempotent for every other consumable effect.
 	_recalculate_max_hp_mp(target_character_id)
-	consumables[item_id] = qty - 1
-	if consumables[item_id] <= 0:
-		consumables.erase(item_id)
-	inventory["consumables"] = consumables
-	inventory_changed.emit()
+	consume_item(item_id)
 	return true
 
 
@@ -515,23 +516,28 @@ func break_arcanite_gear() -> void:
 		equipment_changed.emit("edren")
 
 
+## Add a quantity item to the inventory, routed to its bucket: crafting
+## materials to `materials`, everything else to `consumables` (GAP-019).
 func add_item(item_id: String, quantity: int) -> void:
-	if quantity <= 0:
+	if quantity <= 0 or item_id.is_empty():
 		return
-	var consumables: Dictionary = inventory.get("consumables", {})
-	consumables[item_id] = consumables.get(item_id, 0) + quantity
-	inventory["consumables"] = consumables
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	items[item_id] = items.get(item_id, 0) + quantity
+	inventory[bucket] = items
 	inventory_changed.emit()
 
 
+## Remove a quantity item from whichever bucket it belongs to.
 func remove_item(item_id: String, quantity: int) -> void:
-	if quantity <= 0:
+	if quantity <= 0 or item_id.is_empty():
 		return
-	var cons: Dictionary = inventory.get("consumables", {})
-	cons[item_id] = maxi(0, cons.get(item_id, 0) - quantity)
-	if cons[item_id] <= 0:
-		cons.erase(item_id)
-	inventory["consumables"] = cons
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	items[item_id] = maxi(0, items.get(item_id, 0) - quantity)
+	if items[item_id] <= 0:
+		items.erase(item_id)
+	inventory[bucket] = items
 	inventory_changed.emit()
 
 
@@ -674,16 +680,19 @@ func rest_party(restore_pct: float, clears_status: bool) -> void:
 			m["status_effects"] = []
 
 
-## Consume one unit of a consumable item. Returns true if consumed.
+## Consume one unit of an item from its own bucket. Returns true if consumed.
+## Battle use of a Drake Fang spends it from the material stack (items.md
+## § Drake Fang Special Case), which is the same routing rule adds use.
 func consume_item(item_id: String) -> bool:
-	var consumables: Dictionary = inventory.get("consumables", {})
-	var qty: int = consumables.get(item_id, 0)
+	var bucket: String = Helpers.bucket_for_item(item_id)
+	var items: Dictionary = inventory.get(bucket, {})
+	var qty: int = items.get(item_id, 0)
 	if qty <= 0:
 		return false
-	consumables[item_id] = qty - 1
-	if consumables[item_id] <= 0:
-		consumables.erase(item_id)
-	inventory["consumables"] = consumables
+	items[item_id] = qty - 1
+	if items[item_id] <= 0:
+		items.erase(item_id)
+	inventory[bucket] = items
 	inventory_changed.emit()
 	return true
 

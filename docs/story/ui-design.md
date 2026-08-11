@@ -414,7 +414,7 @@ FF6 item screen: tabs top, description middle, item list bottom.
 
 ```
 ┌──────────────────────────────────────────┐
-│  [USE]   ARRANGE   KEY                   │
+│  [USE]   MAT   ARRANGE   KEY             │
 ├──────────────────────────────────────────┤
 │ Cures [poison icon] status               │
 ├──────────────────────────────────────────┤
@@ -429,8 +429,11 @@ FF6 item screen: tabs top, description middle, item list bottom.
 
 ### 4.3 Tab Bar
 
-- Three tabs: **USE** | **ARRANGE** | **KEY**
-- USE: consumable items. ARRANGE: cycles through sort orders on each
+- Four tabs: **USE** | **MAT** | **ARRANGE** | **KEY**
+- USE: consumable items. MAT: crafting materials with their sell value,
+  view-only here — a material's only in-game use is in battle (see
+  [items.md](items.md) § Drake Fang Special Case) or in crafting.
+  ARRANGE: cycles through sort orders on each
   press (Type → Name → Quantity → Type...; default sort is Type).
   KEY: key items and quest items (viewable, not usable).
 - Active tab highlighted in white, inactive in pale blue.

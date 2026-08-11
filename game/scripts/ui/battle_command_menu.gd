@@ -10,6 +10,7 @@ signal target_changed(index: int, is_enemy: bool)
 enum MenuState { HIDDEN, COMMAND, SUBMENU, TARGET }
 
 const SpellHelpers := preload("res://scripts/ui/spell_helpers.gd")
+const InvHelpers := preload("res://scripts/autoload/inventory_helpers.gd")
 
 const COLOR_SELECTED: Color = Color("#ffff88")
 const COLOR_NORMAL: Color = Color("#ccddff")
@@ -192,6 +193,7 @@ func _confirm_command() -> void:
 		"ability":
 			_show_submenu()
 		"item":
+			_build_item_submenu()
 			_show_submenu()
 		"defend":
 			command_selected.emit({"type": "defend"})
@@ -261,6 +263,27 @@ func _build_magic_submenu() -> void:
 					"command": {"type": "magic", "spell": spell},
 					"target_type": spell.get("target", "single_enemy"),
 					"enabled": _current_mp >= cost,
+				}
+			)
+		)
+	set_submenu_items(items)
+
+
+## Populate the submenu with the party's battle-usable items (GAP-019). Battle
+## consumables and battle-usable crafting materials share one list because
+## InventoryHelpers gives them one shape; each entry routes an
+## {"type": "item", "item": <item_dict>} command, as the magic submenu does.
+func _build_item_submenu() -> void:
+	var items: Array[Dictionary] = []
+	for entry: Dictionary in InvHelpers.build_battle_item_list():
+		(
+			items
+			. append(
+				{
+					"label": "%s  :%d" % [entry.get("name", "Item"), entry.get("quantity", 0)],
+					"command": {"type": "item", "item": entry},
+					"target_type": entry.get("target", "single_ally"),
+					"enabled": true,
 				}
 			)
 		)

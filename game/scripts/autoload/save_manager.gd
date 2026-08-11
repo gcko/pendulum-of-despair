@@ -5,6 +5,8 @@ extends Node
 ## Save files are JSON in user://saves/. Global config is separate.
 ## See docs/plans/technical-architecture.md Section 6.
 
+const Helpers = preload("res://scripts/autoload/inventory_helpers.gd")
+
 ## Increment this when the save schema changes. Migration chain runs
 ## automatically on load for older versions.
 ## v2: player position is real or absent (#269) and crafting materials live in
@@ -216,10 +218,17 @@ func _migrate(data: Dictionary) -> Dictionary:
 ## stood. Dropping the key is deliberate: an absent position means "spawn at the
 ## map's default marker", which keeps an old save from materialising the party
 ## inside geometry at the map origin.
+##
+## v1 also routed every acquired item into the consumables bucket, so crafting
+## materials sat where nothing could name or use them (GAP-019). They are moved
+## into `inventory.materials` here rather than dropped — the player earned them.
 func _migrate_v1_to_v2(data: Dictionary) -> Dictionary:
 	var world: Variant = data.get("world", null)
 	if world is Dictionary:
 		(world as Dictionary).erase("current_position")
+	var inv: Variant = data.get("inventory", null)
+	if inv is Dictionary:
+		Helpers.reroute_materials(inv as Dictionary)
 	return data
 
 
