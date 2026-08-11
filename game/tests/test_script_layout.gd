@@ -158,18 +158,29 @@ func _script_line_counts(roots: Array[String]) -> Dictionary:
 	return counts
 
 
-func test_no_script_exceeds_the_hard_line_maximum() -> void:
-	var counts: Dictionary = _script_line_counts(CEILING_ROOTS)
+## _script_line_counts, plus the assertions that the walk reached every root.
+##
+## The walk missing a root — or the root list being emptied — is the failure
+## neither budget test can survive: it would report a clean tree while never
+## looking at one, and with nothing over the threshold the test would assert
+## nothing at all and still be counted as passing. So both tests take their
+## counts through here instead of calling _script_line_counts directly, which
+## also means neither can be left behind when the other gains a guard.
+func _scanned_line_counts(roots: Array[String]) -> Dictionary:
+	var counts: Dictionary = _script_line_counts(roots)
 	assert_gt(counts.size(), 20, "the scan must actually find the script tree")
-	# The walk missing a whole root is the failure this test cannot survive:
-	# it would report a clean tree while never looking at it.
-	for root: String in CEILING_ROOTS:
+	for root: String in roots:
 		var seen: bool = false
 		for path: String in counts:
 			if path.begins_with(root + "/"):
 				seen = true
 				break
 		assert_true(seen, "the scan must reach %s" % root)
+	return counts
+
+
+func test_no_script_exceeds_the_hard_line_maximum() -> void:
+	var counts: Dictionary = _scanned_line_counts(CEILING_ROOTS)
 	var over: Array[String] = []
 	for path: String in counts:
 		if int(counts[path]) > MAX_SCRIPT_LINES:
@@ -245,7 +256,7 @@ func test_files_between_the_aim_and_the_maximum_are_justified_in_the_doc() -> vo
 	var section: String = _budget_section()
 	if section.is_empty():
 		return  # _budget_section already failed the test
-	var counts: Dictionary = _script_line_counts(AIM_ROOTS)
+	var counts: Dictionary = _scanned_line_counts(AIM_ROOTS)
 	var still_undocumented: Dictionary = {}
 	for path: String in counts:
 		if int(counts[path]) <= TARGET_SCRIPT_LINES:
