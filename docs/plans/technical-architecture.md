@@ -123,7 +123,7 @@ Two thresholds, not one:
 `test_script_layout.gd` walks both trees for the 600-line maximum — a file past it fails
 the suite wherever it lives. The 400-line aim, and the written justification this section
 demands of every file in the 400–600 band, apply to `scripts/` only. A test file has no
-collaborator to extract into: its length tracks how many behaviours its subject has, not
+collaborator to extract into: its length tracks how many behaviors its subject has, not
 any property of its own design, so the only lever is splitting it by subject, and doing
 that at 400 would scatter one subject's tests across several files for nothing. The
 ceiling still catches the failure that matters, which is a file that stopped being about
@@ -146,7 +146,7 @@ not re-litigate it. Legitimate reasons look like:
   mutates ten private fields at once; extracting it trades method bodies for setters.
 - **State a test suite pins directly.** `audio_manager.gd` keeps its player/tween/track-ID
   fields because `test_audio_manager.gd` asserts against them in ~25 places — moving them
-  would discard the strongest evidence that crossfade behaviour is unchanged.
+  would discard the strongest evidence that crossfade behavior is unchanged.
 - **A loop plus the seam its collaborators reach it through.** `battle_manager.gd` is the
   post-extraction residue of a 724-line original: every command the player can pick was
   moved out to `BattlePlayerActions` (attack/defend/flee), `BattleMagicCommand` and
