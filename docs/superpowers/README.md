@@ -95,4 +95,9 @@ the act-boundary correction (#287); that list went stale the moment a fourth
 record disagreed with canon (#352). The rule now covers the whole directory, so
 nothing has to be enumerated.
 
+The policy is prospective. Some dated records were repaired against canon
+before it existed — `0a646a5` re-anchored `2026-03-18-faint-mechanic.md` and
+corrected a spell cost in `2026-03-26-difficulty-balance.md`, for example.
+Those repairs stand; they are simply no longer the thing to do.
+
 Closes the question raised in #317, #335, #344 and #352.
