@@ -352,19 +352,12 @@ class TestStringKeyInventory(DialogueSyncFixture):
             scene_id="fixture",
             entries=[{"choice": [{"branch": {"caption": "Deep."}}]}],
         )
-        self.assertIn(
-            "caption",
-            set(
-                check_dialogue_sync.iter_string_keys(
-                    json.load(
-                        open(
-                            os.path.join(self.dialogue_dir, "scene.json"),
-                            encoding="utf-8",
-                        )
-                    )
-                )
-            ),
-        )
+        path = os.path.join(self.dialogue_dir, "scene.json")
+        with open(path, encoding="utf-8") as handle:
+            found = set(
+                check_dialogue_sync.iter_string_keys(json.load(handle))
+            )
+        self.assertIn("caption", found)
 
     def test_a_walk_that_stops_descending_trips_the_floor(self):
         """Break the recursion, not the entry point, and watch it fire.
