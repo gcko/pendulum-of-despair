@@ -19,6 +19,7 @@ GATE_DIR="scripts/quality-gates"
 #   H  GUT unit tests             pre-push
 #   I  quality-gate self-tests    pre-push   test_quality_gates.py
 #   J  dialogue script/JSON sync  pre-push   check_dialogue_sync.py
+#   K  American-English spelling  pre-push   check_spelling.py
 #
 # Each gate script's module docstring names its own letter; keep the two in
 # step when editing either.
@@ -52,6 +53,14 @@ python3 "$GATE_DIR/check_doc_citations.py"
 # === QUALITY GATE J: Dialogue script/JSON sync ===
 echo "=== Pre-push: Dialogue script/JSON sync ==="
 python3 "$GATE_DIR/check_dialogue_sync.py"
+
+# === QUALITY GATE K: American-English spelling ===
+# The house rule in docs/story/README.md § Writing Conventions used to live
+# only as two grep commands written down in that document, which nothing ran.
+# Five sweeps each missed residue the next one found, and two of them added
+# fresh British spellings in the commit that was sweeping (#400).
+echo "=== Pre-push: American-English spelling ==="
+python3 "$GATE_DIR/check_spelling.py"
 
 # === QUALITY GATE H: GUT unit tests ===
 # Run all GUT tests headless. Requires Godot binary on PATH or at

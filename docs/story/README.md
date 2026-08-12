@@ -136,16 +136,50 @@ This directory contains the narrative design for Pendulum of Despair.
   to it — not a prose fix, so it belongs in its own commit under its own
   review rather than folded into a spelling sweep.
 
-  A general `-ise/-isation` rule was tried and rejected: *rising*,
-  *sunrise* and *promising* flood it, and the exception list needed to
-  suppress them is longer and less stable than the stems it replaces.
-  Two more families are deliberately absent — `paralys` collides with the
-  correct *analysis* / *paralysis*, and `centre` with the proper noun
-  *Centre*. Both are clean today (checked by hand), but nothing in the
-  patterns above will tell you when they stop being clean.
+  **These patterns are a gate now, not a note.**
+  `scripts/quality-gates/check_spelling.py` — Quality Gate K, run from
+  `.husky/pre-push` — applies every family in this section to the six
+  trees on every push. It exists because nothing ran the two commands
+  above: five sweeps each found residue the previous one missed, and two
+  of them introduced fresh British spellings in the very commit that was
+  sweeping (#400). Stop hand-auditing against the greps; run the gate.
+  Where the gate and this prose disagree, the gate is the one that ships,
+  and the prose is the defect.
 
-  `grey` and its proper nouns (`Greyveil`, `Greyvale`, `Greywood`, the
-  `grey_*` data identifiers) are correct and are excluded on purpose.
+  A general `-ise`/`-isation` rule was tried and rejected once, on the
+  grounds that *rising*, *sunrise* and *promising* flood it. #400
+  overturned that. The flood is real, but it is a closed set of ordinary
+  English words, which makes it the same shape as the `-our` over-match
+  list above — a fact about English rather than a guess about authors.
+  The cost of leaving it out was concrete: the stem half held `realis`
+  and `recognis` and nothing else, so it could not see *optimise*,
+  *organisation*, *summarise*, *visualise* or a dozen other members of
+  the family, and *optimises* sat in
+  `game/scripts/util/party_equipment.gd` until #387 found it by hand.
+  The rule and its exception list now live in `ALLOWED_ISE_LEMMAS` in
+  `scripts/quality-gates/check_spelling.py`, where they are tested rather
+  than argued about.
+
+  Two families are still deliberately absent — `paralys` collides with
+  the correct *analysis* / *paralysis*, and `centre` with the proper noun
+  *Centre*. Both are clean today (checked by hand), but neither the
+  patterns above nor the gate will tell you when they stop being clean.
+
+  **The `grey` carve-out, exactly.** The bare word `grey`, the coined
+  proper nouns built on it (*Greyveil*, *Greyvale*, *Greywood*, the
+  world-state *The Grey*, *Grey Remnant*, *Grey Cleaver*, *Grey Keeper*)
+  and the `grey_*` data identifiers are correct and are never flagged.
+  `grey` in this setting names the Pallor world-state, and *Grey Remnant*
+  is a shipped Ley Crystal name in `game/data/ley_crystals.json`, so a
+  sweep that "fixed" it would rename an item the player can read. What
+  *is* swept is the inflected color word — *greyed*, *greying*, *greyer*,
+  *greyest*, *greyish*, *greys*, *greyscale* — which is what #400 found
+  in `menu_overlay.gd` and `battle_command_menu.gd` and which neither
+  grep above could see. The gate encodes the carve-out structurally: its
+  pattern requires one of those suffixes, so bare `grey`, `Greyveil` and
+  `grey_residue` cannot match it. Read the consequence plainly — a clean
+  gate run is **not** a claim that this corpus spells the color word
+  *gray*. The 844 bare `grey` tokens are outside the pattern by design.
 
   **The sweep covers six trees, and only three things sit outside it.**
   `docs/plans/` and `docs/analysis/` were added by #375, which found the
@@ -170,42 +204,36 @@ This directory contains the narrative design for Pendulum of Despair.
   closed-issue titles. All three record what was written at the time, so
   a British spelling in them is history, not a defect.
 
-  Within the six trees the two patterns return a residue, and what is
-  worth checking about it is its *character*, not its size: every hit is
-  doc prose, a code comment, or an assertion message, and none is a
-  string the engine emits. **No count is written here on purpose.** One
-  used to be, and it was wrong inside a week — the residue moves every
-  time a branch in this wave lands a fix or writes a new comment, and a
-  number typed into prose cannot notice either event. Run the two
-  commands above for the current set, then sort it against the two lists
-  below.
+  **The residue the two greps tracked is gone.** #387 fixed the
+  `game/scripts/` comment sites and the one in
+  `docs/story/progression.md`; #399 and #378 fixed the six `game/tests/`
+  comment and assertion-message sites (`test_dialogue_conditions.gd`,
+  which held three, `test_menu_ui_structure.gd`, `test_npc.gd`,
+  `test_stat_capsules.gd`); and the `behaviour` sites this wave wrote
+  into `test_battle_regressions.gd` and `test_script_layout.gd` — a sweep
+  can introduce the thing it is sweeping for — went with an earlier
+  branch. Both greps return nothing today. Nothing about that is
+  self-sustaining, which is the whole reason Gate K exists: the previous
+  four times this paragraph said the tree was clean, it was a hand check
+  that nothing re-ran.
 
-  - **#387 owns the `game/scripts/` comment sites**
-    (`cutscene_commands.gd`, `cutscene_handler.gd`, `cutscene_player.gd`,
-    which holds two, `npc.gd`, `party_state.gd`, `party_crystals.gd`,
-    `progression_helpers.gd`) and the one in `docs/story/progression.md`.
-  - **#378 owns the `game/tests/` comment and assertion-message text**
-    in `test_dialogue_conditions.gd`, which holds three,
-    `test_menu_ui_structure.gd`, `test_npc.gd` and
-    `test_stat_capsules.gd`. Its list also named `behaviour` in
-    `docs/plans/technical-architecture.md`; an earlier branch in this
-    wave fixed that one, so the issue now describes one site more than
-    the tree holds.
+  **What the gate carries instead is a ratchet.** The two families #400
+  added — `-ise`/`-isation` and the inflected `grey` — landed on a corpus
+  that had never been checked for either, so **44 occurrences are pinned**
+  in `KNOWN_VIOLATIONS` in `scripts/quality-gates/check_spelling.py`,
+  across 20 files. What is worth knowing about them is their *character*,
+  not their size: every one is doc prose or a code comment in a file
+  owned by another in-flight branch, and none is a string the engine
+  emits — the two `docs/story/script/` pins are stage direction and a UI
+  note, not `lines[]` dialogue. The pin fails at both ends: a new hit
+  fails, and a pin whose count no longer matches its file — because the
+  fix landed — also fails. So the list can only shrink, and no entry
+  outlives its reason. Pinning is not how a new violation gets in; the
+  fix for one is the American spelling.
 
-  Both sets sit in files owned by other in-flight branches, which is why
-  they are tracked rather than fixed here.
-
-  Anything the greps return that is not in those two lists is new, and by
-  the rule above it is a defect rather than residue. Some already exist:
-  `behaviour` in the header comment of `game/tests/test_battle_regressions.gd`
-  and `behaviours` in a comment in `game/tests/test_script_layout.gd` were
-  both written by *this* wave, in the commit that split the oversized test
-  files, and neither is tracked by #378 or #387 — one of the two files did
-  not exist when those issues were filed. A sweep can introduce the thing
-  it is sweeping for, so "residue" is not a synonym for "somebody else's".
-
-  The absence of hits is still not a proof of cleanliness: the stem half
-  of the pattern only knows the families it has been told about.
+  The absence of hits is still not a proof of cleanliness. The gate knows
+  four families; `paralys` and `centre` are not among them, and it does
+  not look at the bare word `grey` at all.
 
   Two decisions the sweep had to make, recorded so they are not
   re-litigated:
