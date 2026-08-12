@@ -8,6 +8,9 @@ extends GutTest
 ## 3. No camelCase keys remain in save-system.md pseudo-schema
 ## 4. technical-architecture.md section 2.1 keeps documenting the enemy
 ##    schema the act tables actually ship (issue #235)
+## 5. technical-architecture.md sections 2.6 and 2.8 keep documenting the
+##    encounter and crafting schemas the shipped JSON actually carries
+##    (issue #362)
 
 
 func before_each() -> void:
@@ -321,3 +324,236 @@ func test_arch_doc_2_1_shows_nested_two_tier_steal() -> void:
 		content.contains("a single `steal` field"),
 		"technical-architecture.md still claims the enemy JSON uses a single steal field",
 	)
+
+
+# ── technical-architecture.md §2.6 / §2.8 schema sync (issue #362) ───────
+
+
+## The contents of every ```json fence inside `text`, concatenated.
+##
+## Retired-form assertions run against THIS, never against the whole
+## section. The field notes under §2.6 and §2.8 deliberately NAME the
+## retired forms — "the earlier draft (`floor`, and flat `back_attack_rate`
+## / `preemptive_rate`) never landed" — so a whole-section
+## `assert_false(contains("back_attack_rate"))` would fail on the very
+## sentence that records the decision. What must stay clean is the shape
+## the section holds out as current: the example JSON.
+func _json_fences(text: String) -> String:
+	var out: PackedStringArray = PackedStringArray()
+	var inside: bool = false
+	for line: String in text.split("\n"):
+		if line.begins_with("```"):
+			inside = line.begins_with("```json")
+			continue
+		if inside:
+			out.append(line)
+	return "\n".join(out)
+
+
+## Every res://data/encounters/*.json that ships a `floors` array, parsed.
+## overworld.json and overworld_zones.json are the documented exceptions
+## (§2.6 "Three files depart from this shape deliberately") and are skipped.
+func _floor_shaped_encounter_files() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var dir: DirAccess = DirAccess.open("res://data/encounters")
+	if dir == null:
+		fail_test("cannot open res://data/encounters")
+		return out
+	for file_name: String in dir.get_files():
+		if not file_name.ends_with(".json"):
+			continue
+		var parsed: Variant = DataManager.load_json("res://data/encounters/".path_join(file_name))
+		if not parsed is Dictionary:
+			continue
+		var record: Dictionary = parsed as Dictionary
+		if record.has("floors"):
+			out.append(record)
+	return out
+
+
+## Keys carried by EVERY dictionary in `records` — the fields the doc is
+## obliged to document. Empty when `records` is empty, which is why each
+## caller asserts the record count before using the result.
+func _universal_keys(records: Array) -> Array[String]:
+	var universal: Dictionary = {}
+	var seeded: bool = false
+	for entry: Variant in records:
+		if not entry is Dictionary:
+			continue
+		var record: Dictionary = entry as Dictionary
+		if not seeded:
+			for key: Variant in record.keys():
+				universal[key] = true
+			seeded = true
+			continue
+		for key: Variant in universal.keys():
+			if not record.has(key):
+				universal.erase(key)
+	var out: Array[String] = []
+	for key: Variant in universal.keys():
+		out.append(str(key))
+	out.sort()
+	return out
+
+
+## Names every key of `keys` the doc section does not mention at all.
+##
+## Two spellings count, because the doc uses both: a JSON key inside an
+## example fence ("floor_id") and inline code in the field notes
+## (`base_weapon_id`). §2.8 documents synergies.json entirely in prose —
+## it ships no synergies example — so a quoted-form-only diff would report
+## six documented keys as missing.
+func _undocumented(section: String, keys: Array[String]) -> Array[String]:
+	var missing: Array[String] = []
+	for key: String in keys:
+		if not (section.contains('"%s"' % key) or section.contains("`%s`" % key)):
+			missing.append(key)
+	return missing
+
+
+func test_arch_doc_2_6_documents_every_universal_encounter_field() -> void:
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section("### 2.6 Encounter Data", "### 2.7 Spell Data", content)
+	if section.is_empty():
+		return
+	var dungeons: Array[Dictionary] = _floor_shaped_encounter_files()
+	# Guard the diffs below: no files means every key list is empty and every
+	# assertion passes vacuously.
+	assert_gte(
+		dungeons.size(), 20, "20+ encounter files ship a floors array, got %d" % dungeons.size()
+	)
+	var floors: Array = []
+	var groups: Array = []
+	var bosses: Array = []
+	for dungeon: Dictionary in dungeons:
+		for floor_entry: Variant in dungeon.get("floors", []):
+			floors.append(floor_entry)
+			if floor_entry is Dictionary:
+				for group: Variant in (floor_entry as Dictionary).get("groups", []):
+					groups.append(group)
+		for boss: Variant in dungeon.get("bosses", []):
+			bosses.append(boss)
+	assert_gt(floors.size(), 0, "the encounter files ship floors")
+	assert_gt(groups.size(), 0, "the encounter files ship encounter groups")
+	assert_gt(bosses.size(), 0, "the encounter files ship boss records")
+
+	var dungeon_records: Array = []
+	dungeon_records.assign(dungeons)
+	var levels: Dictionary = {
+		"dungeon": _universal_keys(dungeon_records),
+		"floor": _universal_keys(floors),
+		"group": _universal_keys(groups),
+		"boss": _universal_keys(bosses),
+	}
+	for level: String in levels:
+		var keys: Array[String] = levels[level]
+		assert_gte(keys.size(), 3, "every %s record should share 3+ keys" % level)
+		assert_eq(
+			_undocumented(section, keys),
+			[] as Array[String],
+			"technical-architecture.md §2.6 does not document these %s keys" % level,
+		)
+
+
+func test_arch_doc_2_6_example_shows_no_retired_encounter_forms() -> void:
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section("### 2.6 Encounter Data", "### 2.7 Spell Data", content)
+	if section.is_empty():
+		return
+	var example: String = _json_fences(section)
+	assert_gt(example.length(), 0, "§2.6 should carry an example JSON block")
+	assert_false(
+		example.contains("back_attack_rate") or example.contains("preemptive_rate"),
+		"§2.6's example must not show the retired flat back_attack_rate/preemptive_rate pair",
+	)
+	assert_true(
+		example.contains('"formation_rates"'),
+		"§2.6's example should show the formation_rates object that replaced them",
+	)
+	# `floor` is retired at FLOOR level only — a boss still carries one, which
+	# is why this narrows to the floors array instead of the whole example.
+	var floors_start: int = example.find('"floors"')
+	var bosses_start: int = example.find('"bosses"')
+	assert_gt(floors_start, -1, "§2.6's example should show a floors array")
+	assert_gt(bosses_start, floors_start, "§2.6's example should show bosses after floors")
+	var floors_block: String = example.substr(floors_start, bosses_start - floors_start)
+	assert_true(floors_block.contains('"floor_id"'), "floors are keyed floor_id")
+	assert_false(
+		floors_block.contains('"floor":'),
+		'§2.6\'s floors must not use the retired bare "floor" key',
+	)
+
+
+func test_arch_doc_2_8_documents_every_universal_crafting_field() -> void:
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section(
+		"### 2.8 Crafting Data", "### Data Formats Deferred at Design Time", content
+	)
+	if section.is_empty():
+		return
+	var devices: Variant = DataManager.load_json("res://data/crafting/devices.json")
+	var recipes: Variant = DataManager.load_json("res://data/crafting/recipes.json")
+	var synergies: Variant = DataManager.load_json("res://data/crafting/synergies.json")
+	assert_true(devices is Dictionary, "devices.json parses")
+	assert_true(recipes is Dictionary, "recipes.json parses")
+	assert_true(synergies is Dictionary, "synergies.json parses")
+	if not (devices is Dictionary and recipes is Dictionary and synergies is Dictionary):
+		return
+	var tables: Dictionary = {
+		"devices": (devices as Dictionary).get("devices", []),
+		"forging_recipes": (recipes as Dictionary).get("forging_recipes", []),
+		"infusions": (recipes as Dictionary).get("infusions", []),
+		"synergies": (synergies as Dictionary).get("synergies", []),
+	}
+	for table: String in tables:
+		var records: Array = tables[table]
+		# Guard the diff: an empty table would document nothing and still pass.
+		assert_gt(records.size(), 0, "%s should ship records" % table)
+		var keys: Array[String] = _universal_keys(records)
+		assert_gte(keys.size(), 5, "every %s record should share 5+ keys" % table)
+		assert_eq(
+			_undocumented(section, keys),
+			[] as Array[String],
+			"technical-architecture.md §2.8 does not document these %s keys" % table,
+		)
+
+
+func test_arch_doc_2_8_example_shows_no_retired_crafting_forms() -> void:
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var section: String = _arch_section(
+		"### 2.8 Crafting Data", "### Data Formats Deferred at Design Time", content
+	)
+	if section.is_empty():
+		return
+	var example: String = _json_fences(section)
+	assert_gt(example.length(), 0, "§2.8 should carry example JSON blocks")
+	for retired: String in ['"result_item"', '"forge_location"', '"recipes": ['] as Array[String]:
+		assert_false(
+			example.contains(retired),
+			"§2.8's examples must not show the retired %s form" % retired,
+		)
+	assert_true(example.contains('"result_id"'), "a forging recipe names its result as result_id")
+	assert_true(example.contains('"forge_locations"'), "the forge list is the plural form")
+	assert_true(example.contains('"forging_recipes": ['), "the top-level array is forging_recipes")
+
+
+func test_arch_doc_examples_use_roman_numeral_act_ids() -> void:
+	# The game data has no act_1 anywhere; the ids are act_i/act_ii/act_iii.
+	# Scoped to the JSON fences because the prose deliberately says "never
+	# `act_1`" in both §2.6 and §2.8 — banning the string outright would fail
+	# on the sentences that state the rule.
+	var content: String = _read_repo_doc("docs/plans/technical-architecture.md")
+	if content.is_empty():
+		return
+	var examples: String = _json_fences(content)
+	assert_gt(examples.length(), 0, "the doc should carry example JSON blocks")
+	assert_false(examples.contains("act_1"), "no example JSON may use the arabic act_1 id")
+	assert_false(content.contains('"act_1"'), 'no part of the doc may quote "act_1" as a value')

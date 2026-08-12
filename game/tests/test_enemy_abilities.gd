@@ -1,16 +1,19 @@
 extends GutTest
-## Tests for enemy abilities (GAP-024): enemy->party offensive status infliction,
-## party-side DoT ticking, multi-hit, AoE-on-death, and pack buffs. Every numeric
-## constant traces to docs/story/bestiary/enemy-ability-conventions.md and the
-## canon it cites (magic.md / combat-formulas.md).
+## Resolution tests for enemy abilities (GAP-024): enemy->party offensive
+## status infliction, party-side DoT ticking, the ability_mult power knob,
+## multi-hit, stat buffs, AoE-on-death, and the Act-I ability data those
+## paths read. Every numeric constant traces to
+## docs/story/bestiary/enemy-ability-conventions.md and the canon it cites
+## (magic.md / combat-formulas.md).
+##
+## Which ability the AI picks is test_enemy_ability_selection.gd; the same
+## mechanics driven through battle.tscn are
+## test_enemy_abilities_integration.gd (#374).
 
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
-const BattleAI = preload("res://scripts/combat/battle_ai.gd")
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
-const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
-
 ## Poison: 8% max HP/turn, until cured (magic.md § Status Effect Reference > 'Poison').
 ## UNTIL_CURED sentinel = -1.
 const UNTIL_CURED: int = -1
@@ -193,55 +196,6 @@ func test_single_hit_default_is_one_hit() -> void:
 	assert_eq(int(r.get("hits_landed", 0)), 1, "default hits=1 lands exactly once")
 
 
-# --- AI ability-metadata propagation (GAP-024) ---
-
-
-func test_ai_ability_action_carries_full_metadata() -> void:
-	seed(123)
-	var enemy_data: Dictionary = {
-		"abilities":
-		[
-			{
-				"id": "venom_spit",
-				"name": "Venom Spit",
-				"type": "attack",
-				"status": "poison",
-				"status_rate": 70,
-				"target": "single",
-				"ability_mult": 1.0,
-				"hits": 1,
-			}
-		]
-	}
-	var pm: Array = [{"is_alive": true, "row": "front"}, null, null, null]
-	var pr: Array = ["front", "front", "front", "front"]
-	var found: bool = false
-	for _i: int in range(200):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		if a.get("type", "") == "ability":
-			found = true
-			assert_eq(a.get("ability_id", ""), "venom_spit", "carries the ability id")
-			assert_eq(a.get("status", ""), "poison", "carries the inflicted status")
-			assert_eq(int(a.get("status_rate", 0)), 70, "carries the status base-rate")
-			assert_eq(a.get("atk_type", ""), "attack", "carries the resolution type")
-			assert_eq(a.get("target", ""), "single", "carries the target shape")
-			assert_gte(int(a.get("target_slot", -1)), 0, "single-target picks a living slot")
-			break
-	assert_true(found, "the 20% branch yields an ability action within 200 rolls")
-
-
-func test_ai_without_abilities_never_returns_ability() -> void:
-	# The fall-through fix: a chosen-but-empty ability list defends, never
-	# returns a malformed 'ability' action.
-	seed(1)
-	var enemy_data: Dictionary = {"abilities": []}
-	var pm: Array = [{"is_alive": true, "row": "front"}, null, null, null]
-	var pr: Array = ["front", "front", "front", "front"]
-	for _i: int in range(300):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		assert_ne(a.get("type", ""), "ability", "no abilities -> never an ability action")
-
-
 # --- Enemy stat buffs (GAP-024) ---
 
 
@@ -318,113 +272,7 @@ func test_shard_burst_damages_whole_living_party() -> void:
 	assert_gt(total_lost, 0, "the party loses HP to Shard Burst")
 
 
-# --- Integration: enemy-ability resolution through the real battle scene ---
-# These boot battle.tscn and drive the WIRED turn driver directly (bypassing the
-# AI's RNG branch) so each mechanic is proven end-to-end and deterministically.
-
-
-func _boot(encounter: Array, is_boss: bool = false) -> Node:
-	PartyState.initialize_new_game()
-	GameManager.transition_data = {
-		"return_map_id": "test_overworld",
-		"return_position": Vector2.ZERO,
-		"is_boss": is_boss,
-		"formation_type": "normal",
-		"encounter_group": encounter,
-		"enemy_act": "act_i",
-	}
-	var battle: Node = BATTLE.instantiate()
-	add_child_autofree(battle)
-	await wait_frames(3)  # let _ready build enemies + ATB
-	return battle
-
-
-func test_integration_venom_spit_inflicts_poison_on_party() -> void:
-	seed(909)
-	var battle: Node = await _boot(["marsh_serpent"])
-	var serpent: Node = battle._enemies[0]
-	var landed: bool = false
-	for _i: int in range(25):
-		battle._state.heal(0, 99999)  # keep the target alive so we can keep rolling
-		var action: Dictionary = {
-			"type": "ability",
-			"id": "venom_spit",
-			"target": "single",
-			"atk_type": "attack",
-			"target_slot": 0,
-			"ability_mult": 1.0,
-			"hits": 1,
-			"status": "poison",
-			"status_rate": 100,
-			"status_duration": null,
-		}
-		battle._enemy_turn._do_attack_or_ability(action, serpent, 0)
-		if battle._state.has_status(0, "poison"):
-			landed = true
-			break
-	assert_true(landed, "Venom Spit inflicts Poison on a party member via the wired turn driver")
-
-
-func test_integration_shard_burst_fires_on_crystal_death() -> void:
-	seed(11)
-	var battle: Node = await _boot(["unstable_crystal"])
-	var crystal: Node = battle._enemies[0]
-	var hp_before: int = 0
-	for i: int in range(4):
-		hp_before += int(battle._state.get_member(i).get("current_hp", 0))
-	crystal.take_damage(999999)  # death -> Enemy.died -> _on_enemy_died -> Shard Burst
-	await wait_frames(1)
-	var hp_after: int = 0
-	for i: int in range(4):
-		hp_after += int(battle._state.get_member(i).get("current_hp", 0))
-	assert_lt(hp_after, hp_before, "Shard Burst damages the party when the crystal dies")
-
-
-func test_integration_pack_howl_buffs_all_wolves() -> void:
-	var battle: Node = await _boot(["wayward_wolf", "wayward_wolf"])
-	var w0: Node = battle._enemies[0]
-	var w1: Node = battle._enemies[1]
-	var atk_before: int = int(w1.get_stats().get("atk", 0))
-	var action: Dictionary = {
-		"type": "ability",
-		"id": "pack_howl",
-		"target": "self",
-		"atk_type": "buff",
-		"buff": {"stat": "atk", "mult": 1.30, "duration": 5, "scope": "pack"},
-	}
-	battle._enemy_turn._do_self_ability(action, w0, battle._enemies)
-	assert_gt(
-		int(w1.get_stats().get("atk", 0)), atk_before, "Pack Howl buffs the OTHER wolf (pack scope)"
-	)
-	assert_gt(w0.active_buffs.size(), 0, "the casting wolf is buffed too")
-
-
-# --- Round 1 review fixes (GAP-024) ---
-
-
-func test_ai_excludes_aoe_on_death_from_selection() -> void:
-	# Shard Burst (aoe_on_death) is a death trigger only — never a turn action.
-	# An enemy whose ONLY ability is aoe_on_death must fall through to defend.
-	seed(5)
-	var enemy_data: Dictionary = {
-		"abilities":
-		[
-			{
-				"id": "shard_burst",
-				"aoe_on_death": true,
-				"type": "magic",
-				"target": "all",
-				"spell_power": 9
-			}
-		]
-	}
-	var pm: Array = [{"is_alive": true, "row": "front"}, null, null, null]
-	var pr: Array = ["front", "front", "front", "front"]
-	for _i: int in range(300):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		assert_ne(
-			a.get("type", ""), "ability", "aoe_on_death-only enemy never casts it as a turn action"
-		)
+# --- DoT events surfaced to the battle layer (GAP-024) ---
 
 
 func test_party_dot_tick_returns_poison_event() -> void:
@@ -435,136 +283,6 @@ func test_party_dot_tick_returns_poison_event() -> void:
 	assert_eq(events.size(), 1, "one DoT event for the single poison")
 	assert_eq(events[0].get("type", ""), "poison", "event carries the status type")
 	assert_eq(int(events[0].get("dmg", 0)), 8, "8% of 100 max HP")
-
-
-func test_integration_nonelemental_magic_aoe_uses_magic_formula() -> void:
-	seed(77)
-	var battle: Node = await _boot(["unstable_crystal"])
-	var crystal: Node = battle._enemies[0]
-	# Force the distinction: ATK 0 so a physical AoE deals ~1/member; high MAG so a
-	# magic AoE deals real damage. A non-elemental magic AoE must route through the
-	# MAG formula (the _resolve_offensive fix), not the physical ATK formula.
-	crystal.enemy_data["atk"] = 0
-	crystal.enemy_data["mag"] = 60
-	var action: Dictionary = {
-		"type": "ability",
-		"id": "x",
-		"target": "all",
-		"atk_type": "magic",
-		"element": "",
-		"power": 20
-	}
-	var before: int = 0
-	for i: int in range(4):
-		before += int(battle._state.get_member(i).get("current_hp", 0))
-	battle._enemy_turn._do_attack_or_ability(action, crystal, 0)
-	var after: int = 0
-	for i: int in range(4):
-		after += int(battle._state.get_member(i).get("current_hp", 0))
-	assert_lt(
-		after, before - 50, "non-elemental magic AoE deals MAG-based damage, not ~1/member physical"
-	)
-
-
-func test_integration_pack_howl_does_not_buff_other_species() -> void:
-	var battle: Node = await _boot(["wayward_wolf", "wild_boar"])
-	var wolf: Node = battle._enemies[0]
-	var boar: Node = battle._enemies[1]
-	var boar_atk_before: int = int(boar.get_stats().get("atk", 0))
-	var action: Dictionary = {
-		"type": "ability",
-		"id": "pack_howl",
-		"target": "self",
-		"atk_type": "buff",
-		"buff": {"stat": "atk", "mult": 1.30, "duration": 5, "scope": "pack"},
-	}
-	battle._enemy_turn._do_self_ability(action, wolf, battle._enemies)
-	assert_eq(
-		int(boar.get_stats().get("atk", 0)),
-		boar_atk_before,
-		"Pack Howl does NOT buff a different species (id mismatch)"
-	)
-	assert_gt(wolf.active_buffs.size(), 0, "the wolf itself is still buffed")
-
-
-# --- Regular-enemy ability selector (GAP-024 follow-up #249) ---
-
-
-func test_ability_selector_back_targets_back_row() -> void:
-	seed(123)
-	var enemy_data: Dictionary = {
-		"abilities":
-		[
-			{
-				"id": "lunge",
-				"name": "Lunge",
-				"type": "attack",
-				"target": "single",
-				"selector": "back",
-				"ability_mult": 1.0,
-			}
-		]
-	}
-	var pm: Array = [
-		{"is_alive": true, "row": "front"}, {"is_alive": true, "row": "back"}, null, null
-	]
-	var pr: Array = ["front", "back", "front", "front"]
-	var found: bool = false
-	for _i: int in range(200):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		if a.get("type", "") == "ability":
-			found = true
-			assert_eq(int(a.get("target_slot", -1)), 1, "back selector targets the back-row member")
-			break
-	assert_true(found, "the 20% ability branch fired within 200 rolls")
-
-
-func test_ability_selector_random_targets_a_living_member() -> void:
-	seed(99)
-	var enemy_data: Dictionary = {
-		"abilities":
-		[
-			{
-				"id": "drift",
-				"name": "Drift",
-				"type": "attack",
-				"target": "single",
-				"selector": "random"
-			}
-		]
-	}
-	var pm: Array = [
-		{"is_alive": true, "row": "front"}, null, {"is_alive": true, "row": "back"}, null
-	]
-	var pr: Array = ["front", "front", "back", "front"]
-	var living: Array = [0, 2]
-	for _i: int in range(200):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		if a.get("type", "") == "ability":
-			assert_true(
-				int(a.get("target_slot", -1)) in living, "random selector picks a living slot"
-			)
-			break
-
-
-func test_ability_selector_back_falls_back_when_no_back_row() -> void:
-	seed(5)
-	var enemy_data: Dictionary = {
-		"abilities":
-		[{"id": "lunge", "name": "Lunge", "type": "attack", "target": "single", "selector": "back"}]
-	}
-	# No back-row member -> "back" selector falls back to a valid front slot, never -1.
-	var pm: Array = [
-		{"is_alive": true, "row": "front"}, {"is_alive": true, "row": "front"}, null, null
-	]
-	var pr: Array = ["front", "front", "front", "front"]
-	for _i: int in range(200):
-		var a: Dictionary = BattleAI.select_action(enemy_data, pm, pr)
-		if a.get("type", "") == "ability":
-			assert_true(
-				int(a.get("target_slot", -1)) in [0, 1], "back fallback picks a living front slot"
-			)
-			break
 
 
 # --- Act-I ability data integrity (GAP-024 follow-up #249) ---
