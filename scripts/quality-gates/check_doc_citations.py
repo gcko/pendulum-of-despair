@@ -13,7 +13,7 @@ test notices. This gate makes that impossible in live files by
 The filename may be bare, a markdown link — ``[magic.md](../story/magic.md)
 § Spell Balance Guidelines``, which is the house style in ``docs/`` — or a
 code span: ``` `items.md` § Key Items ```. Only the bare form was read until
-#404, which left 132 of today's 550 citations checked by nobody. Where a link
+#404, which left 132 of today's citations checked by nobody. Where a link
 names two paths, the destination is the one resolved (``cited_path``).
 
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
@@ -59,7 +59,7 @@ _DESIGN_REF_SECTION = re.compile(
 )
 
 # Non-vacuity floors for that scan, set well under what the tree holds today
-# (91 docs, 158 bullets) and well over what a broken walk would return.
+# (91 docs, 159 bullets) and well over what a broken walk would return.
 MIN_GAP_DOCS = 50
 MIN_GAP_BULLETS = 90
 
