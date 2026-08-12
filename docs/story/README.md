@@ -188,8 +188,10 @@ This directory contains the narrative design for Pendulum of Despair.
   open. Measured against `/usr/share/dict/words`, the `-our` rule still
   over-matches 55 correct entries and `-ise`/`-isation` 103 — nearly all
   archaic, dialectal or foreign — and the stem family, which has no prefix
-  structure to exploit, over-matches 25 including the live American words
-  *cancellous*, *labellum* and *levelly*.
+  structure to exploit, still over-matches 20 after `ALLOWED_STEM`. The
+  entry that mattered there was *cancellation*: American English drops an
+  `l` in *canceled* but keeps both in *cancellation*, so the `cancell`
+  stem was flagging a word American style guides require.
 
   **So a hit is not proof of a misspelling.** If the flagged word really
   is correct American English, add its lemma to the family's allow-list in

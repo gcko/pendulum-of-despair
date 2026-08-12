@@ -35,8 +35,10 @@ stated here rather than papered over: measured against
 `/usr/share/dict/words`, the `-our` rule still over-matches 55 entries and
 `-ise`/`-isation` 103, nearly all archaic, dialectal or foreign
 (*aportoise*, *calambour*, *ardoise*). The stem family has no prefix
-structure to exploit and over-matches 25, of which *cancellous*,
-*labellum* and *levelly* are live American words.
+structure to exploit, so its over-matches are enumerated in `ALLOWED_STEM`
+— chiefly *cancellation*, which American English spells with both `l`s
+even though it spells *canceled* with one — and 20 dictionary entries
+still get through.
 
 **So a hit is not proof of a misspelling.** When the flagged word really is
 correct American English, the fix is to add its lemma to the family's
@@ -375,6 +377,26 @@ STEM_PATTERN = re.compile(
     r"\b(?:" + "|".join(BRITISH_STEMS) + r")[a-z]*\b", re.IGNORECASE
 )
 
+# The stem family over-matches too, and this list is the same kind of thing
+# as ALLOWED_OUR_LEMMAS — not closed, just what English is known to spell
+# this way. `cancellation` is the one that matters: American English drops
+# an `l` in *canceled* and *canceling* but keeps both in *cancellation*, so
+# the `cancell` stem flags a word every American style guide requires. That
+# is a plausible word for a menu or quest doc, unlike the anatomy and botany
+# terms (*cancellous*, *labellum*, *levelly*) that the same stems also
+# admit. Prefix-stripping does not help here — these are not prefixed forms
+# — so this family is enumerated the old way.
+ALLOWED_STEM: frozenset[str] = frozenset(
+    {
+        "cancellation",
+        "cancellations",
+        "cancellous",
+        "labellum",
+        "labella",
+        "levelly",
+    }
+)
+
 
 class Family(NamedTuple):
     """One detection rule plus the correct English words it over-matches."""
@@ -398,7 +420,7 @@ FAMILIES: tuple[Family, ...] = (
         ),
     ),
     Family("grey", GREY_PATTERN, lambda w: False),
-    Family("stem", STEM_PATTERN, lambda w: False),
+    Family("stem", STEM_PATTERN, lambda w: w in ALLOWED_STEM),
 )
 
 # The ratchet, keyed by repo-relative path, then by the lowercased offending

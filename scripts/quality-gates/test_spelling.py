@@ -364,6 +364,26 @@ class TestStemFamily(SpellingFixture):
                 self.write("tree1/subject.md", f"the {word} thing")
                 self.assertEqual(len(self.run_check()), 1, word)
 
+    def test_american_words_the_stems_over_match_are_not_flagged(self) -> None:
+        """American English keeps both `l`s in *cancellation*.
+
+        It drops one in *canceled* and *canceling*, which is why `cancell`
+        is a stem at all — but that stem then flags a word every American
+        style guide requires. The rarer anatomy and botany terms the same
+        stems admit are listed with it.
+        """
+        self.assertClean(
+            "the cancellation and its cancellations, cancellous bone, "
+            "the labellum and labella, and levelly poured"
+        )
+
+    def test_the_british_forms_those_stems_exist_for_still_fail(self) -> None:
+        """The allow-list must not blunt the stem it sits on."""
+        for word in ("cancelled", "cancelling", "labelled", "levelled"):
+            with self.subTest(word=word):
+                self.write("tree1/subject.md", f"the {word} thing")
+                self.assertEqual(len(self.run_check()), 1, word)
+
     def test_the_leading_boundary_keeps_identifiers_out(self) -> None:
         """`\\b` is load-bearing: drop it and `levell` eats `NextLevelLabel`.
 
