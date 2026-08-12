@@ -35,6 +35,21 @@ Wire each consumer: read screen_shake in shake emitters; branch transitions on t
 - [ ] Transition Style selects simple vs classic
 - [ ] HP bars show a crack/segment cue below 25%
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 4 met, and the first
+criterion has moved in the wrong direction.** Searched `game/scripts/` and
+`game/tests/` for each key. `screen_shake` and `transition_style` now have a
+second consumer, but it is `menu_config.gd` again: turning Reduce Motion on
+saves the prior values, forces `screen_shake` to `false` and `transition_style`
+to `"simple"` through `PartyState.set_config()`, and turning it off restores
+them. That couples the settings more tightly rather than separating them —
+`cutscene_commands.gd` `_shake()` still returns early on `reduce_motion` alone
+and never reads `screen_shake`, so switching Screen Shake off by itself still
+changes nothing. `sound_mode` and `high_res_text` have no consumer outside
+`menu_config.gd` at all: `audio_manager.gd` never mentions `sound_mode`, so
+there is no down-mix. And there is no HP-bar cue — `stat_bar_helpers.gd` and
+`battle_party_panel.gd`, which own the bars PR #275 shipped, contain no
+`crack`, no segment logic and no 25% threshold.
+
 ## Design references
 
 - docs/story/accessibility.md §1/§2/§5
@@ -42,8 +57,9 @@ Wire each consumer: read screen_shake in shake emitters; branch transitions on t
 
 ## Code references
 
-- game/scripts/ui/menu_config.gd
-- game/scripts/autoload/audio_manager.gd
+- game/scripts/ui/menu_config.gd — `_apply_cascades()` (the Reduce Motion cascade that forces `screen_shake` false and `transition_style` "simple", and restores them) and `_is_setting_disabled()` (which greys both out while Reduce Motion is on)
+- game/scripts/autoload/audio_manager.gd — no `sound_mode` reader; the Mono criterion has no implementation to point at, so re-check this one by hand rather than trusting a green path check
+- game/scripts/ui/stat_bar_helpers.gd — the bar renderer PR #275 shipped, which is where the below-25% HP cue would go and currently has no threshold logic
 - game/scripts/core/cutscene_commands.gd — `_shake()` (the shake emitter, gated on reduce_motion alone; it never reads screen_shake, which outside menu_config.gd has no consumer at all. PR #357 moved this out of cutscene_player.gd, where it was `_cmd_shake`)
 
 

@@ -34,6 +34,18 @@ Compute each member's awarded XP (0 KO'd-active, full active-alive, half reserve
 - [ ] Reserve wearer's crystal gains 30% of the 50% share
 - [ ] Active-alive wearer's crystal gains 30% of full
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched `game/scripts/` and `game/tests/` for `distribute_crystal_xp`
+and `add_crystal_xp`. The function is still the one the finding measured and
+still lives in `exploration.gd`: it walks `PartyState.formation["active"]` only,
+and calls `PartyState.add_crystal_xp(cid, int(xp_per_member * 0.3))` with no KO
+check, so a KO'd active wearer is credited in full and a reserve wearer is
+credited nothing. Its two other callers, both in `cleansing_sequence.gd`, route
+through the same function (`start()`, `continue_sequence()`) and inherit the
+same behavior. Note the criteria list
+three cases while the finding is four-way (active/reserve × alive/KO); a reserve
+KO'd wearer is unstated and should be settled when this is implemented.
+
 ## Design references
 
 - docs/story/progression.md § XP Distribution Rules
@@ -41,6 +53,10 @@ Compute each member's awarded XP (0 KO'd-active, full active-alive, half reserve
 ## Code references
 
 - game/scripts/core/exploration.gd — `distribute_crystal_xp()`
+- game/scripts/autoload/party_state.gd — `add_crystal_xp()` (the credit call the
+  distribution makes; the wearer's own KO/reserve state is never passed to it)
+- game/scripts/core/cleansing_sequence.gd — `start()` and `continue_sequence()`,
+  the two other callers of `distribute_crystal_xp()`, which inherit the same rule
 
 
 ## Verification (fresh-eyes adversarial pass)

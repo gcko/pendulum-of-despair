@@ -34,6 +34,19 @@ Extend STAT_NAMES + .tscn rows and populate _info_label from equipment element/s
 - [ ] HP/MP rows appear when modified
 - [ ] Element/status info line populated
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, but the numbers
+the first criterion needs already exist one screen over.** `menu_equip.gd` is
+unchanged where it matters: `STAT_NAMES` is still the six-entry
+`["atk", "def", "mag", "mdef", "spd", "lck"]`, `_update_stat_comparison()`
+projects deltas for those six only, and `_info_label.text` is still set to the
+empty string. Searching `game/scripts/ui/` for `eva`, `meva` and `crit` finds
+the one real consumer: `menu_status.gd` `_update_display()` reads
+`eva_pct` / `meva_pct` / `crit_pct` out of `PartyState.get_derived_stats()` and
+renders them. So the derived stats are computed and displayed elsewhere in the
+menu; this gap is a missing projection in the equip panel, not a missing
+formula, and closing it means calling `get_derived_stats()` against the
+projected loadout.
+
 ## Design references
 
 - docs/story/ui-design.md §5.6/§5.7
@@ -41,6 +54,8 @@ Extend STAT_NAMES + .tscn rows and populate _info_label from equipment element/s
 ## Code references
 
 - game/scripts/ui/menu_equip.gd — `_update_stat_comparison()`
+- game/scripts/autoload/party_state.gd — `get_derived_stats()`, which already returns `eva_pct` / `meva_pct` / `crit_pct`; the equip panel never calls it
+- game/scripts/ui/menu_status.gd — `_update_display()`, the screen that does render those three derived stats today
 - game/scenes/overlay/menu.tscn
 
 

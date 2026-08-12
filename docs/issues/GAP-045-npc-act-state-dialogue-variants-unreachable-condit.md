@@ -34,6 +34,23 @@ Add flag setters when each act is built; extend events.md with the *_seen/*_defe
 - [ ] A lint flags dialogue conditions whose flags are never set
 - [ ] fenmother_cleansed vs fenmother_boss_defeated is clarified
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, but the first
+has moved a long way.** `docs/story/events.md` now carries eight rows
+explicitly labeled "Implementation-level ordering flag" — `vaelith_scene_complete`
+(2b), `valdris_arrived` (6a), `pendulum_presented` (6b), `scene_7c_aldis` /
+`scene_7c_cordwyn` / `scene_7c_renn` (6c–6e), `fenmother_boss_defeated` (9a) and
+`caden_binding_complete` (9b) — so the Summary's claim that the impl's ordering
+flags are absent from the catalog is no longer true of `fenmother_boss_defeated`.
+It is still true of the rest: searching `set_flag(` across `game/scripts/`
+yields `fenmother_cleansed`, `arcanite_gear_broken`, `sables_coin_active`,
+`light_source_active`, `chest_<id>_opened` and `trigger_<id>_fired`, and
+`events.md` mentions none of them. Because `fenmother_cleansed` is the flag the
+third criterion turns on, that criterion is untouched — the two Fenmother flags
+still have no side-by-side definition anywhere. The second criterion is
+unbuilt: `scripts/quality-gates/` holds six checkers and none of them reads a
+dialogue `condition` against the set of flags the engine can produce, so the
+dead Act-II+ variants are still unguarded.
+
 ## Design references
 
 - docs/story/events.md flags 17/19/20/38; §3

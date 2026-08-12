@@ -35,6 +35,16 @@ Add a negative_effect/special_rule handler keyed off the equipped crystal; hook 
 - [ ] Null Crystal grants Despair immunity
 - [ ] Cael's Echo grants Lira/Edren conditional bonuses
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 4 met, nothing has
+moved.** Searched `game/scripts/` and `game/tests/` for the crystal ids
+(`frost_veil`, `grey_remnant`, `null_crystal`, `flame_heart`, `storm_eye`,
+`cael_echo`) and for `negative_effect`: the ids appear in no script and no test,
+and the only `negative_effect` reader is still `menu_ley_crystal.gd`
+`_show_detail()`, which prints the description string. `despair` appears in
+`status_effects.gd` and in `enemy.gd`'s per-type immunity table, but neither
+path consults a worn crystal, so Null Crystal grants nothing. This gap is
+unbuilt rather than relocated.
+
 ## Design references
 
 - docs/story/progression.md § Crystals With Negative Effects

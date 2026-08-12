@@ -34,6 +34,15 @@ Add minimum Act-I structures (Guest Hollow inn, Trader's Nook, Hunter weapon cac
 - [ ] The Root-Weaver's Workshop secret is reachable
 - [ ] Spirit-token barter rules are represented
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched every `.tscn` under `game/scenes/maps/` for a second
+Roothollow scene and for the designed structure names: there is exactly one,
+`towns/roothollow.tscn`, and its `Entities` node still holds only `Vessa`,
+`Herbalist` (`shop_id` `roothollow_herbalist`), `RoothollowSave` and the
+`Scene5Trigger` party-join area, plus a single `ExitToOverworld`. No inn, no
+trader beyond the herbalist, no hunter cache, no interior transition, and no
+spirit-token currency anywhere in `game/data/`.
+
 ## Design references
 
 - docs/story/city-thornmere.md § Roothollow Building/Structure Directory

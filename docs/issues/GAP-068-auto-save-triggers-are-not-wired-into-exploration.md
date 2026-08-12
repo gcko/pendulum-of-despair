@@ -34,6 +34,14 @@ Hook auto-save at flagged floor/town transitions, at boss trigger zones before f
 - [ ] Mid-floor and boss-rush are suppressed
 - [ ] Writes to the auto slot
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched `game/scripts/` and `game/tests/` for `auto_save`: the single
+hit is the definition in `save_manager.gd`. Zero callers in production code and
+zero in the suite, so no trigger fires it and no test would notice if one
+did. This is the cleanest case in the sweep for the cited-path method being
+adequate — the behavior cannot have relocated, because the entry point is a
+named public method with no references at all.
+
 ## Design references
 
 - docs/story/save-system.md §6

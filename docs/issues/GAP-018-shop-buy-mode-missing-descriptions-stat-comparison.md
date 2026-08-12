@@ -35,13 +35,25 @@ Extend shop_overlay.tscn with a selection-bound description line, an equipment c
 - [ ] Unaffordable items are greyed; owned quantity shown
 - [ ] Consumables support 1-99 quantity with live total
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 4 met, nothing has
+moved.** `shop_overlay.gd` is still the only script in `game/scripts/` that
+mentions a shop, so no part of Buy mode has been extracted elsewhere.
+`_build_list()` still emits one `Label` per row reading `"%s  %dG"` (name and
+price, nothing else); `_update_selection()` only re-modulates the row and clears
+feedback, so highlighting never populates `DescLabel`; and `_try_buy()` still
+transacts a single unit. The nearest live stat-comparison code is
+`menu_equip.gd` `_update_stat_comparison()`, which is menu-side and has no shop
+caller — implementing this criterion means reusing it, not finding it already
+wired.
+
 ## Design references
 
 - docs/story/ui-design.md §11.3
 
 ## Code references
 
-- game/scripts/ui/shop_overlay.gd — `_build_list()` (name+price labels), `_show_feedback()` (the DescLabel reuse)
+- game/scripts/ui/shop_overlay.gd — `_build_list()` (name+price labels), `_update_selection()` (highlight only, never fills DescLabel), `_show_feedback()` (the DescLabel reuse), `_try_buy()` (fixed quantity of 1)
+- game/scripts/ui/menu_equip.gd — `_update_stat_comparison()`, the existing delta renderer this gap should reuse rather than reimplement
 - game/scenes/overlay/shop_overlay.tscn
 
 

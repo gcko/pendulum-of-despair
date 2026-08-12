@@ -34,6 +34,15 @@ Add the basement sub-map and ground-floor lore interactables; wire the Pendulum-
 - [ ] Ground-floor lore interactables present
 - [ ] Pendulum-examination cutscene wired to the Work Desk
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched `game/scenes/maps/` for a Maren's Refuge basement scene and
+for the designed points of interest (work desk, ley-line tap, artifact vault,
+specimen jar): none exists under any name. `towns/marens_refuge.tscn` is still
+the single room the finding measured — `Maren`, the `Scene6Trigger` area, one
+`ExitToOverworld`, and the two spawn markers. Its `Transitions` node holds only
+the overworld exit, so there is no basement to reach and no interactable to
+carry the Pendulum-examination cutscene.
+
 ## Design references
 
 - docs/story/city-thornmere.md § 8. Maren's Refuge

@@ -34,6 +34,17 @@ Extend _validate with per-group type assertions (party Array, formation/inventor
 - [ ] Malformed saves are flagged corrupted
 - [ ] A test feeds a wrong-typed group and asserts rejection
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** `_validate()` is defined once, in `save_manager.gd`, and still checks
+presence for all ten required groups (`meta`, `party`, `formation`,
+`inventory`, `owned_equipment`, `crafting`, `ley_crystals`, `world`, `quests`,
+`completion`) but type only for `meta` and `world`. The eight untyped groups
+are unchanged, so a save with `party` as a String still validates. Searched
+`game/tests/` for any test that reaches validation: no test file mentions
+`_validate` or feeds it a malformed save, which is the same hole GAP-083 (#218,
+SaveManager core logic has no unit tests) covers from the other side. The third
+criterion therefore has no coverage to build on.
+
 ## Design references
 
 - docs/story/save-system.md §11

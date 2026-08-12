@@ -34,6 +34,16 @@ Add a per-slot operations sub-menu (Save/Copy/Delete) wiring Copy to a source->d
 - [ ] Player can delete a slot with confirm
 - [ ] Existing _do_copy/_do_delete are reached
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Traced the reachability rather than re-reading the cited file: the
+only producer of a pending operation is `_show_confirm()`, and its only call
+site passes the literal `"overwrite"` from `_confirm_slot()`. `_execute_confirm()`
+therefore matches `"overwrite"` and can never enter its `"delete"` or
+`"copy_dest"` arms, so `_do_delete()` and `_do_copy()` stay unreachable and
+`_copy_source_slot` is still read-only at `-1`. The backend
+(`save_manager.gd` `copy_slot()` / `delete_slot()`) is present and correct;
+what is missing is an operation selector in the slot UI, not the operations.
+
 ## Design references
 
 - docs/story/save-system.md §5
@@ -41,7 +51,7 @@ Add a per-slot operations sub-menu (Save/Copy/Delete) wiring Copy to a source->d
 
 ## Code references
 
-- game/scripts/ui/save_load.gd — `_do_copy()`, `_do_delete()` (unreachable from slot input)
+- game/scripts/ui/save_load.gd — `_do_copy()`, `_do_delete()` (unreachable from slot input), and the pair that makes them unreachable: `_confirm_slot()`, whose only `_show_confirm()` call passes `"overwrite"`, and `_execute_confirm()`, which holds the dead `"delete"` / `"copy_dest"` arms
 - game/scripts/autoload/save_manager.gd — `copy_slot()`, `delete_slot()` (the reachable-from-nowhere backend)
 
 

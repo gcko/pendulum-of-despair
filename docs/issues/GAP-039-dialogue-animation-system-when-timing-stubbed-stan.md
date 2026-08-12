@@ -34,6 +34,22 @@ Implement per-box when filtering in DialogueBox, drive cutscenes box-by-box, con
 - [ ] Standalone NPC dialogue routes emotion to the entity
 - [ ] clear returns the sprite to idle and held anims reset at sequence end
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched `game/scripts/` and `game/tests/` for `animation_requested`,
+`_fire_animations`, `_fire_entry_animations` and `play_animation`, and for the
+`"when"` key. `dialogue_box.gd` `_fire_animations()` still names its timing
+argument `_timing_filter` — a leading underscore, i.e. deliberately unread — and
+fires every entry animation from the single `before_line_0` call site.
+`cutscene_player.gd` `_fire_entry_animations()` does read `when`, but only via
+`when.begins_with(prefix)` against the two per-entry phases `before_line` and
+`after_line`, so `after_line_0` and `after_line_1` remain indistinguishable.
+`exploration_interactions.gd` `connect_dialogue_signals()` connects
+`sfx_requested` and the consequence hooks and still does not connect
+`animation_requested`, so the standalone path drops the signal on the floor.
+`npc.gd` `play_animation()` has no `clear` case: it looks `clear` up on the
+`AnimationPlayer`, fails `has_animation()` and returns, which is the no-op the
+finding recorded.
+
 ## Design references
 
 - docs/story/dialogue-system.md §2.1/§2.2/§2.3/§3.5/§4.5
