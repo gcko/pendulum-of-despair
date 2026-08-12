@@ -189,6 +189,113 @@ class TestIseFamily(SpellingFixture):
     def test_words_where_is_is_not_a_suffix_are_not_flagged(self) -> None:
         self.assertClean("analysis paralysis emphasis basis crisis this his")
 
+    def test_the_six_words_413_found_falsely_accused(self) -> None:
+        """The regression, verbatim.
+
+        The allow-list was expanded over suffixes while the pattern matched
+        any prefix, so these six ordinary American words were reported as
+        British spellings and the author was told to "write the American
+        spelling" of a word already spelled correctly.
+        """
+        self.assertClean(
+            "an imprecise estimate left us unsurprised by the unpromising "
+            "and undisguised result; he stood with upraised hands rather "
+            "than overpromise"
+        )
+
+
+class TestPrefixRule(SpellingFixture):
+    """`ALLOWED_PREFIXES`: an allow-list lemma answers for its prefixed forms.
+
+    English builds on the front as well as the back. Enumerating prefixed
+    forms would repeat the `cataloguing` mistake at the other end of the
+    word, so the prefix half is a rule — and a rule has to be shown both to
+    admit correct words and to refuse British ones.
+    """
+
+    def test_prefixed_forms_of_allowed_lemmas_are_clean(self) -> None:
+        for word in (
+            "imprecise",
+            "unsurprised",
+            "unpromising",
+            "upraised",
+            "undisguised",
+            "overpromise",
+            "reappraised",
+            "unadvised",
+            "disenfranchised",
+            "overexercising",
+            "outpouring",
+            "recontoured",
+            "afterhours",
+        ):
+            with self.subTest(word=word):
+                self.write("tree1/subject.md", f"it was {word} today")
+                self.assertEqual(self.run_check(), [], word)
+
+    def test_the_prefix_rule_cannot_launder_a_british_spelling(self) -> None:
+        """The property that makes the rule safe, checked exhaustively.
+
+        Stripping only ever removes a prefix and the remainder must still
+        land in the allow-list, which holds no British form. So every
+        British lemma stays flagged under every prefix — 28 prefixes over
+        the lemmas below, plus the bare forms.
+        """
+        british = (
+            "organise", "organisation", "realise", "recognise", "apologise",
+            "optimise", "normalise", "specialise", "prioritise", "summarise",
+            "utilise", "minimise", "maximise", "criticise", "standardise",
+            "visualise", "emphasise", "synthesise", "materialise",
+            "memorise", "categorise", "authorise", "customise", "finalise",
+            "colour", "behaviour", "honour", "harbour", "flavour",
+            "neighbour", "rumour", "vapour", "endeavour", "splendour",
+            "armour", "favourite", "odourless", "honourable", "clamour",
+            "saviour", "labour", "valour", "rigour", "humour", "parlour",
+        )
+        candidates = list(british) + [
+            prefix + word
+            for prefix in check_spelling.ALLOWED_PREFIXES
+            for word in british
+        ]
+        self.assertGreater(
+            len(candidates), 1_000, "corpus too small to mean much"
+        )
+        leaked = []
+        for word in candidates:
+            for family in check_spelling.FAMILIES:
+                if family.pattern.fullmatch(word) and family.allowed(word):
+                    leaked.append(word)
+        self.assertEqual(
+            leaked, [], "prefix rule laundered a British spelling"
+        )
+
+    def test_a_prefixed_british_spelling_is_still_reported(self) -> None:
+        self.assertFlagged(
+            "we deprioritise it", "deprioritise", "-ise"
+        )
+
+    def test_a_short_remainder_cannot_launder_a_word(self) -> None:
+        """`MIN_STEM_AFTER_PREFIX` stops letters coinciding with a lemma."""
+        self.assertFalse(
+            check_spelling.allowed_with_prefixes(
+                "coise", check_spelling.ALLOWED_ISE
+            )
+        )
+
+    def test_the_failure_message_names_the_over_match_remedy(self) -> None:
+        """A hit is not proof of a misspelling, so the message cannot say so.
+
+        The old line read "write the American spelling", full stop. Against
+        an over-matched correct word that instruction is wrong, and following
+        it introduces the misspelling the gate exists to catch.
+        """
+        self.write("tree1/subject.md", "the organisation of the file")
+        errors = self.run_check()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("If it is already correct American English", errors[0])
+        self.assertIn("add its lemma", errors[0])
+        self.assertIn("check_spelling.py", errors[0])
+
 
 class TestGreyFamily(SpellingFixture):
     """The one documented exception, encoded no wider and no narrower."""

@@ -15,9 +15,33 @@ author might get wrong is open-ended, and because a list of *whole words*
 cannot see inflections it was not told about: `catalogue|catalogued` was
 structurally unable to match *cataloguing* (the stem drops the final `e`),
 and that one gap hid three shipped player-facing strings. So every family
-below is a **rule over stems and suffixes**, and what is enumerated is the
-closed set of *correct English words the rule over-matches* — a fact about
-English, short and stable, rather than a guess about authors.
+below is a **rule over stems and suffixes**, and what is enumerated is a
+list of *correct English words the rule over-matches*.
+
+**That enumeration is not closed, and this file used to claim it was.**
+#413 disproved the claim: the allow-lists were expanded over suffixes only,
+while the patterns match any prefix, so *imprecise, unsurprised,
+unpromising, upraised, undisguised* and *overpromise* — six ordinary
+American words — were reported as British spellings, under a remediation
+line that told the author to "write the American spelling" of a word they
+had already spelled correctly. Three live *imprecise* sites sit in
+`docs/issues/`, one scope widening away.
+
+The prefix half of that gap is now a rule (`ALLOWED_PREFIXES`), which is
+the general fix: an allow-list entry covers its prefixed and inflected
+forms together, so *promise* alone answers for *promising*, *unpromising*
+and *overpromised*. What remains after the rule is genuinely open, and is
+stated here rather than papered over: measured against
+`/usr/share/dict/words`, the `-our` rule still over-matches 55 entries and
+`-ise`/`-isation` 103, nearly all archaic, dialectal or foreign
+(*aportoise*, *calambour*, *ardoise*). The stem family has no prefix
+structure to exploit and over-matches 25, of which *cancellous*,
+*labellum* and *levelly* are live American words.
+
+**So a hit is not proof of a misspelling.** When the flagged word really is
+correct American English, the fix is to add its lemma to the family's
+allow-list — never to reword the sentence around the gate, and never to pin
+it in `KNOWN_VIOLATIONS`. The failure message says both remedies out loud.
 
 **The four families.**
 
@@ -32,10 +56,11 @@ English, short and stable, rather than a guess about authors.
    standardise, visualise, emphasise, realise, recognise, synthesise*.
    § Writing Conventions previously recorded this family as *tried and
    rejected* because *rising*, *sunrise* and *promising* flood it. #400
-   overturned that: the flood is real but it is a closed set of ordinary
-   English words, so it is written out in `ALLOWED_ISE_LEMMAS` and tested,
-   rather than left to a stem list that misses fourteen of the sixteen
-   words above.
+   overturned that: the flood is real but its common core is small enough
+   to write out in `ALLOWED_ISE_LEMMAS` and test, rather than left to a
+   stem list that misses fourteen of the sixteen words above. #413 added
+   the prefix rule the lemma list needs to cover *unsurprised* and
+   *imprecise*; see the note on openness above.
 3. `grey` (#400), narrowly. See "The grey carve-out" below.
 4. Residual stems with no tractable rule: `defenc`, `catalogu`, `travell`,
    `cancell`, `labell`, `levell`, `mould`. Each is a *stem* with an open
@@ -152,15 +177,71 @@ def _expand(lemma: str, suffixes: tuple[str, ...]) -> set[str]:
     return forms
 
 
+# English builds words on the front as well as the back, and #413 found the
+# allow-lists expanded only over the back: every lemma was inflected over
+# its suffixes, while the patterns matched any prefix, so `surprise` covered
+# `surprised` but not `unsurprised`. Enumerating prefixed forms would repeat
+# the `cataloguing` mistake at the other end of the word, so this is a rule.
+#
+# The set is the productive English prefixes, and it is deliberately short:
+# every entry widens what the gate accepts, so the bar is "attaches
+# generatively to ordinary verbs and adjectives". Archaic ones (`be-` as in
+# *beclamour*) are left out, because `beclamour` IS British and flagging it
+# is right.
+ALLOWED_PREFIXES: tuple[str, ...] = (
+    "un", "re", "im", "in", "dis", "mis", "non", "over", "under", "up",
+    "out", "pre", "post", "co", "de", "sub", "inter", "intra", "anti",
+    "semi", "self", "counter", "fore", "mid", "multi", "trans", "after",
+    "ex",
+)
+
+# A stripped remainder shorter than this is not a word carrying the meaning,
+# it is a coincidence of letters, so `co` + `ise` cannot launder anything.
+MIN_STEM_AFTER_PREFIX = 3
+
+
+def allowed_with_prefixes(word: str, allowed: frozenset[str]) -> bool:
+    """True when *word* is an allowed form, possibly behind known prefixes.
+
+    Strips repeatedly, so *reappraised* and *unsurprised* both reduce. This
+    cannot launder a British spelling: stripping only ever removes a prefix,
+    and the remainder still has to land in *allowed*, which holds no British
+    form. `deprioritise` reduces to `prioritise`, which is not allowed, so it
+    stays flagged — verified in `test_spelling.py` against every British
+    lemma the tests know, under every prefix above.
+    """
+    if word in allowed:
+        return True
+    seen = {word}
+    frontier = [word]
+    while frontier:
+        current = frontier.pop()
+        for prefix in ALLOWED_PREFIXES:
+            if not current.startswith(prefix):
+                continue
+            rest = current[len(prefix):]
+            if len(rest) < MIN_STEM_AFTER_PREFIX:
+                continue
+            if rest in allowed:
+                return True
+            if rest not in seen:
+                seen.add(rest)
+                frontier.append(rest)
+    return False
+
+
 # --- Family 1: -our -----------------------------------------------------
 # The rule, from docs/story/README.md § Writing Conventions.
 OUR_PATTERN = re.compile(
     r"\b[a-z]+ou(?:r|rs|red|ring|rful|rless|rable|rite)\b", re.IGNORECASE
 )
 
-# The closed set of correct English words the rule over-matches. These are
-# facts about English, not observations about this repo, so unlike
-# KNOWN_VIOLATIONS they do not go stale.
+# Correct English words the rule over-matches, as lemmas: ALLOWED_PREFIXES
+# and _expand() carry each one to its prefixed and inflected forms. These are
+# facts about English rather than observations about this repo, so unlike
+# KNOWN_VIOLATIONS they do not go stale — but the list is not closed, and a
+# correct word missing from it is a gate defect to fix here, not a sentence
+# to reword. See "That enumeration is not closed" in the module docstring.
 ALLOWED_OUR_LEMMAS: tuple[str, ...] = (
     "four",
     "hour",
@@ -304,11 +385,17 @@ class Family(NamedTuple):
 
 
 FAMILIES: tuple[Family, ...] = (
-    Family("-our", OUR_PATTERN, lambda w: w in ALLOWED_OUR),
+    Family(
+        "-our",
+        OUR_PATTERN,
+        lambda w: allowed_with_prefixes(w, ALLOWED_OUR),
+    ),
     Family(
         "-ise/-isation",
         ISE_PATTERN,
-        lambda w: w.endswith(WISE_SUFFIX) or w in ALLOWED_ISE,
+        lambda w: (
+            w.endswith(WISE_SUFFIX) or allowed_with_prefixes(w, ALLOWED_ISE)
+        ),
     ),
     Family("grey", GREY_PATTERN, lambda w: False),
     Family("stem", STEM_PATTERN, lambda w: False),
@@ -464,8 +551,11 @@ def check_spelling(
             errors.append(
                 f"{path}: {seen} occurrence(s) of {word!r} ({family} family) "
                 f"but only {pinned} pinned in KNOWN_VIOLATIONS — line(s) "
-                f"{where}; write the American spelling. Pinning a new hit is "
-                f"not the fix."
+                f"{where}. If {word!r} is a British spelling, write the "
+                f"American one. If it is already correct American English "
+                f"the rule over-matched, add its lemma to the {family} "
+                f"allow-list in scripts/quality-gates/check_spelling.py. "
+                f"Pinning it in KNOWN_VIOLATIONS is not the fix for either."
             )
 
     for path in sorted(pins):

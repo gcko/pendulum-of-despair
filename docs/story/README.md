@@ -100,8 +100,10 @@ This directory contains the narrative design for Pendulum of Despair.
   with *flavour* in `game/scripts/entities/npc.gd`.
 
   Where a family admits a rule, write the rule and enumerate only the
-  correct English words it over-matches. That list is closed and short,
-  because it is a fact about English rather than a guess about authors.
+  correct English words it over-matches. That list is short, because it
+  is a fact about English rather than a guess about authors — but it is
+  **not closed**, and this section claimed twice that it was. See "What
+  the over-match lists do not cover" below before you trust a hit.
   The `-our` family works this way:
 
   ```
@@ -118,7 +120,8 @@ This directory contains the narrative design for Pendulum of Despair.
   That single rule catches *harbour*, *flavour*, *neighbour*, *rumour*,
   *vapour*, *endeavour*, *splendour*, *armour* and *colour* without being
   told about any of them, and returns no false positives across the six
-  trees. Requiring `ou` + an `r`-suffix + a word boundary is what keeps
+  trees *as they stand today* — which is a measurement, not a property of
+  the rule. Requiring `ou` + an `r`-suffix + a word boundary is what keeps
   *courage*, *journey*, *mourning*, *flourish* and *tournament* out.
 
   The remaining families have no tractable rule yet, so they are still
@@ -159,9 +162,9 @@ This directory contains the narrative design for Pendulum of Despair.
 
   A general `-ise`/`-isation` rule was tried and rejected once, on the
   grounds that *rising*, *sunrise* and *promising* flood it. #400
-  overturned that. The flood is real, but it is a closed set of ordinary
-  English words, which makes it the same shape as the `-our` over-match
-  list above — a fact about English rather than a guess about authors.
+  overturned that. The flood is real, and its common core is small enough
+  to enumerate, which makes it the same shape as the `-our` over-match
+  list above — though neither list is closed, as #413 showed.
   The cost of leaving it out was concrete: the stem half held `realis`
   and `recognis` and nothing else, so it could not see *optimise*,
   *organisation*, *summarise*, *visualise* or a dozen other members of
@@ -170,6 +173,29 @@ This directory contains the narrative design for Pendulum of Despair.
   The rule and its exception list now live in `ALLOWED_ISE_LEMMAS` in
   `scripts/quality-gates/check_spelling.py`, where they are tested rather
   than argued about.
+
+  **What the over-match lists do not cover.** #413 found this section and
+  the gate both calling the over-match lists a "closed set" that could not
+  go stale. They are not closed. The lists were expanded over *suffixes*
+  while the patterns match any *prefix*, so *imprecise*, *unsurprised*,
+  *unpromising*, *upraised*, *undisguised* and *overpromise* — six
+  ordinary American words — were reported as British spellings, and the
+  failure line told the author to write the American spelling of a word
+  already spelled correctly.
+
+  The prefix half is now a rule (`ALLOWED_PREFIXES`), so one lemma covers
+  its prefixed and inflected forms together. What is left is genuinely
+  open. Measured against `/usr/share/dict/words`, the `-our` rule still
+  over-matches 55 correct entries and `-ise`/`-isation` 103 — nearly all
+  archaic, dialectal or foreign — and the stem family, which has no prefix
+  structure to exploit, over-matches 25 including the live American words
+  *cancellous*, *labellum* and *levelly*.
+
+  **So a hit is not proof of a misspelling.** If the flagged word really
+  is correct American English, add its lemma to the family's allow-list in
+  `scripts/quality-gates/check_spelling.py`. Do not reword the sentence to
+  dodge the gate, and do not pin it in `KNOWN_VIOLATIONS` — that list is
+  for British spellings awaiting a sweep, not for the gate's own misses.
 
   Two families are still deliberately absent — `paralys` collides with
   the correct *analysis* / *paralysis*, and `centre` with the proper noun
