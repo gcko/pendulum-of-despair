@@ -170,25 +170,42 @@ This directory contains the narrative design for Pendulum of Despair.
   closed-issue titles. All three record what was written at the time, so
   a British spelling in them is history, not a defect.
 
-  Within the six trees, the two patterns as written return exactly
-  sixteen hits across thirteen files, with no false positives, and every
-  one of them sits in a file owned by another in-flight branch in this
-  wave — which is why they are tracked rather than fixed here:
+  Within the six trees the two patterns return a residue, and what is
+  worth checking about it is its *character*, not its size: every hit is
+  doc prose, a code comment, or an assertion message, and none is a
+  string the engine emits. **No count is written here on purpose.** One
+  used to be, and it was wrong inside a week — the residue moves every
+  time a branch in this wave lands a fix or writes a new comment, and a
+  number typed into prose cannot notice either event. Run the two
+  commands above for the current set, then sort it against the two lists
+  below.
 
-  - #378 carries seven: `behaviour` in
-    `docs/plans/technical-architecture.md` § 1.2a, and comment and
-    assertion-message text in four files under `game/tests/`.
-  - #387 carries nine: eight comment sites in seven files under
-    `game/scripts/` (`cutscene_commands.gd`, `cutscene_handler.gd`,
-    `cutscene_player.gd`, which holds two, `npc.gd`, `party_state.gd`,
-    `party_crystals.gd`, `progression_helpers.gd`) and one in
-    `docs/story/progression.md`.
+  - **#387 owns the `game/scripts/` comment sites**
+    (`cutscene_commands.gd`, `cutscene_handler.gd`, `cutscene_player.gd`,
+    which holds two, `npc.gd`, `party_state.gd`, `party_crystals.gd`,
+    `progression_helpers.gd`) and the one in `docs/story/progression.md`.
+  - **#378 owns the `game/tests/` comment and assertion-message text**
+    in `test_dialogue_conditions.gd`, which holds three,
+    `test_menu_ui_structure.gd`, `test_npc.gd` and
+    `test_stat_capsules.gd`. Its list also named `behaviour` in
+    `docs/plans/technical-architecture.md`; an earlier branch in this
+    wave fixed that one, so the issue now describes one site more than
+    the tree holds.
 
-  Every one of the sixteen is doc prose, a code comment, or an assertion
-  message; none is a string the engine emits. Any *other* hit is new and
-  it is a defect. The absence of hits is still not a proof of
-  cleanliness: the stem half of the pattern only knows the families it
-  has been told about.
+  Both sets sit in files owned by other in-flight branches, which is why
+  they are tracked rather than fixed here.
+
+  Anything the greps return that is not in those two lists is new, and by
+  the rule above it is a defect rather than residue. Some already exist:
+  `behaviour` in the header comment of `game/tests/test_battle_regressions.gd`
+  and `behaviours` in a comment in `game/tests/test_script_layout.gd` were
+  both written by *this* wave, in the commit that split the oversized test
+  files, and neither is tracked by #378 or #387 — one of the two files did
+  not exist when those issues were filed. A sweep can introduce the thing
+  it is sweeping for, so "residue" is not a synonym for "somebody else's".
+
+  The absence of hits is still not a proof of cleanliness: the stem half
+  of the pattern only knows the families it has been told about.
 
   Two decisions the sweep had to make, recorded so they are not
   re-litigated:
