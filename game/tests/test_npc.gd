@@ -261,5 +261,5 @@ func test_resolver_uses_shared_condition_evaluator() -> void:
 	assert_eq(
 		npc.get_current_dialogue().get("id"),
 		"party_line",
-		"party_has should be honoured through DialogueCondition",
+		"party_has should be honored through DialogueCondition",
 	)

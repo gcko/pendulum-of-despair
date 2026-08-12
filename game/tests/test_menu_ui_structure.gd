@@ -91,7 +91,7 @@ func test_char_select_uses_color_highlight() -> void:
 	var panel: String = _read_file("res://scripts/ui/menu_party_panel.gd")
 	assert_true(
 		panel.contains("_selected_color if i == char_index"),
-		"char select should highlight selected member name with the selected colour",
+		"char select should highlight selected member name with the selected color",
 	)
 	var text: String = _read_file("res://scripts/ui/menu_overlay.gd")
 	assert_true(

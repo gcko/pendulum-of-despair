@@ -451,7 +451,7 @@ func test_crystal_level_up_updates_the_holder_max_hp() -> void:
 		0,
 		"precondition: that level grants HP per character level",
 	)
-	assert_gt(int(edren.get("max_hp", 0)), before, "levelling the crystal raises its holder's HP")
+	assert_gt(int(edren.get("max_hp", 0)), before, "leveling the crystal raises its holder's HP")
 	assert_eq(
 		int(edren.get("max_hp", 0)),
 		PartyState.get_effective_stat("edren", "hp"),
