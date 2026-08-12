@@ -35,6 +35,17 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 - [ ] Resonance/amplification buffs alter spell damage
 - [ ] Tests cover at least one interaction per tier
 
+**Partly landed, gap still open** (re-measured 2026-08-12). PR #243 added
+`ModifierAggregator` and wired it into `battle_actions.gd`, so the Summary's
+"every combat caller passes interaction_mult=1.0" is no longer true: Spirit's
+0.5 pre-DEF physical multiplier and the four type-element bonuses now reach
+`damage_calculator`, where they multiply separately from `element_mod` and
+therefore stack multiplicatively with it. `test_modifier_aggregator.gd` covers
+those values. None of the four criteria is fully met, so the Status does not
+move: Undead heal-to-damage, physical-elemental routing of type bonuses,
+Resonance/amplification, and per-tier interaction coverage all remain unbuilt,
+and the aggregator's own docstring names them as deferred to this gap.
+
 ## Design references
 
 - docs/story/combat-formulas.md §Combat Interactions & Hidden Synergies / §Buff & Debuff Interaction
@@ -44,7 +55,8 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 ## Code references
 
 - game/scripts/combat/battle_actions.gd
-- game/scripts/combat/damage_calculator.gd — `calculate_physical()`, `calculate_magic()` (the interaction/buff params callers leave neutral)
+- game/scripts/combat/modifier_aggregator.gd — `type_element_multiplier()`, `physical_pre_def_mult()` (the slice of this gap that PR #243 landed)
+- game/scripts/combat/damage_calculator.gd — `calculate_physical()`, `calculate_magic()` (the interaction/buff params, now fed by the aggregator for type traits and still neutral for buffs and status interactions)
 - game/scripts/entities/enemy.gd
 
 
