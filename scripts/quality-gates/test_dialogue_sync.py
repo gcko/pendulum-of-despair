@@ -352,3 +352,29 @@ class TestAgainstTheRepo(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPinnedFileDeleted(unittest.TestCase):
+    """A pin whose file is gone must say so, not blame the line."""
+
+    def test_a_pin_for_a_missing_file_names_the_missing_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            script_dir = os.path.join(tmp, "script")
+            dialogue_dir = os.path.join(tmp, "dialogue")
+            os.makedirs(script_dir)
+            os.makedirs(dialogue_dir)
+            with open(os.path.join(script_dir, "a.md"), "w") as fh:
+                fh.write("nothing here\n")
+            errors = check_dialogue_sync.check_dialogue_sync(
+                script_dir=script_dir,
+                dialogue_dir=dialogue_dir,
+                known_orphans={"gone.json": ("an orphaned line",)},
+                min_script_files=0,
+                min_script_chars=0,
+                min_dialogue_files=0,
+                min_dialogue_lines=0,
+            )
+            missing = [e for e in errors if "no longer exists" in e]
+            self.assertEqual(len(missing), 1, errors)
+            self.assertIn("gone.json", missing[0])
+            self.assertNotIn("now resolves", missing[0])

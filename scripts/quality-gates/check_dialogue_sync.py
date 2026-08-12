@@ -371,6 +371,17 @@ def check_dialogue_sync(
             )
 
     for rel in sorted(pins):
+        # A pinned file that no longer exists is its own failure, and reporting
+        # it as "the line now resolves" would send the reader hunting for a
+        # markdown source that was never the reason.
+        if not os.path.isfile(os.path.join(dialogue_dir, rel)):
+            errors.append(
+                f"{dialogue_dir}/{rel}: KNOWN_ORPHANS pins "
+                f"{len(pins[rel])} line(s) in this file, but the file no "
+                f"longer exists; drop its entry from "
+                f"scripts/quality-gates/check_dialogue_sync.py"
+            )
+            continue
         observed = orphans.get(rel, set())
         for line in pins[rel]:
             if line not in observed:
