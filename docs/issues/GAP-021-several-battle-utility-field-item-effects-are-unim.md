@@ -32,12 +32,25 @@ Implement teleport/preemptive via EventFlags + exploration/battle hooks; route b
 
 - [ ] Waystone teleports to the dungeon entrance
 - [x] Sable's Coin forces a preemptive next battle (done by GAP-027/PR #268: using the coin sets `sables_coin_active`, `encounter_handler.gd` forces the preemptive formation and clears the flag, and `can_apply_item_effect()` refuses a second coin while one is active; re-measured 2026-08-12)
-- [ ] Whetstone/Spirit Incense apply a one-battle buff
-- [ ] Smoke Bomb flees non-boss battles
+- [x] Whetstone/Spirit Incense apply a one-battle buff (`battle_item_command.gd` `do_item()` handles `buff_atk` / `buff_mag` by calling `state.set_buff(target_slot, "atk_mult" / "mag_mult", 1.0 + value / 100.0)` — 1.10 for Whetstone's `value: 10` and 1.15 for Spirit Incense's `15`, matching their `+10% ATK` / `+15% MAG` descriptions; `battle_state.gd` `get_effective_stat()` multiplies the base stat by `<stat>_mult` and `battle_actions.gd` reads `atk` and `mag` through it, so the buff reaches damage and expires with the per-battle state; re-measured 2026-08-12)
+- [x] Smoke Bomb flees non-boss battles (`_flee_item()` in `battle_item_command.gd` emits "Can't use that here!" and returns false when `is_boss_battle()`, otherwise consumes the item and calls `exit_battle("flee")`; `test_battle_regressions.gd::test_smoke_bomb_blocked_in_boss_fight` covers the boss guard; re-measured 2026-08-12)
 
-The gap stays open on the other three: `teleport` is still a `push_warning`
-stub, and `whetstone` / `spirit_incense` / `smoke_bomb` have no handler in
-`apply_item_effect()` at all.
+The gap stays open on Waystone alone: `teleport` is still a `push_warning`
+stub in `apply_item_effect()`. Waystone is also the one affected item that is
+field-only (`usable_in_battle: false`), so the battle path that carries the
+other four cannot reach it.
+
+The Summary, Current state and Verification sections are the frozen 2026-06-27
+record of the gap as first filed, and are left as written. They read
+`inventory_helpers.gd` alone, which no longer tells the whole story: the
+battle-side effects live in `battle_item_command.gd` (split out of
+`battle_manager.gd` by the GAP-087 extraction), reached from
+`battle_manager.gd` via `_get_items().do_item(command)`. The `buff_atk` /
+`buff_mag` "battle-only" warnings still in `apply_item_effect()` are
+unreachable in production — `party_inventory.gd` `use_item()` refuses any item
+without `usable_in_field` before the effect runs, and both items are
+`usable_in_field: false` — so they mark the field refusal, not a missing
+implementation. Smoke Bomb needs no arm there for the same reason.
 
 ## Design references
 
@@ -45,7 +58,9 @@ stub, and `whetstone` / `spirit_incense` / `smoke_bomb` have no handler in
 
 ## Code references
 
-- game/scripts/util/inventory_helpers.gd — `apply_item_effect()`, `can_apply_item_effect()` (the coin's set-flag path and its refuse-while-active guard)
+- game/scripts/util/inventory_helpers.gd — `apply_item_effect()`, `can_apply_item_effect()` (the coin's set-flag path and its refuse-while-active guard; the field side, where `teleport` is still a stub)
+- game/scripts/combat/battle_item_command.gd — `do_item()` (`buff_atk` / `buff_mag`) and `_flee_item()` (Smoke Bomb): the battle side, dispatched from `battle_manager.gd`
+- game/scripts/combat/battle_state.gd — `set_buff()` / `get_effective_stat()`, which is how a buff reaches damage and how it expires
 - game/scripts/core/encounter_handler.gd — the `sables_coin_active` consumer that forces the preemptive formation
 - game/data/items/consumables.json
 
