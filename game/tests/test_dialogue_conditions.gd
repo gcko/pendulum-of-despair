@@ -1,7 +1,7 @@
 extends GutTest
 ## Tests for the shared dialogue condition evaluator (DialogueCondition)
 ## and its use by the sequence players (cutscene_player, dialogue_box).
-## Covers GAP-036: per-entry `condition` must be honoured everywhere.
+## Covers GAP-036: per-entry `condition` must be honored everywhere.
 
 const CUTSCENE_SCENE: PackedScene = preload("res://scenes/overlay/cutscene.tscn")
 const DIALOGUE_SCENE: PackedScene = preload("res://scenes/overlay/dialogue.tscn")
@@ -216,7 +216,7 @@ func test_choice_context_marks_only_the_selected_option() -> void:
 	assert_false(bool(context["choice_1_selected"]), "first option not selected")
 
 
-# --- Cutscene player honours conditions (GAP-036) ---
+# --- Cutscene player honors conditions (GAP-036) ---
 
 
 func test_cutscene_skips_false_condition_entry() -> void:
@@ -274,7 +274,7 @@ func test_cutscene_skip_ignores_false_condition_entries() -> void:
 	assert_true(fired.has("c"), "later playable entry flag should fire on skip")
 
 
-# --- Dialogue box honours conditions (GAP-036) ---
+# --- Dialogue box honors conditions (GAP-036) ---
 
 
 func test_dialogue_box_skips_false_condition_entry() -> void:
