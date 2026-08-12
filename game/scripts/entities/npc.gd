@@ -20,7 +20,7 @@ signal walk_complete
 ## Keyed by npc_id. Session-scoped on purpose: it is static so an NPC keeps its
 ## place in the rotation across map reloads and battles, and it is deliberately
 ## NOT written to save data — which line comes next within a single story state
-## is flavour, not progression. Cleared by [method reset_dialogue_cycles].
+## is flavor, not progression. Cleared by [method reset_dialogue_cycles].
 static var _dialogue_cycle_indices: Dictionary = {}
 
 ## NPC identifier used for dialogue lookup.
