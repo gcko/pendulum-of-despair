@@ -19,6 +19,8 @@ pr-review-response (Step 6).
 | Formula precision | Missing rounding rules, incomplete formula terms, stated ranges that don't match formula outputs | Agent 3 (Technical) | 255/256 != 1.0; floor vs round unspecified |
 | Ambiguity | Unclear language, multiple interpretations, undefined edge cases | Agent 5 (Devil's Advocate) | "1.5x damage" vs "+50% damage"; timer behavior during pause |
 | Enumeration completeness | Doc lists a field's allowed values but omits one that ships in the data | Agent 6 (Canonical Verifier) | `act` list omits `all`, which `overworld.json` uses |
+| Guard/rule unit mismatch | Guard measures in a different unit or shape than the rule it enforces | Agent 3 (Technical) | `split()` vs `wc -l`; character length vs word count |
+| Scan vacuity | Guard can inspect nothing and still assert a clean result | Agent 3 (Technical) | scan skips unloadable files, then asserts 0 found |
 
 ## Agent Mapping
 
