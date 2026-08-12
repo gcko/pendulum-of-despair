@@ -8,7 +8,7 @@
 | **Type** | bug |
 | **Effort** | M |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — PR #283 (re-verified against the tree on 2026-08-12; see Resolution) |
 | **GitHub Issue** | [#170](https://github.com/gcko/pendulum-of-despair/issues/170) |
 | **Source domains** | dialogue |
 
@@ -30,9 +30,53 @@ Add a _connect_dialogue_signals() wiring flag_set_requested (and animation_reque
 
 ## Acceptance criteria
 
-- [ ] A standalone choice sets its flag/score
-- [ ] Wiring is shared across all standalone dialogue paths
-- [ ] A test asserts a standalone choice mutates state
+- [x] A standalone choice sets its flag/score — PR #283
+- [x] Wiring is shared across all standalone dialogue paths — PR #283, moved into `exploration_interactions.gd` by PR #357
+- [x] A test asserts a standalone choice mutates state — PR #283
+
+## Resolution
+
+Re-measured against the tree on 2026-08-12 rather than taken from the issue
+text. All three criteria hold. The Summary, Current state and Verification
+sections are the frozen 2026-06-27 record of the bug as it stood then, and are
+left as written; this section is the live view.
+
+**Criterion 1 — a standalone choice sets its flag/score.** `dialogue_box.gd`
+emits `flag_set_requested` and `score_increment_requested` when a choice is
+answered, and `DialogueConsequences.connect_overlay()` in
+`game/scripts/util/dialogue_consequences.gd` routes them to
+`EventFlags.set_flag` and `EventFlags.apply_score_choice`. The two travel on
+separate signals because flags overwrite while scores accumulate and clamp
+(dialogue-system.md §3.3), which is also why the score path lands on
+`apply_score_choice` rather than `set_flag`.
+
+**Criterion 2 — shared across all standalone paths.** Checked exhaustively,
+not by sampling: every `push_overlay(GameManager.OverlayState.DIALOGUE)` site
+under `game/scripts/` calls `connect_overlay()` on the overlay it just pushed.
+There are six, across the four paths the gap named —
+`exploration_interactions.gd` (NPC talk and dialogue trigger, both via
+`connect_dialogue_signals()`), `exploration_zone_handler.gd`,
+`exploration_auto_sequence.gd`, and `cleansing_sequence.gd` (three sites). The
+CUTSCENE overlay is wired separately by `CutsceneHandler`, as before.
+
+**Criterion 3 — a test asserts the state mutation.**
+`game/tests/test_dialogue_scores.gd` has
+`test_dialogue_consequences_apply_both_consequence_types()`, which connects a
+real overlay through `connect_overlay()`, answers a choice carrying both a
+`flag_set` and a `score_delta`, and asserts `EventFlags` state afterwards — not
+that a signal fired. `test_two_questions_accumulate_through_the_overlay()`
+covers the accumulate-don't-overwrite regression on the same path.
+
+PR #283 (commit `25fcedfa`) landed all three in one change: it added
+`dialogue_consequences.gd`, `EventFlags.apply_score_choice`, the call at every
+standalone site, and `test_dialogue_scores.gd`. PR #357 later moved the
+`exploration.gd` call site into `exploration_interactions.gd` without changing
+the wiring.
+
+**Still open, and not this gap.** `animation_requested` is connected only in
+`cutscene_player.gd` and remains unwired on every standalone path. That
+sub-claim appears in this gap's Summary but in none of its acceptance
+criteria; GAP-039 owns it and cites it explicitly.
 
 ## Design references
 

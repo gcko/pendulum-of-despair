@@ -27,7 +27,7 @@ Recomputed from the Status column of the table below, which
 field of each linked GAP doc. **Update these numbers whenever a row's Status
 changes** — the gate fails the build when they drift.
 
-- **91 gap files** — **61 open**, **2 partial**, **28 resolved**.
+- **91 gap files** — **60 open**, **2 partial**, **29 resolved**.
 - **14 epics** (🏔️) among them.
 
 This directory is the durable, reviewable source.
@@ -72,7 +72,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-029](GAP-029-continental-overworld-unbuilt-60x40-act-i-screen-v.md) 🏔️ | Exploration | HIGH | XL | open | Continental overworld unbuilt — 60x40 Act-I screen vs designed 128x96 free-scroll continent |
 | [GAP-030](GAP-030-transport-vehicle-system-entirely-missing-ley-stag.md) 🏔️ | Exploration | HIGH | L | open | Transport/vehicle system entirely missing (Ley Stag, rail, ferry, Linewalk) |
 | [GAP-031](GAP-031-act-based-dynamic-world-transformations-not-implem.md) 🏔️ | Exploration | HIGH | XL | open | Act-based dynamic world transformations not implemented — all locations are single Act-I state |
-| [GAP-037](GAP-037-choice-consequences-flag-set-score-not-wired-for-s.md) | Dialogue | HIGH | M | open | Choice consequences (flag_set/score) not wired for standalone NPC/zone/auto-sequence dialogue |
+| [GAP-037](GAP-037-choice-consequences-flag-set-score-not-wired-for-s.md) | Dialogue | HIGH | M | resolved | Choice consequences (flag_set/score) not wired for standalone NPC/zone/auto-sequence dialogue |
 | [GAP-038](GAP-038-numeric-score-increment-clamp-not-implemented-scor.md) | Dialogue | HIGH | M | resolved (#171) | Numeric score increment + clamp not implemented — score choices overwrite instead of accumulate |
 | [GAP-044](GAP-044-sidequest-system-entirely-absent-no-schema-no-jour.md) 🏔️ | Story | HIGH | XL | open | Sidequest system entirely absent: no schema, no journal, 0 of 26 quests wired (givers already placed) |
 | [GAP-047](GAP-047-epic-acts-ii-iv-interlude-epilogue-narrative-scene.md) 🏔️ | World/Story | HIGH | XL | open | EPIC: Acts II–IV + Interlude + Epilogue narrative, scene wiring, NPCs, and world-state transitions unimplemented |

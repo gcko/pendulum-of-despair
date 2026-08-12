@@ -31,9 +31,13 @@ Implement teleport/preemptive via EventFlags + exploration/battle hooks; route b
 ## Acceptance criteria
 
 - [ ] Waystone teleports to the dungeon entrance
-- [ ] Sable's Coin forces a preemptive next battle
+- [x] Sable's Coin forces a preemptive next battle (done by GAP-027/PR #268: using the coin sets `sables_coin_active`, `encounter_handler.gd` forces the preemptive formation and clears the flag, and `can_apply_item_effect()` refuses a second coin while one is active; re-measured 2026-08-12)
 - [ ] Whetstone/Spirit Incense apply a one-battle buff
 - [ ] Smoke Bomb flees non-boss battles
+
+The gap stays open on the other three: `teleport` is still a `push_warning`
+stub, and `whetstone` / `spirit_incense` / `smoke_bomb` have no handler in
+`apply_item_effect()` at all.
 
 ## Design references
 
@@ -41,7 +45,8 @@ Implement teleport/preemptive via EventFlags + exploration/battle hooks; route b
 
 ## Code references
 
-- game/scripts/util/inventory_helpers.gd — `apply_item_effect()`
+- game/scripts/util/inventory_helpers.gd — `apply_item_effect()`, `can_apply_item_effect()` (the coin's set-flag path and its refuse-while-active guard)
+- game/scripts/core/encounter_handler.gd — the `sables_coin_active` consumer that forces the preemptive formation
 - game/data/items/consumables.json
 
 
