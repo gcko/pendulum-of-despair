@@ -2,9 +2,10 @@ class_name StoryAct
 extends RefCounted
 ## Static helpers mapping EventFlags story progression to the current
 ## narrative period, encounter danger scaling, and enemy stat tables.
-## Source: combat-formulas.md § Act scaling.
+## Source: combat-formulas.md § Danger Counter > 'Act scaling'.
 
-## Danger-counter multiplier per period. combat-formulas.md § Act scaling.
+## Danger-counter multiplier per period, from
+## combat-formulas.md § Danger Counter > 'Act scaling'.
 ## The table's Act IV and Epilogue rows are both x1.1, the same value as
 ## Act III, so get_period() deliberately has no branch for them: it reports
 ## "act_iii" for everything past act_iii_started and the carried value is

@@ -193,6 +193,12 @@ Calculate base damage, then apply the row modifier.
 # Mirrors the shape of docs/plans/technical-architecture.md, where a
 # letter-suffixed section sits directly under the section it extends. That
 # adjacency is what a digits-only matcher gets wrong.
+#
+# It also carries the two shapes the id matcher has to keep apart: a nested
+# "### 1.3" ahead of a top-level "## 3." in the file (a bag-of-words matcher
+# returns the nested one for "§ 3", #391), and a section whose body names
+# something a citation may point at without naming the heading ("§ 2.1 Enemy
+# Data Field Budget", modeled on the live "audio.md § 3.1 SFX budget", #389).
 NUMBERED_FIXTURE = """# Technical Architecture
 
 ## 1. Project Setup
@@ -209,11 +215,21 @@ snake_case files, PascalCase classes.
 
 Aim 400 lines, hard maximum 600.
 
+### 1.3 Autoload Singletons
+
+Six singletons, registered here and nowhere else.
+
 ## 2. Data Formats
 
 ### 2.1 Enemy Data
 
+Every enemy record. The Field Budget row caps one at twelve keys.
+
 ### 2.3 Equipment Data
+
+## 3. Game State Machine
+
+Exploration, battle and menu, and the transitions between them.
 """
 
 # The numbered-list heading shape, as dungeons-world.md writes it: the
@@ -686,12 +702,12 @@ class TestCheckDocCitations(unittest.TestCase):
     # headings are the common shape in ui-design.md,
     # technical-architecture.md and dungeons-world.md.
     #
-    # What runs there now reads the section-id shape only: a leftover
-    # ``21.`` is as loud a claim about the heading tree as ``Invented`` is,
-    # and ``isupper`` is blind to it because digits have no case. The
-    # capitalisation half stays out — under an id it fails four correct live
-    # citations — and the exception has a test of its own below so it is
-    # pinned rather than merely absent.
+    # What runs there reads the section-id shape: a leftover ``21.`` is as
+    # loud a claim about the heading tree as ``Invented`` is, and ``isupper``
+    # is blind to it because digits have no case. Capitalization on its own
+    # still stays out — under an id it fails four correct live citations —
+    # so the leftover words are checked against the cited section's own
+    # vocabulary instead (#389); see the block after this one.
 
     def _arch(self):
         self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
@@ -748,20 +764,25 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("names no heading", errors[0])
 
-    def test_capitalised_run_on_under_a_section_id_is_allowed(self):
-        """The recorded exception, pinned so it cannot drift unnoticed.
+    # ── Invented words under a section id (#389) ───────────────────────
+    #
+    # The pair above left one shape resolving: ``§ 2.3 Nonexistent
+    # Subsection``. Its syntax is identical to ``audio.md § 3.1 SFX budget``
+    # and ``dungeons-world.md § 1 Ember Vein Floor 2``, two correct live
+    # citations whose trailing words locate something *inside* the section,
+    # so no rule reading capitalization alone can refuse one and keep the
+    # others. The document decides instead: a locator names something the
+    # section says, an invented subsection names something nowhere in it.
 
-        Under an id the check reads ids only. ``§ 2.3 Nonexistent
-        Subsection`` is indistinguishable from ``audio.md § 3.1 SFX budget``
-        and ``dungeons-world.md § 1 Ember Vein Floor 2`` — two correct live
-        citations whose trailing words locate something inside the section
-        rather than name a subsection. Refusing on capitalisation here fails
-        all three. This test is the exception's record; if a later change
-        closes the gap (#389), it is the test that should change with it.
-        """
-        hit = self._arch_resolve("2.3 Nonexistent Subsection")
-        self.assertIsNotNone(hit, "the documented exception must hold")
-        self.assertEqual(hit[2], "2.3 Equipment Data")
+    def test_an_invented_subsection_under_a_section_id_is_refused(self):
+        """The gap #389 was filed for. ``Nonexistent`` is not in § 2.3."""
+        self.assertIsNone(self._arch_resolve("2.3 Nonexistent Subsection"))
+
+    def test_a_locator_the_section_actually_names_is_still_allowed(self):
+        """The half that must survive: § 2.1's body says "Field Budget"."""
+        hit = self._arch_resolve("2.1 Enemy Data Field Budget")
+        self.assertIsNotNone(hit, "a locator inside the section must resolve")
+        self.assertEqual(hit[2], "2.1 Enemy Data")
 
     def test_a_locator_phrase_after_an_id_survives_a_full_scan(self):
         """The live shape end to end: § <id> <Capitalised locator>.
@@ -772,6 +793,188 @@ class TestCheckDocCitations(unittest.TestCase):
         self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
         self._write(
             "game/scripts/a.gd", "# arch.md § 2.1 Enemy Data Field Budget.\n"
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_an_invented_subsection_under_an_id_fails_the_whole_scan(self):
+        """End to end, through the gate rather than around it."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd", "# arch.md § 2.1 Enemy Data Ghost Budget.\n"
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_locator_that_the_section_stops_saying_fails(self):
+        """The rot this closes: the section moves on, the citation does not."""
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE.replace("The Field Budget row", "The key cap"),
+        )
+        self._write(
+            "game/scripts/a.gd", "# arch.md § 2.1 Enemy Data Field Budget.\n"
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_lower_case_prose_after_an_id_is_still_free_to_run_on(self):
+        """The check reads capitalized words only, and says so.
+
+        House style writes citations mid-sentence, and the sentence carries
+        on in lower case with words the cited section never uses. Holding
+        *those* to the section's vocabulary would fail most numbered
+        citations in the tree.
+        """
+        hit = self._arch_resolve("2.1 Enemy Data and the exit_battle rule")
+        self.assertIsNotNone(hit, "run-on prose must not break a citation")
+        self.assertEqual(hit[2], "2.1 Enemy Data")
+
+    def test_a_word_from_the_headings_own_title_is_not_invention(self):
+        """A citation may repeat the title out of order without failing."""
+        hit = self._arch_resolve("1.2a Budget Script")
+        self.assertIsNotNone(hit, "the heading's own words must be accepted")
+        self.assertEqual(hit[2], "1.2a Script Size Budget")
+
+    # ── A bare section id is positional, not a bag of words (#391) ─────
+    #
+    # Ids were matched with ``is_subsequence`` against a heading's normalized
+    # breadcrumb, so ``3`` matched the trail of ``### 1.3 Autoload
+    # Singletons`` (``... 1 3 autoload singletons``) and won by coming first
+    # in the file. ``enemy-ability-conventions.md §3`` is cited twice in the
+    # live tree and resolved that way to ``### 2.3 AoE elemental abilities``:
+    # the gate reported passed while pointing the reader at the wrong
+    # section, and renaming the real § 3 would not have failed it.
+
+    def test_a_bare_id_reaches_its_own_top_level_heading(self):
+        """``§ 3`` is ``## 3.``, even with a ``### 1.3`` earlier in the file."""
+        hit = self._arch_resolve("3")
+        self.assertIsNotNone(hit, "§ 3 must resolve")
+        self.assertEqual(hit[2], "3. Game State Machine")
+
+    def test_a_bare_id_does_not_borrow_a_nested_heading(self):
+        """``§ 2`` is ``## 2.``, not the earlier ``### 1.2``."""
+        hit = self._arch_resolve("2")
+        self.assertIsNotNone(hit, "§ 2 must resolve")
+        self.assertEqual(hit[2], "2. Data Formats")
+
+    def test_a_nested_id_still_reaches_itself(self):
+        """The other half: ``§ 1.3`` must still be the nested heading."""
+        hit = self._arch_resolve("1.3")
+        self.assertIsNotNone(hit, "§ 1.3 must resolve")
+        self.assertEqual(hit[2], "1.3 Autoload Singletons")
+
+    def test_a_digit_inside_a_title_is_not_a_section_id(self):
+        """``dungeons-world.md § 2`` means ``## 2.``, not ``### Floor 2:``.
+
+        Both cited sites of that citation resolved to ``Floor 2: Lower
+        Mine`` before ids were anchored, which is a different dungeon from
+        the one they meant.
+        """
+        self._write(
+            "docs/story/dungeons.md",
+            "# Dungeons\n\n## 1. Ember Vein\n\n### Floor 2: Lower Mine\n\n"
+            "Ore carts.\n\n## 2. Fenmother's Hollow\n\nMarsh.\n",
+        )
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(), "docs/story/dungeons.md", "2"
+        )
+        self.assertIsNotNone(hit, "§ 2 must resolve")
+        self.assertEqual(hit[2], "2. Fenmother's Hollow")
+
+    def test_renaming_the_section_a_bare_id_names_fails_the_scan(self):
+        """The rot the anchoring makes visible, end to end.
+
+        Before it, deleting ``## 3.`` left ``§ 3`` resolving happily to
+        ``### 1.3`` and the gate reporting passed.
+        """
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE.replace("## 3. Game State Machine", "## Flow"),
+        )
+        self._write("game/scripts/a.gd", "# States: arch.md § 3.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_bare_id_no_heading_numbers_fails_the_scan(self):
+        """``§ 9`` names nothing, and must say so rather than shorten."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# See arch.md § 9.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    # ── A document citing its own section (#386) ───────────────────────
+    #
+    # ``technical-architecture.md`` says "the six singletons listed in § 1.3".
+    # Spelling its own filename out there is redundant to a reader, so the
+    # reference carried no filename — and went unchecked entirely.
+
+    def test_a_bare_section_reference_resolves_against_its_own_document(self):
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE + "\nThe singletons listed in § 1.3 and no more.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_bare_reference_to_a_section_nobody_wrote_fails(self):
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE + "\nThe singletons listed in § 9.4 and no more.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_self_reference_that_rots_fails_the_scan(self):
+        """Rename the section and the same reference must stop passing."""
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE.replace("### 1.3 ", "### 1.4 ")
+            + "\nThe singletons listed in § 1.3 and no more.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_reference_after_a_named_document_is_not_read_as_self(self):
+        """The house style wraps its markdown links, and the ``§`` lands
+        on the next line with no filename in front of it. Reading that as a
+        self-reference resolves it against the wrong document — silently,
+        and in the direction this gate exists to prevent. ``arch.md`` has no
+        § 5, so a self-reading would fail here.
+        """
+        self._write(
+            "docs/story/dungeons.md", "# Dungeons\n\n## 5. Ley Nexus\n\nA leech.\n"
+        )
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE
+            + "\nThe party enters ([dungeons.md](../story/dungeons.md)\n"
+            "§ 5, recommended level 12) before Act II.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_bare_reference_in_code_has_no_document_to_resolve_against(self):
+        """A ``.gd`` file is not a document, so ``§ 9`` there stays unread."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write("game/scripts/a.gd", "# The rule in § 9.4 applies.\n")
+        self.assertEqual(self._errors(), [])
+
+    def test_a_number_that_is_not_a_section_id_is_not_a_self_reference(self):
+        """``§ 3rd`` is prose; an id ends the token it starts."""
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE + "\nThe § 3rd rule of the tree.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_self_reference_inside_a_fence_is_an_example(self):
+        self._write(
+            "docs/plans/arch.md",
+            NUMBERED_FIXTURE + "\n```\nSee § 9.4 for the shape.\n```\n",
         )
         self.assertEqual(self._errors(), [])
 
@@ -975,6 +1178,49 @@ class TestIntegration(unittest.TestCase):
             self.skipTest("No design docs available")
         result = check_doc_citations.main()
         self.assertEqual(result, 0)
+
+    def test_full_citation_scan_reads_a_non_trivial_corpus(self):
+        """"No bad citations" and "no citations read" both print nothing.
+
+        The floors are far below the live numbers (418 citations across 533
+        files, 11 of them same-document) so ordinary editing does not trip
+        them, but a scan that stopped descending cannot clear them.
+        """
+        if not os.path.exists("docs/story"):
+            self.skipTest("No design docs available")
+        tally: dict = {}
+        errors = check_doc_citations.check_citations(tally)
+        self.assertEqual(errors, [])
+        self.assertGreater(tally["files"], 300)
+        self.assertGreater(tally["citations"], 250)
+        self.assertGreater(tally["self_references"], 5)
+
+    def test_the_citation_counts_come_from_the_directory_walk(self):
+        """Sever the walk's recursion and the counts must collapse.
+
+        A floor is only evidence if the number under it is measured. This
+        stops ``os.walk`` descending past each scan root — leaving the entry
+        points intact and taking away everything below them — and the counts
+        that pass the floors above must fall through them: no
+        ``docs/story/script/``, no ``game/scripts/**``, and no
+        same-document reference anywhere, since all eleven live ones sit in
+        nested directories.
+        """
+        if not os.path.exists("docs/story"):
+            self.skipTest("No design docs available")
+        real_walk = os.walk
+
+        def no_descent(top, *args, **kwargs):
+            for dirpath, dirnames, filenames in real_walk(top, *args, **kwargs):
+                dirnames[:] = []
+                yield dirpath, dirnames, filenames
+
+        tally: dict = {}
+        with patch("check_doc_citations.os.walk", no_descent):
+            check_doc_citations.check_citations(tally)
+        self.assertLess(tally["files"], 300)
+        self.assertLess(tally["citations"], 250)
+        self.assertEqual(tally["self_references"], 0)
 
 
 class TestDocLineCounts(unittest.TestCase):
