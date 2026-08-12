@@ -957,7 +957,7 @@
       "sell_price": 200,
       "sellable": true,
       "stack_limit": 99,
-      "description": "A lens from the Index's cataloguing apparatus.",
+      "description": "A lens from the Index's cataloging apparatus.",
       "crafting_use": "Boss-specific material"
     },
     {

@@ -880,7 +880,7 @@ than taken on trust.
 | Greyveil | Torren | Spell power 28 | 14 MP Tier 2 comparators (Rootgrip 30, Kindlepyre 32) netted against the MDEF-ignore and non-elemental riders |
 | Duskbreaker (Favor 3) | Torren | Spell power 56 | "Heavy" = double; single target both sides |
 | Rootsong | Torren | Spell power 12 per ally | The table's own "same per-target potency as Dewfall" |
-| Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components. Which four spirits compose it, and how the cell's "cleanse" is read, are labelled choices — see abilities.md |
+| Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components. Which four spirits compose it, and how the cell's "cleanse" is read, are labeled choices — see abilities.md |
 | Wild Card (0-2 items) | Sable | `ability_mult` 2.0 | The 0-item branch's stated "2x her Attack" |
 | Wild Card (3 items) | Sable | `ability_mult` 3.0 | "Heavy" = double, capped by the ladder's Maximum tier |
 | Ambush Protocol (combo #8) | Sable + Lira | Spell power 60 | The combo's own "2x normal Arc Trap damage" |

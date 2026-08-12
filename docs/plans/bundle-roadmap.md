@@ -130,9 +130,9 @@ blocked until real assets exist.
 - **P0:** #217 GAP-082 **EPIC** all art assets are placeholders (XL)
 - **P1:** #204 GAP-058 portraits + walking sprites (L) · #205 GAP-059 status-icon
   system · #207 GAP-061 equip stat comparison · #208 GAP-062 battle results ·
-  #212 GAP-071 colour-blind mode · #214 GAP-073 key rebinding (L)
+  #212 GAP-071 color-blind mode · #214 GAP-073 key rebinding (L)
 - **P2:** #229 GAP-065 item screen grid · #206 GAP-060 abilities screen ·
-  #228 GAP-064 window colour · #230 GAP-074 orphaned config toggles ·
+  #228 GAP-064 window color · #230 GAP-074 orphaned config toggles ·
   #213 GAP-072 SFX captions
 
 ### Phase 8 — Audio (7 issues)
@@ -158,4 +158,4 @@ Opportunistic — fold into whichever phase touches the same files.
 - Issue numbers map to GAP-NNN via the issue titles (`gh issue list --label gap-analysis`).
 - Phase order is dependency order. Within a phase, work P0 → P1 → P2.
 - Only L and XL carry a `Size`; anything unsized is S/M and not worth estimating.
-- The 14 `epic`-labelled issues are all XL and must be sliced before implementation.
+- The 14 `epic`-labeled issues are all XL and must be sliced before implementation.

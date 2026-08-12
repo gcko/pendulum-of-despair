@@ -230,3 +230,27 @@ Each item is a single check. Grows from Copilot gap analysis.
   encounter files), confirm that sibling files with a different shape
   (e.g. `overworld.json` zone records) are either covered by the same
   list or explicitly excluded from it.
+
+## Guard/Rule Unit Agreement (from Copilot gap analysis, PR #393/#394)
+
+- A guard must measure in the SAME unit and shape as the rule it
+  enforces. Where the rule is stated in a doc and checked elsewhere,
+  both sides must share one implementation or one documented
+  definition — `split("\n").size()` and `wc -l` differ by one, so a
+  600-line ceiling checked the first way is really 599.
+- When a unit test calls the same function production calls, it must
+  pass arguments of the same SHAPE production passes. A test handing
+  over a wider or looser value (a character length where production
+  passes a word count) silently stops exercising the bound it claims
+  to cover.
+
+## Scan Vacuity (from Copilot gap analysis, PR #394)
+
+- A guard that asserts "zero matches" must first prove it LOOKED:
+  assert a non-trivial number of items were actually inspected. A scan
+  that returns early on an unreadable directory, or skips files that
+  fail to load, reports "clean" and "never ran" identically.
+- Verify by breaking the scan's REACH — its recursion, not just its
+  top-level entry — and confirming the guard fails. A top-level guard
+  often already covers the entry case while the recursive case stays
+  silently vacuous.

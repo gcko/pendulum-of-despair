@@ -1478,15 +1478,15 @@ attention to the boss's words.
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
 | *The Index* | Boss | 32 | 7,000 | 112 | 88 | 55 | 90 | 54 | 39 | 2,000 | 4,000 | Lost Page (100%) | Archivist's Lens (100%) | Spirit (150%) | Void (50%) | — | Death, Petrify, Stop, Sleep, Confusion | Pallor Wastes Trial 5 |
 
-**Modes:** 1 (Catalogue)
+**Modes:** 1 (Catalog)
 
 **AI Script:**
 
 ```
 === Scripted Encounter: The Index ===
 
-Mode: Catalogue
-  Note: The Index is not a creature. It is a vast, floating catalogue
+Mode: Catalog
+  Note: The Index is not a creature. It is a vast, floating catalog
         of every recorded death from every Pallor cycle -- thousands of
         entries, each a person's final moments. It hovers in the arena,
         pages turning slowly, radiating Void energy. It does not attack.
@@ -1588,7 +1588,7 @@ Scripted Events:
       understand one."
     - cutscene: "The Index shudders. Pages scatter like startled
       birds. The binding cracks. Not from violence -- from being
-      seen. The catalogue was never meant to be read with compassion.
+      seen. The catalog was never meant to be read with compassion.
       It shatters. Fragments of pages drift down like snow."
     - boss.hp = 0 (defeat)
     - ability_unlock: Maren learns Pallor Sight (reveals all enemy
@@ -1800,7 +1800,7 @@ Scripted Events:
 the Pallor Wastes arc. The Invulnerable pre-fight phase establishes him
 as overwhelmingly powerful and makes Lira's weapon-forging moment feel
 earned rather than arbitrary. The Scholar/Shepherd mode split reflects
-his character arc: he begins as a detached academic cataloguing despair,
+his character arc: he begins as a detached academic cataloging despair,
 then transitions to someone who personally inflicts it. Cycle's Weight's
 stacking ATK/DEF debuff creates mounting pressure -- the longer the
 fight lasts, the harder it gets, mechanically reinforcing the theme that
@@ -2858,7 +2858,7 @@ there are stars. That is enough.
 === Echo Boss Encounter: The First Scholar ===
 
 Note: The First Scholar is the echo of a long-dead archivist who
-      catalogued the world's magic into glyphs -- symbols that bind
+      cataloged the world's magic into glyphs -- symbols that bind
       elemental forces into repeatable patterns. In death, the Scholar
       became the pattern. Every action follows a fixed 4-spell rotation
       that never deviates: Flame, Frost, Storm, Void. Each glyph is
@@ -2958,7 +2958,7 @@ Scripted Events:
       is gone. Not destroyed -- finished. The echo has completed what
       the living scholar could not."
     - drop: Scholar's Codex (accessory; +15% magic damage when
-      exploiting elemental weakness; "Every element, catalogued.")
+      exploiting elemental weakness; "Every element, cataloged.")
     - drop: Ancient Manuscript (key item; unlocks Scholar's glyph
       entries in the bestiary)
 ```
