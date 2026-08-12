@@ -42,9 +42,9 @@ Add an abilities schema to enemy JSON (Act I families first), populate from pale
 
 ## Code references
 
-- game/data/enemies/act_i.json (no 'abilities' field in any of 28 entries)
-- game/scripts/combat/battle_ai.gd — `select_action()` (the 20% ability roll)
-- game/scripts/combat/battle_actions.gd (no apply_status path)
+- game/data/enemies/act_i.json — 19 of its 27 entries carry a populated `abilities` array (#166). Of the 8 without, 4 carry a `boss_ai` phase script instead (ember_drake, vein_guardian, drowned_sentinel, corrupted_fenmother) and 4 carry neither (the_flickering, bog_leech, compact_patrol, compact_scout)
+- game/scripts/combat/battle_ai.gd — `select_action()` (the 20% ability roll, which now reads those arrays instead of falling through to defend)
+- game/scripts/combat/battle_actions.gd — `apply_status_to_enemy()` (the status path enemy abilities resolve through)
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -59,4 +59,4 @@ Add an abilities schema to enemy JSON (Act I families first), populate from pale
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
 
-_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Two kinds of rot slip through that check, both measured and repaired on 2026-08-11. A path check cannot tell you the cited file is still the relevant one, so a decomposition that splits a script into siblings leaves every citation green and pointing at the wrong file (#382); a `symbol()` anchor is the fix, because the gate does follow those. And a bullet that asserts an absence — "no status path", "no equip references" — cannot be checked at all, and keeps passing after the missing thing is built (#383); write what the file does hold instead. Always verify against current code before acting._

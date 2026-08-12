@@ -42,7 +42,7 @@ Add HPBar/MPBar ColorRect (bg + fill) to each battle and menu Row; compute fill_
 
 - game/scripts/ui/battle_party_panel.gd — `_set_fill()` (the HP/MP fill bars)
 - game/scenes/core/battle.tscn
-- game/scripts/ui/menu_overlay.gd
+- game/scripts/ui/menu_party_panel.gd — `_set_bar_fill()` (the menu-row HP/MP fill bars; the party panel was extracted from menu_overlay.gd, which renders no HP/MP)
 
 
 ## Verification (fresh-eyes adversarial pass)
@@ -57,7 +57,7 @@ Add HPBar/MPBar ColorRect (bg + fill) to each battle and menu Row; compute fill_
 
 _Generated 2026-06-27 by the `pod-gap-analysis` ultracode workflow (design-vs-implementation gap analysis)._
 
-_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Always verify against current code before acting._
+_**How to read the citations.** The `file.ext:NNN` line numbers in the Summary, Evidence and Notes prose are a frozen 2026-06-27 snapshot and are deliberately NOT maintained — the code has moved under them and re-numbering them on every refactor would be busywork that silently rots again. Treat them as historical provenance only. The **Code references** bullets are the measured ones: they carry no line numbers, and `check_gap_code_references()` in `scripts/quality-gates/check_stale_counts.py` fails the build if a path listed there stops existing, if a line anchor is reintroduced, or if a bullet names a `symbol()` its file no longer defines. Most bullets name a file without a symbol, so what the gate guarantees for those is that the file is still there — not where inside it to look. Two kinds of rot slip through that check, both measured and repaired on 2026-08-11. A path check cannot tell you the cited file is still the relevant one, so a decomposition that splits a script into siblings leaves every citation green and pointing at the wrong file (#382); a `symbol()` anchor is the fix, because the gate does follow those. And a bullet that asserts an absence — "no status path", "no equip references" — cannot be checked at all, and keeps passing after the missing thing is built (#383); write what the file does hold instead. Always verify against current code before acting._
 
 ## Resolution (PR #275, 2026-07-20)
 
