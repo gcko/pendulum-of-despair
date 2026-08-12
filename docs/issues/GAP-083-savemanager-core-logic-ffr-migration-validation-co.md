@@ -41,7 +41,7 @@ Add game/tests/test_save_manager.gd with GUT cases for _migrate, _validate, load
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd
+- game/scripts/autoload/save_manager.gd — `_migrate()`, `_validate()`, `faint_and_fast_reload()` (the untested branches)
 - game/tests/test_save_load.gd
 
 

@@ -40,9 +40,10 @@ Add EventFlags.increment_score(name, delta, min, max) with clamp and a distinct 
 
 ## Code references
 
-- game/scripts/ui/dialogue_box.gd
-- game/scripts/core/cutscene_handler.gd
-- game/scripts/autoload/event_flags.gd
+- game/scripts/ui/dialogue_box.gd — `_select_choice()` (emits the score delta)
+- game/scripts/core/cutscene_handler.gd — `_on_cutscene_score_increment()` (the cutscene-path handler)
+- game/scripts/util/dialogue_consequences.gd — `connect_overlay()` (the exploration-path handler)
+- game/scripts/autoload/event_flags.gd — `increment_score()`
 
 
 ## Verification (fresh-eyes adversarial pass)

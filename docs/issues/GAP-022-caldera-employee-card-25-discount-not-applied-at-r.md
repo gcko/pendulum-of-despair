@@ -41,7 +41,7 @@ In shop_overlay, when shop.markup>1.0 and PartyState has caldera_employee_card, 
 
 ## Code references
 
-- game/scripts/ui/shop_overlay.gd
+- game/scripts/ui/shop_overlay.gd — `posted_price()`
 - game/data/shops/caldera_company_store.json
 
 

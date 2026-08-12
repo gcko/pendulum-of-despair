@@ -41,7 +41,7 @@ Extend shop_overlay.tscn with a selection-bound description line, an equipment c
 
 ## Code references
 
-- game/scripts/ui/shop_overlay.gd
+- game/scripts/ui/shop_overlay.gd — `_build_list()` (name+price labels), `_show_feedback()` (the DescLabel reuse)
 - game/scenes/overlay/shop_overlay.tscn
 
 

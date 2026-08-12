@@ -42,7 +42,7 @@ Decide semantics (group consecutive same-condition entries as a sequence, or cyc
 
 ## Code references
 
-- game/scripts/entities/npc.gd
+- game/scripts/entities/npc.gd — `get_current_dialogue()`
 - game/data/dialogue/npc_bren.json
 - game/data/dialogue/npc_grandmother_seyth.json
 

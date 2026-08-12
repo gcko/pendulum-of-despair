@@ -41,10 +41,10 @@ Classify add_item by category/source (or add add_material) and route to the corr
 
 ## Code references
 
-- game/scripts/autoload/party_state.gd
+- game/scripts/autoload/party_state.gd — `add_item()` (the routing entry point)
 - game/scripts/util/progression_helpers.gd — `apply_battle_rewards()` drop routing
 - game/scripts/util/inventory_helpers.gd — `bucket_for_item()`, `reroute_materials()`
-- game/scripts/ui/menu_items.gd
+- game/scripts/ui/menu_items.gd — `_lookup_material()` (the materials name resolution the finding said was missing)
 
 
 ## Verification (fresh-eyes adversarial pass)

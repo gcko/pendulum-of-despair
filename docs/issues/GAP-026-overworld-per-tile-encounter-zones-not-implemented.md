@@ -42,7 +42,7 @@ Add a TileMapLayer terrain-tag -> zone_id map and update the current zone on til
 ## Code references
 
 - game/data/encounters/overworld.json (13 zones)
-- game/scripts/core/exploration.gd
+- game/scripts/core/exploration.gd — `get_player_tile()`, `get_zone_map()` (the per-tile zone lookup)
 - game/scenes/maps/overworld.tscn
 
 

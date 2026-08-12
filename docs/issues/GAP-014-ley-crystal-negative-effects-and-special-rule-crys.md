@@ -42,7 +42,7 @@ Add a negative_effect/special_rule handler keyed off the equipped crystal; hook 
 ## Code references
 
 - game/data/ley_crystals.json
-- game/scripts/ui/menu_ley_crystal.gd
+- game/scripts/ui/menu_ley_crystal.gd — `_show_detail()` (the only reader of a crystal's negative_effect, and only to warn)
 - game/scripts/combat/ (no negative_effect refs)
 
 

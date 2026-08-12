@@ -41,7 +41,7 @@ Once continental region boundaries exist, detect crossings in the move step and 
 
 ## Code references
 
-- game/scripts/core/exploration.gd
+- game/scripts/core/exploration.gd — `flash_location_name()` (the per-map-load banner that is all there is)
 
 
 ## Verification (fresh-eyes adversarial pass)

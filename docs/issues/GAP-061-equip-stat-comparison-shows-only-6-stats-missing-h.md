@@ -40,7 +40,7 @@ Extend STAT_NAMES + .tscn rows and populate _info_label from equipment element/s
 
 ## Code references
 
-- game/scripts/ui/menu_equip.gd
+- game/scripts/ui/menu_equip.gd — `_update_stat_comparison()`
 - game/scenes/overlay/menu.tscn
 
 

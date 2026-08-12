@@ -40,7 +40,7 @@ Extend _validate with per-group type assertions (party Array, formation/inventor
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd
+- game/scripts/autoload/save_manager.gd — `_validate()`
 
 
 ## Verification (fresh-eyes adversarial pass)

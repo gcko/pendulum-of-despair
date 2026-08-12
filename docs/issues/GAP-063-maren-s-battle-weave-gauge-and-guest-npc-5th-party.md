@@ -40,7 +40,7 @@ Add a conditional WeaveBar for Maren and a 5th compact Row visible when a guest 
 
 ## Code references
 
-- game/scripts/ui/battle_party_panel.gd
+- game/scripts/ui/battle_party_panel.gd — `_update_weave()` (Maren's gauge; the guest row is still absent)
 - game/scenes/core/battle.tscn
 
 

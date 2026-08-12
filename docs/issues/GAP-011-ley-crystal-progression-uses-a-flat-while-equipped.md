@@ -41,7 +41,7 @@ On level-up, if a crystal is equipped, add its current-level bonus to a persiste
 
 ## Code references
 
-- game/scripts/autoload/party_state.gd
+- game/scripts/autoload/party_state.gd — `get_crystal_stat_bonus()` (the flat while-equipped bonus)
 - game/scripts/util/progression_helpers.gd — `add_xp_to_member()` level-up branch
 
 

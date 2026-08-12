@@ -41,7 +41,7 @@ Decide with design owner: adopt doc constants and verify pacing in-engine, or up
 ## Code references
 
 - game/scripts/combat/atb_system.gd (SPEED_FACTORS)
-- game/scripts/combat/atb_system.gd
+- game/scripts/combat/atb_system.gd — `calculate_fill_rate()` (the formula the divergent constants feed)
 
 
 ## Verification (fresh-eyes adversarial pass)

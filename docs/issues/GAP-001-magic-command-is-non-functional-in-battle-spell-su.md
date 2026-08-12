@@ -42,7 +42,7 @@ On Magic confirm in battle_ui/battle_command_menu, build the active character's 
 
 ## Code references
 
-- game/scripts/ui/battle_command_menu.gd
+- game/scripts/ui/battle_command_menu.gd — `set_submenu_items()` (the spell-list setter the finding recorded as having zero callers)
 - game/scripts/combat/battle_magic_command.gd — `do_magic()` (was battle_manager._do_magic, unreachable at the time of the finding)
 
 

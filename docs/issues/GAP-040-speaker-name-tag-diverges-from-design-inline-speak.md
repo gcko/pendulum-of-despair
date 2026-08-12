@@ -40,7 +40,7 @@ Make a design call and reconcile dialogue-system.md §1 and ui-design.md §12; r
 
 ## Code references
 
-- game/scripts/ui/dialogue_box.gd
+- game/scripts/ui/dialogue_box.gd — `_show_entry()` (builds the inline SPEAKER prefix and hides the inset)
 
 
 ## Verification (fresh-eyes adversarial pass)

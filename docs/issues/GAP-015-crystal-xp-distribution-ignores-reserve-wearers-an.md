@@ -40,7 +40,7 @@ Compute each member's awarded XP (0 KO'd-active, full active-alive, half reserve
 
 ## Code references
 
-- game/scripts/core/exploration.gd
+- game/scripts/core/exploration.gd — `distribute_crystal_xp()`
 
 
 ## Verification (fresh-eyes adversarial pass)

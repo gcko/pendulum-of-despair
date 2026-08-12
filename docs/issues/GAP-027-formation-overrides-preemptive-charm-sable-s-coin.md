@@ -39,7 +39,7 @@ Add an optional modifier dict (charm_bonus, force_preemptive) populated from equ
 
 ## Code references
 
-- game/scripts/combat/encounter_system.gd
+- game/scripts/combat/encounter_system.gd — `roll_formation()`
 
 
 ## Verification (fresh-eyes adversarial pass)

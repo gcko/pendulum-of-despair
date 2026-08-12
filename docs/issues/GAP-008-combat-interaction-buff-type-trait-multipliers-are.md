@@ -43,7 +43,7 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 ## Code references
 
 - game/scripts/combat/battle_actions.gd
-- game/scripts/combat/damage_calculator.gd
+- game/scripts/combat/damage_calculator.gd — `calculate_physical()`, `calculate_magic()` (the interaction/buff params callers leave neutral)
 - game/scripts/entities/enemy.gd
 
 

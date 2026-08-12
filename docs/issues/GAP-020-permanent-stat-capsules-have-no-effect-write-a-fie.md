@@ -42,7 +42,7 @@ Store gains in member['stat_capsules']; add into get_effective_stat and re-apply
 
 - game/scripts/util/inventory_helpers.gd — `apply_item_effect()` stat_boost arm
 - game/scripts/util/progression_helpers.gd — `add_xp_to_member()` level-up overwrite
-- game/scripts/autoload/party_state.gd
+- game/scripts/autoload/party_state.gd — `get_effective_stat()` (the reader that ignored the capsule field)
 
 
 ## Verification (fresh-eyes adversarial pass)
