@@ -18,6 +18,7 @@ GATE_DIR="scripts/quality-gates"
 #   G  doc citation integrity     pre-push   check_doc_citations.py
 #   H  GUT unit tests             pre-push
 #   I  quality-gate self-tests    pre-push   test_quality_gates.py
+#   J  dialogue script/JSON sync  pre-push   check_dialogue_sync.py
 #
 # Each gate script's module docstring names its own letter; keep the two in
 # step when editing either.
@@ -47,6 +48,10 @@ python3 "$GATE_DIR/check_scene_refs.py"
 # === QUALITY GATE G: Doc citation integrity ===
 echo "=== Pre-push: Doc citation integrity ==="
 python3 "$GATE_DIR/check_doc_citations.py"
+
+# === QUALITY GATE J: Dialogue script/JSON sync ===
+echo "=== Pre-push: Dialogue script/JSON sync ==="
+python3 "$GATE_DIR/check_dialogue_sync.py"
 
 # === QUALITY GATE H: GUT unit tests ===
 # Run all GUT tests headless. Requires Godot binary on PATH or at

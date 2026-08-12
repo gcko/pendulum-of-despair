@@ -243,18 +243,29 @@ This directory contains the narrative design for Pendulum of Despair.
   source anywhere in `docs/story/script/*.md` at all (#380), so no
   generator could emit them. The JSON is authored, not derived, and the
   evidence for that is recorded in `tools/README.md`.
-  Nothing automated compares the two corpora to each other either. The
-  one test that checks a shipped dialogue string against the engine —
-  `game/tests/test_status_effects.gd` — pins the paralysis notification
-  to the adjective `game/scripts/combat/status_effects.gd` emits; it never
-  opens `docs/story/script/*.md`, so it catches JSON-versus-engine drift
-  and nothing else. This rule is therefore the only thing holding the script
-  markdown and the dialogue JSON together, which is why #311 had to move
-  each swept spelling in both corpora itself. #379 tracks the gate that
-  would catch the drift; until it exists, edit both copies by hand and
-  prove they agree — `items.md` § Key Items and
-  `game/data/items/key_items.json` were swept in one commit for exactly
-  this reason, because half a fix is worse than none.
+  What compares the two corpora is
+  `scripts/quality-gates/check_dialogue_sync.py`, quality gate J, which
+  runs on pre-push (#379): every string in a `lines[]` array under
+  `game/data/dialogue/` must occur verbatim — exact substring, no case
+  folding, no whitespace normalization — somewhere in
+  `docs/story/script/*.md`, so respelling one copy and not the other turns
+  the gate red. It enforces that direction only: script prose with no
+  shipped line is fine, a match in any script file counts, and only
+  `lines[]` is read, which leaves the `choice.label` and `text` strings in
+  that directory unchecked (#398). The 121 shipped strings that already
+  had no markdown source are held in the gate's shrink-only
+  `KNOWN_ORPHANS` list — 121 strings are pinned today — and the gate fails
+  both when a new orphan appears and when a pin stops being an orphan, so
+  entries come off only as #380 back-fills them. A pinned line is a line
+  the gate cannot see change. The one test that checks a shipped dialogue
+  string against the engine — `game/tests/test_status_effects.gd` — pins
+  the paralysis notification to the adjective
+  `game/scripts/combat/status_effects.gd` emits; it never opens
+  `docs/story/script/*.md`, so it catches JSON-versus-engine drift and
+  nothing else. #311 predates gate J and had to move each swept spelling
+  in both corpora itself, which is also why `items.md` § Key Items and
+  `game/data/items/key_items.json` were swept in one commit — half a fix
+  is worse than none.
 - **`grey` is the one deliberate exception, and it is a proper noun.**
   *The Grey* is the game's name for the Pallor's drained world-state;
   *grey* is used throughout for it and for the color it names. Do not
