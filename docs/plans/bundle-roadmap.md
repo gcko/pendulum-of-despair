@@ -5,11 +5,30 @@ as **bundles** — small sets of 2–4 related issues that share a code touchpoi
 and land as ONE PR via the `/issue-bundle` skill.
 
 **Ordering lives in the [GitHub Project](https://github.com/users/gcko/projects/3).**
-Every open issue carries exactly one phase milestone, one type label
-(`bug` / `feature` / `enhancement` / `documentation` / `chore`), and a Project
-`Priority` of P0/P1/P2. `Size` is set only for L and XL work; everything else is
-left blank on purpose. This document is the prose companion — the Project is the
-queue.
+Every open issue carries exactly one phase milestone and is on the Project
+board. The 2026-08-10 re-plan also gave each issue open at that moment a
+Project `Priority` of P0/P1/P2 and, for L and XL work only, a `Size`. Issues
+filed since then are milestoned but **unprioritized** — they carry no
+`Priority`, and a handful carry no type label either. This document is the
+prose companion — the Project is the queue.
+
+### How to read the phase headers
+
+Counts were measured against the live milestones on **2026-08-12**. Each header
+reads `(N open — P prioritized below, U filed since the re-plan)`:
+
+- **N open** is the milestone's open-issue count on GitHub.
+- **P prioritized below** is what the bullets enumerate: the P0/P1/P2 items from
+  the re-plan that are still open.
+- **U filed since the re-plan** is the remainder — real, milestoned work that
+  this document deliberately does not name, because it would rot faster than it
+  is read. Query it instead:
+  `gh issue list --milestone "<phase>" --state open`.
+
+Nothing recomputes these numbers. `check_stale_counts.py` reconciles the GAP
+docs with `docs/issues/README.md` but knows nothing about this file, so a phase
+list can keep planning work that has already merged (#410 was exactly that).
+Re-measure the headers whenever you touch a phase.
 
 **Process:** pick the next `Ready` items inside the lowest-numbered open phase →
 implement together on one branch (`/game-designer` or `/gut-tdd`) → one PR
@@ -33,8 +52,16 @@ bundle — slice them into their own multi-PR efforts.
 | Bundle 6 | GAP-057 HP/MP bars, GAP-063 Weave Gauge (guest row → #272) | ✅ merged (PR #275) |
 
 All six planned bundles have shipped. The original clustering (2026-06-28) is
-exhausted; the phases below are the 2026-08-10 re-plan over the 93 remaining
-open issues.
+exhausted; the phases below are the 2026-08-10 re-plan over the 93 issues open
+at that moment. Two of its phases have since closed out entirely:
+
+| Phase | Milestone state | Issues |
+|-------|-----------------|--------|
+| Phase 1 — Live Regressions | ✅ 0 open, 11 closed | #164, #165, #171, #184, #190, #192, #260, #269, #270, #274, #276 |
+| Infra & Docs | ✅ 0 open, 15 closed | the re-plan's #235, #236, #237, #238, #265 plus ten filed and closed afterwards |
+
+A successor milestone, **Infra & Docs II — Citation Rot & Doc Hygiene**, is
+open with 7 issues; it postdates the re-plan and has no phase section below.
 
 ---
 
@@ -44,22 +71,12 @@ Phases are strictly ordered by *what unblocks what*, not by severity. The
 gap-analysis `sev:*` labels are kept as historical signal but are **not** the
 priority axis — Project `Priority` is.
 
-### Phase 1 — Live Regressions (11 issues)
+### Phase 1 — Live Regressions (0 open — complete)
 
-Behavior that is already built and demonstrably wrong. Cheap, high-confidence,
-and it stops new systems from being layered on top of broken foundations. This
-phase should be one or two bundles, not eight PRs.
+Behavior that was already built and demonstrably wrong. All eleven issues are
+closed; the roster is in the Shipped table above. Nothing is queued here.
 
-- **P0:** #274 level-up drops equipment HP/MP bonus · #269 saves hardcode player
-  position · #165 GAP-020 stat capsules wiped on level-up · #164 GAP-019 material
-  drops land in consumables · #192 GAP-042 dialogue resolver drops default lines ·
-  #190 GAP-036 cutscene ignores entry condition · #171 GAP-038 score overwrites
-  instead of accumulating
-- **P1:** #260 paralysis message clobber · #270 overworld zones pull dungeon-only
-  enemies · #276 target-arrow/damage-popup anchors · #184 GAP-022 employee-card
-  discount never applied
-
-### Phase 2 — Combat Completion (11 issues)
+### Phase 2 — Combat Completion (29 open — 11 prioritized below, 18 filed since the re-plan)
 
 Closes out the combat layer so it can be considered feature-complete before the
 world grows around it.
@@ -72,7 +89,7 @@ world grows around it.
 - **P2:** #253 boss charge interrupts · #254 Cael-as-boss Rally kit · #272 guest
   NPC battle support · #273 battle party-row polish
 
-### Phase 3 — Progression & Save (12 issues)
+### Phase 3 — Progression & Save (15 open — 12 prioritized below, 3 filed since the re-plan)
 
 The Esper/Magicite-model progression framework plus save integrity. #161 and
 #174 gate most of the rest.
@@ -86,24 +103,29 @@ The Esper/Magicite-model progression framework plus save integrity. #161 and
   #233 GAP-077 config-persistence ownership · #210 GAP-069 save Copy/Delete ·
   #231 GAP-075 inn rest flow
 
-### Phase 4 — Items, Shop & Crafting (4 issues)
+### Phase 4 — Items, Shop & Crafting (8 open — 4 prioritized below, 4 filed since the re-plan)
 
 - **P1:** #183 GAP-021 item effect stubs (L) · #163 GAP-017 shop Sell mode (L)
 - **P2:** #182 GAP-018 shop Buy mode UI (L) · #162 GAP-016 **EPIC** Arcanite
   Forging (XL)
 
-### Phase 5 — Dialogue & Story Flags (7 issues)
+### Phase 5 — Dialogue & Story Flags (16 open — 6 prioritized below, 10 filed since the re-plan)
 
 Prerequisite for Acts II–IV and the sidequest system: consequences must stick
 before story content depends on them.
 
-- **P0:** #170 GAP-037 choice consequences for standalone dialogue (L)
+The re-plan's only P0 here, #170 GAP-037 choice consequences for standalone
+dialogue, has shipped and is closed. **#191 GAP-039 dialogue animation now
+leads the phase** as its highest-priority open item. It is still P1 on the
+Project board and this document does not overrule that — promoting it to P0
+means editing the board, not this list.
+
 - **P1:** #191 GAP-039 dialogue animation (L) · #194 GAP-045 NPC act-state
   variants · #193 GAP-043 Act II content ungated in Act I
 - **P2:** #224 GAP-040 speaker name tag · #225 GAP-041 Cael grey border ·
   #271 reconcile mechanical period flags with canon
 
-### Phase 6 — World & Overworld (24 issues)
+### Phase 6 — World & Overworld (33 open — 24 prioritized below, 9 filed since the re-plan)
 
 The largest phase by far. #167 is the keystone — the continental overworld —
 and almost every other world issue is cheaper after it lands.
@@ -122,7 +144,7 @@ and almost every other world issue is cheaper after it lands.
   #226 GAP-054 Duskfen (L) · #196 GAP-049 **EPIC** faction cities (XL) · #195
   GAP-048 **EPIC** world dungeons (XL) · #239 GAP-091 **EPIC** post-game (XL)
 
-### Phase 7 — UI, Menus & Art (12 issues)
+### Phase 7 — UI, Menus & Art (14 open — 12 prioritized below, 2 filed since the re-plan)
 
 #217 gates the icon/portrait work — every art-dependent UI issue below is
 blocked until real assets exist.
@@ -135,7 +157,7 @@ blocked until real assets exist.
   #228 GAP-064 window color · #230 GAP-074 orphaned config toggles ·
   #213 GAP-072 SFX captions
 
-### Phase 8 — Audio (7 issues)
+### Phase 8 — Audio (7 open — all 7 prioritized below)
 
 - **P0:** #154 wire AudioManager into runtime (L)
 - **P1:** #155 SFX panning + Mono mode · #175 GAP-078 **EPIC** music/SFX assets (XL)
@@ -143,19 +165,29 @@ blocked until real assets exist.
   evolution (XL) · #216 GAP-080 **EPIC** leitmotif layering (XL) · #234 GAP-081
   `enter_pallor()`
 
-### Infra & Docs (5 issues, all P2)
+### Infra & Docs (0 open — complete)
 
-Opportunistic — fold into whichever phase touches the same files.
+The re-plan's five P2 items (#235 GAP-084 architecture doc vs. enemy JSON, #236
+GAP-086 `inventory_helpers` misplaced in `autoload/`, #237 GAP-087 oversized
+files, #238 GAP-089 design-doc numeric balance, #265 encounter-table
+reconciliation) are all closed, along with ten later additions.
 
-- #235 GAP-084 architecture doc vs. enemy JSON · #236 GAP-086 `inventory_helpers`
-  misplaced in `autoload/` · #237 GAP-087 oversized files (L) · #238 GAP-089
-  design-doc numeric balance · #265 encounter-table reconciliation
+### Infra & Docs II — Citation Rot & Doc Hygiene (7 open — all unprioritized)
+
+Successor milestone, opened after the re-plan and currently in burn-down. It
+holds the citation-gate, spelling-ratchet and doc-accuracy work; none of its
+issues carry a Project `Priority`. Query it directly:
+`gh issue list --milestone "Infra & Docs II — Citation Rot & Doc Hygiene" --state open`.
 
 ---
 
 ## Notes
 
 - Issue numbers map to GAP-NNN via the issue titles (`gh issue list --label gap-analysis`).
-- Phase order is dependency order. Within a phase, work P0 → P1 → P2.
-- Only L and XL carry a `Size`; anything unsized is S/M and not worth estimating.
-- The 14 `epic`-labeled issues are all XL and must be sliced before implementation.
+- Phase order is dependency order. Within a phase, work P0 → P1 → P2, then the
+  unprioritized remainder.
+- Among the issues the re-plan sized, only L and XL carry a `Size`; an unsized
+  one from that set is S/M and not worth estimating. Issues filed since are
+  unsized because nobody sized them, which says nothing about their effort.
+- The 14 open `epic`-labeled issues are all XL and must be sliced before
+  implementation (verified 2026-08-12).
