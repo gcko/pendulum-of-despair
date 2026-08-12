@@ -51,7 +51,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Interlude State
 - **Major transformation:** The capital has fractured into noble house territories. Makeshift barricades of furniture, carts, and rubble divide the Citizen's Walk into controlled zones. The Court Quarter is locked down by Lord Chancellor Haren's faction. The Lower Ward is the most accessible but most damaged.
-- **How the Pallor's corruption manifests:** Stage 1-2 corruption. The remaining ley-lamps are dark. The limestone walls look older -- the warm pale color has greyed, as if decades of weathering happened in months. Grey dust settles in corners. Some NPCs stand motionless in doorways. The market square is empty except for a single vendor selling at inflated prices. At night, the towers are dark silhouettes against an overcast sky.
+- **How the Pallor's corruption manifests:** Stage 1-2 corruption. The remaining ley-lamps are dark. The limestone walls look older -- the warm pale color has grayed, as if decades of weathering happened in months. Grey dust settles in corners. Some NPCs stand motionless in doorways. The market square is empty except for a single vendor selling at inflated prices. At night, the towers are dark silhouettes against an overcast sky.
 - **Structural damage:** Eastern wall breach is now a permanent ruin zone with rubble filling the gap. Two buildings in the Lower Ward are collapsed (fire damage from the assault, never repaired). Scorch marks on the Citizen's Walk cobblestones. The Royal Keep's main doors are shut and barred -- access requires going through a servants' passage.
 - **Which buildings are destroyed, which repurposed:** The Lower Ward barracks is now a refugee shelter (bunks replaced with makeshift bedding, civilians instead of soldiers). One market hall is a noble house command post (merchant stalls replaced with planning tables and guard posts). Cael's former quarters are sealed and warded -- no one goes near them.
 
@@ -201,7 +201,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 ##### Interlude State
 - **What changed:** Several submersible rigs have surfaced unmanned, crews lost to the Pallor. The harbor economy is disrupted. One rig has drifted to shore (the Sunken Rig dungeon).
 - **Map modifications:** One section of the Stilts district has collapsed into the water (pilings rotted or undermined). The gap is bridged with planks and rope -- a hasty repair. Merchant stalls in the harbor quarter are half-empty. Compact naval vessels are absent (recalled to Corrund).
-- **Palette/atmosphere shifts:** Stage 1 corruption. The tide marks are higher than normal. Gull calls are less frequent. The maritime haze is greyer. The water's surface shimmer is flatter.
+- **Palette/atmosphere shifts:** Stage 1 corruption. The tide marks are higher than normal. Gull calls are less frequent. The maritime haze is grayer. The water's surface shimmer is flatter.
 - **Environmental details:** The Breakwater has unidentifiable grey things washing against it. Fishermen report catches declining. The Stilts taverns are quieter -- sailors are not putting to sea. Sable's childhood neighborhood has a boarded-up shop that was open in Act II. The merchant princes are hoarding. One rig offshore is visibly dark -- no lights, no smoke, drifting.
 
 ---
@@ -270,7 +270,7 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 ##### Interlude State
 - **What changed:** The arms trade has shifted to salvage. Holt Varen pivots without missing a beat. The harbor is quieter -- fewer ships, fewer foreign merchants.
 - **Map modifications:** Several warehouse doors are shut and chained (businesses closed). The arms testing ranges are silent (no distant discharge sounds). A section of dock has collapsed (poor maintenance, no labor to fix it).
-- **Palette/atmosphere shifts:** Stage 1 corruption. The maritime haze is greyer. The Arcanite-forged stone in the merchant quarter has lost its gleam.
+- **Palette/atmosphere shifts:** Stage 1 corruption. The maritime haze is grayer. The Arcanite-forged stone in the merchant quarter has lost its gleam.
 - **Environmental details:** Pell is still on the docks but the work has dried up. Nara Voss's shop has reduced inventory. Holt Varen sells salvage with the same cheerful amorality. The arms testing ranges are silent -- the weapons are being shipped to the front, not tested. Fewer gulls.
 
 ---
@@ -412,9 +412,9 @@ Design reference: FF6's World of Ruin. The player recognizes every place but not
 
 ##### Interlude State
 - **What changed:** The camp is under siege by Pallor corruption and has become a refugee point.
-- **Map modifications:** New tent clusters at the camp's edges (refugees from Roothollow, Duskfen, and smaller settlements). The greywood trees at the perimeter are greying at their edges -- bark turning from pale white to pale grey. The central fire pit burns lower. Kael's patrol routes have contracted (new boundary markers closer to the camp center).
+- **Map modifications:** New tent clusters at the camp's edges (refugees from Roothollow, Duskfen, and smaller settlements). The greywood trees at the perimeter are graying at their edges -- bark turning from pale white to pale grey. The central fire pit burns lower. Kael's patrol routes have contracted (new boundary markers closer to the camp center).
 - **Palette/atmosphere shifts:** Stage 1-2 corruption at the edges. The greywood trees' pale bark makes the Stage 1 grey subtle and insidious -- the player has to compare to their Act II memory to see the shift.
-- **Environmental details:** Savanh is weakened -- sitting instead of standing, leaning on a walking stick. Refugee families huddle near fires that do not warm. The children's area is quieter -- Wren and the other children have been evacuated. Dorin's spirit-ward totems are cracking (the ley energy that activates them is gone). Grandmother Seyth still tells stories, but her audience is people who have lost their homes, and the stories hit different. The perimeter patrols report the greying is advancing inward, a few feet per day.
+- **Environmental details:** Savanh is weakened -- sitting instead of standing, leaning on a walking stick. Refugee families huddle near fires that do not warm. The children's area is quieter -- Wren and the other children have been evacuated. Dorin's spirit-ward totems are cracking (the ley energy that activates them is gone). Grandmother Seyth still tells stories, but her audience is people who have lost their homes, and the stories hit different. The perimeter patrols report the graying is advancing inward, a few feet per day.
 
 ---
 
@@ -1100,12 +1100,12 @@ This is the World of Ruin moment. The player takes control of Sable and the worl
 
 | Location | Corruption Stage | Key Visual Detail |
 |----------|-----------------|-------------------|
-| Valdris Crown | Stage 2 | Ley-lamps all dark. Limestone greyed. Noble house barricades. Catatonic civilians in the Lower Ward. |
+| Valdris Crown | Stage 2 | Ley-lamps all dark. Limestone grayed. Noble house barricades. Catatonic civilians in the Lower Ward. |
 | Highcairn | Stage 2 | Grey frost on everything. Monks' dreams of surrender. Pallor manifestations in the monastery corridors. |
 | Greyvale | Stage 2 | Catatonic residents in doorways. Grey dust on every surface. The dog that doesn't move. |
 | Roothollow | Stage 2 | Petrifying great tree. Bioluminescence replaced by grey light. Cracking root chambers. |
 | Duskfen | Stage 2 | Half-submerged. Will-o'-wisps dead. Grey water. The marsh that doesn't smell. |
-| Greywood Camp | Stage 1-2 (edges) | Greywood trees greying at the periphery. Refugees from more corrupted settlements. |
+| Greywood Camp | Stage 1-2 (edges) | Greywood trees graying at the periphery. Refugees from more corrupted settlements. |
 | Corrund | Stage 1-2 (edges) | Machines running on Pallor energy (grey-white glow). Workers who have stopped talking. |
 | Ashmark | Stage 1 | Forge-glow flickering. Workers fading faster. Subtle compared to Wilds corruption. |
 | Bellhaven | Stage 1 | Grey things washing ashore. Tide wrong. Rigs dark. |

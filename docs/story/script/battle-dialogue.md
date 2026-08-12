@@ -736,7 +736,7 @@ before the thread breaks entirely.
 
 - *(Success:)* "Escaped!"
 - *(Failure:)* "Can't escape!"
-- *(Boss:)* Flee option greyed out. *(Not selectable.)*
+- *(Boss:)* Flee option grayed out. *(Not selectable.)*
 
 ### Status Effect Notifications
 

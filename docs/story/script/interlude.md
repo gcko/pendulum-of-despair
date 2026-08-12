@@ -35,7 +35,7 @@ erratic. The ley lines are rupturing.)*
 
 *(Valdris Crown: the seven towers flare — too bright, then dark.
 A ley-lamp explodes in a shower of sparks. Citizens scatter.
-The limestone walls seem to age decades in seconds, greying as
+The limestone walls seem to age decades in seconds, graying as
 if weathered by a century of rain. [SFX: ley_rupture])*
 
 *(Thornmere Wilds: the great tree at Roothollow shudders. Bark

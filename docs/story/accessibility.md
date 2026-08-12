@@ -156,7 +156,7 @@ during decisions.
 ### Config Interaction
 
 - Enabling Patience Mode **overrides** ATB Mode and Battle Speed
-  settings (greyed out in Config while active).
+  settings (grayed out in Config while active).
 - Disabling Patience Mode **restores** the previous ATB Mode and
   Battle Speed values.
 - Can be toggled mid-game from Config at any time.

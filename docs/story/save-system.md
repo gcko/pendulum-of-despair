@@ -352,7 +352,7 @@ overworld location entry (the named map tile).
 offers the full choice: restore 25% HP OR cure all ailments. The font
 offers only the ailment-cure option (a shortcut for players who know
 what they want). Using either consumes the single once-per-visit
-blessing — interacting with one greys out the other until the next
+blessing — interacting with one grays out the other until the next
 visit. At Highcairn Monastery, Father Aldous serves the priest role
 (offering the blessing at the hearth rather than an altar).
 

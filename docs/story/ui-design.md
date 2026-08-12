@@ -310,7 +310,7 @@ of the battle screen (over the party panel).
 
 **Magic sub-menu:**
 - Two-column spell list: spell name (left) + MP cost (right).
-- Spells the character can't afford: greyed out (`#666688`), not selectable.
+- Spells the character can't afford: grayed out (`#666688`), not selectable.
 - Description line at top of window: effect text + inline status icons.
 - Hand cursor. Cancel returns to command panel.
 
@@ -333,7 +333,7 @@ of the battle screen (over the party panel).
 
 **Flee:** No sub-menu. Selecting Flee immediately attempts escape.
 Success: "Escaped!" message, battle dissolve. Failure: "Can't escape!"
-message, turn consumed. Boss battles: Flee greyed out, not selectable.
+message, turn consumed. Boss battles: Flee grayed out, not selectable.
 
 **Defend:** No sub-menu. Selecting Defend immediately sets defend
 stance. Brief pixel-art shield icon animation over the character's
@@ -435,7 +435,7 @@ Vertical list with pixel-art hand cursor:
 | Status | Character select → stat sheet |
 | Formation | Opens formation screen |
 | Config | Opens config screen |
-| Save | Opens save screen (greyed out if no save point) |
+| Save | Opens save screen (grayed out if no save point) |
 
 **Character select flow:** Choosing Magic, Abilities, Equip, Crystal,
 or Status causes a second cursor to appear on the party panel. Player
@@ -501,7 +501,7 @@ FF6 item screen: tabs top, description middle, item list bottom.
 - Each entry: 8×8 pixel-art item icon + name + quantity (right-aligned,
   colon prefix: `:99`).
 - Zero-quantity items not shown.
-- Battle-only items greyed out in field.
+- Battle-only items grayed out in field.
 - Hand cursor on selected item.
 
 ### 4.6 Use Flow
@@ -628,7 +628,7 @@ main area.
 - **Character info:** 32×32 portrait, name, LV, HP/MP with bars + numbers.
 - **Spell grid (main):** Two-column scrollable list. Spell name (left) +
   MP cost (right). Unlearned spells not shown. Field-unusable spells
-  (offensive) greyed out.
+  (offensive) grayed out.
 - **Field use flow:** Select healing/support spell → character select →
   confirm → animation + sound → MP deducted → return to list.
 
@@ -1001,7 +1001,7 @@ populated → copy complete.
   - **Rest & Save:** Perform rest first, then open the save screen.
   - **Save:** Open the save screen directly.
 - Also accessible from Main Menu → Save, but only on a save point;
-  otherwise greyed out — just not selectable.
+  otherwise grayed out — just not selectable.
 
 ### 13.8 Auto-Save Slot Rules
 
@@ -1139,7 +1139,7 @@ narrative:
   desaturation.
 - **Act III exploration:** As the Pallor Wastes desaturate the world,
   party sprites remain in full color. The UI contrast (vivid bars and
-  text against the greying world) reinforces the theme that the
+  text against the graying world) reinforces the theme that the
   characters' determination persists.
 
 ---
@@ -1179,7 +1179,7 @@ Torren's overworld field ability is "Call Stag" — accessed by selecting
 Torren from the party menu on the overworld. Same slot as Lira's
 "Forge Devices" and Maren's Linewalk. If mounted: option changes to
 "Dismiss Stag". Restricted terrain shows contextual message per
-[transport.md](transport.md). If `stag_lost`: option greyed out with
+[transport.md](transport.md). If `stag_lost`: option grayed out with
 "The bond is broken..."
 
 ### 18.3 Character Field Abilities (Formalized)

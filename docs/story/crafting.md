@@ -65,7 +65,7 @@ Device crafting uses a five-step field menu:
    A confirmation prompt warns the player before discarding.
 4. Choose recipe from unlocked list — material, AC, and gold costs
    displayed. Recipes the player cannot afford (insufficient AC,
-   materials, or gold) are greyed out.
+   materials, or gold) are grayed out.
 5. Confirm — device appears in loadout with 3 fresh charges
 
 ### Equipment Forging Flow (At Forge)

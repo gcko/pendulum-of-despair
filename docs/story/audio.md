@@ -75,7 +75,7 @@ to 4 KO sounds. Boss type uses whichever fits the boss's primary nature.
 | `menu_open` | Main menu opens | Subtle whoosh / reveal |
 | `menu_close` | Main menu closes | Reverse of open |
 | `equip_change` | Equipment equipped or removed | Metallic clink |
-| `error_buzz` | Invalid action (greyed option, can't equip) | Short buzz / denied |
+| `error_buzz` | Invalid action (grayed option, can't equip) | Short buzz / denied |
 | `save_confirm` | Save completed | Positive chime (distinct from `confirm`) |
 
 ### 1.3 Exploration SFX (8)

@@ -73,11 +73,11 @@ This directory contains the narrative design for Pendulum of Despair.
   soon as #400 widened them, which is the failure mode this whole section
   keeps repeating: a claim measured by a narrower instrument than the
   claim. Stated at the width Gate K actually checks:
-  `game/data/dialogue/*.json` holds **zero** hits in all four families;
-  `docs/story/script/*.md` holds **two**, *greyed* in
-  `battle-dialogue.md` and *greying* in `interlude.md`, both stage
-  direction rather than shipped `lines[]` strings, both pinned and
-  tracked by #411. Two families remain outside any instrument
+  `game/data/dialogue/*.json` holds **zero** hits in all four families,
+  and so does `docs/story/script/*.md` — the *greyed* in
+  `battle-dialogue.md` and the *greying* in `interlude.md`, both stage
+  direction rather than shipped `lines[]` strings, were the last two, and
+  #411 fixed them. Two families remain outside any instrument
   (`paralys`, `centre`) and are clean by hand check only. The last
   survivor of the `-our` sweep was *harbour*, six sites the earlier
   hand-listed pattern was structurally unable to find; the design prose
@@ -256,21 +256,22 @@ This directory contains the narrative design for Pendulum of Despair.
   four times this paragraph said the tree was clean, it was a hand check
   that nothing re-ran.
 
-  **What the gate carries instead is a ratchet.** The two families #400
-  added — `-ise`/`-isation` and the inflected `grey` — landed on a corpus
-  that had never been checked for either, so **44 occurrences are pinned**
-  in `KNOWN_VIOLATIONS` in `scripts/quality-gates/check_spelling.py`,
-  across 20 files. What is worth knowing about them is their *character*,
-  not their size: every one is doc prose or a code comment in a file
-  owned by another in-flight branch, and none is a string the engine
-  emits — the two `docs/story/script/` pins are stage direction and a UI
-  note, not `lines[]` dialogue. The pin fails at both ends: a new hit
-  fails, and a pin whose count no longer matches its file — because the
-  fix landed — also fails. So the list can only shrink, and no entry
-  outlives its reason. Pinning is not how a new violation gets in; the
-  fix for one is the American spelling. #411 burns down the 41
-  inflected-`grey` pins and #412 the three `-ise` ones; the authoritative
-  list is the code, not this paragraph, which is the point.
+  **What the gate carries instead is a ratchet, and it is empty.** The
+  two families #400 added — `-ise`/`-isation` and the inflected `grey` —
+  landed on a corpus that had never been checked for either, so 44
+  occurrences across 20 files were pinned in `KNOWN_VIOLATIONS` in
+  `scripts/quality-gates/check_spelling.py` purely so the gate could be
+  switched on. #411 fixed the 41 inflected-`grey` sites and #412 the
+  three `-ise` ones, so **0 occurrences are pinned** today and every hit
+  the four families find fails the gate outright, with nothing
+  grandfathered. The pin machinery stays, because it fails at both ends:
+  a new hit fails, and a pin whose count no longer matches its file —
+  because the fix landed — also fails. So the list can only shrink, and
+  no entry outlives its reason; that is what made the burn-down check
+  itself, since a pin left behind after its site was fixed failed the
+  gate. Pinning is not how a new violation gets in; the fix for one is
+  the American spelling. The authoritative list is the code, not this
+  paragraph, which is the point.
 
   The absence of hits is still not a proof of cleanliness. The gate knows
   four families; `paralys` and `centre` are not among them, and it does

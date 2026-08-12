@@ -719,7 +719,7 @@ Greywood Camp is the political heart of the Thornmere Wilds. Unlike the organic 
 
 - **The Central Fire Pit:** The emotional center of camp life. At night, the entire camp gathers. The fire is always burning. NPCs rotate through -- sometimes telling stories, sometimes arguing, sometimes sitting in silence. The "What the Stars Said" side quest begins when Seyth tells a particular story here.
 - **Kael's Patrol Routes:** Visible on the map at the Ranger Post -- colored markers showing patrol boundaries. In Act II, the patrols range wide. In the Interlude, the boundary markers have contracted closer to the camp center. This visual change tells the story of territory lost.
-- **The Greywood Trees:** The pale-barked trees that define the camp's visual identity. In Act II, their bark is warm white, almost luminous in dappled light. In the Interlude, the bark at the perimeter is greying at the edges -- white turning to grey, subtly, like frost creeping.
+- **The Greywood Trees:** The pale-barked trees that define the camp's visual identity. In Act II, their bark is warm white, almost luminous in dappled light. In the Interlude, the bark at the perimeter is graying at the edges -- white turning to grey, subtly, like frost creeping.
 - **Wren's Corner:** In the Children's Area, Wren sits apart from the other children. A single conversation with her about the stars that stopped singing is one of the most affecting moments in the game. Her fear is specific, personal, and devastating in retrospect.
 - **The "Missing Patrol" Quest Start:** Kael at the Ranger Post. One of his patrols hasn't returned from the northern route. The quest leads into the deep forest and reveals early signs of corruption.
 
@@ -735,7 +735,7 @@ Greywood Camp is the political heart of the Thornmere Wilds. Unlike the organic 
 
 **Interlude (Refugee Camp State):**
 - New tent clusters at the camp's edges -- refugees from Roothollow, Duskfen, and smaller settlements. The camp population has doubled.
-- The greywood trees at the perimeter are greying at their edges -- bark turning from pale white to pale grey. The corruption is visible but not yet overwhelming.
+- The greywood trees at the perimeter are graying at their edges -- bark turning from pale white to pale grey. The corruption is visible but not yet overwhelming.
 - The Central Fire Pit burns lower. Fuel is being rationed.
 - Savanh is weakened -- the spirit world's collapse has physically aged her. She has passed active leadership to the younger generation.
 - Kael's patrol routes have contracted. New boundary markers are closer to the camp center. The map at the Ranger Post tells the story -- red markers where patrols can no longer safely go.

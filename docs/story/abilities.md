@@ -47,7 +47,7 @@ Each party member has one unique command in their battle menu alongside Fight, M
 
 **Story Integration:**
 - **Acts I-II:** Edren has Ironwall, Riposte, and Rampart. His kit reflects a disciplined knight protecting others.
-- **Interlude:** After Cael's betrayal, Edren loses access to Bulwark temporarily during the monastery sequence (he's paralyzed by guilt — mechanically represented as the command being greyed out). Sable's arrival restores it.
+- **Interlude:** After Cael's betrayal, Edren loses access to Bulwark temporarily during the monastery sequence (he's paralyzed by guilt — mechanically represented as the command being grayed out). Sable's arrival restores it.
 - **Act III:** By this point, Edren has typically reached levels 15-22, unlocking Aegis Veil and Shatter Guard through standard leveling. Steadfast Resolve unlocks from his Pallor Wastes trial — the culmination of the theme established in Acts I-II (defending, not attacking). The party-wide Despair cleanse is invaluable in the Pallor Wastes and Convergence.
 - **Act IV:** Oathkeeper unlocks when Edren picks up Cael's fallen sword. This is the culmination of his arc — carrying the weight of loss and turning it into strength.
 
@@ -676,7 +676,7 @@ with the alternative it rejects:
    magnitude.** Both shipped cases state the doubling themselves rather than
    inheriting it from a rule: Ambush Protocol says "2x normal Arc Trap damage",
    and Thornfire states its total as 40, split 20 Flame + 20 Storm over Ember
-   Wing and Shock Coil. The rule is the generalisation of those two, and it is
+   Wing and Shock Coil. The rule is the generalization of those two, and it is
    worth exactly that much. The unit matters: for a persistent device the
    doubled quantity is one tick (Shock Coil, 10 per tick); for a single-shot one
    it is the whole burst (Arc Trap, 30). The equal-AC budget argument that sets

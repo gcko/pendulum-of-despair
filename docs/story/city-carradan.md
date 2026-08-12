@@ -1035,7 +1035,7 @@ KEY:  ~~~ = ocean   === = dock/pier   ### = breakwater
 - Arms testing ranges silent (no discharge sounds)
 - Several warehouse doors chained shut (businesses closed)
 - A dock section has collapsed (poor maintenance)
-- Maritime haze greyer; Arcanite stone lost its gleam
+- Maritime haze grayer; Arcanite stone lost its gleam
 - Holt pivots to salvage; Nara sells wool
 - Pell still on docks but work has dried up
 - Fewer gulls
