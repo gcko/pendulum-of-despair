@@ -170,13 +170,32 @@ This directory contains the narrative design for Pendulum of Despair.
   `docs/story/script/battle-dialogue.md` § Status Effect Notifications.
   Player-facing strings are duplicated between the script markdown and
   the shipped dialogue JSON, so **both copies move in the same commit**.
-  Do not reach for `tools/dialogue_parser.py` to do it for you: the
-  parser currently crashes, and its output has diverged from the
-  committed JSON badly enough that running it deletes shipped files
-  (#364). Until that is resolved, edit both copies by hand and prove they
-  agree — `items.md` § Key Items and `game/data/items/key_items.json` are
-  deliberately still British together for exactly this reason, because
-  half a fix is worse than none.
+  **Nothing generates one from the other.** This bullet used to send you
+  to `tools/dialogue_parser.py`; that script was deleted in #364, because
+  it had not completed a run since 2026-04-05 — `3b2bcc49` introduced a
+  `NameError` that fired *after* it had written output, and the two commits
+  that touched the script afterwards only hand-edited a hardcoded string
+  list — and because it unlinked every `game/data/dialogue/*.json`
+  before parsing, so a re-run deleted 31 shipped files. Those 31 are
+  exactly the files added to that directory since the crash: every
+  Scene 7 beat, the Ember Vein and Fenmother scenes, the Valdris shop
+  NPCs. On top of that, 121 shipped `lines[]` strings have no verbatim
+  source anywhere in `docs/story/script/*.md` at all (#380), so no
+  generator could emit them. The JSON is authored, not derived, and the
+  evidence for that is recorded in `tools/README.md`.
+  Nothing automated compares the two corpora to each other either. The
+  one test that checks a shipped dialogue string against the engine —
+  `game/tests/test_status_effects.gd` — pins the paralysis notification
+  to the adjective `game/scripts/combat/status_effects.gd` emits; it never
+  opens `docs/story/script/*.md`, so it catches JSON-versus-engine drift
+  and nothing else. This rule is therefore the only thing holding the script
+  markdown and the dialogue JSON together, which is why #311 had to move
+  each swept spelling in both corpora itself. #379 tracks the gate that
+  would catch the drift; until it exists, edit both copies by hand and
+  prove they agree — `items.md` § Key Items and
+  `game/data/items/key_items.json` are deliberately still British
+  together for exactly this reason, because half a fix is worse than
+  none.
 - **`grey` is the one deliberate exception, and it is a proper noun.**
   *The Grey* is the game's name for the Pallor's drained world-state;
   *grey* is used throughout for it and for the color it names. Do not
