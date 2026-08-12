@@ -315,32 +315,30 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
-**Estimated Size:** L (109 JSON files, 1034 entries)
+**Estimated Size:** L (139 dialogue files, 1105 entries)
 **Output:** `game/data/dialogue/{scene_id}.json`, `game/data/dialogue/npc_{npc_id}.json`, `game/data/dialogue/battle_{context_id}.json`
-**Source Docs:** `script/` (6,531 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
+**Source Docs:** `script/` (6,316 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
 **Architecture Ref:** `technical-architecture.md` Section 2.5
 **Depends On:** None (foundational, but dialogue overlay in Tier 3 needed to display)
 
 **What's Needed:**
 - [x] Per-scene dialogue JSON following Section 2.5 schema (7-field entries)
-- [x] 40 narrative scenes from script/ Layer 1 (661 entries)
-- [x] NPC ambient dialogue from npc-ambient.md Layer 2 (43 files, 177 entries)
-- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 196 entries)
+- [x] Narrative scenes from script/ Layer 1 (59 files, 737 entries)
+- [x] NPC ambient dialogue from npc-ambient.md Layer 2 (54 files, 171 entries)
+- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 197 entries)
 - [x] System text (tutorials, prompts, notifications) from battle-dialogue.md
-- [x] Condition expressions (flag checks, party_has) per dialogue-system.md (98 conditional entries)
-- [x] Animation markers mapped to sprite animation IDs (45 animations captured)
-- [x] SFX markers mapped to audio.md SFX catalog IDs (17 SFX captured)
+- [x] Condition expressions (flag checks, party_has) per dialogue-system.md (135 conditional entries)
+- [x] Animation markers mapped to sprite animation IDs (44 animation markers)
+- [x] SFX markers mapped to audio.md SFX catalog IDs (29 SFX markers)
 - [x] Choice nodes with branch targets (4 choice blocks)
 - [x] Verify every speaker tag matches a valid character/NPC ID
-- [x] Verify flag names (validated against events.md; choice_N_selected and branch conditions are parser-generated placeholders pending runtime implementation)
+- [x] Verify flag names (validated against events.md; `choice_N_selected` and branch conditions are placeholders left behind by the retired parser, still pending runtime implementation)
 
 **Notes:**
-- Built via Python parser (`tools/dialogue_parser.py`) that reads 8 script files
-- Parser uses heuristic timing for animation/SFX `when` fields
-- Validation report at `tools/dialogue_validation_report.md` flags low-confidence items
-- 109 total files (40 narrative + 43 NPC + 26 battle) with 1034 entries
+- **This tree is authored, not derived.** The generator (`tools/dialogue_parser.py`) was deleted on 2026-08-11 (#364) after it stopped completing a run, and its validation report went with it; tools/README.md § Retired records why, and how to recover the last version from git. The JSON and `docs/story/script/*.md` are now two hand-maintained copies of the same player-facing strings; the rule that keeps them in step is docs/story/README.md § Writing Conventions, and #379 tracks the gate that would enforce it.
+- 139 dialogue files (59 narrative + 54 NPC + 26 battle) with 1105 entries. Every count in this section is a measurement of `game/data/dialogue/*.json`, not a record of what the generator once emitted — re-measure rather than trust it, because nothing fails when it drifts. `scripts/quality-gates/check_stale_counts.py` already computes `dialogue_files` but does not yet assert against it.
 - All entry IDs globally unique, all 7 fields present, 2-space indent
-- Iterative improvement: subsequent passes can refine timing heuristics
+- Animation and SFX `when` timings began as parser heuristics and are now edited by hand
 - Design spec: `docs/superpowers/specs/2026-04-04-dialogue-data-design.md`
 
 **Blocking:** All narrative content, NPC interactions, story progression
