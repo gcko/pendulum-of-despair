@@ -36,8 +36,8 @@ Add the basement sub-map and ground-floor lore interactables; wire the Pendulum-
 
 ## Design references
 
-- docs/story/city-thornmere.md:965-1123
-- docs/story/interiors.md:195-276
+- docs/story/city-thornmere.md § 8. Maren's Refuge
+- docs/story/interiors.md § 1.3 Maren's Refuge Interior
 
 ## Code references
 

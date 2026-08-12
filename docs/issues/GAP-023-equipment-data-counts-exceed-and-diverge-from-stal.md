@@ -36,7 +36,9 @@ Run an adversarial data-vs-doc diff for the three equipment JSONs and update gam
 
 ## Design references
 
-- docs/story/equipment.md §Weapon/Armor/Accessory Summaries
+- docs/story/equipment.md § Weapon Summary by Tier
+- docs/story/equipment.md § Body Armor Summary
+- docs/story/equipment.md § Accessory Summary
 
 ## Code references
 

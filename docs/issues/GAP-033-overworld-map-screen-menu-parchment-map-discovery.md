@@ -37,7 +37,7 @@ Add a discovered-locations set to save/world state set on map entry, and a menu 
 ## Design references
 
 - docs/story/overworld.md §Map Screen
-- docs/story/geography.md:524
+- docs/story/geography.md § Camera Behavior > 'Map screen'
 
 ## Code references
 

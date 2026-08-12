@@ -706,8 +706,15 @@ class TestCheckDocCitations(unittest.TestCase):
             ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
         }
         buffer = io.StringIO()
+        # The fixture repo has no docs/issues, so the Design-reference floors
+        # (#403) would fire on a scan this test is not about. Dropping them
+        # here rather than in the gate keeps them live everywhere else.
         with patch.dict(
             check_doc_citations.KNOWN_UNRESOLVED, known, clear=True
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_DOCS", 0
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 0
         ), contextlib.redirect_stdout(buffer):
             self.assertEqual(check_doc_citations.main(), 0)
         self.assertIn("1 citation(s) pinned", buffer.getvalue())
@@ -1593,6 +1600,117 @@ class TestGapCodeReferences(unittest.TestCase):
             self.skipTest("No gap issue docs available")
         errors = check_stale_counts.check_gap_code_references()
         self.assertEqual(errors, [], f"Stale code references: {errors}")
+
+
+class TestGapDesignReferences(unittest.TestCase):
+    """Gate G, scan 2: the Design references section of the GAP docs (#403).
+
+    #382/#383 hold the Code references bullets to live paths and ``symbol()``
+    anchors. The Design references beside them were held to nothing and still
+    carried the line anchors this milestone banned everywhere else — 37 of
+    them across 28 docs, GAP-013's pointing 65 lines from the table it named.
+    """
+
+    def setUp(self):
+        self.cwd = os.getcwd()
+        self.tmpdir = tempfile.mkdtemp()
+        os.makedirs(os.path.join(self.tmpdir, "docs/story"))
+        os.makedirs(os.path.join(self.tmpdir, "issues"))
+        with open(os.path.join(self.tmpdir, "docs/story/magic.md"), "w") as f:
+            f.write(MAGIC_FIXTURE)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def _errors(self, body: str, name: str = "GAP-001-thing.md") -> list:
+        with open(os.path.join("issues", name), "w") as f:
+            f.write(
+                "# GAP-001\n\n## Summary\n\nBroke at magic.md:1537.\n\n"
+                "## Design references\n\n" + body + "\n\n## Code references\n"
+            )
+        with patch.object(check_doc_citations, "MIN_GAP_DOCS", 1), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 1
+        ):
+            return check_doc_citations.check_gap_design_references("issues")
+
+    def test_a_heading_reference_resolves(self):
+        self.assertEqual(
+            self._errors("- docs/story/magic.md § Status Effect Reference"), []
+        )
+
+    def test_a_line_anchor_is_rejected(self):
+        errors = self._errors("- docs/story/magic.md:1537")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+        self.assertIn("docs/story/magic.md:1537", errors[0])
+
+    def test_a_bare_line_anchor_is_rejected_too(self):
+        errors = self._errors("- magic.md:1537 (status table)")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+
+    def test_the_dated_prose_around_the_section_is_left_alone(self):
+        """The Summary's ``magic.md:1537`` is a 2026-06-27 snapshot."""
+        self.assertEqual(
+            self._errors("- docs/story/magic.md § Spell Count Summary"), []
+        )
+
+    def test_a_heading_that_moved_is_reported(self):
+        errors = self._errors("- docs/story/magic.md § Status Effects Table")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_narrowing_term_is_checked(self):
+        errors = self._errors(
+            "- docs/story/magic.md § Status Effect Reference > 'Petrify'"
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_bullet_naming_a_missing_document_is_reported(self):
+        errors = self._errors("- docs/story/gone.md (the whole thing)")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("not a file in this repo", errors[0])
+
+    def test_the_reported_line_points_into_the_doc_not_the_excerpt(self):
+        errors = self._errors("- docs/story/magic.md § Ghost Section")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("GAP-001-thing.md:9:", errors[0])
+
+    def test_an_empty_scan_fails_its_floor(self):
+        """Zero bullets read is not the same as zero bullets wrong."""
+        errors = check_doc_citations.check_gap_design_references("issues")
+        self.assertTrue(errors, "a scan that read nothing must say so")
+        self.assertIn("read only 0", errors[0])
+
+    def test_the_counts_come_from_the_glob(self):
+        """Sever the walk and the floors must catch it.
+
+        The scan's own numbers are what separates "nothing wrong" from
+        "nothing read", so they have to be measured rather than assumed: with
+        ``glob`` returning nothing, both counts collapse to zero and both
+        floors fire.
+        """
+        self._errors("- docs/story/magic.md § Status Effect Reference")
+        tally: dict = {}
+        with patch("check_doc_citations.glob.glob", return_value=[]):
+            errors = check_doc_citations.check_gap_design_references(
+                "issues", tally=tally
+            )
+        self.assertEqual(tally, {"gap_docs": 0, "gap_bullets": 0})
+        self.assertEqual(len(errors), 2, errors)
+
+    def test_real_gap_docs_carry_no_line_anchors(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        tally: dict = {}
+        errors = check_doc_citations.check_gap_design_references(tally=tally)
+        self.assertEqual(errors, [], f"Stale design references: {errors}")
+        self.assertGreater(tally["gap_docs"], 50)
+        self.assertGreater(tally["gap_bullets"], 90)
 
 
 class TestGapCodeReferencePaths(unittest.TestCase):

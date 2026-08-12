@@ -35,7 +35,7 @@ Change the return to maxi(1, floori(avg) - 1); add a unit test for a known avera
 
 ## Design references
 
-- docs/story/progression.md:154-156,248
+- docs/story/progression.md § Join Rule
 
 ## Code references
 

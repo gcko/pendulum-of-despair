@@ -37,7 +37,8 @@ On level-up, if a crystal is equipped, add its current-level bonus to a persiste
 
 ## Design references
 
-- docs/story/progression.md:304-306,370,374
+- docs/story/progression.md § Ley Crystal System Core Mechanics
+- docs/story/progression.md § Crystal Leveling
 
 ## Code references
 

@@ -36,8 +36,8 @@ Fold into the narrative-spike framework (GAP-013); drive from passive/trait data
 
 ## Design references
 
-- docs/story/progression.md:388
-- docs/story/characters.md:49-50
+- docs/story/progression.md § Narrative Milestone Stat Spikes > "Pallor's hidden influence"
+- docs/story/characters.md § Cael
 - docs/story/combat-formulas.md § Implementation Architecture ('interactions are data-driven, not special-cased')
 
 ## Code references

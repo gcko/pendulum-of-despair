@@ -38,7 +38,7 @@ Add an abilities schema to enemy JSON (Act I families first), populate from pale
 ## Design references
 
 - docs/story/bestiary/palette-families.md (per-family 'New Abilities')
-- docs/story/bestiary/act-i.md:104-107
+- docs/story/bestiary/act-i.md § Fenmother's Hollow (Floors 1–3 + Cleansing)
 
 ## Code references
 

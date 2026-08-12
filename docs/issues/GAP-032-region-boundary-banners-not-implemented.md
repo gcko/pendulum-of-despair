@@ -37,7 +37,7 @@ Once continental region boundaries exist, detect crossings in the move step and 
 ## Design references
 
 - docs/story/overworld.md §Region Boundary Banners
-- docs/story/geography.md:526
+- docs/story/geography.md § Camera Behavior > 'Region banners'
 
 ## Code references
 

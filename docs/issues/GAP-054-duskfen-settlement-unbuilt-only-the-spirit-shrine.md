@@ -36,7 +36,7 @@ Track the full settlement under GAP-049; note the misfiled dungeon path.
 
 ## Design references
 
-- docs/story/city-thornmere.md:207-350
+- docs/story/city-thornmere.md § 2. Duskfen
 
 ## Code references
 
