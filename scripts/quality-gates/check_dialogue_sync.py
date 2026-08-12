@@ -8,25 +8,38 @@ in #364 — so the only thing that had been holding them together was the
 "both copies move in the same commit" rule in `docs/story/README.md`
 § Writing Conventions. This gate is what enforces that rule.
 
-**What it checks.** Every player-facing string anywhere under
-`game/data/dialogue/` must occur *verbatim* — as an exact substring, no
-case folding, no whitespace or punctuation normalization — somewhere in the
+**What it checks.** A string held under one of three named keys anywhere in
+`game/data/dialogue/` must occur *verbatim* — as an exact substring, no case
+folding, no whitespace or punctuation normalization — somewhere in the
 concatenated text of `docs/story/script/*.md`. Reword or respell a shipped
 string without moving the markdown copy and this gate goes red.
 
-Three keys hold such strings, and all three are read (#398): the entries of
-a `lines` array, a `choice` option's `label`, and the `text` of a title-card
-command. The last two were unchecked when the gate landed, which left every
-choice in the game — the Thornmere council's ten branch options — outside a
-gate whose stated rule already covered them.
+The three keys are the entries of a `lines` array, a `choice` option's
+`label`, and the `text` of a title-card command (#398). The last two were
+unchecked when the gate landed, which left every choice in the game — the
+Thornmere council's ten branch options — outside a gate whose stated rule
+already covered them.
 
-**What it does not check.** Two things, named here so nobody reads a
+*Three* is a fact about today's data, not a property of the code: the walk
+knows those key names and no others. So the key inventory is itself gated.
+`check_string_keys` fails on any key in the dialogue JSON that holds a
+string and is not classified in `STRING_KEYS`, and on any classification
+whose key has left the data. A fourth key carrying player-facing prose
+therefore cannot arrive unnoticed — it arrives red, and someone decides
+whether it belongs in the checked half.
+
+**What it does not check.** Three things, named here so nobody reads a
 guarantee into it that is not in the code:
 
 1. *The reverse direction.* Markdown with no matching JSON line is fine;
    most of the script is stage direction that never ships as a string.
 2. *Position.* A match anywhere in any script file counts, so this catches
    a line whose text drifted, not a line filed under the wrong scene.
+3. *Strings under the twelve keys classified as not player-facing.* `id`,
+   `speaker`, `condition` and the rest of `STRING_KEYS`'s `False` half are
+   read past on purpose — see the table for the reason each is there. That
+   classification is a human judgment; what the gate guarantees is only that
+   it stays current with the data.
 
 **The ratchet.** 128 shipped strings across 31 files have no markdown
 source: 121 `lines[]` entries that predate the gate (#380 tracks the
@@ -320,6 +333,50 @@ def iter_dialogue_files(dialogue_dir: str = DIALOGUE_DIR) -> list[str]:
 
 PLAYER_FACING_KEYS = ("label", "text")
 
+# Every key that holds a string anywhere under DIALOGUE_DIR, and the decision
+# made about it: ``True`` = its strings are player-facing prose and are read by
+# ``iter_player_strings``; ``False`` = they are not prose, so a verbatim
+# comparison against the script markdown would test nothing.
+#
+# This table exists because ``iter_player_strings`` knows three key *names* and
+# nothing else. Add a `prompt` or a `caption` key to the dialogue JSON tomorrow
+# and the gate would report clean over prose it never opened, while the
+# docstring above went on describing a wider guarantee than the walk delivers —
+# which is exactly the shape of miss #398 was filed for. ``check_string_keys``
+# makes that impossible: an unclassified key fails the gate, so a new key
+# arrives red and someone has to decide which half of this table it belongs in.
+#
+# The ``False`` half is a judgment and worth stating rather than assuming.
+# ``id``/``scene_id``/``cutscene_id`` are identifiers; ``condition``, ``when``,
+# ``who``, ``anim``, ``type``, ``direction`` and ``sfx`` are engine directives;
+# ``score_name`` names a music track. ``speaker`` is the one that looks
+# player-facing and is not: it holds a lower-case character id (``caels_echo``),
+# not the display name, and 71 of the 92 distinct values appear nowhere in the
+# script markdown for that reason.
+STRING_KEYS: dict[str, bool] = {
+    "anim": False,
+    "condition": False,
+    "cutscene_id": False,
+    "direction": False,
+    "id": False,
+    "label": True,
+    "lines": True,
+    "scene_id": False,
+    "score_name": False,
+    "sfx": False,
+    "speaker": False,
+    "text": True,
+    "type": False,
+    "when": False,
+    "who": False,
+}
+
+# Non-vacuity floor for the key inventory. The tree holds 15 such keys today;
+# a walk that stopped descending would return the two or three that sit on a
+# document's top level, and every classification below them would then look
+# stale rather than the walk looking broken.
+MIN_STRING_KEYS = 10
+
 
 def iter_player_strings(node: Any) -> Iterator[tuple[str, str]]:
     """Yield ``(key, string)`` for every player-facing string in *node*.
@@ -350,6 +407,102 @@ def iter_player_strings(node: Any) -> Iterator[tuple[str, str]]:
     elif isinstance(node, list):
         for item in node:
             yield from iter_player_strings(item)
+
+
+def iter_string_keys(node: Any) -> Iterator[str]:
+    """Yield the name of every key in *node* that holds a string.
+
+    A key holds a string when its value is one, or when its value is a list
+    with a string in it — the ``lines`` shape. Recursive for the same reason
+    ``iter_player_strings`` is: a key that only ever appears three levels down
+    is exactly the key an inventory taken off the top level would miss, and
+    missing it is indistinguishable from it not existing.
+    """
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if isinstance(value, str):
+                yield key
+            elif isinstance(value, list) and any(
+                isinstance(item, str) for item in value
+            ):
+                yield key
+            yield from iter_string_keys(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from iter_string_keys(item)
+
+
+def check_string_keys(
+    dialogue_dir: str = DIALOGUE_DIR,
+    classified: dict[str, bool] | None = None,
+    min_keys: int = MIN_STRING_KEYS,
+    tally: dict[str, int] | None = None,
+) -> list[str]:
+    """Hold the dialogue JSON's set of string-bearing keys closed (#398).
+
+    ``check_dialogue_sync`` reads three key names. Whether those three are
+    *all* the keys that carry player-facing prose is a fact about the data,
+    not about the code, and the gate's docstring had been asserting it. An
+    assertion about data that nothing measures is the kind of claim that is
+    true on the day it is written and silently false afterwards.
+
+    So the inventory is measured. Every key that holds a string anywhere under
+    *dialogue_dir* must appear in ``STRING_KEYS``, and every key in
+    ``STRING_KEYS`` must still appear in the data. That fails at both ends: a
+    new key cannot ship unclassified, and a classification cannot outlive the
+    key it describes. It does **not** decide whether a key is player-facing —
+    a human does that, by putting the new key in the right half of the table
+    and, if it is prose, teaching ``iter_player_strings`` to read it.
+
+    ``tally``, when given, gets ``string_keys``: how many distinct keys the
+    walk actually found.
+    """
+    known = STRING_KEYS if classified is None else classified
+    observed: set[str] = set()
+    errors: list[str] = []
+
+    for rel in iter_dialogue_files(dialogue_dir):
+        path = os.path.join(dialogue_dir, rel)
+        with open(path, encoding="utf-8") as handle:
+            try:
+                doc = json.load(handle)
+            except json.JSONDecodeError:
+                # check_dialogue_sync reports this; saying it twice would
+                # just double the noise on one broken file.
+                continue
+        observed.update(iter_string_keys(doc))
+
+    if tally is not None:
+        tally["string_keys"] = len(observed)
+
+    # Non-vacuity first: on a walk that found almost nothing every
+    # classification looks stale, and that report would blame the table for
+    # what the walk did.
+    if len(observed) < min_keys:
+        return [
+            f"the key inventory read only {len(observed)} string-bearing "
+            f"key(s) under {dialogue_dir} (floor {min_keys}) — it is not "
+            f"reading the corpus it reports on, so a clean result would mean "
+            f"nothing; repair the walk rather than lowering the floor"
+        ]
+
+    for key in sorted(observed - set(known)):
+        errors.append(
+            f"{dialogue_dir}: `{key}` holds a string and is not classified in "
+            f"STRING_KEYS — decide whether it is player-facing prose. If it "
+            f"is, add it to PLAYER_FACING_KEYS so it is checked against "
+            f"{SCRIPT_DIR}/*.md; if it is not, record that in STRING_KEYS "
+            f"with the reason. Do not leave it unlisted: the gate would then "
+            f"report clean over text it never read."
+        )
+    for key in sorted(set(known) - observed):
+        errors.append(
+            f"{dialogue_dir}: STRING_KEYS classifies `{key}`, which no longer "
+            f"holds a string anywhere in this directory — the key was renamed "
+            f"or removed; drop the entry from "
+            f"scripts/quality-gates/check_dialogue_sync.py"
+        )
+    return errors
 
 
 def check_dialogue_sync(
@@ -472,6 +625,7 @@ def main() -> int:
     """Run the dialogue sync check. Returns 0 on pass, 1 on failure."""
     tally: dict[str, int] = {}
     errors = check_dialogue_sync(tally=tally)
+    errors += check_string_keys(tally=tally)
 
     if errors:
         print("Dialogue script/JSON sync FAILED:")
@@ -485,7 +639,9 @@ def main() -> int:
         f"{tally['choices']} choice.label / command text string(s) (#398) "
         f"checked across {tally['dialogue_files']} dialogue file(s) against "
         f"{tally['script_files']} script file(s); "
-        f"{pinned} strings are pinned in KNOWN_ORPHANS."
+        f"{pinned} strings are pinned in KNOWN_ORPHANS. "
+        f"{tally['string_keys']} string-bearing key(s) found, all classified "
+        f"in STRING_KEYS ({sum(STRING_KEYS.values())} read as player-facing)."
     )
     return 0
 

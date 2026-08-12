@@ -303,6 +303,104 @@ class TestRecursion(DialogueSyncFixture):
         self.assertIn("act-iii/scene.json", errors[0])
 
 
+class TestStringKeyInventory(DialogueSyncFixture):
+    """The gate reads three key names; the data must hold only those (#398).
+
+    Which keys carry player-facing prose is a fact about the JSON, and the
+    module docstring used to assert it in prose while nothing measured it. A
+    fourth key would then ship text the walk never opens, under a docstring
+    still promising it did — the same miss #398 was filed for, one key along.
+    """
+
+    def keys(self, name: str = "scene.json", **payload) -> None:
+        self.write_dialogue(name, payload)
+
+    def test_a_key_nobody_classified_fails(self):
+        """The reviewer's hypothetical, exactly: add a `prompt` key."""
+        self.keys(lines=["Sealed."], prompt="Press start.")
+        errors = check_dialogue_sync.check_string_keys(
+            self.dialogue_dir, {"lines": True}, min_keys=1
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("`prompt` holds a string", errors[0])
+        self.assertIn("not classified in STRING_KEYS", errors[0])
+
+    def test_a_classification_whose_key_left_the_data_fails(self):
+        """The other end of the ratchet: a pin nothing needs any more."""
+        self.keys(lines=["Sealed."])
+        errors = check_dialogue_sync.check_string_keys(
+            self.dialogue_dir, {"lines": True, "caption": True}, min_keys=1
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("`caption`", errors[0])
+        self.assertIn("no longer holds a string", errors[0])
+
+    def test_a_fully_classified_tree_is_clean(self):
+        self.keys(lines=["Sealed."], speaker="edren")
+        self.assertEqual(
+            check_dialogue_sync.check_string_keys(
+                self.dialogue_dir,
+                {"lines": True, "speaker": False},
+                min_keys=1,
+            ),
+            [],
+        )
+
+    def test_a_key_that_only_appears_deep_is_still_found(self):
+        """An inventory taken off the top level is an inventory of nothing."""
+        self.keys(
+            scene_id="fixture",
+            entries=[{"choice": [{"branch": {"caption": "Deep."}}]}],
+        )
+        self.assertIn(
+            "caption",
+            set(
+                check_dialogue_sync.iter_string_keys(
+                    json.load(
+                        open(
+                            os.path.join(self.dialogue_dir, "scene.json"),
+                            encoding="utf-8",
+                        )
+                    )
+                )
+            ),
+        )
+
+    def test_a_walk_that_stops_descending_trips_the_floor(self):
+        """Break the recursion, not the entry point, and watch it fire.
+
+        A shallow walk finds the two or three keys on a document's top level
+        and misses the rest — at which point every classification below them
+        looks stale and the report blames the table for what the walk did.
+        The floor is what stops that being the message.
+        """
+        self.keys(
+            scene_id="fixture",
+            entries=[{"lines": ["Sealed."], "choice": [{"label": "Open."}]}],
+        )
+
+        def shallow(node):
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    if isinstance(value, str):
+                        yield key
+
+        real = check_dialogue_sync.iter_string_keys
+        check_dialogue_sync.iter_string_keys = shallow
+        try:
+            errors = check_dialogue_sync.check_string_keys(
+                self.dialogue_dir,
+                {"scene_id": False, "lines": True, "label": True},
+                min_keys=3,
+            )
+        finally:
+            check_dialogue_sync.iter_string_keys = real
+
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("read only 1 string-bearing key", errors[0])
+        self.assertIn("floor 3", errors[0])
+
+
 class TestNonVacuity(DialogueSyncFixture):
     """A scan that read nothing must fail, not report clean."""
 
@@ -465,6 +563,44 @@ class TestAgainstTheRepo(unittest.TestCase):
             for line in pinned:
                 self.assertIn(line, shipped, f"{rel}: {line!r}")
 
+    def test_the_shipped_key_inventory_is_current(self):
+        """STRING_KEYS and the dialogue JSON agree, both ways."""
+        self.assertEqual(check_dialogue_sync.check_string_keys(), [])
+
+    def test_the_key_inventory_floor_has_headroom(self):
+        keys = set()
+        for rel in check_dialogue_sync.iter_dialogue_files():
+            path = os.path.join(check_dialogue_sync.DIALOGUE_DIR, rel)
+            with open(path, encoding="utf-8") as handle:
+                keys.update(
+                    check_dialogue_sync.iter_string_keys(json.load(handle))
+                )
+        self.assertGreater(len(keys), check_dialogue_sync.MIN_STRING_KEYS)
+        self.assertEqual(keys, set(check_dialogue_sync.STRING_KEYS))
+
+    def test_the_checked_half_is_exactly_what_the_walk_reads(self):
+        """The table cannot claim a key is read unless the walk reads it.
+
+        ``STRING_KEYS``'s ``True`` half is the docstring's "three keys" in
+        machine-readable form. If it and ``iter_player_strings`` drift, the
+        docstring is wrong again and nothing else would say so.
+        """
+        claimed = {k for k, checked in check_dialogue_sync.STRING_KEYS.items()
+                   if checked}
+        self.assertEqual(
+            claimed,
+            {"lines", *check_dialogue_sync.PLAYER_FACING_KEYS},
+        )
+        read = set()
+        for rel in check_dialogue_sync.iter_dialogue_files():
+            path = os.path.join(check_dialogue_sync.DIALOGUE_DIR, rel)
+            with open(path, encoding="utf-8") as handle:
+                for key, _ in check_dialogue_sync.iter_player_strings(
+                    json.load(handle)
+                ):
+                    read.add(key)
+        self.assertEqual(read, claimed)
+
     def test_both_readmes_state_the_current_pin_count(self):
         """Prose that counts the pins must move when the ratchet moves."""
         pinned = sum(
@@ -483,10 +619,6 @@ class TestAgainstTheRepo(unittest.TestCase):
                 f"{doc} claims {claims[0]} pinned strings; the gate pins "
                 f"{pinned} — update the sentence",
             )
-
-
-if __name__ == "__main__":
-    unittest.main()
 
 
 class TestPinnedFileDeleted(unittest.TestCase):
@@ -514,3 +646,7 @@ class TestPinnedFileDeleted(unittest.TestCase):
             self.assertEqual(len(missing), 1, errors)
             self.assertIn("gone.json", missing[0])
             self.assertNotIn("now resolves", missing[0])
+
+
+if __name__ == "__main__":
+    unittest.main()
