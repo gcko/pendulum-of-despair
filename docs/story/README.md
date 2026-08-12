@@ -64,21 +64,32 @@ This directory contains the narrative design for Pendulum of Despair.
   (line 210), `characters.md` "paralyzes him" (line 21), `abilities.md`
   "he's paralyzed by guilt" (line 50) — and it is the form the engine
   emits for status notifications.
-- **The player-facing corpus now matches the rule.** This bullet used to
-  read "a rule for new writing, not a description of the corpus"; #301
-  swept the `color` / `paralyzed` / `centered` / `behavior` families and
-  #311 swept the rest, so for the two corpora a player can actually read —
-  `docs/story/script/*.md` and `game/data/dialogue/*.json` — the
-  description now holds: **zero** British spellings, verified by both
-  greps below plus a hand check of the two families they cannot see
-  (`paralys`, `centre`). The last survivor was *harbour*, six sites the
-  earlier hand-listed pattern was structurally unable to find; the design
-  prose in `docs/story/*.md` was swept alongside. A residual British
-  spelling is therefore a defect to be fixed, not a precedent to be
-  matched.
+- **The player-facing corpus nearly matches the rule, and the gap is
+  named.** This bullet used to read "a rule for new writing, not a
+  description of the corpus"; #301 swept the `color` / `paralyzed` /
+  `centered` / `behavior` families and #311 swept the rest. It then read
+  "**zero** British spellings" for both corpora a player can actually
+  read. That was true of the families anyone was checking and false as
+  soon as #400 widened them, which is the failure mode this whole section
+  keeps repeating: a claim measured by a narrower instrument than the
+  claim. Stated at the width Gate K actually checks:
+  `game/data/dialogue/*.json` holds **zero** hits in all four families;
+  `docs/story/script/*.md` holds **two**, *greyed* in
+  `battle-dialogue.md` and *greying* in `interlude.md`, both stage
+  direction rather than shipped `lines[]` strings, both pinned and
+  tracked by #411. Two families remain outside any instrument
+  (`paralys`, `centre`) and are clean by hand check only. The last
+  survivor of the `-our` sweep was *harbour*, six sites the earlier
+  hand-listed pattern was structurally unable to find; the design prose
+  in `docs/story/*.md` was swept alongside. A residual British spelling
+  is a defect to be fixed, not a precedent to be matched.
 - **Enumerate the exceptions, never the defects.** A hand-written list of
-  *misspellings* has now been wrong three times, because the set of words
-  a writer might get wrong is open-ended. The second time,
+  *misspellings* has now been wrong four times, because the set of words
+  a writer might get wrong is open-ended. The fourth time is why this
+  section ends in a gate rather than a grep — see **These patterns are a
+  gate now, not a note** below, and read the rest of this bullet as the
+  reasoning behind `scripts/quality-gates/check_spelling.py` rather than
+  as instructions to run anything by hand. The second time,
   `catalogue|catalogued` silently missed *cataloguing* — the stem drops
   the final *e* — and that alone hid three player-facing sites
   (`script/act-i.md`, `script/npc-ambient.md`, and the shipped
@@ -229,7 +240,9 @@ This directory contains the narrative design for Pendulum of Despair.
   fails, and a pin whose count no longer matches its file — because the
   fix landed — also fails. So the list can only shrink, and no entry
   outlives its reason. Pinning is not how a new violation gets in; the
-  fix for one is the American spelling.
+  fix for one is the American spelling. #411 burns down the 41
+  inflected-`grey` pins and #412 the three `-ise` ones; the authoritative
+  list is the code, not this paragraph, which is the point.
 
   The absence of hits is still not a proof of cleanliness. The gate knows
   four families; `paralys` and `centre` are not among them, and it does

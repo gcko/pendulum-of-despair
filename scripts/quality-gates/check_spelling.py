@@ -328,7 +328,8 @@ FAMILIES: tuple[Family, ...] = (
 # This list may shrink. It may not grow — a new hit is a defect, and the fix
 # is the American spelling, not a pin. Drop or decrement an entry in the same
 # commit that fixes its sites; the gate fails on a count that no longer
-# matches, so a stale pin cannot sit here unnoticed.
+# matches, so a stale pin cannot sit here unnoticed. #411 burns down the 41
+# inflected-`grey` pins, #412 the three `-ise` ones.
 KNOWN_VIOLATIONS: dict[str, dict[str, int]] = {
     "docs/analysis/game-dev-gaps.md": {"greyed": 3},
     "docs/story/abilities.md": {"generalisation": 1, "greyed": 1},
