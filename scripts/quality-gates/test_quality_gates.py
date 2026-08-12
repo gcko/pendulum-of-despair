@@ -444,6 +444,114 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("Ninety-one", errors[0])
 
+    # ── Decorated filenames: the markdown link and the code span ───────
+    #
+    # The house style writes a cross-document citation as a markdown link,
+    # and prose elsewhere writes the filename as a code span. Both put a
+    # character between the filename and the section sign, and the pattern
+    # could cross neither, so 132 live citations — one in four — were read by
+    # nobody and could rot in silence (#404).
+
+    def test_a_markdown_link_citation_is_read(self):
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_rotted_markdown_link_citation_fails(self):
+        """The proof that the link form is checked and not merely tolerated."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Nonexistent Heading.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_markdown_link_citations_term_is_checked(self):
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Status Effect Reference > 'Rot'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_link_citation_resolves_its_target_not_its_link_text(self):
+        """The two filenames can disagree, and the target is the real path.
+
+        ``docs/analysis/`` writes ``[magic.md](../story/magic.md)``. Resolving
+        the link text would hand ``DocIndex`` every ``magic.md`` in the tree;
+        here the wrong one carries the heading and the right one does not, so
+        only a checker that follows the target reports it.
+        """
+        self._write("docs/story/decoy/magic.md", MAGIC_FIXTURE)
+        self._write(
+            "docs/analysis/note.md",
+            "See [magic.md](../story/decoy/magic.md) § Spell Count Summary.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write("docs/story/decoy/magic.md", "# Magic System\n\n## Moved\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("docs/story/decoy/magic.md", errors[0])
+
+    def test_a_link_with_a_dead_target_is_read_through_its_text(self):
+        """A broken link is still a citation; report it as the one it names."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](../gone/magic.md) § Nonexistent Heading.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_link_citation_may_wrap_before_the_section_sign(self):
+        """``[dungeons-world.md](...)`` / ``§ 2`` is one citation, not two."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "docs/story/note.md",
+            "See [arch.md](../plans/arch.md)\n§ 2.1 Enemy Data for the shape.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write(
+            "docs/story/note.md",
+            "See [arch.md](../plans/arch.md)\n§ 9.9 Enemy Data for the shape.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_code_span_citation_is_read(self):
+        self._write(
+            "docs/story/note.md",
+            "See `magic.md` § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_rotted_code_span_citation_fails(self):
+        self._write("docs/story/note.md", "See `magic.md` § Ghost Section.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_the_decorated_forms_are_counted_separately(self):
+        """The count is what makes "nothing wrong" distinguishable later."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Spell Count Summary, "
+            "`magic.md` § Physical Attack Resolution, and "
+            "magic.md § Status Effect Reference.\n",
+        )
+        tally: dict = {}
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, {}, clear=True
+        ):
+            self.assertEqual(check_doc_citations.check_citations(tally), [])
+        self.assertEqual(tally["citations"], 3)
+        self.assertEqual(tally["decorated"], 2)
+
     def test_ignores_dated_records(self):
         """docs/issues and docs/superpowers describe the tree as it was."""
         self._write("docs/issues/rot.md", "Broke at magic.md:1537.\n")
@@ -1182,9 +1290,15 @@ class TestIntegration(unittest.TestCase):
     def test_full_citation_scan_reads_a_non_trivial_corpus(self):
         """"No bad citations" and "no citations read" both print nothing.
 
-        The floors are far below the live numbers (418 citations across 533
-        files, 11 of them same-document) so ordinary editing does not trip
-        them, but a scan that stopped descending cannot clear them.
+        The floors are far below the live numbers (550 citations across 535
+        files, 11 of them same-document and 132 written as a markdown link or
+        code span) so ordinary editing does not trip them, but a scan that
+        stopped descending cannot clear them.
+
+        The ``decorated`` floor is the one #404 leaves behind. That count was
+        zero for the gate's whole life — the pattern could not cross the
+        ``](...)`` a markdown link puts between the filename and the section
+        sign — and a floor under it is what stops it silently returning there.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1192,8 +1306,9 @@ class TestIntegration(unittest.TestCase):
         errors = check_doc_citations.check_citations(tally)
         self.assertEqual(errors, [])
         self.assertGreater(tally["files"], 300)
-        self.assertGreater(tally["citations"], 250)
+        self.assertGreater(tally["citations"], 400)
         self.assertGreater(tally["self_references"], 5)
+        self.assertGreater(tally["decorated"], 60)
 
     def test_the_citation_counts_come_from_the_directory_walk(self):
         """Sever the walk's recursion and the counts must collapse.
@@ -1202,9 +1317,10 @@ class TestIntegration(unittest.TestCase):
         stops ``os.walk`` descending past each scan root — leaving the entry
         points intact and taking away everything below them — and the counts
         that pass the floors above must fall through them: no
-        ``docs/story/script/``, no ``game/scripts/**``, and no
-        same-document reference anywhere, since all eleven live ones sit in
-        nested directories.
+        ``docs/story/script/``, no ``game/scripts/**``, no same-document
+        reference anywhere, since all eleven live ones sit in nested
+        directories, and no link-form citation either — every one of the 132
+        lives under a scan root rather than directly in it.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1219,8 +1335,9 @@ class TestIntegration(unittest.TestCase):
         with patch("check_doc_citations.os.walk", no_descent):
             check_doc_citations.check_citations(tally)
         self.assertLess(tally["files"], 300)
-        self.assertLess(tally["citations"], 250)
+        self.assertLess(tally["citations"], 400)
         self.assertEqual(tally["self_references"], 0)
+        self.assertEqual(tally["decorated"], 0)
 
 
 class TestDocLineCounts(unittest.TestCase):

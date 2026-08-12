@@ -190,7 +190,7 @@ Flags most frequently used in dialogue branching. Full list:
 | act-i.md | [outline.md](../outline.md) Act I, [events.md](../events.md) flags 1--6/39, [locations.md](../locations.md) § Aelhart/Ironmouth/Roothollow, [dungeons-world.md](../dungeons-world.md) § Ember Vein |
 | act-ii-part-1.md | [outline.md](../outline.md) Act II early, [events.md](../events.md) flags 8--14/40--43/54, [locations.md](../locations.md) § Duskfen/Canopy Reach/Ashgrove, [sidequests.md](../sidequests.md) |
 | act-ii-part-2.md | [outline.md](../outline.md) Act II late, [events.md](../events.md) flags 7/15--19/44--47, [locations.md](../locations.md) § Valdris Crown |
-| interlude.md | [outline.md](../outline.md) Interlude, [events.md](../events.md) flags 20--27/48--51/55--56, [locations.md](../locations.md) § all reunion locations |
+| interlude.md | [outline.md](../outline.md) Interlude, [events.md](../events.md) flags 20--27/48--51/55--56, [locations.md](../locations.md) (all reunion locations) |
 | act-iii.md | [outline.md](../outline.md) Act III, [events.md](../events.md) flags 28--35/52--53, [dungeons-world.md](../dungeons-world.md) § Pallor Wastes |
 | act-iv-epilogue.md | [outline.md](../outline.md) Act IV + Epilogue, [events.md](../events.md) flags 36--38, [bestiary/bosses.md](../bestiary/bosses.md) § Cael |
 | npc-ambient.md | [npcs.md](../npcs.md), [locations.md](../locations.md), [events.md](../events.md) all flags |

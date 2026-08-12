@@ -10,6 +10,12 @@ test notices. This gate makes that impossible in live files by
    target document, optionally narrowing to a quoted term that must appear
    inside that section: ``magic.md § Status Effect Reference > 'Poison'``.
 
+The filename may be bare, a markdown link — ``[magic.md](../story/magic.md)
+§ Spell Balance Guidelines``, which is the house style in ``docs/`` — or a
+code span: ``` `items.md` § Key Items ```. Only the bare form was read until
+#404, which left 132 of today's 550 citations checked by nobody. Where a link
+names two paths, the destination is the one resolved (``cited_path``).
+
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
 Not scanned: docs/issues/ and docs/superpowers/. Those are **dated
@@ -65,8 +71,25 @@ LINE_ANCHOR_RE = re.compile(
 # is how the citation lands inside wrapped GDScript ``##`` doc comments.
 # The match deliberately stops at the section sign rather than capturing the
 # heading, so that a line carrying several citations yields several matches.
+#
+# The filename may be *decorated*, and both decorations were unreadable until
+# #404. The house style in ``docs/`` writes a cross-document citation as a
+# markdown link — ``[combat-formulas.md](combat-formulas.md) § Act scaling`` —
+# so a closing paren sits between the filename and the section sign; prose
+# elsewhere writes the filename as a code span — ``` `items.md` § Key Items ```
+# — so a backtick does. A pattern that could cross neither read no such
+# citation at all, and a citation nobody reads is one nobody can catch rotting:
+# 127 link-form and 6 code-span citations were unchecked, among them the fourth
+# site of the broken ``§ Act scaling`` citation that #384 repointed at its
+# three other sites.
+#
+# ``target`` is the link's destination when there is one. It matters because
+# the two filenames can disagree — ``[magic.md](../story/magic.md)`` in
+# ``docs/analysis/`` — and the destination is the real path, so it is the one
+# resolved (see ``cited_path``).
 HEADING_CITE_RE = re.compile(
     r"(?P<file>[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md)"
+    r"(?:`|\][ \t]*\((?P<target>[^()\s]*)\))?"
     r"[ \t]*(?:\r?\n[ \t]*(?:#+|//|\*|>)?[ \t]*)?"
     r"§[ \t]*"
 )
@@ -628,6 +651,34 @@ def match_all(
     return first
 
 
+def cited_path(citing: str, match: re.Match[str]) -> str:
+    """Which document a heading citation names.
+
+    A markdown link carries two filenames and they need not agree: in
+    ``docs/analysis/game-design-gaps.md`` the citation reads
+    ``[magic.md](../story/magic.md)``, where the link text is a bare basename
+    and the destination is the real path. Resolving the destination — made
+    repo-relative against the citing file's own directory — pins the citation
+    to one document; resolving the basename hands ``DocIndex.resolve`` every
+    file of that name in the tree and lets the citation pass if *any* of them
+    happens to carry the heading. ``README.md`` alone has 9 such files.
+
+    Falls back to the link text when there is no destination, or when the
+    destination does not name a file in this repo — a broken link is worth
+    reporting as the citation it was trying to be, not as a path lookup that
+    silently found nothing.
+    """
+    target = match.groupdict().get("target")
+    if target:
+        target = target.split("#", 1)[0]
+        if target:
+            joined = os.path.join(os.path.dirname(citing), target)
+            resolved = os.path.normpath(joined).replace(os.sep, "/")
+            if os.path.isfile(resolved):
+                return resolved
+    return match.group("file")
+
+
 def citation_signature(cited_file: str, heading_part: str) -> str:
     """Stable printable form of a heading citation, used in messages and keys."""
     return f"{cited_file} § {' '.join(heading_part.split())[:60]}"
@@ -790,12 +841,21 @@ def check_file(
             f"`{m.group(0)}` — {FIX_HINT_ANCHOR}"
         )
 
-    # (cited filename, offset just past the section sign, forced targets).
-    # A cross-document citation names its file and is resolved through the
-    # index; a self-reference has no filename to name and resolves against
-    # the document it sits in (#386).
-    sites: list[tuple[str, int, list[str] | None]] = [
-        (m.group("file"), m.end(), None) for m in HEADING_CITE_RE.finditer(text)
+    # (cited filename, offset just past the section sign, forced targets,
+    # decorated). A cross-document citation names its file and is resolved
+    # through the index; a self-reference has no filename to name and resolves
+    # against the document it sits in (#386). *Decorated* means the filename
+    # was written as a markdown link or a code span rather than bare — the
+    # forms nothing read before #404, counted so the coverage they add is a
+    # number on every run rather than a claim in a docstring.
+    sites: list[tuple[str, int, list[str] | None, bool]] = [
+        (
+            cited_path(path, m),
+            m.end(),
+            None,
+            bool(m.group("target")) or m.group(0)[len(m.group("file"))] == "`",
+        )
+        for m in HEADING_CITE_RE.finditer(text)
     ]
     if path.endswith(".md"):
         named = {
@@ -809,10 +869,10 @@ def check_file(
             window_start = starts[here - 2] if here >= 2 else 0
             if NEARBY_DOC_RE.search(text[window_start:m.start()]):
                 continue
-            sites.append((os.path.basename(path), m.end(), [path]))
+            sites.append((os.path.basename(path), m.end(), [path], False))
         sites.sort(key=lambda site: site[1])
 
-    for cited_file, cite_end, forced in sites:
+    for cited_file, cite_end, forced, decorated in sites:
         line_no: int = line_of(cite_end)
 
         if line_no in skip_lines:
@@ -822,6 +882,8 @@ def check_file(
             tally["citations"] = tally.get("citations", 0) + 1
             if forced is not None:
                 tally["self_references"] = tally.get("self_references", 0) + 1
+            if decorated:
+                tally["decorated"] = tally.get("decorated", 0) + 1
 
         # ``own_len`` marks where the citation's own line stops and the
         # wrapped continuation begins. Every trim below returns a *prefix* of
@@ -898,12 +960,14 @@ def check_file(
 def check_citations(tally: dict[str, int] | None = None) -> list[str]:
     """Scan every live file for rotted or rot-prone doc citations.
 
-    ``tally``, when given, is filled with ``files``, ``citations`` and
-    ``self_references``: how many files were walked, how many citations were
-    resolved in them, and how many of those were a document referring to its
-    own section (#386). A scan reports its findings by returning nothing, and
-    nothing is also what a scan that stopped looking returns; the counts are
-    what tells those apart, and ``main`` prints them on every run.
+    ``tally``, when given, is filled with ``files``, ``citations``,
+    ``self_references`` and ``decorated``: how many files were walked, how
+    many citations were resolved in them, how many of those were a document
+    referring to its own section (#386), and how many were written as a
+    markdown link or a code span (#404). A scan reports its findings by
+    returning nothing, and nothing is also what a scan that stopped looking
+    returns; the counts are what tells those apart, and ``main`` prints them
+    on every run.
     """
     index = DocIndex()
     errors: list[str] = []
@@ -912,6 +976,7 @@ def check_citations(tally: dict[str, int] | None = None) -> list[str]:
     if tally is not None:
         tally.setdefault("citations", 0)
         tally.setdefault("self_references", 0)
+        tally.setdefault("decorated", 0)
         tally["files"] = len(scanned)
     for path in scanned:
         errors.extend(check_file(path, index, seen_known, tally))
@@ -949,9 +1014,10 @@ def main() -> int:
     print(
         f"Doc citation validation passed. {tally['citations']} citation(s) "
         f"resolved across {tally['files']} file(s), "
-        f"{tally['self_references']} of them same-document (#386). "
-        f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in KNOWN_UNRESOLVED "
-        "(#366); the list can only shrink."
+        f"{tally['self_references']} of them same-document (#386) and "
+        f"{tally['decorated']} written as a markdown link or code span "
+        f"(#404). {len(KNOWN_UNRESOLVED)} citation(s) pinned in "
+        "KNOWN_UNRESOLVED (#366); the list can only shrink."
     )
     return 0
 

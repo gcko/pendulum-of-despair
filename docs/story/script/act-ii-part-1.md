@@ -16,7 +16,8 @@
 > [events.md](../events.md) flags 8--14, 40--43, 54 |
 > [locations.md](../locations.md) |
 > [npcs.md](../npcs.md) |
-> [sidequests.md](../sidequests.md) § Ley Stag
+> [sidequests.md](../sidequests.md) |
+> [transport.md](../transport.md) § Ley Stag Mount
 
 ---
 
