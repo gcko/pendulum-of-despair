@@ -36,8 +36,8 @@ static func roll_increment(
 ## Aggregate flag-gated location modifiers from a zone/floor config.
 ## Each config.location_mods entry {"flag": ..., "modifier": ...} applies
 ## while its EventFlags flag is satisfied; entries stack multiplicatively
-## (combat-formulas.md § Encounter rate modifiers: Tunnel Map, Kole's
-## patrol, Veilstep all land here as data).
+## (combat-formulas.md § Danger Counter > 'Encounter rate modifiers':
+## Tunnel Map, Kole's patrol, Veilstep all land here as data).
 static func get_location_modifier(config: Dictionary) -> float:
 	var mod: float = 1.0
 	for entry: Variant in config.get("location_mods", []):

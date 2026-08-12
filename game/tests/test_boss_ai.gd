@@ -2,9 +2,9 @@ extends GutTest
 ## Tests for the data-driven boss AI interpreter (GAP-009): phase transitions,
 ## charge/telegraph (2-turn), highest-threat targeting, fixed-key conditions, and
 ## each Act-I boss script (Ember Drake, Vein Guardian, Drowned Sentinel,
-## Corrupted Fenmother). Values trace to docs/story/bestiary/bosses.md +
-## enemy-ability-conventions.md §3. Drives the static interpreter directly (no
-## scene): ai_state lives on the Enemy node and persists across calls.
+## Corrupted Fenmother). Drives the static interpreter directly (no scene):
+## ai_state lives on the Enemy node and persists across calls. Values trace to
+## docs/story/bestiary/bosses.md and enemy-ability-conventions.md § 3.
 
 const BossAI = preload("res://scripts/combat/boss_ai.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")

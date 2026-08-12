@@ -93,6 +93,14 @@ SECTION_ID = r"\d+(?:\.\d+)*[A-Za-z]?"
 # "2.1", "1.2a", or a list of them: "2.1/2.3", "1.2,1.3".
 SECTION_LIST_RE = re.compile(rf"^({SECTION_ID}(?:[/,]{SECTION_ID})*)")
 
+# The id a heading numbers *itself* with, taken off the front of its title:
+# "### 1.2a Script Size Budget" -> "1.2a", "## 19. Ley Nexus Hollow" -> "19",
+# "### Floor 2: Lower Mine" -> none. The trailing "." or ")" is list
+# punctuation and not part of the id, so "§ 19" and "§ 19." name the same
+# heading. Matching an id against *this* rather than against the heading's
+# breadcrumb words is what keeps "§ 3" off "### 1.3" (#391).
+HEADING_ID_RE = re.compile(rf"^({SECTION_ID})[.)]?(?:[ \t]|$)")
+
 # The period closing a *leading* section id, where the numbered-list heading
 # style puts it: "## 19. Ley Nexus Hollow" carries the number, the period and
 # the title in one heading, so "§ 19. Ley Nexus Hollow" spells that heading
@@ -122,6 +130,24 @@ ID_DOT_RE = re.compile(rf"(?:^|(?<=[ \t])){SECTION_ID}\.(?=[ \t])")
 SECTION_WORD_RE = re.compile(
     r"^(?:\d+(?:\.\d+)+[A-Za-z]?|\d+(?:\.\d+)*[A-Za-z]?[.)])$"
 )
+
+# A ``§`` with a section id after it and no filename in front: a document
+# referring to one of its own sections, which is how a document refers to
+# itself without the redundancy of naming its own filename ("the six
+# singletons listed in § 1.3"). The lookahead keeps "§ 3rd" and "§ 2gil"
+# out — an id ends the token it starts.
+SELF_CITE_RE = re.compile(
+    rf"§[ \t]*(?={SECTION_ID}(?:[/,]{SECTION_ID})*(?![\w.]))"
+)
+
+# A filename that could own the ``§`` after it. A bare ``§N`` is only read as
+# a self-reference when none appears in the wrap window before it, because the
+# house style writes cross-document citations as markdown links
+# ("[dungeons-world.md](../dungeons-world.md)\n§ 2, recommended level 12-15")
+# whose closing paren stops HEADING_CITE_RE from reaching the section sign.
+# Reading *that* as a self-reference would resolve it against the wrong
+# document — silently, and in the direction this gate exists to prevent.
+NEARBY_DOC_RE = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md")
 
 # Where one citation stops and the next begins. A comment often chains them
 # ("conventions §2.1; palette-families.md § Serpent Family > 'Marsh Serpent'"),
@@ -311,6 +337,43 @@ def match_words(
     return None
 
 
+def heading_id(title: str) -> str | None:
+    """The section id a heading numbers itself with, or ``None``.
+
+    ``"1.2a Script Size Budget"`` -> ``"1.2a"``; ``"19. Ley Nexus Hollow"`` ->
+    ``"19"``; ``"Floor 2: Lower Mine (40x30)"`` -> ``None``, because the number
+    there is inside the title rather than in front of it.
+    """
+    m = HEADING_ID_RE.match(title.strip())
+    return m.group(1).lower() if m else None
+
+
+def match_section_id(
+    index: DocIndex, path: str, section_id: str
+) -> tuple[int, int, str] | None:
+    """The heading that numbers *itself* ``section_id``.
+
+    An id is positional, not a bag of words. Matching it as words against a
+    heading's breadcrumb let ``§ 3`` reach ``### 1.3 Autoload Singletons`` —
+    whose trail reads ``1 project setup 1 3 autoload singletons``, and so
+    contains a ``3`` — and, being the first such heading in the file, win over
+    ``## 3. Game State Machine`` further down. Both cited sites of
+    ``enemy-ability-conventions.md §3`` resolved that way to ``### 2.3 AoE
+    elemental abilities``: the gate reported passed while pointing the reader
+    at the wrong section (#391).
+
+    So the citation's id is compared for equality against the id parsed off
+    the front of each heading title. ``3`` is ``3`` and is not ``1.3``;
+    ``1.2a`` is its own section and not ``1.2``. A document that numbers two
+    headings alike is resolved to the first, as everywhere else here.
+    """
+    want = section_id.lower()
+    for head in index.headings(path):
+        if heading_id(head[2]) == want:
+            return head
+    return None
+
+
 def named_prefix_len(
     index: DocIndex, path: str, hit: tuple[int, int, str], words: list[str]
 ) -> int:
@@ -390,6 +453,53 @@ def continues_a_heading(
     return first.isalpha() and first.isupper()
 
 
+def unknown_capitalized_word(
+    index: DocIndex,
+    path: str,
+    hit: tuple[int, int, str],
+    extra: list[str],
+) -> str | None:
+    """First capitalized word in ``extra`` the cited section never says.
+
+    This is the signal #389 asked for. Under a section id the id alone settles
+    which heading, so the words after it are optional — and in the live corpus
+    they are as often a *locator inside* the section (``audio.md § 3.1 SFX
+    budget``, ``dungeons-world.md § 1 Ember Vein Floor 2``) as a continuation
+    of its title. Capitalization cannot tell those from an invented subsection
+    name, which is why ``continues_a_heading`` refuses to read it under an id.
+
+    The document itself can tell them apart. A locator names something the
+    section contains: ``SFX`` is a row of § 3.1 Channel Budget's table,
+    ``Floor`` is a word of § 1. Ember Vein's prose. An invented subsection
+    names something that is nowhere in it — ``§ 2.3 Nonexistent Subsection``,
+    ``§ 19. Invented Chamber``. So a capitalized word that the id did not
+    account for must appear in the section's own vocabulary: its breadcrumb
+    (the heading and its ancestors) or its body text.
+
+    What this does **not** claim: it does not verify that the trailing words
+    name a real subsection, and it does not look at lower-case words at all.
+    ``§ 3.3 and the exit_battle convention`` and ``§ 2.5: the announcement
+    holds the message window`` are ordinary prose running on from a citation,
+    which is house style, and demanding that the section contain *those* words
+    would fail most numbered citations in the tree. The guarantee is narrower
+    and exact: under a section id, a capitalized word offered as part of the
+    section's name must be a word that section actually uses.
+    """
+    if not extra:
+        return None
+    heads = index.headings(path)
+    trail = index.trails(path)[heads.index(hit)]
+    body = normalize(index.section_text(path, hit[0], hit[1])).split()
+    vocabulary = {stem(w) for w in trail} | {stem(w) for w in body}
+    for word in extra:
+        if not (word[:1].isalpha() and word[:1].isupper()):
+            continue
+        folded = normalize(word).split()
+        if folded and any(stem(w) not in vocabulary for w in folded):
+            return word
+    return None
+
+
 def match_heading(
     index: DocIndex, path: str, candidate: str, own: int | None = None
 ) -> tuple[int, int, str] | None:
@@ -428,8 +538,12 @@ def match_heading(
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
 
-    A citation that opens with a section id is resolved by that id alone, and
-    the id includes any letter suffix: ``§ 1.2a`` reaches
+    A citation that opens with a section id is resolved by that id alone,
+    compared for equality against the id each heading numbers itself with
+    rather than matched as words against its breadcrumb. ``§ 3`` therefore
+    reaches ``## 3. Game State Machine`` and never ``### 1.3 Autoload
+    Singletons``, whose breadcrumb merely contains a ``3`` (#391). The id
+    includes any letter suffix: ``§ 1.2a`` reaches
     ``### 1.2a Script Size Budget``, never the adjacent ``### 1.2 Naming
     Conventions``, and ``§ 1.2b`` resolves to nothing and fails. The id
     settles *which* heading, not whether the citation stops there: the
@@ -443,17 +557,15 @@ def match_heading(
     technical-architecture.md and dungeons-world.md, so running no check here
     at all would have left #367 standing over most of the corpus.
 
-    **Under a section id the check reads ids only, not capitalisation, and
-    that gap is deliberate.** ``§ 2.3 Nonexistent Subsection`` still
-    resolves to ``### 2.3 Equipment Data``. Its shape cannot be told from
-    ``audio.md § 3.1 SFX budget`` or ``dungeons-world.md § 1 Ember Vein
-    Floor 2``, both correct citations in this repo whose trailing words
-    locate something *inside* the cited section rather than name a
-    subsection; refusing on capitalisation fails four live citations that
-    have not rotted. An id already identifies the section exactly, which is
-    what makes the trailing phrase optional there and load-bearing in the
-    unnumbered form above. Closing the gap needs a signal this resolver does
-    not have — see the issue filed against this exception (#389).
+    Under a section id the shape check reads ids only, because
+    capitalization there cannot tell an invented subsection from a locator
+    (``audio.md § 3.1 SFX budget``). The document supplies what the shape
+    cannot: a capitalized word the id did not account for must be a word the
+    cited section itself uses, or the citation is naming something that is
+    not in there. ``§ 2.3 Nonexistent Subsection`` is refused on
+    ``Nonexistent``; ``§ 3.1 SFX budget`` resolves because § 3.1 Channel
+    Budget's table has an ``SFX`` row. See ``unknown_capitalized_word`` for
+    exactly how much that checks and how much it does not (#389).
     """
     words = candidate.split()
     if not words:
@@ -471,6 +583,8 @@ def match_heading(
             return None
         k = named_prefix_len(index, path, hit, words)
         if continues_a_heading(words, k, own, by_id=True):
+            return None
+        if unknown_capitalized_word(index, path, hit, words[k:own]):
             return None
         return hit
 
@@ -493,13 +607,21 @@ def match_heading(
 def match_all(
     index: DocIndex, path: str, parts: list[str]
 ) -> tuple[int, int, str] | None:
-    """Resolve every part of a slash- or comma-separated section list."""
+    """Resolve every part of a slash- or comma-separated section list.
+
+    A part that is itself a section id (``2.1``, ``1.2a``) is resolved
+    positionally by ``match_section_id``; a part that is words
+    (``npcs.md § Yara/Caden``) by its breadcrumb.
+    """
     first: tuple[int, int, str] | None = None
     for part in parts:
-        want = normalize(part).split()
-        if not want:
-            return None
-        hit = match_words(index, path, want)
+        if re.fullmatch(SECTION_ID, part.strip()):
+            hit = match_section_id(index, path, part.strip())
+        else:
+            want = normalize(part).split()
+            if not want:
+                return None
+            hit = match_words(index, path, want)
         if hit is None:
             return None
         first = first or hit
@@ -626,9 +748,16 @@ def citation_extent(rest: str) -> str:
 
 
 def check_file(
-    path: str, index: DocIndex, seen_known: set[tuple[str, str]]
+    path: str,
+    index: DocIndex,
+    seen_known: set[tuple[str, str]],
+    tally: dict[str, int] | None = None,
 ) -> list[str]:
-    """Citation errors in one file, formatted ``path:line: message``."""
+    """Citation errors in one file, formatted ``path:line: message``.
+
+    ``tally`` accumulates how much was actually read — see ``check_citations``
+    for why a scan that reports nothing has to say how much it looked at.
+    """
     errors: list[str] = []
     try:
         with open(path, encoding="utf-8") as f:
@@ -661,18 +790,44 @@ def check_file(
             f"`{m.group(0)}` — {FIX_HINT_ANCHOR}"
         )
 
-    for m in HEADING_CITE_RE.finditer(text):
-        cited_file: str = m.group("file")
-        line_no: int = line_of(m.end())
+    # (cited filename, offset just past the section sign, forced targets).
+    # A cross-document citation names its file and is resolved through the
+    # index; a self-reference has no filename to name and resolves against
+    # the document it sits in (#386).
+    sites: list[tuple[str, int, list[str] | None]] = [
+        (m.group("file"), m.end(), None) for m in HEADING_CITE_RE.finditer(text)
+    ]
+    if path.endswith(".md"):
+        named = {
+            text.rfind("§", m.start(), m.end())
+            for m in HEADING_CITE_RE.finditer(text)
+        }
+        for m in SELF_CITE_RE.finditer(text):
+            if m.start() in named:
+                continue
+            here = line_of(m.start())
+            window_start = starts[here - 2] if here >= 2 else 0
+            if NEARBY_DOC_RE.search(text[window_start:m.start()]):
+                continue
+            sites.append((os.path.basename(path), m.end(), [path]))
+        sites.sort(key=lambda site: site[1])
+
+    for cited_file, cite_end, forced in sites:
+        line_no: int = line_of(cite_end)
 
         if line_no in skip_lines:
             continue
+
+        if tally is not None:
+            tally["citations"] = tally.get("citations", 0) + 1
+            if forced is not None:
+                tally["self_references"] = tally.get("self_references", 0) + 1
 
         # ``own_len`` marks where the citation's own line stops and the
         # wrapped continuation begins. Every trim below returns a *prefix* of
         # ``rest``, so the offset stays meaningful all the way to the
         # resolver, which uses it to bound the invention check (#367).
-        rest, own_len = citation_tail(text[m.end():], path.endswith(".md"))
+        rest, own_len = citation_tail(text[cite_end:], path.endswith(".md"))
         boundary = NEXT_CITE_RE.search(rest)
         if boundary:
             rest = rest[: boundary.start()]
@@ -697,7 +852,7 @@ def check_file(
         signature = citation_signature(cited_file, heading_part)
         known_key = (path, signature)
 
-        targets = index.resolve(cited_file)
+        targets = forced if forced is not None else index.resolve(cited_file)
         if not targets:
             if known_key in KNOWN_UNRESOLVED:
                 seen_known.add(known_key)
@@ -740,13 +895,26 @@ def check_file(
     return errors
 
 
-def check_citations() -> list[str]:
-    """Scan every live file for rotted or rot-prone doc citations."""
+def check_citations(tally: dict[str, int] | None = None) -> list[str]:
+    """Scan every live file for rotted or rot-prone doc citations.
+
+    ``tally``, when given, is filled with ``files``, ``citations`` and
+    ``self_references``: how many files were walked, how many citations were
+    resolved in them, and how many of those were a document referring to its
+    own section (#386). A scan reports its findings by returning nothing, and
+    nothing is also what a scan that stopped looking returns; the counts are
+    what tells those apart, and ``main`` prints them on every run.
+    """
     index = DocIndex()
     errors: list[str] = []
     seen_known: set[tuple[str, str]] = set()
-    for path in iter_scanned_files():
-        errors.extend(check_file(path, index, seen_known))
+    scanned = iter_scanned_files()
+    if tally is not None:
+        tally.setdefault("citations", 0)
+        tally.setdefault("self_references", 0)
+        tally["files"] = len(scanned)
+    for path in scanned:
+        errors.extend(check_file(path, index, seen_known, tally))
 
     for key in sorted(KNOWN_UNRESOLVED):
         if key not in seen_known:
@@ -761,7 +929,8 @@ def check_citations() -> list[str]:
 
 def main() -> int:
     """Run the citation check. Returns 0 on pass, 1 on failure."""
-    errors: list[str] = check_citations()
+    tally: dict[str, int] = {}
+    errors: list[str] = check_citations(tally)
 
     if errors:
         print("Doc citation validation FAILED:")
@@ -774,10 +943,15 @@ def main() -> int:
         return 1
 
     # State the size of the escape hatch on every run. A number nobody has to
-    # count by hand is a number nobody can understate.
+    # count by hand is a number nobody can understate. Same for the size of
+    # what was read: "no bad citations" and "no citations read" print the
+    # same word otherwise.
     print(
-        f"Doc citation validation passed. {len(KNOWN_UNRESOLVED)} citation(s) "
-        "pinned in KNOWN_UNRESOLVED (#366); the list can only shrink."
+        f"Doc citation validation passed. {tally['citations']} citation(s) "
+        f"resolved across {tally['files']} file(s), "
+        f"{tally['self_references']} of them same-document (#386). "
+        f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in KNOWN_UNRESOLVED "
+        "(#366); the list can only shrink."
     )
     return 0
 

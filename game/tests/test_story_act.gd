@@ -1,7 +1,7 @@
 extends GutTest
 ## Tests for StoryAct static helpers (period, danger scale, enemy act).
-## Canon: combat-formulas.md § Act scaling (Act I x1.0, Act II x1.1,
-## Interlude x1.2, Act III x1.1).
+## Canon: combat-formulas.md § Danger Counter > 'Act scaling'
+## (Act I x1.0, Act II x1.1, Interlude x1.2, Act III x1.1).
 
 const SA = preload("res://scripts/core/story_act.gd")
 const TestHelpers = preload("res://tests/test_helpers.gd")
