@@ -35,11 +35,13 @@ func test_display_adjective_reads_back_as_an_announcement() -> void:
 
 
 ## The paralysis announcement exists in three places that must agree: the
-## adjective in status_effects.gd, the canon line in battle-dialogue.md
-## § Status Effect Notifications, and the shipped
-## game/data/dialogue/battle_status_effect_notifications.json generated from
-## it by tools/dialogue_parser.py. Nothing else compares the JSON against the
-## engine, so a spelling drift in either one was previously silent (#301).
+## adjective in game/scripts/combat/status_effects.gd, the canon line in
+## docs/story/script/battle-dialogue.md § Status Effect Notifications, and the
+## shipped game/data/dialogue/battle_status_effect_notifications.json. That
+## JSON is authored by hand, not generated from either of the other two — see
+## tools/README.md for why the generator was retired. This test pins the JSON
+## against the engine adjective and nothing else; it never opens the markdown,
+## so only the JSON-versus-engine half of the drift is covered here (#301).
 func test_shipped_notification_matches_the_engine_adjective() -> void:
 	var data: Dictionary = DataManager.load_dialogue("battle_status_effect_notifications")
 	var entries: Array = data.get("entries", [])

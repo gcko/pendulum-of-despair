@@ -172,9 +172,10 @@ This directory contains the narrative design for Pendulum of Despair.
   the shipped dialogue JSON, so **both copies move in the same commit**.
   **Nothing generates one from the other.** This bullet used to send you
   to `tools/dialogue_parser.py`; that script was deleted in #364, because
-  it had not completed a run since 2026-04-05 — its own last commit,
-  `3b2bcc49`, introduced a `NameError` that fired *after* it had written
-  output — and because it unlinked every `game/data/dialogue/*.json`
+  it had not completed a run since 2026-04-05 — `3b2bcc49` introduced a
+  `NameError` that fired *after* it had written output, and the two commits
+  that touched the script afterwards only hand-edited a hardcoded string
+  list — and because it unlinked every `game/data/dialogue/*.json`
   before parsing, so a re-run deleted 31 shipped files. Those 31 are
   exactly the files added to that directory since the crash: every
   Scene 7 beat, the Ember Vein and Fenmother scenes, the Valdris shop
