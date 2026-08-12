@@ -102,7 +102,7 @@
 			"cost_value": 20,
 			"cooldown": null,
 			"target": "all_enemies",
-			"_comment": "target records the damage component only; the heal, the barrier and the status immunity all resolve party-side (abilities.md § Damage Magnitudes, Convergence Chorus). A component whose source Spiritcall Torren has not yet learned is skipped.",
+			"_comment": "target records the damage component only; the heal, the barrier and the status immunity all resolve party-side (abilities.md § Damage Magnitudes > 'Convergence Chorus'). A component whose source Spiritcall Torren has not yet learned is skipped.",
 			"component_powers": {
 				"damage": 5,
 				"heal": 6

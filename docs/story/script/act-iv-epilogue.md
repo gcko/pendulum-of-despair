@@ -223,7 +223,7 @@ them.
 <!-- Scene: the_farewell | Tier: 1 | Trigger: follows cael_explanation -->
 <!-- Location: Convergence Central Platform | Party: all five + Cael -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act IV The Farewell, characters.md § all -->
+<!-- Cross-ref: outline.md § Act IV The Farewell, characters.md § The Two Protagonists, characters.md § The Party -->
 
 *(The party stands around Cael. The door pulses behind the
 machine — grey light, patient, waiting. The machine's hum is
@@ -601,7 +601,7 @@ me any time.
 <!-- Scene: first_tree_seed | Tier: 2 | Trigger: player uses First Tree Seed at Convergence Meadow -->
 <!-- Location: Convergence Meadow | Party: all five assemble automatically -->
 <!-- Variants: none -->
-<!-- Cross-ref: dynamic-world.md § First Tree Seed, dungeons-world.md § 14e Ashgrove Undercroft, items.md § First Tree Seed -->
+<!-- Cross-ref: dynamic-world.md § First Tree Seed, dungeons-world.md § 14e Ashgrove Undercroft, items.md § Story Items > 'First Tree Seed' -->
 
 *(The player uses the First Tree Seed at the Convergence meadow,
 beside Cael's sword. All five party members assemble

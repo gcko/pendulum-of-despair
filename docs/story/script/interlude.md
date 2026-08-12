@@ -184,7 +184,7 @@ order.)*
 <!-- Scene: finding_edren | Tier: 2+3 | Trigger: player travels to Highcairn -->
 <!-- Location: Highcairn Monastery | Party: Sable + previously found members -->
 <!-- Variants: reunion_order position affects emotional tone -->
-<!-- Cross-ref: outline.md § Interlude Finding Edren, npcs.md § Father Aldous, locations.md § Highcairn -->
+<!-- Cross-ref: outline.md § Sable's Journey > 'Finding Edren', npcs.md § Father Aldous, locations.md § Highcairn -->
 
 ### 23a. The Monastery
 
@@ -345,7 +345,7 @@ something to drink. The wine here is terrible.
 <!-- Scene: finding_lira | Tier: 2+3 | Trigger: player travels to Corrund -->
 <!-- Location: Corrund → Ironmark Citadel | Party: Sable + previously found members -->
 <!-- Variants: reunion_order position; party_has checks for infiltration dialogue -->
-<!-- Cross-ref: outline.md § Interlude Finding Lira, npcs.md § Tash/Brant/Veld/Kole, locations.md § Corrund -->
+<!-- Cross-ref: outline.md § Sable's Journey > 'Finding Lira', npcs.md § Tash/Brant/Veld/Kole, locations.md § Corrund -->
 
 ### 24a. Corrund Undercity
 
@@ -516,7 +516,7 @@ terrain no patrol has survived.)*
 <!-- Scene: finding_torren | Tier: 2+3 | Trigger: player travels to Roothollow -->
 <!-- Location: Thornmere Wilds → Roothollow → Ley Nexus | Party: Sable + previously found members -->
 <!-- Variants: reunion_order position; stag_bonded affects post-battle scene -->
-<!-- Cross-ref: outline.md § Interlude Finding Torren, npcs.md § Yara/Caden, locations.md § Roothollow -->
+<!-- Cross-ref: outline.md § Sable's Journey > 'Finding Torren', npcs.md § Yara/Caden, locations.md § Roothollow -->
 
 ### 25a. The Dying Forest
 
@@ -596,7 +596,7 @@ sever its connection before Torren can let go.
 
 **SABLE** : Then we sever it.
 
-<!-- Cross-ref: dungeons-world.md § Roothollow Ley Nexus (Ley Leech) -->
+<!-- Cross-ref: dungeons-world.md § 19. Ley Nexus Hollow > 'The Ley Leech' -->
 
 *(Boss fight: Ley Leech. The fight occurs around Torren, who
 cannot move. Protecting him is implicit.)*
@@ -661,7 +661,7 @@ at once.)*
 <!-- Scene: finding_maren | Tier: 2+3 | Trigger: player travels to Deep Wilds -->
 <!-- Location: Deep Wilds → Archive of Ages | Party: Sable + previously found members -->
 <!-- Variants: reunion_order position -->
-<!-- Cross-ref: outline.md § Interlude Finding Maren, npcs.md § Brenn/Riven/The Archivist, locations.md § Archive of Ages -->
+<!-- Cross-ref: outline.md § Sable's Journey > 'Finding Maren', npcs.md § Brenn/Riven/The Archivist, locations.md § Archive of Ages -->
 
 ### 26a. Brenn's Message
 
@@ -795,7 +795,7 @@ remembers.
 <!-- Scene: party_reassembled | Tier: 1 | Trigger: all four reunions complete (flag 27) -->
 <!-- Location: Safe camp (determined by last reunion location) | Party: Edren, Lira, Torren, Sable, Maren -->
 <!-- Variants: reunion_order affects who references what -->
-<!-- Cross-ref: outline.md § Interlude Maren's Briefing, events.md flag 27 -->
+<!-- Cross-ref: outline.md § The Interlude Ends, events.md flag 27 -->
 
 *(Night. A campfire in a safe clearing. The full party for the
 first time since the siege. Five people, a fire, and the weight

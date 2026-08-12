@@ -216,6 +216,51 @@ Aim 400 lines, hard maximum 600.
 ### 2.3 Equipment Data
 """
 
+# The numbered-list heading shape, as dungeons-world.md writes it: the
+# number is part of the title, not a dotted id. It is the case where a
+# citation can run on into a *second* number, and where the check for a
+# capitalised word cannot see the invention — "21." has no case.
+DUNGEON_FIXTURE = """# Dungeons
+
+## 19. Ley Nexus Hollow
+
+A leech feeds on the ley line here.
+
+## 20. Highcairn Monastery
+
+Pallor waits on the top floor.
+"""
+
+# The house style in one file: a heading named by its last word
+# (``§ Caden``), a heading named by a plural of its first (``§ Inns``), a
+# heading named by its breadcrumb path (``§ Interlude The World Changes``),
+# and — the shape #367 is about — a real section with a real subsection
+# under it, so a citation can be tested for running on past both.
+HOUSE_STYLE_FIXTURE = """# NPC Directory
+
+## Duskfen
+
+### Spirit-speaker Caden
+
+Caden reads the ley currents for anyone who asks twice.
+
+## Inn Costs
+
+Twenty gil a night, everywhere but Canopy Reach.
+
+## The Interlude: The Unraveling
+
+### The World Changes
+
+The map redraws itself while the party sleeps.
+
+## Encounter System
+
+### Danger Counter
+
+The counter increments once per step and resets on a battle.
+"""
+
 
 class TestCheckDocCitations(unittest.TestCase):
     """Tests for Gate G: doc citation integrity."""
@@ -417,11 +462,19 @@ class TestCheckDocCitations(unittest.TestCase):
         )
         self.assertEqual(truncated[2], "Physical Elemental Attacks")
 
-        wrapped = check_doc_citations.citation_tail(
+        # ``citation_tail`` returns a *character* length; ``match_heading``
+        # takes a *word* count. ``check_citations`` converts between the two
+        # (``own_words = len(heading_part[:own_len].split())``) and this test
+        # must convert identically — a character length is several times the
+        # word count, which switches the own-line bound off and lets the
+        # assertion pass whatever the bounding logic does.
+        wrapped, own_len = check_doc_citations.citation_tail(
             " Physical Attack\n## Resolution).\n", markdown=False
         )
+        self.assertEqual(wrapped[:own_len], " Physical Attack")
+        own_words = len(wrapped[:own_len].split())
         hit = check_doc_citations.match_heading(
-            index, "docs/story/magic.md", wrapped
+            index, "docs/story/magic.md", wrapped, own_words
         )
         self.assertEqual(hit[2], "Physical Attack Resolution")
 
@@ -431,6 +484,29 @@ class TestCheckDocCitations(unittest.TestCase):
             "## Resolution > 'row modifier').\n",
         )
         self.assertEqual(self._errors(), [])
+
+    def test_the_wrapped_bound_is_counted_in_words_not_characters(self):
+        """A wrap whose next line opens on a capital needs the bound exact.
+
+        Above, the citation's own words and the joined ones together name one
+        heading, so the invention check never reaches ``words[own]`` and any
+        ``own`` at all resolves it. Here the heading ends on the citation's own
+        line and the continuation opens on ``Eighty-nine`` — capitalised, and
+        matching no heading. Only a bound of exactly three words stops that
+        from reading as an invented subsection, so this case fails on a
+        character length and fails again if the bound is dropped.
+        """
+        index = check_doc_citations.DocIndex()
+        wrapped, own_len = check_doc_citations.citation_tail(
+            " Spell Count Summary\n## Eighty-nine spells.\n", markdown=False
+        )
+        self.assertEqual(wrapped, " Spell Count Summary Eighty-nine spells.")
+        own_words = len(wrapped[:own_len].split())
+        self.assertEqual(own_words, 3)
+        hit = check_doc_citations.match_heading(
+            index, "docs/story/magic.md", wrapped, own_words
+        )
+        self.assertEqual(hit[2], "Spell Count Summary")
 
     def test_a_wrapped_citation_cannot_green_light_the_wrong_section(self):
         """The silent failure this gate exists to stop.
@@ -511,6 +587,353 @@ class TestCheckDocCitations(unittest.TestCase):
         ), contextlib.redirect_stdout(buffer):
             self.assertEqual(check_doc_citations.main(), 0)
         self.assertIn("1 citation(s) pinned", buffer.getvalue())
+
+    # ── Running on past the heading into invention (#367) ──────────────
+    #
+    # The resolver shortens a citation until some prefix matches, which is
+    # what makes ``§ Caden`` reach ``### Spirit-speaker Caden``. Before
+    # #367 the shortening had no floor: a citation could name a real
+    # heading, keep going into a subsection nobody wrote, and still
+    # resolve — to the shorter heading, silently, sending the reader to a
+    # section that does not say what the citation claims it says. The two
+    # halves below are inseparable: the rejection must bite, and the
+    # shortening it is carved out of must survive it.
+
+    def _house(self) -> None:
+        self._write("docs/story/npcs.md", HOUSE_STYLE_FIXTURE)
+
+    def _resolve(self, candidate: str):
+        self._house()
+        return check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(), "docs/story/npcs.md", candidate
+        )
+
+    def test_invented_subsection_under_a_real_section_resolves_to_nothing(
+        self,
+    ):
+        """The reported defect, verbatim: § <real> <invented> must not pass."""
+        self.assertIsNone(
+            self._resolve("Encounter System Nonexistent Subsection")
+        )
+
+    def test_invented_words_after_a_real_subsection_resolve_to_nothing(self):
+        """The second reported defect: invention after a *sub*section."""
+        self.assertIsNone(self._resolve("Danger Counter That Nobody Wrote"))
+
+    def test_an_invented_subsection_fails_the_whole_scan(self):
+        """End to end, not just the resolver: the gate must report it."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# See npcs.md § Encounter System Nonexistent Subsection.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_shortening_to_a_later_word_of_the_heading_still_resolves(self):
+        """``§ Caden`` -> ``### Spirit-speaker Caden``, the house style."""
+        hit = self._resolve("Caden")
+        self.assertIsNotNone(hit, "§ Caden must still resolve")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_shortening_to_a_stemmed_first_word_still_resolves(self):
+        """``§ Inns`` -> ``## Inn Costs``: plural, and short of the title."""
+        hit = self._resolve("Inns")
+        self.assertIsNotNone(hit, "§ Inns must still resolve")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_a_breadcrumb_path_citation_still_resolves(self):
+        """Ancestor words may still be skipped: § Interlude <subsection>."""
+        hit = self._resolve("Interlude The World Changes")
+        self.assertIsNotNone(hit, "breadcrumb citations must still resolve")
+        self.assertEqual(hit[2], "The World Changes")
+
+    def test_lower_case_prose_may_still_run_on_past_the_heading(self):
+        """Citations sit mid-sentence; the sentence keeps going."""
+        hit = self._resolve("Danger Counter increments once per step")
+        self.assertIsNotNone(hit, "run-on prose must not break a citation")
+        self.assertEqual(hit[2], "Danger Counter")
+
+    def test_a_parenthetical_gloss_may_still_follow_the_heading(self):
+        """``§ 20. Highcairn Monastery (Pallor encounter)`` — a real one."""
+        hit = self._resolve("Spirit-speaker Caden (Duskfen resident)")
+        self.assertIsNotNone(hit, "a gloss must not break a citation")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_a_quotation_may_still_follow_the_heading(self):
+        """``§ Wolf Family, "all wolves"`` — also a real one."""
+        hit = self._resolve('Inn Costs, "Twenty gil a night"')
+        self.assertIsNotNone(hit, "a quotation must not break a citation")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_house_style_citations_survive_a_full_scan(self):
+        """All four shortening forms, through the gate rather than around it."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# npcs.md § Caden. npcs.md § Inns.\n"
+            "# npcs.md § Interlude The World Changes.\n"
+            "# npcs.md § Danger Counter increments once per step.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    # ── The same invention, under a numbered heading (#367) ────────────
+    #
+    # The first fix for #367 guarded only the word-prefix loop. A citation
+    # that opens with a section id never reaches that loop — it resolves on
+    # the id and returns — so no invention check ran at all, and numbered
+    # headings are the common shape in ui-design.md,
+    # technical-architecture.md and dungeons-world.md.
+    #
+    # What runs there now reads the section-id shape only: a leftover
+    # ``21.`` is as loud a claim about the heading tree as ``Invented`` is,
+    # and ``isupper`` is blind to it because digits have no case. The
+    # capitalisation half stays out — under an id it fails four correct live
+    # citations — and the exception has a test of its own below so it is
+    # pinned rather than merely absent.
+
+    def _arch(self):
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        return check_doc_citations.DocIndex()
+
+    def _arch_resolve(self, candidate: str):
+        return check_doc_citations.match_heading(
+            self._arch(), "docs/plans/arch.md", candidate
+        )
+
+    def _dungeon_resolve(self, candidate: str):
+        self._write("docs/story/dungeons.md", DUNGEON_FIXTURE)
+        return check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(), "docs/story/dungeons.md", candidate
+        )
+
+    def test_a_second_section_id_is_invention_too(self):
+        """``§ 19. <real> 21. <invented>`` — digits are not upper case.
+
+        The whole heading resolves, so the capitalisation check never sees a
+        capital: the first unaccounted-for word is ``21.``. Only the section
+        id shape catches it.
+        """
+        self.assertIsNone(
+            self._dungeon_resolve("19. Ley Nexus Hollow 21. Invented Chamber")
+        )
+
+    def test_a_numbered_list_heading_still_resolves_by_its_full_title(self):
+        """The other half: ``§ 19. Ley Nexus Hollow`` must still land."""
+        hit = self._dungeon_resolve("19. Ley Nexus Hollow")
+        self.assertIsNotNone(hit, "§ 19. Ley Nexus Hollow must resolve")
+        self.assertEqual(hit[2], "19. Ley Nexus Hollow")
+
+    def test_a_gloss_after_a_numbered_list_heading_still_runs_on(self):
+        """``§ 20. Highcairn Monastery (Pallor encounter)`` — a real one."""
+        hit = self._dungeon_resolve("20. Highcairn Monastery (Pallor waits)")
+        self.assertIsNotNone(hit, "a gloss must not break a citation")
+        self.assertEqual(hit[2], "20. Highcairn Monastery")
+
+    def test_a_numbered_invention_fails_the_whole_scan(self):
+        """End to end, through the gate rather than around it.
+
+        The dotted-id form. The ``19.`` list form now reaches the resolver
+        too, since ``citation_extent`` stopped reading a heading number's
+        period as a sentence ending (#390); it has its own end-to-end test
+        below.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd",
+            "# See arch.md § 2.1 Enemy Data 2.3 Invented Section.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_capitalised_run_on_under_a_section_id_is_allowed(self):
+        """The recorded exception, pinned so it cannot drift unnoticed.
+
+        Under an id the check reads ids only. ``§ 2.3 Nonexistent
+        Subsection`` is indistinguishable from ``audio.md § 3.1 SFX budget``
+        and ``dungeons-world.md § 1 Ember Vein Floor 2`` — two correct live
+        citations whose trailing words locate something inside the section
+        rather than name a subsection. Refusing on capitalisation here fails
+        all three. This test is the exception's record; if a later change
+        closes the gap (#389), it is the test that should change with it.
+        """
+        hit = self._arch_resolve("2.3 Nonexistent Subsection")
+        self.assertIsNotNone(hit, "the documented exception must hold")
+        self.assertEqual(hit[2], "2.3 Equipment Data")
+
+    def test_a_locator_phrase_after_an_id_survives_a_full_scan(self):
+        """The live shape end to end: § <id> <Capitalised locator>.
+
+        Modelled on ``audio.md § 3.1 SFX budget``, which cites the channel
+        table inside § 3.1 by what the citing line reads off it.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd", "# arch.md § 2.1 Enemy Data Field Budget.\n"
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_numbered_citation_naming_its_own_title_still_resolves(self):
+        """The check must not cost the citation that spells the heading out."""
+        hit = self._arch_resolve("2.3 Equipment Data")
+        self.assertIsNotNone(hit, "§ 2.3 Equipment Data must resolve")
+        self.assertEqual(hit[2], "2.3 Equipment Data")
+
+    def test_a_numbered_citation_may_still_run_on_into_prose(self):
+        """Lower-case prose after a numbered id is a sentence, not a claim."""
+        hit = self._arch_resolve("2.1 Enemy Data lists every field")
+        self.assertIsNotNone(hit, "run-on prose must not break a citation")
+        self.assertEqual(hit[2], "2.1 Enemy Data")
+
+    def test_a_bare_number_after_a_heading_is_not_a_section_id(self):
+        """``§ 1.1 Directory Structure 400 files`` — 400 is a count."""
+        hit = self._arch_resolve("1.1 Directory Structure 400 files")
+        self.assertIsNotNone(hit, "a bare number must not read as a section")
+        self.assertEqual(hit[2], "1.1 Directory Structure")
+
+    def test_a_section_list_citation_is_not_read_as_invention(self):
+        """``§ 2.1/2.3`` normalises to words no one heading holds."""
+        hit = self._arch_resolve("2.1/2.3")
+        self.assertIsNotNone(hit, "a section list must still resolve")
+
+    # ── The period in "§ 19." belongs to the heading (#390) ────────────
+    #
+    # dungeons-world.md numbers its headings as a list, so "§ 19. Ley Nexus
+    # Hollow" spells one out. ``citation_extent`` read that period as the end
+    # of a sentence and handed the resolver the bare "19" — which resolves on
+    # the id alone, so neither the title nor the narrowing term was ever
+    # looked at. The invention check above was refusing "§ 19. Ley Nexus
+    # Hollow 21. Invented Chamber" when called directly while the gate passed
+    # it, because the citation reaching the resolver had already lost
+    # everything after the "19". These tests run through the gate, which is
+    # the only place that gap was visible.
+
+    def _dungeon_scan(self, citation: str) -> list[str]:
+        self._write("docs/story/dungeons.md", DUNGEON_FIXTURE)
+        self._write("game/scripts/a.gd", f"# See {citation}\n")
+        return self._errors()
+
+    def test_a_numbered_list_citation_keeps_its_title_and_term(self):
+        """The good citation: heading spelled out, term that is really there."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow > 'A leech feeds'."
+        )
+        self.assertEqual(errors, [])
+
+    def test_a_numbered_list_citations_term_is_actually_checked(self):
+        """The term used to be discarded along with the title, unchecked."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow > 'nobody ever wrote this'."
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_second_id_after_a_numbered_list_heading_fails_the_scan(self):
+        """``match_heading``'s own documented example, through the gate."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow 21. Invented Chamber."
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_an_id_followed_by_code_still_ends_at_its_period(self):
+        """Only a capitalized word opens a heading title.
+
+        ``enemy.gd`` cites ``enemy-ability-conventions.md §2.4.`` with a
+        GDScript signature wrapped onto the next line. Stepping over that
+        period would pull the signature into the citation's identity, which
+        is the thing ``citation_extent`` exists to prevent.
+        """
+        self.assertEqual(
+            check_doc_citations.citation_extent(
+                "2.4. func apply_buff(stat: String, mult: float) -> void:"
+            ),
+            "2.4.",
+        )
+
+    def test_a_sentence_ending_on_a_number_still_ends_the_citation(self):
+        """``a stat cannot pass 255. Combat re-clamps.`` — one citation, not two.
+
+        The period stays on the cut so ``255.`` keeps the section-id shape
+        the resolver's invention check reads; what follows it is discarded
+        exactly as before.
+        """
+        self.assertEqual(
+            check_doc_citations.citation_extent(
+                "Equipment and Buffs: a stat cannot pass 255. Combat re-clamps."
+            ),
+            "Equipment and Buffs: a stat cannot pass 255.",
+        )
+
+    # ── Over-reading a wrapped line must stay free (#367) ──────────────
+    #
+    # ``citation_tail`` joins the continuation line so a wrapped heading
+    # still resolves. Its docstring promised that over-reading costs
+    # nothing — true when the resolver only ever shortened, false once the
+    # invention check could *refuse*. A continuation line is prose the
+    # citation did not choose, and English sentences open on capitals, so a
+    # correct citation could fail the gate purely for where it wrapped.
+    # The check is bounded to the citation's own line to keep the promise.
+
+    def test_a_continuation_line_may_open_on_a_capital(self):
+        """The latent trap: a correct citation must not fail for wrapping."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "## The counter grows per npcs.md § Danger Counter\n"
+            "## Maren banks weave when somebody else casts.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_invention_on_the_citations_own_line_still_fails_when_wrapped(self):
+        """The bound is the line, not the check: own-line invention still bites."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "## The counter grows per npcs.md § Danger Counter Nonexistent\n"
+            "## Subsection is what it claims.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    # ── A narrowing term the checker cannot read (#366) ────────────────
+
+    def test_a_term_whose_quote_never_closes_is_reported(self):
+        """An unreadable term is a skipped check wearing a passed one's face.
+
+        ``> 'Poison`` with no closing quote used to leave ``TERM_RE`` with no
+        match, which is the same state as a citation that never narrowed —
+        so the heading resolved, the term went unchecked, and the gate said
+        nothing. The citation still reads as narrowed to anyone following it.
+        """
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Poison\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("never closes its quote", errors[0])
+
+    def test_an_open_term_does_not_also_break_its_heading(self):
+        """One complaint, about the term — the heading still resolved."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Spell Count Summary > 'Eighty\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertNotIn("names no heading", errors[0])
+
+    def test_a_closed_term_is_not_reported_as_open(self):
+        """The guard must not fire on the form it is protecting."""
+        self._write(
+            "game/scripts/a.gd",
+            "# See magic.md § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
 
     def test_stale_known_unresolved_entry_fails(self):
         """The ratchet cannot rot either: a pin with nothing to pin fails."""

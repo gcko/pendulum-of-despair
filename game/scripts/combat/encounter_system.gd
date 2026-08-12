@@ -9,8 +9,8 @@ const REDUCE_ITEMS: Array[String] = ["ward_talisman", "infiltrators_cloak"]
 const LURE_ITEM: String = "lure_talisman"
 ## Accessory granting +25pp preemptive odds (non-stacking).
 const PREEMPTIVE_CHARM: String = "preemptive_charm"
-## Percentage points the Preemptive Charm adds (combat-formulas.md
-## § Preemptive Charm interaction).
+## Percentage points the Preemptive Charm adds
+## (combat-formulas.md § Battle Formations > 'Preemptive Charm interaction').
 const PREEMPTIVE_CHARM_BONUS: float = 25.0
 
 
@@ -25,8 +25,8 @@ static func check_encounter(danger_counter: int) -> bool:
 
 ## Calculate danger increment for one step.
 ## final = floor(base_increment * act_scale * accessory_mod * location_mod)
-## per combat-formulas.md § Final increment formula. int() truncation
-## equals floor for the non-negative operands used here.
+## per combat-formulas.md § Danger Counter > 'Final increment formula'.
+## int() truncation equals floor for the non-negative operands used here.
 static func roll_increment(
 	base_increment: int, act_scale: float, accessory_mod: float, location_mod: float = 1.0
 ) -> int:
@@ -85,8 +85,8 @@ static func roll_formation(formation_rates: Dictionary) -> String:
 
 ## Shift formation rates by [param bonus_pp] percentage points toward
 ## preemptive, deducting from back_attack first then normal, never below
-## zero. Canon: combat-formulas.md § Preemptive Charm interaction
-## ("normalizes all terrains to 62.5/0/37.5").
+## zero. Canon: combat-formulas.md
+## § Battle Formations > 'Normalizes all terrains to 62.5% Normal'.
 static func apply_preemptive_bonus(rates: Dictionary, bonus_pp: float) -> Dictionary:
 	if bonus_pp <= 0.0:
 		return rates

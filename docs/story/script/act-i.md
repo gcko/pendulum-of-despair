@@ -440,7 +440,7 @@ party continues forward. The world opens ahead of them.
 <!-- Scene: torren_encounter | Tier: 3 | Trigger: entering Roothollow zone -->
 <!-- Location: Wildwood Trail → Roothollow | Party: Edren, Cael, Lira, Sable → adds Torren -->
 <!-- Variants: none -->
-<!-- Cross-ref: outline.md § Act I Party Assembly, locations.md § Roothollow, npcs.md § Vessa/Torren -->
+<!-- Cross-ref: outline.md § Act I Party Assembly, locations.md § Roothollow, npcs.md § Vessa, characters.md § Torren -->
 
 ### 5a. The Wildwood Trail
 

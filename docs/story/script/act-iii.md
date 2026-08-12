@@ -101,7 +101,7 @@ each of us. It finds what you fear most and makes you face it.
 <!-- Scene: trial_edren | Tier: 1+3 | Trigger: first trial clearing -->
 <!-- Location: Pallor Wastes, Hall of Crowns | Party: all five (Edren faces trial solo) -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § The Crowned Hollow, abilities.md § Steadfast Resolve -->
+<!-- Cross-ref: bestiary/bosses.md § The Crowned Hollow, abilities.md § Edren — Bulwark > 'Steadfast Resolve' -->
 
 *(A clearing. Stone pillars rise from the grey earth, forming a
 circle. At the center, a throne of fused crowns — gold, iron,
@@ -193,7 +193,7 @@ but they trust him enough to keep walking.)*
 <!-- Scene: trial_lira | Tier: 1+3 | Trigger: second trial clearing -->
 <!-- Location: Pallor Wastes, Unfinished Forge | Party: Lira faces trial solo -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § The Perfect Machine, abilities.md § Cael's Edge -->
+<!-- Cross-ref: bestiary/bosses.md § The Perfect Machine, abilities.md § Lira — Forgewright > 'Sever Bond' (Cael's Edge) -->
 
 *(A clearing. A forge — incomplete, half-built, tools scattered.
 At the center, a Machine stands motionless. It has Cael's face.
@@ -270,7 +270,7 @@ before.)*
 <!-- Scene: trial_torren | Tier: 1+3 | Trigger: third trial clearing -->
 <!-- Location: Pallor Wastes, Silent Grove | Party: Torren faces trial solo -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § The Last Voice, abilities.md § Rootsong -->
+<!-- Cross-ref: bestiary/bosses.md § The Last Voice, abilities.md § Torren — Spiritcall > 'Rootsong' -->
 
 *(A clearing. Dead trees, petrified. At the center, a Great
 Spirit — one of the ancient ones Torren served — stands cracked
@@ -331,7 +331,7 @@ ones can begin. Imperfect protection. That's all anyone gets.
 <!-- Scene: trial_sable | Tier: 1+3 | Trigger: fourth trial clearing -->
 <!-- Location: Pallor Wastes, The Crooked Mile | Party: Sable faces trial solo -->
 <!-- Variants: none -->
-<!-- Cross-ref: dungeons-world.md § Pallor Wastes Trial 4 (non-combat), abilities.md § Unbreakable Thread -->
+<!-- Cross-ref: dungeons-world.md § Pallor Wastes Trial 4 (non-combat), abilities.md § Sable — Tricks > 'Unbreakable Thread' -->
 
 *(A clearing that becomes a twisting alleyway — Caldera
 architecture, familiar to Sable. Dark. Narrow. Walls that
@@ -407,7 +407,7 @@ it tests whether you'll stay.
 <!-- Scene: trial_maren | Tier: 1+3 | Trigger: fifth trial clearing -->
 <!-- Location: Pallor Wastes, Restricted Stacks | Party: Maren faces trial solo -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § The Index, abilities.md § Pallor Sight -->
+<!-- Cross-ref: bestiary/bosses.md § The Index, abilities.md § Maren — Arcanum > 'Pallor Sight' -->
 
 *(A clearing that becomes a library — infinite, spiraling upward,
 pages drifting like snow. Grey light floods from above. At the
@@ -498,7 +498,7 @@ Acceptance starves it. That's why we're still standing.
 <!-- Scene: campfire | Tier: 3 | Trigger: optional, after all five trials -->
 <!-- Location: Safe clearing, Pallor Wastes edge | Party: all five -->
 <!-- Variants: campfire_complete (flag 52) only if player speaks to all members -->
-<!-- Cross-ref: outline.md § Act III Campfire, events.md flag 52 -->
+<!-- Cross-ref: outline.md § The Night Before the Convergence, events.md flag 52 -->
 
 *(A clearing. The only color left — a campfire. The flames are
 real, warm, defiant against the grey. The party rests here before
@@ -568,7 +568,7 @@ the party leaves in silence. No flag set.)*
 <!-- Scene: vaelith_boss | Tier: 1+3 | Trigger: vaelith_defeated (flag 34) -->
 <!-- Location: Plateau's Edge, Pallor Wastes | Party: all five -->
 <!-- Variants: none -->
-<!-- Cross-ref: bestiary/bosses.md § Vaelith the Ashen Shepherd, abilities.md § Cael's Edge -->
+<!-- Cross-ref: bestiary/bosses.md § Vaelith the Ashen Shepherd, abilities.md § Lira — Forgewright > 'Sever Bond' (Cael's Edge) -->
 
 ### 35a. The Encounter
 

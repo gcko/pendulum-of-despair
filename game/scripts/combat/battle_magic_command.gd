@@ -10,7 +10,8 @@ const DamageCalc = preload("res://scripts/combat/damage_calculator.gd")
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 
 ## Weave Gauge earned by the caster for a spell that landed, and the share
-## Maren banks when somebody else casts (combat-formulas.md § Weave Gauge).
+## Maren banks when somebody else casts
+## (abilities.md § Resource Cost Invariants > 'Weave Gauge derivation').
 const CASTER_WEAVE_GAIN: int = 5
 const MAREN_WEAVE_GAIN: int = 10
 

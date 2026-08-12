@@ -48,7 +48,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Vermin Family > 'Ley Vermin')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Vermin Family > 'Ley Vermin')"
         }
       ]
     },
@@ -98,7 +98,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Mite Family > 'Tomb Mite')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Mite Family > 'Tomb Mite')"
         }
       ]
     },
@@ -154,7 +154,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Restless Dead')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Dead Family > 'Restless Dead')"
         }
       ]
     },
@@ -213,7 +213,7 @@
           "spell_power": 9,
           "target": "all",
           "aoe_on_death": true,
-          "_comment": "AoE-on-death, non-elemental, spell_power 9 (conventions §2.3/§2.6; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Crystal Family > 'Shard Burst')"
+          "_comment": "AoE-on-death, non-elemental, spell_power 9 (enemy-ability-conventions.md §2.3/2.6; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Crystal Family > 'Shard Burst')"
         }
       ]
     },
@@ -268,7 +268,7 @@
           "element": "",
           "spell_power": 14,
           "target": "single",
-          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (conventions §2.2; palette-families.md § Shade Family > 'Mine Shade')"
+          "_comment": "MAG-based magic (element unspecified -> non-elemental); Tier-1 spell_power 14 (enemy-ability-conventions.md §2.2; palette-families.md § Shade Family > 'Mine Shade')"
         }
       ]
     },
@@ -327,7 +327,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "Guard Stance +40% DEF/5t self; Ironhide analog (conventions §2.4; palette-families.md § Warden Family > 'Guard Stance')"
+          "_comment": "Guard Stance +40% DEF/5t self; Ironhide analog (enemy-ability-conventions.md §2.4; palette-families.md § Warden Family > 'Guard Stance')"
         },
         {
           "id": "heavy_swing",
@@ -336,7 +336,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Warden Family > 'Bone Warden')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Warden Family > 'Bone Warden')"
         }
       ]
     },
@@ -391,7 +391,7 @@
           "element": "flame",
           "spell_power": 14,
           "target": "single",
-          "_comment": "single-target Flame; Tier-1 spell_power 14 (conventions §2.2; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Wisp Family > 'Ember Wisp')"
+          "_comment": "single-target Flame; Tier-1 spell_power 14 (enemy-ability-conventions.md §2.2; magic.md § Ember Lance > 'Spell power 14'; palette-families.md § Wisp Family > 'Ember Wisp')"
         }
       ]
     },
@@ -497,7 +497,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5; magic.md § Balance Rules > 'base hit rate'); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Venom Spit'"
+          "_comment": "Poison on hit; rate 70 (enemy-ability-conventions.md §2.5; magic.md § Balance Rules > 'base hit rate'); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Venom Spit'"
         }
       ]
     },
@@ -592,7 +592,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Restless Dead')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Dead Family > 'Restless Dead')"
         },
         {
           "id": "bone_toss",
@@ -601,7 +601,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Dead Family > 'Drowned Bones')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Dead Family > 'Drowned Bones')"
         }
       ]
     },
@@ -653,7 +653,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Lurker Family > 'Swamp Lurker')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Lurker Family > 'Swamp Lurker')"
         }
       ]
     },
@@ -711,7 +711,7 @@
           "target": "single",
           "status": "paralysis",
           "status_rate": 70,
-          "_comment": "single-target Ley magic + Paralysis chance; spell_power 14 (conventions §2.2); rate 70 (§2.5); Paralysis 3t no-wake (status_effects.gd; #248); palette-families.md § Jellyfish Family > 'Ley Sting'"
+          "_comment": "single-target Ley magic + Paralysis chance; spell_power 14 (enemy-ability-conventions.md §2.2); rate 70 (§2.5); Paralysis 3t no-wake (status_effects.gd; #248); palette-families.md § Jellyfish Family > 'Ley Sting'"
         },
         {
           "id": "drift",
@@ -721,7 +721,7 @@
           "ability_mult": 1.0,
           "target": "single",
           "selector": "random",
-          "_comment": "random-target physical (conventions §2.1 + selector random; palette-families.md § Jellyfish Family > 'Drift')"
+          "_comment": "random-target physical (enemy-ability-conventions.md §2.1 + selector random; palette-families.md § Jellyfish Family > 'Drift')"
         }
       ]
     },
@@ -777,7 +777,7 @@
           "element": "frost",
           "spell_power": 9,
           "target": "all",
-          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (conventions §2.3; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Rime Shard > 'Spell power 14'; palette-families.md § Elemental Family > 'Polluted Elemental')"
+          "_comment": "AoE Frost; spell_power 9 ~=65% of Tier-1 single 14 (enemy-ability-conventions.md §2.3; magic.md § MP Cost by Tier > 'AoE spell power'; magic.md § Rime Shard > 'Spell power 14'; palette-families.md § Elemental Family > 'Polluted Elemental')"
         },
         {
           "id": "elemental_shield",
@@ -790,7 +790,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "MDEF +40%/5t self; Wardglass analog (conventions §2.4; magic.md § Wardglass > 'magic defense by 40%'; palette-families.md § Elemental Family > 'Polluted Elemental')"
+          "_comment": "MDEF +40%/5t self; Wardglass analog (enemy-ability-conventions.md §2.4; magic.md § Wardglass > 'magic defense by 40%'; palette-families.md § Elemental Family > 'Polluted Elemental')"
         }
       ]
     },
@@ -839,7 +839,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
         },
         {
           "id": "venom_spit",
@@ -850,7 +850,7 @@
           "target": "single",
           "status": "poison",
           "status_rate": 70,
-          "_comment": "Poison on hit; rate 70 (conventions §2.5); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Corrupted Spawn'"
+          "_comment": "Poison on hit; rate 70 (enemy-ability-conventions.md §2.5); Poison 8%/turn until cured (magic.md § Status Effect Reference > 'Poison'); palette-families.md § Serpent Family > 'Corrupted Spawn'"
         },
         {
           "id": "lunge",
@@ -860,7 +860,7 @@
           "ability_mult": 1.0,
           "target": "single",
           "selector": "back",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Serpent Family > 'Corrupted Spawn')"
         },
         {
           "id": "coil",
@@ -873,7 +873,7 @@
             "duration": 5,
             "scope": "self"
           },
-          "_comment": "Coil +50% SPD/5t self; Quickstep analog (conventions §2.4; palette-families.md § Serpent Family > 'Coil')"
+          "_comment": "Coil +50% SPD/5t self; Quickstep analog (enemy-ability-conventions.md §2.4; palette-families.md § Serpent Family > 'Coil')"
         }
       ]
     },
@@ -923,7 +923,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Hare Family > 'Plains Hare')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Hare Family > 'Plains Hare')"
         }
       ]
     },
@@ -974,7 +974,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Beetle Family > 'Thornback Beetle')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Beetle Family > 'Thornback Beetle')"
         }
       ]
     },
@@ -1023,7 +1023,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Bandit Family > 'Road Bandit')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Bandit Family > 'Road Bandit')"
         }
       ]
     },
@@ -1078,7 +1078,7 @@
           "element": "ley",
           "spell_power": 14,
           "target": "single",
-          "_comment": "Ley ranged bolt; Tier-1 spell_power 14 (conventions §2.2; palette-families.md § Sprite Family > 'Forest Sprite')"
+          "_comment": "Ley ranged bolt; Tier-1 spell_power 14 (enemy-ability-conventions.md §2.2; palette-families.md § Sprite Family > 'Forest Sprite')"
         }
       ]
     },
@@ -1128,7 +1128,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Boar Family > 'Wild Boar')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Boar Family > 'Wild Boar')"
         }
       ]
     },
@@ -1178,7 +1178,7 @@
           "element": "",
           "ability_mult": 1.0,
           "target": "single",
-          "_comment": "basic physical (conventions §2.1; palette-families.md § Wolf Family > 'Wayward Wolf')"
+          "_comment": "basic physical (enemy-ability-conventions.md §2.1; palette-families.md § Wolf Family > 'Wayward Wolf')"
         },
         {
           "id": "pack_howl",
@@ -1191,7 +1191,7 @@
             "duration": 5,
             "scope": "pack"
           },
-          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (conventions §2.4; magic.md § Rallying Cry > 'physical attack by 30%'; palette-families.md § Wolf Family > 'Pack Howl')"
+          "_comment": "ATK +30%/5t to all wolves; Rallying Cry analog (enemy-ability-conventions.md §2.4; magic.md § Rallying Cry > 'physical attack by 30%'; palette-families.md § Wolf Family > 'Pack Howl')"
         }
       ]
     },
