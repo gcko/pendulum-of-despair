@@ -260,7 +260,7 @@ func _show_stub_message() -> void:
 
 func _open_save() -> void:
 	if not PartyState.is_at_save_point:
-		return  # Save command is disabled (greyed out)
+		return  # Save command is disabled (grayed out)
 	# Cache tree ref before pop — after pop_overlay this node may be freed.
 	var tree: SceneTree = get_tree()
 	# Pop menu silently (keeps tree paused, no NONE signal) then immediately

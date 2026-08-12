@@ -52,7 +52,7 @@ func _ready() -> void:
 
 
 ## Show command menu for a party member.
-## current_mp drives MP affordability greying in the Magic submenu.
+## current_mp drives MP affordability graying in the Magic submenu.
 func show_commands(character_data: Dictionary, is_boss: bool, current_mp: int = 0) -> void:
 	_is_boss = is_boss
 	_character_data = character_data

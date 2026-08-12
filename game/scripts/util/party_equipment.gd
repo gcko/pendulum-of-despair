@@ -11,7 +11,7 @@ extends RefCounted
 ## Slots backed by owned_equipment instances. The crystal slot is deliberately
 ## absent — it is held by ley_crystals, not by an instance (see PartyCrystals).
 const INSTANCED_SLOTS: Array[String] = ["weapon", "head", "body", "accessory"]
-## Characters whose auto-equip optimises for MAG rather than ATK.
+## Characters whose auto-equip optimizes for MAG rather than ATK.
 const MAGIC_USERS: Array[String] = ["maren", "torren"]
 
 const Helpers = preload("res://scripts/util/inventory_helpers.gd")

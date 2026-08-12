@@ -201,7 +201,7 @@ func _process_entries() -> void:
 	while _current_index < _entries.size() and _is_playing:
 		var entry: Dictionary = _entries[_current_index]
 
-		# Honour the per-entry condition (dialogue-system.md 3.2/3.5).
+		# Honor the per-entry condition (dialogue-system.md 3.2/3.5).
 		if not DialogueCondition.should_play(entry, _choice_context):
 			_current_index += 1
 			continue
@@ -328,7 +328,7 @@ func get_dialogue_box() -> DialogueBox:
 
 
 ## The player's live config, so accessibility options (reduce motion, flash
-## intensity) reach the commands that honour them.
+## intensity) reach the commands that honor them.
 func get_config() -> Dictionary:
 	return _config
 

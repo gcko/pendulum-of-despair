@@ -1,6 +1,6 @@
 class_name ProgressionHelpers
 extends RefCounted
-## Levelling: the two-phase XP curve, what a level-up does to a member's
+## Leveling: the two-phase XP curve, what a level-up does to a member's
 ## stats, and how a battle's XP is shared out across the party
 ## (progression.md § XP Distribution, § Two-Phase XP Curve).
 ##
