@@ -15,7 +15,7 @@
 > [events.md](../events.md) flags 28--35, 52--53 |
 > [dungeons-world.md](../dungeons-world.md) § Pallor Wastes |
 > [bestiary/bosses.md](../bestiary/bosses.md) § Trial Bosses / Vaelith |
-> [abilities.md](../abilities.md) § Trial-unlocked abilities
+> [abilities.md](../abilities.md) § 4. Ability Progression Table
 
 ---
 

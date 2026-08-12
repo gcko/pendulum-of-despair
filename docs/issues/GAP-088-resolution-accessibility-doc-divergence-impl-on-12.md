@@ -36,8 +36,8 @@ Reconcile the resolution model across the docs and re-justify or drop the High-R
 
 ## Design references
 
-- docs/analysis/game-design-gaps.md:703
-- docs/analysis/game-dev-gaps.md:11
+- docs/analysis/game-design-gaps.md § 4.4 Accessibility Design > 'Text accessibility'
+- docs/analysis/game-dev-gaps.md § Game Development Gap Analysis > 'Resolution: 1280x720'
 - docs/story/accessibility.md
 
 ## Code references

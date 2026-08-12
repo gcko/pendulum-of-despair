@@ -35,8 +35,8 @@ Edit music.md:526 to remove 'game over' (or relabel as 'party wipe — reuses sa
 
 ## Design references
 
-- docs/story/music.md:526,467
-- docs/story/audio.md:467
+- docs/story/music.md § Track Count Summary
+- docs/story/music.md § System & UI Music
 
 ## Code references
 

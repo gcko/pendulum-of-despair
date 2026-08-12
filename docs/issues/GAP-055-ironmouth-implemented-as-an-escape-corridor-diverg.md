@@ -36,7 +36,7 @@ Rename/namespace the corridor; update design docs if Ironmouth-as-city is being 
 
 ## Design references
 
-- docs/story/city-carradan.md:1168-1270
+- docs/story/city-carradan.md § 8. Ironmouth
 
 ## Code references
 

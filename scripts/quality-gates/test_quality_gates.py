@@ -247,6 +247,23 @@ A leech feeds on the ley line here.
 Pallor waits on the top floor.
 """
 
+# combat-formulas.md reduced to the two headings that made #404's exemplar
+# resolve to the wrong one. There is no "Act scaling" heading — that is the
+# point — and "Regular Enemy HP by Act" ends on the word the citation opens
+# with, so a one-word shortening reaches it from the wrong end. The real fix
+# was to repoint the citation at Danger Counter, whose body carries the term.
+ACT_SCALING_FIXTURE = """# Combat Formulas
+
+## Danger Counter
+
+The counter drives the encounter rate. Act scaling multiplies the increment:
+Act I x1.0, Act II x1.1, Act III x1.1.
+
+## Regular Enemy HP by Act
+
+The HP table a one-word citation used to land on.
+"""
+
 # The house style in one file: a heading named by its last word
 # (``§ Caden``), a heading named by a plural of its first (``§ Inns``), a
 # heading named by its breadcrumb path (``§ Interlude The World Changes``),
@@ -444,6 +461,114 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("Ninety-one", errors[0])
 
+    # ── Decorated filenames: the markdown link and the code span ───────
+    #
+    # The house style writes a cross-document citation as a markdown link,
+    # and prose elsewhere writes the filename as a code span. Both put a
+    # character between the filename and the section sign, and the pattern
+    # could cross neither, so 132 live citations — one in four — were read by
+    # nobody and could rot in silence (#404).
+
+    def test_a_markdown_link_citation_is_read(self):
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_rotted_markdown_link_citation_fails(self):
+        """The proof that the link form is checked and not merely tolerated."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Nonexistent Heading.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_markdown_link_citations_term_is_checked(self):
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Status Effect Reference > 'Rot'.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_link_citation_resolves_its_target_not_its_link_text(self):
+        """The two filenames can disagree, and the target is the real path.
+
+        ``docs/analysis/`` writes ``[magic.md](../story/magic.md)``. Resolving
+        the link text would hand ``DocIndex`` every ``magic.md`` in the tree;
+        here the wrong one carries the heading and the right one does not, so
+        only a checker that follows the target reports it.
+        """
+        self._write("docs/story/decoy/magic.md", MAGIC_FIXTURE)
+        self._write(
+            "docs/analysis/note.md",
+            "See [magic.md](../story/decoy/magic.md) § Spell Count Summary.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write("docs/story/decoy/magic.md", "# Magic System\n\n## Moved\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("docs/story/decoy/magic.md", errors[0])
+
+    def test_a_link_with_a_dead_target_is_read_through_its_text(self):
+        """A broken link is still a citation; report it as the one it names."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](../gone/magic.md) § Nonexistent Heading.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_link_citation_may_wrap_before_the_section_sign(self):
+        """``[dungeons-world.md](...)`` / ``§ 2`` is one citation, not two."""
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "docs/story/note.md",
+            "See [arch.md](../plans/arch.md)\n§ 2.1 Enemy Data for the shape.\n",
+        )
+        self.assertEqual(self._errors(), [])
+        self._write(
+            "docs/story/note.md",
+            "See [arch.md](../plans/arch.md)\n§ 9.9 Enemy Data for the shape.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_code_span_citation_is_read(self):
+        self._write(
+            "docs/story/note.md",
+            "See `magic.md` § Status Effect Reference > 'Poison'.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    def test_a_rotted_code_span_citation_fails(self):
+        self._write("docs/story/note.md", "See `magic.md` § Ghost Section.\n")
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_the_decorated_forms_are_counted_separately(self):
+        """The count is what makes "nothing wrong" distinguishable later."""
+        self._write(
+            "docs/story/note.md",
+            "See [magic.md](magic.md) § Spell Count Summary, "
+            "`magic.md` § Physical Attack Resolution, and "
+            "magic.md § Status Effect Reference.\n",
+        )
+        tally: dict = {}
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, {}, clear=True
+        ):
+            self.assertEqual(check_doc_citations.check_citations(tally), [])
+        self.assertEqual(tally["citations"], 3)
+        self.assertEqual(tally["decorated"], 2)
+
     def test_ignores_dated_records(self):
         """docs/issues and docs/superpowers describe the tree as it was."""
         self._write("docs/issues/rot.md", "Broke at magic.md:1537.\n")
@@ -598,8 +723,15 @@ class TestCheckDocCitations(unittest.TestCase):
             ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
         }
         buffer = io.StringIO()
+        # The fixture repo has no docs/issues, so the Design-reference floors
+        # (#403) would fire on a scan this test is not about. Dropping them
+        # here rather than in the gate keeps them live everywhere else.
         with patch.dict(
             check_doc_citations.KNOWN_UNRESOLVED, known, clear=True
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_DOCS", 0
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 0
         ), contextlib.redirect_stdout(buffer):
             self.assertEqual(check_doc_citations.main(), 0)
         self.assertIn("1 citation(s) pinned", buffer.getvalue())
@@ -691,6 +823,89 @@ class TestCheckDocCitations(unittest.TestCase):
             "# npcs.md § Caden. npcs.md § Inns.\n"
             "# npcs.md § Interlude The World Changes.\n"
             "# npcs.md § Danger Counter increments once per step.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    # ── The floor under the shortening (#404) ──────────────────────────
+    #
+    # #404 was filed over a citation the gate could not read. Widening the
+    # regex made it readable — and it still resolved, because the loop
+    # shortened it to one word and ``match_words`` will take that word from
+    # anywhere in a heading's breadcrumb. ``§ Act scaling`` landed on
+    # ``### Regular Enemy HP by Act``: read, resolved, wrong. Only the hand
+    # edit to geography.md removed it, which is not something a gate can
+    # notice happening again. These tests are what notices.
+
+    def test_a_one_word_match_buried_in_the_heading_resolves_to_nothing(self):
+        """``§ Costs of travel`` must not land on ``## Inn Costs``."""
+        self.assertIsNone(self._resolve("Costs of travel"))
+
+    def test_a_one_word_match_on_the_headings_subject_still_resolves(self):
+        """``§ Inns are twenty gil`` may: ``Inn`` is what the heading is."""
+        hit = self._resolve("Inns are twenty gil")
+        self.assertIsNotNone(hit, "a subject-word citation must still resolve")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_a_one_word_citation_that_names_nothing_more_still_resolves(self):
+        """``npcs.md § Caden`` alone stays legal — it claims nothing else."""
+        hit = self._resolve("Caden")
+        self.assertIsNotNone(hit, "§ Caden must still resolve")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_a_leading_section_id_is_not_the_headings_subject(self):
+        """``§ Script sizes`` reaches ``### 1.2a Script Size Budget``.
+
+        The subject of a numbered heading is what follows the number, so the
+        id must be stripped before the first word is read — otherwise every
+        numbered heading's subject would be a digit and every one-word
+        citation of one would be refused.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(),
+            "docs/plans/arch.md",
+            "Script sizes are capped",
+        )
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "1.2a Script Size Budget")
+
+    def test_the_refusal_stops_at_one_word(self):
+        """Longer buried prefixes are still accepted, and #416 says so.
+
+        ``World Changes`` is not the subject of ``### The World Changes``
+        either, but two words is a claim the subject rule does not reach.
+        Pinning the boundary here means the day #416 moves it, this test is
+        the one that says the behavior changed on purpose.
+        """
+        hit = self._resolve("World Changes and the map redraws")
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "The World Changes")
+
+    def test_the_404_exemplar_fails_the_whole_scan(self):
+        """The defect #404 was filed over, verbatim, end to end.
+
+        ``docs/story/geography.md:556`` on ``main`` read exactly this line.
+        Before this test the branch could delete the guard and the line would
+        resolve again in silence.
+        """
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        self._write(
+            "docs/story/geography.md",
+            "Act IV and the Epilogue hold at Act III's value -- see\n"
+            "[combat-formulas.md](combat-formulas.md) § Act scaling for why.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+        self.assertIn("Act scaling", errors[0])
+
+    def test_the_repointed_form_of_the_404_exemplar_passes(self):
+        """And the fix that replaced it resolves, so the guard is not a wall."""
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        self._write(
+            "docs/story/geography.md",
+            "see [combat-formulas.md](combat-formulas.md) "
+            "§ Danger Counter > 'Act scaling'.\n",
         )
         self.assertEqual(self._errors(), [])
 
@@ -1182,9 +1397,15 @@ class TestIntegration(unittest.TestCase):
     def test_full_citation_scan_reads_a_non_trivial_corpus(self):
         """"No bad citations" and "no citations read" both print nothing.
 
-        The floors are far below the live numbers (418 citations across 533
-        files, 11 of them same-document) so ordinary editing does not trip
-        them, but a scan that stopped descending cannot clear them.
+        The floors are far below the live numbers (550 citations across 535
+        files, 11 of them same-document and 132 written as a markdown link or
+        code span) so ordinary editing does not trip them, but a scan that
+        stopped descending cannot clear them.
+
+        The ``decorated`` floor is the one #404 leaves behind. That count was
+        zero for the gate's whole life — the pattern could not cross the
+        ``](...)`` a markdown link puts between the filename and the section
+        sign — and a floor under it is what stops it silently returning there.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1192,8 +1413,9 @@ class TestIntegration(unittest.TestCase):
         errors = check_doc_citations.check_citations(tally)
         self.assertEqual(errors, [])
         self.assertGreater(tally["files"], 300)
-        self.assertGreater(tally["citations"], 250)
+        self.assertGreater(tally["citations"], 400)
         self.assertGreater(tally["self_references"], 5)
+        self.assertGreater(tally["decorated"], 60)
 
     def test_the_citation_counts_come_from_the_directory_walk(self):
         """Sever the walk's recursion and the counts must collapse.
@@ -1202,9 +1424,10 @@ class TestIntegration(unittest.TestCase):
         stops ``os.walk`` descending past each scan root — leaving the entry
         points intact and taking away everything below them — and the counts
         that pass the floors above must fall through them: no
-        ``docs/story/script/``, no ``game/scripts/**``, and no
-        same-document reference anywhere, since all eleven live ones sit in
-        nested directories.
+        ``docs/story/script/``, no ``game/scripts/**``, no same-document
+        reference anywhere, since all eleven live ones sit in nested
+        directories, and no link-form citation either — every one of the 132
+        lives under a scan root rather than directly in it.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1219,8 +1442,9 @@ class TestIntegration(unittest.TestCase):
         with patch("check_doc_citations.os.walk", no_descent):
             check_doc_citations.check_citations(tally)
         self.assertLess(tally["files"], 300)
-        self.assertLess(tally["citations"], 250)
+        self.assertLess(tally["citations"], 400)
         self.assertEqual(tally["self_references"], 0)
+        self.assertEqual(tally["decorated"], 0)
 
 
 class TestDocLineCounts(unittest.TestCase):
@@ -1476,6 +1700,117 @@ class TestGapCodeReferences(unittest.TestCase):
             self.skipTest("No gap issue docs available")
         errors = check_stale_counts.check_gap_code_references()
         self.assertEqual(errors, [], f"Stale code references: {errors}")
+
+
+class TestGapDesignReferences(unittest.TestCase):
+    """Gate G, scan 2: the Design references section of the GAP docs (#403).
+
+    #382/#383 hold the Code references bullets to live paths and ``symbol()``
+    anchors. The Design references beside them were held to nothing and still
+    carried the line anchors this milestone banned everywhere else — 37 of
+    them across 28 docs, GAP-013's pointing 65 lines from the table it named.
+    """
+
+    def setUp(self):
+        self.cwd = os.getcwd()
+        self.tmpdir = tempfile.mkdtemp()
+        os.makedirs(os.path.join(self.tmpdir, "docs/story"))
+        os.makedirs(os.path.join(self.tmpdir, "issues"))
+        with open(os.path.join(self.tmpdir, "docs/story/magic.md"), "w") as f:
+            f.write(MAGIC_FIXTURE)
+        os.chdir(self.tmpdir)
+
+    def tearDown(self):
+        os.chdir(self.cwd)
+        shutil.rmtree(self.tmpdir, ignore_errors=True)
+
+    def _errors(self, body: str, name: str = "GAP-001-thing.md") -> list:
+        with open(os.path.join("issues", name), "w") as f:
+            f.write(
+                "# GAP-001\n\n## Summary\n\nBroke at magic.md:1537.\n\n"
+                "## Design references\n\n" + body + "\n\n## Code references\n"
+            )
+        with patch.object(check_doc_citations, "MIN_GAP_DOCS", 1), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 1
+        ):
+            return check_doc_citations.check_gap_design_references("issues")
+
+    def test_a_heading_reference_resolves(self):
+        self.assertEqual(
+            self._errors("- docs/story/magic.md § Status Effect Reference"), []
+        )
+
+    def test_a_line_anchor_is_rejected(self):
+        errors = self._errors("- docs/story/magic.md:1537")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+        self.assertIn("docs/story/magic.md:1537", errors[0])
+
+    def test_a_bare_line_anchor_is_rejected_too(self):
+        errors = self._errors("- magic.md:1537 (status table)")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("banned line-anchored citation", errors[0])
+
+    def test_the_dated_prose_around_the_section_is_left_alone(self):
+        """The Summary's ``magic.md:1537`` is a 2026-06-27 snapshot."""
+        self.assertEqual(
+            self._errors("- docs/story/magic.md § Spell Count Summary"), []
+        )
+
+    def test_a_heading_that_moved_is_reported(self):
+        errors = self._errors("- docs/story/magic.md § Status Effects Table")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_narrowing_term_is_checked(self):
+        errors = self._errors(
+            "- docs/story/magic.md § Status Effect Reference > 'Petrify'"
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_bullet_naming_a_missing_document_is_reported(self):
+        errors = self._errors("- docs/story/gone.md (the whole thing)")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("not a file in this repo", errors[0])
+
+    def test_the_reported_line_points_into_the_doc_not_the_excerpt(self):
+        errors = self._errors("- docs/story/magic.md § Ghost Section")
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("GAP-001-thing.md:9:", errors[0])
+
+    def test_an_empty_scan_fails_its_floor(self):
+        """Zero bullets read is not the same as zero bullets wrong."""
+        errors = check_doc_citations.check_gap_design_references("issues")
+        self.assertTrue(errors, "a scan that read nothing must say so")
+        self.assertIn("read only 0", errors[0])
+
+    def test_the_counts_come_from_the_glob(self):
+        """Sever the walk and the floors must catch it.
+
+        The scan's own numbers are what separates "nothing wrong" from
+        "nothing read", so they have to be measured rather than assumed: with
+        ``glob`` returning nothing, both counts collapse to zero and both
+        floors fire.
+        """
+        self._errors("- docs/story/magic.md § Status Effect Reference")
+        tally: dict = {}
+        with patch("check_doc_citations.glob.glob", return_value=[]):
+            errors = check_doc_citations.check_gap_design_references(
+                "issues", tally=tally
+            )
+        self.assertEqual(tally, {"gap_docs": 0, "gap_bullets": 0})
+        self.assertEqual(len(errors), 2, errors)
+
+    def test_real_gap_docs_carry_no_line_anchors(self):
+        os.chdir(self.cwd)
+        if not os.path.exists("docs/issues"):
+            self.skipTest("No gap issue docs available")
+        tally: dict = {}
+        errors = check_doc_citations.check_gap_design_references(tally=tally)
+        self.assertEqual(errors, [], f"Stale design references: {errors}")
+        self.assertGreater(tally["gap_docs"], 50)
+        self.assertGreater(tally["gap_bullets"], 90)
 
 
 class TestGapCodeReferencePaths(unittest.TestCase):

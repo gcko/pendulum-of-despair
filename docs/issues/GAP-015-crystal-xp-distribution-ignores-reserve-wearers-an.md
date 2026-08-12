@@ -36,7 +36,7 @@ Compute each member's awarded XP (0 KO'd-active, full active-alive, half reserve
 
 ## Design references
 
-- docs/story/progression.md:226-229
+- docs/story/progression.md § XP Distribution Rules
 
 ## Code references
 

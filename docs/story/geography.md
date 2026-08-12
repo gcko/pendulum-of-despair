@@ -553,7 +553,7 @@ Act I ×1.0, Act II ×1.1, Interlude ×1.2, Act III ×1.1, Act IV ×1.1,
 Epilogue / Post-game ×1.1. The multiplier applies to the base danger
 counter increment before item modifiers. Act IV and the Epilogue hold at
 Act III's value rather than climbing further -- see
-[combat-formulas.md](combat-formulas.md) § Act scaling for why.
+[combat-formulas.md](combat-formulas.md) § Danger Counter > 'Act scaling'.
 See [combat-formulas.md](combat-formulas.md) (Encounter System section)
 for the full formula and modifier stacking rules.
 

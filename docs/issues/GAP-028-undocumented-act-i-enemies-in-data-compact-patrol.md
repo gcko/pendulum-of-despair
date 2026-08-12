@@ -35,7 +35,8 @@ Add the two enemies with derived stats/threat/family to the correct bestiary fil
 
 ## Design references
 
-- docs/story/bestiary/act-i.md:8,91-103
+- docs/story/bestiary/act-i.md § Act I Bestiary
+- docs/story/bestiary/act-i.md § Ironmouth Docks (Act I — Scene 3 Escape)
 
 ## Code references
 

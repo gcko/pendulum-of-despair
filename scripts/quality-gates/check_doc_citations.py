@@ -10,6 +10,22 @@ test notices. This gate makes that impossible in live files by
    target document, optionally narrowing to a quoted term that must appear
    inside that section: ``magic.md § Status Effect Reference > 'Poison'``.
 
+The filename may be bare, a markdown link — ``[magic.md](../story/magic.md)
+§ Spell Balance Guidelines``, which is the house style in ``docs/`` — or a
+code span: ``` `items.md` § Key Items ```. Only the bare form was read until
+#404, which left 132 of today's citations unread, and a citation nobody
+reads is one nobody can catch rotting. Where a link names two paths, the
+destination is the one resolved (``cited_path``).
+
+Read is not the same as verified, and the gap between the two is where this
+gate's remaining exposure lives. The resolver is deliberately loose — it
+accepts any word prefix of the citation that the heading's breadcrumb
+contains — so a citation can be read, resolve, and still name a heading
+nobody wrote. ``names_the_heading`` closes the loosest case of that, the
+one-word match on a word buried inside some other heading, which is what
+made ``combat-formulas.md § Act scaling`` land on ``### Regular Enemy HP by
+Act`` in #404. Longer partial matches are not closed; #416 tracks those.
+
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
 Not scanned: docs/issues/ and docs/superpowers/. Those are **dated
@@ -17,8 +33,14 @@ records** — a bug report or a design plan describes the tree as it was on
 the day it was written, so a citation there is a snapshot, not a live
 pointer, and rewriting it would falsify the record.
 
+One region inside them is live and is scanned: the ``## Design references``
+section of a GAP doc, which is the reader's route into canon now rather than
+a snapshot of it. It gets the same treatment a live file gets, plus a check
+that each bullet's path exists — see ``check_gap_design_references`` (#403).
+
 Exit code 0 = pass, 1 = offending citations found.
 """
+import glob
 import os
 import re
 import sys
@@ -36,6 +58,20 @@ EXCLUDED_DIRS: tuple[str, ...] = (
     "docs/issues",
     "docs/superpowers",
 )
+
+# The one live region inside a dated record: a GAP doc's Design references
+# are the reader's route into canon now, not a snapshot of it (#403). They
+# are checked by ``check_gap_design_references`` with the same machinery the
+# live files get; everything else in ``docs/issues/`` stays unread.
+GAP_ISSUES_DIR = "docs/issues"
+_DESIGN_REF_SECTION = re.compile(
+    r"^## Design references\n(.*?)(?=^## |\Z)", re.M | re.S
+)
+
+# Non-vacuity floors for that scan, set well under what the tree holds today
+# (91 docs, 159 bullets) and well over what a broken walk would return.
+MIN_GAP_DOCS = 50
+MIN_GAP_BULLETS = 90
 
 # This gate and its tests quote citations as *data* (the ratchet list below,
 # the test fixtures). Scanning them would flag the gate's own examples.
@@ -55,9 +91,15 @@ SCANNED_SUFFIXES: tuple[str, ...] = (
     ".cfg",
 )
 
-# "magic.md:1537", "status_effects.gd:25" — the banned form.
+# "magic.md:1537", "status_effects.gd:25", "docs/story/magic.md:1537" — the
+# banned form. The path prefix is part of the pattern rather than something
+# the lookbehind refuses: a bare filename and a full path rot identically,
+# and reading only the bare one meant every Design-reference anchor written
+# as ``docs/story/progression.md:388`` went unbanned (#403). The lookbehind
+# still keeps the match from starting mid-token.
 LINE_ANCHOR_RE = re.compile(
-    r"(?<![\w/.])([A-Za-z0-9_][A-Za-z0-9_.\-]*\.(?:md|gd)):(\d+)"
+    r"(?<![\w/.\-])((?:[A-Za-z0-9_][A-Za-z0-9_.\-]*/)*"
+    r"[A-Za-z0-9_][A-Za-z0-9_.\-]*\.(?:md|gd)):(\d+)"
 )
 
 # "magic.md § Status Effect Reference"; tolerates a line wrap (with an
@@ -65,8 +107,25 @@ LINE_ANCHOR_RE = re.compile(
 # is how the citation lands inside wrapped GDScript ``##`` doc comments.
 # The match deliberately stops at the section sign rather than capturing the
 # heading, so that a line carrying several citations yields several matches.
+#
+# The filename may be *decorated*, and both decorations were unreadable until
+# #404. The house style in ``docs/`` writes a cross-document citation as a
+# markdown link — ``[combat-formulas.md](combat-formulas.md) § Act scaling`` —
+# so a closing paren sits between the filename and the section sign; prose
+# elsewhere writes the filename as a code span — ``` `items.md` § Key Items ```
+# — so a backtick does. A pattern that could cross neither read no such
+# citation at all, and a citation nobody reads is one nobody can catch rotting:
+# 127 link-form and 6 code-span citations were unchecked, among them the fourth
+# site of the broken ``§ Act scaling`` citation that #384 repointed at its
+# three other sites.
+#
+# ``target`` is the link's destination when there is one. It matters because
+# the two filenames can disagree — ``[magic.md](../story/magic.md)`` in
+# ``docs/analysis/`` — and the destination is the real path, so it is the one
+# resolved (see ``cited_path``).
 HEADING_CITE_RE = re.compile(
     r"(?P<file>[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md)"
+    r"(?:`|\][ \t]*\((?P<target>[^()\s]*)\))?"
     r"[ \t]*(?:\r?\n[ \t]*(?:#+|//|\*|>)?[ \t]*)?"
     r"§[ \t]*"
 )
@@ -348,6 +407,54 @@ def heading_id(title: str) -> str | None:
     return m.group(1).lower() if m else None
 
 
+def heading_subject(title: str) -> list[str]:
+    """A heading's own words, with any leading section id dropped.
+
+    ``"56. Ironhide"`` -> ``["ironhide"]``; ``"Regular Enemy HP by Act"`` ->
+    ``["regular", "enemy", "hp", "by", "act"]``. The id is dropped because a
+    numbered heading's subject is what comes after the number, and
+    ``magic.md § Ironhide`` names that subject exactly.
+    """
+    stripped = title.strip()
+    m = HEADING_ID_RE.match(stripped)
+    if m:
+        stripped = stripped[m.end():]
+    return normalize(stripped).split()
+
+
+def names_the_heading(title: str, word: str) -> bool:
+    """True when a *one-word* citation names what ``title`` is about.
+
+    ``match_words`` accepts a citation word anywhere in a heading's breadcrumb
+    path, in order. Over a single word that is far too weak a claim: ``act``
+    appears somewhere in the breadcrumb of ``### Regular Enemy HP by Act``, so
+    ``combat-formulas.md § Act scaling`` — a heading nobody wrote, and the
+    exemplar defect #404 was filed over — resolved to it and the gate reported
+    passed. Widening the regex so the citation was finally *read* did not
+    change that; it only meant the wrong resolution now happened in public.
+
+    The test is where in the heading the word landed. A one-word citation that
+    names a heading names its **subject** — the first word of its own title,
+    after any leading section id: ``§ Weapons`` for ``### Weapons``,
+    ``§ Ironhide`` for ``### 56. Ironhide``, ``§ Cael`` for ``### Cael —
+    Rally``. A word found buried mid-title is a coincidence of the subsequence
+    matcher, not a name.
+
+    Applied only when the citation offered *more* words than the one that
+    matched (see ``match_heading``), because a citation that offers exactly one
+    word has made no larger claim to check it against: ``npcs.md § Caden`` for
+    ``### Spirit-speaker Caden`` is house style and stays legal.
+
+    This closes one shape of false green, not the family. A *two*-word prefix
+    buried the same way is still accepted — #416.
+    """
+    subject = heading_subject(title)
+    cited = normalize(word).split()
+    if not subject or not cited:
+        return True
+    return stem(subject[0]) == stem(cited[0])
+
+
 def match_section_id(
     index: DocIndex, path: str, section_id: str
 ) -> tuple[int, int, str] | None:
@@ -531,6 +638,14 @@ def match_heading(
     heading, so once a citation has been caught naming a subsection nobody
     wrote there is nothing better left to find.
 
+    Shortening also has a floor. A prefix of *one* word, offered by a citation
+    that named more than one, is the weakest claim this loop can accept, and
+    ``match_words`` will take that word from anywhere in the breadcrumb — which
+    is how ``combat-formulas.md § Act scaling`` reached ``### Regular Enemy HP
+    by Act`` (#404). So at ``k == 1`` the word must be the heading's own
+    subject; see ``names_the_heading`` for what that means and for the longer
+    partial matches it does not cover (#416).
+
     ``own`` is how many words of ``candidate`` came from the citation's own
     line rather than from the wrapped continuation ``citation_tail`` joined
     on; it bounds the refusal and defaults to all of them.
@@ -593,13 +708,24 @@ def match_heading(
         want = normalize(joined).split()
         if not want:
             continue
+        listed = False
         hit = match_words(index, path, want)
         if hit is None and "/" in joined:
             hit = match_all(index, path, joined.split("/"))
+            listed = hit is not None
         if hit is None:
             continue
         if continues_a_heading(words, k, own):
             return None
+        # The shortening has run all the way down to one word while the
+        # citation named more. That is the weakest match this loop can make,
+        # and it is the one that green-lit `§ Act scaling` — so the word has
+        # to be the heading's subject, not a word buried inside it. A list
+        # citation is exempt: ``hit`` is then only its first part's heading,
+        # so there is nothing meaningful to compare the whole token against.
+        if k == 1 and own > 1 and not listed:
+            if not names_the_heading(hit[2], words[0]):
+                return None
         return hit
     return None
 
@@ -626,6 +752,34 @@ def match_all(
             return None
         first = first or hit
     return first
+
+
+def cited_path(citing: str, match: re.Match[str]) -> str:
+    """Which document a heading citation names.
+
+    A markdown link carries two filenames and they need not agree: in
+    ``docs/analysis/game-design-gaps.md`` the citation reads
+    ``[magic.md](../story/magic.md)``, where the link text is a bare basename
+    and the destination is the real path. Resolving the destination — made
+    repo-relative against the citing file's own directory — pins the citation
+    to one document; resolving the basename hands ``DocIndex.resolve`` every
+    file of that name in the tree and lets the citation pass if *any* of them
+    happens to carry the heading. ``README.md`` alone has 9 such files.
+
+    Falls back to the link text when there is no destination, or when the
+    destination does not name a file in this repo — a broken link is worth
+    reporting as the citation it was trying to be, not as a path lookup that
+    silently found nothing.
+    """
+    target = match.groupdict().get("target")
+    if target:
+        target = target.split("#", 1)[0]
+        if target:
+            joined = os.path.join(os.path.dirname(citing), target)
+            resolved = os.path.normpath(joined).replace(os.sep, "/")
+            if os.path.isfile(resolved):
+                return resolved
+    return match.group("file")
 
 
 def citation_signature(cited_file: str, heading_part: str) -> str:
@@ -758,12 +912,32 @@ def check_file(
     ``tally`` accumulates how much was actually read — see ``check_citations``
     for why a scan that reports nothing has to say how much it looked at.
     """
-    errors: list[str] = []
     try:
         with open(path, encoding="utf-8") as f:
             text = f.read()
     except (UnicodeDecodeError, OSError):
-        return errors
+        return []
+    return check_text(path, text, index, seen_known, tally)
+
+
+def check_text(
+    path: str,
+    text: str,
+    index: DocIndex,
+    seen_known: set[tuple[str, str]],
+    tally: dict[str, int] | None = None,
+    line_offset: int = 0,
+) -> list[str]:
+    """Citation errors in ``text``, reported as if it started in ``path``.
+
+    Split out from ``check_file`` so that a *region* of a file can be checked
+    with the same machinery: ``check_gap_design_references`` hands it the
+    ``## Design references`` section of a GAP doc, whose surrounding prose is
+    a dated record and must stay unchecked (#403). ``line_offset`` is how far
+    down the file that region starts, so reported line numbers point at the
+    real file rather than at the excerpt.
+    """
+    errors: list[str] = []
 
     # In markdown, a fenced block is a template or a transcript, not a
     # citation — docs/story/script/README.md shows the house citation style
@@ -786,16 +960,26 @@ def check_file(
 
     for m in LINE_ANCHOR_RE.finditer(text):
         errors.append(
-            f"{path}:{line_of(m.start())}: banned line-anchored citation "
+            f"{path}:{line_of(m.start()) + line_offset}: banned "
+            f"line-anchored citation "
             f"`{m.group(0)}` — {FIX_HINT_ANCHOR}"
         )
 
-    # (cited filename, offset just past the section sign, forced targets).
-    # A cross-document citation names its file and is resolved through the
-    # index; a self-reference has no filename to name and resolves against
-    # the document it sits in (#386).
-    sites: list[tuple[str, int, list[str] | None]] = [
-        (m.group("file"), m.end(), None) for m in HEADING_CITE_RE.finditer(text)
+    # (cited filename, offset just past the section sign, forced targets,
+    # decorated). A cross-document citation names its file and is resolved
+    # through the index; a self-reference has no filename to name and resolves
+    # against the document it sits in (#386). *Decorated* means the filename
+    # was written as a markdown link or a code span rather than bare — the
+    # forms nothing read before #404, counted so the coverage they add is a
+    # number on every run rather than a claim in a docstring.
+    sites: list[tuple[str, int, list[str] | None, bool]] = [
+        (
+            cited_path(path, m),
+            m.end(),
+            None,
+            bool(m.group("target")) or m.group(0)[len(m.group("file"))] == "`",
+        )
+        for m in HEADING_CITE_RE.finditer(text)
     ]
     if path.endswith(".md"):
         named = {
@@ -809,19 +993,22 @@ def check_file(
             window_start = starts[here - 2] if here >= 2 else 0
             if NEARBY_DOC_RE.search(text[window_start:m.start()]):
                 continue
-            sites.append((os.path.basename(path), m.end(), [path]))
+            sites.append((os.path.basename(path), m.end(), [path], False))
         sites.sort(key=lambda site: site[1])
 
-    for cited_file, cite_end, forced in sites:
-        line_no: int = line_of(cite_end)
+    for cited_file, cite_end, forced, decorated in sites:
+        found_at: int = line_of(cite_end)
 
-        if line_no in skip_lines:
+        if found_at in skip_lines:
             continue
+        line_no: int = found_at + line_offset
 
         if tally is not None:
             tally["citations"] = tally.get("citations", 0) + 1
             if forced is not None:
                 tally["self_references"] = tally.get("self_references", 0) + 1
+            if decorated:
+                tally["decorated"] = tally.get("decorated", 0) + 1
 
         # ``own_len`` marks where the citation's own line stops and the
         # wrapped continuation begins. Every trim below returns a *prefix* of
@@ -895,23 +1082,110 @@ def check_file(
     return errors
 
 
-def check_citations(tally: dict[str, int] | None = None) -> list[str]:
+def check_gap_design_references(
+    issues_dir: str = GAP_ISSUES_DIR,
+    index: DocIndex | None = None,
+    tally: dict[str, int] | None = None,
+) -> list[str]:
+    """Check the ``## Design references`` bullets in the GAP docs (#403).
+
+    ``docs/issues/`` is excluded from the main scan because a GAP doc's
+    Summary, Evidence and Notes are a dated record — the tree as it was on
+    2026-06-27 — and rewriting a citation there would falsify it. The doc's
+    own footer says as much. The Design references section is the exception:
+    it is the reader's route into canon *now*, which is why #382/#383 hold
+    the Code references section beside it to live paths and ``symbol()``
+    anchors. Design references were held to nothing, and still carried the
+    line anchors this milestone banned everywhere else — 37 of them across 28
+    docs, of which GAP-013's was 65 lines out from the table it named.
+
+    So the section, and only the section, is checked exactly as a live file
+    is: no line anchors, every ``§`` citation resolved against a real heading,
+    every narrowing term found under it. Each bullet's leading path must also
+    exist, which is the one rule ``check_text`` cannot supply — a bullet may
+    name a document without naming a section in it.
+
+    Args:
+        issues_dir: Directory holding the GAP-NNN docs.
+        index: Shared heading index; built here when not supplied.
+        tally: Filled with ``gap_docs`` and ``gap_bullets`` — how many docs
+            carried a Design references section and how many bullets were
+            read out of them. A scan that stopped finding sections reports
+            exactly what a clean tree reports without them.
+    """
+    index = DocIndex() if index is None else index
+    seen_known: set[tuple[str, str]] = set()
+    errors: list[str] = []
+    docs = 0
+    bullets = 0
+    for doc in sorted(glob.glob(os.path.join(issues_dir, "GAP-*.md"))):
+        with open(doc, encoding="utf-8") as handle:
+            text = handle.read()
+        section = _DESIGN_REF_SECTION.search(text)
+        if not section:
+            continue
+        docs += 1
+        offset = text[: section.start(1)].count("\n")
+        errors.extend(
+            check_text(doc, section.group(1), index, seen_known, None, offset)
+        )
+        for i, line in enumerate(section.group(1).splitlines(), start=1):
+            if not line.startswith("- "):
+                continue
+            bullets += 1
+            token = line[2:].split()[0].rstrip(",") if line[2:].split() else ""
+            if "/" not in token or not token.endswith(".md"):
+                continue
+            if not os.path.isfile(token):
+                errors.append(
+                    f"{doc}:{offset + i}: Design reference names `{token}`, "
+                    f"which is not a file in this repo — the document moved "
+                    f"or was renamed; re-point the bullet"
+                )
+    if tally is not None:
+        tally["gap_docs"] = docs
+        tally["gap_bullets"] = bullets
+    floors = [
+        (docs, MIN_GAP_DOCS, "GAP docs with a Design references section"),
+        (bullets, MIN_GAP_BULLETS, "Design reference bullets"),
+    ]
+    errors += [
+        f"the Design-reference scan read only {actual} {label} (floor "
+        f"{floor}) — it is not reading what it reports on, so a clean result "
+        f"would mean nothing; repair the walk rather than lowering the floor"
+        for actual, floor, label in floors
+        if actual < floor
+    ]
+    return errors
+
+
+def check_citations(
+    tally: dict[str, int] | None = None, index: DocIndex | None = None
+) -> list[str]:
     """Scan every live file for rotted or rot-prone doc citations.
 
-    ``tally``, when given, is filled with ``files``, ``citations`` and
-    ``self_references``: how many files were walked, how many citations were
-    resolved in them, and how many of those were a document referring to its
-    own section (#386). A scan reports its findings by returning nothing, and
-    nothing is also what a scan that stopped looking returns; the counts are
-    what tells those apart, and ``main`` prints them on every run.
+    The GAP docs' Design references are a separate scan —
+    ``check_gap_design_references`` — because they are a live region inside a
+    directory this one deliberately excludes. ``main`` runs both; a caller
+    that wants the whole gate must do the same.
+
+    ``tally``, when given, is filled with ``files``, ``citations``,
+    ``self_references`` and ``decorated``: how many files were walked, how
+    many citations were resolved in them, how many of those were a document
+    referring to its own section (#386), and how many were written as a
+    markdown link or a code span (#404). A scan reports its findings by
+    returning nothing, and nothing is also what a scan that stopped looking
+    returns; the counts are what tells those apart, and ``main`` prints them
+    on every run.
     """
-    index = DocIndex()
+    index = DocIndex() if index is None else index
     errors: list[str] = []
     seen_known: set[tuple[str, str]] = set()
     scanned = iter_scanned_files()
     if tally is not None:
         tally.setdefault("citations", 0)
         tally.setdefault("self_references", 0)
+        tally.setdefault("decorated", 0)
         tally["files"] = len(scanned)
     for path in scanned:
         errors.extend(check_file(path, index, seen_known, tally))
@@ -930,7 +1204,9 @@ def check_citations(tally: dict[str, int] | None = None) -> list[str]:
 def main() -> int:
     """Run the citation check. Returns 0 on pass, 1 on failure."""
     tally: dict[str, int] = {}
-    errors: list[str] = check_citations(tally)
+    index = DocIndex()
+    errors: list[str] = check_citations(tally, index)
+    errors += check_gap_design_references(index=index, tally=tally)
 
     if errors:
         print("Doc citation validation FAILED:")
@@ -949,9 +1225,12 @@ def main() -> int:
     print(
         f"Doc citation validation passed. {tally['citations']} citation(s) "
         f"resolved across {tally['files']} file(s), "
-        f"{tally['self_references']} of them same-document (#386). "
-        f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in KNOWN_UNRESOLVED "
-        "(#366); the list can only shrink."
+        f"{tally['self_references']} of them same-document (#386) and "
+        f"{tally['decorated']} written as a markdown link or code span "
+        f"(#404). {tally['gap_bullets']} Design-reference bullet(s) read in "
+        f"{tally['gap_docs']} GAP doc(s) (#403). "
+        f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in "
+        "KNOWN_UNRESOLVED (#366); the list can only shrink."
     )
     return 0
 

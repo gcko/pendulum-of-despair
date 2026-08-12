@@ -38,7 +38,8 @@ Add a buff/status/type aggregation layer that, at attack time, collects modifier
 ## Design references
 
 - docs/story/combat-formulas.md §Combat Interactions & Hidden Synergies / §Buff & Debuff Interaction
-- docs/story/bestiary/README.md:49-135 (Enemy Type Rules; multiplicative stacking)
+- docs/story/bestiary/README.md § Enemy Type Rules
+- docs/story/bestiary/README.md § Stacking Rule (multiplicative)
 
 ## Code references
 

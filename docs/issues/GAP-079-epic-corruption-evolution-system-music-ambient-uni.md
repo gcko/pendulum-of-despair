@@ -36,8 +36,8 @@ Add a corruption API routing music/ambient buses through AudioEffect chains (pit
 
 ## Design references
 
-- docs/story/music.md:370-413
-- docs/story/audio.md:204-213
+- docs/story/music.md § Corruption Evolution System
+- docs/story/audio.md § 2.3 Corruption Stage Effects on Ambient
 
 ## Code references
 

@@ -37,7 +37,7 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 ## Design references
 
 - docs/story/ui-design.md §2.8
-- docs/story/progression.md:240
+- docs/story/progression.md § Level-Up Effects
 
 ## Code references
 

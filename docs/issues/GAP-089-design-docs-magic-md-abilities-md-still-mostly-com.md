@@ -47,7 +47,8 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
 
 ## Design references
 
-- docs/analysis/game-design-gaps.md:808,809
+- docs/analysis/game-design-gaps.md § Already Strong (No Gaps) > 'Magic System'
+- docs/analysis/game-design-gaps.md § Already Strong (No Gaps) > 'Ability System'
 
 ## Code references
 

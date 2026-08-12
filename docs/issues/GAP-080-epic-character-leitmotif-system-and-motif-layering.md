@@ -36,7 +36,9 @@ Composition + adaptive-audio epic: author per-character motif stems and a layeri
 
 ## Design references
 
-- docs/story/music.md:116-183,340-350,434
+- docs/story/music.md § Character Leitmotifs
+- docs/story/music.md § Final Battle (3 Phases)
+- docs/story/music.md § Major Cutscene Themes
 
 ## Code references
 

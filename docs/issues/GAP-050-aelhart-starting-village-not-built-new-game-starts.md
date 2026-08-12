@@ -36,8 +36,8 @@ Make an explicit decision and either build Aelhart or reconcile the docs.
 
 ## Design references
 
-- docs/story/city-valdris.md:503-657 (Aelhart, Act I location #1)
-- docs/story/dungeons-world.md:2689
+- docs/story/city-valdris.md § 2. Aelhart (Starting Village)
+- docs/story/dungeons-world.md § 10. Dry Well of Aelhart
 
 ## Code references
 

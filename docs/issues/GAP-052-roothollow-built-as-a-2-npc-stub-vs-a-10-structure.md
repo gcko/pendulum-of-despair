@@ -36,7 +36,7 @@ Add minimum Act-I structures (Guest Hollow inn, Trader's Nook, Hunter weapon cac
 
 ## Design references
 
-- docs/story/city-thornmere.md:131-205
+- docs/story/city-thornmere.md § Roothollow Building/Structure Directory
 
 ## Code references
 

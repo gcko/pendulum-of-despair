@@ -37,7 +37,9 @@ Content-production epic: first produce the Act-I-slice subset (Valdris Crown, Ro
 
 ## Design references
 
-- docs/story/music.md:516-528,199-366,415-441
+- docs/story/music.md § Track Count Summary
+- docs/story/music.md § Town Themes
+- docs/story/music.md § Narrative Moment Themes
 - docs/story/audio.md (~51 SFX, 12 ambient)
 
 ## Code references

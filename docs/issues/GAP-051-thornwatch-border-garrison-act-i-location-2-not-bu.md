@@ -36,7 +36,7 @@ Build Thornwatch in the Act-I content completion pass.
 
 ## Design references
 
-- docs/story/city-valdris.md:877-1060
+- docs/story/city-valdris.md § 4. Thornwatch (Border Garrison)
 
 ## Code references
 

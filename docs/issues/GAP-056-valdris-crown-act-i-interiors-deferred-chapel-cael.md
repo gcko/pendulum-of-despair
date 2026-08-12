@@ -36,9 +36,9 @@ Prioritize Chapel + Cael's Quarters for Act-I narrative completeness; verify/rem
 
 ## Design references
 
-- docs/story/city-valdris.md:286-318
-- docs/story/dungeons-city.md:1131
-- docs/story/interiors.md:464-631
+- docs/story/city-valdris.md § 1.3 Building Directory
+- docs/story/dungeons-city.md § Valdris Crown: Cael's Quarters (Interior)
+- docs/story/interiors.md § 2.1 Valdris Variants
 
 ## Code references
 

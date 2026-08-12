@@ -671,8 +671,8 @@ shipped state noted on each:
   *(Partly shipped — the four Act I boss and mini-boss records use the
   structured `boss_ai` object read by `combat/boss_ai.gd`; schema in
   [bestiary/enemy-ability-conventions.md](../story/bestiary/enemy-ability-conventions.md)
-  §3. The remaining 32 boss records — Acts II and III plus the four
-  optional superbosses — are still on the legacy flat `phases` form.)*
+  § 3 (boss-AI conventions). The remaining 32 boss records — Acts II and III
+  plus the four optional superbosses — are still on the flat `phases` form.)*
 
 **Note on steal schema (resolved):** Two-tier steal shipped, as a
 nested `steal: { common, rare }` object rather than the flat

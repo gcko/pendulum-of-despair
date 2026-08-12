@@ -36,8 +36,8 @@ Implement enter_pallor() using the constants (silence music, fade-in sub-bass dr
 
 ## Design references
 
-- docs/story/audio.md:261
-- docs/story/music.md:451
+- docs/story/audio.md § 3.3 Crossfade Rules
+- docs/story/music.md § Special Audio Rules
 
 ## Code references
 

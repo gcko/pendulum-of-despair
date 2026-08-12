@@ -39,8 +39,9 @@ core mechanic.
 > The former is the exhausted ley-crystal quarry country on Valdris's
 > eastern border around Greyvale — now a sanctioned Quarried plains zone
 > (increment 148) with its own definition in
-> [geography.md](../geography.md) § Valdris Territory / Terrain Effects on
-> Gameplay (#265). The latter is the Act III optional grinding zone inside
+> [geography.md](../geography.md)
+> § Valdris Territory > 'Terrain Effects on Gameplay' (#265). The latter
+> is the Act III optional grinding zone inside
 > the Pallor Wastes (increment 506). They share a root because both are
 > ley-damaged ground; nothing else connects them.
 >

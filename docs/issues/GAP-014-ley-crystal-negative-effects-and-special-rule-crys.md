@@ -37,7 +37,8 @@ Add a negative_effect/special_rule handler keyed off the equipped crystal; hook 
 
 ## Design references
 
-- docs/story/progression.md:336-343,349-352
+- docs/story/progression.md § Crystals With Negative Effects
+- docs/story/progression.md § Special Crystals
 
 ## Code references
 

@@ -37,7 +37,9 @@ Single cities epic; enumerate settlements by faction in the tracker so the ~24 r
 ## Design references
 
 - docs/story/city-carradan.md
-- docs/story/city-valdris.md:660,877,1061
+- docs/story/city-valdris.md § 3. Highcairn (Monastery Town)
+- docs/story/city-valdris.md § 4. Thornwatch (Border Garrison)
+- docs/story/city-valdris.md § 5. Greyvale (Fallen Border Town)
 - docs/story/city-thornmere.md
 
 ## Code references

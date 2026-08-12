@@ -37,7 +37,7 @@ Add a spikes data file and an apply hook in PartyState triggered by EventFlags; 
 
 ## Design references
 
-- docs/story/progression.md:380-407 (12 one-time permanent boosts)
+- docs/story/progression.md § Narrative Milestone Stat Spikes (12 one-time permanent boosts)
 
 ## Code references
 
