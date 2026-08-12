@@ -93,6 +93,24 @@ SECTION_ID = r"\d+(?:\.\d+)*[A-Za-z]?"
 # "2.1", "1.2a", or a list of them: "2.1/2.3", "1.2,1.3".
 SECTION_LIST_RE = re.compile(rf"^({SECTION_ID}(?:[/,]{SECTION_ID})*)")
 
+# The period closing a *leading* section id, where the numbered-list heading
+# style puts it: "## 19. Ley Nexus Hollow" carries the number, the period and
+# the title in one heading, so "§ 19. Ley Nexus Hollow" spells that heading
+# out and the period belongs to the id, not to a sentence. ``citation_extent``
+# read it as a sentence ending and cut the citation down to the bare "19"
+# (#390). The capitalized word is what tells the heading form apart from an id
+# followed by ordinary prose or code — "§2.4. func apply_buff(...)" — where the
+# period really does end the citation and the run-on must still be discarded.
+LEADING_ID_DOT_RE = re.compile(rf"[ \t]*{SECTION_ID}\.(?=[ \t]+[A-Z])")
+
+# A section id's period met *after* that leading one. The citation has run on
+# from the heading it named into a second id, which is a claim about the
+# heading tree rather than prose, so this is where it stops — but the period
+# stays on, because "21." is section-shaped to ``SECTION_WORD_RE`` and a bare
+# "21" is not, and the resolver's invention check reads that shape (#367).
+# Anchored at a word boundary, so it can only ever match a whole token.
+ID_DOT_RE = re.compile(rf"(?:^|(?<=[ \t])){SECTION_ID}\.(?=[ \t])")
+
 # A whole word that is *itself* a section id, and so is a claim about the
 # document's heading tree rather than prose: "2.3", "1.2a", "21.", "3)".
 # Either the id is multi-part ("2.3") or it carries a list terminator ("21."),
@@ -416,10 +434,14 @@ def match_heading(
     Conventions``, and ``§ 1.2b`` resolves to nothing and fails. The id
     settles *which* heading, not whether the citation stops there: the
     invention check then runs over the words the id did not account for, so
-    ``§ 19. Ley Nexus Hollow 21. Invented Chamber`` is refused. Numbered
-    headings are the common shape in ui-design.md, technical-architecture.md
-    and dungeons-world.md, so running no check here at all would have left
-    #367 standing over most of the corpus.
+    ``§ 19. Ley Nexus Hollow 21. Invented Chamber`` is refused — and it is
+    refused *through the gate*, not only when this function is called
+    directly. That distinction is the whole of #390: while ``citation_extent``
+    read the period in ``19.`` as a sentence ending, this example never
+    reached the resolver at all, and the guarantee written here was one the
+    gate did not keep. Numbered headings are the common shape in ui-design.md,
+    technical-architecture.md and dungeons-world.md, so running no check here
+    at all would have left #367 standing over most of the corpus.
 
     **Under a section id the check reads ids only, not capitalisation, and
     that gap is deliberate.** ``§ 2.3 Nonexistent Subsection`` still
@@ -551,11 +573,33 @@ def citation_extent(rest: str) -> str:
     quote that follows ``>`` opens one, so the apostrophe in ``§ Cael's Edge``
     stays an apostrophe.
 
+    The one period that is *not* a sentence ending is the one closing a
+    *leading* section id. dungeons-world.md numbers its headings as a list —
+    ``## 19. Ley Nexus Hollow`` — so a citation spelling that heading out
+    reads ``§ 19. Ley Nexus Hollow``, and treating that period as a terminator
+    handed the resolver the bare string ``19``. Everything past it was
+    discarded before anything read it: not the title words, and not the
+    narrowing term — so ``§ 19. <chamber nobody wrote> > '<term nobody
+    wrote>'`` passed the gate silently, and so did the run-on second id
+    ``§ 19. Ley Nexus Hollow 21. Invented Chamber`` that the resolver's own
+    invention check was written to refuse (#390).
+
+    Two rules keep that narrow. The leading period is stepped over only when a
+    capitalized word follows it, which is the numbered-list heading shape and
+    not the shape of an id followed by prose or code (``§2.4. func
+    apply_buff(...)``). A *later* id period ends the citation as any sentence
+    would, except that the period stays on the last word: ``21.`` is
+    section-shaped where ``21`` is a plain number, and that shape is what the
+    resolver's invention check reads.
+
     Trimming here keeps a citation's identity — the signature the ratchet keys
     on — independent of whatever code or prose happens to follow it.
     """
     depth = 0
     i = 0
+    lead = LEADING_ID_DOT_RE.match(rest)
+    if lead:
+        i = lead.end()
     while i < len(rest):
         ch = rest[i]
         if ch in "'\"" and rest[:i].rstrip().endswith(">"):
@@ -573,6 +617,9 @@ def citation_extent(rest: str) -> str:
         elif rest.startswith("-->", i):
             return rest[:i]
         elif ch == "." and rest[i + 1: i + 2] in (" ", "\t"):
+            start = max(rest.rfind(" ", 0, i), rest.rfind("\t", 0, i)) + 1
+            if ID_DOT_RE.match(rest, start):
+                return rest[: i + 1]
             return rest[:i]
         i += 1
     return rest

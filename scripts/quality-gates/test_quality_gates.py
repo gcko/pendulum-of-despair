@@ -734,13 +734,10 @@ class TestCheckDocCitations(unittest.TestCase):
     def test_a_numbered_invention_fails_the_whole_scan(self):
         """End to end, through the gate rather than around it.
 
-        Dotted ids, not the ``19.`` list form: ``citation_extent`` reads a
-        ``.`` before a space as the end of a sentence, so a citation to
-        ``§ 19. Ley Nexus Hollow`` is already trimmed to ``19`` before the
-        resolver sees a word of the title. Three of the four live ``§ N.``
-        citations want exactly that trim (``§3. The remaining 32 boss
-        records...``), so the resolver-level guard is as far as this fix
-        reaches; #390 carries the rest.
+        The dotted-id form. The ``19.`` list form now reaches the resolver
+        too, since ``citation_extent`` stopped reading a heading number's
+        period as a sentence ending (#390); it has its own end-to-end test
+        below.
         """
         self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
         self._write(
@@ -800,6 +797,75 @@ class TestCheckDocCitations(unittest.TestCase):
         """``§ 2.1/2.3`` normalises to words no one heading holds."""
         hit = self._arch_resolve("2.1/2.3")
         self.assertIsNotNone(hit, "a section list must still resolve")
+
+    # ── The period in "§ 19." belongs to the heading (#390) ────────────
+    #
+    # dungeons-world.md numbers its headings as a list, so "§ 19. Ley Nexus
+    # Hollow" spells one out. ``citation_extent`` read that period as the end
+    # of a sentence and handed the resolver the bare "19" — which resolves on
+    # the id alone, so neither the title nor the narrowing term was ever
+    # looked at. The invention check above was refusing "§ 19. Ley Nexus
+    # Hollow 21. Invented Chamber" when called directly while the gate passed
+    # it, because the citation reaching the resolver had already lost
+    # everything after the "19". These tests run through the gate, which is
+    # the only place that gap was visible.
+
+    def _dungeon_scan(self, citation: str) -> list[str]:
+        self._write("docs/story/dungeons.md", DUNGEON_FIXTURE)
+        self._write("game/scripts/a.gd", f"# See {citation}\n")
+        return self._errors()
+
+    def test_a_numbered_list_citation_keeps_its_title_and_term(self):
+        """The good citation: heading spelled out, term that is really there."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow > 'A leech feeds'."
+        )
+        self.assertEqual(errors, [])
+
+    def test_a_numbered_list_citations_term_is_actually_checked(self):
+        """The term used to be discarded along with the title, unchecked."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow > 'nobody ever wrote this'."
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("does not appear under", errors[0])
+
+    def test_a_second_id_after_a_numbered_list_heading_fails_the_scan(self):
+        """``match_heading``'s own documented example, through the gate."""
+        errors = self._dungeon_scan(
+            "dungeons.md § 19. Ley Nexus Hollow 21. Invented Chamber."
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_an_id_followed_by_code_still_ends_at_its_period(self):
+        """Only a capitalized word opens a heading title.
+
+        ``enemy.gd`` cites ``enemy-ability-conventions.md §2.4.`` with a
+        GDScript signature wrapped onto the next line. Stepping over that
+        period would pull the signature into the citation's identity, which
+        is the thing ``citation_extent`` exists to prevent.
+        """
+        self.assertEqual(
+            check_doc_citations.citation_extent(
+                "2.4. func apply_buff(stat: String, mult: float) -> void:"
+            ),
+            "2.4.",
+        )
+
+    def test_a_sentence_ending_on_a_number_still_ends_the_citation(self):
+        """``a stat cannot pass 255. Combat re-clamps.`` — one citation, not two.
+
+        The period stays on the cut so ``255.`` keeps the section-id shape
+        the resolver's invention check reads; what follows it is discarded
+        exactly as before.
+        """
+        self.assertEqual(
+            check_doc_citations.citation_extent(
+                "Equipment and Buffs: a stat cannot pass 255. Combat re-clamps."
+            ),
+            "Equipment and Buffs: a stat cannot pass 255.",
+        )
 
     # ── Over-reading a wrapped line must stay free (#367) ──────────────
     #
