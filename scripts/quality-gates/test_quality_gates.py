@@ -870,11 +870,11 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertEqual(hit[2], "1.2a Script Size Budget")
 
     def test_the_refusal_stops_at_one_word(self):
-        """Longer buried prefixes are still accepted, and #415 says so.
+        """Longer buried prefixes are still accepted, and #416 says so.
 
         ``World Changes`` is not the subject of ``### The World Changes``
         either, but two words is a claim the subject rule does not reach.
-        Pinning the boundary here means the day #415 moves it, this test is
+        Pinning the boundary here means the day #416 moves it, this test is
         the one that says the behavior changed on purpose.
         """
         hit = self._resolve("World Changes and the map redraws")

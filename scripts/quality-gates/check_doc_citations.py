@@ -24,7 +24,7 @@ contains — so a citation can be read, resolve, and still name a heading
 nobody wrote. ``names_the_heading`` closes the loosest case of that, the
 one-word match on a word buried inside some other heading, which is what
 made ``combat-formulas.md § Act scaling`` land on ``### Regular Enemy HP by
-Act`` in #404. Longer partial matches are not closed, and #415 tracks them.
+Act`` in #404. Longer partial matches are not closed; #416 tracks those.
 
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
@@ -446,7 +446,7 @@ def names_the_heading(title: str, word: str) -> bool:
     ``### Spirit-speaker Caden`` is house style and stays legal.
 
     This closes one shape of false green, not the family. A *two*-word prefix
-    buried the same way is still accepted — #415.
+    buried the same way is still accepted — #416.
     """
     subject = heading_subject(title)
     cited = normalize(word).split()
@@ -644,7 +644,7 @@ def match_heading(
     is how ``combat-formulas.md § Act scaling`` reached ``### Regular Enemy HP
     by Act`` (#404). So at ``k == 1`` the word must be the heading's own
     subject; see ``names_the_heading`` for what that means and for the longer
-    partial matches it does not cover (#415).
+    partial matches it does not cover (#416).
 
     ``own`` is how many words of ``candidate`` came from the citation's own
     line rather than from the wrapped continuation ``citation_tail`` joined
