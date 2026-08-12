@@ -247,6 +247,23 @@ A leech feeds on the ley line here.
 Pallor waits on the top floor.
 """
 
+# combat-formulas.md reduced to the two headings that made #404's exemplar
+# resolve to the wrong one. There is no "Act scaling" heading — that is the
+# point — and "Regular Enemy HP by Act" ends on the word the citation opens
+# with, so a one-word shortening reaches it from the wrong end. The real fix
+# was to repoint the citation at Danger Counter, whose body carries the term.
+ACT_SCALING_FIXTURE = """# Combat Formulas
+
+## Danger Counter
+
+The counter drives the encounter rate. Act scaling multiplies the increment:
+Act I x1.0, Act II x1.1, Act III x1.1.
+
+## Regular Enemy HP by Act
+
+The HP table a one-word citation used to land on.
+"""
+
 # The house style in one file: a heading named by its last word
 # (``§ Caden``), a heading named by a plural of its first (``§ Inns``), a
 # heading named by its breadcrumb path (``§ Interlude The World Changes``),
@@ -806,6 +823,89 @@ class TestCheckDocCitations(unittest.TestCase):
             "# npcs.md § Caden. npcs.md § Inns.\n"
             "# npcs.md § Interlude The World Changes.\n"
             "# npcs.md § Danger Counter increments once per step.\n",
+        )
+        self.assertEqual(self._errors(), [])
+
+    # ── The floor under the shortening (#404) ──────────────────────────
+    #
+    # #404 was filed over a citation the gate could not read. Widening the
+    # regex made it readable — and it still resolved, because the loop
+    # shortened it to one word and ``match_words`` will take that word from
+    # anywhere in a heading's breadcrumb. ``§ Act scaling`` landed on
+    # ``### Regular Enemy HP by Act``: read, resolved, wrong. Only the hand
+    # edit to geography.md removed it, which is not something a gate can
+    # notice happening again. These tests are what notices.
+
+    def test_a_one_word_match_buried_in_the_heading_resolves_to_nothing(self):
+        """``§ Costs of travel`` must not land on ``## Inn Costs``."""
+        self.assertIsNone(self._resolve("Costs of travel"))
+
+    def test_a_one_word_match_on_the_headings_subject_still_resolves(self):
+        """``§ Inns are twenty gil`` may: ``Inn`` is what the heading is."""
+        hit = self._resolve("Inns are twenty gil")
+        self.assertIsNotNone(hit, "a subject-word citation must still resolve")
+        self.assertEqual(hit[2], "Inn Costs")
+
+    def test_a_one_word_citation_that_names_nothing_more_still_resolves(self):
+        """``npcs.md § Caden`` alone stays legal — it claims nothing else."""
+        hit = self._resolve("Caden")
+        self.assertIsNotNone(hit, "§ Caden must still resolve")
+        self.assertEqual(hit[2], "Spirit-speaker Caden")
+
+    def test_a_leading_section_id_is_not_the_headings_subject(self):
+        """``§ Script sizes`` reaches ``### 1.2a Script Size Budget``.
+
+        The subject of a numbered heading is what follows the number, so the
+        id must be stripped before the first word is read — otherwise every
+        numbered heading's subject would be a digit and every one-word
+        citation of one would be refused.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(),
+            "docs/plans/arch.md",
+            "Script sizes are capped",
+        )
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "1.2a Script Size Budget")
+
+    def test_the_refusal_stops_at_one_word(self):
+        """Longer buried prefixes are still accepted, and #415 says so.
+
+        ``World Changes`` is not the subject of ``### The World Changes``
+        either, but two words is a claim the subject rule does not reach.
+        Pinning the boundary here means the day #415 moves it, this test is
+        the one that says the behavior changed on purpose.
+        """
+        hit = self._resolve("World Changes and the map redraws")
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "The World Changes")
+
+    def test_the_404_exemplar_fails_the_whole_scan(self):
+        """The defect #404 was filed over, verbatim, end to end.
+
+        ``docs/story/geography.md:556`` on ``main`` read exactly this line.
+        Before this test the branch could delete the guard and the line would
+        resolve again in silence.
+        """
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        self._write(
+            "docs/story/geography.md",
+            "Act IV and the Epilogue hold at Act III's value -- see\n"
+            "[combat-formulas.md](combat-formulas.md) § Act scaling for why.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+        self.assertIn("Act scaling", errors[0])
+
+    def test_the_repointed_form_of_the_404_exemplar_passes(self):
+        """And the fix that replaced it resolves, so the guard is not a wall."""
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        self._write(
+            "docs/story/geography.md",
+            "see [combat-formulas.md](combat-formulas.md) "
+            "§ Danger Counter > 'Act scaling'.\n",
         )
         self.assertEqual(self._errors(), [])
 

@@ -13,8 +13,18 @@ test notices. This gate makes that impossible in live files by
 The filename may be bare, a markdown link — ``[magic.md](../story/magic.md)
 § Spell Balance Guidelines``, which is the house style in ``docs/`` — or a
 code span: ``` `items.md` § Key Items ```. Only the bare form was read until
-#404, which left 132 of today's citations checked by nobody. Where a link
-names two paths, the destination is the one resolved (``cited_path``).
+#404, which left 132 of today's citations unread, and a citation nobody
+reads is one nobody can catch rotting. Where a link names two paths, the
+destination is the one resolved (``cited_path``).
+
+Read is not the same as verified, and the gap between the two is where this
+gate's remaining exposure lives. The resolver is deliberately loose — it
+accepts any word prefix of the citation that the heading's breadcrumb
+contains — so a citation can be read, resolve, and still name a heading
+nobody wrote. ``names_the_heading`` closes the loosest case of that, the
+one-word match on a word buried inside some other heading, which is what
+made ``combat-formulas.md § Act scaling`` land on ``### Regular Enemy HP by
+Act`` in #404. Longer partial matches are not closed, and #415 tracks them.
 
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
@@ -397,6 +407,54 @@ def heading_id(title: str) -> str | None:
     return m.group(1).lower() if m else None
 
 
+def heading_subject(title: str) -> list[str]:
+    """A heading's own words, with any leading section id dropped.
+
+    ``"56. Ironhide"`` -> ``["ironhide"]``; ``"Regular Enemy HP by Act"`` ->
+    ``["regular", "enemy", "hp", "by", "act"]``. The id is dropped because a
+    numbered heading's subject is what comes after the number, and
+    ``magic.md § Ironhide`` names that subject exactly.
+    """
+    stripped = title.strip()
+    m = HEADING_ID_RE.match(stripped)
+    if m:
+        stripped = stripped[m.end():]
+    return normalize(stripped).split()
+
+
+def names_the_heading(title: str, word: str) -> bool:
+    """True when a *one-word* citation names what ``title`` is about.
+
+    ``match_words`` accepts a citation word anywhere in a heading's breadcrumb
+    path, in order. Over a single word that is far too weak a claim: ``act``
+    appears somewhere in the breadcrumb of ``### Regular Enemy HP by Act``, so
+    ``combat-formulas.md § Act scaling`` — a heading nobody wrote, and the
+    exemplar defect #404 was filed over — resolved to it and the gate reported
+    passed. Widening the regex so the citation was finally *read* did not
+    change that; it only meant the wrong resolution now happened in public.
+
+    The test is where in the heading the word landed. A one-word citation that
+    names a heading names its **subject** — the first word of its own title,
+    after any leading section id: ``§ Weapons`` for ``### Weapons``,
+    ``§ Ironhide`` for ``### 56. Ironhide``, ``§ Cael`` for ``### Cael —
+    Rally``. A word found buried mid-title is a coincidence of the subsequence
+    matcher, not a name.
+
+    Applied only when the citation offered *more* words than the one that
+    matched (see ``match_heading``), because a citation that offers exactly one
+    word has made no larger claim to check it against: ``npcs.md § Caden`` for
+    ``### Spirit-speaker Caden`` is house style and stays legal.
+
+    This closes one shape of false green, not the family. A *two*-word prefix
+    buried the same way is still accepted — #415.
+    """
+    subject = heading_subject(title)
+    cited = normalize(word).split()
+    if not subject or not cited:
+        return True
+    return stem(subject[0]) == stem(cited[0])
+
+
 def match_section_id(
     index: DocIndex, path: str, section_id: str
 ) -> tuple[int, int, str] | None:
@@ -580,6 +638,14 @@ def match_heading(
     heading, so once a citation has been caught naming a subsection nobody
     wrote there is nothing better left to find.
 
+    Shortening also has a floor. A prefix of *one* word, offered by a citation
+    that named more than one, is the weakest claim this loop can accept, and
+    ``match_words`` will take that word from anywhere in the breadcrumb — which
+    is how ``combat-formulas.md § Act scaling`` reached ``### Regular Enemy HP
+    by Act`` (#404). So at ``k == 1`` the word must be the heading's own
+    subject; see ``names_the_heading`` for what that means and for the longer
+    partial matches it does not cover (#415).
+
     ``own`` is how many words of ``candidate`` came from the citation's own
     line rather than from the wrapped continuation ``citation_tail`` joined
     on; it bounds the refusal and defaults to all of them.
@@ -642,13 +708,24 @@ def match_heading(
         want = normalize(joined).split()
         if not want:
             continue
+        listed = False
         hit = match_words(index, path, want)
         if hit is None and "/" in joined:
             hit = match_all(index, path, joined.split("/"))
+            listed = hit is not None
         if hit is None:
             continue
         if continues_a_heading(words, k, own):
             return None
+        # The shortening has run all the way down to one word while the
+        # citation named more. That is the weakest match this loop can make,
+        # and it is the one that green-lit `§ Act scaling` — so the word has
+        # to be the heading's subject, not a word buried inside it. A list
+        # citation is exempt: ``hit`` is then only its first part's heading,
+        # so there is nothing meaningful to compare the whole token against.
+        if k == 1 and own > 1 and not listed:
+            if not names_the_heading(hit[2], words[0]):
+                return None
         return hit
     return None
 
