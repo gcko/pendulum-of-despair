@@ -17,6 +17,29 @@ code span: ``` `items.md` § Key Items ```. Only the bare form was read until
 reads is one nobody can catch rotting. Where a link names two paths, the
 destination is the one resolved (``cited_path``).
 
+The filename may also be missing, because a citation *before* it on the same
+line already supplied one: ``combat-formulas.md § Danger Counter, § Battle
+Formations``. Every ``§`` after the first went unread, so ``§ Battle
+Formations`` could be renamed out from under three call sites while this gate
+stayed green. Such a ``§`` now inherits the file the list opened with, for as
+long as the text between the two signs is still list — see ``chain_continues``
+and ``CHAIN_BREAK_RE`` for what ends one, and ``collect_sites`` for how the
+inheritance is applied (#415).
+
+**Refused on purpose:** a ``§ <Heading>`` in a markdown document with no
+filename anywhere near it. A section *id* in that position is read as the
+document's reference to its own section (#386, ``SELF_CITE_RE``), but the same
+position in word form is genuinely two different citations in this corpus and
+nothing in the text separates them. ``progression.md`` writes ``under § Ley
+Crystal System`` and ``equipment.md`` writes ``the War Cleaver (§
+Greatswords)``, both naming their own headings; ``bestiary/act-i.md`` writes
+``the § Location Vocabulary rule`` and ``all sit inside § Level Ranges by
+Act``, both naming ``bestiary/README.md``'s. Reading them as same-document
+would fail act-i.md's two, and reading them as cross-document would resolve
+progression.md's against whatever file was last mentioned. They are left
+unread rather than guessed at; the fix that makes one of them readable is to
+write its filename, not to widen this gate.
+
 Read is not the same as verified, and the gap between the two is where this
 gate's remaining exposure lives. The resolver is deliberately loose — it
 accepts any word prefix of the citation that the heading's breadcrumb
@@ -40,6 +63,7 @@ that each bullet's path exists — see ``check_gap_design_references`` (#403).
 
 Exit code 0 = pass, 1 = offending citations found.
 """
+import bisect
 import glob
 import os
 import re
@@ -200,18 +224,76 @@ SELF_CITE_RE = re.compile(
 )
 
 # A filename that could own the ``§`` after it. A bare ``§N`` is only read as
-# a self-reference when none appears in the wrap window before it, because the
-# house style writes cross-document citations as markdown links
-# ("[dungeons-world.md](../dungeons-world.md)\n§ 2, recommended level 12-15")
-# whose closing paren stops HEADING_CITE_RE from reaching the section sign.
-# Reading *that* as a self-reference would resolve it against the wrong
+# a self-reference when none appears earlier on its own line, because a
+# filename in the prose ahead of it is a document the ``§`` may well belong to,
+# and reading it as a self-reference would resolve it against the wrong
 # document — silently, and in the direction this gate exists to prevent.
+#
+# The window used to reach a line further back, for a shape #404 has since
+# taken over: the house style's link form
+# ("[dungeons-world.md](../dungeons-world.md)\n§ 2, recommended level 12-15")
+# is read by HEADING_CITE_RE itself now, wrap and closing paren included, so it
+# never reaches this test. What the wider window still did was hide correct
+# self-references behind a filename cited on the line above —
+# ``enemy-ability-conventions.md``'s own ``§2.3`` and ``§2.6``, both suppressed
+# by a ``magic.md`` and a ``combat-formulas.md`` one line up (#415).
 NEARBY_DOC_RE = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md")
 
 # Where one citation stops and the next begins. A comment often chains them
 # ("conventions §2.1; palette-families.md § Serpent Family > 'Marsh Serpent'"),
 # and without this cut the first citation would claim the second one's term.
 NEXT_CITE_RE = re.compile(r"§|[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md")
+
+# Every section sign, and the run of spaces after it — the same slice
+# ``HEADING_CITE_RE`` ends on, so a chained site's offset means the same thing
+# a named site's does.
+SECTION_SIGN_RE = re.compile(r"§[ \t]*")
+
+# What stops one citation's file from carrying on to the next ``§`` (#415).
+#
+# The house style chains sections of one document into a *list*:
+# ``combat-formulas.md § Danger Counter, § Battle Formations``, ``audio.md
+# § 3.2 priority stack, § 3.4 same-ID limit``, ``geography.md § Region
+# Boundaries / § Encounter Zones``. Only the first ``§`` of each was read, so
+# ``§ Battle Formations`` could be renamed out from under three call sites and
+# this gate would stay green. The later ones inherit the file the list opened
+# with — but only while the text between them is still list, which is what this
+# pattern decides by naming the four things that end one:
+#
+# * ``;`` — the house style's own separator between two *different* citations
+#   (see ``NEXT_CITE_RE``). It is also what tells the one live case apart where
+#   inheriting would be wrong: ``enemy-ability-conventions.md`` writes ``magic.md
+#   § Tier 4 AoE Exemption; §2.3 only ever applies ...``, where ``§2.3`` is one
+#   of its *own* sections and magic.md has no 2.3 at all.
+# * a sentence-ending ``.`` — a new sentence is a new subject. ``bosses.md``
+#   writes ``[act-i.md](act-i.md) § Fenmother's Hollow for the same note on the
+#   roster (#287). The Act column in § Quick Reference ...``, where § Quick
+#   Reference is bosses.md's own heading and act-i.md has no such section.
+# * a blank line, with or without the comment or blockquote marker a blank line
+#   carries inside a ``##`` doc comment — a paragraph is as far as a list runs.
+# * another ``.md`` — that filename either owns the next ``§`` through
+#   ``HEADING_CITE_RE`` or is prose naming a different document; either way the
+#   list is over.
+#
+# A period closing a numbered-list heading id (``§ 19. Ley Nexus Hollow``) reads
+# as a sentence end here and breaks the chain. That costs a chain and never
+# creates a wrong one, which is the safe direction; ``citation_extent`` needs
+# the opposite bias and pays for it with ``LEADING_ID_DOT_RE``.
+CHAIN_BREAK_RE = re.compile(
+    r";"
+    r"|\.(?:[ \t]|\r?\n|$)"
+    r"|\r?\n[ \t]*(?:[#>*/]+[ \t]*)?\r?\n"
+    r"|[A-Za-z0-9_][A-Za-z0-9_.\-/]*\.md"
+)
+
+# How far a chain may wrap: one line break, the same tolerance
+# ``HEADING_CITE_RE`` grants between a filename and its section sign and
+# ``citation_tail`` grants between a heading and its continuation. A list of
+# sections is written on one line or wraps once; past that the ``§`` further
+# down is a new thought. Without this bound a chain crossed thirty lines of
+# GDScript inside one function body, where nothing it passed happened to be a
+# sentence.
+CHAIN_MAX_WRAP = 1
 
 # A ratchet, now at zero (#366). It carried the twelve citations that
 # predated this gate and named a heading nobody wrote; every one has since
@@ -901,6 +983,153 @@ def citation_extent(rest: str) -> str:
     return rest
 
 
+def chain_continues(gap: str) -> bool:
+    """True when ``gap`` is still list, so the next ``§`` inherits the file.
+
+    ``gap`` is the text between one citation's section sign and the next. Two
+    things end the list. ``CHAIN_BREAK_RE`` names the first four — a new clause,
+    a new sentence, a new paragraph, a new document — and is documented where it
+    is defined.
+
+    The fifth is a ``)`` with no opener of its own, which closes the
+    parenthetical the citation was written inside. ``citation_extent`` reads an
+    unbalanced ``)`` the same way and for the same reason, and it is the only
+    thing separating two live lines that are otherwise identical prose:
+
+        ([ui-design.md](ui-design.md) § 4.6 Use Flow, whose overlay follows
+        the § 3.3 party panel — ...)
+
+    where § 3.3 is ui-design.md's, from
+
+        ... permanent Stat Capsule gains ([items.md](items.md) § Stat
+        Capsules), plus ... under § Ley Crystal System — then clamped ...
+
+    where § Ley Crystal System is progression.md's own heading and items.md has
+    no such section. The citation's parenthesis closed before the second ``§``;
+    the file it named went with it.
+    """
+    if CHAIN_BREAK_RE.search(gap):
+        return False
+    depth = 0
+    for ch in gap:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            if depth == 0:
+                return False
+            depth -= 1
+    return True
+
+
+def line_starts(text: str) -> list[int]:
+    """Offset each line of ``text`` begins at, 0-based and one past the end."""
+    starts = [0]
+    for line in text.split("\n"):
+        starts.append(starts[-1] + len(line) + 1)
+    return starts
+
+
+def collect_sites(
+    path: str, text: str
+) -> list[tuple[str, int, list[str] | None, bool, bool]]:
+    """Every ``§`` in ``text`` this gate can attach a document to.
+
+    Returns ``(cited filename, offset just past the section sign, forced
+    targets, decorated, chained)`` in document order. A cross-document citation
+    names its file and is resolved through the index; a self-reference has no
+    filename to name and resolves against the document it sits in (#386).
+
+    *Decorated* means the filename was written as a markdown link or a code
+    span rather than bare — the forms nothing read before #404, counted so the
+    coverage they add is a number on every run rather than a claim in a
+    docstring.
+
+    *Chained* means the ``§`` named no file of its own and inherited one from
+    the citation before it (#415). The house style lists several sections of
+    one document off a single filename — ``combat-formulas.md § Danger Counter,
+    § Battle Formations`` — and every ``§`` after the first went unread, so
+    renaming ``§ Battle Formations`` broke three call sites without failing
+    this gate. Inheritance runs while ``chain_continues`` says the text between
+    the two signs is still list and the list has wrapped no more than
+    ``CHAIN_MAX_WRAP`` times; both are documented where they are defined.
+
+    A chained site inherits its predecessor's ``forced`` targets too, so a list
+    that opens on a self-reference stays a list of the citing document's own
+    sections rather than becoming a cross-document claim.
+
+    **A bare ``§N`` and a chained ``§`` are contradictory readings of the same
+    text, and the order below is the rule for choosing between them.** A named
+    citation wins over both; a chain wins over a self-reference; a
+    self-reference is what is left. The chain wins because it rests on evidence
+    the self-reading has none of — a citation that named a document, and an
+    unbroken list running from it to here — while the self-reading rests only
+    on the absence of a filename. Both live cases turn on exactly that:
+
+        [bestiary/enemy-ability-conventions.md](...)
+        §1 (ability schema) and §3 (boss-AI conventions).
+
+    in ``technical-architecture.md``, where ``§3`` is the cited file's and the
+    citing file's own ``## 3. Game State Machine`` would swallow it silently;
+    and
+
+        (Tier 4 is exempt — magic.md
+        § Tier 4 AoE Exemption; §2.3 only ever applies the rule at Tier 1-2 ...
+
+    in ``enemy-ability-conventions.md``, where the ``;`` ends the list, so
+    ``§2.3`` falls through to the self-reading and reaches that file's own
+    ``### 2.3`` — which is right, and which magic.md could not have supplied
+    because it numbers no section 2.3 at all.
+    """
+    # Keyed on the section sign's own offset rather than the end of the match,
+    # because that is the anchor the chain measures gaps between.
+    named: dict[int, tuple[str, int, list[str] | None, bool, bool]] = {}
+    for m in HEADING_CITE_RE.finditer(text):
+        sign = text.rfind("§", m.start(), m.end())
+        named[sign] = (
+            cited_path(path, m),
+            m.end(),
+            None,
+            bool(m.group("target")) or m.group(0)[len(m.group("file"))] == "`",
+            False,
+        )
+
+    starts = line_starts(text)
+    self_refs: dict[int, tuple[str, int, list[str] | None, bool, bool]] = {}
+    if path.endswith(".md"):
+        for m in SELF_CITE_RE.finditer(text):
+            if m.start() in named:
+                continue
+            here = bisect.bisect_right(starts, m.start()) - 1
+            if NEARBY_DOC_RE.search(text[starts[here]:m.start()]):
+                continue
+            self_refs[m.start()] = (
+                os.path.basename(path),
+                m.end(),
+                [path],
+                False,
+                False,
+            )
+
+    sites: list[tuple[str, int, list[str] | None, bool, bool]] = []
+    previous: tuple[int, tuple[str, int, list[str] | None, bool, bool]] | None
+    previous = None
+    for m in SECTION_SIGN_RE.finditer(text):
+        sign = m.start()
+        site = named.get(sign)
+        if site is None and previous is not None:
+            gap = text[previous[0] + 1: sign]
+            if gap.count("\n") <= CHAIN_MAX_WRAP and chain_continues(gap):
+                site = (previous[1][0], m.end(), previous[1][2], False, True)
+        if site is None:
+            site = self_refs.get(sign)
+        if site is None:
+            previous = None
+            continue
+        sites.append(site)
+        previous = (sign, site)
+    return sites
+
+
 def check_file(
     path: str,
     index: DocIndex,
@@ -944,9 +1173,7 @@ def check_text(
     # with a `relevant_doc.md` placeholder.
     skip_lines: set[int] = fenced_lines(text) if path.endswith(".md") else set()
 
-    starts = [0]
-    for line in text.split("\n"):
-        starts.append(starts[-1] + len(line) + 1)
+    starts = line_starts(text)
 
     def line_of(offset: int) -> int:
         lo, hi = 0, len(starts) - 1
@@ -965,38 +1192,9 @@ def check_text(
             f"`{m.group(0)}` — {FIX_HINT_ANCHOR}"
         )
 
-    # (cited filename, offset just past the section sign, forced targets,
-    # decorated). A cross-document citation names its file and is resolved
-    # through the index; a self-reference has no filename to name and resolves
-    # against the document it sits in (#386). *Decorated* means the filename
-    # was written as a markdown link or a code span rather than bare — the
-    # forms nothing read before #404, counted so the coverage they add is a
-    # number on every run rather than a claim in a docstring.
-    sites: list[tuple[str, int, list[str] | None, bool]] = [
-        (
-            cited_path(path, m),
-            m.end(),
-            None,
-            bool(m.group("target")) or m.group(0)[len(m.group("file"))] == "`",
-        )
-        for m in HEADING_CITE_RE.finditer(text)
-    ]
-    if path.endswith(".md"):
-        named = {
-            text.rfind("§", m.start(), m.end())
-            for m in HEADING_CITE_RE.finditer(text)
-        }
-        for m in SELF_CITE_RE.finditer(text):
-            if m.start() in named:
-                continue
-            here = line_of(m.start())
-            window_start = starts[here - 2] if here >= 2 else 0
-            if NEARBY_DOC_RE.search(text[window_start:m.start()]):
-                continue
-            sites.append((os.path.basename(path), m.end(), [path], False))
-        sites.sort(key=lambda site: site[1])
-
-    for cited_file, cite_end, forced, decorated in sites:
+    for cited_file, cite_end, forced, decorated, chained in collect_sites(
+        path, text
+    ):
         found_at: int = line_of(cite_end)
 
         if found_at in skip_lines:
@@ -1009,6 +1207,8 @@ def check_text(
                 tally["self_references"] = tally.get("self_references", 0) + 1
             if decorated:
                 tally["decorated"] = tally.get("decorated", 0) + 1
+            if chained:
+                tally["chained"] = tally.get("chained", 0) + 1
 
         # ``own_len`` marks where the citation's own line stops and the
         # wrapped continuation begins. Every trim below returns a *prefix* of
@@ -1170,13 +1370,13 @@ def check_citations(
     that wants the whole gate must do the same.
 
     ``tally``, when given, is filled with ``files``, ``citations``,
-    ``self_references`` and ``decorated``: how many files were walked, how
-    many citations were resolved in them, how many of those were a document
-    referring to its own section (#386), and how many were written as a
-    markdown link or a code span (#404). A scan reports its findings by
-    returning nothing, and nothing is also what a scan that stopped looking
-    returns; the counts are what tells those apart, and ``main`` prints them
-    on every run.
+    ``self_references``, ``decorated`` and ``chained``: how many files were
+    walked, how many citations were resolved in them, how many of those were a
+    document referring to its own section (#386), how many were written as a
+    markdown link or a code span (#404), and how many inherited their file from
+    the citation before them (#415). A scan reports its findings by returning
+    nothing, and nothing is also what a scan that stopped looking returns; the
+    counts are what tells those apart, and ``main`` prints them on every run.
     """
     index = DocIndex() if index is None else index
     errors: list[str] = []
@@ -1186,6 +1386,7 @@ def check_citations(
         tally.setdefault("citations", 0)
         tally.setdefault("self_references", 0)
         tally.setdefault("decorated", 0)
+        tally.setdefault("chained", 0)
         tally["files"] = len(scanned)
     for path in scanned:
         errors.extend(check_file(path, index, seen_known, tally))
@@ -1225,9 +1426,11 @@ def main() -> int:
     print(
         f"Doc citation validation passed. {tally['citations']} citation(s) "
         f"resolved across {tally['files']} file(s), "
-        f"{tally['self_references']} of them same-document (#386) and "
+        f"{tally['self_references']} of them same-document (#386), "
         f"{tally['decorated']} written as a markdown link or code span "
-        f"(#404). {tally['gap_bullets']} Design-reference bullet(s) read in "
+        f"(#404) and {tally['chained']} inheriting their file from the "
+        f"citation before them (#415). "
+        f"{tally['gap_bullets']} Design-reference bullet(s) read in "
         f"{tally['gap_docs']} GAP doc(s) (#403). "
         f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in "
         "KNOWN_UNRESOLVED (#366); the list can only shrink."

@@ -3,9 +3,9 @@ extends RefCounted
 ##
 ## Pure static functions — no instance state. Every value traces to
 ## docs/story/bestiary/README.md. Type-element bonuses stack MULTIPLICATIVELY
-## with elemental weakness/resistance (README §Stacking Rule), so callers pass
-## the returned value as `interaction_mult` into damage_calculator, where it is
-## multiplied against `element_mod`.
+## with elemental weakness/resistance (bestiary/README.md § Stacking Rule), so
+## callers pass the returned value as `interaction_mult` into
+## damage_calculator, where it is multiplied against `element_mod`.
 ##
 ## Scope note: this slice implements only the dependency-free type traits that
 ## are wired into a live path — type-element bonuses (magic) and Spirit pre-DEF

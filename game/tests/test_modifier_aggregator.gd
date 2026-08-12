@@ -4,7 +4,7 @@ extends GutTest
 
 const Agg := preload("res://scripts/combat/modifier_aggregator.gd")
 
-# --- Type-element bonuses (README §Enemy Type Rules) ---
+# --- Type-element bonuses (bestiary/README.md § Enemy Type Rules) ---
 
 
 func test_undead_takes_spirit_element_1_5x() -> void:
