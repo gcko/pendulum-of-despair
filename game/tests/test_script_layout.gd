@@ -31,9 +31,11 @@ const CEILING_ROOTS: Array[String] = ["res://scripts", "res://tests"]
 
 ## Trees the 400-line aim applies to. Deliberately narrower than
 ## CEILING_ROOTS: § 1.2a exempts test suites from the aim, because a test
-## file's length tracks how many behaviours its subject has rather than any
-## property of its own design. The exemption is a documented decision, so
-## the guard below checks that the doc still states it.
+## file's length tracks how many behaviors its subject has rather than any
+## property of its own design. No guard here checks that the doc still
+## states the exemption; the only doc guard below is
+## test_the_doc_states_which_trees_the_budget_covers, which checks that
+## § 1.2a names each tree in CEILING_ROOTS.
 const AIM_ROOTS: Array[String] = ["res://scripts"]
 
 ## Files in the 400-600 band that § 1.2a does not name yet.
@@ -310,7 +312,8 @@ func test_the_doc_states_which_trees_the_budget_covers() -> void:
 	# undocumented makes the scope an accident rather than a decision — which
 	# is exactly how game/tests/ stayed unscanned while three files there ran
 	# past the hard maximum (#374). Every tree the ceiling walks must be named
-	# in § 1.2a, and so must the narrower scope of the 400-line aim.
+	# in § 1.2a. This checks the ceiling's scope only — nothing here asserts
+	# that the doc still spells out the narrower scope of the 400-line aim.
 	var section: String = _budget_section()
 	if section.is_empty():
 		return  # _budget_section already failed the test

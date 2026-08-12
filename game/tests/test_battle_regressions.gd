@@ -1,7 +1,7 @@
 extends GutTest
 ## Regression guards for the battle layer: the ATB frame budget, command
 ## menu input handling, heal targeting, the defend flag's lifetime, the
-## item command's return contract, and the field behaviour of item effects.
+## item command's return contract, and the field behavior of item effects.
 ##
 ## Split out of the 968-line test_issue_fixes.gd (#374).
 

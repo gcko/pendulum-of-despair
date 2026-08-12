@@ -40,6 +40,7 @@ func test_helpers_teardown_overlay() -> void:
 		GameManager.OverlayState.NONE,
 		"overlay should be NONE after teardown",
 	)
+	assert_false(get_tree().paused, "tree should be unpaused")
 
 
 # ==========================================================================
