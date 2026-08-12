@@ -57,7 +57,19 @@ class DialogueSyncFixture(unittest.TestCase):
     def scene(self, *lines: str) -> dict:
         return {"scene_id": "fixture", "entries": [{"lines": list(lines)}]}
 
-    def run_check(self, pins=None) -> list[str]:
+    def choice_scene(self, *labels: str) -> dict:
+        """The shape thornmere_council.json ships: labels under a choice."""
+        return {
+            "scene_id": "fixture",
+            "entries": [
+                {
+                    "lines": ["The gate is sealed."],
+                    "choice": [{"label": label} for label in labels],
+                }
+            ],
+        }
+
+    def run_check(self, pins=None, min_dialogue_choices: int = 0) -> list[str]:
         """Run the gate over the fixture with the floors turned down."""
         return check_dialogue_sync.check_dialogue_sync(
             script_dir=self.script_dir,
@@ -67,6 +79,7 @@ class DialogueSyncFixture(unittest.TestCase):
             min_script_chars=1,
             min_dialogue_files=1,
             min_dialogue_lines=1,
+            min_dialogue_choices=min_dialogue_choices,
         )
 
 
@@ -109,6 +122,46 @@ class TestVerbatimMatching(DialogueSyncFixture):
         self.write_script("act-ii.md", "MAREN: Hold the line.\n")
         self.write_dialogue("scene.json", self.scene("Hold the line."))
         self.assertEqual(self.run_check(), [])
+
+    def test_choice_label_with_a_markdown_source_passes(self):
+        self.write_script(
+            "act.md", "EDREN: The gate is sealed.\n> **Choice: \"Open it.\"**\n"
+        )
+        self.write_dialogue("scene.json", self.choice_scene("Open it."))
+        self.assertEqual(self.run_check(), [])
+
+    def test_choice_label_with_no_markdown_source_fails(self):
+        """#398: every branch option was outside the gate that covered it."""
+        self.write_script("act.md", "EDREN: The gate is sealed.\n")
+        self.write_dialogue("scene.json", self.choice_scene("Force it open."))
+        errors = self.run_check()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("Force it open.", errors[0])
+        self.assertIn("no verbatim source", errors[0])
+
+    def test_command_text_with_no_markdown_source_fails(self):
+        self.write_script("act.md", "EDREN: The gate is sealed.\n")
+        self.write_dialogue(
+            "scene.json",
+            {
+                "entries": [
+                    {
+                        "lines": ["The gate is sealed."],
+                        "commands": [{"type": "title_card", "text": "DAWN"}],
+                    }
+                ]
+            },
+        )
+        errors = self.run_check()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("DAWN", errors[0])
+
+    def test_a_pinned_choice_label_passes_like_any_other_pin(self):
+        self.write_script("act.md", "EDREN: The gate is sealed.\n")
+        self.write_dialogue("scene.json", self.choice_scene("Force it open."))
+        self.assertEqual(
+            self.run_check({"scene.json": ("Force it open.",)}), []
+        )
 
     def test_markdown_without_a_shipped_line_is_not_an_error(self):
         """The reverse direction is out of scope — most script is direction."""
@@ -200,17 +253,44 @@ class TestRecursion(DialogueSyncFixture):
             "wrapper": {"inner": {"lines": ["depth three"]}},
             "listed": [[{"lines": ["through nested lists"]}]],
         }
-        found = list(check_dialogue_sync.iter_line_strings(doc))
+        found = list(check_dialogue_sync.iter_player_strings(doc))
         self.assertEqual(
             sorted(found),
-            ["depth three", "depth two", "through nested lists"],
+            [
+                ("lines", "depth three"),
+                ("lines", "depth two"),
+                ("lines", "through nested lists"),
+            ],
+        )
+
+    def test_the_walker_labels_each_string_with_the_key_that_held_it(self):
+        """The two counts are floored apart, so the kinds cannot blur."""
+        doc = {
+            "entries": [
+                {
+                    "lines": ["spoken"],
+                    "choice": [{"label": "chosen"}],
+                    "commands": [{"text": "carded"}],
+                }
+            ]
+        }
+        self.assertEqual(
+            sorted(check_dialogue_sync.iter_player_strings(doc)),
+            [("label", "chosen"), ("lines", "spoken"), ("text", "carded")],
         )
 
     def test_non_string_members_of_lines_are_skipped(self):
         doc = {"entries": [{"lines": ["real", None, 7, {"lines": ["deep"]}]}]}
         self.assertEqual(
-            sorted(check_dialogue_sync.iter_line_strings(doc)),
-            ["deep", "real"],
+            sorted(check_dialogue_sync.iter_player_strings(doc)),
+            [("lines", "deep"), ("lines", "real")],
+        )
+
+    def test_a_non_string_label_is_skipped_not_crashed_on(self):
+        doc = {"entries": [{"choice": [{"label": None}, {"label": "real"}]}]}
+        self.assertEqual(
+            list(check_dialogue_sync.iter_player_strings(doc)),
+            [("label", "real")],
         )
 
     def test_files_in_subdirectories_are_scanned(self):
@@ -238,7 +318,7 @@ class TestNonVacuity(DialogueSyncFixture):
             script_dir=os.path.join(self.tmpdir, "nope"),
             dialogue_dir=os.path.join(self.tmpdir, "also-nope"),
         )
-        self.assertEqual(len(errors), 4)
+        self.assertEqual(len(errors), 5)
 
     def test_a_walker_that_stops_descending_trips_the_floor(self):
         """Break the recursion, not the entry point: the floor still fires.
@@ -255,10 +335,10 @@ class TestNonVacuity(DialogueSyncFixture):
             if isinstance(node, dict):
                 for item in node.get("lines", []):
                     if isinstance(item, str):
-                        yield item
+                        yield "lines", item
 
-        real = check_dialogue_sync.iter_line_strings
-        check_dialogue_sync.iter_line_strings = shallow
+        real = check_dialogue_sync.iter_player_strings
+        check_dialogue_sync.iter_player_strings = shallow
         try:
             errors = check_dialogue_sync.check_dialogue_sync(
                 script_dir=self.script_dir,
@@ -268,13 +348,52 @@ class TestNonVacuity(DialogueSyncFixture):
                 min_script_chars=1,
                 min_dialogue_files=1,
                 min_dialogue_lines=3,
+                min_dialogue_choices=0,
             )
         finally:
-            check_dialogue_sync.iter_line_strings = real
+            check_dialogue_sync.iter_player_strings = real
 
         self.assertEqual(len(errors), 1)
         self.assertIn("dialogue lines[] strings", errors[0])
         self.assertIn("floor 3", errors[0])
+
+    def test_a_walker_that_drops_the_new_keys_trips_the_choice_floor(self):
+        """The #398 half of the same proof.
+
+        A walk that keeps reading ``lines`` while quietly losing ``label``
+        and ``text`` would clear the lines floor on the strength of 2,066
+        strings and report a clean tree over choices it never opened. The
+        second floor is what makes that impossible, so it is worth breaking
+        the walk on purpose to watch it fire.
+        """
+        self.write_script("act.md", "EDREN: The gate is sealed.\n")
+        self.write_dialogue("scene.json", self.choice_scene("Open it."))
+
+        real = check_dialogue_sync.iter_player_strings
+
+        def lines_only(node):
+            for key, value in real(node):
+                if key == "lines":
+                    yield key, value
+
+        try:
+            check_dialogue_sync.iter_player_strings = lines_only
+            errors = check_dialogue_sync.check_dialogue_sync(
+                script_dir=self.script_dir,
+                dialogue_dir=self.dialogue_dir,
+                known_orphans={},
+                min_script_files=1,
+                min_script_chars=1,
+                min_dialogue_files=1,
+                min_dialogue_lines=1,
+                min_dialogue_choices=1,
+            )
+        finally:
+            check_dialogue_sync.iter_player_strings = real
+
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("choice.label / command text", errors[0])
+        self.assertIn("read only 0", errors[0])
 
     def test_unreadable_json_is_reported_not_skipped(self):
         self.write_script("act.md", "EDREN: The gate is sealed.\n")
@@ -306,11 +425,21 @@ class TestAgainstTheRepo(unittest.TestCase):
         corpus, script_files = check_dialogue_sync.load_script_corpus()
         dialogue_files = check_dialogue_sync.iter_dialogue_files()
         lines = 0
+        choices = 0
         for rel in dialogue_files:
             path = os.path.join(check_dialogue_sync.DIALOGUE_DIR, rel)
             with open(path, encoding="utf-8") as handle:
                 doc = json.load(handle)
-            lines += len(list(check_dialogue_sync.iter_line_strings(doc)))
+            lines += sum(
+                1
+                for key, _ in check_dialogue_sync.iter_player_strings(doc)
+                if key == "lines"
+            )
+            choices += sum(
+                1
+                for key, _ in check_dialogue_sync.iter_player_strings(doc)
+                if key != "lines"
+            )
 
         self.assertGreater(script_files, check_dialogue_sync.MIN_SCRIPT_FILES)
         self.assertGreater(len(corpus), check_dialogue_sync.MIN_SCRIPT_CHARS)
@@ -318,6 +447,9 @@ class TestAgainstTheRepo(unittest.TestCase):
             len(dialogue_files), check_dialogue_sync.MIN_DIALOGUE_FILES
         )
         self.assertGreater(lines, check_dialogue_sync.MIN_DIALOGUE_LINES)
+        self.assertGreater(
+            choices, check_dialogue_sync.MIN_DIALOGUE_CHOICES
+        )
 
     def test_every_pinned_file_and_string_is_real(self):
         """A pin names a shipped file and a string that file still holds."""
@@ -326,7 +458,10 @@ class TestAgainstTheRepo(unittest.TestCase):
             self.assertTrue(os.path.isfile(path), f"{rel} is not a file")
             with open(path, encoding="utf-8") as handle:
                 doc = json.load(handle)
-            shipped = set(check_dialogue_sync.iter_line_strings(doc))
+            shipped = {
+                text
+                for _, text in check_dialogue_sync.iter_player_strings(doc)
+            }
             for line in pinned:
                 self.assertIn(line, shipped, f"{rel}: {line!r}")
 
@@ -373,6 +508,7 @@ class TestPinnedFileDeleted(unittest.TestCase):
                 min_script_chars=0,
                 min_dialogue_files=0,
                 min_dialogue_lines=0,
+                min_dialogue_choices=0,
             )
             missing = [e for e in errors if "no longer exists" in e]
             self.assertEqual(len(missing), 1, errors)

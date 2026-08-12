@@ -63,9 +63,11 @@ So `game/data/dialogue/*.json` is **authored, not derived**. It and the script
 markdown are two hand-maintained copies of the same player-facing strings, and
 the rule that keeps them in step is written down in `docs/story/README.md`
 § Writing Conventions. `scripts/quality-gates/check_dialogue_sync.py` — quality
-gate J, pre-push — enforces it in one direction (#379): every `lines[]` string
-in `game/data/dialogue/*.json` must occur verbatim somewhere in
-`docs/story/script/*.md`. The 121 orphans counted above predate the gate and
-are held in its shrink-only `KNOWN_ORPHANS` ratchet, which fails both on a new
-orphan and on a pin that has stopped being one; 121 strings are pinned today,
-and they come off as #380 back-fills them.
+gate J, pre-push — enforces it in one direction (#379): every player-facing
+string in `game/data/dialogue/*.json` — a `lines[]` entry, a choice option's
+`label`, or a title-card command's `text` (#398) — must occur verbatim
+somewhere in `docs/story/script/*.md`. The 121 orphans counted above predate
+the gate and are held in its shrink-only `KNOWN_ORPHANS` ratchet, along with
+the 7 that widening the walk brought into view; the ratchet fails both on a
+new orphan and on a pin that has stopped being one; 128 strings are pinned
+today, and they come off as #380 and #414 back-fill them.

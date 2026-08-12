@@ -8,27 +8,31 @@ in #364 — so the only thing that had been holding them together was the
 "both copies move in the same commit" rule in `docs/story/README.md`
 § Writing Conventions. This gate is what enforces that rule.
 
-**What it checks.** Every string in a `lines` array anywhere under
+**What it checks.** Every player-facing string anywhere under
 `game/data/dialogue/` must occur *verbatim* — as an exact substring, no
 case folding, no whitespace or punctuation normalization — somewhere in the
 concatenated text of `docs/story/script/*.md`. Reword or respell a shipped
-line without moving the markdown copy and this gate goes red.
+string without moving the markdown copy and this gate goes red.
 
-**What it does not check.** Three things, named here so nobody reads a
+Three keys hold such strings, and all three are read (#398): the entries of
+a `lines` array, a `choice` option's `label`, and the `text` of a title-card
+command. The last two were unchecked when the gate landed, which left every
+choice in the game — the Thornmere council's ten branch options — outside a
+gate whose stated rule already covered them.
+
+**What it does not check.** Two things, named here so nobody reads a
 guarantee into it that is not in the code:
 
 1. *The reverse direction.* Markdown with no matching JSON line is fine;
    most of the script is stage direction that never ships as a string.
 2. *Position.* A match anywhere in any script file counts, so this catches
    a line whose text drifted, not a line filed under the wrong scene.
-3. *Player-facing strings under other keys.* Only `lines` arrays are read.
-   `choice.label` in `thornmere_council.json` and the `text` fields in
-   `dawn_march.json` are player-visible and unchecked (#398).
 
-**The ratchet.** 121 shipped strings across 29 files already had no
-markdown source when this gate landed (#380 tracks the back-fill), so a
-strict gate could never have been switched on. Those strings are pinned in
-`KNOWN_ORPHANS` below, which fails at *both* ends: an unpinned orphan
+**The ratchet.** 128 shipped strings across 31 files have no markdown
+source: 121 `lines[]` entries that predate the gate (#380 tracks the
+back-fill) and the 7 `label`/`text` strings the widening added (#414). A
+strict gate could never have been switched on over them, so they are pinned
+in `KNOWN_ORPHANS` below, which fails at *both* ends: an unpinned orphan
 fails, and a pin that is no longer an orphan — because the back-fill
 landed, or because the line was edited or deleted — also fails. The list
 can therefore only shrink, and no entry can outlive its reason.
@@ -36,8 +40,9 @@ can therefore only shrink, and no entry can outlive its reason.
 **Non-vacuity.** A scan that reads nothing reports nothing wrong, which is
 indistinguishable from a clean tree (#365). So the scan first asserts it
 read a non-trivial corpus at both ends — script files, script characters,
-dialogue files, dialogue lines — and fails if any floor is breached. Fix
-the walk when that fires; do not lower a floor.
+dialogue files, dialogue lines, and the choice labels and card text that
+#398 added — and fails if any floor is breached. Fix the walk when that
+fires; do not lower a floor.
 
 Exit code 0 = pass, 1 = drift, stale pin, or a degenerate scan.
 """
@@ -52,17 +57,28 @@ DIALOGUE_DIR = "game/data/dialogue"
 
 # Non-vacuity floors — see module docstring. Set well below what the repo
 # holds today (9 script files / 214,340 chars / 139 dialogue files / 2,066
-# lines) so ordinary authoring never trips them, and high enough that a walk
-# which silently stops descending cannot pass.
+# lines / 13 choice labels and card texts) so ordinary authoring never trips
+# them, and high enough that a walk which silently stops descending cannot
+# pass. The last floor is the one #398 leaves behind: that count was zero for
+# the gate's whole life, and a floor under it is what stops it going back.
 MIN_SCRIPT_FILES = 5
 MIN_SCRIPT_CHARS = 100_000
 MIN_DIALOGUE_FILES = 100
 MIN_DIALOGUE_LINES = 1_500
+MIN_DIALOGUE_CHOICES = 8
 
 # The ratchet, keyed by path relative to DIALOGUE_DIR. Every entry is a
-# shipped `lines[]` string that had no verbatim source in the script
-# markdown when this gate landed (#379), inherited from the parser
-# retirement (#364) and tracked for back-fill by #380.
+# shipped string that has no verbatim source in the script markdown: 121
+# `lines[]` strings that predate the gate (#379), inherited from the parser
+# retirement (#364) and tracked for back-fill by #380, plus the 7
+# `choice.label` and `text` strings that #398 brought into view.
+#
+# The 7 are not all the same kind of miss, and the difference is what the
+# back-fill needs to know. Five of the council labels *are* in
+# `act-ii-part-1.md` — wrapped across two blockquote lines, which a verbatim
+# substring test cannot see through. The two `dawn_march.json` credit rows
+# are not in the markdown at any wrapping, and their double-spaced
+# separators are exactly the drift this gate exists to catch.
 #
 # This list may shrink. It may not grow: a new orphan is drift, and the fix
 # is to write the line into `docs/story/script/*.md`, not to pin it. Remove
@@ -86,6 +102,13 @@ KNOWN_ORPHANS: dict[str, tuple[str, ...]] = {
         'domain is yours to pass through freely.',
         'Thank you, Caden.',
         "Don't thank me. Thank her. She chose to trust you.",
+    ),
+    # #398: the two title-card credit rows. No wrapping of the markdown
+    # produces these — the rows are not in act-i.md § Scene 4: The Dawn
+    # March at all — and the doubled spaces are the drift itself.
+    "dawn_march.json": (
+        'Edren  -  Cael  -  Maren',
+        'Sable  -  Lira  -  Torren',
     ),
     "ember_vein_1a_bodies.json": (
         'More of them. Same as before — no wounds, no struggle.',
@@ -240,6 +263,19 @@ KNOWN_ORPHANS: dict[str, tuple[str, ...]] = {
         "For a single frame -- his reflection's eyes are grey.",
         "The Pendulum's needle shifts one degree, then stops.",
     ),
+    # #398: five of the ten Thornmere council choice labels. Each one is in
+    # `docs/story/script/act-ii-part-1.md`, wrapped across two `>` lines
+    # ("...Neutrality requires a" / "stable world."), so the verbatim test
+    # cannot reach it. The back-fill is to unwrap the markdown copy, not to
+    # reword the shipped label.
+    "thornmere_council.json": (
+        'The ley lines affect everyone. Neutrality requires a stable world.',
+        'Valdris and the Wilds share a border. If we fall, the Compact '
+        'comes for you next.',
+        'The spirits can scream all they want. We need soldiers.',
+        'Contain the Pendulum, reinforce the ley wards, prepare for a siege.',
+        "We don't have a full plan yet. But we have people willing to fight.",
+    ),
     "water_of_life.json": (
         'This is old water. Older than the Compact. Older than',
         'the Duskfen. It remembers what this place was.',
@@ -282,24 +318,38 @@ def iter_dialogue_files(dialogue_dir: str = DIALOGUE_DIR) -> list[str]:
     return sorted(found)
 
 
-def iter_line_strings(node: Any) -> Iterator[str]:
-    """Yield every string held in a ``lines`` array anywhere in *node*.
+PLAYER_FACING_KEYS = ("label", "text")
+
+
+def iter_player_strings(node: Any) -> Iterator[tuple[str, str]]:
+    """Yield ``(key, string)`` for every player-facing string in *node*.
+
+    Three keys carry one: an entry of a ``lines`` array, a choice option's
+    ``label``, and a title-card command's ``text``. The key comes back with
+    the string because the two are floored separately — a walk that keeps
+    reading ``lines`` while silently dropping the other two would clear a
+    single combined floor on the strength of the 2,066 lines alone.
 
     Recursive rather than a fixed ``doc["entries"][i]["lines"]`` reach,
     because a `lines` array nested under a choice branch is just as shipped
     as a top-level one, and a reach that only knows today's shape would skip
-    it while still reporting clean.
+    it while still reporting clean. The same holds for ``label``, which lives
+    two levels further down than any ``lines`` array does — under
+    ``entries[].choice[]`` — and for ``text``, which hangs off
+    ``entries[].commands[]``.
     """
     if isinstance(node, dict):
         for key, value in node.items():
             if key == "lines" and isinstance(value, list):
                 for item in value:
                     if isinstance(item, str):
-                        yield item
-            yield from iter_line_strings(value)
+                        yield "lines", item
+            elif key in PLAYER_FACING_KEYS and isinstance(value, str):
+                yield key, value
+            yield from iter_player_strings(value)
     elif isinstance(node, list):
         for item in node:
-            yield from iter_line_strings(item)
+            yield from iter_player_strings(item)
 
 
 def check_dialogue_sync(
@@ -310,14 +360,23 @@ def check_dialogue_sync(
     min_script_chars: int = MIN_SCRIPT_CHARS,
     min_dialogue_files: int = MIN_DIALOGUE_FILES,
     min_dialogue_lines: int = MIN_DIALOGUE_LINES,
+    min_dialogue_choices: int = MIN_DIALOGUE_CHOICES,
+    tally: dict[str, int] | None = None,
 ) -> list[str]:
-    """Verify every shipped dialogue line has a verbatim markdown source."""
+    """Verify every shipped dialogue string has a verbatim markdown source.
+
+    ``tally``, when given, is filled with ``script_files``,
+    ``dialogue_files``, ``lines`` and ``choices`` — what the scan actually
+    read. ``main`` prints them, because "no drift found" and "nothing read"
+    are otherwise the same sentence.
+    """
     pins = KNOWN_ORPHANS if known_orphans is None else known_orphans
     corpus, script_files = load_script_corpus(script_dir)
     dialogue_files = iter_dialogue_files(dialogue_dir)
 
     orphans: dict[str, set[str]] = {}
     total_lines = 0
+    total_choices = 0
     errors: list[str] = []
 
     for rel in dialogue_files:
@@ -328,10 +387,19 @@ def check_dialogue_sync(
             except json.JSONDecodeError as exc:
                 errors.append(f"{path}: is not valid JSON ({exc})")
                 continue
-        for line in iter_line_strings(doc):
-            total_lines += 1
+        for key, line in iter_player_strings(doc):
+            if key == "lines":
+                total_lines += 1
+            else:
+                total_choices += 1
             if line not in corpus:
                 orphans.setdefault(rel, set()).add(line)
+
+    if tally is not None:
+        tally["script_files"] = script_files
+        tally["dialogue_files"] = len(dialogue_files)
+        tally["lines"] = total_lines
+        tally["choices"] = total_choices
 
     # Non-vacuity first: on a degenerate scan every pin looks stale and no
     # line looks orphaned, so reporting the sync findings would be noise on
@@ -349,6 +417,11 @@ def check_dialogue_sync(
             f".json files under {dialogue_dir}",
         ),
         (total_lines, min_dialogue_lines, "dialogue lines[] strings"),
+        (
+            total_choices,
+            min_dialogue_choices,
+            "dialogue choice.label / command text strings (#398)",
+        ),
     ]
     vacuity = [
         f"scan read only {actual} {label} (floor {floor}) — it is not "
@@ -397,7 +470,8 @@ def check_dialogue_sync(
 
 def main() -> int:
     """Run the dialogue sync check. Returns 0 on pass, 1 on failure."""
-    errors = check_dialogue_sync()
+    tally: dict[str, int] = {}
+    errors = check_dialogue_sync(tally=tally)
 
     if errors:
         print("Dialogue script/JSON sync FAILED:")
@@ -407,8 +481,11 @@ def main() -> int:
 
     pinned = sum(len(v) for v in KNOWN_ORPHANS.values())
     print(
-        "Dialogue script/JSON sync passed "
-        f"({pinned} strings are pinned in KNOWN_ORPHANS)."
+        f"Dialogue script/JSON sync passed. {tally['lines']} lines[] and "
+        f"{tally['choices']} choice.label / command text string(s) (#398) "
+        f"checked across {tally['dialogue_files']} dialogue file(s) against "
+        f"{tally['script_files']} script file(s); "
+        f"{pinned} strings are pinned in KNOWN_ORPHANS."
     )
     return 0
 

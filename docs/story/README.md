@@ -314,18 +314,20 @@ This directory contains the narrative design for Pendulum of Despair.
   evidence for that is recorded in `tools/README.md`.
   What compares the two corpora is
   `scripts/quality-gates/check_dialogue_sync.py`, quality gate J, which
-  runs on pre-push (#379): every string in a `lines[]` array under
+  runs on pre-push (#379): every player-facing string under
   `game/data/dialogue/` must occur verbatim — exact substring, no case
   folding, no whitespace normalization — somewhere in
   `docs/story/script/*.md`, so respelling one copy and not the other turns
-  the gate red. It enforces that direction only: script prose with no
-  shipped line is fine, a match in any script file counts, and only
-  `lines[]` is read, which leaves the `choice.label` and `text` strings in
-  that directory unchecked (#398). The 121 shipped strings that already
-  had no markdown source are held in the gate's shrink-only
-  `KNOWN_ORPHANS` list — 121 strings are pinned today — and the gate fails
-  both when a new orphan appears and when a pin stops being an orphan, so
-  entries come off only as #380 back-fills them. A pinned line is a line
+  the gate red. Player-facing means all three keys that hold such a string:
+  a `lines[]` entry, a choice option's `label`, and a title-card command's
+  `text` (#398). It enforces that direction only: script prose with no
+  shipped line is fine, and a match in any script file counts. The 128
+  shipped strings that have no markdown source are held in the gate's
+  shrink-only `KNOWN_ORPHANS` list — 128 strings are pinned today — and the
+  gate fails both when a new orphan appears and when a pin stops being an
+  orphan, so entries come off only as the back-fill reaches them (#380 for
+  the 121 `lines[]` strings, #414 for the 7 the widening added). A pinned
+  line is a line
   the gate cannot see change. The one test that checks a shipped dialogue
   string against the engine — `game/tests/test_status_effects.gd` — pins
   the paralysis notification to the adjective
