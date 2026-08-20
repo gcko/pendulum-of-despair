@@ -334,7 +334,7 @@ Magic in the world of Pendulum of Despair flows from the **ley lines** — veins
 | **Seal Tongue** | 6 | Single | 70% chance to inflict Silence | Maren (Lv 6), Edren (Lv 12), Lira (Act III cross-train), Torren (Act III cross-train) |
 | **Ley Cascade** | 16 | Single | Medium Ley-element damage (spell power 35) | Maren (Lv 15), Cael (Lv 17) |
 | **Dispersion** | 14 | Single | Removes all buffs from target | Maren (Lv 18) |
-| **Leyward** | 16 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
+| **Leyward** | 20 | Party | +25% Magic Defense, 4 turns | Maren (Lv 18), Edren (Lv 22) |
 | **Ley Storm** | 25 | All enemies | Moderate Ley-element AoE damage (spell power 27) | Maren (Lv 22) |
 | **Convergence Flare** | 38 | Single | Massive Ley-element damage (spell power 65) | Maren (Lv 34) |
 
