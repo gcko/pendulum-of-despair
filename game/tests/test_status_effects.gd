@@ -75,13 +75,20 @@ func _shipped_notification_lines() -> Array[String]:
 ## status LANDS. battle_manager speaks these through the registry, so each one
 ## must exist verbatim in the shipped data (and therefore, via Gate J, in
 ## battle-dialogue.md) with the "[Character]" placeholder the script uses (#299).
-func test_every_application_notice_is_a_shipped_line() -> void:
+##
+## Driven from RULES — every status the game can inflict — rather than from the
+## notice table. Walking the notice table would only prove the entries that
+## happen to exist are worded right; drop one and that status lands on a party
+## member in total silence with every assertion still green, which is the very
+## #299 symptom this pins. Empty the table entirely and the walk is vacuous.
+func test_every_status_the_registry_can_inflict_announces_a_shipped_line() -> void:
 	var shipped_lines: Array[String] = _shipped_notification_lines()
 	if shipped_lines.is_empty():
 		fail_test("battle_status_effect_notifications.json is missing or has no entries")
 		return
-	for status: String in SE.APPLICATION_NOTICES:
+	for status: String in SE.RULES:
 		var line: String = SE.application_notice(status, "[Character]")
+		assert_false(line.is_empty(), "%s can land on a member with nothing said" % status)
 		assert_true(
 			line in shipped_lines,
 			'%s announces "%s", which is not a shipped notification' % [status, line]

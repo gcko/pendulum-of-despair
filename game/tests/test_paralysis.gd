@@ -264,9 +264,19 @@ func test_sleep_holds_a_party_gauge_where_it_stands_and_a_cure_resumes_there() -
 	assert_eq(atb.get_gauge("party_0"), 8000, "a slept gauge does not fill")
 
 	st.remove_status(0, "sleep")
-	battle._process(0.016)
+	for _i: int in range(5):
+		battle._process(0.016)
 
-	assert_gte(atb.get_gauge("party_0"), 8000, "and resumes from where it froze, not from 0")
+	# Strictly above the frozen value: equal would mean the gauge is still
+	# frozen (never resumed), and any value at or below 8000 would mean the cure
+	# restarted it. Only "resumed from 8000" can land above 8000 in five frames,
+	# whatever the fill rate is.
+	assert_gt(atb.get_gauge("party_0"), 8000, "the cure resumes filling")
+	assert_lt(
+		atb.get_gauge("party_0"),
+		ATBSystem.GAUGE_MAX,
+		"from where it froze, so five frames do not reach a turn"
+	)
 
 
 func test_petrify_empties_the_party_gauge_and_recovery_starts_fresh() -> void:
@@ -287,8 +297,42 @@ func test_petrify_empties_the_party_gauge_and_recovery_starts_fresh() -> void:
 	assert_eq(atb.get_gauge("party_0"), 0, "and holds it empty")
 
 	st.remove_status(0, "petrify")
+	battle._process(0.016)
 
-	assert_eq(atb.get_gauge("party_0"), 0, "so a cured member starts from 0, not from 8000")
+	# One frame of fill after the cure and no more: above 0 proves the gauge
+	# resumed at all, and below the 8000 it carried when petrify landed proves
+	# it resumed from empty rather than from the value it used to hold.
+	var resumed: int = atb.get_gauge("party_0")
+	assert_gt(resumed, 0, "a cured member's gauge starts filling again")
+	assert_lt(resumed, 8000, "from 0, not from the 8000 petrify swallowed")
+
+
+func test_petrify_holds_an_enemy_gauge_at_zero_until_it_is_cured() -> void:
+	# The enemy mirror of the rule above. combat-formulas.md gives Petrify's
+	# gauge as "Frozen (0)" for both sides, so a petrified enemy banks no
+	# progress toward a turn however long it stands there, and a cured one
+	# starts over rather than acting the instant the stone breaks.
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var atb: Node = battle.get_atb()
+	var enemy: Node = battle.get_enemies()[0]
+	atb.set_gauge("enemy_0", 8000)
+	assert_true(
+		enemy.apply_status("petrify", StatusEffects.default_duration("petrify")),
+		"petrify lands on a beast"
+	)
+
+	for _i: int in range(5):
+		battle._process(0.016)
+
+	assert_eq(atb.get_gauge("enemy_0"), 0, "petrify empties the enemy gauge and holds it there")
+
+	enemy.remove_status("petrify")
+	battle._process(0.016)
+
+	var resumed: int = atb.get_gauge("enemy_0")
+	assert_gt(resumed, 0, "a cured enemy's gauge fills again")
+	assert_lt(resumed, 8000, "from 0, not from the 8000 petrify swallowed")
 
 
 func test_paralysis_applied_first_never_spends_a_sleeping_gauge() -> void:

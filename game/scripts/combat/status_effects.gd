@@ -59,12 +59,15 @@ const RULES: Dictionary = {
 	"blind": {"duration": 4},
 }
 
-## Player-facing adjective for an action-denial announcement ("paralysis" ->
-## "paralyzed"). Only Paralysis reaches an announcement today: a gauge-frozen
-## member is passed over in silence (combat-formulas.md § Status Effect ATB
-## Interactions), so the sleep/petrify entries are pre-registered wording for a
-## future announcement path, not live behavior. Anything unlisted falls back to
-## its raw status name rather than reading as another status.
+## Player-facing adjective for an ACTION-DENIAL announcement ("paralysis" ->
+## "paralyzed"), which is a separate path from APPLICATION_NOTICES below: this
+## table words the moment a turn is refused, that one words the moment a status
+## lands. Only Paralysis denies a turn out loud — a gauge-frozen member is
+## passed over in silence (combat-formulas.md § Status Effect ATB Interactions)
+## — so the sleep/petrify entries here are pre-registered wording for a future
+## denial announcement, even though both statuses do announce on landing.
+## Anything unlisted falls back to its raw status name rather than reading as
+## another status.
 const ADJECTIVES: Dictionary = {
 	"paralysis": "paralyzed",
 	"sleep": "asleep",
@@ -74,9 +77,12 @@ const ADJECTIVES: Dictionary = {
 ## Player-facing line announcing that a status has just landed, as a format
 ## string taking the bearer's name. Every entry is the canonical wording from
 ## docs/story/script/battle-dialogue.md § Status Effect Notifications with
-## "[Character]" replaced by "%s"; test_status_effects pins them against the
-## shipped game/data/dialogue/battle_status_effect_notifications.json so the two
-## copies cannot drift apart. A status with no entry lands silently.
+## "[Character]" replaced by "%s". test_status_effects walks RULES — not this
+## table — and demands each status both HAS a line here and matches the shipped
+## game/data/dialogue/battle_status_effect_notifications.json verbatim, so
+## neither rewording an entry nor dropping one can slip through: every status
+## the game can inflict must keep a canonical line. A name the registry does not
+## know lands silently.
 const APPLICATION_NOTICES: Dictionary = {
 	"poison": "%s is Poisoned!",
 	"burn": "%s is Burning!",

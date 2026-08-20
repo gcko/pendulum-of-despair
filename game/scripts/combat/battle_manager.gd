@@ -309,6 +309,14 @@ func resync_enemy_atb(idx: int) -> void:
 ## one resumes from that same value (combat-formulas.md § Status Effect ATB
 ## Interactions). Petrify additionally pins the gauge to 0 while it lasts, which
 ## is what makes recovery start fresh when it is cured (#279).
+##
+## Caveat: this implements only the gauge half of Sleep's party-side rule. That
+## rule is "until cured OR damaged", and battle_state.take_damage never consults
+## StatusEffects.wakes_on_damage — only enemy.gd does — so a slept member's only
+## exit is an explicit cure, and this freeze is what makes that visible. Latent
+## rather than live: no enemy ability in game/data/enemies/ inflicts Sleep or
+## Confusion on the party today. Tracked as #440; do not read this function
+## as evidence the wake-on-damage half exists.
 func _resync_party_atb(slot: int) -> void:
 	var m: Dictionary = _state.get_member(slot)
 	if m.is_empty() or not m.get("is_alive", false):
@@ -324,8 +332,11 @@ func _resync_party_atb(slot: int) -> void:
 ## Tell the player a status just landed on a party member (#299). Routed through
 ## the one registry table so the wording is battle-dialogue.md
 ## § Status Effect Notifications rather than a per-caller invention, and so
-## every infliction path — enemy ability, AoE, future spell — announces the same
-## way. A status with no canonical line lands silently.
+## every path that lands a status on the PARTY announces it the same way,
+## whatever inflicted it. The enemy-facing side is not yet converged:
+## battle_magic_command still hand-rolls "X is afflicted with <raw id>!" when
+## the player lands a status on an enemy, which is not a shipped line (#439).
+## A status with no canonical line lands silently.
 func _on_party_status_applied(slot: int, status_name: String) -> void:
 	var nm: String = _state.get_member(slot).get("character_data", {}).get("name", "???")
 	var line: String = StatusEffects.application_notice(status_name, nm)
