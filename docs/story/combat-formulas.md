@@ -50,10 +50,10 @@ final = clamp(floor(damage_after_rows × reduction_product), 1, 14999)
 | Edren Lv35 vs Act II mob | 85 | 1.0 | 30 | ~1,174 | 2–3 hits on 2,500 HP mob |
 | Edren Lv70 vs Act III (good gear) | 175 | 1.0 | 60 | ~5,044 | In the 5–7K target range |
 | Edren Lv70 Riposte (1.5×) | 175 | 1.5 | 60 | ~7,596 | Strong skill hit |
-| Edren Lv70 Oathkeeper (1.5×, 2 hits) | 175 | 1.5 | 60 | 7,596 × 2 | Two hits; each hit capped at 14,999 |
+| Edren Lv70 Oathkeeper (Attack twice) | 175 | 1.0 | 60 | 5,044 × 2 | Two Attack-command hits; DEF is subtracted per hit |
 | Sable Lv70 Shiv (DEF halved) | 150 | 1.0 | 30 | ~3,720 | DEF-shredding thief |
 | Edren Lv150 basic | 255 | 1.0 | 80 | ~10,757 | Post-game power fantasy |
-| Edren Lv150 Oathkeeper (1.5×) | 255 | 1.5 | 80 | 14,999 | Hits cap with best skill |
+| Edren Lv150 Oathkeeper (Attack twice) | 255 | 1.0 | 80 | 10,757 × 2 | Two Attack-command hits; a crit on either caps it |
 | Any Lv150 2.0× technique | 255 | 2.0 | 60 | 14,999 | Bum Rush equivalent |
 
 The act label in each Scenario names the content the party's *level* puts
@@ -273,7 +273,7 @@ final = min(14999, raw × variance)
 
 ## Damage Cap & Floor
 
-**Damage cap: 14,999** — applies to all damage types (physical, magical, healing). Each individual hit is capped independently. Multi-hit abilities can exceed 14,999 total per turn (e.g., Oathkeeper's 2 hits can deal up to 29,998 in one turn).
+**Damage cap: 14,999** — applies to all damage types (physical, magical, healing). Each individual hit is capped independently. Multi-hit abilities can exceed 14,999 total per turn (e.g., Oathkeeper's two Attack-command hits are capped separately, so a turn in which both cap deals 29,998).
 
 **Damage floor: 1** — physical and magical damage can never deal less than 1 when the elemental modifier is positive. This applies after all calculations including variance. Elemental immunity (0.0×) and absorb (-1.0×) are explicit overrides that bypass the floor — immunity always deals 0 damage, and absorb always heals. A level 150 Edren taking a hit from a level 1 Restless Dead still sees "1" — satisfying proof of growth.
 
@@ -319,17 +319,33 @@ The `ability_mult` value in the physical formula. Basic attack = 1.0. Damage col
 |------|------|---------|-------------------------------|
 | 1.0 | Basic attack | Attack command, Shiv (see below) | ~5,044 |
 | 1.5 | Strong skill | Riposte counter | ~7,596 |
-| 2.0 | Ultimate skill | Oathkeeper hits; Wild Card at 0–2 stolen items | ~10,148 |
+| 2.0 | Ultimate skill | Wild Card at 0–2 stolen items | ~10,148 |
 | 2.5 | Combo ability | *(reserved — see note)* | ~12,700 |
 | 3.0 | Maximum | Sever Bond (Cael's Edge, 1 use); Wild Card at 3 stolen items | 14,999 (capped) |
 
-**The 2.0 row's Oathkeeper exemplar is disputed and is not settled here.** This
-document gives Oathkeeper three different multipliers (1.0 doubled, 1.5, 2.0)
-across this table and its own worked examples, tracked as
-[#346](https://github.com/gcko/pendulum-of-despair/issues/346). Wild Card's
-0-2 item branch is derived independently in [abilities.md](abilities.md)
-§ Damage Magnitudes from its own stated "2x her Attack" and does not depend on
-how #346 resolves; the two exemplars share a row but not an argument.
+**Oathkeeper is no longer an exemplar of this row, and takes no rung on this
+ladder at all ([#346](https://github.com/gcko/pendulum-of-despair/issues/346)).**
+This document used to give it three different multipliers — 1.0 doubled, 1.5 and
+2.0 — across this table and its own worked examples. The 1.0-doubled reading
+wins, because it is the only one any *definition* of the ability supports:
+[abilities.md](abilities.md) § Edren — Bulwark says Oathkeeper makes "Edren's
+attack commands hit twice", and the Attack command is the 1.0 row above. The
+other two numbers appear only in a worked-example row and an exemplar cell,
+neither of which defines an ability. Balance agrees: 8 AP out of a 10 AP pool
+already buys +50% absorption on every stance for 3 turns *and* automatic Riposte
+on every absorbed hit, so raising each of the two hits to 2.0 on top of that
+would put a single turn at four basic attacks. So Oathkeeper is a buff that adds
+a *hit*, not a multiplier — see § Buff-Granted Multipliers, where it now sits.
+
+A near-miss worth naming, since it is probably how the 2.0 row acquired
+Oathkeeper: this row's ~10,148 and two doubled Attack hits at ~5,044 are not the
+same number. Doubling the Attack command subtracts DEF twice (10,088 at the
+figures above); a single 2.0 strike subtracts it once. The 60-point gap is the
+whole difference between "hits twice" and "hits twice as hard".
+
+Wild Card's 0-2 item branch was always derived independently in
+[abilities.md](abilities.md) § Damage Magnitudes from its own stated "2x her
+Attack", so it keeps the row on its own argument.
 
 The 3.0 tier is reserved for abilities with extreme costs — a single scripted use (Lira's Sever Bond, spent for good after the Vaelith fight), or spending an entire resource pool (Wild Card consuming all three stolen items). These are "Bum Rush" moments — the payoff for mastering the system.
 
@@ -348,12 +364,15 @@ Some abilities are buffs that multiply the next attack's output rather than havi
 - **Overcharge (+50% damage):** Multiplies the next attack's final damage by 1.5×. Stacks multiplicatively with ability_mult. Example: Overcharge on Edren's Riposte (1.5×) = damage × 1.5 × 1.5 = 2.25× effective. See [abilities.md](abilities.md).
 - **Press Forward (+20% ATK buff):** Modifies ATK stat for 3 turns. Since damage uses ATK², a 20% ATK buff yields ~44% more damage.
 - **Resonance (+30% spell output):** Multiplies magic damage by 1.3× after base calculation and elemental modifiers.
+- **Oathkeeper (Attack command hits twice):** Adds a hit rather than a multiplier. For 3 turns Edren's Attack command resolves twice, each hit a plain basic attack at `ability_mult` 1.0 with its own variance roll, crit check and DEF subtraction (§ Multi-Hit Rules). It also raises Bulwark absorption by 50% and makes Riposte automatic; those Riposte counters are 1.5× as always. See [abilities.md](abilities.md) § Edren — Bulwark.
 
 ### Special: Shiv (DEF Ignore)
 
 Sable's Shiv halves target DEF before the formula: `DEF_effective = target.DEF / 2`
 
-Shiv uses ability_mult 1.0 (no damage multiplier beyond the DEF penetration). The 50% DEF ignore IS the damage bonus — it is most valuable against heavily armored targets. Per [abilities.md](abilities.md), Shiv is a quick physical attack at `ability_mult` 1.0 that ignores 50% of the target's Defense; its thrown-stolen-item branch is still open, and the numbers above cover only the base attack. See [abilities.md](abilities.md) § Damage Magnitudes.
+Shiv uses ability_mult 1.0 (no damage multiplier beyond the DEF penetration). The 50% DEF ignore IS the damage bonus — it is most valuable against heavily armored targets. Per [abilities.md](abilities.md), Shiv is a quick physical attack at `ability_mult` 1.0 that ignores 50% of the target's Defense.
+
+Its thrown-stolen-item branch is settled ([#359](https://github.com/gcko/pendulum-of-despair/issues/359)) and changes none of the numbers above: throwing a stolen item re-elements the same hit and nothing else, so the multiplier stays 1.0, the DEF halving stays, and the only thing that moves is `element_mod` — through § Physical Elemental Attacks, the same pipeline Overcharge and elemental weapons use. Which element a given item confers is [items.md](items.md) § Thrown-Item Elements; most items confer none, and a non-elemental throw is arithmetically identical to a bare Shiv. See [abilities.md](abilities.md) § Damage Magnitudes.
 
 Example — DEF 100 boss, both characters at Lv70 with gear:
 - Edren (ATK 175) basic: (175² / 6) - 100 = ~5,004
@@ -370,7 +389,7 @@ These abilities use their own formulas, not the standard physical or magic formu
 - **Greyveil:** Non-elemental magic damage that ignores MDEF. Spell power 28 (Duskbreaker 56 at Favor 3) — derived in [abilities.md](abilities.md) § Damage Magnitudes. It is on this list because forcing `target.MDEF` to 0 changes a term of the magic formula; supplying a different spell power to the unchanged formula does not (see Ambush Protocol below).
 - **Shattered Vanguard** (combo): Shatter Guard's absorbed-damage total × 1.5, after Misdirect funnels the enemy group into Edren. **Whether Shatter Guard's 2× max-HP cap applies before or after the ×1.5 is undecided** — before yields a 3× max-HP ceiling, after keeps 2× — and no document states it. It is left open here rather than settled, because it is a balance decision worth a 50% swing in the combo's ceiling and belongs to the pass that implements Shatter Guard in the battle layer.
 
-Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula with no term altered, so it needs no formula of its own. See § Physical Ability Multiplier Tiers, "What this table does not cover".
+Ambush Protocol is *not* on this list: `Arc Trap × 2` resolves to spell power 60 through the standard magic formula with no term altered, so it needs no formula of its own. The `caster.mag` that formula reads is **Lira's** — the trap is hers, and Sable supplies the guaranteed trigger and the lost enemy turn rather than a damage term ([abilities.md](abilities.md) § Damage Magnitudes, rule 5; [#360](https://github.com/gcko/pendulum-of-despair/issues/360)). See § Physical Ability Multiplier Tiers, "What this table does not cover".
 
 ---
 
@@ -662,7 +681,7 @@ authoritative for enemy stats.
 - Each hit is calculated independently (separate variance rolls, separate crit checks).
 - Each hit is capped at 14,999 individually.
 - DEF/MDEF is applied per hit (not once for the sequence).
-- Multi-hit is the primary way to exceed the damage cap per turn: Oathkeeper (2 × 14,999 = 29,998) is the ultimate physical moment.
+- Multi-hit is the primary way to exceed the damage cap per turn: Oathkeeper's doubled Attack command (2 × 14,999 = 29,998, once both hits are capping) is the ultimate physical moment.
 
 ### AoE Damage Rules
 
@@ -712,6 +731,26 @@ Player-configurable (1-6, default 3). Default matches FF6.
 | 4 | 2 | 4.0s | 3.1s |
 | 5 | 1.5 | 5.4s | 4.1s |
 | 6 (Slowest) | 1 | 8.1s | 6.2s |
+
+**These six factors are canon, and the engine was corrected to them
+([#177](https://github.com/gcko/pendulum-of-despair/issues/177)).**
+`game/scripts/combat/atb_system.gd` shipped a quietly retuned set — speed 3 at
+0.7 instead of 3 — which ran every turn roughly four times slower than the
+seconds column above and contradicted every row of the pacing milestones below.
+Three things decided it against the code. The battle-scene implementation plan
+specifies the factors in this table, so the retune diverged from its own plan
+rather than superseding it. [difficulty-balance.md](difficulty-balance.md)
+§ 7.2 Boss Duration Check builds its fight-length arithmetic on an average action
+interval of ~2.5s at level 1 and ~1.0s at level 70, which is what these factors
+produce and roughly four times what the retune produced. And this section is
+internally consistent under them: every seconds figure printed here and below is
+`16000 / floor((SPD + 25) x factor) / 60` to the tenth. The one argument on the
+other side was a code comment claiming FF6 parity for the retune, with no
+measurement behind it.
+
+`game/tests/test_atb_system.gd` now measures this column by ticking a real gauge
+at 60 fps and counting frames to ready, so the constants cannot drift from the
+table again without the suite going red.
 
 ### Active/Wait Mode
 

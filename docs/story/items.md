@@ -41,6 +41,7 @@
   - [Equipment Cross-Reference](#equipment-cross-reference)
 - [Cross-Reference Tables](#cross-reference-tables)
   - [Status Cure Mapping](#status-cure-mapping)
+  - [Thrown-Item Elements](#thrown-item-elements)
   - [Bestiary Drop Consistency](#bestiary-drop-consistency)
 
 ---
@@ -618,6 +619,65 @@ Cross-reference between status effects, item cures, and spell cures. For full st
 | Despair | Pallor Salve, Hope Shard | Hollow Mend (post-game) | Cannot be cured by Remedy |
 
 > **Remedy** cures all negative statuses EXCEPT Stop, Berserk, Despair, and Faint.
+
+### Thrown-Item Elements
+
+Two abilities throw a stolen item at an enemy and say the element "depends on
+item type": Sable's **Shiv** and her **Wild Card** item branches
+([abilities.md](abilities.md) § Sable — Tricks). Nothing mapped this catalog
+onto [magic.md](magic.md)'s elements, so neither branch could be executed
+([#359](https://github.com/gcko/pendulum-of-despair/issues/359)). This table is
+that mapping, and it is the same one for both abilities.
+
+**The rule: an item is thrown at the element its own entry names, and at nothing
+otherwise.** No item is given an element here that its catalog text, or the
+documented nature of the material it is made of, does not already carry. Eleven
+items qualify:
+
+| Item | Thrown element | Where the element comes from |
+|------|---------------|------------------------------|
+| Emberstone | Flame | "A rare fire-attuned stone"; crafting use is "Flame-element forging" |
+| Spirit Essence | Spirit | Crafting use is "Spirit-element crafting" |
+| Spirit Dust | Spirit | Crafting use is "Spirit-element basics" |
+| Arcanite Shard | Storm | Storm is Arcanite Channeling's primary element ([abilities.md](abilities.md) § Elemental System) |
+| Arcanite Core | Storm | As above |
+| Arcanite Ingot | Storm | As above |
+| Grey Residue | Void | Crafting use is "Void-element infusions" |
+| Pallor Blade | Void | "Seethes with void energy"; crafting use is "Void-element weapon crafting" |
+| Pallor Sample | Void | Contained Pallor corruption, and Void *is* the Pallor made manifest ([magic.md](magic.md) § Element Descriptions) |
+| Pallor Shard | Void | Crystallized Pallor energy; as above |
+| Nest Fragment | Void | Hardened Pallor nest matter; as above |
+
+**Everything else in this catalog is thrown non-elemental** — every consumable,
+every key item, and the other 76 materials. Non-elemental bypasses resistance
+and exploits no weakness ([combat-formulas.md](combat-formulas.md) § Elemental
+System), so throwing a Potion or a Beast Hide adds nothing to the hit but costs
+you the item. That is the intended shape: the throw is worth doing when Sable
+has stolen the right thing, not on reflex. In the data this is the *absence* of
+a field — `game/data/items/*.json` carries `throw_element` on exactly the eleven
+rows above, and an item without one is non-elemental.
+
+Three deliberate exclusions, so they are not read as oversights:
+
+- **Pallor Ward** and **Forge Hammer** are filed under the `pallor` source
+  category but are not Pallor matter — the Ward is explicitly *anti*-Pallor and
+  the Hammer is a smith's tool that a Pallor smith happened to drop. Source
+  category records who dropped a thing, not what it is made of, which is why
+  this table is per-item rather than per-category.
+- **Element Shard** and **Elemental Core** name elemental energy without naming
+  an element. A pass that gives elemental creatures a per-creature element could
+  assign these from their drop source; until one does, inventing an element for
+  them is exactly the kind of guess this mapping exists to avoid.
+- **Leech Ichor**'s crafting use reads "Poison-element crafting", and Poison is
+  a status in this game, not an element. It throws non-elemental.
+
+**Void in the player's hands.** [magic.md](magic.md) § Void Magic (Pallor) keeps Void
+*spells* enemy-only until after Cael's defeat. A thrown lump of Pallor matter is
+not a spell, and the five Void rows above are the one way the party deals Void
+damage before then. It cuts both ways, which is the point: Void is strong
+against Spirit and weak against Ley, and Void versus Void deals nothing at all —
+so throwing a Pallor Sample at a Pallor enemy is the worst thing Sable can do
+with it.
 
 ### Bestiary Drop Consistency
 

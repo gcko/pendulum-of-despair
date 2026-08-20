@@ -342,6 +342,7 @@
     },
     {
       "id": "spirit_essence",
+      "throw_element": "spirit",
       "name": "Spirit Essence",
       "category": "material",
       "tier": 2,
@@ -354,6 +355,7 @@
     },
     {
       "id": "spirit_dust",
+      "throw_element": "spirit",
       "name": "Spirit Dust",
       "category": "material",
       "tier": 2,
@@ -390,6 +392,7 @@
     },
     {
       "id": "emberstone",
+      "throw_element": "flame",
       "name": "Emberstone",
       "category": "material",
       "tier": 3,
@@ -402,6 +405,7 @@
     },
     {
       "id": "pallor_sample",
+      "throw_element": "void",
       "name": "Pallor Sample",
       "category": "material",
       "tier": 3,
@@ -414,6 +418,7 @@
     },
     {
       "id": "grey_residue",
+      "throw_element": "void",
       "name": "Grey Residue",
       "category": "material",
       "tier": 2,
@@ -426,6 +431,7 @@
     },
     {
       "id": "nest_fragment",
+      "throw_element": "void",
       "name": "Nest Fragment",
       "category": "material",
       "tier": 2,
@@ -438,6 +444,7 @@
     },
     {
       "id": "pallor_shard",
+      "throw_element": "void",
       "name": "Pallor Shard",
       "category": "material",
       "tier": 3,
@@ -486,6 +493,7 @@
     },
     {
       "id": "arcanite_shard",
+      "throw_element": "storm",
       "name": "Arcanite Shard",
       "category": "material",
       "tier": 3,
@@ -499,6 +507,7 @@
     },
     {
       "id": "arcanite_core",
+      "throw_element": "storm",
       "name": "Arcanite Core",
       "category": "material",
       "tier": 3,
@@ -511,6 +520,7 @@
     },
     {
       "id": "arcanite_ingot",
+      "throw_element": "storm",
       "name": "Arcanite Ingot",
       "category": "material",
       "tier": 4,
@@ -691,6 +701,7 @@
     },
     {
       "id": "pallor_blade",
+      "throw_element": "void",
       "name": "Pallor Blade",
       "category": "material",
       "tier": 3,

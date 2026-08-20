@@ -12,6 +12,7 @@
 			"cooldown": null,
 			"target": "single_enemy",
 			"power": 10,
+			"ticks": 3,
 			"effect": "Device. Persists 3 turns. Deals Storm damage to a random enemy at the start of each turn. Damage scales with Lira's Magic stat: spell power 10 per tick.",
 			"row_restriction": null,
 			"story_gated": false,
