@@ -27,7 +27,7 @@
 | Create | `game/data/enemies/interlude.json` (52 enemies) |
 | Create | `game/data/enemies/act_iii.json` (69 enemies) |
 | Create | `game/data/enemies/optional.json` (25 enemies) |
-| Create | `game/data/enemies/bosses.json` (~35 boss entries) |
+| ~~Create~~ | ~~`game/data/enemies/bosses.json` (~35 boss entries)~~ — **never delivered; retired in #330, see Task 6** |
 | Modify | `docs/analysis/game-dev-gaps.md` (update gap 1.2 status) |
 
 ---
@@ -170,10 +170,21 @@
 
 ---
 
-### Task 6: Transcribe Boss compendium
+### Task 6: Transcribe Boss compendium — RETIRED (#330)
+
+> **Outcome (#330, 2026-08):** this task was never delivered. `bosses.json` was
+> created as a 20-byte `{"enemies": []}` stub and never populated, and the
+> "separate load path for battle AI" it existed to serve was never built —
+> nothing in `game/scripts/`, `game/scenes/` or `game/tests/` ever read it.
+> What actually shipped is better: all 36 boss and mini-boss records live in
+> the act tables next to their encounter neighbours, carrying `is_boss`,
+> `is_mini_boss` and `boss_group`, and the four migrated Act I bosses carry
+> their `boss_ai` object there too, read by `boss_ai.gd` through the ordinary
+> `DataManager.load_enemies(<act>)` path. The stub is deleted. The rest of this
+> task is kept as a record of what was planned, not as work outstanding.
 
 **Files:**
-- Create: `game/data/enemies/bosses.json`
+- ~~Create: `game/data/enemies/bosses.json`~~
 - Read: `docs/story/bestiary/bosses.md` (full file — very large, 57K+ tokens)
 - Read: All per-act bestiary files (for boss stat rows already transcribed)
 - Read: `docs/superpowers/specs/2026-04-02-enemy-data-json-design.md`
@@ -187,9 +198,9 @@
 **Boss list (35 entries):**
 Bosses 1-31 from quick reference table + Vaelith Siege + extra Cael Phase 2 entry + 2 extra Lingering phase entries = 35 total.
 
-- [ ] **Step 1:** Read bosses.md (focus on quick reference + phase thresholds per boss), read spec
-- [ ] **Step 2:** Create `game/data/enemies/bosses.json` with all 35 boss entries
-- [ ] **Step 3:** Self-verify: count (35), phase counts match quick reference, HP values match
+- [x] ~~**Step 1:** Read bosses.md (focus on quick reference + phase thresholds per boss), read spec~~ (retired, #330)
+- [x] ~~**Step 2:** Create `game/data/enemies/bosses.json` with all 35 boss entries~~ (retired, #330)
+- [x] ~~**Step 3:** Self-verify: count (35), phase counts match quick reference, HP values match~~ (retired, #330)
 
 ---
 
@@ -198,16 +209,16 @@ Bosses 1-31 from quick reference table + Vaelith Siege + extra Cael Phase 2 entr
 ### Task 7: Adversarial verification pass
 
 **Files:**
-- Read: All 6 JSON files created in Tasks 1-6
+- Read: The 5 JSON files created in Tasks 1-5 (Task 6 retired, #330)
 - Read: All bestiary source files
 - Read: `docs/story/bestiary/palette-families.md` (threat levels)
 
 **Instructions:** Cross-reference every JSON file against its source bestiary file. Check:
 
-- [ ] **Step 1:** Verify enemy counts per file match expected totals (25, 33, 52, 69, 25, 35)
+- [ ] **Step 1:** Verify enemy counts per file match expected totals (25, 33, 52, 69, 25)
 - [ ] **Step 2:** Spot-check 5 random enemies per file — verify every stat value matches source
 - [ ] **Step 3:** Verify all boss HP values match bosses.md quick reference exactly
-- [ ] **Step 4:** Verify all IDs are globally unique across all 6 files
+- [ ] **Step 4:** Verify all IDs are globally unique across all 5 files
 - [ ] **Step 5:** Verify element arrays: every weakness/resistance/absorb matches bestiary
 - [ ] **Step 6:** Verify steal.common matches bestiary "Steal" column for 10 random enemies
 - [ ] **Step 7:** Verify threat levels match palette-families.md for 10 random enemies

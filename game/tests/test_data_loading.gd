@@ -18,7 +18,9 @@ func test_character_files_exist() -> void:
 
 
 func test_enemy_files_exist() -> void:
-	var acts: Array[String] = ["act_i", "act_ii", "interlude", "act_iii", "optional", "bosses"]
+	# Boss records live in the act tables (is_boss / boss_ai), not a separate
+	# file — bosses.json was an empty stub nothing loaded and is gone (#330).
+	var acts: Array[String] = ["act_i", "act_ii", "interlude", "act_iii", "optional"]
 	for act: String in acts:
 		var path: String = "res://data/enemies/%s.json" % act
 		assert_true(FileAccess.file_exists(path), "Enemy file should exist: %s" % path)

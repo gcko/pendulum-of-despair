@@ -33,7 +33,7 @@
 | `docs/analysis/game-dev-gaps.md` | MODIFY | Update gap 4.1 status |
 
 **Files NOT created (data already exists):**
-- Enemy stat JSON — already in `game/data/enemies/act_i.json` and `bosses.json`
+- Enemy stat JSON — already in `game/data/enemies/act_i.json` (boss records included; there is no separate boss file — #330)
 - Potion, Antidote — already in `game/data/items/consumables.json`
 
 ---

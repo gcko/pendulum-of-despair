@@ -70,7 +70,7 @@ Extends tech-arch Section 2.1 with the following changes:
 
 | Field | Type | Source | Notes |
 |-------|------|--------|-------|
-| `id` | string | Derived from name (snake_case) | Unique across act files; bosses intentionally share IDs between act files and bosses.json (same enemy, separate load paths) |
+| `id` | string | Derived from name (snake_case) | Unique across every enemy file, bosses included (#330) |
 | `name` | string | Bestiary "Name" column | Exact match |
 | `type` | string | Bestiary "Type" column | Lowercase: beast, undead, construct, spirit, humanoid, pallor, elemental, boss |
 | `threat` | string | palette-families.md / act summary | trivial, low, standard, dangerous, rare, boss. See README.md Threat Multiplier table |
@@ -157,7 +157,7 @@ Location strings from the bestiary are converted to snake_case IDs with these ru
 
 ### Boss-Specific Fields
 
-Bosses in `bosses.json` get additional fields:
+Boss records — which live in the act tables alongside their encounter neighbours, not in a file of their own (#330) — get additional fields:
 
 ```json
 {
@@ -190,7 +190,7 @@ Bosses in `bosses.json` get additional fields:
 | Archive Keeper (variable HP) | `"hp": 3000, "hp_max_variable": 12000` |
 | Vaelith Siege (scripted loss) | `"scripted_loss": true, "hp": 999999` |
 | Confluence Elemental (rotating) | `"weaknesses": ["cycle"], "absorb": ["cycle"]` |
-| The Lingering (3 stat rows) | 3 entries in bosses.json with `"boss_group": "the_lingering"` |
+| The Lingering (3 stat rows) | 3 entries in `act_iii.json` with `"boss_group": "the_lingering"` |
 | Cael (2 stat rows) | 2 entries with `"boss_group": "cael_knight_of_despair"` |
 
 ### Intentional Exclusions
@@ -213,9 +213,19 @@ Bosses in `bosses.json` get additional fields:
 | `game/data/enemies/interlude.json` | bestiary/interlude.md | 52 |
 | `game/data/enemies/act_iii.json` | bestiary/act-iii.md | 69 |
 | `game/data/enemies/optional.json` | bestiary/optional.md | 25 |
-| `game/data/enemies/bosses.json` | bestiary/bosses.md + per-act boss entries | 35 entries (31 unique bosses + 2 extra Cael phases + 3 Lingering phases - 1 Cael single - 1 Lingering single + 1 Vaelith siege) |
 
-Act files include ALL enemies for that act (regular + bosses). `bosses.json` duplicates boss stat data but adds boss-specific metadata (phases, thresholds). This duplication is intentional — act files are loaded for encounter tables, bosses.json is loaded for battle AI.
+Act files include ALL enemies for that act, regular **and** boss. There is no separate boss file.
+
+> **Correction (#330, 2026-08):** this table used to promise a sixth file,
+> `game/data/enemies/bosses.json`, holding 35 entries, and justified the
+> duplication as "act files are loaded for encounter tables, bosses.json is
+> loaded for battle AI". The second load path was never built. The file shipped
+> as a 20-byte `{"enemies": []}` stub that no script, scene or test ever read,
+> while all 36 boss and mini-boss records lived in the act tables carrying
+> `is_boss` / `is_mini_boss` / `boss_group`, and the four migrated Act I bosses
+> carried their `boss_ai` object there too. The stub is deleted; boss data is
+> read from the act tables through `DataManager.load_enemies(<act>)` like every
+> other record.
 
 ## Implementation Approach
 
@@ -234,7 +244,7 @@ Parallel agent transcription: 6 agents dispatched simultaneously, one per JSON f
 - [ ] Every threat level matches palette-families.md / act summaries
 - [ ] Boss HP values match bestiary/bosses.md
 - [ ] Boss phase counts match bosses.md quick reference
-- [ ] All non-boss enemy IDs are unique across act files; boss ID duplication is allowed only between act files and bosses.json for the same boss stat row
+- [ ] All enemy IDs are unique across the act files, bosses included (enforced by `scripts/quality-gates/check_id_uniqueness.py`)
 - [ ] All item_ids use snake_case
 - [ ] All location IDs follow derivation rules consistently
 - [ ] No invented values — everything traces to a source doc

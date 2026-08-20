@@ -120,8 +120,8 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-02
 **Priority:** P0 — blocks battle system, encounters, economy testing
-**Estimated Size:** L (~204 enemies + 35 boss entries across 6 JSON files)
-**Output:** `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional,bosses}.json`
+**Estimated Size:** L (~209 enemies, boss records included, across 5 JSON files)
+**Output:** `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional}.json` — a sixth `bosses.json` was planned and shipped empty; it was deleted in #330 and boss records live in the act files
 **Source Docs:** `bestiary/act-i.md` through `bestiary/optional.md`, `bestiary/bosses.md`, `bestiary/README.md` (type rules, scaling), `bestiary/palette-families.md`
 **Architecture Ref:** `technical-architecture.md` Section 2.1 (extended with two-tier steal, threat field, locations array)
 **Depends On:** None (foundational)
@@ -993,7 +993,7 @@ smallest vertical slice (Ember Vein) that exercises every system.
 **Phase A2: Fenmother's Hollow (MOSTLY COMPLETE — 2026-04-09)**
 - [x] 3 floor maps: F1 Flooded Entry (45x30), F2 Submerged Temple (50x35), F3 Sanctum (35x25)
 - [x] Swamp tileset: 4 new tiles (marsh floor, shallow water, stone wall, crystal root) at indices 10-13
-- [x] 7 regular enemy types in act_i.json (marsh_serpent through corrupted_spawn); 2 bosses in bosses.json (drowned_sentinel, corrupted_fenmother)
+- [x] 7 regular enemy types in act_i.json (marsh_serpent through corrupted_spawn); 2 bosses in the same file (drowned_sentinel, corrupted_fenmother)
 - [x] Encounter data verified (fenmothers_hollow.json: floors "1-2" and "3")
 - [x] 3 dialogue files: fenmother_battle.json, water_of_life.json, fenmother_cleansing.json
 - [x] Drowned Sentinel mini-boss AI (Barnacle Shield/Frost Wave/Stone Slam cycle)

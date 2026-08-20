@@ -217,7 +217,7 @@ The overworld file reuses `dungeon_id` as a generic area identifier (consistent 
 
 | Field | Type | Notes |
 |-------|------|-------|
-| `enemy_id` | string | Must exist in gap 1.2 enemy files (bosses.json or act files) |
+| `enemy_id` | string | Must exist in a gap 1.2 act file; boss records live there too (#330) |
 | `name` | string | Human-readable boss name |
 | `floor` | string | Floor or section where boss is encountered |
 | `trigger` | string | `zone`, `interact`, `cutscene`, `hp_threshold` |
@@ -543,7 +543,7 @@ Total: 3 crafting files in `game/data/crafting/`.
 
 ## Cross-File Consistency Rules
 
-1. **Every encounter enemy_id must exist** in gap 1.2 enemy files (act_i.json through bosses.json)
+1. **Every encounter enemy_id must exist** in a gap 1.2 act file (`act_i`, `act_ii`, `interlude`, `act_iii`, `optional`)
 2. **Every device/recipe material item_id must exist** in gap 1.3 materials.json
 3. **Every forging recipe result_id must exist** in gap 1.3 weapons.json or armor.json
 4. **Encounter group weights must sum to 100** per floor (within rounding tolerance of 0.01)
