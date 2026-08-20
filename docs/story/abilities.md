@@ -204,7 +204,7 @@ twice a basic attack.
 | **Shiv** | Level 8 | 0 MP / 1 turn | Quick physical attack (`ability_mult` 1.0) that ignores 50% of target's Defense. If Sable has a stolen item, she can throw it instead: the same hit at the same multiplier and the same DEF ignore, re-elemented to the item's thrown element ([items.md](items.md) § Thrown-Item Elements). Most items are non-elemental and add nothing; the item is consumed either way. See § Damage Magnitudes. |
 | **Misdirect** | Interlude [S] (Lv 14+) | 6 MP / 3 turns | Forces one enemy to target a different ally than intended on its next attack. Against AoE attacks, Misdirect has no effect. Against non-physical actions (spells), it redirects the targeting as normal. If used on a boss, instead reduces the boss's next attack damage by 25%. |
 | **Ransack** | Interlude [S] (Lv 19+) | 8 MP / 4 turns | Steal from all enemies simultaneously. Lower success rate than Filch (70% of normal), but hits everyone. |
-| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is [items.md](items.md) § Thrown-Item Elements. See § Damage Magnitudes. |
+| **Wild Card** | Story: After the Interlude (Sable's journey reuniting the party) | 10 MP / 5 turns | Sable improvises a powerful technique based on her current stolen goods. 0 items: physical damage to one enemy at `ability_mult` 2.0 ("2x her Attack"). 1 item: the same 2.0 strike against all enemies, carrying the thrown item's element. 2 items: as 1 item, plus a random debuff (drawn from: Poison, Sleep, Silence, Blind, Slow) on all enemies. 3 items: heavy — `ability_mult` 3.0 against all enemies, elemental, random debuff (same list), and restores 10% HP to all allies. *Which* of the held items supplies the element on the 2- and 3-item branches is open, not settled ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)) — see § Damage Magnitudes. All stolen items are consumed. Multipliers per [combat-formulas.md](combat-formulas.md) § Physical Ability Multiplier Tiers; *which* element a given item confers is [items.md](items.md) § Thrown-Item Elements. See § Damage Magnitudes. |
 
 **Synergies:**
 - Sable + Lira: Stolen Forgewright components can be given to Lira between battles to restore 2 AC each.
@@ -632,7 +632,9 @@ and `counter_pct_favor3`, Stoneheart's `immunity_turns`, Shock Coil's `ticks`,
 Shiv's `def_ignore_pct`, and the `caster` / `scaling_stat` / `source_ability` on
 every combo that carries a power — so an edit that breaks one of those fails the
 suite. (Its sibling `test_ability_balance.gd` keeps the *cost* invariants of
-§ Resource Cost Invariants; the two were split when they outgrew one file.) Three quantities used to live in effect prose alone and
+§ Resource Cost Invariants; the two were split when holding the new magnitude
+assertions alongside the cost ones would have carried the combined 415-line file
+past the 600-line ceiling.) Three quantities used to live in effect prose alone and
 were pinned by nothing: the Chorus's "counter 10% of DEF" and "status immunity,
 1 turn", and Shock Coil's "3 ticks"
 ([#355](https://github.com/gcko/pendulum-of-despair/issues/355)). They are real
@@ -796,7 +798,11 @@ in the Tier 1 AoE range of 7-14 that `game/tests/test_spell_balance.gd` already
 enforces for spells. Tier 2 is ruled out by price from either direction: the
 shipped Tier 2 AoE *attack* spells cost 22-25 MP (Scorch Sweep, Whiteout and
 Quake Stride at 22 up to Ley Storm at 25), and the cheapest Tier 2 AoE spell of
-any kind is 12 MP. Neither is 10. The window brackets Thornfire's answer; it
+*any* kind is Rekindling at 16 MP — a heal, which is the discounted end of the
+ladder, and still six MP clear of Ember Wing. Neither is 10. That floor read
+12 MP until [magic.md](magic.md)'s control-AoE pass repriced Miasma and Bogsink
+from 12 to 20; the repricing moved the Tier 2 floor *away* from 10, so it widens
+this gap rather than closing it. The window brackets Thornfire's answer; it
 does not select it, because 9, 10 and 11 all sit inside it.
 **Inferno Gale** doubles to **power 20** (rules 2 and 3), which lands inside the
 Tier 2 AoE band of 18-28 that [magic.md](magic.md) § Spell Balance Guidelines
@@ -829,8 +835,8 @@ equal-2 AC budget argument carries it alone.
 **Ambush Protocol** follows from rule 4 and the combo's own text: **60**. That
 is mid-band Tier 3 for 8 MP, the cheapest combo in the table — but it costs two
 ATB gauges and one stolen Forgewright component, and it is single-target where
-Thornfire (40, 16 MP) hits the whole group with guaranteed Burn. By rule 5 the
-formula reads **Lira's MAG**: the trap is hers, and Sable's contribution is the
+Thornfire (40, 16 MP) hits the whole group with guaranteed Burn. By rule 5
+**Ambush Protocol's** formula reads **Lira's MAG**: the trap is hers, and Sable's contribution is the
 guaranteed trigger and the lost enemy turn, neither of which is a damage term.
 Thornfire splits under the same rule — the Flame half's 20 is Ember Wing, on
 **Torren's MAG**, and the Storm half's 20 is Shock Coil, on **Lira's MAG** — so
@@ -959,6 +965,26 @@ Which element a given stolen item confers is
 [items.md](items.md) § Thrown-Item Elements — the same mapping Shiv's throw
 needed, made once and used by both.
 
+*What that mapping does not settle: which held item supplies the element*
+([#447](https://github.com/gcko/pendulum-of-despair/issues/447)). Shiv throws
+one item, so the mapping answers the question outright. Wild Card's 2- and
+3-item branches consume the whole pool and still land as a single elemental
+strike, and no document says whether the element comes from the first item
+stolen, the last, a random one, the first *elemental* one, or whether the branch
+resolves as several strikes at all. `item_branch_element_field` in
+`game/data/abilities/sable.json` names the field the element is read from; it
+does not name the item to read it from. With most of the catalog throwing
+non-elemental, a pool of one Emberstone and two Potions has no defined answer
+today. That is **left open here rather than settled**, the same way
+[combat-formulas.md](combat-formulas.md) § Custom-Formula Abilities leaves
+Shattered Vanguard's cap ordering open: the readings differ in balance rather
+than in bookkeeping — "first elemental item wins" makes the branch reliably
+elemental, "last stolen" makes it a player choice, "one strike per element"
+changes the magnitude — and the decision belongs to the pass that implements the
+Stolen Goods pool in the battle layer. What *is* settled is the mapping and the
+magnitude: the multiplier is 2.0 through the 2-item branch and 3.0 at three,
+whichever element lands.
+
 **Shiv's thrown-item branch — resolved on reading (a)**
 ([#359](https://github.com/gcko/pendulum-of-despair/issues/359)). The base attack
 was always fully specified (`ability_mult` 1.0 plus 50% DEF ignore,
@@ -969,12 +995,18 @@ made here.
    [items.md](items.md)'s catalog onto the elements. It does now:
    [items.md](items.md) § Thrown-Item Elements. The rule there is that an item
    is thrown at the element its own catalog entry names and at nothing
-   otherwise, which comes to eleven items — Emberstone (Flame), two Spirit
+   otherwise, which comes to sixteen items — Emberstone (Flame), two Spirit
    materials, three Arcanite ones (Storm, the element § Elemental System above
-   gives the Arcanite tradition), and five pieces of Pallor matter (Void). **Everything else is thrown non-elemental**, which is the honest
+   gives the Arcanite tradition), two ley-crystal ones (Ley), and eight rows
+   that name Void or the Pallor it manifests.
+   **Everything else is thrown non-elemental**, which is the honest
    answer for a Potion and keeps the branch from needing a number nobody has
    written down. The same mapping serves Wild Card's item branches — that was
-   always one decision covering both abilities, and it is settled once here.
+   always one decision covering both abilities, and the *mapping* is settled
+   once here. Which of several held items supplies the element on Wild Card's
+   2- and 3-item branches is a separate question the mapping does not reach; it
+   is named open above
+   ([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
 
 2. *The shape of the bonus.* Reading **(a)**: the throw re-elements the existing
    Shiv hit, changing `element_mod` and nothing else. The multiplier stays 1.0
@@ -1003,5 +1035,6 @@ made here.
 `thrown_item_ability_mult` (equal to `ability_mult`, which is the whole content
 of reading (a)) and `thrown_item_element_field`, and
 `game/tests/test_ability_magnitudes.gd` fails if the throw ever stops being the
-same hit — or if the item rows stop carrying the element the table below gives
-them, which it checks item by item rather than as a roster.
+same hit — or if the item rows stop carrying the element
+[items.md](items.md) § Thrown-Item Elements gives them, which it checks item by
+item rather than as a roster.

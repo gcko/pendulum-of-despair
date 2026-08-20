@@ -38,7 +38,7 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
   magnitudes (all ten closed)) and left Sable's Shiv thrown-item branch
   open, because it needed two design decisions no document implied: the
   item-type -> element mapping and the shape of the thrown bonus. Both
-  are now made — items.md § Thrown-Item Elements maps eleven items, and
+  are now made — items.md § Thrown-Item Elements maps sixteen items, and
   the throw is read as re-elementing the same hit (issue #359). The two
   combos that stated a spell power without saying whose stat carried it
   are settled the same way (issue #360). Two rows of combat-formulas.md
@@ -47,7 +47,10 @@ Run a balance pass, then diff against the gap-1.5 JSON values.
   is a buff that adds an Attack-command hit, not a multiplier rung.
   Runtime execution of the party abilities is still open as issue #321,
   which is an implementation gap rather than a documentation one and
-  does not hold this criterion.
+  does not hold this criterion. Neither does #447: the mapping fixes the
+  element per item, and *which* held item supplies it on Wild Card's 2-
+  and 3-item branches is a balance decision abilities.md names open
+  rather than settles, not a magnitude.
 
 ## Design references
 

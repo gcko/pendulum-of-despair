@@ -806,7 +806,7 @@ documents. They may need minor updates as Tier 1 gaps are filled.
 | Dungeon Design | dungeons-world.md, dungeons-city.md | COMPLETE |
 | NPC Design | npcs.md | MOSTLY COMPLETE |
 | Magic System | magic.md | COMPLETE (numeric balance closed — see below) |
-| Ability System | abilities.md | COMPLETE (resource costs closed; all ten damage magnitudes closed, the last being Shiv's thrown-item branch — [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below) |
+| Ability System | abilities.md | COMPLETE (resource costs closed; all ten damage magnitudes closed, the last being Shiv's thrown-item branch — [#359](https://github.com/gcko/pendulum-of-despair/issues/359), see below. One non-magnitude decision is named open in abilities.md rather than settled: which held item supplies the element on Wild Card's 2- and 3-item branches — [#447](https://github.com/gcko/pendulum-of-despair/issues/447)) |
 | Music Score | music.md | COMPLETE |
 | Visual Style | visual-style.md, building-palette.md | COMPLETE |
 | Dynamic World | dynamic-world.md | COMPLETE |
@@ -859,8 +859,10 @@ of the 2026-03-21 design, not a live rule.
 
 The three custom resources (AP/AC/WG) are within their stated caps, and the
 damage and healing magnitudes that used to be adjectives are now numbers. Both
-are asserted by `game/tests/test_ability_magnitudes.gd` against the numeric fields
-in `game/data/abilities/` — the caps, and every `power`, `power_favor3`,
+are asserted against the numeric fields in `game/data/abilities/`, in one test
+file each: `game/tests/test_ability_balance.gd` holds the cost invariants
+(`test_no_ability_costs_more_than_its_resource_cap` is the cap one), and
+`game/tests/test_ability_magnitudes.gd` holds every `power`, `power_favor3`,
 `ability_mult`, `ability_mult_max` and `component_powers` value. The three
 quantities that used to live in effect prose alone — the Chorus's barrier
 percentage and immunity duration, and Shock Coil's tick count — are data fields
@@ -896,10 +898,15 @@ attack was always fully specified (`ability_mult` 1.0 plus 50% DEF ignore,
 combat-formulas.md § Special: Shiv). The throw needed two decisions and both are
 now made. First, [items.md](../story/items.md) § Thrown-Item Elements maps the
 catalog onto the elements, on the rule that an item is thrown at the element its
-own entry names and at nothing otherwise — eleven items qualify (Emberstone,
-two Spirit materials, three Arcanite ones, five pieces of Pallor matter) and
-everything else throws non-elemental. Wild Card's item branches take the same
-mapping, which was always one decision covering both. Second, the throw is read
+own entry names and at nothing otherwise — sixteen items qualify (Emberstone,
+two Spirit materials, three Arcanite ones, two ley-crystal ones, and eight rows
+naming Void or the Pallor it manifests) and everything else throws
+non-elemental. Wild Card's item branches take the same mapping, which was always
+one decision covering both — though the mapping fixes the element *per item* and
+does not say which of several held items supplies it on Wild Card's 2- and
+3-item branches, which abilities.md leaves open rather than settled
+([#447](https://github.com/gcko/pendulum-of-despair/issues/447)).
+Second, the throw is read
 as **(a)**: it re-elements the existing Shiv hit and changes nothing else, so no
 new magnitude was invented for it. The rejected readings — a separate second hit,
 or a raised multiplier — both need a number no document states, and either would

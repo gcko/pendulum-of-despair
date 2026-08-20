@@ -428,15 +428,15 @@ func test_throwing_a_stolen_item_changes_the_element_and_nothing_else() -> void:
 
 
 func test_each_thrown_item_confers_the_element_items_md_derives_for_it() -> void:
-	## items.md § Thrown-Item Elements maps eleven items onto elements and throws
-	## everything else non-elemental. The content of that section is the
-	## *mapping*, so the mapping is what is pinned — a roster check alone would
-	## let all eleven be permuted among the elements, and re-elementing a Pallor
-	## Sample away from Void would undo "throwing a Pallor Sample at a Pallor
-	## enemy is the worst thing Sable can do with it". The field name is read off
-	## Shiv rather than hard-coded, so the ability's pointer and the item rows it
-	## points at are joined: aim it at a field no item carries and this scan
-	## comes back empty, which the roster equality reports.
+	## items.md § Thrown-Item Elements maps sixteen items onto elements and throws
+	## everything else non-elemental. The *mapping* is what is pinned, not a
+	## roster: a roster check alone would let all sixteen be permuted, and
+	## re-elementing the Ley Crystal Fragment away from Ley would undo the
+	## section's reading of what the throw is worth against the Ley Colossus it is
+	## stolen from. The element field is read off Shiv rather than hard-coded, so
+	## aiming it at a field no item carries empties this scan. All three item
+	## files are walked: a key item that quietly acquired the field must not slip
+	## past `found`.
 	var shiv: Dictionary = _find_ability("shiv")
 	if shiv.is_empty():
 		return
@@ -454,9 +454,14 @@ func test_each_thrown_item_confers_the_element_items_md_derives_for_it() -> void
 		"pallor_sample": "void",
 		"pallor_shard": "void",
 		"nest_fragment": "void",
+		"despair_shard": "void",
+		"nest_mothers_core": "void",
+		"pallor_core": "void",
+		"ley_residue": "ley",
+		"ley_crystal_fragment": "ley",
 	}
 	var found: Array[String] = []
-	for file_name: String in ["materials", "consumables"]:
+	for file_name: String in ["materials", "consumables", "key_items"]:
 		for raw: Variant in _items_named(file_name):
 			var item: Dictionary = raw as Dictionary
 			if not item.has(element_field):

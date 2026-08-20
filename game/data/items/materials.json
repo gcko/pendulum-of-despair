@@ -689,6 +689,7 @@
     },
     {
       "id": "ley_residue",
+      "throw_element": "ley",
       "name": "Ley Residue",
       "category": "material",
       "tier": 2,
@@ -834,6 +835,7 @@
     },
     {
       "id": "ley_crystal_fragment",
+      "throw_element": "ley",
       "name": "Ley Crystal Fragment",
       "category": "material",
       "tier": 3,
@@ -858,6 +860,7 @@
     },
     {
       "id": "despair_shard",
+      "throw_element": "void",
       "name": "Despair Shard",
       "category": "material",
       "tier": 3,
@@ -870,6 +873,7 @@
     },
     {
       "id": "nest_mothers_core",
+      "throw_element": "void",
       "name": "Nest Mother's Core",
       "category": "material",
       "tier": 3,
@@ -901,6 +905,7 @@
     },
     {
       "id": "pallor_core",
+      "throw_element": "void",
       "name": "Pallor Core",
       "category": "material",
       "tier": 4,

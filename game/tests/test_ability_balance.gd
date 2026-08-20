@@ -2,8 +2,10 @@ extends GutTest
 ## Cost invariants for game/data/abilities/ (6 character files, 44 entries).
 ##
 ## What abilities *deal* is asserted next door in test_ability_magnitudes.gd;
-## this file is only what they *cost*. The two were one file until it crossed
-## the 600-line ceiling (technical-architecture.md 1.2a).
+## this file is only what they *cost*. The two were one 415-line file until the
+## magnitude assertions were written: keeping them together would have carried it
+## past the 600-line ceiling (technical-architecture.md 1.2a), so the split was
+## made before that happened rather than after.
 ##
 ## combos.json (12 entries) is outside these assertions entirely: its `cost` is a
 ## free-text per-character split ("Edren: 7 MP, Cael: 7 MP") with no `cost_value`

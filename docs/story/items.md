@@ -631,7 +631,7 @@ that mapping, and it is the same one for both abilities.
 
 **The rule: an item is thrown at the element its own entry names, and at nothing
 otherwise.** No item is given an element here that its catalog text, or the
-documented nature of the material it is made of, does not already carry. Eleven
+documented nature of the material it is made of, does not already carry. Sixteen
 items qualify:
 
 | Item | Thrown element | Where the element comes from |
@@ -647,14 +647,19 @@ items qualify:
 | Pallor Sample | Void | Contained Pallor corruption, and Void *is* the Pallor made manifest ([magic.md](magic.md) § Element Descriptions) |
 | Pallor Shard | Void | Crystallized Pallor energy; as above |
 | Nest Fragment | Void | Hardened Pallor nest matter; as above |
+| Despair Shard | Void | Crafting use is "Pallor-element crafting"; as above |
+| Nest Mother's Core | Void | "Concentrated Pallor essence"; as above |
+| Pallor Core | Void | "The concentrated essence of the Pallor itself"; as above |
+| Ley Residue | Ley | Crafting use is "Ley-element crafting" |
+| Ley Crystal Fragment | Ley | Crafting use is "Ley-element forging" |
 
 **Everything else in this catalog is thrown non-elemental** — every consumable,
-every key item, and the other 76 materials. Non-elemental bypasses resistance
+every key item, and the other 71 materials. Non-elemental bypasses resistance
 and exploits no weakness ([combat-formulas.md](combat-formulas.md) § Elemental
 System), so throwing a Potion or a Beast Hide adds nothing to the hit but costs
 you the item. That is the intended shape: the throw is worth doing when Sable
 has stolen the right thing, not on reflex. In the data this is the *absence* of
-a field — `game/data/items/*.json` carries `throw_element` on exactly the eleven
+a field — `game/data/items/*.json` carries `throw_element` on exactly the sixteen
 rows above, and an item without one is non-elemental.
 
 Three deliberate exclusions, so they are not read as oversights:
@@ -673,11 +678,36 @@ Three deliberate exclusions, so they are not read as oversights:
 
 **Void in the player's hands.** [magic.md](magic.md) § Void Magic (Pallor) keeps Void
 *spells* enemy-only until after Cael's defeat. A thrown lump of Pallor matter is
-not a spell, and the five Void rows above are the one way the party deals Void
-damage before then. It cuts both ways, which is the point: Void is strong
-against Spirit and weak against Ley, and Void versus Void deals nothing at all —
-so throwing a Pallor Sample at a Pallor enemy is the worst thing Sable can do
-with it.
+not a spell, and the Void rows above are the one way the party deals Void damage
+before then.
+
+*What a throw is worth is read off the target's record, not off the wheel.*
+[combat-formulas.md](combat-formulas.md) § Element Matchup Wheel states the
+element relationships, but `Enemy.get_element_multiplier()` computes the
+multiplier from the target's own `weaknesses`, `resistances` and `absorb` lists
+in `game/data/enemies/*.json` and from nothing else. Measured against the
+shipped bestiary, the throw to avoid is not the one the wheel suggests:
+
+- **No shipped enemy is immune to any element.** The engine supports it —
+  `Enemy.is_immune_to()` reads an `immunities` list — but that list is absent
+  from all 209 enemy records, so § Elemental Damage Modifiers' 0.0x tier, and
+  the "Void vs Void enemy" it offers as that tier's example, describe nothing
+  the bestiary currently does. There is no Void-immune Pallor enemy: of the
+  46 `type: pallor` records, 23 carry Void among their `resistances` and the
+  other 23 carry no Void entry at all. A Pallor Sample thrown at a Pallor enemy
+  is a poor trade, never a null one.
+- **Five records absorb Void, and absorbed damage heals the target**
+  (`damage_calculator.gd`, `element_mod < 0`): Ley Colossus, Ley Titan, Void
+  Wisp, Void Moth and Void Crystal. That is the worst thing Sable can do with a
+  piece of Pallor matter, and none of the five is a Pallor-type enemy.
+- **The two Ley rows carry the same trap, pointed at their own source.** Ley
+  Colossus and Ley Titan absorb all seven elements, and the Ley Crystal Fragment
+  is stolen from exactly those two — so throwing it back at the enemy it came
+  from heals that enemy, and against this pair a plain non-elemental throw is
+  strictly the better one.
+- **Four bosses list Void as a weakness** — the Ironbound, the Perfect Machine,
+  the Ley Abomination and the First Scholar — and are where the stored Pallor
+  matter pays for itself.
 
 ### Bestiary Drop Consistency
 
