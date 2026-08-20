@@ -126,7 +126,16 @@ After outputting the PR URL, always end with:
 - **Hooks are the quality gates.** Do not run separate test/lint
   commands — the husky pre-commit (branch protection, gdlint, JSON
   validation, gdformat --check) and pre-push (ID uniqueness, stale
-  counts, scene refs, Godot import, full GUT suite) hooks handle it.
+  counts, scene refs, Godot import, full GUT suite, GUT count floor)
+  hooks handle it. The one exception is `bash scripts/gates.sh`, on
+  work the hooks cannot see: uncommitted state in a parallel worktree
+  (pre-commit sees only the index), or a stacked branch that must be
+  judged against its own parent rather than `main`
+  (`GATES_BASE=<parent> bash scripts/gates.sh`). It also serializes
+  headless Godot when several worktrees run at once. That is the whole
+  carve-out — it is not general permission to run tests by hand, it
+  does not replace either hook, and both hooks still run on every
+  commit and push. See AGENTS.md § Essential Commands.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
 - **Temp file for body.** Always write to `/tmp/pr_body.md` and use
