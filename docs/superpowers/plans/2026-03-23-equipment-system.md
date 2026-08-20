@@ -354,7 +354,7 @@ Examples:
 - Ley Amplifier (+20% spell damage)
 - Pallor Bane (+25% damage vs Pallor-type)
 - MP Regen Ring (restore 3% max MP per turn)
-- Preemptive Charm (+25% preemptive strike rate)
+- Preemptive Charm (+25pp preemptive strike rate)
 
 - [ ] **Step 5: Write Character-Specific and Quest accessories (~6)**
 

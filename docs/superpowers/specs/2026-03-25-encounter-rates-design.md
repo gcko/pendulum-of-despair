@@ -230,7 +230,7 @@ Example thresholds for open terrain (grassland):
 ### Preemptive Charm Interaction
 
 The **Preemptive Charm** accessory (already defined in equipment.md at
-+25% preemptive strike rate, 2,000g, Bellhaven quest) adds 25
++25pp preemptive strike rate, 2,000g, Bellhaven quest) adds 25
 percentage points to preemptive chance. The added percentage is
 subtracted from back attack chance first; if back attack is already
 reduced to 0%, the remainder is subtracted from normal.
@@ -446,7 +446,7 @@ randomly weakened by a back attack 3 steps from the boss door.
 
 ### Equipment (Gap 1.5)
 
-- Preemptive Charm already defined in equipment.md (+25% preemptive
+- Preemptive Charm already defined in equipment.md (+25pp preemptive
   rate, 2,000g, Bellhaven quest).
 - Infiltrator's Cloak already referenced in dungeons-world.md (Axis
   Tower F2 treasure) and now added to equipment.md.

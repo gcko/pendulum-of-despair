@@ -516,7 +516,7 @@ Preemptive Charm, Infiltrator's Cloak).
 |------|--------|-------|-----|----------|
 | Haste Bangle | Auto-Haste 2 turns at battle start | 2,500 | Int | Interlude shop |
 | Counter Ring | +15% counter-attack rate | 3,000 | Int | Catacombs chest |
-| Preemptive Charm | +25% preemptive strike rate | 2,000 | Int | Bellhaven quest |
+| Preemptive Charm | +25pp preemptive strike rate | 2,000 | Int | Bellhaven quest |
 | Ley Amplifier | +20% spell damage | 4,000 | III | Dry Well chest |
 | Pallor Bane Charm | +25% damage vs Pallor-type | 3,500 | III | Act III shop |
 | MP Regen Ring | Restore 3% max MP per turn | 4,500 | III | Ley Line Depths F5 chest |
