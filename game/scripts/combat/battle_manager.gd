@@ -315,7 +315,7 @@ func resync_enemy_atb(idx: int) -> void:
 ## StatusEffects.wakes_on_damage — only enemy.gd does — so a slept member's only
 ## exit is an explicit cure, and this freeze is what makes that visible. Latent
 ## rather than live: no enemy ability in game/data/enemies/ inflicts Sleep or
-## Confusion on the party today. Tracked as #440; do not read this function
+## Confusion on the party today. Tracked as #435; do not read this function
 ## as evidence the wake-on-damage half exists.
 func _resync_party_atb(slot: int) -> void:
 	var m: Dictionary = _state.get_member(slot)
