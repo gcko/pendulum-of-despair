@@ -144,12 +144,6 @@ not re-litigate it. Legitimate reasons look like:
 - **A scene controller.** `exploration.gd` is the Godot lifecycle (`_ready`, `_process`,
   `_unhandled_input`, `load_map`) plus the accessors its collaborators need. `load_map`
   mutates ten private fields at once; extracting it trades method bodies for setters.
-- **A justification that has lapsed.** `audio_manager.gd` (536) was admitted here because
-  `test_audio_manager.gd` asserted against its player/tween/track-ID fields in ~25 places, so
-  moving them would have discarded the evidence that crossfade behavior was unchanged. The
-  behavioral rewrite in #420 moved that suite off private fields entirely — the audio tests now
-  read zero private state — so the reason no longer holds. By the rule below, the file is debt
-  until it is decomposed or given a justification that is true today. Tracked in #425.
 - **A loop plus the seam its collaborators reach it through.** `battle_manager.gd` is the
   post-extraction residue of a 724-line original: every command the player can pick was
   moved out to `BattlePlayerActions` (attack/defend/flee), `BattleMagicCommand` and
@@ -164,6 +158,20 @@ not re-litigate it. Legitimate reasons look like:
 
 What is **not** a reason: "it grew". A file over 400 with no stated justification is debt,
 and the next change to it should pay some down.
+
+A justification that has **lapsed** counts as no justification. `audio_manager.gd` sat in the
+band at 536 lines on one reason: `test_audio_manager.gd` asserted against its player, tween and
+track-ID fields in ~25 places, so moving them would have discarded the evidence that crossfade
+behavior was unchanged. The behavioral rewrite in #420 moved that suite off private state
+entirely, which left the file here on a reason that was no longer true — and nothing caught it,
+because `test_script_layout.gd` checks that a band file is *named* in this section, not that
+what the section says about it still holds. #425 decomposed the file instead of rewording the
+excuse: the crossfading player pair and the track sounding on it became `AudioChannel`, the
+pre-battle snapshot and the swap back became `AudioBattleTransition`, and resolving a track ID
+to a path on disk became `AudioAssets`. What is left is the Node the players hang off — buses,
+the 16 `AudioStreamPlayer` children, and the public entry points game scripts call — comfortably
+under the aim, so it is no longer a band file at all. A stated reason can only be re-checked by
+a reader; when one stops being true, decompose rather than restate.
 
 Prefer the patterns already in the tree: static `class_name` helpers in `scripts/util/`
 (`inventory_helpers.gd`, `dialogue_condition.gd`), and `RefCounted` collaborators
@@ -981,6 +989,12 @@ Per [audio.md](../story/audio.md) Section 3.1 — 24 channels total
 **Godot import settings:** Loop mode set per track in import dialog.
 Music and ambient loop seamlessly. SFX do not loop (except specified
 jingles).
+
+**Runtime resolution:** `AudioAssets` (`scripts/util/audio_assets.gd`) turns a
+track ID into one of the three paths above, so the naming column is implemented
+in one place rather than repeated at each AudioManager playback entry point. It
+returns `null` for an ID no file answers to, which is how a missing asset stays
+a warning instead of a crash.
 
 ### 5.4 Pixel Art Import Settings
 
