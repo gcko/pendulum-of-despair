@@ -58,17 +58,21 @@ never descends** — which looks like work, returns a plausible number, and
 misses everything.
 
 Sever the descent (`dirnames[:] = []` inside the walk, or the equivalent) and
-confirm the gate fails. In this repo that took `check_spelling.py` from 474
-files to 139 — still a big number, still completely blind, because all 89
-scripts live one level down.
+confirm the gate fails. In this repo that cut `check_spelling.py`'s corpus by
+roughly two thirds while it still reported a plausible three-figure file count —
+completely blind, because every script under `game/scripts/` lives at least one
+level below the root the walk was still entering.
 
 So:
 
 - Assert a **floor on what was inspected**, not just on what was found.
   `assert scanned > 300`, per-root if the roots differ in size.
-- **Print the corpus size on success.** `Doc citation validation passed` and
-  `575 citation(s) resolved across 537 file(s)` are different sentences, and
-  only the second one distinguishes a clean scan from a dead one.
+- **Print the corpus size on success.** "validation passed" and "validation
+  passed, N citations resolved across M files" are different sentences, and only
+  the second distinguishes a clean scan from a dead one. Run
+  `python3 scripts/quality-gates/check_doc_citations.py` to see the shape the
+  gates here use — and note that quoting its literal numbers into a doc is how
+  they go stale, which is why this bullet does not.
 - Make the floor's failure message say *repair the walk*, not *lower the floor*.
 
 ## 3. Turning on a gate that already has violations: the ratchet

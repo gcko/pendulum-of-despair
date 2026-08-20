@@ -16,8 +16,11 @@ For taking a milestone from N open to zero. `/issue-bundle` handles one
 coherent bundle; this is the layer above it — several bundles in flight, a
 stacked chain, and several waves before the count reaches zero.
 
-Expect **waves**, not one pass. A real milestone went 17 -> 14 -> 7 -> 3 -> 1
--> 0 across five waves, because reviewing work honestly finds more work. That
+Expect **waves**, not one pass. The figures in this skill come from one
+milestone — *Infra & Docs II — Citation Rot & Doc Hygiene*, 59 issues closed —
+so they are illustrative of scale rather than targets, and the issue history
+there is where to check any of them. It went 17 -> 14 -> 7 -> 3 -> 1 -> 0
+across five waves, because reviewing work honestly finds more work. That
 is the process succeeding. What matters is that each wave's follow-ups are
 smaller and more specific than the last; if they are not, the reviews are
 generating opinions rather than findings (see *Controlling follow-ups*).
@@ -29,7 +32,8 @@ surprising share of issues are already fixed or wrong about their own example.
 Verify before bundling:
 
 - Issues whose fix already landed — close them with the evidence, do not
-  re-do the work. One wave found 5 of 14 already fixed.
+  re-do the work. One wave found 5 of its 14 already fixed (#378, #381, #388,
+  #390, #392 — each closed with the verification in the comment).
 - Issues whose named example is wrong but whose defect is real — fix the real
   thing and say the example was wrong.
 - Issues that ask for the wrong fix. Two agents correctly REFUSED a resolver
