@@ -23,6 +23,11 @@ Absence is never a pass. A log with no summary in it FAILS rather than
 falling through the comparisons, because a run that died before printing its
 summary is indistinguishable from a run that had nothing to say.
 
+Nor is a count on its own. A test that stops asserting is scored RISKY and one
+marked pending is scored PENDING; neither is a failure, both still count toward
+`Tests`, so a test can stop testing without a single floor moving. The gate
+compares `Passing Tests` against `Tests` for that reason.
+
     python3 scripts/quality-gates/check_gut_baseline.py               # shape only
     python3 scripts/quality-gates/check_gut_baseline.py --shell       # MIN_* for eval
     python3 scripts/quality-gates/check_gut_baseline.py --log /tmp/gut.log
@@ -54,14 +59,18 @@ SUMMARY_KEYS = {
     "tests": "Tests",
     "passing": "Passing Tests",
     "failing": "Failing Tests",
+    "risky": "Risky/Pending",
 }
 
-# GUT 9.7.0 prints "Failing Tests" ONLY when something failed, so its absence
-# cannot serve as the proof that the suite finished — which is precisely how the
-# old pre-push gate came to pass vacuously on a run that produced no summary at
-# all. These two are printed on every completed run, so THEY are the evidence,
-# and only once they are present may a missing "Failing Tests" be read as zero.
-REQUIRED_SUMMARY = ("scripts", "tests")
+# GUT 9.7.0 prints "Failing Tests" and "Risky/Pending" ONLY when they are
+# non-zero (`_log_non_zero_total` in summary.gd), so their absence cannot serve
+# as the proof that
+# the suite finished — which is precisely how the old pre-push gate came to pass
+# vacuously on a run that produced no summary at all. These three are printed on
+# every completed run (the plain `_total_fmt` lines in summary.gd), so THEY are
+# the evidence, and only once they are present may a missing "Failing Tests" be
+# read as zero.
+REQUIRED_SUMMARY = ("scripts", "tests", "passing")
 
 # The lines Godot emits when it refuses a script. These are the visible half of
 # a silent skip, and printing them is the difference between "the count fell"
@@ -151,12 +160,13 @@ def judge_log(log_path, floors, out, label="", log_text=None):
     _say(
         out,
         label,
-        "RESULT scripts=%s tests=%s passing=%s failing=%s (floors %d/%d)"
+        "RESULT scripts=%s tests=%s passing=%s failing=%s risky=%s (floors %d/%d)"
         % (
             shown["scripts"],
             shown["tests"],
             shown["passing"],
             0 if counts["failing"] is None and counts["tests"] is not None else shown["failing"],
+            0 if counts["risky"] is None and counts["tests"] is not None else shown["risky"],
             floors["scripts"],
             floors["tests"],
         ),
@@ -216,6 +226,34 @@ def judge_log(log_path, floors, out, label="", log_text=None):
                 shown_errors += 1
                 if shown_errors >= 20:
                     break
+        ok = False
+
+    # --- Tests that neither passed nor failed ------------------------------
+    # `passing` used to be parsed, printed, and never judged, so `Tests 1289`
+    # with `Passing Tests 0` cleared both floors and the gate reported success.
+    # GUT scores a test as passing only when it made at least one assert and
+    # went neither pending nor failing (`is_passing` in collected_test.gd), so a
+    # test that stops asserting is RISKY and one marked pending is PENDING.
+    # Neither is a failure, both still count toward `Tests`, and the floors
+    # therefore hold — a test can stop testing without a single count moving.
+    # Compare the totals instead.
+    failing = 0 if counts["failing"] is None else counts["failing"]
+    unaccounted = counts["tests"] - counts["passing"] - failing
+    if unaccounted > 0:
+        _say(
+            out,
+            label,
+            "TESTS RAN WITHOUT PASSING: %d of %d collected tests neither passed nor failed"
+            % (unaccounted, counts["tests"]),
+        )
+        _say(
+            out,
+            label,
+            "  (GUT reports Risky/Pending %s). A test that asserts nothing is risky and a"
+            % ("?" if counts["risky"] is None else counts["risky"]),
+        )
+        _say(out, label, "  pending one is pending; both still count toward Tests, so the floors")
+        _say(out, label, "  hold and the suite still reads green. Make it assert, or delete it.")
         ok = False
 
     if counts["tests"] < floors["tests"]:

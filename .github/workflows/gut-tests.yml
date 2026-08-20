@@ -32,6 +32,12 @@ jobs:
           godot --headless --path game/ --import
         timeout-minutes: 2
 
+      # This step judges the PROCESS only: did Godot survive the run. Everything
+      # read out of the log is judged by Gate L below. CI used to re-implement
+      # the summary-presence check and the failing-tests verdict here in YAML
+      # while .husky/pre-push re-implemented both again in bash, so a rule the
+      # comments called single-implementation had five copies and a fix to the
+      # summary regex had to land in three files (#433).
       - name: Run GUT tests
         run: |
           set -o pipefail
@@ -41,32 +47,16 @@ jobs:
             tail -40 /tmp/gut.log
             exit 1
           fi
-          # ABSENCE OF THE SUMMARY IS A FAILURE. The old form reached `exit 1`
-          # only when it could positively SEE a failure, and accepted the string
-          # "All tests passed" appearing anywhere; a run that collected nothing
-          # or died early was scored as a clean one. GUT 9.7.0 prints a "Failing
-          # Tests" line only when something failed, so the Run Summary totals -
-          # printed on every completed run - are the evidence the suite finished.
-          if ! grep -qE "^Scripts[[:space:]]+[0-9]+" /tmp/gut.log \
-             || ! grep -qE "^Tests[[:space:]]+[0-9]+" /tmp/gut.log; then
-            echo "GUT Run Summary MISSING: no 'Scripts'/'Tests' totals, so the suite never"
-            echo "reached the end. Absence of the summary FAILS; it does not pass."
-            tail -40 /tmp/gut.log
-            exit 1
-          fi
-          if grep -qE "^Failing Tests[[:space:]]+" /tmp/gut.log \
-             && ! grep -qE "^Failing Tests[[:space:]]+0[[:space:]]*$" /tmp/gut.log; then
-            echo "Tests failed!"
-            grep -nE "^[[:space:]]+\[Failed\]" /tmp/gut.log | head -30 || true
-            exit 1
-          fi
-          echo "All tests passed!"
         timeout-minutes: 5
 
-      # A green suite says nothing about how many tests RAN: GUT 9.7.0 drops a
-      # whole test file over a GDScript parse error and still reports
-      # `Failing Tests 0`. The floors in gut-baseline.txt are the only thing
-      # that notices, and until #430 nothing but a hand-run scripts/gates.sh
-      # read them -- so a parse-skipped or deleted test file passed CI.
-      - name: GUT script/test count floor (Gate L)
+      # THE VERDICT. A green suite says nothing about how many tests RAN: GUT
+      # 9.7.0 drops a whole test file over a GDScript parse error and still
+      # reports `Failing Tests 0`, and a test that stops asserting is scored
+      # risky rather than failing. This one step checks that the Run Summary is
+      # present at all (absence FAILS, it does not pass), that nothing failed,
+      # that every collected test passed, and that the script/test counts clear
+      # the floors in gut-baseline.txt. Until #430 nothing but a hand-run
+      # scripts/gates.sh read those floors, so a parse-skipped or deleted test
+      # file passed CI unremarked.
+      - name: GUT summary, failures and count floor (Gate L)
         run: python3 scripts/quality-gates/check_gut_baseline.py --log /tmp/gut.log
