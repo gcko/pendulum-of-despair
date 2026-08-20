@@ -20,7 +20,7 @@ GATE_DIR="scripts/quality-gates"
 #   I  quality-gate self-tests    pre-push   test_quality_gates.py
 #   J  dialogue script/JSON sync  pre-push   check_dialogue_sync.py
 #   K  American-English spelling  pre-push   check_spelling.py
-#   L  GUT script/test floor      pre-push   check_gut_baseline.py
+#   L  GUT summary/failures/floor pre-push   check_gut_baseline.py
 #
 # Each gate script's module docstring names its own letter; keep the two in
 # step when editing either.
@@ -64,82 +64,99 @@ echo "=== Pre-push: American-English spelling ==="
 python3 "$GATE_DIR/check_spelling.py"
 
 # === QUALITY GATE H: GUT unit tests ===
-# Run all GUT tests headless. Requires Godot binary on PATH or at
-# /Applications/Godot.app (macOS). Skip gracefully if Godot not found.
-GODOT_BIN=""
-if command -v godot >/dev/null 2>&1; then
+# Run all GUT tests headless. Godot comes from $GODOT_BIN, from PATH, or from
+# /Applications/Godot.app (macOS), in that order.
+#
+# ABSENCE OF GODOT IS A FAILURE, NOT A SKIP. Until #433 everything below sat
+# inside `if [ -n "$GODOT_BIN" ] && [ -f gut_cmdln.gd ]`, whose `else` branch
+# printed "GUT tests SKIPPED (Godot not found)" and fell through to the success
+# banner. On any machine without Godot the push therefore succeeded having run
+# neither Gate H nor Gate L, on a tree whose suite had never run — the exact
+# vacuity Gate L exists to close, with the guard against silently-skipped tests
+# itself silently skipped. scripts/gates.sh has refused this since #430; the
+# hook refuses it now too, and the two agree.
+GODOT_BIN="${GODOT_BIN:-}"
+if [ -z "$GODOT_BIN" ] && command -v godot >/dev/null 2>&1; then
     GODOT_BIN="godot"
-elif [ -x "/Applications/Godot.app/Contents/MacOS/Godot" ]; then
+fi
+if [ -z "$GODOT_BIN" ] && [ -x "/Applications/Godot.app/Contents/MacOS/Godot" ]; then
     GODOT_BIN="/Applications/Godot.app/Contents/MacOS/Godot"
 fi
-
-if [ -n "$GODOT_BIN" ] && [ -f "game/addons/gut/gut_cmdln.gd" ]; then
-    echo "=== Pre-push: Godot import ==="
-    set +e
-    IMPORT_LOG=$("$GODOT_BIN" --headless --path game/ --import 2>&1)
-    IMPORT_EXIT=$?
-    set -e
-    if [ $IMPORT_EXIT -ne 0 ]; then
-        echo "$IMPORT_LOG"
-        echo "Godot import FAILED (exit $IMPORT_EXIT)."
-        exit 1
-    fi
-    echo "Godot import passed."
+if [ -z "$GODOT_BIN" ]; then
     echo "=== Pre-push: GUT tests ==="
-    TEMP_LOG=/tmp/gut_prepush.log
-    # set +e around the pipeline so the status can be REPORTED rather than
-    # aborting the hook wordlessly through `set -e`.
-    set +e
-    "$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \
-        sed 's/\x1b\[[0-9;]*m//g' | tee "$TEMP_LOG"
-    GUT_EXIT=${PIPESTATUS[0]}
-    set -e
-    # Godot's own exit status, named rather than left for `set -e` to swallow
-    # wordlessly. A printed summary is not evidence the process survived; the
-    # status is.
-    if [ "$GUT_EXIT" -ne 0 ]; then
-        echo "Godot EXITED $GUT_EXIT during the GUT run. See $TEMP_LOG"
-        tail -30 "$TEMP_LOG"
-        exit 1
-    fi
-    # ABSENCE OF THE SUMMARY IS A FAILURE. This used to read
-    #   if grep -q "Failing Tests" && ! grep -qE "Failing Tests\s+0"
-    # which passed VACUOUSLY whenever the suite died, or collected nothing, before
-    # printing a summary: the first grep found nothing, the conjunction went false,
-    # and the gate reported that no test had failed. Nothing had run.
-    #
-    # The repair is not to demand a "Failing Tests" line - GUT 9.7.0 prints that
-    # one ONLY when something failed, so on a green run it is legitimately
-    # absent. The Run Summary totals are printed on every completed run, so they
-    # are the evidence that the suite reached the end, and only once they are
-    # present may a missing "Failing Tests" be read as zero.
-    if ! grep -qE "^Scripts[[:space:]]+[0-9]+" "$TEMP_LOG" \
-       || ! grep -qE "^Tests[[:space:]]+[0-9]+" "$TEMP_LOG"; then
-        echo "GUT Run Summary MISSING from $TEMP_LOG - no 'Scripts'/'Tests' totals, so the"
-        echo "suite never reached the end. Absence of the summary FAILS; it does not pass."
-        tail -30 "$TEMP_LOG"
-        exit 1
-    fi
-    if grep -qE "^Failing Tests[[:space:]]+" "$TEMP_LOG" \
-       && ! grep -qE "^Failing Tests[[:space:]]+0[[:space:]]*$" "$TEMP_LOG"; then
-        echo "GUT tests FAILED. Fix tests before pushing."
-        grep -nE "^[[:space:]]+\[Failed\]" "$TEMP_LOG" | head -30 || true
-        exit 1
-    fi
-    PASSING=$(grep -E "^Passing Tests " "$TEMP_LOG" | awk '{print $NF}' | tail -1 || true)
-    echo "GUT tests passed ($PASSING passing)."
-
-    # === QUALITY GATE L: GUT script/test count floor ===
-    # `Failing Tests 0` says nothing about how many tests RAN. GUT 9.7.0 drops a
-    # whole test file over a GDScript parse error and still reports a green
-    # suite, so the floors in gut-baseline.txt are the only thing that notices
-    # one going missing. They were read by scripts/gates.sh alone until #430,
-    # and nothing runs that for you. Same implementation as gates.sh and CI, so
-    # the three cannot drift apart in their parsing or their diagnosis.
-    echo "=== Pre-push: GUT script/test count floor ==="
-    python3 "$GATE_DIR/check_gut_baseline.py" --log "$TEMP_LOG"
-else
-    echo "=== Pre-push: GUT tests SKIPPED (Godot not found) ==="
+    echo "Godot NOT FOUND (set GODOT_BIN, put godot on PATH, or install it to"
+    echo "/Applications/Godot.app) - refusing to report success on a tree whose GUT"
+    echo "suite was never run. Gates H and L both need it; a skipped guard is not a"
+    echo "passed one."
+    exit 1
 fi
+if [ ! -f "game/addons/gut/gut_cmdln.gd" ]; then
+    echo "=== Pre-push: GUT tests ==="
+    echo "game/addons/gut/gut_cmdln.gd is MISSING, so the suite cannot run and Gates H"
+    echo "and L have nothing to judge. Absence FAILS; it does not pass."
+    exit 1
+fi
+
+# One headless Godot per machine, shared with scripts/gates.sh. A contended run
+# collects FEWER scripts, which Gate L reads as a silently-skipped test file and
+# blames on a healthy one; see scripts/quality-gates/godot-lock.sh. gates.sh has
+# serialized Godot since it was written and the hook did not, which is how the
+# two came to disagree about one clean tree (#433).
+GODOT_LOCK_LABEL="$(basename "$PWD")"
+# shellcheck source=scripts/quality-gates/godot-lock.sh
+. "$GATE_DIR/godot-lock.sh"
+godot_lock_acquire || exit 1
+
+echo "=== Pre-push: Godot import ==="
+set +e
+IMPORT_LOG=$("$GODOT_BIN" --headless --path game/ --import 2>&1)
+IMPORT_EXIT=$?
+set -e
+if [ $IMPORT_EXIT -ne 0 ]; then
+    echo "$IMPORT_LOG"
+    echo "Godot import FAILED (exit $IMPORT_EXIT)."
+    exit 1
+fi
+echo "Godot import passed."
+
+echo "=== Pre-push: GUT tests ==="
+# Per-worktree, because this machine runs several. A fixed /tmp/gut_prepush.log
+# was truncated by a sibling's `tee` while this run's Gate L was reading it, and
+# the verdict is count-based: the reader either saw no summary at all or judged
+# the neighbour's totals, since the LAST summary in the file wins.
+TEMP_LOG="/tmp/gut_prepush_$(basename "$PWD").log"
+# set +e around the pipeline so the status can be REPORTED rather than
+# aborting the hook wordlessly through `set -e`.
+set +e
+"$GODOT_BIN" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 | \
+    sed 's/\x1b\[[0-9;]*m//g' | tee "$TEMP_LOG"
+GUT_EXIT=${PIPESTATUS[0]}
+set -e
+# Godot's own exit status, named rather than left for `set -e` to swallow
+# wordlessly. A printed summary is not evidence the process survived; the
+# status is.
+if [ "$GUT_EXIT" -ne 0 ]; then
+    echo "Godot EXITED $GUT_EXIT during the GUT run. See $TEMP_LOG"
+    tail -30 "$TEMP_LOG"
+    exit 1
+fi
+
+# === QUALITY GATE L: GUT summary, failures and script/test count floor ===
+# Everything read OUT of the log is judged here and only here. The hook used to
+# re-implement the summary-presence check and the failing-tests verdict in bash
+# while CI re-implemented both again in YAML, so one rule had five copies; the
+# comment claiming a single implementation was true of the floor alone (#433).
+# judge_log() in check_gut_baseline.py performs all three:
+#
+#   * the Run Summary must be PRESENT - a suite that died before printing one
+#     looks exactly like a suite with nothing to report, and absence fails;
+#   * `Failing Tests` must be zero, read as zero only once the summary is there,
+#     because GUT 9.7.0 prints that line only when something failed;
+#   * `Scripts` and `Tests` must clear the floors in gut-baseline.txt, and every
+#     collected test must actually PASS. A green suite says nothing about how
+#     many tests ran: GUT drops a whole test file over a GDScript parse error
+#     and still reports `Failing Tests 0`.
+echo "=== Pre-push: GUT summary, failures and count floor ==="
+python3 "$GATE_DIR/check_gut_baseline.py" --log "$TEMP_LOG"
 
 echo "=== All pre-push quality gates passed ==="

@@ -11,8 +11,9 @@
 # What it judges: everything in `$BASE...HEAD`, PLUS everything uncommitted —
 # staged, unstaged and untracked. The hooks cannot see either of those (pre-commit
 # sees only the index, pre-push only what you are pushing), and agents working in
-# parallel worktrees need something that can. It also serializes Godot, which the
-# hooks do not.
+# parallel worktrees need something that can. It shares the headless-Godot mutex
+# in scripts/quality-gates/godot-lock.sh with .husky/pre-push, so a hand-run and
+# a push cannot start two Godots between them.
 #
 # What it is NOT: a replacement for the hooks. It does not run the pre-push
 # data-integrity scans that live inside the hook itself, and nothing runs it for
@@ -26,7 +27,6 @@ GODOT_APP="/Applications/Godot.app/Contents/MacOS/Godot"
 GODOT="${GODOT_BIN:-}"
 [ -z "$GODOT" ] && command -v godot >/dev/null 2>&1 && GODOT="godot"
 [ -z "$GODOT" ] && [ -x "$GODOT_APP" ] && GODOT="$GODOT_APP"
-LOCK="/tmp/pod-godot.lock"
 BASE="${GATES_BASE:-main}"
 MAX_GODOT="${GATES_MAX_GODOT:-1}"
 FAIL=0
@@ -128,13 +128,30 @@ fi
 DOCS_READ=$(grep -rhoE '(docs/[A-Za-z0-9_/-]+\.md)' game/tests/ 2>/dev/null | sort -u)
 DOC_TRIGGER=""
 for d in $DOCS_READ; do echo "$ALL_PATHS" | grep -qxF "$d" && DOC_TRIGGER="$DOC_TRIGGER $d"; done
+
+# Gate L's OWN inputs count too. The floors and the judge decide the GUT
+# verdict, so a branch that edits either changes what a run means — yet neither
+# is under game/, so this script skipped Godot and the branch that WIRED Gate L
+# could not demonstrate Gate L through its own runner. A mistyped floor is also
+# shape-valid, so the bare shape check at the top accepts it and ALL GATES
+# PASSED prints; the error then surfaces two minutes into someone's pre-push,
+# a long way from the one-line diff that caused it (#433).
+GATE_L_INPUTS="$BASELINE_FILE
+$GUT_FLOOR_GATE
+scripts/quality-gates/godot-lock.sh"
+GATE_TRIGGER=""
+while IFS= read -r g; do
+  [ -n "$g" ] && echo "$ALL_PATHS" | grep -qxF "$g" && GATE_TRIGGER="$GATE_TRIGGER $g"
+done <<<"$GATE_L_INPUTS"
+
 [ -z "$CHANGED_GAME" ] && [ -n "$DOC_TRIGGER" ] && say "docs-only diff, but the suite reads:$DOC_TRIGGER — running Godot"
-if [ -z "$CHANGED_GAME" ] && [ -z "$DOC_TRIGGER" ] && [ "${GATES_FORCE_GODOT:-0}" != "1" ]; then
+[ -z "$CHANGED_GAME" ] && [ -n "$GATE_TRIGGER" ] && say "no game/ change, but Gate L's own inputs moved:$GATE_TRIGGER — running Godot"
+if [ -z "$CHANGED_GAME" ] && [ -z "$DOC_TRIGGER" ] && [ -z "$GATE_TRIGGER" ] && [ "${GATES_FORCE_GODOT:-0}" != "1" ]; then
   if [ -z "$ALL_PATHS" ]; then
     say "STATIC GATES PASSED — nothing differs from $BASE and the tree is clean, so this run"
     say "  judged no game code at all. GATES_FORCE_GODOT=1 to actually run the suite."
   else
-    say "STATIC GATES PASSED — no game/ file and no test-read doc changed vs $BASE, skipping Godot"
+    say "STATIC GATES PASSED — no game/ file, test-read doc or Gate L input changed vs $BASE, skipping Godot"
     say "  (GATES_FORCE_GODOT=1 to override)"
   fi
   exit 0
@@ -146,22 +163,14 @@ if [ -z "$GODOT" ]; then
   exit 1
 fi
 
-# A killed agent used to leave the lock held and wedge every sibling for the
-# full timeout. The owner PID makes a dead holder's lock reclaimable.
-reap_stale_lock() {
-  [ -d "$LOCK" ] || return 0
-  local owner; owner=$(cat "$LOCK/owner.pid" 2>/dev/null || echo "")
-  if [ -z "$owner" ] || ! kill -0 "$owner" 2>/dev/null; then
-    say "reaping stale lock (owner ${owner:-unknown} is gone)"; rm -rf "$LOCK"
-  fi
-}
-say "waiting for godot lock..."; WAITED=0; reap_stale_lock
-until mkdir "$LOCK" 2>/dev/null; do
-  sleep 10; WAITED=$((WAITED+10)); reap_stale_lock
-  [ $WAITED -gt 1800 ] && { say "LOCK TIMEOUT after 30m"; exit 1; }
-done
-echo "$$" > "$LOCK/owner.pid"; trap 'rm -rf "$LOCK" 2>/dev/null' EXIT
-say "lock acquired (waited ${WAITED}s)"
+# The mutex lives in scripts/quality-gates/godot-lock.sh, shared with
+# .husky/pre-push. It used to live here alone, and the hook ran Godot with no
+# lock at all -- so a push contending with a gates.sh run collected fewer
+# scripts and Gate L blamed a healthy test file (#433).
+GODOT_LOCK_LABEL="$NAME"
+# shellcheck source=scripts/quality-gates/godot-lock.sh
+. scripts/quality-gates/godot-lock.sh
+godot_lock_acquire || exit 1
 
 # We hold the mutex, so any live headless Godot belongs to a dead agent. Two
 # headless Godots importing one project is how .import sidecars get written
