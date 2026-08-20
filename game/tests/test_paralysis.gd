@@ -163,6 +163,10 @@ func test_skip_message_survives_the_enemys_action_on_the_next_frame() -> void:
 	var ui: CanvasLayer = battle._ui
 	ui.set_process(false)
 	battle.get_battle_state().apply_status(0, "paralysis", "turns", 3)
+	# Landing the status announces it ("Edren is Paralyzed!", #299) and that line
+	# claims the window first. Age it out, so what this test measures is the skip
+	# line against the enemy's action and not the notice against the skip.
+	ui._process(ui.MESSAGE_HOLD)
 	battle.get_atb().set_spd("enemy_0", 1)
 	var msgs: Array[String] = []
 	battle.message.connect(func(t: String) -> void: msgs.append(t))
@@ -236,3 +240,149 @@ func test_dot_death_during_skip_resolves_the_party_wipe_same_frame() -> void:
 
 	assert_false(st.get_member(0).get("is_alive", true), "the DoT tick killed them")
 	assert_eq(defeats.size(), 1, "party wipe resolves inside the skip, not a frame later")
+
+
+# --- The gauge under a frozen status (#279, #298, #300) ---
+
+
+func test_sleep_holds_a_party_gauge_where_it_stands_and_a_cure_resumes_there() -> void:
+	# combat-formulas.md § Status Effect ATB Interactions: "Frozen gauge retains
+	# value ... Gauge resumes from that point when status ends." Only the enemy
+	# gauges were ever told, so a sleeping party member's gauge kept filling to
+	# full and they were merely passed over (#298). Stated as "the gauge does not
+	# move", never as a frame count, so no ATB fill rate can make it lie.
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var st: Node = battle.get_battle_state()
+	var atb: Node = battle.get_atb()
+	atb.set_gauge("party_0", 8000)
+	st.apply_status(0, "sleep", "turns", StatusEffects.default_duration("sleep"))
+
+	for _i: int in range(5):
+		battle._process(0.016)
+
+	assert_eq(atb.get_gauge("party_0"), 8000, "a slept gauge does not fill")
+
+	st.remove_status(0, "sleep")
+	for _i: int in range(5):
+		battle._process(0.016)
+
+	# Strictly above the frozen value: equal would mean the gauge is still
+	# frozen (never resumed), and any value at or below 8000 would mean the cure
+	# restarted it. Only "resumed from 8000" can land above 8000 in five frames,
+	# whatever the fill rate is.
+	assert_gt(atb.get_gauge("party_0"), 8000, "the cure resumes filling")
+	assert_lt(
+		atb.get_gauge("party_0"),
+		ATBSystem.GAUGE_MAX,
+		"from where it froze, so five frames do not reach a turn"
+	)
+
+
+func test_petrify_empties_the_party_gauge_and_recovery_starts_fresh() -> void:
+	# The severe one: combat-formulas.md gives Petrify's gauge as "Frozen (0)"
+	# and its cure as "recovery starts fresh", where Sleep above keeps its 8000.
+	# Curing it left the old value behind, so a cured member resumed a turn early
+	# (#279).
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var st: Node = battle.get_battle_state()
+	var atb: Node = battle.get_atb()
+	atb.set_gauge("party_0", 8000)
+	st.apply_status(0, "petrify", "turns", StatusEffects.default_duration("petrify"))
+
+	battle._process(0.016)
+	assert_eq(atb.get_gauge("party_0"), 0, "petrify empties the gauge it lands on")
+	battle._process(0.016)
+	assert_eq(atb.get_gauge("party_0"), 0, "and holds it empty")
+
+	st.remove_status(0, "petrify")
+	battle._process(0.016)
+
+	# One frame of fill after the cure and no more: above 0 proves the gauge
+	# resumed at all, and below the 8000 it carried when petrify landed proves
+	# it resumed from empty rather than from the value it used to hold.
+	var resumed: int = atb.get_gauge("party_0")
+	assert_gt(resumed, 0, "a cured member's gauge starts filling again")
+	assert_lt(resumed, 8000, "from 0, not from the 8000 petrify swallowed")
+
+
+func test_petrify_holds_an_enemy_gauge_at_zero_until_it_is_cured() -> void:
+	# The enemy mirror of the rule above. combat-formulas.md gives Petrify's
+	# gauge as "Frozen (0)" for both sides, so a petrified enemy banks no
+	# progress toward a turn however long it stands there, and a cured one
+	# starts over rather than acting the instant the stone breaks.
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var atb: Node = battle.get_atb()
+	var enemy: Node = battle.get_enemies()[0]
+	atb.set_gauge("enemy_0", 8000)
+	assert_true(
+		enemy.apply_status("petrify", StatusEffects.default_duration("petrify")),
+		"petrify lands on a beast"
+	)
+
+	for _i: int in range(5):
+		battle._process(0.016)
+
+	assert_eq(atb.get_gauge("enemy_0"), 0, "petrify empties the enemy gauge and holds it there")
+
+	enemy.remove_status("petrify")
+	battle._process(0.016)
+
+	var resumed: int = atb.get_gauge("enemy_0")
+	assert_gt(resumed, 0, "a cured enemy's gauge fills again")
+	assert_lt(resumed, 8000, "from 0, not from the 8000 petrify swallowed")
+
+
+func test_paralysis_applied_first_never_spends_a_sleeping_gauge() -> void:
+	_assert_frozen_gauge_survives_both_statuses("paralysis", "sleep")
+
+
+func test_paralysis_applied_second_never_spends_a_sleeping_gauge() -> void:
+	_assert_frozen_gauge_survives_both_statuses("sleep", "paralysis")
+
+
+## Apply two incapacitating statuses in the given order to a member whose gauge
+## is already full, then run the frame that would resolve their turn. Whichever
+## order they landed in, the battle must treat them as gauge-frozen: passed over
+## in silence with the gauge untouched. Answering "paralysis" instead ran the
+## auto-skip, which resets the gauge — destroying the value the freeze exists to
+## keep (#300).
+func _assert_frozen_gauge_survives_both_statuses(first: String, second: String) -> void:
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var st: Node = battle.get_battle_state()
+	st.apply_status(0, first, "turns", StatusEffects.default_duration(first))
+	st.apply_status(0, second, "turns", StatusEffects.default_duration(second))
+	var msgs: Array[String] = []
+	battle.message.connect(func(t: String) -> void: msgs.append(t))
+	battle.get_atb().set_gauge("party_0", ATBSystem.GAUGE_MAX)
+
+	battle._process(0.0)
+
+	assert_eq(
+		battle.get_atb().get_gauge("party_0"),
+		ATBSystem.GAUGE_MAX,
+		"%s then %s: the frozen gauge is not spent" % [first, second]
+	)
+	for m: String in msgs:
+		assert_false(m.contains("can't move"), "a frozen member is passed over in silence: %s" % m)
+
+
+func test_a_status_landing_on_a_party_member_is_announced() -> void:
+	# ley_sting inflicts Paralysis on the party and the player was told nothing
+	# at all — the auto-skip line announces the turn it denies, not the moment
+	# the status lands (#299). The wording is battle-dialogue.md § Status Effect
+	# Notifications, reached through the registry so every infliction path speaks
+	# the same line.
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var st: Node = battle.get_battle_state()
+	var nm: String = st.get_member(0).get("character_data", {}).get("name", "???")
+	var msgs: Array[String] = []
+	battle.message.connect(func(t: String) -> void: msgs.append(t))
+
+	st.apply_status(0, "paralysis", "turns", StatusEffects.default_duration("paralysis"))
+
+	assert_true(("%s is Paralyzed!" % nm) in msgs, "the player is told it landed: %s" % str(msgs))

@@ -752,7 +752,9 @@ before the thread breaks entirely.
 - "[Character] is Berserk!"
 - "[Character] is Stopped!"
 - "[Character] is Grounded!"
-- "[Character] is paralyzed and can't move!"
+- "[Character] is Paralyzed!"
+- "[Character] is Petrified!"
+- "[Character] is paralyzed and can't move!" *(the auto-skipped turn, not the moment the status lands)*
 - "Poison wears off."
 - "Silence wears off."
 - "[Character] woke up!"

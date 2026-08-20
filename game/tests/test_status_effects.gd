@@ -43,16 +43,14 @@ func test_display_adjective_reads_back_as_an_announcement() -> void:
 ## against the engine adjective and nothing else; it never opens the markdown,
 ## so only the JSON-versus-engine half of the drift is covered here (#301).
 func test_shipped_notification_matches_the_engine_adjective() -> void:
-	var data: Dictionary = DataManager.load_dialogue("battle_status_effect_notifications")
-	var entries: Array = data.get("entries", [])
-	if entries.is_empty():
+	var shipped_lines: Array[String] = _shipped_notification_lines()
+	if shipped_lines.is_empty():
 		fail_test("battle_status_effect_notifications.json is missing or has no entries")
 		return
 	var shipped: String = ""
-	for entry: Variant in entries:
-		for line: Variant in (entry as Dictionary).get("lines", []):
-			if String(line).contains("can't move"):
-				shipped = String(line)
+	for line: String in shipped_lines:
+		if line.contains("can't move"):
+			shipped = line
 	if shipped.is_empty():
 		fail_test('no "can\'t move" notification in battle_status_effect_notifications.json')
 		return
@@ -61,6 +59,81 @@ func test_shipped_notification_matches_the_engine_adjective() -> void:
 		"[Character] is %s and can't move!" % SE.display_adjective("paralysis"),
 		"shipped notification must read back exactly as battle_manager builds it"
 	)
+
+
+## Every line the shipped notification data carries, flattened.
+func _shipped_notification_lines() -> Array[String]:
+	var data: Dictionary = DataManager.load_dialogue("battle_status_effect_notifications")
+	var lines: Array[String] = []
+	for entry: Variant in data.get("entries", []):
+		for line: Variant in (entry as Dictionary).get("lines", []):
+			lines.append(String(line))
+	return lines
+
+
+## The other half of the same drift: the announcement the engine makes when a
+## status LANDS. battle_manager speaks these through the registry, so each one
+## must exist verbatim in the shipped data (and therefore, via Gate J, in
+## battle-dialogue.md) with the "[Character]" placeholder the script uses (#299).
+##
+## Driven from RULES — every status the game can inflict — rather than from the
+## notice table. Walking the notice table would only prove the entries that
+## happen to exist are worded right; drop one and that status lands on a party
+## member in total silence with every assertion still green, which is the very
+## #299 symptom this pins. Empty the table entirely and the walk is vacuous.
+func test_every_status_the_registry_can_inflict_announces_a_shipped_line() -> void:
+	var shipped_lines: Array[String] = _shipped_notification_lines()
+	if shipped_lines.is_empty():
+		fail_test("battle_status_effect_notifications.json is missing or has no entries")
+		return
+	for status: String in SE.RULES:
+		var line: String = SE.application_notice(status, "[Character]")
+		assert_false(line.is_empty(), "%s can land on a member with nothing said" % status)
+		assert_true(
+			line in shipped_lines,
+			'%s announces "%s", which is not a shipped notification' % [status, line]
+		)
+
+
+func test_a_status_with_no_canonical_line_announces_nothing() -> void:
+	assert_eq(SE.application_notice("berserk", "Sable"), "", "unregistered statuses stay silent")
+	assert_eq(SE.application_notice("paralysis", "Sable"), "Sable is Paralyzed!")
+
+
+## Which status answers "why can this member not act" must be the registry's
+## decision, not the order the statuses happened to land in: a gauge-frozen
+## status outranks Paralysis, because the caller passes a frozen member over
+## untouched but spends a paralyzed one's gauge (#300).
+func test_blocking_status_prefers_a_frozen_gauge_whichever_landed_first() -> void:
+	assert_eq(SE.blocking_status([{"name": "paralysis"}, {"name": "sleep"}]), "sleep")
+	assert_eq(SE.blocking_status([{"name": "sleep"}, {"name": "paralysis"}]), "sleep")
+	assert_eq(SE.blocking_status([{"name": "paralysis"}, {"name": "petrify"}]), "petrify")
+	assert_eq(SE.blocking_status([{"name": "petrify"}, {"name": "paralysis"}]), "petrify")
+
+
+func test_blocking_status_names_paralysis_when_it_is_the_only_denial() -> void:
+	assert_eq(SE.blocking_status([{"name": "poison"}, {"name": "paralysis"}]), "paralysis")
+
+
+func test_blocking_status_is_empty_when_the_member_can_still_act() -> void:
+	assert_eq(SE.blocking_status([]), "", "no statuses, no denial")
+	assert_eq(
+		SE.blocking_status([{"name": "poison"}, {"name": "slow"}]),
+		"",
+		"Slow throttles the gauge but never denies the turn"
+	)
+
+
+## Petrify is the only status that keeps nothing: combat-formulas.md
+## § Status Effect ATB Interactions gives its gauge as "Frozen (0)" and its cure
+## as "recovery starts fresh", where Sleep resumes from the value it froze at.
+func test_only_petrify_holds_the_gauge_at_zero() -> void:
+	assert_true(SE.zeroes_gauge("petrify"))
+	assert_false(SE.zeroes_gauge("sleep"), "Sleep keeps the value it froze at")
+	assert_false(SE.zeroes_gauge("paralysis"), "Paralysis never freezes at all")
+	assert_true(SE.atb_state([{"name": "petrify"}])["zeroed"])
+	assert_false(SE.atb_state([{"name": "sleep"}])["zeroed"])
+	assert_false(SE.atb_state([])["zeroed"])
 
 
 func test_atb_mod_statuses() -> void:

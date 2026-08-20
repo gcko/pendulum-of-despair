@@ -316,7 +316,7 @@ transformation that can be validated line-by-line against source docs.
 **Status:** COMPLETE
 **Completed:** 2026-04-04
 **Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
-**Estimated Size:** L (139 dialogue files, 1105 entries)
+**Estimated Size:** L (139 dialogue files, 1107 entries)
 **Output:** `game/data/dialogue/{scene_id}.json`, `game/data/dialogue/npc_{npc_id}.json`, `game/data/dialogue/battle_{context_id}.json`
 **Source Docs:** `script/` (6,319 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
 **Architecture Ref:** `technical-architecture.md` Section 2.5
@@ -326,7 +326,7 @@ transformation that can be validated line-by-line against source docs.
 - [x] Per-scene dialogue JSON following Section 2.5 schema (7-field entries)
 - [x] Narrative scenes from script/ Layer 1 (59 files, 737 entries)
 - [x] NPC ambient dialogue from npc-ambient.md Layer 2 (54 files, 171 entries)
-- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 197 entries)
+- [x] Battle dialogue from battle-dialogue.md Layer 3 (26 files, 199 entries)
 - [x] System text (tutorials, prompts, notifications) from battle-dialogue.md
 - [x] Condition expressions (flag checks, party_has) per dialogue-system.md (135 conditional entries)
 - [x] Animation markers mapped to sprite animation IDs (44 animation markers)
@@ -337,7 +337,7 @@ transformation that can be validated line-by-line against source docs.
 
 **Notes:**
 - **This tree is authored, not derived.** The generator (`tools/dialogue_parser.py`) was deleted on 2026-08-11 (#364) after it stopped completing a run, and its validation report went with it; tools/README.md § Retired records why, and how to recover the last version from git. The JSON and `docs/story/script/*.md` are now two hand-maintained copies of the same player-facing strings; the rule that keeps them in step is docs/story/README.md § Writing Conventions, and `scripts/quality-gates/check_dialogue_sync.py` — quality gate J in `.husky/pre-push`, landed by #379 — enforces it: every string in a `lines` array under `game/data/dialogue/` must occur verbatim somewhere in the concatenated `docs/story/script/*.md`. Read the scope before trusting it. The check runs one direction only (markdown carrying no shipped line is fine, since most of the script is stage direction), it is position-blind (a match in any script file counts, so it catches text that drifted, not a line filed under the wrong scene), and it reads `lines` arrays alone — player-facing text under other keys, such as `choice.label` in `thornmere_council.json`, is unchecked (#398). The 121 shipped strings across 29 files that already had no markdown source when the gate landed are pinned in a shrink-only `KNOWN_ORPHANS` ratchet that fails at both ends — a new orphan fails, and so does a pin that has stopped being one — so those 121 stay invisible to the check until #380 back-fills them.
-- 139 dialogue files (59 narrative + 54 NPC + 26 battle) with 1105 entries. Every count in this section is a measurement of `game/data/dialogue/*.json`, not a record of what the generator once emitted — re-measure rather than trust it, because nothing fails when it drifts. `scripts/quality-gates/check_stale_counts.py` already computes `dialogue_files` but does not yet assert against it.
+- 139 dialogue files (59 narrative + 54 NPC + 26 battle) with 1107 entries. Every count in this section is a measurement of `game/data/dialogue/*.json`, not a record of what the generator once emitted — re-measure rather than trust it, because nothing fails when it drifts. `scripts/quality-gates/check_stale_counts.py` already computes `dialogue_files` but does not yet assert against it.
 - All entry IDs globally unique, all 7 fields present, 2-space indent
 - Animation and SFX `when` timings began as parser heuristics and are now edited by hand
 - Design spec: `docs/superpowers/specs/2026-04-04-dialogue-data-design.md`
