@@ -322,13 +322,12 @@ func heal(amount: int) -> void:
 
 ## Roll for a steal attempt. Returns {item_id: String, success: bool}.
 ##
-## Three steal shapes are canon (enemy-data-json-design.md § Steal Mapping
-## Rules): the two-tier object, a whole-record `null` (Rule 3, a "—" bestiary
-## cell), and a `null` tier inside the object (Rule 4, bosses whose only steal
-## is the 100% rare). Dictionary.get() returns the STORED value when the key
-## exists, so a JSON null arrives as Nil rather than the default — reading it
-## into a typed Dictionary local aborts the function. Widen through Variant and
-## treat every non-dictionary as "carries nothing here".
+## Three steal shapes are canon (2026-04-02-enemy-data-json-design.md
+## § Steal Mapping Rules): the two-tier object, a whole-record `null` (Rule 3),
+## and a `null` tier (Rule 4). Dictionary.get() returns the STORED value when
+## the key exists, so a JSON null arrives as Nil rather than the default and
+## reading it into a typed Dictionary local aborts the function. Widen through
+## Variant; every non-dictionary means "carries nothing here".
 func roll_steal(tier: String) -> Dictionary:
 	var raw_steal: Variant = enemy_data.get("steal")
 	if not raw_steal is Dictionary:
@@ -351,9 +350,8 @@ func roll_steal(tier: String) -> Dictionary:
 
 
 ## Roll for a drop on death. Returns {item_id: String, success: bool}.
-##
-## `"drop": null` is canon for the enemies that leave nothing (6 records, e.g.
-## corrupted_fenmother). Same Nil-through-get() trap as roll_steal() above.
+## `"drop": null` is canon for the 6 enemies that leave nothing behind — same
+## Nil-through-get() trap as roll_steal() above.
 func roll_drop() -> Dictionary:
 	var raw_drop: Variant = enemy_data.get("drop")
 	if not raw_drop is Dictionary:

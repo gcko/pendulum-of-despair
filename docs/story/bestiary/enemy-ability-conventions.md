@@ -136,6 +136,44 @@ production entry sets it above 1.
 
 ---
 
+### 2.8 Enemies with no tabled kit — inherit the family, not an invention
+
+`palette-families.md` names a kit for every *family tier*, but three Act I
+records sit outside a tier row and so had no kit at all (#257). Rather than
+invent one, each takes the kit of the family it demonstrably belongs to:
+
+| Enemy | Family evidence | Kit assigned |
+|-------|-----------------|--------------|
+| The Flickering (Lv 6, Spirit, Dangerous, Ember Vein F3 unique) | Shares Mine Shade's entire profile — Spirit type, Ley weakness, Ether Wisp (75%) / Spirit Essence (25%) loot, Poison + Petrify immunities (`act-i.md § Ember Vein`) | Shadow Touch (Tier 1 base) + Darkness (`palette-families.md § Shade Family`) |
+| Compact Patrol (Lv 5, Humanoid, Low) | `act-i.md § Ironmouth Docks` states both are **early deployments of the Soldier / Compact family** (base: Compact Soldier Lv 18) | Sword Strike (`palette-families.md § Soldier Family > 'Compact Soldier'`) |
+| Compact Scout (Lv 6, Humanoid, Low) | as above | Sword Strike |
+
+Two rules govern which of the family's abilities a non-tier record gets:
+
+1. **Take the base tier's kit.** A record below the family's base level gets
+   the Tier 1 row and nothing more. Compact Patrol and Compact Scout are
+   therefore *identical* in kit and differ only in stats — Patrol is the
+   180 HP / 16 ATK wall, Scout the 140 HP / 14 SPD skirmisher. That is the
+   documented difference between them, and inventing a Scout-only recon move
+   to make them feel distinct would be exactly the kind of guess §2 exists to
+   prevent.
+2. **A record whose threat outranks the base may take the family's next
+   documented ability — never a new one.** The Flickering is the only
+   *Dangerous* regular enemy in Act I (the other two Dangerous records are
+   mini-bosses driven by `boss_ai`), so a single-ability kit would make it
+   weaker than Bone Warden. It therefore adds the Shade family's next tabled
+   ability, **Darkness** (Blind, single target — `palette-families.md § Shade
+   Family > 'Crypt Shade'`), at §2.2's spell power and §2.5's status rate.
+   This gives it two abilities, matching every other 2-ability Act I record
+   (Bone Warden, Marsh Serpent, Wayward Wolf).
+
+**Cover is deferred, not assigned.** The Soldier family's other Tier 1 move,
+*Cover (protects adjacent ally)*, is a targeting-redirect mechanic with no
+defined magnitude and no battle-layer support. It joins the §4 deferred list
+rather than being approximated by a DEF buff.
+
+---
+
 ## 3. Boss-AI conventions (GAP-009)
 
 The data-driven boss interpreter (`boss_ai.gd`) reads a `boss_ai` object on each
@@ -224,7 +262,9 @@ These Act I kit items reference mechanics the docs do not yet define; they are
 
 - **Bespoke effects** with no defined magnitude: HP drain (Latch), self-destruct
   (Bloat), first-strike (Ambush), knockback (Charge), reactive counter (Thorn
-  Counter), gold theft (Steal Gold), flee (Flee).
+  Counter), gold theft (Steal Gold), flee (Flee), **ally protection (Cover —
+  Soldier family Tier 1; needs a targeting-redirect mechanic the battle layer
+  does not have)**.
 
 > **Now defined (#248):** **Paralysis** — *cannot act for 3 turns, does not wake
 > on damage* — is in the `magic.md` Status Effect Reference and `status_effects.gd`
@@ -233,6 +273,9 @@ These Act I kit items reference mechanics the docs do not yet define; they are
 > passed over instead — see `combat-formulas.md` § Status Effect ATB
 > Interactions). Ley Jellyfish (Ley Sting +
 > Drift via the `random` selector) is fully populated.
-- **The full Act I roster.** GAP-024's first pass populates a representative
-  subset proving each mechanic end-to-end; the remaining family kits are
-  populated in a follow-up using the conventions above.
+- **The full Act I roster.** GAP-024's first pass populated a representative
+  subset proving each mechanic end-to-end; the remaining family kits followed.
+  As of #257 the Act I roster is complete except **Bog Leech**, whose only
+  documented move is *Latch* (HP drain, deferred above). The four Act I
+  bosses and mini-bosses carry no `abilities` array by design — their moves
+  live in `boss_ai.moves` (§3).
