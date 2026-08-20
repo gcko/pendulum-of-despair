@@ -3,6 +3,20 @@ extends GutTest
 
 const ATBScript := preload("res://scripts/combat/atb_system.gd")
 
+## The seconds-per-turn column of combat-formulas.md § ATB Gauge System >
+## Battle Speed Config, for a Lv1 Maren (SPD 8). Each entry is measured by
+## ticking the real gauge at 60 fps and counting frames to ready, so the
+## SPEED_FACTORS constants, the fill-rate formula and GAUGE_MAX all have to
+## agree with the doc for it to pass (#177).
+const DOCUMENTED_SECONDS_PER_TURN: Dictionary = {
+	1: 1.3,
+	2: 1.6,
+	3: 2.7,
+	4: 4.0,
+	5: 5.4,
+	6: 8.1,
+}
+
 var _atb: Node
 
 
@@ -19,30 +33,52 @@ func after_each() -> void:
 
 
 func test_fill_rate_maren_lv1_speed3() -> void:
-	# SPD 8, battle speed 3 (factor 0.7), no status mods
-	# fill_rate = floor((8 + 25) * 0.7 * 1.0) = floor(23.1) = 23
+	# SPD 8, battle speed 3 (factor 3.0), no status mods
+	# fill_rate = floor((8 + 25) * 3.0 * 1.0) = 99
+	# combat-formulas.md § ATB Gauge System > ATB Pacing at Key Milestones.
 	var rate: int = _atb.calculate_fill_rate(8, 3, [])
-	assert_eq(rate, 23, "Maren Lv1 at speed 3")
+	assert_eq(rate, 99, "Maren Lv1 at speed 3")
 
 
 func test_fill_rate_sable_lv1_speed3() -> void:
-	# SPD 18, speed 3 → floor((18+25)*0.7) = floor(30.1) = 30
+	# SPD 18, speed 3 → floor((18+25)*3.0) = 129
 	var rate: int = _atb.calculate_fill_rate(18, 3, [])
-	assert_eq(rate, 30, "Sable Lv1 at speed 3")
+	assert_eq(rate, 129, "Sable Lv1 at speed 3")
 
 
 func test_fill_rate_with_haste() -> void:
 	# SPD 10, speed 3, haste (1.5x)
-	# floor((10+25)*0.7*1.5) = floor(36.75) = 36
+	# floor((10+25)*3.0*1.5) = floor(157.5) = 157
 	var rate: int = _atb.calculate_fill_rate(10, 3, [1.5])
-	assert_eq(rate, 36, "haste increases fill rate")
+	assert_eq(rate, 157, "haste increases fill rate")
 
 
 func test_fill_rate_haste_and_despair() -> void:
 	# SPD 10, speed 3, haste (1.5) + despair (0.75)
-	# floor((10+25)*0.7*1.5*0.75) = floor(27.5625) = 27
+	# floor((10+25)*3.0*1.5*0.75) = floor(118.125) = 118
 	var rate: int = _atb.calculate_fill_rate(10, 3, [1.5, 0.75])
-	assert_eq(rate, 27, "haste + despair stack multiplicatively")
+	assert_eq(rate, 118, "haste + despair stack multiplicatively")
+
+
+func test_each_battle_speed_takes_its_documented_seconds_per_turn() -> void:
+	for speed: int in DOCUMENTED_SECONDS_PER_TURN:
+		var atb: Node = ATBScript.new()
+		add_child_autofree(atb)
+		atb.add_combatant("maren", 8, false)
+		atb.set_battle_speed(speed)
+		var frames: int = 0
+		while atb.get_gauge("maren") < ATBScript.GAUGE_MAX and frames < 3600:
+			atb.tick(1.0 / 60.0)
+			frames += 1
+		# Tolerance covers the two roundings between a measured fill and a
+		# printed table: the 1/60 s frame the gauge lands on (0.017 s) and the
+		# 0.1 s the doc rounds to. Anything further out is a real drift.
+		assert_almost_eq(
+			float(frames) / 60.0,
+			float(DOCUMENTED_SECONDS_PER_TURN[speed]),
+			0.06,
+			"battle speed %d must fill a Lv1 SPD 8 gauge in its documented time" % speed,
+		)
 
 
 # --- Gauge Mechanics ---
@@ -57,8 +93,8 @@ func test_gauge_fills_by_fill_rate() -> void:
 	_atb.add_combatant("party_0", 10, false)
 	_atb.set_battle_speed(3)
 	_atb.tick(1.0 / 60.0)
-	# fill_rate = floor((10+25)*0.7) = 24
-	assert_eq(_atb.get_gauge("party_0"), 24, "gauge fills by fill rate")
+	# fill_rate = floor((10+25)*3.0) = 105
+	assert_eq(_atb.get_gauge("party_0"), 105, "gauge fills by fill rate")
 
 
 func test_gauge_caps_at_max() -> void:

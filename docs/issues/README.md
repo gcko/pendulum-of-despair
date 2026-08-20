@@ -27,7 +27,7 @@ Recomputed from the Status column of the table below, which
 field of each linked GAP doc. **Update these numbers whenever a row's Status
 changes** — the gate fails the build when they drift.
 
-- **91 gap files** — **60 open**, **2 partial**, **29 resolved**.
+- **91 gap files** — **59 open**, **2 partial**, **30 resolved**.
 - **14 epics** (🏔️) among them.
 
 This directory is the durable, reviewable source.
@@ -80,7 +80,7 @@ Several Act-I-scope content items were deliberately kept CONCRETE (not folded in
 | [GAP-067](GAP-067-dialogue-and-cutscenes-read-bundled-defaults-json.md) | Save | HIGH | S | ✅ fixed | Dialogue and cutscenes read bundled defaults.json instead of the player's saved config |
 | [GAP-078](GAP-078-epic-music-audio-assets-are-placeholders-5-silent.md) 🏔️ | Audio | HIGH | XL | open | EPIC: Music + audio assets are placeholders (5 silent tracks vs ~70-80 designed; ~51 SFX, 12 ambient missing) |
 | [GAP-005](GAP-005-12-dual-tech-combos-are-entirely-unimplemented-com.md) | Combat | MEDIUM | L | open | 12 dual-tech combos are entirely unimplemented (combos.json unused) |
-| [GAP-006](GAP-006-atb-battle-speed-factors-diverge-from-combat-formu.md) | Combat | MEDIUM | S | open | ATB battle-speed factors diverge from combat-formulas.md (~4x slower than documented) |
+| [GAP-006](GAP-006-atb-battle-speed-factors-diverge-from-combat-formu.md) | Combat | MEDIUM | S | resolved (#177) | ATB battle-speed factors diverge from combat-formulas.md (~4x slower than documented) |
 | [GAP-008](GAP-008-combat-interaction-buff-type-trait-multipliers-are.md) | Combat | MEDIUM | L | open | Combat interaction/buff/type-trait multipliers are never applied (damage_calculator params always neutral) |
 | [GAP-009](GAP-009-boss-ai-is-stubbed-hardcoded-data-driven-phase-scr.md) | Combat | MEDIUM | L | resolved (#179) | Boss AI is stubbed/hardcoded; data-driven phase scripts, telegraphs, and Ember Drake kit missing |
 | [GAP-012](GAP-012-party-join-level-omits-the-design-mandated-1.md) | Progression | MEDIUM | S | ✅ fixed | Party join level omits the design-mandated '-1' |

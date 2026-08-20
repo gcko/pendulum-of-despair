@@ -8,7 +8,7 @@
 | **Type** | design-divergence |
 | **Effort** | S |
 | **Epic** | No |
-| **Status** | open — CONFIRMED |
+| **Status** | resolved — #177 |
 | **GitHub Issue** | [#177](https://github.com/gcko/pendulum-of-despair/issues/177) |
 | **Source domains** | combat |
 
@@ -30,9 +30,24 @@ Decide with design owner: adopt doc constants and verify pacing in-engine, or up
 
 ## Acceptance criteria
 
-- [ ] Code constants and doc tables agree (one is changed to match the other)
-- [ ] In-engine seconds-per-turn at speed 3 matches the chosen spec
-- [ ] Decision is recorded in the doc or a changelog
+- [x] Code constants and doc tables agree (one is changed to match the other)
+- [x] In-engine seconds-per-turn at speed 3 matches the chosen spec
+- [x] Decision is recorded in the doc or a changelog
+
+## Resolution (#177)
+
+The **doc** is canon. `SPEED_FACTORS` in `game/scripts/combat/atb_system.gd`
+now carries combat-formulas.md's `{1: 6, 2: 5, 3: 3, 4: 2, 5: 1.5, 6: 1}` and
+the retuned `{1: 1.5 … 6: 0.25}` set is gone. Three things decided it: the
+battle-scene implementation plan specifies the doc's factors, so the retune was
+a divergence from its own plan rather than a supersession; difficulty-balance.md
+§ 7.2 Boss Duration Check builds its fight-length model on a ~2.5s level-1
+action interval, which only the doc's factors produce; and the whole ATB section
+of combat-formulas.md — two tables, thirteen printed seconds figures — is
+internally consistent under them and under nothing else.
+`game/tests/test_atb_system.gd::test_each_battle_speed_takes_its_documented_seconds_per_turn`
+now measures the Battle Speed Config seconds column by ticking a real gauge at
+60 fps, so the constants cannot drift from the table again in silence.
 
 ## Design references
 
