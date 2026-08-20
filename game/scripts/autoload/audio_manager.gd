@@ -15,7 +15,8 @@ extends Node
 ## AudioBattleTransition (the pre-battle snapshot and the swap back),
 ## AudioMixContext (how loud each channel sits per place), AudioSfxPolicy
 ## (priority and voice stealing) and AudioAssets (where a track ID lives on
-## disk). The first three were split out in GAP-087, the rest in #425.
+## disk). AudioCrossfade, AudioMixContext and AudioSfxPolicy were split out in
+## GAP-087; AudioChannel, AudioBattleTransition and AudioAssets in #425.
 
 ## Audio priority levels (per audio.md Section 3.2).
 ## Higher number = higher priority.
