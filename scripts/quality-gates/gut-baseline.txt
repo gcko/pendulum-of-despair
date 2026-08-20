@@ -1,0 +1,20 @@
+# GUT suite floor. gates.sh and anything else measuring the suite reads this.
+#
+# These are FLOORS, not expected values: the run fails if it collects FEWER
+# scripts or tests than this. That is the silent-skip guard — a GDScript parse
+# error makes GUT drop a whole test file while still reporting a green suite,
+# so a count that only ever rises is the cheapest way to notice.
+#
+# UPDATE IT DELIBERATELY, in the same commit as the change that moves it:
+#   - added a test file      -> raise scripts
+#   - added tests            -> raise tests
+#   - DELETED a test on purpose (see gut-tdd: a test pinning no behavior should
+#     be deleted) -> LOWER tests, and say so in the commit message
+#
+# It lives in its own tracked file rather than inside gates.sh so that moving
+# the floor is a reviewable one-line diff someone has to justify, instead of an
+# edit buried in a script. This floor has gone stale three times by being buried
+# (68/1083, then 79/1287, then 1293 after tests were deliberately removed);
+# each time it either passed a real regression or failed honest work.
+scripts=89
+tests=1289

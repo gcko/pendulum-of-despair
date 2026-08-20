@@ -45,6 +45,67 @@ loop you actually run.
 
 Repeat one behavior at a time. One assertion's worth of progress per loop.
 
+## Every test must pin observable behavior (BDD)
+
+Before writing or keeping a test, answer one question:
+
+> **What player- or caller-observable behavior does this pin?**
+
+If the honest answer is "none", **delete it**. Removal is a normal outcome
+here, not a last resort. A test that only proves the implementation is
+currently shaped the way it is shaped costs maintenance, fails on harmless
+refactors, and stays green while real behavior breaks.
+
+If it pins real behavior, drive it through the seam a real caller uses and
+assert the outcome the test is NAMED after.
+
+### Why this is not style advice
+
+Reaching into privates to observe is what makes a suite flaky. Internal state
+gets read before it settles, so the test races. Both flaky suites in this repo
+were the same defect wearing two hats:
+
+- `test_audio_manager.gd` asserted `_am._music_active.playing` immediately
+  after starting a zero-length `AudioStreamWAV.new()`. The stream ended before
+  the next statement ran, on a loaded machine. The assertion was also a poor
+  proxy for its own name: the test exists to prove the crossfade **swapped
+  players**, and `playing` was the incidental part that raced.
+- `test_materials_inventory.gd` set an ATB gauge, waited a fixed
+  `wait_frames(2)`, then issued a battle command. Under load the actor was not
+  ready, the command was rejected, and both assertions failed together.
+
+Fix a flake by removing the race — assert the settled outcome, through a public
+seam. **Never** by waiting longer, retrying, loosening the assertion, skipping
+the test, or changing engine code to make a test pass. Those keep a worthless
+test alive.
+
+### The payoff: unchanged tests prove a refactor
+
+Once a suite is behavioral, a behavior-preserving refactor needs **zero test
+edits**. That makes the diff itself the proof:
+
+```bash
+git diff --stat main...HEAD -- game/tests    # must be empty
+```
+
+`audio_manager.gd` was decomposed 536 -> 333 lines across three new
+collaborators with that diff empty and the public API byte-identical. The same
+refactor was unsafe a week earlier, when the suite pinned private fields — any
+move destroyed the evidence, which is exactly why the architecture doc had
+exempted the file from its size budget.
+
+So when a refactor makes you want to edit a test, stop: that is the refactor
+changing behavior, not the test being wrong.
+
+### Deleting tests deliberately
+
+Deleting a test lowers the GUT floor, which `scripts/gates.sh` will fail on.
+That is the silent-skip guard doing its job, not an obstacle:
+
+- Update `scripts/quality-gates/gut-baseline.txt` in the SAME commit.
+- Name every deleted test with its one-line justification in the commit body.
+- Never keep a worthless test alive just to hold the number up.
+
 ## Run commands
 
 Godot binary: `godot` on PATH, else
