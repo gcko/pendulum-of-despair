@@ -1353,6 +1353,185 @@ class TestCheckDocCitations(unittest.TestCase):
         )
         self.assertEqual(self._errors(), [])
 
+    # ── A § whose file the citation before it named (#415) ─────────────
+    #
+    # The house style lists several sections of one document off a single
+    # filename — ``combat-formulas.md § Danger Counter, § Battle Formations``
+    # — and only the first ``§`` was ever checked. ``§ Battle Formations``
+    # could be renamed out from under three call sites and this gate stayed
+    # green, which is the exact failure it exists to prevent, one comma to
+    # the right of where it was looking.
+
+    def _chained(self, line: str) -> list[str]:
+        self._house()
+        self._write("game/scripts/a.gd", line)
+        return self._errors()
+
+    def test_a_chained_citation_is_read(self):
+        """``npcs.md § A, § B`` — the second ``§`` inherits npcs.md."""
+        self.assertEqual(
+            self._chained("# Canon: npcs.md § Inn Costs, § Danger Counter.\n"),
+            [],
+        )
+
+    def test_an_invented_heading_behind_a_chained_sign_fails(self):
+        """The proof the chain is checked and not merely tolerated."""
+        errors = self._chained(
+            "# Canon: npcs.md § Inn Costs, § Chamber Nobody Wrote.\n"
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+        self.assertIn("Chamber Nobody Wrote", errors[0])
+
+    def test_renaming_a_heading_only_a_chain_cites_fails_the_gate(self):
+        """The #415 defect end to end: the rename used to cost nothing.
+
+        Only the second ``§`` on the line names ``### Danger Counter``. Before
+        the chain was read, renaming that heading left every citation of it
+        passing, because nothing had ever resolved the citation.
+        """
+        self._write(
+            "docs/story/npcs.md",
+            HOUSE_STYLE_FIXTURE.replace(
+                "### Danger Counter", "### Step Counter"
+            ),
+        )
+        self._write(
+            "game/scripts/a.gd",
+            "# Canon: npcs.md § Inn Costs, § Danger Counter.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("Danger Counter", errors[0])
+
+    def test_a_sentence_end_stops_the_chain(self):
+        """``bosses.md`` cites act-i.md, then names *its own* § Quick
+        Reference one sentence later. A chain that crossed the full stop
+        would resolve that against act-i.md, which has no such section.
+        Both halves are here: the chain must stop, and it must not stop for
+        a comma.
+        """
+        self.assertEqual(
+            self._chained(
+                "# npcs.md § Inn Costs. See § Chamber Nobody Wrote.\n"
+            ),
+            [],
+        )
+        errors = self._chained(
+            "# npcs.md § Inn Costs, see § Chamber Nobody Wrote.\n"
+        )
+        self.assertEqual(len(errors), 1, errors)
+
+    def test_a_closed_parenthesis_stops_the_chain(self):
+        """``progression.md`` writes, on one line with no full stop between,
+
+            ... gains ([items.md](items.md) § Stat Capsules), plus whatever
+            the equipped Ley Crystal contributes under § Ley Crystal System
+
+        where § Ley Crystal System is progression.md's own heading. The
+        citation's parenthesis closed before the second ``§``; the file it
+        named went with it. Without this the chain resolved it against
+        items.md and the gate failed a correct citation.
+        """
+        self.assertEqual(
+            self._chained(
+                "# gains (npcs.md § Inn Costs), plus what "
+                "§ Chamber Nobody Wrote adds.\n"
+            ),
+            [],
+        )
+        errors = self._chained(
+            "# gains (npcs.md § Inn Costs, plus what "
+            "§ Chamber Nobody Wrote adds).\n"
+        )
+        self.assertEqual(len(errors), 1, errors)
+
+    def test_a_chain_wraps_once_and_no_further(self):
+        """One wrap is the tolerance every other join here gets."""
+        errors = self._chained(
+            "# npcs.md § Inn Costs,\n# § Chamber Nobody Wrote.\n"
+        )
+        self.assertEqual(len(errors), 1, errors)
+        self.assertEqual(
+            self._chained(
+                "# npcs.md § Inn Costs,\n# and also,\n"
+                "# § Chamber Nobody Wrote.\n"
+            ),
+            [],
+        )
+
+    def test_a_chain_outranks_the_same_document_reading(self):
+        """``technical-architecture.md`` writes
+
+            [bestiary/enemy-ability-conventions.md](...)
+            §1 (ability schema) and §3 (boss-AI conventions).
+
+        and numbers a ``## 3.`` of its own. Reading ``§3`` as a
+        self-reference resolves it against the wrong document and passes,
+        which is the silent wrong answer this gate exists to prevent. Here
+        the citing file numbers a § 2.9 and ``arch.md`` does not, so the scan
+        can only fail if the chain won.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "docs/story/note.md",
+            "# Note\n\n## 2.9 Local Section\n\nText.\n\n"
+            "Defined in [arch.md](../plans/arch.md)\n"
+            "§ 1.1 (layout) and § 2.9 (records).\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("2.9", errors[0])
+
+    def test_a_broken_chain_falls_through_to_the_same_document_reading(self):
+        """``enemy-ability-conventions.md`` writes
+
+            (Tier 4 is exempt — magic.md
+            § Tier 4 AoE Exemption; §2.3 only ever applies the rule ...
+
+        where ``§2.3`` is one of *its own* sections and magic.md numbers no
+        2.3 at all. The ``;`` ends the list, so the reading falls through to
+        the same-document one — and that reading is still checked: rename the
+        section and the scan fails.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        note = (
+            "# Note\n\n## 2.9 Local Section\n\nText.\n\n"
+            "Defined in [arch.md](../plans/arch.md)\n"
+            "§ 1.1 (layout); § 2.9 only ever applies here.\n"
+        )
+        self._write("docs/story/note.md", note)
+        self.assertEqual(self._errors(), [])
+        self._write(
+            "docs/story/note.md", note.replace("## 2.9 Local", "## 2.8 Local")
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+
+    def test_a_chain_carries_the_link_destination_not_the_link_text(self):
+        """What the first citation resolved to is what the second inherits."""
+        self._write("docs/story/npcs.md", HOUSE_STYLE_FIXTURE)
+        self._write("docs/story/other/npcs.md", "# Other\n\n## Inn Costs\n")
+        self._write(
+            "docs/analysis/note.md",
+            "See [npcs.md](../story/other/npcs.md) § Inn Costs, "
+            "§ Danger Counter.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("docs/story/other/npcs.md", errors[0])
+
+    def test_the_chain_count_is_reported(self):
+        """The tally is what stops the coverage silently returning to zero."""
+        self._house()
+        self._write(
+            "game/scripts/a.gd", "# npcs.md § Inn Costs, § Danger Counter.\n"
+        )
+        tally: dict = {}
+        self.assertEqual(check_doc_citations.check_citations(tally), [])
+        self.assertEqual(tally["chained"], 1)
+
     def test_stale_known_unresolved_entry_fails(self):
         """The ratchet cannot rot either: a pin with nothing to pin fails."""
         known = {
@@ -1397,15 +1576,18 @@ class TestIntegration(unittest.TestCase):
     def test_full_citation_scan_reads_a_non_trivial_corpus(self):
         """"No bad citations" and "no citations read" both print nothing.
 
-        The floors are far below the live numbers (550 citations across 535
-        files, 11 of them same-document and 132 written as a markdown link or
-        code span) so ordinary editing does not trip them, but a scan that
-        stopped descending cannot clear them.
+        The floors are far below the live numbers (575 citations across 537
+        files, 13 of them same-document, 134 written as a markdown link or
+        code span and 16 inheriting their file from the citation before them)
+        so ordinary editing does not trip them, but a scan that stopped
+        descending cannot clear them.
 
-        The ``decorated`` floor is the one #404 leaves behind. That count was
-        zero for the gate's whole life — the pattern could not cross the
-        ``](...)`` a markdown link puts between the filename and the section
-        sign — and a floor under it is what stops it silently returning there.
+        The ``decorated`` floor is the one #404 leaves behind and the
+        ``chained`` floor the one #415 does. Both counts were zero for the
+        gate's whole life — the pattern could cross neither the ``](...)`` a
+        markdown link puts between the filename and the section sign nor the
+        comma a list of sections puts between two of them — and a floor under
+        each is what stops it silently returning there.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1416,6 +1598,7 @@ class TestIntegration(unittest.TestCase):
         self.assertGreater(tally["citations"], 400)
         self.assertGreater(tally["self_references"], 5)
         self.assertGreater(tally["decorated"], 60)
+        self.assertGreater(tally["chained"], 8)
 
     def test_the_citation_counts_come_from_the_directory_walk(self):
         """Sever the walk's recursion and the counts must collapse.
@@ -1425,9 +1608,12 @@ class TestIntegration(unittest.TestCase):
         points intact and taking away everything below them — and the counts
         that pass the floors above must fall through them: no
         ``docs/story/script/``, no ``game/scripts/**``, no same-document
-        reference anywhere, since all eleven live ones sit in nested
-        directories, and no link-form citation either — every one of the 132
-        lives under a scan root rather than directly in it.
+        reference anywhere, since all thirteen live ones sit in nested
+        directories, and no link-form citation either — every one of the 134
+        lives under a scan root rather than directly in it. Eleven of the
+        sixteen chained citations go the same way; the five that survive are
+        in ``game/tests/`` itself, which is a scan root, and five is under the
+        floor above.
         """
         if not os.path.exists("docs/story"):
             self.skipTest("No design docs available")
@@ -1445,6 +1631,7 @@ class TestIntegration(unittest.TestCase):
         self.assertLess(tally["citations"], 400)
         self.assertEqual(tally["self_references"], 0)
         self.assertEqual(tally["decorated"], 0)
+        self.assertLess(tally["chained"], 8)
 
 
 class TestDocLineCounts(unittest.TestCase):
