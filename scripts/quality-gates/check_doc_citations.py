@@ -56,9 +56,12 @@ subsequence, so ``§ Convergence Meadow`` reaching ``### First Tree Seed
 Scene (Convergence Meadow)`` and a hypothetical ``§ Enemy Act`` reaching
 ``### Regular Enemy HP by Act`` are the same shape and this gate cannot
 separate them. Nothing was discarded there, so there is no discarded word to
-hold to anything. ``main`` prints how many citations resolved only by
-discarding words, so the size of the shortening the corpus leans on is a
-number on every run.
+hold to anything. ``main`` prints how many citations the word-prefix loop
+reached by discarding words, and how many of those the subject rule held, so
+the size of the shortening the corpus leans on is a number on every run and
+not a claim in a docstring. A citation settled by a section id is in neither
+number: ``match_section_id`` pins its heading by comparing ids for equality,
+so nothing was discarded to reach it.
 
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
@@ -617,6 +620,14 @@ def named_prefix_len(
     list of ids (``§ 2.1/2.3``) normalises to words no single heading's
     breadcrumb contains, so counting it as unaccounted-for would refuse every
     list citation.
+
+    That floor is also why this number cannot be read as how much a citation
+    *discarded*. A slash list spends its whole token and still returns one,
+    so subtracting this from the citation's length calls 8 live list
+    citations shortened when they threw nothing away; and a citation settled
+    by a section id discarded nothing to reach its heading in the first
+    place. ``match_heading`` hands the real answer to callers through its
+    ``trace`` (#416).
     """
     heads = index.headings(path)
     trail = index.trails(path)[heads.index(hit)]
@@ -730,7 +741,11 @@ def unknown_capitalized_word(
 
 
 def match_heading(
-    index: DocIndex, path: str, candidate: str, own: int | None = None
+    index: DocIndex,
+    path: str,
+    candidate: str,
+    own: int | None = None,
+    trace: dict[str, int] | None = None,
 ) -> tuple[int, int, str] | None:
     """Resolve the text after ``§`` to a heading in ``path``.
 
@@ -775,6 +790,16 @@ def match_heading(
     ``own`` is how many words of ``candidate`` came from the citation's own
     line rather than from the wrapped continuation ``citation_tail`` joined
     on; it bounds the refusal and defaults to all of them.
+
+    ``trace``, when given, is filled on a successful resolution with what
+    this function did rather than what a caller can guess it did:
+    ``shortened`` — whether the word-prefix loop discarded words from the
+    citation's own line — and ``subject_checked`` — whether
+    ``names_the_heading`` is part of why the result stands. Both are known
+    here and nowhere else, which is the whole reason they are handed out:
+    the count #416 asked for was first taken by re-deriving them outside
+    this function, and it counted 48 resolutions the subject rule had never
+    seen. See ``check_text``.
 
     A citation may list several sections at once — ``ui-design.md § 2.1/2.3``
     or ``npcs.md § Yara/Caden``. Every listed section must resolve.
@@ -827,6 +852,17 @@ def match_heading(
             return None
         if unknown_capitalized_word(index, path, hit, words[k:own]):
             return None
+        if trace is not None:
+            # Not a shortening, whatever ``k`` says. ``match_section_id``
+            # settles this heading by comparing the id for equality against
+            # the id the heading numbers itself with — no breadcrumb
+            # subsequence, nothing discarded to reach it, so the exposure
+            # #416 is about is not present and ``names_the_heading`` has
+            # nothing to hold. ``named_prefix_len`` is a re-derivation for
+            # the invention check above (#367, #389); reading it as a
+            # discard is what made the count wrong.
+            trace["shortened"] = 0
+            trace["subject_checked"] = 0
         return hit
 
     for k in range(len(words), 0, -1):
@@ -851,9 +887,13 @@ def match_heading(
         # heading's subject, not just words buried inside it. A list citation
         # is exempt: ``hit`` is then only its first part's heading, so there
         # is nothing meaningful to compare the whole token against.
-        if own > k and not listed:
+        shortened = own > k
+        if shortened and not listed:
             if not names_the_heading(hit[2], want):
                 return None
+        if trace is not None:
+            trace["shortened"] = int(shortened)
+            trace["subject_checked"] = int(shortened and not listed)
         return hit
     return None
 
@@ -1298,23 +1338,38 @@ def check_text(
 
         own_words = len(heading_part[:own_len].split())
         hit: tuple[str, tuple[int, int, str]] | None = None
+        trace: dict[str, int] = {}
         for target in targets:
-            found = match_heading(index, target, heading_part, own_words)
+            attempt: dict[str, int] = {}
+            found = match_heading(
+                index, target, heading_part, own_words, attempt
+            )
             if found:
-                hit = (target, found)
+                hit, trace = (target, found), attempt
                 break
         if hit is not None and tally is not None:
-            # How far the corpus leans on shortening. A citation the resolver
-            # had to discard words from is one whose meaning-carrying words
-            # may be the discarded ones; ``names_the_heading`` holds what
-            # survived to the heading's subject, but that is a weaker promise
-            # than an exact name, and #416 asked for the size of the weaker
-            # set rather than a docstring saying it exists.
-            accounted = named_prefix_len(
-                index, hit[0], hit[1], heading_part.split()
+            # How far the corpus leans on shortening, and how much of that
+            # the subject rule actually holds. A citation the resolver had to
+            # discard words from is one whose meaning-carrying words may be
+            # the discarded ones; ``names_the_heading`` holds what survived
+            # to the heading's subject, which is a weaker promise than an
+            # exact name, and #416 asked for the size of the weaker set
+            # rather than a docstring saying it exists.
+            #
+            # Both numbers come from ``trace`` — from the resolver's own
+            # record of what it did — because they cannot be recovered from
+            # the outside. The first version of this count re-derived the
+            # discard with ``named_prefix_len`` and reported 101, of which
+            # only 53 had been through the subject rule at all: 40 were
+            # settled by a section id, where nothing is discarded and the
+            # rule never runs, and 8 were slash lists counted by that
+            # function's floor of one rather than by any discard.
+            tally["shortened"] = tally.get("shortened", 0) + trace.get(
+                "shortened", 0
             )
-            if own_words > accounted:
-                tally["shortened"] = tally.get("shortened", 0) + 1
+            tally["subject_checked"] = tally.get(
+                "subject_checked", 0
+            ) + trace.get("subject_checked", 0)
 
         if hit is None:
             if known_key in KNOWN_UNRESOLVED:
@@ -1429,15 +1484,21 @@ def check_citations(
     that wants the whole gate must do the same.
 
     ``tally``, when given, is filled with ``files``, ``citations``,
-    ``self_references``, ``decorated``, ``chained`` and ``shortened``: how many
-    files were walked, how many citations were resolved in them, how many of
-    those were a document referring to its own section (#386), how many were
-    written as a markdown link or a code span (#404), how many inherited their
-    file from the citation before them (#415), and how many resolved only
-    because the resolver discarded words the citation offered (#416). A scan
-    reports its findings by returning nothing, and nothing is also what a scan
-    that stopped looking returns; the counts are what tells those apart, and
-    ``main`` prints them on every run.
+    ``self_references``, ``decorated``, ``chained``, ``shortened`` and
+    ``subject_checked``: how many files were walked, how many citations were
+    resolved in them, how many of those were a document referring to its own
+    section (#386), how many were written as a markdown link or a code span
+    (#404), how many inherited their file from the citation before them
+    (#415), how many resolved only because the word-prefix loop discarded
+    words the citation offered (#416), and how many of *those* the subject
+    rule was applied to. The last two are taken from ``match_heading``'s own
+    ``trace`` rather than re-derived here, because only the resolver knows
+    which branch resolved a citation and whether it discarded anything to do
+    it; re-deriving them counted 40 section-id resolutions and 8 slash lists
+    the subject rule had never been asked about. A scan reports its findings
+    by returning nothing, and nothing is also what a scan that stopped
+    looking returns; the counts are what tells those apart, and ``main``
+    prints them on every run.
     """
     index = DocIndex() if index is None else index
     errors: list[str] = []
@@ -1449,6 +1510,7 @@ def check_citations(
         tally.setdefault("decorated", 0)
         tally.setdefault("chained", 0)
         tally.setdefault("shortened", 0)
+        tally.setdefault("subject_checked", 0)
         tally["files"] = len(scanned)
     for path in scanned:
         errors.extend(check_file(path, index, seen_known, tally))
@@ -1493,8 +1555,10 @@ def main() -> int:
         f"(#404) and {tally['chained']} inheriting their file from the "
         f"citation before them (#415). "
         f"{tally['shortened']} resolved only by discarding words the "
-        f"citation offered (#416); each of those kept the heading's "
-        f"subject, which is a weaker promise than naming it. "
+        f"citation offered (#416); the subject rule held "
+        f"{tally['subject_checked']} of those to what the heading is "
+        f"about, which is a weaker promise than naming it, and it does "
+        f"not read a slash list. "
         f"{tally['gap_bullets']} Design-reference bullet(s) read in "
         f"{tally['gap_docs']} GAP doc(s) (#403). "
         f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in "

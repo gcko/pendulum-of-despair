@@ -711,6 +711,24 @@ class TestCheckDocCitations(unittest.TestCase):
         }
         self.assertEqual(self._errors(known), [])
 
+    def _message(self, known: dict | None = None) -> str:
+        """What a passing full scan prints, for the counts inside it.
+
+        The fixture repo has no docs/issues, so the Design-reference floors
+        (#403) would fire on scans these tests are not about. Dropping them
+        here rather than in the gate keeps them live everywhere else.
+        """
+        buffer = io.StringIO()
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, known or {}, clear=True
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_DOCS", 0
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 0
+        ), contextlib.redirect_stdout(buffer):
+            self.assertEqual(check_doc_citations.main(), 0)
+        return buffer.getvalue()
+
     def test_pass_message_reports_how_many_citations_are_pinned(self):
         """The escape hatch has to announce its own size.
 
@@ -722,19 +740,7 @@ class TestCheckDocCitations(unittest.TestCase):
         known = {
             ("game/scripts/a.gd", "magic.md § Ghost Section."): "#0 — pinned",
         }
-        buffer = io.StringIO()
-        # The fixture repo has no docs/issues, so the Design-reference floors
-        # (#403) would fire on a scan this test is not about. Dropping them
-        # here rather than in the gate keeps them live everywhere else.
-        with patch.dict(
-            check_doc_citations.KNOWN_UNRESOLVED, known, clear=True
-        ), patch.object(
-            check_doc_citations, "MIN_GAP_DOCS", 0
-        ), patch.object(
-            check_doc_citations, "MIN_GAP_BULLETS", 0
-        ), contextlib.redirect_stdout(buffer):
-            self.assertEqual(check_doc_citations.main(), 0)
-        self.assertIn("1 citation(s) pinned", buffer.getvalue())
+        self.assertIn("1 citation(s) pinned", self._message(known))
 
     # ── Running on past the heading into invention (#367) ──────────────
     #
@@ -969,6 +975,21 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertEqual(hit[2], "Inn Costs")
         self.assertIsNone(self._resolve("Costs of travel"))
 
+    # ── What the shortening count is allowed to claim ──────────────────
+    #
+    # The count is the mitigation offered for the hole #416 leaves open, so
+    # a count that overstates its own coverage is worse than no count. Its
+    # first version was taken by re-deriving the discard from outside
+    # ``match_heading`` with ``named_prefix_len``, and printed 101 while
+    # saying every one of them had kept the heading's subject. Only 53 had
+    # ever reached ``names_the_heading``: 40 were settled by a section id,
+    # where the heading is pinned by an equality test on the id and nothing
+    # is discarded to reach it, and 8 were slash lists counted by that
+    # function's documented floor of one rather than by any discard at all.
+    #
+    # Both numbers now come from the resolver's own ``trace``, and the
+    # tests below hold each population to the number it belongs in.
+
     def test_pass_message_reports_how_many_resolutions_were_shortened(self):
         """The weaker promise has to announce its own size.
 
@@ -982,16 +1003,63 @@ class TestCheckDocCitations(unittest.TestCase):
             "game/scripts/a.gd",
             "# npcs.md § Danger Counter increments once per step.\n",
         )
-        buffer = io.StringIO()
-        with patch.dict(
-            check_doc_citations.KNOWN_UNRESOLVED, {}, clear=True
-        ), patch.object(
-            check_doc_citations, "MIN_GAP_DOCS", 0
-        ), patch.object(
-            check_doc_citations, "MIN_GAP_BULLETS", 0
-        ), contextlib.redirect_stdout(buffer):
-            self.assertEqual(check_doc_citations.main(), 0)
-        self.assertIn("1 resolved only by discarding words", buffer.getvalue())
+        message = self._message()
+        self.assertIn("1 resolved only by discarding words", message)
+        self.assertIn("the subject rule held 1 of those", message)
+
+    def test_a_section_id_resolution_is_not_counted_as_shortened(self):
+        """``§ 1.3, and nothing else`` — a live shape, and not a shortening.
+
+        ``match_section_id`` compares the citation's id for equality against
+        the id the heading numbers itself with (#391). Nothing is discarded
+        to reach the heading, so the #416 exposure is not present and
+        ``names_the_heading`` has nothing to hold. Counting it anyway put 40
+        live resolutions inside a sentence promising each had kept the
+        heading's subject, when the rule had never been asked about them.
+        The words after the id are checked, but by ``continues_a_heading``
+        and ``unknown_capitalized_word`` (#367, #389), which is a different
+        claim than this count makes.
+        """
+        self._write("docs/plans/arch.md", NUMBERED_FIXTURE)
+        self._write(
+            "game/scripts/a.gd", "# arch.md § 1.3, and nothing else.\n"
+        )
+        message = self._message()
+        self.assertIn("0 resolved only by discarding words", message)
+        self.assertIn("the subject rule held 0 of those", message)
+
+    def test_a_slash_list_that_spends_its_words_is_not_shortened(self):
+        """``§ Caden/Inns`` discarded nothing, so it is nobody's exposure.
+
+        ``named_prefix_len`` floors its return at one for a list citation —
+        the slash token normalizes to words no single heading's breadcrumb
+        carries whole — which made every live list citation look shortened
+        to a caller reading that number as a discard. 8 of them were.
+        """
+        self._house()
+        self._write("game/scripts/a.gd", "# npcs.md § Caden/Inns\n")
+        message = self._message()
+        self.assertIn("0 resolved only by discarding words", message)
+
+    def test_a_shortened_slash_list_counts_without_the_subject_rule(self):
+        """The one shape that makes the two numbers differ, on purpose.
+
+        ``§ Caden/Inns and other notes`` is resolved by shortening to the
+        list token, so words were discarded — but ``hit`` is then only the
+        first part's heading, and ``match_heading`` exempts a list from the
+        subject rule because there is nothing meaningful to compare the
+        whole token against. The live tree has none of these today. If one
+        lands, the gate has to say so rather than fold it into a promise it
+        did not keep, which is what the second number is for.
+        """
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# npcs.md § Caden/Inns and other notes.\n",
+        )
+        message = self._message()
+        self.assertIn("1 resolved only by discarding words", message)
+        self.assertIn("the subject rule held 0 of those", message)
 
     def test_the_404_exemplar_fails_the_whole_scan(self):
         """The defect #404 was filed over, verbatim, end to end.
