@@ -13,21 +13,22 @@
 # `scripts/quality-gates/check_gut_baseline.py`, which is the single
 # implementation of reading these floors, checking the Run Summary is present,
 # checking nothing failed, checking every collected test PASSED, and judging the
-# counts. None of it is written twice, so the three cannot drift apart (#430,
-# #433). `gates` and `gate_tests` are used by gates.sh alone; `scripts` and
-# `tests` by all three.
+# counts. None of it is written twice, so the three cannot drift apart (#430).
+# `gates` and `gate_tests` are used by gates.sh alone; `scripts` and `tests` by
+# all three.
 #
 # THE LIMIT: pre-push and gates.sh can only read these floors on a machine with
 # Godot, because there is otherwise no GUT log to read. Neither one treats that
 # as a pass — both refuse to run and exit non-zero, so a tree whose suite never
-# ran cannot be pushed from either (#433). CI always has Godot, so every PR is
+# ran cannot be pushed from either (#430). CI always has Godot, so every PR is
 # judged regardless.
 #
 # It was not always so. Until #430 only the hand-run gates.sh read this file:
 # the hook and CI checked "Failing Tests 0" and never looked at the counts, so a
-# deleted or parse-skipped test file passed both of them unremarked. Until #433
-# the hook's Gate L sat inside its own `if Godot is present` branch whose else
-# printed "SKIPPED" and fell through to "All pre-push quality gates passed".
+# deleted or parse-skipped test file passed both of them unremarked. Reviewing
+# that same wiring turned up the layer beneath it: the hook's Gate L sat inside
+# its own `if Godot is present` branch whose else printed "SKIPPED" and fell
+# through to "All pre-push quality gates passed".
 #
 # UPDATE IT DELIBERATELY, in the same commit as the change that moves it:
 #   - added a test file      -> raise scripts
@@ -41,7 +42,7 @@
 # its outcome, so a test that stops asserting (GUT scores it risky) or is marked
 # pending keeps the count up while testing nothing. Gate L compares
 # `Passing Tests` against `Tests` for exactly that reason; raising a floor does
-# not buy the promise on its own (#433).
+# not buy the promise on its own (#430).
 #
 # It lives in its own tracked file rather than inside gates.sh so that moving
 # the floor is a reviewable one-line diff someone has to justify, instead of an

@@ -67,14 +67,14 @@ python3 "$GATE_DIR/check_spelling.py"
 # Run all GUT tests headless. Godot comes from $GODOT_BIN, from PATH, or from
 # /Applications/Godot.app (macOS), in that order.
 #
-# ABSENCE OF GODOT IS A FAILURE, NOT A SKIP. Until #433 everything below sat
+# ABSENCE OF GODOT IS A FAILURE, NOT A SKIP. Until #430 everything below sat
 # inside `if [ -n "$GODOT_BIN" ] && [ -f gut_cmdln.gd ]`, whose `else` branch
 # printed "GUT tests SKIPPED (Godot not found)" and fell through to the success
 # banner. On any machine without Godot the push therefore succeeded having run
 # neither Gate H nor Gate L, on a tree whose suite had never run — the exact
 # vacuity Gate L exists to close, with the guard against silently-skipped tests
-# itself silently skipped. scripts/gates.sh has refused this since #430; the
-# hook refuses it now too, and the two agree.
+# itself silently skipped. scripts/gates.sh already refused it; the hook
+# refuses it now too, and the two agree.
 GODOT_BIN="${GODOT_BIN:-}"
 if [ -z "$GODOT_BIN" ] && command -v godot >/dev/null 2>&1; then
     GODOT_BIN="godot"
@@ -101,7 +101,7 @@ fi
 # collects FEWER scripts, which Gate L reads as a silently-skipped test file and
 # blames on a healthy one; see scripts/quality-gates/godot-lock.sh. gates.sh has
 # serialized Godot since it was written and the hook did not, which is how the
-# two came to disagree about one clean tree (#433).
+# two came to disagree about one clean tree (#430).
 GODOT_LOCK_LABEL="$(basename "$PWD")"
 # shellcheck source=scripts/quality-gates/godot-lock.sh
 . "$GATE_DIR/godot-lock.sh"
@@ -145,7 +145,7 @@ fi
 # Everything read OUT of the log is judged here and only here. The hook used to
 # re-implement the summary-presence check and the failing-tests verdict in bash
 # while CI re-implemented both again in YAML, so one rule had five copies; the
-# comment claiming a single implementation was true of the floor alone (#433).
+# comment claiming a single implementation was true of the floor alone (#430).
 # judge_log() in check_gut_baseline.py performs all three:
 #
 #   * the Run Summary must be PRESENT - a suite that died before printing one

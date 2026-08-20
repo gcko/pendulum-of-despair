@@ -37,7 +37,7 @@ jobs:
       # the summary-presence check and the failing-tests verdict here in YAML
       # while .husky/pre-push re-implemented both again in bash, so a rule the
       # comments called single-implementation had five copies and a fix to the
-      # summary regex had to land in three files (#433).
+      # summary regex had to land in three files (#430).
       - name: Run GUT tests
         run: |
           set -o pipefail

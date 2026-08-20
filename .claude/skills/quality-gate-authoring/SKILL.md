@@ -135,7 +135,7 @@ write only that.
 `assertIn("check_gut_baseline.py", hook)` is not a wiring test. The gate's name
 survives in the pre-push gate registry, in the `gates.sh` header and in the CI
 step's rationale, so the assertion passes on a file whose only remaining mention
-is prose. Both call sites were commented out with all 46 tests green (#433).
+is prose. Both call sites were commented out with all 46 tests green (#430).
 
 Match an **uncommented line that runs the thing**: drop comment-only lines, then
 require the interpreter, the script (resolving a `NAME="path"` shell alias, since
@@ -154,7 +154,7 @@ A gate nested inside `if <tool> is installed` with an `else` that echoes
 "SKIPPED" and falls through to the success banner does not enforce anything; it
 enforces something on the author's laptop. Gate L shipped that way: on a machine
 without Godot, `.husky/pre-push` ran neither the suite nor the floor and printed
-"All pre-push quality gates passed" (#433).
+"All pre-push quality gates passed" (#430).
 
 Refuse instead — `scripts/gates.sh` already did, and the two disagreeing about
 one clean tree is how it was found. If the tool is genuinely optional, then the
