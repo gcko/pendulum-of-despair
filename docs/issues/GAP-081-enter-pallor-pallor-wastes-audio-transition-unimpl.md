@@ -34,6 +34,15 @@ Implement enter_pallor() using the constants (silence music, fade-in sub-bass dr
 - [ ] Ambient crossfades over 3s
 - [ ] Reserved constants are consumed
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched all of `game/scripts/` and `game/tests/` for `enter_pallor`
+and `CROSSFADE_PALLOR`. `enter_pallor` appears exactly once, inside the comment
+above the constants; no method by that name is defined anywhere, in
+`audio_manager.gd` or in the `audio_crossfade.gd` / `audio_mix_context.gd` /
+`audio_sfx_policy.gd` helpers that were split out of it. `CROSSFADE_PALLOR_MUSIC`
+and `CROSSFADE_PALLOR_AMBIENT` are declared and never read. The gap is unbuilt,
+not relocated by the audio decomposition.
+
 ## Design references
 
 - docs/story/audio.md § 3.3 Crossfade Rules
@@ -41,7 +50,8 @@ Implement enter_pallor() using the constants (silence music, fade-in sub-bass dr
 
 ## Code references
 
-- game/scripts/autoload/audio_manager.gd
+- game/scripts/autoload/audio_manager.gd — declares `CROSSFADE_PALLOR_MUSIC` and `CROSSFADE_PALLOR_AMBIENT`. The method they were reserved for is absent, so no symbol anchor is possible here and a green path check proves nothing about this gap; re-verify the absence by hand.
+- game/scripts/util/audio_crossfade.gd — `swap_in()`, `fade_out()`: the existing fade machinery the Pallor transition would drive; searched and confirmed it holds no Pallor path
 
 
 ## Verification (fresh-eyes adversarial pass)

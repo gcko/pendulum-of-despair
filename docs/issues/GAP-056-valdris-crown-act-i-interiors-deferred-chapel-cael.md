@@ -32,7 +32,26 @@ Prioritize Chapel + Cael's Quarters for Act-I narrative completeness; verify/rem
 
 - [ ] Chapel interior exists with Thessa and save point
 - [ ] Cael's Quarters interior exists for the Act-I beat
-- [ ] Unexpected OldHarren node verified or removed
+- [x] Unexpected OldHarren node verified: `docs/story/npcs.md` § Old Harren
+      places him in "Valdris Crown, Lower Ward (the Crown's Rest inn)" as the
+      innkeeper, and `game/data/dialogue/npc_old_harren.json` gives the placed
+      node its dialogue, so the `OldHarren` instance in
+      `valdris_lower_ward.tscn` is designed content, not a stray. Keep it
+      (re-measured 2026-08-12)
+
+**Re-verified by behavior search 2026-08-12 (#413): 1 of 3 met.** The
+OldHarren criterion resolves to "verified, keep" — the finding read the building
+directory and concluded the node was undesigned, but the NPC directory places
+him and the engine ships his dialogue file. The other two are unbuilt.
+Searched `game/scenes/maps/towns/` for a chapel or quarters interior under any
+name: the eight Valdris scenes are Lower Ward, Citizens' Walk, Court Quarter,
+Throne Hall, Royal Library, Barracks and the two Anchor & Oar floors, and none
+is an interior for either. In `valdris_lower_ward.tscn` the Chapel is still an
+exterior `ChapelSave` save point with no transition behind it, and
+`valdris_court_quarter.tscn` has exactly two transitions — `SouthRoad` to
+Citizens' Walk and `NorthEntrance` to the Throne Hall — so Haren's Estate, the
+Council Chambers, the Court Mage Tower and the Noble Archive still have no
+interiors to enter.
 
 ## Design references
 
@@ -42,7 +61,14 @@ Prioritize Chapel + Cael's Quarters for Act-I narrative completeness; verify/rem
 
 ## Code references
 
-- game/scenes/maps/towns/valdris_lower_ward.tscn
+- game/scenes/maps/towns/valdris_lower_ward.tscn — holds `ChapelSave` (the
+  exterior save point standing in for the Chapel) and the `OldHarren` node the
+  third criterion was about
+- game/scenes/maps/towns/valdris_court_quarter.tscn — its `Transitions` node is
+  the measurement for the missing Court Quarter interiors: `SouthRoad` and
+  `NorthEntrance` only
+- game/data/dialogue/npc_old_harren.json — the dialogue that, with
+  docs/story/npcs.md, verifies the OldHarren node
 
 
 ## Verification (fresh-eyes adversarial pass)

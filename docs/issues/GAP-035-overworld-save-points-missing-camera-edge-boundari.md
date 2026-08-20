@@ -34,6 +34,18 @@ Add SavePoint entities at designed coords and set Camera2D limit_* from the acti
 - [ ] Camera stops at map edges
 - [ ] Ocean fills beyond the edge
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched every `.tscn` for `SavePoint` and `save_point.tscn`:
+`overworld.tscn` instances neither, while twelve other map scenes do, so this
+is an omission in one scene and not a relocation. Searched `game/scenes/` and
+`game/scripts/` for `limit_left` / `limit_right` / `limit_top` /
+`limit_bottom` / `limit_smoothed`: zero hits anywhere, and the shared
+`Camera2D` in `exploration.tscn` still declares only `zoom` and
+`position_smoothing_enabled`. Searched for `ocean`: the only hit is a comment in
+`game/data/encounters/overworld_zones.json` recording that ocean tiles are
+impassable and intentionally unmapped, which is encounter data, not an edge
+fill.
+
 ## Design references
 
 - docs/story/overworld.md §6

@@ -34,6 +34,19 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 - [ ] Results advance on confirm per section
 - [ ] A level-up panel shows new level, stat deltas, and new abilities
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, nothing has
+moved.** Searched `game/scripts/` for `Victory`, `ResultsLabel` and
+`_results_panel`: `battle_ui.gd` is still the only results screen, and
+`_show_results()` still builds one string — `"Victory!"`, `EXP`, `Gold`, then
+`"Found: %s" % drop.get("item_id", "???")` — into a single `Label`. There is no
+item-name lookup helper anywhere in `game/scripts/` to resolve that id against,
+so the first criterion needs one written. `_unhandled_input()` dismisses the
+whole panel on one `ui_accept`, so there are no sections to advance through.
+And the level-up data is still produced and dropped: `progression_helpers.gd`
+`distribute_rewards()` returns `level_ups`, `party_state.gd`
+`distribute_battle_rewards()` passes the summary straight back, and no UI caller
+reads the key — the only readers are `test_battle_rewards.gd`.
+
 ## Design references
 
 - docs/story/ui-design.md §2.8
@@ -41,8 +54,9 @@ Consume the distribute_battle_rewards return; resolve item_id->name via DataMana
 
 ## Code references
 
-- game/scripts/ui/battle_ui.gd — `_show_results()`
+- game/scripts/ui/battle_ui.gd — `_show_results()` (the raw `item_id` line) and `_unhandled_input()` (the single dismissal that leaves no room for per-section advance)
 - game/scripts/util/progression_helpers.gd — `distribute_rewards()`
+- game/scripts/autoload/party_state.gd — `distribute_battle_rewards()`, which returns the `level_ups` summary that no UI caller reads
 - game/scripts/core/exploration.gd — `_initialize_from_transition_data()` (the return-from-battle path that distributes rewards)
 
 

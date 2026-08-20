@@ -30,9 +30,25 @@ Track the full settlement under GAP-049; note the misfiled dungeon path.
 
 ## Acceptance criteria
 
-- [ ] Full Duskfen settlement tracked under the cities epic
+- [x] Full Duskfen settlement tracked under the cities epic (GAP-049 names "full
+      Duskfen" in both its title and its Desired state, alongside the ten
+      Carradan settlements and the four other Thornmere ones; it is live as
+      [#196](https://github.com/gcko/pendulum-of-despair/issues/196) under the
+      Phase 6 milestone with the `epic` label — re-measured 2026-08-12)
 - [ ] Settlement has shops/NPCs/trade goods
 - [ ] Path/classification corrected (town not dungeon)
+
+**Re-verified by behavior search 2026-08-12 (#413): 1 of 3 met.** The tracking
+criterion is a documentation claim and the tree meets it — GAP-049 / #196 owns
+the full settlement, so this doc only has to keep the Act-I shrine honest. The
+other two are unbuilt. Searched `game/scenes/maps/` for any second Duskfen
+scene: there is one file, and it is still
+`dungeons/duskfen_spirit_shrine.tscn`, holding `SavePoint`,
+`CadenPostEvent` (`npc_id` `caden_duskfen`), one `OverworldExit` and three spawn
+markers — no shop metadata, no stilt structures, no trade goods. The
+classification criterion is unmet in the most literal way available: the scene
+still lives under `maps/dungeons/`, and moving it is a `game/` change this doc
+cannot make.
 
 ## Design references
 
@@ -40,7 +56,13 @@ Track the full settlement under GAP-049; note the misfiled dungeon path.
 
 ## Code references
 
-- game/scenes/maps/dungeons/duskfen_spirit_shrine.tscn
+- game/scenes/maps/dungeons/duskfen_spirit_shrine.tscn — the whole of Duskfen in
+  the tree: the save point, Caden's post-event NPC and the overworld exit. The
+  path is itself the third criterion's evidence, since a town scene is sitting
+  under `maps/dungeons/`.
+- docs/issues/GAP-049-epic-faction-cities-settlements-largely-unbuilt-10.md — where
+  the full settlement is tracked (issue #196), which is what satisfies the first
+  criterion
 
 
 ## Verification (fresh-eyes adversarial pass)

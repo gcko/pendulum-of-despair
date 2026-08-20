@@ -46,6 +46,13 @@ move: Undead heal-to-damage, physical-elemental routing of type bonuses,
 Resonance/amplification, and per-tier interaction coverage all remain unbuilt,
 and the aggregator's own docstring names them as deferred to this gap.
 
+Re-checked in the #413 behavior sweep on the same day and left as written:
+searching `game/scripts/` for `interaction_mult`, `undead` and `resonance`
+turns up only the four files already cited below — `modifier_aggregator.gd`,
+`damage_calculator.gd` (which multiplies `interaction_mult` into both the
+physical and the magic path) and `enemy.gd`'s per-type immunity table — plus no
+`resonance` anywhere at all. This record is current.
+
 ## Design references
 
 - docs/story/combat-formulas.md §Combat Interactions & Hidden Synergies / §Buff & Debuff Interaction

@@ -35,6 +35,18 @@ Implement capture/merge against PartyState XP and EventFlags boss_cutscene_seen_
 - [ ] HP/MP reset to 100% and ailments cleared
 - [ ] Tests cover merge + restore
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 4 met, nothing has
+moved.** Searched `game/scripts/` and `game/tests/` for each stub by name.
+All six still live in `save_manager.gd` and all six are still empty:
+`_capture_party_xp()` and `_capture_boss_cutscene_flags()` `return {}` behind a
+TODO, and `_merge_xp()`, `_merge_flags()`, `_process_level_ups()` and
+`_full_restore()` are a bare `pass`. `faint_and_fast_reload()` calls every one
+of them in the documented order, so the control flow the finding described is
+intact and only the bodies are missing. `_capture_gold()` is the single
+exception and the reason gold alone survives: it returns `PartyState.gold`.
+No other script defines an FFR merge, and the decomposition that split
+`battle_manager.gd` never touched `save_manager.gd`.
+
 ## Design references
 
 - docs/story/save-system.md §7
@@ -42,7 +54,7 @@ Implement capture/merge against PartyState XP and EventFlags boss_cutscene_seen_
 
 ## Code references
 
-- game/scripts/autoload/save_manager.gd — `faint_and_fast_reload()` and the stubs it calls: `_merge_xp()`, `_process_level_ups()`, `_full_restore()`
+- game/scripts/autoload/save_manager.gd — `faint_and_fast_reload()` and the stubs it calls: `_capture_party_xp()`, `_capture_boss_cutscene_flags()`, `_merge_xp()`, `_merge_flags()`, `_process_level_ups()`, `_full_restore()`. `_capture_gold()` in the same file is the one that is real, which is why gold survives a wipe and nothing else does.
 
 
 ## Verification (fresh-eyes adversarial pass)

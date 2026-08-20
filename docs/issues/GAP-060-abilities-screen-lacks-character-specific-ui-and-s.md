@@ -34,6 +34,29 @@ Add per-command rendering branches (pips/gauge/highlight) and source live values
 - [ ] Per-character unique elements render
 - [ ] Values update with PartyState
 
+**Re-verified by behavior search 2026-08-12 (#413): 0 of 3 met, but the first
+two criteria are now half-true and the doc should not be read as "nothing
+works".** `ability_helpers.gd` `get_resource_label()` no longer returns a
+literal for every character: where `RESOURCE_LABELS` maps the command to `"MP"`
+— Cael's Rally, Torren's Spiritcall, Sable's Tricks — it formats
+`"MP %d/%d"` from the member dictionary `menu_abilities.gd` passes in, which
+comes from `PartyState`. The three non-MP commands are the ones still frozen:
+Bulwark returns `"AP 0/10"`, Forgewright `"AC 12/12"` and Arcanum `"WG 0/100"`
+regardless of state. So half the roster satisfies criteria 1 and 3 today and
+half does not, and the criteria as written are all-or-nothing, so none is
+ticked. Criterion 2 is untouched: searched `game/scripts/ui/` for stance
+highlights, Favor pips, cooldown pips and a front-row icon and found none.
+
+One of the three frozen headers has a live source that this screen simply does
+not read, which is the kind of thing the cited-path method misses. PR #275
+shipped Maren's Weave Gauge, but into the *battle* party panel:
+`battle_party_panel.gd` `_update_weave()` draws it, `stat_bar_helpers.gd`
+`shows_weave_gauge()` decides who gets one, and the value itself is battle
+state, fed by `battle_state.gd` `gain_weave_gauge_for_maren()`. So the Abilities
+screen's `"WG 0/100"` is stale rather than sourceless — but the gauge is
+per-battle and does not persist into `PartyState`, so wiring it here is a design
+question (show 0 out of battle? carry it in party state?) and not a lookup.
+
 ## Design references
 
 - docs/story/ui-design.md §7.3
@@ -41,7 +64,10 @@ Add per-command rendering branches (pips/gauge/highlight) and source live values
 ## Code references
 
 - game/scripts/ui/menu_abilities.gd
-- game/scripts/ui/ability_helpers.gd — `get_resource_label()` (the resource header the finding recorded as hardcoded)
+- game/scripts/ui/ability_helpers.gd — `get_resource_label()` (the resource header the finding recorded as hardcoded; now live for the three MP commands, still literal for AP/AC/WG)
+- game/scripts/ui/battle_party_panel.gd — `_update_weave()`, where the Weave Gauge is actually drawn today (the battle panel, not this screen)
+- game/scripts/ui/stat_bar_helpers.gd — `shows_weave_gauge()`, which decides who gets one
+- game/scripts/combat/battle_state.gd — `gain_weave_gauge_for_maren()`, the only writer of the WG value, which is per-battle and never reaches PartyState
 
 
 ## Verification (fresh-eyes adversarial pass)
