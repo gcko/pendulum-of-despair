@@ -177,11 +177,16 @@
 > "separate load path for battle AI" it existed to serve was never built —
 > nothing in `game/scripts/`, `game/scenes/` or `game/tests/` ever read it.
 > What actually shipped is better: all 36 boss and mini-boss records live in
-> the act tables next to their encounter neighbours, carrying `is_boss`,
-> `is_mini_boss` and `boss_group`, and the four migrated Act I bosses carry
-> their `boss_ai` object there too, read by `boss_ai.gd` through the ordinary
-> `DataManager.load_enemies(<act>)` path. The stub is deleted. The rest of this
-> task is kept as a record of what was planned, not as work outstanding.
+> the act tables next to their encounter neighbours — 29 flagged `is_boss` and
+> 7 flagged `is_mini_boss` — and the four migrated Act I bosses carry their
+> `boss_ai` object there too, read by `boss_ai.gd` through the ordinary
+> `DataManager.load_enemies(<act>)` path. `boss_group` is *not* a universal
+> boss field and should not be read as one: the key is present on 14 of the 36
+> records and carries a non-null value on only 5 — The Lingering's 3 phase rows
+> and Cael's 2 — which is its whole job, tying the rows of one multi-record
+> fight together. The other 9 spell the key out as `null`, and the remaining 22
+> boss records omit it. The stub is deleted. The rest of this task is kept as a
+> record of what was planned, not as work outstanding.
 
 **Files:**
 - ~~Create: `game/data/enemies/bosses.json`~~

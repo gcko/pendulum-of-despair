@@ -138,8 +138,8 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 | Category | Count | Source |
 |----------|-------|--------|
 | Party members | 6 playable + 2 guests | [characters.md](characters.md) |
-| Regular enemies | 173 (209 records incl. bosses) | [bestiary/](bestiary/) |
-| Bosses | 36 boss + mini-boss records (+ 1 scripted loss) | [bestiary/bosses.md](bestiary/bosses.md) |
+| Regular enemies | 173 | [game/data/enemies/](../../game/data/enemies/) |
+| Bosses & mini-bosses | 36 records (see note) | [game/data/enemies/](../../game/data/enemies/) |
 | Palette-swap families | 32 | [bestiary/palette-families.md](bestiary/palette-families.md) |
 | Consumable items | 33 | [items.md](items.md) |
 | Equipment (weapons) | 56 | [equipment.md](equipment.md) |
@@ -153,6 +153,23 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 | Script lines | ~6,300 | [script/](script/) |
 | Narrative scenes | 44 | [script/](script/) |
 | Sidequests | 25--30 | [sidequests.md](sidequests.md) |
+
+> **Enemy counts are measured from `game/data/enemies/*.json`**, which is
+> what the game loads: 209 records, of which 36 carry `is_boss` or
+> `is_mini_boss` and 173 carry neither. 173 + 36 = 209 exactly, so the
+> scripted-loss encounter (Vaelith (Siege)) is *inside* the 36, not an
+> addition to it.
+>
+> The bestiary counts differently, and both are right about their own
+> subject. [bestiary/bosses.md](bestiary/bosses.md) rosters 31 numbered
+> combat bosses plus Vaelith (Siege), which it explicitly excludes from
+> that 31. Add Ley Abomination — a mini-boss tabled in
+> [bestiary/act-iii.md](bestiary/act-iii.md) rather than in the boss
+> compendium — and the roster is 33 boss *entities*. Cael ships as 2
+> records and The Lingering as 3, one per phase, which takes 33 entities
+> to the 36 shipped *records*. Likewise the five bestiary act files table
+> 206 stat rows (27 + 33 + 52 + 69 + 25); the same three Lingering phase
+> records account for the gap to 209.
 
 ### Estimated Playtime
 

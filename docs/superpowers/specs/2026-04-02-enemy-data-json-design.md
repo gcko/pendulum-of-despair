@@ -206,20 +206,38 @@ Boss records — which live in the act tables alongside their encounter neighbou
 
 ## File Structure
 
-| File | Source | Enemies |
-|------|--------|---------|
-| `game/data/enemies/act_i.json` | bestiary/act-i.md | 27 |
-| `game/data/enemies/act_ii.json` | bestiary/act-ii.md | 38 |
-| `game/data/enemies/interlude.json` | bestiary/interlude.md | 47 |
-| `game/data/enemies/act_iii.json` | bestiary/act-iii.md | 72 |
-| `game/data/enemies/optional.json` | bestiary/optional.md | 25 |
+| File | Records shipped | Rows in the bestiary file it was transcribed from |
+|------|-----------------|---------------------------------------------------|
+| `game/data/enemies/act_i.json` | 27 | bestiary/act-i.md — 27 |
+| `game/data/enemies/act_ii.json` | 38 | bestiary/act-ii.md — 33 |
+| `game/data/enemies/interlude.json` | 47 | bestiary/interlude.md — 52 |
+| `game/data/enemies/act_iii.json` | 72 | bestiary/act-iii.md — 69 |
+| `game/data/enemies/optional.json` | 25 | bestiary/optional.md — 25 |
 
 Act files include ALL enemies for that act, regular **and** boss — 209 records
-in total. There is no separate boss file. The counts above are the shipped ones,
-re-derived from the JSON in 2026-08; the column used to hold this spec's
-*planned* totals (25 / 33 / 52 / 69 / 25 = 204), which drifted from the tables
-as they were written and never matched the bestiary (act-i.md alone documents
-27).
+in total, against 206 stat rows in the five bestiary act files. There is no
+separate boss file.
+
+**The two columns are deliberately different numbers, and neither is a typo.**
+Both were counted in 2026-08 — the left from the JSON, the right from
+19-column data rows in the named markdown file — and the file boundaries do not
+line up in two places:
+
+- **act_ii.json is +5 and interlude.json is −5.** Five Interlude bosses —
+  Corrupted Boring Engine, The Ironbound, The Undying Warden, Pallor Nest
+  Mother and General Vassar Kole — are tabled in `bestiary/interlude.md` but
+  shipped in `act_ii.json`. The pair nets to zero: 38 + 47 = 33 + 52 = 85.
+- **act_iii.json is +3.** The Lingering ships as three phase records sharing
+  `"boss_group": "the_lingering"`; `bestiary/act-iii.md` does not table it at
+  all (it is in `bestiary/bosses.md`). This +3 is the whole of the 206 → 209
+  gap.
+
+The Enemies column previously held this spec's *planned* totals
+(25 / 33 / 52 / 69 / 25 = 204). Four of those five matched the bestiary exactly
+and still do — only the act-i figure was ever wrong about the markdown, which
+documents 27, not 25. What the planned column did not anticipate was the two
+file-boundary moves above, so it stopped describing the JSON once the data
+shipped.
 
 > **Correction (#330, 2026-08):** this table used to promise a sixth file,
 > `game/data/enemies/bosses.json`, holding 35 entries, and justified the
@@ -227,8 +245,8 @@ as they were written and never matched the bestiary (act-i.md alone documents
 > loaded for battle AI". The second load path was never built. The file shipped
 > as a 20-byte `{"enemies": []}` stub that no script, scene or test ever read,
 > while all 36 boss and mini-boss records lived in the act tables carrying
-> `is_boss` / `is_mini_boss` / `boss_group`, and the four migrated Act I bosses
-> carried their `boss_ai` object there too. The stub is deleted; boss data is
+> `is_boss` or `is_mini_boss` (29 and 7 respectively), and the four migrated
+> Act I bosses carried their `boss_ai` object there too. The stub is deleted; boss data is
 > read from the act tables through `DataManager.load_enemies(<act>)` like every
 > other record.
 

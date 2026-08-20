@@ -41,7 +41,7 @@ in these docs.**
 
 | Category | Source Documents |
 |----------|----------------|
-| Game overview | `gdd-overview.md` (253), `outline.md` (371), `world.md` (79) |
+| Game overview | `gdd-overview.md` (270), `outline.md` (371), `world.md` (79) |
 | Combat mechanics | `combat-formulas.md` (1,055) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
 | Abilities & magic | `abilities.md` (1,040), `magic.md` (1,702) |
@@ -128,18 +128,18 @@ transformation that can be validated line-by-line against source docs.
 
 **What's Needed:**
 - [x] Per-act JSON file following Section 2.1 schema (extended — see spec)
-- [x] All ~204 regular enemies with 19-column stat sheets
+- [x] All 173 regular enemies with 19-column stat sheets (209 records once the 36 boss and mini-boss records in the same files are counted)
 - [x] Elemental profiles (weaknesses, resistances, immunities, absorb)
 - [x] Status effect vulnerability lists
 - [x] Drop tables (common item, rare item, steal item with rates)
-- [x] Boss data file with phase triggers and metadata (35 entries; AI scripts deferred to GDScript implementation)
+- [x] Boss metadata carried on the boss records themselves, in the act files, not in a boss file of their own. A separate `bosses.json` was planned for 35 entries, shipped as an empty `{"enemies": []}` stub that nothing ever read, and was deleted in #330. Measured across `game/data/enemies/*.json`: 36 records flagged `is_boss` (29) or `is_mini_boss` (7), of which 32 carry `phases`, 8 carry `phase_hp_thresholds`, and 14 carry a `boss_group` key (non-null on the 5 rows of the two multi-record fights, The Lingering and Cael).
 - [x] Verify every enemy name, stat, and drop against bestiary source files
 - [x] Verify boss phase HP thresholds against bosses.md
 - [x] Decision: two-tier steal (common/rare) per abilities.md Filch description and economy.md — RESOLVED, implemented as `steal: { common, rare }` nested object
 
 **Notes:**
 - Schema extends tech-arch Section 2.1: added `threat` field (reward validation), `locations` array, two-tier `steal` object. Tech-arch should be updated to match.
-- Boss AI scripts are NOT in JSON — those are runtime behavior for future GDScript implementation.
+- Boss AI scripts were out of scope here (runtime behavior, deferred to GDScript) and have since become data instead, under GAP-009 — but only partly. Four migrated Act I bosses (Ember Drake, Vein Guardian, Drowned Sentinel, Corrupted Fenmother) carry a `boss_ai` object read by `combat/boss_ai.gd`; they are the only 4 of the 36 boss records that do. The other 32 still have no AI data.
 - Design spec: `docs/superpowers/specs/2026-04-02-enemy-data-json-design.md`
 - Enemies reappearing at different levels across acts have location-suffixed IDs (e.g., `pallor_wisp_rail_tunnels`, `pallor_drake_void`)
 
@@ -318,7 +318,7 @@ transformation that can be validated line-by-line against source docs.
 **Priority:** P0 — blocks NPC prefab (2.2), exploration scene (3.2), and vertical slice (4.1)
 **Estimated Size:** L (139 dialogue files, 1105 entries)
 **Output:** `game/data/dialogue/{scene_id}.json`, `game/data/dialogue/npc_{npc_id}.json`, `game/data/dialogue/battle_{context_id}.json`
-**Source Docs:** `script/` (6,316 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
+**Source Docs:** `script/` (6,319 lines across 8 content files), `dialogue-system.md` (7-field entry format), `npcs.md` (NPC dialogue assignments)
 **Architecture Ref:** `technical-architecture.md` Section 2.5
 **Depends On:** None (foundational, but dialogue overlay in Tier 3 needed to display)
 
