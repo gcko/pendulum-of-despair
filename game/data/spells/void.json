@@ -13,9 +13,7 @@
 			"hit_rate": null,
 			"duration": null,
 			"description": "Deals Void damage and drains HP equal to 25% of damage dealt, healing the caster.",
-			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null
+			"learned_by": []
 		},
 		{
 			"id": "ashen_whisper",
@@ -31,8 +29,6 @@
 			"duration": 4,
 			"description": "60% chance to inflict Despair. ATB fill speed reduced by 25%, all damage dealt reduced by 20%. Lasts 4 turns.",
 			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "despair"
 		},
 		{
@@ -48,9 +44,7 @@
 			"hit_rate": null,
 			"duration": null,
 			"description": "Void damage to entire party.",
-			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null
+			"learned_by": []
 		},
 		{
 			"id": "silence_of_ages",
@@ -66,8 +60,6 @@
 			"duration": null,
 			"description": "50% chance to inflict Silence on each party member. Additionally suppresses all active buff effects for 2 turns.",
 			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "silence"
 		},
 		{
@@ -83,9 +75,7 @@
 			"hit_rate": null,
 			"duration": null,
 			"description": "Drains MP equal to 30% of target's max MP. No MP is gained by the caster.",
-			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null
+			"learned_by": []
 		},
 		{
 			"id": "unmaking",
@@ -100,9 +90,7 @@
 			"hit_rate": null,
 			"duration": null,
 			"description": "Massive Void damage. If target HP falls below 10% from this spell, they are instantly Fainted.",
-			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null
+			"learned_by": []
 		},
 		{
 			"id": "grey_horizon",
@@ -118,8 +106,6 @@
 			"duration": null,
 			"description": "Inflicts Despair on all party members (45% per target) and suppresses all healing effects by 50% for 3 turns.",
 			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "despair"
 		},
 		{
@@ -135,9 +121,7 @@
 			"hit_rate": null,
 			"duration": null,
 			"description": "Massive Void damage to all. Inflicts Despair on all targets (no resistance check). Cael boss only.",
-			"learned_by": [],
-			"cross_trained": false,
-			"mp_penalty": null
+			"learned_by": []
 		},
 		{
 			"id": "hollow_mend",
@@ -161,9 +145,7 @@
 					"character": "torren",
 					"event": "post_game_convergence_meadow"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "pendulums_echo",
@@ -183,9 +165,7 @@
 					"character": "maren",
 					"event": "post_game_pendulum_chamber"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		}
 	]
 }

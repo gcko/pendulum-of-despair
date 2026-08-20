@@ -159,9 +159,7 @@ Total: 5 spell files in `game/data/spells/`. ~89 spells total (39 ley_line + 6 f
       "description": "A focused lance of flame. Basic fire attack.",
       "learned_by": [
         { "character": "maren", "level": 1 }
-      ],
-      "cross_trained": false,
-      "mp_penalty": null
+      ]
     }
   ]
 }
@@ -183,11 +181,9 @@ Total: 5 spell files in `game/data/spells/`. ~89 spells total (39 ley_line + 6 f
 | `hit_rate` | int/null | Base hit % for status spells (50-80). null for guaranteed-hit |
 | `duration` | int/null | Turn duration for buffs/debuffs. null for instant effects |
 | `description` | string | Effect description from magic.md |
-| `learned_by` | array | `[{"character": "maren", "level": 1}]` or `[{"character": "torren", "event": "spirit_communion"}]` |
-| `cross_trained` | bool | false at spell level. Cross-training is per-learner — see learned_by entries |
-| `mp_penalty` | float/null | null at spell level. Per-learner cross-training adds `cross_trained: true` and `mp_penalty: 1.5` to the learned_by entry |
+| `learned_by` | array | `[{"character": "maren", "level": 1}]` or `[{"character": "torren", "event": "spirit_communion"}]`. A cross-trained learner adds `"cross_trained": true, "mp_penalty": 1.5` to its own entry |
 
-**Cross-training note:** The `cross_trained` and `mp_penalty` fields exist at the spell level for schema consistency (always false/null) but the ACTUAL cross-training data lives in the `learned_by` array entries. A learned_by entry with `"cross_trained": true, "mp_penalty": 1.5` means that specific character learns the spell via cross-training with +50% MP cost. Native learners omit these fields.
+**Cross-training note:** Cross-training is per-learner, never per-spell — the same spell is native to one character and cross-trained for another. A learned_by entry with `"cross_trained": true, "mp_penalty": 1.5` means that character learns the spell via cross-training at +50% MP cost; native learners omit both keys. Spell-level `cross_trained`/`mp_penalty` fields existed in the first cut of this schema "for consistency" (always `false`/`null`); nothing ever read them and they were removed — do not reintroduce them. See magic.md § Derived Rules, "Cross-training is per-learner, not per-spell".
 
 ### Spell Categories
 
@@ -331,7 +327,7 @@ This matches the gap 1.2 pattern where boss AI scripts were captured as phase me
 - [ ] Caldera Company shops have markup: 1.5, Black Market has markup: 1.0
 - [ ] Every spell name, power, MP cost, element, target matches magic.md
 - [ ] Every spell learned_by character+level matches magic.md
-- [ ] Cross-trained spells have cross_trained: true and mp_penalty: 1.5
+- [ ] Cross-trained learned_by entries have cross_trained: true and mp_penalty: 1.5 (and no spell carries those keys at the top level)
 - [ ] Every ability name, cost, effect matches abilities.md
 - [ ] Sable's Filch, Ransack, Wild Card have row_restriction: "front"
 - [ ] Story-gated abilities have story_gated: true with correct story_event

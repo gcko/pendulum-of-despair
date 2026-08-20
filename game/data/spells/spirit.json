@@ -22,9 +22,7 @@
 					"character": "maren",
 					"level": 5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "rootgrip",
@@ -48,9 +46,7 @@
 					"character": "maren",
 					"level": 16
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "landshatter",
@@ -74,9 +70,7 @@
 					"character": "maren",
 					"level": 34
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "quake_stride",
@@ -100,9 +94,7 @@
 					"character": "maren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "thornlash",
@@ -122,9 +114,7 @@
 					"character": "torren",
 					"level": 1
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "spiritfang",
@@ -144,9 +134,7 @@
 					"character": "torren",
 					"level": 14
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "ancestors_fury",
@@ -166,9 +154,7 @@
 					"character": "torren",
 					"event": "act_iii_spirit_communion"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "wilds_chorus",
@@ -188,9 +174,7 @@
 					"character": "torren",
 					"level": 18
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "requiem_of_thorns",
@@ -210,9 +194,7 @@
 					"character": "torren",
 					"event": "pallor_trial"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "mend",
@@ -240,9 +222,7 @@
 					"character": "edren",
 					"level": 5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "deepmend",
@@ -266,9 +246,7 @@
 					"character": "maren",
 					"level": 14
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "resurgence",
@@ -292,9 +270,7 @@
 					"character": "maren",
 					"level": 30
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "breath_of_the_wilds",
@@ -324,9 +300,7 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "sanctuary",
@@ -350,9 +324,7 @@
 					"character": "maren",
 					"level": 22
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "lifetide",
@@ -372,9 +344,7 @@
 					"character": "torren",
 					"level": 32
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "kindle_breath",
@@ -404,9 +374,7 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "rekindling",
@@ -432,9 +400,7 @@
 					"cross_trained": true,
 					"mp_penalty": 1.5
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "spirit_recall",
@@ -458,9 +424,7 @@
 					"character": "maren",
 					"level": 18
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "cleansing_draught",
@@ -488,9 +452,7 @@
 					"character": "edren",
 					"level": 8
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "vilethorn",
@@ -515,8 +477,6 @@
 					"level": 8
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "poison"
 		},
 		{
@@ -542,8 +502,6 @@
 					"level": 6
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "sleep"
 		},
 		{
@@ -569,8 +527,6 @@
 					"level": 10
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "slow"
 		},
 		{
@@ -596,8 +552,6 @@
 					"level": 12
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "blind"
 		},
 		{
@@ -608,7 +562,7 @@
 			"category": "status",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 12,
+			"mp_cost": 20,
 			"target": "all_enemies",
 			"hit_rate": 60,
 			"duration": null,
@@ -619,8 +573,6 @@
 					"level": 14
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "poison"
 		},
 		{
@@ -631,7 +583,7 @@
 			"category": "status",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 14,
+			"mp_cost": 22,
 			"target": "all_enemies",
 			"hit_rate": 55,
 			"duration": null,
@@ -642,8 +594,6 @@
 					"level": 16
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "sleep"
 		},
 		{
@@ -654,7 +604,7 @@
 			"category": "status",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 12,
+			"mp_cost": 20,
 			"target": "all_enemies",
 			"hit_rate": 60,
 			"duration": null,
@@ -665,8 +615,6 @@
 					"level": 15
 				}
 			],
-			"cross_trained": false,
-			"mp_penalty": null,
 			"status": "slow"
 		},
 		{
@@ -699,9 +647,7 @@
 					"character": "lira",
 					"event": "ironhaven_foundry_schematic"
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "bulwark_line",
@@ -711,7 +657,7 @@
 			"category": "buff",
 			"tier": 2,
 			"power": null,
-			"mp_cost": 16,
+			"mp_cost": 20,
 			"target": "all_allies",
 			"hit_rate": null,
 			"duration": 4,
@@ -725,9 +671,7 @@
 					"character": "torren",
 					"level": 22
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "last_breath",
@@ -751,9 +695,7 @@
 					"character": "maren",
 					"level": 32
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "crumble",
@@ -777,9 +719,7 @@
 					"character": "maren",
 					"level": 20
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "spiritsight",
@@ -811,9 +751,7 @@
 					"character": "lira",
 					"level": 10
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		},
 		{
 			"id": "veilstep",
@@ -833,9 +771,7 @@
 					"character": "torren",
 					"level": 10
 				}
-			],
-			"cross_trained": false,
-			"mp_penalty": null
+			]
 		}
 	]
 }

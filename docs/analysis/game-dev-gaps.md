@@ -44,7 +44,7 @@ in these docs.**
 | Game overview | `gdd-overview.md` (253), `outline.md` (371), `world.md` (79) |
 | Combat mechanics | `combat-formulas.md` (1,055) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (1,040), `magic.md` (1,613) |
+| Abilities & magic | `abilities.md` (1,040), `magic.md` (1,702) |
 | Enemy data | `bestiary/` (10 files) |
 | Items & equipment | `items.md` (724), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |
