@@ -144,9 +144,12 @@ not re-litigate it. Legitimate reasons look like:
 - **A scene controller.** `exploration.gd` is the Godot lifecycle (`_ready`, `_process`,
   `_unhandled_input`, `load_map`) plus the accessors its collaborators need. `load_map`
   mutates ten private fields at once; extracting it trades method bodies for setters.
-- **State a test suite pins directly.** `audio_manager.gd` keeps its player/tween/track-ID
-  fields because `test_audio_manager.gd` asserts against them in ~25 places — moving them
-  would discard the strongest evidence that crossfade behavior is unchanged.
+- **A justification that has lapsed.** `audio_manager.gd` (536) was admitted here because
+  `test_audio_manager.gd` asserted against its player/tween/track-ID fields in ~25 places, so
+  moving them would have discarded the evidence that crossfade behavior was unchanged. The
+  behavioral rewrite in #420 moved that suite off private fields entirely — the audio tests now
+  read zero private state — so the reason no longer holds. By the rule below, the file is debt
+  until it is decomposed or given a justification that is true today. Tracked in #425.
 - **A loop plus the seam its collaborators reach it through.** `battle_manager.gd` is the
   post-extraction residue of a 724-line original: every command the player can pick was
   moved out to `BattlePlayerActions` (attack/defend/flee), `BattleMagicCommand` and
