@@ -8,10 +8,18 @@ Two kinds of test live here and they fail differently, so both are needed:
     the thing. `test_quality_gates.py` once had 36 green tests that no hook ran,
     which is the exact shape of bug a fixture-only suite cannot see.
 
+The wiring tests match an UNCOMMENTED invocation, not the string
+`check_gut_baseline.py`. They were substring assertions once, and the name also
+appears in prose in all three callers -- the pre-push gate registry, the
+gates.sh header, the CI step's rationale -- so both call sites could be
+commented out with all 46 tests still green (#433). `gate_run_lines()` below is
+the matcher, and it is itself tested against a commented-out call.
+
 Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 """
 import io
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -59,6 +67,48 @@ RED_LOG = GREEN_LOG.replace(
     "Passing Tests      1289",
     "Passing Tests      1287\nFailing Tests         2",
 ).replace("---- All tests passed! ----", "---- 2 failing tests ----")
+
+
+GATE_SCRIPT = "check_gut_baseline.py"
+
+
+def uncommented(text):
+    """`text` with comment-only lines dropped.
+
+    Every assertion about what a script DOES has to read this rather than the
+    raw file. These scripts explain the bugs they fixed in prose, so the string
+    a test is asserting is absent from the CODE is routinely still present in a
+    comment describing why it was removed.
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.strip().startswith("#")
+    )
+
+
+def gate_run_lines(text):
+    """Return the UNCOMMENTED lines of `text` that run Gate L against a log.
+
+    Presence of the string `check_gut_baseline.py` is not wiring: it survives in
+    comments in every caller, so a commented-out invocation satisfies an
+    `assertIn` while running nothing. A line counts here only if it is not
+    comment-only, invokes python3, names the gate (directly or through a shell
+    variable assigned its path in the same file), and passes `--log` -- the
+    argument that makes it judge a run rather than validate the floors' shape.
+    """
+    names = [re.escape(GATE_SCRIPT)]
+    for var in re.findall(
+        r'^\s*([A-Za-z_][A-Za-z0-9_]*)="[^"]*%s"' % re.escape(GATE_SCRIPT), text, re.M
+    ):
+        names.append(r"\$\{?%s\}?" % re.escape(var))
+    pattern = re.compile(r"python3\b.*(?:%s)\b.*--log\b" % "|".join(names))
+    hits = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        if pattern.search(line):
+            hits.append(stripped)
+    return hits
 
 
 def _floors(**overrides):
@@ -147,6 +197,14 @@ class TestParseCounts(unittest.TestCase):
         self.assertEqual(counts["passing"], 1289)
         # Absent, not zero: GUT omits the line entirely when nothing failed.
         self.assertIsNone(counts["failing"])
+
+    def test_parses_the_risky_pending_total(self):
+        # GUT prints this one only when it is non-zero (`_log_non_zero_total`).
+        counts = gate.parse_counts("Risky/Pending         7\n")
+        self.assertEqual(counts["risky"], 7)
+
+    def test_absent_risky_line_is_none(self):
+        self.assertIsNone(gate.parse_counts(GREEN_LOG)["risky"])
 
     def test_parses_a_red_summary(self):
         counts = gate.parse_counts(RED_LOG)
@@ -245,6 +303,55 @@ class TestJudgeLog(unittest.TestCase):
         self.assertIn("GUT FAILURES:", output)
         self.assertIn("[Failed]", output)
 
+    def test_tests_that_never_passed_fail_even_with_no_failures(self):
+        # `passing` used to be parsed, printed and never judged: Tests 1289 with
+        # Passing Tests 0 cleared both floors and the gate reported success.
+        log = GREEN_LOG.replace("Passing Tests      1289", "Passing Tests         0")
+        ok, output = _judge(log)
+        self.assertFalse(ok, output)
+        self.assertIn("TESTS RAN WITHOUT PASSING: 1289 of 1289", output)
+
+    def test_a_whole_suite_gone_pending_fails(self):
+        # Pending and risky tests still count toward `Tests`, so every floor
+        # holds while nothing is being tested at all.
+        log = GREEN_LOG.replace(
+            "Passing Tests      1289", "Passing Tests         0\nRisky/Pending      1289"
+        )
+        ok, output = _judge(log)
+        self.assertFalse(ok, output)
+        self.assertIn("Risky/Pending 1289", output)
+
+    def test_a_single_test_that_stopped_asserting_fails(self):
+        # One risky test among 1289 is the realistic case, and the one a floor
+        # on counts alone can never see.
+        log = GREEN_LOG.replace(
+            "Passing Tests      1289", "Passing Tests      1288\nRisky/Pending         1"
+        )
+        ok, output = _judge(log)
+        self.assertFalse(ok, output)
+        self.assertIn("1 of 1289", output)
+
+    def test_failures_are_not_double_counted_as_unaccounted(self):
+        # RED_LOG: 1289 tests, 1287 passing, 2 failing. The failures are already
+        # reported; nothing is unaccounted for, so only one diagnosis prints.
+        ok, output = _judge(RED_LOG)
+        self.assertFalse(ok)
+        self.assertNotIn("TESTS RAN WITHOUT PASSING", output)
+
+    def test_a_missing_passing_line_is_absence_not_zero(self):
+        # GUT prints `Passing Tests` unconditionally on every completed run, so
+        # a log without one did not finish.
+        log = GREEN_LOG.replace("Passing Tests      1289\n", "")
+        ok, output = _judge(log)
+        self.assertFalse(ok)
+        self.assertIn("GUT SUMMARY MISSING", output)
+        self.assertIn("Passing Tests", output)
+
+    def test_risky_is_reported_in_the_result_line(self):
+        ok, output = _judge(GREEN_LOG)
+        self.assertTrue(ok, output)
+        self.assertIn("risky=0", output)
+
     def test_unreadable_log_fails(self):
         out = io.StringIO()
         ok = gate.judge_log("/nonexistent/path/gut.log", _floors(), out)
@@ -341,6 +448,48 @@ class TestCli(unittest.TestCase):
         self.assertNotIn("RESULT", out)
 
 
+class TestGateRunLineMatcher(unittest.TestCase):
+    """The wiring tests are only as good as this matcher, so it is tested too."""
+
+    LIVE = 'python3 "$GATE_DIR/check_gut_baseline.py" --log "$TEMP_LOG"'
+
+    def test_a_live_invocation_counts(self):
+        self.assertEqual(gate_run_lines(self.LIVE), [self.LIVE])
+
+    def test_a_commented_out_invocation_does_not_count(self):
+        # The mutation that 46 green tests missed.
+        self.assertEqual(gate_run_lines("    # " + self.LIVE), [])
+
+    def test_a_prose_mention_does_not_count(self):
+        registry = "#   L  GUT summary/failures/floor pre-push   check_gut_baseline.py"
+        self.assertEqual(gate_run_lines(registry), [])
+
+    def test_a_deleted_invocation_does_not_count(self):
+        self.assertEqual(gate_run_lines('GATE_DIR="scripts/quality-gates"\n: # DISABLED\n'), [])
+
+    def test_an_invocation_through_a_shell_variable_counts(self):
+        # scripts/gates.sh calls the gate through $GUT_FLOOR_GATE, so a matcher
+        # that only knows the literal filename would report it as unwired.
+        text = (
+            'GUT_FLOOR_GATE="scripts/quality-gates/check_gut_baseline.py"\n'
+            'python3 "$GUT_FLOOR_GATE" --baseline "$B" --log "/tmp/gut.log" || exit 1\n'
+        )
+        self.assertEqual(len(gate_run_lines(text)), 1)
+
+    def test_uncommented_drops_prose_but_keeps_code(self):
+        text = "# echo SKIPPED\n    echo live\n  # trailing note\n"
+        self.assertNotIn("SKIPPED", uncommented(text))
+        self.assertIn("echo live", uncommented(text))
+
+    def test_the_shape_check_alone_is_not_a_run(self):
+        # `--shell` reads the floors; it judges no log, so it is not wiring.
+        text = (
+            'GUT_FLOOR_GATE="scripts/quality-gates/check_gut_baseline.py"\n'
+            'FLOORS=$(python3 "$GUT_FLOOR_GATE" --baseline "$B" --shell)\n'
+        )
+        self.assertEqual(gate_run_lines(text), [])
+
+
 class TestWiredIntoTheGates(unittest.TestCase):
     """A gate nothing calls is not a gate. These are the tests that notice."""
 
@@ -353,44 +502,119 @@ class TestWiredIntoTheGates(unittest.TestCase):
         self.assertEqual(sorted(floors), sorted(gate.FLOOR_KEYS))
 
     def test_pre_push_runs_the_gate(self):
-        hook = self._read(".husky/pre-push")
-        self.assertIn("check_gut_baseline.py", hook)
-        self.assertIn("--log", hook)
+        hits = gate_run_lines(self._read(".husky/pre-push"))
+        self.assertTrue(hits, "no uncommented Gate L invocation in .husky/pre-push")
+
+    def test_gates_sh_runs_the_gate(self):
+        hits = gate_run_lines(self._read("scripts/gates.sh"))
+        self.assertTrue(hits, "no uncommented Gate L invocation in scripts/gates.sh")
+
+    def test_ci_workflow_runs_the_gate(self):
+        hits = gate_run_lines(self._read(".github/workflows/gut-tests.yml"))
+        self.assertTrue(hits, "no uncommented Gate L invocation in the GUT workflow")
 
     def test_pre_push_registry_documents_letter_l(self):
         hook = self._read(".husky/pre-push")
         self.assertRegex(hook, r"#\s+L\s+.*check_gut_baseline\.py")
 
-    def test_pre_push_fails_when_the_summary_is_absent(self):
-        # The old Gate H read `grep -q "Failing Tests" && ! grep -qE "...0"`,
-        # which passed when the suite crashed before printing any summary.
-        hook = self._read(".husky/pre-push")
-        self.assertNotIn('if grep -q "Failing Tests" "$TEMP_LOG" && !', hook)
-        self.assertIn("GUT Run Summary MISSING", hook)
-        self.assertIn('grep -qE "^Scripts[[:space:]]+[0-9]+" "$TEMP_LOG"', hook)
-
-    def test_ci_fails_when_the_summary_is_absent(self):
-        workflow = self._read(".github/workflows/gut-tests.yml")
-        self.assertIn("GUT Run Summary MISSING", workflow)
-        # The bare "All tests passed" substring check is what it replaced.
-        self.assertNotIn('if grep -q "All tests passed" /tmp/gut.log', workflow)
-
     def test_pre_push_checks_godot_exit_status(self):
         self.assertIn("PIPESTATUS", self._read(".husky/pre-push"))
 
-    def test_ci_workflow_runs_the_gate(self):
-        self.assertIn("check_gut_baseline.py", self._read(".github/workflows/gut-tests.yml"))
+    # --- Absence of Godot must not be reported as success -------------------
 
-    def test_gates_sh_runs_the_gate(self):
-        self.assertIn("check_gut_baseline.py", self._read("scripts/gates.sh"))
+    def test_pre_push_refuses_to_pass_when_godot_is_absent(self):
+        # Gate L used to sit inside `if [ -n "$GODOT_BIN" ]`, whose else branch
+        # printed "GUT tests SKIPPED (Godot not found)" and fell through to the
+        # success banner: no Gate H, no Gate L, exit 0. The guard against
+        # silently-skipped tests must not itself be silently skipped.
+        hook = uncommented(self._read(".husky/pre-push"))
+        self.assertNotIn("SKIPPED (Godot not found)", hook)
+        self.assertNotIn("GUT tests SKIPPED", hook)
+        self.assertIn("Godot NOT FOUND", hook)
+        self.assertIn("refusing to report success", hook)
+
+    def test_pre_push_refuses_to_pass_when_gut_itself_is_missing(self):
+        hook = self._read(".husky/pre-push")
+        self.assertIn("gut_cmdln.gd is MISSING", hook)
+
+    def test_the_hook_and_the_runner_agree_about_a_missing_godot(self):
+        # One posture, two callers. gates.sh has refused since #430.
+        for path in (".husky/pre-push", "scripts/gates.sh"):
+            self.assertIn("refusing to", self._read(path), path)
+
+    # --- One headless Godot per machine -------------------------------------
+
+    def test_both_runners_share_one_godot_mutex(self):
+        lock = self._read("scripts/quality-gates/godot-lock.sh")
+        self.assertIn("/tmp/pod-godot.lock", lock)
+        self.assertIn("godot_lock_acquire()", lock)
+        for path in (".husky/pre-push", "scripts/gates.sh"):
+            body = self._read(path)
+            self.assertIn("godot-lock.sh", body, path)
+            self.assertIn("godot_lock_acquire", body, path)
+
+    def test_neither_runner_reimplements_the_mutex(self):
+        # Two implementations of one lock is how the hook came to hold no lock
+        # at all while gates.sh held one.
+        for path in (".husky/pre-push", "scripts/gates.sh"):
+            body = uncommented(self._read(path))
+            self.assertNotIn('until mkdir "$LOCK"', body, path)
+            self.assertNotIn("reap_stale_lock()", body, path)
+
+    def test_the_pre_push_log_is_not_shared_between_worktrees(self):
+        # A fixed /tmp/gut_prepush.log is truncated by a sibling push's `tee`
+        # mid-read, and parse_counts takes the LAST summary in the file -- so
+        # one worktree's Gate L could pass on another worktree's totals.
+        hook = self._read(".husky/pre-push")
+        self.assertNotIn("TEMP_LOG=/tmp/gut_prepush.log", hook)
+        self.assertRegex(hook, r'TEMP_LOG="/tmp/gut_prepush_\$\(basename')
+
+    # --- One implementation of the verdict, not five ------------------------
+
+    def test_pre_push_no_longer_hardcodes_its_own_summary_parsing(self):
+        # judge_log() already checks summary presence and the failing count, so
+        # a bash copy in the hook and a YAML copy in CI made three. The comment
+        # claiming one implementation was true of the floor alone.
+        hook = uncommented(self._read(".husky/pre-push"))
+        self.assertNotIn("GUT Run Summary MISSING", hook)
+        self.assertNotIn('grep -qE "^Scripts[[:space:]]+[0-9]+"', hook)
+        self.assertNotIn('grep -qE "^Failing Tests', hook)
+
+    def test_ci_no_longer_hardcodes_its_own_summary_parsing(self):
+        workflow = uncommented(self._read(".github/workflows/gut-tests.yml"))
+        self.assertNotIn("GUT Run Summary MISSING", workflow)
+        self.assertNotIn('grep -qE "^Scripts[[:space:]]+[0-9]+"', workflow)
+        self.assertNotIn('grep -qE "^Failing Tests', workflow)
+        # The bare "All tests passed" substring check is what all this replaced.
+        self.assertNotIn('if grep -q "All tests passed" /tmp/gut.log', workflow)
 
     def test_gates_sh_no_longer_hardcodes_its_own_floor_parsing(self):
         # Two implementations of one floor is how the wordings drift apart, and
         # the SILENTLY SKIPPED diagnosis is the one that must not.
-        gates_sh = self._read("scripts/gates.sh")
+        gates_sh = uncommented(self._read("scripts/gates.sh"))
         self.assertNotIn("SILENTLY SKIPPED", gates_sh)
         self.assertNotIn("SCRIPT COUNT REGRESSION", gates_sh)
         self.assertNotIn("read_floor()", gates_sh)
+
+    def test_ci_still_checks_godots_own_exit_status(self):
+        # Delegating the LOG verdict must not delete the PROCESS verdict: a run
+        # that printed a clean summary and then died is not a clean run.
+        workflow = self._read(".github/workflows/gut-tests.yml")
+        self.assertIn("set -o pipefail", workflow)
+        self.assertIn("Godot exited non-zero", workflow)
+
+    # --- The runner must exercise the gate its own branch changes -----------
+
+    def test_gates_sh_runs_godot_when_gate_l_inputs_change(self):
+        # Neither the floors nor the judge live under game/, so the Godot skip
+        # heuristic used to skip them -- and the branch that wired Gate L could
+        # not demonstrate Gate L through its own runner.
+        gates_sh = self._read("scripts/gates.sh")
+        self.assertIn("GATE_L_INPUTS", gates_sh)
+        self.assertIn('$BASELINE_FILE', gates_sh)
+        self.assertIn('$GUT_FLOOR_GATE', gates_sh)
+        # Defined is not consulted: the skip condition has to read it.
+        self.assertIn('[ -z "$GATE_TRIGGER" ]', gates_sh)
 
 
 if __name__ == "__main__":
