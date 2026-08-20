@@ -6,6 +6,7 @@ extends GutTest
 
 const StatusEffects = preload("res://scripts/combat/status_effects.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
+const ATBSystem = preload("res://scripts/combat/atb_system.gd")
 const BATTLE: PackedScene = preload("res://scenes/core/battle.tscn")
 
 var _booted: Node = null
@@ -81,29 +82,47 @@ func _boot(encounter: Array) -> Node:
 		"enemy_act": "act_i",
 	}
 	var battle: Node = BATTLE.instantiate()
+	# battle.tscn seats the party, spawns the enemies and registers every ATB
+	# gauge in _ready, which runs inside add_child — the battle is ready to
+	# drive the moment this returns, with no frame to wait for.
 	add_child(battle)
-	await wait_frames(3)
 	_booted = battle
 	return battle
 
 
-func test_integration_paralyzed_member_is_skipped_and_recovers() -> void:
-	seed(31)
-	var battle: Node = await _boot(["ley_vermin"])
-	battle._state.apply_status(0, "paralysis", "turns", 3)
-	# Drive party_0's would-be turns: while paralyzed it is auto-skipped (never
-	# prompted) and the status counts down; eventually it wears off.
+func test_paralyzed_member_is_never_asked_for_a_command_until_it_wears_off() -> void:
+	# What the player sees is the prompt: a paralyzed member's full gauge never
+	# opens the command menu, and once the status expires the very next full
+	# gauge does. turn_ready is the signal that opens it (battle_ui connects to
+	# it), so that is what this asserts — not the manager's internal bookkeeping.
+	#
+	# The battle is driven one frame at a time. Waiting a fixed number of frames
+	# cannot say when a turn resolved: the battle advances in _process (idle
+	# frames) while GUT's frame waits count physics frames, so under load the
+	# wait returns with no turn processed at all (#422).
+	var battle: Node = _boot(["ley_vermin"])
+	battle.set_process(false)
+	var prompted: Array[String] = []
+	battle.turn_ready.connect(
+		func(cid: String, _p: bool, _s: int, _e: int, _b: bool, _c: Dictionary) -> void:
+			prompted.append(cid)
+	)
+	var state: Node = battle.get_battle_state()
+	state.apply_status(0, "paralysis", "turns", 3)
+
+	# Each would-be turn is auto-skipped and counts the status down.
 	for _i: int in range(8):
-		if not battle._state.has_status(0, "paralysis"):
+		if not state.has_status(0, "paralysis"):
 			break
-		battle._atb.set_gauge("party_0", 16000)
-		await wait_frames(2)
-		assert_ne(battle._awaiting_input_for, "party_0", "a paralyzed member is never prompted")
-	assert_false(battle._state.has_status(0, "paralysis"), "paralysis wears off after its turns")
-	# Recovered: a now-free member fills and IS prompted.
-	battle._atb.set_gauge("party_0", 16000)
-	await wait_frames(2)
-	assert_eq(battle._awaiting_input_for, "party_0", "recovered member is prompted normally")
+		battle.get_atb().set_gauge("party_0", ATBSystem.GAUGE_MAX)
+		battle._process(0.0)
+		assert_false("party_0" in prompted, "a paralyzed member is never asked for a command")
+	assert_false(state.has_status(0, "paralysis"), "paralysis wears off after its turns")
+
+	battle.get_atb().set_gauge("party_0", ATBSystem.GAUGE_MAX)
+	battle._process(0.0)
+
+	assert_true("party_0" in prompted, "and the recovered member is asked on its next turn")
 
 
 func test_skip_consumes_the_frame_so_its_message_is_not_clobbered() -> void:
@@ -111,15 +130,15 @@ func test_skip_consumes_the_frame_so_its_message_is_not_clobbered() -> void:
 	# the frame's single action slot, so no other combatant's message can
 	# overwrite the skip announcement before the UI renders it (#260).
 	seed(31)
-	var battle: Node = await _boot(["ley_vermin"])
+	var battle: Node = _boot(["ley_vermin"])
 	battle.set_process(false)  # drive _process by hand, one frame exactly
-	battle._state.apply_status(0, "paralysis", "turns", 3)
+	battle.get_battle_state().apply_status(0, "paralysis", "turns", 3)
 	# Make the enemy slower than the party so the ready queue puts party_0 first.
-	battle._atb._combatants["enemy_0"]["spd"] = 1
+	battle.get_atb().set_spd("enemy_0", 1)
 	var msgs: Array[String] = []
 	battle.message.connect(func(t: String) -> void: msgs.append(t))
-	battle._atb.set_gauge("party_0", 16000)
-	battle._atb.set_gauge("enemy_0", 16000)
+	battle.get_atb().set_gauge("party_0", 16000)
+	battle.get_atb().set_gauge("enemy_0", 16000)
 
 	battle._process(0.0)
 
@@ -131,7 +150,7 @@ func test_skip_consumes_the_frame_so_its_message_is_not_clobbered() -> void:
 	# The enemy keeps its full gauge and acts on the NEXT frame — which is why
 	# winning this frame is not enough on its own; the UI message queue below
 	# carries the announcement across that next frame.
-	assert_eq(battle._atb.get_gauge("enemy_0"), 16000, "the enemy still acts next frame")
+	assert_eq(battle.get_atb().get_gauge("enemy_0"), 16000, "the enemy still acts next frame")
 
 
 func test_skip_message_survives_the_enemys_action_on_the_next_frame() -> void:
@@ -139,16 +158,16 @@ func test_skip_message_survives_the_enemys_action_on_the_next_frame() -> void:
 	# ui-design.md § 2.5: the announcement holds the message window for a readable
 	# minimum, so the enemy's line queues behind it instead of replacing it (#260).
 	seed(31)
-	var battle: Node = await _boot(["ley_vermin"])
+	var battle: Node = _boot(["ley_vermin"])
 	battle.set_process(false)
 	var ui: CanvasLayer = battle._ui
 	ui.set_process(false)
-	battle._state.apply_status(0, "paralysis", "turns", 3)
-	battle._atb._combatants["enemy_0"]["spd"] = 1
+	battle.get_battle_state().apply_status(0, "paralysis", "turns", 3)
+	battle.get_atb().set_spd("enemy_0", 1)
 	var msgs: Array[String] = []
 	battle.message.connect(func(t: String) -> void: msgs.append(t))
-	battle._atb.set_gauge("party_0", 16000)
-	battle._atb.set_gauge("enemy_0", 16000)
+	battle.get_atb().set_gauge("party_0", 16000)
+	battle.get_atb().set_gauge("enemy_0", 16000)
 
 	battle._process(0.0)  # frame N: the skip announces
 	var skip_line: String = ui._message_label.text
@@ -166,36 +185,43 @@ func test_frozen_status_takes_no_turn_and_keeps_its_gauge() -> void:
 	# retains its frozen value. A member already at full gauge is therefore
 	# passed over in silence: no announcement, no status tick, no reset (#260).
 	seed(31)
-	var battle: Node = await _boot(["ley_vermin"])
+	var battle: Node = _boot(["ley_vermin"])
 	battle.set_process(false)
-	battle._state.apply_status(0, "sleep", "turns", StatusEffects.default_duration("sleep"))
-	battle._state.apply_status(0, "poison", "turns", StatusEffects.default_duration("poison"))
-	var hp_before: int = battle._state.get_member(0).get("current_hp", 0)
+	var st: Node = battle.get_battle_state()
+	st.apply_status(0, "sleep", "turns", StatusEffects.default_duration("sleep"))
+	st.apply_status(0, "poison", "turns", StatusEffects.default_duration("poison"))
+	var hp_before: int = st.get_member(0).get("current_hp", 0)
 	var msgs: Array[String] = []
 	battle.message.connect(func(t: String) -> void: msgs.append(t))
-	battle._atb.set_gauge("party_0", 16000)
+	# turn_ready is what opens the command menu (battle_ui connects to it), so it
+	# is the observable answer to "was the player prompted".
+	var prompted: Array[String] = []
+	battle.turn_ready.connect(
+		func(cid: String, _p: bool, _s: int, _e: int, _b: bool, _c: Dictionary) -> void:
+			prompted.append(cid)
+	)
+	battle.get_atb().set_gauge("party_0", 16000)
 
 	battle._process(0.0)
 
-	assert_eq(battle._atb.get_gauge("party_0"), 16000, "a frozen gauge keeps its value")
-	assert_ne(battle._awaiting_input_for, "party_0", "a sleeping member is never prompted")
+	assert_eq(battle.get_atb().get_gauge("party_0"), 16000, "a frozen gauge keeps its value")
+	assert_false("party_0" in prompted, "a sleeping member is never prompted")
 	assert_eq(msgs.size(), 0, "no skip announcement for a frozen status: %s" % str(msgs))
-	assert_eq(
-		battle._state.get_member(0).get("current_hp", 0), hp_before, "no turn means no DoT tick"
-	)
+	assert_eq(st.get_member(0).get("current_hp", 0), hp_before, "no turn means no DoT tick")
 
 
 func test_dot_death_during_skip_resolves_the_party_wipe_same_frame() -> void:
 	# A paralyzed last-standing member killed by its own Poison tick must trip
 	# the end-condition check inside the skip, not a frame later (#260).
 	seed(31)
-	var battle: Node = await _boot(["ley_vermin"])
+	var battle: Node = _boot(["ley_vermin"])
 	battle.set_process(false)
+	var st: Node = battle.get_battle_state()
 	for slot: int in range(1, 4):
-		battle._state.take_damage(slot, 999999)
-	battle._state.take_damage(0, battle._state.get_member(0).get("current_hp", 1) - 1)
-	battle._state.apply_status(0, "paralysis", "turns", 3)
-	battle._state.apply_status(0, "poison", "turns", StatusEffects.default_duration("poison"))
+		st.take_damage(slot, 999999)
+	st.take_damage(0, st.get_member(0).get("current_hp", 1) - 1)
+	st.apply_status(0, "paralysis", "turns", 3)
+	st.apply_status(0, "poison", "turns", StatusEffects.default_duration("poison"))
 	# Array counter, not an int: GDScript lambdas capture locals by value.
 	var defeats: Array[int] = []
 	battle.defeat.connect(
@@ -204,9 +230,9 @@ func test_dot_death_during_skip_resolves_the_party_wipe_same_frame() -> void:
 			# Guard: keep _exit_battle from starting a real scene transition.
 			battle._battle_active = false
 	)
-	battle._atb.set_gauge("party_0", 16000)
+	battle.get_atb().set_gauge("party_0", 16000)
 
 	battle._process(0.0)
 
-	assert_false(battle._state.get_member(0).get("is_alive", true), "the DoT tick killed them")
+	assert_false(st.get_member(0).get("is_alive", true), "the DoT tick killed them")
 	assert_eq(defeats.size(), 1, "party wipe resolves inside the skip, not a frame later")

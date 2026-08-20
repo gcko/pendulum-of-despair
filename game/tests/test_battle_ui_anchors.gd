@@ -32,7 +32,11 @@ func _boot() -> Node:
 	}
 	var battle: Node = BATTLE.instantiate()
 	add_child(battle)
-	await wait_frames(3)
+	# The row rects these tests anchor to only exist once the party panel's
+	# containers have sorted their children, and that happens on a process
+	# frame. Physics frames are the wrong clock for it: several can elapse
+	# inside one iteration without a single process frame running (#422).
+	await wait_process_frames(2)
 	_booted = battle
 	return battle
 

@@ -35,8 +35,9 @@ func _boot_ui() -> CanvasLayer:
 		"enemy_act": "act_i",
 	}
 	var battle: Node = BATTLE.instantiate()
+	# The UI and its label exist as soon as _ready has run, which add_child does
+	# synchronously; both nodes stop processing on the next two lines anyway.
 	add_child(battle)
-	await wait_frames(3)
 	_booted = battle
 	battle.set_process(false)
 	var ui: CanvasLayer = battle._ui
@@ -45,7 +46,7 @@ func _boot_ui() -> CanvasLayer:
 
 
 func test_a_new_message_waits_while_the_current_one_is_still_fresh() -> void:
-	var ui: CanvasLayer = await _boot_ui()
+	var ui: CanvasLayer = _boot_ui()
 	ui._on_message("Edren is paralyzed and can't move!")
 	ui._process(0.016)  # one rendered frame — nowhere near readable yet
 
@@ -60,7 +61,7 @@ func test_a_new_message_waits_while_the_current_one_is_still_fresh() -> void:
 
 
 func test_the_waiting_message_takes_over_once_the_line_has_been_read() -> void:
-	var ui: CanvasLayer = await _boot_ui()
+	var ui: CanvasLayer = _boot_ui()
 	ui._on_message("first")
 	ui._process(0.016)
 	ui._on_message("second")
@@ -73,7 +74,7 @@ func test_the_waiting_message_takes_over_once_the_line_has_been_read() -> void:
 
 
 func test_a_message_arriving_after_the_minimum_replaces_immediately() -> void:
-	var ui: CanvasLayer = await _boot_ui()
+	var ui: CanvasLayer = _boot_ui()
 	ui._on_message("first")
 	ui._process(BattleUIScript.MESSAGE_MIN_DISPLAY)
 
@@ -84,7 +85,7 @@ func test_a_message_arriving_after_the_minimum_replaces_immediately() -> void:
 
 
 func test_the_queue_drops_the_oldest_line_when_a_burst_overflows_it() -> void:
-	var ui: CanvasLayer = await _boot_ui()
+	var ui: CanvasLayer = _boot_ui()
 	var cap: int = BattleUIScript.MESSAGE_QUEUE_MAX
 	ui._on_message("shown")
 
@@ -97,7 +98,7 @@ func test_the_queue_drops_the_oldest_line_when_a_burst_overflows_it() -> void:
 
 
 func test_the_window_still_fades_after_its_hold() -> void:
-	var ui: CanvasLayer = await _boot_ui()
+	var ui: CanvasLayer = _boot_ui()
 	ui._on_message("only")
 
 	ui._process(BattleUIScript.MESSAGE_HOLD)

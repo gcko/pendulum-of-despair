@@ -53,14 +53,26 @@ func test_physical_back_row_attacker_penalty() -> void:
 
 
 func test_physical_back_row_spear_bypasses() -> void:
-	# Spear (weapon_bypasses_row=true) ignores back row penalty
+	# combat-formulas.md: a melee attacker in the back row is halved, but a
+	# spear (weapon_bypasses_row) reaches the front line and is not.
+	#
+	# Each call rolls its own variance, so both claims are stated against
+	# margins wider than that roll can reach: the band is 240/256 to 255/256,
+	# so two rolls of the same raw damage can never differ by more than a
+	# factor of 15/16 (#422). Comparing the two samples with a fixed 10-point
+	# tolerance failed roughly one run in six once no leaked seed was holding
+	# the RNG still.
 	var front: int = DamageCalc.calculate_physical(
 		50, 1.0, 10, false, 1.0, "front", "front", false, [], false, 1.0
+	)
+	var back: int = DamageCalc.calculate_physical(
+		50, 1.0, 10, false, 1.0, "back", "front", false, [], false, 1.0
 	)
 	var spear_back: int = DamageCalc.calculate_physical(
 		50, 1.0, 10, false, 1.0, "back", "front", true, [], false, 1.0
 	)
-	assert_gte(spear_back, front - 10, "spear from back row similar to front")
+	assert_gt(spear_back, back, "a spear is not halved for standing in the back row")
+	assert_gte(spear_back, front * 15 / 16, "it lands for what a front-row hit lands for")
 
 
 func test_physical_back_row_defender_reduction() -> void:

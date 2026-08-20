@@ -246,12 +246,17 @@ func test_wait_command_creates_delay() -> void:
 	}
 	var entry: Dictionary = _entry({"commands": [wait_cmd, move_cmd]})
 	cs.start_cutscene("wait_test", [entry], cs.TIER_MICRO)
-	# Move should not have fired yet right after start
-	await get_tree().process_frame
-	assert_signal_not_emitted(cs, "cutscene_move_requested")
-	# After wait completes, move should fire
-	await get_tree().create_timer(0.3).timeout
-	assert_signal_emitted(cs, "cutscene_move_requested")
+
+	# start_cutscene runs up to the wait and no further, so the move has not
+	# fired when it returns. Asserting that here, rather than a frame later,
+	# is what makes it a statement about ordering instead of a race with the
+	# 0.1s timer (#422).
+	assert_signal_not_emitted(cs, "cutscene_move_requested", "the move waits its turn")
+
+	assert_true(
+		await wait_for_signal(cs.cutscene_move_requested, 2.0),
+		"and it fires once the wait has elapsed",
+	)
 
 
 # --- 17. Hide/show dialogue toggles visibility ---
