@@ -2,16 +2,13 @@ extends GutTest
 ## Balance invariants for game/data/spells/ (89 spells, 5 traditions).
 ##
 ## Every assertion here maps to a rule written in docs/story/magic.md:
-##   § Spell Balance Guidelines  — tier MP band, tier spell power band
-##   § Balance Rules             — healing discount, AoE MP multiplier,
-##                                 status hit rate, buff/debuff duration
-##   § Tier 4 AoE Exemption      — ultimates keep the full power band
-##   § Derived Rules             — severe status band, offensive status riders,
-##                                 named same-tier AoE pairs, the AoE control
-##                                 floor, revival pricing, substitute costs,
-##                                 enemy-only spells, null durations (including
-##                                 status durations owned by § Status Effect
-##                                 Reference), per-learner cross-training
+## § Spell Balance Guidelines (tier MP and spell power bands), § Balance Rules
+## (healing discount, AoE MP multiplier, status hit rate, buff/debuff duration),
+## § Tier 4 AoE Exemption (ultimates keep the full power band) and § Derived
+## Rules (severe status band, offensive status riders, named same-tier AoE pairs,
+## the AoE control floor and the two cases that let it clear a tier band, revival
+## pricing, substitute costs, enemy-only spells, null durations and per-learner
+## cross-training).
 ##
 ## If a spell value changes and a test here fails, either the value is wrong
 ## or the rule in magic.md is wrong. Fix one of them — do not weaken the test.
@@ -25,19 +22,18 @@ const MP_BAND: Dictionary = {1: [3, 8], 2: [12, 20], 3: [25, 45], 4: [50, 99]}
 ## Tier -> [min, max] single-target spell power, per § Spell Balance Guidelines.
 const POWER_BAND: Dictionary = {1: [12, 20], 2: [28, 40], 3: [50, 70], 4: [85, 120]}
 
-## Tier -> [min, max] AoE spell power (60-70% of the single-target band, rounded
-## outward). Tier 4 is absent on purpose — see § Tier 4 AoE Exemption.
+## Tier -> [min, max] AoE spell power, 60-70% of single-target rounded outward.
+## Tier 4 is absent on purpose — see § Tier 4 AoE Exemption.
 const AOE_POWER_BAND: Dictionary = {1: [7, 14], 2: [16, 28], 3: [30, 49]}
 
 ## Tier -> [min, max] turns for a turn-counted buff/debuff, per § Balance Rules.
 ## Tier 3 is absent: those last until end of battle and encode duration as null.
 const DURATION_BAND: Dictionary = {1: [4, 6], 2: [4, 8]}
 
-## Status id -> canonical turn count from magic.md § Status Effect Reference.
-## 0 marks an open-ended status (until cured, until damaged, or measured in real
-## time), which no spell may restate as a turn count. Per § Derived Rules a
-## status spell either declares `duration: null` — the duration belongs to the
-## status, not the spell — or restates this number exactly.
+## Status id -> canonical turn count from magic.md § Status Effect Reference. 0
+## marks an open-ended status (until cured, until damaged, or in real time), which
+## no spell may restate as a turn count; per § Derived Rules such a spell declares
+## `duration: null` instead.
 const STATUS_CANONICAL_TURNS: Dictionary = {
 	"blind": 4,
 	"confusion": 3,
@@ -51,10 +47,9 @@ const STATUS_CANONICAL_TURNS: Dictionary = {
 }
 
 ## [single_target_id, aoe_id] — the only same-tier pairs the 1.5-2x AoE MP rule
-## binds on. Cross-tier escalations (Murk Veil -> Flashblind, Kindle Breath ->
-## Rekindling, Dispersion -> Mass Dispersion, ...) are deliberately absent: per
-## § Derived Rules they are new spells at a new tier, priced inside their own
-## plain tier MP band rather than off a counterpart.
+## binds on. Cross-tier escalations (Murk Veil -> Flashblind, Dispersion -> Mass
+## Dispersion, ...) are deliberately absent: per § Derived Rules they are new
+## spells at a new tier, priced inside their own plain tier MP band.
 const AOE_PAIRS: Array = [
 	["kindlepyre", "scorch_sweep"],
 	["hoarfall", "whiteout"],
@@ -110,8 +105,8 @@ func _load_all_spells() -> Array[Dictionary]:
 	return out
 
 
-## Return the spell with this id. Fails the test (rather than returning {})
-## when the spell is missing, so a renamed id cannot silently skip a check.
+## The spell with this id; fails the test when missing, so a renamed id cannot
+## silently skip a check.
 func _find_spell(spell_id: String) -> Dictionary:
 	for spell: Dictionary in _spells:
 		if String(spell.get("id", "")) == spell_id:
@@ -132,18 +127,16 @@ func _is_aoe(spell: Dictionary) -> bool:
 	return target == "all_enemies" or target == "all_allies"
 
 
-## Control spells are the ones the AoE control floor governs — the categories
-## whose whole value is denying or granting actions rather than dealing or
-## restoring HP (magic.md § Derived Rules, "AoE control is never cheaper than
-## single-target control").
+## The categories the AoE control floor governs: value comes from denying or
+## granting actions, not from HP. See magic.md § Derived Rules.
 func _is_control(spell: Dictionary) -> bool:
 	var category: String = String(spell.get("category", ""))
 	return category == "status" or category == "buff" or category == "debuff"
 
 
-## MP cost of the dearest single-target spell sharing this spell's tier and
-## category, or 0 when no such spell exists (then the floor is vacuous and the
-## spell falls back to its plain tier MP band).
+## MP of the dearest single-target spell sharing this spell's tier and category,
+## or 0 when there is none — then the floor is vacuous (Mass Dispersion) and the
+## spell falls back to its plain tier MP band.
 func _dearest_single_target_control_mp(spell: Dictionary) -> int:
 	var tier: int = int(spell.get("tier", 0))
 	var category: String = String(spell.get("category", ""))
@@ -161,15 +154,29 @@ func _dearest_single_target_control_mp(spell: Dictionary) -> int:
 	return dearest
 
 
-## True when the AoE control floor, not the plain tier MP band, prices this
-## spell. Both the band test and the floor test route on this one predicate so
-## they cannot disagree about which rule owns a spell.
+## True when the AoE control floor prices this spell. Both the band test and the
+## floor test route on this predicate so they cannot disagree about ownership.
 func _priced_by_aoe_control_floor(spell: Dictionary) -> bool:
 	if spell.get("mp_cost") == null:
 		return false
 	if not _is_control(spell) or not _is_aoe(spell):
 		return false
 	return _dearest_single_target_control_mp(spell) > 0
+
+
+## True when a floor-priced control AoE may sit *above* its plain tier MP band.
+## Being floor-priced is not on its own a licence to leave it: magic.md § Derived
+## Rules allows the overshoot only when the floor forces it (every single-target
+## spell of the tier and category already sits at or above the ceiling) or the
+## status is severe-band (Eventide). Flashblind, Miasma, Bogsink, Leyward and
+## Bulwark Line stay band-checked.
+func _may_exceed_band_for_aoe_control_floor(spell: Dictionary) -> bool:
+	if not _priced_by_aoe_control_floor(spell):
+		return false
+	if SEVERE_STATUS.has(String(spell.get("id", ""))):
+		return true
+	var band: Array = MP_BAND[int(spell.get("tier", 0))]
+	return _dearest_single_target_control_mp(spell) + 1 > int(band[1])
 
 
 func _label(spell: Dictionary) -> String:
@@ -215,15 +222,14 @@ func test_mp_cost_within_tier_band() -> void:
 		if SUBSTITUTE_COST_SPELLS.has(spell_id):
 			continue  # pays in HP, outside the MP band by rule
 		if paired.has(spell_id):
-			# Priced off its same-tier counterpart via the 1.5-2x rule, which
-			# deliberately overshoots the plain tier band and the healing band
-			# (Ley Storm 25, Sanctuary 18, Lifetide 42) — see § Derived Rules
-			# "AoE MP pricing". Covered by the ratio test instead.
+			# Priced off its same-tier counterpart by the 1.5-2x rule, which
+			# deliberately overshoots this band (Ley Storm 25, Sanctuary 18,
+			# Lifetide 42). Covered by the ratio test instead.
 			continue
-		if _priced_by_aoe_control_floor(spell):
-			# Priced by the AoE control floor, which may overshoot the plain
-			# tier band (Eventide 22 against a Tier 2 ceiling of 20) — see
-			# § Derived Rules. Covered by the floor test instead.
+		if _may_exceed_band_for_aoe_control_floor(spell):
+			# Entitled to overshoot the band (Eventide 22 against a Tier 2
+			# ceiling of 20) and bounded above by the floor test instead.
+			# Floor-priced spells without that entitlement fall through here.
 			continue
 		var tier: int = int(spell.get("tier", 0))
 		var band: Array = MP_BAND[tier]
@@ -311,11 +317,10 @@ func test_paired_aoe_spells_cost_1_5x_to_2x_their_single_target_version() -> voi
 
 
 ## magic.md § Derived Rules, "AoE control is never cheaper than single-target
-## control": a status/buff/debuff that hits a whole side must cost strictly more
-## than every single-target spell of its tier and category, and at most 2x the
-## dearest of them. This is the rule that catches a party-wide Poison priced
-## under a single-target Petrify — the 1.5-2x pair rule cannot, because none of
-## these spells has a same-tier counterpart to take a ratio against.
+## control": a status/buff/debuff hitting a whole side costs strictly more than
+## every single-target spell of its tier and category, and at most 2x the dearest.
+## Catches a party-wide Poison priced under a single-target Petrify, which the
+## 1.5-2x pair rule cannot — these spells have no counterpart.
 func test_aoe_control_costs_more_than_same_tier_single_target_control() -> void:
 	var checked: int = 0
 	for spell: Dictionary in _spells:
@@ -431,11 +436,10 @@ func test_stat_penalty_debuffs_use_the_standard_hit_rate_band() -> void:
 	assert_gt(checked, 0, "no stat-penalty debuffs were checked")
 
 
-## `hit_rate` is a spell's own to-hit roll, and an offensive spell's damage does
-## not roll to hit. Per magic.md § Derived Rules, "A status rider on an offensive
-## spell sits below both hit-rate bands", a rider such as Pendulum's Echo's 40%
-## Despair is deliberately NOT encoded here — reading `hit_rate` off an offensive
-## spell would make the battle layer roll its damage instead of its rider.
+## `hit_rate` is a spell's own to-hit roll, and offensive damage does not roll to
+## hit. Per magic.md § Derived Rules, "A status rider on an offensive spell sits
+## below both hit-rate bands", a rider (Pendulum's Echo's 40% Despair) is NOT
+## encoded here: the battle layer would roll damage instead of the rider.
 func test_only_status_and_debuff_spells_declare_a_hit_rate() -> void:
 	assert_false(_spells.is_empty(), "spell list must not be empty")
 	for spell: Dictionary in _spells:
@@ -550,9 +554,8 @@ func test_tier3_buffs_and_debuffs_last_until_end_of_battle() -> void:
 
 
 ## magic.md § Derived Rules, "Cross-training is per-learner, not per-spell". The
-## spell-level `cross_trained`/`mp_penalty` fields were removed because they were
-## false/null on all 89 spells and read by nothing; a reader that sets one and
-## expects a +50% charge would be silently wrong.
+## spell-level `cross_trained`/`mp_penalty` fields were removed: false/null on all
+## 89 spells, read by nothing, and a reader setting one would be silently wrong.
 func test_no_spell_carries_cross_training_keys_at_the_top_level() -> void:
 	assert_false(_spells.is_empty(), "spell list must not be empty")
 	for spell: Dictionary in _spells:

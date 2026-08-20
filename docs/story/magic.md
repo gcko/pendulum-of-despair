@@ -103,7 +103,7 @@ Each element has one element it is strong against (deals 150% damage) and one it
 ### Balance Rules
 
 - **Healing spells** cost ~80% of equivalent-tier damage spells (healers must sustain through long fights)
-- **AoE versions** cost 1.5-2x the single-target version of the same tier — binds only on the named same-tier pairs; see "AoE MP pricing" under § Derived Rules below. An AoE spell with no same-tier counterpart has no ratio to take: if it is a control spell (status/buff/debuff) it is held to the "AoE control is never cheaper than single-target control" floor in the same section, and otherwise to its plain tier MP band
+- **AoE versions** cost 1.5-2x the single-target version of the same tier — binds only on the named same-tier pairs; see "AoE MP pricing" under § Derived Rules below. An AoE spell with no same-tier counterpart has no ratio to take: it is held to the "AoE control is never cheaper than single-target control" floor in the same section when it is a control spell (status/buff/debuff) **and its own tier and category contain a single-target spell to measure against**, and otherwise to its plain tier MP band. A control AoE whose tier and category hold no single-target spell at all (Mass Dispersion) has nothing for the floor to bite on and falls back to the band like any other
 - **Status spells** have a base hit rate of 60-80% (the *standard* band; see "Status hit rate has two bands" under § Derived Rules below for the 45-59% severe band) (modified by caster MAG vs. target MDEF)
 - **Buff/debuff durations** last 4-6 turns at Tier 1, 4-8 turns at Tier 2, until end of battle at Tier 3
 - **Damage formula reference:** `magic_damage = min(14999, max(1, (caster.mag * spell.power) / 4 - target.mdef) * element_mod * variance)` where `variance = random_int(240, 255) / 256`. See [combat-formulas.md](combat-formulas.md) for full resolution order.
@@ -185,8 +185,13 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
 - **A status *rider* on an offensive spell sits below both hit-rate bands.** An
   offensive spell may carry a rider — a chance to inflict a status *on top of*
   full damage rather than as the spell's purpose. Pendulum's Echo is the only
-  one in the corpus: Void damage at spell power 70, plus a 40% chance of
-  Despair. A rider is priced **below the 60% standard-band floor (30-50%)**
+  `category: offensive` spell in the corpus that carries one: Void damage at
+  spell power 70, plus a 40% chance of Despair. The rule binds on
+  `category: offensive` and on nothing else. The Weight (`category: special`,
+  Cael boss only, no MP cost) also deals full damage and then applies Despair,
+  but at a guaranteed 100% with no resistance check — that is a scripted boss
+  beat, not a priced player option, and `special` is the category that says so.
+  A rider is priced **below the 60% standard-band floor (30-50%)**
   precisely because the caster is already being paid in damage; pricing it
   inside either status band would make an offensive spell strictly better than
   the status spell it duplicates. A rider is **not** encoded as `hit_rate`:
@@ -225,10 +230,13 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   lower-tier single-target effect one tier up. They are new spells at a new tier,
   not a repriced version of the same spell, so the 1.5-2x rule does not bind on
   them. They are priced inside their own plain tier MP band — or, where they are
-  also control spells (five of the six below), by the AoE control floor further
-  down, which can push one past that band. Their ratios against the lower-tier
-  original are recorded here so the relationship is not mistaken for a broken
-  pair:
+  also control spells with a single-target spell of their own tier and category to
+  measure against (four of the six below: Flashblind, Miasma, Bogsink, Eventide),
+  by the AoE control floor further down, which can push one past that band.
+  Rekindling is a `healing` spell rather than a control spell, and Mass Dispersion
+  is the only Tier 3 debuff of any kind, so both are priced inside their plain
+  tier band. Their ratios against the lower-tier original are recorded here so the
+  relationship is not mistaken for a broken pair:
 
   | Lower-tier single target | MP | Cross-tier AoE | MP | Ratio |
   |--------------------------|----|----------------|----|-------|
@@ -258,8 +266,18 @@ unstated. `game/tests/test_spell_balance.gd` asserts all of them against
   against, so before this rule every one of them sat legally inside its tier MP
   band while undercutting a single-target spell of the same tier — a party-wide
   60% Poison for less than one Petrify. Like the paired AoE spells above, a
-  control AoE **may exceed the plain tier MP band** to clear the floor; a
-  party-wide control effect is worth more than its tier band alone allows.
+  control AoE **may exceed the plain tier MP band**, because a party-wide control
+  effect is worth more than its tier band alone allows — but only in the two
+  cases below. Clearing the floor is not on its own a licence to leave the band,
+  and a floor-priced spell outside both cases is still held to the band:
+
+  1. **The floor forces it.** Every single-target spell of that tier and category
+     already sits at or above the band ceiling, so nothing strictly dearer fits
+     inside the band. No shipped spell is in this position today; the rule is
+     stated so that the guard has a principle rather than a list of names.
+  2. **The status is severe-band.** The floor orders its members by severity (see
+     below), and a severe-band AoE status is priced above the standard-band ones,
+     which can carry it past the ceiling. Eventide is the only such spell today.
 
   | Tier / category | Dearest single target | MP | AoE control | MP | Ratio |
   |-----------------|----------------------|----|-------------|----|-------|
