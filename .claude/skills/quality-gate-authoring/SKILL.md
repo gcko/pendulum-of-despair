@@ -39,8 +39,9 @@ about, and this repo has shipped several that never could have failed.
 
 Do it against the REAL tree, not only a fixture — a fixture proves the
 function works, the real tree proves the gate is wired to it. Both matter, and
-they fail differently: `check_spelling.py`'s unit tests passed while the
-pre-push wiring was absent.
+they fail differently: `test_quality_gates.py` had 36 passing tests that no
+hook or workflow ever ran, so every one of them was green and none of them
+guarded anything.
 
 Report it as literal terminal output in the PR body. "Mutation-verified" as a
 claim, with no output, is exactly the kind of unbacked assertion these gates
@@ -135,4 +136,16 @@ write only that.
 - [ ] Guard's unit matches the rule's, sharing an implementation where possible
 - [ ] Wired into `.husky/pre-push` with its own letter, and the docstring agrees
 - [ ] Every "enforced by" sentence checked against the code it names
-- [ ] Self-tests are actually run by something (`gates.sh` runs the directory)
+- [ ] Self-tests are actually run by a hook (pre-push Gate I discovers the
+      directory), not only by `scripts/gates.sh`, which nothing runs for you
+
+### Known unwired gate
+
+The GUT count floor in `scripts/quality-gates/gut-baseline.txt` fails the
+"Wired into `.husky/pre-push`" item above: it has no pre-push letter, and
+neither the hook nor `.github/workflows/gut-tests.yml` reads it — both check
+`Failing Tests 0` and
+ignore the `Scripts`/`Tests` counts entirely. Only `bash scripts/gates.sh`
+enforces it, and only when someone runs it. So a parse-skipped or deleted test
+file passes both hooks today. Tracked as #430; recorded here rather than left as
+a silent violation of the list above. Delete this section when #430 lands.

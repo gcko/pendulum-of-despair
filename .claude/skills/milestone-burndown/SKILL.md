@@ -4,9 +4,10 @@ description: >
   Use when driving a whole GitHub milestone to zero open issues, rather than
   one issue or one bundle at a time. Covers grouping issues by file-ownership
   boundary, running several bundles in parallel worktrees and rebasing them
-  into a stacked-PR chain, keeping every PR green at its own tip, the
-  merge-and-close sequence including the traps GitHub does not warn about,
-  and controlling the follow-up issues each wave generates.
+  into a stacked-PR chain, keeping every PR green at its own tip, routing each
+  one through the mandatory review push-gate, the merge-and-close sequence
+  including the traps GitHub does not warn about, and controlling the follow-up
+  issues each wave generates.
 ---
 
 # Milestone burn-down
@@ -63,17 +64,27 @@ This produced **zero conflicts** across nine shared files, versus resolving
 the same conflicts four times on merge.
 
 ```bash
-git -C wt-B rebase --gpg-sign --empty=drop <branch-A>
-git -C wt-C rebase --gpg-sign --empty=drop <branch-B>
+git -C wt-B rebase --gpg-sign <branch-A>
+git -C wt-C rebase --gpg-sign <branch-B>
 ```
 
-`--empty=drop` matters: a commit that a sibling already made becomes empty on
-rebase and would otherwise stop the whole chain.
+`--gpg-sign` is the part that matters — see section 5 on why an unsigned
+subagent commit blocks the PR with no visible reason. Duplicate work needs no
+flag: git drops a commit a sibling already made as a clean cherry-pick
+(`warning: skipped previously applied commit ...`), and drops one that merely
+becomes empty by default, since `drop` is already `--empty`'s default for a
+non-interactive rebase.
 
 ## 4. Every PR must be green at ITS OWN tip
 
 A stack that is only green at the top is not reviewable — the middle PRs get
-merged red.
+merged red. Judge each branch against **its own parent**, not `main`, or the
+diff includes the parent's work and the result tells you nothing about this PR:
+
+```bash
+git -C wt-B checkout <branch-B>
+GATES_BASE=<branch-A> bash scripts/gates.sh    # not the default BASE of main
+```
 
 The recurring case is a **derived value** that several branches move: a line
 count, a test count, a table of file sizes. Fix it in the **last branch that
@@ -85,7 +96,23 @@ Worked example: three branches each edited `technical-architecture.md`, and
 branch last changes the file's length — the branch that adds a section, not
 the branch that rewords a sentence in place.
 
-## 5. Merge bottom-up, and mind two traps GitHub does not warn about
+## 5. Route every PR through `/pr-review-response` before it is pushed again
+
+Green at its own tip is not the same as reviewed. Each PR in the stack goes
+through `/pr-review-response`, and that skill's **PUSH-GATE (Step 6b)** is the
+only authorized push point once Copilot has commented: fixes committed locally,
+Copilot gap analysis done, `/story-review-loop <PR#> 1` reporting CLEAN, and
+only then `git push`. Do not push around it — AGENTS.md lists this under Do NOT,
+not under suggestions.
+
+Read `.claude/skills/pr-review-response/SKILL.md` from disk. The
+system-reminder summary of that skill omits Steps 6 and 6b entirely, which is
+how the gate has been skipped before.
+
+A stack multiplies this: N PRs means N review passes, and the one you skip is
+the one that gets merged red at position 2 of 4.
+
+## 6. Merge bottom-up, and mind two traps GitHub does not warn about
 
 **Signed commits.** If the repo's ruleset requires signatures, subagent
 commits are sometimes unsigned. The PR sits at `mergeStateStatus: BLOCKED`
@@ -105,7 +132,7 @@ auto-retargeted to `main` after its parent merges, its `Closes` refs are
   evidence,
 - re-audit the project board for `closed-but-not-Done` and fix it.
 
-## 6. Controlling the follow-ups
+## 7. Controlling the follow-ups
 
 Each wave generates new issues. That is healthy while they are *findings*, and
 a problem once they are *opinions*. When the milestone is closing, raise the
@@ -122,7 +149,7 @@ This took a wave from 7 new issues to 1.
 Every issue filed still needs `--milestone` (see AGENTS.md), and the milestone
 is chosen by the topic of the **fix**, not the PR that surfaced it.
 
-## 7. Declaring it done
+## 8. Declaring it done
 
 Check the **milestone counter**, not the issues you happened to work on:
 
@@ -131,8 +158,20 @@ gh api repos/<owner>/<repo>/milestones --paginate -q '.[] | "\(.title): open=\(.
 ```
 
 Saying "milestone complete" while the counter reads 7 is a real mistake that
-has been made here. Zero open, `main` green under `scripts/gates.sh`, and the
-board audited — then it is done.
+has been made here.
+
+Then confirm `main` is actually green. Run on `main`, `HEAD` equals the default
+`BASE`, so the diff is empty and `gates.sh` takes its fast path and skips the
+whole GUT suite. A pass on that signal means nothing:
+
+```bash
+git -C <main-worktree> checkout main
+GATES_FORCE_GODOT=1 bash scripts/gates.sh    # or the run never touched Godot
+```
+
+Read the `RESULT scripts=... tests=...` line and check the counts moved the way
+the milestone's commits said they would. Zero open, that line seen with your own
+eyes, and the board audited — then it is done.
 
 ## Related
 

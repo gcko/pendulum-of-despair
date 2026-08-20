@@ -49,7 +49,14 @@ authorized push point in the entire pr-review-response workflow.
 |------|---------|
 | **Install tooling** | `pnpm install` |
 | **Open in editor** | Open `game/` directory in Godot 4.7+ editor (no main scene yet — editor only, not runnable) |
-| **Run every quality gate** | `bash scripts/gates.sh` (add `GATES_BASE=<parent>` on a stacked branch) |
+| **Run the gates on work the hooks cannot see yet** | `bash scripts/gates.sh` (add `GATES_BASE=<parent>` on a stacked branch) |
+
+`scripts/gates.sh` does not replace the hooks and is not a general "run the
+tests" command — `/create-pr`'s Iron Rule still holds, and the hooks still run
+on every commit and push. Reach for the script only where the hooks are blind:
+work sitting uncommitted in a parallel worktree, or a stacked branch that must
+be judged against its own parent rather than `main`. It also serializes headless
+Godot, which matters when several worktrees run at once.
 
 ---
 

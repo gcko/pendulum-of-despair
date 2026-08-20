@@ -79,14 +79,26 @@ seam. **Never** by waiting longer, retrying, loosening the assertion, skipping
 the test, or changing engine code to make a test pass. Those keep a worthless
 test alive.
 
-### The payoff: unchanged tests prove a refactor
+### The payoff: an unchanged test suite is usable evidence
 
 Once a suite is behavioral, a behavior-preserving refactor needs **zero test
-edits**. That makes the diff itself the proof:
+edits**, so an empty test diff over a green suite is evidence the refactor kept
+the behavior the suite pins:
 
 ```bash
-git diff --stat main...HEAD -- game/tests    # must be empty
+git diff --stat main...HEAD -- game/tests    # empty, alongside a green full run
 ```
+
+It is evidence, not proof, and the gap is worth knowing:
+
+- It says nothing unless the suite actually ran. `scripts/gates.sh` skips Godot
+  on a diff that touches no `game/` file, so read the `Scripts`/`Tests` counts
+  from a real run rather than inferring green from an exit code.
+- It only covers behavior the suite pins. 46 test files assert over JSON loaded
+  through `DataManager`, so a change under `game/data/` moves behavior with the
+  test diff empty; `.tscn` and `project.godot` are outside both paths.
+- A refactor that ADDS public API leaves the diff empty too. Empty means
+  "nothing the suite pins moved", not "nothing moved".
 
 `audio_manager.gd` was decomposed 536 -> 333 lines across three new
 collaborators with that diff empty and the public API byte-identical. The same
@@ -94,13 +106,24 @@ refactor was unsafe a week earlier, when the suite pinned private fields — any
 move destroyed the evidence, which is exactly why the architecture doc had
 exempted the file from its size budget.
 
-So when a refactor makes you want to edit a test, stop: that is the refactor
-changing behavior, not the test being wrong.
+So when a refactor makes you want to edit a test, stop and ask which case you
+are in. Usually it is the refactor changing behavior. But the two exceptions
+above are live in a suite that is not behavioral yet: a test that pins no
+observable behavior should be deleted, and a test reaching into privates should
+be rewritten through a public seam. Both are legitimate `game/tests` edits —
+make each one its own commit with its own justification, separate from the
+refactor, so the refactor's diff stays readable as evidence.
 
 ### Deleting tests deliberately
 
-Deleting a test lowers the GUT floor, which `scripts/gates.sh` will fail on.
-That is the silent-skip guard doing its job, not an obstacle:
+Deleting a test drops the suite below the GUT floor, which `bash
+scripts/gates.sh` fails on. That is the silent-skip guard doing its job, not an
+obstacle.
+
+Know what does NOT catch it: the hooks. `.husky/pre-push` and the CI workflow
+both check `Failing Tests 0` and never read the `Scripts`/`Tests` counts, so a
+deleted — or parse-skipped — test file sails through both. Running `gates.sh`
+is the only thing that notices.
 
 - Update `scripts/quality-gates/gut-baseline.txt` in the SAME commit.
 - Name every deleted test with its one-line justification in the commit body.
