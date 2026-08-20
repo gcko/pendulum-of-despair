@@ -729,7 +729,7 @@ Player-configurable (1-6, default 3). Default matches FF6.
 | 2 | 5 | 1.6s | 1.2s |
 | **3 (Default)** | **3** | **2.7s** | **2.1s** |
 | 4 | 2 | 4.0s | 3.1s |
-| 5 | 1.5 | 5.4s | 4.1s |
+| 5 | 1.5 | 5.4s | 4.2s |
 | 6 (Slowest) | 1 | 8.1s | 6.2s |
 
 **These six factors are canon, and the engine was corrected to them
@@ -744,13 +744,21 @@ rather than superseding it. [difficulty-balance.md](difficulty-balance.md)
 interval of ~2.5s at level 1 and ~1.0s at level 70, which is what these factors
 produce and roughly four times what the retune produced. And this section is
 internally consistent under them: every seconds figure printed here and below is
-`16000 / floor((SPD + 25) x factor) / 60` to the tenth. The one argument on the
-other side was a code comment claiming FF6 parity for the retune, with no
-measurement behind it.
+`16000 / floor((SPD + 25) x factor) / 60`, rounded to the precision that figure
+is printed at. The one argument on the other side was a code comment claiming
+FF6 parity for the retune, with no measurement behind it.
 
-`game/tests/test_atb_system.gd` now measures this column by ticking a real gauge
-at 60 fps and counting frames to ready, so the constants cannot drift from the
-table again without the suite going red.
+`game/tests/test_atb_system.gd` now measures **both** columns of this table and
+every row of § ATB Pacing at Key Milestones below, by ticking a real gauge and
+counting frames to ready. It checks each cell twice over: the gauge must reach
+ready on exactly the tick its fill rate implies, and the seconds printed here
+must be `16000 / rate / 60` rounded to the precision the cell is printed at. So
+the constants cannot drift from the table without the suite going red, and
+neither can the table drift from the constants — the Sable-at-speed-5 cell read
+4.1s until this guard was widened past the Maren column, which is the arithmetic
+you get by dropping the floor the fill-rate formula mandates. The 60 in that
+expression is `run/max_fps`, which `game/tests/test_battle_regressions.gd` pins
+at 60 and the seconds measurement reads rather than assumes.
 
 ### Active/Wait Mode
 

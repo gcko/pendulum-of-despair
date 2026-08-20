@@ -3,19 +3,40 @@ extends GutTest
 
 const ATBScript := preload("res://scripts/combat/atb_system.gd")
 
-## The seconds-per-turn column of combat-formulas.md § ATB Gauge System >
-## Battle Speed Config, for a Lv1 Maren (SPD 8). Each entry is measured by
-## ticking the real gauge at 60 fps and counting frames to ready, so the
-## SPEED_FACTORS constants, the fill-rate formula and GAUGE_MAX all have to
-## agree with the doc for it to pass (#177).
-const DOCUMENTED_SECONDS_PER_TURN: Dictionary = {
-	1: 1.3,
-	2: 1.6,
-	3: 2.7,
-	4: 4.0,
-	5: 5.4,
-	6: 8.1,
+## Both seconds-per-turn columns of combat-formulas.md § ATB Gauge System >
+## Battle Speed Config — Maren Lv1 (SPD 8) and Sable Lv1 (SPD 18) — keyed
+## {battle speed: {SPD: printed seconds}}. Covering one column was not enough:
+## the SPD 18 cell at speed 5 shipped as 4.1s when the floor in the fill-rate
+## formula makes it 4.2s, and a guard that ticked only Maren could not see it
+## (#177).
+const DOCUMENTED_BATTLE_SPEED_SECONDS: Dictionary = {
+	1: {8: 1.3, 18: 1.0},
+	2: {8: 1.6, 18: 1.2},
+	3: {8: 2.7, 18: 2.1},
+	4: {8: 4.0, 18: 3.1},
+	5: {8: 5.4, 18: 4.2},
+	6: {8: 8.1, 18: 6.2},
 }
+
+## combat-formulas.md § ATB Pacing at Key Milestones, every row, all at battle
+## speed 3. `step` is the precision the row is printed to, which is what the
+## rounding assertion below compares against.
+const DOCUMENTED_PACING_MILESTONES: Array = [
+	{"who": "Maren Lv1", "spd": 8, "mods": [], "rate": 99, "seconds": 2.7, "step": 0.1},
+	{"who": "Sable Lv1", "spd": 18, "mods": [], "rate": 129, "seconds": 2.1, "step": 0.1},
+	{"who": "Maren Lv70", "spd": 49, "mods": [], "rate": 222, "seconds": 1.20, "step": 0.01},
+	{"who": "Edren Lv70", "spd": 65, "mods": [], "rate": 270, "seconds": 0.99, "step": 0.01},
+	{"who": "Sable Lv70", "spd": 128, "mods": [], "rate": 459, "seconds": 0.58, "step": 0.01},
+	{
+		"who": "Sable Lv70 + Haste",
+		"spd": 128,
+		"mods": [1.5],
+		"rate": 688,
+		"seconds": 0.39,
+		"step": 0.01,
+	},
+	{"who": "Lv70 enemy", "spd": 60, "mods": [], "rate": 255, "seconds": 1.0, "step": 0.1},
+]
 
 var _atb: Node
 
@@ -60,24 +81,86 @@ func test_fill_rate_haste_and_despair() -> void:
 	assert_eq(rate, 118, "haste + despair stack multiplicatively")
 
 
+## The tick rate the documented seconds are printed at. `atb_system.tick()`
+## advances every gauge by exactly one fill_rate per call and ignores its delta
+## (battle_manager drives it from `_process`), so a "second" in the tables above
+## is a count of calls — and that is a second only while the project runs at
+## this frame rate. Reading it from the project setting rather than hard-coding
+## 60 joins the two halves: raise `run/max_fps` and the measured seconds stop
+## matching the canon tables here, on top of test_battle_regressions.gd failing
+## on the setting itself.
+func _ticks_per_second() -> float:
+	var fps: int = int(ProjectSettings.get_setting("application/run/max_fps", 0))
+	assert_gt(fps, 0, "the seconds tables assume a capped frame rate; run/max_fps sets it")
+	return float(maxi(fps, 1))
+
+
+## Tick a real gauge until it is ready and return the frame count. This is what
+## makes the assertions below measurements rather than restatements of the
+## formula: it proves `tick()` actually applies `calculate_fill_rate`.
+func _frames_to_ready(spd: int, battle_speed: int, mods: Array) -> int:
+	var atb: Node = ATBScript.new()
+	add_child_autofree(atb)
+	atb.add_combatant("x", spd, false)
+	atb.set_battle_speed(battle_speed)
+	atb.set_status_mods("x", mods)
+	var frames: int = 0
+	while atb.get_gauge("x") < ATBScript.GAUGE_MAX and frames < 100000:
+		atb.tick(1.0 / _ticks_per_second())
+		frames += 1
+	return frames
+
+
+## Assert one printed cell three ways, with no tolerance anywhere.
+##
+## An earlier version compared the measured seconds to the printed figure under
+## a +/- 0.06 tolerance, which is wider than the gap between the wrong 4.1s and
+## the right 4.2s — the guard would have straddled the very defect it was
+## written for. So the two roundings are separated instead: the gauge must land
+## on the exact tick the rate implies, and the doc must print the exact seconds
+## rounded to its own precision.
+func _assert_documented_cell(
+	label: String, spd: int, battle_speed: int, mods: Array, printed: float, step: float
+) -> void:
+	var ticks: float = _ticks_per_second()
+	var rate: int = _atb.calculate_fill_rate(spd, battle_speed, mods)
+	assert_gt(rate, 0, "%s: a zero fill rate never becomes ready" % label)
+	if rate <= 0:
+		return
+	var expected_frames: int = int(ceil(float(ATBScript.GAUGE_MAX) / float(rate)))
+	assert_eq(
+		_frames_to_ready(spd, battle_speed, mods),
+		expected_frames,
+		"%s: the gauge must fill at exactly its fill rate" % label,
+	)
+	assert_almost_eq(
+		snappedf(float(ATBScript.GAUGE_MAX) / float(rate) / ticks, step),
+		printed,
+		0.0001,
+		"%s: combat-formulas.md prints %s s for this cell" % [label, str(printed)],
+	)
+
+
 func test_each_battle_speed_takes_its_documented_seconds_per_turn() -> void:
-	for speed: int in DOCUMENTED_SECONDS_PER_TURN:
-		var atb: Node = ATBScript.new()
-		add_child_autofree(atb)
-		atb.add_combatant("maren", 8, false)
-		atb.set_battle_speed(speed)
-		var frames: int = 0
-		while atb.get_gauge("maren") < ATBScript.GAUGE_MAX and frames < 3600:
-			atb.tick(1.0 / 60.0)
-			frames += 1
-		# Tolerance covers the two roundings between a measured fill and a
-		# printed table: the 1/60 s frame the gauge lands on (0.017 s) and the
-		# 0.1 s the doc rounds to. Anything further out is a real drift.
-		assert_almost_eq(
-			float(frames) / 60.0,
-			float(DOCUMENTED_SECONDS_PER_TURN[speed]),
-			0.06,
-			"battle speed %d must fill a Lv1 SPD 8 gauge in its documented time" % speed,
+	for speed: int in DOCUMENTED_BATTLE_SPEED_SECONDS:
+		var column: Dictionary = DOCUMENTED_BATTLE_SPEED_SECONDS[speed]
+		for spd: int in column:
+			_assert_documented_cell(
+				"battle speed %d, SPD %d" % [speed, spd], spd, speed, [], float(column[spd]), 0.1
+			)
+
+
+func test_the_pacing_milestones_match_the_gauge_they_describe() -> void:
+	for row: Dictionary in DOCUMENTED_PACING_MILESTONES:
+		var spd: int = int(row["spd"])
+		var mods: Array = row["mods"] as Array
+		assert_eq(
+			_atb.calculate_fill_rate(spd, 3, mods),
+			int(row["rate"]),
+			"%s: § ATB Pacing prints fill rate %s" % [row["who"], str(row["rate"])],
+		)
+		_assert_documented_cell(
+			String(row["who"]), spd, 3, mods, float(row["seconds"]), float(row["step"])
 		)
 
 

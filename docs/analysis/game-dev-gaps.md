@@ -42,9 +42,9 @@ in these docs.**
 | Category | Source Documents |
 |----------|----------------|
 | Game overview | `gdd-overview.md` (253), `outline.md` (371), `world.md` (79) |
-| Combat mechanics | `combat-formulas.md` (1,047) |
+| Combat mechanics | `combat-formulas.md` (1,055) |
 | Character stats/growth | `progression.md` (511), `characters.md` (220) |
-| Abilities & magic | `abilities.md` (1,003), `magic.md` (1,613) |
+| Abilities & magic | `abilities.md` (1,007), `magic.md` (1,613) |
 | Enemy data | `bestiary/` (10 files) |
 | Items & equipment | `items.md` (691), `equipment.md` (735) |
 | Economy & shops | `economy.md` (965) |
@@ -72,14 +72,15 @@ in these docs.**
 in `game-design-gaps.md` (npcs.md, sidequests.md, events.md).
 Implementation gaps that depend on these may encounter missing data —
 use `/story-designer` to fill design gaps before implementing.
-`magic.md` is now COMPLETE (numeric balance closed). `abilities.md` is
-still MOSTLY COMPLETE, but the residue is one entry rather than a
-general caveat: resource costs are closed and nine of the ten
-damage/healing magnitudes are now numbers, leaving only Sable's Shiv
-thrown-item branch — see `game-design-gaps.md` § Ability System —
-damage magnitudes (9 of 10 closed) for the enumerated list. The
-remaining branch is tracked as issue #359; runtime execution of the
-party abilities is tracked as issue #321.
+`magic.md` and `abilities.md` are both now COMPLETE (numeric balance
+closed). Resource costs were closed first, and all ten of the
+damage/healing magnitudes that used to be adjectives are now numbers —
+Sable's Shiv thrown-item branch was the last of them (issue #359), and
+the two combos that carried a power with no scaling stat are settled
+alongside it (issue #360). See `game-design-gaps.md` § Ability System —
+damage magnitudes (all ten closed) for the enumerated list. Runtime
+execution of the party abilities remains open as issue #321: the data is
+canon, but nothing in the battle layer reads most of it yet.
 
 ---
 

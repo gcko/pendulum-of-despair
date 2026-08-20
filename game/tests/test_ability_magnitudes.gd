@@ -5,8 +5,8 @@ extends GutTest
 ##
 ## Split from test_ability_balance.gd, which keeps the cost invariants, when the
 ## two together crossed the 600-line ceiling (technical-architecture.md 1.2a).
-## The loader below is duplicated from that file on purpose: a shared base class
-## would couple two suites that fail for unrelated reasons.
+## The loader below is duplicated on purpose: a shared base class would couple
+## two suites that fail for unrelated reasons.
 
 const CHARACTER_FILES: Array[String] = [
 	"cael",
@@ -143,19 +143,36 @@ func test_spiritcall_powers_sit_in_their_derived_tier_band() -> void:
 
 
 func test_favor3_upgrade_never_reduces_the_per_target_magnitude() -> void:
-	## Rule 2, checked across every Spiritcall that declares an upgrade.
+	## Rule 2, across every `*_favor3` magnitude, not just `power_favor3`. The
+	## rule is about the suffix, so the scan reads the suffix: a Deeproot Veil
+	## countering for less than a base Thornveil is the same defect as a
+	## Duskbreaker hitting softer than a Greyveil, and a check keyed on one field
+	## name would only ever catch the second.
 	var checked: int = 0
 	for ability: Dictionary in _abilities:
-		if not ability.has("power_favor3"):
-			continue
 		var ability_id: String = String(ability.get("id", "?"))
-		assert_gte(
-			int(ability.get("power_favor3", -1)),
-			int(ability.get("power", 0)),
-			"%s: a Favor 3 upgrade must never weaken the ability" % ability_id,
-		)
-		checked += 1
-	assert_eq(checked, 3, "Dewfall, Ember Wing and Greyveil declare Favor 3 magnitudes")
+		for key: String in ability.keys():
+			if not key.ends_with("_favor3"):
+				continue
+			var base_key: String = key.trim_suffix("_favor3")
+			assert_true(
+				ability.has(base_key),
+				(
+					"%s.%s upgrades '%s', which the ability does not carry"
+					% [ability_id, key, base_key]
+				),
+			)
+			assert_gte(
+				int(ability.get(key, -1)),
+				int(ability.get(base_key, 0)),
+				"%s: a Favor 3 upgrade must never weaken %s" % [ability_id, base_key],
+			)
+			checked += 1
+	assert_eq(
+		checked,
+		4,
+		"Dewfall, Ember Wing and Greyveil upgrade a power; Thornveil upgrades its counter",
+	)
 
 
 func test_favor3_doubles_only_when_the_target_set_is_unchanged() -> void:
@@ -182,32 +199,30 @@ func test_favor3_doubles_only_when_the_target_set_is_unchanged() -> void:
 
 
 func test_convergence_chorus_components_are_half_their_spiritcall() -> void:
-	## The ability states the rule ("50% normal potency") rather than the
-	## numbers; these are the numbers that rule produces.
+	## The ability states the rule ("50% normal potency"); these are the numbers
+	## it produces. Each pair is asserted as `2 x component == source`, never as
+	## `component == source / 2`: integer division rounds an odd source down, so
+	## the second form accepts a Stoneheart raised to 3 turns (3 / 2 == 1) or a
+	## Thornveil raised to 21% (21 / 2 == 10) against an unchanged Chorus.
 	var chorus: Dictionary = _find_ability("convergence_chorus")
 	if chorus.is_empty():
 		return
 	var components: Dictionary = chorus.get("component_powers", {}) as Dictionary
-	assert_eq(
-		int(components.get("damage", -1)),
-		_power_of("ember_wing") / 2,
-		"Chorus damage is Ember Wing at 50% potency",
-	)
-	assert_eq(
-		int(components.get("heal", -1)),
-		_power_of("dewfall") / 2,
-		"Chorus heal is Dewfall at 50% potency",
-	)
-	assert_eq(
-		int(components.get("barrier_pct", -1)),
-		_int_field("thornveil", "counter_pct") / 2,
-		"Chorus barrier counters for half of Thornveil's share of DEF",
-	)
-	assert_eq(
-		int(components.get("immunity_turns", -1)),
-		_int_field("stoneheart", "immunity_turns") / 2,
-		"Chorus immunity lasts half of Stoneheart's, because a duration is all it has",
-	)
+	var sources: Dictionary = {
+		"damage": _power_of("ember_wing"),
+		"heal": _power_of("dewfall"),
+		"barrier_pct": _int_field("thornveil", "counter_pct"),
+		"immunity_turns": _int_field("stoneheart", "immunity_turns"),
+	}
+	var reasons: Dictionary = {
+		"damage": "Chorus damage is Ember Wing at 50% potency",
+		"heal": "Chorus heal is Dewfall at 50% potency",
+		"barrier_pct": "Chorus barrier counters for half of Thornveil's share of DEF",
+		"immunity_turns": "Chorus immunity is half of Stoneheart's, a duration being all it has",
+	}
+	for key: String in sources:
+		assert_true(components.has(key), "Convergence Chorus must declare a %s component" % key)
+		assert_eq(2 * int(components.get(key, -1)), int(sources[key]), String(reasons[key]))
 
 
 func test_lira_devices_share_an_equal_arcanite_budget() -> void:
@@ -229,11 +244,7 @@ func test_lira_devices_share_an_equal_arcanite_budget() -> void:
 		_int_field("shock_coil", "ticks") * int(coil.get("power", 0)),
 		"Arc Trap's single burst equals Shock Coil's whole life of ticks",
 	)
-	assert_eq(
-		_int_field("shock_coil", "ticks"),
-		3,
-		"the device lives 3 turns and fires once a turn, so 3 ticks",
-	)
+	assert_eq(_int_field("shock_coil", "ticks"), 3, "3 turns, one shot a turn, so 3 ticks")
 
 
 func test_combos_double_the_ability_they_fire() -> void:
@@ -241,16 +252,19 @@ func test_combos_double_the_ability_they_fire() -> void:
 	## constituents apply differently. Arc Trap is single-shot, so `power` 30 is
 	## one application and Ambush Protocol is 2 x 30. Shock Coil is a 3-turn
 	## device, so `power` 10 is one tick and Thornfire doubles the tick, not the
-	## 30 it delivers over its life. That 30 is a separate quantity, used only by
-	## the equal-AC budget check in the test above.
-	## Ambush Protocol states the doubling outright; Thornfire states its
-	## total instead, and the total is what checks the two constituent values.
+	## 30 it delivers over its life — that 30 is the quantity the equal-AC budget
+	## check above uses instead.
 	var ambush: Dictionary = _find_combo("ambush_protocol")
 	if not ambush.is_empty():
 		assert_eq(
+			String(ambush.get("source_ability", "")),
+			"arc_trap",
+			"Ambush Protocol's stated 2x is 2x an Arc Trap",
+		)
+		assert_eq(
 			int(ambush.get("power", -1)),
-			2 * _power_of("arc_trap"),
-			"Ambush Protocol is 2x Arc Trap",
+			2 * _power_of(String(ambush.get("source_ability", ""))),
+			"Ambush Protocol is 2x the ability it names",
 		)
 	var thornfire: Dictionary = _find_combo("thornfire")
 	if thornfire.is_empty():
@@ -298,22 +312,15 @@ func test_wild_card_escalates_from_ultimate_to_maximum() -> void:
 	var wild_card: Dictionary = _find_ability("wild_card")
 	if wild_card.is_empty():
 		return
-	assert_eq(
-		float(wild_card.get("ability_mult", 0.0)), 2.0, "Wild Card's base branch is 2x Attack"
-	)
-	assert_eq(
-		float(wild_card.get("ability_mult_max", 0.0)),
-		3.0,
-		"the three-item branch takes the ladder's Maximum tier",
-	)
+	assert_eq(float(wild_card.get("ability_mult", 0.0)), 2.0, "the base branch is 2x Attack")
+	assert_eq(float(wild_card.get("ability_mult_max", 0.0)), 3.0, "3 items takes the Maximum rung")
 
 
 # ── Oathkeeper: a buff that adds a hit, not a multiplier (#346) ──────────
 
 
-## The § Physical Damage worked example from combat-formulas.md, variance-free:
-## `(ATK^2 * mult) / 6 - DEF`, floored. DEF is subtracted per hit, which is what
-## separates "hits twice" from "hits twice as hard".
+## combat-formulas.md § Physical Damage, variance-free: `(ATK^2 * mult) / 6 - DEF`,
+## floored. DEF comes off per hit, which separates "twice" from "twice as hard".
 func _documented_hit(atk: int, mult: float, target_def: int) -> int:
 	return int((atk * atk * mult) / 6.0) - target_def
 
@@ -342,20 +349,45 @@ func test_a_turn_of_oathkeeper_deals_exactly_two_basic_attacks() -> void:
 
 
 func test_oathkeeper_takes_no_rung_on_the_physical_multiplier_ladder() -> void:
-	## The buff itself deals no damage — it modifies the Attack command. If it
-	## ever grows an `ability_mult` of its own, the two documents have drifted
-	## apart again.
+	## The buff deals no damage — it modifies the Attack command. An
+	## `ability_mult` of its own means the two documents have drifted again.
 	var oathkeeper: Dictionary = _find_ability("oathkeeper")
 	if oathkeeper.is_empty():
 		return
-	assert_false(
-		oathkeeper.has("ability_mult"),
-		"Oathkeeper is a buff; its damage is the Attack command's, not its own",
+	assert_false(oathkeeper.has("ability_mult"), "its damage is the Attack command's, not its own")
+	assert_eq(
+		float(oathkeeper.get("attack_ability_mult", 0.0)), 1.0, "each hit is the 1.0 Attack rung"
+	)
+
+
+# ── Shiv: the DEF ignore is the whole damage bonus ──────────────────────
+
+
+## combat-formulas.md § Special: Shiv halves target DEF before the formula
+## subtracts it, generalized to whatever percentage the data declares.
+func _documented_shiv_hit(atk: int, target_def: int, ignore_pct: int) -> int:
+	return _documented_hit(atk, 1.0, target_def - (target_def * ignore_pct) / 100)
+
+
+func test_a_shiv_beats_a_basic_attack_by_exactly_the_defense_it_skips() -> void:
+	## "Shiv uses ability_mult 1.0... The 50% DEF ignore IS the damage bonus"
+	## (combat-formulas.md § Special: Shiv). The multiplier assertion above says
+	## Shiv takes no rung on the ladder; without this one nothing says what it
+	## takes instead, and `def_ignore_pct` could fall to 0 with the suite green.
+	## Worked at the document's own milestone: ATK 150 into a DEF 100 boss.
+	var shiv: Dictionary = _find_ability("shiv")
+	if shiv.is_empty():
+		return
+	var ignore_pct: int = _int_field("shiv", "def_ignore_pct")
+	assert_eq(
+		_documented_shiv_hit(150, 100, ignore_pct),
+		3700,
+		"the § Special: Shiv worked example: ~3,700 against that boss, not ~3,650",
 	)
 	assert_eq(
-		float(oathkeeper.get("attack_ability_mult", 0.0)),
-		1.0,
-		"each of the two hits is the Attack command, which is the ladder's 1.0 rung",
+		_documented_shiv_hit(150, 100, ignore_pct) - _documented_hit(150, 1.0, 100),
+		50,
+		"Shiv's entire advantage over a basic attack is the half of DEF it skips",
 	)
 
 
@@ -372,8 +404,7 @@ func _items_named(file_name: String) -> Array:
 
 func test_throwing_a_stolen_item_changes_the_element_and_nothing_else() -> void:
 	## abilities.md § Damage Magnitudes reads the throw as (a): the same hit,
-	## re-elemented. The rejected readings (b) and (c) would show up here as a
-	## thrown multiplier that differs from the bare one.
+	## re-elemented. Readings (b) and (c) would show up as a differing multiplier.
 	var shiv: Dictionary = _find_ability("shiv")
 	if not shiv.is_empty():
 		assert_eq(
@@ -396,53 +427,72 @@ func test_throwing_a_stolen_item_changes_the_element_and_nothing_else() -> void:
 	)
 
 
-func test_a_thrown_item_confers_only_an_element_a_document_names() -> void:
-	## items.md § Thrown-Item Elements: eleven items carry a thrown element and
-	## every other item is thrown non-elemental. The absence of the field is the
-	## non-elemental case, so this checks both the roster and the values.
-	var legal: Array[String] = ["flame", "frost", "storm", "earth", "ley", "spirit", "void"]
-	var documented: Array[String] = [
-		"emberstone",
-		"spirit_essence",
-		"spirit_dust",
-		"arcanite_shard",
-		"arcanite_core",
-		"arcanite_ingot",
-		"grey_residue",
-		"pallor_blade",
-		"pallor_sample",
-		"pallor_shard",
-		"nest_fragment",
-	]
+func test_each_thrown_item_confers_the_element_items_md_derives_for_it() -> void:
+	## items.md § Thrown-Item Elements maps eleven items onto elements and throws
+	## everything else non-elemental. The content of that section is the
+	## *mapping*, so the mapping is what is pinned — a roster check alone would
+	## let all eleven be permuted among the elements, and re-elementing a Pallor
+	## Sample away from Void would undo "throwing a Pallor Sample at a Pallor
+	## enemy is the worst thing Sable can do with it". The field name is read off
+	## Shiv rather than hard-coded, so the ability's pointer and the item rows it
+	## points at are joined: aim it at a field no item carries and this scan
+	## comes back empty, which the roster equality reports.
+	var shiv: Dictionary = _find_ability("shiv")
+	if shiv.is_empty():
+		return
+	var element_field: String = String(shiv.get("thrown_item_element_field", ""))
+	assert_ne(element_field, "", "Shiv must name the item field its element comes from")
+	var documented: Dictionary = {
+		"emberstone": "flame",
+		"spirit_essence": "spirit",
+		"spirit_dust": "spirit",
+		"arcanite_shard": "storm",
+		"arcanite_core": "storm",
+		"arcanite_ingot": "storm",
+		"grey_residue": "void",
+		"pallor_blade": "void",
+		"pallor_sample": "void",
+		"pallor_shard": "void",
+		"nest_fragment": "void",
+	}
 	var found: Array[String] = []
 	for file_name: String in ["materials", "consumables"]:
 		for raw: Variant in _items_named(file_name):
 			var item: Dictionary = raw as Dictionary
-			if not item.has("throw_element"):
+			if not item.has(element_field):
 				continue
 			var item_id: String = String(item.get("id", "?"))
 			found.append(item_id)
 			assert_true(
-				legal.has(String(item.get("throw_element", ""))),
-				"%s throws as '%s', which is not an element" % [item_id, item.get("throw_element")],
-			)
-			assert_true(
 				documented.has(item_id),
 				"%s carries a thrown element that items.md does not derive" % item_id,
 			)
+			if not documented.has(item_id):
+				continue
+			assert_eq(
+				String(item.get(element_field, "")),
+				String(documented[item_id]),
+				"%s throws at the element its items.md row derives" % item_id,
+			)
+	var expected: Array[String] = []
+	for item_id: String in documented:
+		expected.append(item_id)
 	found.sort()
-	documented.sort()
-	assert_eq(found, documented, "every item items.md gives a thrown element must have one")
+	expected.sort()
+	assert_eq(found, expected, "every item items.md gives a thrown element must have one")
 
 
 # ── Combo scaling stats (#360) ──────────────────────────────────────────
 
 
-func test_every_combo_that_deals_a_power_names_whose_stat_it_reads() -> void:
+func test_every_combo_power_scales_off_the_character_who_supplies_the_ability() -> void:
 	## A two-character combo has two stat lines, and a spell power that does not
 	## say which one it reads cannot be executed (#360). abilities.md § Damage
-	## Magnitudes rule 5: each constituent scales off the character who supplies
-	## it, so every declared power carries a caster who is in the combo.
+	## Magnitudes rule 5 settles it: each constituent scales off the character who
+	## *supplies* it. So the caster is not free text checked against combo
+	## membership — either member passes that — it is fixed by `source_ability`,
+	## and this walks the join. Ambush Protocol naming Sable is the exact error
+	## the rule rules out: the trap is Lira's, and Sable supplies the trigger.
 	var checked: int = 0
 	for raw: Variant in _load_combos():
 		var combo: Dictionary = raw as Dictionary
@@ -456,6 +506,7 @@ func test_every_combo_that_deals_a_power_names_whose_stat_it_reads() -> void:
 		for source_raw: Variant in sources:
 			var source: Dictionary = source_raw as Dictionary
 			var caster: String = String(source.get("caster", ""))
+			var source_ability: String = String(source.get("source_ability", ""))
 			assert_true(
 				characters.has(caster),
 				(
@@ -463,7 +514,40 @@ func test_every_combo_that_deals_a_power_names_whose_stat_it_reads() -> void:
 					% [combo_id, str(combo.get("power")), caster]
 				),
 			)
-			assert_ne(String(source.get("scaling_stat", "")), "", "%s names no stat" % combo_id)
+			assert_ne(
+				source_ability,
+				"",
+				(
+					"%s must name the ability its power doubles, or nothing fixes whose it is"
+					% combo_id
+				),
+			)
+			var supplier: Dictionary = _find_ability(source_ability)
+			if supplier.is_empty():
+				continue
+			assert_eq(
+				String(supplier.get("character", "")),
+				caster,
+				(
+					"%s: %s belongs to %s, so %s's stat cannot be the one it reads"
+					% [combo_id, source_ability, supplier.get("character", "?"), caster]
+				),
+			)
+			assert_eq(
+				String(source.get("scaling_stat", "")),
+				"magic",
+				(
+					"%s: %s deals a spell power, which the magic formula reads off MAG"
+					% [combo_id, source_ability]
+				),
+			)
+			assert_true(
+				supplier.has("power"),
+				(
+					"%s doubles %s, which must therefore have a power to double"
+					% [combo_id, source_ability]
+				),
+			)
 			split_total += int(source.get("power", 0))
 		if not halves.is_empty():
 			assert_eq(

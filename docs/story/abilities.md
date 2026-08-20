@@ -51,8 +51,8 @@ and this reading is the one it now records, in § Buff-Granted Multipliers. The
 Riposte counters Oathkeeper fires automatically are 1.5x as they always are; the
 +50% is on stance absorption, not on damage dealt. `game/data/abilities/edren.json`
 carries the two numbers as `attack_hits` and `attack_ability_mult`, and
-`game/tests/test_ability_balance.gd` holds a turn of Oathkeeper to exactly twice
-a basic attack.
+`game/tests/test_ability_magnitudes.gd` holds a turn of Oathkeeper to exactly
+twice a basic attack.
 
 **Synergies:**
 - Edren + Torren: Torren's healing spirits can restore HP Edren loses while absorbing, creating a sustain loop.
@@ -625,12 +625,14 @@ adjectives rather than numbers, and all ten are now resolved — the last of the
 Shiv's thrown-item branch, at the bottom of this section
 ([#359](https://github.com/gcko/pendulum-of-despair/issues/359)).
 
-`game/tests/test_ability_balance.gd` asserts the numeric *fields* below against
-`game/data/abilities/` — every `power`, `power_favor3`, `ability_mult` and
-`ability_mult_max`, all four `component_powers`, Thornveil's `counter_pct`,
-Stoneheart's `immunity_turns`, Shock Coil's `ticks`, and the `caster` /
-`scaling_stat` on every combo that carries a power — so an edit that breaks one
-of those fails the suite. Three quantities used to live in effect prose alone and
+`game/tests/test_ability_magnitudes.gd` asserts the numeric *fields* below
+against `game/data/abilities/` — every `power`, `power_favor3`, `ability_mult`
+and `ability_mult_max`, all four `component_powers`, Thornveil's `counter_pct`
+and `counter_pct_favor3`, Stoneheart's `immunity_turns`, Shock Coil's `ticks`,
+Shiv's `def_ignore_pct`, and the `caster` / `scaling_stat` / `source_ability` on
+every combo that carries a power — so an edit that breaks one of those fails the
+suite. (Its sibling `test_ability_balance.gd` keeps the *cost* invariants of
+§ Resource Cost Invariants; the two were split when they outgrew one file.) Three quantities used to live in effect prose alone and
 were pinned by nothing: the Chorus's "counter 10% of DEF" and "status immunity,
 1 turn", and Shock Coil's "3 ticks"
 ([#355](https://github.com/gcko/pendulum-of-despair/issues/355)). They are real
@@ -751,6 +753,7 @@ with the alternative it rejects:
 | Wild Card, 3 items | Sable | `ability_mult` 3.0 | 3, capped by the ladder |
 | Ambush Protocol | Sable + Lira | Spell power 60, on Lira's MAG | 4, 5 |
 | Shiv, thrown-item branch | Sable | `ability_mult` 1.0, re-elemented from the item | reading (a), plus the item mapping |
+| Thornfire | Torren + Lira | Spell power 40, split 20 Flame on Torren's MAG + 20 Storm on Lira's MAG | 4, 5 |
 
 #### Derivations
 
@@ -999,5 +1002,6 @@ made here.
 `game/data/abilities/sable.json` records the decision as
 `thrown_item_ability_mult` (equal to `ability_mult`, which is the whole content
 of reading (a)) and `thrown_item_element_field`, and
-`game/tests/test_ability_balance.gd` fails if the throw ever stops being the
-same hit.
+`game/tests/test_ability_magnitudes.gd` fails if the throw ever stops being the
+same hit — or if the item rows stop carrying the element the table below gives
+them, which it checks item by item rather than as a roster.

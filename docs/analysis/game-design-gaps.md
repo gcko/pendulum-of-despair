@@ -855,11 +855,11 @@ The mirrored sentences in `docs/superpowers/specs/2026-03-21-combat-formulas-des
 carry dated supersession notes rather than edits, since that file is the record
 of the 2026-03-21 design, not a live rule.
 
-### Ability System — damage magnitudes (9 of 10 closed)
+### Ability System — damage magnitudes (all ten closed)
 
 The three custom resources (AP/AC/WG) are within their stated caps, and the
 damage and healing magnitudes that used to be adjectives are now numbers. Both
-are asserted by `game/tests/test_ability_balance.gd` against the numeric fields
+are asserted by `game/tests/test_ability_magnitudes.gd` against the numeric fields
 in `game/data/abilities/` — the caps, and every `power`, `power_favor3`,
 `ability_mult`, `ability_mult_max` and `component_powers` value. The three
 quantities that used to live in effect prose alone — the Chorus's barrier
@@ -886,7 +886,7 @@ than taken on trust.
 | Convergence Chorus | Torren | Damage 5, heal 6, barrier 10% of DEF, immunity 1 turn | The ability's own "50% normal potency" rule, applied to the now-numeric components. Which four spirits compose it, and how the cell's "cleanse" is read, are labeled choices — see abilities.md |
 | Wild Card (0-2 items) | Sable | `ability_mult` 2.0 | The 0-item branch's stated "2x her Attack" |
 | Wild Card (3 items) | Sable | `ability_mult` 3.0 | "Heavy" = double, capped by the ladder's Maximum tier |
-| Ambush Protocol (combo #8) | Sable + Lira | Spell power 60 | The combo's own "2x normal Arc Trap damage" |
+| Ambush Protocol (combo #8) | Sable + Lira | Spell power 60, on Lira's MAG | The combo's own "2x normal Arc Trap damage", scaled off the character who supplies the trap |
 | Shiv (thrown-item branch) | Sable | `ability_mult` 1.0, re-elemented from the thrown item | Reading (a) — the throw changes `element_mod` and nothing else — plus the item-type mapping in items.md § Thrown-Item Elements |
 | Thornfire (combo #4) | Torren + Lira | Spell power 40, split 20 Flame on Torren's MAG + 20 Storm on Lira's MAG | The combo's own stated split, with each half scaling off the character who supplies the constituent ability |
 
