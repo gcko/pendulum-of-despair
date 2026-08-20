@@ -31,8 +31,14 @@ const MIX_CONTEXTS: Dictionary = {
 
 ## The context a fresh session and a cleared pre-battle snapshot fall back to.
 const DEFAULT_CONTEXT: String = "overworld"
+## The context a fight applies. Named because AudioManager also tests against
+## it to tell a fresh battle from a second one inside the same fight.
+const BATTLE_CONTEXT: String = "battle"
 ## Volume sliders run 0..10 (ui-design.md § Config).
 const SLIDER_MAX: float = 10.0
+## Linear level at or below which a bus is treated as muted. linear_to_db(0.0)
+## is negative infinity, which no bus accepts.
+const SILENCE_THRESHOLD: float = 0.001
 
 
 static func has_context(context: String) -> bool:
@@ -54,3 +60,11 @@ static func bus_volumes(context: String, config: Dictionary) -> Dictionary:
 		"ambient": sfx_vol * float(mix.get("ambient", 0.35)),
 		"sfx": sfx_vol,
 	}
+
+
+## [param linear] as decibels, floored at silence for a muted channel — the
+## conversion a caller needs between bus_volumes() and AudioServer.
+static func to_db(linear: float) -> float:
+	if linear <= SILENCE_THRESHOLD:
+		return AudioCrossfade.SILENT_DB
+	return linear_to_db(linear)
