@@ -14,9 +14,15 @@ automatically by husky hooks — no manual test/lint step needed:
 
 - **pre-commit:** branch protection (no direct commits to main) +
   gdlint + JSON validation + `gdformat --check`.
-- **pre-push:** cross-file ID-uniqueness scan + stale-count scan +
-  scene-ref scan + Godot import (`godot --headless --path game/
-  --import`) + the full GUT test suite.
+- **pre-push:** quality-gate self-tests + cross-file ID-uniqueness
+  scan + stale-count scan + scene-ref scan + doc-citation integrity +
+  dialogue sync + American-English spelling + Godot import
+  (`godot --headless --path game/ --import`) + the full GUT test suite
+  + Gate L (Run Summary present, nothing failed, every collected test
+  passed, script/test counts at or above `gut-baseline.txt`).
+  **No Godot installed is a failure, not a skip** — the hook exits
+  non-zero rather than reporting success on a tree whose suite never
+  ran.
 
 ## Invocation
 
@@ -74,10 +80,20 @@ fails, fix the reported issues and retry — do not use `--no-verify`.
 git push -u origin "$(git branch --show-current)"
 ```
 
-The pre-push hook runs **cross-file ID uniqueness**, **stale-count
-scan**, **scene reference validation**, **Godot import**
-(`godot --headless --path game/ --import`), and the **full GUT test
-suite**. If the push fails, fix the reported issues and retry.
+The pre-push hook runs the **quality-gate self-tests**, **cross-file
+ID uniqueness**, **stale-count scan**, **scene reference
+validation**, **doc-citation integrity**, **dialogue sync**,
+**American-English spelling**, **Godot import**
+(`godot --headless --path game/ --import`), the **full GUT test
+suite**, and **Gate L** over the run's log. If the push fails, fix
+the reported issues and retry.
+
+Two failures look like infrastructure but are not. `Godot NOT FOUND`
+means the hook refused to pass a tree it could not test — install
+Godot or set `GODOT_BIN`, never work around it. `GODOT LOCK TIMEOUT`
+means another worktree is running headless Godot; wait for it, because
+a second concurrent run collects fewer test scripts and Gate L reports
+that as a silently-skipped test file.
 
 ### 3. Write PR Body
 
@@ -92,7 +108,7 @@ PR body format:
 
 ## Test plan
 - [x] Pre-commit gates pass (branch protection, gdlint, JSON validation, gdformat --check)
-- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, Godot import, full GUT suite)
+- [x] Pre-push gates pass (ID uniqueness, stale counts, scene refs, Godot import, full GUT suite, Gate L count floor)
 - [ ] Manual verification steps if applicable
 
 Generated with [Claude Code](https://claude.ai/code)
@@ -126,7 +142,21 @@ After outputting the PR URL, always end with:
 - **Hooks are the quality gates.** Do not run separate test/lint
   commands — the husky pre-commit (branch protection, gdlint, JSON
   validation, gdformat --check) and pre-push (ID uniqueness, stale
-  counts, scene refs, Godot import, full GUT suite) hooks handle it.
+  counts, scene refs, Godot import, full GUT suite, GUT count floor)
+  hooks handle it. The one exception is `bash scripts/gates.sh`, on
+  work the hooks cannot see: uncommitted state in a parallel worktree
+  (pre-commit sees only the index), or a stacked branch that must be
+  judged against its own parent rather than `main`
+  (`GATES_BASE=<parent> bash scripts/gates.sh`). It shares the
+  headless-Godot mutex with pre-push, so a hand-run and a push do not
+  start two Godots between them — which matters because a contended
+  run collects fewer test scripts and Gate L reads that as a
+  silently-skipped test file. It is a `mkdir` lock with an owner pid
+  rather than a kernel lock, and `scripts/quality-gates/godot-lock.sh`
+  names the one window it cannot close. That is the whole
+  carve-out — it is not general permission to run tests by hand, it
+  does not replace either hook, and both hooks still run on every
+  commit and push. See AGENTS.md § Essential Commands.
 - **Never bypass hooks.** Do not use `--no-verify`. If a hook fails,
   fix the issue.
 - **Temp file for body.** Always write to `/tmp/pr_body.md` and use

@@ -32,17 +32,31 @@ jobs:
           godot --headless --path game/ --import
         timeout-minutes: 2
 
+      # This step judges the PROCESS only: did Godot survive the run. Everything
+      # read out of the log is judged by Gate L below. CI used to re-implement
+      # the summary-presence check and the failing-tests verdict here in YAML
+      # while .husky/pre-push re-implemented both again in bash, so a rule the
+      # comments called single-implementation had five copies and a fix to the
+      # summary regex had to land in three files (#430).
       - name: Run GUT tests
         run: |
-          godot --headless --path game/ -s addons/gut/gut_cmdln.gd -gdir=res://tests -gprefix=test_ -gsuffix=.gd -gexit 2>&1 | tee /tmp/gut.log
-          if grep -q "All tests passed" /tmp/gut.log; then
-            echo "All tests passed!"
-            exit 0
-          elif grep -qE "Failing Tests\s+0" /tmp/gut.log; then
-            echo "All tests passed!"
-            exit 0
-          else
-            echo "Tests failed!"
+          set -o pipefail
+          if ! godot --headless --path game/ -s addons/gut/gut_cmdln.gd -gdir=res://tests -gprefix=test_ -gsuffix=.gd -gexit 2>&1 \
+               | sed 's/\x1b\[[0-9;]*m//g' | tee /tmp/gut.log; then
+            echo "Godot exited non-zero during the GUT run."
+            tail -40 /tmp/gut.log
             exit 1
           fi
         timeout-minutes: 5
+
+      # THE VERDICT. A green suite says nothing about how many tests RAN: GUT
+      # 9.7.0 drops a whole test file over a GDScript parse error and still
+      # reports `Failing Tests 0`, and a test that stops asserting is scored
+      # risky rather than failing. This one step checks that the Run Summary is
+      # present at all (absence FAILS, it does not pass), that nothing failed,
+      # that every collected test passed, and that the script/test counts clear
+      # the floors in gut-baseline.txt. Until #430 nothing but a hand-run
+      # scripts/gates.sh read those floors, so a parse-skipped or deleted test
+      # file passed CI unremarked.
+      - name: GUT summary, failures and count floor (Gate L)
+        run: python3 scripts/quality-gates/check_gut_baseline.py --log /tmp/gut.log

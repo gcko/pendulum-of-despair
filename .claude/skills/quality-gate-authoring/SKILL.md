@@ -130,6 +130,37 @@ write only that.
   you can, make the exposure a NUMBER the gate prints, so it can be watched
   shrink instead of being rediscovered.
 
+## 6. A wiring test must reject a commented-out call
+
+`assertIn("check_gut_baseline.py", hook)` is not a wiring test. The gate's name
+survives in the pre-push gate registry, in the `gates.sh` header and in the CI
+step's rationale, so the assertion passes on a file whose only remaining mention
+is prose. Both call sites were commented out with all 46 tests green (#430).
+
+Match an **uncommented line that runs the thing**: drop comment-only lines, then
+require the interpreter, the script (resolving a `NAME="path"` shell alias, since
+`gates.sh` calls through `$GUT_FLOOR_GATE`) and the argument that makes it judge
+rather than self-check. Then test the matcher itself against a commented-out
+call, so the test that catches the mutation cannot be the thing that rots.
+
+The same trap runs the other way round. Any assertion that a string is ABSENT
+from a script has to read the script with its comments stripped, because these
+files explain the bug they fixed — the string you are asserting is gone from the
+code is usually still there in the comment saying why it went.
+
+## 7. A skip is not a pass, on any machine
+
+A gate nested inside `if <tool> is installed` with an `else` that echoes
+"SKIPPED" and falls through to the success banner does not enforce anything; it
+enforces something on the author's laptop. Gate L shipped that way: on a machine
+without Godot, `.husky/pre-push` ran neither the suite nor the floor and printed
+"All pre-push quality gates passed" (#430).
+
+Refuse instead — `scripts/gates.sh` already did, and the two disagreeing about
+one clean tree is how it was found. If the tool is genuinely optional, then the
+enforcement claim in the docs is conditional and must say so in the same breath
+(§ 5).
+
 ## Checklist
 
 - [ ] Mutated the protected thing, watched the gate fail, reverted, captured output
@@ -142,14 +173,12 @@ write only that.
 - [ ] Every "enforced by" sentence checked against the code it names
 - [ ] Self-tests are actually run by a hook (pre-push Gate I discovers the
       directory), not only by `scripts/gates.sh`, which nothing runs for you
-
-### Known unwired gate
-
-The GUT count floor in `scripts/quality-gates/gut-baseline.txt` fails the
-"Wired into `.husky/pre-push`" item above: it has no pre-push letter, and
-neither the hook nor `.github/workflows/gut-tests.yml` reads it — both check
-`Failing Tests 0` and
-ignore the `Scripts`/`Tests` counts entirely. Only `bash scripts/gates.sh`
-enforces it, and only when someone runs it. So a parse-skipped or deleted test
-file passes both hooks today. Tracked as #430; recorded here rather than left as
-a silent violation of the list above. Delete this section when #430 lands.
+- [ ] Wiring test rejects a COMMENTED-OUT call, and the matcher is itself tested
+- [ ] No `else: echo SKIPPED` path reaches the success banner — a missing tool
+      exits non-zero in every runner, and all runners agree
+- [ ] If the gate shares a machine resource (headless Godot, a database, a
+      port), every runner takes the SAME mutex — a contended run gives a wrong
+      answer, not a slow one, and a count-based gate turns it into a false
+      accusation against a healthy file
+- [ ] Diff-derived "should we bother running this" heuristics list the gate's
+      OWN inputs, or the branch that adds the gate cannot demonstrate it

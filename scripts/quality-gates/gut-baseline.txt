@@ -1,4 +1,4 @@
-# Quality-gate floors. `scripts/gates.sh` reads this; nothing else does.
+# Quality-gate floors, read through `scripts/quality-gates/check_gut_baseline.py`.
 #
 # These are FLOORS, not expected values: the run fails if it collects FEWER
 # scripts, tests, gate scripts or gate self-tests than this. That is the
@@ -7,10 +7,28 @@
 # Python gate stage announce itself and inspect nothing. A count that only ever
 # rises is the cheapest way to notice either.
 #
-# WHAT ENFORCES THESE: only `bash scripts/gates.sh`, run by hand. Neither
-# .husky/pre-push nor .github/workflows reads this file — they check "Failing
-# Tests 0" and never look at the counts. So a deleted or parse-skipped test file
-# passes both of them; the floor catches it only if someone runs the script.
+# WHAT ENFORCES THESE: `.husky/pre-push` Gate L, the "GUT summary, failures and
+# count floor" step in .github/workflows/gut-tests.yml, and
+# `bash scripts/gates.sh` — all three through
+# `scripts/quality-gates/check_gut_baseline.py`, which is the single
+# implementation of reading these floors, checking the Run Summary is present,
+# checking nothing failed, checking every collected test PASSED, and judging the
+# counts. None of it is written twice, so the three cannot drift apart (#430).
+# `gates` and `gate_tests` are used by gates.sh alone; `scripts` and `tests` by
+# all three.
+#
+# THE LIMIT: pre-push and gates.sh can only read these floors on a machine with
+# Godot, because there is otherwise no GUT log to read. Neither one treats that
+# as a pass — both refuse to run and exit non-zero, so a tree whose suite never
+# ran cannot be pushed from either (#430). CI always has Godot, so every PR is
+# judged regardless.
+#
+# It was not always so. Until #430 only the hand-run gates.sh read this file:
+# the hook and CI checked "Failing Tests 0" and never looked at the counts, so a
+# deleted or parse-skipped test file passed both of them unremarked. Reviewing
+# that same wiring turned up the layer beneath it: the hook's Gate L sat inside
+# its own `if Godot is present` branch whose else printed "SKIPPED" and fell
+# through to "All pre-push quality gates passed".
 #
 # UPDATE IT DELIBERATELY, in the same commit as the change that moves it:
 #   - added a test file      -> raise scripts
@@ -20,6 +38,12 @@
 #   - DELETED a test on purpose (see gut-tdd: a test pinning no behavior should
 #     be deleted) -> LOWER tests, and say so in the commit message
 #
+# A FLOOR IS NOT THE WHOLE GUARD. `Tests` counts every collected test whatever
+# its outcome, so a test that stops asserting (GUT scores it risky) or is marked
+# pending keeps the count up while testing nothing. Gate L compares
+# `Passing Tests` against `Tests` for exactly that reason; raising a floor does
+# not buy the promise on its own (#430).
+#
 # It lives in its own tracked file rather than inside gates.sh so that moving
 # the floor is a reviewable one-line diff someone has to justify, instead of an
 # edit buried in a script. This floor has gone stale four times (68/1083, then
@@ -28,5 +52,5 @@
 # regression or failed honest work.
 scripts=90
 tests=1289
-gates=6
-gate_tests=260
+gates=7
+gate_tests=329
