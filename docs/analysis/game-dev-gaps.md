@@ -529,15 +529,15 @@ These are the core .tscn scenes and their orchestrating GDScript.
 - [x] Title screen scene with game logo placeholder, menu options (New Game, Continue, Config)
 - [x] New Game: initialize fresh game state, transition to Exploration
 - [x] Continue: ~~show save slot selection~~ loads most recent save via SaveManager.load_most_recent(), transition to Exploration
-- [x] ~~Config: push config overlay~~ → Config stubbed (greyed out), deferred to gap 3.4
+- [x] ~~Config: push config overlay~~ → Config stubbed (grayed out), deferred to gap 3.4
 - [ ] ~~Title music playback via AudioManager~~ → deferred to gap 3.8 (Audio Integration)
 - [x] Keyboard/gamepad navigation per accessibility.md input spec
 - [x] Set as `run/main_scene` in project.godot (first runnable scene)
 
 **Notes:**
 - Bundled with gaps 3.5 (Dialogue) and 3.6 (Save/Load) in one PR
-- Continue greyed out when no saves exist, shows error on corrupted save
-- Config greyed out with stub — opens nothing until gap 3.4 (Menu Overlay)
+- Continue grayed out when no saves exist, shows error on corrupted save
+- Config grayed out with stub — opens nothing until gap 3.4 (Menu Overlay)
 - SaveManager gained 5 new public methods: load_most_recent(), has_any_save(), get_slot_previews(), delete_slot(), copy_slot()
 - GUT tests in test_title.gd, all code passes gdlint + gdformat
 - Design spec: `docs/superpowers/specs/2026-04-06-title-dialogue-saveload-design.md`

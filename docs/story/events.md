@@ -175,7 +175,7 @@ The party reassembles. They know where Cael is. They know the cost. The march to
 | Hadley | Keeps the light on | Three Roads Inn still open. "Somebody has to." |
 
 **Environmental Changes:**
-- Progressive greyscale palette shift as the party approaches the Convergence.
+- Progressive grayscale palette shift as the party approaches the Convergence.
 - Sound dampens to near-silence in the Pallor Wastes.
 - No shops or save points inside the gauntlet dungeon, except faint ley line clearings.
 - Hope physically heavier — reflected in gameplay (debuff mechanics, resource pressure).
@@ -319,7 +319,7 @@ The game tracks world state through flags. Each flag, when set, cascades changes
 | # | Flag Name | Trigger | World Changes | NPCs Affected |
 |---|-----------|---------|---------------|---------------|
 | 52 | `campfire_complete` | Player (as Edren) speaks to all four companions at the campfire | Binary. Triggers group moment: Edren says something that binds the party. If the player walks to the exit without speaking to everyone, the march begins without it. | Edren, Lira, Torren, Sable, Maren |
-| 28 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive greyscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
+| 28 | `grey_march_begins` | Party enters the Pallor Wastes | Point of no return warning. Progressive grayscale palette shift begins. No shops, limited save points. Pallor manifestation gauntlet starts. | None (the world narrows) |
 | 29 | `trial_edren_complete` | Edren completes the Hall of Crowns in the Pallor Wastes | Edren unlocks Steadfast Resolve ability. Trial clearing becomes a temporary safe zone. Edren confronts phantom kings who demand he justify every life lost under his command. | Edren |
 | 30 | `trial_lira_complete` | Lira completes the Unfinished Forge | Lira unlocks latent weapon forge ability. The most emotionally devastating trial — she must build something that works without Cael's hands beside hers. | Lira |
 | 31 | `trial_torren_complete` | Torren completes the Silent Grove | Torren unlocks Rootsong ability. The spirits' accusations force him to accept imperfect protection over abandonment. | Torren |

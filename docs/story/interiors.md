@@ -318,7 +318,7 @@ Legend (additions):
 - Timber columns (`|`) support the ceiling. The beams above are blackened by smoke. The stone floor has grooves worn by feet.
 - Prayer alcoves (`P`) are recessed into the side walls -- small niches where monks kneel alone. In the Interlude, prayer stones in these alcoves show grey frost.
 - Weapon racks (`W`) hang beside prayer alcoves near the entrance. Swords next to meditation beads. The Vigil fights and prays.
-- A stone font (`s`) near the entrance holds blessed water. Interaction: cure all status ailments (once per visit; shares blessing with Father Aldous — using one greys out the other).
+- A stone font (`s`) near the entrance holds blessed water. Interaction: cure all status ailments (once per visit; shares blessing with Father Aldous — using one grays out the other).
 - Father Aldous (`@`) stands before the hearth, tending it. Provides blessing (restore 25% HP to all party OR cure all status ailments — player chooses one; once per visit). Shares blessing with the font. His dialogue changes across acts but his position never does.
 
 **Edren's position (Interlude):** Edren (`E`) sits on the middle bench, facing the hearth. Not at the end of a bench -- in the middle, taking up space he has no right to. He is not praying. He is not sleeping. He is sitting. The player must speak to him to trigger the Pallor Hollow boss fight. After the fight, he stands.
@@ -1726,7 +1726,7 @@ Changes from Act II:
 - Floor tiles show grey creep from edges inward on 3-4 tiles
 - All furniture is intact but colorless -- like a photograph bleached by sun
 - The rug's pattern is barely visible through the grey
-- Bookshelves: the books' spines have greyed. Examining: "The pages crumble at touch."
+- Bookshelves: the books' spines have grayed. Examining: "The pages crumble at touch."
 - The child's toy on the rug has turned grey. Examinable: "Cold stone. It was wood yesterday."
 - No NPCs. No rats. No insects. No ambient life of any kind.
 - The interior is recognizable but dead. The shape of a home with none of its life.
@@ -1905,7 +1905,7 @@ Ground Floor -- Act I State:
 #.WW...FF...k..#     FF = fireplace COLD (ley-tap dimmed, amber reduced to faint flicker)
 #.WW...FF..mm.#     Map table: pins removed hastily, scratch marks
 #.k............#     @ REMOVED -- Maren is GONE
-#..~..a......K.#     Root tendrils: greying at tips (Stage 1 corruption beginning)
+#..~..a......K.#     Root tendrils: graying at tips (Stage 1 corruption beginning)
 #......r.....K.#     Reading chair undisturbed (she didn't sit down before leaving)
 #..............#     Spirit creatures: GONE. Perches empty.
 #.......b.b..~.#     Cot: books still piled, plus a hastily written NOTE
@@ -1918,7 +1918,7 @@ Changes from Act I:
 - Books scattered on floor (3-4 loose book tiles) -- she grabbed specific volumes in haste
 - Fireplace dim -- the ley-line tap is weakening. Amber reduced to faint flicker.
 - Spirit creatures GONE. The perches are empty. The absence is felt.
-- Root tendrils greying at tips -- the forest is beginning to fail
+- Root tendrils graying at tips -- the forest is beginning to fail
 - A NOTE on the cot (interactable):
   "Gone to the Archive. If I'm not back in a month, I was wrong. Don't follow."
 - Map pins removed -- she took her research with her
@@ -1939,7 +1939,7 @@ Changes from Act I:
 #.WW...FF..mm.#     Map table: new pins in new positions
 #..............#     @ NOT PRESENT -- Maren is elsewhere, but her presence is felt
 #..~..a..n...K.#     n = NEW books (different spines, post-war publications)
-#......r.....K.#     Root tendrils: living, GREEN (new growth around greyed sections)
+#......r.....K.#     Root tendrils: living, GREEN (new growth around grayed sections)
 #..p.........K.#     Spirit creatures inside: more than before, new species
 #.......b.b..~.#     Cot: books still on it. Same habit. Some are new.
 #..p...........#
@@ -1953,7 +1953,7 @@ Changes from Interlude:
 - Fireplace BRIGHTER than Act I -- the ley-line tap has been restored and strengthened
 - Spirit creatures returned in greater numbers. New species (a small bird-like shape,
   something crystalline). They are bolder -- not just perching but moving through the room.
-- Root tendrils show new green growth around the greyed sections. The grey persists as
+- Root tendrils show new green growth around the grayed sections. The grey persists as
   scars, but living wood wraps around it. The roots remember and grow anyway.
 - The work desk has new notes -- not in Maren's handwriting. Others have used the space.
   Examinable: "Research notes in three different hands. Someone is continuing her work."

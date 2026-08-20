@@ -90,7 +90,7 @@ All palettes use 8-12 hex colors per biome. These are not exhaustive sprite pale
 
 ### 2. Carradan Industrial
 
-**Description:** Brick, iron, smog, and amber forge-light. The Carradan Compact builds upward and outward without restraint. Every surface is functional. Beauty, where it exists, is accidental -- the way firelight catches on polished brass, or the geometric pattern of factory windows at dusk. The palette is warm but oppressive: oranges, browns, and greys that press inward.
+**Description:** Brick, iron, smog, and amber forge-light. The Carradan Compact builds upward and outward without restraint. Every surface is functional. Beauty, where it exists, is accidental -- the way firelight catches on polished brass, or the geometric pattern of factory windows at dusk. The palette is warm but oppressive: oranges, browns, and grays that press inward.
 
 **Color Palette:**
 
@@ -886,7 +886,7 @@ The Pallor does not have its own natural biome until the Wastes of Act III. Inst
 | Thornmere Wetlands | Will-o'-wisps pulse irregularly. Water surface is flatter, less reflective. Dead fish appear. |
 | Mountain / Alpine | Frost patterns simplify. Wind drops. The silence is heavier. |
 | Coastal / Harbor | Tide marks higher. Gull calls less frequent. One offshore rig is dark. |
-| Ashlands | Already so muted that Stage 1 is nearly invisible. The ash is slightly greyer. |
+| Ashlands | Already so muted that Stage 1 is nearly invisible. The ash is slightly grayer. |
 
 #### Stage 2: Mid Corruption (Obvious)
 **When it appears:** Interlude proper. The player cannot miss this.

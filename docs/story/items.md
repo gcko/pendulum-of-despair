@@ -306,7 +306,7 @@ Lv 1–4: AoE 100 dmg, 1 use. Lv 5: AoE 2,000 dmg, 1 use. The Shard is functiona
 
 ### Axis Tower Suppression
 
-- **Axis Tower Floor 1:** All invocations are greyed out in the Magic menu ("Ley interference detected").
+- **Axis Tower Floor 1:** All invocations are grayed out in the Magic menu ("Ley interference detected").
 - **Stat bonuses still apply** — passive, permanent bonuses from crystals are unaffected.
 - **Only invocations are suppressed** (active abilities). Standard spells and abilities function normally.
 - **Restored** after defeating Kole and destroying the conduit crystals.

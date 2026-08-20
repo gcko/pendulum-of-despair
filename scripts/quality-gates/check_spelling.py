@@ -113,15 +113,19 @@ scripts), `docs/superpowers/` (see its README), and closed-issue titles.
 `docs/plans/` and `docs/analysis/` are *in* scope: #375 found the earlier
 "dated record" classification wrong for both.
 
-**The ratchet.** 44 violations across 20 files already existed when this
-gate landed, all of them doc prose in files owned by other in-flight
-branches. A gate that fails on pre-existing hits is a gate nobody can
-switch on, so those are pinned in `KNOWN_VIOLATIONS` below with their
-counts. The pin fails at *both* ends: an unpinned hit fails, a pinned count
-that grows fails, and a pinned count that *shrinks* — because the fix
-landed — also fails, so the list can only shrink and no entry outlives its
-reason. Pinning is not a way to add a violation; the fix for a new one is
-the American spelling.
+**The ratchet, now empty.** 44 violations across 20 files already existed
+when this gate landed, all of them doc prose or code comments in files
+owned by other in-flight branches. A gate that fails on pre-existing hits
+is a gate nobody can switch on, so those were pinned in `KNOWN_VIOLATIONS`
+below with their counts. #411 fixed the 41 inflected-`grey` sites and #412
+the three `-ise` ones, so the dict is empty and every hit the four families
+find now fails the gate outright. The machinery stays because the pin fails
+at *both* ends: an unpinned hit fails, a pinned count that grows fails, and
+a pinned count that *shrinks* — because the fix landed — also fails, so the
+list can only shrink and no entry outlives its reason. That is what let the
+burn-down prove itself: a pin left behind after its site was fixed failed
+the gate. Pinning is not a way to add a violation; the fix for a new one is
+the American spelling, and an empty dict is the state to keep it in.
 
 **Non-vacuity.** A scan that reads nothing reports nothing wrong, which is
 indistinguishable from a clean tree (#365). #400 named the specific trap:
@@ -429,38 +433,17 @@ FAMILIES: tuple[Family, ...] = (
 # a sibling branch edits a doc, and a ratchet that goes stale on unrelated
 # edits gets deleted rather than fixed.
 #
-# Every entry below is doc prose or a code comment in a file owned by
-# another in-flight branch of the "Infra & Docs II" milestone. None is a
-# string the engine emits: the two `docs/story/script/` entries are stage
-# direction and a UI note, not `lines[]` dialogue.
+# It is EMPTY, and that is the state to keep it in. The 44 occurrences it
+# carried at launch — 41 inflected `grey` (#411) and three `-ise` (#412) —
+# are fixed in the tree, so every hit the four families find now fails the
+# gate outright, with nothing grandfathered.
 #
 # This list may shrink. It may not grow — a new hit is a defect, and the fix
-# is the American spelling, not a pin. Drop or decrement an entry in the same
+# is the American spelling, not a pin. If a future gate widening ever needs
+# to land on a dirty corpus again, drop or decrement each entry in the same
 # commit that fixes its sites; the gate fails on a count that no longer
-# matches, so a stale pin cannot sit here unnoticed. #411 burns down the 41
-# inflected-`grey` pins, #412 the three `-ise` ones.
-KNOWN_VIOLATIONS: dict[str, dict[str, int]] = {
-    "docs/analysis/game-dev-gaps.md": {"greyed": 3},
-    "docs/story/abilities.md": {"generalisation": 1, "greyed": 1},
-    "docs/story/accessibility.md": {"greyed": 1},
-    "docs/story/audio.md": {"greyed": 1},
-    "docs/story/biomes.md": {"greyer": 1, "greys": 1},
-    "docs/story/city-carradan.md": {"greyer": 1},
-    "docs/story/city-thornmere.md": {"greying": 2},
-    "docs/story/city-valdris.md": {"greyed": 1},
-    "docs/story/crafting.md": {"greyed": 1},
-    "docs/story/dungeons-world.md": {"greyscale": 1},
-    "docs/story/dynamic-world.md": {"greyed": 2, "greyer": 2, "greying": 3},
-    "docs/story/events.md": {"greyscale": 2},
-    "docs/story/interiors.md": {"greyed": 3, "greying": 2, "greys": 1},
-    "docs/story/items.md": {"greyed": 1},
-    "docs/story/save-system.md": {"greys": 1},
-    "docs/story/script/battle-dialogue.md": {"greyed": 1},
-    "docs/story/script/interlude.md": {"greying": 1},
-    "docs/story/ui-design.md": {"greyed": 7, "greying": 1},
-    "game/scripts/autoload/save_manager.gd": {"materialising": 1},
-    "game/scripts/ui/dialogue_box.gd": {"materialises": 1},
-}
+# matches, so a stale pin cannot sit here unnoticed.
+KNOWN_VIOLATIONS: dict[str, dict[str, int]] = {}
 
 
 class Hit(NamedTuple):

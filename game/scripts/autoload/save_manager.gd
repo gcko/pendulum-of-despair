@@ -216,7 +216,7 @@ func _migrate(data: Dictionary) -> Dictionary:
 ## v1 wrote `world.current_position` as a hardcoded (0,0) for every save (#269),
 ## so the stored value carries no information about where the player actually
 ## stood. Dropping the key is deliberate: an absent position means "spawn at the
-## map's default marker", which keeps an old save from materialising the party
+## map's default marker", which keeps an old save from materializing the party
 ## inside geometry at the map origin.
 ##
 ## v1 also routed every acquired item into the consumables bucket, so crafting

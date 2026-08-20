@@ -461,7 +461,7 @@ Full city. All ley-lamps lit. Markets bustling. Children in the Lower Ward. Flow
 
 **Visual changes:**
 - All ley-lamps dark. Towers are black silhouettes against grey sky.
-- Limestone greyed -- warm pale color replaced with cold grey-beige
+- Limestone grayed -- warm pale color replaced with cold grey-beige
 - Grey dust in corners and on windowsills
 - Permanent overcast, grey filter on palette
 - Stage 1-2 Pallor corruption
