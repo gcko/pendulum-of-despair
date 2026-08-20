@@ -685,8 +685,11 @@ before then.
 [combat-formulas.md](combat-formulas.md) § Element Matchup Wheel states the
 element relationships, but `Enemy.get_element_multiplier()` computes the
 multiplier from the target's own `weaknesses`, `resistances` and `absorb` lists
-in `game/data/enemies/*.json` and from nothing else. Measured against the
-shipped bestiary, the throw to avoid is not the one the wheel suggests:
+in `game/data/enemies/*.json` and from nothing else — a divergence from that
+table which is tracked as
+[#448](https://github.com/gcko/pendulum-of-despair/issues/448) and which this
+section will need revisiting once it lands. Measured against the shipped
+bestiary, the throw to avoid is not the one the wheel suggests:
 
 - **No shipped enemy is immune to any element.** The engine supports it —
   `Enemy.is_immune_to()` reads an `immunities` list — but that list is absent
