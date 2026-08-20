@@ -49,6 +49,14 @@ authorized push point in the entire pr-review-response workflow.
 |------|---------|
 | **Install tooling** | `pnpm install` |
 | **Open in editor** | Open `game/` directory in Godot 4.7+ editor (no main scene yet — editor only, not runnable) |
+| **Run the gates on work the hooks cannot see yet** | `bash scripts/gates.sh` (add `GATES_BASE=<parent>` on a stacked branch) |
+
+`scripts/gates.sh` does not replace the hooks and is not a general "run the
+tests" command — `/create-pr`'s Iron Rule still holds, and the hooks still run
+on every commit and push. Reach for the script only where the hooks are blind:
+work sitting uncommitted in a parallel worktree, or a stacked branch that must
+be judged against its own parent rather than `main`. It also serializes headless
+Godot, which matters when several worktrees run at once.
 
 ---
 
@@ -135,6 +143,10 @@ git commit -m "docs(story): add combat formulas"
 | Hooks not running | `pnpm install` (reinstalls husky) |
 | Commitlint rejects message | Check format: `type(scope): description` |
 | Cross-branch work | Use `git worktree add ../name branch` |
+| PR shows `BLOCKED`, CI green, no reason given | An **unsigned commit**. `main`'s rule is a *ruleset*, so `gh api repos/.../branches/main/protection` returns 404 and tells you nothing. Check `git log --format='%h %G? %s' main..HEAD` for `N`; fix with `git rebase --force-rebase --gpg-sign <base>` — plain `--gpg-sign` is a **no-op** when the branch is already current |
+| Issues stay open after a stacked PR merges | GitHub binds `Closes #N` only for PRs targeting the default branch **at creation**. A PR auto-retargeted to `main` after its parent merges never re-parses them. Verify each issue closed, close the stragglers by hand, then re-audit the project board for closed-but-not-Done |
+| `TEST COUNT REGRESSION` after deleting a test on purpose | The floor lives in `scripts/quality-gates/gut-baseline.txt`. Lower it in the **same commit** and name the deleted tests in the body. Never keep a worthless test alive to hold the number up |
+| Asset tests fail locally but pass in CI | Poisoned Godot import sidecars. `grep -rl 'valid=false' game/assets --include='*.import'`. They sit **beside** the asset, so `rm -rf game/.godot` does not clear them and repeated `--import` will not retry them. Delete the sidecars themselves, then re-import |
 
 ---
 

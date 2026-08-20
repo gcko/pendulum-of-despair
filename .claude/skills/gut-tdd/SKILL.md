@@ -45,6 +45,90 @@ loop you actually run.
 
 Repeat one behavior at a time. One assertion's worth of progress per loop.
 
+## Every test must pin observable behavior (BDD)
+
+Before writing or keeping a test, answer one question:
+
+> **What player- or caller-observable behavior does this pin?**
+
+If the honest answer is "none", **delete it**. Removal is a normal outcome
+here, not a last resort. A test that only proves the implementation is
+currently shaped the way it is shaped costs maintenance, fails on harmless
+refactors, and stays green while real behavior breaks.
+
+If it pins real behavior, drive it through the seam a real caller uses and
+assert the outcome the test is NAMED after.
+
+### Why this is not style advice
+
+Reaching into privates to observe is what makes a suite flaky. Internal state
+gets read before it settles, so the test races. Both flaky suites in this repo
+were the same defect wearing two hats:
+
+- `test_audio_manager.gd` asserted `_am._music_active.playing` immediately
+  after starting a zero-length `AudioStreamWAV.new()`. The stream ended before
+  the next statement ran, on a loaded machine. The assertion was also a poor
+  proxy for its own name: the test exists to prove the crossfade **swapped
+  players**, and `playing` was the incidental part that raced.
+- `test_materials_inventory.gd` set an ATB gauge, waited a fixed
+  `wait_frames(2)`, then issued a battle command. Under load the actor was not
+  ready, the command was rejected, and both assertions failed together.
+
+Fix a flake by removing the race — assert the settled outcome, through a public
+seam. **Never** by waiting longer, retrying, loosening the assertion, skipping
+the test, or changing engine code to make a test pass. Those keep a worthless
+test alive.
+
+### The payoff: an unchanged test suite is usable evidence
+
+Once a suite is behavioral, a behavior-preserving refactor needs **zero test
+edits**, so an empty test diff over a green suite is evidence the refactor kept
+the behavior the suite pins:
+
+```bash
+git diff --stat main...HEAD -- game/tests    # empty, alongside a green full run
+```
+
+It is evidence, not proof, and the gap is worth knowing:
+
+- It says nothing unless the suite actually ran. `scripts/gates.sh` skips Godot
+  on a diff that touches no `game/` file, so read the `Scripts`/`Tests` counts
+  from a real run rather than inferring green from an exit code.
+- It only covers behavior the suite pins. 46 test files assert over JSON loaded
+  through `DataManager`, so a change under `game/data/` moves behavior with the
+  test diff empty; `.tscn` and `project.godot` are outside both paths.
+- A refactor that ADDS public API leaves the diff empty too. Empty means
+  "nothing the suite pins moved", not "nothing moved".
+
+`audio_manager.gd` was decomposed 536 -> 333 lines across three new
+collaborators with that diff empty and the public API byte-identical. The same
+refactor was unsafe a week earlier, when the suite pinned private fields — any
+move destroyed the evidence, which is exactly why the architecture doc had
+exempted the file from its size budget.
+
+So when a refactor makes you want to edit a test, stop and ask which case you
+are in. Usually it is the refactor changing behavior. But the two exceptions
+above are live in a suite that is not behavioral yet: a test that pins no
+observable behavior should be deleted, and a test reaching into privates should
+be rewritten through a public seam. Both are legitimate `game/tests` edits —
+make each one its own commit with its own justification, separate from the
+refactor, so the refactor's diff stays readable as evidence.
+
+### Deleting tests deliberately
+
+Deleting a test drops the suite below the GUT floor, which `bash
+scripts/gates.sh` fails on. That is the silent-skip guard doing its job, not an
+obstacle.
+
+Know what does NOT catch it: the hooks. `.husky/pre-push` and the CI workflow
+both check `Failing Tests 0` and never read the `Scripts`/`Tests` counts, so a
+deleted — or parse-skipped — test file sails through both. Running `gates.sh`
+is the only thing that notices.
+
+- Update `scripts/quality-gates/gut-baseline.txt` in the SAME commit.
+- Name every deleted test with its one-line justification in the commit body.
+- Never keep a worthless test alive just to hold the number up.
+
 ## Run commands
 
 Godot binary: `godot` on PATH, else
