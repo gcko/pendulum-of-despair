@@ -1214,7 +1214,16 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {},
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
       "drop": {
         "item_id": "potion",
         "rate": 75
@@ -1243,7 +1252,16 @@
       "resistances": [],
       "absorb": [],
       "status_immunities": [],
-      "steal": {},
+      "steal": {
+        "common": {
+          "item_id": "potion",
+          "rate": 75
+        },
+        "rare": {
+          "item_id": "gold_pouch",
+          "rate": 25
+        }
+      },
       "drop": {
         "item_id": "antidote",
         "rate": 50

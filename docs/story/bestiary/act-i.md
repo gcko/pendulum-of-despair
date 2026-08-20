@@ -301,13 +301,23 @@ partly on Ember Vein enemies instead, documented in that section above.
 > is a deliberate, documented exception — the values are correct as shipped and
 > should not be "corrected" to the formula. (Compact Scout's HP 140 is within the
 > normal Lv 6 band.)
+>
+> **Steal (#309):** both units carry the Soldier / Compact family's Humanoid
+> steal pair — Potion (75%) common, Gold Pouch (25%) rare — the same pair every
+> other Humanoid in the corpus ships, including the family base Compact Soldier
+> and Act I's other Humanoid, Road Bandit
+> ([economy.md](../economy.md) § Steal Tiers by Enemy Type > 'Humanoid'; the
+> rare tier is derived, not tabled, per the enemy-data spec's Steal Mapping
+> Rule 2). Until #309 these two shipped `"steal": {}` — an empty object that is
+> neither of the two canon shapes — and the `—` this table used to show in their
+> Steal column was a transcription of that gap, not a design decision.
 
 Recommended party level: 5–6.
 
 | Name | Type | Lv | HP | MP | ATK | DEF | MAG | MDEF | SPD | Gold | Exp | Steal | Drop | Weak | Resists | Absorbs | Status Immunities | Location(s) |
 |------|------|----|----|----|----|-----|-----|------|-----|------|-----|-------|------|------|---------|---------|-------------------|-------------|
-| Compact Patrol | Humanoid | 5 | 180 | 0 | 16 | 14 | 8 | 10 | 10 | 30 | 18 | — | Potion (75%) | — | — | — | — | Ironmouth Docks (Scene 3) |
-| Compact Scout | Humanoid | 6 | 140 | 0 | 14 | 10 | 8 | 8 | 14 | 35 | 20 | — | Antidote (50%) | — | — | — | — | Ironmouth Docks (Scene 3) |
+| Compact Patrol | Humanoid | 5 | 180 | 0 | 16 | 14 | 8 | 10 | 10 | 30 | 18 | Potion (75%) | Potion (75%) | — | — | — | — | Ironmouth Docks (Scene 3) |
+| Compact Scout | Humanoid | 6 | 140 | 0 | 14 | 10 | 8 | 8 | 14 | 35 | 20 | Potion (75%) | Antidote (50%) | — | — | — | — | Ironmouth Docks (Scene 3) |
 
 ---
 
