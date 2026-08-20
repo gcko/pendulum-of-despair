@@ -142,14 +142,3 @@ write only that.
 - [ ] Every "enforced by" sentence checked against the code it names
 - [ ] Self-tests are actually run by a hook (pre-push Gate I discovers the
       directory), not only by `scripts/gates.sh`, which nothing runs for you
-
-### Known unwired gate
-
-The GUT count floor in `scripts/quality-gates/gut-baseline.txt` fails the
-"Wired into `.husky/pre-push`" item above: it has no pre-push letter, and
-neither the hook nor `.github/workflows/gut-tests.yml` reads it — both check
-`Failing Tests 0` and
-ignore the `Scripts`/`Tests` counts entirely. Only `bash scripts/gates.sh`
-enforces it, and only when someone runs it. So a parse-skipped or deleted test
-file passes both hooks today. Tracked as #430; recorded here rather than left as
-a silent violation of the list above. Delete this section when #430 lands.

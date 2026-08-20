@@ -37,25 +37,18 @@ say() { echo "[$NAME] $*"; }
 # not to: `[ "$SCRIPTS" -lt abc ]` prints "integer expression expected" and
 # evaluates FALSE, so a corrupted floor reported ALL GATES PASSED with the
 # silent-skip guard switched off. Validate the shape before trusting it.
+#
+# Reading the floors and judging a GUT log against them both live in
+# check_gut_baseline.py (pre-push Gate L) rather than here, so this script, the
+# hook and CI share ONE implementation and cannot drift apart in their parsing
+# or their diagnosis (#430). Its stdout is the value channel; diagnostics go to
+# stderr, which is why it is safe to eval.
 BASELINE_FILE="scripts/quality-gates/gut-baseline.txt"
-# Diagnostics go to stderr: stdout is the return channel for the value.
-read_floor() {
-  local key="$1" hits value
-  hits=$(grep -cE "^$key=" "$BASELINE_FILE" 2>/dev/null); hits=${hits:-0}
-  if [ "$hits" -ne 1 ]; then
-    say "$BASELINE_FILE: expected exactly one '$key=' line, found $hits" >&2; return 1
-  fi
-  value=$(grep -E "^$key=" "$BASELINE_FILE" | cut -d= -f2 | tr -d '[:space:]')
-  case "$value" in
-    ''|*[!0-9]*) say "$BASELINE_FILE: $key='$value' is not a number" >&2; return 1 ;;
-  esac
-  [ "$value" -gt 0 ] || { say "$BASELINE_FILE: $key=$value — a zero floor guards nothing" >&2; return 1; }
-  echo "$value"
-}
-MIN_SCRIPTS=$(read_floor scripts) || { say "refusing to run rather than pass vacuously"; exit 1; }
-MIN_TESTS=$(read_floor tests)     || { say "refusing to run rather than pass vacuously"; exit 1; }
-MIN_GATES=$(read_floor gates)     || { say "refusing to run rather than pass vacuously"; exit 1; }
-MIN_GATE_TESTS=$(read_floor gate_tests) || { say "refusing to run rather than pass vacuously"; exit 1; }
+GUT_FLOOR_GATE="scripts/quality-gates/check_gut_baseline.py"
+if ! FLOORS=$(python3 "$GUT_FLOOR_GATE" --baseline "$BASELINE_FILE" --shell --label "$NAME"); then
+  say "cannot read $BASELINE_FILE"; exit 1
+fi
+eval "$FLOORS"
 
 # --- What changed -----------------------------------------------------------
 # An unresolvable BASE used to produce an empty CHANGED with its error swallowed
@@ -195,23 +188,15 @@ say "GUT suite"
 "$GODOT" --headless --path game/ -s addons/gut/gut_cmdln.gd 2>&1 \
   | sed 's/\x1b\[[0-9;]*m//g' > "/tmp/gut_$NAME.log"
 GUT_STATUS=${PIPESTATUS[0]}
-SCRIPTS=$(grep -E "^Scripts " "/tmp/gut_$NAME.log" | awk '{print $NF}' | tail -1)
-TESTS=$(grep -E "^Tests " "/tmp/gut_$NAME.log" | awk '{print $NF}' | tail -1)
-PASSING=$(grep -E "^Passing Tests " "/tmp/gut_$NAME.log" | awk '{print $NF}' | tail -1)
-FAILING=$(grep -E "^Failing Tests " "/tmp/gut_$NAME.log" | awk '{print $NF}' | tail -1); FAILING=${FAILING:-0}
-say "RESULT scripts=$SCRIPTS tests=$TESTS passing=$PASSING failing=$FAILING (floors $MIN_SCRIPTS/$MIN_TESTS)"
 
 if [ "$GUT_STATUS" -ne 0 ]; then
   say "GODOT EXITED $GUT_STATUS — the suite's own summary is not evidence the process"
   say "  survived. See /tmp/gut_$NAME.log"; tail -30 "/tmp/gut_$NAME.log"; exit 1; fi
-if [ "${FAILING:-0}" != "0" ]; then
-  say "GUT FAILURES:"; grep -nE "^\s+\[Failed\]" "/tmp/gut_$NAME.log" | head -30; exit 1; fi
-if [ -z "$SCRIPTS" ] || [ "$SCRIPTS" -lt "$MIN_SCRIPTS" ]; then
-  say "SCRIPT COUNT REGRESSION: $SCRIPTS < $MIN_SCRIPTS — a test file is being SILENTLY SKIPPED (parse error),"
-  say "  or you removed one on purpose and owe $BASELINE_FILE an update."
-  grep -iE "Ignoring script|SCRIPT ERROR|Parse Error" "/tmp/gut_$NAME.log" | head -20; exit 1; fi
-if [ -z "$TESTS" ] || [ "$TESTS" -lt "$MIN_TESTS" ]; then
-  say "TEST COUNT REGRESSION: $TESTS < $MIN_TESTS — tests disappeared,"
-  say "  or you removed some on purpose and owe $BASELINE_FILE an update."; exit 1; fi
+
+# The summary, the failure verdict and the script/test floors: pre-push Gate L.
+# A log with no summary in it FAILS here rather than falling through the
+# comparisons, because a run that died before printing one is indistinguishable
+# from a run with nothing to report.
+python3 "$GUT_FLOOR_GATE" --baseline "$BASELINE_FILE" --log "/tmp/gut_$NAME.log" --label "$NAME" || exit 1
 
 say "ALL GATES PASSED"
