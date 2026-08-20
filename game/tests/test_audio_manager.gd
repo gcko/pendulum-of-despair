@@ -498,6 +498,18 @@ func test_entering_battle_cuts_to_the_battle_track_and_kills_the_ambient_bed() -
 	_am.enter_battle(REAL_BATTLE)
 	assert_eq(_am.get_current_music(), REAL_BATTLE, "The battle track should be current")
 	assert_false(_is_sounding("Music", theme), "The exploration track should be cut, not faded")
+	# The reported track is only a label; what the player hears is the battle
+	# stream loaded onto a music player at full volume. Asserted through the
+	# stream rather than `playing` because battle_standard.ogg is a 0.1-second
+	# placeholder that would end before the next statement runs.
+	var battle_stream: AudioStream = load("res://assets/music/%s.ogg" % REAL_BATTLE)
+	var battle_player: AudioStreamPlayer = _player_holding("Music", battle_stream)
+	assert_not_null(battle_player, "The battle track should be on a music player")
+	if battle_player != null:
+		assert_gt(
+			battle_player.volume_db, INAUDIBLE_DB, "The battle track should be at full volume"
+		)
+	assert_gt(_bus_db("Music"), INAUDIBLE_DB, "The music channel should carry the battle track")
 	assert_eq(_sounding_on("Ambient").size(), 0, "The ambient bed should be silenced")
 	assert_lte(_bus_db("Ambient"), INAUDIBLE_DB, "The battle mix should duck ambient to silence")
 
