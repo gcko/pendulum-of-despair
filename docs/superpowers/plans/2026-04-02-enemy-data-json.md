@@ -215,7 +215,7 @@ Bosses 1-31 from quick reference table + Vaelith Siege + extra Cael Phase 2 entr
 
 **Instructions:** Cross-reference every JSON file against its source bestiary file. Check:
 
-- [ ] **Step 1:** Verify enemy counts per file match expected totals (25, 33, 52, 69, 25)
+- [ ] **Step 1:** Verify enemy counts per file match expected totals (act_i 27, act_ii 38, interlude 47, act_iii 72, optional 25 — 209 records, boss records included)
 - [ ] **Step 2:** Spot-check 5 random enemies per file — verify every stat value matches source
 - [ ] **Step 3:** Verify all boss HP values match bosses.md quick reference exactly
 - [ ] **Step 4:** Verify all IDs are globally unique across all 5 files

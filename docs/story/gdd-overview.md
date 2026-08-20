@@ -138,8 +138,8 @@ Explore (overworld/towns) --> Fight (ATB encounters) --> Progress (level/equip/c
 | Category | Count | Source |
 |----------|-------|--------|
 | Party members | 6 playable + 2 guests | [characters.md](characters.md) |
-| Regular enemies | 204 | [bestiary/](bestiary/) |
-| Bosses | 31 (+ 1 scripted loss) | [bestiary/bosses.md](bestiary/bosses.md) |
+| Regular enemies | 173 (209 records incl. bosses) | [bestiary/](bestiary/) |
+| Bosses | 36 boss + mini-boss records (+ 1 scripted loss) | [bestiary/bosses.md](bestiary/bosses.md) |
 | Palette-swap families | 32 | [bestiary/palette-families.md](bestiary/palette-families.md) |
 | Consumable items | 33 | [items.md](items.md) |
 | Equipment (weapons) | 56 | [equipment.md](equipment.md) |

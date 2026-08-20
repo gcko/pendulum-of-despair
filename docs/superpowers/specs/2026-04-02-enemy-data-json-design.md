@@ -196,7 +196,7 @@ Boss records — which live in the act tables alongside their encounter neighbou
 ### Intentional Exclusions
 
 - **Enemy abilities/AI scripts:** Not encoded in JSON. Abilities are runtime behavior implemented in GDScript (future gaps). Boss AI scripts live in bosses.md and will be implemented as GDScript state machines.
-  > **Superseded (GAP-024 / GAP-009):** both are now data. 19 Act I enemies carry an
+  > **Superseded (GAP-024 / GAP-009):** both are now data. 22 Act I enemies carry an
   > `abilities` array and the four migrated Act I bosses carry a `boss_ai` object,
   > read by `combat/battle_ai.gd` / `combat/battle_actions.gd` and
   > `combat/boss_ai.gd`. The schema for
@@ -208,13 +208,18 @@ Boss records — which live in the act tables alongside their encounter neighbou
 
 | File | Source | Enemies |
 |------|--------|---------|
-| `game/data/enemies/act_i.json` | bestiary/act-i.md | 25 |
-| `game/data/enemies/act_ii.json` | bestiary/act-ii.md | 33 |
-| `game/data/enemies/interlude.json` | bestiary/interlude.md | 52 |
-| `game/data/enemies/act_iii.json` | bestiary/act-iii.md | 69 |
+| `game/data/enemies/act_i.json` | bestiary/act-i.md | 27 |
+| `game/data/enemies/act_ii.json` | bestiary/act-ii.md | 38 |
+| `game/data/enemies/interlude.json` | bestiary/interlude.md | 47 |
+| `game/data/enemies/act_iii.json` | bestiary/act-iii.md | 72 |
 | `game/data/enemies/optional.json` | bestiary/optional.md | 25 |
 
-Act files include ALL enemies for that act, regular **and** boss. There is no separate boss file.
+Act files include ALL enemies for that act, regular **and** boss — 209 records
+in total. There is no separate boss file. The counts above are the shipped ones,
+re-derived from the JSON in 2026-08; the column used to hold this spec's
+*planned* totals (25 / 33 / 52 / 69 / 25 = 204), which drifted from the tables
+as they were written and never matched the bestiary (act-i.md alone documents
+27).
 
 > **Correction (#330, 2026-08):** this table used to promise a sixth file,
 > `game/data/enemies/bosses.json`, holding 35 entries, and justified the

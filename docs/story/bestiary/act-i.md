@@ -303,12 +303,18 @@ partly on Ember Vein enemies instead, documented in that section above.
 > normal Lv 6 band.)
 >
 > **Steal (#309):** both units carry the Soldier / Compact family's Humanoid
-> steal pair — Potion (75%) common, Gold Pouch (25%) rare — the same pair every
-> other Humanoid in the corpus ships, including the family base Compact Soldier
-> and Act I's other Humanoid, Road Bandit
+> steal pair — Potion (75%) common, Gold Pouch (25%) rare — including the family
+> base Compact Soldier and Act I's other Humanoid, Road Bandit
 > ([economy.md](../economy.md) § Steal Tiers by Enemy Type > 'Humanoid'; the
 > rare tier is derived, not tabled, per the enemy-data spec's Steal Mapping
-> Rule 2). Until #309 these two shipped `"steal": {}` — an empty object that is
+> Rule 2). That pair is what 16 of the corpus's 19 Humanoid records ship; the
+> three that differ each differ for a documented reason. Pallor-Touched Worker
+> has no rare tier at all — the enemy-data spec's Special Cases table encodes him
+> as a victim rather than a combatant — and the Dreamer's Fault uniques
+> Glyphscribe and Bough Knight swap the common tier for their own material,
+> Ancient Glyph and Living Bark.
+>
+> Until #309 these two shipped `"steal": {}` — an empty object that is
 > neither of the two canon shapes — and the `—` this table used to show in their
 > Steal column was a transcription of that gap, not a design decision.
 

@@ -116,7 +116,7 @@ RULES:
 - `bosses` array = mini-bosses and dungeon bosses. `trigger` = zone/interact/cutscene/hp_threshold
 - Boss corridors (Tier 0) are NOT in the floors array — no random encounters there
 - Weights per floor MUST sum to exactly 100
-- All enemy_ids MUST be snake_case and MUST exist in `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional,bosses}.json` (6 files total)
+- All enemy_ids MUST be snake_case and MUST exist in `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional}.json` (5 files total; the `bosses.json` this plan once promised was never built and its stub is deleted — boss records live in the act files, #330)
 
 ACT I DUNGEONS (2 files) — with explicit act values:
 1. ember_vein — act: act_i, 4 floors, 2 floor-groups, Tier 2 standard
@@ -412,7 +412,7 @@ SYNERGIES (7): penitents_edge, stormforge_hammer, rootbound_lance, resonance_sta
 ### Task 9: Cross-reference encounter enemy_ids against gap 1.2
 
 - [ ] **Step 1:** Extract all enemy_ids from all 27 encounter files (groups + bosses)
-- [ ] **Step 2:** Load all enemy IDs from `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional,bosses}.json`
+- [ ] **Step 2:** Load all enemy IDs from `game/data/enemies/{act_i,act_ii,interlude,act_iii,optional}.json`
 - [ ] **Step 3:** Report any enemy_id not found — these are gaps
 - [ ] **Step 4:** Fix any missing references (either correct the ID or flag as a design doc gap)
 

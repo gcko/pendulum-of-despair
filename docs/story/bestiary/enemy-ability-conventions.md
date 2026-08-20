@@ -164,8 +164,12 @@ Two rules govern which of the family's abilities a non-tier record gets:
    weaker than Bone Warden. It therefore adds the Shade family's next tabled
    ability, **Darkness** (Blind, single target — `palette-families.md § Shade
    Family > 'Crypt Shade'`), at §2.2's spell power and §2.5's status rate.
-   This gives it two abilities, matching every other 2-ability Act I record
-   (Bone Warden, Marsh Serpent, Wayward Wolf).
+   This gives it two abilities, which is the ordinary size for a record that
+   outranks its family base: six other Act I records carry exactly two (Bone
+   Warden, Drowned Bones, Ley Jellyfish, Marsh Serpent, Polluted Elemental,
+   Wayward Wolf). Two is not the Act I ceiling — Corrupted Spawn carries four —
+   but nothing in the Shade family's table supports going past the one ability
+   this rule licenses.
 
 **Cover is deferred, not assigned.** The Soldier family's other Tier 1 move,
 *Cover (protects adjacent ally)*, is a targeting-redirect mechanic with no
@@ -275,7 +279,9 @@ These Act I kit items reference mechanics the docs do not yet define; they are
 > Drift via the `random` selector) is fully populated.
 - **The full Act I roster.** GAP-024's first pass populated a representative
   subset proving each mechanic end-to-end; the remaining family kits followed.
-  As of #257 the Act I roster is complete except **Bog Leech**, whose only
-  documented move is *Latch* (HP drain, deferred above). The four Act I
+  As of #257 the Act I roster is complete except **Bog Leech**, whose two
+  documented moves — *Latch* (HP drain) and *Bloat* (self-destruct at full HP,
+  `palette-families.md § Leech Family`) — are both on the deferral list above,
+  so it ships no `abilities` array at all. The four Act I
   bosses and mini-bosses carry no `abilities` array by design — their moves
   live in `boss_ai.moves` (§3).
