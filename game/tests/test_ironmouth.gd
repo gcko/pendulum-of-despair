@@ -4,6 +4,7 @@ extends GutTest
 const BattleActions = preload("res://scripts/combat/battle_actions.gd")
 const BattleState = preload("res://scripts/combat/battle_state.gd")
 const ENEMY_SCENE: PackedScene = preload("res://scenes/entities/enemy.tscn")
+const EXPLORATION_SCENE: PackedScene = preload("res://scenes/core/exploration.tscn")
 
 
 func before_each() -> void:
@@ -15,24 +16,38 @@ func after_each() -> void:
 	TestHelpers.reset_game_state()
 
 
-## Surviving the ambush is what puts Lira and Sable in the party. The flag
-## gating itself is pinned against ironmouth_docks.tscn's own trigger
+## Surviving the ambush is what puts Lira and Sable in the party, and
+## progression.md's Join Rule fixes the level they arrive at:
+## `max(1, floor(party_average_level) - 1)` — one rung *under* the party, never
+## level 1. Walking onto a map with the flag set is the real path
+## (exploration.gd `_ready` -> ExplorationPartyJoins.check_join_flags), so the
+## test drives that rather than calling add_member itself; a hand-written
+## add_member would pin PartyState's storage and nothing about the join level.
+## The flag gating itself is pinned against ironmouth_docks.tscn's own trigger
 ## metadata in test_opening_sequence.gd.
-func test_ambush_survivors_join_the_party_at_the_party_average_level() -> void:
-	var avg_level: int = 3
-	PartyState.add_member("lira", avg_level)
-	PartyState.add_member("sable", avg_level)
-	assert_true(PartyState.has_member("lira"), "Lira should be in party")
-	assert_true(PartyState.has_member("sable"), "Sable should be in party")
+func test_ambush_survivors_join_one_level_under_the_party() -> void:
+	for member: Dictionary in PartyState.members:
+		member["level"] = 8
+	EventFlags.set_flag("carradan_ambush_survived", true)
+	GameManager.transition_data = {}
+	var exploration: Node2D = EXPLORATION_SCENE.instantiate()
+	add_child_autofree(exploration)
+
+	assert_true(PartyState.has_member("lira"), "Lira joins on the ambush flag")
+	assert_true(PartyState.has_member("sable"), "Sable joins on the ambush flag")
+	# Edren and Cael are both level 8, so Lira is max(1, floor(8) - 1) = 7.
 	assert_eq(
 		int(PartyState.get_member("lira").get("level", 0)),
-		avg_level,
-		"Lira joins scaled to the party, not at level 1",
+		7,
+		"Lira joins one under the level-8 party, not at level 1",
 	)
+	# The average is recomputed for each joiner in turn, so Sable is measured
+	# against [8, 8, 7]: max(1, floor(7.66) - 1) = 6. Whether two simultaneous
+	# joiners should instead share the pre-ambush average is tracked in #438.
 	assert_eq(
 		int(PartyState.get_member("sable").get("level", 0)),
-		avg_level,
-		"Sable joins scaled to the party, not at level 1",
+		6,
+		"Sable joins one under the party Lira just widened, not at level 1",
 	)
 
 
