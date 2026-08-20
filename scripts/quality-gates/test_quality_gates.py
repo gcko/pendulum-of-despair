@@ -869,17 +869,129 @@ class TestCheckDocCitations(unittest.TestCase):
         self.assertIsNotNone(hit)
         self.assertEqual(hit[2], "1.2a Script Size Budget")
 
-    def test_the_refusal_stops_at_one_word(self):
-        """Longer buried prefixes are still accepted, and #416 says so.
+    # ── The floor moved off one word (#416) ────────────────────────────
+    #
+    # The tests above pinned the refusal at a single word, and said in so
+    # many words that the day #416 moved it, the test that changed would be
+    # the signal. This is that change, made on purpose.
+    #
+    # The subject rule now runs at every prefix length the resolver had to
+    # *shorten* to. What separates a legal shortening from an invented
+    # heading was never how many words survived — ``§ Act scaling`` (one
+    # word) and ``§ Enemy Act scaling`` (two) are the same defect — it is
+    # whether the survivors still reach what the heading is about. So the
+    # trigger is the discard, not the count: ``own > k``.
+    #
+    # Measured against the live tree by running the gate under each
+    # variant. As landed it refuses 0 live citations. Drop the discard gate
+    # and it refuses 5 — ``§ Caden`` and ``§ Convergence Meadow`` among them.
+    # Require the subject to come *first* among the kept words and it refuses
+    # 3. Stop stepping over a leading article and the corpus survives, but
+    # ``§ Diplomatic Mission`` and ``§ World Changes`` stop naming their own
+    # headings; that step is pinned by test rather than by the tree, and the
+    # test below says so.
 
-        ``World Changes`` is not the subject of ``### The World Changes``
-        either, but two words is a claim the subject rule does not reach.
-        Pinning the boundary here means the day #416 moves it, this test is
-        the one that says the behavior changed on purpose.
+    def test_a_shortened_two_word_prefix_must_still_reach_the_subject(self):
+        """``§ Enemy Act scaling`` is ``§ Act scaling`` one word wider.
+
+        ``enemy act`` is a subsequence of ``### Regular Enemy HP by Act``'s
+        breadcrumb exactly as ``act`` alone was, and the word that carried
+        the citation's meaning — ``scaling`` — is the one the resolver threw
+        away. Before #416 the extra word bought it a pass.
+        """
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        hit = check_doc_citations.match_heading(
+            check_doc_citations.DocIndex(),
+            "docs/story/combat-formulas.md",
+            "Enemy Act scaling",
+        )
+        self.assertIsNone(hit)
+
+    def test_the_416_shape_fails_the_whole_scan(self):
+        """End to end, not just the resolver: the gate must report it."""
+        self._write("docs/story/combat-formulas.md", ACT_SCALING_FIXTURE)
+        self._write(
+            "docs/story/geography.md",
+            "see [combat-formulas.md](combat-formulas.md) "
+            "§ Enemy Act scaling for why.\n",
+        )
+        errors = self._errors()
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("names no heading", errors[0])
+        self.assertIn("Enemy Act scaling", errors[0])
+
+    def test_a_shortened_prefix_that_keeps_the_subject_still_resolves(self):
+        """``§ World Changes and ...`` survives, and now for a stated reason.
+
+        This assertion is unchanged from the test that pinned the old
+        one-word boundary; what changed is why it holds. ``World`` is the
+        subject of ``### The World Changes`` once the article is stepped
+        over, so the shortening kept what the heading is about. Without the
+        article step this line fails. The live tree does not currently
+        exercise it — this test is the only thing holding the step in place,
+        which is why it says so out loud.
         """
         hit = self._resolve("World Changes and the map redraws")
         self.assertIsNotNone(hit)
         self.assertEqual(hit[2], "The World Changes")
+
+    def test_the_subject_may_be_reached_through_an_ancestor(self):
+        """``§ Interlude World Changes ...``: kept words span the path.
+
+        The subject has to be *among* the kept words, not first among them —
+        a breadcrumb citation spends its opening words on ancestors, the way
+        ``outline.md § Act II Siege`` does. Requiring the subject first
+        refuses 3 live citations, including ``dungeons-world.md § The
+        Diplomatic Mission makes the same sequence explicit``.
+        """
+        hit = self._resolve("Interlude World Changes and the map redraws")
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "The World Changes")
+
+    def test_a_citation_that_discards_nothing_is_not_held_to_the_subject(
+        self,
+    ):
+        """``§ Costs`` resolves where ``§ Costs of travel`` does not.
+
+        This is the hole #416 leaves open, pinned so it is a documented
+        boundary rather than an oversight. A citation that spends every word
+        it offered has discarded nothing, so there is no discarded word to
+        hold to the heading — ``Costs`` reaches ``## Inn Costs`` on the bare
+        breadcrumb subsequence, exactly as the live ``dynamic-world.md
+        § Convergence Meadow`` reaches ``### First Tree Seed Scene
+        (Convergence Meadow)``. A wrong citation of that shape is
+        indistinguishable from a right one by anything the resolver sees.
+        ``main`` prints how many resolutions leaned on shortening so the
+        exposure is a number someone can watch.
+        """
+        hit = self._resolve("Costs")
+        self.assertIsNotNone(hit)
+        self.assertEqual(hit[2], "Inn Costs")
+        self.assertIsNone(self._resolve("Costs of travel"))
+
+    def test_pass_message_reports_how_many_resolutions_were_shortened(self):
+        """The weaker promise has to announce its own size.
+
+        ``names_the_heading`` guarantees a shortened match kept the
+        heading's subject. That is not the same as the citation naming the
+        heading, and the difference is only safe if somebody can see how
+        much of the corpus rests on it.
+        """
+        self._house()
+        self._write(
+            "game/scripts/a.gd",
+            "# npcs.md § Danger Counter increments once per step.\n",
+        )
+        buffer = io.StringIO()
+        with patch.dict(
+            check_doc_citations.KNOWN_UNRESOLVED, {}, clear=True
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_DOCS", 0
+        ), patch.object(
+            check_doc_citations, "MIN_GAP_BULLETS", 0
+        ), contextlib.redirect_stdout(buffer):
+            self.assertEqual(check_doc_citations.main(), 0)
+        self.assertIn("1 resolved only by discarding words", buffer.getvalue())
 
     def test_the_404_exemplar_fails_the_whole_scan(self):
         """The defect #404 was filed over, verbatim, end to end.

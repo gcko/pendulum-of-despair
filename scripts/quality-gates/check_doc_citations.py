@@ -44,10 +44,21 @@ Read is not the same as verified, and the gap between the two is where this
 gate's remaining exposure lives. The resolver is deliberately loose — it
 accepts any word prefix of the citation that the heading's breadcrumb
 contains — so a citation can be read, resolve, and still name a heading
-nobody wrote. ``names_the_heading`` closes the loosest case of that, the
-one-word match on a word buried inside some other heading, which is what
-made ``combat-formulas.md § Act scaling`` land on ``### Regular Enemy HP by
-Act`` in #404. Longer partial matches are not closed; #416 tracks those.
+nobody wrote. ``names_the_heading`` closes that at every prefix length a
+citation was *shortened* to reach: whenever the resolver had to discard
+words to make a match, what it kept must carry the heading's subject. That
+is what refuses ``combat-formulas.md § Act scaling`` on ``### Regular Enemy
+HP by Act`` (#404) and ``§ Enemy Act scaling`` with it (#416).
+
+What stays open, and is measured rather than claimed: a citation that
+spends *every* word it offered still resolves on the bare breadcrumb
+subsequence, so ``§ Convergence Meadow`` reaching ``### First Tree Seed
+Scene (Convergence Meadow)`` and a hypothetical ``§ Enemy Act`` reaching
+``### Regular Enemy HP by Act`` are the same shape and this gate cannot
+separate them. Nothing was discarded there, so there is no discarded word to
+hold to anything. ``main`` prints how many citations resolved only by
+discarding words, so the size of the shortening the corpus leans on is a
+number on every run.
 
 Scanned: docs/, game/scripts/, game/tests/, game/data/, scripts/.
 
@@ -306,6 +317,13 @@ CHAIN_MAX_WRAP = 1
 # supposed to be in. Do not add to it — fix the citation instead.
 KNOWN_UNRESOLVED: dict[tuple[str, str], str] = {}
 
+# A heading's subject is not the word "the". ``## The Diplomatic Mission`` is
+# about the mission, and ``outline.md § Diplomatic Mission ...`` is how the
+# script files cite it, so the article is stepped over before the subject is
+# read. The live tree does not lean on this today; the tests do, and
+# ``names_the_heading`` says why it is here anyway.
+ARTICLES = frozenset({"the", "a", "an"})
+
 FIX_HINT_ANCHOR = (
     "line anchors rot on the next insertion — cite a heading instead, e.g. "
     "`magic.md § Status Effect Reference > 'Poison'`"
@@ -504,37 +522,59 @@ def heading_subject(title: str) -> list[str]:
     return normalize(stripped).split()
 
 
-def names_the_heading(title: str, word: str) -> bool:
-    """True when a *one-word* citation names what ``title`` is about.
+def names_the_heading(title: str, kept: list[str]) -> bool:
+    """True when the words a match *kept* name what ``title`` is about.
 
-    ``match_words`` accepts a citation word anywhere in a heading's breadcrumb
-    path, in order. Over a single word that is far too weak a claim: ``act``
-    appears somewhere in the breadcrumb of ``### Regular Enemy HP by Act``, so
+    ``match_words`` accepts a citation's words anywhere in a heading's
+    breadcrumb path, in order, however scattered. When the resolver reached
+    that heading by shortening — by throwing away words the citation offered —
+    the words it kept are all that is left of the claim, and a subsequence is
+    far too weak a thing to let them stand on: ``act`` appears somewhere in
+    the breadcrumb of ``### Regular Enemy HP by Act``, so
     ``combat-formulas.md § Act scaling`` — a heading nobody wrote, and the
     exemplar defect #404 was filed over — resolved to it and the gate reported
     passed. Widening the regex so the citation was finally *read* did not
     change that; it only meant the wrong resolution now happened in public.
+    ``§ Enemy Act scaling`` is the same defect two words wide, and was still
+    accepted after #404 (#416).
 
-    The test is where in the heading the word landed. A one-word citation that
-    names a heading names its **subject** — the first word of its own title,
-    after any leading section id: ``§ Weapons`` for ``### Weapons``,
-    ``§ Ironhide`` for ``### 56. Ironhide``, ``§ Cael`` for ``### Cael —
-    Rally``. A word found buried mid-title is a coincidence of the subsequence
-    matcher, not a name.
+    The test is whether the kept words reach the heading's **subject** — the
+    first word of its own title, after any leading section id and any leading
+    article. ``§ Weapons`` for ``### Weapons``, ``§ Ironhide`` for
+    ``### 56. Ironhide``, ``§ Act I still counts ...`` for ``### Act I (Levels
+    1–12, ...)``, ``§ Diplomatic Mission makes ...`` for ``### The Diplomatic
+    Mission``. A citation may keep more than the subject and reach it through
+    an ancestor's words — ``§ Act II Siege`` keeps ``Act II`` from ``## Act
+    II`` and ``Siege`` from ``### The Siege of Valdris`` — so the subject has
+    to be *among* the kept words, not first among them. Requiring it first
+    fails 3 live citations, ``dungeons-world.md § The Diplomatic Mission
+    makes ...`` among them.
 
-    Applied only when the citation offered *more* words than the one that
-    matched (see ``match_heading``), because a citation that offers exactly one
-    word has made no larger claim to check it against: ``npcs.md § Caden`` for
-    ``### Spirit-speaker Caden`` is house style and stays legal.
+    The article step costs the live tree nothing today — every citation there
+    that shortens past an article keeps the article too — so it is pinned by
+    tests rather than by the corpus. It is here because the form it protects
+    is house style and one hand edit away: ``§ Diplomatic Mission`` and
+    ``§ World Changes`` name their headings, and a subject of ``the`` would
+    refuse both.
 
-    This closes one shape of false green, not the family. A *two*-word prefix
-    buried the same way is still accepted — #416.
+    Applied only where the resolver discarded something (``own > k`` in
+    ``match_heading``). A citation that spent every word it offered has
+    invented nothing to check: ``§ Caden`` for ``### Spirit-speaker Caden``
+    and ``§ Convergence Meadow`` for ``### First Tree Seed Scene (Convergence
+    Meadow)`` are house style and stay legal, and both would fail this test.
+    That is also the exposure this does not close, stated plainly in the
+    module docstring and counted on every run: an all-words-spent citation is
+    still only a breadcrumb subsequence, and ``§ Enemy Act`` cannot be told
+    apart from ``§ Convergence Meadow`` by anything this function can see.
     """
     subject = heading_subject(title)
-    cited = normalize(word).split()
-    if not subject or not cited:
+    i = 0
+    while i < len(subject) and subject[i] in ARTICLES:
+        i += 1
+    if i >= len(subject) or not kept:
         return True
-    return stem(subject[0]) == stem(cited[0])
+    head = stem(subject[i])
+    return any(stem(word) == head for word in kept)
 
 
 def match_section_id(
@@ -720,13 +760,17 @@ def match_heading(
     heading, so once a citation has been caught naming a subsection nobody
     wrote there is nothing better left to find.
 
-    Shortening also has a floor. A prefix of *one* word, offered by a citation
-    that named more than one, is the weakest claim this loop can accept, and
-    ``match_words`` will take that word from anywhere in the breadcrumb — which
-    is how ``combat-formulas.md § Act scaling`` reached ``### Regular Enemy HP
-    by Act`` (#404). So at ``k == 1`` the word must be the heading's own
-    subject; see ``names_the_heading`` for what that means and for the longer
-    partial matches it does not cover (#416).
+    Shortening also has a floor, and the floor is under every prefix length,
+    not just the shortest. Whenever the loop had to *discard* words to make a
+    match — whenever the accepted prefix is shorter than what the citation's
+    own line offered — ``match_words`` has taken the surviving words from
+    anywhere in the breadcrumb, which is how ``combat-formulas.md § Act
+    scaling`` reached ``### Regular Enemy HP by Act`` (#404) and how ``§ Enemy
+    Act scaling`` still reached it after #404 was closed (#416). So a
+    shortened match must keep the heading's subject; see
+    ``names_the_heading`` for what that means, for why the subject need only
+    be *among* the kept words, and for the one shape this still does not
+    cover — a citation that spends every word it offered.
 
     ``own`` is how many words of ``candidate`` came from the citation's own
     line rather than from the wrapped continuation ``citation_tail`` joined
@@ -799,14 +843,16 @@ def match_heading(
             continue
         if continues_a_heading(words, k, own):
             return None
-        # The shortening has run all the way down to one word while the
-        # citation named more. That is the weakest match this loop can make,
-        # and it is the one that green-lit `§ Act scaling` — so the word has
-        # to be the heading's subject, not a word buried inside it. A list
-        # citation is exempt: ``hit`` is then only its first part's heading,
-        # so there is nothing meaningful to compare the whole token against.
-        if k == 1 and own > 1 and not listed:
-            if not names_the_heading(hit[2], words[0]):
+        # The loop discarded words from the citation's own line to get here.
+        # Whatever survived is the whole of the claim, and `match_words` will
+        # take a survivor from anywhere in the breadcrumb — which is what
+        # green-lit `§ Act scaling` at one word (#404) and `§ Enemy Act
+        # scaling` at two (#416). So a shortened match has to keep the
+        # heading's subject, not just words buried inside it. A list citation
+        # is exempt: ``hit`` is then only its first part's heading, so there
+        # is nothing meaningful to compare the whole token against.
+        if own > k and not listed:
+            if not names_the_heading(hit[2], want):
                 return None
         return hit
     return None
@@ -1257,6 +1303,19 @@ def check_text(
             if found:
                 hit = (target, found)
                 break
+        if hit is not None and tally is not None:
+            # How far the corpus leans on shortening. A citation the resolver
+            # had to discard words from is one whose meaning-carrying words
+            # may be the discarded ones; ``names_the_heading`` holds what
+            # survived to the heading's subject, but that is a weaker promise
+            # than an exact name, and #416 asked for the size of the weaker
+            # set rather than a docstring saying it exists.
+            accounted = named_prefix_len(
+                index, hit[0], hit[1], heading_part.split()
+            )
+            if own_words > accounted:
+                tally["shortened"] = tally.get("shortened", 0) + 1
+
         if hit is None:
             if known_key in KNOWN_UNRESOLVED:
                 seen_known.add(known_key)
@@ -1370,13 +1429,15 @@ def check_citations(
     that wants the whole gate must do the same.
 
     ``tally``, when given, is filled with ``files``, ``citations``,
-    ``self_references``, ``decorated`` and ``chained``: how many files were
-    walked, how many citations were resolved in them, how many of those were a
-    document referring to its own section (#386), how many were written as a
-    markdown link or a code span (#404), and how many inherited their file from
-    the citation before them (#415). A scan reports its findings by returning
-    nothing, and nothing is also what a scan that stopped looking returns; the
-    counts are what tells those apart, and ``main`` prints them on every run.
+    ``self_references``, ``decorated``, ``chained`` and ``shortened``: how many
+    files were walked, how many citations were resolved in them, how many of
+    those were a document referring to its own section (#386), how many were
+    written as a markdown link or a code span (#404), how many inherited their
+    file from the citation before them (#415), and how many resolved only
+    because the resolver discarded words the citation offered (#416). A scan
+    reports its findings by returning nothing, and nothing is also what a scan
+    that stopped looking returns; the counts are what tells those apart, and
+    ``main`` prints them on every run.
     """
     index = DocIndex() if index is None else index
     errors: list[str] = []
@@ -1387,6 +1448,7 @@ def check_citations(
         tally.setdefault("self_references", 0)
         tally.setdefault("decorated", 0)
         tally.setdefault("chained", 0)
+        tally.setdefault("shortened", 0)
         tally["files"] = len(scanned)
     for path in scanned:
         errors.extend(check_file(path, index, seen_known, tally))
@@ -1430,6 +1492,9 @@ def main() -> int:
         f"{tally['decorated']} written as a markdown link or code span "
         f"(#404) and {tally['chained']} inheriting their file from the "
         f"citation before them (#415). "
+        f"{tally['shortened']} resolved only by discarding words the "
+        f"citation offered (#416); each of those kept the heading's "
+        f"subject, which is a weaker promise than naming it. "
         f"{tally['gap_bullets']} Design-reference bullet(s) read in "
         f"{tally['gap_docs']} GAP doc(s) (#403). "
         f"{len(KNOWN_UNRESOLVED)} citation(s) pinned in "
