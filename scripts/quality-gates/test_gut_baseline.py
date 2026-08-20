@@ -12,7 +12,7 @@ The wiring tests match an UNCOMMENTED invocation, not the string
 `check_gut_baseline.py`. They were substring assertions once, and the name also
 appears in prose in all three callers -- the pre-push gate registry, the
 gates.sh header, the CI step's rationale -- so both call sites could be
-commented out with all 46 tests still green (#433). `gate_run_lines()` below is
+commented out with all 46 tests still green (#430). `gate_run_lines()` below is
 the matcher, and it is itself tested against a commented-out call.
 
 Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
@@ -20,8 +20,11 @@ Run: python3 -m unittest discover -s scripts/quality-gates -p 'test_*.py'
 import io
 import os
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -538,7 +541,7 @@ class TestWiredIntoTheGates(unittest.TestCase):
         self.assertIn("gut_cmdln.gd is MISSING", hook)
 
     def test_the_hook_and_the_runner_agree_about_a_missing_godot(self):
-        # One posture, two callers. gates.sh has refused since #430.
+        # One posture, two callers. gates.sh refused it first; see #430.
         for path in (".husky/pre-push", "scripts/gates.sh"):
             self.assertIn("refusing to", self._read(path), path)
 
@@ -615,6 +618,142 @@ class TestWiredIntoTheGates(unittest.TestCase):
         self.assertIn('$GUT_FLOOR_GATE', gates_sh)
         # Defined is not consulted: the skip condition has to read it.
         self.assertIn('[ -z "$GATE_TRIGGER" ]', gates_sh)
+
+
+class TestGodotLockMutex(unittest.TestCase):
+    """Behavioural coverage for scripts/quality-gates/godot-lock.sh.
+
+    These drive the real shell functions in real separate processes. A mutex is
+    exactly the kind of thing a string assertion cannot check: the previous
+    version of this file proved both runners SOURCED the lock, while the lock
+    itself would hand the same mutex to two of them.
+    """
+
+    LOCK_SH = os.path.join(REPO_ROOT, "scripts", "quality-gates", "godot-lock.sh")
+
+    def setUp(self):
+        self.dir = tempfile.mkdtemp(prefix="godotlock")
+        self.lock = os.path.join(self.dir, "pod-godot.lock")
+
+    def tearDown(self):
+        shutil.rmtree(self.dir, ignore_errors=True)
+
+    def _run(self, script, timeout="3", grace="30"):
+        """Run `script` in a bash that has sourced the lock, return CompletedProcess."""
+        env = dict(os.environ)
+        env.update(
+            GODOT_LOCK=self.lock,
+            GODOT_LOCK_POLL="1",
+            GODOT_LOCK_TIMEOUT=timeout,
+            GODOT_LOCK_CLAIM_GRACE=grace,
+        )
+        return subprocess.run(
+            ["bash", "-c", '. "$1"; shift; ' + script, "_", self.LOCK_SH],
+            capture_output=True, text=True, env=env, timeout=120,
+        )
+
+    def _owner(self):
+        try:
+            with open(os.path.join(self.lock, "owner.pid")) as fh:
+                return fh.read().strip()
+        except OSError:
+            return ""
+
+    def test_an_acquirer_names_itself_and_release_removes_the_lock(self):
+        got = self._run('godot_lock_acquire && echo "OWNER=$(cat $GODOT_LOCK/owner.pid) ME=$$"; '
+                        'godot_lock_release; [ -d "$GODOT_LOCK" ] && echo LEAKED || echo RELEASED')
+        self.assertEqual(got.returncode, 0, got.stderr)
+        owner, me = re.search(r"OWNER=(\d+) ME=(\d+)", got.stdout).groups()
+        self.assertEqual(owner, me, "the lock must name the process that took it")
+        self.assertIn("RELEASED", got.stdout)
+
+    def test_a_lock_taken_but_not_yet_claimed_is_not_stolen(self):
+        # THE RACE. `mkdir` and the owner.pid write are two statements. The
+        # reaper used to read owner.pid in the gap, find nothing, call a live
+        # lock stale, rm -rf it and take it -- so two runners both believed
+        # they held one mutex and two headless Godots started. A directory with
+        # no owner named yet is mid-acquisition, not abandoned.
+        os.mkdir(self.lock)
+        got = self._run("godot_lock_acquire && echo STOLE")
+        self.assertNotEqual(got.returncode, 0, "acquired a lock another runner was taking")
+        self.assertNotIn("STOLE", got.stdout)
+        self.assertIn("GODOT LOCK TIMEOUT", got.stdout)
+
+    def test_a_second_claim_cannot_overwrite_an_owner_already_named(self):
+        # The `set -C` half of the same defence: even if a runner does end up
+        # inside a directory someone else claimed, it must not be able to
+        # rewrite the owner and make release delete the wrong lock.
+        os.mkdir(self.lock)
+        with open(os.path.join(self.lock, "owner.pid"), "w") as fh:
+            fh.write("424242\n")
+        got = self._run("godot_lock_claim && echo CLAIMED || echo REFUSED")
+        self.assertIn("REFUSED", got.stdout)
+        self.assertEqual(self._owner(), "424242")
+
+    def test_a_live_owner_blocks_every_other_runner(self):
+        os.mkdir(self.lock)
+        with open(os.path.join(self.lock, "owner.pid"), "w") as fh:
+            fh.write("%d\n" % os.getpid())  # this test process is alive
+        got = self._run("godot_lock_acquire && echo STOLE")
+        self.assertNotEqual(got.returncode, 0)
+        self.assertNotIn("STOLE", got.stdout)
+
+    def test_a_dead_owners_lock_is_reclaimed(self):
+        # Without this a killed agent wedges every sibling worktree for the
+        # full 1800s timeout, which is why owner.pid exists at all.
+        dead = subprocess.Popen(["true"])
+        dead.wait()
+        os.mkdir(self.lock)
+        with open(os.path.join(self.lock, "owner.pid"), "w") as fh:
+            fh.write("%d\n" % dead.pid)
+        got = self._run("godot_lock_acquire && echo ACQUIRED")
+        self.assertIn("ACQUIRED", got.stdout, got.stdout + got.stderr)
+        self.assertIn("reaping stale lock", got.stdout)
+
+    def test_a_lock_abandoned_before_it_was_claimed_is_reclaimed_after_the_grace(self):
+        # The cost of refusing to reap an unclaimed lock: an acquirer killed
+        # between the two statements leaves one behind. Bounded by the grace
+        # window rather than the full timeout, and never permanent.
+        os.mkdir(self.lock)
+        old = time.time() - 3600
+        os.utime(self.lock, (old, old))
+        got = self._run("godot_lock_acquire && echo ACQUIRED")
+        self.assertIn("ACQUIRED", got.stdout, got.stdout + got.stderr)
+        self.assertIn("reaping unclaimed lock", got.stdout)
+
+    def test_release_leaves_a_lock_owned_by_someone_else_alone(self):
+        os.mkdir(self.lock)
+        with open(os.path.join(self.lock, "owner.pid"), "w") as fh:
+            fh.write("424242\n")
+        got = self._run('godot_lock_release; [ -d "$GODOT_LOCK" ] && echo KEPT || echo DELETED')
+        self.assertIn("KEPT", got.stdout)
+
+    def test_the_lock_stays_a_directory_at_the_shared_path(self):
+        # Worktrees on older commits take /tmp/pod-godot.lock with `mkdir` from
+        # their own copy of gates.sh. A symlink or an flock'd regular file
+        # would be atomic in isolation and would stop serialising against them.
+        with open(self.LOCK_SH) as fh:
+            lock = fh.read()
+        self.assertIn('GODOT_LOCK="${GODOT_LOCK:-/tmp/pod-godot.lock}"', lock)
+        self.assertIn('mkdir "$GODOT_LOCK"', uncommented(lock))
+
+    def test_the_docs_do_not_claim_a_guarantee_the_lock_does_not_give(self):
+        # The mutex is best-effort at one boundary (a holder frozen mid-
+        # acquisition for longer than the grace window). Prose that says two
+        # Godots CANNOT start overclaims; § 5 of quality-gate-authoring
+        # requires the limit in the same breath as the guarantee.
+        for path in ("scripts/gates.sh", ".claude/skills/create-pr/SKILL.md"):
+            flat = re.sub(r"\s+", " ", self._read_repo(path))
+            if "cannot start two Godots" in flat:
+                self.fail(
+                    "%s claims two Godots CANNOT start. godot-lock.sh is a mkdir "
+                    "lock, not a kernel lock: state the limit in the same breath."
+                    % path
+                )
+
+    def _read_repo(self, relative):
+        with open(os.path.join(REPO_ROOT, relative)) as fh:
+            return fh.read()
 
 
 if __name__ == "__main__":

@@ -13,7 +13,8 @@
 # sees only the index, pre-push only what you are pushing), and agents working in
 # parallel worktrees need something that can. It shares the headless-Godot mutex
 # in scripts/quality-gates/godot-lock.sh with .husky/pre-push, so a hand-run and
-# a push cannot start two Godots between them.
+# a push do not start two Godots between them. That is a mkdir lock with an owner
+# pid, not a kernel lock; godot-lock.sh names the one window it cannot close.
 #
 # What it is NOT: a replacement for the hooks. It does not run the pre-push
 # data-integrity scans that live inside the hook itself, and nothing runs it for
@@ -135,7 +136,7 @@ for d in $DOCS_READ; do echo "$ALL_PATHS" | grep -qxF "$d" && DOC_TRIGGER="$DOC_
 # could not demonstrate Gate L through its own runner. A mistyped floor is also
 # shape-valid, so the bare shape check at the top accepts it and ALL GATES
 # PASSED prints; the error then surfaces two minutes into someone's pre-push,
-# a long way from the one-line diff that caused it (#433).
+# a long way from the one-line diff that caused it (#430).
 GATE_L_INPUTS="$BASELINE_FILE
 $GUT_FLOOR_GATE
 scripts/quality-gates/godot-lock.sh"
@@ -166,7 +167,7 @@ fi
 # The mutex lives in scripts/quality-gates/godot-lock.sh, shared with
 # .husky/pre-push. It used to live here alone, and the hook ran Godot with no
 # lock at all -- so a push contending with a gates.sh run collected fewer
-# scripts and Gate L blamed a healthy test file (#433).
+# scripts and Gate L blamed a healthy test file (#430).
 GODOT_LOCK_LABEL="$NAME"
 # shellcheck source=scripts/quality-gates/godot-lock.sh
 . scripts/quality-gates/godot-lock.sh

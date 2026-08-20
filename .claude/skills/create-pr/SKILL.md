@@ -148,10 +148,12 @@ After outputting the PR URL, always end with:
   (pre-commit sees only the index), or a stacked branch that must be
   judged against its own parent rather than `main`
   (`GATES_BASE=<parent> bash scripts/gates.sh`). It shares the
-  headless-Godot mutex with pre-push, so a hand-run and a push cannot
+  headless-Godot mutex with pre-push, so a hand-run and a push do not
   start two Godots between them — which matters because a contended
   run collects fewer test scripts and Gate L reads that as a
-  silently-skipped test file. That is the whole
+  silently-skipped test file. It is a `mkdir` lock with an owner pid
+  rather than a kernel lock, and `scripts/quality-gates/godot-lock.sh`
+  names the one window it cannot close. That is the whole
   carve-out — it is not general permission to run tests by hand, it
   does not replace either hook, and both hooks still run on every
   commit and push. See AGENTS.md § Essential Commands.
